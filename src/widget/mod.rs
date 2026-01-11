@@ -5,7 +5,7 @@ mod frame;
 mod registry;
 
 pub use anchor::{Anchor, AnchorPoint};
-pub use frame::Frame;
+pub use frame::{Frame, FrameStrata};
 pub use registry::WidgetRegistry;
 
 use std::sync::atomic::{AtomicU64, Ordering};

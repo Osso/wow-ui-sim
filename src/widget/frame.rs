@@ -30,6 +30,18 @@ pub struct Frame {
     pub frame_level: i32,
     /// Frame strata (major draw order).
     pub frame_strata: FrameStrata,
+    /// Alpha transparency (0.0 - 1.0).
+    pub alpha: f32,
+    /// Whether mouse is enabled.
+    pub mouse_enabled: bool,
+    /// Texture path (for Texture widgets).
+    pub texture: Option<String>,
+    /// Text content (for FontString widgets).
+    pub text: Option<String>,
+    /// Font name (for FontString widgets).
+    pub font: Option<String>,
+    /// Font size (for FontString widgets).
+    pub font_size: f32,
 }
 
 impl Frame {
@@ -47,6 +59,12 @@ impl Frame {
             registered_events: HashSet::new(),
             frame_level: 0,
             frame_strata: FrameStrata::Medium,
+            alpha: 1.0,
+            mouse_enabled: false,
+            texture: None,
+            text: None,
+            font: None,
+            font_size: 12.0,
         }
     }
 
@@ -117,6 +135,20 @@ impl FrameStrata {
             "FULLSCREEN_DIALOG" => Some(Self::FullscreenDialog),
             "TOOLTIP" => Some(Self::Tooltip),
             _ => None,
+        }
+    }
+
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::World => "WORLD",
+            Self::Background => "BACKGROUND",
+            Self::Low => "LOW",
+            Self::Medium => "MEDIUM",
+            Self::High => "HIGH",
+            Self::Dialog => "DIALOG",
+            Self::Fullscreen => "FULLSCREEN",
+            Self::FullscreenDialog => "FULLSCREEN_DIALOG",
+            Self::Tooltip => "TOOLTIP",
         }
     }
 }

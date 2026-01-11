@@ -128,7 +128,161 @@ function ns.tests.Events()
     }
 end
 
--- Test 6: Custom fields on frames (common addon pattern)
+-- Test 6: Alpha transparency
+function ns.tests.Alpha()
+    local frame = CreateFrame("Frame", "TestAlpha", UIParent)
+    frame:SetSize(80, 80)
+    frame:SetPoint("CENTER", 200, 0)
+
+    local initial = frame:GetAlpha()
+    frame:SetAlpha(0.5)
+    local half = frame:GetAlpha()
+    frame:SetAlpha(0)
+    local zero = frame:GetAlpha()
+    frame:SetAlpha(1)
+    local full = frame:GetAlpha()
+
+    return {
+        name = "Alpha",
+        expected = {initial = 1, half = 0.5, zero = 0, full = 1},
+        actual = {initial = initial, half = half, zero = zero, full = full}
+    }
+end
+
+-- Test 7: Frame strata and level
+function ns.tests.StrataLevel()
+    local frame = CreateFrame("Frame", "TestStrataLevel", UIParent)
+    frame:SetSize(60, 60)
+    frame:SetPoint("CENTER", 200, 100)
+
+    local defaultStrata = frame:GetFrameStrata()
+    local defaultLevel = frame:GetFrameLevel()
+
+    frame:SetFrameStrata("HIGH")
+    frame:SetFrameLevel(10)
+
+    local newStrata = frame:GetFrameStrata()
+    local newLevel = frame:GetFrameLevel()
+
+    return {
+        name = "StrataLevel",
+        expected = {
+            defaultStrata = "MEDIUM",
+            newStrata = "HIGH",
+            newLevel = 10
+        },
+        actual = {
+            defaultStrata = defaultStrata,
+            newStrata = newStrata,
+            newLevel = newLevel
+        }
+    }
+end
+
+-- Test 8: Mouse interaction
+function ns.tests.MouseEnabled()
+    local frame = CreateFrame("Frame", "TestMouse", UIParent)
+    frame:SetSize(70, 70)
+    frame:SetPoint("CENTER", -200, 100)
+
+    local wasEnabled = frame:IsMouseEnabled()
+    frame:EnableMouse(true)
+    local isEnabled = frame:IsMouseEnabled()
+    frame:EnableMouse(false)
+    local nowDisabled = not frame:IsMouseEnabled()
+
+    return {
+        name = "MouseEnabled",
+        expected = {wasEnabled = false, isEnabled = true, nowDisabled = true},
+        actual = {wasEnabled = wasEnabled, isEnabled = isEnabled, nowDisabled = nowDisabled}
+    }
+end
+
+-- Test 9: Texture creation
+function ns.tests.Texture()
+    local frame = CreateFrame("Frame", "TestTextureParent", UIParent)
+    frame:SetSize(100, 100)
+    frame:SetPoint("CENTER", -200, 0)
+
+    local tex = frame:CreateTexture("TestTexture", "BACKGROUND")
+    tex:SetAllPoints()
+    tex:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark")
+
+    local objType = tex:GetObjectType()
+    local texPath = tex:GetTexture()
+    local parentName = tex:GetParent():GetName()
+
+    return {
+        name = "Texture",
+        expected = {
+            objType = "Texture",
+            hasTexture = true,
+            parentName = "TestTextureParent"
+        },
+        actual = {
+            objType = objType,
+            hasTexture = texPath ~= nil,
+            parentName = parentName
+        }
+    }
+end
+
+-- Test 10: FontString creation
+function ns.tests.FontString()
+    local frame = CreateFrame("Frame", "TestFontParent", UIParent)
+    frame:SetSize(150, 50)
+    frame:SetPoint("CENTER", 0, -150)
+
+    local text = frame:CreateFontString("TestFontString", "OVERLAY")
+    text:SetPoint("CENTER")
+    text:SetText("Hello World")
+
+    local objType = text:GetObjectType()
+    local content = text:GetText()
+    local width = text:GetStringWidth()
+
+    return {
+        name = "FontString",
+        expected = {
+            objType = "FontString",
+            content = "Hello World",
+            hasWidth = true
+        },
+        actual = {
+            objType = objType,
+            content = content,
+            hasWidth = width > 0
+        }
+    }
+end
+
+-- Test 11: GetPoint and anchoring
+function ns.tests.GetPoint()
+    local frame = CreateFrame("Frame", "TestGetPoint", UIParent)
+    frame:SetSize(50, 50)
+    frame:SetPoint("TOPLEFT", 25, -30)
+
+    local point, relativeTo, relativePoint, xOfs, yOfs = frame:GetPoint(1)
+    local numPoints = frame:GetNumPoints()
+
+    return {
+        name = "GetPoint",
+        expected = {
+            point = "TOPLEFT",
+            xOfs = 25,
+            yOfs = -30,
+            numPoints = 1
+        },
+        actual = {
+            point = point,
+            xOfs = xOfs,
+            yOfs = yOfs,
+            numPoints = numPoints
+        }
+    }
+end
+
+-- Test 12: Custom fields on frames (common addon pattern)
 function ns.tests.CustomFields()
     local frame = CreateFrame("Frame", "TestCustomFields", UIParent)
     frame:SetSize(60, 60)

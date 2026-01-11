@@ -25,9 +25,10 @@ fn load_test_addon(env: &WowLuaEnv) -> Result<(), String> {
 
 fn fire_addon_loaded(env: &WowLuaEnv) {
     // Fire ADDON_LOADED with "TestAddon" as the addon name argument
+    // Check a wide range since widget IDs are global and increment across tests
     env.exec(r#"
         -- Manually trigger the loader's OnEvent
-        for id = 1, 100 do
+        for id = 1, 10000 do
             local key = "__frame_" .. id
             local frame = _G[key]
             if frame then
@@ -159,12 +160,78 @@ fn test_event_registration() {
 }
 
 #[test]
+fn test_alpha() {
+    let env = WowLuaEnv::new().unwrap();
+    load_test_addon(&env).unwrap();
+    fire_addon_loaded(&env);
+
+    let alpha: f32 = env.eval("return TestAlpha:GetAlpha()").unwrap();
+    assert_eq!(alpha, 1.0, "Alpha should be 1.0 after test completes");
+}
+
+#[test]
+fn test_strata_level() {
+    let env = WowLuaEnv::new().unwrap();
+    load_test_addon(&env).unwrap();
+    fire_addon_loaded(&env);
+
+    let strata: String = env.eval("return TestStrataLevel:GetFrameStrata()").unwrap();
+    let level: i32 = env.eval("return TestStrataLevel:GetFrameLevel()").unwrap();
+
+    assert_eq!(strata, "HIGH");
+    assert_eq!(level, 10);
+}
+
+#[test]
+fn test_texture_creation() {
+    let env = WowLuaEnv::new().unwrap();
+    load_test_addon(&env).unwrap();
+    fire_addon_loaded(&env);
+
+    let obj_type: String = env.eval("return TestTexture:GetObjectType()").unwrap();
+    let has_texture: bool = env.eval("return TestTexture:GetTexture() ~= nil").unwrap();
+    let parent: String = env.eval("return TestTexture:GetParent():GetName()").unwrap();
+
+    assert_eq!(obj_type, "Texture");
+    assert!(has_texture);
+    assert_eq!(parent, "TestTextureParent");
+}
+
+#[test]
+fn test_fontstring_creation() {
+    let env = WowLuaEnv::new().unwrap();
+    load_test_addon(&env).unwrap();
+    fire_addon_loaded(&env);
+
+    let obj_type: String = env.eval("return TestFontString:GetObjectType()").unwrap();
+    let text: String = env.eval("return TestFontString:GetText()").unwrap();
+    let width: f32 = env.eval("return TestFontString:GetStringWidth()").unwrap();
+
+    assert_eq!(obj_type, "FontString");
+    assert_eq!(text, "Hello World");
+    assert!(width > 0.0, "Font string should have width");
+}
+
+#[test]
+fn test_get_point() {
+    let env = WowLuaEnv::new().unwrap();
+    load_test_addon(&env).unwrap();
+    fire_addon_loaded(&env);
+
+    let point: String = env.eval("local p = TestGetPoint:GetPoint(1); return p").unwrap();
+    let num_points: i32 = env.eval("return TestGetPoint:GetNumPoints()").unwrap();
+
+    assert_eq!(point, "TOPLEFT");
+    assert_eq!(num_points, 1);
+}
+
+#[test]
 fn test_all_frames_created() {
     let env = WowLuaEnv::new().unwrap();
     load_test_addon(&env).unwrap();
     fire_addon_loaded(&env);
 
-    // Count all test frames
+    // Count all test frames (original 11 + 6 new parent frames + textures/fontstrings)
     let count: i32 = env
         .eval(
             r#"
@@ -173,7 +240,11 @@ fn test_all_frames_created() {
             "TestBasicFrame", "TestTopLeft", "TestTopRight",
             "TestBottomLeft", "TestBottomRight", "TestParent",
             "TestChild1", "TestChild2", "TestVisibility",
-            "TestEvents", "TestCustomFields"
+            "TestEvents", "TestCustomFields",
+            "TestAlpha", "TestStrataLevel", "TestMouse",
+            "TestTextureParent", "TestTexture",
+            "TestFontParent", "TestFontString",
+            "TestGetPoint"
         }
         for _, name in ipairs(testFrames) do
             if _G[name] then count = count + 1 end
@@ -183,5 +254,5 @@ fn test_all_frames_created() {
         )
         .unwrap();
 
-    assert_eq!(count, 11, "All 11 test frames should be created");
+    assert_eq!(count, 19, "All 19 test frames should be created");
 }

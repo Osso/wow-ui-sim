@@ -236,6 +236,30 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let slash_cmd_list = lua.create_table()?;
     globals.set("SlashCmdList", slash_cmd_list)?;
 
+    // securecallfunction(func, ...) - calls a function in protected mode
+    let securecallfunction = lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
+        // In WoW this provides taint protection, but for simulation we just call it
+        func.call::<mlua::MultiValue>(args)
+    })?;
+    globals.set("securecallfunction", securecallfunction)?;
+
+    // securecall(func, ...) - alias for securecallfunction
+    let securecall = lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
+        func.call::<mlua::MultiValue>(args)
+    })?;
+    globals.set("securecall", securecall)?;
+
+    // geterrorhandler() - returns error handler function
+    let geterrorhandler = lua.create_function(|lua, ()| {
+        // Return a simple error handler that just prints
+        let handler = lua.create_function(|_, msg: String| {
+            println!("Lua error: {}", msg);
+            Ok(())
+        })?;
+        Ok(handler)
+    })?;
+    globals.set("geterrorhandler", geterrorhandler)?;
+
     // C_Timer namespace
     let c_timer = lua.create_table()?;
     // C_Timer.After(seconds, callback) - simplified version that calls immediately for testing
@@ -373,25 +397,22 @@ impl UserData for FrameHandle {
             let point =
                 crate::widget::AnchorPoint::from_str(&point_str).unwrap_or_default();
 
+            // Helper to extract numeric value from Value (handles both Number and Integer)
+            fn get_number(v: &Value) -> Option<f32> {
+                match v {
+                    Value::Number(n) => Some(*n as f32),
+                    Value::Integer(n) => Some(*n as f32),
+                    _ => None,
+                }
+            }
+
             // Parse the variable arguments
             let (relative_to, relative_point, x_ofs, y_ofs) = match args.len() {
                 1 => (None, point, 0.0, 0.0),
                 2 | 3 => {
                     // SetPoint("CENTER", x, y) or SetPoint("CENTER", relativeTo)
-                    let x = args.get(1).and_then(|v| {
-                        if let Value::Number(n) = v {
-                            Some(*n as f32)
-                        } else {
-                            None
-                        }
-                    });
-                    let y = args.get(2).and_then(|v| {
-                        if let Value::Number(n) = v {
-                            Some(*n as f32)
-                        } else {
-                            None
-                        }
-                    });
+                    let x = args.get(1).and_then(get_number);
+                    let y = args.get(2).and_then(get_number);
                     if let (Some(x), Some(y)) = (x, y) {
                         (None, point, x, y)
                     } else {
@@ -410,26 +431,8 @@ impl UserData for FrameHandle {
                     let rel_point = rel_point_str
                         .and_then(|s| crate::widget::AnchorPoint::from_str(&s))
                         .unwrap_or(point);
-                    let x = args
-                        .get(3)
-                        .and_then(|v| {
-                            if let Value::Number(n) = v {
-                                Some(*n as f32)
-                            } else {
-                                None
-                            }
-                        })
-                        .unwrap_or(0.0);
-                    let y = args
-                        .get(4)
-                        .and_then(|v| {
-                            if let Value::Number(n) = v {
-                                Some(*n as f32)
-                            } else {
-                                None
-                            }
-                        })
-                        .unwrap_or(0.0);
+                    let x = args.get(3).and_then(get_number).unwrap_or(0.0);
+                    let y = args.get(4).and_then(get_number).unwrap_or(0.0);
                     (None, rel_point, x, y)
                 }
             };
@@ -559,6 +562,306 @@ impl UserData for FrameHandle {
                 .map(|f| f.widget_type.as_str())
                 .unwrap_or("Frame");
             Ok(obj_type.to_string())
+        });
+
+        // SetAlpha(alpha)
+        methods.add_method("SetAlpha", |_, this, alpha: f32| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.alpha = alpha.clamp(0.0, 1.0);
+            }
+            Ok(())
+        });
+
+        // GetAlpha()
+        methods.add_method("GetAlpha", |_, this, ()| {
+            let state = this.state.borrow();
+            let alpha = state.widgets.get(this.id).map(|f| f.alpha).unwrap_or(1.0);
+            Ok(alpha)
+        });
+
+        // SetFrameStrata(strata)
+        methods.add_method("SetFrameStrata", |_, this, strata: String| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(s) = crate::widget::FrameStrata::from_str(&strata) {
+                    frame.frame_strata = s;
+                }
+            }
+            Ok(())
+        });
+
+        // GetFrameStrata()
+        methods.add_method("GetFrameStrata", |_, this, ()| {
+            let state = this.state.borrow();
+            let strata = state
+                .widgets
+                .get(this.id)
+                .map(|f| f.frame_strata.as_str())
+                .unwrap_or("MEDIUM");
+            Ok(strata.to_string())
+        });
+
+        // SetFrameLevel(level)
+        methods.add_method("SetFrameLevel", |_, this, level: i32| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.frame_level = level;
+            }
+            Ok(())
+        });
+
+        // GetFrameLevel()
+        methods.add_method("GetFrameLevel", |_, this, ()| {
+            let state = this.state.borrow();
+            let level = state.widgets.get(this.id).map(|f| f.frame_level).unwrap_or(0);
+            Ok(level)
+        });
+
+        // EnableMouse(enable)
+        methods.add_method("EnableMouse", |_, this, enable: bool| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.mouse_enabled = enable;
+            }
+            Ok(())
+        });
+
+        // IsMouseEnabled()
+        methods.add_method("IsMouseEnabled", |_, this, ()| {
+            let state = this.state.borrow();
+            let enabled = state.widgets.get(this.id).map(|f| f.mouse_enabled).unwrap_or(false);
+            Ok(enabled)
+        });
+
+        // SetAllPoints(relativeTo)
+        methods.add_method("SetAllPoints", |_, this, _relative_to: Option<mlua::AnyUserData>| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.clear_all_points();
+                // SetAllPoints makes the frame fill its relative frame
+                frame.set_point(
+                    crate::widget::AnchorPoint::TopLeft,
+                    None,
+                    crate::widget::AnchorPoint::TopLeft,
+                    0.0,
+                    0.0,
+                );
+                frame.set_point(
+                    crate::widget::AnchorPoint::BottomRight,
+                    None,
+                    crate::widget::AnchorPoint::BottomRight,
+                    0.0,
+                    0.0,
+                );
+            }
+            Ok(())
+        });
+
+        // GetPoint(index) -> point, relativeTo, relativePoint, xOfs, yOfs
+        methods.add_method("GetPoint", |lua, this, index: Option<i32>| {
+            let idx = index.unwrap_or(1) - 1; // Lua is 1-indexed
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(anchor) = frame.anchors.get(idx as usize) {
+                    return Ok(mlua::MultiValue::from_vec(vec![
+                        Value::String(lua.create_string(anchor.point.as_str())?),
+                        Value::Nil, // relativeTo (would need to return frame reference)
+                        Value::String(lua.create_string(anchor.relative_point.as_str())?),
+                        Value::Number(anchor.x_offset as f64),
+                        Value::Number(anchor.y_offset as f64),
+                    ]));
+                }
+            }
+            Ok(mlua::MultiValue::new())
+        });
+
+        // GetNumPoints()
+        methods.add_method("GetNumPoints", |_, this, ()| {
+            let state = this.state.borrow();
+            let count = state.widgets.get(this.id).map(|f| f.anchors.len()).unwrap_or(0);
+            Ok(count as i32)
+        });
+
+        // CreateTexture(name, layer, inherits, subLevel)
+        methods.add_method("CreateTexture", |lua, this, args: mlua::MultiValue| {
+            let args: Vec<Value> = args.into_iter().collect();
+
+            let name: Option<String> = args.first().and_then(|v| {
+                if let Value::String(s) = v {
+                    Some(s.to_string_lossy().to_string())
+                } else {
+                    None
+                }
+            });
+
+            let texture = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
+            let texture_id = texture.id;
+
+            {
+                let mut state = this.state.borrow_mut();
+                state.widgets.register(texture);
+                state.widgets.add_child(this.id, texture_id);
+            }
+
+            let handle = FrameHandle {
+                id: texture_id,
+                state: Rc::clone(&this.state),
+            };
+
+            let ud = lua.create_userdata(handle)?;
+
+            if let Some(ref n) = name {
+                lua.globals().set(n.as_str(), ud.clone())?;
+            }
+
+            let frame_key = format!("__frame_{}", texture_id);
+            lua.globals().set(frame_key.as_str(), ud.clone())?;
+
+            Ok(ud)
+        });
+
+        // CreateFontString(name, layer, inherits)
+        methods.add_method("CreateFontString", |lua, this, args: mlua::MultiValue| {
+            let args: Vec<Value> = args.into_iter().collect();
+
+            let name: Option<String> = args.first().and_then(|v| {
+                if let Value::String(s) = v {
+                    Some(s.to_string_lossy().to_string())
+                } else {
+                    None
+                }
+            });
+
+            let fontstring = Frame::new(WidgetType::FontString, name.clone(), Some(this.id));
+            let fontstring_id = fontstring.id;
+
+            {
+                let mut state = this.state.borrow_mut();
+                state.widgets.register(fontstring);
+                state.widgets.add_child(this.id, fontstring_id);
+            }
+
+            let handle = FrameHandle {
+                id: fontstring_id,
+                state: Rc::clone(&this.state),
+            };
+
+            let ud = lua.create_userdata(handle)?;
+
+            if let Some(ref n) = name {
+                lua.globals().set(n.as_str(), ud.clone())?;
+            }
+
+            let frame_key = format!("__frame_{}", fontstring_id);
+            lua.globals().set(frame_key.as_str(), ud.clone())?;
+
+            Ok(ud)
+        });
+
+        // SetTexture(path) - for Texture widgets
+        methods.add_method("SetTexture", |_, this, path: Option<String>| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.texture = path;
+            }
+            Ok(())
+        });
+
+        // GetTexture() - for Texture widgets
+        methods.add_method("GetTexture", |_, this, ()| {
+            let state = this.state.borrow();
+            let texture = state
+                .widgets
+                .get(this.id)
+                .and_then(|f| f.texture.clone());
+            Ok(texture)
+        });
+
+        // SetText(text) - for FontString widgets
+        methods.add_method("SetText", |_, this, text: Option<String>| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.text = text;
+            }
+            Ok(())
+        });
+
+        // GetText() - for FontString widgets
+        methods.add_method("GetText", |_, this, ()| {
+            let state = this.state.borrow();
+            let text = state
+                .widgets
+                .get(this.id)
+                .and_then(|f| f.text.clone())
+                .unwrap_or_default();
+            Ok(text)
+        });
+
+        // SetFont(font, size, flags) - for FontString widgets
+        methods.add_method("SetFont", |_, this, (font, size, _flags): (String, Option<f32>, Option<String>)| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.font = Some(font);
+                if let Some(s) = size {
+                    frame.font_size = s;
+                }
+            }
+            Ok(true) // Returns success
+        });
+
+        // SetVertexColor(r, g, b, a) - for Texture widgets
+        methods.add_method("SetVertexColor", |_, _this, (_r, _g, _b, _a): (f32, f32, f32, Option<f32>)| {
+            // Store vertex color if needed for rendering
+            Ok(())
+        });
+
+        // SetTexCoord(left, right, top, bottom) - for Texture widgets
+        methods.add_method("SetTexCoord", |_, _this, _args: mlua::MultiValue| {
+            // Store texture coordinates if needed
+            Ok(())
+        });
+
+        // SetColorTexture(r, g, b, a) - for Texture widgets
+        methods.add_method("SetColorTexture", |_, _this, (_r, _g, _b, _a): (f32, f32, f32, Option<f32>)| {
+            // Set a solid color instead of texture
+            Ok(())
+        });
+
+        // SetFontObject(fontObject) - for FontString widgets
+        methods.add_method("SetFontObject", |_, _this, _font_object: Value| {
+            // Would copy font settings from another FontString
+            Ok(())
+        });
+
+        // SetJustifyH(justify) - for FontString widgets
+        methods.add_method("SetJustifyH", |_, _this, _justify: String| {
+            Ok(())
+        });
+
+        // SetJustifyV(justify) - for FontString widgets
+        methods.add_method("SetJustifyV", |_, _this, _justify: String| {
+            Ok(())
+        });
+
+        // GetStringWidth() - for FontString widgets
+        methods.add_method("GetStringWidth", |_, this, ()| {
+            let state = this.state.borrow();
+            // Approximate: 7 pixels per character
+            let width = state
+                .widgets
+                .get(this.id)
+                .and_then(|f| f.text.as_ref())
+                .map(|t| t.len() as f32 * 7.0)
+                .unwrap_or(0.0);
+            Ok(width)
+        });
+
+        // GetStringHeight() - for FontString widgets
+        methods.add_method("GetStringHeight", |_, this, ()| {
+            let state = this.state.borrow();
+            let height = state.widgets.get(this.id).map(|f| f.font_size).unwrap_or(12.0);
+            Ok(height)
         });
     }
 }
