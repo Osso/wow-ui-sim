@@ -70,6 +70,27 @@ impl WowLuaEnv {
         Ok(())
     }
 
+    /// Execute Lua code with varargs (like WoW addon loading).
+    /// In WoW, each addon file receives (addonName, addonTable) as varargs.
+    pub fn exec_with_varargs(
+        &self,
+        code: &str,
+        name: &str,
+        addon_name: &str,
+        addon_table: mlua::Table,
+    ) -> Result<()> {
+        let chunk = self.lua.load(code).set_name(name);
+        let func: mlua::Function = chunk.into_function()?;
+        func.call::<()>((addon_name.to_string(), addon_table))?;
+        Ok(())
+    }
+
+    /// Create a new empty table for addon private storage.
+    pub fn create_addon_table(&self) -> Result<mlua::Table> {
+        let table = self.lua.create_table()?;
+        Ok(table)
+    }
+
     /// Execute Lua code and return the result.
     pub fn eval<T: mlua::FromLuaMulti>(&self, code: &str) -> Result<T> {
         let result = self.lua.load(code).eval()?;

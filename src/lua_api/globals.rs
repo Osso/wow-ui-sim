@@ -72,6 +72,130 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("CreateFrame", create_frame)?;
 
+    // CreateTexturePool(parent, layer, subLayer, textureTemplate, resetterFunc)
+    // Creates a pool for managing reusable textures
+    let create_texture_pool_state = Rc::clone(&state);
+    let create_texture_pool = lua.create_function(move |lua, args: mlua::MultiValue| {
+        let _state = create_texture_pool_state.borrow();
+        let _args: Vec<Value> = args.into_iter().collect();
+        // Create a simple pool table with Acquire/Release methods
+        let pool = lua.create_table()?;
+        let pool_storage = lua.create_table()?;
+        pool.set("__storage", pool_storage)?;
+        pool.set("__active", lua.create_table()?)?;
+        pool.set(
+            "Acquire",
+            lua.create_function(|lua, this: mlua::Table| {
+                // Return a new texture-like table
+                let texture = lua.create_table()?;
+                texture.set("SetTexture", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                texture.set("SetTexCoord", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                texture.set("SetVertexColor", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                texture.set("SetBlendMode", lua.create_function(|_, _: String| Ok(()))?)?;
+                texture.set("SetDrawLayer", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                texture.set("SetAllPoints", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                texture.set("SetPoint", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                texture.set("ClearAllPoints", lua.create_function(|_, ()| Ok(()))?)?;
+                texture.set("SetAlpha", lua.create_function(|_, _: f64| Ok(()))?)?;
+                texture.set("SetSize", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                texture.set("Show", lua.create_function(|_, ()| Ok(()))?)?;
+                texture.set("Hide", lua.create_function(|_, ()| Ok(()))?)?;
+                texture.set("SetParent", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                // Track in active list
+                let active: mlua::Table = this.get("__active")?;
+                active.set(active.raw_len() + 1, texture.clone())?;
+                Ok(texture)
+            })?,
+        )?;
+        pool.set(
+            "Release",
+            lua.create_function(|_, (_this, _texture): (mlua::Table, mlua::Table)| Ok(()))?,
+        )?;
+        pool.set(
+            "ReleaseAll",
+            lua.create_function(|_, _this: mlua::Table| Ok(()))?,
+        )?;
+        Ok(pool)
+    })?;
+    globals.set("CreateTexturePool", create_texture_pool)?;
+
+    // CreateFramePool(frameType, parent, template, resetterFunc, forbidden)
+    // Creates a pool for managing reusable frames
+    let create_frame_pool_state = Rc::clone(&state);
+    let create_frame_pool = lua.create_function(move |lua, args: mlua::MultiValue| {
+        let _state = create_frame_pool_state.borrow();
+        let _args: Vec<Value> = args.into_iter().collect();
+        let pool = lua.create_table()?;
+        pool.set("__active", lua.create_table()?)?;
+        pool.set(
+            "Acquire",
+            lua.create_function(|lua, this: mlua::Table| {
+                // Create a simple frame table
+                let frame = lua.create_table()?;
+                frame.set("Show", lua.create_function(|_, ()| Ok(()))?)?;
+                frame.set("Hide", lua.create_function(|_, ()| Ok(()))?)?;
+                frame.set("SetPoint", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                frame.set("ClearAllPoints", lua.create_function(|_, ()| Ok(()))?)?;
+                frame.set("SetParent", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+                let active: mlua::Table = this.get("__active")?;
+                active.set(active.raw_len() + 1, frame.clone())?;
+                Ok(frame)
+            })?,
+        )?;
+        pool.set(
+            "Release",
+            lua.create_function(|_, (_this, _frame): (mlua::Table, mlua::Table)| Ok(()))?,
+        )?;
+        pool.set(
+            "ReleaseAll",
+            lua.create_function(|_, _this: mlua::Table| Ok(()))?,
+        )?;
+        Ok(pool)
+    })?;
+    globals.set("CreateFramePool", create_frame_pool)?;
+
+    // CreateObjectPool(creatorFunc, resetterFunc) - generic object pool
+    let create_object_pool = lua.create_function(|lua, (creator_func, _resetter_func): (mlua::Function, Option<mlua::Function>)| {
+        let pool = lua.create_table()?;
+        pool.set("__creator", creator_func.clone())?;
+        pool.set("__active", lua.create_table()?)?;
+        pool.set("__inactive", lua.create_table()?)?;
+        pool.set(
+            "Acquire",
+            lua.create_function(|_lua, this: mlua::Table| {
+                let creator: mlua::Function = this.get("__creator")?;
+                let obj = creator.call::<Value>(())?;
+                let active: mlua::Table = this.get("__active")?;
+                active.set(active.raw_len() + 1, obj.clone())?;
+                Ok((obj, true)) // Return object and isNew flag
+            })?,
+        )?;
+        pool.set(
+            "Release",
+            lua.create_function(|_, (_this, _obj): (mlua::Table, Value)| Ok(()))?,
+        )?;
+        pool.set(
+            "ReleaseAll",
+            lua.create_function(|_, _this: mlua::Table| Ok(()))?,
+        )?;
+        pool.set(
+            "GetNumActive",
+            lua.create_function(|_, this: mlua::Table| {
+                let active: mlua::Table = this.get("__active")?;
+                Ok(active.raw_len())
+            })?,
+        )?;
+        pool.set(
+            "EnumerateActive",
+            lua.create_function(|lua, _this: mlua::Table| {
+                // Return an iterator function (simple stub)
+                lua.create_function(|_, ()| Ok(Value::Nil))
+            })?,
+        )?;
+        Ok(pool)
+    })?;
+    globals.set("CreateObjectPool", create_object_pool)?;
+
     // UIParent reference
     let ui_parent_id = {
         let state = state.borrow();
@@ -105,6 +229,20 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         lua.create_function(|_, _addon: String| Ok(()))?,
     )?;
     globals.set("AddonCompartmentFrame", addon_compartment)?;
+
+    // StaticPopupDialogs - table for popup dialog definitions
+    let static_popup_dialogs = lua.create_table()?;
+    globals.set("StaticPopupDialogs", static_popup_dialogs)?;
+
+    // StaticPopup_Show(name, text1, text2, ...) - show a static popup
+    globals.set(
+        "StaticPopup_Show",
+        lua.create_function(|_, _args: mlua::Variadic<Value>| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "StaticPopup_Hide",
+        lua.create_function(|_, _name: String| Ok(()))?,
+    )?;
 
     // print() - already exists in Lua but we can customize if needed
 
@@ -189,6 +327,17 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         table_remove.call::<Value>(args)
     })?;
     globals.set("tremove", tremove)?;
+
+    // tInvert - invert table (swap keys and values)
+    let tinvert = lua.create_function(|lua, tbl: mlua::Table| {
+        let result = lua.create_table()?;
+        for pair in tbl.pairs::<Value, Value>() {
+            let (k, v) = pair?;
+            result.set(v, k)?;
+        }
+        Ok(result)
+    })?;
+    globals.set("tInvert", tinvert)?;
 
     // hooksecurefunc(name, hook) or hooksecurefunc(table, name, hook)
     let hooksecurefunc = lua.create_function(|lua, args: mlua::MultiValue| {
@@ -532,6 +681,44 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("UnitName", unit_name)?;
 
+    // UnitNameUnmodified(unit) - Return raw name (used for BattleTag lookups)
+    let unit_name_unmodified = lua.create_function(|lua, unit: String| {
+        let name = match unit.as_str() {
+            "player" => "SimPlayer",
+            _ => "SimUnit",
+        };
+        // Return: name, realm (realm is nil for same-realm units)
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string(name)?),
+            Value::Nil,
+        ]))
+    })?;
+    globals.set("UnitNameUnmodified", unit_name_unmodified)?;
+
+    // UnitFullName(unit) - Return name with realm
+    let unit_full_name = lua.create_function(|lua, unit: String| {
+        let name = match unit.as_str() {
+            "player" => "SimPlayer",
+            _ => "SimUnit",
+        };
+        // Return: name, realm
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string(name)?),
+            Value::String(lua.create_string("SimRealm")?),
+        ]))
+    })?;
+    globals.set("UnitFullName", unit_full_name)?;
+
+    // GetUnitName(unit, showServerName) - alias for UnitName with server name option
+    let get_unit_name = lua.create_function(|lua, (unit, _show_server): (String, Option<bool>)| {
+        let name = match unit.as_str() {
+            "player" => "SimPlayer",
+            _ => "SimUnit",
+        };
+        Ok(Value::String(lua.create_string(name)?))
+    })?;
+    globals.set("GetUnitName", get_unit_name)?;
+
     // UnitGUID(unit) - Return unit GUID
     let unit_guid = lua.create_function(|lua, unit: String| {
         let guid = match unit.as_str() {
@@ -562,6 +749,9 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("UnitFactionGroup", unit_faction_group)?;
 
+    // IsLoggedIn() - Check if player is logged in (always true in sim)
+    globals.set("IsLoggedIn", lua.create_function(|_, ()| Ok(false))?)?;
+
     // GetCurrentRegion() - Return region ID
     let get_current_region = lua.create_function(|_, ()| {
         // 1=US, 2=Korea, 3=Europe, 4=Taiwan, 5=China
@@ -588,12 +778,176 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("GetBuildInfo", get_build_info)?;
 
+    // GetDifficultyInfo(difficultyID) - Return difficulty info
+    globals.set(
+        "GetDifficultyInfo",
+        lua.create_function(|lua, difficulty_id: i32| {
+            // Return: name, groupType, isHeroic, isChallengeMode, displayHeroic, displayMythic, toggleDifficultyID
+            let (name, group_type, is_heroic, is_mythic) = match difficulty_id {
+                1 => ("Normal", "party", false, false),
+                2 => ("Heroic", "party", true, false),
+                3 => ("Normal", "raid", false, false),
+                4 => ("Normal", "raid", false, false),
+                5 => ("Heroic", "raid", true, false),
+                6 => ("Heroic", "raid", true, false),
+                7 => ("Legacy LFR", "raid", false, false),
+                8 => ("Mythic Keystone", "party", false, true),
+                9 => ("Legacy 40-player", "raid", false, false),
+                14 => ("Normal", "raid", false, false),
+                15 => ("Heroic", "raid", true, false),
+                16 => ("Mythic", "raid", false, true),
+                17 => ("LFR", "raid", false, false),
+                23 => ("Mythic", "party", false, true),
+                _ => ("Unknown", "none", false, false),
+            };
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::String(lua.create_string(name)?),
+                Value::String(lua.create_string(group_type)?),
+                Value::Boolean(is_heroic),
+                Value::Boolean(false), // isChallengeMode
+                Value::Boolean(is_heroic),
+                Value::Boolean(is_mythic),
+                Value::Nil, // toggleDifficultyID
+            ]))
+        })?,
+    )?;
+
+    // GetNumShapeshiftForms() - Return number of shapeshift forms
+    globals.set(
+        "GetNumShapeshiftForms",
+        lua.create_function(|_, ()| Ok(0))?,
+    )?;
+
+    // GetShapeshiftFormInfo(index) - Return shapeshift form info
+    globals.set(
+        "GetShapeshiftFormInfo",
+        lua.create_function(|_, _index: i32| {
+            // Return: texture, name, isActive, isCastable
+            Ok(Value::Nil)
+        })?,
+    )?;
+
     // GetPhysicalScreenSize() - Return physical screen dimensions
     let get_physical_screen_size = lua.create_function(|_, ()| {
         // Return simulated 1920x1080 screen
         Ok((1920, 1080))
     })?;
     globals.set("GetPhysicalScreenSize", get_physical_screen_size)?;
+
+    // GetScreenWidth() - Return screen width in UI units
+    globals.set(
+        "GetScreenWidth",
+        lua.create_function(|_, ()| Ok(1920.0))?,
+    )?;
+
+    // GetScreenHeight() - Return screen height in UI units
+    globals.set(
+        "GetScreenHeight",
+        lua.create_function(|_, ()| Ok(1080.0))?,
+    )?;
+
+    // UnitAttackSpeed(unit) - Return attack speed info
+    globals.set(
+        "UnitAttackSpeed",
+        lua.create_function(|_, _unit: String| {
+            // Return: mainHandSpeed, offHandSpeed
+            Ok((2.0, Value::Nil))
+        })?,
+    )?;
+
+    // GetTexCoordsByGrid(row, col, rows, cols) - Calculate texture coordinates for grid
+    globals.set(
+        "GetTexCoordsByGrid",
+        lua.create_function(|_, (col, row, grid_cols, grid_rows): (i32, i32, Option<i32>, Option<i32>)| {
+            let cols = grid_cols.unwrap_or(1);
+            let rows = grid_rows.unwrap_or(1);
+            if cols == 0 || rows == 0 {
+                return Ok((0.0, 1.0, 0.0, 1.0));
+            }
+            let cell_width = 1.0 / cols as f64;
+            let cell_height = 1.0 / rows as f64;
+            let left = (col - 1) as f64 * cell_width;
+            let right = col as f64 * cell_width;
+            let top = (row - 1) as f64 * cell_height;
+            let bottom = row as f64 * cell_height;
+            Ok((left, right, top, bottom))
+        })?,
+    )?;
+
+    // IsAddonMessagePrefixRegistered(prefix) - Check if addon message prefix is registered
+    globals.set(
+        "IsAddonMessagePrefixRegistered",
+        lua.create_function(|_, _prefix: String| Ok(false))?,
+    )?;
+
+    // RegisterAddonMessagePrefix(prefix) - Register addon message prefix
+    globals.set(
+        "RegisterAddonMessagePrefix",
+        lua.create_function(|_, _prefix: String| Ok(true))?,
+    )?;
+
+    // CreateTextureMarkup(file, fileWidth, fileHeight, width, height, left, right, top, bottom) - create texture markup string
+    globals.set(
+        "CreateTextureMarkup",
+        lua.create_function(
+            |lua, (file, _file_width, _file_height, width, height, _left, _right, _top, _bottom): (
+                String,
+                Option<i32>,
+                Option<i32>,
+                Option<i32>,
+                Option<i32>,
+                Option<f64>,
+                Option<f64>,
+                Option<f64>,
+                Option<f64>,
+            )| {
+                let w = width.unwrap_or(0);
+                let h = height.unwrap_or(0);
+                let markup = format!("|T{}:{}:{}|t", file, h, w);
+                Ok(Value::String(lua.create_string(&markup)?))
+            },
+        )?,
+    )?;
+
+    // CreateAtlasMarkup(atlas, width, height, offsetX, offsetY) - create atlas texture markup string
+    globals.set(
+        "CreateAtlasMarkup",
+        lua.create_function(
+            |lua, (atlas, width, height, _offset_x, _offset_y): (
+                String,
+                Option<i32>,
+                Option<i32>,
+                Option<i32>,
+                Option<i32>,
+            )| {
+                let w = width.unwrap_or(0);
+                let h = height.unwrap_or(0);
+                let markup = format!("|A:{}:{}:{}|a", atlas, h, w);
+                Ok(Value::String(lua.create_string(&markup)?))
+            },
+        )?,
+    )?;
+
+    // GetInventoryItemTexture(unit, slot) - get texture ID for equipped item
+    globals.set(
+        "GetInventoryItemTexture",
+        lua.create_function(|_, (_unit, _slot): (String, i32)| {
+            // Return nil - no items equipped in simulation
+            Ok(Value::Nil)
+        })?,
+    )?;
+
+    // GetInventoryItemID(unit, slot) - get item ID for equipped item
+    globals.set(
+        "GetInventoryItemID",
+        lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(Value::Nil))?,
+    )?;
+
+    // GetInventoryItemLink(unit, slot) - get item link for equipped item
+    globals.set(
+        "GetInventoryItemLink",
+        lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(Value::Nil))?,
+    )?;
 
     // UnitPlayerControlled(unit) - Check if unit is player controlled
     let unit_player_controlled = lua.create_function(|_, unit: String| {
@@ -871,6 +1225,30 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             return a % b
         end
 
+        -- Lua 5.2 compatibility: bit32 is an alias for bit with different names
+        bit32 = {
+            band = bit.band,
+            bor = bit.bor,
+            bxor = bit.bxor,
+            bnot = bit.bnot,
+            lshift = bit.lshift,
+            rshift = bit.rshift,
+            arshift = bit.arshift,
+            -- bit32-specific functions
+            extract = function(n, field, width)
+                width = width or 1
+                return bit.band(bit.rshift(n, field), (2 ^ width) - 1)
+            end,
+            replace = function(n, v, field, width)
+                width = width or 1
+                local mask = (2 ^ width) - 1
+                return bit.bor(bit.band(n, bit.bnot(bit.lshift(mask, field))), bit.lshift(bit.band(v, mask), field))
+            end,
+            btest = function(...)
+                return bit.band(...) ~= 0
+            end,
+        }
+
         -- Mixin system (WoW C++ intrinsics)
         function Mixin(object, ...)
             for i = 1, select("#", ...) do
@@ -956,6 +1334,69 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             return os.time()
         end
 
+        -- SecondsFormatter class - formats seconds into time strings
+        SecondsFormatter = {}
+        SecondsFormatter.__index = SecondsFormatter
+
+        -- Constants
+        SecondsFormatter.Abbreviation = {
+            None = 0,
+            Truncate = 1,
+            OneLetter = 2,
+        }
+
+        -- Interval descriptions (used by WoW for time formatting)
+        SecondsFormatter.IntervalDescription = {
+            { seconds = 86400, formatString = { "%d Day", "%d Days", "d" } },
+            { seconds = 3600, formatString = { "%d Hour", "%d Hours", "h" } },
+            { seconds = 60, formatString = { "%d Min", "%d Mins", "m" } },
+            { seconds = 1, formatString = { "%d Sec", "%d Secs", "s" } },
+        }
+
+        function SecondsFormatter:Init(interval, abbreviation, roundUpLastUnit, convertToLower)
+            self.interval = interval or 0
+            self.abbreviation = abbreviation or SecondsFormatter.Abbreviation.None
+            self.roundUpLastUnit = roundUpLastUnit or false
+            self.convertToLower = convertToLower or false
+        end
+
+        function SecondsFormatter:SetDesiredUnitCount(count)
+            self.desiredUnitCount = count
+        end
+
+        function SecondsFormatter:SetStripIntervalWhitespace(strip)
+            self.stripIntervalWhitespace = strip
+        end
+
+        function SecondsFormatter:Format(seconds)
+            if not seconds or seconds < 0 then
+                return ""
+            end
+            local days = math.floor(seconds / 86400)
+            local hours = math.floor((seconds % 86400) / 3600)
+            local minutes = math.floor((seconds % 3600) / 60)
+            local secs = math.floor(seconds % 60)
+
+            if days > 0 then
+                return string.format("%d d %02d h", days, hours)
+            elseif hours > 0 then
+                return string.format("%d h %02d m", hours, minutes)
+            elseif minutes > 0 then
+                return string.format("%d m %02d s", minutes, secs)
+            else
+                return string.format("%d s", secs)
+            end
+        end
+
+        function CreateSecondsFormatter(interval, abbreviation, roundUpLastUnit, convertToLower)
+            local formatter = setmetatable({}, SecondsFormatter)
+            formatter:Init(interval, abbreviation, roundUpLastUnit, convertToLower)
+            return formatter
+        end
+
+        -- SecondsFormatterMixin alias (some code uses this)
+        SecondsFormatterMixin = SecondsFormatter
+
         function time()
             return os.time()
         end
@@ -966,6 +1407,48 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
         function difftime(t2, t1)
             return os.difftime(t2, t1)
+        end
+
+        -- CopyTable - deep copy a table
+        function CopyTable(settings, shallow)
+            if type(settings) ~= "table" then
+                return settings
+            end
+            local copy = {}
+            for k, v in pairs(settings) do
+                if type(v) == "table" and not shallow then
+                    copy[k] = CopyTable(v, shallow)
+                else
+                    copy[k] = v
+                end
+            end
+            return copy
+        end
+
+        -- MergeTable - merge source into destination
+        function MergeTable(destination, source)
+            for k, v in pairs(source) do
+                destination[k] = v
+            end
+            return destination
+        end
+
+        -- ChatFrame message filter (store filters but don't actually filter in simulation)
+        __chatFilters = {}
+        function ChatFrame_AddMessageEventFilter(event, filter)
+            __chatFilters[event] = __chatFilters[event] or {}
+            table.insert(__chatFilters[event], filter)
+        end
+
+        function ChatFrame_RemoveMessageEventFilter(event, filter)
+            if __chatFilters[event] then
+                for i, f in ipairs(__chatFilters[event]) do
+                    if f == filter then
+                        table.remove(__chatFilters[event], i)
+                        break
+                    end
+                end
+            end
         end
     "##).exec()?;
 
@@ -1004,16 +1487,26 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
     // C_ChatInfo namespace
     let c_chat_info = lua.create_table()?;
-    let register_prefix = lua.create_function(|_, _prefix: String| {
-        // In simulation, just accept the prefix without doing anything
-        Ok(true)
-    })?;
-    c_chat_info.set("RegisterAddonMessagePrefix", register_prefix)?;
-    let send_addon_message = lua.create_function(|_, (_prefix, _message, _channel, _target): (String, String, Option<String>, Option<String>)| {
-        // Stub - messages don't go anywhere in simulation
-        Ok(())
-    })?;
-    c_chat_info.set("SendAddonMessage", send_addon_message)?;
+    c_chat_info.set(
+        "RegisterAddonMessagePrefix",
+        lua.create_function(|_, _prefix: String| Ok(true))?,
+    )?;
+    c_chat_info.set(
+        "IsAddonMessagePrefixRegistered",
+        lua.create_function(|_, _prefix: String| Ok(false))?,
+    )?;
+    c_chat_info.set(
+        "SendAddonMessage",
+        lua.create_function(
+            |_, (_prefix, _message, _channel, _target): (String, String, Option<String>, Option<String>)| {
+                Ok(())
+            },
+        )?,
+    )?;
+    c_chat_info.set(
+        "GetRegisteredAddonMessagePrefixes",
+        lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
     globals.set("C_ChatInfo", c_chat_info)?;
 
     // Legacy global version
@@ -1108,7 +1601,90 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         "GetOverrideSpell",
         lua.create_function(|_, spell_id: i32| Ok(spell_id))?,
     )?;
+    c_spell.set(
+        "GetSchoolString",
+        lua.create_function(|lua, school_mask: i32| {
+            // WoW spell school bitmask to name
+            let name = match school_mask {
+                1 => "Physical",
+                2 => "Holy",
+                4 => "Fire",
+                8 => "Nature",
+                16 => "Frost",
+                32 => "Shadow",
+                64 => "Arcane",
+                _ => "Unknown",
+            };
+            Ok(Value::String(lua.create_string(name)?))
+        })?,
+    )?;
     globals.set("C_Spell", c_spell)?;
+
+    // C_Traits namespace - talent/loadout system (Dragonflight+)
+    let c_traits = lua.create_table()?;
+    c_traits.set(
+        "GenerateImportString",
+        lua.create_function(|_, _config_id: i32| {
+            // Return a dummy talent string
+            Ok("dummy_talent_string".to_string())
+        })?,
+    )?;
+    c_traits.set(
+        "GetConfigIDBySystemID",
+        lua.create_function(|_, _system_id: i32| Ok(0))?,
+    )?;
+    c_traits.set(
+        "GetConfigIDByTreeID",
+        lua.create_function(|_, _tree_id: i32| Ok(0))?,
+    )?;
+    c_traits.set(
+        "GetConfigInfo",
+        lua.create_function(|_, _config_id: i32| Ok(Value::Nil))?,
+    )?;
+    c_traits.set(
+        "GetNodeInfo",
+        lua.create_function(|_, (_config_id, _node_id): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+    c_traits.set(
+        "GetEntryInfo",
+        lua.create_function(|_, (_config_id, _entry_id): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+    c_traits.set(
+        "GetDefinitionInfo",
+        lua.create_function(|_, _def_id: i32| Ok(Value::Nil))?,
+    )?;
+    globals.set("C_Traits", c_traits)?;
+
+    // C_ClassTalents namespace - class talent functions
+    let c_class_talents = lua.create_table()?;
+    c_class_talents.set(
+        "GetActiveConfigID",
+        lua.create_function(|_, ()| Ok(0))?,
+    )?;
+    c_class_talents.set(
+        "GetConfigIDsBySpecID",
+        lua.create_function(|lua, _spec_id: i32| {
+            // Return empty table
+            lua.create_table()
+        })?,
+    )?;
+    c_class_talents.set(
+        "GetStarterBuildActive",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    c_class_talents.set(
+        "GetHasStarterBuild",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    c_class_talents.set(
+        "GetTraitTreeForSpec",
+        lua.create_function(|_, _spec_id: i32| Ok(0))?,
+    )?;
+    c_class_talents.set(
+        "UpdateLastSelectedSavedConfigID",
+        lua.create_function(|_, (_spec_id, _config_id): (i32, i32)| Ok(()))?,
+    )?;
+    globals.set("C_ClassTalents", c_class_talents)?;
 
     // Legacy global spell functions
     globals.set(
@@ -1161,6 +1737,42 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         "GetItemIconByID",
         lua.create_function(|_, _item_id: i32| Ok(Value::Nil))?,
     )?;
+    c_item.set(
+        "GetItemSubClassInfo",
+        lua.create_function(|lua, (class_id, subclass_id): (i32, i32)| {
+            // Return item subclass name based on class/subclass IDs
+            let name = match (class_id, subclass_id) {
+                // Weapons (class 2)
+                (2, 0) => "One-Handed Axes",
+                (2, 1) => "Two-Handed Axes",
+                (2, 2) => "Bows",
+                (2, 3) => "Guns",
+                (2, 4) => "One-Handed Maces",
+                (2, 5) => "Two-Handed Maces",
+                (2, 6) => "Polearms",
+                (2, 7) => "One-Handed Swords",
+                (2, 8) => "Two-Handed Swords",
+                (2, 9) => "Warglaives",
+                (2, 10) => "Staves",
+                (2, 13) => "Fist Weapons",
+                (2, 14) => "Miscellaneous",
+                (2, 15) => "Daggers",
+                (2, 16) => "Thrown",
+                (2, 18) => "Crossbows",
+                (2, 19) => "Wands",
+                (2, 20) => "Fishing Poles",
+                // Armor (class 4)
+                (4, 0) => "Miscellaneous",
+                (4, 1) => "Cloth",
+                (4, 2) => "Leather",
+                (4, 3) => "Mail",
+                (4, 4) => "Plate",
+                (4, 6) => "Shield",
+                _ => "Unknown",
+            };
+            Ok(Value::String(lua.create_string(name)?))
+        })?,
+    )?;
     globals.set("C_Item", c_item)?;
 
     // Legacy global GetItemInfo
@@ -1204,6 +1816,55 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     globals.set(
         "GetContainerItemLink",
         lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+
+    // Inventory slot functions
+    globals.set(
+        "GetInventorySlotInfo",
+        lua.create_function(|_, slot_name: String| {
+            // Return slot ID for known slot names
+            let slot_id = match slot_name.as_str() {
+                "HeadSlot" => 1,
+                "NeckSlot" => 2,
+                "ShoulderSlot" => 3,
+                "BackSlot" => 15,
+                "ChestSlot" => 5,
+                "ShirtSlot" => 4,
+                "TabardSlot" => 19,
+                "WristSlot" => 9,
+                "HandsSlot" => 10,
+                "WaistSlot" => 6,
+                "LegsSlot" => 7,
+                "FeetSlot" => 8,
+                "Finger0Slot" => 11,
+                "Finger1Slot" => 12,
+                "Trinket0Slot" => 13,
+                "Trinket1Slot" => 14,
+                "MainHandSlot" => 16,
+                "SecondaryHandSlot" => 17,
+                "RangedSlot" => 18,
+                "AmmoSlot" => 0,
+                _ => 0,
+            };
+            Ok(slot_id)
+        })?,
+    )?;
+
+    // Pet action functions
+    globals.set(
+        "GetPetActionInfo",
+        lua.create_function(|_, _slot: i32| {
+            // Return: name, texture, isToken, isActive, autoCastAllowed, autoCastEnabled, spellID, checksRange, inRange
+            // Return nil for no action in slot
+            Ok(Value::Nil)
+        })?,
+    )?;
+    globals.set(
+        "GetPetActionCooldown",
+        lua.create_function(|_, _slot: i32| {
+            // Return: start, duration, enable
+            Ok((0.0, 0.0, 0))
+        })?,
     )?;
 
     // Legacy global CVar functions
@@ -1282,7 +1943,14 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     )?;
     c_addons.set(
         "IsAddOnLoaded",
-        lua.create_function(|_, _addon: String| Ok(true))?,
+        lua.create_function(|_, addon: String| {
+            // Return true only for addons we actually load in the simulator
+            // Return false for optional addons like CustomNames that aren't loaded
+            Ok(matches!(
+                addon.as_str(),
+                "WeakAuras" | "Ace3" | "LibStub" | "CallbackHandler-1.0"
+            ))
+        })?,
     )?;
     c_addons.set(
         "IsAddOnLoadable",
@@ -1297,6 +1965,235 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         lua.create_function(|_, _addon: String| Ok(true))?,
     )?;
     globals.set("C_AddOns", c_addons)?;
+
+    // C_Reputation namespace - faction reputation system
+    let c_reputation = lua.create_table()?;
+    c_reputation.set(
+        "GetFactionDataByID",
+        lua.create_function(|_, _faction_id: i32| Ok(Value::Nil))?,
+    )?;
+    c_reputation.set(
+        "IsFactionParagon",
+        lua.create_function(|_, _faction_id: i32| Ok(false))?,
+    )?;
+    c_reputation.set(
+        "GetFactionParagonInfo",
+        lua.create_function(|_, _faction_id: i32| Ok(Value::Nil))?,
+    )?;
+    c_reputation.set(
+        "GetNumFactions",
+        lua.create_function(|_, ()| Ok(0))?,
+    )?;
+    c_reputation.set(
+        "GetFactionInfo",
+        lua.create_function(|_, _index: i32| Ok(Value::Nil))?,
+    )?;
+    c_reputation.set(
+        "GetWatchedFactionData",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    c_reputation.set(
+        "SetWatchedFactionByID",
+        lua.create_function(|_, _faction_id: i32| Ok(()))?,
+    )?;
+    globals.set("C_Reputation", c_reputation)?;
+
+    // C_Texture namespace - texture handling
+    let c_texture = lua.create_table()?;
+    c_texture.set(
+        "GetAtlasInfo",
+        lua.create_function(|lua, _atlas_name: String| {
+            // Return atlas info table (or nil if not found)
+            // Fields: width, height, leftTexCoord, rightTexCoord, topTexCoord, bottomTexCoord, file
+            let info = lua.create_table()?;
+            info.set("width", 64)?;
+            info.set("height", 64)?;
+            info.set("leftTexCoord", 0.0)?;
+            info.set("rightTexCoord", 1.0)?;
+            info.set("topTexCoord", 0.0)?;
+            info.set("bottomTexCoord", 1.0)?;
+            info.set("file", "")?;
+            Ok(Value::Table(info))
+        })?,
+    )?;
+    c_texture.set(
+        "GetFilenameFromFileDataID",
+        lua.create_function(|_, _file_data_id: i32| Ok(Value::Nil))?,
+    )?;
+    globals.set("C_Texture", c_texture)?;
+
+    // C_CreatureInfo namespace - NPC/creature information
+    let c_creature_info = lua.create_table()?;
+    c_creature_info.set(
+        "GetClassInfo",
+        lua.create_function(|lua, class_id: i32| {
+            // Return class info table
+            let info = lua.create_table()?;
+            let class_name = match class_id {
+                1 => "WARRIOR",
+                2 => "PALADIN",
+                3 => "HUNTER",
+                4 => "ROGUE",
+                5 => "PRIEST",
+                6 => "DEATHKNIGHT",
+                7 => "SHAMAN",
+                8 => "MAGE",
+                9 => "WARLOCK",
+                10 => "MONK",
+                11 => "DRUID",
+                12 => "DEMONHUNTER",
+                13 => "EVOKER",
+                _ => "UNKNOWN",
+            };
+            info.set("className", class_name)?;
+            info.set("classFile", class_name)?;
+            info.set("classID", class_id)?;
+            Ok(Value::Table(info))
+        })?,
+    )?;
+    c_creature_info.set(
+        "GetRaceInfo",
+        lua.create_function(|lua, race_id: i32| {
+            let info = lua.create_table()?;
+            // WoW race data: (name, clientFileString)
+            let (race_name, client_file) = match race_id {
+                1 => ("Human", "Human"),
+                2 => ("Orc", "Orc"),
+                3 => ("Dwarf", "Dwarf"),
+                4 => ("Night Elf", "NightElf"),
+                5 => ("Undead", "Scourge"),
+                6 => ("Tauren", "Tauren"),
+                7 => ("Gnome", "Gnome"),
+                8 => ("Troll", "Troll"),
+                9 => ("Goblin", "Goblin"),
+                10 => ("Blood Elf", "BloodElf"),
+                11 => ("Draenei", "Draenei"),
+                22 => ("Worgen", "Worgen"),
+                24 => ("Pandaren", "Pandaren"),
+                25 => ("Pandaren", "Pandaren"),
+                26 => ("Pandaren", "Pandaren"),
+                27 => ("Nightborne", "Nightborne"),
+                28 => ("Highmountain Tauren", "HighmountainTauren"),
+                29 => ("Void Elf", "VoidElf"),
+                30 => ("Lightforged Draenei", "LightforgedDraenei"),
+                31 => ("Zandalari Troll", "ZandalariTroll"),
+                32 => ("Kul Tiran", "KulTiran"),
+                34 => ("Dark Iron Dwarf", "DarkIronDwarf"),
+                35 => ("Vulpera", "Vulpera"),
+                36 => ("Mag'har Orc", "MagharOrc"),
+                37 => ("Mechagnome", "Mechagnome"),
+                52 | 70 => ("Dracthyr", "Dracthyr"),
+                84 | 85 => ("Earthen", "Earthen"),
+                _ => ("Unknown", "Unknown"),
+            };
+            info.set("raceName", race_name)?;
+            info.set("raceID", race_id)?;
+            info.set("clientFileString", client_file)?;
+            Ok(Value::Table(info))
+        })?,
+    )?;
+    c_creature_info.set(
+        "GetCreatureTypeIDs",
+        lua.create_function(|lua, ()| {
+            // WoW creature types: Beast, Dragonkin, Demon, Elemental, Giant, Undead, Humanoid, Critter, Mechanical, etc.
+            let ids = lua.create_table()?;
+            for (i, id) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].iter().enumerate() {
+                ids.set(i + 1, *id)?;
+            }
+            Ok(ids)
+        })?,
+    )?;
+    c_creature_info.set(
+        "GetCreatureTypeInfo",
+        lua.create_function(|lua, creature_type_id: i32| {
+            let info = lua.create_table()?;
+            let name = match creature_type_id {
+                1 => "Beast",
+                2 => "Dragonkin",
+                3 => "Demon",
+                4 => "Elemental",
+                5 => "Giant",
+                6 => "Undead",
+                7 => "Humanoid",
+                8 => "Critter",
+                9 => "Mechanical",
+                10 => "Not specified",
+                _ => "Unknown",
+            };
+            info.set("name", name)?;
+            info.set("creatureTypeID", creature_type_id)?;
+            Ok(Value::Table(info))
+        })?,
+    )?;
+    c_creature_info.set(
+        "GetCreatureFamilyIDs",
+        lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
+    c_creature_info.set(
+        "GetCreatureFamilyInfo",
+        lua.create_function(|_, _family_id: i32| Ok(Value::Nil))?,
+    )?;
+    globals.set("C_CreatureInfo", c_creature_info)?;
+
+    // C_Covenants namespace - Shadowlands covenant system
+    let c_covenants = lua.create_table()?;
+    c_covenants.set(
+        "GetCovenantData",
+        lua.create_function(|lua, covenant_id: i32| {
+            let data = lua.create_table()?;
+            let name = match covenant_id {
+                1 => "Kyrian",
+                2 => "Venthyr",
+                3 => "Night Fae",
+                4 => "Necrolord",
+                _ => "None",
+            };
+            data.set("ID", covenant_id)?;
+            data.set("name", name)?;
+            data.set("textureKit", "")?;
+            Ok(Value::Table(data))
+        })?,
+    )?;
+    c_covenants.set(
+        "GetActiveCovenantID",
+        lua.create_function(|_, ()| Ok(0))?,
+    )?;
+    c_covenants.set(
+        "GetCovenantIDs",
+        lua.create_function(|lua, ()| {
+            let ids = lua.create_table()?;
+            ids.set(1, 1)?;
+            ids.set(2, 2)?;
+            ids.set(3, 3)?;
+            ids.set(4, 4)?;
+            Ok(ids)
+        })?,
+    )?;
+    globals.set("C_Covenants", c_covenants)?;
+
+    // C_CurrencyInfo namespace - currency information
+    let c_currency_info = lua.create_table()?;
+    c_currency_info.set(
+        "GetCurrencyInfo",
+        lua.create_function(|_, _currency_id: i32| Ok(Value::Nil))?,
+    )?;
+    c_currency_info.set(
+        "GetCurrencyInfoFromLink",
+        lua.create_function(|_, _link: String| Ok(Value::Nil))?,
+    )?;
+    c_currency_info.set(
+        "GetCurrencyListSize",
+        lua.create_function(|_, ()| Ok(0))?,
+    )?;
+    c_currency_info.set(
+        "GetCurrencyListInfo",
+        lua.create_function(|_, _index: i32| Ok(Value::Nil))?,
+    )?;
+    c_currency_info.set(
+        "GetWarResourcesCurrencyID",
+        lua.create_function(|_, ()| Ok(1560))?, // War Resources currency ID
+    )?;
+    globals.set("C_CurrencyInfo", c_currency_info)?;
 
     // Legacy addon functions
     globals.set(
@@ -1321,7 +2218,13 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     )?;
     globals.set(
         "IsAddOnLoaded",
-        lua.create_function(|_, _addon: Value| Ok(true))?,
+        lua.create_function(|_, addon: String| {
+            // Return true only for addons we actually load
+            Ok(matches!(
+                addon.as_str(),
+                "WeakAuras" | "Ace3" | "LibStub" | "CallbackHandler-1.0"
+            ))
+        })?,
     )?;
     globals.set(
         "LoadAddOn",
@@ -1357,6 +2260,15 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("CreateColor", create_color)?;
 
+    // WrapTextInColorCode(text, colorStr) - wrap text in color escape codes
+    globals.set(
+        "WrapTextInColorCode",
+        lua.create_function(|lua, (text, color_str): (String, String)| {
+            let wrapped = format!("|c{}{}|r", color_str, text);
+            Ok(Value::String(lua.create_string(&wrapped)?))
+        })?,
+    )?;
+
     // Faction color globals (now that CreateColor exists)
     lua.load(r#"
         PLAYER_FACTION_COLOR_HORDE = CreateColor(1.0, 0.1, 0.1)
@@ -1364,6 +2276,208 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         FACTION_HORDE = "Horde"
         FACTION_ALLIANCE = "Alliance"
     "#).exec()?;
+
+    // Error message strings used by addons
+    globals.set("ERR_CHAT_PLAYER_NOT_FOUND_S", "%s is not online")?;
+    globals.set("ERR_NOT_IN_COMBAT", "You can't do that while in combat")?;
+    globals.set("ERR_GENERIC_NO_TARGET", "You have no target")?;
+
+    // Game constants
+    globals.set("NUM_PET_ACTION_SLOTS", 10)?;
+    globals.set("NUM_ACTIONBAR_BUTTONS", 12)?;
+    globals.set("NUM_BAG_SLOTS", 5)?;
+    globals.set("MAX_SKILLLINE_TABS", 8)?;
+    globals.set("MAX_PLAYER_LEVEL", 80)?;
+    globals.set("MAX_NUM_TALENTS", 20)?;
+    globals.set("BOOKTYPE_SPELL", "spell")?;
+    globals.set("BOOKTYPE_PET", "pet")?;
+
+    // Raid target marker names
+    globals.set("RAID_TARGET_1", "Star")?;
+    globals.set("RAID_TARGET_2", "Circle")?;
+    globals.set("RAID_TARGET_3", "Diamond")?;
+    globals.set("RAID_TARGET_4", "Triangle")?;
+    globals.set("RAID_TARGET_5", "Moon")?;
+    globals.set("RAID_TARGET_6", "Square")?;
+    globals.set("RAID_TARGET_7", "Cross")?;
+    globals.set("RAID_TARGET_8", "Skull")?;
+
+    // UI strings
+    globals.set("SPECIALIZATION", "Specialization")?;
+    globals.set("TALENT", "Talent")?;
+    globals.set("NONE", "None")?;
+    globals.set("UNKNOWN", "Unknown")?;
+    globals.set("YES", "Yes")?;
+    globals.set("NO", "No")?;
+    globals.set("OKAY", "Okay")?;
+    globals.set("CANCEL", "Cancel")?;
+    globals.set("ACCEPT", "Accept")?;
+    globals.set("DECLINE", "Decline")?;
+    globals.set("ENABLE", "Enable")?;
+    globals.set("DISABLE", "Disable")?;
+    globals.set("BINDING_HEADER_RAID_TARGET", "Raid Target")?;
+    globals.set("BINDING_HEADER_ACTIONBAR", "Action Bar")?;
+    globals.set("BINDING_HEADER_MULTIACTIONBAR", "Multi-Action Bar")?;
+    globals.set("BINDING_HEADER_MOVEMENT", "Movement")?;
+    globals.set("BINDING_HEADER_CHAT", "Chat")?;
+    globals.set("BINDING_HEADER_TARGETING", "Targeting")?;
+    globals.set("BINDING_HEADER_INTERFACE", "Interface")?;
+    globals.set("BINDING_HEADER_MISC", "Miscellaneous")?;
+
+    // Role strings
+    globals.set("TANK", "Tank")?;
+    globals.set("HEALER", "Healer")?;
+    globals.set("DAMAGER", "Damage")?;
+    globals.set("COMBATLOG_FILTER_MELEE", "Melee")?;
+    globals.set("COMBATLOG_FILTER_RANGED", "Ranged")?;
+    globals.set("RANGED_ABILITY", "Ranged")?;
+    globals.set("MELEE", "Melee")?;
+
+    // Role icon markup strings
+    globals.set("INLINE_TANK_ICON", "|A:groupfinder-icon-role-large-tank:16:16:0:0|a")?;
+    globals.set("INLINE_HEALER_ICON", "|A:groupfinder-icon-role-large-healer:16:16:0:0|a")?;
+    globals.set("INLINE_DAMAGER_ICON", "|A:groupfinder-icon-role-large-dps:16:16:0:0|a")?;
+
+    // RAID_CLASS_COLORS - color table for each class
+    lua.load(
+        r##"
+        RAID_CLASS_COLORS = {
+            ["WARRIOR"] = { r = 0.78, g = 0.61, b = 0.43, colorStr = "ffc79c6e" },
+            ["PALADIN"] = { r = 0.96, g = 0.55, b = 0.73, colorStr = "fff58cba" },
+            ["HUNTER"] = { r = 0.67, g = 0.83, b = 0.45, colorStr = "ffabd473" },
+            ["ROGUE"] = { r = 1.00, g = 0.96, b = 0.41, colorStr = "fffff569" },
+            ["PRIEST"] = { r = 1.00, g = 1.00, b = 1.00, colorStr = "ffffffff" },
+            ["DEATHKNIGHT"] = { r = 0.77, g = 0.12, b = 0.23, colorStr = "ffc41f3b" },
+            ["SHAMAN"] = { r = 0.00, g = 0.44, b = 0.87, colorStr = "ff0070de" },
+            ["MAGE"] = { r = 0.41, g = 0.80, b = 0.94, colorStr = "ff69ccf0" },
+            ["WARLOCK"] = { r = 0.58, g = 0.51, b = 0.79, colorStr = "ff9482c9" },
+            ["MONK"] = { r = 0.00, g = 1.00, b = 0.59, colorStr = "ff00ff96" },
+            ["DRUID"] = { r = 1.00, g = 0.49, b = 0.04, colorStr = "ffff7d0a" },
+            ["DEMONHUNTER"] = { r = 0.64, g = 0.19, b = 0.79, colorStr = "ffa330c9" },
+            ["EVOKER"] = { r = 0.20, g = 0.58, b = 0.50, colorStr = "ff33937f" },
+        }
+        -- Add colorStr getter method to each color
+        for class, color in pairs(RAID_CLASS_COLORS) do
+            setmetatable(color, {
+                __index = {
+                    GenerateHexColor = function(self) return self.colorStr end,
+                    GenerateHexColorMarkup = function(self) return "|c" .. self.colorStr end,
+                    WrapTextInColorCode = function(self, text) return "|c" .. self.colorStr .. text .. "|r" end,
+                }
+            })
+        end
+    "##,
+    )
+    .exec()?;
+
+    // C_SpecializationInfo namespace
+    let c_spec_info = lua.create_table()?;
+    c_spec_info.set(
+        "GetSpellsDisplay",
+        lua.create_function(|lua, _spec_id: i32| lua.create_table())?,
+    )?;
+    c_spec_info.set(
+        "GetInspectSelectedSpecialization",
+        lua.create_function(|_, _unit: Option<String>| Ok(0))?,
+    )?;
+    c_spec_info.set(
+        "CanPlayerUseTalentSpecUI",
+        lua.create_function(|_, ()| Ok(true))?,
+    )?;
+    c_spec_info.set(
+        "IsInitialized",
+        lua.create_function(|_, ()| Ok(true))?,
+    )?;
+    globals.set("C_SpecializationInfo", c_spec_info)?;
+
+    // C_ChallengeMode namespace - Mythic+ dungeons
+    let c_challenge_mode = lua.create_table()?;
+    c_challenge_mode.set(
+        "GetMapUIInfo",
+        lua.create_function(|lua, _map_id: i32| {
+            // Return: name, id, timeLimit, texture, backgroundTexture
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::String(lua.create_string("Unknown Dungeon")?),
+                Value::Integer(0),
+                Value::Integer(0),
+                Value::Nil,
+                Value::Nil,
+            ]))
+        })?,
+    )?;
+    c_challenge_mode.set(
+        "GetMapTable",
+        lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
+    c_challenge_mode.set(
+        "GetActiveKeystoneInfo",
+        lua.create_function(|_, ()| {
+            // Return: activeKeystoneLevel, activeAffixIDs, wasActiveKeystoneCharged
+            Ok((0, Value::Nil, false))
+        })?,
+    )?;
+    c_challenge_mode.set(
+        "GetAffixInfo",
+        lua.create_function(|lua, _affix_id: i32| {
+            // Return: name, description, filedataid
+            Ok((
+                Value::String(lua.create_string("Unknown Affix")?),
+                Value::String(lua.create_string("")?),
+                Value::Integer(0),
+            ))
+        })?,
+    )?;
+    c_challenge_mode.set(
+        "IsChallengeModeActive",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    globals.set("C_ChallengeMode", c_challenge_mode)?;
+
+    // GetSpecializationInfoByID(specID) - Get spec info
+    globals.set(
+        "GetSpecializationInfoByID",
+        lua.create_function(|lua, spec_id: i32| {
+            // Return: specID, specName, description, icon, role, isRecommended, isAllowed
+            // Stub - return some default values
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::Integer(spec_id as i64),
+                Value::String(lua.create_string("Unknown Spec")?),
+                Value::String(lua.create_string("")?),
+                Value::Integer(0), // icon
+                Value::String(lua.create_string("DAMAGER")?),
+                Value::Boolean(false),
+                Value::Boolean(true),
+            ]))
+        })?,
+    )?;
+
+    // GetSpecialization() - Get current player spec index
+    globals.set(
+        "GetSpecialization",
+        lua.create_function(|_, ()| Ok(1))?,
+    )?;
+
+    // GetNumSpecializations() - Get number of specs for player class
+    globals.set(
+        "GetNumSpecializations",
+        lua.create_function(|_, ()| Ok(3))?,
+    )?;
+
+    // GetSpecializationInfo(specIndex) - Get spec info by index
+    globals.set(
+        "GetSpecializationInfo",
+        lua.create_function(|lua, _spec_index: i32| {
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::Integer(0), // specID
+                Value::String(lua.create_string("Unknown")?),
+                Value::String(lua.create_string("")?),
+                Value::Integer(0), // icon
+                Value::String(lua.create_string("DAMAGER")?),
+                Value::Boolean(false),
+                Value::Boolean(true),
+            ]))
+        })?,
+    )?;
 
     Ok(())
 }
@@ -1584,6 +2698,18 @@ impl UserData for FrameHandle {
             }
             Ok(())
         });
+
+        // RegisterUnitEvent(event, unit1, unit2, ...) - register for unit-specific events
+        methods.add_method(
+            "RegisterUnitEvent",
+            |_, this, (event, _units): (String, mlua::Variadic<String>)| {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.register_event(&event);
+                }
+                Ok(())
+            },
+        );
 
         // UnregisterEvent(event)
         methods.add_method("UnregisterEvent", |_, this, event: String| {

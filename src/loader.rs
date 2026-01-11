@@ -3,6 +3,7 @@
 use crate::lua_api::WowLuaEnv;
 use crate::toc::TocFile;
 use crate::xml::{parse_xml_file, XmlElement};
+use mlua::Table;
 use std::path::Path;
 
 /// Result of loading an addon.
@@ -16,6 +17,12 @@ pub struct LoadResult {
     pub xml_files: usize,
     /// Errors encountered (non-fatal)
     pub warnings: Vec<String>,
+}
+
+/// Context for loading addon files (name and private table).
+struct AddonContext<'a> {
+    name: &'a str,
+    table: Table,
 }
 
 /// Load an addon from its TOC file.
@@ -33,25 +40,28 @@ pub fn load_addon_from_toc(env: &WowLuaEnv, toc: &TocFile) -> Result<LoadResult,
         warnings: Vec::new(),
     };
 
+    // Create the shared private table for this addon (WoW passes this as second vararg)
+    let addon_table = env.create_addon_table().map_err(|e| LoadError::Lua(e.to_string()))?;
+    let ctx = AddonContext {
+        name: &toc.name,
+        table: addon_table,
+    };
+
     for file in toc.file_paths() {
         let ext = file.extension().and_then(|e| e.to_str()).unwrap_or("");
 
         match ext {
-            "lua" => {
-                match load_lua_file(env, &file) {
-                    Ok(()) => result.lua_files += 1,
-                    Err(e) => result.warnings.push(format!("{}: {}", file.display(), e)),
+            "lua" => match load_lua_file(env, &file, &ctx) {
+                Ok(()) => result.lua_files += 1,
+                Err(e) => result.warnings.push(format!("{}: {}", file.display(), e)),
+            },
+            "xml" => match load_xml_file(env, &file, &ctx) {
+                Ok(count) => {
+                    result.xml_files += 1;
+                    result.lua_files += count;
                 }
-            }
-            "xml" => {
-                match load_xml_file(env, &file) {
-                    Ok(count) => {
-                        result.xml_files += 1;
-                        result.lua_files += count;
-                    }
-                    Err(e) => result.warnings.push(format!("{}: {}", file.display(), e)),
-                }
-            }
+                Err(e) => result.warnings.push(format!("{}: {}", file.display(), e)),
+            },
             _ => {
                 result.warnings.push(format!("{}: unknown file type", file.display()));
             }
@@ -61,8 +71,8 @@ pub fn load_addon_from_toc(env: &WowLuaEnv, toc: &TocFile) -> Result<LoadResult,
     Ok(result)
 }
 
-/// Load a Lua file into the environment.
-fn load_lua_file(env: &WowLuaEnv, path: &Path) -> Result<(), LoadError> {
+/// Load a Lua file into the environment with addon varargs.
+fn load_lua_file(env: &WowLuaEnv, path: &Path, ctx: &AddonContext) -> Result<(), LoadError> {
     let code = std::fs::read_to_string(path)?;
     // Transform path to WoW-style for debugstack (libraries expect "AddOns/..." pattern)
     let path_str = path.display().to_string();
@@ -74,7 +84,9 @@ fn load_lua_file(env: &WowLuaEnv, path: &Path) -> Result<(), LoadError> {
     } else {
         format!("@{}", path_str)
     };
-    env.exec_named(&code, &chunk_name)
+    // Clone the table since mlua moves it on call
+    let table_clone = ctx.table.clone();
+    env.exec_with_varargs(&code, &chunk_name, ctx.name, table_clone)
         .map_err(|e| LoadError::Lua(e.to_string()))?;
     Ok(())
 }
@@ -192,7 +204,7 @@ fn create_frame_from_xml(
 
 /// Load an XML file, processing its elements.
 /// Returns the number of Lua files loaded from Script elements.
-fn load_xml_file(env: &WowLuaEnv, path: &Path) -> Result<usize, LoadError> {
+fn load_xml_file(env: &WowLuaEnv, path: &Path, ctx: &AddonContext) -> Result<usize, LoadError> {
     let ui = parse_xml_file(path)?;
     let xml_dir = path.parent().unwrap_or(Path::new("."));
     let mut lua_count = 0;
@@ -203,17 +215,25 @@ fn load_xml_file(env: &WowLuaEnv, path: &Path) -> Result<usize, LoadError> {
                 // Script can have file attribute or inline content
                 if let Some(file) = &s.file {
                     let script_path = xml_dir.join(normalize_path(file));
-                    load_lua_file(env, &script_path)?;
+                    load_lua_file(env, &script_path, ctx)?;
                     lua_count += 1;
                 } else if let Some(inline) = &s.inline {
-                    // Execute inline script
-                    env.exec(inline).map_err(|e| LoadError::Lua(e.to_string()))?;
+                    // Execute inline script with varargs
+                    let table_clone = ctx.table.clone();
+                    env.exec_with_varargs(inline, "@inline", ctx.name, table_clone)
+                        .map_err(|e| LoadError::Lua(e.to_string()))?;
                     lua_count += 1;
                 }
             }
             XmlElement::Include(i) => {
                 let include_path = xml_dir.join(normalize_path(&i.file));
-                lua_count += load_xml_file(env, &include_path)?;
+                // Check if it's a Lua file (some addons use Include for Lua files)
+                if i.file.ends_with(".lua") {
+                    load_lua_file(env, &include_path, ctx)?;
+                    lua_count += 1;
+                } else {
+                    lua_count += load_xml_file(env, &include_path, ctx)?;
+                }
             }
             XmlElement::Frame(f) => {
                 create_frame_from_xml(env, f, "Frame")?;
@@ -314,7 +334,12 @@ mod tests {
         let lua_path = temp_dir.join("test.lua");
         std::fs::write(&lua_path, "TEST_VAR = 42").unwrap();
 
-        load_lua_file(&env, &lua_path).unwrap();
+        let addon_table = env.create_addon_table().unwrap();
+        let ctx = AddonContext {
+            name: "TestAddon",
+            table: addon_table,
+        };
+        load_lua_file(&env, &lua_path, &ctx).unwrap();
 
         let value: i32 = env.eval("return TEST_VAR").unwrap();
         assert_eq!(value, 42);

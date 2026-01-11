@@ -1,5 +1,106 @@
 # Accomplished
 
+## 2026-01-11 (session 5 continued)
+
+### Phase 5: WeakAuras Full Loading - Near Complete
+
+**Summary:** WeakAuras loading improved from 84 Lua files to **94 Lua files** with warnings reduced from 14 to **1**.
+
+**New Frame Methods:**
+- `RegisterUnitEvent(event, unit1, unit2, ...)` - Register for unit-specific events
+
+**New Global UI Elements:**
+- `StaticPopupDialogs` - Table for popup dialog definitions
+- `StaticPopup_Show(name, text1, ...)` - Show a static popup
+- `StaticPopup_Hide(name)` - Hide a static popup
+
+**Bug Fixes:**
+- Fixed `IsAddOnLoaded()` to return false for addons not actually loaded (like CustomNames)
+- This fixed WeakAuras.lua from incorrectly detecting optional addons as present
+
+**Test Results:**
+- 69 tests passing (7 ignored)
+- WeakAuras: **94 Lua files**, 4 XML files load
+- WeakAuras.IsRetail(), WeakAuras.IsLibsOK() both return true
+
+**WeakAuras Bug Identified:**
+- Repository.lua line 123 calls `Archivist:RegisterStoreType(prototype)`
+- But `RegisterStoreType` only exists on archive instances (`proto`), not on global Archivist
+- Other store types (RawData.lua, ReadOnly.lua) correctly call `Archivist:RegisterDefaultStoreType(prototype)`
+- This is a genuine bug in WeakAuras, not our simulator - Repository store type is for aura history/snapshots
+
+---
+
+## 2026-01-11 (session 5)
+
+### Phase 5: WeakAuras Full Loading - Major Progress
+
+**Summary:** WeakAuras loading improved from 64 Lua files to **84 Lua files** with warnings reduced from 34 to 14.
+
+**Addon Varargs Support:**
+- `WowLuaEnv::exec_with_varargs()` - Execute Lua with (addonName, privateTable) varargs
+- `WowLuaEnv::create_addon_table()` - Create private addon table
+- `AddonContext` struct in loader for tracking addon name/table per file
+- All addon Lua files now receive proper WoW-style varargs
+
+**New C_* Namespaces Added:**
+- `C_Reputation` - `GetFactionDataByID`, `IsFactionParagon`, `GetFactionParagonInfo`, `GetNumFactions`, `GetFactionInfo`, `GetWatchedFactionData`, `SetWatchedFactionByID`
+- `C_Texture` - `GetAtlasInfo`, `GetFilenameFromFileDataID`
+- `C_CreatureInfo` - `GetClassInfo`, `GetRaceInfo` (with clientFileString), `GetCreatureTypeIDs`, `GetCreatureTypeInfo`, `GetCreatureFamilyIDs`
+- `C_Covenants` - `GetCovenantData`, `GetActiveCovenantID`, `GetCovenantIDs`
+- `C_CurrencyInfo` - `GetCurrencyInfo`, `GetCurrencyInfoFromLink`, `GetCurrencyListSize`, `GetCurrencyListInfo`, `GetWarResourcesCurrencyID`
+- `C_ChallengeMode` - `GetMapUIInfo`, `GetMapTable`, `GetActiveKeystoneInfo`, `GetAffixInfo`, `IsChallengeModeActive`
+- `C_ChatInfo` - Added `IsAddonMessagePrefixRegistered`, `GetRegisteredAddonMessagePrefixes`
+- `C_Spell` - Added `GetSchoolString`
+- `C_Item` - Added `GetItemSubClassInfo` with weapon/armor type mappings
+
+**New Global Functions:**
+- `CopyTable(table, shallow)` - Deep copy tables
+- `MergeTable(destination, source)` - Merge tables
+- `ChatFrame_AddMessageEventFilter`, `ChatFrame_RemoveMessageEventFilter`
+- `WrapTextInColorCode(text, colorStr)` - Color markup helper
+- `GetUnitName(unit, showServerName)` - Unit name with server option
+- `GetScreenWidth()`, `GetScreenHeight()` - Screen dimension functions
+- `UnitAttackSpeed(unit)` - Combat info
+- `GetTexCoordsByGrid(col, row, cols, rows)` - Texture coordinate helper
+- `IsAddonMessagePrefixRegistered`, `RegisterAddonMessagePrefix`
+- `CreateTextureMarkup`, `CreateAtlasMarkup` - Markup string helpers
+- `GetInventoryItemTexture`, `GetInventoryItemID`, `GetInventoryItemLink`
+- `GetDifficultyInfo(difficultyID)` - Dungeon/raid difficulty info
+- `GetNumShapeshiftForms`, `GetShapeshiftFormInfo`
+- `GetSpecializationInfoByID`, `GetSpecialization`, `GetNumSpecializations`, `GetSpecializationInfo`
+
+**Object Pool Functions:**
+- `CreateObjectPool(creatorFunc, resetterFunc)` - Generic object pooling with Acquire/Release/ReleaseAll
+
+**Game Constants Added:**
+- `RAID_CLASS_COLORS` - Full class color table with color methods
+- `RAID_TARGET_1` through `RAID_TARGET_8` - Raid marker names
+- Role strings: `TANK`, `HEALER`, `DAMAGER`, `MELEE`
+- Role icon markup: `INLINE_TANK_ICON`, `INLINE_HEALER_ICON`, `INLINE_DAMAGER_ICON`
+- UI strings: `SPECIALIZATION`, `TALENT`, `NONE`, `UNKNOWN`, `YES`, `NO`, `OKAY`, `CANCEL`, etc.
+- Binding headers: `BINDING_HEADER_RAID_TARGET`, `BINDING_HEADER_ACTIONBAR`, etc.
+- `MAX_NUM_TALENTS`
+
+**SecondsFormatter Class:**
+- Full implementation with `IntervalDescription` table
+- Methods: `Init`, `SetDesiredUnitCount`, `SetStripIntervalWhitespace`, `Format`
+- `CreateSecondsFormatter()` factory function
+- `SecondsFormatterMixin` alias
+
+**XML Include Fix:**
+- `load_xml_file()` now handles `<Include file="*.lua"/>` elements (used by Chomp.xml)
+
+**WeakAuras Libraries Setup:**
+- Cloned missing libs: LibCustomGlow, LibGetFrame, Archivist, LibSpellRange, LibSerialize, LibRangeCheck, LibSpecialization, LibDispel, Chomp, TaintLess
+- Replaced Wildstar LibCompress with WoW version from ElvUI
+- Created symlinks from Ace3 and Details for shared libs
+
+**Test Results:**
+- 68 tests passing (7 ignored)
+- WeakAuras: 84 Lua files, 4 XML files load
+- Remaining 14 warnings are cascading failures from optional "CustomNames" library not installed
+
 ## 2026-01-11 (session 4)
 
 ### Phase 5: Real Addon Testing - WeakAuras Support

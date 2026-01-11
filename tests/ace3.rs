@@ -377,6 +377,58 @@ fn test_load_weakauras_init() {
 }
 
 #[test]
+fn test_load_weakauras_full() {
+    let weakauras_toc = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/WeakAuras2/WeakAuras/WeakAuras.toc");
+
+    if !weakauras_toc.exists() {
+        eprintln!("Skipping: WeakAuras not found at {:?}", weakauras_toc);
+        return;
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+    let result = load_addon(&env, &weakauras_toc);
+
+    match result {
+        Ok(r) => {
+            println!(
+                "WeakAuras loaded: {} Lua files, {} XML files",
+                r.lua_files, r.xml_files
+            );
+            if !r.warnings.is_empty() {
+                println!("Warnings ({}):", r.warnings.len());
+                for w in r.warnings.iter().take(20) {
+                    println!("  {}", w);
+                }
+                if r.warnings.len() > 20 {
+                    println!("  ... and {} more", r.warnings.len() - 20);
+                }
+            }
+
+            // Check if WeakAuras table exists
+            let wa_exists: bool = env.eval("return WeakAuras ~= nil").unwrap_or(false);
+            println!("WeakAuras table exists: {}", wa_exists);
+
+            if wa_exists {
+                let is_retail: bool = env
+                    .eval("return WeakAuras.IsRetail and WeakAuras.IsRetail() or false")
+                    .unwrap_or(false);
+                println!("WeakAuras.IsRetail(): {}", is_retail);
+
+                let libs_ok: bool = env
+                    .eval("return WeakAuras.IsLibsOK and WeakAuras.IsLibsOK() or false")
+                    .unwrap_or(false);
+                println!("WeakAuras.IsLibsOK(): {}", libs_ok);
+            }
+
+        }
+        Err(e) => {
+            println!("WeakAuras failed to load: {}", e);
+        }
+    }
+}
+
+#[test]
 fn test_load_plater() {
     let plater_path = PathBuf::from(env!("HOME"))
         .join("Projects/wow/reference-addons/Plater/Plater.toc");
