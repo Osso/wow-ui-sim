@@ -2,7 +2,7 @@
 
 use super::SimState;
 use crate::widget::{AttributeValue, Frame, WidgetType};
-use mlua::{Lua, MetaMethod, Result, UserData, UserDataMethods, Value};
+use mlua::{Lua, MetaMethod, ObjectLike, Result, UserData, UserDataMethods, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -82,6 +82,29 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         state: Rc::clone(&state),
     })?;
     globals.set("UIParent", ui_parent)?;
+
+    // Minimap reference (built-in UI element)
+    let minimap_id = {
+        let state = state.borrow();
+        state.widgets.get_id_by_name("Minimap").unwrap()
+    };
+    let minimap = lua.create_userdata(FrameHandle {
+        id: minimap_id,
+        state: Rc::clone(&state),
+    })?;
+    globals.set("Minimap", minimap)?;
+
+    // AddonCompartmentFrame (retail UI element for addon buttons)
+    let addon_compartment = lua.create_table()?;
+    addon_compartment.set(
+        "RegisterAddon",
+        lua.create_function(|_, _info: mlua::Table| Ok(()))?,
+    )?;
+    addon_compartment.set(
+        "UnregisterAddon",
+        lua.create_function(|_, _addon: String| Ok(()))?,
+    )?;
+    globals.set("AddonCompartmentFrame", addon_compartment)?;
 
     // print() - already exists in Lua but we can customize if needed
 
@@ -552,6 +575,85 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("GetCurrentRegionName", get_current_region_name)?;
 
+    // GetBuildInfo() - Return game version info
+    let get_build_info = lua.create_function(|lua, ()| {
+        // Returns: version, build, date, tocversion
+        // 11.0.7 is The War Within (TWW)
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string("11.0.7")?), // version
+            Value::String(lua.create_string("58238")?),  // build
+            Value::String(lua.create_string("Jan 7 2025")?), // date
+            Value::Integer(110007), // tocversion
+        ]))
+    })?;
+    globals.set("GetBuildInfo", get_build_info)?;
+
+    // GetPhysicalScreenSize() - Return physical screen dimensions
+    let get_physical_screen_size = lua.create_function(|_, ()| {
+        // Return simulated 1920x1080 screen
+        Ok((1920, 1080))
+    })?;
+    globals.set("GetPhysicalScreenSize", get_physical_screen_size)?;
+
+    // UnitPlayerControlled(unit) - Check if unit is player controlled
+    let unit_player_controlled = lua.create_function(|_, unit: String| {
+        // Player, party, raid members are player controlled
+        Ok(unit.starts_with("player")
+            || unit.starts_with("party")
+            || unit.starts_with("raid")
+            || unit == "pet")
+    })?;
+    globals.set("UnitPlayerControlled", unit_player_controlled)?;
+
+    // UnitIsTapDenied(unit) - Check if unit is tapped by another player
+    let unit_is_tap_denied = lua.create_function(|_, _unit: String| {
+        // In simulation, nothing is tapped
+        Ok(false)
+    })?;
+    globals.set("UnitIsTapDenied", unit_is_tap_denied)?;
+
+    // PixelUtil namespace - pixel snapping utilities
+    let pixel_util = lua.create_table()?;
+    pixel_util.set(
+        "SetWidth",
+        lua.create_function(|_, (frame, width): (mlua::AnyUserData, f64)| {
+            // Just forward to frame:SetWidth
+            frame.call_method::<()>("SetWidth", width)?;
+            Ok(())
+        })?,
+    )?;
+    pixel_util.set(
+        "SetHeight",
+        lua.create_function(|_, (frame, height): (mlua::AnyUserData, f64)| {
+            frame.call_method::<()>("SetHeight", height)?;
+            Ok(())
+        })?,
+    )?;
+    pixel_util.set(
+        "SetSize",
+        lua.create_function(|_, (frame, width, height): (mlua::AnyUserData, f64, f64)| {
+            frame.call_method::<()>("SetSize", (width, height))?;
+            Ok(())
+        })?,
+    )?;
+    pixel_util.set(
+        "SetPoint",
+        lua.create_function(|_, args: mlua::MultiValue| {
+            let mut args_iter = args.into_iter();
+            if let Some(Value::UserData(frame)) = args_iter.next() {
+                // Forward remaining args to frame:SetPoint
+                let remaining: Vec<Value> = args_iter.collect();
+                frame.call_method::<()>("SetPoint", mlua::MultiValue::from_vec(remaining))?;
+            }
+            Ok(())
+        })?,
+    )?;
+    pixel_util.set(
+        "GetPixelToUIUnitFactor",
+        lua.create_function(|_, ()| Ok(1.0))?,
+    )?;
+    globals.set("PixelUtil", pixel_util)?;
+
     // Constants table (WoW uses this for various constants)
     let constants_table = lua.create_table()?;
     // LFG role constants
@@ -658,6 +760,34 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         ldexp = math.ldexp
         random = math.random
         PI = math.pi
+
+        -- WoW math utility functions
+        function Round(value)
+            if value < 0 then
+                return math.ceil(value - 0.5)
+            else
+                return math.floor(value + 0.5)
+            end
+        end
+
+        function Lerp(startValue, endValue, amount)
+            return startValue + (endValue - startValue) * amount
+        end
+
+        function Clamp(value, min, max)
+            if value < min then return min end
+            if value > max then return max end
+            return value
+        end
+
+        function Saturate(value)
+            return Clamp(value, 0.0, 1.0)
+        end
+
+        function ClampedPercentageBetween(value, min, max)
+            if max <= min then return 0.0 end
+            return Saturate((value - min) / (max - min))
+        end
 
         -- Table library aliases
         foreach = table.foreach
@@ -781,7 +911,36 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
         -- Debug functions
         function debugstack(start, count1, count2)
-            return "stack trace not available in simulation"
+            start = start or 1
+            count1 = count1 or 12
+            count2 = count2 or 12
+
+            local result = {}
+            local level = start + 1  -- +1 to skip debugstack itself
+
+            for i = 1, count1 do
+                local info = debug.getinfo(level, "Sln")
+                if not info then break end
+
+                local source = info.source or "?"
+                -- Convert @path to just path
+                if source:sub(1, 1) == "@" then
+                    source = source:sub(2)
+                end
+
+                local line = info.currentline or 0
+                local name = info.name or ""
+
+                if name ~= "" then
+                    table.insert(result, source .. ":" .. line .. ": in function `" .. name .. "'")
+                else
+                    table.insert(result, source .. ":" .. line .. ": in main chunk")
+                end
+
+                level = level + 1
+            end
+
+            return table.concat(result, "\n")
         end
 
         function debuglocals(level)
@@ -860,6 +1019,314 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     // Legacy global version
     let register_addon_message_prefix = lua.create_function(|_, _prefix: String| Ok(true))?;
     globals.set("RegisterAddonMessagePrefix", register_addon_message_prefix)?;
+
+    // C_EventUtils namespace
+    let c_event_utils = lua.create_table()?;
+    c_event_utils.set(
+        "IsEventValid",
+        lua.create_function(|_, _event: String| {
+            // In simulation, all events are valid
+            Ok(true)
+        })?,
+    )?;
+    globals.set("C_EventUtils", c_event_utils)?;
+
+    // C_CVar namespace - console variables
+    let c_cvar = lua.create_table()?;
+    c_cvar.set(
+        "GetCVar",
+        lua.create_function(|lua, cvar: String| {
+            // Return default values for common cvars
+            let value = match cvar.as_str() {
+                "nameplateShowEnemies" => "1",
+                "nameplateShowFriends" => "0",
+                "nameplateShowAll" => "1",
+                _ => "",
+            };
+            Ok(Value::String(lua.create_string(value)?))
+        })?,
+    )?;
+    c_cvar.set(
+        "SetCVar",
+        lua.create_function(|_, (_cvar, _value): (String, String)| Ok(()))?,
+    )?;
+    c_cvar.set(
+        "GetCVarBool",
+        lua.create_function(|_, cvar: String| {
+            // Return default values for common cvars
+            Ok(matches!(
+                cvar.as_str(),
+                "nameplateShowEnemies" | "nameplateShowAll"
+            ))
+        })?,
+    )?;
+    c_cvar.set(
+        "RegisterCVar",
+        lua.create_function(|_, (_cvar, _default): (String, Option<String>)| Ok(()))?,
+    )?;
+    globals.set("C_CVar", c_cvar)?;
+
+    // C_SpellBook namespace - spell book functions
+    let c_spell_book = lua.create_table()?;
+    c_spell_book.set(
+        "GetSpellBookItemName",
+        lua.create_function(|_, (_index, _book): (i32, Option<String>)| Ok(Value::Nil))?,
+    )?;
+    c_spell_book.set(
+        "GetNumSpellBookSkillLines",
+        lua.create_function(|_, ()| Ok(0))?,
+    )?;
+    c_spell_book.set(
+        "GetSpellBookSkillLineInfo",
+        lua.create_function(|_, _tab: i32| Ok(Value::Nil))?,
+    )?;
+    c_spell_book.set(
+        "GetSpellBookItemInfo",
+        lua.create_function(|_, (_index, _book): (i32, Option<String>)| Ok(Value::Nil))?,
+    )?;
+    c_spell_book.set(
+        "HasPetSpells",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    c_spell_book.set(
+        "GetOverrideSpell",
+        lua.create_function(|_, spell_id: i32| Ok(spell_id))?,
+    )?;
+    globals.set("C_SpellBook", c_spell_book)?;
+
+    // C_Spell namespace - spell information
+    let c_spell = lua.create_table()?;
+    c_spell.set(
+        "GetSpellInfo",
+        lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?,
+    )?;
+    c_spell.set(
+        "IsSpellPassive",
+        lua.create_function(|_, _spell_id: i32| Ok(false))?,
+    )?;
+    c_spell.set(
+        "GetOverrideSpell",
+        lua.create_function(|_, spell_id: i32| Ok(spell_id))?,
+    )?;
+    globals.set("C_Spell", c_spell)?;
+
+    // Legacy global spell functions
+    globals.set(
+        "GetSpellInfo",
+        lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetSpellBookItemName",
+        lua.create_function(|_, (_index, _book): (i32, Option<String>)| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetNumSpellTabs",
+        lua.create_function(|_, ()| Ok(0))?,
+    )?;
+    globals.set(
+        "GetSpellTabInfo",
+        lua.create_function(|_, _tab: i32| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetSpellBookItemInfo",
+        lua.create_function(|_, (_index, _book): (i32, Option<String>)| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "IsPassiveSpell",
+        lua.create_function(|_, _spell_id: i32| Ok(false))?,
+    )?;
+    globals.set(
+        "HasPetSpells",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    globals.set(
+        "GetOverrideSpell",
+        lua.create_function(|_, spell_id: i32| Ok(spell_id))?,
+    )?;
+
+    // C_Item namespace - item information
+    let c_item = lua.create_table()?;
+    c_item.set(
+        "GetItemInfo",
+        lua.create_function(|_, _item_id: Value| {
+            // Return nil - no item info in simulation
+            Ok(Value::Nil)
+        })?,
+    )?;
+    c_item.set(
+        "GetItemInfoInstant",
+        lua.create_function(|_, _item_id: Value| Ok(Value::Nil))?,
+    )?;
+    c_item.set(
+        "GetItemIconByID",
+        lua.create_function(|_, _item_id: i32| Ok(Value::Nil))?,
+    )?;
+    globals.set("C_Item", c_item)?;
+
+    // Legacy global GetItemInfo
+    globals.set(
+        "GetItemInfo",
+        lua.create_function(|_, _item_id: Value| Ok(Value::Nil))?,
+    )?;
+
+    // C_Container namespace - bag/container functions
+    let c_container = lua.create_table()?;
+    c_container.set(
+        "GetContainerNumSlots",
+        lua.create_function(|_, bag: i32| {
+            // Return bag slot counts (0 = backpack has 16 slots, bags 1-4 vary)
+            Ok(if bag == 0 { 16 } else { 0 })
+        })?,
+    )?;
+    c_container.set(
+        "GetContainerItemID",
+        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+    c_container.set(
+        "GetContainerItemLink",
+        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+    c_container.set(
+        "GetContainerItemInfo",
+        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+    globals.set("C_Container", c_container)?;
+
+    // Legacy global container functions
+    let get_container_num_slots = lua.create_function(|_, bag: i32| {
+        Ok(if bag == 0 { 16 } else { 0 })
+    })?;
+    globals.set("GetContainerNumSlots", get_container_num_slots)?;
+    globals.set(
+        "GetContainerItemID",
+        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetContainerItemLink",
+        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
+    )?;
+
+    // Legacy global CVar functions
+    let get_cvar = lua.create_function(|lua, cvar: String| {
+        let value = match cvar.as_str() {
+            "nameplateShowEnemies" => "1",
+            "nameplateShowFriends" => "0",
+            _ => "",
+        };
+        Ok(Value::String(lua.create_string(value)?))
+    })?;
+    globals.set("GetCVar", get_cvar)?;
+
+    let set_cvar = lua.create_function(|_, (_cvar, _value): (String, String)| Ok(()))?;
+    globals.set("SetCVar", set_cvar)?;
+
+    // C_AddOns namespace - addon management
+    let c_addons = lua.create_table()?;
+    c_addons.set(
+        "GetAddOnMetadata",
+        lua.create_function(|lua, (addon, field): (String, String)| {
+            // Return stub metadata - WeakAuras checks Version and X-Flavor
+            let value = match field.as_str() {
+                "Version" => "@project-version@",
+                "X-Flavor" => "Mainline",
+                "Title" => addon.as_str(),
+                "Notes" => "",
+                "Author" => "",
+                _ => "",
+            };
+            if value.is_empty() {
+                Ok(Value::Nil)
+            } else {
+                Ok(Value::String(lua.create_string(value)?))
+            }
+        })?,
+    )?;
+    c_addons.set(
+        "EnableAddOn",
+        lua.create_function(|_, _addon: String| Ok(()))?,
+    )?;
+    c_addons.set(
+        "DisableAddOn",
+        lua.create_function(|_, _addon: String| Ok(()))?,
+    )?;
+    c_addons.set(
+        "GetNumAddOns",
+        lua.create_function(|_, ()| Ok(1))?,
+    )?;
+    c_addons.set(
+        "GetAddOnInfo",
+        lua.create_function(|lua, index: i32| {
+            // Return: name, title, notes, loadable, reason, security, newVersion
+            if index == 1 {
+                Ok((
+                    Value::String(lua.create_string("TestAddon")?),
+                    Value::String(lua.create_string("Test Addon")?),
+                    Value::String(lua.create_string("")?),
+                    Value::Boolean(true),
+                    Value::Nil,
+                    Value::String(lua.create_string("SECURE")?),
+                    Value::Boolean(false),
+                ))
+            } else {
+                Ok((
+                    Value::Nil,
+                    Value::Nil,
+                    Value::Nil,
+                    Value::Boolean(false),
+                    Value::Nil,
+                    Value::Nil,
+                    Value::Boolean(false),
+                ))
+            }
+        })?,
+    )?;
+    c_addons.set(
+        "IsAddOnLoaded",
+        lua.create_function(|_, _addon: String| Ok(true))?,
+    )?;
+    c_addons.set(
+        "IsAddOnLoadable",
+        lua.create_function(|_, _addon: String| Ok(true))?,
+    )?;
+    c_addons.set(
+        "LoadAddOn",
+        lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
+    )?;
+    c_addons.set(
+        "DoesAddOnExist",
+        lua.create_function(|_, _addon: String| Ok(true))?,
+    )?;
+    globals.set("C_AddOns", c_addons)?;
+
+    // Legacy addon functions
+    globals.set(
+        "GetAddOnMetadata",
+        lua.create_function(|lua, (addon, field): (String, String)| {
+            let value = match field.as_str() {
+                "Version" => "@project-version@",
+                "X-Flavor" => "Mainline",
+                "Title" => addon.as_str(),
+                _ => "",
+            };
+            if value.is_empty() {
+                Ok(Value::Nil)
+            } else {
+                Ok(Value::String(lua.create_string(value)?))
+            }
+        })?,
+    )?;
+    globals.set(
+        "GetNumAddOns",
+        lua.create_function(|_, ()| Ok(1))?,
+    )?;
+    globals.set(
+        "IsAddOnLoaded",
+        lua.create_function(|_, _addon: Value| Ok(true))?,
+    )?;
+    globals.set(
+        "LoadAddOn",
+        lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
+    )?;
 
     // CreateColor(r, g, b, a) - creates a color object
     let create_color = lua.create_function(|lua, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
@@ -1172,6 +1639,33 @@ impl UserData for FrameHandle {
             }
         });
 
+        // HookScript(handler, func) - Hook into existing script handler
+        methods.add_method("HookScript", |lua, this, (handler, func): (String, Value)| {
+            if let Value::Function(f) = func {
+                // Store hook in a global table
+                let hooks_table: mlua::Table =
+                    lua.globals().get("__script_hooks").unwrap_or_else(|_| {
+                        let t = lua.create_table().unwrap();
+                        lua.globals().set("__script_hooks", t.clone()).unwrap();
+                        t
+                    });
+
+                let frame_key = format!("{}_{}", this.id, handler);
+                // Get existing hooks array or create new
+                let hooks_array: mlua::Table = hooks_table
+                    .get::<mlua::Table>(frame_key.as_str())
+                    .unwrap_or_else(|_| {
+                        let t = lua.create_table().unwrap();
+                        hooks_table.set(frame_key.as_str(), t.clone()).unwrap();
+                        t
+                    });
+                // Append the new hook
+                let len = hooks_array.len().unwrap_or(0);
+                hooks_array.set(len + 1, f)?;
+            }
+            Ok(())
+        });
+
         // GetParent()
         methods.add_method("GetParent", |lua, this, ()| {
             let state = this.state.borrow();
@@ -1250,6 +1744,68 @@ impl UserData for FrameHandle {
             let state = this.state.borrow();
             let level = state.widgets.get(this.id).map(|f| f.frame_level).unwrap_or(0);
             Ok(level)
+        });
+
+        // SetFixedFrameStrata(fixed) - Controls if strata is fixed
+        methods.add_method("SetFixedFrameStrata", |_, _this, _fixed: bool| {
+            // Accept but don't track (affects strata inheritance behavior)
+            Ok(())
+        });
+
+        // SetFixedFrameLevel(fixed) - Controls if level is fixed
+        methods.add_method("SetFixedFrameLevel", |_, _this, _fixed: bool| {
+            // Accept but don't track (affects level inheritance behavior)
+            Ok(())
+        });
+
+        // SetToplevel(toplevel) - Mark frame as toplevel (raises on click)
+        methods.add_method("SetToplevel", |_, _this, _toplevel: bool| {
+            Ok(())
+        });
+
+        // IsToplevel()
+        methods.add_method("IsToplevel", |_, _this, ()| {
+            Ok(false)
+        });
+
+        // Raise() - Raise frame above siblings
+        methods.add_method("Raise", |_, _this, ()| {
+            Ok(())
+        });
+
+        // Lower() - Lower frame below siblings
+        methods.add_method("Lower", |_, _this, ()| {
+            Ok(())
+        });
+
+        // SetBackdrop(backdropInfo) - WoW backdrop system for frame backgrounds
+        methods.add_method("SetBackdrop", |_, _this, _backdrop: Option<mlua::Table>| {
+            // Accept backdrop table but don't render it for now
+            // Backdrop format: { bgFile = "", edgeFile = "", tile = bool, tileSize = n, edgeSize = n, insets = { left, right, top, bottom } }
+            Ok(())
+        });
+
+        // SetBackdropColor(r, g, b, a) - Set backdrop background color
+        methods.add_method("SetBackdropColor", |_, _this, _args: mlua::MultiValue| {
+            // Accept color but don't render it
+            Ok(())
+        });
+
+        // SetBackdropBorderColor(r, g, b, a) - Set backdrop border color
+        methods.add_method("SetBackdropBorderColor", |_, _this, _args: mlua::MultiValue| {
+            // Accept border color but don't render it
+            Ok(())
+        });
+
+        // SetID(id) - Set frame ID (used for tab ordering, etc.)
+        methods.add_method("SetID", |_, _this, _id: i32| {
+            // Accept ID but don't use it for now
+            Ok(())
+        });
+
+        // GetID() - Get frame ID
+        methods.add_method("GetID", |_, _this, ()| {
+            Ok(0) // Default ID
         });
 
         // EnableMouse(enable)
@@ -1606,6 +2162,93 @@ impl UserData for FrameHandle {
                 }
             }
             Ok(())
+        });
+
+        // ===== Button Methods =====
+
+        // SetNormalFontObject(fontObject) - Set font for normal state
+        methods.add_method("SetNormalFontObject", |_, _this, _font_object: Value| {
+            Ok(())
+        });
+
+        // SetHighlightFontObject(fontObject) - Set font for highlight state
+        methods.add_method("SetHighlightFontObject", |_, _this, _font_object: Value| {
+            Ok(())
+        });
+
+        // SetDisabledFontObject(fontObject) - Set font for disabled state
+        methods.add_method("SetDisabledFontObject", |_, _this, _font_object: Value| {
+            Ok(())
+        });
+
+        // GetNormalTexture() - Get the normal state texture
+        methods.add_method("GetNormalTexture", |_, _this, ()| {
+            Ok(Value::Nil)
+        });
+
+        // GetHighlightTexture() - Get the highlight state texture
+        methods.add_method("GetHighlightTexture", |_, _this, ()| {
+            Ok(Value::Nil)
+        });
+
+        // GetPushedTexture() - Get the pushed state texture
+        methods.add_method("GetPushedTexture", |_, _this, ()| {
+            Ok(Value::Nil)
+        });
+
+        // GetDisabledTexture() - Get the disabled state texture
+        methods.add_method("GetDisabledTexture", |_, _this, ()| {
+            Ok(Value::Nil)
+        });
+
+        // SetNormalTexture(texture) - Set texture for normal state
+        methods.add_method("SetNormalTexture", |_, _this, _texture: Value| {
+            Ok(())
+        });
+
+        // SetHighlightTexture(texture) - Set texture for highlight state
+        methods.add_method("SetHighlightTexture", |_, _this, _texture: Value| {
+            Ok(())
+        });
+
+        // SetPushedTexture(texture) - Set texture for pushed state
+        methods.add_method("SetPushedTexture", |_, _this, _texture: Value| {
+            Ok(())
+        });
+
+        // SetDisabledTexture(texture) - Set texture for disabled state
+        methods.add_method("SetDisabledTexture", |_, _this, _texture: Value| {
+            Ok(())
+        });
+
+        // SetEnabled(enabled) - Enable/disable button
+        methods.add_method("SetEnabled", |_, _this, _enabled: bool| {
+            Ok(())
+        });
+
+        // IsEnabled() - Check if button is enabled
+        methods.add_method("IsEnabled", |_, _this, ()| {
+            Ok(true)
+        });
+
+        // Click() - Simulate button click
+        methods.add_method("Click", |_, _this, ()| {
+            Ok(())
+        });
+
+        // RegisterForClicks(...) - Register which mouse buttons trigger clicks
+        methods.add_method("RegisterForClicks", |_, _this, _args: mlua::MultiValue| {
+            Ok(())
+        });
+
+        // SetButtonState(state, locked) - Set button visual state
+        methods.add_method("SetButtonState", |_, _this, (_state, _locked): (String, Option<bool>)| {
+            Ok(())
+        });
+
+        // GetButtonState() - Get button visual state
+        methods.add_method("GetButtonState", |_, _this, ()| {
+            Ok("NORMAL".to_string())
         });
     }
 }

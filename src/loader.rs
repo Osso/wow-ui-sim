@@ -64,7 +64,18 @@ pub fn load_addon_from_toc(env: &WowLuaEnv, toc: &TocFile) -> Result<LoadResult,
 /// Load a Lua file into the environment.
 fn load_lua_file(env: &WowLuaEnv, path: &Path) -> Result<(), LoadError> {
     let code = std::fs::read_to_string(path)?;
-    env.exec(&code).map_err(|e| LoadError::Lua(e.to_string()))?;
+    // Transform path to WoW-style for debugstack (libraries expect "AddOns/..." pattern)
+    let path_str = path.display().to_string();
+    let chunk_name = if let Some(pos) = path_str.find("reference-addons/") {
+        // Transform: .../reference-addons/Details/... -> Interface/AddOns/Details/...
+        format!("@Interface/AddOns/{}", &path_str[pos + 17..])
+    } else if let Some(pos) = path_str.find("AddOns/") {
+        format!("@Interface/{}", &path_str[pos..])
+    } else {
+        format!("@{}", path_str)
+    };
+    env.exec_named(&code, &chunk_name)
+        .map_err(|e| LoadError::Lua(e.to_string()))?;
     Ok(())
 }
 

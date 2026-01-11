@@ -1,6 +1,85 @@
 # Accomplished
 
-## 2026-01-11 (continued)
+## 2026-01-11 (session 4)
+
+### Phase 5: Real Addon Testing - WeakAuras Support
+
+**New APIs Added:**
+- `C_AddOns` namespace - `GetAddOnMetadata`, `EnableAddOn`, `DisableAddOn`, `GetNumAddOns`, `GetAddOnInfo`, `IsAddOnLoaded`, `IsAddOnLoadable`, `LoadAddOn`, `DoesAddOnExist`
+- `AddonCompartmentFrame` - `RegisterAddon`, `UnregisterAddon` (retail addon button compartment)
+- Legacy globals: `GetAddOnMetadata`, `GetNumAddOns`, `IsAddOnLoaded`, `LoadAddOn`
+
+**New Frame Methods:**
+- `SetFixedFrameStrata(fixed)` - Frame strata inheritance control
+- `SetFixedFrameLevel(fixed)` - Frame level inheritance control
+- `SetToplevel(toplevel)`, `IsToplevel()` - Toplevel frame handling
+- `Raise()`, `Lower()` - Frame z-order manipulation
+
+**Button Methods Added:**
+- `SetNormalFontObject`, `SetHighlightFontObject`, `SetDisabledFontObject`
+- `GetNormalTexture`, `GetHighlightTexture`, `GetPushedTexture`, `GetDisabledTexture`
+- `SetNormalTexture`, `SetHighlightTexture`, `SetPushedTexture`, `SetDisabledTexture`
+- `SetEnabled`, `IsEnabled`, `Click`, `RegisterForClicks`
+- `SetButtonState`, `GetButtonState`
+
+**WeakAuras Testing:**
+- **WeakAuras Init.lua loads successfully**
+- WeakAuras table created with all version detection functions (IsRetail, IsClassic, etc.)
+- AddonCompartmentFrame registration works
+- Missing libs correctly detected and reported (expected - full lib loading not tested)
+
+**Plater Testing:**
+- 7 Lua files, 1 XML file load
+- AceConfigDialog partially loads (needs more API stubs)
+- Main blocker: DetailsFramework library not available in git repo
+
+**Test Count:** 68 passing (7 ignored)
+
+## 2026-01-11 (session 3)
+
+### Phase 5: Real Addon Testing - Extended API Coverage
+
+**New APIs Added:**
+- `GetBuildInfo()` - returns version "11.0.7", build, date, tocversion
+- `GetPhysicalScreenSize()` - simulated 1920x1080 screen
+- `UnitPlayerControlled(unit)` - check if unit is player controlled
+- `UnitIsTapDenied(unit)` - check if unit is tapped (always false)
+- `PixelUtil` namespace - `SetWidth`, `SetHeight`, `SetSize`, `SetPoint`, `GetPixelToUIUnitFactor`
+- `Round()`, `Lerp()`, `Clamp()`, `Saturate()`, `ClampedPercentageBetween()` - math utilities
+- `C_EventUtils.IsEventValid()` - event validation
+- `C_CVar` namespace - `GetCVar`, `SetCVar`, `GetCVarBool`, `RegisterCVar`
+- `C_Container` namespace - `GetContainerNumSlots`, `GetContainerItemID`, `GetContainerItemLink`, `GetContainerItemInfo`
+- `C_Item` namespace - `GetItemInfo`, `GetItemInfoInstant`, `GetItemIconByID`
+- `C_SpellBook` namespace - `GetSpellBookItemName`, `GetNumSpellBookSkillLines`, `GetSpellBookSkillLineInfo`, etc.
+- `C_Spell` namespace - `GetSpellInfo`, `IsSpellPassive`, `GetOverrideSpell`
+- Legacy globals: `GetCVar`, `SetCVar`, `GetItemInfo`, `GetSpellInfo`, `GetNumSpellTabs`, etc.
+
+**New Frame Methods:**
+- `SetBackdrop(backdropInfo)` - accept backdrop config
+- `SetBackdropColor(r, g, b, a)` - accept backdrop color
+- `SetBackdropBorderColor(r, g, b, a)` - accept border color
+- `SetID(id)`, `GetID()` - frame ID for tab ordering
+- `HookScript(handler, func)` - hook into existing script handlers
+
+**Built-in UI Elements:**
+- `Minimap` global frame - used by LibDBIcon for minimap button positioning
+
+**Infrastructure Improvements:**
+- `debugstack()` now returns real Lua stack traces with file paths
+- `exec_named()` method for loading Lua with custom chunk names
+- File paths transformed to WoW-style (`Interface/AddOns/...`) for library compatibility
+- Enabled full debug library via `unsafe_new()` for debugstack support
+
+**Details Addon Progress:**
+- **67 Lua files loaded** (up from 65), 92 warnings (down from 94)
+- All Ace3 libs load: LibStub, CallbackHandler, AceLocale, AceAddon, AceComm, AceSerializer, AceTimer
+- LibSharedMedia, NickTag, LibDataBroker, LibDBIcon, LibGraph-2.0, LibWindow, PlayerInfo all load
+- LibOpenRaid partially loads (Functions.lua, GetPlayerInformation.lua load)
+- Current blocker: data error in ThingsToMantain_WarWithin.lua (not missing API)
+
+**Test Count:** 66 passing (7 ignored)
+
+## 2026-01-11 (session 2)
 
 ### Phase 4: Rendering Complete
 

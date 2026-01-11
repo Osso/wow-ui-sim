@@ -27,7 +27,9 @@ pub struct SimState {
 impl WowLuaEnv {
     /// Create a new WoW Lua environment with the API initialized.
     pub fn new() -> Result<Self> {
-        let lua = Lua::new();
+        // Use unsafe_new to get full standard library including debug
+        // This is safe for our simulator since we control the Lua code
+        let lua = unsafe { Lua::unsafe_new() };
         let state = Rc::new(RefCell::new(SimState::default()));
 
         // Create UIParent (the root frame)
@@ -38,7 +40,16 @@ impl WowLuaEnv {
                 Some("UIParent".to_string()),
                 None,
             );
+            let ui_parent_id = ui_parent.id;
             s.widgets.register(ui_parent);
+
+            // Create Minimap (built-in UI element)
+            let minimap = crate::widget::Frame::new(
+                crate::widget::WidgetType::Frame,
+                Some("Minimap".to_string()),
+                Some(ui_parent_id),
+            );
+            s.widgets.register(minimap);
         }
 
         // Register global functions
@@ -50,6 +61,12 @@ impl WowLuaEnv {
     /// Execute Lua code.
     pub fn exec(&self, code: &str) -> Result<()> {
         self.lua.load(code).exec()?;
+        Ok(())
+    }
+
+    /// Execute Lua code with a custom chunk name (for better error messages and debugstack).
+    pub fn exec_named(&self, code: &str, name: &str) -> Result<()> {
+        self.lua.load(code).set_name(name).exec()?;
         Ok(())
     }
 

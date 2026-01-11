@@ -257,3 +257,157 @@ fn test_load_dbm_core() {
         }
     }
 }
+
+#[test]
+fn test_load_weakauras_init() {
+    let details_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/Details/Details.toc");
+    let weakauras_dir = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/WeakAuras2/WeakAuras");
+
+    if !details_path.exists() || !weakauras_dir.exists() {
+        eprintln!("Skipping: Details or WeakAuras not found");
+        return;
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+
+    // First load core libs from Details
+    let details_libs = details_path.parent().unwrap().join("Libs");
+
+    // Load LibStub first
+    let libstub_path = details_libs.join("LibStub/LibStub.lua");
+    if let Ok(code) = std::fs::read_to_string(&libstub_path) {
+        env.exec(&code).expect("LibStub should load");
+    }
+
+    // Load CallbackHandler
+    let cbh_path = details_libs.join("CallbackHandler-1.0/CallbackHandler-1.0.lua");
+    if let Ok(code) = std::fs::read_to_string(&cbh_path) {
+        let _ = env.exec(&code);
+    }
+
+    // Load AceTimer
+    let timer_path = details_libs.join("AceTimer-3.0/AceTimer-3.0.lua");
+    if let Ok(code) = std::fs::read_to_string(&timer_path) {
+        let _ = env.exec(&code);
+    }
+
+    // Load AceSerializer
+    let serializer_path = details_libs.join("AceSerializer-3.0/AceSerializer-3.0.lua");
+    if let Ok(code) = std::fs::read_to_string(&serializer_path) {
+        let _ = env.exec(&code);
+    }
+
+    // Load AceComm
+    let comm_path = details_libs.join("AceComm-3.0/AceComm-3.0.lua");
+    if let Ok(code) = std::fs::read_to_string(&comm_path) {
+        let _ = env.exec(&code);
+    }
+
+    // Load LibSharedMedia
+    let lsm_path = details_libs.join("LibSharedMedia-3.0/LibSharedMedia-3.0.lua");
+    if let Ok(code) = std::fs::read_to_string(&lsm_path) {
+        let _ = env.exec(&code);
+    }
+
+    // Load LibDataBroker
+    let ldb_path = details_libs.join("LibDataBroker-1.1/LibDataBroker-1.1.lua");
+    if let Ok(code) = std::fs::read_to_string(&ldb_path) {
+        let _ = env.exec(&code);
+    }
+
+    // Load LibDBIcon
+    let ldbi_path = details_libs.join("LibDBIcon-1.0/LibDBIcon-1.0.lua");
+    if let Ok(code) = std::fs::read_to_string(&ldbi_path) {
+        let _ = env.exec(&code);
+    }
+
+    // Now try loading WeakAuras Init.lua
+    // WoW loads addon files with varargs: (addonName, privateTable)
+    // We simulate this by using load() and passing the varargs
+    let init_path = weakauras_dir.join("Init.lua");
+    let init_code = std::fs::read_to_string(&init_path).expect("Should read Init.lua");
+
+    // Escape the Lua code for embedding in a string
+    let escaped_code = init_code.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n");
+
+    let wrapper = format!(
+        r#"
+        -- Create the private table for WeakAuras
+        local addonName = "WeakAuras"
+        local privateTable = {{}}
+
+        -- Load the Init.lua code as a function with varargs (use loadstring for Lua 5.1)
+        local code = "{}"
+        local chunk, err = loadstring(code, "@WeakAuras/Init.lua")
+        if not chunk then
+            error("Failed to compile WeakAuras Init.lua: " .. tostring(err))
+        end
+
+        -- Call the chunk with addon varargs
+        local ok, result = pcall(chunk, addonName, privateTable)
+        if not ok then
+            error("WeakAuras Init.lua runtime error: " .. tostring(result))
+        end
+        "#,
+        escaped_code
+    );
+
+    match env.exec(&wrapper) {
+        Ok(_) => {
+            println!("WeakAuras Init.lua loaded successfully!");
+
+            // Check if WeakAuras table exists
+            let wa_exists: bool = env.eval("return WeakAuras ~= nil").unwrap_or(false);
+            println!("WeakAuras table exists: {}", wa_exists);
+
+            if wa_exists {
+                let is_retail: bool = env.eval("return WeakAuras.IsRetail and WeakAuras.IsRetail() or false").unwrap_or(false);
+                println!("WeakAuras.IsRetail(): {}", is_retail);
+
+                let libs_ok: bool = env.eval("return WeakAuras.IsLibsOK and WeakAuras.IsLibsOK() or false").unwrap_or(false);
+                println!("WeakAuras.IsLibsOK(): {}", libs_ok);
+            }
+        }
+        Err(e) => {
+            println!("WeakAuras Init.lua failed: {}", e);
+        }
+    }
+}
+
+#[test]
+fn test_load_plater() {
+    let plater_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/Plater/Plater.toc");
+
+    if !plater_path.exists() {
+        eprintln!("Skipping: Plater not found at {:?}", plater_path);
+        return;
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+    let result = load_addon(&env, &plater_path);
+
+    match result {
+        Ok(r) => {
+            println!("Plater loaded: {} Lua files, {} XML files", r.lua_files, r.xml_files);
+            if !r.warnings.is_empty() {
+                println!("Warnings ({}):", r.warnings.len());
+                for w in r.warnings.iter().take(15) {
+                    println!("  {}", w);
+                }
+                if r.warnings.len() > 15 {
+                    println!("  ... and {} more", r.warnings.len() - 15);
+                }
+            }
+
+            // Check if Plater table exists
+            let plater_exists: bool = env.eval("return Plater ~= nil").unwrap_or(false);
+            println!("Plater table exists: {}", plater_exists);
+        }
+        Err(e) => {
+            println!("Plater failed to load: {}", e);
+        }
+    }
+}
