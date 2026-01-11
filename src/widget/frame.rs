@@ -1,7 +1,16 @@
 //! Frame widget - the base container for UI elements.
 
 use super::{next_widget_id, Anchor, AnchorPoint, WidgetType};
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
+
+/// Attribute value stored on frames.
+#[derive(Debug, Clone)]
+pub enum AttributeValue {
+    String(String),
+    Number(f64),
+    Boolean(bool),
+    Nil,
+}
 
 /// A Frame is the base widget type in WoW's UI system.
 #[derive(Debug)]
@@ -42,6 +51,8 @@ pub struct Frame {
     pub font: Option<String>,
     /// Font size (for FontString widgets).
     pub font_size: f32,
+    /// Named attributes (for secure frames, unit frames, etc.).
+    pub attributes: HashMap<String, AttributeValue>,
 }
 
 impl Frame {
@@ -65,6 +76,7 @@ impl Frame {
             text: None,
             font: None,
             font_size: 12.0,
+            attributes: HashMap::new(),
         }
     }
 

@@ -40,10 +40,13 @@ struct FrameInfo {
     #[allow(dead_code)]
     id: u64,
     name: Option<String>,
-    #[allow(dead_code)]
     widget_type: WidgetType,
     rect: LayoutRect,
     visible: bool,
+    frame_strata: crate::widget::FrameStrata,
+    frame_level: i32,
+    alpha: f32,
+    text: Option<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -107,6 +110,10 @@ impl App {
                         widget_type: frame.widget_type,
                         rect,
                         visible: frame.visible,
+                        frame_strata: frame.frame_strata,
+                        frame_level: frame.frame_level,
+                        alpha: frame.alpha,
+                        text: frame.text.clone(),
                     });
 
                     let name = frame.name.as_deref().unwrap_or("(anonymous)");
@@ -121,6 +128,13 @@ impl App {
                     ));
                 }
             }
+
+            // Sort by strata then level for proper z-ordering
+            infos.sort_by(|a, b| {
+                a.frame_strata
+                    .cmp(&b.frame_strata)
+                    .then_with(|| a.frame_level.cmp(&b.frame_level))
+            });
 
             (infos, list_items)
         };
@@ -227,7 +241,7 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                 Color::from_rgba(0.2, 0.6, 0.6, 0.6),
             ];
 
-            // Draw each visible frame
+            // Draw each visible frame (already sorted by strata/level)
             for (i, info) in self.frames.iter().enumerate() {
                 if !info.visible {
                     continue;
@@ -250,7 +264,21 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                     height: info.rect.height * scale_y,
                 };
 
-                let color = colors[i % colors.len()];
+                // Different colors for different widget types
+                let base_color = match info.widget_type {
+                    WidgetType::Frame => colors[i % colors.len()],
+                    WidgetType::Button => Color::from_rgba(0.3, 0.5, 0.7, 0.8),
+                    WidgetType::Texture => Color::from_rgba(0.6, 0.4, 0.2, 0.7),
+                    WidgetType::FontString => Color::from_rgba(0.1, 0.1, 0.1, 0.3),
+                };
+
+                // Apply alpha
+                let color = Color::from_rgba(
+                    base_color.r,
+                    base_color.g,
+                    base_color.b,
+                    base_color.a * info.alpha,
+                );
 
                 // Draw filled rectangle
                 frame.fill_rectangle(
@@ -259,18 +287,31 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                     color,
                 );
 
-                // Draw border
-                let border_path = Path::rectangle(
-                    Point::new(rect.x, rect.y),
-                    Size::new(rect.width, rect.height),
-                );
-                frame.stroke(
-                    &border_path,
-                    Stroke::default().with_color(Color::WHITE).with_width(1.0),
-                );
+                // Draw border (skip for FontStrings)
+                if info.widget_type != WidgetType::FontString {
+                    let border_path = Path::rectangle(
+                        Point::new(rect.x, rect.y),
+                        Size::new(rect.width, rect.height),
+                    );
+                    frame.stroke(
+                        &border_path,
+                        Stroke::default().with_color(Color::WHITE).with_width(1.0),
+                    );
+                }
 
-                // Draw frame name
-                if let Some(name) = &info.name {
+                // Draw text content for FontStrings
+                if info.widget_type == WidgetType::FontString {
+                    if let Some(text) = &info.text {
+                        frame.fill_text(canvas::Text {
+                            content: text.clone(),
+                            position: Point::new(rect.x, rect.y),
+                            color: Color::WHITE,
+                            size: iced::Pixels(12.0),
+                            ..Default::default()
+                        });
+                    }
+                } else if let Some(name) = &info.name {
+                    // Draw frame name for other widgets
                     frame.fill_text(canvas::Text {
                         content: name.clone(),
                         position: Point::new(rect.x + 2.0, rect.y + 2.0),

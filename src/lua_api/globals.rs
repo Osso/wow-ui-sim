@@ -1,7 +1,7 @@
 //! Global WoW API functions.
 
 use super::SimState;
-use crate::widget::{Frame, WidgetType};
+use crate::widget::{AttributeValue, Frame, WidgetType};
 use mlua::{Lua, MetaMethod, Result, UserData, UserDataMethods, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -232,9 +232,364 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("GetBuildInfo", get_build_info)?;
 
+    // GetRealmName() - Return mock realm name
+    let get_realm_name = lua.create_function(|lua, ()| {
+        Ok(Value::String(lua.create_string("SimulatedRealm")?))
+    })?;
+    globals.set("GetRealmName", get_realm_name)?;
+
+    // GetNormalizedRealmName() - Return mock normalized realm name
+    let get_normalized_realm_name = lua.create_function(|lua, ()| {
+        Ok(Value::String(lua.create_string("SimulatedRealm")?))
+    })?;
+    globals.set("GetNormalizedRealmName", get_normalized_realm_name)?;
+
+    // GetLocale() - Return mock locale
+    let get_locale = lua.create_function(|lua, ()| {
+        Ok(Value::String(lua.create_string("enUS")?))
+    })?;
+    globals.set("GetLocale", get_locale)?;
+
     // SlashCmdList table
     let slash_cmd_list = lua.create_table()?;
     globals.set("SlashCmdList", slash_cmd_list)?;
+
+    // Enum table (WoW uses this for various enumerations)
+    let enum_table = lua.create_table()?;
+
+    // Enum.LFGRole
+    let lfg_role = lua.create_table()?;
+    lfg_role.set("Tank", 0)?;
+    lfg_role.set("Healer", 1)?;
+    lfg_role.set("Damage", 2)?;
+    enum_table.set("LFGRole", lfg_role)?;
+
+    // Enum.UnitSex
+    let unit_sex = lua.create_table()?;
+    unit_sex.set("Male", 2)?;
+    unit_sex.set("Female", 3)?;
+    enum_table.set("UnitSex", unit_sex)?;
+
+    // Enum.GameMode
+    let game_mode = lua.create_table()?;
+    game_mode.set("Standard", 0)?;
+    game_mode.set("Plunderstorm", 1)?;
+    game_mode.set("WoWHack", 2)?;
+    enum_table.set("GameMode", game_mode)?;
+
+    // Enum.Profession
+    let profession = lua.create_table()?;
+    profession.set("Mining", 1)?;
+    profession.set("Skinning", 2)?;
+    profession.set("Herbalism", 3)?;
+    profession.set("Blacksmithing", 4)?;
+    profession.set("Leatherworking", 5)?;
+    profession.set("Alchemy", 6)?;
+    profession.set("Tailoring", 7)?;
+    profession.set("Engineering", 8)?;
+    profession.set("Enchanting", 9)?;
+    profession.set("Fishing", 10)?;
+    profession.set("Cooking", 11)?;
+    profession.set("Jewelcrafting", 12)?;
+    profession.set("Inscription", 13)?;
+    profession.set("Archaeology", 14)?;
+    enum_table.set("Profession", profession)?;
+
+    // Enum.VasTransactionPurchaseResult - all values used by VASErrorLookup.lua
+    let vas_result = lua.create_table()?;
+    for (i, name) in [
+        "Ok", "NotAvailable", "InProgress", "OnlyOneVasAtATime",
+        "InvalidDestinationAccount", "InvalidSourceAccount", "InvalidCharacter",
+        "NotEnoughMoney", "NotEligible", "TransferServiceDisabled",
+        "DifferentRegion", "RealmNotEligible", "CharacterNotOnAccount",
+        "TooManyCharacters", "InternalError", "PendingOtherProduct",
+        "PendingItemDelivery", "PurchaseInProgress", "GenericError",
+        "DisallowedSourceAccount", "DisallowedDestinationAccount", "LowerBoxLevel",
+        "MaxCharactersOnServer", "CantAffordService", "ServiceAvailable",
+        "CharacterHasGuildBank", "NameNotAvailable", "CharacterBelongsToGuild",
+        "LockedForVas", "MoveInProgress", "AgeRestriction", "UnderMinAge",
+        "BoostedTooRecently", "NewPlayerRestrictions", "CannotRestore",
+        "GuildHasGuildBank", "CharacterArenaTeam", "CharacterTransferInProgress",
+        "CharacterTransferPending", "RaceClassComboNotEligible", "InvalidStartingLevel",
+        // Proxy errors
+        "ProxyBadRequestContained", "ProxyCharacterTransferredNoBoostInProgress",
+        // Database errors
+        "DbRealmNotEligible", "DbCannotMoveGuildmaster", "DbMaxCharactersOnServer",
+        "DbNoMixedAlliance", "DbDuplicateCharacterName", "DbHasMail", "DbMoveInProgress",
+        "DbUnderMinLevelReq", "DbIneligibleTargetRealm", "DbTransferDateTooSoon",
+        "DbCharLocked", "DbAllianceNotEligible", "DbTooMuchMoneyForLevel",
+        "DbHasAuctions", "DbLastSaveTooRecent", "DbNameNotAvailable",
+        "DbLastRenameTooRecent", "DbAlreadyRenameFlagged", "DbCustomizeAlreadyRequested",
+        "DbLastCustomizeTooSoon", "DbFactionChangeTooSoon", "DbRaceClassComboIneligible",
+        "DbPendingItemAudit", "DbGuildRankInsufficient", "DbCharacterWithoutGuild",
+        "DbGmSenorityInsufficient", "DbAuthenticatorInsufficient", "DbIneligibleMapID",
+        "DbBpayDeliveryPending", "DbHasBpayToken", "DbHasHeirloomItem",
+        "DbResultAccountRestricted", "DbLastSaveTooDistant", "DbCagedPetInInventory",
+        "DbOnBoostCooldown", "DbPvEPvPTransferNotAllowed", "DbNewLeaderInvalid",
+        "DbNeedsLevelSquish", "DbHasNewPlayerExperienceRestriction", "DbHasCraftingOrders",
+        "DbInvalidName", "DbNeedsEraChoice", "DbCannotMoveArenaCaptn",
+    ].iter().enumerate() {
+        vas_result.set(*name, i as i32)?;
+    }
+    enum_table.set("VasTransactionPurchaseResult", vas_result)?;
+
+    // Enum.StoreError - store error codes
+    let store_error = lua.create_table()?;
+    for (i, name) in [
+        "InvalidPaymentMethod", "PaymentFailed", "WrongCurrency", "BattlepayDisabled",
+        "InsufficientBalance", "Other", "AlreadyOwned", "ParentalControlsNoPurchase",
+        "PurchaseDenied", "ConsumableTokenOwned", "TooManyTokens", "ItemUnavailable",
+        "ClientRestricted",
+    ].iter().enumerate() {
+        store_error.set(*name, i as i32)?;
+    }
+    enum_table.set("StoreError", store_error)?;
+
+    // Enum.GameRule - game rule identifiers
+    let game_rule = lua.create_table()?;
+    for (i, name) in [
+        "PlayerCastBarDisabled", "TargetCastBarDisabled", "NameplateCastBarDisabled",
+        "UserAddonsDisabled", "EncounterJournalDisabled", "EjSuggestedContentDisabled",
+        "EjDungeonsDisabled", "EjRaidsDisabled", "EjItemSetsDisabled",
+        "ExperienceBarDisabled", "ActionButtonTypeOverlayStrategy",
+    ].iter().enumerate() {
+        game_rule.set(*name, i as i32)?;
+    }
+    enum_table.set("GameRule", game_rule)?;
+
+    // Enum.ScriptedAnimationBehavior (many values needed)
+    let animation_behavior = lua.create_table()?;
+    for (i, name) in [
+        "None", "FollowsCaster", "FollowsTarget", "SourceRecoil",
+        "SourceCollideWithTarget", "TargetShake", "TargetKnockBack",
+        "UIParentShake", "TargetCenter", "TargetCenterToSource",
+    ].iter().enumerate() {
+        animation_behavior.set(*name, i as i32)?;
+    }
+    enum_table.set("ScriptedAnimationBehavior", animation_behavior)?;
+
+    // Enum.ScriptedAnimationTrajectory
+    let animation_trajectory = lua.create_table()?;
+    for (i, name) in [
+        "AtSource", "Straight", "CurveLeft", "CurveRight", "CurveRandom",
+        "AtTarget", "HalfwayBetween", "SourceToTarget", "TargetToSource",
+    ].iter().enumerate() {
+        animation_trajectory.set(*name, i as i32)?;
+    }
+    enum_table.set("ScriptedAnimationTrajectory", animation_trajectory)?;
+
+    globals.set("Enum", enum_table)?;
+
+    // C_UIColor namespace (color utilities)
+    let c_ui_color = lua.create_table()?;
+    let get_colors = lua.create_function(|lua, ()| {
+        // Return an empty table of colors
+        lua.create_table()
+    })?;
+    c_ui_color.set("GetColors", get_colors)?;
+    globals.set("C_UIColor", c_ui_color)?;
+
+    // C_ClassColor namespace
+    let c_class_color = lua.create_table()?;
+    let get_class_color = lua.create_function(|lua, _class_name: String| {
+        // Return a color object with methods (same as CreateColor)
+        let r = 1.0f32;
+        let g = 1.0f32;
+        let b = 1.0f32;
+        let a = 1.0f32;
+
+        let color = lua.create_table()?;
+        color.set("r", r)?;
+        color.set("g", g)?;
+        color.set("b", b)?;
+        color.set("a", a)?;
+
+        let get_rgb = lua.create_function(move |_, ()| Ok((r, g, b)))?;
+        color.set("GetRGB", get_rgb)?;
+
+        let get_rgba = lua.create_function(move |_, ()| Ok((r, g, b, a)))?;
+        color.set("GetRGBA", get_rgba)?;
+
+        let generate_hex = lua.create_function(move |lua, ()| {
+            let hex = format!("{:02x}{:02x}{:02x}", (r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8);
+            Ok(Value::String(lua.create_string(&hex)?))
+        })?;
+        color.set("GenerateHexColor", generate_hex)?;
+
+        let wrap_text = lua.create_function(move |lua, text: String| {
+            let hex = format!("{:02x}{:02x}{:02x}", (r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8);
+            let wrapped = format!("|cff{}{}|r", hex, text);
+            Ok(Value::String(lua.create_string(&wrapped)?))
+        })?;
+        color.set("WrapTextInColorCode", wrap_text)?;
+
+        Ok(color)
+    })?;
+    c_class_color.set("GetClassColor", get_class_color)?;
+    globals.set("C_ClassColor", c_class_color)?;
+
+    // C_GameRules namespace
+    let c_game_rules = lua.create_table()?;
+    let is_active = lua.create_function(|_, _rule: Value| {
+        Ok(false) // No special game rules in simulation
+    })?;
+    c_game_rules.set("IsGameRuleActive", is_active)?;
+
+    let get_active_game_mode = lua.create_function(|_, ()| {
+        Ok(0) // Enum.GameMode.Standard
+    })?;
+    c_game_rules.set("GetActiveGameMode", get_active_game_mode)?;
+
+    let get_game_rule_as_float = lua.create_function(|_, _rule: Value| {
+        Ok(0.0f32) // Default value for numeric game rules
+    })?;
+    c_game_rules.set("GetGameRuleAsFloat", get_game_rule_as_float)?;
+
+    let is_standard = lua.create_function(|_, ()| {
+        Ok(true) // Always standard mode in simulation
+    })?;
+    c_game_rules.set("IsStandard", is_standard)?;
+
+    globals.set("C_GameRules", c_game_rules)?;
+
+    // C_ScriptedAnimations namespace
+    let c_scripted_anims = lua.create_table()?;
+    let get_all_effects = lua.create_function(|lua, ()| {
+        // Return empty array - no scripted animation effects in simulation
+        lua.create_table()
+    })?;
+    c_scripted_anims.set("GetAllScriptedAnimationEffects", get_all_effects)?;
+    globals.set("C_ScriptedAnimations", c_scripted_anims)?;
+
+    // C_Glue namespace (glue screen utilities)
+    let c_glue = lua.create_table()?;
+    let is_on_glue_screen = lua.create_function(|_, ()| {
+        Ok(false) // Not on character select/login screen
+    })?;
+    c_glue.set("IsOnGlueScreen", is_on_glue_screen)?;
+    globals.set("C_Glue", c_glue)?;
+
+    // Unit info functions (stubs for simulation)
+    let unit_race = lua.create_function(|lua, _unit: String| {
+        // Return: raceName, raceFile
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string("Human")?),
+            Value::String(lua.create_string("Human")?),
+        ]))
+    })?;
+    globals.set("UnitRace", unit_race)?;
+
+    let unit_sex = lua.create_function(|_, _unit: String| {
+        // Return: 2 for male, 3 for female (matches Enum.UnitSex)
+        Ok(2)
+    })?;
+    globals.set("UnitSex", unit_sex)?;
+
+    let unit_class = lua.create_function(|lua, _unit: String| {
+        // Return: className, classFile, classID
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string("Warrior")?),
+            Value::String(lua.create_string("WARRIOR")?),
+            Value::Integer(1),
+        ]))
+    })?;
+    globals.set("UnitClass", unit_class)?;
+
+    // UnitName(unit) - Return name and realm
+    let unit_name = lua.create_function(|lua, unit: String| {
+        let name = match unit.as_str() {
+            "player" => "SimPlayer",
+            _ => "SimUnit",
+        };
+        // Return: name, realm (realm is nil for same-realm units)
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string(name)?),
+            Value::Nil,
+        ]))
+    })?;
+    globals.set("UnitName", unit_name)?;
+
+    // UnitGUID(unit) - Return unit GUID
+    let unit_guid = lua.create_function(|lua, unit: String| {
+        let guid = match unit.as_str() {
+            "player" => "Player-0000-00000001",
+            _ => "Creature-0000-00000000",
+        };
+        Ok(Value::String(lua.create_string(guid)?))
+    })?;
+    globals.set("UnitGUID", unit_guid)?;
+
+    // UnitLevel(unit) - Return unit level
+    let unit_level = lua.create_function(|_, _unit: String| Ok(70))?;
+    globals.set("UnitLevel", unit_level)?;
+
+    // UnitExists(unit) - Check if unit exists
+    let unit_exists = lua.create_function(|_, unit: String| {
+        Ok(matches!(unit.as_str(), "player" | "target" | "pet"))
+    })?;
+    globals.set("UnitExists", unit_exists)?;
+
+    // UnitFactionGroup(unit) - Return faction
+    let unit_faction_group = lua.create_function(|lua, _unit: String| {
+        // Return: englishFaction, localizedFaction
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string("Alliance")?),
+            Value::String(lua.create_string("Alliance")?),
+        ]))
+    })?;
+    globals.set("UnitFactionGroup", unit_faction_group)?;
+
+    // GetCurrentRegion() - Return region ID
+    let get_current_region = lua.create_function(|_, ()| {
+        // 1=US, 2=Korea, 3=Europe, 4=Taiwan, 5=China
+        Ok(1)
+    })?;
+    globals.set("GetCurrentRegion", get_current_region)?;
+
+    // GetCurrentRegionName() - Return region name
+    let get_current_region_name = lua.create_function(|lua, ()| {
+        Ok(Value::String(lua.create_string("US")?))
+    })?;
+    globals.set("GetCurrentRegionName", get_current_region_name)?;
+
+    // Constants table (WoW uses this for various constants)
+    let constants_table = lua.create_table()?;
+    // LFG role constants
+    let lfg_role_constants = lua.create_table()?;
+    lfg_role_constants.set("LFG_ROLE_TANK", 0)?;
+    lfg_role_constants.set("LFG_ROLE_HEALER", 1)?;
+    lfg_role_constants.set("LFG_ROLE_DAMAGE", 2)?;
+    lfg_role_constants.set("LFG_ROLE_NO_ROLE", 3)?;
+    constants_table.set("LFG_ROLEConstants", lfg_role_constants)?;
+
+    // AccountStoreConsts
+    let account_store_consts = lua.create_table()?;
+    account_store_consts.set("PlunderstormStoreFrontID", 1)?;
+    account_store_consts.set("WowhackStoreFrontID", 2)?;
+    constants_table.set("AccountStoreConsts", account_store_consts)?;
+
+    globals.set("Constants", constants_table)?;
+
+    // GetCurrentEnvironment() - returns the current global environment table
+    let get_current_environment = lua.create_function(|lua, ()| {
+        // Return _G (the global environment table)
+        Ok(lua.globals())
+    })?;
+    globals.set("GetCurrentEnvironment", get_current_environment)?;
+
+    // WOW_PROJECT constants
+    globals.set("WOW_PROJECT_MAINLINE", 1)?;
+    globals.set("WOW_PROJECT_CLASSIC", 2)?;
+    globals.set("WOW_PROJECT_BURNING_CRUSADE_CLASSIC", 5)?;
+    globals.set("WOW_PROJECT_WRATH_CLASSIC", 11)?;
+    globals.set("WOW_PROJECT_CATACLYSM_CLASSIC", 14)?;
+    globals.set("WOW_PROJECT_ID", 1)?; // Mainline
+
+    // nop() - no-operation function
+    let nop = lua.create_function(|_, _: mlua::MultiValue| {
+        Ok(())
+    })?;
+    globals.set("nop", nop)?;
 
     // securecallfunction(func, ...) - calls a function in protected mode
     let securecallfunction = lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
@@ -260,18 +615,288 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("geterrorhandler", geterrorhandler)?;
 
+    // Lua stdlib global aliases (WoW compatibility)
+    lua.load(r##"
+        -- String library aliases
+        strlen = string.len
+        strsub = string.sub
+        strfind = string.find
+        strmatch = string.match
+        strbyte = string.byte
+        strchar = string.char
+        strrep = string.rep
+        strrev = string.reverse
+        strlower = string.lower
+        strupper = string.upper
+        strtrim = function(s) return (s:gsub("^%s*(.-)%s*$", "%1")) end
+        strsplittable = function(del, str) local t = {} for v in string.gmatch(str, "([^"..del.."]+)") do t[#t+1] = v end return t end
+        format = string.format
+        gsub = string.gsub
+        gmatch = string.gmatch
+
+        -- Math library aliases
+        abs = math.abs
+        ceil = math.ceil
+        floor = math.floor
+        max = math.max
+        min = math.min
+        mod = math.fmod
+        sqrt = math.sqrt
+        sin = function(x) return math.sin(math.rad(x)) end
+        cos = function(x) return math.cos(math.rad(x)) end
+        tan = function(x) return math.tan(math.rad(x)) end
+        asin = function(x) return math.deg(math.asin(x)) end
+        acos = function(x) return math.deg(math.acos(x)) end
+        atan = function(x) return math.deg(math.atan(x)) end
+        atan2 = function(x, y) return math.deg(math.atan2(x, y)) end
+        deg = math.deg
+        rad = math.rad
+        exp = math.exp
+        log = math.log
+        log10 = math.log10
+        frexp = math.frexp
+        ldexp = math.ldexp
+        random = math.random
+        PI = math.pi
+
+        -- Table library aliases
+        foreach = table.foreach
+        foreachi = table.foreachi
+        getn = table.getn or function(t) return #t end
+        sort = table.sort
+        table.wipe = wipe
+
+        -- Bit operations (pure Lua 5.1 implementation)
+        bit = {}
+
+        local function tobits(n)
+            local t = {}
+            while n > 0 do
+                t[#t + 1] = n % 2
+                n = math.floor(n / 2)
+            end
+            return t
+        end
+
+        local function frombits(t)
+            local n = 0
+            for i = 1, #t do
+                n = n + t[i] * (2 ^ (i - 1))
+            end
+            return n
+        end
+
+        function bit.band(a, b)
+            local ta, tb = tobits(a), tobits(b)
+            local result = {}
+            local len = math.max(#ta, #tb)
+            for i = 1, len do
+                result[i] = ((ta[i] or 0) == 1 and (tb[i] or 0) == 1) and 1 or 0
+            end
+            return frombits(result)
+        end
+
+        function bit.bor(a, b)
+            local ta, tb = tobits(a), tobits(b)
+            local result = {}
+            local len = math.max(#ta, #tb)
+            for i = 1, len do
+                result[i] = ((ta[i] or 0) == 1 or (tb[i] or 0) == 1) and 1 or 0
+            end
+            return frombits(result)
+        end
+
+        function bit.bxor(a, b)
+            local ta, tb = tobits(a), tobits(b)
+            local result = {}
+            local len = math.max(#ta, #tb)
+            for i = 1, len do
+                result[i] = ((ta[i] or 0) ~= (tb[i] or 0)) and 1 or 0
+            end
+            return frombits(result)
+        end
+
+        function bit.bnot(a)
+            -- 32-bit NOT
+            return 4294967295 - a
+        end
+
+        function bit.lshift(a, n)
+            return math.floor(a * (2 ^ n)) % 4294967296
+        end
+
+        function bit.rshift(a, n)
+            return math.floor(a / (2 ^ n))
+        end
+
+        function bit.arshift(a, n)
+            local r = bit.rshift(a, n)
+            if a >= 2147483648 then
+                r = r + (2 ^ 32 - 2 ^ (32 - n))
+            end
+            return r
+        end
+
+        function bit.mod(a, b)
+            return a % b
+        end
+
+        -- Mixin system (WoW C++ intrinsics)
+        function Mixin(object, ...)
+            for i = 1, select("#", ...) do
+                local mixin = select(i, ...)
+                if mixin then
+                    for k, v in pairs(mixin) do
+                        object[k] = v
+                    end
+                end
+            end
+            return object
+        end
+
+        function CreateFromMixins(...)
+            return Mixin({}, ...)
+        end
+
+        function CreateAndInitFromMixin(mixin, ...)
+            local object = CreateFromMixins(mixin)
+            if object.Init then
+                object:Init(...)
+            end
+            return object
+        end
+
+        -- Security functions (always "secure" in simulation)
+        function issecure()
+            return true
+        end
+
+        function issecurevariable(table, variable)
+            return true, "secure"
+        end
+
+        function forceinsecure()
+            -- no-op in simulation
+        end
+
+        -- Debug functions
+        function debugstack(start, count1, count2)
+            return "stack trace not available in simulation"
+        end
+
+        function debuglocals(level)
+            return ""
+        end
+
+        -- Time functions
+        function GetTime()
+            return os.clock()
+        end
+
+        function GetServerTime()
+            return os.time()
+        end
+
+        function time()
+            return os.time()
+        end
+
+        function date(fmt, t)
+            return os.date(fmt, t)
+        end
+
+        function difftime(t2, t1)
+            return os.difftime(t2, t1)
+        end
+    "##).exec()?;
+
     // C_Timer namespace
     let c_timer = lua.create_table()?;
-    // C_Timer.After(seconds, callback) - simplified version that calls immediately for testing
+    // C_Timer.After(seconds, callback) - simplified version
     let c_timer_after = lua.create_function(|_, (_seconds, callback): (f64, mlua::Function)| {
         // In a real implementation, this would schedule for later
-        // For testing, we just store it (or call it immediately)
-        // For now, just acknowledge it exists
         let _ = callback; // Would need an event loop to actually call this
         Ok(())
     })?;
     c_timer.set("After", c_timer_after)?;
+
+    // C_Timer.NewTicker(seconds, callback, iterations) - creates a repeating timer
+    let c_timer_new_ticker = lua.create_function(|lua, (_seconds, callback, _iterations): (f64, mlua::Function, Option<i32>)| {
+        // Return a ticker object with Cancel method
+        let _ = callback; // Would need an event loop to actually call this
+        let ticker = lua.create_table()?;
+        let cancel = lua.create_function(|_, ()| Ok(()))?;
+        ticker.set("Cancel", cancel)?;
+        Ok(ticker)
+    })?;
+    c_timer.set("NewTicker", c_timer_new_ticker)?;
+
+    // C_Timer.NewTimer(seconds, callback) - creates a one-shot timer
+    let c_timer_new_timer = lua.create_function(|lua, (_seconds, callback): (f64, mlua::Function)| {
+        let _ = callback;
+        let timer = lua.create_table()?;
+        let cancel = lua.create_function(|_, ()| Ok(()))?;
+        timer.set("Cancel", cancel)?;
+        Ok(timer)
+    })?;
+    c_timer.set("NewTimer", c_timer_new_timer)?;
+
     globals.set("C_Timer", c_timer)?;
+
+    // C_ChatInfo namespace
+    let c_chat_info = lua.create_table()?;
+    let register_prefix = lua.create_function(|_, _prefix: String| {
+        // In simulation, just accept the prefix without doing anything
+        Ok(true)
+    })?;
+    c_chat_info.set("RegisterAddonMessagePrefix", register_prefix)?;
+    let send_addon_message = lua.create_function(|_, (_prefix, _message, _channel, _target): (String, String, Option<String>, Option<String>)| {
+        // Stub - messages don't go anywhere in simulation
+        Ok(())
+    })?;
+    c_chat_info.set("SendAddonMessage", send_addon_message)?;
+    globals.set("C_ChatInfo", c_chat_info)?;
+
+    // Legacy global version
+    let register_addon_message_prefix = lua.create_function(|_, _prefix: String| Ok(true))?;
+    globals.set("RegisterAddonMessagePrefix", register_addon_message_prefix)?;
+
+    // CreateColor(r, g, b, a) - creates a color object
+    let create_color = lua.create_function(|lua, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
+        let color = lua.create_table()?;
+        color.set("r", r)?;
+        color.set("g", g)?;
+        color.set("b", b)?;
+        color.set("a", a.unwrap_or(1.0))?;
+
+        // Add color methods
+        let get_rgb = lua.create_function(move |_, ()| {
+            Ok((r, g, b))
+        })?;
+        color.set("GetRGB", get_rgb)?;
+
+        let get_rgba = lua.create_function(move |_, ()| {
+            Ok((r, g, b, a.unwrap_or(1.0)))
+        })?;
+        color.set("GetRGBA", get_rgba)?;
+
+        let generate_hex = lua.create_function(move |lua, ()| {
+            let hex = format!("{:02x}{:02x}{:02x}", (r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8);
+            Ok(Value::String(lua.create_string(&hex)?))
+        })?;
+        color.set("GenerateHexColor", generate_hex)?;
+
+        Ok(color)
+    })?;
+    globals.set("CreateColor", create_color)?;
+
+    // Faction color globals (now that CreateColor exists)
+    lua.load(r#"
+        PLAYER_FACTION_COLOR_HORDE = CreateColor(1.0, 0.1, 0.1)
+        PLAYER_FACTION_COLOR_ALLIANCE = CreateColor(0.1, 0.1, 1.0)
+        FACTION_HORDE = "Horde"
+        FACTION_ALLIANCE = "Alliance"
+    "#).exec()?;
 
     Ok(())
 }
@@ -498,6 +1123,15 @@ impl UserData for FrameHandle {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.unregister_event(&event);
+            }
+            Ok(())
+        });
+
+        // UnregisterAllEvents()
+        methods.add_method("UnregisterAllEvents", |_, this, ()| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.registered_events.clear();
             }
             Ok(())
         });
@@ -862,6 +1496,116 @@ impl UserData for FrameHandle {
             let state = this.state.borrow();
             let height = state.widgets.get(this.id).map(|f| f.font_size).unwrap_or(12.0);
             Ok(height)
+        });
+
+        // SetForbidden() - marks frame as forbidden (security feature, no-op in simulation)
+        methods.add_method("SetForbidden", |_, _this, _forbidden: Option<bool>| {
+            Ok(())
+        });
+
+        // IsForbidden() - check if frame is forbidden
+        methods.add_method("IsForbidden", |_, _this, ()| {
+            Ok(false)
+        });
+
+        // CanChangeProtectedState() - check if we can change protected state
+        methods.add_method("CanChangeProtectedState", |_, _this, ()| {
+            Ok(true) // Always true in simulation
+        });
+
+        // SetPassThroughButtons(...) - set which mouse buttons pass through
+        methods.add_method("SetPassThroughButtons", |_, _this, _args: mlua::MultiValue| {
+            Ok(())
+        });
+
+        // SetFlattensRenderLayers(flatten) - for render optimization
+        methods.add_method("SetFlattensRenderLayers", |_, _this, _flatten: Option<bool>| {
+            Ok(())
+        });
+
+        // SetClipsChildren(clips) - whether to clip child frames
+        methods.add_method("SetClipsChildren", |_, _this, _clips: Option<bool>| {
+            Ok(())
+        });
+
+        // SetShown(shown) - show/hide based on boolean
+        methods.add_method("SetShown", |_, this, shown: bool| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.visible = shown;
+            }
+            Ok(())
+        });
+
+        // GetEffectiveScale() - get combined scale of frame and parents
+        methods.add_method("GetEffectiveScale", |_, _this, ()| {
+            Ok(1.0f32) // No scaling in simulation
+        });
+
+        // GetScale() - get frame's scale
+        methods.add_method("GetScale", |_, _this, ()| {
+            Ok(1.0f32)
+        });
+
+        // SetScale(scale) - set frame's scale
+        methods.add_method("SetScale", |_, _this, _scale: f32| {
+            Ok(())
+        });
+
+        // GetAttribute(name) - get a named attribute from the frame
+        methods.add_method("GetAttribute", |lua, this, name: String| {
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(attr) = frame.attributes.get(&name) {
+                    return match attr {
+                        AttributeValue::String(s) => Ok(Value::String(lua.create_string(s)?)),
+                        AttributeValue::Number(n) => Ok(Value::Number(*n)),
+                        AttributeValue::Boolean(b) => Ok(Value::Boolean(*b)),
+                        AttributeValue::Nil => Ok(Value::Nil),
+                    };
+                }
+            }
+            Ok(Value::Nil)
+        });
+
+        // SetAttribute(name, value) - set a named attribute on the frame
+        methods.add_method("SetAttribute", |lua, this, (name, value): (String, Value)| {
+            // Store attribute (if it's a simple type)
+            {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    let attr = match &value {
+                        Value::Nil => AttributeValue::Nil,
+                        Value::Boolean(b) => AttributeValue::Boolean(*b),
+                        Value::Integer(i) => AttributeValue::Number(*i as f64),
+                        Value::Number(n) => AttributeValue::Number(*n),
+                        Value::String(s) => AttributeValue::String(s.to_str().map(|s| s.to_string()).unwrap_or_default()),
+                        _ => AttributeValue::Nil, // Tables etc not stored persistently
+                    };
+                    if matches!(attr, AttributeValue::Nil) && matches!(value, Value::Nil) {
+                        frame.attributes.remove(&name);
+                    } else if !matches!(value, Value::Table(_)) {
+                        // Only store non-table values
+                        frame.attributes.insert(name.clone(), attr);
+                    }
+                }
+            }
+
+            // Trigger OnAttributeChanged script if one exists
+            let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
+            if let Some(table) = scripts_table {
+                let frame_key = format!("{}_OnAttributeChanged", this.id);
+                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+                if let Some(handler) = handler {
+                    // Get frame userdata
+                    let frame_ref_key = format!("__frame_{}", this.id);
+                    let frame_ud: Value = lua.globals().get(frame_ref_key.as_str()).unwrap_or(Value::Nil);
+                    // Call handler with (self, name, value)
+                    let name_str = lua.create_string(&name)?;
+                    let _ = handler.call::<()>((frame_ud, name_str, value));
+                }
+            }
+            Ok(())
         });
     }
 }

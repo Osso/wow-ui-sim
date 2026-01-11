@@ -5,8 +5,10 @@
 
 pub mod error;
 pub mod event;
+pub mod loader;
 pub mod lua_api;
 pub mod render;
+pub mod toc;
 pub mod widget;
 pub mod xml;
 

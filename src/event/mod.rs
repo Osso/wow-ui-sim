@@ -85,6 +85,7 @@ pub enum ScriptHandler {
     OnMouseWheel,
     OnSizeChanged,
     OnLoad,
+    OnAttributeChanged,
 }
 
 impl ScriptHandler {
@@ -105,6 +106,7 @@ impl ScriptHandler {
             "OnMouseWheel" => Some(Self::OnMouseWheel),
             "OnSizeChanged" => Some(Self::OnSizeChanged),
             "OnLoad" => Some(Self::OnLoad),
+            "OnAttributeChanged" => Some(Self::OnAttributeChanged),
             _ => None,
         }
     }
@@ -126,6 +128,7 @@ impl ScriptHandler {
             Self::OnMouseWheel => "OnMouseWheel",
             Self::OnSizeChanged => "OnSizeChanged",
             Self::OnLoad => "OnLoad",
+            Self::OnAttributeChanged => "OnAttributeChanged",
         }
     }
 }
