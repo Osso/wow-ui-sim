@@ -1,0 +1,20 @@
+[package]
+name = "wow-ui-sim"
+version = "0.1.0"
+edition = "2024"
+description = "World of Warcraft UI simulator for addon development"
+
+[dependencies]
+mlua = { version = "0.10", features = ["lua51", "vendored"] }
+quick-xml = { version = "0.37", features = ["serialize"] }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+iced = { version = "0.13", features = ["canvas"] }
+
+[dev-dependencies]
+insta = "1.42"
+
+[profile.release]
+lto = false
