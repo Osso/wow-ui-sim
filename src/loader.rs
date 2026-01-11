@@ -73,6 +73,112 @@ fn normalize_path(path: &str) -> String {
     path.replace('\\', "/")
 }
 
+/// Create a frame from XML definition.
+fn create_frame_from_xml(
+    env: &WowLuaEnv,
+    frame: &crate::xml::FrameXml,
+    widget_type: &str,
+) -> Result<(), LoadError> {
+    // Skip virtual frames (templates)
+    if frame.is_virtual == Some(true) {
+        return Ok(());
+    }
+
+    // Need a name to create a global frame
+    let name = match &frame.name {
+        Some(n) => n,
+        None => return Ok(()), // Anonymous frames in XML are usually children
+    };
+
+    // Build the Lua code to create and configure the frame
+    let parent = frame.parent.as_deref().unwrap_or("UIParent");
+    let inherits = frame.inherits.as_deref().unwrap_or("");
+
+    // Create the frame
+    let mut lua_code = format!(
+        r#"
+        local frame = CreateFrame("{}", "{}", {}, {})
+        "#,
+        widget_type,
+        name,
+        parent,
+        if inherits.is_empty() {
+            "nil".to_string()
+        } else {
+            format!("\"{}\"", inherits)
+        }
+    );
+
+    // Apply mixins
+    if let Some(mixin) = &frame.mixin {
+        for m in mixin.split(',').map(|s| s.trim()) {
+            if !m.is_empty() {
+                lua_code.push_str(&format!(
+                    r#"
+        if {} then Mixin(frame, {}) end
+        "#,
+                    m, m
+                ));
+            }
+        }
+    }
+
+    // Set size
+    if let Some(size) = frame.size() {
+        if let (Some(x), Some(y)) = (size.x, size.y) {
+            lua_code.push_str(&format!(
+                r#"
+        frame:SetSize({}, {})
+        "#,
+                x, y
+            ));
+        }
+    }
+
+    // Set anchors
+    if let Some(anchors) = frame.anchors() {
+        for anchor in &anchors.anchors {
+            let point = &anchor.point;
+            let relative_to = anchor.relative_to.as_deref();
+            let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
+            let x = anchor.x.unwrap_or(0.0);
+            let y = anchor.y.unwrap_or(0.0);
+
+            if let Some(rel) = relative_to {
+                lua_code.push_str(&format!(
+                    r#"
+        frame:SetPoint("{}", {}, "{}", {}, {})
+        "#,
+                    point, rel, relative_point, x, y
+                ));
+            } else {
+                lua_code.push_str(&format!(
+                    r#"
+        frame:SetPoint("{}", nil, "{}", {}, {})
+        "#,
+                    point, relative_point, x, y
+                ));
+            }
+        }
+    }
+
+    // Set hidden state
+    if frame.hidden == Some(true) {
+        lua_code.push_str(
+            r#"
+        frame:Hide()
+        "#,
+        );
+    }
+
+    // Execute the creation code
+    env.exec(&lua_code).map_err(|e| {
+        LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
+    })?;
+
+    Ok(())
+}
+
 /// Load an XML file, processing its elements.
 /// Returns the number of Lua files loaded from Script elements.
 fn load_xml_file(env: &WowLuaEnv, path: &Path) -> Result<usize, LoadError> {
@@ -99,14 +205,10 @@ fn load_xml_file(env: &WowLuaEnv, path: &Path) -> Result<usize, LoadError> {
                 lua_count += load_xml_file(env, &include_path)?;
             }
             XmlElement::Frame(f) => {
-                // Process frame definition (create if not virtual)
-                if f.is_virtual != Some(true) {
-                    if let Some(name) = &f.name {
-                        // For non-virtual frames, we'd create them here
-                        // For now, just note that we saw them
-                        let _ = name;
-                    }
-                }
+                create_frame_from_xml(env, f, "Frame")?;
+            }
+            XmlElement::Button(f) => {
+                create_frame_from_xml(env, f, "Button")?;
             }
             XmlElement::Texture(_) | XmlElement::FontString(_) => {
                 // Top-level textures/fontstrings are templates
@@ -120,8 +222,7 @@ fn load_xml_file(env: &WowLuaEnv, path: &Path) -> Result<usize, LoadError> {
             XmlElement::Font(_) => {
                 // Font definitions
             }
-            XmlElement::Button(_)
-            | XmlElement::CheckButton(_)
+            XmlElement::CheckButton(_)
             | XmlElement::EditBox(_)
             | XmlElement::ScrollFrame(_)
             | XmlElement::Slider(_)

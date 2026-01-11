@@ -164,6 +164,69 @@ fn test_load_details() {
 }
 
 #[test]
+fn test_load_game_menu() {
+    let wow_ui_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/wow-ui-source");
+
+    if !wow_ui_path.exists() {
+        eprintln!("Skipping: wow-ui-source not found");
+        return;
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+
+    // First load Blizzard_SharedXML (already tested to work)
+    let shared_xml_base_toc = wow_ui_path.join("Interface/AddOns/Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
+    match load_addon(&env, &shared_xml_base_toc) {
+        Ok(r) => println!("SharedXMLBase: {} Lua, {} XML", r.lua_files, r.xml_files),
+        Err(e) => println!("SharedXMLBase failed: {}", e),
+    }
+
+    let shared_xml_toc = wow_ui_path.join("Interface/AddOns/Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
+    match load_addon(&env, &shared_xml_toc) {
+        Ok(r) => println!("SharedXML: {} Lua, {} XML (warnings: {})", r.lua_files, r.xml_files, r.warnings.len()),
+        Err(e) => println!("SharedXML failed: {}", e),
+    }
+
+    // Now try loading GameMenu
+    let game_menu_toc = wow_ui_path.join("Interface/AddOns/Blizzard_GameMenu/Blizzard_GameMenu_Mainline.toc");
+    let result = load_addon(&env, &game_menu_toc);
+
+    match result {
+        Ok(r) => {
+            println!("GameMenu loaded: {} Lua files, {} XML files", r.lua_files, r.xml_files);
+            if !r.warnings.is_empty() {
+                println!("Warnings ({}):", r.warnings.len());
+                for w in &r.warnings {
+                    println!("  {}", w);
+                }
+            }
+        }
+        Err(e) => {
+            println!("GameMenu failed to load: {}", e);
+        }
+    }
+
+    // Check if GameMenuFrame exists
+    let mixin_exists: bool = env.eval("return GameMenuFrameMixin ~= nil").unwrap_or(false);
+    let frame_exists: bool = env.eval("return GameMenuFrame ~= nil").unwrap_or(false);
+    let main_menu_mixin: bool = env.eval("return MainMenuFrameMixin ~= nil").unwrap_or(false);
+
+    println!("GameMenuFrameMixin exists: {}", mixin_exists);
+    println!("GameMenuFrame exists: {}", frame_exists);
+    println!("MainMenuFrameMixin exists: {}", main_menu_mixin);
+
+    // Try to show the menu (if frame exists)
+    if frame_exists {
+        let _ = env.exec("GameMenuFrame:Show()");
+        let visible: bool = env.eval("return GameMenuFrame:IsVisible()").unwrap_or(false);
+        println!("GameMenuFrame visible after Show(): {}", visible);
+    }
+
+    assert!(mixin_exists, "GameMenuFrameMixin should exist");
+}
+
+#[test]
 fn test_load_dbm_core() {
     let dbm_path = PathBuf::from(env!("HOME"))
         .join("Projects/wow/reference-addons/DeadlyBossMods/DBM-Core/DBM-Core_Mainline.toc");
