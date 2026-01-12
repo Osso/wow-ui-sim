@@ -2905,23 +2905,55 @@ impl UserData for FrameHandle {
         });
 
         // SetBackdrop(backdropInfo) - WoW backdrop system for frame backgrounds
-        methods.add_method("SetBackdrop", |_, _this, _backdrop: Option<mlua::Table>| {
-            // Accept backdrop table but don't render it for now
-            // Backdrop format: { bgFile = "", edgeFile = "", tile = bool, tileSize = n, edgeSize = n, insets = { left, right, top, bottom } }
+        methods.add_method("SetBackdrop", |_, this, backdrop: Option<mlua::Table>| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(info) = backdrop {
+                    frame.backdrop.enabled = true;
+                    // Parse edge size if provided
+                    if let Ok(edge_size) = info.get::<f32>("edgeSize") {
+                        frame.backdrop.edge_size = edge_size;
+                    }
+                    // Parse insets if provided
+                    if let Ok(insets) = info.get::<mlua::Table>("insets") {
+                        if let Ok(left) = insets.get::<f32>("left") {
+                            frame.backdrop.insets = left;
+                        }
+                    }
+                } else {
+                    frame.backdrop.enabled = false;
+                }
+            }
             Ok(())
         });
 
         // SetBackdropColor(r, g, b, a) - Set backdrop background color
-        methods.add_method("SetBackdropColor", |_, _this, _args: mlua::MultiValue| {
-            // Accept color but don't render it
-            Ok(())
-        });
+        methods.add_method(
+            "SetBackdropColor",
+            |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.backdrop.enabled = true;
+                    frame.backdrop.bg_color =
+                        crate::widget::Color::new(r, g, b, a.unwrap_or(1.0));
+                }
+                Ok(())
+            },
+        );
 
         // SetBackdropBorderColor(r, g, b, a) - Set backdrop border color
-        methods.add_method("SetBackdropBorderColor", |_, _this, _args: mlua::MultiValue| {
-            // Accept border color but don't render it
-            Ok(())
-        });
+        methods.add_method(
+            "SetBackdropBorderColor",
+            |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.backdrop.enabled = true;
+                    frame.backdrop.border_color =
+                        crate::widget::Color::new(r, g, b, a.unwrap_or(1.0));
+                }
+                Ok(())
+            },
+        );
 
         // SetID(id) - Set frame ID (used for tab ordering, etc.)
         methods.add_method("SetID", |_, _this, _id: i32| {
@@ -3127,10 +3159,29 @@ impl UserData for FrameHandle {
         });
 
         // SetVertexColor(r, g, b, a) - for Texture widgets
-        methods.add_method("SetVertexColor", |_, _this, (_r, _g, _b, _a): (f32, f32, f32, Option<f32>)| {
-            // Store vertex color if needed for rendering
-            Ok(())
-        });
+        methods.add_method(
+            "SetVertexColor",
+            |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.vertex_color =
+                        Some(crate::widget::Color::new(r, g, b, a.unwrap_or(1.0)));
+                }
+                Ok(())
+            },
+        );
+
+        // SetTextColor(r, g, b, a) - for FontString widgets
+        methods.add_method(
+            "SetTextColor",
+            |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.text_color = crate::widget::Color::new(r, g, b, a.unwrap_or(1.0));
+                }
+                Ok(())
+            },
+        );
 
         // SetTexCoord(left, right, top, bottom) - for Texture widgets
         methods.add_method("SetTexCoord", |_, _this, _args: mlua::MultiValue| {

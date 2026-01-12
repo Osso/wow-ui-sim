@@ -12,6 +12,40 @@ pub enum AttributeValue {
     Nil,
 }
 
+/// RGBA color value.
+#[derive(Debug, Clone, Copy, Default)]
+pub struct Color {
+    pub r: f32,
+    pub g: f32,
+    pub b: f32,
+    pub a: f32,
+}
+
+impl Color {
+    pub fn new(r: f32, g: f32, b: f32, a: f32) -> Self {
+        Self { r, g, b, a }
+    }
+
+    pub fn rgb(r: f32, g: f32, b: f32) -> Self {
+        Self { r, g, b, a: 1.0 }
+    }
+}
+
+/// Backdrop configuration for frames.
+#[derive(Debug, Clone, Default)]
+pub struct Backdrop {
+    /// Whether backdrop is enabled.
+    pub enabled: bool,
+    /// Background color.
+    pub bg_color: Color,
+    /// Border color.
+    pub border_color: Color,
+    /// Edge size (border thickness).
+    pub edge_size: f32,
+    /// Insets from frame edges.
+    pub insets: f32,
+}
+
 /// A Frame is the base widget type in WoW's UI system.
 #[derive(Debug)]
 pub struct Frame {
@@ -45,14 +79,20 @@ pub struct Frame {
     pub mouse_enabled: bool,
     /// Texture path (for Texture widgets).
     pub texture: Option<String>,
+    /// Vertex color for textures (tinting).
+    pub vertex_color: Option<Color>,
     /// Text content (for FontString widgets).
     pub text: Option<String>,
+    /// Text color for FontStrings.
+    pub text_color: Color,
     /// Font name (for FontString widgets).
     pub font: Option<String>,
     /// Font size (for FontString widgets).
     pub font_size: f32,
     /// Named attributes (for secure frames, unit frames, etc.).
     pub attributes: HashMap<String, AttributeValue>,
+    /// Backdrop configuration.
+    pub backdrop: Backdrop,
 }
 
 impl Frame {
@@ -73,10 +113,13 @@ impl Frame {
             alpha: 1.0,
             mouse_enabled: false,
             texture: None,
+            vertex_color: None,
             text: None,
+            text_color: Color::new(1.0, 1.0, 1.0, 1.0), // Default white text
             font: None,
             font_size: 12.0,
             attributes: HashMap::new(),
+            backdrop: Backdrop::default(),
         }
     }
 

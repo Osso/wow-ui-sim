@@ -133,6 +133,37 @@ impl WowLuaEnv {
         Ok(())
     }
 
+    /// Fire a script handler for a specific widget.
+    /// handler_name is like "OnClick", "OnEnter", etc.
+    /// extra_args are passed after the frame (self) argument.
+    pub fn fire_script_handler(
+        &self,
+        widget_id: u64,
+        handler_name: &str,
+        extra_args: Vec<Value>,
+    ) -> Result<()> {
+        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
+
+        if let Some(table) = scripts_table {
+            let frame_key = format!("{}_{}", widget_id, handler_name);
+            let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+
+            if let Some(handler) = handler {
+                // Get the frame userdata
+                let frame_ref_key = format!("__frame_{}", widget_id);
+                let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
+
+                // Build arguments: (self, ...extra_args)
+                let mut call_args = vec![frame];
+                call_args.extend(extra_args);
+
+                handler.call::<()>(MultiValue::from_vec(call_args))?;
+            }
+        }
+
+        Ok(())
+    }
+
     /// Get access to the Lua state.
     pub fn lua(&self) -> &Lua {
         &self.lua

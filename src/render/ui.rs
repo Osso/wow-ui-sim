@@ -2,12 +2,39 @@
 
 use super::LayoutRect;
 use crate::lua_api::WowLuaEnv;
-use crate::widget::WidgetType;
+use crate::widget::{Backdrop, WidgetType};
 use iced::widget::canvas::{self, Cache, Canvas, Geometry, Path, Stroke};
 use iced::widget::{column, container, row, text, Column};
 use iced::{Color, Element, Length, Point, Rectangle, Size, Theme};
 use std::cell::RefCell;
 use std::rc::Rc;
+
+// WoW-style color palette
+mod wow_colors {
+    use iced::Color;
+
+    // Background colors
+    pub const PANEL_BG: Color = Color::from_rgba(0.05, 0.05, 0.08, 0.92);
+    pub const PANEL_BG_LIGHT: Color = Color::from_rgba(0.12, 0.12, 0.15, 0.85);
+    pub const TOOLTIP_BG: Color = Color::from_rgba(0.0, 0.0, 0.0, 0.95);
+
+    // Border colors (gold/bronze theme)
+    pub const BORDER_GOLD: Color = Color::from_rgba(0.75, 0.6, 0.2, 1.0);
+    pub const BORDER_DARK: Color = Color::from_rgba(0.3, 0.25, 0.1, 1.0);
+    pub const BORDER_HIGHLIGHT: Color = Color::from_rgba(1.0, 0.85, 0.4, 1.0);
+
+    // Button colors
+    pub const BUTTON_BG: Color = Color::from_rgba(0.15, 0.12, 0.08, 0.9);
+    pub const BUTTON_BORDER: Color = Color::from_rgba(0.6, 0.5, 0.25, 1.0);
+    pub const BUTTON_HIGHLIGHT: Color = Color::from_rgba(0.25, 0.2, 0.12, 0.95);
+
+    // Texture placeholder
+    pub const TEXTURE_TINT: Color = Color::from_rgba(0.4, 0.35, 0.3, 0.7);
+
+    // Text colors
+    pub const TEXT_NORMAL: Color = Color::from_rgba(1.0, 0.82, 0.0, 1.0); // Gold text
+    pub const TEXT_WHITE: Color = Color::from_rgba(1.0, 1.0, 1.0, 1.0);
+}
 
 /// Run the iced UI with the given Lua environment.
 pub fn run_ui(env: WowLuaEnv) -> iced::Result {
@@ -37,7 +64,6 @@ struct App {
 /// Owned frame info for rendering.
 #[derive(Debug, Clone)]
 struct FrameInfo {
-    #[allow(dead_code)]
     id: u64,
     name: Option<String>,
     widget_type: WidgetType,
@@ -47,14 +73,36 @@ struct FrameInfo {
     frame_level: i32,
     alpha: f32,
     text: Option<String>,
+    text_color: crate::widget::Color,
+    backdrop: Backdrop,
+    vertex_color: Option<crate::widget::Color>,
+    mouse_enabled: bool,
 }
 
 #[derive(Debug, Clone)]
-#[allow(dead_code)]
 enum Message {
     LuaInputChanged(String),
     ExecuteLua,
     FireEvent(String),
+    // Mouse interaction messages
+    MouseTransition {
+        leave: Option<u64>,
+        enter: Option<u64>,
+    },
+    MouseDown(u64, String),
+    MouseUp(u64, String),
+    Click(u64, String),
+}
+
+/// State for canvas mouse interaction tracking.
+#[derive(Debug, Default)]
+struct CanvasState {
+    /// Currently hovered frame ID (topmost mouse-enabled frame under cursor).
+    hovered_frame: Option<u64>,
+    /// Frame that received mouse down (for click detection).
+    mouse_down_frame: Option<u64>,
+    /// Which button is pressed (for click detection).
+    mouse_down_button: Option<iced::mouse::Button>,
 }
 
 impl App {
@@ -88,6 +136,53 @@ impl App {
                 }
                 self.frame_cache.clear();
             }
+            Message::MouseTransition { leave, enter } => {
+                let env = self.env.borrow();
+                if let Some(frame_id) = leave {
+                    if let Err(e) = env.fire_script_handler(frame_id, "OnLeave", vec![]) {
+                        self.log_messages.push(format!("OnLeave error: {}", e));
+                    }
+                }
+                if let Some(frame_id) = enter {
+                    if let Err(e) = env.fire_script_handler(frame_id, "OnEnter", vec![]) {
+                        self.log_messages.push(format!("OnEnter error: {}", e));
+                    }
+                }
+                self.frame_cache.clear();
+            }
+            Message::MouseDown(frame_id, button) => {
+                let env = self.env.borrow();
+                let button_val =
+                    mlua::Value::String(env.lua().create_string(&button).unwrap());
+                if let Err(e) =
+                    env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val])
+                {
+                    self.log_messages.push(format!("OnMouseDown error: {}", e));
+                }
+                self.frame_cache.clear();
+            }
+            Message::MouseUp(frame_id, button) => {
+                let env = self.env.borrow();
+                let button_val =
+                    mlua::Value::String(env.lua().create_string(&button).unwrap());
+                if let Err(e) = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val])
+                {
+                    self.log_messages.push(format!("OnMouseUp error: {}", e));
+                }
+                self.frame_cache.clear();
+            }
+            Message::Click(frame_id, button) => {
+                let env = self.env.borrow();
+                let button_val =
+                    mlua::Value::String(env.lua().create_string(&button).unwrap());
+                let down_val = mlua::Value::Boolean(false); // Mouse click, not keyboard
+                if let Err(e) =
+                    env.fire_script_handler(frame_id, "OnClick", vec![button_val, down_val])
+                {
+                    self.log_messages.push(format!("OnClick error: {}", e));
+                }
+                self.frame_cache.clear();
+            }
         }
         iced::Task::none()
     }
@@ -114,6 +209,10 @@ impl App {
                         frame_level: frame.frame_level,
                         alpha: frame.alpha,
                         text: frame.text.clone(),
+                        text_color: frame.text_color,
+                        backdrop: frame.backdrop.clone(),
+                        vertex_color: frame.vertex_color,
+                        mouse_enabled: frame.mouse_enabled,
                     });
 
                     let name = frame.name.as_deref().unwrap_or("(anonymous)");
@@ -209,7 +308,7 @@ struct FrameRenderer<'a> {
 }
 
 impl canvas::Program<Message> for FrameRenderer<'_> {
-    type State = ();
+    type State = CanvasState;
 
     fn draw(
         &self,
@@ -220,35 +319,25 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
         _cursor: iced::mouse::Cursor,
     ) -> Vec<Geometry> {
         let geometry = self.cache.draw(renderer, bounds.size(), |frame| {
-            // Draw background
+            // Draw WoW-style dark background
             frame.fill_rectangle(
                 Point::ORIGIN,
                 bounds.size(),
-                Color::from_rgb(0.1, 0.1, 0.15),
+                Color::from_rgb(0.05, 0.05, 0.08),
             );
 
             // Recompute layout for actual canvas size
             let scale_x = bounds.width / 800.0;
             let scale_y = bounds.height / 600.0;
 
-            // Color palette for frames
-            let colors = [
-                Color::from_rgba(0.2, 0.4, 0.8, 0.6),
-                Color::from_rgba(0.8, 0.3, 0.2, 0.6),
-                Color::from_rgba(0.2, 0.7, 0.3, 0.6),
-                Color::from_rgba(0.7, 0.5, 0.2, 0.6),
-                Color::from_rgba(0.5, 0.2, 0.7, 0.6),
-                Color::from_rgba(0.2, 0.6, 0.6, 0.6),
-            ];
-
             // Draw each visible frame (already sorted by strata/level)
-            for (i, info) in self.frames.iter().enumerate() {
+            for info in self.frames.iter() {
                 if !info.visible {
                     continue;
                 }
 
-                // Skip UIParent
-                if info.name.as_deref() == Some("UIParent") {
+                // Skip UIParent and Minimap (built-in frames)
+                if matches!(info.name.as_deref(), Some("UIParent") | Some("Minimap")) {
                     continue;
                 }
 
@@ -264,61 +353,20 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                     height: info.rect.height * scale_y,
                 };
 
-                // Different colors for different widget types
-                let base_color = match info.widget_type {
-                    WidgetType::Frame => colors[i % colors.len()],
-                    WidgetType::Button => Color::from_rgba(0.3, 0.5, 0.7, 0.8),
-                    WidgetType::Texture => Color::from_rgba(0.6, 0.4, 0.2, 0.7),
-                    WidgetType::FontString => Color::from_rgba(0.1, 0.1, 0.1, 0.3),
-                };
-
-                // Apply alpha
-                let color = Color::from_rgba(
-                    base_color.r,
-                    base_color.g,
-                    base_color.b,
-                    base_color.a * info.alpha,
-                );
-
-                // Draw filled rectangle
-                frame.fill_rectangle(
-                    Point::new(rect.x, rect.y),
-                    Size::new(rect.width, rect.height),
-                    color,
-                );
-
-                // Draw border (skip for FontStrings)
-                if info.widget_type != WidgetType::FontString {
-                    let border_path = Path::rectangle(
-                        Point::new(rect.x, rect.y),
-                        Size::new(rect.width, rect.height),
-                    );
-                    frame.stroke(
-                        &border_path,
-                        Stroke::default().with_color(Color::WHITE).with_width(1.0),
-                    );
-                }
-
-                // Draw text content for FontStrings
-                if info.widget_type == WidgetType::FontString {
-                    if let Some(text) = &info.text {
-                        frame.fill_text(canvas::Text {
-                            content: text.clone(),
-                            position: Point::new(rect.x, rect.y),
-                            color: Color::WHITE,
-                            size: iced::Pixels(12.0),
-                            ..Default::default()
-                        });
+                // Draw based on widget type
+                match info.widget_type {
+                    WidgetType::Frame => {
+                        draw_wow_frame(frame, &rect, info);
                     }
-                } else if let Some(name) = &info.name {
-                    // Draw frame name for other widgets
-                    frame.fill_text(canvas::Text {
-                        content: name.clone(),
-                        position: Point::new(rect.x + 2.0, rect.y + 2.0),
-                        color: Color::WHITE,
-                        size: iced::Pixels(10.0),
-                        ..Default::default()
-                    });
+                    WidgetType::Button => {
+                        draw_wow_button(frame, &rect, info);
+                    }
+                    WidgetType::Texture => {
+                        draw_wow_texture(frame, &rect, info);
+                    }
+                    WidgetType::FontString => {
+                        draw_wow_fontstring(frame, &rect, info);
+                    }
                 }
             }
 
@@ -342,6 +390,156 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
         });
 
         vec![geometry]
+    }
+
+    fn update(
+        &self,
+        state: &mut Self::State,
+        event: canvas::Event,
+        bounds: Rectangle,
+        cursor: iced::mouse::Cursor,
+    ) -> (canvas::event::Status, Option<Message>) {
+        use canvas::Event;
+        use iced::mouse::Event as MouseEvent;
+
+        let cursor_position = match cursor.position_in(bounds) {
+            Some(pos) => pos,
+            None => {
+                // Cursor left canvas - fire OnLeave if we had a hovered frame
+                if let Some(old_frame) = state.hovered_frame.take() {
+                    return (
+                        canvas::event::Status::Captured,
+                        Some(Message::MouseTransition {
+                            leave: Some(old_frame),
+                            enter: None,
+                        }),
+                    );
+                }
+                return (canvas::event::Status::Ignored, None);
+            }
+        };
+
+        match event {
+            Event::Mouse(MouseEvent::CursorMoved { .. }) => {
+                let new_hovered = hit_test_frames(&self.frames, cursor_position, bounds);
+
+                // Handle hover state changes
+                if new_hovered != state.hovered_frame {
+                    let leave = state.hovered_frame;
+                    state.hovered_frame = new_hovered;
+
+                    if leave.is_some() || new_hovered.is_some() {
+                        return (
+                            canvas::event::Status::Captured,
+                            Some(Message::MouseTransition {
+                                leave,
+                                enter: new_hovered,
+                            }),
+                        );
+                    }
+                }
+                (canvas::event::Status::Ignored, None)
+            }
+
+            Event::Mouse(MouseEvent::ButtonPressed(button)) => {
+                if let Some(frame_id) = state.hovered_frame {
+                    state.mouse_down_frame = Some(frame_id);
+                    state.mouse_down_button = Some(button);
+                    let button_name = mouse_button_name(button);
+                    return (
+                        canvas::event::Status::Captured,
+                        Some(Message::MouseDown(frame_id, button_name)),
+                    );
+                }
+                (canvas::event::Status::Ignored, None)
+            }
+
+            Event::Mouse(MouseEvent::ButtonReleased(button)) => {
+                let message = if let Some(frame_id) = state.hovered_frame {
+                    let button_name = mouse_button_name(button);
+
+                    // Check if this is a click (same frame as mouse down)
+                    if state.mouse_down_frame == Some(frame_id)
+                        && state.mouse_down_button == Some(button)
+                    {
+                        // Fire Click instead of just MouseUp
+                        Some(Message::Click(frame_id, button_name))
+                    } else {
+                        Some(Message::MouseUp(frame_id, button_name))
+                    }
+                } else {
+                    None
+                };
+
+                // Clear mouse down state
+                state.mouse_down_frame = None;
+                state.mouse_down_button = None;
+
+                if message.is_some() {
+                    (canvas::event::Status::Captured, message)
+                } else {
+                    (canvas::event::Status::Ignored, None)
+                }
+            }
+
+            _ => (canvas::event::Status::Ignored, None),
+        }
+    }
+
+    fn mouse_interaction(
+        &self,
+        state: &Self::State,
+        _bounds: Rectangle,
+        _cursor: iced::mouse::Cursor,
+    ) -> iced::mouse::Interaction {
+        if state.hovered_frame.is_some() {
+            iced::mouse::Interaction::Pointer
+        } else {
+            iced::mouse::Interaction::default()
+        }
+    }
+}
+
+/// Find the topmost mouse-enabled frame at the given canvas position.
+/// Frames are checked in reverse z-order (topmost first).
+fn hit_test_frames(frames: &[FrameInfo], point: Point, bounds: Rectangle) -> Option<u64> {
+    let scale_x = bounds.width / 800.0;
+    let scale_y = bounds.height / 600.0;
+
+    // Iterate in reverse (topmost frames are at the end after sorting)
+    for info in frames.iter().rev() {
+        if !info.visible || !info.mouse_enabled {
+            continue;
+        }
+
+        // Skip built-in frames
+        if matches!(info.name.as_deref(), Some("UIParent") | Some("Minimap")) {
+            continue;
+        }
+
+        // Scale rect to canvas size
+        let rect = Rectangle {
+            x: info.rect.x * scale_x,
+            y: info.rect.y * scale_y,
+            width: info.rect.width * scale_x,
+            height: info.rect.height * scale_y,
+        };
+
+        if rect.contains(point) {
+            return Some(info.id);
+        }
+    }
+    None
+}
+
+/// Convert iced mouse button to WoW button name.
+fn mouse_button_name(button: iced::mouse::Button) -> String {
+    match button {
+        iced::mouse::Button::Left => "LeftButton".to_string(),
+        iced::mouse::Button::Right => "RightButton".to_string(),
+        iced::mouse::Button::Middle => "MiddleButton".to_string(),
+        iced::mouse::Button::Other(n) => format!("Button{}", n),
+        _ => "Unknown".to_string(),
     }
 }
 
@@ -456,5 +654,221 @@ fn frame_position_from_anchor(
         AnchorPoint::BottomLeft => (anchor_x, anchor_y - h),
         AnchorPoint::Bottom => (anchor_x - w / 2.0, anchor_y - h),
         AnchorPoint::BottomRight => (anchor_x - w, anchor_y - h),
+    }
+}
+
+/// Draw a WoW-style frame with optional backdrop.
+fn draw_wow_frame(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo) {
+    let alpha = info.alpha;
+
+    // Check if backdrop is enabled
+    if info.backdrop.enabled {
+        // Draw background
+        let bg = &info.backdrop.bg_color;
+        let bg_color = Color::from_rgba(bg.r, bg.g, bg.b, bg.a * alpha);
+
+        let inset = info.backdrop.insets;
+        let bg_rect = Rectangle {
+            x: rect.x + inset,
+            y: rect.y + inset,
+            width: rect.width - inset * 2.0,
+            height: rect.height - inset * 2.0,
+        };
+        frame.fill_rectangle(Point::new(bg_rect.x, bg_rect.y), bg_rect.size(), bg_color);
+
+        // Draw border
+        let border = &info.backdrop.border_color;
+        let border_color = Color::from_rgba(border.r, border.g, border.b, border.a * alpha);
+        let edge_size = info.backdrop.edge_size.max(1.0);
+
+        let border_path = Path::rectangle(
+            Point::new(rect.x, rect.y),
+            Size::new(rect.width, rect.height),
+        );
+        let stroke = Stroke::default()
+            .with_color(border_color)
+            .with_width(edge_size);
+        frame.stroke(&border_path, stroke);
+    } else {
+        // Default WoW panel style when no backdrop set
+        let bg_color = Color::from_rgba(
+            wow_colors::PANEL_BG.r,
+            wow_colors::PANEL_BG.g,
+            wow_colors::PANEL_BG.b,
+            wow_colors::PANEL_BG.a * alpha,
+        );
+        frame.fill_rectangle(
+            Point::new(rect.x, rect.y),
+            Size::new(rect.width, rect.height),
+            bg_color,
+        );
+
+        // Gold border
+        let border_path = Path::rectangle(
+            Point::new(rect.x, rect.y),
+            Size::new(rect.width, rect.height),
+        );
+        let stroke = Stroke::default()
+            .with_color(Color::from_rgba(
+                wow_colors::BORDER_GOLD.r,
+                wow_colors::BORDER_GOLD.g,
+                wow_colors::BORDER_GOLD.b,
+                wow_colors::BORDER_GOLD.a * alpha,
+            ))
+            .with_width(2.0);
+        frame.stroke(&border_path, stroke);
+
+        // Inner dark border for depth
+        let inner_path = Path::rectangle(
+            Point::new(rect.x + 2.0, rect.y + 2.0),
+            Size::new(rect.width - 4.0, rect.height - 4.0),
+        );
+        let inner_stroke = Stroke::default()
+            .with_color(Color::from_rgba(
+                wow_colors::BORDER_DARK.r,
+                wow_colors::BORDER_DARK.g,
+                wow_colors::BORDER_DARK.b,
+                wow_colors::BORDER_DARK.a * alpha,
+            ))
+            .with_width(1.0);
+        frame.stroke(&inner_path, inner_stroke);
+    }
+
+    // Draw frame name label (small, for debugging)
+    if let Some(name) = &info.name {
+        frame.fill_text(canvas::Text {
+            content: name.clone(),
+            position: Point::new(rect.x + 4.0, rect.y + 4.0),
+            color: Color::from_rgba(1.0, 1.0, 1.0, 0.6 * alpha),
+            size: iced::Pixels(10.0),
+            ..Default::default()
+        });
+    }
+}
+
+/// Draw a WoW-style button.
+fn draw_wow_button(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo) {
+    let alpha = info.alpha;
+
+    // Button background with gradient effect (simulated with solid color)
+    let bg_color = Color::from_rgba(
+        wow_colors::BUTTON_BG.r,
+        wow_colors::BUTTON_BG.g,
+        wow_colors::BUTTON_BG.b,
+        wow_colors::BUTTON_BG.a * alpha,
+    );
+    frame.fill_rectangle(
+        Point::new(rect.x, rect.y),
+        Size::new(rect.width, rect.height),
+        bg_color,
+    );
+
+    // Highlight bar at top (3D effect)
+    let highlight_rect = Path::line(
+        Point::new(rect.x + 1.0, rect.y + 1.0),
+        Point::new(rect.x + rect.width - 1.0, rect.y + 1.0),
+    );
+    frame.stroke(
+        &highlight_rect,
+        Stroke::default()
+            .with_color(Color::from_rgba(
+                wow_colors::BUTTON_HIGHLIGHT.r,
+                wow_colors::BUTTON_HIGHLIGHT.g,
+                wow_colors::BUTTON_HIGHLIGHT.b,
+                wow_colors::BUTTON_HIGHLIGHT.a * alpha,
+            ))
+            .with_width(1.0),
+    );
+
+    // Button border
+    let border_path = Path::rectangle(
+        Point::new(rect.x, rect.y),
+        Size::new(rect.width, rect.height),
+    );
+    frame.stroke(
+        &border_path,
+        Stroke::default()
+            .with_color(Color::from_rgba(
+                wow_colors::BUTTON_BORDER.r,
+                wow_colors::BUTTON_BORDER.g,
+                wow_colors::BUTTON_BORDER.b,
+                wow_colors::BUTTON_BORDER.a * alpha,
+            ))
+            .with_width(1.5),
+    );
+
+    // Draw button text if present
+    if let Some(text_content) = &info.text {
+        let tc = &info.text_color;
+        frame.fill_text(canvas::Text {
+            content: text_content.clone(),
+            position: Point::new(
+                rect.x + rect.width / 2.0,
+                rect.y + rect.height / 2.0 - 6.0,
+            ),
+            color: Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha),
+            size: iced::Pixels(12.0),
+            horizontal_alignment: iced::alignment::Horizontal::Center,
+            ..Default::default()
+        });
+    }
+}
+
+/// Draw a WoW texture (placeholder with tinting).
+fn draw_wow_texture(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo) {
+    let alpha = info.alpha;
+
+    // Use vertex color if set, otherwise default texture tint
+    let color = if let Some(vc) = &info.vertex_color {
+        Color::from_rgba(vc.r, vc.g, vc.b, vc.a * alpha)
+    } else {
+        Color::from_rgba(
+            wow_colors::TEXTURE_TINT.r,
+            wow_colors::TEXTURE_TINT.g,
+            wow_colors::TEXTURE_TINT.b,
+            wow_colors::TEXTURE_TINT.a * alpha,
+        )
+    };
+
+    // Fill texture area
+    frame.fill_rectangle(
+        Point::new(rect.x, rect.y),
+        Size::new(rect.width, rect.height),
+        color,
+    );
+
+    // Draw diagonal lines to indicate it's a texture placeholder
+    let line1 = Path::line(
+        Point::new(rect.x, rect.y),
+        Point::new(rect.x + rect.width, rect.y + rect.height),
+    );
+    let line2 = Path::line(
+        Point::new(rect.x + rect.width, rect.y),
+        Point::new(rect.x, rect.y + rect.height),
+    );
+    let stroke = Stroke::default()
+        .with_color(Color::from_rgba(1.0, 1.0, 1.0, 0.2 * alpha))
+        .with_width(1.0);
+    frame.stroke(&line1, stroke.clone());
+    frame.stroke(&line2, stroke);
+}
+
+/// Draw a WoW FontString (text).
+fn draw_wow_fontstring(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo) {
+    let alpha = info.alpha;
+
+    if let Some(text_content) = &info.text {
+        let tc = &info.text_color;
+        let color = Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha);
+
+        // Draw text centered in the rect
+        frame.fill_text(canvas::Text {
+            content: text_content.clone(),
+            position: Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0 - 6.0),
+            color,
+            size: iced::Pixels(12.0),
+            horizontal_alignment: iced::alignment::Horizontal::Center,
+            ..Default::default()
+        });
     }
 }
