@@ -95,8 +95,70 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         local sideTitle = sidebar:CreateFontString("SideTitle", "OVERLAY")
         sideTitle:SetSize(140, 18)
         sideTitle:SetPoint("TOP", 0, -10)
-        sideTitle:SetText("Options")
+        sideTitle:SetText("Events")
         sideTitle:SetTextColor(1.0, 1.0, 1.0, 1.0)
+
+        -- Event log text
+        local eventLog = sidebar:CreateFontString("EventLog", "OVERLAY")
+        eventLog:SetSize(140, 200)
+        eventLog:SetPoint("TOP", 0, -35)
+        eventLog:SetText("(no events)")
+        eventLog:SetTextColor(0.7, 0.7, 0.7, 1.0)
+
+        -- Register for events on the main frame
+        mainFrame:RegisterEvent("ADDON_LOADED")
+        mainFrame:RegisterEvent("PLAYER_LOGIN")
+        mainFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        mainFrame:SetScript("OnEvent", function(self, event, ...)
+            local args = {...}
+            local argStr = ""
+            for i, v in ipairs(args) do
+                if i > 1 then argStr = argStr .. ", " end
+                argStr = argStr .. tostring(v)
+            end
+
+            -- Print to console
+            if argStr ~= "" then
+                print(event .. ": " .. argStr)
+                eventLog:SetText(event .. "\n" .. argStr)
+            else
+                print(event)
+                eventLog:SetText(event)
+            end
+            eventLog:SetTextColor(0.3, 1.0, 0.3, 1.0)
+        end)
+
+        -- Fire Event button
+        local fireBtn = CreateFrame("Button", "FireEventButton", sidebar)
+        fireBtn:SetSize(120, 24)
+        fireBtn:SetPoint("BOTTOM", 0, 40)
+        fireBtn:SetText("Fire Event")
+        fireBtn:EnableMouse(true)
+        fireBtn:SetScript("OnClick", function(self)
+            FireEvent("ADDON_LOADED", "TestAddon")
+        end)
+        fireBtn:SetScript("OnEnter", function(self)
+            self:SetText("> Fire Event <")
+        end)
+        fireBtn:SetScript("OnLeave", function(self)
+            self:SetText("Fire Event")
+        end)
+
+        -- Login button
+        local loginBtn = CreateFrame("Button", "LoginButton", sidebar)
+        loginBtn:SetSize(120, 24)
+        loginBtn:SetPoint("BOTTOM", 0, 70)
+        loginBtn:SetText("Player Login")
+        loginBtn:EnableMouse(true)
+        loginBtn:SetScript("OnClick", function(self)
+            FireEvent("PLAYER_LOGIN")
+        end)
+        loginBtn:SetScript("OnEnter", function(self)
+            self:SetText("> Login <")
+        end)
+        loginBtn:SetScript("OnLeave", function(self)
+            self:SetText("Player Login")
+        end)
 
         print("Demo frames with WoW styling created!")
         "#,

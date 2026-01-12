@@ -39,19 +39,62 @@ mod wow_colors {
 /// Run the iced UI with the given Lua environment.
 pub fn run_ui(env: WowLuaEnv) -> iced::Result {
     iced::application("WoW UI Simulator", App::update, App::view)
+        .subscription(App::subscription)
         .theme(|_| Theme::Dark)
         .window_size((1024.0, 768.0))
         .run_with(move || {
+            let env_rc = Rc::new(RefCell::new(env));
+
+            // Fire startup events
+            fire_startup_events(&env_rc);
+
+            // Collect console output from startup
+            let mut log_messages = vec!["UI loaded. Press Ctrl+R to reload.".to_string()];
+            {
+                let env = env_rc.borrow();
+                let mut state = env.state().borrow_mut();
+                log_messages.append(&mut state.console_output);
+            }
+
             (
                 App {
-                    env: Rc::new(RefCell::new(env)),
+                    env: env_rc,
                     lua_input: String::new(),
-                    log_messages: Vec::new(),
+                    log_messages,
                     frame_cache: Cache::new(),
                 },
                 iced::Task::none(),
             )
         })
+}
+
+/// Fire the standard WoW startup events.
+fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
+    let env = env.borrow();
+
+    println!("[Startup] Firing ADDON_LOADED");
+    if let Err(e) = env.fire_event_with_args(
+        "ADDON_LOADED",
+        &[mlua::Value::String(env.lua().create_string("WoWUISim").unwrap())],
+    ) {
+        eprintln!("Error firing ADDON_LOADED: {}", e);
+    }
+
+    println!("[Startup] Firing PLAYER_LOGIN");
+    if let Err(e) = env.fire_event("PLAYER_LOGIN") {
+        eprintln!("Error firing PLAYER_LOGIN: {}", e);
+    }
+
+    println!("[Startup] Firing PLAYER_ENTERING_WORLD");
+    if let Err(e) = env.fire_event_with_args(
+        "PLAYER_ENTERING_WORLD",
+        &[
+            mlua::Value::Boolean(true),  // isInitialLogin
+            mlua::Value::Boolean(false), // isReloadingUi
+        ],
+    ) {
+        eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
+    }
 }
 
 struct App {
@@ -92,6 +135,8 @@ enum Message {
     MouseDown(u64, String),
     MouseUp(u64, String),
     Click(u64, String),
+    // Keyboard
+    ReloadUI,
 }
 
 /// State for canvas mouse interaction tracking.
@@ -106,6 +151,13 @@ struct CanvasState {
 }
 
 impl App {
+    /// Drain console output from Lua and add to log messages.
+    fn drain_console(&mut self) {
+        let env = self.env.borrow();
+        let mut state = env.state().borrow_mut();
+        self.log_messages.append(&mut state.console_output);
+    }
+
     fn update(&mut self, message: Message) -> iced::Task<Message> {
         match message {
             Message::LuaInputChanged(input) => {
@@ -114,77 +166,136 @@ impl App {
             Message::ExecuteLua => {
                 let code = self.lua_input.clone();
                 if !code.is_empty() {
-                    let env = self.env.borrow();
-                    match env.exec(&code) {
-                        Ok(_) => {
-                            self.log_messages.push(format!("> {}", code));
-                        }
-                        Err(e) => {
-                            self.log_messages.push(format!("Error: {}", e));
+                    {
+                        let env = self.env.borrow();
+                        match env.exec(&code) {
+                            Ok(_) => {
+                                self.log_messages.push(format!("> {}", code));
+                            }
+                            Err(e) => {
+                                self.log_messages.push(format!("Error: {}", e));
+                            }
                         }
                     }
+                    self.drain_console();
                     self.lua_input.clear();
                     self.frame_cache.clear();
                 }
             }
             Message::FireEvent(event) => {
-                let env = self.env.borrow();
-                if let Err(e) = env.fire_event(&event) {
-                    self.log_messages.push(format!("Event error: {}", e));
-                } else {
-                    self.log_messages.push(format!("Fired: {}", event));
+                {
+                    let env = self.env.borrow();
+                    if let Err(e) = env.fire_event(&event) {
+                        self.log_messages.push(format!("Event error: {}", e));
+                    } else {
+                        self.log_messages.push(format!("Fired: {}", event));
+                    }
                 }
+                self.drain_console();
                 self.frame_cache.clear();
             }
             Message::MouseTransition { leave, enter } => {
-                let env = self.env.borrow();
-                if let Some(frame_id) = leave {
-                    if let Err(e) = env.fire_script_handler(frame_id, "OnLeave", vec![]) {
-                        self.log_messages.push(format!("OnLeave error: {}", e));
+                {
+                    let env = self.env.borrow();
+                    if let Some(frame_id) = leave {
+                        if let Err(e) = env.fire_script_handler(frame_id, "OnLeave", vec![]) {
+                            self.log_messages.push(format!("OnLeave error: {}", e));
+                        }
+                    }
+                    if let Some(frame_id) = enter {
+                        if let Err(e) = env.fire_script_handler(frame_id, "OnEnter", vec![]) {
+                            self.log_messages.push(format!("OnEnter error: {}", e));
+                        }
                     }
                 }
-                if let Some(frame_id) = enter {
-                    if let Err(e) = env.fire_script_handler(frame_id, "OnEnter", vec![]) {
-                        self.log_messages.push(format!("OnEnter error: {}", e));
-                    }
-                }
+                self.drain_console();
                 self.frame_cache.clear();
             }
             Message::MouseDown(frame_id, button) => {
-                let env = self.env.borrow();
-                let button_val =
-                    mlua::Value::String(env.lua().create_string(&button).unwrap());
-                if let Err(e) =
-                    env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val])
                 {
-                    self.log_messages.push(format!("OnMouseDown error: {}", e));
+                    let env = self.env.borrow();
+                    let button_val =
+                        mlua::Value::String(env.lua().create_string(&button).unwrap());
+                    if let Err(e) =
+                        env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val])
+                    {
+                        self.log_messages.push(format!("OnMouseDown error: {}", e));
+                    }
                 }
+                self.drain_console();
                 self.frame_cache.clear();
             }
             Message::MouseUp(frame_id, button) => {
-                let env = self.env.borrow();
-                let button_val =
-                    mlua::Value::String(env.lua().create_string(&button).unwrap());
-                if let Err(e) = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val])
                 {
-                    self.log_messages.push(format!("OnMouseUp error: {}", e));
+                    let env = self.env.borrow();
+                    let button_val =
+                        mlua::Value::String(env.lua().create_string(&button).unwrap());
+                    if let Err(e) =
+                        env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val])
+                    {
+                        self.log_messages.push(format!("OnMouseUp error: {}", e));
+                    }
                 }
+                self.drain_console();
                 self.frame_cache.clear();
             }
             Message::Click(frame_id, button) => {
-                let env = self.env.borrow();
-                let button_val =
-                    mlua::Value::String(env.lua().create_string(&button).unwrap());
-                let down_val = mlua::Value::Boolean(false); // Mouse click, not keyboard
-                if let Err(e) =
-                    env.fire_script_handler(frame_id, "OnClick", vec![button_val, down_val])
                 {
-                    self.log_messages.push(format!("OnClick error: {}", e));
+                    let env = self.env.borrow();
+                    let button_val =
+                        mlua::Value::String(env.lua().create_string(&button).unwrap());
+                    let down_val = mlua::Value::Boolean(false); // Mouse click, not keyboard
+                    if let Err(e) =
+                        env.fire_script_handler(frame_id, "OnClick", vec![button_val, down_val])
+                    {
+                        self.log_messages.push(format!("OnClick error: {}", e));
+                    }
                 }
+                self.drain_console();
+                self.frame_cache.clear();
+            }
+            Message::ReloadUI => {
+                self.log_messages.push("Reloading UI...".to_string());
+                {
+                    let env = self.env.borrow();
+
+                    // Fire ADDON_LOADED
+                    if let Ok(s) = env.lua().create_string("WoWUISim") {
+                        let _ =
+                            env.fire_event_with_args("ADDON_LOADED", &[mlua::Value::String(s)]);
+                    }
+
+                    // Fire PLAYER_LOGIN
+                    let _ = env.fire_event("PLAYER_LOGIN");
+
+                    // Fire PLAYER_ENTERING_WORLD with isReloadingUi = true
+                    let _ = env.fire_event_with_args(
+                        "PLAYER_ENTERING_WORLD",
+                        &[
+                            mlua::Value::Boolean(false), // isInitialLogin
+                            mlua::Value::Boolean(true),  // isReloadingUi
+                        ],
+                    );
+                }
+                self.drain_console();
+                self.log_messages.push("UI reloaded.".to_string());
                 self.frame_cache.clear();
             }
         }
         iced::Task::none()
+    }
+
+    fn subscription(&self) -> iced::Subscription<Message> {
+        use iced::keyboard::{self, Key};
+
+        keyboard::on_key_press(|key, modifiers| {
+            // Ctrl+R to reload
+            if modifiers.control() && key == Key::Character("r".into()) {
+                Some(Message::ReloadUI)
+            } else {
+                None
+            }
+        })
     }
 
     fn view(&self) -> Element<'_, Message> {
@@ -256,7 +367,7 @@ impl App {
 
         // Log area
         let mut log_col = Column::new().spacing(2).padding(5);
-        log_col = log_col.push(text("Log:").size(14));
+        log_col = log_col.push(text("Console:").size(14));
         for msg in self.log_messages.iter().rev().take(10) {
             log_col = log_col.push(text(msg).size(11));
         }

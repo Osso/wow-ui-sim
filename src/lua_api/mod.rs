@@ -22,6 +22,8 @@ pub struct SimState {
     pub widgets: WidgetRegistry,
     pub events: EventQueue,
     pub scripts: ScriptRegistry,
+    /// Console output from Lua print() calls.
+    pub console_output: Vec<String>,
 }
 
 impl WowLuaEnv {
@@ -103,7 +105,7 @@ impl WowLuaEnv {
     }
 
     /// Fire an event with arguments to all registered frames.
-    pub fn fire_event_with_args(&self, event: &str, _args: &[Value]) -> Result<()> {
+    pub fn fire_event_with_args(&self, event: &str, args: &[Value]) -> Result<()> {
         let listeners = {
             let state = self.state.borrow();
             state.widgets.get_event_listeners(event)
@@ -122,8 +124,9 @@ impl WowLuaEnv {
                     let frame_ref_key = format!("__frame_{}", widget_id);
                     let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
 
-                    // Build arguments: (self, event, ...)
-                    let call_args = vec![frame, Value::String(self.lua.create_string(event)?)];
+                    // Build arguments: (self, event, ...args)
+                    let mut call_args = vec![frame, Value::String(self.lua.create_string(event)?)];
+                    call_args.extend(args.iter().cloned());
 
                     handler.call::<()>(MultiValue::from_vec(call_args))?;
                 }

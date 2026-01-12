@@ -10,6 +10,34 @@ use std::rc::Rc;
 pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
 
+    // Override print to capture output to console
+    let state_for_print = Rc::clone(&state);
+    let print_func = lua.create_function(move |_lua, args: mlua::Variadic<Value>| {
+        let mut output = String::new();
+        for (i, arg) in args.iter().enumerate() {
+            if i > 0 {
+                output.push('\t');
+            }
+            match arg {
+                Value::Nil => output.push_str("nil"),
+                Value::Boolean(b) => output.push_str(if *b { "true" } else { "false" }),
+                Value::Integer(n) => output.push_str(&n.to_string()),
+                Value::Number(n) => output.push_str(&n.to_string()),
+                Value::String(s) => output.push_str(&s.to_string_lossy()),
+                Value::Table(_) => output.push_str("table"),
+                Value::Function(_) => output.push_str("function"),
+                Value::UserData(_) => output.push_str("userdata"),
+                _ => output.push_str(&format!("{:?}", arg)),
+            }
+        }
+        // Print to terminal too
+        println!("{}", output);
+        // Store in console buffer
+        state_for_print.borrow_mut().console_output.push(output);
+        Ok(())
+    })?;
+    globals.set("print", print_func)?;
+
     // CreateFrame(frameType, name, parent, template, id)
     let state_clone = Rc::clone(&state);
     let create_frame = lua.create_function(move |lua, args: mlua::MultiValue| {
@@ -425,6 +453,48 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     // SlashCmdList table
     let slash_cmd_list = lua.create_table()?;
     globals.set("SlashCmdList", slash_cmd_list)?;
+
+    // FireEvent - simulator utility to fire events for testing
+    let state_for_fire = Rc::clone(&state);
+    let fire_event = lua.create_function(move |lua, args: mlua::Variadic<Value>| {
+        let mut args_iter = args.into_iter();
+        let event_name: String = match args_iter.next() {
+            Some(Value::String(s)) => s.to_str()?.to_string(),
+            _ => return Err(mlua::Error::runtime("FireEvent requires event name as first argument")),
+        };
+
+        // Collect remaining arguments
+        let event_args: Vec<Value> = args_iter.collect();
+
+        // Get listeners for this event
+        let listeners = {
+            let state = state_for_fire.borrow();
+            state.widgets.get_event_listeners(&event_name)
+        };
+
+        // Fire to each listener
+        for widget_id in listeners {
+            let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
+
+            if let Some(table) = scripts_table {
+                let frame_key = format!("{}_OnEvent", widget_id);
+                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+
+                if let Some(handler) = handler {
+                    let frame_ref_key = format!("__frame_{}", widget_id);
+                    let frame: Value = lua.globals().get(frame_ref_key.as_str()).unwrap_or(Value::Nil);
+
+                    let mut call_args = vec![frame, Value::String(lua.create_string(&event_name)?)];
+                    call_args.extend(event_args.iter().cloned());
+
+                    handler.call::<()>(mlua::MultiValue::from_vec(call_args)).ok();
+                }
+            }
+        }
+
+        Ok(())
+    })?;
+    globals.set("FireEvent", fire_event)?;
 
     // Enum table (WoW uses this for various enumerations)
     let enum_table = lua.create_table()?;
