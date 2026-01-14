@@ -72,11 +72,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             self:SetText("Decline")
         end)
 
-        -- Create a colored texture
+        -- Create a texture with actual image from wow-ui-textures
         local icon = mainFrame:CreateTexture("IconTexture", "ARTWORK")
         icon:SetSize(64, 64)
         icon:SetPoint("TOP", 0, -50)
-        icon:SetVertexColor(0.3, 0.7, 1.0, 1.0)  -- Blue tint
+        icon:SetTexture("Interface\\DialogFrame\\UI-Dialog-Icon-AlertNew")
+
+        -- Create a background texture tile
+        local bgTex = mainFrame:CreateTexture("BackgroundTex", "BACKGROUND")
+        bgTex:SetSize(300, 150)
+        bgTex:SetPoint("CENTER", 0, 0)
+        bgTex:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Background")
 
         -- Create a sidebar panel
         local sidebar = CreateFrame("Frame", "Sidebar", UIParent)

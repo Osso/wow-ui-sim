@@ -1,43 +1,40 @@
 //! Iced-based UI for rendering WoW frames.
 
+use super::nine_slice::{
+    button_texture_path, draw_button, draw_nine_slice, preload_nine_slice_textures, ButtonState,
+    NineSliceFrame,
+};
 use super::LayoutRect;
 use crate::lua_api::WowLuaEnv;
+use crate::texture::TextureManager;
 use crate::widget::{Backdrop, WidgetType};
-use iced::widget::canvas::{self, Cache, Canvas, Geometry, Path, Stroke};
+use iced::widget::canvas::{self, Cache, Canvas, Geometry, Image, Path, Stroke};
+use iced::widget::image::Handle as ImageHandle;
 use iced::widget::{column, container, row, text, Column};
 use iced::{Color, Element, Length, Point, Rectangle, Size, Theme};
 use std::cell::RefCell;
+use std::collections::HashMap;
+use std::path::PathBuf;
 use std::rc::Rc;
 
 // WoW-style color palette
 mod wow_colors {
     use iced::Color;
 
-    // Background colors
-    pub const PANEL_BG: Color = Color::from_rgba(0.05, 0.05, 0.08, 0.92);
-    pub const PANEL_BG_LIGHT: Color = Color::from_rgba(0.12, 0.12, 0.15, 0.85);
-    pub const TOOLTIP_BG: Color = Color::from_rgba(0.0, 0.0, 0.0, 0.95);
-
-    // Border colors (gold/bronze theme)
-    pub const BORDER_GOLD: Color = Color::from_rgba(0.75, 0.6, 0.2, 1.0);
-    pub const BORDER_DARK: Color = Color::from_rgba(0.3, 0.25, 0.1, 1.0);
-    pub const BORDER_HIGHLIGHT: Color = Color::from_rgba(1.0, 0.85, 0.4, 1.0);
-
-    // Button colors
-    pub const BUTTON_BG: Color = Color::from_rgba(0.15, 0.12, 0.08, 0.9);
-    pub const BUTTON_BORDER: Color = Color::from_rgba(0.6, 0.5, 0.25, 1.0);
-    pub const BUTTON_HIGHLIGHT: Color = Color::from_rgba(0.25, 0.2, 0.12, 0.95);
-
-    // Texture placeholder
+    // Texture placeholder tint (used when texture file is missing)
     pub const TEXTURE_TINT: Color = Color::from_rgba(0.4, 0.35, 0.3, 0.7);
-
-    // Text colors
-    pub const TEXT_NORMAL: Color = Color::from_rgba(1.0, 0.82, 0.0, 1.0); // Gold text
-    pub const TEXT_WHITE: Color = Color::from_rgba(1.0, 1.0, 1.0, 1.0);
 }
+
+/// Default path to wow-ui-textures repository.
+const DEFAULT_TEXTURES_PATH: &str = "/home/osso/Repos/wow-ui-textures";
 
 /// Run the iced UI with the given Lua environment.
 pub fn run_ui(env: WowLuaEnv) -> iced::Result {
+    run_ui_with_textures(env, PathBuf::from(DEFAULT_TEXTURES_PATH))
+}
+
+/// Run the iced UI with the given Lua environment and textures path.
+pub fn run_ui_with_textures(env: WowLuaEnv, textures_path: PathBuf) -> iced::Result {
     iced::application("WoW UI Simulator", App::update, App::view)
         .subscription(App::subscription)
         .theme(|_| Theme::Dark)
@@ -59,9 +56,10 @@ pub fn run_ui(env: WowLuaEnv) -> iced::Result {
             (
                 App {
                     env: env_rc,
-                    lua_input: String::new(),
                     log_messages,
                     frame_cache: Cache::new(),
+                    texture_manager: RefCell::new(TextureManager::new(textures_path)),
+                    image_handles: RefCell::new(HashMap::new()),
                 },
                 iced::Task::none(),
             )
@@ -99,9 +97,11 @@ fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
 
 struct App {
     env: Rc<RefCell<WowLuaEnv>>,
-    lua_input: String,
     log_messages: Vec<String>,
     frame_cache: Cache,
+    texture_manager: RefCell<TextureManager>,
+    /// Cache of loaded texture image handles (wow_path -> Handle).
+    image_handles: RefCell<HashMap<String, ImageHandle>>,
 }
 
 /// Owned frame info for rendering.
@@ -120,12 +120,12 @@ struct FrameInfo {
     backdrop: Backdrop,
     vertex_color: Option<crate::widget::Color>,
     mouse_enabled: bool,
+    /// Texture path for Texture widgets.
+    texture: Option<String>,
 }
 
 #[derive(Debug, Clone)]
 enum Message {
-    LuaInputChanged(String),
-    ExecuteLua,
     FireEvent(String),
     // Mouse interaction messages
     MouseTransition {
@@ -160,28 +160,6 @@ impl App {
 
     fn update(&mut self, message: Message) -> iced::Task<Message> {
         match message {
-            Message::LuaInputChanged(input) => {
-                self.lua_input = input;
-            }
-            Message::ExecuteLua => {
-                let code = self.lua_input.clone();
-                if !code.is_empty() {
-                    {
-                        let env = self.env.borrow();
-                        match env.exec(&code) {
-                            Ok(_) => {
-                                self.log_messages.push(format!("> {}", code));
-                            }
-                            Err(e) => {
-                                self.log_messages.push(format!("Error: {}", e));
-                            }
-                        }
-                    }
-                    self.drain_console();
-                    self.lua_input.clear();
-                    self.frame_cache.clear();
-                }
-            }
             Message::FireEvent(event) => {
                 {
                     let env = self.env.borrow();
@@ -309,7 +287,7 @@ impl App {
 
             for id in state.widgets.all_ids() {
                 if let Some(frame) = state.widgets.get(id) {
-                    let rect = compute_frame_rect_owned(&state.widgets, id, 800.0, 600.0);
+                    let rect = compute_frame_rect_owned(&state.widgets, id, 500.0, 375.0);
                     infos.push(FrameInfo {
                         id,
                         name: frame.name.clone(),
@@ -324,6 +302,7 @@ impl App {
                         backdrop: frame.backdrop.clone(),
                         vertex_color: frame.vertex_color,
                         mouse_enabled: frame.mouse_enabled,
+                        texture: frame.texture.clone(),
                     });
 
                     let name = frame.name.as_deref().unwrap_or("(anonymous)");
@@ -349,10 +328,73 @@ impl App {
             (infos, list_items)
         };
 
+        // Load textures for any frames that need them
+        {
+            let mut tex_mgr = self.texture_manager.borrow_mut();
+            let mut handles = self.image_handles.borrow_mut();
+            let mut new_textures = false;
+
+            // Preload 9-slice frame textures
+            let nine_slice = NineSliceFrame::dialog_frame();
+            let prev_count = handles.len();
+            preload_nine_slice_textures(&mut tex_mgr, &mut handles, &nine_slice);
+            if handles.len() > prev_count {
+                new_textures = true;
+            }
+
+            // Preload button textures
+            for state in [
+                ButtonState::Normal,
+                ButtonState::Hover,
+                ButtonState::Pressed,
+                ButtonState::Disabled,
+            ] {
+                let path = button_texture_path(state);
+                if !handles.contains_key(path) {
+                    if let Some(tex_data) = tex_mgr.load(path) {
+                        let handle = ImageHandle::from_rgba(
+                            tex_data.width,
+                            tex_data.height,
+                            tex_data.pixels.clone(),
+                        );
+                        handles.insert(path.to_string(), handle);
+                        new_textures = true;
+                    }
+                }
+            }
+
+            // Load textures for individual frames
+            for info in &frame_infos {
+                if let Some(ref tex_path) = info.texture {
+                    // Skip if already loaded
+                    if handles.contains_key(tex_path) {
+                        continue;
+                    }
+
+                    // Try to load the texture
+                    if let Some(tex_data) = tex_mgr.load(tex_path) {
+                        let handle = ImageHandle::from_rgba(
+                            tex_data.width,
+                            tex_data.height,
+                            tex_data.pixels.clone(),
+                        );
+                        handles.insert(tex_path.clone(), handle);
+                        new_textures = true;
+                    }
+                }
+            }
+
+            // Clear cache to force re-render with new textures
+            if new_textures {
+                self.frame_cache.clear();
+            }
+        }
+
         // Create canvas for rendering frames
         let canvas = Canvas::new(FrameRenderer {
             frames: frame_infos,
             cache: &self.frame_cache,
+            image_handles: self.image_handles.borrow().clone(),
         })
         .width(Length::Fill)
         .height(Length::Fill);
@@ -391,14 +433,14 @@ impl App {
                     .width(Length::FillPortion(3))
                     .height(Length::Fill)
                     .style(container::bordered_box),
-                container(frame_list.width(Length::Fixed(250.0)))
+                container(frame_list.width(Length::Fixed(180.0)))
                     .height(Length::Fill)
                     .style(container::bordered_box),
             ]
-            .height(Length::FillPortion(3)),
+            .height(Length::FillPortion(4)),
             event_buttons,
             container(log_col)
-                .height(Length::Fixed(150.0))
+                .height(Length::Fixed(100.0))
                 .width(Length::Fill)
                 .style(container::bordered_box),
         ]
@@ -416,6 +458,8 @@ impl App {
 struct FrameRenderer<'a> {
     frames: Vec<FrameInfo>,
     cache: &'a Cache,
+    /// Image handles for textures (keyed by wow path).
+    image_handles: HashMap<String, ImageHandle>,
 }
 
 impl canvas::Program<Message> for FrameRenderer<'_> {
@@ -423,12 +467,20 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
 
     fn draw(
         &self,
-        _state: &Self::State,
+        state: &Self::State,
         renderer: &iced::Renderer,
         _theme: &Theme,
         bounds: Rectangle,
         _cursor: iced::mouse::Cursor,
     ) -> Vec<Geometry> {
+        // Extract hover/press state for button rendering
+        let hovered_id = state.hovered_frame;
+        let pressed_id = if state.mouse_down_button.is_some() {
+            state.mouse_down_frame
+        } else {
+            None
+        };
+
         let geometry = self.cache.draw(renderer, bounds.size(), |frame| {
             // Draw WoW-style dark background
             frame.fill_rectangle(
@@ -438,8 +490,8 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
             );
 
             // Recompute layout for actual canvas size
-            let scale_x = bounds.width / 800.0;
-            let scale_y = bounds.height / 600.0;
+            let scale_x = bounds.width / 500.0;
+            let scale_y = bounds.height / 375.0;
 
             // Draw each visible frame (already sorted by strata/level)
             for info in self.frames.iter() {
@@ -467,13 +519,21 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                 // Draw based on widget type
                 match info.widget_type {
                     WidgetType::Frame => {
-                        draw_wow_frame(frame, &rect, info);
+                        draw_wow_frame(frame, &rect, info, &self.image_handles);
                     }
                     WidgetType::Button => {
-                        draw_wow_button(frame, &rect, info);
+                        // Determine button visual state
+                        let button_state = if pressed_id == Some(info.id) {
+                            ButtonState::Pressed
+                        } else if hovered_id == Some(info.id) {
+                            ButtonState::Hover
+                        } else {
+                            ButtonState::Normal
+                        };
+                        draw_wow_button(frame, &rect, info, &self.image_handles, button_state);
                     }
                     WidgetType::Texture => {
-                        draw_wow_texture(frame, &rect, info);
+                        draw_wow_texture(frame, &rect, info, &self.image_handles);
                     }
                     WidgetType::FontString => {
                         draw_wow_fontstring(frame, &rect, info);
@@ -769,80 +829,29 @@ fn frame_position_from_anchor(
 }
 
 /// Draw a WoW-style frame with optional backdrop.
-fn draw_wow_frame(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo) {
+fn draw_wow_frame(
+    frame: &mut canvas::Frame,
+    rect: &LayoutRect,
+    info: &FrameInfo,
+    image_handles: &HashMap<String, ImageHandle>,
+) {
     let alpha = info.alpha;
+    let bounds = Rectangle {
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
+    };
 
-    // Check if backdrop is enabled
+    // Check if backdrop is enabled - use 9-slice rendering
     if info.backdrop.enabled {
-        // Draw background
-        let bg = &info.backdrop.bg_color;
-        let bg_color = Color::from_rgba(bg.r, bg.g, bg.b, bg.a * alpha);
-
-        let inset = info.backdrop.insets;
-        let bg_rect = Rectangle {
-            x: rect.x + inset,
-            y: rect.y + inset,
-            width: rect.width - inset * 2.0,
-            height: rect.height - inset * 2.0,
-        };
-        frame.fill_rectangle(Point::new(bg_rect.x, bg_rect.y), bg_rect.size(), bg_color);
-
-        // Draw border
-        let border = &info.backdrop.border_color;
-        let border_color = Color::from_rgba(border.r, border.g, border.b, border.a * alpha);
-        let edge_size = info.backdrop.edge_size.max(1.0);
-
-        let border_path = Path::rectangle(
-            Point::new(rect.x, rect.y),
-            Size::new(rect.width, rect.height),
-        );
-        let stroke = Stroke::default()
-            .with_color(border_color)
-            .with_width(edge_size);
-        frame.stroke(&border_path, stroke);
+        // Use 9-slice frame rendering
+        let nine_slice = NineSliceFrame::dialog_frame();
+        draw_nine_slice(frame, bounds, &nine_slice, image_handles, alpha);
     } else {
-        // Default WoW panel style when no backdrop set
-        let bg_color = Color::from_rgba(
-            wow_colors::PANEL_BG.r,
-            wow_colors::PANEL_BG.g,
-            wow_colors::PANEL_BG.b,
-            wow_colors::PANEL_BG.a * alpha,
-        );
-        frame.fill_rectangle(
-            Point::new(rect.x, rect.y),
-            Size::new(rect.width, rect.height),
-            bg_color,
-        );
-
-        // Gold border
-        let border_path = Path::rectangle(
-            Point::new(rect.x, rect.y),
-            Size::new(rect.width, rect.height),
-        );
-        let stroke = Stroke::default()
-            .with_color(Color::from_rgba(
-                wow_colors::BORDER_GOLD.r,
-                wow_colors::BORDER_GOLD.g,
-                wow_colors::BORDER_GOLD.b,
-                wow_colors::BORDER_GOLD.a * alpha,
-            ))
-            .with_width(2.0);
-        frame.stroke(&border_path, stroke);
-
-        // Inner dark border for depth
-        let inner_path = Path::rectangle(
-            Point::new(rect.x + 2.0, rect.y + 2.0),
-            Size::new(rect.width - 4.0, rect.height - 4.0),
-        );
-        let inner_stroke = Stroke::default()
-            .with_color(Color::from_rgba(
-                wow_colors::BORDER_DARK.r,
-                wow_colors::BORDER_DARK.g,
-                wow_colors::BORDER_DARK.b,
-                wow_colors::BORDER_DARK.a * alpha,
-            ))
-            .with_width(1.0);
-        frame.stroke(&inner_path, inner_stroke);
+        // Default WoW panel style when no backdrop set - also use 9-slice
+        let nine_slice = NineSliceFrame::dialog_frame();
+        draw_nine_slice(frame, bounds, &nine_slice, image_handles, alpha);
     }
 
     // Draw frame name label (small, for debugging)
@@ -858,55 +867,23 @@ fn draw_wow_frame(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo
 }
 
 /// Draw a WoW-style button.
-fn draw_wow_button(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo) {
+fn draw_wow_button(
+    frame: &mut canvas::Frame,
+    rect: &LayoutRect,
+    info: &FrameInfo,
+    image_handles: &HashMap<String, ImageHandle>,
+    button_state: ButtonState,
+) {
     let alpha = info.alpha;
+    let bounds = Rectangle {
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
+    };
 
-    // Button background with gradient effect (simulated with solid color)
-    let bg_color = Color::from_rgba(
-        wow_colors::BUTTON_BG.r,
-        wow_colors::BUTTON_BG.g,
-        wow_colors::BUTTON_BG.b,
-        wow_colors::BUTTON_BG.a * alpha,
-    );
-    frame.fill_rectangle(
-        Point::new(rect.x, rect.y),
-        Size::new(rect.width, rect.height),
-        bg_color,
-    );
-
-    // Highlight bar at top (3D effect)
-    let highlight_rect = Path::line(
-        Point::new(rect.x + 1.0, rect.y + 1.0),
-        Point::new(rect.x + rect.width - 1.0, rect.y + 1.0),
-    );
-    frame.stroke(
-        &highlight_rect,
-        Stroke::default()
-            .with_color(Color::from_rgba(
-                wow_colors::BUTTON_HIGHLIGHT.r,
-                wow_colors::BUTTON_HIGHLIGHT.g,
-                wow_colors::BUTTON_HIGHLIGHT.b,
-                wow_colors::BUTTON_HIGHLIGHT.a * alpha,
-            ))
-            .with_width(1.0),
-    );
-
-    // Button border
-    let border_path = Path::rectangle(
-        Point::new(rect.x, rect.y),
-        Size::new(rect.width, rect.height),
-    );
-    frame.stroke(
-        &border_path,
-        Stroke::default()
-            .with_color(Color::from_rgba(
-                wow_colors::BUTTON_BORDER.r,
-                wow_colors::BUTTON_BORDER.g,
-                wow_colors::BUTTON_BORDER.b,
-                wow_colors::BUTTON_BORDER.a * alpha,
-            ))
-            .with_width(1.5),
-    );
+    // Draw button texture with appropriate state
+    draw_button(frame, bounds, button_state, image_handles, alpha);
 
     // Draw button text if present
     if let Some(text_content) = &info.text {
@@ -925,11 +902,42 @@ fn draw_wow_button(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInf
     }
 }
 
-/// Draw a WoW texture (placeholder with tinting).
-fn draw_wow_texture(frame: &mut canvas::Frame, rect: &LayoutRect, info: &FrameInfo) {
+/// Draw a WoW texture.
+fn draw_wow_texture(
+    frame: &mut canvas::Frame,
+    rect: &LayoutRect,
+    info: &FrameInfo,
+    image_handles: &HashMap<String, ImageHandle>,
+) {
     let alpha = info.alpha;
 
-    // Use vertex color if set, otherwise default texture tint
+    // Try to render the actual texture if available
+    if let Some(ref tex_path) = info.texture {
+        if let Some(handle) = image_handles.get(tex_path) {
+            let bounds = Rectangle {
+                x: rect.x,
+                y: rect.y,
+                width: rect.width,
+                height: rect.height,
+            };
+
+            // Create image with optional vertex color tinting
+            let image = if let Some(vc) = &info.vertex_color {
+                Image::new(handle.clone())
+                    .opacity(vc.a * alpha)
+                    .filter_method(iced::widget::image::FilterMethod::Linear)
+            } else {
+                Image::new(handle.clone())
+                    .opacity(alpha)
+                    .filter_method(iced::widget::image::FilterMethod::Linear)
+            };
+
+            frame.draw_image(bounds, image);
+            return;
+        }
+    }
+
+    // Fallback: draw placeholder if no texture loaded
     let color = if let Some(vc) = &info.vertex_color {
         Color::from_rgba(vc.r, vc.g, vc.b, vc.a * alpha)
     } else {
