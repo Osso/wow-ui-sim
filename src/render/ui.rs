@@ -741,7 +741,7 @@ impl App {
             };
             log_col = log_col.push(
                 text(display)
-                    .size(11)
+                    .size(14)
                     .color(palette::CONSOLE_TEXT),
             );
         }
@@ -790,7 +790,7 @@ impl App {
             event_buttons,
             command_row,
             scrollable(log_col)
-                .height(Length::Fill)
+                .height(Length::Fixed(80.0))
                 .width(Length::Fill),
         ]
         .spacing(6)

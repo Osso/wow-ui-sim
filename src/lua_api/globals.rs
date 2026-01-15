@@ -2597,6 +2597,32 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         "IsInitialized",
         lua.create_function(|_, ()| Ok(true))?,
     )?;
+    // GetSpecialization() - returns current spec index (1-4)
+    c_spec_info.set(
+        "GetSpecialization",
+        lua.create_function(|_, ()| Ok(1i32))?,
+    )?;
+    // GetSpecializationInfo(specIndex) - returns specID, name, description, icon, role, primaryStat
+    c_spec_info.set(
+        "GetSpecializationInfo",
+        lua.create_function(|lua, spec_index: i32| {
+            // Return dummy spec info for spec index 1 (Warrior Arms as example)
+            let spec_id = match spec_index {
+                1 => 71,  // Arms Warrior
+                2 => 72,  // Fury Warrior
+                3 => 73,  // Protection Warrior
+                _ => 71,
+            };
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::Integer(spec_id),
+                Value::String(lua.create_string("Arms")?),
+                Value::String(lua.create_string("A battle-hardened master of weapons.")?),
+                Value::Integer(132355), // icon ID
+                Value::String(lua.create_string("DAMAGER")?),
+                Value::Integer(1), // primary stat (Strength)
+            ]))
+        })?,
+    )?;
     globals.set("C_SpecializationInfo", c_spec_info)?;
 
     // C_ChallengeMode namespace - Mythic+ dungeons
