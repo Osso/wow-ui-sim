@@ -13,8 +13,11 @@ dirs = "5.0"
 thiserror = "2.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-iced = { version = "0.13", features = ["canvas", "image"] }
+iced = { version = "0.14", features = ["canvas", "image", "tokio"] }
+iced_runtime = "0.14"
 image = "0.25"
+iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
+tokio = { version = "1", features = ["sync"] }
 
 [dev-dependencies]
 insta = "1.42"

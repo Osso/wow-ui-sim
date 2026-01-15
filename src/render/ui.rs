@@ -12,6 +12,9 @@ use iced::widget::canvas::{self, Cache, Canvas, Geometry, Image, Path, Stroke};
 use iced::widget::image::Handle as ImageHandle;
 use iced::widget::{column, container, row, text, text_input, Column};
 use iced::{Color, Element, Length, Point, Rectangle, Size, Theme};
+use iced_layout_inspector::server::{self, Command};
+use iced_layout_inspector::{LayoutDump, LayoutDumper, Viewport};
+use std::time::Duration;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -35,36 +38,21 @@ pub fn run_ui(env: WowLuaEnv) -> iced::Result {
 
 /// Run the iced UI with the given Lua environment and textures path.
 pub fn run_ui_with_textures(env: WowLuaEnv, textures_path: PathBuf) -> iced::Result {
-    iced::application("WoW UI Simulator", App::update, App::view)
+    // Store in thread-local for the boot function
+    INIT_ENV.with(|cell| *cell.borrow_mut() = Some(env));
+    INIT_TEXTURES.with(|cell| *cell.borrow_mut() = Some(textures_path));
+
+    iced::application(App::new, App::update, App::view)
         .subscription(App::subscription)
-        .theme(|_| Theme::Dark)
         .window_size((1024.0, 768.0))
-        .run_with(move || {
-            let env_rc = Rc::new(RefCell::new(env));
+        .title("WoW UI Simulator")
+        .run()
+}
 
-            // Fire startup events
-            fire_startup_events(&env_rc);
-
-            // Collect console output from startup
-            let mut log_messages = vec!["UI loaded. Press Ctrl+R to reload.".to_string()];
-            {
-                let env = env_rc.borrow();
-                let mut state = env.state().borrow_mut();
-                log_messages.append(&mut state.console_output);
-            }
-
-            (
-                App {
-                    env: env_rc,
-                    log_messages,
-                    frame_cache: Cache::new(),
-                    texture_manager: RefCell::new(TextureManager::new(textures_path)),
-                    image_handles: RefCell::new(HashMap::new()),
-                    command_input: String::new(),
-                },
-                iced::Task::none(),
-            )
-        })
+// Thread-local storage for init params (iced 0.14 boot function can't capture)
+thread_local! {
+    static INIT_ENV: RefCell<Option<WowLuaEnv>> = const { RefCell::new(None) };
+    static INIT_TEXTURES: RefCell<Option<PathBuf>> = const { RefCell::new(None) };
 }
 
 /// Fire the standard WoW startup events.
@@ -105,6 +93,14 @@ struct App {
     image_handles: RefCell<HashMap<String, ImageHandle>>,
     /// Current text in the command input field.
     command_input: String,
+    /// Debug server command receiver.
+    debug_rx: server::CommandReceiver,
+    /// Pending layout dump response.
+    pending_dump_respond: Option<tokio::sync::oneshot::Sender<String>>,
+    /// Debug server socket guard (keeps socket alive).
+    _debug_guard: server::SocketGuard,
+    /// Current window size for layout dumps.
+    window_size: iced::Size,
 }
 
 /// Owned frame info for rendering.
@@ -143,6 +139,12 @@ enum Message {
     // Command input
     CommandInputChanged(String),
     ExecuteCommand,
+    // Debug server
+    DebugPoll,
+    DumpLayout,
+    LayoutDumped(LayoutDump),
+    // No-op for unhandled events
+    NoOp,
 }
 
 /// State for canvas mouse interaction tracking.
@@ -157,6 +159,44 @@ struct CanvasState {
 }
 
 impl App {
+    fn new() -> (Self, iced::Task<Message>) {
+        let env = INIT_ENV.with(|cell| cell.borrow_mut().take().expect("INIT_ENV not set"));
+        let textures_path = INIT_TEXTURES.with(|cell| cell.borrow_mut().take().expect("INIT_TEXTURES not set"));
+
+        let env_rc = Rc::new(RefCell::new(env));
+
+        // Fire startup events
+        fire_startup_events(&env_rc);
+
+        // Collect console output from startup
+        let mut log_messages = vec!["UI loaded. Press Ctrl+R to reload.".to_string()];
+        {
+            let env = env_rc.borrow();
+            let mut state = env.state().borrow_mut();
+            log_messages.append(&mut state.console_output);
+        }
+
+        // Initialize debug server
+        let (debug_rx, debug_guard) = server::init();
+        eprintln!("[wow-ui-sim] Debug server at {}", server::socket_path().display());
+
+        (
+            App {
+                env: env_rc,
+                log_messages,
+                frame_cache: Cache::new(),
+                texture_manager: RefCell::new(TextureManager::new(textures_path)),
+                image_handles: RefCell::new(HashMap::new()),
+                command_input: String::new(),
+                debug_rx,
+                pending_dump_respond: None,
+                _debug_guard: debug_guard,
+                window_size: iced::Size::new(1024.0, 768.0),
+            },
+            iced::Task::none(),
+        )
+    }
+
     /// Drain console output from Lua and add to log messages.
     fn drain_console(&mut self) {
         let env = self.env.borrow();
@@ -291,21 +331,79 @@ impl App {
                     self.frame_cache.clear();
                 }
             }
+            Message::NoOp => {}
+            Message::DebugPoll => {
+                // Poll for debug commands
+                while let Ok(cmd) = self.debug_rx.try_recv() {
+                    match cmd {
+                        Command::Dump { respond } => {
+                            self.pending_dump_respond = Some(respond);
+                            return iced::Task::done(Message::DumpLayout);
+                        }
+                        Command::Input { field, value, respond } => {
+                            // Handle text input commands
+                            let result = if field.to_lowercase().contains("command") || field.to_lowercase().contains("slash") {
+                                self.command_input = value;
+                                Ok(())
+                            } else {
+                                Err(format!("Unknown field: {}", field))
+                            };
+                            let _ = respond.send(result);
+                        }
+                        Command::Click { label, respond } => {
+                            // Handle button click commands
+                            let result = match label.to_lowercase().as_str() {
+                                "run" => {
+                                    let _ = respond.send(Ok(()));
+                                    return iced::Task::done(Message::ExecuteCommand);
+                                }
+                                _ => Err(format!("Unknown button: {}", label)),
+                            };
+                            let _ = respond.send(result);
+                        }
+                        Command::Submit { respond } => {
+                            let _ = respond.send(Ok(()));
+                            return iced::Task::done(Message::ExecuteCommand);
+                        }
+                    }
+                }
+            }
+            Message::DumpLayout => {
+                let viewport = Viewport::new(self.window_size.width, self.window_size.height);
+                return iced_runtime::task::widget(LayoutDumper::new(viewport))
+                    .map(Message::LayoutDumped);
+            }
+            Message::LayoutDumped(dump) => {
+                if let Some(respond) = self.pending_dump_respond.take() {
+                    let _ = respond.send(dump.to_string());
+                }
+            }
         }
         iced::Task::none()
     }
 
     fn subscription(&self) -> iced::Subscription<Message> {
-        use iced::keyboard::{self, Key};
+        use iced::keyboard;
+        use iced::time;
 
-        keyboard::on_key_press(|key, modifiers| {
-            // Ctrl+R to reload
-            if modifiers.control() && key == Key::Character("r".into()) {
-                Some(Message::ReloadUI)
-            } else {
-                None
+        let keyboard_sub = keyboard::listen().map(|event| {
+            if let keyboard::Event::KeyPressed {
+                key: keyboard::Key::Character(c),
+                modifiers,
+                ..
+            } = event
+            {
+                if modifiers.control() && c.as_str() == "r" {
+                    return Message::ReloadUI;
+                }
             }
-        })
+            Message::NoOp
+        });
+
+        // Poll for debug commands every 50ms
+        let debug_sub = time::every(Duration::from_millis(50)).map(|_| Message::DebugPoll);
+
+        iced::Subscription::batch([keyboard_sub, debug_sub])
     }
 
     fn view(&self) -> Element<'_, Message> {
@@ -643,11 +741,10 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
     fn update(
         &self,
         state: &mut Self::State,
-        event: canvas::Event,
+        event: &iced::Event,
         bounds: Rectangle,
         cursor: iced::mouse::Cursor,
-    ) -> (canvas::event::Status, Option<Message>) {
-        use canvas::Event;
+    ) -> Option<canvas::Action<Message>> {
         use iced::mouse::Event as MouseEvent;
 
         let cursor_position = match cursor.position_in(bounds) {
@@ -655,20 +752,17 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
             None => {
                 // Cursor left canvas - fire OnLeave if we had a hovered frame
                 if let Some(old_frame) = state.hovered_frame.take() {
-                    return (
-                        canvas::event::Status::Captured,
-                        Some(Message::MouseTransition {
-                            leave: Some(old_frame),
-                            enter: None,
-                        }),
-                    );
+                    return Some(canvas::Action::publish(Message::MouseTransition {
+                        leave: Some(old_frame),
+                        enter: None,
+                    }));
                 }
-                return (canvas::event::Status::Ignored, None);
+                return None;
             }
         };
 
         match event {
-            Event::Mouse(MouseEvent::CursorMoved { .. }) => {
+            iced::Event::Mouse(MouseEvent::CursorMoved { .. }) => {
                 let new_hovered = hit_test_frames(&self.frames, cursor_position, bounds);
 
                 // Handle hover state changes
@@ -677,38 +771,35 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                     state.hovered_frame = new_hovered;
 
                     if leave.is_some() || new_hovered.is_some() {
-                        return (
-                            canvas::event::Status::Captured,
-                            Some(Message::MouseTransition {
-                                leave,
-                                enter: new_hovered,
-                            }),
-                        );
+                        return Some(canvas::Action::publish(Message::MouseTransition {
+                            leave,
+                            enter: new_hovered,
+                        }));
                     }
                 }
-                (canvas::event::Status::Ignored, None)
+                None
             }
 
-            Event::Mouse(MouseEvent::ButtonPressed(button)) => {
+            iced::Event::Mouse(MouseEvent::ButtonPressed(button)) => {
                 if let Some(frame_id) = state.hovered_frame {
                     state.mouse_down_frame = Some(frame_id);
-                    state.mouse_down_button = Some(button);
-                    let button_name = mouse_button_name(button);
-                    return (
-                        canvas::event::Status::Captured,
-                        Some(Message::MouseDown(frame_id, button_name)),
-                    );
+                    state.mouse_down_button = Some(*button);
+                    let button_name = mouse_button_name(*button);
+                    return Some(canvas::Action::publish(Message::MouseDown(
+                        frame_id,
+                        button_name,
+                    )));
                 }
-                (canvas::event::Status::Ignored, None)
+                None
             }
 
-            Event::Mouse(MouseEvent::ButtonReleased(button)) => {
+            iced::Event::Mouse(MouseEvent::ButtonReleased(button)) => {
                 let message = if let Some(frame_id) = state.hovered_frame {
-                    let button_name = mouse_button_name(button);
+                    let button_name = mouse_button_name(*button);
 
                     // Check if this is a click (same frame as mouse down)
                     if state.mouse_down_frame == Some(frame_id)
-                        && state.mouse_down_button == Some(button)
+                        && state.mouse_down_button == Some(*button)
                     {
                         // Fire Click instead of just MouseUp
                         Some(Message::Click(frame_id, button_name))
@@ -723,14 +814,10 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                 state.mouse_down_frame = None;
                 state.mouse_down_button = None;
 
-                if message.is_some() {
-                    (canvas::event::Status::Captured, message)
-                } else {
-                    (canvas::event::Status::Ignored, None)
-                }
+                message.map(canvas::Action::publish)
             }
 
-            _ => (canvas::event::Status::Ignored, None),
+            _ => None,
         }
     }
 
@@ -960,7 +1047,7 @@ fn draw_wow_button(
             ),
             color: Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha),
             size: iced::Pixels(12.0),
-            horizontal_alignment: iced::alignment::Horizontal::Center,
+            align_x: iced::alignment::Alignment::Center.into(),
             ..Default::default()
         });
     }
@@ -1050,7 +1137,7 @@ fn draw_wow_fontstring(frame: &mut canvas::Frame, rect: &LayoutRect, info: &Fram
             position: Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0 - 6.0),
             color,
             size: iced::Pixels(12.0),
-            horizontal_alignment: iced::alignment::Horizontal::Center,
+            align_x: iced::alignment::Alignment::Center.into(),
             ..Default::default()
         });
     }
