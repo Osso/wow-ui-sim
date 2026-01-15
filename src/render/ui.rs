@@ -10,7 +10,7 @@ use crate::texture::TextureManager;
 use crate::widget::{Backdrop, WidgetType};
 use iced::widget::canvas::{self, Cache, Canvas, Geometry, Image, Path, Stroke};
 use iced::widget::image::Handle as ImageHandle;
-use iced::widget::{column, container, row, text, Column};
+use iced::widget::{column, container, row, text, text_input, Column};
 use iced::{Color, Element, Length, Point, Rectangle, Size, Theme};
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -60,6 +60,7 @@ pub fn run_ui_with_textures(env: WowLuaEnv, textures_path: PathBuf) -> iced::Res
                     frame_cache: Cache::new(),
                     texture_manager: RefCell::new(TextureManager::new(textures_path)),
                     image_handles: RefCell::new(HashMap::new()),
+                    command_input: String::new(),
                 },
                 iced::Task::none(),
             )
@@ -102,6 +103,8 @@ struct App {
     texture_manager: RefCell<TextureManager>,
     /// Cache of loaded texture image handles (wow_path -> Handle).
     image_handles: RefCell<HashMap<String, ImageHandle>>,
+    /// Current text in the command input field.
+    command_input: String,
 }
 
 /// Owned frame info for rendering.
@@ -137,6 +140,9 @@ enum Message {
     Click(u64, String),
     // Keyboard
     ReloadUI,
+    // Command input
+    CommandInputChanged(String),
+    ExecuteCommand,
 }
 
 /// State for canvas mouse interaction tracking.
@@ -258,6 +264,32 @@ impl App {
                 self.drain_console();
                 self.log_messages.push("UI reloaded.".to_string());
                 self.frame_cache.clear();
+            }
+            Message::CommandInputChanged(input) => {
+                self.command_input = input;
+            }
+            Message::ExecuteCommand => {
+                let cmd = self.command_input.clone();
+                if !cmd.is_empty() {
+                    self.log_messages.push(format!("> {}", cmd));
+                    {
+                        let env = self.env.borrow();
+                        match env.dispatch_slash_command(&cmd) {
+                            Ok(true) => {
+                                // Command was handled
+                            }
+                            Ok(false) => {
+                                self.log_messages.push(format!("Unknown command: {}", cmd));
+                            }
+                            Err(e) => {
+                                self.log_messages.push(format!("Command error: {}", e));
+                            }
+                        }
+                    }
+                    self.drain_console();
+                    self.command_input.clear();
+                    self.frame_cache.clear();
+                }
             }
         }
         iced::Task::none()
@@ -425,6 +457,17 @@ impl App {
         ]
         .spacing(5);
 
+        // Command input row
+        let command_row = row![
+            text_input("Type a slash command (e.g., /wa)", &self.command_input)
+                .on_input(Message::CommandInputChanged)
+                .on_submit(Message::ExecuteCommand)
+                .width(Length::Fill),
+            iced::widget::button("Run")
+                .on_press(Message::ExecuteCommand),
+        ]
+        .spacing(5);
+
         // Main layout
         let content = column![
             text("WoW UI Simulator").size(20),
@@ -439,6 +482,7 @@ impl App {
             ]
             .height(Length::FillPortion(4)),
             event_buttons,
+            command_row,
             container(log_col)
                 .height(Length::Fixed(100.0))
                 .width(Length::Fill)

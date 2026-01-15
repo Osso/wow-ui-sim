@@ -270,6 +270,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         end)
 
         print("Demo frames with WoW styling created!")
+
+        -- Register a test slash command
+        SLASH_TEST1 = "/test"
+        SLASH_TEST2 = "/t"
+        SlashCmdList["TEST"] = function(msg)
+            print("Test command received: " .. (msg or ""))
+            StatusText:SetText("Command: /test " .. (msg or ""))
+        end
         "#,
     )?;
 

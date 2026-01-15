@@ -167,6 +167,58 @@ impl WowLuaEnv {
         Ok(())
     }
 
+    /// Dispatch a slash command (e.g., "/wa options").
+    /// Returns Ok(true) if a handler was found and called, Ok(false) if no handler matched.
+    pub fn dispatch_slash_command(&self, input: &str) -> Result<bool> {
+        let input = input.trim();
+        if !input.starts_with('/') {
+            return Ok(false);
+        }
+
+        // Parse command and message: "/wa options" -> cmd="/wa", msg="options"
+        let (cmd, msg) = match input.find(' ') {
+            Some(pos) => (&input[..pos], input[pos + 1..].trim()),
+            None => (input, ""),
+        };
+        let cmd_lower = cmd.to_lowercase();
+
+        // Scan globals for SLASH_* variables to find a matching command
+        let globals = self.lua.globals();
+        let slash_cmd_list: mlua::Table = globals.get("SlashCmdList")?;
+
+        // Iterate through all globals looking for SLASH_* patterns
+        for pair in globals.pairs::<String, Value>() {
+            let (key, value) = pair?;
+
+            // Look for SLASH_NAME1, SLASH_NAME2, etc.
+            if !key.starts_with("SLASH_") {
+                continue;
+            }
+
+            // Extract the command name (e.g., "SLASH_WEAKAURAS1" -> "WEAKAURAS")
+            let suffix = &key[6..]; // Skip "SLASH_"
+            let name = suffix.trim_end_matches(|c: char| c.is_ascii_digit());
+            if name.is_empty() {
+                continue;
+            }
+
+            // Check if this SLASH_ variable matches our command
+            if let Value::String(slash_str) = value {
+                if slash_str.to_str()?.to_lowercase() == cmd_lower {
+                    // Found a match! Look up the handler in SlashCmdList
+                    let handler: Option<mlua::Function> = slash_cmd_list.get(name).ok();
+                    if let Some(handler) = handler {
+                        let msg_value = self.lua.create_string(msg)?;
+                        handler.call::<()>(msg_value)?;
+                        return Ok(true);
+                    }
+                }
+            }
+        }
+
+        Ok(false)
+    }
+
     /// Get access to the Lua state.
     pub fn lua(&self) -> &Lua {
         &self.lua

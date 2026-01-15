@@ -1,44 +1,73 @@
-# Project Plan
+# WoW UI Simulator - Plan
 
-Phases are executed in order: 1 → 2 → 3 → 4 → 5.
+## Current State
 
-## Current Blocker
+- Basic rendering with WoW-style textures and 9-slice
+- Mouse interaction (hover, click, OnEnter/OnLeave/OnClick)
+- Event system (ADDON_LOADED, PLAYER_LOGIN, PLAYER_ENTERING_WORLD)
+- Saved variables persistence (JSON in ~/.local/share/wow-ui-sim/)
+- Loading real addons: Ace3, SharedXML, GameMenu, WeakAuras, DBM, Details, Plater
 
-None - Phase 4 complete. Starting Phase 5.
+### Load Statistics
+- Ace3: 43 Lua, 15 XML, 0 warnings
+- SharedXMLBase: 34 Lua, 2 XML
+- SharedXML: 155 Lua, 72 XML, 0 warnings
+- GameMenu: 3 Lua, 1 XML, 1 warning
+- WeakAuras: 97 Lua, 4 XML, 1 warning
+- DBM-Core: 43 Lua, 0 XML, 33 warnings
+- Details: 117 Lua, 2 XML, 42 warnings
+- Plater: 13 Lua, 1 XML, 42 warnings
 
-## Active TODO
+## High Impact
 
-### Phase 4: Rendering [COMPLETE]
+### Fix Addon Errors
+- Details PlayerInfo.lua:852 - `'for' initial value must be a number`
+- Investigate missing APIs causing 30+ warnings per addon
+- Add stubs or implementations as needed
 
-- [x] Add iced dependency and basic app scaffold
-- [x] Expose widget registry to renderer
-- [x] Render frames as rectangles with position/size from anchors
-- [x] Render textures (solid colors, differentiated from frames)
-- [x] Render FontStrings with text content
-- [x] Handle frame strata and level for z-ordering
+### More Frame Types
+- ScrollFrame - scrollable content areas
+- EditBox - text input fields
+- Slider - value sliders
+- CheckButton - checkboxes
+- DropDownMenu - dropdown menus
 
-### Phase 5: Real Addon Testing [IN PROGRESS]
+### Keyboard Input
+- EditBox text entry
+- Keybinding system (SetBinding, GetBindingKey)
+- Focus management
 
-- [x] Load Ace3 library suite (43 Lua, 15 XML - 100%)
-- [x] Load a simple addon (LibStub already works)
-- [x] Add missing APIs: GetBuildInfo, GetPhysicalScreenSize, UnitPlayerControlled, UnitIsTapDenied, PixelUtil, math utilities
-- [x] Add frame methods: SetBackdrop, SetBackdropColor, SetID, HookScript
-- [x] Add built-in frames: Minimap, AddonCompartmentFrame
-- [x] Improve debugstack to include file paths (for LibGraph-2.0)
-- [x] Add C_AddOns namespace (GetAddOnMetadata, EnableAddOn, etc.)
-- [x] Test WeakAuras Init.lua (loads successfully)
-- [ ] Load full WeakAuras addon (needs more libs)
-- [ ] Improve Details addon loading (currently 67 Lua, 92 warnings)
+## Visual Improvements
 
-## Decisions Needed
+### Font Rendering
+- Load WoW fonts (FRIZQT__, ARIALN, etc.)
+- FontString:SetFont() implementation
+- Text alignment and wrapping
 
-None currently.
+### Tooltip System
+- GameTooltip frame
+- SetOwner, AddLine, Show/Hide
+- Anchor positioning
 
-## Parked
+### Frame Dragging/Resizing
+- StartMoving/StopMovingOrSizing
+- SetMovable/SetResizable
+- Clamp to screen
 
-- [ ] Blizzard_FrameXML loading (requires more APIs)
-- [ ] Game API stubs (UnitHealth, combat events, etc.)
-- [ ] Full template inheritance system
+## Functionality
+
+### Slash Commands
+- Register handlers via SlashCmdList
+- Parse and dispatch /command input
+- Console input for typing commands
+
+### API Coverage
+Priority APIs by addon usage:
+- C_Timer (After, NewTimer, NewTicker)
+- C_ChatInfo (SendAddonMessage)
+- C_Covenants, C_Soulbinds
+- Combat log events
+- Unit auras (UnitAura, UnitBuff, UnitDebuff)
 
 ## Reference Addons
 
@@ -49,15 +78,3 @@ Located at `~/Projects/wow/reference-addons/`:
 - `Plater/` - Nameplate addon
 - `WeakAuras2/` - Custom display framework
 - `wow-ui-source/` - Blizzard's official UI code
-
-## Current Statistics
-
-- **68 tests passing** (7 ignored)
-- Blizzard_SharedXMLBase: 100% loaded (34 Lua, 2 XML)
-- Blizzard_SharedXML: 100% loaded (155 Lua, 72 XML)
-- Ace3: 100% loaded (43 Lua, 15 XML)
-- WeakAuras Init.lua: loads successfully (reports missing libs, expected)
-- Plater: Partial (7 Lua, 1 XML - needs DetailsFramework library)
-- Details: Improved (67 Lua, 2 XML, 92 warnings - most libs load)
-- DBM-Core: Partial (19 Lua - needs bundled Libs folder)
-- GameMenu: 100% loaded (3 Lua, 2 XML)
