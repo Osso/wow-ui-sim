@@ -1125,7 +1125,8 @@ fn compute_frame_rect_owned(
     );
 
     let target_x = parent_anchor_x + anchor.x_offset;
-    let target_y = parent_anchor_y + anchor.y_offset;
+    // WoW uses Y-up coordinate system, screen uses Y-down, so negate Y offset
+    let target_y = parent_anchor_y - anchor.y_offset;
 
     let (frame_x, frame_y) =
         frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
