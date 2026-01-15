@@ -34,14 +34,17 @@ impl WowLuaEnv {
         let lua = unsafe { Lua::unsafe_new() };
         let state = Rc::new(RefCell::new(SimState::default()));
 
-        // Create UIParent (the root frame)
+        // Create UIParent (the root frame) - must have screen dimensions for layout
         {
             let mut s = state.borrow_mut();
-            let ui_parent = crate::widget::Frame::new(
+            let mut ui_parent = crate::widget::Frame::new(
                 crate::widget::WidgetType::Frame,
                 Some("UIParent".to_string()),
                 None,
             );
+            // Set UIParent to screen size (reference coordinate system)
+            ui_parent.width = 500.0;
+            ui_parent.height = 375.0;
             let ui_parent_id = ui_parent.id;
             s.widgets.register(ui_parent);
 
@@ -228,4 +231,222 @@ impl WowLuaEnv {
     pub fn state(&self) -> &Rc<RefCell<SimState>> {
         &self.state
     }
+
+    /// Dump all frame positions for debugging.
+    /// Returns a formatted string similar to iced-debug output.
+    pub fn dump_frames(&self) -> String {
+        let state = self.state.borrow();
+        let screen_width = 500.0_f32;
+        let screen_height = 375.0_f32;
+
+        let mut output = String::new();
+        output.push_str(&format!(
+            "[WoW Frames: {}x{}]\n\n",
+            screen_width, screen_height
+        ));
+
+        // Collect and sort frames by strata/level
+        let mut frames: Vec<_> = state.widgets.all_ids().into_iter().collect();
+        frames.sort_by(|&a, &b| {
+            let fa = state.widgets.get(a);
+            let fb = state.widgets.get(b);
+            match (fa, fb) {
+                (Some(fa), Some(fb)) => fa
+                    .frame_strata
+                    .cmp(&fb.frame_strata)
+                    .then_with(|| fa.frame_level.cmp(&fb.frame_level)),
+                _ => std::cmp::Ordering::Equal,
+            }
+        });
+
+        for id in frames {
+            let frame = match state.widgets.get(id) {
+                Some(f) => f,
+                None => continue,
+            };
+
+            // Compute position
+            let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
+
+            // Format: Name [Type] (x,y w×h) visible/hidden
+            let name = frame.name.as_deref().unwrap_or("(anon)");
+            let vis = if frame.visible { "" } else { " HIDDEN" };
+            let mouse = if frame.mouse_enabled { " mouse" } else { "" };
+
+            // Indentation based on parent depth
+            let depth = get_parent_depth(&state.widgets, id);
+            let indent = "  ".repeat(depth);
+
+            // Get parent name for context
+            let parent_name = frame.parent_id
+                .and_then(|pid| state.widgets.get(pid))
+                .and_then(|p| p.name.as_deref())
+                .unwrap_or("(root)");
+
+            output.push_str(&format!(
+                "{}{} [{}] ({:.0},{:.0} {:.0}x{:.0}){}{} parent={}\n",
+                indent,
+                name,
+                frame.widget_type.as_str(),
+                rect.x,
+                rect.y,
+                rect.width,
+                rect.height,
+                vis,
+                mouse,
+                parent_name,
+            ));
+
+            // Show anchor info
+            if !frame.anchors.is_empty() {
+                let anchor = &frame.anchors[0];
+                output.push_str(&format!(
+                    "{}  └─ {:?} -> {:?} offset ({:.0},{:.0})\n",
+                    indent, anchor.point, anchor.relative_point, anchor.x_offset, anchor.y_offset
+                ));
+            } else {
+                output.push_str(&format!("{}  └─ (no anchors - centered)\n", indent));
+            }
+        }
+
+        output
+    }
+}
+
+/// Get depth in parent hierarchy (for indentation).
+fn get_parent_depth(registry: &crate::widget::WidgetRegistry, id: u64) -> usize {
+    let mut depth = 0;
+    let mut current = id;
+    while let Some(frame) = registry.get(current) {
+        if let Some(parent_id) = frame.parent_id {
+            depth += 1;
+            current = parent_id;
+        } else {
+            break;
+        }
+    }
+    depth
+}
+
+/// Compute frame rect for debugging (same algorithm as renderer).
+fn compute_frame_rect(
+    registry: &crate::widget::WidgetRegistry,
+    id: u64,
+    screen_width: f32,
+    screen_height: f32,
+) -> LayoutRect {
+    let frame = match registry.get(id) {
+        Some(f) => f,
+        None => return LayoutRect::default(),
+    };
+
+    let width = frame.width;
+    let height = frame.height;
+
+    // If no anchors, default to center of parent
+    if frame.anchors.is_empty() {
+        let parent_rect = if let Some(parent_id) = frame.parent_id {
+            compute_frame_rect(registry, parent_id, screen_width, screen_height)
+        } else {
+            LayoutRect {
+                x: 0.0,
+                y: 0.0,
+                width: screen_width,
+                height: screen_height,
+            }
+        };
+
+        return LayoutRect {
+            x: parent_rect.x + (parent_rect.width - width) / 2.0,
+            y: parent_rect.y + (parent_rect.height - height) / 2.0,
+            width,
+            height,
+        };
+    }
+
+    let anchor = &frame.anchors[0];
+
+    let parent_rect = if let Some(parent_id) = frame.parent_id {
+        compute_frame_rect(registry, parent_id, screen_width, screen_height)
+    } else {
+        LayoutRect {
+            x: 0.0,
+            y: 0.0,
+            width: screen_width,
+            height: screen_height,
+        }
+    };
+
+    let (parent_anchor_x, parent_anchor_y) = anchor_position(
+        anchor.relative_point,
+        parent_rect.x,
+        parent_rect.y,
+        parent_rect.width,
+        parent_rect.height,
+    );
+
+    let target_x = parent_anchor_x + anchor.x_offset;
+    // WoW uses Y-up coordinate system, screen uses Y-down
+    let target_y = parent_anchor_y - anchor.y_offset;
+
+    let (frame_x, frame_y) =
+        frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
+
+    LayoutRect {
+        x: frame_x,
+        y: frame_y,
+        width,
+        height,
+    }
+}
+
+fn anchor_position(
+    point: crate::widget::AnchorPoint,
+    x: f32,
+    y: f32,
+    w: f32,
+    h: f32,
+) -> (f32, f32) {
+    use crate::widget::AnchorPoint;
+    match point {
+        AnchorPoint::TopLeft => (x, y),
+        AnchorPoint::Top => (x + w / 2.0, y),
+        AnchorPoint::TopRight => (x + w, y),
+        AnchorPoint::Left => (x, y + h / 2.0),
+        AnchorPoint::Center => (x + w / 2.0, y + h / 2.0),
+        AnchorPoint::Right => (x + w, y + h / 2.0),
+        AnchorPoint::BottomLeft => (x, y + h),
+        AnchorPoint::Bottom => (x + w / 2.0, y + h),
+        AnchorPoint::BottomRight => (x + w, y + h),
+    }
+}
+
+fn frame_position_from_anchor(
+    point: crate::widget::AnchorPoint,
+    anchor_x: f32,
+    anchor_y: f32,
+    w: f32,
+    h: f32,
+) -> (f32, f32) {
+    use crate::widget::AnchorPoint;
+    match point {
+        AnchorPoint::TopLeft => (anchor_x, anchor_y),
+        AnchorPoint::Top => (anchor_x - w / 2.0, anchor_y),
+        AnchorPoint::TopRight => (anchor_x - w, anchor_y),
+        AnchorPoint::Left => (anchor_x, anchor_y - h / 2.0),
+        AnchorPoint::Center => (anchor_x - w / 2.0, anchor_y - h / 2.0),
+        AnchorPoint::Right => (anchor_x - w, anchor_y - h / 2.0),
+        AnchorPoint::BottomLeft => (anchor_x, anchor_y - h),
+        AnchorPoint::Bottom => (anchor_x - w / 2.0, anchor_y - h),
+        AnchorPoint::BottomRight => (anchor_x - w, anchor_y - h),
+    }
+}
+
+/// Simple layout rect for frame positioning.
+#[derive(Debug, Default, Clone, Copy)]
+struct LayoutRect {
+    x: f32,
+    y: f32,
+    width: f32,
+    height: f32,
 }

@@ -286,6 +286,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             print("Reloading UI...")
             ReloadUI()
         end
+
+        -- Register /frames command (handled specially by the simulator)
+        SLASH_FRAMES1 = "/frames"
+        SLASH_FRAMES2 = "/f"
+        SlashCmdList["FRAMES"] = function()
+            -- This is a marker; actual handling is in Rust
+            print("__DUMP_FRAMES__")
+        end
         "#,
     )?;
 

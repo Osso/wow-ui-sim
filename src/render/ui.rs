@@ -462,7 +462,19 @@ impl App {
                 let cmd = self.command_input.clone();
                 if !cmd.is_empty() {
                     self.log_messages.push(format!("> {}", cmd));
-                    {
+
+                    // Handle /frames and /f specially - dump frame positions
+                    let cmd_lower = cmd.to_lowercase();
+                    if cmd_lower == "/frames" || cmd_lower == "/f" {
+                        let env = self.env.borrow();
+                        let dump = env.dump_frames();
+                        // Print to stderr for easy viewing
+                        eprintln!("{}", dump);
+                        // Also add summary to log
+                        let line_count = dump.lines().count();
+                        self.log_messages
+                            .push(format!("Dumped {} frames to stderr", line_count / 2));
+                    } else {
                         let env = self.env.borrow();
                         match env.dispatch_slash_command(&cmd) {
                             Ok(true) => {
