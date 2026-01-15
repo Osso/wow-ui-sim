@@ -1238,11 +1238,12 @@ fn draw_wow_button(
             content: text_content.clone(),
             position: Point::new(
                 rect.x + rect.width / 2.0,
-                rect.y + rect.height / 2.0 - 6.0,
+                rect.y + rect.height / 2.0,
             ),
             color: Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha),
             size: iced::Pixels(12.0),
             align_x: iced::alignment::Alignment::Center.into(),
+            align_y: iced::alignment::Alignment::Center.into(),
             ..Default::default()
         });
     }
