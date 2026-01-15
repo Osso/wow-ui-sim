@@ -36,7 +36,6 @@ mod palette {
     pub const BORDER_HIGHLIGHT: Color = Color::from_rgb(0.40, 0.35, 0.25);
 
     // Console
-    pub const CONSOLE_BG: Color = Color::from_rgb(0.04, 0.04, 0.05);
     pub const CONSOLE_TEXT: Color = Color::from_rgb(0.70, 0.85, 0.70);
 }
 
@@ -51,21 +50,6 @@ fn panel_style(_theme: &Theme) -> container::Style {
         },
         shadow: Shadow::default(),
         text_color: Some(palette::TEXT_PRIMARY),
-        snap: false,
-    }
-}
-
-// Console panel style (darker)
-fn console_style(_theme: &Theme) -> container::Style {
-    container::Style {
-        background: Some(iced::Background::Color(palette::CONSOLE_BG)),
-        border: Border {
-            color: palette::BORDER,
-            width: 1.0,
-            radius: 4.0.into(),
-        },
-        shadow: Shadow::default(),
-        text_color: Some(palette::CONSOLE_TEXT),
         snap: false,
     }
 }
@@ -732,16 +716,11 @@ impl App {
         }
 
         // Log area - limit to 5 messages to save space
-        let mut log_col = Column::new().spacing(2).padding(6);
-        log_col = log_col.push(
-            text("Console")
-                .size(14)
-                .color(palette::GOLD),
-        );
+        let mut log_col = Column::new().spacing(2);
         for msg in self.log_messages.iter().rev().take(5) {
             // Truncate long messages
-            let display = if msg.len() > 80 {
-                format!("{}...", &msg[..77])
+            let display = if msg.len() > 100 {
+                format!("{}...", &msg[..97])
             } else {
                 msg.clone()
             };
@@ -780,8 +759,6 @@ impl App {
         .spacing(8);
 
         // Main layout - use fixed heights to prevent overflow
-        // Window: 768, padding: 16, title: 26, buttons: 31, command: 31, console: 100, spacing: 30
-        // Available for canvas: 768 - 16 - 26 - 31 - 31 - 100 - 30 = 534px
         let content = column![
             text("WoW UI Simulator")
                 .size(20)
@@ -797,10 +774,9 @@ impl App {
             ],
             event_buttons,
             command_row,
-            container(scrollable(log_col))
-                .height(Length::Fixed(100.0))
-                .width(Length::Fill)
-                .style(console_style),
+            scrollable(log_col)
+                .height(Length::Fill)
+                .width(Length::Fill),
         ]
         .spacing(6)
         .padding(8);
