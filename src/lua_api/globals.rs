@@ -496,6 +496,69 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     })?;
     globals.set("FireEvent", fire_event)?;
 
+    // ReloadUI - reload the interface (fires startup events again)
+    let state_for_reload = Rc::clone(&state);
+    let reload_ui = lua.create_function(move |lua, ()| {
+        // Fire ADDON_LOADED
+        let addon_loaded_listeners = {
+            let state = state_for_reload.borrow();
+            state.widgets.get_event_listeners("ADDON_LOADED")
+        };
+        for widget_id in addon_loaded_listeners {
+            if let Ok(Some(table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
+                let frame_key = format!("{}_OnEvent", widget_id);
+                if let Ok(Some(handler)) = table.get::<Option<mlua::Function>>(frame_key.as_str()) {
+                    let frame_ref_key = format!("__frame_{}", widget_id);
+                    if let Ok(frame) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
+                        let event_str = lua.create_string("ADDON_LOADED")?;
+                        let addon_name = lua.create_string("WoWUISim")?;
+                        let _ = handler.call::<()>((frame, Value::String(event_str), Value::String(addon_name)));
+                    }
+                }
+            }
+        }
+
+        // Fire PLAYER_LOGIN
+        let login_listeners = {
+            let state = state_for_reload.borrow();
+            state.widgets.get_event_listeners("PLAYER_LOGIN")
+        };
+        for widget_id in login_listeners {
+            if let Ok(Some(table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
+                let frame_key = format!("{}_OnEvent", widget_id);
+                if let Ok(Some(handler)) = table.get::<Option<mlua::Function>>(frame_key.as_str()) {
+                    let frame_ref_key = format!("__frame_{}", widget_id);
+                    if let Ok(frame) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
+                        let event_str = lua.create_string("PLAYER_LOGIN")?;
+                        let _ = handler.call::<()>((frame, Value::String(event_str)));
+                    }
+                }
+            }
+        }
+
+        // Fire PLAYER_ENTERING_WORLD
+        let entering_listeners = {
+            let state = state_for_reload.borrow();
+            state.widgets.get_event_listeners("PLAYER_ENTERING_WORLD")
+        };
+        for widget_id in entering_listeners {
+            if let Ok(Some(table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
+                let frame_key = format!("{}_OnEvent", widget_id);
+                if let Ok(Some(handler)) = table.get::<Option<mlua::Function>>(frame_key.as_str()) {
+                    let frame_ref_key = format!("__frame_{}", widget_id);
+                    if let Ok(frame) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
+                        let event_str = lua.create_string("PLAYER_ENTERING_WORLD")?;
+                        let _ = handler.call::<()>((frame, Value::String(event_str), Value::Boolean(false), Value::Boolean(true)));
+                    }
+                }
+            }
+        }
+
+        state_for_reload.borrow_mut().console_output.push("UI Reloaded".to_string());
+        Ok(())
+    })?;
+    globals.set("ReloadUI", reload_ui)?;
+
     // Enum table (WoW uses this for various enumerations)
     let enum_table = lua.create_table()?;
 

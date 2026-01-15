@@ -278,6 +278,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             print("Test command received: " .. (msg or ""))
             StatusText:SetText("Command: /test " .. (msg or ""))
         end
+
+        -- Register /reload command
+        SLASH_RELOAD1 = "/reload"
+        SLASH_RELOAD2 = "/rl"
+        SlashCmdList["RELOAD"] = function()
+            print("Reloading UI...")
+            ReloadUI()
+        end
         "#,
     )?;
 
