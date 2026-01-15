@@ -597,10 +597,25 @@ impl App {
             }
 
             // Sort by strata then level for proper z-ordering
+            // Within same strata/level:
+            // - Textures/FontStrings render first (background elements)
+            // - Frames/Buttons render after (on top)
+            // - Use ID as final tie-breaker (children have higher IDs)
             infos.sort_by(|a, b| {
                 a.frame_strata
                     .cmp(&b.frame_strata)
                     .then_with(|| a.frame_level.cmp(&b.frame_level))
+                    .then_with(|| {
+                        // Textures/FontStrings render before Frames/Buttons
+                        let type_order = |t: &WidgetType| match t {
+                            WidgetType::Texture => 0,
+                            WidgetType::FontString => 1,
+                            WidgetType::Frame => 2,
+                            WidgetType::Button => 3,
+                        };
+                        type_order(&a.widget_type).cmp(&type_order(&b.widget_type))
+                    })
+                    .then_with(|| a.id.cmp(&b.id))
             });
 
             (infos, list_items)
