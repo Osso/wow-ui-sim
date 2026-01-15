@@ -10,8 +10,158 @@ use crate::texture::TextureManager;
 use crate::widget::{Backdrop, WidgetType};
 use iced::widget::canvas::{self, Cache, Canvas, Geometry, Image, Path, Stroke};
 use iced::widget::image::Handle as ImageHandle;
-use iced::widget::{column, container, row, text, text_input, Column};
-use iced::{Color, Element, Length, Point, Rectangle, Size, Theme};
+use iced::widget::{button, column, container, row, scrollable, text, text_input, Column};
+use iced::{Border, Color, Element, Length, Point, Rectangle, Shadow, Size, Theme};
+
+// WoW-inspired color palette for the UI
+mod palette {
+    use iced::Color;
+
+    // Backgrounds
+    pub const BG_DARK: Color = Color::from_rgb(0.08, 0.08, 0.10);
+    pub const BG_PANEL: Color = Color::from_rgb(0.12, 0.12, 0.14);
+    pub const BG_INPUT: Color = Color::from_rgb(0.06, 0.06, 0.08);
+
+    // Accents - WoW gold
+    pub const GOLD: Color = Color::from_rgb(0.85, 0.65, 0.13);
+    pub const GOLD_DIM: Color = Color::from_rgb(0.55, 0.42, 0.10);
+
+    // Text
+    pub const TEXT_PRIMARY: Color = Color::from_rgb(0.92, 0.90, 0.85);
+    pub const TEXT_SECONDARY: Color = Color::from_rgb(0.60, 0.58, 0.55);
+    pub const TEXT_MUTED: Color = Color::from_rgb(0.45, 0.43, 0.40);
+
+    // Borders
+    pub const BORDER: Color = Color::from_rgb(0.25, 0.23, 0.20);
+    pub const BORDER_HIGHLIGHT: Color = Color::from_rgb(0.40, 0.35, 0.25);
+
+    // Console
+    pub const CONSOLE_BG: Color = Color::from_rgb(0.04, 0.04, 0.05);
+    pub const CONSOLE_TEXT: Color = Color::from_rgb(0.70, 0.85, 0.70);
+}
+
+// Custom container style for panels
+fn panel_style(_theme: &Theme) -> container::Style {
+    container::Style {
+        background: Some(iced::Background::Color(palette::BG_PANEL)),
+        border: Border {
+            color: palette::BORDER,
+            width: 1.0,
+            radius: 4.0.into(),
+        },
+        shadow: Shadow::default(),
+        text_color: Some(palette::TEXT_PRIMARY),
+        snap: false,
+    }
+}
+
+// Console panel style (darker)
+fn console_style(_theme: &Theme) -> container::Style {
+    container::Style {
+        background: Some(iced::Background::Color(palette::CONSOLE_BG)),
+        border: Border {
+            color: palette::BORDER,
+            width: 1.0,
+            radius: 4.0.into(),
+        },
+        shadow: Shadow::default(),
+        text_color: Some(palette::CONSOLE_TEXT),
+        snap: false,
+    }
+}
+
+// Canvas container (no border, dark bg)
+fn canvas_style(_theme: &Theme) -> container::Style {
+    container::Style {
+        background: Some(iced::Background::Color(palette::BG_DARK)),
+        border: Border {
+            color: palette::BORDER_HIGHLIGHT,
+            width: 2.0,
+            radius: 4.0.into(),
+        },
+        shadow: Shadow::default(),
+        text_color: None,
+        snap: false,
+    }
+}
+
+// Main app container
+fn app_style(_theme: &Theme) -> container::Style {
+    container::Style {
+        background: Some(iced::Background::Color(palette::BG_DARK)),
+        border: Border::default(),
+        shadow: Shadow::default(),
+        text_color: Some(palette::TEXT_PRIMARY),
+        snap: false,
+    }
+}
+
+// Event button style
+fn event_button_style(_theme: &Theme, status: button::Status) -> button::Style {
+    let (bg, text_color) = match status {
+        button::Status::Active => (palette::BG_PANEL, palette::TEXT_SECONDARY),
+        button::Status::Hovered => (palette::BORDER_HIGHLIGHT, palette::GOLD),
+        button::Status::Pressed => (palette::GOLD_DIM, palette::TEXT_PRIMARY),
+        button::Status::Disabled => (palette::BG_DARK, palette::TEXT_MUTED),
+    };
+
+    button::Style {
+        background: Some(iced::Background::Color(bg)),
+        text_color,
+        border: Border {
+            color: palette::BORDER,
+            width: 1.0,
+            radius: 3.0.into(),
+        },
+        shadow: Shadow::default(),
+        snap: false,
+    }
+}
+
+// Run button style (gold accent)
+fn run_button_style(_theme: &Theme, status: button::Status) -> button::Style {
+    let (bg, text_color, border_color) = match status {
+        button::Status::Active => (palette::GOLD_DIM, palette::TEXT_PRIMARY, palette::GOLD),
+        button::Status::Hovered => (palette::GOLD, Color::BLACK, palette::GOLD),
+        button::Status::Pressed => (palette::GOLD_DIM, Color::BLACK, palette::GOLD_DIM),
+        button::Status::Disabled => (palette::BG_DARK, palette::TEXT_MUTED, palette::BORDER),
+    };
+
+    button::Style {
+        background: Some(iced::Background::Color(bg)),
+        text_color,
+        border: Border {
+            color: border_color,
+            width: 1.0,
+            radius: 3.0.into(),
+        },
+        shadow: Shadow::default(),
+        snap: false,
+    }
+}
+
+// Text input style
+fn input_style(_theme: &Theme, status: text_input::Status) -> text_input::Style {
+    let border_color = match status {
+        text_input::Status::Active => palette::BORDER,
+        text_input::Status::Hovered => palette::BORDER_HIGHLIGHT,
+        text_input::Status::Focused { is_hovered: _ } => palette::GOLD_DIM,
+        text_input::Status::Disabled => palette::BG_DARK,
+    };
+
+    text_input::Style {
+        background: iced::Background::Color(palette::BG_INPUT),
+        border: Border {
+            color: border_color,
+            width: 1.0,
+            radius: 3.0.into(),
+        },
+        icon: palette::TEXT_MUTED,
+        placeholder: palette::TEXT_MUTED,
+        value: palette::TEXT_PRIMARY,
+        selection: palette::GOLD_DIM,
+    }
+}
 use iced_layout_inspector::server::{self, Command};
 use iced_layout_inspector::{LayoutDump, LayoutDumper, Viewport};
 use std::time::Duration;
@@ -531,7 +681,11 @@ impl App {
 
         // Frame list sidebar - filter to only show meaningful frames
         let mut frame_list = Column::new().spacing(3).padding(8);
-        frame_list = frame_list.push(text("Frames").size(16));
+        frame_list = frame_list.push(
+            text("Frames")
+                .size(16)
+                .color(palette::GOLD),
+        );
 
         for item in frame_list_items
             .iter()
@@ -550,64 +704,84 @@ impl App {
             })
             .take(20)
         {
-            frame_list = frame_list.push(text(item.clone()).size(12));
+            frame_list = frame_list.push(
+                text(item.clone())
+                    .size(11)
+                    .color(palette::TEXT_SECONDARY),
+            );
         }
 
         // Log area with larger font
         let mut log_col = Column::new().spacing(3).padding(8);
-        log_col = log_col.push(text("Console").size(16));
+        log_col = log_col.push(
+            text("Console")
+                .size(16)
+                .color(palette::GOLD),
+        );
         for msg in self.log_messages.iter().rev().take(8) {
-            log_col = log_col.push(text(msg).size(14));
+            log_col = log_col.push(
+                text(msg)
+                    .size(13)
+                    .color(palette::CONSOLE_TEXT),
+            );
         }
 
         // Event buttons
         let event_buttons = row![
-            iced::widget::button("ADDON_LOADED")
-                .on_press(Message::FireEvent("ADDON_LOADED".to_string())),
-            iced::widget::button("PLAYER_LOGIN")
-                .on_press(Message::FireEvent("PLAYER_LOGIN".to_string())),
-            iced::widget::button("PLAYER_ENTERING_WORLD")
-                .on_press(Message::FireEvent("PLAYER_ENTERING_WORLD".to_string())),
+            button("ADDON_LOADED")
+                .on_press(Message::FireEvent("ADDON_LOADED".to_string()))
+                .style(event_button_style),
+            button("PLAYER_LOGIN")
+                .on_press(Message::FireEvent("PLAYER_LOGIN".to_string()))
+                .style(event_button_style),
+            button("PLAYER_ENTERING_WORLD")
+                .on_press(Message::FireEvent("PLAYER_ENTERING_WORLD".to_string()))
+                .style(event_button_style),
         ]
-        .spacing(5);
+        .spacing(8);
 
         // Command input row
         let command_row = row![
-            text_input("Type a slash command (e.g., /wa)", &self.command_input)
+            text_input("/command", &self.command_input)
                 .on_input(Message::CommandInputChanged)
                 .on_submit(Message::ExecuteCommand)
-                .width(Length::Fill),
-            iced::widget::button("Run")
-                .on_press(Message::ExecuteCommand),
+                .width(Length::Fill)
+                .style(input_style),
+            button("Run")
+                .on_press(Message::ExecuteCommand)
+                .style(run_button_style),
         ]
-        .spacing(5);
+        .spacing(8);
 
         // Main layout
         let content = column![
-            text("WoW UI Simulator").size(24),
+            text("WoW UI Simulator")
+                .size(24)
+                .color(palette::GOLD),
             row![
                 container(canvas)
                     .width(Length::FillPortion(4))
                     .height(Length::Fill)
-                    .style(container::bordered_box),
-                container(frame_list.width(Length::Fixed(220.0)))
+                    .style(canvas_style),
+                container(scrollable(frame_list).width(Length::Fixed(220.0)))
                     .height(Length::Fill)
-                    .style(container::bordered_box),
+                    .style(panel_style),
             ]
             .height(Length::FillPortion(3)),
             event_buttons,
             command_row,
-            container(log_col)
+            container(scrollable(log_col))
                 .height(Length::Fixed(150.0))
                 .width(Length::Fill)
-                .style(container::bordered_box),
+                .style(console_style),
         ]
-        .spacing(8)
+        .spacing(10)
         .padding(12);
 
         container(content)
             .width(Length::Fill)
             .height(Length::Fill)
+            .style(app_style)
             .into()
     }
 }
