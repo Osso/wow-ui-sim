@@ -133,10 +133,23 @@ impl TocFile {
             .unwrap_or(false)
     }
 
-    /// Get saved variables names.
+    /// Get saved variables names (account-wide).
     pub fn saved_variables(&self) -> Vec<String> {
         self.metadata
             .get("SavedVariables")
+            .map(|s| {
+                s.split(',')
+                    .map(|v| v.trim().to_string())
+                    .filter(|v| !v.is_empty())
+                    .collect()
+            })
+            .unwrap_or_default()
+    }
+
+    /// Get saved variables per character names.
+    pub fn saved_variables_per_character(&self) -> Vec<String> {
+        self.metadata
+            .get("SavedVariablesPerCharacter")
             .map(|s| {
                 s.split(',')
                     .map(|v| v.trim().to_string())

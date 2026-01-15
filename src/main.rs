@@ -1,6 +1,9 @@
+use std::path::PathBuf;
 use tracing_subscriber::EnvFilter;
+use wow_ui_sim::loader::{load_addon, load_addon_with_saved_vars};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::render::run_ui;
+use wow_ui_sim::saved_variables::SavedVariablesManager;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt()
@@ -8,6 +11,106 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
 
     let env = WowLuaEnv::new()?;
+    let mut saved_vars = SavedVariablesManager::new();
+    println!("SavedVariables storage: {:?}", std::env::var("HOME").map(|h| format!("{}/.local/share/wow-ui-sim/SavedVariables", h)).unwrap_or_default());
+
+    // Try loading Ace3 library
+    let ace3_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/Ace3/Ace3.toc");
+    if ace3_path.exists() {
+        match load_addon(&env, &ace3_path) {
+            Ok(r) => println!("Ace3 loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+            Err(e) => println!("Ace3 failed: {}", e),
+        }
+    }
+
+    // Try loading Blizzard SharedXML for base UI support
+    let wow_ui_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/wow-ui-source");
+    if wow_ui_path.exists() {
+        let shared_xml_base_toc = wow_ui_path.join("Interface/AddOns/Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
+        if shared_xml_base_toc.exists() {
+            match load_addon(&env, &shared_xml_base_toc) {
+                Ok(r) => println!("SharedXMLBase loaded: {} Lua, {} XML", r.lua_files, r.xml_files),
+                Err(e) => println!("SharedXMLBase failed: {}", e),
+            }
+        }
+
+        let shared_xml_toc = wow_ui_path.join("Interface/AddOns/Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
+        if shared_xml_toc.exists() {
+            match load_addon(&env, &shared_xml_toc) {
+                Ok(r) => println!("SharedXML loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+                Err(e) => println!("SharedXML failed: {}", e),
+            }
+        }
+
+        // Try loading GameMenu
+        let game_menu_toc = wow_ui_path.join("Interface/AddOns/Blizzard_GameMenu/Blizzard_GameMenu_Mainline.toc");
+        if game_menu_toc.exists() {
+            match load_addon(&env, &game_menu_toc) {
+                Ok(r) => println!("GameMenu loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+                Err(e) => println!("GameMenu failed: {}", e),
+            }
+        }
+
+        // Try loading UIWidgets
+        let widgets_toc = wow_ui_path.join("Interface/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgets_Mainline.toc");
+        if widgets_toc.exists() {
+            match load_addon(&env, &widgets_toc) {
+                Ok(r) => println!("UIWidgets loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+                Err(e) => println!("UIWidgets failed: {}", e),
+            }
+        }
+
+        // Try loading FrameXML templates
+        let framexmlbase_toc = wow_ui_path.join("Interface/AddOns/Blizzard_FrameXMLBase/Blizzard_FrameXMLBase.toc");
+        if framexmlbase_toc.exists() {
+            match load_addon(&env, &framexmlbase_toc) {
+                Ok(r) => println!("FrameXMLBase loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+                Err(e) => println!("FrameXMLBase failed: {}", e),
+            }
+        }
+    }
+
+    // Try loading WeakAuras (with saved variables)
+    let weakauras_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/WeakAuras2/WeakAuras/WeakAuras.toc");
+    if weakauras_path.exists() {
+        match load_addon_with_saved_vars(&env, &weakauras_path, &mut saved_vars) {
+            Ok(r) => println!("WeakAuras loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+            Err(e) => println!("WeakAuras failed: {}", e),
+        }
+    }
+
+    // Try loading DBM-Core (with saved variables)
+    let dbm_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/DeadlyBossMods/DBM-Core/DBM-Core_Mainline.toc");
+    if dbm_path.exists() {
+        match load_addon_with_saved_vars(&env, &dbm_path, &mut saved_vars) {
+            Ok(r) => println!("DBM-Core loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+            Err(e) => println!("DBM-Core failed: {}", e),
+        }
+    }
+
+    // Try loading Details (with saved variables)
+    let details_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/Details/Details.toc");
+    if details_path.exists() {
+        match load_addon_with_saved_vars(&env, &details_path, &mut saved_vars) {
+            Ok(r) => println!("Details loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+            Err(e) => println!("Details failed: {}", e),
+        }
+    }
+
+    // Try loading Plater (with saved variables)
+    let plater_path = PathBuf::from(env!("HOME"))
+        .join("Projects/wow/reference-addons/Plater/Plater.toc");
+    if plater_path.exists() {
+        match load_addon_with_saved_vars(&env, &plater_path, &mut saved_vars) {
+            Ok(r) => println!("Plater loaded: {} Lua, {} XML, {} warnings", r.lua_files, r.xml_files, r.warnings.len()),
+            Err(e) => println!("Plater failed: {}", e),
+        }
+    }
 
     // Create some demo frames
     env.exec(

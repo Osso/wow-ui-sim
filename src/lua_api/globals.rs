@@ -822,6 +822,82 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     // IsLoggedIn() - Check if player is logged in (always true in sim)
     globals.set("IsLoggedIn", lua.create_function(|_, ()| Ok(false))?)?;
 
+    // Group/raid functions
+    globals.set("IsInGroup", lua.create_function(|_, _instance_type: Option<String>| Ok(false))?)?;
+    globals.set("IsInRaid", lua.create_function(|_, _instance_type: Option<String>| Ok(false))?)?;
+    globals.set("IsInGuild", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("IsInInstance", lua.create_function(|_, ()| {
+        // Returns: inInstance, instanceType ("none", "pvp", "arena", "party", "raid", "scenario")
+        Ok((false, "none"))
+    })?)?;
+    globals.set("GetNumGroupMembers", lua.create_function(|_, _instance_type: Option<String>| Ok(0))?)?;
+    globals.set("GetNumSubgroupMembers", lua.create_function(|_, _instance_type: Option<String>| Ok(0))?)?;
+    globals.set("UnitInParty", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    globals.set("UnitInRaid", lua.create_function(|_, _unit: String| Ok(Value::Nil))?)?;
+    globals.set("GetRaidRosterInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+
+    // Unit state functions
+    globals.set("UnitIsDeadOrGhost", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    globals.set("UnitIsDead", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    globals.set("UnitIsGhost", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    globals.set("UnitIsAFK", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    globals.set("UnitIsDND", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    globals.set("UnitIsConnected", lua.create_function(|_, _unit: String| Ok(true))?)?;
+    globals.set("UnitIsPlayer", lua.create_function(|_, unit: String| Ok(unit == "player"))?)?;
+    globals.set("UnitPlayerControlled", lua.create_function(|_, unit: String| Ok(unit == "player" || unit == "pet"))?)?;
+
+    // Realm/server functions
+    globals.set("GetAutoCompleteRealms", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    globals.set("GetRealmName", lua.create_function(|lua, ()| Ok(Value::String(lua.create_string("SimRealm")?)))?)?;
+    globals.set("GetNormalizedRealmName", lua.create_function(|lua, ()| Ok(Value::String(lua.create_string("SimRealm")?)))?)?;
+
+    // Specialization functions
+    globals.set("GetSpecialization", lua.create_function(|_, ()| Ok(1))?)?; // Returns current spec index (1-4)
+    globals.set("GetSpecializationInfo", lua.create_function(|lua, spec_index: i32| {
+        // Returns: specID, name, description, icon, role, primaryStat
+        let (id, name, role) = match spec_index {
+            1 => (62, "Arcane", "DAMAGER"),
+            2 => (63, "Fire", "DAMAGER"),
+            3 => (64, "Frost", "DAMAGER"),
+            _ => (62, "Arcane", "DAMAGER"),
+        };
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::Integer(id),
+            Value::String(lua.create_string(name)?),
+            Value::String(lua.create_string("Spec description")?),
+            Value::Integer(136116), // icon texture ID
+            Value::String(lua.create_string(role)?),
+            Value::Integer(4), // primaryStat (INT)
+        ]))
+    })?)?;
+    globals.set("GetNumSpecializations", lua.create_function(|_, ()| Ok(4))?)?;
+    globals.set("GetNumSpecializationsForClassID", lua.create_function(|_, _class_id: i32| Ok(3))?)?;
+    globals.set("GetSpecializationInfoByID", lua.create_function(|lua, _spec_id: i32| {
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::Integer(62),
+            Value::String(lua.create_string("Arcane")?),
+            Value::String(lua.create_string("Spec description")?),
+            Value::Integer(136116),
+            Value::String(lua.create_string("DAMAGER")?),
+            Value::String(lua.create_string("MAGE")?),
+        ]))
+    })?)?;
+    globals.set("GetSpecializationInfoForClassID", lua.create_function(|lua, (_class_id, spec_index): (i32, i32)| {
+        // Returns: specID, name, description, icon, role, isRecommended, isAllowed
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::Integer(62i64 + spec_index as i64 - 1),
+            Value::String(lua.create_string("Spec")?),
+            Value::String(lua.create_string("Description")?),
+            Value::Integer(136116),
+            Value::String(lua.create_string("DAMAGER")?),
+            Value::Boolean(false),
+            Value::Boolean(true),
+        ]))
+    })?)?;
+    globals.set("GetSpecializationRoleByID", lua.create_function(|lua, _spec_id: i32| {
+        Ok(Value::String(lua.create_string("DAMAGER")?))
+    })?)?;
+
     // GetCurrentRegion() - Return region ID
     let get_current_region = lua.create_function(|_, ()| {
         // 1=US, 2=Korea, 3=Europe, 4=Taiwan, 5=China

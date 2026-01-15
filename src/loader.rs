@@ -1,6 +1,7 @@
 //! Addon loader - loads addons from TOC files.
 
 use crate::lua_api::WowLuaEnv;
+use crate::saved_variables::SavedVariablesManager;
 use crate::toc::TocFile;
 use crate::xml::{parse_xml_file, XmlElement};
 use mlua::Table;
@@ -31,14 +32,62 @@ pub fn load_addon(env: &WowLuaEnv, toc_path: &Path) -> Result<LoadResult, LoadEr
     load_addon_from_toc(env, &toc)
 }
 
+/// Load an addon from its TOC file with saved variables support.
+pub fn load_addon_with_saved_vars(
+    env: &WowLuaEnv,
+    toc_path: &Path,
+    saved_vars_mgr: &mut SavedVariablesManager,
+) -> Result<LoadResult, LoadError> {
+    let toc = TocFile::from_file(toc_path)?;
+    load_addon_from_toc_with_saved_vars(env, &toc, saved_vars_mgr)
+}
+
 /// Load an addon from a parsed TOC.
 pub fn load_addon_from_toc(env: &WowLuaEnv, toc: &TocFile) -> Result<LoadResult, LoadError> {
+    load_addon_internal(env, toc, None)
+}
+
+/// Load an addon from a parsed TOC with saved variables support.
+pub fn load_addon_from_toc_with_saved_vars(
+    env: &WowLuaEnv,
+    toc: &TocFile,
+    saved_vars_mgr: &mut SavedVariablesManager,
+) -> Result<LoadResult, LoadError> {
+    load_addon_internal(env, toc, Some(saved_vars_mgr))
+}
+
+/// Internal addon loading with optional saved variables.
+fn load_addon_internal(
+    env: &WowLuaEnv,
+    toc: &TocFile,
+    saved_vars_mgr: Option<&mut SavedVariablesManager>,
+) -> Result<LoadResult, LoadError> {
     let mut result = LoadResult {
         name: toc.name.clone(),
         lua_files: 0,
         xml_files: 0,
         warnings: Vec::new(),
     };
+
+    // Initialize saved variables before loading addon files
+    if let Some(mgr) = saved_vars_mgr {
+        let saved_vars = toc.saved_variables();
+        let saved_vars_per_char = toc.saved_variables_per_character();
+
+        if !saved_vars.is_empty() || !saved_vars_per_char.is_empty() {
+            if let Err(e) = mgr.init_for_addon(
+                env.lua(),
+                &toc.name,
+                &saved_vars,
+                &saved_vars_per_char,
+            ) {
+                result.warnings.push(format!(
+                    "Failed to initialize saved variables for {}: {}",
+                    toc.name, e
+                ));
+            }
+        }
+    }
 
     // Create the shared private table for this addon (WoW passes this as second vararg)
     let addon_table = env.create_addon_table().map_err(|e| LoadError::Lua(e.to_string()))?;

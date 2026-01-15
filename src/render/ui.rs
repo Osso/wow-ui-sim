@@ -674,8 +674,9 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
 /// Find the topmost mouse-enabled frame at the given canvas position.
 /// Frames are checked in reverse z-order (topmost first).
 fn hit_test_frames(frames: &[FrameInfo], point: Point, bounds: Rectangle) -> Option<u64> {
-    let scale_x = bounds.width / 800.0;
-    let scale_y = bounds.height / 600.0;
+    // Must match the reference size used in draw() for coordinate scaling
+    let scale_x = bounds.width / 500.0;
+    let scale_y = bounds.height / 375.0;
 
     // Iterate in reverse (topmost frames are at the end after sorting)
     for info in frames.iter().rev() {
