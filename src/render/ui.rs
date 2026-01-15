@@ -1249,11 +1249,12 @@ fn draw_wow_button(
     // Draw button text if present
     if let Some(text_content) = &info.text {
         let tc = &info.text_color;
+        // Slight upward offset (-1px) to visually center text (fonts render low due to descenders)
         frame.fill_text(canvas::Text {
             content: text_content.clone(),
             position: Point::new(
                 rect.x + rect.width / 2.0,
-                rect.y + rect.height / 2.0,
+                rect.y + rect.height / 2.0 - 1.0,
             ),
             color: Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha),
             size: iced::Pixels(12.0),
@@ -1342,13 +1343,14 @@ fn draw_wow_fontstring(frame: &mut canvas::Frame, rect: &LayoutRect, info: &Fram
         let tc = &info.text_color;
         let color = Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha);
 
-        // Draw text centered in the rect
+        // Draw text centered in the rect (slight upward offset for visual centering)
         frame.fill_text(canvas::Text {
             content: text_content.clone(),
-            position: Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0 - 6.0),
+            position: Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0 - 1.0),
             color,
             size: iced::Pixels(12.0),
             align_x: iced::alignment::Alignment::Center.into(),
+            align_y: iced::alignment::Alignment::Center.into(),
             ..Default::default()
         });
     }
