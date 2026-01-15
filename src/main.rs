@@ -117,8 +117,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         r#"
         -- Create a main panel with WoW-style backdrop
         local mainFrame = CreateFrame("Frame", "MainPanel", UIParent)
-        mainFrame:SetSize(350, 250)
-        mainFrame:SetPoint("CENTER", 0, 0)
+        mainFrame:SetSize(300, 220)
+        mainFrame:SetPoint("CENTER", 60, 0)
         mainFrame:SetBackdrop({
             bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
             edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
@@ -189,8 +189,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         -- Create a sidebar panel
         local sidebar = CreateFrame("Frame", "Sidebar", UIParent)
-        sidebar:SetSize(150, 350)
-        sidebar:SetPoint("LEFT", 30, 0)
+        sidebar:SetSize(120, 280)
+        sidebar:SetPoint("LEFT", 15, 0)
         sidebar:SetBackdrop({
             bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
             edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -202,14 +202,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         -- Sidebar title
         local sideTitle = sidebar:CreateFontString("SideTitle", "OVERLAY")
-        sideTitle:SetSize(140, 18)
+        sideTitle:SetSize(110, 18)
         sideTitle:SetPoint("TOP", 0, -10)
         sideTitle:SetText("Events")
         sideTitle:SetTextColor(1.0, 1.0, 1.0, 1.0)
 
         -- Event log text
         local eventLog = sidebar:CreateFontString("EventLog", "OVERLAY")
-        eventLog:SetSize(140, 200)
+        eventLog:SetSize(110, 160)
         eventLog:SetPoint("TOP", 0, -35)
         eventLog:SetText("(no events)")
         eventLog:SetTextColor(0.7, 0.7, 0.7, 1.0)
@@ -239,7 +239,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         -- Fire Event button
         local fireBtn = CreateFrame("Button", "FireEventButton", sidebar)
-        fireBtn:SetSize(120, 24)
+        fireBtn:SetSize(100, 24)
         fireBtn:SetPoint("BOTTOM", 0, 40)
         fireBtn:SetText("Fire Event")
         fireBtn:EnableMouse(true)
@@ -255,7 +255,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         -- Login button
         local loginBtn = CreateFrame("Button", "LoginButton", sidebar)
-        loginBtn:SetSize(120, 24)
+        loginBtn:SetSize(100, 24)
         loginBtn:SetPoint("BOTTOM", 0, 70)
         loginBtn:SetText("Player Login")
         loginBtn:EnableMouse(true)
