@@ -680,10 +680,10 @@ impl App {
         .height(Length::Fill);
 
         // Frame list sidebar - filter to only show meaningful frames
-        let mut frame_list = Column::new().spacing(3).padding(8);
+        let mut frame_list = Column::new().spacing(2).padding(6);
         frame_list = frame_list.push(
             text("Frames")
-                .size(16)
+                .size(14)
                 .color(palette::GOLD),
         );
 
@@ -702,26 +702,38 @@ impl App {
                     && !item.starts_with("UIWidget")
                     && !item.starts_with("GameMenu")
             })
-            .take(20)
+            .take(15)
         {
+            // Truncate long names
+            let display = if item.len() > 25 {
+                format!("{}...", &item[..22])
+            } else {
+                item.clone()
+            };
             frame_list = frame_list.push(
-                text(item.clone())
-                    .size(11)
+                text(display)
+                    .size(10)
                     .color(palette::TEXT_SECONDARY),
             );
         }
 
-        // Log area with larger font
-        let mut log_col = Column::new().spacing(3).padding(8);
+        // Log area - limit to 5 messages to save space
+        let mut log_col = Column::new().spacing(2).padding(6);
         log_col = log_col.push(
             text("Console")
-                .size(16)
+                .size(14)
                 .color(palette::GOLD),
         );
-        for msg in self.log_messages.iter().rev().take(8) {
+        for msg in self.log_messages.iter().rev().take(5) {
+            // Truncate long messages
+            let display = if msg.len() > 80 {
+                format!("{}...", &msg[..77])
+            } else {
+                msg.clone()
+            };
             log_col = log_col.push(
-                text(msg)
-                    .size(13)
+                text(display)
+                    .size(11)
                     .color(palette::CONSOLE_TEXT),
             );
         }
@@ -753,30 +765,31 @@ impl App {
         ]
         .spacing(8);
 
-        // Main layout
+        // Main layout - use fixed heights to prevent overflow
+        // Window: 768, padding: 16, title: 26, buttons: 31, command: 31, console: 100, spacing: 30
+        // Available for canvas: 768 - 16 - 26 - 31 - 31 - 100 - 30 = 534px
         let content = column![
             text("WoW UI Simulator")
-                .size(24)
+                .size(20)
                 .color(palette::GOLD),
             row![
                 container(canvas)
-                    .width(Length::FillPortion(4))
-                    .height(Length::Fill)
+                    .width(Length::Fill)
+                    .height(Length::Fixed(500.0))
                     .style(canvas_style),
-                container(scrollable(frame_list).width(Length::Fixed(220.0)))
-                    .height(Length::Fill)
+                container(scrollable(frame_list).width(Length::Fixed(180.0)))
+                    .height(Length::Fixed(500.0))
                     .style(panel_style),
-            ]
-            .height(Length::FillPortion(3)),
+            ],
             event_buttons,
             command_row,
             container(scrollable(log_col))
-                .height(Length::Fixed(150.0))
+                .height(Length::Fixed(100.0))
                 .width(Length::Fill)
                 .style(console_style),
         ]
-        .spacing(10)
-        .padding(12);
+        .spacing(6)
+        .padding(8);
 
         container(content)
             .width(Length::Fill)
