@@ -256,3 +256,94 @@ fn test_all_frames_created() {
 
     assert_eq!(count, 19, "All 19 test frames should be created");
 }
+
+#[test]
+fn test_button_positions() {
+    let env = WowLuaEnv::new().unwrap();
+
+    // Create a panel at CENTER with a button at BOTTOMLEFT
+    env.exec(r#"
+        local mainFrame = CreateFrame("Frame", "TestMainPanel", UIParent)
+        mainFrame:SetSize(300, 220)
+        mainFrame:SetPoint("CENTER", 60, 0)
+
+        local btn1 = CreateFrame("Button", "TestAcceptBtn", mainFrame)
+        btn1:SetSize(100, 28)
+        btn1:SetPoint("BOTTOMLEFT", 30, 25)
+
+        local btn2 = CreateFrame("Button", "TestDeclineBtn", mainFrame)
+        btn2:SetSize(100, 28)
+        btn2:SetPoint("BOTTOMRIGHT", -30, 25)
+    "#).unwrap();
+
+    // Dump and print frame positions for debugging
+    let dump = env.dump_frames();
+    println!("Frame dump:\n{}", dump);
+
+    // Verify the buttons exist
+    let btn1_exists: bool = env.eval("return TestAcceptBtn ~= nil").unwrap();
+    let btn2_exists: bool = env.eval("return TestDeclineBtn ~= nil").unwrap();
+    assert!(btn1_exists, "AcceptButton should exist");
+    assert!(btn2_exists, "DeclineButton should exist");
+
+    // Check that GetPoint returns the correct anchor info
+    let (point1, rel_point1, x1, y1): (String, String, f32, f32) = env.eval(r#"
+        local p, rt, rp, x, y = TestAcceptBtn:GetPoint(1)
+        return p, rp, x, y
+    "#).unwrap();
+
+    assert_eq!(point1, "BOTTOMLEFT");
+    assert_eq!(rel_point1, "BOTTOMLEFT");
+    assert_eq!(x1, 30.0);
+    assert_eq!(y1, 25.0);
+
+    let (point2, rel_point2, x2, y2): (String, String, f32, f32) = env.eval(r#"
+        local p, rt, rp, x, y = TestDeclineBtn:GetPoint(1)
+        return p, rp, x, y
+    "#).unwrap();
+
+    assert_eq!(point2, "BOTTOMRIGHT");
+    assert_eq!(rel_point2, "BOTTOMRIGHT");
+    assert_eq!(x2, -30.0);
+    assert_eq!(y2, 25.0);
+}
+
+#[test]
+fn test_parent_visibility_propagation() {
+    let env = WowLuaEnv::new().unwrap();
+
+    // Create a parent frame that is hidden
+    env.exec(r#"
+        local parent = CreateFrame("Frame", "TestHiddenParent", UIParent)
+        parent:SetSize(200, 200)
+        parent:Hide()  -- Parent is hidden
+
+        local child = CreateFrame("Button", "TestChildOfHidden", parent)
+        child:SetSize(100, 50)
+        child:Show()  -- Child is explicitly shown, but parent is hidden
+    "#).unwrap();
+
+    // Verify parent is hidden
+    let parent_visible: bool = env.eval("return TestHiddenParent:IsVisible()").unwrap();
+    assert!(!parent_visible, "Parent should be hidden");
+
+    // Verify child's own visibility flag is true
+    let child_shown: bool = env.eval("return TestChildOfHidden:IsShown()").unwrap();
+    assert!(child_shown, "Child's own shown flag should be true");
+
+    // Check parent_id is correctly set
+    let child_parent: String = env.eval("return TestChildOfHidden:GetParent():GetName()").unwrap();
+    assert_eq!(child_parent, "TestHiddenParent", "Child should have correct parent");
+
+    // Get parent_id from the widget registry directly
+    let state = env.state().borrow();
+    let child_id = state.widgets.get_id_by_name("TestChildOfHidden").expect("Child should exist");
+    let parent_id = state.widgets.get_id_by_name("TestHiddenParent").expect("Parent should exist");
+
+    let child_frame = state.widgets.get(child_id).expect("Child frame should exist");
+    assert_eq!(child_frame.parent_id, Some(parent_id), "Child's parent_id should point to parent");
+
+    let parent_frame = state.widgets.get(parent_id).expect("Parent frame should exist");
+    assert!(!parent_frame.visible, "Parent's visible flag should be false");
+    assert!(child_frame.visible, "Child's own visible flag should be true");
+}

@@ -580,12 +580,14 @@ impl App {
             for id in state.widgets.all_ids() {
                 if let Some(frame) = state.widgets.get(id) {
                     let rect = compute_frame_rect_owned(&state.widgets, id, 500.0, 375.0);
+                    // Check if frame and all ancestors are visible
+                    let effectively_visible = is_effectively_visible(&state.widgets, id);
                     infos.push(FrameInfo {
                         id,
                         name: frame.name.clone(),
                         widget_type: frame.widget_type,
                         rect,
-                        visible: frame.visible,
+                        visible: effectively_visible,
                         frame_strata: frame.frame_strata,
                         frame_level: frame.frame_level,
                         alpha: frame.alpha,
@@ -1076,6 +1078,23 @@ fn mouse_button_name(button: iced::mouse::Button) -> String {
         iced::mouse::Button::Other(n) => format!("Button{}", n),
         _ => "Unknown".to_string(),
     }
+}
+
+/// Check if a frame is effectively visible (itself and all ancestors are visible).
+fn is_effectively_visible(registry: &crate::widget::WidgetRegistry, id: u64) -> bool {
+    let mut current_id = Some(id);
+    while let Some(cid) = current_id {
+        match registry.get(cid) {
+            Some(frame) => {
+                if !frame.visible {
+                    return false;
+                }
+                current_id = frame.parent_id;
+            }
+            None => break,
+        }
+    }
+    true
 }
 
 /// Compute frame rect - owned version that doesn't borrow.
