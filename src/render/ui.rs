@@ -431,19 +431,35 @@ impl App {
         .width(Length::Fill)
         .height(Length::Fill);
 
-        // Frame list sidebar
-        let mut frame_list = Column::new().spacing(2).padding(5);
-        frame_list = frame_list.push(text("Frames:").size(14));
+        // Frame list sidebar - filter to only show meaningful frames
+        let mut frame_list = Column::new().spacing(3).padding(8);
+        frame_list = frame_list.push(text("Frames").size(16));
 
-        for item in frame_list_items {
-            frame_list = frame_list.push(text(item).size(11));
+        for item in frame_list_items
+            .iter()
+            .filter(|item| {
+                // Only show frames with actual names and reasonable size
+                !item.starts_with("(anonymous)")
+                    && !item.starts_with("__")
+                    && !item.contains("0x0")
+                    && !item.starts_with("DBM")
+                    && !item.starts_with("Details")
+                    && !item.starts_with("Avatar")
+                    && !item.starts_with("Plater")
+                    && !item.starts_with("WeakAuras")
+                    && !item.starts_with("UIWidget")
+                    && !item.starts_with("GameMenu")
+            })
+            .take(20)
+        {
+            frame_list = frame_list.push(text(item.clone()).size(12));
         }
 
-        // Log area
-        let mut log_col = Column::new().spacing(2).padding(5);
-        log_col = log_col.push(text("Console:").size(14));
-        for msg in self.log_messages.iter().rev().take(10) {
-            log_col = log_col.push(text(msg).size(11));
+        // Log area with larger font
+        let mut log_col = Column::new().spacing(3).padding(8);
+        log_col = log_col.push(text("Console").size(16));
+        for msg in self.log_messages.iter().rev().take(8) {
+            log_col = log_col.push(text(msg).size(14));
         }
 
         // Event buttons
@@ -470,26 +486,26 @@ impl App {
 
         // Main layout
         let content = column![
-            text("WoW UI Simulator").size(20),
+            text("WoW UI Simulator").size(24),
             row![
                 container(canvas)
-                    .width(Length::FillPortion(3))
+                    .width(Length::FillPortion(4))
                     .height(Length::Fill)
                     .style(container::bordered_box),
-                container(frame_list.width(Length::Fixed(180.0)))
+                container(frame_list.width(Length::Fixed(220.0)))
                     .height(Length::Fill)
                     .style(container::bordered_box),
             ]
-            .height(Length::FillPortion(4)),
+            .height(Length::FillPortion(3)),
             event_buttons,
             command_row,
             container(log_col)
-                .height(Length::Fixed(100.0))
+                .height(Length::Fixed(150.0))
                 .width(Length::Fill)
                 .style(container::bordered_box),
         ]
-        .spacing(10)
-        .padding(10);
+        .spacing(8)
+        .padding(12);
 
         container(content)
             .width(Length::Fill)
@@ -543,14 +559,31 @@ impl canvas::Program<Message> for FrameRenderer<'_> {
                     continue;
                 }
 
-                // Skip UIParent and Minimap (built-in frames)
-                if matches!(info.name.as_deref(), Some("UIParent") | Some("Minimap")) {
-                    continue;
-                }
-
                 // Skip frames with no size
                 if info.rect.width <= 0.0 || info.rect.height <= 0.0 {
                     continue;
+                }
+
+                // Skip built-in and addon internal frames
+                if let Some(name) = &info.name {
+                    if matches!(
+                        name.as_str(),
+                        "UIParent" | "Minimap" | "AddonCompartmentFrame"
+                    ) {
+                        continue;
+                    }
+                    // Skip addon internal frames
+                    if name.starts_with("DBM")
+                        || name.starts_with("Details")
+                        || name.starts_with("Avatar")
+                        || name.starts_with("Plater")
+                        || name.starts_with("WeakAuras")
+                        || name.starts_with("UIWidget")
+                        || name.starts_with("GameMenu")
+                        || name.starts_with("__")
+                    {
+                        continue;
+                    }
                 }
 
                 let rect = LayoutRect {
@@ -880,6 +913,11 @@ fn draw_wow_frame(
     info: &FrameInfo,
     image_handles: &HashMap<String, ImageHandle>,
 ) {
+    // Only draw frames that have a backdrop explicitly enabled
+    if !info.backdrop.enabled {
+        return;
+    }
+
     let alpha = info.alpha;
     let bounds = Rectangle {
         x: rect.x,
@@ -888,27 +926,8 @@ fn draw_wow_frame(
         height: rect.height,
     };
 
-    // Check if backdrop is enabled - use 9-slice rendering
-    if info.backdrop.enabled {
-        // Use 9-slice frame rendering
-        let nine_slice = NineSliceFrame::dialog_frame();
-        draw_nine_slice(frame, bounds, &nine_slice, image_handles, alpha);
-    } else {
-        // Default WoW panel style when no backdrop set - also use 9-slice
-        let nine_slice = NineSliceFrame::dialog_frame();
-        draw_nine_slice(frame, bounds, &nine_slice, image_handles, alpha);
-    }
-
-    // Draw frame name label (small, for debugging)
-    if let Some(name) = &info.name {
-        frame.fill_text(canvas::Text {
-            content: name.clone(),
-            position: Point::new(rect.x + 4.0, rect.y + 4.0),
-            color: Color::from_rgba(1.0, 1.0, 1.0, 0.6 * alpha),
-            size: iced::Pixels(10.0),
-            ..Default::default()
-        });
-    }
+    let nine_slice = NineSliceFrame::dialog_frame();
+    draw_nine_slice(frame, bounds, &nine_slice, image_handles, alpha);
 }
 
 /// Draw a WoW-style button.
