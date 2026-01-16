@@ -2,8 +2,12 @@ use std::path::PathBuf;
 use tracing_subscriber::EnvFilter;
 use wow_ui_sim::loader::{load_addon, load_addon_with_saved_vars};
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::render::run_ui;
 use wow_ui_sim::saved_variables::SavedVariablesManager;
+
+// Use GTK by default, set USE_ICED=1 env var for iced
+fn use_iced() -> bool {
+    std::env::var("USE_ICED").map(|v| v == "1").unwrap_or(false)
+}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt()
@@ -298,7 +302,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
 
     // Run the UI
-    run_ui(env)?;
+    if use_iced() {
+        println!("Running iced UI (USE_ICED=1)");
+        wow_ui_sim::render::run_ui(env)?;
+    } else {
+        println!("Running GTK UI (set USE_ICED=1 for iced)");
+        wow_ui_sim::run_gtk_ui(env)?;
+    }
 
     Ok(())
 }

@@ -5,6 +5,7 @@
 
 pub mod error;
 pub mod event;
+pub mod gtk_app;
 pub mod loader;
 pub mod lua_api;
 pub mod render;
@@ -15,3 +16,4 @@ pub mod widget;
 pub mod xml;
 
 pub use error::{Error, Result};
+pub use gtk_app::{run_gtk_ui, run_gtk_ui_with_textures};

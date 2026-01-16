@@ -1,0 +1,133 @@
+/* WoW UI Simulator - Dark Theme */
+
+/* Base font size */
+* {
+    font-size: 14px;
+}
+
+/* Main window background */
+window, .background {
+    background-color: #14141a;
+    color: #ebe6d9;
+}
+
+/* Title styling - gold accent */
+.title-2 {
+    color: #d9a621;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Headings - gold */
+.heading {
+    color: #d9a621;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Dim labels for secondary text */
+.dim-label {
+    color: #999690;
+    font-size: 12px;
+}
+
+/* Monospace console text */
+.monospace {
+    font-family: monospace;
+    font-size: 14px;
+    color: #b3d9b3;
+    background-color: #0f0f14;
+    padding: 6px;
+}
+
+/* Frame/card styling */
+.view {
+    background-color: #14141a;
+    border: 1px solid #66593f;
+    border-radius: 3px;
+}
+
+/* Button styling */
+button {
+    background-color: #1f1f24;
+    color: #999690;
+    border: 1px solid #403a33;
+    border-radius: 3px;
+    padding: 4px 11px;
+    min-height: 28px;
+    font-size: 13px;
+}
+
+button:hover {
+    background-color: #66593f;
+    color: #d9a621;
+}
+
+button:active {
+    background-color: #8c6b1a;
+    color: #ebe6d9;
+}
+
+/* Run button (suggested action) - gold accent */
+button.suggested-action {
+    background-color: #8c6b1a;
+    color: #ebe6d9;
+    border-color: #d9a621;
+}
+
+button.suggested-action:hover {
+    background-color: #d9a621;
+    color: #000000;
+}
+
+button.suggested-action:active {
+    background-color: #8c6b1a;
+    color: #000000;
+}
+
+/* Text entry */
+entry {
+    background-color: #0f0f14;
+    color: #ebe6d9;
+    border: 1px solid #403a33;
+    border-radius: 3px;
+    padding: 4px 7px;
+    min-height: 28px;
+    font-size: 14px;
+}
+
+entry:focus {
+    border-color: #8c6b1a;
+}
+
+entry placeholder {
+    color: #736e66;
+}
+
+/* Scrollbar styling */
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: #403a33;
+    border-radius: 3px;
+    min-width: 7px;
+    min-height: 7px;
+}
+
+scrollbar slider:hover {
+    background-color: #66593f;
+}
+
+/* Scrolled window */
+scrolledwindow {
+    background-color: #1f1f24;
+    border: 1px solid #403a33;
+    border-radius: 3px;
+}
+
+/* Frame list items */
+scrolledwindow .dim-label {
+    padding: 2px 3px;
+}
