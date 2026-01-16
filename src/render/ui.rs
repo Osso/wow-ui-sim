@@ -231,10 +231,14 @@ struct App {
     debug_rx: server::CommandReceiver,
     /// Pending layout dump response.
     pending_dump_respond: Option<tokio::sync::oneshot::Sender<String>>,
+    /// Pending screenshot response channel.
+    pending_screenshot_respond: Option<tokio::sync::oneshot::Sender<Result<server::ScreenshotData, String>>>,
     /// Debug server socket guard (keeps socket alive).
     _debug_guard: server::SocketGuard,
     /// Current window size for layout dumps.
     window_size: iced::Size,
+    /// Window ID for screenshots.
+    window_id: Option<iced::window::Id>,
 }
 
 /// Owned frame info for rendering.
@@ -277,6 +281,9 @@ enum Message {
     DebugPoll,
     DumpLayout,
     LayoutDumped(LayoutDump),
+    TakeScreenshot,
+    ScreenshotTaken(iced::window::Screenshot),
+    WindowOpened(iced::window::Id),
     // No-op for unhandled events
     NoOp,
 }
@@ -324,8 +331,10 @@ impl App {
                 command_input: String::new(),
                 debug_rx,
                 pending_dump_respond: None,
+                pending_screenshot_respond: None,
                 _debug_guard: debug_guard,
                 window_size: iced::Size::new(1024.0, 768.0),
+                window_id: None,
             },
             iced::Task::none(),
         )
@@ -511,6 +520,10 @@ impl App {
                             let _ = respond.send(Ok(()));
                             return iced::Task::done(Message::ExecuteCommand);
                         }
+                        Command::Screenshot { respond } => {
+                            self.pending_screenshot_respond = Some(respond);
+                            return iced::Task::done(Message::TakeScreenshot);
+                        }
                     }
                 }
             }
@@ -522,6 +535,29 @@ impl App {
             Message::LayoutDumped(dump) => {
                 if let Some(respond) = self.pending_dump_respond.take() {
                     let _ = respond.send(dump.to_string());
+                }
+            }
+            Message::TakeScreenshot => {
+                if let Some(window_id) = self.window_id {
+                    return iced::window::screenshot(window_id)
+                        .map(Message::ScreenshotTaken);
+                } else if let Some(respond) = self.pending_screenshot_respond.take() {
+                    let _ = respond.send(Err("Window ID not available yet".to_string()));
+                }
+            }
+            Message::ScreenshotTaken(screenshot) => {
+                if let Some(respond) = self.pending_screenshot_respond.take() {
+                    let data = server::ScreenshotData {
+                        width: screenshot.size.width,
+                        height: screenshot.size.height,
+                        pixels: screenshot.rgba.to_vec(),
+                    };
+                    let _ = respond.send(Ok(data));
+                }
+            }
+            Message::WindowOpened(id) => {
+                if self.window_id.is_none() {
+                    self.window_id = Some(id);
                 }
             }
         }
@@ -549,7 +585,10 @@ impl App {
         // Poll for debug commands every 50ms
         let debug_sub = time::every(Duration::from_millis(50)).map(|_| Message::DebugPoll);
 
-        iced::Subscription::batch([keyboard_sub, debug_sub])
+        // Track window open events to capture window ID for screenshots
+        let window_sub = iced::window::open_events().map(Message::WindowOpened);
+
+        iced::Subscription::batch([keyboard_sub, debug_sub, window_sub])
     }
 
     fn view(&self) -> Element<'_, Message> {
@@ -781,16 +820,17 @@ impl App {
             row![
                 container(canvas)
                     .width(Length::Fill)
-                    .height(Length::Fixed(500.0))
+                    .height(Length::Fill)
                     .style(canvas_style),
                 container(scrollable(frame_list).width(Length::Fixed(180.0)))
-                    .height(Length::Fixed(500.0))
+                    .height(Length::Fill)
                     .style(panel_style),
-            ],
+            ]
+            .height(Length::Fill),
             event_buttons,
             command_row,
             scrollable(log_col)
-                .height(Length::Fixed(80.0))
+                .height(Length::Fixed(160.0))
                 .width(Length::Fill),
         ]
         .spacing(6)
@@ -1246,20 +1286,21 @@ fn draw_wow_button(
     // Draw button texture with appropriate state
     draw_button(frame, bounds, button_state, image_handles, alpha);
 
-    // Draw button text if present
+    // Draw button text centered
     if let Some(text_content) = &info.text {
         let tc = &info.text_color;
-        // Slight upward offset (-1px) to visually center text (fonts render low due to descenders)
+        let font_size = 12.0;
+        // Actual measured: ~10px per char width, ~16px effective height
+        let text_width = text_content.len() as f32 * 10.0;
+        let text_height = 16.0;
         frame.fill_text(canvas::Text {
             content: text_content.clone(),
             position: Point::new(
-                rect.x + rect.width / 2.0,
-                rect.y + rect.height / 2.0 - 1.0,
+                rect.x + (rect.width - text_width) / 2.0,
+                rect.y + (rect.height - text_height) / 2.0,
             ),
             color: Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha),
-            size: iced::Pixels(12.0),
-            align_x: iced::alignment::Alignment::Center.into(),
-            align_y: iced::alignment::Alignment::Center.into(),
+            size: iced::Pixels(font_size),
             ..Default::default()
         });
     }
@@ -1343,14 +1384,18 @@ fn draw_wow_fontstring(frame: &mut canvas::Frame, rect: &LayoutRect, info: &Fram
         let tc = &info.text_color;
         let color = Color::from_rgba(tc.r, tc.g, tc.b, tc.a * alpha);
 
-        // Draw text centered in the rect (slight upward offset for visual centering)
+        // Draw text centered in the rect
+        let font_size = 12.0;
+        let text_width = text_content.len() as f32 * 10.0;
+        let text_height = 16.0;
         frame.fill_text(canvas::Text {
             content: text_content.clone(),
-            position: Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0 - 1.0),
+            position: Point::new(
+                rect.x + (rect.width - text_width) / 2.0,
+                rect.y + (rect.height - text_height) / 2.0,
+            ),
             color,
-            size: iced::Pixels(12.0),
-            align_x: iced::alignment::Alignment::Center.into(),
-            align_y: iced::alignment::Alignment::Center.into(),
+            size: iced::Pixels(font_size),
             ..Default::default()
         });
     }
