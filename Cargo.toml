@@ -14,18 +14,16 @@ thiserror = "2.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 image = "0.25"
+image-blp = "1"
 tokio = { version = "1", features = ["sync", "rt", "time"] }
 
 # GTK4/relm4 for UI
 relm4 = { version = "0.10", features = ["libadwaita"] }
 gtk = { version = "0.10", package = "gtk4" }
 adw = { version = "0.8", package = "libadwaita" }
+pango = "0.21"
+pangocairo = "0.21"
 gtk-layout-inspector = { path = "/home/osso/Projects/lib/gtk-layout-inspector", features = ["server"] }
-
-# Keep iced for now during migration (will remove in Phase 4)
-iced = { version = "0.14", features = ["canvas", "image", "tokio"] }
-iced_runtime = "0.14"
-iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
 
 [dev-dependencies]
 insta = "1.42"

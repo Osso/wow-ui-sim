@@ -31,11 +31,39 @@ impl Color {
     }
 }
 
+/// Text justification for FontStrings.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum TextJustify {
+    /// Left/Top alignment.
+    Left,
+    /// Center/Middle alignment (default).
+    #[default]
+    Center,
+    /// Right/Bottom alignment.
+    Right,
+}
+
+impl TextJustify {
+    /// Parse from WoW string (case-insensitive).
+    pub fn from_wow_str(s: &str) -> Self {
+        match s.to_uppercase().as_str() {
+            "LEFT" | "TOP" => TextJustify::Left,
+            "CENTER" | "MIDDLE" => TextJustify::Center,
+            "RIGHT" | "BOTTOM" => TextJustify::Right,
+            _ => TextJustify::Center,
+        }
+    }
+}
+
 /// Backdrop configuration for frames.
 #[derive(Debug, Clone, Default)]
 pub struct Backdrop {
     /// Whether backdrop is enabled.
     pub enabled: bool,
+    /// Background texture file path (WoW path format).
+    pub bg_file: Option<String>,
+    /// Edge/border texture file path (WoW path format).
+    pub edge_file: Option<String>,
     /// Background color.
     pub bg_color: Color,
     /// Border color.
@@ -79,20 +107,50 @@ pub struct Frame {
     pub mouse_enabled: bool,
     /// Texture path (for Texture widgets).
     pub texture: Option<String>,
+    /// Solid color texture (from SetColorTexture).
+    pub color_texture: Option<Color>,
     /// Vertex color for textures (tinting).
     pub vertex_color: Option<Color>,
     /// Text content (for FontString widgets).
     pub text: Option<String>,
+    /// Title text (for DefaultPanelTemplate frames).
+    pub title: Option<String>,
     /// Text color for FontStrings.
     pub text_color: Color,
     /// Font name (for FontString widgets).
     pub font: Option<String>,
     /// Font size (for FontString widgets).
     pub font_size: f32,
+    /// Horizontal text justification (LEFT, CENTER, RIGHT).
+    pub justify_h: TextJustify,
+    /// Vertical text justification (TOP, MIDDLE, BOTTOM).
+    pub justify_v: TextJustify,
     /// Named attributes (for secure frames, unit frames, etc.).
     pub attributes: HashMap<String, AttributeValue>,
     /// Backdrop configuration.
     pub backdrop: Backdrop,
+    /// Named child references (e.g., "Text" -> FontString child ID for CheckButtons).
+    pub children_keys: HashMap<String, u64>,
+    /// Whether the frame can be moved by the user.
+    pub movable: bool,
+    /// Whether the frame can be resized by the user.
+    pub resizable: bool,
+    /// Whether the frame is clamped to screen bounds.
+    pub clamped_to_screen: bool,
+    /// Whether the frame is currently being moved/dragged.
+    pub is_moving: bool,
+    /// Whether text should word-wrap (for FontString widgets).
+    pub word_wrap: bool,
+    /// Text scale factor (for FontString widgets).
+    pub text_scale: f64,
+    /// Normal texture path (for Button widgets).
+    pub normal_texture: Option<String>,
+    /// Pushed texture path (for Button widgets).
+    pub pushed_texture: Option<String>,
+    /// Highlight texture path (for Button widgets).
+    pub highlight_texture: Option<String>,
+    /// Disabled texture path (for Button widgets).
+    pub disabled_texture: Option<String>,
 }
 
 impl Frame {
@@ -113,13 +171,28 @@ impl Frame {
             alpha: 1.0,
             mouse_enabled: false,
             texture: None,
+            color_texture: None,
             vertex_color: None,
             text: None,
+            title: None,
             text_color: Color::new(1.0, 1.0, 1.0, 1.0), // Default white text
             font: None,
             font_size: 12.0,
+            justify_h: TextJustify::Center,
+            justify_v: TextJustify::Center,
             attributes: HashMap::new(),
             backdrop: Backdrop::default(),
+            children_keys: HashMap::new(),
+            movable: false,
+            resizable: false,
+            clamped_to_screen: false,
+            is_moving: false,
+            word_wrap: false,
+            text_scale: 1.0,
+            normal_texture: None,
+            pushed_texture: None,
+            highlight_texture: None,
+            disabled_texture: None,
         }
     }
 

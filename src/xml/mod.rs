@@ -17,6 +17,7 @@ pub enum XmlElement {
     // Frame-like widgets
     Frame(FrameXml),
     Button(FrameXml),
+    ItemButton(FrameXml),
     CheckButton(FrameXml),
     EditBox(FrameXml),
     ScrollFrame(FrameXml),
@@ -45,15 +46,23 @@ pub enum XmlElement {
     // Texture/Font regions
     Texture(TextureXml),
     FontString(FontStringXml),
-    // File references
+    // File references (both uppercase and lowercase variants for compatibility)
     Script(ScriptXml),
+    #[serde(rename = "script")]
+    ScriptLower(ScriptXml),
     Include(IncludeXml),
+    #[serde(rename = "include")]
+    IncludeLower(IncludeXml),
     // Animation elements
     AnimationGroup(AnimationGroupXml),
     // ModelScene elements
     Actor(ActorXml),
     // Font definitions
     Font(FontXml),
+    FontFamily(FontFamilyXml),
+    // Text content (from malformed XML or comments)
+    #[serde(rename = "$text")]
+    Text(String),
 }
 
 /// Frame definition in XML.
@@ -284,20 +293,22 @@ pub struct OffsetXml {
 }
 
 /// Scripts container.
+/// Note: Some scripts can appear multiple times (e.g., duplicate OnClick in Baganator),
+/// so we use Vec to allow this. WoW likely uses the last one or merges them.
 #[derive(Debug, Deserialize)]
 pub struct ScriptsXml {
-    #[serde(rename = "OnLoad")]
-    pub on_load: Option<ScriptBodyXml>,
-    #[serde(rename = "OnEvent")]
-    pub on_event: Option<ScriptBodyXml>,
-    #[serde(rename = "OnUpdate")]
-    pub on_update: Option<ScriptBodyXml>,
-    #[serde(rename = "OnClick")]
-    pub on_click: Option<ScriptBodyXml>,
-    #[serde(rename = "OnShow")]
-    pub on_show: Option<ScriptBodyXml>,
-    #[serde(rename = "OnHide")]
-    pub on_hide: Option<ScriptBodyXml>,
+    #[serde(rename = "OnLoad", default)]
+    pub on_load: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnEvent", default)]
+    pub on_event: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnUpdate", default)]
+    pub on_update: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnClick", default)]
+    pub on_click: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnShow", default)]
+    pub on_show: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnHide", default)]
+    pub on_hide: Vec<ScriptBodyXml>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -455,6 +466,7 @@ pub struct FramesXml {
 pub enum FrameElement {
     Frame(FrameXml),
     Button(FrameXml),
+    ItemButton(FrameXml),
     CheckButton(FrameXml),
     EditBox(FrameXml),
     ScrollFrame(FrameXml),
@@ -544,6 +556,16 @@ pub struct FontXml {
     pub height: Option<f32>,
     #[serde(rename = "@outline")]
     pub outline: Option<String>,
+}
+
+/// FontFamily definition - collection of fonts for different alphabets.
+#[derive(Debug, Deserialize, Default)]
+pub struct FontFamilyXml {
+    #[serde(rename = "@name")]
+    pub name: Option<String>,
+    #[serde(rename = "@virtual")]
+    pub is_virtual: Option<bool>,
+    // Contains Member elements with Font children, which we ignore for simulation
 }
 
 /// Parse a WoW UI XML file from a string.

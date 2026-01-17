@@ -6,6 +6,7 @@ use crate::toc::TocFile;
 use crate::xml::{parse_xml_file, XmlElement};
 use mlua::Table;
 use std::path::Path;
+use std::time::{Duration, Instant};
 
 /// Result of loading an addon.
 #[derive(Debug)]
@@ -16,14 +17,37 @@ pub struct LoadResult {
     pub lua_files: usize,
     /// Number of XML files loaded
     pub xml_files: usize,
+    /// Time breakdown
+    pub timing: LoadTiming,
     /// Errors encountered (non-fatal)
     pub warnings: Vec<String>,
 }
 
-/// Context for loading addon files (name and private table).
+/// Timing breakdown for addon loading.
+#[derive(Debug, Default, Clone)]
+pub struct LoadTiming {
+    /// Time reading files from disk
+    pub io_time: Duration,
+    /// Time parsing XML
+    pub xml_parse_time: Duration,
+    /// Time executing Lua
+    pub lua_exec_time: Duration,
+    /// Time loading SavedVariables
+    pub saved_vars_time: Duration,
+}
+
+impl LoadTiming {
+    pub fn total(&self) -> Duration {
+        self.io_time + self.xml_parse_time + self.lua_exec_time + self.saved_vars_time
+    }
+}
+
+/// Context for loading addon files (name, private table, and addon root for path resolution).
 struct AddonContext<'a> {
     name: &'a str,
     table: Table,
+    /// Addon root directory for fallback path resolution
+    addon_root: &'a Path,
 }
 
 /// Load an addon from its TOC file.
@@ -62,49 +86,75 @@ fn load_addon_internal(
     toc: &TocFile,
     saved_vars_mgr: Option<&mut SavedVariablesManager>,
 ) -> Result<LoadResult, LoadError> {
+    // WoW passes the folder name (not Title) as the addon name vararg
+    let folder_name = toc
+        .addon_dir
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or(&toc.name);
+
     let mut result = LoadResult {
         name: toc.name.clone(),
         lua_files: 0,
         xml_files: 0,
+        timing: LoadTiming::default(),
         warnings: Vec::new(),
     };
 
     // Initialize saved variables before loading addon files
     if let Some(mgr) = saved_vars_mgr {
-        let saved_vars = toc.saved_variables();
-        let saved_vars_per_char = toc.saved_variables_per_character();
+        let sv_start = Instant::now();
+        // First try to load WTF saved variables from real WoW installation
+        match mgr.load_wtf_for_addon(env.lua(), folder_name) {
+            Ok(count) if count > 0 => {
+                tracing::debug!("Loaded {} WTF SavedVariables file(s) for {}", count, toc.name);
+            }
+            Ok(_) => {
+                // No WTF files found, fall back to JSON storage
+                let saved_vars = toc.saved_variables();
+                let saved_vars_per_char = toc.saved_variables_per_character();
 
-        if !saved_vars.is_empty() || !saved_vars_per_char.is_empty() {
-            if let Err(e) = mgr.init_for_addon(
-                env.lua(),
-                &toc.name,
-                &saved_vars,
-                &saved_vars_per_char,
-            ) {
+                if !saved_vars.is_empty() || !saved_vars_per_char.is_empty() {
+                    if let Err(e) = mgr.init_for_addon(
+                        env.lua(),
+                        folder_name,
+                        &saved_vars,
+                        &saved_vars_per_char,
+                    ) {
+                        result.warnings.push(format!(
+                            "Failed to initialize saved variables for {}: {}",
+                            folder_name, e
+                        ));
+                    }
+                }
+            }
+            Err(e) => {
                 result.warnings.push(format!(
-                    "Failed to initialize saved variables for {}: {}",
-                    toc.name, e
+                    "Failed to load WTF SavedVariables for {}: {}",
+                    folder_name, e
                 ));
             }
         }
+        result.timing.saved_vars_time = sv_start.elapsed();
     }
 
     // Create the shared private table for this addon (WoW passes this as second vararg)
     let addon_table = env.create_addon_table().map_err(|e| LoadError::Lua(e.to_string()))?;
     let ctx = AddonContext {
-        name: &toc.name,
+        name: folder_name,
         table: addon_table,
+        addon_root: &toc.addon_dir,
     };
 
     for file in toc.file_paths() {
         let ext = file.extension().and_then(|e| e.to_str()).unwrap_or("");
 
         match ext {
-            "lua" => match load_lua_file(env, &file, &ctx) {
+            "lua" => match load_lua_file(env, &file, &ctx, &mut result.timing) {
                 Ok(()) => result.lua_files += 1,
                 Err(e) => result.warnings.push(format!("{}: {}", file.display(), e)),
             },
-            "xml" => match load_xml_file(env, &file, &ctx) {
+            "xml" => match load_xml_file(env, &file, &ctx, &mut result.timing) {
                 Ok(count) => {
                     result.xml_files += 1;
                     result.lua_files += count;
@@ -121,8 +171,20 @@ fn load_addon_internal(
 }
 
 /// Load a Lua file into the environment with addon varargs.
-fn load_lua_file(env: &WowLuaEnv, path: &Path, ctx: &AddonContext) -> Result<(), LoadError> {
-    let code = std::fs::read_to_string(path)?;
+fn load_lua_file(
+    env: &WowLuaEnv,
+    path: &Path,
+    ctx: &AddonContext,
+    timing: &mut LoadTiming,
+) -> Result<(), LoadError> {
+    let io_start = Instant::now();
+    // Use lossy UTF-8 conversion to handle files with invalid encoding
+    let bytes = std::fs::read(path)?;
+    let code = String::from_utf8_lossy(&bytes);
+    timing.io_time += io_start.elapsed();
+
+    // Strip UTF-8 BOM if present (common in Windows-edited files)
+    let code = code.strip_prefix('\u{feff}').unwrap_or(&code);
     // Transform path to WoW-style for debugstack (libraries expect "AddOns/..." pattern)
     let path_str = path.display().to_string();
     let chunk_name = if let Some(pos) = path_str.find("reference-addons/") {
@@ -135,8 +197,12 @@ fn load_lua_file(env: &WowLuaEnv, path: &Path, ctx: &AddonContext) -> Result<(),
     };
     // Clone the table since mlua moves it on call
     let table_clone = ctx.table.clone();
+
+    let lua_start = Instant::now();
     env.exec_with_varargs(&code, &chunk_name, ctx.name, table_clone)
         .map_err(|e| LoadError::Lua(e.to_string()))?;
+    timing.lua_exec_time += lua_start.elapsed();
+
     Ok(())
 }
 
@@ -145,27 +211,54 @@ fn normalize_path(path: &str) -> String {
     path.replace('\\', "/")
 }
 
+/// Resolve a path relative to xml_dir, with fallback to addon_root.
+/// Some addons use paths relative to addon root instead of the XML file location.
+fn resolve_path_with_fallback(xml_dir: &Path, addon_root: &Path, file: &str) -> std::path::PathBuf {
+    let normalized = normalize_path(file);
+    let primary = xml_dir.join(&normalized);
+    if primary.exists() {
+        primary
+    } else {
+        // Try relative to addon root as fallback
+        let fallback = addon_root.join(&normalized);
+        if fallback.exists() {
+            fallback
+        } else {
+            // Return primary path (will result in error with correct path)
+            primary
+        }
+    }
+}
+
 /// Create a frame from XML definition.
+/// Returns the name of the created frame (or None if skipped).
 fn create_frame_from_xml(
     env: &WowLuaEnv,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     parent_override: Option<&str>,
-) -> Result<(), LoadError> {
+) -> Result<Option<String>, LoadError> {
     // Skip virtual frames (templates)
     if frame.is_virtual == Some(true) {
-        return Ok(());
+        return Ok(None);
     }
 
     // Need a name to create a global frame (unless we have a parent override for anonymous children)
     let name = match &frame.name {
-        Some(n) => n.clone(),
+        Some(n) => {
+            // Replace $parent with actual parent name if present
+            if let Some(parent_name) = parent_override {
+                n.replace("$parent", parent_name)
+            } else {
+                n.clone()
+            }
+        }
         None => {
             if parent_override.is_some() {
                 // Anonymous child frame - generate temp name
                 format!("__anon_{}", rand_id())
             } else {
-                return Ok(()); // Anonymous top-level frames are templates
+                return Ok(None); // Anonymous top-level frames are templates
             }
         }
     };
@@ -220,7 +313,7 @@ fn create_frame_from_xml(
 
     // Set anchors
     if let Some(anchors) = frame.anchors() {
-        lua_code.push_str(&generate_anchors_code(anchors, "$parent"));
+        lua_code.push_str(&generate_anchors_code(anchors, parent));
     }
 
     // Set hidden state
@@ -281,7 +374,7 @@ fn create_frame_from_xml(
         for child in &frames.elements {
             let (child_frame, child_type) = match child {
                 crate::xml::FrameElement::Frame(f) => (f, "Frame"),
-                crate::xml::FrameElement::Button(f) => (f, "Button"),
+                crate::xml::FrameElement::Button(f) | crate::xml::FrameElement::ItemButton(f) => (f, "Button"),
                 crate::xml::FrameElement::CheckButton(f) => (f, "CheckButton"),
                 crate::xml::FrameElement::EditBox(f) => (f, "EditBox"),
                 crate::xml::FrameElement::ScrollFrame(f) => (f, "ScrollFrame"),
@@ -289,24 +382,37 @@ fn create_frame_from_xml(
                 crate::xml::FrameElement::StatusBar(f) => (f, "StatusBar"),
                 _ => continue, // Skip unsupported types for now
             };
-            create_frame_from_xml(env, child_frame, child_type, Some(&name))?;
+            let child_name = create_frame_from_xml(env, child_frame, child_type, Some(&name))?;
 
-            // Handle parentKey for child frames
-            if let (Some(child_name), Some(parent_key)) =
-                (&child_frame.name, &child_frame.parent_key)
+            // Handle parentKey for child frames (works for both named and anonymous frames)
+            if let (Some(actual_child_name), Some(parent_key)) =
+                (child_name, &child_frame.parent_key)
             {
                 let lua_code = format!(
                     r#"
                     {}.{} = {}
                     "#,
-                    name, parent_key, child_name
+                    name, parent_key, actual_child_name
                 );
                 env.exec(&lua_code).ok(); // Ignore errors (parent might not exist yet)
             }
         }
     }
 
-    Ok(())
+    // Fire OnLoad script after frame is fully configured
+    // In WoW, OnLoad fires at the end of frame creation from XML
+    let onload_code = format!(
+        r#"
+        local handler = {}:GetScript("OnLoad")
+        if handler then
+            handler({})
+        end
+        "#,
+        name, name
+    );
+    env.exec(&onload_code).ok(); // Ignore errors (OnLoad might not be set)
+
+    Ok(Some(name))
 }
 
 /// Get size values from a SizeXml, checking both direct attributes and AbsDimension.
@@ -359,6 +465,10 @@ fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str) -> 
 
         let rel_str = match relative_to {
             Some("$parent") => parent_ref.to_string(),
+            Some(rel) if rel.starts_with("$parent_") || rel.starts_with("$Parent_") => {
+                // $parent_Sibling refers to a sibling frame with name ParentFrame_Sibling
+                rel.replace("$parent", parent_ref).replace("$Parent", parent_ref)
+            }
             Some(rel) => rel.to_string(),
             None => "nil".to_string(),
         };
@@ -411,22 +521,23 @@ fn generate_scripts_code(scripts: &crate::xml::ScriptsXml) -> String {
         }
     };
 
-    if let Some(on_load) = &scripts.on_load {
+    // Process scripts - use last handler if multiple are specified (WoW behavior)
+    if let Some(on_load) = scripts.on_load.last() {
         add_handler(&mut code, "OnLoad", on_load);
     }
-    if let Some(on_event) = &scripts.on_event {
+    if let Some(on_event) = scripts.on_event.last() {
         add_handler(&mut code, "OnEvent", on_event);
     }
-    if let Some(on_update) = &scripts.on_update {
+    if let Some(on_update) = scripts.on_update.last() {
         add_handler(&mut code, "OnUpdate", on_update);
     }
-    if let Some(on_click) = &scripts.on_click {
+    if let Some(on_click) = scripts.on_click.last() {
         add_handler(&mut code, "OnClick", on_click);
     }
-    if let Some(on_show) = &scripts.on_show {
+    if let Some(on_show) = scripts.on_show.last() {
         add_handler(&mut code, "OnShow", on_show);
     }
-    if let Some(on_hide) = &scripts.on_hide {
+    if let Some(on_hide) = scripts.on_hide.last() {
         add_handler(&mut code, "OnHide", on_hide);
     }
 
@@ -448,6 +559,7 @@ fn create_texture_from_xml(
     let tex_name = texture
         .name
         .clone()
+        .map(|n| n.replace("$parent", parent_name))
         .unwrap_or_else(|| format!("__tex_{}", rand_id()));
 
     let mut lua_code = format!(
@@ -509,6 +621,10 @@ fn create_texture_from_xml(
 
             let rel = match anchor.relative_to.as_deref() {
                 Some("$parent") | None => "parent".to_string(),
+                Some(r) if r.starts_with("$parent_") || r.starts_with("$Parent_") => {
+                    // $parent_Sibling refers to a sibling with name ParentName_Sibling
+                    r.replace("$parent", parent_name).replace("$Parent", parent_name)
+                }
                 Some(r) => r.to_string(),
             };
 
@@ -568,6 +684,7 @@ fn create_fontstring_from_xml(
     let fs_name = fontstring
         .name
         .clone()
+        .map(|n| n.replace("$parent", parent_name))
         .unwrap_or_else(|| format!("__fs_{}", rand_id()));
 
     let inherits = fontstring.inherits.as_deref().unwrap_or("");
@@ -646,6 +763,10 @@ fn create_fontstring_from_xml(
 
             let rel = match anchor.relative_to.as_deref() {
                 Some("$parent") | None => "parent".to_string(),
+                Some(r) if r.starts_with("$parent_") || r.starts_with("$Parent_") => {
+                    // $parent_Sibling refers to a sibling with name ParentName_Sibling
+                    r.replace("$parent", parent_name).replace("$Parent", parent_name)
+                }
                 Some(r) => r.to_string(),
             };
 
@@ -678,41 +799,51 @@ fn create_fontstring_from_xml(
 
 /// Load an XML file, processing its elements.
 /// Returns the number of Lua files loaded from Script elements.
-fn load_xml_file(env: &WowLuaEnv, path: &Path, ctx: &AddonContext) -> Result<usize, LoadError> {
+fn load_xml_file(
+    env: &WowLuaEnv,
+    path: &Path,
+    ctx: &AddonContext,
+    timing: &mut LoadTiming,
+) -> Result<usize, LoadError> {
+    let xml_start = Instant::now();
     let ui = parse_xml_file(path)?;
+    timing.xml_parse_time += xml_start.elapsed();
+
     let xml_dir = path.parent().unwrap_or(Path::new("."));
     let mut lua_count = 0;
 
     for element in &ui.elements {
         match element {
-            XmlElement::Script(s) => {
+            XmlElement::Script(s) | XmlElement::ScriptLower(s) => {
                 // Script can have file attribute or inline content
                 if let Some(file) = &s.file {
-                    let script_path = xml_dir.join(normalize_path(file));
-                    load_lua_file(env, &script_path, ctx)?;
+                    let script_path = resolve_path_with_fallback(xml_dir, ctx.addon_root, file);
+                    load_lua_file(env, &script_path, ctx, timing)?;
                     lua_count += 1;
                 } else if let Some(inline) = &s.inline {
                     // Execute inline script with varargs
                     let table_clone = ctx.table.clone();
+                    let lua_start = Instant::now();
                     env.exec_with_varargs(inline, "@inline", ctx.name, table_clone)
                         .map_err(|e| LoadError::Lua(e.to_string()))?;
+                    timing.lua_exec_time += lua_start.elapsed();
                     lua_count += 1;
                 }
             }
-            XmlElement::Include(i) => {
-                let include_path = xml_dir.join(normalize_path(&i.file));
+            XmlElement::Include(i) | XmlElement::IncludeLower(i) => {
+                let include_path = resolve_path_with_fallback(xml_dir, ctx.addon_root, &i.file);
                 // Check if it's a Lua file (some addons use Include for Lua files)
                 if i.file.ends_with(".lua") {
-                    load_lua_file(env, &include_path, ctx)?;
+                    load_lua_file(env, &include_path, ctx, timing)?;
                     lua_count += 1;
                 } else {
-                    lua_count += load_xml_file(env, &include_path, ctx)?;
+                    lua_count += load_xml_file(env, &include_path, ctx, timing)?;
                 }
             }
             XmlElement::Frame(f) => {
                 create_frame_from_xml(env, f, "Frame", None)?;
             }
-            XmlElement::Button(f) => {
+            XmlElement::Button(f) | XmlElement::ItemButton(f) => {
                 create_frame_from_xml(env, f, "Button", None)?;
             }
             XmlElement::CheckButton(f) => {
@@ -739,8 +870,119 @@ fn load_xml_file(env: &WowLuaEnv, path: &Path, ctx: &AddonContext) -> Result<usi
             XmlElement::Actor(_) => {
                 // Actor definitions for ModelScene
             }
-            XmlElement::Font(_) => {
-                // Font definitions
+            XmlElement::Font(font) => {
+                // Font definitions - create font objects that can be referenced
+                if let Some(name) = &font.name {
+                    if !name.is_empty() {
+                        let font_path = font.font.clone().unwrap_or_else(|| "Fonts/FRIZQT__.TTF".to_string());
+                        // Escape backslashes for Lua string
+                        let font_path_escaped = font_path.replace('\\', "/");
+                        let font_height = font.height.unwrap_or(12.0);
+                        let font_outline = font.outline.clone().unwrap_or_default();
+
+                        // Create font object via Lua
+                        let lua_code = format!(r#"
+                            {name} = {{
+                                __font = "{font_path}",
+                                __height = {font_height},
+                                __outline = "{font_outline}",
+                                __r = 1.0,
+                                __g = 1.0,
+                                __b = 1.0,
+                                SetTextColor = function(self, r, g, b)
+                                    self.__r = r
+                                    self.__g = g
+                                    self.__b = b
+                                end,
+                                GetFont = function(self)
+                                    return self.__font, self.__height, self.__outline
+                                end,
+                                SetFont = function(self, path, height, flags)
+                                    self.__font = path
+                                    if height then self.__height = height end
+                                    if flags then self.__outline = flags end
+                                end,
+                                CopyFontObject = function(self, source)
+                                    if source.__font then self.__font = source.__font end
+                                    if source.__height then self.__height = source.__height end
+                                    if source.__outline then self.__outline = source.__outline end
+                                    if source.__r then self.__r = source.__r end
+                                    if source.__g then self.__g = source.__g end
+                                    if source.__b then self.__b = source.__b end
+                                end,
+                            }}
+                        "#, name = name, font_path = font_path_escaped, font_height = font_height, font_outline = font_outline);
+
+                        env.exec(&lua_code).map_err(|e| {
+                            LoadError::Lua(format!("Failed to create font {}: {}", name, e))
+                        })?;
+                    }
+                }
+            }
+            XmlElement::FontFamily(font_family) => {
+                // FontFamily definitions - create font objects that can be referenced
+                if let Some(name) = &font_family.name {
+                    if !name.is_empty() {
+                        // Create font object via Lua with default values
+                        // FontFamily contains Member elements with Font children, but for simulation
+                        // we just need a font object with the right methods
+                        let lua_code = format!(r#"
+                            {name} = {{
+                                __font = "Fonts/FRIZQT__.TTF",
+                                __height = 12.0,
+                                __outline = "",
+                                __r = 1.0,
+                                __g = 1.0,
+                                __b = 1.0,
+                                __justifyH = "CENTER",
+                                __justifyV = "MIDDLE",
+                                SetTextColor = function(self, r, g, b)
+                                    self.__r = r
+                                    self.__g = g
+                                    self.__b = b
+                                end,
+                                GetTextColor = function(self)
+                                    return self.__r, self.__g, self.__b
+                                end,
+                                SetFont = function(self, font, height, flags)
+                                    if font then self.__font = font end
+                                    if height then self.__height = height end
+                                    if flags then self.__outline = flags end
+                                end,
+                                GetFont = function(self)
+                                    return self.__font, self.__height, self.__outline
+                                end,
+                                SetJustifyH = function(self, justify)
+                                    self.__justifyH = justify
+                                end,
+                                GetJustifyH = function(self)
+                                    return self.__justifyH
+                                end,
+                                SetJustifyV = function(self, justify)
+                                    self.__justifyV = justify
+                                end,
+                                GetJustifyV = function(self)
+                                    return self.__justifyV
+                                end,
+                                CopyFontObject = function(self, source)
+                                    if source.__font then self.__font = source.__font end
+                                    if source.__height then self.__height = source.__height end
+                                    if source.__outline then self.__outline = source.__outline end
+                                    if source.__r then self.__r = source.__r end
+                                    if source.__g then self.__g = source.__g end
+                                    if source.__b then self.__b = source.__b end
+                                end,
+                            }}
+                        "#, name = name);
+
+                        env.exec(&lua_code).map_err(|e| {
+                            LoadError::Lua(format!("Failed to create font family {}: {}", name, e))
+                        })?;
+                    }
+                }
+            }
+            XmlElement::Text(_) => {
+                // Inline text content - ignored (comes from malformed XML or comments)
             }
             // Other frame types not yet fully supported - skip for now
             _ => {}
@@ -802,8 +1044,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_lua_file(&env, &lua_path, &ctx).unwrap();
+        load_lua_file(&env, &lua_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         let value: i32 = env.eval("return TEST_VAR").unwrap();
         assert_eq!(value, 42);
@@ -875,8 +1118,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify frame was created
         let frame_exists: bool = env.eval("return TestXMLFrame ~= nil").unwrap();
@@ -951,8 +1195,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify the script handler references the global function
         let handler_set: bool = env
@@ -986,8 +1231,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Add a method to the frame
         env.exec(
@@ -1036,8 +1282,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify string value
         let str_val: String = env.eval("return KeyValueFrame.myString").unwrap();
@@ -1085,8 +1332,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify anchor was set with offset values
         let point_info: String = env
@@ -1128,8 +1376,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify size was set correctly
         let width: f64 = env.eval("return AbsSizeFrame:GetWidth()").unwrap();
@@ -1171,8 +1420,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify parent frame
         let parent_exists: bool = env.eval("return ParentFrame ~= nil").unwrap();
@@ -1248,8 +1498,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify texture exists via parentKey
         let tex_exists: bool = env.eval("return ColorTexFrame.bg ~= nil").unwrap();
@@ -1290,8 +1541,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Virtual frame should NOT be created
         let virtual_exists: bool = env.eval("return VirtualTemplate ~= nil").unwrap();
@@ -1328,8 +1580,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify frame has multiple anchor points
         let num_points: i32 = env
@@ -1394,8 +1647,9 @@ mod tests {
         let ctx = AddonContext {
             name: "TestAddon",
             table: addon_table,
+            addon_root: &temp_dir,
         };
-        load_xml_file(&env, &xml_path, &ctx).unwrap();
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
 
         // Verify all handlers are set
         let has_onload: bool = env
@@ -1429,5 +1683,160 @@ mod tests {
         assert!(has_onclick, "OnClick should be set on button");
 
         std::fs::remove_file(&xml_path).ok();
+    }
+
+    #[test]
+    fn test_local_function_closures() {
+        // This test verifies that local functions capture each other correctly in closures
+        // Replicates the ExtraQuestButton/widgets.lua issue where updateKeyDirection is nil
+        let env = WowLuaEnv::new().unwrap();
+
+        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-closures");
+        std::fs::create_dir_all(&temp_dir).unwrap();
+        let lua_path = temp_dir.join("closures.lua");
+        std::fs::write(
+            &lua_path,
+            r#"
+                local _, addon = ...
+
+                local function innerFunc(x)
+                    return x * 2
+                end
+
+                local function outerFunc(x)
+                    -- innerFunc should be captured as an upvalue
+                    if not innerFunc then
+                        error("innerFunc is nil!")
+                    end
+                    return innerFunc(x)
+                end
+
+                -- Store the result on the addon table for verification
+                addon.result = outerFunc(21)
+
+                -- Also test immediate call pattern
+                function addon:CreateSomething()
+                    return outerFunc(10)
+                end
+            "#,
+        )
+        .unwrap();
+
+        let addon_table = env.create_addon_table().unwrap();
+        let ctx = AddonContext {
+            name: "ClosureTest",
+            table: addon_table.clone(),
+            addon_root: &temp_dir,
+        };
+        load_lua_file(&env, &lua_path, &ctx, &mut LoadTiming::default()).unwrap();
+
+        // Verify the result was computed correctly
+        let result: i32 = addon_table.get("result").unwrap();
+        assert_eq!(result, 42, "innerFunc should be captured and work correctly");
+
+        // Verify the method works too (test via direct call)
+        let create_something: mlua::Function = addon_table.get("CreateSomething").unwrap();
+        let method_result: i32 = create_something.call(addon_table.clone()).unwrap();
+        assert_eq!(method_result, 20, "outerFunc should still capture innerFunc");
+
+        std::fs::remove_file(&lua_path).ok();
+    }
+
+    #[test]
+    fn test_multi_file_closures() {
+        // This test simulates ExtraQuestButton's loading pattern:
+        // 1. widgets.lua defines local functions and addon:CreateButton
+        // 2. button.lua defines addon:CreateExtraButton which calls addon:CreateButton
+        // 3. addon.lua calls addon:CreateExtraButton
+        let env = WowLuaEnv::new().unwrap();
+
+        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-multifile");
+        std::fs::create_dir_all(&temp_dir).unwrap();
+
+        // File 1: widgets.lua - defines local functions and addon method
+        let widgets_path = temp_dir.join("widgets.lua");
+        std::fs::write(
+            &widgets_path,
+            r#"
+                local _, addon = ...
+
+                local function updateKeyDirection(self)
+                    return "updated: " .. tostring(self)
+                end
+
+                local function onCVarUpdate(self, cvar)
+                    if cvar == "TestCVar" then
+                        -- This is the critical line - updateKeyDirection should be captured
+                        if not updateKeyDirection then
+                            error("updateKeyDirection is nil!")
+                        end
+                        self.result = updateKeyDirection(self)
+                    end
+                end
+
+                function addon:CreateButton(name)
+                    local button = { name = name }
+                    -- Call onCVarUpdate immediately during CreateButton
+                    onCVarUpdate(button, "TestCVar")
+                    return button
+                end
+            "#,
+        )
+        .unwrap();
+
+        // File 2: button.lua - calls addon:CreateButton
+        let button_path = temp_dir.join("button.lua");
+        std::fs::write(
+            &button_path,
+            r#"
+                local _, addon = ...
+
+                function addon:CreateExtraButton(name)
+                    -- This calls CreateButton which was defined in widgets.lua
+                    return addon:CreateButton(name .. "_extra")
+                end
+            "#,
+        )
+        .unwrap();
+
+        // File 3: addon.lua - calls addon:CreateExtraButton
+        let addon_lua_path = temp_dir.join("addon.lua");
+        std::fs::write(
+            &addon_lua_path,
+            r#"
+                local _, addon = ...
+
+                -- This should work: CreateExtraButton -> CreateButton -> onCVarUpdate -> updateKeyDirection
+                local button = addon:CreateExtraButton("test")
+                addon.testButton = button
+            "#,
+        )
+        .unwrap();
+
+        // Create shared addon table and context
+        let addon_table = env.create_addon_table().unwrap();
+        let ctx = AddonContext {
+            name: "MultiFileTest",
+            table: addon_table.clone(),
+            addon_root: &temp_dir,
+        };
+
+        // Load files in order (like TOC would)
+        load_lua_file(&env, &widgets_path, &ctx, &mut LoadTiming::default())
+            .expect("widgets.lua should load");
+        load_lua_file(&env, &button_path, &ctx, &mut LoadTiming::default())
+            .expect("button.lua should load");
+        load_lua_file(&env, &addon_lua_path, &ctx, &mut LoadTiming::default())
+            .expect("addon.lua should load");
+
+        // Verify the button was created and the closure worked
+        let test_button: mlua::Table = addon_table.get("testButton").expect("testButton should exist");
+        let result: String = test_button.get("result").expect("result should be set");
+        assert!(result.starts_with("updated:"), "updateKeyDirection should have been called, got: {}", result);
+
+        // Cleanup
+        std::fs::remove_file(&widgets_path).ok();
+        std::fs::remove_file(&button_path).ok();
+        std::fs::remove_file(&addon_lua_path).ok();
     }
 }

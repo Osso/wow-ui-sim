@@ -46,12 +46,31 @@ impl TocFile {
                 continue;
             }
 
-            // File path - normalize path separators and strip inline annotations
-            // Blizzard TOC files use [...] annotations like [AllowLoadEnvironment Global]
-            let file_path = if let Some(bracket_pos) = line.find('[') {
+            // Handle locale-specific files with [AllowLoadTextLocale] annotation
+            // If enUS is not in the allowed list, skip this file since we use enUS
+            if line.contains("[AllowLoadTextLocale") && !line.contains("enUS") {
+                continue;
+            }
+
+            // File path - handle placeholders before stripping annotations
+            // [TextLocale] is replaced with default locale (enUS)
+            // [Game] is replaced with game version folder (Standard for retail)
+            let line = line.replace("[TextLocale]", "enUS");
+            let line = line.replace("[Game]", "Standard");
+
+            // Strip inline annotations like [AllowLoadEnvironment Global]
+            // Annotations are typically at the end after a space
+            let file_path = if let Some(bracket_pos) = line.find(" [") {
                 line[..bracket_pos].trim()
+            } else if line.ends_with(']') {
+                // Annotation at start of line without leading space
+                if let Some(bracket_pos) = line.find('[') {
+                    line[..bracket_pos].trim()
+                } else {
+                    line.trim()
+                }
             } else {
-                line
+                line.trim()
             };
             let file_path = file_path.replace('\\', "/");
             if !file_path.is_empty() {

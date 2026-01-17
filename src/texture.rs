@@ -3,11 +3,18 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+use image_blp::convert::blp_to_image;
+use image_blp::parser::load_blp;
+
 /// Texture manager that loads and caches textures.
 #[derive(Debug)]
 pub struct TextureManager {
-    /// Base path to wow-ui-textures repository.
+    /// Base path to wow-ui-textures repository (for game UI textures).
     textures_path: PathBuf,
+    /// Base path to WoW Interface directory (for extracted game files).
+    interface_path: Option<PathBuf>,
+    /// Base path to addons directory (for addon textures).
+    addons_path: Option<PathBuf>,
     /// Cache of loaded texture data (path -> RGBA pixels).
     cache: HashMap<String, TextureData>,
     /// Cache of sub-region textures (path#region -> RGBA pixels).
@@ -27,9 +34,23 @@ impl TextureManager {
     pub fn new(textures_path: impl Into<PathBuf>) -> Self {
         Self {
             textures_path: textures_path.into(),
+            interface_path: None,
+            addons_path: None,
             cache: HashMap::new(),
             sub_cache: HashMap::new(),
         }
+    }
+
+    /// Set the WoW Interface directory path for extracted game files.
+    pub fn with_interface_path(mut self, path: impl Into<PathBuf>) -> Self {
+        self.interface_path = Some(path.into());
+        self
+    }
+
+    /// Set the addons directory path for addon textures.
+    pub fn with_addons_path(mut self, path: impl Into<PathBuf>) -> Self {
+        self.addons_path = Some(path.into());
+        self
     }
 
     /// Load a texture by its WoW path (e.g., "Interface\\DialogFrame\\UI-DialogBox-Background").
@@ -44,9 +65,14 @@ impl TextureManager {
 
         // Try to load from disk
         if let Some(file_path) = self.resolve_path(&normalized) {
-            if let Ok(data) = load_texture_file(&file_path) {
-                self.cache.insert(normalized.clone(), data);
-                return self.cache.get(&normalized);
+            match load_texture_file(&file_path) {
+                Ok(data) => {
+                    self.cache.insert(normalized.clone(), data);
+                    return self.cache.get(&normalized);
+                }
+                Err(e) => {
+                    eprintln!("[TexMgr] Load error: {} -> {}: {}", wow_path, file_path.display(), e);
+                }
             }
         }
 
@@ -93,28 +119,110 @@ impl TextureManager {
 
     /// Resolve a WoW texture path to a file system path.
     fn resolve_path(&self, normalized_path: &str) -> Option<PathBuf> {
-        // WoW paths like "Interface/DialogFrame/UI-DialogBox-Background"
-        // map to "DialogFrame/UI-DialogBox-Background.PNG" in the repo
+        // Handle addon textures: Interface/AddOns/AddonName/path/texture
+        if let Some(addon_relative) = normalized_path
+            .strip_prefix("Interface/AddOns/")
+            .or_else(|| normalized_path.strip_prefix("interface/Addons/"))
+            .or_else(|| normalized_path.strip_prefix("interface/addons/"))
+        {
+            if let Some(addons_path) = &self.addons_path {
+                if let Some(result) = self.try_resolve_in_dir(addons_path, addon_relative) {
+                    return Some(result);
+                }
+            }
+        }
 
-        // Remove "Interface/" prefix if present
+        // Remove "Interface/" prefix if present for game textures
         let path = normalized_path
             .strip_prefix("Interface/")
+            .or_else(|| normalized_path.strip_prefix("interface/"))
             .unwrap_or(normalized_path);
 
+        // Try wow-ui-textures repo first
+        if let Some(result) = self.try_resolve_in_dir(&self.textures_path, path) {
+            return Some(result);
+        }
+
+        // Try WoW Interface directory (extracted game files)
+        if let Some(interface_path) = &self.interface_path {
+            if let Some(result) = self.try_resolve_in_dir(interface_path, path) {
+                return Some(result);
+            }
+        }
+
+        None
+    }
+
+    /// Try to resolve a path within a given base directory.
+    fn try_resolve_in_dir(&self, base: &Path, path: &str) -> Option<PathBuf> {
         // Try different extensions
-        for ext in &["PNG", "png", "tga", "TGA", "blp", "BLP"] {
-            let file_path = self.textures_path.join(format!("{}.{}", path, ext));
+        for ext in &["PNG", "png", "tga", "TGA", "blp", "BLP", "jpg", "JPG"] {
+            let file_path = base.join(format!("{}.{}", path, ext));
             if file_path.exists() {
                 return Some(file_path);
             }
         }
 
         // Try without extension (file might already have it)
-        let file_path = self.textures_path.join(path);
+        let file_path = base.join(path);
         if file_path.exists() {
             return Some(file_path);
         }
 
+        // Try case-insensitive directory matching
+        if let Some(result) = self.resolve_case_insensitive_in(base, path) {
+            return Some(result);
+        }
+
+        None
+    }
+
+    /// Resolve path with case-insensitive directory matching within a base directory.
+    fn resolve_case_insensitive_in(&self, base: &Path, path: &str) -> Option<PathBuf> {
+        let components: Vec<&str> = path.split('/').collect();
+        let mut current = base.to_path_buf();
+
+        for (i, component) in components.iter().enumerate() {
+            let is_last = i == components.len() - 1;
+
+            if is_last {
+                // For the filename, try with different extensions
+                for ext in &["PNG", "png", "tga", "TGA", "blp", "BLP", "jpg", "JPG"] {
+                    let with_ext = format!("{}.{}", component, ext);
+                    if let Some(entry) = self.find_case_insensitive(&current, &with_ext) {
+                        return Some(entry);
+                    }
+                }
+                // Try without extension
+                if let Some(entry) = self.find_case_insensitive(&current, component) {
+                    return Some(entry);
+                }
+            } else {
+                // For directories, find case-insensitive match
+                if let Some(entry) = self.find_case_insensitive(&current, component) {
+                    if entry.is_dir() {
+                        current = entry;
+                    } else {
+                        return None;
+                    }
+                } else {
+                    return None;
+                }
+            }
+        }
+        None
+    }
+
+    /// Find a directory entry case-insensitively.
+    fn find_case_insensitive(&self, dir: &Path, name: &str) -> Option<PathBuf> {
+        let name_lower = name.to_lowercase();
+        if let Ok(entries) = std::fs::read_dir(dir) {
+            for entry in entries.flatten() {
+                if entry.file_name().to_string_lossy().to_lowercase() == name_lower {
+                    return Some(entry.path());
+                }
+            }
+        }
         None
     }
 }
@@ -133,16 +241,35 @@ fn normalize_wow_path(path: &str) -> String {
 }
 
 /// Load texture data from a file.
-fn load_texture_file(path: &Path) -> Result<TextureData, image::ImageError> {
-    let img = image::open(path)?;
-    let rgba = img.to_rgba8();
-    let (width, height) = rgba.dimensions();
+fn load_texture_file(path: &Path) -> Result<TextureData, Box<dyn std::error::Error + Send + Sync>> {
+    // Check if it's a BLP file
+    let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
 
-    Ok(TextureData {
-        width,
-        height,
-        pixels: rgba.into_raw(),
-    })
+    if ext.eq_ignore_ascii_case("blp") {
+        // Use image-blp for BLP files
+        // Note: image-blp uses image 0.24, we use 0.25, so extract raw pixels directly
+        let blp = load_blp(path)?;
+        let blp_img = blp_to_image(&blp, 0)?;
+        // Get dimensions and convert to RGBA8 bytes
+        let rgba = blp_img.to_rgba8();
+        let width = rgba.width();
+        let height = rgba.height();
+        Ok(TextureData {
+            width,
+            height,
+            pixels: rgba.into_raw(),
+        })
+    } else {
+        // Use standard image crate for other formats
+        let img = image::open(path)?;
+        let rgba = img.to_rgba8();
+        let (width, height) = rgba.dimensions();
+        Ok(TextureData {
+            width,
+            height,
+            pixels: rgba.into_raw(),
+        })
+    }
 }
 
 /// Extract a sub-region from texture data.

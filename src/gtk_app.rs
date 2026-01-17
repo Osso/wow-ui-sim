@@ -2,21 +2,24 @@
 
 use std::cell::RefCell;
 use std::collections::HashMap;
-use std::path::PathBuf;
+use std::ffi::CString;
+use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::time::Duration;
 
 use adw::prelude::*;
+use gtk::cairo::{self, ImageSurface, Format};
 use gtk::gdk;
 use gtk::glib;
+use pangocairo::functions as pango_cairo;
 use glib::ControlFlow;
 use relm4::prelude::*;
 
 use crate::lua_api::WowLuaEnv;
-use crate::render::LayoutRect;
+use crate::LayoutRect;
 use crate::texture::TextureManager;
-use crate::widget::WidgetType;
-use gtk_layout_inspector::server::{self as debug_server, Command as DebugCommand};
+use crate::widget::{TextJustify, WidgetType};
+use gtk_layout_inspector::server::{self as debug_server, Command as DebugCommand, ScreenshotData};
 use gtk_layout_inspector::{dump_widget_tree, find_button_by_label, find_entry_by_placeholder};
 
 /// Custom CSS for WoW-style theming.
@@ -24,6 +27,56 @@ const STYLE_CSS: &str = include_str!("style.css");
 
 /// Default path to wow-ui-textures repository.
 const DEFAULT_TEXTURES_PATH: &str = "/home/osso/Repos/wow-ui-textures";
+
+/// Default path to WoW Interface directory (extracted game files).
+const DEFAULT_INTERFACE_PATH: &str = "/home/osso/Projects/wow/Interface";
+
+/// Default path to addons directory.
+const DEFAULT_ADDONS_PATH: &str = "/home/osso/Projects/wow/reference-addons";
+
+/// UI scale factor (1.0 = pixel-perfect, no scaling).
+const UI_SCALE: f64 = 1.0;
+
+/// Texture scale factor for button textures (affects cap width preservation).
+const TEXTURE_SCALE: f64 = 1.56;
+
+/// Load WoW fonts from a directory into fontconfig.
+/// This makes fonts available to Pango without requiring system-wide installation.
+fn load_fonts_from_dir(fonts_dir: &Path) {
+    if !fonts_dir.exists() {
+        eprintln!("[Fonts] Directory not found: {}", fonts_dir.display());
+        return;
+    }
+
+    // Use fontconfig FFI to add the fonts directory
+    #[link(name = "fontconfig")]
+    unsafe extern "C" {
+        fn FcConfigGetCurrent() -> *mut std::ffi::c_void;
+        fn FcConfigAppFontAddDir(config: *mut std::ffi::c_void, dir: *const i8) -> i32;
+    }
+
+    let dir_cstr = match CString::new(fonts_dir.to_string_lossy().as_bytes()) {
+        Ok(s) => s,
+        Err(e) => {
+            eprintln!("[Fonts] Invalid path: {}", e);
+            return;
+        }
+    };
+
+    unsafe {
+        let config = FcConfigGetCurrent();
+        if config.is_null() {
+            eprintln!("[Fonts] Failed to get fontconfig");
+            return;
+        }
+        let result = FcConfigAppFontAddDir(config, dir_cstr.as_ptr());
+        if result != 0 {
+            println!("[Fonts] Loaded fonts from: {}", fonts_dir.display());
+        } else {
+            eprintln!("[Fonts] Failed to add fonts dir: {}", fonts_dir.display());
+        }
+    }
+}
 
 /// Run the GTK UI with the given Lua environment.
 pub fn run_gtk_ui(env: WowLuaEnv) -> Result<(), Box<dyn std::error::Error>> {
@@ -35,6 +88,10 @@ pub fn run_gtk_ui_with_textures(
     env: WowLuaEnv,
     textures_path: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
+    // Load WoW fonts from project fonts/ directory
+    let fonts_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("fonts");
+    load_fonts_from_dir(&fonts_dir);
+
     let app = RelmApp::new("com.osso.wow-ui-sim");
     app.run::<App>((env, textures_path));
     Ok(())
@@ -75,11 +132,6 @@ fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
 struct App {
     env: Rc<RefCell<WowLuaEnv>>,
     log_messages: Vec<String>,
-    // Note: texture_manager and texture_cache will be used in Phase 2 for texture rendering
-    #[allow(dead_code)]
-    texture_manager: RefCell<TextureManager>,
-    #[allow(dead_code)]
-    texture_cache: RefCell<HashMap<String, TextureData>>,
     /// Current text in the command input field.
     command_input: String,
     /// Drawing area for WoW frames canvas.
@@ -94,13 +146,394 @@ struct App {
     mouse_down_frame: Option<u64>,
 }
 
-/// Loaded texture data (will be used in Phase 2)
-#[derive(Clone)]
+/// Cairo texture cache for GPU-ready surfaces.
+type CairoTextureCache = HashMap<String, Rc<ImageSurface>>;
+
+/// Convert RGBA pixels to Cairo ARGB32 format (premultiplied, BGRA byte order on little-endian).
+fn rgba_to_cairo_argb32(rgba: &[u8], width: u32, height: u32) -> Vec<u8> {
+    let mut argb = Vec::with_capacity((width * height * 4) as usize);
+    for chunk in rgba.chunks_exact(4) {
+        let r = chunk[0] as f32;
+        let g = chunk[1] as f32;
+        let b = chunk[2] as f32;
+        let a = chunk[3] as f32 / 255.0;
+        // Premultiply and convert to BGRA
+        argb.push((b * a) as u8); // B
+        argb.push((g * a) as u8); // G
+        argb.push((r * a) as u8); // R
+        argb.push(chunk[3]);       // A
+    }
+    argb
+}
+
+/// Load a texture and convert to Cairo ImageSurface.
+fn load_cairo_surface(
+    texture_manager: &mut TextureManager,
+    cache: &mut CairoTextureCache,
+    path: &str,
+) -> Option<Rc<ImageSurface>> {
+    // Skip empty paths
+    if path.is_empty() {
+        return None;
+    }
+
+    // Check cache first
+    if let Some(surface) = cache.get(path) {
+        return Some(Rc::clone(surface));
+    }
+
+    // Load from texture manager
+    if let Some(tex_data) = texture_manager.load(path) {
+        eprintln!("[Texture] OK: {} ({}x{})", path, tex_data.width, tex_data.height);
+        let argb = rgba_to_cairo_argb32(&tex_data.pixels, tex_data.width, tex_data.height);
+        let stride = cairo::Format::ARgb32.stride_for_width(tex_data.width).unwrap();
+
+        // Cairo expects rows to be stride-aligned
+        let mut aligned_data = vec![0u8; (stride * tex_data.height as i32) as usize];
+        for y in 0..tex_data.height {
+            let src_start = (y * tex_data.width * 4) as usize;
+            let src_end = src_start + (tex_data.width * 4) as usize;
+            let dst_start = (y as i32 * stride) as usize;
+            aligned_data[dst_start..dst_start + (tex_data.width * 4) as usize]
+                .copy_from_slice(&argb[src_start..src_end]);
+        }
+
+        if let Ok(surface) = ImageSurface::create_for_data(
+            aligned_data,
+            Format::ARgb32,
+            tex_data.width as i32,
+            tex_data.height as i32,
+            stride,
+        ) {
+            let rc = Rc::new(surface);
+            cache.insert(path.to_string(), Rc::clone(&rc));
+            return Some(rc);
+        }
+    } else {
+        use std::sync::LazyLock;
+        static LOGGED: LazyLock<std::sync::Mutex<std::collections::HashSet<String>>> =
+            LazyLock::new(|| std::sync::Mutex::new(std::collections::HashSet::new()));
+        let mut logged = LOGGED.lock().unwrap();
+        if logged.insert(path.to_string()) {
+            eprintln!("[Texture] FAIL: {}", path);
+        }
+    }
+    None
+}
+
+/// Draw a texture scaled to fit the target rectangle.
+fn draw_scaled_texture(
+    cr: &cairo::Context,
+    surface: &ImageSurface,
+    x: f64,
+    y: f64,
+    w: f64,
+    h: f64,
+    alpha: f64,
+) {
+    let tex_w = surface.width() as f64;
+    let tex_h = surface.height() as f64;
+
+    if tex_w <= 0.0 || tex_h <= 0.0 || w <= 0.0 || h <= 0.0 {
+        return;
+    }
+
+    cr.save().ok();
+
+    // Clip to target rectangle
+    cr.rectangle(x, y, w, h);
+    cr.clip();
+
+    // Translate to position, then scale to fit
+    cr.translate(x, y);
+    cr.scale(w / tex_w, h / tex_h);
+
+    // Now draw the surface at origin - it will be scaled to fill the clipped area
+    cr.set_source_surface(surface, 0.0, 0.0).ok();
+
+    // Use EXTEND_PAD to avoid edge artifacts
+    let pattern = cr.source();
+    pattern.set_extend(cairo::Extend::Pad);
+    pattern.set_filter(cairo::Filter::Bilinear);
+
+    if alpha < 1.0 {
+        cr.paint_with_alpha(alpha).ok();
+    } else {
+        cr.paint().ok();
+    }
+
+    cr.restore().ok();
+}
+
+/// Draw a texture tiled to fill the target rectangle.
+fn draw_tiled_texture(
+    cr: &cairo::Context,
+    surface: &ImageSurface,
+    x: f64,
+    y: f64,
+    w: f64,
+    h: f64,
+    alpha: f64,
+) {
+    let tex_w = surface.width() as f64;
+    let tex_h = surface.height() as f64;
+
+    cr.save().ok();
+
+    // Clip to target rectangle
+    cr.rectangle(x, y, w, h);
+    cr.clip();
+
+    // Draw tiles
+    let mut ty = y;
+    while ty < y + h {
+        let mut tx = x;
+        while tx < x + w {
+            cr.set_source_surface(surface, tx, ty).ok();
+            cr.paint_with_alpha(alpha).ok();
+            tx += tex_w;
+        }
+        ty += tex_h;
+    }
+
+    cr.restore().ok();
+}
+
+/// Draw a texture using 9-slice scaling (corners fixed, edges stretch).
+/// `inset` is the size of the corner regions in texture pixels.
 #[allow(dead_code)]
-struct TextureData {
-    width: u32,
-    height: u32,
-    pixels: Vec<u8>,
+fn draw_nine_slice_texture(
+    cr: &cairo::Context,
+    surface: &ImageSurface,
+    x: f64,
+    y: f64,
+    w: f64,
+    h: f64,
+    inset: f64,
+    alpha: f64,
+) {
+    let tex_w = surface.width() as f64;
+    let tex_h = surface.height() as f64;
+
+    // Clamp inset to half the texture size
+    let inset_x = inset.min(tex_w / 2.0);
+    let inset_y = inset.min(tex_h / 2.0);
+
+    // If target is smaller than corners, just scale the whole thing
+    if w < inset_x * 2.0 || h < inset_y * 2.0 {
+        draw_scaled_texture(cr, surface, x, y, w, h, alpha);
+        return;
+    }
+
+    cr.save().ok();
+
+    // Helper to draw a region of the texture
+    let draw_region = |sx: f64, sy: f64, sw: f64, sh: f64, dx: f64, dy: f64, dw: f64, dh: f64| {
+        if sw <= 0.0 || sh <= 0.0 || dw <= 0.0 || dh <= 0.0 {
+            return;
+        }
+        cr.save().ok();
+        cr.rectangle(dx, dy, dw, dh);
+        cr.clip();
+        cr.translate(dx, dy);
+        cr.scale(dw / sw, dh / sh);
+        cr.set_source_surface(surface, -sx, -sy).ok();
+        cr.paint_with_alpha(alpha).ok();
+        cr.restore().ok();
+    };
+
+    let center_tex_w = tex_w - inset_x * 2.0;
+    let center_tex_h = tex_h - inset_y * 2.0;
+    let center_dst_w = w - inset_x * 2.0;
+    let center_dst_h = h - inset_y * 2.0;
+
+    // Top-left corner
+    draw_region(0.0, 0.0, inset_x, inset_y, x, y, inset_x, inset_y);
+    // Top edge
+    draw_region(inset_x, 0.0, center_tex_w, inset_y, x + inset_x, y, center_dst_w, inset_y);
+    // Top-right corner
+    draw_region(tex_w - inset_x, 0.0, inset_x, inset_y, x + w - inset_x, y, inset_x, inset_y);
+
+    // Left edge
+    draw_region(0.0, inset_y, inset_x, center_tex_h, x, y + inset_y, inset_x, center_dst_h);
+    // Center
+    draw_region(inset_x, inset_y, center_tex_w, center_tex_h, x + inset_x, y + inset_y, center_dst_w, center_dst_h);
+    // Right edge
+    draw_region(tex_w - inset_x, inset_y, inset_x, center_tex_h, x + w - inset_x, y + inset_y, inset_x, center_dst_h);
+
+    // Bottom-left corner
+    draw_region(0.0, tex_h - inset_y, inset_x, inset_y, x, y + h - inset_y, inset_x, inset_y);
+    // Bottom edge
+    draw_region(inset_x, tex_h - inset_y, center_tex_w, inset_y, x + inset_x, y + h - inset_y, center_dst_w, inset_y);
+    // Bottom-right corner
+    draw_region(tex_w - inset_x, tex_h - inset_y, inset_x, inset_y, x + w - inset_x, y + h - inset_y, inset_x, inset_y);
+
+    cr.restore().ok();
+}
+
+/// Draw a texture using horizontal 3-slice (left cap, stretchable middle, right cap).
+/// `cap_width` is the width of left/right caps in texture pixels.
+fn draw_horizontal_slice_texture(
+    cr: &cairo::Context,
+    surface: &ImageSurface,
+    x: f64,
+    y: f64,
+    w: f64,
+    h: f64,
+    cap_width: f64,
+    alpha: f64,
+) {
+    let tex_w = surface.width() as f64;
+    let tex_h = surface.height() as f64;
+
+    // Clamp cap_width
+    let cap = cap_width.min(tex_w / 2.0);
+
+    // If target is smaller than caps, just scale
+    if w < cap * 2.0 {
+        draw_scaled_texture(cr, surface, x, y, w, h, alpha);
+        return;
+    }
+
+    cr.save().ok();
+
+    let scale_y = h / tex_h;
+    let middle_tex_w = tex_w - cap * 2.0;
+    let middle_dst_w = w - cap * 2.0;
+
+    println!("[3-slice] tex={}x{} cap={} target={}x{} middle_tex={} middle_dst={} scale_y={}",
+        tex_w, tex_h, cap, w, h, middle_tex_w, middle_dst_w, scale_y);
+
+    // Helper to draw a region of the texture
+    let draw_region = |sx: f64, sy: f64, sw: f64, sh: f64, dx: f64, dy: f64, dw: f64, dh: f64| {
+        if sw <= 0.0 || sh <= 0.0 || dw <= 0.0 || dh <= 0.0 {
+            return;
+        }
+        cr.save().ok();
+        cr.rectangle(dx, dy, dw, dh);
+        cr.clip();
+        cr.translate(dx, dy);
+        cr.scale(dw / sw, dh / sh);
+        cr.set_source_surface(surface, -sx, -sy).ok();
+        cr.paint_with_alpha(alpha).ok();
+        cr.restore().ok();
+    };
+
+    // Left cap: src (0, 0, cap, tex_h) -> dst (x, y, cap, h)
+    draw_region(0.0, 0.0, cap, tex_h, x, y, cap, h);
+
+    // Middle: src (cap, 0, middle_tex_w, tex_h) -> dst (x+cap, y, middle_dst_w, h)
+    draw_region(cap, 0.0, middle_tex_w, tex_h, x + cap, y, middle_dst_w, h);
+
+    // Right cap: src (tex_w - cap, 0, cap, tex_h) -> dst (x+w-cap, y, cap, h)
+    draw_region(tex_w - cap, 0.0, cap, tex_h, x + w - cap, y, cap, h);
+
+    cr.restore().ok();
+}
+
+/// Map WoW font paths to system font families.
+/// Fonts installed to ~/.local/share/fonts/wow/ are available by their registered names.
+fn wow_font_to_family(font_path: Option<&str>) -> &'static str {
+    match font_path {
+        Some(path) => {
+            let path_upper = path.to_uppercase();
+            if path_upper.contains("FRIZQT") && path_upper.contains("CYR") {
+                // WoW Cyrillic font
+                "FrizQuadrataCTT"
+            } else if path_upper.contains("FRIZQT") {
+                // WoW's main UI font - Friz Quadrata
+                "Friz Quadrata TT"
+            } else if path_upper.contains("ARIALN") {
+                // WoW's narrow font
+                "Arial Narrow"
+            } else if path_upper.contains("SKURRI") {
+                // WoW's fantasy font - fallback to serif (no TTF available)
+                "Serif"
+            } else if path_upper.contains("MORPHEUS") {
+                // WoW's title font - use Trajan Pro as similar alternative
+                "Trajan Pro 3"
+            } else if path_upper.contains("FIRA") {
+                // WeakAuras Fira fonts
+                "Fira Sans"
+            } else if path_upper.contains("MONO") {
+                "Monospace"
+            } else {
+                "Sans"
+            }
+        }
+        None => "Friz Quadrata TT", // Default to WoW font
+    }
+}
+
+/// Draw text using Pango for proper font rendering.
+fn draw_pango_text(
+    cr: &cairo::Context,
+    text: &str,
+    x: f64,
+    y: f64,
+    w: f64,
+    h: f64,
+    font_size: f64,
+    justify_h: TextJustify,
+    justify_v: TextJustify,
+    color: (f64, f64, f64, f64),
+) {
+    draw_pango_text_with_font(cr, text, x, y, w, h, font_size, justify_h, justify_v, color, None, false)
+}
+
+/// Draw text using Pango with custom font.
+fn draw_pango_text_with_font(
+    cr: &cairo::Context,
+    text: &str,
+    x: f64,
+    y: f64,
+    w: f64,
+    h: f64,
+    font_size: f64,
+    justify_h: TextJustify,
+    justify_v: TextJustify,
+    color: (f64, f64, f64, f64),
+    font_path: Option<&str>,
+    word_wrap: bool,
+) {
+    let layout = pango_cairo::create_layout(cr);
+
+    // Set up font description
+    let mut font_desc = pango::FontDescription::new();
+    font_desc.set_family(wow_font_to_family(font_path));
+    font_desc.set_size((font_size * pango::SCALE as f64) as i32);
+    layout.set_font_description(Some(&font_desc));
+
+    // Set text and alignment
+    layout.set_text(text);
+    layout.set_width((w * pango::SCALE as f64) as i32);
+    layout.set_alignment(match justify_h {
+        TextJustify::Left => pango::Alignment::Left,
+        TextJustify::Center => pango::Alignment::Center,
+        TextJustify::Right => pango::Alignment::Right,
+    });
+    // Word wrapping based on frame setting
+    if word_wrap {
+        layout.set_wrap(pango::WrapMode::Word);
+    }
+    // Ellipsize text that overflows
+    layout.set_ellipsize(pango::EllipsizeMode::End);
+
+    // Get ink extents for proper visual vertical centering
+    // pixel_size() returns logical bounds (includes leading), ink gives actual painted area
+    let (ink_rect, _logical_rect) = layout.pixel_extents();
+    let ink_height = ink_rect.height() as f64;
+    let ink_y_offset = ink_rect.y() as f64; // Offset from baseline to ink top
+    let text_y = match justify_v {
+        TextJustify::Left => y - ink_y_offset, // TOP: align ink top to y
+        TextJustify::Center => y + (h - ink_height) / 2.0 - ink_y_offset, // MIDDLE: center ink
+        TextJustify::Right => y + h - ink_height - ink_y_offset, // BOTTOM: align ink bottom
+    };
+
+    // Set color and draw
+    cr.set_source_rgba(color.0, color.1, color.2, color.3);
+    cr.move_to(x, text_y);
+    pango_cairo::show_layout(cr, &layout);
 }
 
 #[derive(Debug)]
@@ -112,6 +545,7 @@ enum Msg {
     ReloadUI,
     CommandInputChanged(String),
     ExecuteCommand,
+    ProcessTimers,
     #[allow(dead_code)]
     Redraw,
 }
@@ -243,8 +677,8 @@ impl Component for App {
 
                 // Console output
                 gtk::ScrolledWindow {
-                    set_min_content_height: 100,
-                    set_max_content_height: 140,
+                    set_min_content_height: 160,
+                    set_max_content_height: 200,
                     set_hscrollbar_policy: gtk::PolicyType::Never,
 
                     #[local_ref]
@@ -295,11 +729,16 @@ impl Component for App {
         let frames_box = gtk::Box::new(gtk::Orientation::Vertical, 2);
         let console_label = gtk::Label::new(None);
 
+        let texture_manager = Rc::new(RefCell::new(
+            TextureManager::new(textures_path)
+                .with_interface_path(DEFAULT_INTERFACE_PATH)
+                .with_addons_path(DEFAULT_ADDONS_PATH)
+        ));
+        let texture_cache: Rc<RefCell<CairoTextureCache>> = Rc::new(RefCell::new(HashMap::new()));
+
         let model = App {
             env: env_rc.clone(),
             log_messages,
-            texture_manager: RefCell::new(TextureManager::new(textures_path)),
-            texture_cache: RefCell::new(HashMap::new()),
             command_input: String::new(),
             drawing_area: drawing_area.clone(),
             frames_box: frames_box.clone(),
@@ -313,9 +752,21 @@ impl Component for App {
 
         // Set up drawing area
         let env_for_draw = env_rc.clone();
+        let tex_mgr_for_draw = Rc::clone(&texture_manager);
+        let tex_cache_for_draw = Rc::clone(&texture_cache);
         drawing_area.set_draw_func(move |_area, cr, width, height| {
-            draw_wow_frames(&env_for_draw, cr, width, height);
+            draw_wow_frames(
+                &env_for_draw,
+                &tex_mgr_for_draw,
+                &tex_cache_for_draw,
+                cr,
+                width,
+                height,
+            );
         });
+
+        // Force initial draw
+        drawing_area.queue_draw();
 
         // Mouse motion controller
         let motion_controller = gtk::EventControllerMotion::new();
@@ -411,12 +862,25 @@ impl Component for App {
                         }
                     }
                     DebugCommand::Screenshot { respond } => {
-                        // Take screenshot of the drawing area
-                        let _ = respond.send(Err("Screenshot not yet implemented for GTK".to_string()));
+                        let result = ScreenshotData::capture(&window);
+                        let _ = respond.send(result);
                     }
                 }
             }
             ControlFlow::Continue
+        });
+
+        // Timer processing loop - check every 16ms (~60fps) for pending timers
+        let timer_sender = sender.clone();
+        glib::timeout_add_local(Duration::from_millis(16), move || {
+            timer_sender.input(Msg::ProcessTimers);
+            ControlFlow::Continue
+        });
+
+        // Schedule initial redraw after the main loop starts (when widget is mapped)
+        let redraw_sender = sender.clone();
+        glib::idle_add_local_once(move || {
+            redraw_sender.input(Msg::Redraw);
         });
 
         ComponentParts { model, widgets }
@@ -548,6 +1012,23 @@ impl Component for App {
                     self.update_console_label();
                 }
             }
+            Msg::ProcessTimers => {
+                let env = self.env.borrow();
+                match env.process_timers() {
+                    Ok(count) if count > 0 => {
+                        // Timer callbacks may have changed the UI
+                        drop(env);
+                        self.drain_console();
+                        self.drawing_area.queue_draw();
+                        self.update_frames_sidebar();
+                        self.update_console_label();
+                    }
+                    Err(e) => {
+                        eprintln!("Timer error: {}", e);
+                    }
+                    _ => {}
+                }
+            }
             Msg::Redraw => {
                 self.drawing_area.queue_draw();
             }
@@ -647,10 +1128,8 @@ impl App {
         let env = self.env.borrow();
         let state = env.state().borrow();
 
-        let width = self.drawing_area.width() as f32;
-        let height = self.drawing_area.height() as f32;
-        let scale_x = width / 500.0;
-        let scale_y = height / 375.0;
+        let scale_x = UI_SCALE as f32;
+        let scale_y = UI_SCALE as f32;
 
         // Collect frames and sort by z-order
         let mut frames: Vec<_> = state.widgets.all_ids()
@@ -660,7 +1139,7 @@ impl App {
                 if !frame.visible || !frame.mouse_enabled {
                     return None;
                 }
-                if matches!(frame.name.as_deref(), Some("UIParent") | Some("Minimap")) {
+                if matches!(frame.name.as_deref(), Some("UIParent") | Some("Minimap") | Some("WorldFrame") | Some("DEFAULT_CHAT_FRAME") | Some("ChatFrame1") | Some("EventToastManagerFrame") | Some("EditModeManagerFrame")) {
                     return None;
                 }
                 let rect = compute_frame_rect(&state.widgets, id, 500.0, 375.0);
@@ -692,7 +1171,14 @@ impl App {
 }
 
 /// Draw WoW frames using Cairo.
-fn draw_wow_frames(env: &Rc<RefCell<WowLuaEnv>>, cr: &gtk::cairo::Context, width: i32, height: i32) {
+fn draw_wow_frames(
+    env: &Rc<RefCell<WowLuaEnv>>,
+    texture_manager: &Rc<RefCell<TextureManager>>,
+    texture_cache: &Rc<RefCell<CairoTextureCache>>,
+    cr: &gtk::cairo::Context,
+    width: i32,
+    height: i32,
+) {
     let env = env.borrow();
     let state = env.state().borrow();
 
@@ -700,8 +1186,9 @@ fn draw_wow_frames(env: &Rc<RefCell<WowLuaEnv>>, cr: &gtk::cairo::Context, width
     cr.set_source_rgb(0.05, 0.05, 0.08);
     cr.paint().ok();
 
-    let scale_x = width as f64 / 500.0;
-    let scale_y = height as f64 / 375.0;
+    let scale_x = UI_SCALE;
+    let scale_y = UI_SCALE;
+    let _ = (width, height); // available for dynamic scaling later
 
     // Collect and sort frames
     let mut frames: Vec<_> = state.widgets.all_ids()
@@ -720,6 +1207,14 @@ fn draw_wow_frames(env: &Rc<RefCell<WowLuaEnv>>, cr: &gtk::cairo::Context, width
                 frame.text_color,
                 frame.backdrop.clone(),
                 frame.name.clone(),
+                frame.texture.clone(),
+                frame.color_texture,
+                frame.font_size,
+                frame.font.clone(),
+                frame.justify_h,
+                frame.justify_v,
+                frame.word_wrap,
+                frame.normal_texture.clone(),
                 rect,
             ))
         })
@@ -734,14 +1229,28 @@ fn draw_wow_frames(env: &Rc<RefCell<WowLuaEnv>>, cr: &gtk::cairo::Context, width
                     WidgetType::Texture => 0,
                     WidgetType::FontString => 1,
                     WidgetType::Frame => 2,
-                    WidgetType::Button => 3,
+                    WidgetType::ScrollFrame => 3,
+                    WidgetType::Button => 4,
+                    WidgetType::CheckButton => 5,
+                    WidgetType::EditBox => 6,
+                    WidgetType::Slider => 7,
+                    WidgetType::StatusBar => 8,
+                    WidgetType::Cooldown => 9,
+                    WidgetType::Model | WidgetType::PlayerModel => 10,
+                    WidgetType::ColorSelect => 11,
+                    WidgetType::MessageFrame => 12,
+                    WidgetType::SimpleHTML => 13,
                 };
                 type_order(&a.3).cmp(&type_order(&b.3))
             })
             .then_with(|| a.0.cmp(&b.0))
     });
 
-    for (_id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, rect) in frames {
+    // Get mutable borrows for texture loading
+    let mut tex_mgr = texture_manager.borrow_mut();
+    let mut tex_cache = texture_cache.borrow_mut();
+
+    for (_id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, texture_path, color_texture, font_size, font_path, justify_h, justify_v, word_wrap, normal_texture, rect) in frames {
         if !visible {
             continue;
         }
@@ -749,17 +1258,10 @@ fn draw_wow_frames(env: &Rc<RefCell<WowLuaEnv>>, cr: &gtk::cairo::Context, width
             continue;
         }
 
-        // Skip internal frames
-        if let Some(ref n) = name {
-            if matches!(n.as_str(), "UIParent" | "Minimap" | "AddonCompartmentFrame") {
-                continue;
-            }
-            if n.starts_with("DBM") || n.starts_with("Details") || n.starts_with("Avatar")
-                || n.starts_with("Plater") || n.starts_with("WeakAuras") || n.starts_with("UIWidget")
-                || n.starts_with("GameMenu") || n.starts_with("__")
-            {
-                continue;
-            }
+        // ONLY show TestButton for now
+        match &name {
+            Some(n) if n == "TestButton" => {}
+            _ => continue,
         }
 
         let x = (rect.x as f64) * scale_x;
@@ -770,80 +1272,330 @@ fn draw_wow_frames(env: &Rc<RefCell<WowLuaEnv>>, cr: &gtk::cairo::Context, width
         match widget_type {
             WidgetType::Frame => {
                 if backdrop.enabled {
-                    // Draw frame background
-                    cr.set_source_rgba(0.1, 0.1, 0.15, 0.9 * alpha as f64);
-                    cr.rectangle(x, y, w, h);
-                    cr.fill().ok();
+                    // Try to draw backdrop texture
+                    let mut drew_texture = false;
+                    if let Some(ref bg_file) = backdrop.bg_file {
+                        if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, bg_file) {
+                            draw_tiled_texture(cr, &surface, x, y, w, h, alpha as f64);
+                            drew_texture = true;
+                        }
+                    }
+
+                    if !drew_texture {
+                        // Fallback: draw colored background
+                        let bg = &backdrop.bg_color;
+                        cr.set_source_rgba(
+                            bg.r as f64,
+                            bg.g as f64,
+                            bg.b as f64,
+                            bg.a as f64 * alpha as f64,
+                        );
+                        cr.rectangle(x, y, w, h);
+                        cr.fill().ok();
+                    }
 
                     // Draw border
-                    cr.set_source_rgba(0.7, 0.55, 0.2, alpha as f64);
-                    cr.set_line_width(2.0);
+                    let bc = &backdrop.border_color;
+                    cr.set_source_rgba(
+                        bc.r as f64,
+                        bc.g as f64,
+                        bc.b as f64,
+                        bc.a as f64 * alpha as f64,
+                    );
+                    cr.set_line_width(backdrop.edge_size.max(1.0) as f64);
                     cr.rectangle(x, y, w, h);
                     cr.stroke().ok();
                 }
             }
             WidgetType::Button => {
-                // Draw button background
-                cr.set_source_rgba(0.15, 0.12, 0.1, 0.9 * alpha as f64);
-                cr.rectangle(x, y, w, h);
-                cr.fill().ok();
-
-                // Draw button border
-                cr.set_source_rgba(0.6, 0.45, 0.15, alpha as f64);
-                cr.set_line_width(1.5);
+                // Draw debug box around button
+                cr.set_source_rgba(1.0, 1.0, 0.0, 1.0); // Yellow
+                cr.set_line_width(2.0);
                 cr.rectangle(x, y, w, h);
                 cr.stroke().ok();
 
-                // Draw button text (centered)
-                if let Some(ref txt) = text {
-                    cr.set_source_rgba(
-                        text_color.r as f64,
-                        text_color.g as f64,
-                        text_color.b as f64,
-                        text_color.a as f64 * alpha as f64,
-                    );
-                    cr.select_font_face("Sans", gtk::cairo::FontSlant::Normal, gtk::cairo::FontWeight::Normal);
-                    cr.set_font_size(12.0);
+                // Try to draw button normal texture first
+                let mut drew_background = false;
+                if let Some(ref tex_path) = normal_texture {
+                    if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, tex_path) {
+                        // WoW buttons use 3-slice horizontal stretching
+                        // TEXTURE_SCALE multiplies the texture output size
+                        let tex_w = w * TEXTURE_SCALE - 1.0;
+                        let tex_h = h * TEXTURE_SCALE - 3.0;
+                        let cap_width = 12.0 * TEXTURE_SCALE;
+                        draw_horizontal_slice_texture(cr, &surface, x+1.0, y, tex_w, tex_h, cap_width, alpha as f64);
+                        drew_background = true;
+                    }
+                }
 
-                    let extents = cr.text_extents(txt).unwrap();
-                    let text_x = x + (w - extents.width()) / 2.0;
-                    let text_y = y + (h + extents.height()) / 2.0;
-                    cr.move_to(text_x, text_y);
-                    cr.show_text(txt).ok();
+                // Fallback to backdrop if no normal texture
+                if !drew_background && backdrop.enabled {
+                    if let Some(ref bg_file) = backdrop.bg_file {
+                        if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, bg_file) {
+                            draw_scaled_texture(cr, &surface, x, y, w, h, alpha as f64);
+                            drew_background = true;
+                        }
+                    }
+                }
+
+                if !drew_background {
+                    // Default button styling (dark red gradient-like)
+                    cr.set_source_rgba(0.15, 0.05, 0.05, 0.95 * alpha as f64);
+                    cr.rectangle(x, y, w, h);
+                    cr.fill().ok();
+
+                    cr.set_source_rgba(0.6, 0.45, 0.15, alpha as f64);
+                    cr.set_line_width(1.5);
+                    cr.rectangle(x, y, w, h);
+                    cr.stroke().ok();
+                }
+
+                // Draw button text (centered) using Pango
+                if let Some(ref txt) = text {
+                    draw_pango_text_with_font(
+                        cr, txt, x, y, w, h, font_size as f64,
+                        TextJustify::Center, // Buttons always center text horizontally
+                        TextJustify::Center, // Buttons always center text vertically
+                        (text_color.r as f64, text_color.g as f64, text_color.b as f64, text_color.a as f64 * alpha as f64),
+                        font_path.as_deref(),
+                        false, // Buttons don't wrap
+                    );
                 }
             }
             WidgetType::Texture => {
-                // Draw texture placeholder
-                cr.set_source_rgba(0.4, 0.35, 0.3, 0.7 * alpha as f64);
+                // Try to render actual texture
+                let mut drew_texture = false;
+
+                // First check for color texture (SetColorTexture)
+                if let Some(color) = color_texture {
+                    cr.set_source_rgba(
+                        color.r as f64,
+                        color.g as f64,
+                        color.b as f64,
+                        color.a as f64 * alpha as f64,
+                    );
+                    cr.rectangle(x, y, w, h);
+                    cr.fill().ok();
+                    drew_texture = true;
+                }
+
+                // Then try file texture
+                if !drew_texture {
+                    if let Some(ref path) = texture_path {
+                        if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, path) {
+                            draw_scaled_texture(cr, &surface, x, y, w, h, alpha as f64);
+                            drew_texture = true;
+                        }
+                    }
+                }
+
+                if !drew_texture {
+                    // Fallback: draw placeholder
+                    cr.set_source_rgba(0.4, 0.35, 0.3, 0.7 * alpha as f64);
+                    cr.rectangle(x, y, w, h);
+                    cr.fill().ok();
+
+                    // Diagonal lines to indicate placeholder
+                    cr.set_source_rgba(1.0, 1.0, 1.0, 0.2 * alpha as f64);
+                    cr.set_line_width(1.0);
+                    cr.move_to(x, y);
+                    cr.line_to(x + w, y + h);
+                    cr.stroke().ok();
+                    cr.move_to(x + w, y);
+                    cr.line_to(x, y + h);
+                    cr.stroke().ok();
+                }
+            }
+            WidgetType::FontString => {
+                // Draw FontString text using Pango with frame's justification and font
+                if let Some(ref txt) = text {
+                    draw_pango_text_with_font(
+                        cr, txt, x, y, w, h, font_size as f64,
+                        justify_h,
+                        justify_v,
+                        (text_color.r as f64, text_color.g as f64, text_color.b as f64, text_color.a as f64 * alpha as f64),
+                        font_path.as_deref(),
+                        word_wrap,
+                    );
+                }
+            }
+            WidgetType::EditBox => {
+                // Draw EditBox as a text input field
+                // Background
+                cr.set_source_rgba(0.08, 0.08, 0.1, 0.9 * alpha as f64);
                 cr.rectangle(x, y, w, h);
                 cr.fill().ok();
 
-                // Diagonal lines to indicate placeholder
-                cr.set_source_rgba(1.0, 1.0, 1.0, 0.2 * alpha as f64);
+                // Border (slightly inset look)
+                cr.set_source_rgba(0.3, 0.3, 0.35, alpha as f64);
                 cr.set_line_width(1.0);
-                cr.move_to(x, y);
-                cr.line_to(x + w, y + h);
+                cr.rectangle(x + 0.5, y + 0.5, w - 1.0, h - 1.0);
                 cr.stroke().ok();
-                cr.move_to(x + w, y);
-                cr.line_to(x, y + h);
+
+                // Draw text content (left-aligned, vertically centered)
+                if let Some(ref txt) = text {
+                    // Add padding
+                    let padding = 4.0;
+                    draw_pango_text(
+                        cr, txt,
+                        x + padding, y, w - padding * 2.0, h,
+                        font_size as f64,
+                        TextJustify::Left,
+                        TextJustify::Center,
+                        (text_color.r as f64, text_color.g as f64, text_color.b as f64, text_color.a as f64 * alpha as f64),
+                    );
+                }
+            }
+            WidgetType::ScrollFrame => {
+                // ScrollFrame renders like a Frame with clipping area
+                if backdrop.enabled {
+                    let bg = &backdrop.bg_color;
+                    cr.set_source_rgba(
+                        bg.r as f64,
+                        bg.g as f64,
+                        bg.b as f64,
+                        bg.a as f64 * alpha as f64,
+                    );
+                    cr.rectangle(x, y, w, h);
+                    cr.fill().ok();
+
+                    // Draw border
+                    let bc = &backdrop.border_color;
+                    cr.set_source_rgba(
+                        bc.r as f64,
+                        bc.g as f64,
+                        bc.b as f64,
+                        bc.a as f64 * alpha as f64,
+                    );
+                    cr.set_line_width(backdrop.edge_size.max(1.0) as f64);
+                    cr.rectangle(x, y, w, h);
+                    cr.stroke().ok();
+                }
+            }
+            WidgetType::Slider => {
+                // Draw slider track
+                let track_height = 4.0;
+                let track_y = y + (h - track_height) / 2.0;
+                cr.set_source_rgba(0.2, 0.2, 0.25, 0.9 * alpha as f64);
+                cr.rectangle(x, track_y, w, track_height);
+                cr.fill().ok();
+
+                // Draw slider thumb (centered for now - would use slider value)
+                let thumb_width = 12.0;
+                let thumb_height = 16.0;
+                let thumb_x = x + (w - thumb_width) / 2.0;
+                let thumb_y = y + (h - thumb_height) / 2.0;
+                cr.set_source_rgba(0.6, 0.5, 0.3, alpha as f64);
+                cr.rectangle(thumb_x, thumb_y, thumb_width, thumb_height);
+                cr.fill().ok();
+
+                // Thumb border
+                cr.set_source_rgba(0.8, 0.7, 0.4, alpha as f64);
+                cr.set_line_width(1.0);
+                cr.rectangle(thumb_x, thumb_y, thumb_width, thumb_height);
                 cr.stroke().ok();
             }
-            WidgetType::FontString => {
-                if let Some(ref txt) = text {
-                    cr.set_source_rgba(
-                        text_color.r as f64,
-                        text_color.g as f64,
-                        text_color.b as f64,
-                        text_color.a as f64 * alpha as f64,
-                    );
-                    cr.select_font_face("Sans", gtk::cairo::FontSlant::Normal, gtk::cairo::FontWeight::Normal);
-                    cr.set_font_size(12.0);
+            WidgetType::CheckButton => {
+                // Draw checkbox
+                let box_size = h.min(16.0);
+                let box_x = x;
+                let box_y = y + (h - box_size) / 2.0;
 
-                    let extents = cr.text_extents(txt).unwrap();
-                    let text_x = x + (w - extents.width()) / 2.0;
-                    let text_y = y + (h + extents.height()) / 2.0;
-                    cr.move_to(text_x, text_y);
-                    cr.show_text(txt).ok();
+                // Checkbox background
+                cr.set_source_rgba(0.1, 0.1, 0.12, 0.9 * alpha as f64);
+                cr.rectangle(box_x, box_y, box_size, box_size);
+                cr.fill().ok();
+
+                // Checkbox border
+                cr.set_source_rgba(0.5, 0.4, 0.2, alpha as f64);
+                cr.set_line_width(1.0);
+                cr.rectangle(box_x, box_y, box_size, box_size);
+                cr.stroke().ok();
+
+                // Draw label text (to the right of checkbox)
+                if let Some(ref txt) = text {
+                    let text_x = box_x + box_size + 6.0;
+                    let text_w = w - box_size - 6.0;
+                    draw_pango_text(
+                        cr, txt, text_x, y, text_w, h, font_size as f64,
+                        TextJustify::Left,
+                        TextJustify::Center,
+                        (text_color.r as f64, text_color.g as f64, text_color.b as f64, text_color.a as f64 * alpha as f64),
+                    );
+                }
+            }
+            WidgetType::StatusBar => {
+                // Draw status bar track
+                cr.set_source_rgba(0.1, 0.1, 0.12, 0.9 * alpha as f64);
+                cr.rectangle(x, y, w, h);
+                cr.fill().ok();
+
+                // Draw filled portion (50% for now - would use actual value)
+                let fill_width = w * 0.5;
+                cr.set_source_rgba(0.2, 0.6, 0.2, alpha as f64);
+                cr.rectangle(x, y, fill_width, h);
+                cr.fill().ok();
+
+                // Border
+                cr.set_source_rgba(0.4, 0.35, 0.2, alpha as f64);
+                cr.set_line_width(1.0);
+                cr.rectangle(x, y, w, h);
+                cr.stroke().ok();
+            }
+            WidgetType::Cooldown => {
+                // Draw cooldown overlay (semi-transparent radial sweep)
+                cr.set_source_rgba(0.0, 0.0, 0.0, 0.5 * alpha as f64);
+                cr.rectangle(x, y, w, h);
+                cr.fill().ok();
+            }
+            WidgetType::Model | WidgetType::PlayerModel => {
+                // Draw placeholder for 3D model
+                cr.set_source_rgba(0.15, 0.15, 0.2, 0.8 * alpha as f64);
+                cr.rectangle(x, y, w, h);
+                cr.fill().ok();
+
+                // Draw "3D" indicator
+                draw_pango_text(
+                    cr, "3D Model", x, y, w, h, 10.0,
+                    TextJustify::Center,
+                    TextJustify::Center,
+                    (0.5, 0.5, 0.5, alpha as f64),
+                );
+            }
+            WidgetType::ColorSelect => {
+                // Draw color picker placeholder
+                cr.set_source_rgba(0.5, 0.5, 0.5, alpha as f64);
+                cr.rectangle(x, y, w, h);
+                cr.fill().ok();
+
+                // Rainbow gradient hint
+                cr.set_source_rgba(1.0, 0.0, 0.0, 0.3 * alpha as f64);
+                cr.rectangle(x, y, w / 3.0, h);
+                cr.fill().ok();
+                cr.set_source_rgba(0.0, 1.0, 0.0, 0.3 * alpha as f64);
+                cr.rectangle(x + w / 3.0, y, w / 3.0, h);
+                cr.fill().ok();
+                cr.set_source_rgba(0.0, 0.0, 1.0, 0.3 * alpha as f64);
+                cr.rectangle(x + 2.0 * w / 3.0, y, w / 3.0, h);
+                cr.fill().ok();
+            }
+            WidgetType::MessageFrame | WidgetType::SimpleHTML => {
+                // Draw message frame (text display area)
+                if backdrop.enabled {
+                    let bg = &backdrop.bg_color;
+                    cr.set_source_rgba(bg.r as f64, bg.g as f64, bg.b as f64, bg.a as f64 * alpha as f64);
+                    cr.rectangle(x, y, w, h);
+                    cr.fill().ok();
+                }
+
+                // Draw text if present
+                if let Some(ref txt) = text {
+                    draw_pango_text(
+                        cr, txt, x + 4.0, y, w - 8.0, h, font_size as f64,
+                        justify_h,
+                        TextJustify::Left, // Messages typically start at top
+                        (text_color.r as f64, text_color.g as f64, text_color.b as f64, text_color.a as f64 * alpha as f64),
+                    );
                 }
             }
         }

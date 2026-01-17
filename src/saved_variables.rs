@@ -2,12 +2,69 @@
 //!
 //! WoW addons can declare SavedVariables and SavedVariablesPerCharacter in their
 //! .toc files. These are global Lua tables that persist between sessions.
+//!
+//! This module supports two modes:
+//! 1. JSON storage (default) - for simulator-generated saved variables
+//! 2. WTF loading - loads actual WoW SavedVariables from WTF directory
 
 use mlua::{Lua, Result, Table, Value};
 use serde_json::Value as JsonValue;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
+
+/// Configuration for loading WTF saved variables from a real WoW installation.
+#[derive(Debug, Clone)]
+pub struct WtfConfig {
+    /// Base WTF directory path (e.g., /path/to/WoW/WTF)
+    pub wtf_path: PathBuf,
+    /// Account ID/name (e.g., "50868465#2")
+    pub account: String,
+    /// Realm name (e.g., "Burning Blade")
+    pub realm: String,
+    /// Character name (e.g., "Haky")
+    pub character: String,
+}
+
+impl WtfConfig {
+    /// Create a new WTF configuration.
+    pub fn new(wtf_path: impl Into<PathBuf>, account: &str, realm: &str, character: &str) -> Self {
+        Self {
+            wtf_path: wtf_path.into(),
+            account: account.to_string(),
+            realm: realm.to_string(),
+            character: character.to_string(),
+        }
+    }
+
+    /// Get the path to account-level SavedVariables directory.
+    pub fn account_saved_vars_path(&self) -> PathBuf {
+        self.wtf_path
+            .join("Account")
+            .join(&self.account)
+            .join("SavedVariables")
+    }
+
+    /// Get the path to character-level SavedVariables directory.
+    pub fn character_saved_vars_path(&self) -> PathBuf {
+        self.wtf_path
+            .join("Account")
+            .join(&self.account)
+            .join(&self.realm)
+            .join(&self.character)
+            .join("SavedVariables")
+    }
+
+    /// Get the path to account-level SavedVariables file for an addon.
+    pub fn account_saved_vars_file(&self, addon_name: &str) -> PathBuf {
+        self.account_saved_vars_path().join(format!("{}.lua", addon_name))
+    }
+
+    /// Get the path to character-level SavedVariables file for an addon.
+    pub fn character_saved_vars_file(&self, addon_name: &str) -> PathBuf {
+        self.character_saved_vars_path().join(format!("{}.lua", addon_name))
+    }
+}
 
 /// Manages saved variables for all loaded addons.
 #[derive(Debug)]
@@ -22,6 +79,10 @@ pub struct SavedVariablesManager {
     registered: HashMap<String, Vec<String>>,
     /// Track per-character variables.
     registered_per_char: HashMap<String, Vec<String>>,
+    /// Optional WTF configuration for loading real WoW saved variables.
+    wtf_config: Option<WtfConfig>,
+    /// Track which addons have had WTF variables loaded.
+    wtf_loaded: HashMap<String, bool>,
 }
 
 impl SavedVariablesManager {
@@ -38,6 +99,8 @@ impl SavedVariablesManager {
             realm_name: "SimRealm".to_string(),
             registered: HashMap::new(),
             registered_per_char: HashMap::new(),
+            wtf_config: None,
+            wtf_loaded: HashMap::new(),
         }
     }
 
@@ -49,6 +112,8 @@ impl SavedVariablesManager {
             realm_name: "SimRealm".to_string(),
             registered: HashMap::new(),
             registered_per_char: HashMap::new(),
+            wtf_config: None,
+            wtf_loaded: HashMap::new(),
         }
     }
 
@@ -56,6 +121,81 @@ impl SavedVariablesManager {
     pub fn set_character(&mut self, name: &str, realm: &str) {
         self.character_name = name.to_string();
         self.realm_name = realm.to_string();
+    }
+
+    /// Set WTF configuration for loading real WoW saved variables.
+    pub fn set_wtf_config(&mut self, config: WtfConfig) {
+        // Also update character info from WTF config
+        self.character_name = config.character.clone();
+        self.realm_name = config.realm.clone();
+        self.wtf_config = Some(config);
+    }
+
+    /// Get a reference to the WTF configuration.
+    pub fn wtf_config(&self) -> Option<&WtfConfig> {
+        self.wtf_config.as_ref()
+    }
+
+    /// Load WTF saved variables for an addon from the real WoW installation.
+    /// This executes the Lua files to set global variables.
+    /// Returns the number of files loaded (0, 1, or 2 for account + character).
+    pub fn load_wtf_for_addon(&mut self, lua: &Lua, addon_name: &str) -> Result<usize> {
+        let config = match &self.wtf_config {
+            Some(c) => c.clone(),
+            None => return Ok(0), // No WTF config, skip
+        };
+
+        // Skip if already loaded
+        if self.wtf_loaded.contains_key(addon_name) {
+            return Ok(0);
+        }
+
+        let mut loaded = 0;
+
+        // Load account-level SavedVariables
+        let account_file = config.account_saved_vars_file(addon_name);
+        if account_file.exists() {
+            match self.load_wtf_lua_file(lua, &account_file) {
+                Ok(()) => loaded += 1,
+                Err(e) => {
+                    tracing::warn!(
+                        "Failed to load account SavedVariables for {}: {}",
+                        addon_name,
+                        e
+                    );
+                }
+            }
+        }
+
+        // Load character-level SavedVariables
+        let char_file = config.character_saved_vars_file(addon_name);
+        if char_file.exists() {
+            match self.load_wtf_lua_file(lua, &char_file) {
+                Ok(()) => loaded += 1,
+                Err(e) => {
+                    tracing::warn!(
+                        "Failed to load character SavedVariables for {}: {}",
+                        addon_name,
+                        e
+                    );
+                }
+            }
+        }
+
+        self.wtf_loaded.insert(addon_name.to_string(), loaded > 0);
+        Ok(loaded)
+    }
+
+    /// Load a WTF Lua file, executing it to set global variables.
+    fn load_wtf_lua_file(&self, lua: &Lua, path: &std::path::Path) -> Result<()> {
+        let content = fs::read_to_string(path).map_err(|e| mlua::Error::external(e))?;
+        // Strip UTF-8 BOM if present
+        let content = content.strip_prefix('\u{feff}').unwrap_or(&content);
+
+        // Execute the Lua file - it will set global variables
+        let chunk_name = format!("@WTF/{}", path.file_name().unwrap_or_default().to_string_lossy());
+        lua.load(content).set_name(&chunk_name).exec()?;
+        Ok(())
     }
 
     /// Get the storage path for account-wide saved variables.

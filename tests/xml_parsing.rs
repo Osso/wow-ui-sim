@@ -134,15 +134,15 @@ fn test_xml_with_scripts() {
         let scripts = f.scripts().expect("Expected scripts");
 
         // Check OnLoad has inline code
-        let on_load = scripts.on_load.as_ref().expect("Expected OnLoad");
+        let on_load = scripts.on_load.first().expect("Expected OnLoad");
         assert!(on_load.body.is_some());
 
         // Check OnEvent uses method reference
-        let on_event = scripts.on_event.as_ref().expect("Expected OnEvent");
+        let on_event = scripts.on_event.first().expect("Expected OnEvent");
         assert_eq!(on_event.method.as_deref(), Some("OnEvent"));
 
         // Check OnShow has inherit attribute
-        let on_show = scripts.on_show.as_ref().expect("Expected OnShow");
+        let on_show = scripts.on_show.first().expect("Expected OnShow");
         assert_eq!(on_show.inherit.as_deref(), Some("append"));
     } else {
         panic!("Expected Frame element");

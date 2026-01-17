@@ -5,7 +5,7 @@ mod frame;
 mod registry;
 
 pub use anchor::{Anchor, AnchorPoint};
-pub use frame::{AttributeValue, Backdrop, Color, Frame, FrameStrata};
+pub use frame::{AttributeValue, Backdrop, Color, Frame, FrameStrata, TextJustify};
 pub use registry::WidgetRegistry;
 
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -24,15 +24,37 @@ pub enum WidgetType {
     Button,
     FontString,
     Texture,
+    EditBox,
+    ScrollFrame,
+    Slider,
+    CheckButton,
+    StatusBar,
+    Cooldown,
+    Model,
+    PlayerModel,
+    ColorSelect,
+    MessageFrame,
+    SimpleHTML,
 }
 
 impl WidgetType {
     pub fn from_str(s: &str) -> Option<Self> {
         match s {
             "Frame" => Some(Self::Frame),
-            "Button" => Some(Self::Button),
+            "Button" | "ItemButton" => Some(Self::Button),
             "FontString" => Some(Self::FontString),
             "Texture" => Some(Self::Texture),
+            "EditBox" => Some(Self::EditBox),
+            "ScrollFrame" => Some(Self::ScrollFrame),
+            "Slider" => Some(Self::Slider),
+            "CheckButton" => Some(Self::CheckButton),
+            "StatusBar" => Some(Self::StatusBar),
+            "Cooldown" => Some(Self::Cooldown),
+            "Model" | "ModelScene" | "DressUpModel" => Some(Self::Model),
+            "PlayerModel" | "CinematicModel" | "TabardModel" => Some(Self::PlayerModel),
+            "ColorSelect" => Some(Self::ColorSelect),
+            "MessageFrame" | "ScrollingMessageFrame" => Some(Self::MessageFrame),
+            "SimpleHTML" => Some(Self::SimpleHTML),
             _ => None,
         }
     }
@@ -43,6 +65,17 @@ impl WidgetType {
             Self::Button => "Button",
             Self::FontString => "FontString",
             Self::Texture => "Texture",
+            Self::EditBox => "EditBox",
+            Self::ScrollFrame => "ScrollFrame",
+            Self::Slider => "Slider",
+            Self::CheckButton => "CheckButton",
+            Self::StatusBar => "StatusBar",
+            Self::Cooldown => "Cooldown",
+            Self::Model => "Model",
+            Self::PlayerModel => "PlayerModel",
+            Self::ColorSelect => "ColorSelect",
+            Self::MessageFrame => "MessageFrame",
+            Self::SimpleHTML => "SimpleHTML",
         }
     }
 }
