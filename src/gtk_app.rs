@@ -130,6 +130,8 @@ fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
 struct SharedUiState {
     /// Currently hovered frame ID.
     hovered_frame: Option<u64>,
+    /// Currently pressed frame ID (mouse down).
+    pressed_frame: Option<u64>,
 }
 
 /// App state
@@ -990,6 +992,7 @@ impl Component for App {
             Msg::MousePress(x, y) => {
                 if let Some(frame_id) = self.hit_test(x, y) {
                     self.mouse_down_frame = Some(frame_id);
+                    self.ui_state.borrow_mut().pressed_frame = Some(frame_id);
                     let env = self.env.borrow();
                     let button_val = mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
                     let _ = env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val]);
@@ -1018,6 +1021,7 @@ impl Component for App {
                     self.update_console_label();
                 }
                 self.mouse_down_frame = None;
+                self.ui_state.borrow_mut().pressed_frame = None;
             }
             Msg::ReloadUI => {
                 self.log_messages.push("Reloading UI...".to_string());
@@ -1258,8 +1262,11 @@ fn draw_wow_frames(
     let scale_y = UI_SCALE;
     let _ = (width, height); // available for dynamic scaling later
 
-    // Get hovered frame from UI state
-    let hovered_frame = ui_state.borrow().hovered_frame;
+    // Get UI state for hover/press detection
+    let ui_state_ref = ui_state.borrow();
+    let hovered_frame = ui_state_ref.hovered_frame;
+    let pressed_frame = ui_state_ref.pressed_frame;
+    drop(ui_state_ref);
 
     // Collect and sort frames
     let mut frames: Vec<_> = state.widgets.all_ids()
@@ -1286,6 +1293,7 @@ fn draw_wow_frames(
                 frame.justify_v,
                 frame.word_wrap,
                 frame.normal_texture.clone(),
+                frame.pushed_texture.clone(),
                 frame.highlight_texture.clone(),
                 rect,
             ))
@@ -1322,7 +1330,7 @@ fn draw_wow_frames(
     let mut tex_mgr = texture_manager.borrow_mut();
     let mut tex_cache = texture_cache.borrow_mut();
 
-    for (id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, texture_path, color_texture, font_size, font_path, justify_h, justify_v, word_wrap, normal_texture, highlight_texture, rect) in frames {
+    for (id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, texture_path, color_texture, font_size, font_path, justify_h, justify_v, word_wrap, normal_texture, pushed_texture, highlight_texture, rect) in frames {
         if !visible {
             continue;
         }
@@ -1380,12 +1388,20 @@ fn draw_wow_frames(
                 }
             }
             WidgetType::Button => {
-                // Try to draw button normal texture first
+                let is_pressed = pressed_frame == Some(id);
+
+                // Choose texture based on button state (pressed or normal)
                 let mut drew_background = false;
-                if let Some(ref tex_path) = normal_texture {
+                let button_texture = if is_pressed {
+                    pushed_texture.as_ref().or(normal_texture.as_ref())
+                } else {
+                    normal_texture.as_ref()
+                };
+
+                if let Some(tex_path) = button_texture {
                     if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, tex_path) {
                         // WoW buttons use 3-slice horizontal stretching
-                        // From Blizzard_SecureTransferUI.xml TexCoords:
+                        // From Blizzard TexCoords (same for Up/Down/Disabled):
                         //   Left:   0.0     - 0.09375  (12px cap)
                         //   Middle: 0.09375 - 0.53125  (56px stretchable)
                         //   Right:  0.53125 - 0.625    (12px cap)
@@ -1402,7 +1418,7 @@ fn draw_wow_frames(
                     }
                 }
 
-                // Fallback to backdrop if no normal texture
+                // Fallback to backdrop if no button texture
                 if !drew_background && backdrop.enabled {
                     if let Some(ref bg_file) = backdrop.bg_file {
                         if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, bg_file) {
@@ -1424,8 +1440,8 @@ fn draw_wow_frames(
                     cr.stroke().ok();
                 }
 
-                // Draw highlight texture on hover
-                if hovered_frame == Some(id) {
+                // Draw highlight texture on hover (not when pressed)
+                if hovered_frame == Some(id) && !is_pressed {
                     if let Some(ref tex_path) = highlight_texture {
                         if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, tex_path) {
                             // From UIPanelButtonHighlightTexture:
