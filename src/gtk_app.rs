@@ -37,9 +37,6 @@ const DEFAULT_ADDONS_PATH: &str = "/home/osso/Projects/wow/reference-addons";
 /// UI scale factor (1.0 = pixel-perfect, no scaling).
 const UI_SCALE: f64 = 1.0;
 
-/// Texture scale factor for button textures (affects cap width preservation).
-const TEXTURE_SCALE: f64 = 1.56;
-
 /// Load WoW fonts from a directory into fontconfig.
 /// This makes fonts available to Pango without requiring system-wide installation.
 fn load_fonts_from_dir(fonts_dir: &Path) {
@@ -372,7 +369,10 @@ fn draw_nine_slice_texture(
 }
 
 /// Draw a texture using horizontal 3-slice (left cap, stretchable middle, right cap).
-/// `cap_width` is the width of left/right caps in texture pixels.
+/// - `left_cap_ratio`: left cap as ratio of texture width (e.g., 0.09375 = 12/128)
+/// - `right_cap_start`: where right cap starts as ratio (e.g., 0.53125)
+/// - `tex_right`: right edge of used texture region (e.g., 0.625 = 80/128)
+/// - `tex_bottom`: bottom edge of used texture region (e.g., 0.6875 = 22/32)
 fn draw_horizontal_slice_texture(
     cr: &cairo::Context,
     surface: &ImageSurface,
@@ -380,53 +380,60 @@ fn draw_horizontal_slice_texture(
     y: f64,
     w: f64,
     h: f64,
-    cap_width: f64,
+    left_cap_ratio: f64,
+    right_cap_start: f64,
+    tex_right: f64,
+    tex_bottom: f64,
     alpha: f64,
 ) {
-    let tex_w = surface.width() as f64;
-    let tex_h = surface.height() as f64;
+    let full_tex_w = surface.width() as f64;
+    let full_tex_h = surface.height() as f64;
 
-    // Clamp cap_width
-    let cap = cap_width.min(tex_w / 2.0);
+    // Calculate source regions in pixels from ratios
+    let src_left_cap_w = full_tex_w * left_cap_ratio;
+    let src_right_cap_x = full_tex_w * right_cap_start;
+    let src_right_edge = full_tex_w * tex_right;
+    let src_right_cap_w = src_right_edge - src_right_cap_x;
+    let src_middle_w = src_right_cap_x - src_left_cap_w;
+    let src_h = full_tex_h * tex_bottom;
 
-    // If target is smaller than caps, just scale
-    if w < cap * 2.0 {
-        draw_scaled_texture(cr, surface, x, y, w, h, alpha);
+    // Destination cap widths match source (1:1 pixels for caps)
+    let dst_left_cap_w = src_left_cap_w * UI_SCALE;
+    let dst_right_cap_w = src_right_cap_w * UI_SCALE;
+    let dst_middle_w = w - dst_left_cap_w - dst_right_cap_w;
+
+    // If target is smaller than caps, just scale the whole thing
+    if dst_middle_w < 0.0 {
         return;
     }
 
     cr.save().ok();
 
-    let scale_y = h / tex_h;
-    let middle_tex_w = tex_w - cap * 2.0;
-    let middle_dst_w = w - cap * 2.0;
-
-    println!("[3-slice] tex={}x{} cap={} target={}x{} middle_tex={} middle_dst={} scale_y={}",
-        tex_w, tex_h, cap, w, h, middle_tex_w, middle_dst_w, scale_y);
-
     // Helper to draw a region of the texture
+    // Source coords (sx, sy, sw, sh) are in texture pixels
+    // Dest coords (dx, dy, dw, dh) are in screen pixels
     let draw_region = |sx: f64, sy: f64, sw: f64, sh: f64, dx: f64, dy: f64, dw: f64, dh: f64| {
         if sw <= 0.0 || sh <= 0.0 || dw <= 0.0 || dh <= 0.0 {
             return;
         }
         cr.save().ok();
-        cr.rectangle(dx, dy, dw, dh);
-        cr.clip();
         cr.translate(dx, dy);
+        cr.rectangle(0.0, 0.0, dw, dh);
+        cr.clip();
         cr.scale(dw / sw, dh / sh);
         cr.set_source_surface(surface, -sx, -sy).ok();
         cr.paint_with_alpha(alpha).ok();
         cr.restore().ok();
     };
 
-    // Left cap: src (0, 0, cap, tex_h) -> dst (x, y, cap, h)
-    draw_region(0.0, 0.0, cap, tex_h, x, y, cap, h);
+    // Left cap: src (0, 0, left_cap, src_h) -> dst (x, y, left_cap, h)
+    draw_region(0.0, 0.0, src_left_cap_w, src_h, x, y, dst_left_cap_w, h);
 
-    // Middle: src (cap, 0, middle_tex_w, tex_h) -> dst (x+cap, y, middle_dst_w, h)
-    draw_region(cap, 0.0, middle_tex_w, tex_h, x + cap, y, middle_dst_w, h);
+    // Middle: src (left_cap, 0, middle, src_h) -> dst (x+left_cap, y, dst_middle, h)
+    draw_region(src_left_cap_w, 0.0, src_middle_w, src_h, x + dst_left_cap_w, y, dst_middle_w, h);
 
-    // Right cap: src (tex_w - cap, 0, cap, tex_h) -> dst (x+w-cap, y, cap, h)
-    draw_region(tex_w - cap, 0.0, cap, tex_h, x + w - cap, y, cap, h);
+    // Right cap: src (right_cap_x, 0, right_cap_w, src_h) -> dst (x+w-right_cap, y, right_cap, h)
+    draw_region(src_right_cap_x, 0.0, src_right_cap_w, src_h, x + w - dst_right_cap_w, y, dst_right_cap_w, h);
 
     cr.restore().ok();
 }
@@ -1308,22 +1315,24 @@ fn draw_wow_frames(
                 }
             }
             WidgetType::Button => {
-                // Draw debug box around button
-                cr.set_source_rgba(1.0, 1.0, 0.0, 1.0); // Yellow
-                cr.set_line_width(2.0);
-                cr.rectangle(x, y, w, h);
-                cr.stroke().ok();
-
                 // Try to draw button normal texture first
                 let mut drew_background = false;
                 if let Some(ref tex_path) = normal_texture {
                     if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, tex_path) {
                         // WoW buttons use 3-slice horizontal stretching
-                        // TEXTURE_SCALE multiplies the texture output size
-                        let tex_w = w * TEXTURE_SCALE - 1.0;
-                        let tex_h = h * TEXTURE_SCALE - 3.0;
-                        let cap_width = 12.0 * TEXTURE_SCALE;
-                        draw_horizontal_slice_texture(cr, &surface, x+1.0, y, tex_w, tex_h, cap_width, alpha as f64);
+                        // From Blizzard_SecureTransferUI.xml TexCoords:
+                        //   Left:   0.0     - 0.09375  (12px cap)
+                        //   Middle: 0.09375 - 0.53125  (56px stretchable)
+                        //   Right:  0.53125 - 0.625    (12px cap)
+                        //   Height: 0.0     - 0.6875   (22px of 32px)
+                        draw_horizontal_slice_texture(
+                            cr, &surface, x, y, w, h,
+                            0.09375,  // left_cap_ratio
+                            0.53125,  // right_cap_start
+                            0.625,    // tex_right
+                            0.6875,   // tex_bottom
+                            alpha as f64,
+                        );
                         drew_background = true;
                     }
                 }
