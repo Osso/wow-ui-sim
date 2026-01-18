@@ -5,7 +5,7 @@ use crate::saved_variables::SavedVariablesManager;
 use crate::toc::TocFile;
 use crate::xml::{parse_xml_file, XmlElement};
 use mlua::Table;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
 /// Result of loading an addon.
@@ -211,23 +211,75 @@ fn normalize_path(path: &str) -> String {
     path.replace('\\', "/")
 }
 
-/// Resolve a path relative to xml_dir, with fallback to addon_root.
-/// Some addons use paths relative to addon root instead of the XML file location.
-fn resolve_path_with_fallback(xml_dir: &Path, addon_root: &Path, file: &str) -> std::path::PathBuf {
-    let normalized = normalize_path(file);
-    let primary = xml_dir.join(&normalized);
-    if primary.exists() {
-        primary
-    } else {
-        // Try relative to addon root as fallback
-        let fallback = addon_root.join(&normalized);
-        if fallback.exists() {
-            fallback
-        } else {
-            // Return primary path (will result in error with correct path)
-            primary
+/// Find a directory entry case-insensitively.
+fn find_case_insensitive(dir: &Path, name: &str) -> Option<PathBuf> {
+    let name_lower = name.to_lowercase();
+    if let Ok(entries) = std::fs::read_dir(dir) {
+        for entry in entries.flatten() {
+            if entry.file_name().to_string_lossy().to_lowercase() == name_lower {
+                return Some(entry.path());
+            }
         }
     }
+    None
+}
+
+/// Resolve a path with case-insensitive matching (WoW is case-insensitive on Windows/macOS).
+fn resolve_path_case_insensitive(base: &Path, path: &str) -> Option<PathBuf> {
+    let components: Vec<&str> = path.split('/').collect();
+    let mut current = base.to_path_buf();
+
+    for component in &components {
+        if component.is_empty() {
+            continue;
+        }
+        // Try exact match first
+        let exact = current.join(component);
+        if exact.exists() {
+            current = exact;
+        } else if let Some(entry) = find_case_insensitive(&current, component) {
+            current = entry;
+        } else {
+            return None;
+        }
+    }
+    if current.exists() {
+        Some(current)
+    } else {
+        None
+    }
+}
+
+/// Resolve a path relative to xml_dir, with fallback to addon_root.
+/// Some addons use paths relative to addon root instead of the XML file location.
+/// Uses case-insensitive matching for compatibility with WoW (Windows/macOS).
+fn resolve_path_with_fallback(xml_dir: &Path, addon_root: &Path, file: &str) -> std::path::PathBuf {
+    let normalized = normalize_path(file);
+
+    // Try case-sensitive first (faster)
+    let primary = xml_dir.join(&normalized);
+    if primary.exists() {
+        return primary;
+    }
+
+    // Try case-insensitive in xml_dir
+    if let Some(resolved) = resolve_path_case_insensitive(xml_dir, &normalized) {
+        return resolved;
+    }
+
+    // Try case-sensitive fallback to addon root
+    let fallback = addon_root.join(&normalized);
+    if fallback.exists() {
+        return fallback;
+    }
+
+    // Try case-insensitive in addon_root
+    if let Some(resolved) = resolve_path_case_insensitive(addon_root, &normalized) {
+        return resolved;
+    }
+
+    // Return primary path (will result in error with correct path)
+    primary
 }
 
 /// Create a frame from XML definition.

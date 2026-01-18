@@ -179,13 +179,53 @@ impl TocFile {
     }
 
     /// Get absolute paths for all files to load.
+    /// Uses case-insensitive matching for compatibility with WoW (Windows/macOS).
     pub fn file_paths(&self) -> Vec<PathBuf> {
         self.files
             .iter()
-            .map(|f| self.addon_dir.join(f))
+            .map(|f| resolve_path_case_insensitive(&self.addon_dir, f))
             .collect()
     }
+}
 
+/// Resolve a path with case-insensitive matching (WoW is case-insensitive on Windows/macOS).
+fn resolve_path_case_insensitive(base: &Path, path: &Path) -> PathBuf {
+    let path_str = path.to_string_lossy().replace('\\', "/");
+    let components: Vec<&str> = path_str.split('/').collect();
+    let mut current = base.to_path_buf();
+
+    for component in &components {
+        if component.is_empty() {
+            continue;
+        }
+        // Try exact match first
+        let exact = current.join(component);
+        if exact.exists() {
+            current = exact;
+        } else if let Some(entry) = find_case_insensitive(&current, component) {
+            current = entry;
+        } else {
+            // Fall back to exact path (will fail later with proper error)
+            current = exact;
+        }
+    }
+    current
+}
+
+/// Find a directory entry case-insensitively.
+fn find_case_insensitive(dir: &Path, name: &str) -> Option<PathBuf> {
+    let name_lower = name.to_lowercase();
+    if let Ok(entries) = std::fs::read_dir(dir) {
+        for entry in entries.flatten() {
+            if entry.file_name().to_string_lossy().to_lowercase() == name_lower {
+                return Some(entry.path());
+            }
+        }
+    }
+    None
+}
+
+impl TocFile {
     /// Check if this is a Blizzard addon (AllowLoad metadata present).
     pub fn is_blizzard_addon(&self) -> bool {
         self.metadata.contains_key("AllowLoad")
