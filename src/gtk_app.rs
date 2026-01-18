@@ -125,6 +125,13 @@ fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
 
 // Note: FrameInfo will be used in Phase 2 for texture rendering
 
+/// Shared UI state accessible from draw functions.
+#[derive(Default)]
+struct SharedUiState {
+    /// Currently hovered frame ID.
+    hovered_frame: Option<u64>,
+}
+
 /// App state
 struct App {
     env: Rc<RefCell<WowLuaEnv>>,
@@ -137,8 +144,8 @@ struct App {
     frames_box: gtk::Box,
     /// Console output label.
     console_label: gtk::Label,
-    /// Currently hovered frame ID.
-    hovered_frame: Option<u64>,
+    /// Shared UI state for draw functions.
+    ui_state: Rc<RefCell<SharedUiState>>,
     /// Frame that received mouse down (for click detection).
     mouse_down_frame: Option<u64>,
 }
@@ -258,6 +265,54 @@ fn draw_scaled_texture(
     } else {
         cr.paint().ok();
     }
+
+    cr.restore().ok();
+}
+
+/// Draw a texture with TexCoords (only uses a portion of the texture).
+/// Uses additive blending for highlight textures.
+fn draw_texture_with_texcoords(
+    cr: &cairo::Context,
+    surface: &ImageSurface,
+    x: f64,
+    y: f64,
+    w: f64,
+    h: f64,
+    tex_right: f64,
+    tex_bottom: f64,
+    alpha: f64,
+    additive: bool,
+) {
+    let full_tex_w = surface.width() as f64;
+    let full_tex_h = surface.height() as f64;
+
+    // Calculate the source region from TexCoords
+    let src_w = full_tex_w * tex_right;
+    let src_h = full_tex_h * tex_bottom;
+
+    cr.save().ok();
+
+    // Set additive blending if requested
+    if additive {
+        cr.set_operator(cairo::Operator::Add);
+    }
+
+    // Clip to destination
+    cr.rectangle(x, y, w, h);
+    cr.clip();
+
+    // Translate to position, then scale to fit destination
+    cr.translate(x, y);
+    cr.scale(w / src_w, h / src_h);
+
+    // Draw the surface - only the src_w x src_h portion will be visible due to scaling
+    cr.set_source_surface(surface, 0.0, 0.0).ok();
+
+    let pattern = cr.source();
+    pattern.set_extend(cairo::Extend::Pad);
+    pattern.set_filter(cairo::Filter::Bilinear);
+
+    cr.paint_with_alpha(alpha).ok();
 
     cr.restore().ok();
 }
@@ -743,6 +798,8 @@ impl Component for App {
         ));
         let texture_cache: Rc<RefCell<CairoTextureCache>> = Rc::new(RefCell::new(HashMap::new()));
 
+        let ui_state: Rc<RefCell<SharedUiState>> = Rc::new(RefCell::new(SharedUiState::default()));
+
         let model = App {
             env: env_rc.clone(),
             log_messages,
@@ -750,7 +807,7 @@ impl Component for App {
             drawing_area: drawing_area.clone(),
             frames_box: frames_box.clone(),
             console_label: console_label.clone(),
-            hovered_frame: None,
+            ui_state: ui_state.clone(),
             mouse_down_frame: None,
         };
 
@@ -761,11 +818,13 @@ impl Component for App {
         let env_for_draw = env_rc.clone();
         let tex_mgr_for_draw = Rc::clone(&texture_manager);
         let tex_cache_for_draw = Rc::clone(&texture_cache);
+        let ui_state_for_draw = Rc::clone(&ui_state);
         drawing_area.set_draw_func(move |_area, cr, width, height| {
             draw_wow_frames(
                 &env_for_draw,
                 &tex_mgr_for_draw,
                 &tex_cache_for_draw,
+                &ui_state_for_draw,
                 cr,
                 width,
                 height,
@@ -911,17 +970,18 @@ impl Component for App {
             }
             Msg::MouseMove(x, y) => {
                 let new_hovered = self.hit_test(x, y);
-                if new_hovered != self.hovered_frame {
+                let old_hovered = self.ui_state.borrow().hovered_frame;
+                if new_hovered != old_hovered {
                     // Fire OnLeave/OnEnter
                     let env = self.env.borrow();
-                    if let Some(old_id) = self.hovered_frame {
+                    if let Some(old_id) = old_hovered {
                         let _ = env.fire_script_handler(old_id, "OnLeave", vec![]);
                     }
                     if let Some(new_id) = new_hovered {
                         let _ = env.fire_script_handler(new_id, "OnEnter", vec![]);
                     }
                     drop(env);
-                    self.hovered_frame = new_hovered;
+                    self.ui_state.borrow_mut().hovered_frame = new_hovered;
                     self.drain_console();
                     self.drawing_area.queue_draw();
                     self.update_console_label();
@@ -1182,6 +1242,7 @@ fn draw_wow_frames(
     env: &Rc<RefCell<WowLuaEnv>>,
     texture_manager: &Rc<RefCell<TextureManager>>,
     texture_cache: &Rc<RefCell<CairoTextureCache>>,
+    ui_state: &Rc<RefCell<SharedUiState>>,
     cr: &gtk::cairo::Context,
     width: i32,
     height: i32,
@@ -1196,6 +1257,9 @@ fn draw_wow_frames(
     let scale_x = UI_SCALE;
     let scale_y = UI_SCALE;
     let _ = (width, height); // available for dynamic scaling later
+
+    // Get hovered frame from UI state
+    let hovered_frame = ui_state.borrow().hovered_frame;
 
     // Collect and sort frames
     let mut frames: Vec<_> = state.widgets.all_ids()
@@ -1222,6 +1286,7 @@ fn draw_wow_frames(
                 frame.justify_v,
                 frame.word_wrap,
                 frame.normal_texture.clone(),
+                frame.highlight_texture.clone(),
                 rect,
             ))
         })
@@ -1257,7 +1322,7 @@ fn draw_wow_frames(
     let mut tex_mgr = texture_manager.borrow_mut();
     let mut tex_cache = texture_cache.borrow_mut();
 
-    for (_id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, texture_path, color_texture, font_size, font_path, justify_h, justify_v, word_wrap, normal_texture, rect) in frames {
+    for (id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, texture_path, color_texture, font_size, font_path, justify_h, justify_v, word_wrap, normal_texture, highlight_texture, rect) in frames {
         if !visible {
             continue;
         }
@@ -1357,6 +1422,24 @@ fn draw_wow_frames(
                     cr.set_line_width(1.5);
                     cr.rectangle(x, y, w, h);
                     cr.stroke().ok();
+                }
+
+                // Draw highlight texture on hover
+                if hovered_frame == Some(id) {
+                    if let Some(ref tex_path) = highlight_texture {
+                        if let Some(surface) = load_cairo_surface(&mut tex_mgr, &mut tex_cache, tex_path) {
+                            // From UIPanelButtonHighlightTexture:
+                            //   TexCoords: right=0.625, bottom=0.6875
+                            //   alphaMode="ADD" (additive blending)
+                            draw_texture_with_texcoords(
+                                cr, &surface, x, y, w, h,
+                                0.625,  // tex_right
+                                0.6875, // tex_bottom
+                                alpha as f64,
+                                true,   // additive blending
+                            );
+                        }
+                    }
                 }
 
                 // Draw button text (centered) using Pango
