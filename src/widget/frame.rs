@@ -175,9 +175,9 @@ impl Frame {
             vertex_color: None,
             text: None,
             title: None,
-            text_color: Color::new(1.0, 1.0, 1.0, 1.0), // Default white text
+            text_color: Color::new(1.0, 0.8, 0.2, 1.0), // Default gold text for visibility
             font: None,
-            font_size: 12.0,
+            font_size: 14.0,
             justify_h: TextJustify::Center,
             justify_v: TextJustify::Center,
             attributes: HashMap::new(),
@@ -204,18 +204,49 @@ impl Frame {
     pub fn set_point(
         &mut self,
         point: AnchorPoint,
+        relative_to_id: Option<usize>,
+        relative_point: AnchorPoint,
+        x_offset: f32,
+        y_offset: f32,
+    ) {
+        // Replace existing anchor with same point, or add new one
+        let new_anchor = Anchor {
+            point,
+            relative_to: None,
+            relative_to_id,
+            relative_point,
+            x_offset,
+            y_offset,
+        };
+        if let Some(existing) = self.anchors.iter_mut().find(|a| a.point == point) {
+            *existing = new_anchor;
+        } else {
+            self.anchors.push(new_anchor);
+        }
+    }
+
+    pub fn set_point_with_name(
+        &mut self,
+        point: AnchorPoint,
         relative_to: Option<String>,
         relative_point: AnchorPoint,
         x_offset: f32,
         y_offset: f32,
     ) {
-        self.anchors.push(Anchor {
+        // Replace existing anchor with same point, or add new one
+        let new_anchor = Anchor {
             point,
             relative_to,
+            relative_to_id: None,
             relative_point,
             x_offset,
             y_offset,
-        });
+        };
+        if let Some(existing) = self.anchors.iter_mut().find(|a| a.point == point) {
+            *existing = new_anchor;
+        } else {
+            self.anchors.push(new_anchor);
+        }
     }
 
     pub fn clear_all_points(&mut self) {

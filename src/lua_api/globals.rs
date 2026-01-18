@@ -1,7 +1,8 @@
 //! Global WoW API functions.
 
 use super::{next_timer_id, PendingTimer, SimState};
-use crate::widget::{AttributeValue, Frame, FrameStrata, WidgetType};
+use crate::widget::{Anchor, AnchorPoint, AttributeValue, Frame, FrameStrata, WidgetType};
+use crate::xml::get_template_info;
 use mlua::{Lua, MetaMethod, ObjectLike, Result, UserData, UserDataMethods, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -631,6 +632,11 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                 }
             }
 
+            // NOTE: ButtonFrameTemplate handling is now done via proper template inheritance
+            // in loader.rs (instantiate_template_children). The template registry stores
+            // virtual frames and their children are automatically instantiated when a frame
+            // inherits from them.
+
             // EditModeSystemSelectionTemplate creates a Label FontString (used by LibEditMode)
             // Also sets parent.Selection = self for addon access patterns
             if tmpl.contains("EditModeSystemSelection") {
@@ -753,6 +759,127 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
                 if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
                     parent_frame.children_keys.insert("FrameContainer".to_string(), frame_container_id);
+                }
+            }
+
+            // AddonListEntryTemplate creates Title, Status, Reload FontStrings, Enabled CheckButton, LoadAddonButton
+            // Used by Blizzard_AddOnList for addon list entries
+            if tmpl.contains("AddonListEntry") {
+                // Create Title FontString (300x12)
+                let mut title_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
+                title_fs.width = 300.0;
+                title_fs.height = 16.0; // Taller for better visibility
+                title_fs.font_size = 14.0;
+                title_fs.text = Some("TestAddon".to_string()); // Placeholder text
+                title_fs.text_color = crate::widget::Color::new(1.0, 0.78, 0.0, 1.0); // Gold color
+                // Anchor Title at LEFT + 32px (leaving room for checkbox)
+                title_fs.anchors.push(Anchor {
+                    point: AnchorPoint::Left,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: AnchorPoint::Left,
+                    x_offset: 32.0,
+                    y_offset: 0.0,
+                });
+                let title_id = title_fs.id;
+                state.widgets.register(title_fs);
+                state.widgets.add_child(frame_id, title_id);
+
+                // Create Status FontString (anchored RIGHT)
+                let mut status_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
+                status_fs.width = 100.0;
+                status_fs.height = 12.0;
+                status_fs.anchors.push(Anchor {
+                    point: AnchorPoint::Right,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: AnchorPoint::Right,
+                    x_offset: 0.0,
+                    y_offset: 0.0,
+                });
+                let status_id = status_fs.id;
+                state.widgets.register(status_fs);
+                state.widgets.add_child(frame_id, status_id);
+
+                // Create Reload FontString (220x12, anchored RIGHT)
+                let mut reload_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
+                reload_fs.width = 220.0;
+                reload_fs.height = 12.0;
+                reload_fs.visible = false; // Hidden by default
+                reload_fs.anchors.push(Anchor {
+                    point: AnchorPoint::Right,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: AnchorPoint::Right,
+                    x_offset: 0.0,
+                    y_offset: 0.0,
+                });
+                let reload_id = reload_fs.id;
+                state.widgets.register(reload_fs);
+                state.widgets.add_child(frame_id, reload_id);
+
+                // Create Enabled CheckButton (24x24, anchored LEFT)
+                let mut enabled_cb = Frame::new(WidgetType::CheckButton, None, Some(frame_id));
+                enabled_cb.width = 24.0;
+                enabled_cb.height = 24.0;
+                enabled_cb.anchors.push(Anchor {
+                    point: AnchorPoint::Left,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: AnchorPoint::Left,
+                    x_offset: 4.0,
+                    y_offset: 0.0,
+                });
+                let enabled_id = enabled_cb.id;
+                state.widgets.register(enabled_cb);
+                state.widgets.add_child(frame_id, enabled_id);
+
+                // Create CheckedTexture for the CheckButton
+                let mut checked_tex = Frame::new(WidgetType::Texture, None, Some(enabled_id));
+                checked_tex.width = 24.0;
+                checked_tex.height = 24.0;
+                checked_tex.visible = false; // Hidden until SetChecked(true) is called
+                // Set atlas texture to checkmark-minimal
+                checked_tex.attributes.insert("__atlas".to_string(), AttributeValue::String("checkmark-minimal".to_string()));
+                let checked_tex_id = checked_tex.id;
+                state.widgets.register(checked_tex);
+                state.widgets.add_child(enabled_id, checked_tex_id);
+                if let Some(cb) = state.widgets.get_mut(enabled_id) {
+                    cb.children_keys.insert("CheckedTexture".to_string(), checked_tex_id);
+                }
+
+                // Create LoadAddonButton (100x22, hidden by default)
+                let mut load_btn = Frame::new(WidgetType::Button, None, Some(frame_id));
+                load_btn.width = 100.0;
+                load_btn.height = 22.0;
+                load_btn.visible = false;
+                let load_btn_id = load_btn.id;
+                state.widgets.register(load_btn);
+                state.widgets.add_child(frame_id, load_btn_id);
+
+                // Store children keys
+                if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
+                    parent_frame.children_keys.insert("Title".to_string(), title_id);
+                    parent_frame.children_keys.insert("Status".to_string(), status_id);
+                    parent_frame.children_keys.insert("Reload".to_string(), reload_id);
+                    parent_frame.children_keys.insert("Enabled".to_string(), enabled_id);
+                    parent_frame.children_keys.insert("LoadAddonButton".to_string(), load_btn_id);
+                }
+            }
+
+            // AddonListCategoryTemplate creates Title FontString
+            // Used by Blizzard_AddOnList for category headers
+            if tmpl.contains("AddonListCategory") && !tmpl.contains("Entry") {
+                // Create Title FontString
+                let mut title_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
+                title_fs.width = 300.0;
+                title_fs.height = 12.0;
+                let title_id = title_fs.id;
+                state.widgets.register(title_fs);
+                state.widgets.add_child(frame_id, title_id);
+
+                if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
+                    parent_frame.children_keys.insert("Title".to_string(), title_id);
                 }
             }
         }
@@ -1410,34 +1537,112 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
     // CreateFramePool(frameType, parent, template, resetterFunc, forbidden)
     // Creates a pool for managing reusable frames
-    let create_frame_pool_state = Rc::clone(&state);
-    let create_frame_pool = lua.create_function(move |lua, args: mlua::MultiValue| {
-        let _state = create_frame_pool_state.borrow();
-        let _args: Vec<Value> = args.into_iter().collect();
+    let create_frame_pool = lua.create_function(|lua, args: mlua::MultiValue| {
+        let args: Vec<Value> = args.into_iter().collect();
+        let frame_type: String = args.get(0)
+            .and_then(|v| v.as_str())
+            .map(|s| s.to_string())
+            .unwrap_or_else(|| "Frame".to_string());
+        // Parent can be nil, a string (global name), or a frame object
+        let parent_val = args.get(1).cloned().unwrap_or(Value::Nil);
+        let template: Option<String> = args.get(2)
+            .and_then(|v| v.as_str())
+            .map(|s| s.to_string());
+
         let pool = lua.create_table()?;
         pool.set("__active", lua.create_table()?)?;
+        pool.set("__inactive", lua.create_table()?)?;
+        pool.set("__frame_type", frame_type.clone())?;
+        pool.set("__parent", parent_val.clone())?;
+        if let Some(ref tmpl) = template {
+            pool.set("__template", tmpl.clone())?;
+        }
         pool.set(
             "Acquire",
-            lua.create_function(|lua, this: mlua::Table| {
-                // Create a simple frame table
-                let frame = lua.create_table()?;
-                frame.set("Show", lua.create_function(|_, ()| Ok(()))?)?;
-                frame.set("Hide", lua.create_function(|_, ()| Ok(()))?)?;
-                frame.set("SetPoint", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-                frame.set("ClearAllPoints", lua.create_function(|_, ()| Ok(()))?)?;
-                frame.set("SetParent", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
+            lua.create_function(move |lua, this: mlua::Table| {
+                // First check inactive pool for a frame to reuse
+                let inactive: mlua::Table = this.get("__inactive")?;
+                let inactive_len = inactive.raw_len();
+                if inactive_len > 0 {
+                    // Reuse an existing frame
+                    let frame: Value = inactive.get(inactive_len)?;
+                    inactive.set(inactive_len, Value::Nil)?;
+                    let active: mlua::Table = this.get("__active")?;
+                    active.set(active.raw_len() + 1, frame.clone())?;
+                    return Ok((frame, false)); // false = not new
+                }
+
+                // Create a new frame via CreateFrame
+                let create_frame: mlua::Function = lua.globals().get("CreateFrame")?;
+                let frame_type: String = this.get("__frame_type")?;
+                let parent: Value = this.get("__parent")?;
+                let template: Option<String> = this.get("__template").ok();
+
+                let frame = if let Some(tmpl) = template {
+                    create_frame.call::<Value>((frame_type, Value::Nil, parent, tmpl))?
+                } else {
+                    create_frame.call::<Value>((frame_type, Value::Nil, parent))?
+                };
+
                 let active: mlua::Table = this.get("__active")?;
                 active.set(active.raw_len() + 1, frame.clone())?;
-                Ok(frame)
+                Ok((frame, true)) // true = new frame
             })?,
         )?;
         pool.set(
             "Release",
-            lua.create_function(|_, (_this, _frame): (mlua::Table, mlua::Table)| Ok(()))?,
+            lua.create_function(|_, (this, frame): (mlua::Table, Value)| {
+                // Move from active to inactive
+                let inactive: mlua::Table = this.get("__inactive")?;
+                inactive.set(inactive.raw_len() + 1, frame)?;
+                Ok(())
+            })?,
         )?;
         pool.set(
             "ReleaseAll",
-            lua.create_function(|_, _this: mlua::Table| Ok(()))?,
+            lua.create_function(|_, this: mlua::Table| {
+                let active: mlua::Table = this.get("__active")?;
+                let inactive: mlua::Table = this.get("__inactive")?;
+                // Move all active to inactive
+                for pair in active.pairs::<i64, Value>() {
+                    let (_, frame) = pair?;
+                    inactive.set(inactive.raw_len() + 1, frame)?;
+                }
+                // Clear active
+                for i in 1..=active.raw_len() {
+                    active.set(i, Value::Nil)?;
+                }
+                Ok(())
+            })?,
+        )?;
+        pool.set(
+            "GetNumActive",
+            lua.create_function(|_, this: mlua::Table| {
+                let active: mlua::Table = this.get("__active")?;
+                Ok(active.raw_len())
+            })?,
+        )?;
+        pool.set(
+            "EnumerateActive",
+            lua.create_function(|lua, this: mlua::Table| {
+                let active: mlua::Table = this.get("__active")?;
+                let iter_state = lua.create_table()?;
+                iter_state.set("tbl", active)?;
+                iter_state.set("idx", 0i64)?;
+                let iter_fn = lua.create_function(|_, state: mlua::Table| {
+                    let tbl: mlua::Table = state.get("tbl")?;
+                    let idx: i64 = state.get("idx")?;
+                    let next_idx = idx + 1;
+                    if next_idx <= tbl.raw_len() as i64 {
+                        state.set("idx", next_idx)?;
+                        let val: Value = tbl.get(next_idx)?;
+                        Ok((Some(val), Value::Nil))
+                    } else {
+                        Ok((None, Value::Nil))
+                    }
+                })?;
+                Ok((iter_fn, iter_state, Value::Nil))
+            })?,
         )?;
         Ok(pool)
     })?;
@@ -1495,6 +1700,9 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         state: Rc::clone(&state),
     })?;
     globals.set("UIParent", ui_parent)?;
+
+    // UIPanelWindows - registry for UI panel positioning/behavior
+    globals.set("UIPanelWindows", lua.create_table()?)?;
 
     // WorldFrame reference (3D world rendering frame)
     let world_frame_id = {
@@ -4110,6 +4318,9 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
     // IsLoggedIn() - Check if player is logged in (always true in sim)
     globals.set("IsLoggedIn", lua.create_function(|_, ()| Ok(false))?)?;
+
+    // InGlue() - Check if in glue screen (character selection). Always false in sim.
+    globals.set("InGlue", lua.create_function(|_, ()| Ok(false))?)?;
 
     // Group/raid functions
     globals.set("IsInGroup", lua.create_function(|_, _instance_type: Option<String>| Ok(false))?)?;
@@ -7884,6 +8095,8 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                 "Title" => addon.as_str(),
                 "Notes" => "Addon description",
                 "Author" => "Unknown Author",
+                "Group" => addon.as_str(), // Default group is the addon's name
+                "Category" => "", // No default category
                 _ => "",
             };
             if value.is_empty() {
@@ -7901,42 +8114,45 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         "DisableAddOn",
         lua.create_function(|_, _addon: String| Ok(()))?,
     )?;
+    // GetNumAddOns - return actual addon count
+    let state_for_num = Rc::clone(&state);
     c_addons.set(
         "GetNumAddOns",
-        lua.create_function(|_, ()| Ok(1))?,
+        lua.create_function(move |_, ()| {
+            let state = state_for_num.borrow();
+            Ok(state.addons.len() as i32)
+        })?,
     )?;
+    // GetAddOnInfo - return actual addon info
+    let state_for_info = Rc::clone(&state);
     c_addons.set(
         "GetAddOnInfo",
-        lua.create_function(|lua, index_or_name: Value| {
+        lua.create_function(move |lua, index_or_name: Value| {
             // Return: name, title, notes, loadable, reason, security, newVersion
-            // Accept either integer index or addon name string
-            let addon_name: Option<String> = match index_or_name {
-                Value::Integer(1) => Some("TestAddon".to_string()),
+            let state = state_for_info.borrow();
+            let addon = match index_or_name {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize; // Lua is 1-indexed
+                    state.addons.get(idx)
+                }
                 Value::String(ref s) => {
-                    let name = s.to_string_lossy().to_string();
-                    // Return info for known addons
-                    Some(match name.as_str() {
-                        "WeakAuras" | "WeakAurasOptions" | "WeakAurasTemplates" => "WeakAuras".to_string(),
-                        "Details" | "Details_Streamer" | "Details_EncounterDetails" => "Details".to_string(),
-                        "DBM-Core" | "DBM-StatusBarTimers" => "DBM-Core".to_string(),
-                        "Plater" => "Plater".to_string(),
-                        "AllTheThings" => "AllTheThings".to_string(),
-                        "Ace3" => "Ace3".to_string(),
-                        _ => name, // Return the name as-is for unknown addons
-                    })
+                    let name = s.to_string_lossy();
+                    state.addons.iter().find(|a| a.folder_name == &*name)
                 }
                 _ => None,
             };
 
-            if let Some(name) = addon_name {
+            if let Some(addon) = addon {
+                // Mark all addons as loadable so they show with gold text
+                let loadable = true;
                 Ok((
-                    Value::String(lua.create_string(&name)?),
-                    Value::String(lua.create_string(&name)?),
-                    Value::String(lua.create_string("")?),
-                    Value::Boolean(true),
-                    Value::Nil,
-                    Value::String(lua.create_string("SECURE")?),
-                    Value::Boolean(false),
+                    Value::String(lua.create_string(&addon.folder_name)?),
+                    Value::String(lua.create_string(&addon.title)?),
+                    Value::String(lua.create_string(&addon.notes)?),
+                    Value::Boolean(loadable),
+                    Value::Nil, // reason
+                    Value::String(lua.create_string("INSECURE")?),
+                    Value::Boolean(false), // newVersion
                 ))
             } else {
                 Ok((
@@ -7951,24 +8167,50 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             }
         })?,
     )?;
+    // IsAddOnLoaded - check if addon is actually loaded
+    let state_for_loaded = Rc::clone(&state);
     c_addons.set(
         "IsAddOnLoaded",
-        lua.create_function(|_, addon: String| {
-            // Return true only for addons we actually load in the simulator
-            // Return false for optional addons like CustomNames that aren't loaded
-            Ok(matches!(
-                addon.as_str(),
-                "WeakAuras" | "Ace3" | "LibStub" | "CallbackHandler-1.0"
-            ))
+        lua.create_function(move |_, addon: Value| {
+            let state = state_for_loaded.borrow();
+            let found = match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    state.addons.get(idx).map(|a| a.loaded).unwrap_or(false)
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    state.addons.iter().any(|a| a.folder_name == &*name && a.loaded)
+                }
+                _ => false,
+            };
+            Ok(found)
         })?,
     )?;
     c_addons.set(
         "IsAddOnLoadable",
         lua.create_function(|_, _addon: String| Ok(true))?,
     )?;
+    // IsAddOnLoadOnDemand - check actual LOD flag
+    let state_for_lod = Rc::clone(&state);
     c_addons.set(
         "IsAddOnLoadOnDemand",
-        lua.create_function(|_, _addon: String| Ok(false))?,
+        lua.create_function(move |_, addon: Value| {
+            let state = state_for_lod.borrow();
+            let lod = match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    state.addons.get(idx).map(|a| a.load_on_demand).unwrap_or(false)
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    state.addons.iter().find(|a| a.folder_name == &*name)
+                        .map(|a| a.load_on_demand).unwrap_or(false)
+                }
+                _ => false,
+            };
+            Ok(lod)
+        })?,
     )?;
     c_addons.set(
         "GetAddOnOptionalDependencies",
@@ -7982,18 +8224,142 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         "LoadAddOn",
         lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
     )?;
+    // DoesAddOnExist - check if addon is in the registry
+    let state_for_exists = Rc::clone(&state);
     c_addons.set(
         "DoesAddOnExist",
-        lua.create_function(|_, _addon: String| Ok(true))?,
-    )?;
-    c_addons.set(
-        "GetAddOnEnableState",
-        lua.create_function(|_, (_addon, _character): (Value, Option<String>)| {
-            // Returns: enabled state (0 = disabled, 1 = enabled for some, 2 = enabled for all)
-            Ok(2i32)
+        lua.create_function(move |_, addon: Value| {
+            let state = state_for_exists.borrow();
+            let exists = match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    idx < state.addons.len()
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    state.addons.iter().any(|a| a.folder_name == &*name)
+                }
+                _ => false,
+            };
+            Ok(exists)
         })?,
     )?;
+    // GetAddOnEnableState - check actual enabled state
+    let state_for_enable = Rc::clone(&state);
+    c_addons.set(
+        "GetAddOnEnableState",
+        lua.create_function(move |_, (addon, _character): (Value, Option<String>)| {
+            // Returns: enabled state (0 = disabled, 1 = enabled for some, 2 = enabled for all)
+            let state = state_for_enable.borrow();
+            let enabled = match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    state.addons.get(idx).map(|a| a.enabled).unwrap_or(false)
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    state.addons.iter().find(|a| a.folder_name == &*name)
+                        .map(|a| a.enabled).unwrap_or(false)
+                }
+                _ => false,
+            };
+            Ok(if enabled { 2i32 } else { 0i32 })
+        })?,
+    )?;
+    // GetAddOnName - return folder name
+    let state_for_name = Rc::clone(&state);
+    c_addons.set(
+        "GetAddOnName",
+        lua.create_function(move |lua, index: i64| {
+            let state = state_for_name.borrow();
+            let idx = (index - 1) as usize;
+            if let Some(addon) = state.addons.get(idx) {
+                Ok(Value::String(lua.create_string(&addon.folder_name)?))
+            } else {
+                Ok(Value::Nil)
+            }
+        })?,
+    )?;
+    // GetAddOnTitle - return display title
+    let state_for_title = Rc::clone(&state);
+    c_addons.set(
+        "GetAddOnTitle",
+        lua.create_function(move |lua, index: i64| {
+            let state = state_for_title.borrow();
+            let idx = (index - 1) as usize;
+            if let Some(addon) = state.addons.get(idx) {
+                Ok(Value::String(lua.create_string(&addon.title)?))
+            } else {
+                Ok(Value::Nil)
+            }
+        })?,
+    )?;
+    // GetAddOnNotes - return addon description/notes
+    let state_for_notes = Rc::clone(&state);
+    c_addons.set(
+        "GetAddOnNotes",
+        lua.create_function(move |lua, index: i64| {
+            let state = state_for_notes.borrow();
+            let idx = (index - 1) as usize;
+            if let Some(addon) = state.addons.get(idx) {
+                if addon.notes.is_empty() {
+                    Ok(Value::Nil)
+                } else {
+                    Ok(Value::String(lua.create_string(&addon.notes)?))
+                }
+            } else {
+                Ok(Value::Nil)
+            }
+        })?,
+    )?;
+    // GetAddOnSecurity - return security level (always INSECURE for addons)
+    c_addons.set(
+        "GetAddOnSecurity",
+        lua.create_function(|lua, _index: i64| {
+            // Security levels: SECURE, INSECURE, BANNED
+            Ok(Value::String(lua.create_string("INSECURE")?))
+        })?,
+    )?;
+    // IsAddonVersionCheckEnabled - check if addon version validation is enabled
+    c_addons.set(
+        "IsAddonVersionCheckEnabled",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    // SetAddonVersionCheck - toggle addon version validation
+    c_addons.set(
+        "SetAddonVersionCheck",
+        lua.create_function(|_, _enabled: bool| Ok(()))?,
+    )?;
     globals.set("C_AddOns", c_addons)?;
+
+    // ADDON_ACTIONS_BLOCKED - table of addon names that have blocked actions (used by AddonList)
+    // This is normally populated by the game when addons use protected functions
+    globals.set("ADDON_ACTIONS_BLOCKED", lua.create_table()?)?;
+
+    // AddOnPerformance - addon performance monitoring (nil when not loaded)
+    // This is populated by Blizzard_AddOnPerformanceWarning addon
+    globals.set("AddOnPerformance", Value::Nil)?;
+
+    // C_XMLUtil namespace - XML template utilities
+    let c_xml_util = lua.create_table()?;
+
+    // GetTemplateInfo(templateName) - returns template type, width, height
+    c_xml_util.set(
+        "GetTemplateInfo",
+        lua.create_function(|lua, template_name: String| {
+            if let Some(info) = get_template_info(&template_name) {
+                let result = lua.create_table()?;
+                // WoW uses lowercase "type" for frame type
+                result.set("type", info.frame_type)?;
+                result.set("width", info.width)?;
+                result.set("height", info.height)?;
+                Ok(Value::Table(result))
+            } else {
+                Ok(Value::Nil)
+            }
+        })?,
+    )?;
+    globals.set("C_XMLUtil", c_xml_util)?;
 
     // Legacy global function version
     globals.set(
@@ -8953,6 +9319,7 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                 "Version" => "@project-version@",
                 "X-Flavor" => "Mainline",
                 "Title" => addon.as_str(),
+                "Group" => addon.as_str(), // Default group is addon name
                 _ => "",
             };
             if value.is_empty() {
@@ -8962,27 +9329,57 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             }
         })?,
     )?;
+    // Legacy global addon functions - delegate to state
+    let state_for_legacy_num = Rc::clone(&state);
     globals.set(
         "GetNumAddOns",
-        lua.create_function(|_, ()| Ok(1))?,
+        lua.create_function(move |_, ()| {
+            let state = state_for_legacy_num.borrow();
+            Ok(state.addons.len() as i32)
+        })?,
     )?;
+    let state_for_legacy_loaded = Rc::clone(&state);
     globals.set(
         "IsAddOnLoaded",
-        lua.create_function(|_, addon: String| {
-            // Return true only for addons we actually load
-            Ok(matches!(
-                addon.as_str(),
-                "WeakAuras" | "Ace3" | "LibStub" | "CallbackHandler-1.0"
-            ))
+        lua.create_function(move |_, addon: Value| {
+            let state = state_for_legacy_loaded.borrow();
+            let found = match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    state.addons.get(idx).map(|a| a.loaded).unwrap_or(false)
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    state.addons.iter().any(|a| a.folder_name == &*name && a.loaded)
+                }
+                _ => false,
+            };
+            Ok(found)
         })?,
     )?;
     globals.set(
         "LoadAddOn",
         lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
     )?;
+    let state_for_legacy_lod = Rc::clone(&state);
     globals.set(
         "IsAddOnLoadOnDemand",
-        lua.create_function(|_, _addon: String| Ok(false))?,
+        lua.create_function(move |_, addon: Value| {
+            let state = state_for_legacy_lod.borrow();
+            let lod = match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    state.addons.get(idx).map(|a| a.load_on_demand).unwrap_or(false)
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    state.addons.iter().find(|a| a.folder_name == &*name)
+                        .map(|a| a.load_on_demand).unwrap_or(false)
+                }
+                _ => false,
+            };
+            Ok(lod)
+        })?,
     )?;
     globals.set(
         "GetAddOnOptionalDependencies",
@@ -12648,6 +13045,70 @@ fn create_standard_font_objects(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+/// Calculate frame width from explicit size or anchors (recursive)
+fn calculate_frame_width(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
+    if let Some(frame) = widgets.get(id) {
+        // If explicit width is set, use it
+        if frame.width > 0.0 {
+            return frame.width;
+        }
+        // Try to calculate from left+right anchors
+        use crate::widget::AnchorPoint::*;
+        let left_anchors = [TopLeft, BottomLeft, Left];
+        let right_anchors = [TopRight, BottomRight, Right];
+        let left = frame.anchors.iter().find(|a| left_anchors.contains(&a.point));
+        let right = frame.anchors.iter().find(|a| right_anchors.contains(&a.point));
+        if let (Some(left_anchor), Some(right_anchor)) = (left, right) {
+            // Both must anchor to same relative frame
+            if left_anchor.relative_to_id == right_anchor.relative_to_id {
+                let parent_id = left_anchor.relative_to_id.map(|id| id as u64).or(frame.parent_id);
+                if let Some(pid) = parent_id {
+                    // Recursively calculate parent width
+                    let parent_width = calculate_frame_width(widgets, pid);
+                    if parent_width > 0.0 {
+                        return parent_width - left_anchor.x_offset + right_anchor.x_offset;
+                    }
+                }
+            }
+        }
+        frame.width
+    } else {
+        0.0
+    }
+}
+
+/// Calculate frame height from explicit size or anchors (recursive)
+fn calculate_frame_height(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
+    if let Some(frame) = widgets.get(id) {
+        // If explicit height is set, use it
+        if frame.height > 0.0 {
+            return frame.height;
+        }
+        // Try to calculate from top+bottom anchors
+        use crate::widget::AnchorPoint::*;
+        let top_anchors = [TopLeft, TopRight, Top];
+        let bottom_anchors = [BottomLeft, BottomRight, Bottom];
+        let top = frame.anchors.iter().find(|a| top_anchors.contains(&a.point));
+        let bottom = frame.anchors.iter().find(|a| bottom_anchors.contains(&a.point));
+        if let (Some(top_anchor), Some(bottom_anchor)) = (top, bottom) {
+            // Both must anchor to same relative frame
+            if top_anchor.relative_to_id == bottom_anchor.relative_to_id {
+                let parent_id = top_anchor.relative_to_id.map(|id| id as u64).or(frame.parent_id);
+                if let Some(pid) = parent_id {
+                    // Recursively calculate parent height
+                    let parent_height = calculate_frame_height(widgets, pid);
+                    if parent_height > 0.0 {
+                        return parent_height + top_anchor.y_offset - bottom_anchor.y_offset;
+                    }
+                }
+            }
+        }
+        frame.height
+    } else {
+        0.0
+    }
+}
+
 /// Userdata handle to a frame (passed to Lua).
 #[derive(Clone)]
 pub struct FrameHandle {
@@ -12733,6 +13194,13 @@ impl UserData for FrameHandle {
                 }
             }
 
+            // Fallback methods that might conflict with custom properties
+            // These are only returned if no custom field was found above
+            if key == "Lower" || key == "Raise" {
+                // Lower() and Raise() adjust frame stacking order (no-op in simulator)
+                return Ok(Value::Function(lua.create_function(|_, _: mlua::MultiValue| Ok(()))?));
+            }
+
             // Not found in custom fields, return nil (methods are handled separately by mlua)
             Ok(Value::Nil)
         });
@@ -12779,28 +13247,23 @@ impl UserData for FrameHandle {
             Ok(name)
         });
 
-        // GetWidth()
+        // GetWidth() - returns explicit width or calculates from anchors
         methods.add_method("GetWidth", |_, this, ()| {
             let state = this.state.borrow();
-            let width = state.widgets.get(this.id).map(|f| f.width).unwrap_or(0.0);
-            Ok(width)
+            Ok(calculate_frame_width(&state.widgets, this.id))
         });
 
-        // GetHeight()
+        // GetHeight() - returns explicit height or calculates from anchors
         methods.add_method("GetHeight", |_, this, ()| {
             let state = this.state.borrow();
-            let height = state.widgets.get(this.id).map(|f| f.height).unwrap_or(0.0);
-            Ok(height)
+            Ok(calculate_frame_height(&state.widgets, this.id))
         });
 
-        // GetSize() -> width, height
+        // GetSize() -> width, height (with anchor calculation)
         methods.add_method("GetSize", |_, this, ()| {
             let state = this.state.borrow();
-            let (width, height) = state
-                .widgets
-                .get(this.id)
-                .map(|f| (f.width, f.height))
-                .unwrap_or((0.0, 0.0));
+            let width = calculate_frame_width(&state.widgets, this.id);
+            let height = calculate_frame_height(&state.widgets, this.id);
             Ok((width, height))
         });
 
@@ -12905,6 +13368,16 @@ impl UserData for FrameHandle {
                 }
             }
 
+            // Helper to extract frame ID from Value
+            let get_frame_id = |v: &Value| -> Option<usize> {
+                if let Value::UserData(ud) = v {
+                    if let Ok(frame_handle) = ud.borrow::<FrameHandle>() {
+                        return Some(frame_handle.id as usize);
+                    }
+                }
+                None
+            };
+
             // Parse the variable arguments
             let (relative_to, relative_point, x_ofs, y_ofs) = match args.len() {
                 1 => (None, point, 0.0, 0.0),
@@ -12915,11 +13388,14 @@ impl UserData for FrameHandle {
                     if let (Some(x), Some(y)) = (x, y) {
                         (None, point, x, y)
                     } else {
-                        (None, point, 0.0, 0.0)
+                        // Could be SetPoint("CENTER", relativeTo) - get frame ID
+                        let rel_to = args.get(1).and_then(get_frame_id);
+                        (rel_to, point, 0.0, 0.0)
                     }
                 }
                 _ => {
                     // Full form: SetPoint(point, relativeTo, relativePoint, x, y)
+                    let rel_to = args.get(1).and_then(get_frame_id);
                     let rel_point_str = args.get(2).and_then(|v| {
                         if let Value::String(s) = v {
                             Some(s.to_string_lossy().to_string())
@@ -12932,7 +13408,7 @@ impl UserData for FrameHandle {
                         .unwrap_or(point);
                     let x = args.get(3).and_then(get_number).unwrap_or(0.0);
                     let y = args.get(4).and_then(get_number).unwrap_or(0.0);
-                    (None, rel_point, x, y)
+                    (rel_to, rel_point, x, y)
                 }
             };
 
@@ -13296,15 +13772,9 @@ impl UserData for FrameHandle {
             Ok(false)
         });
 
-        // Raise() - Raise frame above siblings
-        methods.add_method("Raise", |_, _this, ()| {
-            Ok(())
-        });
-
-        // Lower() - Lower frame below siblings
-        methods.add_method("Lower", |_, _this, ()| {
-            Ok(())
-        });
+        // NOTE: Raise() and Lower() methods are handled in __index metamethod
+        // to allow custom properties with these names to take precedence.
+        // See the __index handler for "Raise" and "Lower" fallback.
 
         // SetBackdrop(backdropInfo) - WoW backdrop system for frame backgrounds
         methods.add_method("SetBackdrop", |_, this, backdrop: Option<mlua::Table>| {
@@ -13522,9 +13992,17 @@ impl UserData for FrameHandle {
             let state = this.state.borrow();
             if let Some(frame) = state.widgets.get(this.id) {
                 if let Some(anchor) = frame.anchors.get(idx as usize) {
+                    // Get the relative frame reference if we have an ID
+                    let relative_to: Value = if let Some(rel_id) = anchor.relative_to_id {
+                        // Look up the frame reference from globals
+                        let frame_ref_key = format!("__frame_{}", rel_id);
+                        lua.globals().get(frame_ref_key.as_str()).unwrap_or(Value::Nil)
+                    } else {
+                        Value::Nil
+                    };
                     return Ok(mlua::MultiValue::from_vec(vec![
                         Value::String(lua.create_string(anchor.point.as_str())?),
-                        Value::Nil, // relativeTo (would need to return frame reference)
+                        relative_to,
                         Value::String(lua.create_string(anchor.relative_point.as_str())?),
                         Value::Number(anchor.x_offset as f64),
                         Value::Number(anchor.y_offset as f64),
@@ -13539,6 +14017,27 @@ impl UserData for FrameHandle {
             let state = this.state.borrow();
             let count = state.widgets.get(this.id).map(|f| f.anchors.len()).unwrap_or(0);
             Ok(count as i32)
+        });
+
+        // GetPointByName(pointName) -> point, relativeTo, relativePoint, xOfs, yOfs
+        // Finds an anchor by its point name (e.g., "TOPLEFT", "CENTER")
+        methods.add_method("GetPointByName", |lua, this, point_name: String| {
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                let point_upper = point_name.to_uppercase();
+                for anchor in &frame.anchors {
+                    if anchor.point.as_str().to_uppercase() == point_upper {
+                        return Ok(mlua::MultiValue::from_vec(vec![
+                            Value::String(lua.create_string(anchor.point.as_str())?),
+                            Value::Nil, // relativeTo (would need to return frame reference)
+                            Value::String(lua.create_string(anchor.relative_point.as_str())?),
+                            Value::Number(anchor.x_offset as f64),
+                            Value::Number(anchor.y_offset as f64),
+                        ]));
+                    }
+                }
+            }
+            Ok(mlua::MultiValue::new())
         });
 
         // GetNumChildren() - return count of child frames
@@ -13908,9 +14407,20 @@ impl UserData for FrameHandle {
         methods.add_method("ClearTextureSlice", |_, _this, ()| Ok(()));
 
         // SetText(text) - for FontString widgets
+        // Auto-sizes the FontString to fit the text content
         methods.add_method("SetText", |_, this, text: Option<String>| {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
+                // Calculate auto-size dimensions if width/height is 0
+                if let Some(ref txt) = text {
+                    // Auto-size: ~7 pixels per character for width, font_size for height
+                    if frame.width == 0.0 {
+                        frame.width = txt.len() as f32 * 7.0;
+                    }
+                    if frame.height == 0.0 {
+                        frame.height = frame.font_size.max(12.0);
+                    }
+                }
                 frame.text = text;
             }
             Ok(())
@@ -13928,6 +14438,7 @@ impl UserData for FrameHandle {
         });
 
         // SetFormattedText(format, ...) - for FontString widgets (like string.format + SetText)
+        // Auto-sizes the FontString to fit the text content
         methods.add_method("SetFormattedText", |lua, this, args: mlua::MultiValue| {
             // Use Lua's string.format to format the text
             let string_table: mlua::Table = lua.globals().get("string")?;
@@ -13936,6 +14447,13 @@ impl UserData for FrameHandle {
                 let text = result.to_string_lossy().to_string();
                 let mut state = this.state.borrow_mut();
                 if let Some(frame) = state.widgets.get_mut(this.id) {
+                    // Auto-size: ~7 pixels per character for width, font_size for height
+                    if frame.width == 0.0 {
+                        frame.width = text.len() as f32 * 7.0;
+                    }
+                    if frame.height == 0.0 {
+                        frame.height = frame.font_size.max(12.0);
+                    }
                     frame.text = Some(text);
                 }
             }
@@ -14428,6 +14946,17 @@ impl UserData for FrameHandle {
 
         // GetAttribute(name) - get a named attribute from the frame
         methods.add_method("GetAttribute", |lua, this, name: String| {
+            // First check for table attributes stored in Lua
+            let table_attrs: Option<mlua::Table> = lua.globals().get("__frame_table_attributes").ok();
+            if let Some(attrs) = table_attrs {
+                let key = format!("{}_{}", this.id, name);
+                let table_val: Value = attrs.get(key.as_str()).unwrap_or(Value::Nil);
+                if !matches!(table_val, Value::Nil) {
+                    return Ok(table_val);
+                }
+            }
+
+            // Fall back to non-table attributes stored in Rust
             let state = this.state.borrow();
             if let Some(frame) = state.widgets.get(this.id) {
                 if let Some(attr) = frame.attributes.get(&name) {
@@ -14444,8 +14973,19 @@ impl UserData for FrameHandle {
 
         // SetAttribute(name, value) - set a named attribute on the frame
         methods.add_method("SetAttribute", |lua, this, (name, value): (String, Value)| {
-            // Store attribute (if it's a simple type)
-            {
+            // For table values, store in a Lua table to preserve the reference
+            if matches!(&value, Value::Table(_)) {
+                // Ensure __frame_table_attributes exists
+                let table_attrs: mlua::Table = lua.globals().get("__frame_table_attributes")
+                    .unwrap_or_else(|_| {
+                        let t = lua.create_table().unwrap();
+                        lua.globals().set("__frame_table_attributes", t.clone()).ok();
+                        t
+                    });
+                let key = format!("{}_{}", this.id, name);
+                table_attrs.set(key, value.clone())?;
+            } else {
+                // Store simple types in Rust
                 let mut state = this.state.borrow_mut();
                 if let Some(frame) = state.widgets.get_mut(this.id) {
                     let attr = match &value {
@@ -14454,12 +14994,16 @@ impl UserData for FrameHandle {
                         Value::Integer(i) => AttributeValue::Number(*i as f64),
                         Value::Number(n) => AttributeValue::Number(*n),
                         Value::String(s) => AttributeValue::String(s.to_str().map(|s| s.to_string()).unwrap_or_default()),
-                        _ => AttributeValue::Nil, // Tables etc not stored persistently
+                        _ => AttributeValue::Nil,
                     };
                     if matches!(attr, AttributeValue::Nil) && matches!(value, Value::Nil) {
                         frame.attributes.remove(&name);
-                    } else if !matches!(value, Value::Table(_)) {
-                        // Only store non-table values
+                        // Also remove from table attributes if it exists there
+                        if let Ok(table_attrs) = lua.globals().get::<mlua::Table>("__frame_table_attributes") {
+                            let key = format!("{}_{}", this.id, name);
+                            table_attrs.set(key, Value::Nil).ok();
+                        }
+                    } else {
                         frame.attributes.insert(name.clone(), attr);
                     }
                 }
@@ -15057,8 +15601,33 @@ impl UserData for FrameHandle {
         methods.add_method("SetFillStyle", |_, _this, _style: String| Ok(()));
 
         // ===== CheckButton methods =====
-        methods.add_method("SetChecked", |_, _this, _checked: bool| Ok(()));
-        methods.add_method("GetChecked", |_, _this, ()| Ok(false));
+        methods.add_method("SetChecked", |_, this, checked: bool| {
+            // Store checked state in attributes
+            {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.attributes.insert("__checked".to_string(), AttributeValue::Boolean(checked));
+                }
+                // Also toggle CheckedTexture visibility if it exists
+                if let Some(frame) = state.widgets.get(this.id) {
+                    if let Some(&checked_tex_id) = frame.children_keys.get("CheckedTexture") {
+                        if let Some(tex) = state.widgets.get_mut(checked_tex_id) {
+                            tex.visible = checked;
+                        }
+                    }
+                }
+            }
+            Ok(())
+        });
+        methods.add_method("GetChecked", |_, this, ()| {
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(AttributeValue::Boolean(checked)) = frame.attributes.get("__checked") {
+                    return Ok(*checked);
+                }
+            }
+            Ok(false)
+        });
         methods.add_method("GetCheckedTexture", |lua, this, ()| {
             let texture_key = format!("__frame_{}_CheckedTexture", this.id);
             if let Ok(existing) = lua.globals().get::<Value>(texture_key.as_str()) {
@@ -15336,6 +15905,10 @@ impl UserData for FrameHandle {
         methods.add_method("RegisterCallback", |_, _this, _args: mlua::MultiValue| Ok(()));
         methods.add_method("ForEachFrame", |_, _this, _callback: mlua::Function| Ok(()));
         methods.add_method("UnregisterCallback", |_, _this, _args: mlua::MultiValue| Ok(()));
+
+        // ScrollBox/ScrollBar interpolation methods
+        methods.add_method("CanInterpolateScroll", |_, _this, ()| Ok(false));
+        methods.add_method("SetInterpolateScroll", |_, _this, _enabled: bool| Ok(()));
 
         // EditBox text measurement methods
         methods.add_method("SetCountInvisibleLetters", |_, _this, _count: bool| Ok(()));

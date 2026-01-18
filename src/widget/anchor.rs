@@ -51,8 +51,10 @@ impl AnchorPoint {
 pub struct Anchor {
     /// The point on this widget to anchor.
     pub point: AnchorPoint,
-    /// The widget to anchor to (None = parent).
+    /// The widget name to anchor to (used for XML parsing, None = parent).
     pub relative_to: Option<String>,
+    /// The widget ID to anchor to (used for Lua API, takes precedence over name).
+    pub relative_to_id: Option<usize>,
     /// The point on the relative widget to anchor to.
     pub relative_point: AnchorPoint,
     /// X offset from the anchor point.
@@ -66,6 +68,7 @@ impl Default for Anchor {
         Self {
             point: AnchorPoint::Center,
             relative_to: None,
+            relative_to_id: None,
             relative_point: AnchorPoint::Center,
             x_offset: 0.0,
             y_offset: 0.0,

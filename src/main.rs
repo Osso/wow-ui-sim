@@ -1,8 +1,50 @@
 use std::path::PathBuf;
 use tracing_subscriber::EnvFilter;
 use wow_ui_sim::loader::{load_addon, load_addon_with_saved_vars, LoadTiming};
-use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
+use wow_ui_sim::toc::TocFile;
+
+/// Apply resource limits to prevent runaway memory/CPU usage.
+/// Defaults: 10GB memory, 1 CPU core.
+fn apply_resource_limits() {
+    // Memory limit via RLIMIT_AS (virtual address space)
+    let max_mem_bytes: u64 = std::env::var("WOW_SIM_MAX_MEM_GB")
+        .ok()
+        .and_then(|s| s.parse::<u64>().ok())
+        .unwrap_or(10)
+        * 1024
+        * 1024
+        * 1024;
+
+    let mem_limit = libc::rlimit {
+        rlim_cur: max_mem_bytes,
+        rlim_max: max_mem_bytes,
+    };
+    unsafe {
+        libc::setrlimit(libc::RLIMIT_AS, &mem_limit);
+    }
+
+    // CPU core limit via sched_setaffinity
+    let max_cores: usize = std::env::var("WOW_SIM_MAX_CORES")
+        .ok()
+        .and_then(|s| s.parse::<usize>().ok())
+        .unwrap_or(1);
+
+    unsafe {
+        let mut cpuset: libc::cpu_set_t = std::mem::zeroed();
+        for i in 0..max_cores {
+            libc::CPU_SET(i, &mut cpuset);
+        }
+        libc::sched_setaffinity(0, std::mem::size_of::<libc::cpu_set_t>(), &cpuset);
+    }
+
+    println!(
+        "Resource limits: {}GB memory, {} CPU core(s)",
+        max_mem_bytes / 1024 / 1024 / 1024,
+        max_cores
+    );
+}
 
 /// Find the best .toc file for an addon directory (prefer _Mainline.toc for retail)
 fn find_toc_file(addon_dir: &PathBuf) -> Option<PathBuf> {
@@ -67,6 +109,8 @@ fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    apply_resource_limits();
+
     tracing_subscriber::fmt()
         .with_env_filter(EnvFilter::from_default_env())
         .init();
@@ -110,13 +154,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
             ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
             ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
+            ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
         ];
 
         for (name, toc) in blizzard_addons {
             let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
             if toc_path.exists() {
                 match load_addon(&env, &toc_path) {
-                    Ok(r) => println!("{} loaded: {} Lua, {} XML, {} warnings", name, r.lua_files, r.xml_files, r.warnings.len()),
+                    Ok(r) => {
+                        println!("{} loaded: {} Lua, {} XML, {} warnings", name, r.lua_files, r.xml_files, r.warnings.len());
+                        // Print warnings for Blizzard addons
+                        for w in &r.warnings {
+                            println!("  [!] {}", w);
+                        }
+                    }
                     Err(e) => println!("{} failed: {}", name, e),
                 }
             }
@@ -154,8 +205,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut addon_times: Vec<(String, std::time::Duration)> = Vec::new();
 
     for (name, toc_path) in &addons {
+        // Parse TOC to get metadata for addon info
+        let toc = TocFile::from_file(toc_path).ok();
+        let (title, notes, load_on_demand) = toc.as_ref().map(|t| {
+            let title = t.metadata.get("Title").cloned().unwrap_or_else(|| name.clone());
+            let notes = t.metadata.get("Notes").cloned().unwrap_or_default();
+            let lod = t.metadata.get("LoadOnDemand").map(|v| v == "1").unwrap_or(false);
+            (title, notes, lod)
+        }).unwrap_or_else(|| (name.clone(), String::new(), false));
+
         match load_addon_with_saved_vars(&env, toc_path, &mut saved_vars) {
             Ok(r) => {
+                // Register addon as loaded
+                env.register_addon(AddonInfo {
+                    folder_name: name.clone(),
+                    title: title.clone(),
+                    notes: notes.clone(),
+                    enabled: true,
+                    loaded: true,
+                    load_on_demand,
+                });
+
                 let status = if r.warnings.is_empty() { "✓" } else { "⚠" };
                 let t = &r.timing;
                 println!("{} {} loaded: {} Lua, {} XML, {} warnings ({:.1?} total: io={:.1?} xml={:.1?} lua={:.1?} sv={:.1?})",
@@ -181,6 +251,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 success_count += 1;
             }
             Err(e) => {
+                // Register addon as failed to load
+                env.register_addon(AddonInfo {
+                    folder_name: name.clone(),
+                    title,
+                    notes,
+                    enabled: true,
+                    loaded: false,
+                    load_on_demand,
+                });
+
                 println!("✗ {} failed: {}", name, e);
                 fail_count += 1;
             }
@@ -213,38 +293,68 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    // Create a single WoW-style button centered on screen
+    // Test C_AddOns API and check AddonList state
     env.exec(
         r#"
-        -- Hide ALL existing frames first
-        local function hideAllFrames()
-            local kids = {UIParent:GetChildren()}
-            for _, child in ipairs(kids) do
-                if child and child.Hide then
-                    child:Hide()
-                end
+        local num = C_AddOns.GetNumAddOns()
+        print("C_AddOns.GetNumAddOns() =", num)
+        if num > 0 then
+            for i = 1, math.min(5, num) do
+                local name, title = C_AddOns.GetAddOnInfo(i)
+                print(string.format("  [%d] %s - %s", i, tostring(name), tostring(title)))
             end
         end
-        hideAllFrames()
 
-        -- Single WoW button with proper textures
-        local btn = CreateFrame("Button", "TestButton", UIParent)
-        btn:SetSize(128, 32)
-        btn:SetPoint("CENTER", 0, 0)
-        btn:SetText("Click Me")
-        btn:EnableMouse(true)
-        btn:Show()
-
-        -- Set WoW button textures
-        btn:SetNormalTexture("Interface\\Buttons\\UI-Panel-Button-Up")
-        btn:SetPushedTexture("Interface\\Buttons\\UI-Panel-Button-Down")
-        btn:SetHighlightTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
-
-        btn:SetScript("OnClick", function() print("Button clicked!") end)
-        btn:SetScript("OnEnter", function(self) self:SetText("> Click <") end)
-        btn:SetScript("OnLeave", function(self) self:SetText("Click Me") end)
+        -- Check what AddonList-related globals exist
+        print("AddonList type:", type(AddonList))
+        print("AddonListMixin type:", type(AddonListMixin))
+        print("AddonList_Update type:", type(AddonList_Update))
+        print("CreateTreeDataProvider type:", type(CreateTreeDataProvider))
+        print("CreateScrollBoxListTreeListView type:", type(CreateScrollBoxListTreeListView))
+        print("ScrollUtil type:", type(ScrollUtil))
         "#,
     )?;
+
+    // Initialize and show the AddonList frame
+    env.exec(
+        r#"
+        if AddonList and AddonListMixin then
+            -- Initialize the addon list
+            local ok, err = pcall(function()
+                AddonListMixin.OnLoad(AddonList)
+            end)
+            if not ok then
+                print("[AddonList] OnLoad error:", err)
+            end
+
+            -- Position and show
+            AddonList:ClearAllPoints()
+            AddonList:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -10)
+            AddonList:Show()
+
+            -- Update the addon list
+            if AddonList_Update then
+                local updateOk, updateErr = pcall(AddonList_Update)
+                if updateOk then
+                    print("[AddonList] Initialized and updated successfully")
+                else
+                    print("[AddonList] Update error:", updateErr)
+                end
+            end
+        else
+            print("[AddonList] AddonList or AddonListMixin not found")
+        end
+        "#,
+    )?;
+
+    // Run debug script if it exists
+    let debug_script = PathBuf::from("/tmp/debug-scrollbox-update.lua");
+    if debug_script.exists() {
+        let script = std::fs::read_to_string(&debug_script)?;
+        if let Err(e) = env.exec(&script) {
+            println!("[Debug] Script error: {}", e);
+        }
+    }
 
     // Run the GTK UI
     wow_ui_sim::run_gtk_ui(env)?;

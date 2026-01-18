@@ -132,6 +132,8 @@ struct SharedUiState {
     hovered_frame: Option<u64>,
     /// Currently pressed frame ID (mouse down).
     pressed_frame: Option<u64>,
+    /// Current scroll offset in pixels.
+    scroll_offset: f64,
 }
 
 /// App state
@@ -150,6 +152,8 @@ struct App {
     ui_state: Rc<RefCell<SharedUiState>>,
     /// Frame that received mouse down (for click detection).
     mouse_down_frame: Option<u64>,
+    /// Scroll offset for scrollable content (in pixels).
+    scroll_offset: f64,
 }
 
 /// Cairo texture cache for GPU-ready surfaces.
@@ -190,7 +194,6 @@ fn load_cairo_surface(
 
     // Load from texture manager
     if let Some(tex_data) = texture_manager.load(path) {
-        eprintln!("[Texture] OK: {} ({}x{})", path, tex_data.width, tex_data.height);
         let argb = rgba_to_cairo_argb32(&tex_data.pixels, tex_data.width, tex_data.height);
         let stride = cairo::Format::ARgb32.stride_for_width(tex_data.width).unwrap();
 
@@ -214,14 +217,6 @@ fn load_cairo_surface(
             let rc = Rc::new(surface);
             cache.insert(path.to_string(), Rc::clone(&rc));
             return Some(rc);
-        }
-    } else {
-        use std::sync::LazyLock;
-        static LOGGED: LazyLock<std::sync::Mutex<std::collections::HashSet<String>>> =
-            LazyLock::new(|| std::sync::Mutex::new(std::collections::HashSet::new()));
-        let mut logged = LOGGED.lock().unwrap();
-        if logged.insert(path.to_string()) {
-            eprintln!("[Texture] FAIL: {}", path);
         }
     }
     None
@@ -545,6 +540,53 @@ fn draw_pango_text(
     draw_pango_text_with_font(cr, text, x, y, w, h, font_size, justify_h, justify_v, color, None, false)
 }
 
+/// Strip WoW texture/atlas markup from text (e.g., "|TInterface\ICONS\...:20:20:0:0|t")
+/// Preserves plain text content while removing inline texture tags.
+fn strip_wow_markup(text: &str) -> String {
+    let mut result = String::with_capacity(text.len());
+    let mut chars = text.chars().peekable();
+
+    while let Some(c) = chars.next() {
+        if c == '|' {
+            // Check for texture/atlas markup: |T...|t or |A...|a
+            if let Some(&next) = chars.peek() {
+                if next == 'T' || next == 'A' {
+                    // Skip until we find |t or |a
+                    let end_marker = if next == 'T' { 't' } else { 'a' };
+                    chars.next(); // consume T or A
+                    while let Some(ch) = chars.next() {
+                        if ch == '|' {
+                            if let Some(&marker) = chars.peek() {
+                                if marker == end_marker {
+                                    chars.next(); // consume the end marker
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    continue;
+                }
+                // Handle color markup: |c...|r - strip the |c...| and |r but keep content
+                if next == 'c' {
+                    // |cXXXXXXXX - skip 9 characters after |c
+                    chars.next(); // consume 'c'
+                    for _ in 0..8 {
+                        chars.next();
+                    }
+                    continue;
+                }
+                if next == 'r' {
+                    chars.next(); // consume 'r'
+                    continue;
+                }
+            }
+        }
+        result.push(c);
+    }
+
+    result
+}
+
 /// Draw text using Pango with custom font.
 fn draw_pango_text_with_font(
     cr: &cairo::Context,
@@ -606,6 +648,7 @@ enum Msg {
     MouseMove(f64, f64),
     MousePress(f64, f64),
     MouseRelease(f64, f64),
+    Scroll(f64, f64), // (dx, dy) scroll delta
     ReloadUI,
     CommandInputChanged(String),
     ExecuteCommand,
@@ -811,6 +854,7 @@ impl Component for App {
             console_label: console_label.clone(),
             ui_state: ui_state.clone(),
             mouse_down_frame: None,
+            scroll_offset: 0.0,
         };
 
         // Update console label
@@ -855,6 +899,17 @@ impl Component for App {
             sender_release.input(Msg::MouseRelease(x, y));
         });
         drawing_area.add_controller(click_controller);
+
+        // Scroll controller for mouse wheel
+        let scroll_controller = gtk::EventControllerScroll::new(
+            gtk::EventControllerScrollFlags::VERTICAL | gtk::EventControllerScrollFlags::DISCRETE
+        );
+        let sender_scroll = sender.clone();
+        scroll_controller.connect_scroll(move |_, dx, dy| {
+            sender_scroll.input(Msg::Scroll(dx, dy));
+            glib::Propagation::Stop
+        });
+        drawing_area.add_controller(scroll_controller);
 
         let widgets = view_output!();
 
@@ -930,7 +985,8 @@ impl Component for App {
                         }
                     }
                     DebugCommand::Screenshot { respond } => {
-                        let result = ScreenshotData::capture(&window);
+                        // Use capture_with_retry for reliability (3 attempts, 50ms delay)
+                        let result = ScreenshotData::capture_with_retry(&window, 3, 50);
                         let _ = respond.send(result);
                     }
                 }
@@ -938,9 +994,9 @@ impl Component for App {
             ControlFlow::Continue
         });
 
-        // Timer processing loop - check every 16ms (~60fps) for pending timers
+        // Timer processing loop - check every 33ms (~30fps) for pending timers
         let timer_sender = sender.clone();
-        glib::timeout_add_local(Duration::from_millis(16), move || {
+        glib::timeout_add_local(Duration::from_millis(33), move || {
             timer_sender.input(Msg::ProcessTimers);
             ControlFlow::Continue
         });
@@ -1022,6 +1078,23 @@ impl Component for App {
                 }
                 self.mouse_down_frame = None;
                 self.ui_state.borrow_mut().pressed_frame = None;
+            }
+            Msg::Scroll(_dx, dy) => {
+                // Scroll the addon list content
+                // dy > 0 means scrolling down (content moves up, offset increases)
+                let scroll_speed = 30.0; // pixels per scroll tick
+                self.scroll_offset += dy * scroll_speed;
+
+                // Clamp scroll offset to valid range
+                // Calculate max based on content height vs viewport height
+                // For now, use rough estimates: ~127 addons * ~24px per row = ~3048px content
+                // Viewport ~450px, so max scroll ~2600px
+                let max_scroll = 2600.0;
+                self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
+
+                // Store scroll offset in ui_state for rendering
+                self.ui_state.borrow_mut().scroll_offset = self.scroll_offset;
+                self.drawing_area.queue_draw();
             }
             Msg::ReloadUI => {
                 self.log_messages.push("Reloading UI...".to_string());
@@ -1202,6 +1275,10 @@ impl App {
         let scale_x = UI_SCALE as f32;
         let scale_y = UI_SCALE as f32;
 
+        // Get screen dimensions from drawing area
+        let screen_width = self.drawing_area.width() as f32;
+        let screen_height = self.drawing_area.height() as f32;
+
         // Collect frames and sort by z-order
         let mut frames: Vec<_> = state.widgets.all_ids()
             .into_iter()
@@ -1213,7 +1290,7 @@ impl App {
                 if matches!(frame.name.as_deref(), Some("UIParent") | Some("Minimap") | Some("WorldFrame") | Some("DEFAULT_CHAT_FRAME") | Some("ChatFrame1") | Some("EventToastManagerFrame") | Some("EditModeManagerFrame")) {
                     return None;
                 }
-                let rect = compute_frame_rect(&state.widgets, id, 500.0, 375.0);
+                let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
                 Some((id, frame.frame_strata, frame.frame_level, rect))
             })
             .collect();
@@ -1260,20 +1337,65 @@ fn draw_wow_frames(
 
     let scale_x = UI_SCALE;
     let scale_y = UI_SCALE;
-    let _ = (width, height); // available for dynamic scaling later
+    let screen_width = width as f32;
+    let screen_height = height as f32;
 
     // Get UI state for hover/press detection
     let ui_state_ref = ui_state.borrow();
     let hovered_frame = ui_state_ref.hovered_frame;
     let pressed_frame = ui_state_ref.pressed_frame;
+    let scroll_offset = ui_state_ref.scroll_offset;
     drop(ui_state_ref);
+
+    // Find AddonList frame and collect all its descendant IDs
+    let mut addonlist_ids = std::collections::HashSet::new();
+    let addonlist_id = state.widgets.all_ids()
+        .into_iter()
+        .find(|&id| {
+            state.widgets.get(id)
+                .map(|f| f.name.as_deref() == Some("AddonList"))
+                .unwrap_or(false)
+        });
+    // Debug: check if we found the AddonList frame (always log on first 5 renders)
+    static RENDER_COUNT: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let render_num = RENDER_COUNT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    if render_num < 5 {
+        eprintln!("[Render #{}] AddonList frame found: {:?}", render_num, addonlist_id);
+    }
+    if let Some(root_id) = addonlist_id {
+        // BFS to collect all descendants
+        let mut queue = vec![root_id];
+        while let Some(id) = queue.pop() {
+            addonlist_ids.insert(id);
+            if let Some(frame) = state.widgets.get(id) {
+                queue.extend(frame.children.iter().copied());
+            }
+        }
+        // Debug: log how many AddonList children we collected
+        static LOGGED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+        if !LOGGED.swap(true, std::sync::atomic::Ordering::Relaxed) {
+            eprintln!("[Render] AddonList root_id={}, collected {} descendants", root_id, addonlist_ids.len());
+            // List some children with their types
+            for &id in addonlist_ids.iter().take(20) {
+                if let Some(f) = state.widgets.get(id) {
+                    eprintln!("  - id={} type={:?} text={:?}", id, f.widget_type, f.text.as_deref().unwrap_or("-"));
+                }
+            }
+        }
+    }
 
     // Collect and sort frames
     let mut frames: Vec<_> = state.widgets.all_ids()
         .into_iter()
         .filter_map(|id| {
             let frame = state.widgets.get(id)?;
-            let rect = compute_frame_rect(&state.widgets, id, 500.0, 375.0);
+            let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
+            // Get checked state for CheckButton widgets
+            let checked = if let Some(crate::widget::AttributeValue::Boolean(c)) = frame.attributes.get("__checked") {
+                *c
+            } else {
+                false
+            };
             Some((
                 id,
                 frame.frame_strata,
@@ -1295,6 +1417,7 @@ fn draw_wow_frames(
                 frame.normal_texture.clone(),
                 frame.pushed_texture.clone(),
                 frame.highlight_texture.clone(),
+                checked,
                 rect,
             ))
         })
@@ -1330,7 +1453,12 @@ fn draw_wow_frames(
     let mut tex_mgr = texture_manager.borrow_mut();
     let mut tex_cache = texture_cache.borrow_mut();
 
-    for (id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, texture_path, color_texture, font_size, font_path, justify_h, justify_v, word_wrap, normal_texture, pushed_texture, highlight_texture, rect) in frames {
+    for (id, _strata, _level, widget_type, visible, alpha, text, text_color, backdrop, name, texture_path, color_texture, font_size, font_path, justify_h, justify_v, word_wrap, normal_texture, pushed_texture, highlight_texture, checked, rect) in frames {
+        // ONLY show AddonList frame and its children for now
+        if !addonlist_ids.contains(&id) {
+            continue;
+        }
+
         if !visible {
             continue;
         }
@@ -1338,19 +1466,32 @@ fn draw_wow_frames(
             continue;
         }
 
-        // ONLY show TestButton for now
-        match &name {
-            Some(n) if n == "TestButton" => {}
-            _ => continue,
-        }
 
         let x = (rect.x as f64) * scale_x;
-        let y = (rect.y as f64) * scale_y;
+        let mut y = (rect.y as f64) * scale_y;
         let w = (rect.width as f64) * scale_x;
         let h = (rect.height as f64) * scale_y;
 
+        // Apply scroll offset to scrollable content (AddonList children, not the main frame)
+        // Check if this is the AddonList frame itself - don't scroll it
+        let is_addonlist_root = addonlist_id == Some(id);
+        if !is_addonlist_root && addonlist_ids.contains(&id) {
+            // This is a child of AddonList, apply scroll
+            y -= scroll_offset;
+
+            // Skip rendering if scrolled out of view (simple clipping)
+            // AddonList content area is roughly y=260 to y=700 (height ~440px)
+            let content_top = 260.0; // Approximate top of scrollable area
+            let content_bottom = 700.0; // Approximate bottom
+            if y + h < content_top || y > content_bottom {
+                continue; // Clipped out of view
+            }
+        }
+
         match widget_type {
             WidgetType::Frame => {
+                // Frames only render their backdrop if enabled
+                // The background textures come from child Texture widgets
                 if backdrop.enabled {
                     // Try to draw backdrop texture
                     let mut drew_texture = false;
@@ -1384,6 +1525,52 @@ fn draw_wow_frames(
                     );
                     cr.set_line_width(backdrop.edge_size.max(1.0) as f64);
                     cr.rectangle(x, y, w, h);
+                    cr.stroke().ok();
+                }
+
+                // Draw title bar for AddonList frame
+                if name.as_deref() == Some("AddonList") {
+                    let title_height = 24.0;
+
+                    // Title bar background (dark gradient)
+                    cr.set_source_rgba(0.15, 0.12, 0.08, 0.95 * alpha as f64);
+                    cr.rectangle(x, y, w, title_height);
+                    cr.fill().ok();
+
+                    // Title bar bottom border (gold)
+                    cr.set_source_rgba(0.8, 0.6, 0.2, alpha as f64);
+                    cr.set_line_width(2.0);
+                    cr.move_to(x, y + title_height);
+                    cr.line_to(x + w, y + title_height);
+                    cr.stroke().ok();
+
+                    // Title text "Addons"
+                    draw_pango_text(
+                        cr, "Addons", x + 10.0, y, w - 60.0, title_height, 16.0,
+                        TextJustify::Left,
+                        TextJustify::Center,
+                        (1.0, 0.85, 0.4, alpha as f64),
+                    );
+
+                    // Close button (X) in top right
+                    let close_size = 18.0;
+                    let close_x = x + w - close_size - 6.0;
+                    let close_y = y + (title_height - close_size) / 2.0;
+
+                    // Close button background
+                    cr.set_source_rgba(0.5, 0.2, 0.2, 0.8 * alpha as f64);
+                    cr.rectangle(close_x, close_y, close_size, close_size);
+                    cr.fill().ok();
+
+                    // Close button X
+                    cr.set_source_rgba(1.0, 0.9, 0.7, alpha as f64);
+                    cr.set_line_width(2.0);
+                    cr.set_line_cap(cairo::LineCap::Round);
+                    let margin = 4.0;
+                    cr.move_to(close_x + margin, close_y + margin);
+                    cr.line_to(close_x + close_size - margin, close_y + close_size - margin);
+                    cr.move_to(close_x + close_size - margin, close_y + margin);
+                    cr.line_to(close_x + margin, close_y + close_size - margin);
                     cr.stroke().ok();
                 }
             }
@@ -1517,8 +1704,20 @@ fn draw_wow_frames(
             WidgetType::FontString => {
                 // Draw FontString text using Pango with frame's justification and font
                 if let Some(ref txt) = text {
+                    // Strip WoW markup (texture tags, color codes) for display
+                    let clean_text = strip_wow_markup(txt);
+
+                    // Debug: print text color for addon list items (first few only)
+                    static DEBUG_COUNT: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+                    let count = DEBUG_COUNT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                    if count < 30 && clean_text.len() > 3 {
+                        eprintln!("[FontString] '{}' color: ({:.2}, {:.2}, {:.2}, {:.2})",
+                            &clean_text[..clean_text.len().min(25)],
+                            text_color.r, text_color.g, text_color.b, text_color.a);
+                    }
+
                     draw_pango_text_with_font(
-                        cr, txt, x, y, w, h, font_size as f64,
+                        cr, &clean_text, x, y, w, h, font_size as f64,
                         justify_h,
                         justify_v,
                         (text_color.r as f64, text_color.g as f64, text_color.b as f64, text_color.a as f64 * alpha as f64),
@@ -1604,26 +1803,49 @@ fn draw_wow_frames(
                 cr.stroke().ok();
             }
             WidgetType::CheckButton => {
-                // Draw checkbox
-                let box_size = h.min(16.0);
-                let box_x = x;
+                // Draw checkbox - use full widget size for positioning
+                let box_size = h.min(w).min(20.0);
+                let box_x = x + (w - box_size) / 2.0;
                 let box_y = y + (h - box_size) / 2.0;
 
                 // Checkbox background
-                cr.set_source_rgba(0.1, 0.1, 0.12, 0.9 * alpha as f64);
+                cr.set_source_rgba(0.12, 0.12, 0.15, 0.9 * alpha as f64);
                 cr.rectangle(box_x, box_y, box_size, box_size);
                 cr.fill().ok();
 
-                // Checkbox border
-                cr.set_source_rgba(0.5, 0.4, 0.2, alpha as f64);
-                cr.set_line_width(1.0);
+                // Checkbox border (gold)
+                cr.set_source_rgba(0.8, 0.6, 0.2, alpha as f64);
+                cr.set_line_width(1.5);
                 cr.rectangle(box_x, box_y, box_size, box_size);
                 cr.stroke().ok();
 
+                // Draw checkmark if checked
+                if checked {
+                    // Draw a gold checkmark
+                    cr.set_source_rgba(1.0, 0.8, 0.2, alpha as f64);
+                    cr.set_line_width(2.5);
+                    cr.set_line_cap(cairo::LineCap::Round);
+                    cr.set_line_join(cairo::LineJoin::Round);
+
+                    // Checkmark path (starting from bottom-left, through center-bottom, to top-right)
+                    let margin = box_size * 0.2;
+                    let check_x1 = box_x + margin;
+                    let check_y1 = box_y + box_size * 0.5;
+                    let check_x2 = box_x + box_size * 0.4;
+                    let check_y2 = box_y + box_size - margin;
+                    let check_x3 = box_x + box_size - margin;
+                    let check_y3 = box_y + margin;
+
+                    cr.move_to(check_x1, check_y1);
+                    cr.line_to(check_x2, check_y2);
+                    cr.line_to(check_x3, check_y3);
+                    cr.stroke().ok();
+                }
+
                 // Draw label text (to the right of checkbox)
                 if let Some(ref txt) = text {
-                    let text_x = box_x + box_size + 6.0;
-                    let text_w = w - box_size - 6.0;
+                    let text_x = x + w + 6.0;
+                    let text_w = 200.0; // Fixed width for label
                     draw_pango_text(
                         cr, txt, text_x, y, text_w, h, font_size as f64,
                         TextJustify::Left,
@@ -1734,32 +1956,6 @@ fn compute_frame_rect(
         None => return LayoutRect::default(),
     };
 
-    let width = frame.width;
-    let height = frame.height;
-
-    // If no anchors, default to center of parent
-    if frame.anchors.is_empty() {
-        let parent_rect = if let Some(parent_id) = frame.parent_id {
-            compute_frame_rect(registry, parent_id, screen_width, screen_height)
-        } else {
-            LayoutRect {
-                x: 0.0,
-                y: 0.0,
-                width: screen_width,
-                height: screen_height,
-            }
-        };
-
-        return LayoutRect {
-            x: parent_rect.x + (parent_rect.width - width) / 2.0,
-            y: parent_rect.y + (parent_rect.height - height) / 2.0,
-            width,
-            height,
-        };
-    }
-
-    let anchor = &frame.anchors[0];
-
     let parent_rect = if let Some(parent_id) = frame.parent_id {
         compute_frame_rect(registry, parent_id, screen_width, screen_height)
     } else {
@@ -1770,6 +1966,126 @@ fn compute_frame_rect(
             height: screen_height,
         }
     };
+
+    // If no anchors, default to center of parent
+    if frame.anchors.is_empty() {
+        return LayoutRect {
+            x: parent_rect.x + (parent_rect.width - frame.width) / 2.0,
+            y: parent_rect.y + (parent_rect.height - frame.height) / 2.0,
+            width: frame.width,
+            height: frame.height,
+        };
+    }
+
+    // Check for multi-point anchoring to compute position and possibly size from anchors
+    if frame.anchors.len() >= 2 {
+        use crate::widget::AnchorPoint;
+
+        // Track left/right x-coordinates and top/bottom y-coordinates separately
+        // This handles LEFT+RIGHT anchors correctly (for width) and TOP+BOTTOM (for height)
+        let mut left_x: Option<f32> = None;
+        let mut right_x: Option<f32> = None;
+        let mut top_y: Option<f32> = None;
+        let mut bottom_y: Option<f32> = None;
+
+        for anchor in &frame.anchors {
+            // Get the relative frame's rect (use parent if relative_to_id is None)
+            let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
+                compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
+            } else {
+                parent_rect
+            };
+
+            let (anchor_x, anchor_y) = anchor_position(
+                anchor.relative_point,
+                relative_rect.x,
+                relative_rect.y,
+                relative_rect.width,
+                relative_rect.height,
+            );
+            let target_x = anchor_x + anchor.x_offset;
+            let target_y = anchor_y - anchor.y_offset;
+
+            // Record edge positions based on which edge this anchor affects
+            match anchor.point {
+                AnchorPoint::TopLeft => {
+                    left_x = Some(target_x);
+                    top_y = Some(target_y);
+                }
+                AnchorPoint::TopRight => {
+                    right_x = Some(target_x);
+                    top_y = Some(target_y);
+                }
+                AnchorPoint::BottomLeft => {
+                    left_x = Some(target_x);
+                    bottom_y = Some(target_y);
+                }
+                AnchorPoint::BottomRight => {
+                    right_x = Some(target_x);
+                    bottom_y = Some(target_y);
+                }
+                AnchorPoint::Top => {
+                    top_y = Some(target_y);
+                }
+                AnchorPoint::Bottom => {
+                    bottom_y = Some(target_y);
+                }
+                AnchorPoint::Left => {
+                    left_x = Some(target_x);
+                }
+                AnchorPoint::Right => {
+                    right_x = Some(target_x);
+                }
+                AnchorPoint::Center => {}
+            }
+        }
+
+        // Compute width from left/right anchors only if stored width is 0
+        let computed_width = if frame.width == 0.0 {
+            if let (Some(lx), Some(rx)) = (left_x, right_x) {
+                Some((rx - lx).max(0.0))
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+
+        // Compute height from top/bottom anchors only if stored height is 0
+        let computed_height = if frame.height == 0.0 {
+            if let (Some(ty), Some(by)) = (top_y, bottom_y) {
+                Some((by - ty).max(0.0))
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+
+        // Determine final dimensions - prefer stored values
+        let final_width = if frame.width > 0.0 { frame.width } else { computed_width.unwrap_or(0.0) };
+        let final_height = if frame.height > 0.0 { frame.height } else { computed_height.unwrap_or(0.0) };
+
+        // Determine position from available anchors
+        let final_x = left_x.unwrap_or_else(|| {
+            right_x.map(|rx| rx - final_width).unwrap_or(parent_rect.x)
+        });
+        let final_y = top_y.unwrap_or_else(|| {
+            bottom_y.map(|by| by - final_height).unwrap_or(parent_rect.y)
+        });
+
+        return LayoutRect {
+            x: final_x,
+            y: final_y,
+            width: final_width,
+            height: final_height,
+        };
+    }
+
+    // Single anchor case - use explicit width/height
+    let anchor = &frame.anchors[0];
+    let width = frame.width;
+    let height = frame.height;
 
     let (parent_anchor_x, parent_anchor_y) = anchor_position(
         anchor.relative_point,

@@ -16,6 +16,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 image = "0.25"
 image-blp = "1"
 tokio = { version = "1", features = ["sync", "rt", "time"] }
+libc = "0.2"
 
 # GTK4/relm4 for UI
 relm4 = { version = "0.10", features = ["libadwaita"] }

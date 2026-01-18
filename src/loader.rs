@@ -238,8 +238,11 @@ fn create_frame_from_xml(
     widget_type: &str,
     parent_override: Option<&str>,
 ) -> Result<Option<String>, LoadError> {
-    // Skip virtual frames (templates)
+    // Register virtual frames (templates) in the template registry
     if frame.is_virtual == Some(true) {
+        if let Some(ref name) = frame.name {
+            crate::xml::register_template(name, widget_type, frame.clone());
+        }
         return Ok(None);
     }
 
@@ -284,18 +287,40 @@ fn create_frame_from_xml(
         }
     );
 
-    // Apply mixins
-    if let Some(mixin) = &frame.mixin {
-        for m in mixin.split(',').map(|s| s.trim()) {
-            if !m.is_empty() {
-                lua_code.push_str(&format!(
-                    r#"
-        if {} then Mixin(frame, {}) end
-        "#,
-                    m, m
-                ));
+    // Collect mixins from both direct attribute and inherited templates
+    let mut all_mixins: Vec<String> = Vec::new();
+
+    // First, collect mixins from inherited templates (base mixins first)
+    if !inherits.is_empty() {
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in &template_chain {
+            if let Some(mixin) = &template_entry.frame.mixin {
+                for m in mixin.split(',').map(|s| s.trim()) {
+                    if !m.is_empty() && !all_mixins.contains(&m.to_string()) {
+                        all_mixins.push(m.to_string());
+                    }
+                }
             }
         }
+    }
+
+    // Then add direct mixins (override templates)
+    if let Some(mixin) = &frame.mixin {
+        for m in mixin.split(',').map(|s| s.trim()) {
+            if !m.is_empty() && !all_mixins.contains(&m.to_string()) {
+                all_mixins.push(m.to_string());
+            }
+        }
+    }
+
+    // Apply all mixins
+    for m in &all_mixins {
+        lua_code.push_str(&format!(
+            r#"
+        if {} then Mixin(frame, {}) end
+        "#,
+            m, m
+        ));
     }
 
     // Set size
@@ -352,6 +377,14 @@ fn create_frame_from_xml(
         LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
     })?;
 
+    // Instantiate children from inherited templates
+    if !inherits.is_empty() {
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in template_chain {
+            instantiate_template_children(env, &template_entry.frame, &name, &template_entry.name)?;
+        }
+    }
+
     // Handle Layers (textures and fontstrings)
     for layers in frame.layers() {
         for layer in &layers.layers {
@@ -376,17 +409,23 @@ fn create_frame_from_xml(
                 crate::xml::FrameElement::Frame(f) => (f, "Frame"),
                 crate::xml::FrameElement::Button(f) | crate::xml::FrameElement::ItemButton(f) => (f, "Button"),
                 crate::xml::FrameElement::CheckButton(f) => (f, "CheckButton"),
-                crate::xml::FrameElement::EditBox(f) => (f, "EditBox"),
+                crate::xml::FrameElement::EditBox(f) | crate::xml::FrameElement::EventEditBox(f) => (f, "EditBox"),
                 crate::xml::FrameElement::ScrollFrame(f) => (f, "ScrollFrame"),
                 crate::xml::FrameElement::Slider(f) => (f, "Slider"),
                 crate::xml::FrameElement::StatusBar(f) => (f, "StatusBar"),
+                crate::xml::FrameElement::EventFrame(f) => (f, "Frame"), // EventFrame is just a Frame
+                crate::xml::FrameElement::EventButton(f) => (f, "Button"), // EventButton is just a Button
+                crate::xml::FrameElement::DropdownButton(f) | crate::xml::FrameElement::DropDownToggleButton(f) => (f, "Button"), // Dropdown buttons
+                crate::xml::FrameElement::Cooldown(f) => (f, "Cooldown"),
+                crate::xml::FrameElement::GameTooltip(f) => (f, "GameTooltip"),
+                crate::xml::FrameElement::Model(f) | crate::xml::FrameElement::ModelScene(f) => (f, "Frame"), // Model frames
                 _ => continue, // Skip unsupported types for now
             };
             let child_name = create_frame_from_xml(env, child_frame, child_type, Some(&name))?;
 
             // Handle parentKey for child frames (works for both named and anonymous frames)
             if let (Some(actual_child_name), Some(parent_key)) =
-                (child_name, &child_frame.parent_key)
+                (child_name.clone(), &child_frame.parent_key)
             {
                 let lua_code = format!(
                     r#"
@@ -401,18 +440,89 @@ fn create_frame_from_xml(
 
     // Fire OnLoad script after frame is fully configured
     // In WoW, OnLoad fires at the end of frame creation from XML
+    // Templates often use method="OnLoad" which calls self:OnLoad()
     let onload_code = format!(
         r#"
-        local handler = {}:GetScript("OnLoad")
+        local frame = {}
+        local handler = frame:GetScript("OnLoad")
         if handler then
-            handler({})
+            handler(frame)
+        elseif type(frame.OnLoad) == "function" then
+            -- Call mixin OnLoad method if no script handler but method exists
+            frame:OnLoad()
         end
         "#,
-        name, name
+        name
     );
     env.exec(&onload_code).ok(); // Ignore errors (OnLoad might not be set)
 
     Ok(Some(name))
+}
+
+/// Instantiate children from a template onto a frame.
+/// This creates textures, fontstrings, and child frames defined in the template.
+fn instantiate_template_children(
+    env: &WowLuaEnv,
+    template: &crate::xml::FrameXml,
+    parent_name: &str,
+    _template_name: &str,
+) -> Result<(), LoadError> {
+    // Handle Layers (textures and fontstrings from template)
+    for layers in template.layers() {
+        for layer in &layers.layers {
+            let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
+
+            // Create textures from template
+            for texture in layer.textures() {
+                create_texture_from_xml(env, texture, parent_name, draw_layer)?;
+            }
+
+            // Create fontstrings from template
+            for fontstring in layer.font_strings() {
+                create_fontstring_from_xml(env, fontstring, parent_name, draw_layer)?;
+            }
+        }
+    }
+
+    // Handle child Frames from template recursively
+    if let Some(frames) = template.frames() {
+        for child in &frames.elements {
+            let (child_frame, child_type) = match child {
+                crate::xml::FrameElement::Frame(f) => (f, "Frame"),
+                crate::xml::FrameElement::Button(f) | crate::xml::FrameElement::ItemButton(f) => (f, "Button"),
+                crate::xml::FrameElement::CheckButton(f) => (f, "CheckButton"),
+                crate::xml::FrameElement::EditBox(f) | crate::xml::FrameElement::EventEditBox(f) => (f, "EditBox"),
+                crate::xml::FrameElement::ScrollFrame(f) => (f, "ScrollFrame"),
+                crate::xml::FrameElement::Slider(f) => (f, "Slider"),
+                crate::xml::FrameElement::StatusBar(f) => (f, "StatusBar"),
+                crate::xml::FrameElement::EventFrame(f) => (f, "Frame"), // EventFrame is just a Frame
+                crate::xml::FrameElement::EventButton(f) => (f, "Button"), // EventButton is just a Button
+                crate::xml::FrameElement::DropdownButton(f) | crate::xml::FrameElement::DropDownToggleButton(f) => (f, "Button"), // Dropdown buttons
+                crate::xml::FrameElement::Cooldown(f) => (f, "Cooldown"),
+                crate::xml::FrameElement::GameTooltip(f) => (f, "GameTooltip"),
+                crate::xml::FrameElement::Model(f) | crate::xml::FrameElement::ModelScene(f) => (f, "Frame"), // Model frames
+                _ => continue,
+            };
+
+            // Create the child frame with parent_name as parent
+            let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name))?;
+
+            // Handle parentKey for template child frames
+            if let (Some(actual_child_name), Some(parent_key)) =
+                (child_name, &child_frame.parent_key)
+            {
+                let lua_code = format!(
+                    r#"
+                    {}.{} = {}
+                    "#,
+                    parent_name, parent_key, actual_child_name
+                );
+                env.exec(&lua_code).ok();
+            }
+        }
+    }
+
+    Ok(())
 }
 
 /// Get size values from a SizeXml, checking both direct attributes and AbsDimension.
@@ -450,6 +560,7 @@ fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str) -> 
     for anchor in &anchors.anchors {
         let point = &anchor.point;
         let relative_to = anchor.relative_to.as_deref();
+        let relative_key = anchor.relative_key.as_deref();
         let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
 
         // Get offset from either direct attributes or nested Offset element
@@ -463,14 +574,44 @@ fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str) -> 
             (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
         };
 
-        let rel_str = match relative_to {
-            Some("$parent") => parent_ref.to_string(),
-            Some(rel) if rel.starts_with("$parent_") || rel.starts_with("$Parent_") => {
-                // $parent_Sibling refers to a sibling frame with name ParentFrame_Sibling
-                rel.replace("$parent", parent_ref).replace("$Parent", parent_ref)
+        // Handle relativeKey (e.g., "$parent.Performance", "$parent.$parent.ScrollFrame") first, then relativeTo
+        let rel_str = if let Some(key) = relative_key {
+            // relativeKey format: "$parent", "$parent.ChildKey", "$parent.$parent.ChildKey", etc.
+            if key.contains("$parent") || key.contains("$Parent") {
+                // Split on dots and build expression
+                let parts: Vec<&str> = key.split('.').collect();
+                let mut expr = String::new();
+                for part in parts {
+                    if part == "$parent" || part == "$Parent" {
+                        if expr.is_empty() {
+                            expr = parent_ref.to_string();
+                        } else {
+                            expr = format!("{}:GetParent()", expr);
+                        }
+                    } else if !part.is_empty() {
+                        // Access this as a property/child key
+                        expr = format!("{}[\"{}\"]", expr, part);
+                    }
+                }
+                if expr.is_empty() {
+                    parent_ref.to_string()
+                } else {
+                    expr
+                }
+            } else {
+                // No $parent pattern - use as global name
+                key.to_string()
             }
-            Some(rel) => rel.to_string(),
-            None => "nil".to_string(),
+        } else {
+            match relative_to {
+                Some("$parent") => parent_ref.to_string(),
+                Some(rel) if rel.contains("$parent") || rel.contains("$Parent") => {
+                    // Replace any $parent/$Parent pattern (e.g., $parent_Sibling, $parentColorSwatch)
+                    rel.replace("$parent", parent_ref).replace("$Parent", parent_ref)
+                }
+                Some(rel) => rel.to_string(),
+                None => "nil".to_string(),
+            }
         };
 
         code.push_str(&format!(
@@ -619,13 +760,36 @@ fn create_texture_from_xml(
                 (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
             };
 
-            let rel = match anchor.relative_to.as_deref() {
-                Some("$parent") | None => "parent".to_string(),
-                Some(r) if r.starts_with("$parent_") || r.starts_with("$Parent_") => {
-                    // $parent_Sibling refers to a sibling with name ParentName_Sibling
-                    r.replace("$parent", parent_name).replace("$Parent", parent_name)
+            // Handle relativeKey first, then relativeTo
+            let rel = if let Some(key) = anchor.relative_key.as_deref() {
+                // Handle $parent chains like "$parent.$parent.ScrollFrame"
+                if key.contains("$parent") || key.contains("$Parent") {
+                    let parts: Vec<&str> = key.split('.').collect();
+                    let mut expr = String::new();
+                    for part in parts {
+                        if part == "$parent" || part == "$Parent" {
+                            if expr.is_empty() {
+                                expr = "parent".to_string();
+                            } else {
+                                expr = format!("{}:GetParent()", expr);
+                            }
+                        } else if !part.is_empty() {
+                            expr = format!("{}[\"{}\"]", expr, part);
+                        }
+                    }
+                    if expr.is_empty() { "parent".to_string() } else { expr }
+                } else {
+                    key.to_string()
                 }
-                Some(r) => r.to_string(),
+            } else {
+                match anchor.relative_to.as_deref() {
+                    Some("$parent") | None => "parent".to_string(),
+                    Some(r) if r.contains("$parent") || r.contains("$Parent") => {
+                        // Replace any $parent/$Parent pattern (e.g., $parent_Sibling, $parentColorSwatch)
+                        r.replace("$parent", parent_name).replace("$Parent", parent_name)
+                    }
+                    Some(r) => r.to_string(),
+                }
             };
 
             lua_code.push_str(&format!(
@@ -761,13 +925,36 @@ fn create_fontstring_from_xml(
                 (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
             };
 
-            let rel = match anchor.relative_to.as_deref() {
-                Some("$parent") | None => "parent".to_string(),
-                Some(r) if r.starts_with("$parent_") || r.starts_with("$Parent_") => {
-                    // $parent_Sibling refers to a sibling with name ParentName_Sibling
-                    r.replace("$parent", parent_name).replace("$Parent", parent_name)
+            // Handle relativeKey first, then relativeTo
+            let rel = if let Some(key) = anchor.relative_key.as_deref() {
+                // Handle $parent chains like "$parent.$parent.ScrollFrame"
+                if key.contains("$parent") || key.contains("$Parent") {
+                    let parts: Vec<&str> = key.split('.').collect();
+                    let mut expr = String::new();
+                    for part in parts {
+                        if part == "$parent" || part == "$Parent" {
+                            if expr.is_empty() {
+                                expr = "parent".to_string();
+                            } else {
+                                expr = format!("{}:GetParent()", expr);
+                            }
+                        } else if !part.is_empty() {
+                            expr = format!("{}[\"{}\"]", expr, part);
+                        }
+                    }
+                    if expr.is_empty() { "parent".to_string() } else { expr }
+                } else {
+                    key.to_string()
                 }
-                Some(r) => r.to_string(),
+            } else {
+                match anchor.relative_to.as_deref() {
+                    Some("$parent") | None => "parent".to_string(),
+                    Some(r) if r.contains("$parent") || r.contains("$Parent") => {
+                        // Replace any $parent/$Parent pattern (e.g., $parent_Sibling, $parentColorSwatch)
+                        r.replace("$parent", parent_name).replace("$Parent", parent_name)
+                    }
+                    Some(r) => r.to_string(),
+                }
             };
 
             lua_code.push_str(&format!(
@@ -860,6 +1047,9 @@ fn load_xml_file(
             }
             XmlElement::StatusBar(f) => {
                 create_frame_from_xml(env, f, "StatusBar", None)?;
+            }
+            XmlElement::EventFrame(f) => {
+                create_frame_from_xml(env, f, "Frame", None)?;
             }
             XmlElement::Texture(_) | XmlElement::FontString(_) => {
                 // Top-level textures/fontstrings are templates

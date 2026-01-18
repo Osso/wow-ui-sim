@@ -74,6 +74,8 @@ impl TextureManager {
                     eprintln!("[TexMgr] Load error: {} -> {}: {}", wow_path, file_path.display(), e);
                 }
             }
+        } else {
+            eprintln!("[TexMgr] Not found: {}", wow_path);
         }
 
         None

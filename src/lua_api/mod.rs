@@ -44,6 +44,23 @@ pub struct WowLuaEnv {
     state: Rc<RefCell<SimState>>,
 }
 
+/// Information about a loaded addon.
+#[derive(Debug, Clone, Default)]
+pub struct AddonInfo {
+    /// Folder name (used as addon identifier).
+    pub folder_name: String,
+    /// Display title from TOC metadata.
+    pub title: String,
+    /// Notes/description from TOC metadata.
+    pub notes: String,
+    /// Whether the addon is currently enabled.
+    pub enabled: bool,
+    /// Whether the addon was successfully loaded.
+    pub loaded: bool,
+    /// Load on demand flag.
+    pub load_on_demand: bool,
+}
+
 /// Shared simulator state accessible from Lua.
 #[derive(Default)]
 pub struct SimState {
@@ -56,6 +73,8 @@ pub struct SimState {
     pub timers: VecDeque<PendingTimer>,
     /// Currently focused frame ID (for keyboard input).
     pub focused_frame_id: Option<u64>,
+    /// Registered addons (includes all scanned addons, not just loaded ones).
+    pub addons: Vec<AddonInfo>,
 }
 
 impl WowLuaEnv {
@@ -1139,6 +1158,11 @@ impl WowLuaEnv {
     /// Get access to the simulator state.
     pub fn state(&self) -> &Rc<RefCell<SimState>> {
         &self.state
+    }
+
+    /// Register an addon in the addon list.
+    pub fn register_addon(&self, info: AddonInfo) {
+        self.state.borrow_mut().addons.push(info);
     }
 
     /// Schedule a timer callback.

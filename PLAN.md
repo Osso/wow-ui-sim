@@ -121,10 +121,25 @@ See `/home/osso/Projects/apps/reddit-desktop-gtk` for relm4 patterns:
 - Saved variables persistence (JSON in ~/.local/share/wow-ui-sim/)
 - Loading real addons: Ace3, SharedXML, GameMenu, WeakAuras, DBM, Details, Plater, AllTheThings
 
-### Load Statistics (2026-01-17 - Updated v20)
-**Overall: 127/127 addons, 110 with 0 warnings, 17 with warnings, 32 total warnings**
+### Load Statistics (2026-01-18 - Updated v21)
+**Overall: 127/127 addons, 114 with 0 warnings, 13 with warnings, 32 total warnings**
 
-Current session (v20):
+Current session (v21):
+- Fixed $parent/$Parent substitution in XML anchors (relativeTo and relativeKey)
+- Previously only `$parent_Foo` was handled, now `$parentFoo` and `$parent` as relativeKey also work
+- Added support for chained $parent (e.g., `$parent.$parent.ScrollFrame` → `parent:GetParent()["ScrollFrame"]`)
+- Angleur: 1 warning → 0 warnings (fixed relativeTo="$parentColorSwatch")
+- BetterWardrobe: 1 warning → 0 warnings (79 Lua, 19 XML)
+- Collectionator: 1 warning → 0 warnings, 14 → 75 Lua files (+61 files)
+- DialogueUI: 3 warnings → 0 warnings, 73 → 97 Lua files (+24 files), 10 → 13 XML files (+3 files)
+- Plumber: 2 warnings → 1 warning, 119 → 146 Lua files (+27 files)
+- Blizzard_SharedXML: 2 warnings → 1 warning (DropDownList template now works)
+- Total: 39 → 32 warnings (-7 warnings, -18%)
+- Addons with 0 warnings: 110 → 114 (+4)
+- Lua files: 5158 → 5271 (+113 files)
+- XML files: 296 → 303 (+7 files)
+
+Previous session (v20):
 - Added POWER_TYPE_ESSENCE, UNIT_NAME_FRIENDLY_TOTEMS, HUD_EDIT_MODE_EXPERIENCE_BAR_LABEL
 - Added HUD_EDIT_MODE_HUD_TOOLTIP_LABEL, HUD_EDIT_MODE_TIMER_BARS_LABEL
 - Added BAG_NAME_BACKPACK, BAGSLOTTEXT, LOSS_OF_CONTROL, COOLDOWN_VIEWER_LABEL

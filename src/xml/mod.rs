@@ -3,7 +3,7 @@
 use serde::Deserialize;
 
 /// Root element of a WoW UI XML file.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename = "Ui")]
 pub struct UiXml {
     #[serde(rename = "$value", default)]
@@ -11,7 +11,7 @@ pub struct UiXml {
 }
 
 /// XML elements that can appear in a UI definition.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub enum XmlElement {
     // Frame-like widgets
@@ -66,7 +66,7 @@ pub enum XmlElement {
 }
 
 /// Frame definition in XML.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct FrameXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
@@ -143,7 +143,7 @@ impl FrameXml {
 }
 
 /// Child elements that can appear inside a Frame.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub enum FrameChildElement {
     Size(SizeXml),
@@ -184,14 +184,14 @@ pub enum FrameChildElement {
 }
 
 /// Animations container.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct AnimationsXml {
     #[serde(rename = "$value", default)]
     pub animations: Vec<AnimationGroupXml>,
 }
 
 /// Font reference (for NormalFont, HighlightFont, etc.)
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct FontRefXml {
     #[serde(rename = "@style")]
     pub style: Option<String>,
@@ -200,14 +200,14 @@ pub struct FontRefXml {
 }
 
 /// ScrollChild element.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct ScrollChildXml {
     #[serde(rename = "$value", default)]
     pub children: Vec<FrameElement>,
 }
 
 /// Backdrop element (legacy).
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct BackdropXml {
     #[serde(rename = "@bgFile")]
     pub bg_file: Option<String>,
@@ -218,7 +218,7 @@ pub struct BackdropXml {
 }
 
 /// ResizeBounds element.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct ResizeBoundsXml {
     #[serde(rename = "@minWidth")]
     pub min_width: Option<f32>,
@@ -231,7 +231,7 @@ pub struct ResizeBoundsXml {
 }
 
 /// Insets element.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct InsetsXml {
     #[serde(rename = "@left")]
     pub left: Option<f32>,
@@ -244,7 +244,7 @@ pub struct InsetsXml {
 }
 
 /// Size definition.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct SizeXml {
     #[serde(rename = "@x")]
     pub x: Option<f32>,
@@ -254,7 +254,7 @@ pub struct SizeXml {
     pub abs_dimension: Option<AbsDimensionXml>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct AbsDimensionXml {
     #[serde(rename = "@x")]
     pub x: Option<f32>,
@@ -263,19 +263,22 @@ pub struct AbsDimensionXml {
 }
 
 /// Anchors container.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct AnchorsXml {
     #[serde(rename = "Anchor", default)]
     pub anchors: Vec<AnchorXml>,
 }
 
 /// Single anchor definition.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct AnchorXml {
     #[serde(rename = "@point")]
     pub point: String,
     #[serde(rename = "@relativeTo")]
     pub relative_to: Option<String>,
+    /// Relative key like "$parent.ScrollBox" or "$parent.Performance"
+    #[serde(rename = "@relativeKey")]
+    pub relative_key: Option<String>,
     #[serde(rename = "@relativePoint")]
     pub relative_point: Option<String>,
     #[serde(rename = "@x")]
@@ -286,7 +289,7 @@ pub struct AnchorXml {
     pub offset: Option<OffsetXml>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct OffsetXml {
     #[serde(rename = "AbsDimension")]
     pub abs_dimension: Option<AbsDimensionXml>,
@@ -295,7 +298,7 @@ pub struct OffsetXml {
 /// Scripts container.
 /// Note: Some scripts can appear multiple times (e.g., duplicate OnClick in Baganator),
 /// so we use Vec to allow this. WoW likely uses the last one or merges them.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct ScriptsXml {
     #[serde(rename = "OnLoad", default)]
     pub on_load: Vec<ScriptBodyXml>,
@@ -311,7 +314,7 @@ pub struct ScriptsXml {
     pub on_hide: Vec<ScriptBodyXml>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct ScriptBodyXml {
     #[serde(rename = "$text")]
     pub body: Option<String>,
@@ -326,13 +329,13 @@ pub struct ScriptBodyXml {
 }
 
 /// KeyValues container for custom properties.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct KeyValuesXml {
     #[serde(rename = "KeyValue", default)]
     pub values: Vec<KeyValueXml>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct KeyValueXml {
     #[serde(rename = "@key")]
     pub key: String,
@@ -343,13 +346,13 @@ pub struct KeyValueXml {
 }
 
 /// Layers container (for textures and font strings).
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct LayersXml {
     #[serde(rename = "Layer", default)]
     pub layers: Vec<LayerXml>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct LayerXml {
     #[serde(rename = "@level")]
     pub level: Option<String>,
@@ -376,7 +379,7 @@ impl LayerXml {
 }
 
 /// Elements that can appear inside a Layer.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub enum LayerElement {
     Texture(TextureXml),
@@ -385,7 +388,7 @@ pub enum LayerElement {
     MaskTexture(TextureXml),
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct TextureXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
@@ -413,7 +416,7 @@ pub struct TextureXml {
     pub scripts: Option<ScriptsXml>,
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct FontStringXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
@@ -439,7 +442,7 @@ pub struct FontStringXml {
     pub scripts: Option<ScriptsXml>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct ColorXml {
     #[serde(rename = "@r")]
     pub r: Option<f32>,
@@ -454,14 +457,14 @@ pub struct ColorXml {
 }
 
 /// Child frames container - can contain any frame-like element.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct FramesXml {
     #[serde(rename = "$value", default)]
     pub elements: Vec<FrameElement>,
 }
 
 /// Frame-like elements that can appear inside a <Frames> container.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub enum FrameElement {
     Frame(FrameXml),
@@ -495,7 +498,7 @@ pub enum FrameElement {
 }
 
 /// Script include (file attribute is optional for inline scripts).
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct ScriptXml {
     #[serde(rename = "@file")]
     pub file: Option<String>,
@@ -504,14 +507,14 @@ pub struct ScriptXml {
 }
 
 /// XML include.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct IncludeXml {
     #[serde(rename = "@file")]
     pub file: String,
 }
 
 /// Animation group definition.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct AnimationGroupXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
@@ -529,7 +532,7 @@ pub struct AnimationGroupXml {
 }
 
 /// Actor definition for ModelScene.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct ActorXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
@@ -542,7 +545,7 @@ pub struct ActorXml {
 }
 
 /// Font definition.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct FontXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
@@ -559,7 +562,7 @@ pub struct FontXml {
 }
 
 /// FontFamily definition - collection of fonts for different alphabets.
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct FontFamilyXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
@@ -608,6 +611,141 @@ impl std::fmt::Display for XmlLoadError {
 }
 
 impl std::error::Error for XmlLoadError {}
+
+// ========== Template Registry ==========
+
+use std::collections::HashMap;
+use std::sync::{OnceLock, RwLock};
+
+/// Stores a template (virtual frame) with its widget type.
+#[derive(Debug, Clone)]
+pub struct TemplateEntry {
+    pub name: String,
+    pub widget_type: String,
+    pub frame: FrameXml,
+}
+
+/// Global registry of XML templates (virtual frames).
+fn template_registry() -> &'static RwLock<HashMap<String, TemplateEntry>> {
+    static REGISTRY: OnceLock<RwLock<HashMap<String, TemplateEntry>>> = OnceLock::new();
+    REGISTRY.get_or_init(|| RwLock::new(HashMap::new()))
+}
+
+/// Register a template (virtual frame) in the global registry.
+pub fn register_template(name: &str, widget_type: &str, frame: FrameXml) {
+    let mut registry = template_registry().write().unwrap();
+    registry.insert(name.to_string(), TemplateEntry {
+        name: name.to_string(),
+        widget_type: widget_type.to_string(),
+        frame,
+    });
+}
+
+/// Get a template by name from the registry.
+pub fn get_template(name: &str) -> Option<TemplateEntry> {
+    let registry = template_registry().read().unwrap();
+    registry.get(name).cloned()
+}
+
+/// Template info for C_XMLUtil.GetTemplateInfo.
+pub struct TemplateInfo {
+    pub frame_type: String,
+    pub width: f32,
+    pub height: f32,
+}
+
+/// Get template info (type, width, height) by resolving inheritance chain.
+pub fn get_template_info(name: &str) -> Option<TemplateInfo> {
+    let chain = get_template_chain(name);
+    if chain.is_empty() {
+        return None;
+    }
+
+    // Get the widget type from the first entry that defines it
+    let frame_type = chain.iter()
+        .find(|e| !e.widget_type.is_empty())
+        .map(|e| e.widget_type.clone())
+        .unwrap_or_else(|| "Frame".to_string());
+
+    // Resolve size by looking through inheritance chain (most derived wins)
+    let mut width: f32 = 0.0;
+    let mut height: f32 = 0.0;
+
+    for entry in &chain {
+        if let Some(size) = entry.frame.size() {
+            // Check AbsDimension first, then direct attributes
+            if let Some(ref abs) = size.abs_dimension {
+                if let Some(x) = abs.x {
+                    width = x;
+                }
+                if let Some(y) = abs.y {
+                    height = y;
+                }
+            }
+            if let Some(x) = size.x {
+                width = x;
+            }
+            if let Some(y) = size.y {
+                height = y;
+            }
+        }
+    }
+
+    Some(TemplateInfo {
+        frame_type,
+        width,
+        height,
+    })
+}
+
+/// Get the full inheritance chain for a template (including the template itself).
+/// Returns templates in order from most base to most derived.
+pub fn get_template_chain(names: &str) -> Vec<TemplateEntry> {
+    let mut chain = Vec::new();
+    let mut visited = std::collections::HashSet::new();
+
+    // Process comma-separated template names
+    for name in names.split(',').map(|s| s.trim()) {
+        if name.is_empty() || visited.contains(name) {
+            continue;
+        }
+        collect_template_chain(name, &mut chain, &mut visited);
+    }
+
+    chain
+}
+
+/// Recursively collect templates in the inheritance chain.
+fn collect_template_chain(
+    name: &str,
+    chain: &mut Vec<TemplateEntry>,
+    visited: &mut std::collections::HashSet<String>,
+) {
+    if visited.contains(name) {
+        return;
+    }
+    visited.insert(name.to_string());
+
+    if let Some(entry) = get_template(name) {
+        // First, process parent templates (if this template inherits from others)
+        if let Some(ref inherits) = entry.frame.inherits {
+            for parent in inherits.split(',').map(|s| s.trim()) {
+                if !parent.is_empty() {
+                    collect_template_chain(parent, chain, visited);
+                }
+            }
+        }
+        // Then add this template
+        chain.push(entry);
+    }
+}
+
+/// Clear the template registry (useful for testing).
+#[allow(dead_code)]
+pub fn clear_templates() {
+    let mut registry = template_registry().write().unwrap();
+    registry.clear();
+}
 
 #[cfg(test)]
 mod tests {
