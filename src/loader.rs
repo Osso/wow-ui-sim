@@ -878,6 +878,24 @@ fn create_texture_from_xml(
         ));
     }
 
+    // Set horizontal tiling
+    if texture.horiz_tile == Some(true) {
+        lua_code.push_str(
+            r#"
+        tex:SetHorizTile(true)
+        "#,
+        );
+    }
+
+    // Set vertical tiling
+    if texture.vert_tile == Some(true) {
+        lua_code.push_str(
+            r#"
+        tex:SetVertTile(true)
+        "#,
+        );
+    }
+
     // Set parentKey if specified
     if let Some(key) = &texture.parent_key {
         lua_code.push_str(&format!(

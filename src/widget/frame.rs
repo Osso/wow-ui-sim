@@ -161,6 +161,10 @@ pub struct Frame {
     pub draw_layer: DrawLayer,
     /// Sub-layer within draw layer (for fine-grained ordering).
     pub draw_sub_layer: i32,
+    /// Tile texture horizontally.
+    pub horiz_tile: bool,
+    /// Tile texture vertically.
+    pub vert_tile: bool,
 }
 
 impl Frame {
@@ -208,6 +212,8 @@ impl Frame {
             right_texture: None,
             draw_layer: DrawLayer::Artwork,
             draw_sub_layer: 0,
+            horiz_tile: false,
+            vert_tile: false,
         }
     }
 

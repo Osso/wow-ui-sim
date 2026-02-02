@@ -1308,29 +1308,93 @@ impl App {
             return;
         }
 
-        // Fallback placeholder - use a more visible color
-        frame.fill_rectangle(
-            bounds.position(),
-            bounds.size(),
-            Color::from_rgba(0.2, 0.15, 0.1, 0.9 * f.alpha),  // Dark brown, more opaque
-        );
+        // Try to load and render the texture file
+        if let Some(ref tex_path) = f.texture {
+            if let Some(handle) = self.get_or_load_texture(tex_path) {
+                // Check if tiling is enabled
+                if f.horiz_tile || f.vert_tile {
+                    // Get texture dimensions from cache
+                    let tex_size = self.get_texture_size(tex_path).unwrap_or((256.0, 256.0));
 
-        // Diagonal lines - brighter
-        let line_color = Color::from_rgba(0.5, 0.4, 0.3, 0.4 * f.alpha);
-        frame.stroke(
-            &Path::line(
-                bounds.position(),
-                Point::new(bounds.x + bounds.width, bounds.y + bounds.height),
-            ),
-            Stroke::default().with_color(line_color).with_width(1.0),
-        );
-        frame.stroke(
-            &Path::line(
-                Point::new(bounds.x + bounds.width, bounds.y),
-                Point::new(bounds.x, bounds.y + bounds.height),
-            ),
-            Stroke::default().with_color(line_color).with_width(1.0),
-        );
+                    // Draw tiled texture
+                    self.draw_tiled_texture(
+                        frame,
+                        bounds,
+                        &handle,
+                        tex_size.0,
+                        tex_size.1,
+                        f.horiz_tile,
+                        f.vert_tile,
+                        f.alpha,
+                    );
+                } else {
+                    // Draw stretched to bounds
+                    frame.draw_image(bounds, canvas::Image::new(handle));
+                }
+                return;
+            }
+        }
+
+        // No texture - don't draw anything (transparent)
+    }
+
+    /// Draw a texture tiled across the given bounds.
+    fn draw_tiled_texture(
+        &self,
+        frame: &mut canvas::Frame,
+        bounds: Rectangle,
+        handle: &ImageHandle,
+        tex_width: f32,
+        tex_height: f32,
+        horiz_tile: bool,
+        vert_tile: bool,
+        alpha: f32,
+    ) {
+        let tile_width = if horiz_tile { tex_width } else { bounds.width };
+        let tile_height = if vert_tile { tex_height } else { bounds.height };
+
+        // Calculate how many tiles we need
+        let cols = if horiz_tile {
+            ((bounds.width / tile_width).ceil() as i32).max(1)
+        } else {
+            1
+        };
+        let rows = if vert_tile {
+            ((bounds.height / tile_height).ceil() as i32).max(1)
+        } else {
+            1
+        };
+
+        // Draw each tile
+        for row in 0..rows {
+            for col in 0..cols {
+                let x = bounds.x + col as f32 * tile_width;
+                let y = bounds.y + row as f32 * tile_height;
+
+                // Calculate the size of this tile (may be clipped at edges)
+                let width = (bounds.x + bounds.width - x).min(tile_width);
+                let height = (bounds.y + bounds.height - y).min(tile_height);
+
+                if width > 0.0 && height > 0.0 {
+                    // For partial tiles at edges, we'd need texture coords clipping
+                    // For now, just draw the full tile (will be clipped by canvas)
+                    let full_tile = Rectangle::new(Point::new(x, y), Size::new(tile_width, tile_height));
+                    let mut img = canvas::Image::new(handle.clone());
+                    if alpha < 1.0 {
+                        img = img.opacity(alpha);
+                    }
+                    frame.draw_image(full_tile, img);
+                }
+            }
+        }
+    }
+
+    /// Get the dimensions of a cached texture.
+    fn get_texture_size(&self, path: &str) -> Option<(f32, f32)> {
+        self.texture_manager
+            .borrow()
+            .get_texture_size(path)
+            .map(|(w, h)| (w as f32, h as f32))
     }
 
     fn draw_fontstring_widget(

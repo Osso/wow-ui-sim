@@ -14561,6 +14561,46 @@ impl UserData for FrameHandle {
             Ok(texture)
         });
 
+        // SetHorizTile(tile) - Enable/disable horizontal tiling
+        methods.add_method("SetHorizTile", |_, this, tile: bool| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.horiz_tile = tile;
+            }
+            Ok(())
+        });
+
+        // GetHorizTile() - Check if horizontal tiling is enabled
+        methods.add_method("GetHorizTile", |_, this, ()| {
+            let state = this.state.borrow();
+            let tile = state
+                .widgets
+                .get(this.id)
+                .map(|f| f.horiz_tile)
+                .unwrap_or(false);
+            Ok(tile)
+        });
+
+        // SetVertTile(tile) - Enable/disable vertical tiling
+        methods.add_method("SetVertTile", |_, this, tile: bool| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.vert_tile = tile;
+            }
+            Ok(())
+        });
+
+        // GetVertTile() - Check if vertical tiling is enabled
+        methods.add_method("GetVertTile", |_, this, ()| {
+            let state = this.state.borrow();
+            let tile = state
+                .widgets
+                .get(this.id)
+                .map(|f| f.vert_tile)
+                .unwrap_or(false);
+            Ok(tile)
+        });
+
         // SetBlendMode(blendMode) - Set texture blend mode (ADD, ALPHAKEY, BLEND, DISABLE, MOD)
         methods.add_method("SetBlendMode", |_, _this, _mode: Option<String>| {
             // Stub - blend mode is a rendering hint

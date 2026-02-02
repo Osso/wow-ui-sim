@@ -406,6 +406,10 @@ pub struct TextureXml {
     pub texel_snapping_bias: Option<String>,
     #[serde(rename = "@snapToPixelGrid")]
     pub snap_to_pixel_grid: Option<String>,
+    #[serde(rename = "@horizTile")]
+    pub horiz_tile: Option<bool>,
+    #[serde(rename = "@vertTile")]
+    pub vert_tile: Option<bool>,
     #[serde(rename = "Size")]
     pub size: Option<SizeXml>,
     #[serde(rename = "Anchors")]

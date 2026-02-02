@@ -87,6 +87,12 @@ impl TextureManager {
         self.cache.get(&normalized)
     }
 
+    /// Get the dimensions of a cached texture.
+    pub fn get_texture_size(&self, wow_path: &str) -> Option<(u32, u32)> {
+        let normalized = normalize_wow_path(wow_path);
+        self.cache.get(&normalized).map(|d| (d.width, d.height))
+    }
+
     /// Load a sub-region of a texture (for texture atlases).
     /// The key format is "path#x,y,w,h" where x,y is top-left and w,h is size.
     pub fn load_sub_region(
