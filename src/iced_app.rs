@@ -131,7 +131,9 @@ pub struct App {
     env: Rc<RefCell<WowLuaEnv>>,
     log_messages: Vec<String>,
     command_input: String,
+    #[allow(dead_code)] // Will be used for texture loading in future
     texture_manager: Rc<RefCell<TextureManager>>,
+    #[allow(dead_code)] // Will be used for texture loading in future
     image_handles: HashMap<String, ImageHandle>,
     frame_cache: Cache,
     hovered_frame: Option<u64>,
