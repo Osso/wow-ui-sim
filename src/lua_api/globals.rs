@@ -7119,6 +7119,13 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             Ok(info)
         })?,
     )?;
+    c_spell.set(
+        "DoesSpellExist",
+        lua.create_function(|_, spell_id: i32| {
+            // In simulation, assume all positive spell IDs exist
+            Ok(spell_id > 0)
+        })?,
+    )?;
     globals.set("C_Spell", c_spell)?;
 
     // C_Traits namespace - talent/loadout system (Dragonflight+)
@@ -7412,6 +7419,50 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         lua.create_function(|lua, _race_id: i32| lua.create_table())?,
     )?;
     globals.set("C_AlliedRaces", c_allied_races)?;
+
+    // C_AzeriteEssence namespace - BfA Azerite essence system
+    let c_azerite_essence = lua.create_table()?;
+    c_azerite_essence.set(
+        "GetEssenceHyperlink",
+        lua.create_function(|lua, (essence_id, rank): (i32, i32)| {
+            // Returns hyperlink for an Azerite essence
+            let link = format!(
+                "|cff00ccff|Hazessence:{}:{}|h[Essence {}]|h|r",
+                essence_id, rank, essence_id
+            );
+            Ok(Value::String(lua.create_string(&link)?))
+        })?,
+    )?;
+    c_azerite_essence.set(
+        "GetEssenceInfo",
+        lua.create_function(|lua, _essence_id: i32| {
+            let info = lua.create_table()?;
+            info.set("ID", 0)?;
+            info.set("name", "Unknown Essence")?;
+            info.set("icon", 0)?;
+            info.set("valid", false)?;
+            info.set("unlocked", false)?;
+            info.set("rank", 0)?;
+            Ok(Value::Table(info))
+        })?,
+    )?;
+    c_azerite_essence.set(
+        "GetMilestoneEssence",
+        lua.create_function(|_, _milestone_id: i32| Ok(Value::Nil))?,
+    )?;
+    c_azerite_essence.set(
+        "GetNumUnlockedEssences",
+        lua.create_function(|_, ()| Ok(0i32))?,
+    )?;
+    c_azerite_essence.set(
+        "GetNumUnlockedSlots",
+        lua.create_function(|_, ()| Ok(0i32))?,
+    )?;
+    c_azerite_essence.set(
+        "CanOpenUI",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    globals.set("C_AzeriteEssence", c_azerite_essence)?;
 
     // C_PvP namespace - PvP information
     let c_pvp = lua.create_table()?;
@@ -9747,6 +9798,7 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     globals.set("DECLINE", "Decline")?;
     globals.set("ENABLE", "Enable")?;
     globals.set("DISABLE", "Disable")?;
+    globals.set("HIGHLIGHTING", "Highlighting:")?;
     globals.set("READY", "Ready")?;
     globals.set("NOT_READY", "Not Ready")?;
     globals.set("BUSY", "Busy")?;
@@ -12623,6 +12675,146 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     enum_table.set("EditModeSystem", edit_mode_system)?;
 
     // (No need to set Enum again - we modified the existing table)
+
+    // Item class - for async item loading (used by LegionRemixHelper, etc)
+    let item_class = lua.create_table()?;
+    item_class.set(
+        "CreateFromItemID",
+        lua.create_function(|lua, (_self, item_id): (Value, i32)| {
+            // Create an item object with callback methods
+            let item = lua.create_table()?;
+            item.set("itemID", item_id)?;
+
+            // ContinueOnItemLoad - calls callback immediately in simulation
+            item.set(
+                "ContinueOnItemLoad",
+                lua.create_function(|_, (this, callback): (mlua::Table, mlua::Function)| {
+                    // In simulation, immediately call the callback
+                    callback.call::<()>(())?;
+                    let _ = this; // Silence unused warning
+                    Ok(())
+                })?,
+            )?;
+
+            // GetItemID
+            item.set(
+                "GetItemID",
+                lua.create_function(|_, this: mlua::Table| {
+                    this.get::<i32>("itemID")
+                })?,
+            )?;
+
+            // GetItemName - return placeholder name
+            item.set(
+                "GetItemName",
+                lua.create_function(|lua, this: mlua::Table| {
+                    let id: i32 = this.get("itemID")?;
+                    Ok(Value::String(lua.create_string(&format!("Item {}", id))?))
+                })?,
+            )?;
+
+            // GetItemLink
+            item.set(
+                "GetItemLink",
+                lua.create_function(|lua, this: mlua::Table| {
+                    let id: i32 = this.get("itemID")?;
+                    let link = format!("|cff1eff00|Hitem:{}::::::::60:::::|h[Item {}]|h|r", id, id);
+                    Ok(Value::String(lua.create_string(&link)?))
+                })?,
+            )?;
+
+            // GetItemIcon
+            item.set(
+                "GetItemIcon",
+                lua.create_function(|_, _this: mlua::Table| {
+                    Ok(134400i32) // INV_Misc_QuestionMark
+                })?,
+            )?;
+
+            // GetItemQuality
+            item.set(
+                "GetItemQuality",
+                lua.create_function(|_, _this: mlua::Table| {
+                    Ok(1i32) // Common quality
+                })?,
+            )?;
+
+            // IsItemDataCached - always true in simulation
+            item.set(
+                "IsItemDataCached",
+                lua.create_function(|_, _this: mlua::Table| Ok(true))?,
+            )?;
+
+            Ok(item)
+        })?,
+    )?;
+    item_class.set(
+        "CreateFromItemLink",
+        lua.create_function(|lua, (_self, item_link): (Value, String)| {
+            // Extract item ID from link if possible, otherwise use 0
+            let item_id = item_link
+                .split("item:")
+                .nth(1)
+                .and_then(|s| s.split(':').next())
+                .and_then(|s| s.parse::<i32>().ok())
+                .unwrap_or(0);
+
+            // Reuse CreateFromItemID logic
+            let item = lua.create_table()?;
+            item.set("itemID", item_id)?;
+
+            item.set(
+                "ContinueOnItemLoad",
+                lua.create_function(|_, (this, callback): (mlua::Table, mlua::Function)| {
+                    callback.call::<()>(())?;
+                    let _ = this;
+                    Ok(())
+                })?,
+            )?;
+
+            item.set(
+                "GetItemID",
+                lua.create_function(|_, this: mlua::Table| {
+                    this.get::<i32>("itemID")
+                })?,
+            )?;
+
+            item.set(
+                "GetItemName",
+                lua.create_function(|lua, this: mlua::Table| {
+                    let id: i32 = this.get("itemID")?;
+                    Ok(Value::String(lua.create_string(&format!("Item {}", id))?))
+                })?,
+            )?;
+
+            item.set(
+                "GetItemLink",
+                lua.create_function(|lua, this: mlua::Table| {
+                    let id: i32 = this.get("itemID")?;
+                    let link = format!("|cff1eff00|Hitem:{}::::::::60:::::|h[Item {}]|h|r", id, id);
+                    Ok(Value::String(lua.create_string(&link)?))
+                })?,
+            )?;
+
+            item.set(
+                "GetItemIcon",
+                lua.create_function(|_, _this: mlua::Table| Ok(134400i32))?,
+            )?;
+
+            item.set(
+                "GetItemQuality",
+                lua.create_function(|_, _this: mlua::Table| Ok(1i32))?,
+            )?;
+
+            item.set(
+                "IsItemDataCached",
+                lua.create_function(|_, _this: mlua::Table| Ok(true))?,
+            )?;
+
+            Ok(item)
+        })?,
+    )?;
+    globals.set("Item", item_class)?;
 
     // Create standard WoW font objects
     // These are font objects that many addons expect to exist
