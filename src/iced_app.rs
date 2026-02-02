@@ -19,7 +19,7 @@ use tokio::sync::mpsc;
 
 use crate::lua_api::WowLuaEnv;
 use crate::render::text::{strip_wow_markup, wow_font_to_iced, TextRenderer};
-use crate::render::texture::UI_SCALE;
+use crate::render::texture::{draw_horizontal_slice_texture, UI_SCALE};
 use crate::texture::TextureManager;
 use crate::widget::{AnchorPoint, TextJustify, WidgetType};
 use crate::LayoutRect;
@@ -106,6 +106,36 @@ fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
     ) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
     }
+
+    // Create test button with textures
+    create_test_button(&env);
+}
+
+/// Create a test button below AddonList to demonstrate texture rendering.
+fn create_test_button(env: &WowLuaEnv) {
+    let lua_code = r#"
+        -- Create test button with WoW 3-slice gold button textures
+        local btn = CreateFrame("Button", "TestTextureButton", UIParent)
+        btn:SetSize(180, 32)
+        btn:SetPoint("TOP", AddonList, "BOTTOM", 0, -20)
+        btn:SetFrameStrata("HIGH")
+        btn:SetFrameLevel(100)
+
+        -- Set 3-slice button textures (gold button style)
+        btn:SetLeftTexture("Interface\\Buttons\\UI-DialogBox-goldbutton-up-left")
+        btn:SetMiddleTexture("Interface\\Buttons\\UI-DialogBox-goldbutton-up-middle")
+        btn:SetRightTexture("Interface\\Buttons\\UI-DialogBox-goldbutton-up-right")
+
+        -- Set button text directly
+        btn:SetText("Test Button")
+
+        btn:Show()
+        print("[Test] Created TestTextureButton with 3-slice gold button textures")
+    "#;
+
+    if let Err(e) = env.lua().load(lua_code).exec() {
+        eprintln!("[Test] Failed to create test button: {}", e);
+    }
 }
 
 /// Application messages.
@@ -134,10 +164,9 @@ pub struct App {
     env: Rc<RefCell<WowLuaEnv>>,
     log_messages: Vec<String>,
     command_input: String,
-    #[allow(dead_code)] // Will be used for texture loading in future
     texture_manager: Rc<RefCell<TextureManager>>,
-    #[allow(dead_code)] // Will be used for texture loading in future
-    image_handles: HashMap<String, ImageHandle>,
+    /// Cache of loaded texture image handles (uses RefCell for interior mutability during draw).
+    image_handles: Rc<RefCell<HashMap<String, ImageHandle>>>,
     frame_cache: Cache,
     hovered_frame: Option<u64>,
     pressed_frame: Option<u64>,
@@ -195,7 +224,7 @@ impl App {
             log_messages,
             command_input: String::new(),
             texture_manager,
-            image_handles: HashMap::new(),
+            image_handles: Rc::new(RefCell::new(HashMap::new())),
             frame_cache: Cache::new(),
             hovered_frame: None,
             pressed_frame: None,
@@ -908,20 +937,49 @@ impl App {
                 .cmp(&b.1.frame_strata)
                 .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
                 .then_with(|| {
-                    let type_order = |t: &WidgetType| match t {
-                        WidgetType::Texture => 0,
-                        WidgetType::FontString => 1,
-                        WidgetType::Frame => 2,
-                        _ => 3,
+                    // Regions (Texture, FontString) render within their frame
+                    // sorted by draw_layer then draw_sub_layer.
+                    // Non-regions (Frame, Button, etc.) render before their child regions.
+                    let is_region = |t: &WidgetType| {
+                        matches!(t, WidgetType::Texture | WidgetType::FontString)
                     };
-                    type_order(&a.1.widget_type).cmp(&type_order(&b.1.widget_type))
+                    match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
+                        (true, true) => {
+                            // Both regions: sort by draw_layer, then draw_sub_layer
+                            a.1.draw_layer
+                                .cmp(&b.1.draw_layer)
+                                .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer))
+                        }
+                        (false, true) => std::cmp::Ordering::Less, // Frame before region
+                        (true, false) => std::cmp::Ordering::Greater, // Region after frame
+                        (false, false) => std::cmp::Ordering::Equal, // Both frames: use id
+                    }
                 })
                 .then_with(|| a.0.cmp(&b.0))
         });
 
+        // Find TestTextureButton and its children
+        let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
+            state
+                .widgets
+                .get(id)
+                .map(|f| f.name.as_deref() == Some("TestTextureButton"))
+                .unwrap_or(false)
+        });
+        let mut test_button_ids = std::collections::HashSet::new();
+        if let Some(root_id) = test_button_id {
+            let mut queue = vec![root_id];
+            while let Some(id) = queue.pop() {
+                test_button_ids.insert(id);
+                if let Some(f) = state.widgets.get(id) {
+                    queue.extend(f.children.iter().copied());
+                }
+            }
+        }
+
         for (id, f, rect, checked) in frames {
-            // Only show AddonList frame and children for now
-            if !addonlist_ids.contains(&id) {
+            // Only show AddonList frame and children, plus TestTextureButton and its children
+            if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
                 continue;
             }
             if !f.visible {
@@ -1101,13 +1159,108 @@ impl App {
         }
     }
 
+    /// Load a texture and cache its ImageHandle.
+    fn get_or_load_texture(&self, wow_path: &str) -> Option<ImageHandle> {
+        // Check cache first
+        {
+            let cache = self.image_handles.borrow();
+            if let Some(handle) = cache.get(wow_path) {
+                return Some(handle.clone());
+            }
+        }
+
+        // Load texture
+        let mut tex_mgr = self.texture_manager.borrow_mut();
+        if let Some(tex_data) = tex_mgr.load(wow_path) {
+            let handle = ImageHandle::from_rgba(
+                tex_data.width,
+                tex_data.height,
+                tex_data.pixels.clone(),
+            );
+            self.image_handles
+                .borrow_mut()
+                .insert(wow_path.to_string(), handle.clone());
+            Some(handle)
+        } else {
+            None
+        }
+    }
+
     fn draw_button_widget(
         &self,
         frame: &mut canvas::Frame,
         bounds: Rectangle,
         f: &crate::widget::Frame,
     ) {
-        // Default button styling (dark red gradient-like)
+        // Try 3-slice button rendering first (gold button style)
+        if let (Some(left_path), Some(middle_path), Some(right_path)) =
+            (&f.left_texture, &f.middle_texture, &f.right_texture)
+        {
+            let left_handle = self.get_or_load_texture(left_path);
+            let middle_handle = self.get_or_load_texture(middle_path);
+            let right_handle = self.get_or_load_texture(right_path);
+
+            if left_handle.is_some() && middle_handle.is_some() && right_handle.is_some() {
+                // Gold button: left=64px, right=32px
+                draw_horizontal_slice_texture(
+                    frame,
+                    bounds,
+                    left_handle.as_ref().unwrap(), // fallback (unused when all 3 present)
+                    left_handle.as_ref(),
+                    middle_handle.as_ref(),
+                    right_handle.as_ref(),
+                    64.0, // left cap width
+                    32.0, // right cap width
+                    f.alpha,
+                );
+
+                // Draw button text on top
+                if let Some(ref txt) = f.text {
+                    TextRenderer::draw_centered_text(
+                        frame,
+                        txt,
+                        bounds,
+                        f.font_size,
+                        Color::from_rgba(
+                            f.text_color.r,
+                            f.text_color.g,
+                            f.text_color.b,
+                            f.text_color.a * f.alpha,
+                        ),
+                        wow_font_to_iced(f.font.as_deref()),
+                    );
+                }
+                return;
+            }
+        }
+
+        // Try single normal texture
+        if let Some(ref tex_path) = f.normal_texture {
+            if let Some(handle) = self.get_or_load_texture(tex_path) {
+                // Draw the texture scaled to button bounds
+                frame.draw_image(bounds, canvas::Image::new(handle));
+
+                // Draw button text on top
+                if let Some(ref txt) = f.text {
+                    TextRenderer::draw_centered_text(
+                        frame,
+                        txt,
+                        bounds,
+                        f.font_size,
+                        Color::from_rgba(
+                            f.text_color.r,
+                            f.text_color.g,
+                            f.text_color.b,
+                            f.text_color.a * f.alpha,
+                        ),
+                        wow_font_to_iced(f.font.as_deref()),
+                    );
+                }
+                return;
+            }
+        }
+
+        // Fallback: default button styling (dark red gradient-like)
         frame.fill_rectangle(
             bounds.position(),
             bounds.size(),

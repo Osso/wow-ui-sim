@@ -5,7 +5,7 @@ mod frame;
 mod registry;
 
 pub use anchor::{Anchor, AnchorPoint};
-pub use frame::{AttributeValue, Backdrop, Color, Frame, FrameStrata, TextJustify};
+pub use frame::{AttributeValue, Backdrop, Color, DrawLayer, Frame, FrameStrata, TextJustify};
 pub use registry::WidgetRegistry;
 
 use std::sync::atomic::{AtomicU64, Ordering};

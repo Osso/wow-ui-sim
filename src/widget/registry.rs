@@ -1,7 +1,7 @@
 //! Global widget registry for tracking all widgets.
 
 use super::Frame;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet, VecDeque};
 
 /// Registry of all widgets in the UI.
 #[derive(Debug, Default)]
@@ -66,5 +66,42 @@ impl WidgetRegistry {
     /// Get all widget IDs.
     pub fn all_ids(&self) -> Vec<u64> {
         self.widgets.keys().copied().collect()
+    }
+
+    /// Check if setting a point from `frame_id` to `relative_to_id` would create a cycle.
+    /// A cycle exists if relative_to (or any of its anchor dependencies) already
+    /// depends on frame_id.
+    pub fn would_create_anchor_cycle(&self, frame_id: u64, relative_to_id: u64) -> bool {
+        // Can't anchor to yourself
+        if frame_id == relative_to_id {
+            return true;
+        }
+
+        // BFS from relative_to, checking if any dependency points back to frame_id
+        let mut queue = VecDeque::new();
+        let mut seen = HashSet::new();
+
+        queue.push_back(relative_to_id);
+        seen.insert(relative_to_id);
+
+        while let Some(check_id) = queue.pop_front() {
+            if let Some(frame) = self.widgets.get(&check_id) {
+                for anchor in &frame.anchors {
+                    if let Some(anchor_target) = anchor.relative_to_id {
+                        let target_id = anchor_target as u64;
+                        // Found a cycle - the target depends on frame_id
+                        if target_id == frame_id {
+                            return true;
+                        }
+                        // Continue BFS
+                        if seen.insert(target_id) {
+                            queue.push_back(target_id);
+                        }
+                    }
+                }
+            }
+        }
+
+        false
     }
 }

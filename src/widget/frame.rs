@@ -151,6 +151,16 @@ pub struct Frame {
     pub highlight_texture: Option<String>,
     /// Disabled texture path (for Button widgets).
     pub disabled_texture: Option<String>,
+    /// Left cap texture for 3-slice buttons.
+    pub left_texture: Option<String>,
+    /// Middle (stretchable) texture for 3-slice buttons.
+    pub middle_texture: Option<String>,
+    /// Right cap texture for 3-slice buttons.
+    pub right_texture: Option<String>,
+    /// Draw layer for regions (textures/fontstrings).
+    pub draw_layer: DrawLayer,
+    /// Sub-layer within draw layer (for fine-grained ordering).
+    pub draw_sub_layer: i32,
 }
 
 impl Frame {
@@ -193,6 +203,11 @@ impl Frame {
             pushed_texture: None,
             highlight_texture: None,
             disabled_texture: None,
+            left_texture: None,
+            middle_texture: None,
+            right_texture: None,
+            draw_layer: DrawLayer::Artwork,
+            draw_sub_layer: 0,
         }
     }
 
@@ -308,6 +323,41 @@ impl FrameStrata {
             Self::Fullscreen => "FULLSCREEN",
             Self::FullscreenDialog => "FULLSCREEN_DIALOG",
             Self::Tooltip => "TOOLTIP",
+        }
+    }
+}
+
+/// Draw layer for regions (textures/fontstrings) within a frame.
+/// Determines render order: BACKGROUND < BORDER < ARTWORK < OVERLAY < HIGHLIGHT
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default)]
+pub enum DrawLayer {
+    Background = 1,
+    Border = 2,
+    #[default]
+    Artwork = 3,
+    Overlay = 4,
+    Highlight = 5,
+}
+
+impl DrawLayer {
+    pub fn from_str(s: &str) -> Option<Self> {
+        match s.to_uppercase().as_str() {
+            "BACKGROUND" => Some(Self::Background),
+            "BORDER" => Some(Self::Border),
+            "ARTWORK" => Some(Self::Artwork),
+            "OVERLAY" => Some(Self::Overlay),
+            "HIGHLIGHT" => Some(Self::Highlight),
+            _ => None,
+        }
+    }
+
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Background => "BACKGROUND",
+            Self::Border => "BORDER",
+            Self::Artwork => "ARTWORK",
+            Self::Overlay => "OVERLAY",
+            Self::Highlight => "HIGHLIGHT",
         }
     }
 }

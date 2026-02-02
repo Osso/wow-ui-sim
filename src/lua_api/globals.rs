@@ -13637,6 +13637,16 @@ impl UserData for FrameHandle {
             };
 
             let mut state = this.state.borrow_mut();
+
+            // Check for anchor cycles before setting point
+            if let Some(rel_id) = relative_to {
+                if state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
+                    // Silently ignore the anchor to prevent cycles (matches WoW behavior)
+                    // WoW logs an error but doesn't crash
+                    return Ok(());
+                }
+            }
+
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
             }
@@ -14178,29 +14188,45 @@ impl UserData for FrameHandle {
 
         // SetAllPoints(relativeTo)
         // SetAllPoints accepts: nil, frame, or boolean (true = parent, false = no-op)
+        // Sets TOPLEFT→TOPLEFT and BOTTOMRIGHT→BOTTOMRIGHT to the relative frame
         methods.add_method("SetAllPoints", |_, this, arg: Option<Value>| {
             // Handle boolean case: true means use parent, false is a no-op
-            // Also handle userdata (frame reference) or nil (use parent)
-            let should_set = match &arg {
-                Some(Value::Boolean(false)) => false,
-                _ => true, // nil, true, or frame reference all trigger SetAllPoints
+            let (should_set, relative_to_id) = match &arg {
+                Some(Value::Boolean(false)) => (false, None),
+                Some(Value::UserData(ud)) => {
+                    // Extract frame ID from userdata
+                    if let Ok(handle) = ud.borrow::<FrameHandle>() {
+                        (true, Some(handle.id as usize))
+                    } else {
+                        (true, None)
+                    }
+                }
+                _ => (true, None), // nil, true => use parent (None)
             };
 
             if should_set {
                 let mut state = this.state.borrow_mut();
+
+                // Check for anchor cycles before setting points
+                if let Some(rel_id) = relative_to_id {
+                    if state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
+                        return Ok(());
+                    }
+                }
+
                 if let Some(frame) = state.widgets.get_mut(this.id) {
                     frame.clear_all_points();
                     // SetAllPoints makes the frame fill its relative frame
                     frame.set_point(
                         crate::widget::AnchorPoint::TopLeft,
-                        None,
+                        relative_to_id,
                         crate::widget::AnchorPoint::TopLeft,
                         0.0,
                         0.0,
                     );
                     frame.set_point(
                         crate::widget::AnchorPoint::BottomRight,
-                        None,
+                        relative_to_id,
                         crate::widget::AnchorPoint::BottomRight,
                         0.0,
                         0.0,
@@ -15442,6 +15468,48 @@ impl UserData for FrameHandle {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.disabled_texture = path;
+            }
+            Ok(())
+        });
+
+        // SetLeftTexture(texture) - Set left cap texture for 3-slice buttons
+        methods.add_method("SetLeftTexture", |_, this, texture: Value| {
+            let path = match texture {
+                Value::String(s) => Some(s.to_str()?.to_string()),
+                Value::Nil => None,
+                _ => None,
+            };
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.left_texture = path;
+            }
+            Ok(())
+        });
+
+        // SetMiddleTexture(texture) - Set middle (stretchable) texture for 3-slice buttons
+        methods.add_method("SetMiddleTexture", |_, this, texture: Value| {
+            let path = match texture {
+                Value::String(s) => Some(s.to_str()?.to_string()),
+                Value::Nil => None,
+                _ => None,
+            };
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.middle_texture = path;
+            }
+            Ok(())
+        });
+
+        // SetRightTexture(texture) - Set right cap texture for 3-slice buttons
+        methods.add_method("SetRightTexture", |_, this, texture: Value| {
+            let path = match texture {
+                Value::String(s) => Some(s.to_str()?.to_string()),
+                Value::Nil => None,
+                _ => None,
+            };
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.right_texture = path;
             }
             Ok(())
         });
