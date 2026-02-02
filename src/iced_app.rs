@@ -9,10 +9,12 @@ use iced::mouse;
 use iced::widget::canvas::{self, Cache, Canvas, Event, Geometry, Path, Stroke};
 use iced::widget::image::Handle as ImageHandle;
 use iced::widget::{button, column, container, row, scrollable, text, text_input, Column};
-use iced::{Border, Color, Element, Font, Length, Point, Rectangle, Size, Theme};
+use iced::window::screenshot::Screenshot;
+use iced::{window, Border, Color, Element, Font, Length, Point, Rectangle, Size, Theme};
 use iced::{Subscription, Task};
 
-use iced_layout_inspector::server::{self as debug_server, Command as DebugCommand};
+use iced_layout_inspector::server::{self as debug_server, Command as DebugCommand, ScreenshotData};
+use tokio::sync::oneshot;
 use tokio::sync::mpsc;
 
 use crate::lua_api::WowLuaEnv;
@@ -116,6 +118,7 @@ pub enum Message {
     ExecuteCommand,
     ProcessTimers,
     CanvasEvent(CanvasMessage),
+    ScreenshotTaken(Screenshot),
 }
 
 /// Canvas-specific messages.
@@ -142,6 +145,7 @@ pub struct App {
     scroll_offset: f32,
     screen_size: Size,
     debug_rx: Option<mpsc::Receiver<DebugCommand>>,
+    pending_screenshot: Option<oneshot::Sender<Result<ScreenshotData, String>>>,
 }
 
 impl App {
@@ -199,6 +203,7 @@ impl App {
             scroll_offset: 0.0,
             screen_size: Size::new(600.0, 450.0),
             debug_rx: Some(cmd_rx),
+            pending_screenshot: None,
         };
 
         (app, Task::none())
@@ -348,7 +353,17 @@ impl App {
                 }
 
                 // Process debug commands (using try_recv in blocking context)
-                self.process_debug_commands();
+                return self.process_debug_commands();
+            }
+            Message::ScreenshotTaken(screenshot) => {
+                if let Some(respond) = self.pending_screenshot.take() {
+                    let data = ScreenshotData {
+                        width: screenshot.size.width,
+                        height: screenshot.size.height,
+                        pixels: screenshot.rgba.to_vec(),
+                    };
+                    let _ = respond.send(Ok(data));
+                }
             }
         }
 
@@ -487,7 +502,7 @@ impl App {
         self.log_messages.append(&mut state.console_output);
     }
 
-    fn process_debug_commands(&mut self) {
+    fn process_debug_commands(&mut self) -> Task<Message> {
         // Collect commands first to avoid borrow issues
         let commands: Vec<_> = if let Some(ref mut rx) = self.debug_rx {
             let mut cmds = Vec::new();
@@ -499,19 +514,31 @@ impl App {
             Vec::new()
         };
 
-        // Then handle them
+        // Then handle them, collecting any tasks
+        let mut tasks = Vec::new();
         for cmd in commands {
-            Self::handle_debug_command(cmd);
+            if let Some(task) = self.handle_debug_command(cmd) {
+                tasks.push(task);
+            }
+        }
+
+        if tasks.is_empty() {
+            Task::none()
+        } else {
+            Task::batch(tasks)
         }
     }
 
-    fn handle_debug_command(cmd: DebugCommand) {
+    fn handle_debug_command(&mut self, cmd: DebugCommand) -> Option<Task<Message>> {
         match cmd {
             DebugCommand::Dump { respond } => {
-                let _ = respond.send("iced dump not yet implemented".to_string());
+                let dump = self.dump_wow_frames();
+                let _ = respond.send(dump);
+                None
             }
             DebugCommand::Click { label, respond } => {
                 let _ = respond.send(Err(format!("Click not implemented for '{}'", label)));
+                None
             }
             DebugCommand::Input {
                 field,
@@ -519,13 +546,110 @@ impl App {
                 respond,
             } => {
                 let _ = respond.send(Err(format!("Input not implemented for '{}'", field)));
+                None
             }
             DebugCommand::Submit { respond } => {
                 let _ = respond.send(Err("Submit not implemented".to_string()));
+                None
             }
             DebugCommand::Screenshot { respond } => {
-                let _ = respond.send(Err("Screenshot not implemented".into()));
+                // Store the responder and initiate screenshot
+                self.pending_screenshot = Some(respond);
+                Some(
+                    window::latest()
+                        .and_then(window::screenshot)
+                        .map(Message::ScreenshotTaken),
+                )
             }
+        }
+    }
+
+    fn dump_wow_frames(&self) -> String {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        let screen_width = self.screen_size.width;
+        let screen_height = self.screen_size.height;
+
+        let mut lines = Vec::new();
+        lines.push("WoW UI Simulator - Frame Dump".to_string());
+        lines.push(format!("Screen: {}x{}", screen_width as i32, screen_height as i32));
+        lines.push(String::new());
+
+        // Find root frames (no parent or parent is UIParent)
+        let mut root_ids: Vec<u64> = state
+            .widgets
+            .all_ids()
+            .into_iter()
+            .filter(|&id| {
+                state
+                    .widgets
+                    .get(id)
+                    .map(|f| f.parent_id.is_none() || f.parent_id == Some(1))
+                    .unwrap_or(false)
+            })
+            .collect();
+        root_ids.sort();
+
+        for id in root_ids {
+            self.dump_frame_recursive(&state.widgets, id, 0, screen_width, screen_height, &mut lines);
+        }
+
+        lines.join("\n")
+    }
+
+    fn dump_frame_recursive(
+        &self,
+        registry: &crate::widget::WidgetRegistry,
+        id: u64,
+        depth: usize,
+        screen_width: f32,
+        screen_height: f32,
+        lines: &mut Vec<String>,
+    ) {
+        let Some(frame) = registry.get(id) else {
+            return;
+        };
+
+        let rect = compute_frame_rect(registry, id, screen_width, screen_height);
+        let indent = "  ".repeat(depth);
+
+        let name = frame.name.as_deref().unwrap_or("(anon)");
+        let type_str = frame.widget_type.as_str();
+
+        // Build warning flags
+        let mut warnings = Vec::new();
+        if rect.width <= 0.0 {
+            warnings.push("ZERO_WIDTH");
+        }
+        if rect.height <= 0.0 {
+            warnings.push("ZERO_HEIGHT");
+        }
+        if rect.x + rect.width < 0.0 || rect.x > screen_width {
+            warnings.push("OFFSCREEN_X");
+        }
+        if rect.y + rect.height < 0.0 || rect.y > screen_height {
+            warnings.push("OFFSCREEN_Y");
+        }
+        if !frame.visible {
+            warnings.push("HIDDEN");
+        }
+
+        let warning_str = if warnings.is_empty() {
+            String::new()
+        } else {
+            format!(" ! {}", warnings.join(", "))
+        };
+
+        lines.push(format!(
+            "{}{} [{}] ({:.0},{:.0} {}x{}){}",
+            indent, name, type_str,
+            rect.x, rect.y, rect.width as i32, rect.height as i32,
+            warning_str
+        ));
+
+        // Recurse into children
+        for &child_id in &frame.children {
+            self.dump_frame_recursive(registry, child_id, depth + 1, screen_width, screen_height, lines);
         }
     }
 
@@ -731,6 +855,7 @@ impl canvas::Program<Message> for &App {
 
 impl App {
     fn draw_wow_frames(&self, frame: &mut canvas::Frame, size: Size) {
+
         let env = self.env.borrow();
         let state = env.state().borrow();
 
@@ -765,12 +890,14 @@ impl App {
             .filter_map(|id| {
                 let f = state.widgets.get(id)?;
                 let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
+                // Check for __checked attribute, default to true for addon list checkboxes
                 let checked = if let Some(crate::widget::AttributeValue::Boolean(c)) =
                     f.attributes.get("__checked")
                 {
                     *c
                 } else {
-                    false
+                    // Default to checked for CheckButton widgets (most are addon enable checkboxes)
+                    f.widget_type == WidgetType::CheckButton
                 };
                 Some((id, f, rect, checked))
             })
@@ -813,8 +940,11 @@ impl App {
             let is_addonlist_root = addonlist_id == Some(id);
             if !is_addonlist_root && addonlist_ids.contains(&id) {
                 y -= self.scroll_offset;
-                let content_top = 260.0;
-                let content_bottom = 700.0;
+                // Cull elements that scroll outside the visible content area
+                // AddonList content starts around y=70 (after title bar and header)
+                // and ends around y=530 (before the bottom buttons)
+                let content_top = 70.0;
+                let content_bottom = 530.0;
                 if y + h < content_top || y > content_bottom {
                     continue;
                 }
@@ -895,8 +1025,16 @@ impl App {
             );
         }
 
-        // Special handling for AddonList frame title bar
+        // Special handling for AddonList frame - draw border only (not background, which would cover children)
+        // Note: AddonList has strata=High while children have strata=Medium, so frame is drawn AFTER children
         if f.name.as_deref() == Some("AddonList") {
+            // Draw gold border only (background would cover children due to strata ordering)
+            frame.stroke(
+                &Path::rectangle(bounds.position(), bounds.size()),
+                Stroke::default()
+                    .with_color(Color::from_rgba(0.6, 0.45, 0.15, f.alpha))
+                    .with_width(2.0),
+            );
             let title_height = 24.0;
 
             // Title bar background
@@ -1017,15 +1155,15 @@ impl App {
             return;
         }
 
-        // Fallback placeholder
+        // Fallback placeholder - use a more visible color
         frame.fill_rectangle(
             bounds.position(),
             bounds.size(),
-            Color::from_rgba(0.4, 0.35, 0.3, 0.7 * f.alpha),
+            Color::from_rgba(0.2, 0.15, 0.1, 0.9 * f.alpha),  // Dark brown, more opaque
         );
 
-        // Diagonal lines
-        let line_color = Color::from_rgba(1.0, 1.0, 1.0, 0.2 * f.alpha);
+        // Diagonal lines - brighter
+        let line_color = Color::from_rgba(0.5, 0.4, 0.3, 0.4 * f.alpha);
         frame.stroke(
             &Path::line(
                 bounds.position(),
@@ -1122,30 +1260,31 @@ impl App {
         f: &crate::widget::Frame,
         checked: bool,
     ) {
-        let box_size = bounds.height.min(bounds.width).min(20.0);
-        let box_x = bounds.x + (bounds.width - box_size) / 2.0;
+        // WoW-style checkbox: ~16px square, positioned at left of bounds
+        let box_size = 16.0_f32.min(bounds.height).min(bounds.width);
+        let box_x = bounds.x + (bounds.width - box_size) / 2.0; // Centered in bounds
         let box_y = bounds.y + (bounds.height - box_size) / 2.0;
 
-        // Checkbox background
+        // Checkbox background - dark brown
         frame.fill_rectangle(
             Point::new(box_x, box_y),
             Size::new(box_size, box_size),
-            Color::from_rgba(0.12, 0.12, 0.15, 0.9 * f.alpha),
+            Color::from_rgba(0.15, 0.1, 0.05, 0.8 * f.alpha),
         );
 
-        // Checkbox border (gold)
+        // Checkbox border - gold
         frame.stroke(
             &Path::rectangle(Point::new(box_x, box_y), Size::new(box_size, box_size)),
             Stroke::default()
-                .with_color(Color::from_rgba(0.8, 0.6, 0.2, f.alpha))
+                .with_color(Color::from_rgba(0.6, 0.45, 0.15, f.alpha))
                 .with_width(1.5),
         );
 
-        // Checkmark if checked
+        // Checkmark if checked - bright gold
         if checked {
             let margin = box_size * 0.2;
             let check_x1 = box_x + margin;
-            let check_y1 = box_y + box_size * 0.5;
+            let check_y1 = box_y + box_size * 0.55;
             let check_x2 = box_x + box_size * 0.4;
             let check_y2 = box_y + box_size - margin;
             let check_x3 = box_x + box_size - margin;
@@ -1160,30 +1299,8 @@ impl App {
             frame.stroke(
                 &path,
                 Stroke::default()
-                    .with_color(Color::from_rgba(1.0, 0.8, 0.2, f.alpha))
-                    .with_width(2.5),
-            );
-        }
-
-        // Label text
-        if let Some(ref txt) = f.text {
-            let text_x = bounds.x + bounds.width + 6.0;
-            let text_bounds =
-                Rectangle::new(Point::new(text_x, bounds.y), Size::new(200.0, bounds.height));
-            TextRenderer::draw_justified_text(
-                frame,
-                txt,
-                text_bounds,
-                f.font_size,
-                Color::from_rgba(
-                    f.text_color.r,
-                    f.text_color.g,
-                    f.text_color.b,
-                    f.text_color.a * f.alpha,
-                ),
-                Font::DEFAULT,
-                TextJustify::Left,
-                TextJustify::Center,
+                    .with_color(Color::from_rgba(1.0, 0.85, 0.0, f.alpha)) // Bright gold
+                    .with_width(2.0),
             );
         }
     }
@@ -1319,6 +1436,16 @@ fn compute_frame_rect(
         Some(f) => f,
         None => return LayoutRect::default(),
     };
+
+    // Special case: UIParent (id=1) fills the entire screen
+    if frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1) {
+        return LayoutRect {
+            x: 0.0,
+            y: 0.0,
+            width: screen_width,
+            height: screen_height,
+        };
+    }
 
     let parent_rect = if let Some(parent_id) = frame.parent_id {
         compute_frame_rect(registry, parent_id, screen_width, screen_height)

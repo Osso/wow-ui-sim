@@ -50,7 +50,7 @@ impl TextJustify {
             "LEFT" | "TOP" => TextJustify::Left,
             "CENTER" | "MIDDLE" => TextJustify::Center,
             "RIGHT" | "BOTTOM" => TextJustify::Right,
-            _ => TextJustify::Center,
+            _ => TextJustify::Left,  // WoW defaults to LEFT
         }
     }
 }
@@ -178,7 +178,7 @@ impl Frame {
             text_color: Color::new(1.0, 0.8, 0.2, 1.0), // Default gold text for visibility
             font: None,
             font_size: 14.0,
-            justify_h: TextJustify::Center,
+            justify_h: TextJustify::Left,  // WoW defaults to LEFT
             justify_v: TextJustify::Center,
             attributes: HashMap::new(),
             backdrop: Backdrop::default(),
