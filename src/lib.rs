@@ -5,9 +5,10 @@
 
 pub mod error;
 pub mod event;
-pub mod gtk_app;
+pub mod iced_app;
 pub mod loader;
 pub mod lua_api;
+pub mod render;
 pub mod saved_variables;
 pub mod texture;
 pub mod toc;
@@ -15,7 +16,7 @@ pub mod widget;
 pub mod xml;
 
 pub use error::{Error, Result};
-pub use gtk_app::{run_gtk_ui, run_gtk_ui_with_textures};
+pub use iced_app::{run_iced_ui, run_iced_ui_with_textures};
 
 /// Computed layout position for a frame.
 #[derive(Debug, Clone, Copy, Default)]

@@ -18,13 +18,9 @@ image-blp = "1"
 tokio = { version = "1", features = ["sync", "rt", "time"] }
 libc = "0.2"
 
-# GTK4/relm4 for UI
-relm4 = { version = "0.10", features = ["libadwaita"] }
-gtk = { version = "0.10", package = "gtk4" }
-adw = { version = "0.8", package = "libadwaita" }
-pango = "0.21"
-pangocairo = "0.21"
-gtk-layout-inspector = { path = "/home/osso/Projects/lib/gtk-layout-inspector", features = ["server"] }
+# Iced GUI
+iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio"] }
+iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
 
 [dev-dependencies]
 insta = "1.42"

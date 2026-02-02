@@ -356,8 +356,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    // Run the GTK UI
-    wow_ui_sim::run_gtk_ui(env)?;
+    // Run the iced UI
+    wow_ui_sim::run_iced_ui(env)?;
 
     Ok(())
 }
