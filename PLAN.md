@@ -1,84 +1,50 @@
 # WoW UI Simulator - Plan
 
-## GTK4 Migration
+## Iced 0.14 Migration (Completed 2026-02-02)
 
-### Why Migrate from iced
+### Why Migrate from GTK4 back to Iced
 
-The current iced canvas renderer has fundamental limitations:
-- No text measurement APIs - centering text requires guessing character widths
-- Manual layout calculations for everything
-- No proper widget system - reimplementing basic UI primitives
-- Fighting the framework instead of leveraging it
+Iced 0.14 now has proper text measurement via cosmic-text integration:
+- `Paragraph::min_bounds()` / `min_width()` / `min_height()` for accurate text sizing
+- Text alignment via `align_x` and `align_y` fields
+- No more character-counting hacks for centering
 
-GTK4/relm4 provides:
-- Proper text rendering with Pango (measurement, wrapping, ellipsis)
-- Layout containers (Box, Grid, Overlay) that handle positioning
-- Real widget system with CSS styling
-- Same Elm-like architecture as iced (via relm4)
+Additionally:
+- Simpler dependency chain (pure Rust vs GTK4/Cairo/Pango bindings)
+- Better cross-platform potential
+- Faster compilation
 
-### Migration Strategy
-
-**Phase 1: Scaffold GTK App** ✅
-- [x] Add gtk4, relm4, libadwaita dependencies
-- [x] Create basic window with relm4 Application
-- [x] Port console/command input (bottom panel)
-- [x] Port event buttons (ADDON_LOADED, etc.)
-- [x] Port frames list sidebar
-- [x] Integrate gtk-layout-inspector for debugging
-- [x] Add WoW-style CSS theming
-- [x] Cairo rendering for WoW frames
-
-**Phase 2: WoW UI Canvas** ✅
-- [x] Create custom GtkDrawingArea for WoW frame rendering
-- [x] Port nine-slice texture rendering to Cairo
-- [x] Port texture/image rendering
-- [x] Implement proper text rendering with Pango
-- [x] Mouse event handling (hover, click)
-
-**Phase 3: Widget Mapping** ✅
-- [x] Map WoW Button → GTK rendering with proper text centering
-- [x] Map WoW FontString → Pango text layout (with justify_h/justify_v support)
-- [x] Map WoW Frame → Cairo rectangle with backdrop
-- [x] Map WoW Texture → Cairo image surface
-- [x] Map WoW EditBox → Cairo text input field rendering
-
-**Phase 4: Cleanup** ✅
-- [x] Remove iced dependencies
-- [x] Remove render/ui.rs (1400 lines of manual layout)
-- [x] Remove render/nine_slice.rs
-- [x] gtk-layout-inspector integrated
-
-### Architecture
+### Current Architecture (iced 0.14)
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ relm4 Application                                       │
+│ iced Application                                         │
 ├─────────────────────────────────────────────────────────┤
 │ ┌─────────────────────────────────┐ ┌─────────────────┐ │
-│ │ WoW Canvas (GtkDrawingArea)     │ │ Frames Sidebar  │ │
-│ │ - Cairo rendering               │ │ - GtkListView   │ │
-│ │ - Pango text                    │ │                 │ │
+│ │ WoW Canvas (iced canvas)        │ │ Frames Sidebar  │ │
+│ │ - canvas::Frame drawing         │ │ - scrollable    │ │
+│ │ - cosmic-text rendering         │ │                 │ │
 │ │ - Mouse events                  │ │                 │ │
 │ └─────────────────────────────────┘ └─────────────────┘ │
 ├─────────────────────────────────────────────────────────┤
-│ Event Buttons (GtkBox with GtkButtons)                  │
+│ Event Buttons (iced buttons)                            │
 ├─────────────────────────────────────────────────────────┤
-│ Command Input (GtkEntry) │ Console Output (GtkTextView) │
+│ Command Input (text_input) │ Console Output (scrollable)│
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Files to Modify
+### Key Files
 
-| Current (iced) | New (GTK4) |
-|----------------|------------|
-| src/render/ui.rs (1400 lines) | src/gtk_app.rs - relm4 component |
-| src/render/nine_slice.rs | src/render/cairo_nine_slice.rs |
-| src/main.rs | src/main.rs - gtk4 app init |
-| Cargo.toml (iced deps) | Cargo.toml (gtk4, relm4, adw) |
+| File | Purpose |
+|------|---------|
+| `src/iced_app.rs` | Main iced application, canvas rendering |
+| `src/render/mod.rs` | Render module exports |
+| `src/render/text.rs` | Text rendering with proper alignment |
+| `src/render/texture.rs` | Texture drawing utilities |
 
-### Keep Unchanged
+### Renderer-Agnostic Modules
 
-These modules are renderer-agnostic and stay the same:
+These modules are unchanged:
 - `src/lua_api/` - Lua bindings (mlua)
 - `src/loader.rs` - Addon loading
 - `src/widget/` - Frame tree data structures
@@ -86,30 +52,14 @@ These modules are renderer-agnostic and stay the same:
 - `src/toc.rs` - TOC file parsing
 - `src/saved_variables.rs` - SavedVariables persistence
 - `src/event/` - Event system
+- `src/texture.rs` - TextureManager (loads BLP/PNG)
 
 ### Dependencies
 
 ```toml
-[dependencies]
-# Remove
-# iced = ...
-# iced_runtime = ...
-# iced-layout-inspector = ...
-
-# Add
-relm4 = { version = "0.10", features = ["libadwaita"] }
-gtk = { version = "0.10", package = "gtk4" }
-adw = { version = "0.8", package = "libadwaita" }
-gtk-layout-inspector = { path = "...", features = ["server"] }
+iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio"] }
+iced-layout-inspector = { path = ".../iced-layout-inspector", features = ["server"] }
 ```
-
-### Reference Implementation
-
-See `/home/osso/Projects/apps/reddit-desktop-gtk` for relm4 patterns:
-- TypedListView for frame list
-- CSS styling
-- gtk-layout-inspector integration
-- Async operations with tokio
 
 ---
 
