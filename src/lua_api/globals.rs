@@ -13619,6 +13619,7 @@ impl UserData for FrameHandle {
                 _ => {
                     // Full form: SetPoint(point, relativeTo, relativePoint, x, y)
                     let rel_to = args.get(1).and_then(get_frame_id);
+
                     let rel_point_str = args.get(2).and_then(|v| {
                         if let Value::String(s) = v {
                             Some(s.to_string_lossy().to_string())

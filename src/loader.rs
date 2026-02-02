@@ -339,6 +339,17 @@ fn create_frame_from_xml(
         }
     );
 
+    // Set parentKey immediately after frame creation, BEFORE anchors are set.
+    // This ensures sibling frames can reference this frame via $parent.ChildKey in their anchors.
+    if let Some(parent_key) = &frame.parent_key {
+        lua_code.push_str(&format!(
+            r#"
+        {}.{} = frame
+        "#,
+            parent, parent_key
+        ));
+    }
+
     // Collect mixins from both direct attribute and inherited templates
     let mut all_mixins: Vec<String> = Vec::new();
 

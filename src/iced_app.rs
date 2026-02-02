@@ -1571,16 +1571,23 @@ fn compute_frame_rect(
     let width = frame.width;
     let height = frame.height;
 
-    let (parent_anchor_x, parent_anchor_y) = anchor_position(
+    // For single anchor, check if it has a specific relativeTo frame
+    let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
+        compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
+    } else {
+        parent_rect
+    };
+
+    let (anchor_x, anchor_y) = anchor_position(
         anchor.relative_point,
-        parent_rect.x,
-        parent_rect.y,
-        parent_rect.width,
-        parent_rect.height,
+        relative_rect.x,
+        relative_rect.y,
+        relative_rect.width,
+        relative_rect.height,
     );
 
-    let target_x = parent_anchor_x + anchor.x_offset;
-    let target_y = parent_anchor_y - anchor.y_offset;
+    let target_x = anchor_x + anchor.x_offset;
+    let target_y = anchor_y - anchor.y_offset;
 
     let (frame_x, frame_y) =
         frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
