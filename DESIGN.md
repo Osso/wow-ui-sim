@@ -21,8 +21,8 @@
 ├──────────────┬──────────────┬──────────────────────┤
 │  lua_api/    │   widget/    │      render/         │
 │  - globals   │   - Frame    │   - iced UI          │
-│  - WoW APIs  │   - Registry │   - widget tree      │
-│              │   - Anchor   │                      │
+│  - WoW APIs  │   - Registry │   - texture loading  │
+│              │   - Anchor   │   - text rendering   │
 ├──────────────┴──────────────┴──────────────────────┤
 │                  mlua (Lua 5.1)                    │
 ├────────────────────────────────────────────────────┤
@@ -78,10 +78,14 @@
 ### Phase 4: Rendering [COMPLETE]
 - [x] iced integration for visual output
 - [x] Widget tree to iced elements (canvas-based)
-- [x] Basic frame rendering with strata/level z-ordering
-- [x] Text and texture rendering (FontString text, widget type differentiation)
+- [x] Strata/level z-ordering with DrawLayer support
+- [x] Text rendering (FontString with WoW fonts)
+- [x] Texture loading (PNG, BLP formats)
+- [x] Button texture rendering (normal/pushed/highlight)
+- [x] Anchor cycle detection (prevents infinite recursion)
 
-### Phase 5: Real Addon Testing [NOT STARTED]
-- [ ] Load reference addons (Ace3, WeakAuras, Details, etc.)
-- [ ] Identify and implement missing APIs
+### Phase 5: Real Addon Testing [IN PROGRESS]
+- [x] Load 127 addons (Ace3, WeakAuras, Details, BigWigs, etc.)
+- [x] Load SavedVariables from WTF folder
+- [ ] Implement missing APIs (many addons load with errors)
 - [ ] Event simulation (combat log, unit info, etc.)

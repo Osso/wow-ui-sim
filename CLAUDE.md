@@ -6,9 +6,28 @@
 - `~/Projects/wow/WTF` - SavedVariables from real WoW installation
 - `~/Projects/wow/reference-addons/wow-ui-source` - Blizzard base UI (loaded before addons, not scanned as addon)
 
+## Reference Implementations
+
+- `~/Repos/wowless` - Headless WoW client Lua/XML interpreter (useful for understanding WoW API behavior)
+  - `wowless/render.lua` - Frame-to-rect conversion with strata/level ordering
+  - `wowless/modules/points.lua` - Anchor point system (SetPoint, ClearAllPoints)
+  - `wowless/modules/loader.lua` - XML element handlers (anchors, texcoords, colors, gradients)
+  - `data/products/wow/uiobjects.yaml` - Full Frame/Texture/Button API definitions
+- `~/Repos/wow-ui-schema` - Official UI.xsd schema (62KB) for XML validation
+
+## Rendering Order
+
+**Frame Strata** (low to high): `BACKGROUND < LOW < MEDIUM < HIGH < DIALOG < FULLSCREEN < FULLSCREEN_DIALOG < TOOLTIP`
+
+**Draw Layers** within frames: `BACKGROUND < BORDER < ARTWORK < OVERLAY < HIGHLIGHT`
+- Textures render first, then FontStrings (text always above textures in same layer)
+- Overlapping textures in same layer have undefined order
+
+**Texture Coordinates**: 8 values - `tlx, tly, blx, bly, trx, try, brx, bry` (top-left, bottom-left, top-right, bottom-right)
+
 ## Performance
 
-Uses **LuaJIT** (same as retail WoW) for ~30% faster loading vs standard Lua 5.1.
+Uses **Lua 5.1** via mlua (WoW's Lua version).
 
 ### Environment Variables
 
@@ -25,7 +44,7 @@ Each addon shows timing: `(total: io=X xml=X lua=X sv=X)`
 
 ### Known Issues
 
-- `BetterWardrobe/ColorFilter.lua` exceeds LuaJIT's 65536 constant limit (works in WoW's patched LuaJIT)
+- `BetterWardrobe/ColorFilter.lua` has very large constant tables (works in WoW's patched LuaJIT)
 
 ## Textures
 
