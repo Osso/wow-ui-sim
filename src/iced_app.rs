@@ -1118,23 +1118,14 @@ impl App {
             }
 
             let x = rect.x * UI_SCALE;
-            let mut y = rect.y * UI_SCALE;
+            let y = rect.y * UI_SCALE;
             let w = rect.width * UI_SCALE;
             let h = rect.height * UI_SCALE;
 
-            // Apply scroll offset for AddonList children
-            let is_addonlist_root = addonlist_id == Some(id);
-            if !is_addonlist_root && addonlist_ids.contains(&id) {
-                y -= self.scroll_offset;
-                // Cull elements that scroll outside the visible content area
-                // AddonList content starts around y=70 (after title bar and header)
-                // and ends around y=530 (before the bottom buttons)
-                let content_top = 70.0;
-                let content_bottom = 530.0;
-                if y + h < content_top || y > content_bottom {
-                    continue;
-                }
-            }
+            // Note: We don't apply scroll offset to XML-parsed AddonList frames here.
+            // All XML frames in AddonList are decoration (panel textures, borders, buttons).
+            // The actual scrollable addon entries are rendered by draw_addon_list_entries()
+            // which handles its own scroll offset.
 
             let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
 
