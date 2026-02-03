@@ -203,6 +203,8 @@ pub struct App {
     debug_rx: Option<mpsc::Receiver<DebugCommand>>,
     pending_screenshot: Option<oneshot::Sender<Result<ScreenshotData, String>>>,
     lua_rx: Option<std::sync::mpsc::Receiver<LuaCommand>>,
+    /// Draw red debug borders around all frames when true.
+    debug_borders: bool,
 }
 
 impl App {
@@ -254,6 +256,8 @@ impl App {
             lua_server::socket_path().display()
         );
 
+        let debug_borders = std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
+
         let app = App {
             env: env_rc,
             log_messages,
@@ -269,6 +273,7 @@ impl App {
             debug_rx: Some(cmd_rx),
             pending_screenshot: None,
             lua_rx: Some(lua_rx),
+            debug_borders,
         };
 
         (app, Task::none())
@@ -1126,6 +1131,17 @@ impl App {
                 }
                 _ => {}
             }
+
+            // Draw debug border if enabled
+            if self.debug_borders {
+                let border_path = Path::rectangle(bounds.position(), bounds.size());
+                frame.stroke(
+                    &border_path,
+                    Stroke::default()
+                        .with_color(Color::from_rgb(1.0, 0.0, 0.0))
+                        .with_width(1.0),
+                );
+            }
         }
 
         // Draw center crosshair
@@ -1517,20 +1533,15 @@ impl App {
             1
         };
 
-        // Draw each tile
-        for row in 0..rows {
-            for col in 0..cols {
-                let x = bounds.x + col as f32 * tile_width;
-                let y = bounds.y + row as f32 * tile_height;
+        // Clip all tile drawing to the bounds
+        frame.with_clip(bounds, |frame| {
+            for row in 0..rows {
+                for col in 0..cols {
+                    let x = bounds.x + col as f32 * tile_width;
+                    let y = bounds.y + row as f32 * tile_height;
 
-                // Calculate the size of this tile (may be clipped at edges)
-                let width = (bounds.x + bounds.width - x).min(tile_width);
-                let height = (bounds.y + bounds.height - y).min(tile_height);
-
-                if width > 0.0 && height > 0.0 {
-                    // For partial tiles at edges, we'd need texture coords clipping
-                    // For now, just draw the full tile (will be clipped by canvas)
-                    let full_tile = Rectangle::new(Point::new(x, y), Size::new(tile_width, tile_height));
+                    let full_tile =
+                        Rectangle::new(Point::new(x, y), Size::new(tile_width, tile_height));
                     let mut img = canvas::Image::new(handle.clone());
                     if alpha < 1.0 {
                         img = img.opacity(alpha);
@@ -1538,7 +1549,7 @@ impl App {
                     frame.draw_image(full_tile, img);
                 }
             }
-        }
+        });
     }
 
     /// Get the dimensions of a cached texture.
