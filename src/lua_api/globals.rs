@@ -15461,63 +15461,68 @@ impl UserData for FrameHandle {
         // GetPushedTextOffset() - Get text offset when button is pushed
         methods.add_method("GetPushedTextOffset", |_, _this, ()| Ok((0.0_f64, 0.0_f64)));
 
-        // Helper to create texture stub table
-        fn create_texture_stub(lua: &Lua) -> mlua::Result<mlua::Table> {
-            let texture = lua.create_table()?;
-            texture.set("SetTexture", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetTexCoord", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetVertexColor", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetBlendMode", lua.create_function(|_, _: String| Ok(()))?)?;
-            texture.set("SetDrawLayer", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetAllPoints", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetPoint", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("ClearAllPoints", lua.create_function(|_, ()| Ok(()))?)?;
-            texture.set("SetAlpha", lua.create_function(|_, _: f64| Ok(()))?)?;
-            texture.set("SetSize", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetWidth", lua.create_function(|_, _: f64| Ok(()))?)?;
-            texture.set("SetHeight", lua.create_function(|_, _: f64| Ok(()))?)?;
-            texture.set("GetWidth", lua.create_function(|_, ()| Ok(0.0))?)?;
-            texture.set("GetHeight", lua.create_function(|_, ()| Ok(0.0))?)?;
-            texture.set("Show", lua.create_function(|_, ()| Ok(()))?)?;
-            texture.set("Hide", lua.create_function(|_, ()| Ok(()))?)?;
-            texture.set("SetShown", lua.create_function(|_, _: bool| Ok(()))?)?;
-            texture.set("IsShown", lua.create_function(|_, ()| Ok(true))?)?;
-            texture.set("SetParent", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("GetParent", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-            texture.set("SetAtlas", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("GetAtlas", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-            texture.set("SetColorTexture", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetGradient", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-            texture.set("SetDesaturated", lua.create_function(|_, _: bool| Ok(()))?)?;
-            texture.set("IsDesaturated", lua.create_function(|_, ()| Ok(false))?)?;
-            texture.set("SetRotation", lua.create_function(|_, _: f64| Ok(()))?)?;
-            texture.set("GetTexture", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-            Ok(texture)
-        }
-
         // GetNormalTexture() - Get the normal state texture
-        methods.add_method("GetNormalTexture", |lua, _this, ()| {
-            // Return a texture stub table
-            let texture = create_texture_stub(lua)?;
-            Ok(Value::Table(texture))
+        methods.add_method("GetNormalTexture", |lua, this, ()| {
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(&tex_id) = frame.children_keys.get("NormalTexture") {
+                    drop(state);
+                    let handle = FrameHandle {
+                        id: tex_id,
+                        state: Rc::clone(&this.state),
+                    };
+                    return lua.create_userdata(handle).map(Value::UserData);
+                }
+            }
+            Ok(Value::Nil)
         });
 
         // GetHighlightTexture() - Get the highlight state texture
-        methods.add_method("GetHighlightTexture", |lua, _this, ()| {
-            let texture = create_texture_stub(lua)?;
-            Ok(Value::Table(texture))
+        methods.add_method("GetHighlightTexture", |lua, this, ()| {
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(&tex_id) = frame.children_keys.get("HighlightTexture") {
+                    drop(state);
+                    let handle = FrameHandle {
+                        id: tex_id,
+                        state: Rc::clone(&this.state),
+                    };
+                    return lua.create_userdata(handle).map(Value::UserData);
+                }
+            }
+            Ok(Value::Nil)
         });
 
         // GetPushedTexture() - Get the pushed state texture
-        methods.add_method("GetPushedTexture", |lua, _this, ()| {
-            let texture = create_texture_stub(lua)?;
-            Ok(Value::Table(texture))
+        methods.add_method("GetPushedTexture", |lua, this, ()| {
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(&tex_id) = frame.children_keys.get("PushedTexture") {
+                    drop(state);
+                    let handle = FrameHandle {
+                        id: tex_id,
+                        state: Rc::clone(&this.state),
+                    };
+                    return lua.create_userdata(handle).map(Value::UserData);
+                }
+            }
+            Ok(Value::Nil)
         });
 
         // GetDisabledTexture() - Get the disabled state texture
-        methods.add_method("GetDisabledTexture", |lua, _this, ()| {
-            let texture = create_texture_stub(lua)?;
-            Ok(Value::Table(texture))
+        methods.add_method("GetDisabledTexture", |lua, this, ()| {
+            let state = this.state.borrow();
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(&tex_id) = frame.children_keys.get("DisabledTexture") {
+                    drop(state);
+                    let handle = FrameHandle {
+                        id: tex_id,
+                        state: Rc::clone(&this.state),
+                    };
+                    return lua.create_userdata(handle).map(Value::UserData);
+                }
+            }
+            Ok(Value::Nil)
         });
 
         // SetNormalTexture(texture) - Set texture for normal state

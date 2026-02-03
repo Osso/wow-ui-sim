@@ -549,6 +549,9 @@ fn create_frame_from_xml(
         }
     }
 
+    // Apply button textures from this frame's XML (NormalTexture, PushedTexture, etc.)
+    apply_button_textures(env, frame, &name)?;
+
     // Fire OnLoad script after frame is fully configured
     // In WoW, OnLoad fires at the end of frame creation from XML
     // Templates often use method="OnLoad" which calls self:OnLoad()
@@ -632,6 +635,9 @@ fn instantiate_template_children(
             }
         }
     }
+
+    // Apply button textures from template (NormalTexture, PushedTexture, etc.)
+    apply_button_textures(env, template, parent_name)?;
 
     Ok(())
 }
@@ -794,6 +800,67 @@ fn generate_scripts_code(scripts: &crate::xml::ScriptsXml) -> String {
     }
 
     code
+}
+
+/// Apply button textures (NormalTexture, PushedTexture, etc.) from a FrameXml to a button.
+fn apply_button_textures(
+    env: &WowLuaEnv,
+    frame_xml: &crate::xml::FrameXml,
+    button_name: &str,
+) -> Result<(), LoadError> {
+    let mut lua_code = String::new();
+
+    // Helper to generate SetXxxTexture call
+    let add_texture = |code: &mut String, method: &str, texture: &crate::xml::TextureXml| {
+        if let Some(atlas) = &texture.atlas {
+            // Use SetAtlas on the texture object
+            code.push_str(&format!(
+                r#"
+        do
+            local tex = {}:{}()
+            if tex then tex:SetAtlas("{}") end
+        end
+        "#,
+                button_name,
+                method.replace("Set", "Get"),
+                escape_lua_string(atlas)
+            ));
+        } else if let Some(file) = &texture.file {
+            // Use SetTexture directly on the button
+            code.push_str(&format!(
+                r#"
+        {}:{}("{}")
+        "#,
+                button_name,
+                method,
+                escape_lua_string(file)
+            ));
+        }
+    };
+
+    if let Some(tex) = frame_xml.normal_texture() {
+        add_texture(&mut lua_code, "SetNormalTexture", tex);
+    }
+    if let Some(tex) = frame_xml.pushed_texture() {
+        add_texture(&mut lua_code, "SetPushedTexture", tex);
+    }
+    if let Some(tex) = frame_xml.highlight_texture() {
+        add_texture(&mut lua_code, "SetHighlightTexture", tex);
+    }
+    if let Some(tex) = frame_xml.disabled_texture() {
+        add_texture(&mut lua_code, "SetDisabledTexture", tex);
+    }
+
+    if !lua_code.is_empty() {
+        env.exec(&lua_code).map_err(|e| {
+            LoadError::Lua(format!(
+                "Failed to apply button textures to {}: {}",
+                button_name, e
+            ))
+        })?;
+    }
+
+    Ok(())
 }
 
 /// Create a texture from XML definition.

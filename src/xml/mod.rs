@@ -142,6 +142,38 @@ impl FrameXml {
             _ => None,
         })
     }
+
+    /// Get the NormalTexture element if present (Button-specific).
+    pub fn normal_texture(&self) -> Option<&TextureXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::NormalTexture(t) => Some(t),
+            _ => None,
+        })
+    }
+
+    /// Get the PushedTexture element if present (Button-specific).
+    pub fn pushed_texture(&self) -> Option<&TextureXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::PushedTexture(t) => Some(t),
+            _ => None,
+        })
+    }
+
+    /// Get the HighlightTexture element if present (Button-specific).
+    pub fn highlight_texture(&self) -> Option<&TextureXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::HighlightTexture(t) => Some(t),
+            _ => None,
+        })
+    }
+
+    /// Get the DisabledTexture element if present (Button-specific).
+    pub fn disabled_texture(&self) -> Option<&TextureXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::DisabledTexture(t) => Some(t),
+            _ => None,
+        })
+    }
 }
 
 /// Child elements that can appear inside a Frame.
