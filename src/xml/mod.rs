@@ -432,6 +432,8 @@ pub struct TextureXml {
     pub file: Option<String>,
     #[serde(rename = "@atlas")]
     pub atlas: Option<String>,
+    #[serde(rename = "@useAtlasSize")]
+    pub use_atlas_size: Option<bool>,
     #[serde(rename = "@virtual")]
     pub is_virtual: Option<bool>,
     #[serde(rename = "@mixin")]

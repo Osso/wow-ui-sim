@@ -901,11 +901,13 @@ fn create_texture_from_xml(
 
     // Set atlas
     if let Some(atlas) = &texture.atlas {
+        let use_atlas_size = texture.use_atlas_size.unwrap_or(false);
         lua_code.push_str(&format!(
             r#"
-        tex:SetAtlas("{}")
+        tex:SetAtlas("{}", {})
         "#,
-            escape_lua_string(atlas)
+            escape_lua_string(atlas),
+            use_atlas_size
         ));
     }
 
