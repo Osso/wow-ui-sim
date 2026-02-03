@@ -413,7 +413,55 @@ fn create_frame_from_xml(
         );
     }
 
-    // Handle KeyValues
+    // Handle setAllPoints from inherited templates first
+    let mut has_set_all_points = false;
+    if !inherits.is_empty() {
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in &template_chain {
+            if template_entry.frame.set_all_points == Some(true) {
+                has_set_all_points = true;
+                break;
+            }
+        }
+    }
+
+    // Direct attribute overrides template
+    if frame.set_all_points == Some(true) {
+        has_set_all_points = true;
+    }
+
+    // Apply setAllPoints if set
+    if has_set_all_points {
+        lua_code.push_str(
+            r#"
+        frame:SetAllPoints(true)
+        "#,
+        );
+    }
+
+    // Handle KeyValues from inherited templates first (so they can be overridden)
+    if !inherits.is_empty() {
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in &template_chain {
+            if let Some(key_values) = template_entry.frame.key_values() {
+                for kv in &key_values.values {
+                    let value = match kv.value_type.as_deref() {
+                        Some("number") => kv.value.clone(),
+                        Some("boolean") => kv.value.to_lowercase(),
+                        _ => format!("\"{}\"", escape_lua_string(&kv.value)),
+                    };
+                    lua_code.push_str(&format!(
+                        r#"
+        frame.{} = {}
+        "#,
+                        kv.key, value
+                    ));
+                }
+            }
+        }
+    }
+
+    // Handle KeyValues from the frame itself (can override template values)
     if let Some(key_values) = frame.key_values() {
         for kv in &key_values.values {
             let value = match kv.value_type.as_deref() {
@@ -892,6 +940,15 @@ fn create_texture_from_xml(
         lua_code.push_str(
             r#"
         tex:SetVertTile(true)
+        "#,
+        );
+    }
+
+    // Set all points if specified
+    if texture.set_all_points == Some(true) {
+        lua_code.push_str(
+            r#"
+        tex:SetAllPoints(true)
         "#,
         );
     }

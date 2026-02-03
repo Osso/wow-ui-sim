@@ -131,6 +131,32 @@ fn create_test_button(env: &WowLuaEnv) {
 
         btn:Show()
         print("[Test] Created TestTextureButton with 3-slice gold button textures")
+
+        -- Debug: Check NineSlice system
+        if AddonList and AddonList.NineSlice then
+            local ns = AddonList.NineSlice
+            print("[NineSlice] Frame name:", ns:GetName())
+            print("[NineSlice] Parent:", ns:GetParent() and ns:GetParent():GetName())
+            print("[NineSlice] Width x Height:", ns:GetWidth(), "x", ns:GetHeight())
+            print("[NineSlice] Visible:", ns:IsVisible())
+            local numChildren = 0
+            for i = 1, ns:GetNumChildren() do numChildren = numChildren + 1 end
+            print("[NineSlice] NumChildren:", numChildren)
+            if ns.TopLeftCorner then
+                local tlc = ns.TopLeftCorner
+                print("[NineSlice] TopLeftCorner size:", tlc:GetWidth(), "x", tlc:GetHeight())
+                print("[NineSlice] TopLeftCorner texture:", tlc:GetTexture())
+                print("[NineSlice] TopLeftCorner atlas:", tlc:GetAtlas())
+                print("[NineSlice] TopLeftCorner visible:", tlc:IsVisible())
+                print("[NineSlice] TopLeftCorner drawLayer:", tlc:GetDrawLayer())
+                local numPoints = tlc:GetNumPoints()
+                print("[NineSlice] TopLeftCorner numPoints:", numPoints)
+                if numPoints > 0 then
+                    local p, rel, rp, x, y = tlc:GetPoint(1)
+                    print("[NineSlice] TopLeftCorner point1:", p, rel and rel:GetName(), rp, x, y)
+                end
+            end
+        end
     "#;
 
     if let Err(e) = env.lua().load(lua_code).exec() {
@@ -1186,6 +1212,43 @@ impl App {
         }
     }
 
+    /// Load a sub-region of a texture (for atlas textures with tex_coords).
+    fn get_or_load_texture_region(
+        &self,
+        wow_path: &str,
+        x: u32,
+        y: u32,
+        width: u32,
+        height: u32,
+    ) -> Option<ImageHandle> {
+        // Create a cache key for this specific region
+        let cache_key = format!("{}#{}_{}_{}_{}", wow_path, x, y, width, height);
+
+        // Check cache first
+        {
+            let cache = self.image_handles.borrow();
+            if let Some(handle) = cache.get(&cache_key) {
+                return Some(handle.clone());
+            }
+        }
+
+        // Load sub-region from texture manager
+        let mut tex_mgr = self.texture_manager.borrow_mut();
+        if let Some(tex_data) = tex_mgr.load_sub_region(wow_path, x, y, width, height) {
+            let handle = ImageHandle::from_rgba(
+                tex_data.width,
+                tex_data.height,
+                tex_data.pixels.clone(),
+            );
+            self.image_handles
+                .borrow_mut()
+                .insert(cache_key, handle.clone());
+            Some(handle)
+        } else {
+            None
+        }
+    }
+
     fn draw_button_widget(
         &self,
         frame: &mut canvas::Frame,
@@ -1310,11 +1373,40 @@ impl App {
 
         // Try to load and render the texture file
         if let Some(ref tex_path) = f.texture {
-            if let Some(handle) = self.get_or_load_texture(tex_path) {
+            // If we have tex_coords, we need to extract a sub-region
+            let handle_opt = if let Some((left, right, top, bottom)) = f.tex_coords {
+                // Ensure full texture is loaded first to get its size
+                // (load it but don't use the handle - we want the sub-region instead)
+                let _ = self.get_or_load_texture(tex_path);
+
+                // Get full texture size to calculate pixel coords
+                if let Some(tex_size) = self.get_texture_size(tex_path) {
+                    let x = (left * tex_size.0).round() as u32;
+                    let y = (top * tex_size.1).round() as u32;
+                    let w = ((right - left) * tex_size.0).round() as u32;
+                    let h = ((bottom - top) * tex_size.1).round() as u32;
+                    self.get_or_load_texture_region(tex_path, x, y, w, h)
+                } else {
+                    // Fallback: use full texture if size not available
+                    self.get_or_load_texture(tex_path)
+                }
+            } else {
+                self.get_or_load_texture(tex_path)
+            };
+
+            if handle_opt.is_none() && (tex_path.contains("UIFramePortrait") || tex_path.contains("FrameGeneral")) {
+                eprintln!("[draw_texture] FAILED TO LOAD: {}", tex_path);
+            }
+            if let Some(handle) = handle_opt {
                 // Check if tiling is enabled
                 if f.horiz_tile || f.vert_tile {
-                    // Get texture dimensions from cache
-                    let tex_size = self.get_texture_size(tex_path).unwrap_or((256.0, 256.0));
+                    // Get texture dimensions from cache (use sub-region size if available)
+                    let tex_size = if f.tex_coords.is_some() {
+                        // For sub-regions, the tile size should be the region size
+                        (bounds.width, bounds.height)
+                    } else {
+                        self.get_texture_size(tex_path).unwrap_or((256.0, 256.0))
+                    };
 
                     // Draw tiled texture
                     self.draw_tiled_texture(

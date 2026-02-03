@@ -33,11 +33,13 @@ pub struct AtlasInfo {
 pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(|| {
     let mut map = HashMap::new();
 
-    // PortraitFrameTemplate pieces from UIFramePortrait.PNG (256x512)
-    // These coordinates are approximations based on the texture layout
+    // PortraitFrameTemplate pieces from UIFramePortrait.PNG (256x1024)
+    // Note: wow-ui-textures version is 256x1024, different from original WoW 256x512
     let portrait_tex = "Interface\\FrameGeneral\\UIFramePortrait";
+    let tex_h = 1024.0; // Actual texture height
 
-    // TopLeftCorner - Portrait corner with ring (large piece at bottom-left of texture)
+    // TopLeftCorner - Portrait corner with ring (large piece)
+    // Located at approximately y=660 in the 1024-height texture
     map.insert(
         "UI-Frame-PortraitMetal-CornerTopLeft",
         AtlasInfo {
@@ -46,14 +48,14 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             height: 84,
             left_tex_coord: 0.0,
             right_tex_coord: 84.0 / 256.0,
-            top_tex_coord: 330.0 / 512.0,
-            bottom_tex_coord: 414.0 / 512.0,
+            top_tex_coord: 660.0 / tex_h,
+            bottom_tex_coord: 744.0 / tex_h, // 660 + 84 = 744
             tiles_horizontally: false,
             tiles_vertically: false,
         },
     );
 
-    // TopRightCorner
+    // TopRightCorner - small corner piece
     map.insert(
         "UI-Frame-Metal-CornerTopRight",
         AtlasInfo {
@@ -62,8 +64,8 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             height: 32,
             left_tex_coord: 224.0 / 256.0,
             right_tex_coord: 1.0,
-            top_tex_coord: 64.0 / 512.0,
-            bottom_tex_coord: 96.0 / 512.0,
+            top_tex_coord: 128.0 / tex_h,
+            bottom_tex_coord: 160.0 / tex_h, // 128 + 32 = 160
             tiles_horizontally: false,
             tiles_vertically: false,
         },
@@ -78,8 +80,8 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             height: 32,
             left_tex_coord: 0.0,
             right_tex_coord: 32.0 / 256.0,
-            top_tex_coord: 96.0 / 512.0,
-            bottom_tex_coord: 128.0 / 512.0,
+            top_tex_coord: 192.0 / tex_h,
+            bottom_tex_coord: 224.0 / tex_h, // 192 + 32 = 224
             tiles_horizontally: false,
             tiles_vertically: false,
         },
@@ -94,8 +96,8 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             height: 32,
             left_tex_coord: 224.0 / 256.0,
             right_tex_coord: 1.0,
-            top_tex_coord: 96.0 / 512.0,
-            bottom_tex_coord: 128.0 / 512.0,
+            top_tex_coord: 192.0 / tex_h,
+            bottom_tex_coord: 224.0 / tex_h, // 192 + 32 = 224
             tiles_horizontally: false,
             tiles_vertically: false,
         },
@@ -111,7 +113,7 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             left_tex_coord: 0.0,
             right_tex_coord: 1.0,
             top_tex_coord: 0.0,
-            bottom_tex_coord: 8.0 / 512.0,
+            bottom_tex_coord: 8.0 / tex_h,
             tiles_horizontally: true,
             tiles_vertically: false,
         },
@@ -126,8 +128,8 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             height: 8,
             left_tex_coord: 0.0,
             right_tex_coord: 1.0,
-            top_tex_coord: 8.0 / 512.0,
-            bottom_tex_coord: 16.0 / 512.0,
+            top_tex_coord: 16.0 / tex_h,
+            bottom_tex_coord: 24.0 / tex_h, // 16 + 8 = 24
             tiles_horizontally: true,
             tiles_vertically: false,
         },
@@ -142,8 +144,8 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             height: 256,
             left_tex_coord: 0.0,
             right_tex_coord: 8.0 / 256.0,
-            top_tex_coord: 128.0 / 512.0,
-            bottom_tex_coord: 256.0 / 512.0,
+            top_tex_coord: 256.0 / tex_h,
+            bottom_tex_coord: 512.0 / tex_h, // 256 + 256 = 512
             tiles_horizontally: false,
             tiles_vertically: true,
         },
@@ -158,8 +160,8 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
             height: 256,
             left_tex_coord: 248.0 / 256.0,
             right_tex_coord: 1.0,
-            top_tex_coord: 128.0 / 512.0,
-            bottom_tex_coord: 256.0 / 512.0,
+            top_tex_coord: 256.0 / tex_h,
+            bottom_tex_coord: 512.0 / tex_h, // 256 + 256 = 512
             tiles_horizontally: false,
             tiles_vertically: true,
         },

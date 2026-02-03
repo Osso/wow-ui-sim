@@ -86,6 +86,8 @@ pub struct FrameXml {
     pub intrinsic: Option<bool>,
     #[serde(rename = "@propagateMouseInput")]
     pub propagate_mouse_input: Option<String>,
+    #[serde(rename = "@setAllPoints")]
+    pub set_all_points: Option<bool>,
 
     // Child elements collected via $value to allow multiples
     #[serde(rename = "$value", default)]
@@ -410,6 +412,8 @@ pub struct TextureXml {
     pub horiz_tile: Option<bool>,
     #[serde(rename = "@vertTile")]
     pub vert_tile: Option<bool>,
+    #[serde(rename = "@setAllPoints")]
+    pub set_all_points: Option<bool>,
     #[serde(rename = "Size")]
     pub size: Option<SizeXml>,
     #[serde(rename = "Anchors")]
