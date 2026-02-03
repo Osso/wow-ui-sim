@@ -3,6 +3,7 @@
 //! A standalone environment for testing World of Warcraft addons outside the game.
 //! Embeds Lua 5.1 and implements the WoW widget API.
 
+#[path = "../data/atlas.rs"]
 pub mod atlas;
 pub mod cvars;
 pub mod error;

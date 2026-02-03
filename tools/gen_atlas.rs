@@ -8,7 +8,7 @@
 //!   - UiTextureAtlasMember.csv
 //!   - listfile.csv
 //!
-//! Generates: src/atlas_data.rs
+//! Generates: data/atlas.rs
 
 use std::collections::HashMap;
 use std::fs::File;
@@ -42,14 +42,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Join and generate
     println!("Generating atlas_data.rs...");
-    let output_path = Path::new("src/atlas_data.rs");
+    std::fs::create_dir_all("data")?;
+    let output_path = Path::new("data/atlas.rs");
     let mut out = File::create(output_path)?;
 
     writeln!(out, "//! Auto-generated atlas data from WoW CSV exports.")?;
     writeln!(out, "//! Do not edit manually - regenerate with: cargo run --bin gen_atlas")?;
     writeln!(out, "")?;
-    writeln!(out, "use std::collections::HashMap;")?;
-    writeln!(out, "use std::sync::LazyLock;")?;
+    writeln!(out, "use phf::phf_map;")?;
     writeln!(out, "")?;
     writeln!(out, "/// Information about a texture atlas region.")?;
     writeln!(out, "#[derive(Debug, Clone)]")?;
@@ -102,12 +102,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     writeln!(out, "    None")?;
     writeln!(out, "}}")?;
     writeln!(out, "")?;
-    writeln!(out, "/// Atlas database with all known atlas definitions.")?;
-    writeln!(out, "pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(|| {{")?;
-    writeln!(out, "    let mut map = HashMap::new();")?;
+    writeln!(out, "/// Atlas database with all known atlas definitions (compile-time perfect hash map).")?;
+    writeln!(out, "pub static ATLAS_DB: phf::Map<&'static str, AtlasInfo> = phf_map! {{")?;
 
     let mut count = 0;
     let mut skipped = 0;
+    let mut seen_keys = std::collections::HashSet::new();
 
     for member in &members {
         // Look up atlas info
@@ -149,23 +149,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .replace('\\', "\\\\")
             .replace('"', "\\\"");
 
-        writeln!(out, "    map.insert(\"{}\", AtlasInfo {{", name_lower)?;
-        writeln!(out, "        file: r\"{}\",", wow_path)?;
-        writeln!(out, "        width: {},", member.width)?;
-        writeln!(out, "        height: {},", member.height)?;
-        writeln!(out, "        left_tex_coord: {:.6},", left)?;
-        writeln!(out, "        right_tex_coord: {:.6},", right)?;
-        writeln!(out, "        top_tex_coord: {:.6},", top)?;
-        writeln!(out, "        bottom_tex_coord: {:.6},", bottom)?;
-        writeln!(out, "        tiles_horizontally: {},", tiles_h)?;
-        writeln!(out, "        tiles_vertically: {},", tiles_v)?;
-        writeln!(out, "    }});")?;
+        // Skip duplicates (keep first occurrence)
+        if !seen_keys.insert(name_lower.clone()) {
+            skipped += 1;
+            continue;
+        }
+
+        writeln!(out, "    \"{}\" => AtlasInfo {{ file: r\"{}\", width: {}, height: {}, left_tex_coord: {:.6}, right_tex_coord: {:.6}, top_tex_coord: {:.6}, bottom_tex_coord: {:.6}, tiles_horizontally: {}, tiles_vertically: {} }},",
+            name_lower, wow_path, member.width, member.height, left, right, top, bottom, tiles_h, tiles_v)?;
 
         count += 1;
     }
 
-    writeln!(out, "    map")?;
-    writeln!(out, "}});")?;
+    writeln!(out, "}};")?;
 
     println!("Generated {} atlas entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
