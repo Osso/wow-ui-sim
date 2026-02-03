@@ -4,11 +4,13 @@
 //! Embeds Lua 5.1 and implements the WoW widget API.
 
 pub mod atlas;
+pub mod cvars;
 pub mod error;
 pub mod event;
 pub mod iced_app;
 pub mod loader;
 pub mod lua_api;
+pub mod lua_server;
 pub mod render;
 pub mod saved_variables;
 pub mod texture;

@@ -3,6 +3,7 @@
 mod frame_methods;
 mod globals;
 
+use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
 use crate::widget::WidgetRegistry;
 use crate::Result;
@@ -62,7 +63,6 @@ pub struct AddonInfo {
 }
 
 /// Shared simulator state accessible from Lua.
-#[derive(Default)]
 pub struct SimState {
     pub widgets: WidgetRegistry,
     pub events: EventQueue,
@@ -75,6 +75,23 @@ pub struct SimState {
     pub focused_frame_id: Option<u64>,
     /// Registered addons (includes all scanned addons, not just loaded ones).
     pub addons: Vec<AddonInfo>,
+    /// Console variables (CVars).
+    pub cvars: CVarStorage,
+}
+
+impl Default for SimState {
+    fn default() -> Self {
+        Self {
+            widgets: WidgetRegistry::default(),
+            events: EventQueue::default(),
+            scripts: ScriptRegistry::default(),
+            console_output: Vec::new(),
+            timers: VecDeque::new(),
+            focused_frame_id: None,
+            addons: Vec::new(),
+            cvars: CVarStorage::new(),
+        }
+    }
 }
 
 impl WowLuaEnv {

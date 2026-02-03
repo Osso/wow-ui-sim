@@ -18,6 +18,7 @@ use tokio::sync::oneshot;
 use tokio::sync::mpsc;
 
 use crate::lua_api::WowLuaEnv;
+use crate::lua_server::{self, LuaCommand, Response as LuaResponse};
 use crate::render::text::{strip_wow_markup, wow_font_to_iced, TextRenderer};
 use crate::render::texture::{draw_horizontal_slice_texture, UI_SCALE};
 use crate::texture::TextureManager;
@@ -201,6 +202,7 @@ pub struct App {
     screen_size: Size,
     debug_rx: Option<mpsc::Receiver<DebugCommand>>,
     pending_screenshot: Option<oneshot::Sender<Result<ScreenshotData, String>>>,
+    lua_rx: Option<std::sync::mpsc::Receiver<LuaCommand>>,
 }
 
 impl App {
@@ -245,6 +247,13 @@ impl App {
         // Keep guard alive by leaking it
         std::mem::forget(_guard);
 
+        // Initialize Lua REPL server
+        let lua_rx = lua_server::init();
+        eprintln!(
+            "[wow-ui-sim] Lua server at {}",
+            lua_server::socket_path().display()
+        );
+
         let app = App {
             env: env_rc,
             log_messages,
@@ -259,6 +268,7 @@ impl App {
             screen_size: Size::new(600.0, 450.0),
             debug_rx: Some(cmd_rx),
             pending_screenshot: None,
+            lua_rx: Some(lua_rx),
         };
 
         (app, Task::none())
@@ -558,7 +568,7 @@ impl App {
     }
 
     fn process_debug_commands(&mut self) -> Task<Message> {
-        // Collect commands first to avoid borrow issues
+        // Collect debug commands first to avoid borrow issues
         let commands: Vec<_> = if let Some(ref mut rx) = self.debug_rx {
             let mut cmds = Vec::new();
             while let Ok(cmd) = rx.try_recv() {
@@ -577,10 +587,63 @@ impl App {
             }
         }
 
+        // Process Lua commands
+        self.process_lua_commands();
+
         if tasks.is_empty() {
             Task::none()
         } else {
             Task::batch(tasks)
+        }
+    }
+
+    fn process_lua_commands(&mut self) {
+        // Collect lua commands
+        let commands: Vec<_> = if let Some(ref rx) = self.lua_rx {
+            let mut cmds = Vec::new();
+            while let Ok(cmd) = rx.try_recv() {
+                cmds.push(cmd);
+            }
+            cmds
+        } else {
+            Vec::new()
+        };
+
+        // Handle each command
+        for cmd in commands {
+            match cmd {
+                LuaCommand::Exec { code, respond } => {
+                    // Clear console output before execution
+                    {
+                        let env = self.env.borrow();
+                        env.state().borrow_mut().console_output.clear();
+                    }
+
+                    // Execute the Lua code
+                    let result = {
+                        let env = self.env.borrow();
+                        env.exec(&code)
+                    };
+
+                    // Collect output and send response
+                    let response = match result {
+                        Ok(()) => {
+                            let env = self.env.borrow();
+                            let mut state = env.state().borrow_mut();
+                            let output = state.console_output.join("\n");
+                            state.console_output.clear();
+                            LuaResponse::Output(output)
+                        }
+                        Err(e) => LuaResponse::Error(e.to_string()),
+                    };
+
+                    let _ = respond.send(response);
+
+                    // Refresh display
+                    self.drain_console();
+                    self.frame_cache.clear();
+                }
+            }
         }
     }
 

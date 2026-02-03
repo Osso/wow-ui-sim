@@ -3,6 +3,7 @@ name = "wow-ui-sim"
 version = "0.1.0"
 edition = "2024"
 description = "World of Warcraft UI simulator for addon development"
+default-run = "wow-ui-sim"
 
 [dependencies]
 mlua = { version = "0.10", features = ["lua51", "vendored"] }
@@ -17,10 +18,15 @@ image = "0.25"
 image-blp = "1"
 tokio = { version = "1", features = ["sync", "rt", "time"] }
 libc = "0.2"
+glob = "0.3"
 
 # Iced GUI
 iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio"] }
 iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
+
+[[bin]]
+name = "wow-lua"
+path = "src/bin/wow_lua.rs"
 
 [dev-dependencies]
 insta = "1.42"

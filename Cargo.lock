@@ -5121,6 +5121,7 @@ name = "wow-ui-sim"
 version = "0.1.0"
 dependencies = [
  "dirs",
+ "glob",
  "iced",
  "iced-layout-inspector",
  "image 0.25.9",

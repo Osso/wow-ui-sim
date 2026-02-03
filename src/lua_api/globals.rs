@@ -6950,50 +6950,51 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
     // C_CVar namespace - console variables
     let c_cvar = lua.create_table()?;
+    let state_for_getcvar = Rc::clone(&state);
     c_cvar.set(
         "GetCVar",
-        lua.create_function(|lua, cvar: String| {
-            // Return default values for common cvars
-            let value = match cvar.as_str() {
-                "nameplateShowEnemies" => "1",
-                "nameplateShowFriends" => "0",
-                "nameplateShowAll" => "1",
-                "rotateMinimap" => "0",
-                "minimapZoom" => "0",
-                _ => "",
-            };
-            Ok(Value::String(lua.create_string(value)?))
+        lua.create_function(move |lua, cvar: String| {
+            let state = state_for_getcvar.borrow();
+            match state.cvars.get(&cvar) {
+                Some(value) => Ok(Value::String(lua.create_string(&value)?)),
+                None => Ok(Value::Nil),
+            }
         })?,
     )?;
+    let state_for_setcvar = Rc::clone(&state);
     c_cvar.set(
         "SetCVar",
-        lua.create_function(|_, (_cvar, _value): (String, String)| Ok(()))?,
-    )?;
-    c_cvar.set(
-        "GetCVarBool",
-        lua.create_function(|_, cvar: String| {
-            // Return default values for common cvars
-            Ok(matches!(
-                cvar.as_str(),
-                "nameplateShowEnemies" | "nameplateShowAll"
-            ))
+        lua.create_function(move |_, (cvar, value): (String, String)| {
+            let state = state_for_setcvar.borrow();
+            Ok(state.cvars.set(&cvar, &value))
         })?,
     )?;
+    let state_for_getcvarbool = Rc::clone(&state);
+    c_cvar.set(
+        "GetCVarBool",
+        lua.create_function(move |_, cvar: String| {
+            let state = state_for_getcvarbool.borrow();
+            Ok(state.cvars.get_bool(&cvar))
+        })?,
+    )?;
+    let state_for_registercvar = Rc::clone(&state);
     c_cvar.set(
         "RegisterCVar",
-        lua.create_function(|_, (_cvar, _default): (String, Option<String>)| Ok(()))?,
+        lua.create_function(move |_, (cvar, default): (String, Option<String>)| {
+            let state = state_for_registercvar.borrow();
+            state.cvars.register(&cvar, default.as_deref());
+            Ok(())
+        })?,
     )?;
+    let state_for_getcvardefault = Rc::clone(&state);
     c_cvar.set(
         "GetCVarDefault",
-        lua.create_function(|lua, cvar: String| {
-            // Return default values for common cvars
-            let value = match cvar.as_str() {
-                "nameplateShowEnemies" => "1",
-                "nameplateShowFriends" => "0",
-                "cameraDistanceMaxZoomFactor" => "2.6",
-                _ => "",
-            };
-            Ok(Value::String(lua.create_string(value)?))
+        lua.create_function(move |lua, cvar: String| {
+            let state = state_for_getcvardefault.borrow();
+            match state.cvars.get_default(&cvar) {
+                Some(value) => Ok(Value::String(lua.create_string(&value)?)),
+                None => Ok(Value::Nil),
+            }
         })?,
     )?;
     globals.set("C_CVar", c_cvar)?;
@@ -8094,20 +8095,22 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         })?,
     )?;
 
-    // Legacy global CVar functions
-    let get_cvar = lua.create_function(|lua, cvar: String| {
-        let value = match cvar.as_str() {
-            "nameplateShowEnemies" => "1",
-            "nameplateShowFriends" => "0",
-            "rotateMinimap" => "0",
-            "minimapZoom" => "0",
-            _ => "",
-        };
-        Ok(Value::String(lua.create_string(value)?))
+    // Legacy global CVar functions (call through to C_CVar)
+    let state_for_legacy_getcvar = Rc::clone(&state);
+    let get_cvar = lua.create_function(move |lua, cvar: String| {
+        let state = state_for_legacy_getcvar.borrow();
+        match state.cvars.get(&cvar) {
+            Some(value) => Ok(Value::String(lua.create_string(&value)?)),
+            None => Ok(Value::Nil),
+        }
     })?;
     globals.set("GetCVar", get_cvar)?;
 
-    let set_cvar = lua.create_function(|_, (_cvar, _value): (String, String)| Ok(()))?;
+    let state_for_legacy_setcvar = Rc::clone(&state);
+    let set_cvar = lua.create_function(move |_, (cvar, value): (String, String)| {
+        let state = state_for_legacy_setcvar.borrow();
+        Ok(state.cvars.set(&cvar, &value))
+    })?;
     globals.set("SetCVar", set_cvar)?;
 
     // GetFramerate() - returns the current frame rate
