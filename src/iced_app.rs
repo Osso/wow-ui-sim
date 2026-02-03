@@ -1094,6 +1094,11 @@ impl App {
             }
         }
 
+        // Capture AddonList rect before consuming frames
+        let addonlist_rect = addonlist_id.and_then(|root_id| {
+            frames.iter().find(|(id, _, _, _)| *id == root_id).map(|(_, _, r, _)| r.clone())
+        });
+
         for (id, f, rect, checked) in frames {
             // Only show AddonList frame and children, plus test buttons and their children
             if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
@@ -1169,6 +1174,11 @@ impl App {
                         .with_width(1.0),
                 );
             }
+        }
+
+        // Draw scroll bar for AddonList if it exists
+        if let Some(ref rect) = addonlist_rect {
+            self.draw_addon_list_scrollbar(frame, rect, screen_width);
         }
 
         // Draw center crosshair
@@ -1764,6 +1774,149 @@ impl App {
                 .with_color(Color::from_rgb(0.8, 0.7, 0.4))
                 .with_width(1.0),
         );
+    }
+
+    /// Draw scroll bar for AddonList panel
+    fn draw_addon_list_scrollbar(
+        &self,
+        frame: &mut canvas::Frame,
+        addon_list_rect: &crate::LayoutRect,
+        _screen_width: f32,
+    ) {
+        // Scroll bar positioning relative to AddonList
+        // Based on WoW's MinimalScrollBar template
+        let scrollbar_width = 22.0;
+        let button_size = 16.0;
+        let button_margin = 15.0; // Buttons are offset 15px from edges
+
+        // Position scroll bar to the right of the content area
+        // AddonList content area is roughly x+10 to x+width-34
+        let list_x = addon_list_rect.x * UI_SCALE;
+        let list_y = addon_list_rect.y * UI_SCALE;
+        let list_width = addon_list_rect.width * UI_SCALE;
+        let list_height = addon_list_rect.height * UI_SCALE;
+
+        // Scroll bar is on the right side, inside the frame
+        let scrollbar_x = list_x + list_width - scrollbar_width - 8.0;
+        // Content area starts below title bar (~60px) and ends above buttons (~28px)
+        let content_top = list_y + 65.0;
+        let content_bottom = list_y + list_height - 32.0;
+        let scrollbar_height = content_bottom - content_top;
+
+        // Scroll parameters
+        let max_scroll = 2600.0_f32;
+        let scroll_ratio = (self.scroll_offset / max_scroll).clamp(0.0, 1.0);
+
+        // Draw track background (dark)
+        let track_x = scrollbar_x;
+        let track_y = content_top + button_margin + button_size;
+        let track_height = scrollbar_height - 2.0 * (button_margin + button_size);
+
+        frame.fill_rectangle(
+            Point::new(track_x, track_y),
+            Size::new(scrollbar_width, track_height),
+            Color::from_rgba(0.05, 0.05, 0.05, 0.9),
+        );
+
+        // Draw track border
+        frame.stroke(
+            &Path::rectangle(Point::new(track_x, track_y), Size::new(scrollbar_width, track_height)),
+            Stroke::default()
+                .with_color(Color::from_rgba(0.3, 0.25, 0.15, 0.8))
+                .with_width(1.0),
+        );
+
+        // Draw up button
+        let up_btn_x = scrollbar_x + (scrollbar_width - button_size) / 2.0;
+        let up_btn_y = content_top + button_margin;
+        self.draw_scroll_button(frame, up_btn_x, up_btn_y, button_size, true);
+
+        // Draw down button
+        let down_btn_y = content_bottom - button_margin - button_size;
+        self.draw_scroll_button(frame, up_btn_x, down_btn_y, button_size, false);
+
+        // Draw thumb
+        let thumb_height = 40.0_f32.max(track_height * 0.1); // Min 40px or 10% of track
+        let thumb_travel = track_height - thumb_height;
+        let thumb_y = track_y + scroll_ratio * thumb_travel;
+        let thumb_x = track_x + 2.0;
+        let thumb_width = scrollbar_width - 4.0;
+
+        // Thumb background
+        frame.fill_rectangle(
+            Point::new(thumb_x, thumb_y),
+            Size::new(thumb_width, thumb_height),
+            Color::from_rgba(0.4, 0.35, 0.25, 0.95),
+        );
+
+        // Thumb border (gold)
+        frame.stroke(
+            &Path::rectangle(Point::new(thumb_x, thumb_y), Size::new(thumb_width, thumb_height)),
+            Stroke::default()
+                .with_color(Color::from_rgba(0.7, 0.55, 0.25, 1.0))
+                .with_width(1.0),
+        );
+
+        // Thumb grip lines (horizontal lines in middle)
+        let grip_color = Color::from_rgba(0.6, 0.5, 0.3, 0.8);
+        let grip_y_center = thumb_y + thumb_height / 2.0;
+        for i in -1..=1 {
+            let grip_y = grip_y_center + (i as f32) * 4.0;
+            frame.stroke(
+                &Path::line(
+                    Point::new(thumb_x + 4.0, grip_y),
+                    Point::new(thumb_x + thumb_width - 4.0, grip_y),
+                ),
+                Stroke::default().with_color(grip_color).with_width(1.0),
+            );
+        }
+    }
+
+    /// Draw a scroll button (up or down arrow)
+    fn draw_scroll_button(
+        &self,
+        frame: &mut canvas::Frame,
+        x: f32,
+        y: f32,
+        size: f32,
+        is_up: bool,
+    ) {
+        // Button background
+        frame.fill_rectangle(
+            Point::new(x, y),
+            Size::new(size, size),
+            Color::from_rgba(0.25, 0.22, 0.18, 0.95),
+        );
+
+        // Button border
+        frame.stroke(
+            &Path::rectangle(Point::new(x, y), Size::new(size, size)),
+            Stroke::default()
+                .with_color(Color::from_rgba(0.5, 0.4, 0.25, 1.0))
+                .with_width(1.0),
+        );
+
+        // Draw arrow
+        let arrow_color = Color::from_rgba(0.8, 0.7, 0.5, 1.0);
+        let cx = x + size / 2.0;
+        let cy = y + size / 2.0;
+        let arrow_size = size * 0.3;
+
+        let (tip_y, base_y) = if is_up {
+            (cy - arrow_size, cy + arrow_size * 0.5)
+        } else {
+            (cy + arrow_size, cy - arrow_size * 0.5)
+        };
+
+        // Draw triangle arrow
+        let arrow = Path::new(|builder| {
+            builder.move_to(Point::new(cx, tip_y));
+            builder.line_to(Point::new(cx - arrow_size, base_y));
+            builder.line_to(Point::new(cx + arrow_size, base_y));
+            builder.close();
+        });
+
+        frame.fill(&arrow, arrow_color);
     }
 }
 
