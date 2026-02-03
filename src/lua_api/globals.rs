@@ -675,7 +675,30 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                 // Create NineSlice frame (border decoration)
                 let mut nine_slice = Frame::new(WidgetType::Frame, None, Some(frame_id));
                 nine_slice.frame_strata = parent_strata;
-                nine_slice.frame_level = parent_level + 1;
+                nine_slice.frame_level = parent_level + 500; // NineSlice is frameLevel=500 in WoW
+                // Set layout type based on template
+                nine_slice.nine_slice_layout = if tmpl.contains("PortraitFrame") && !tmpl.contains("NoPortrait") {
+                    Some("PortraitFrameTemplate".to_string())
+                } else {
+                    Some("ButtonFrameTemplateNoPortrait".to_string())
+                };
+                // SetAllPoints - NineSlice fills its parent
+                nine_slice.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::TopLeft,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: crate::widget::AnchorPoint::TopLeft,
+                    x_offset: 0.0,
+                    y_offset: 0.0,
+                });
+                nine_slice.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::BottomRight,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: crate::widget::AnchorPoint::BottomRight,
+                    x_offset: 0.0,
+                    y_offset: 0.0,
+                });
                 let nine_slice_id = nine_slice.id;
                 state.widgets.register(nine_slice);
                 state.widgets.add_child(frame_id, nine_slice_id);

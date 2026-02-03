@@ -1213,6 +1213,11 @@ impl App {
         bounds: Rectangle,
         f: &crate::widget::Frame,
     ) {
+        // Draw NineSlice border if this is a NineSlice frame
+        if let Some(ref layout) = f.nine_slice_layout {
+            self.draw_nine_slice_border(frame, bounds, layout, f.alpha);
+        }
+
         if f.backdrop.enabled {
             // Draw backdrop background
             let bg = &f.backdrop.bg_color;
@@ -1232,6 +1237,121 @@ impl App {
             );
         }
 
+    }
+
+    /// Draw NineSlice panel border using atlas textures.
+    fn draw_nine_slice_border(
+        &self,
+        frame: &mut canvas::Frame,
+        bounds: Rectangle,
+        _layout: &str,
+        alpha: f32,
+    ) {
+        // Use the 2x hi-res atlas textures for the metal frame
+        // Corner sizes from atlas: 150x150 for 2x textures, scaled down to ~75 for rendering
+        let corner_size = 32.0; // Scaled down corner size for rendering
+        let edge_thickness = 32.0; // Edge thickness
+
+        // Atlas names for ButtonFrameTemplateNoPortrait (also works for PortraitFrameTemplate)
+        let tl_atlas = "ui-frame-metal-cornertopleft-2x";
+        let tr_atlas = "ui-frame-metal-cornertopright-2x";
+        let bl_atlas = "ui-frame-metal-cornerbottomleft-2x";
+        let br_atlas = "ui-frame-metal-cornerbottomright-2x";
+        let top_atlas = "_ui-frame-metal-edgetop-2x";
+        let bottom_atlas = "_ui-frame-metal-edgebottom-2x";
+        let left_atlas = "!ui-frame-metal-edgeleft-2x";
+        let right_atlas = "!ui-frame-metal-edgeright-2x";
+
+        // Draw corners
+        if let Some(handle) = self.get_atlas_texture(tl_atlas) {
+            let corner_bounds = Rectangle::new(
+                Point::new(bounds.x - 8.0, bounds.y - 8.0),
+                Size::new(corner_size, corner_size),
+            );
+            frame.draw_image(corner_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+
+        if let Some(handle) = self.get_atlas_texture(tr_atlas) {
+            let corner_bounds = Rectangle::new(
+                Point::new(bounds.x + bounds.width - corner_size + 8.0, bounds.y - 8.0),
+                Size::new(corner_size, corner_size),
+            );
+            frame.draw_image(corner_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+
+        if let Some(handle) = self.get_atlas_texture(bl_atlas) {
+            let corner_bounds = Rectangle::new(
+                Point::new(bounds.x - 8.0, bounds.y + bounds.height - corner_size + 8.0),
+                Size::new(corner_size, corner_size),
+            );
+            frame.draw_image(corner_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+
+        if let Some(handle) = self.get_atlas_texture(br_atlas) {
+            let corner_bounds = Rectangle::new(
+                Point::new(bounds.x + bounds.width - corner_size + 8.0, bounds.y + bounds.height - corner_size + 8.0),
+                Size::new(corner_size, corner_size),
+            );
+            frame.draw_image(corner_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+
+        // Draw edges (stretched between corners)
+        // Top edge
+        if let Some(handle) = self.get_atlas_texture(top_atlas) {
+            let edge_bounds = Rectangle::new(
+                Point::new(bounds.x + corner_size - 8.0, bounds.y - 8.0),
+                Size::new(bounds.width - corner_size * 2.0 + 16.0, edge_thickness),
+            );
+            frame.draw_image(edge_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+
+        // Bottom edge
+        if let Some(handle) = self.get_atlas_texture(bottom_atlas) {
+            let edge_bounds = Rectangle::new(
+                Point::new(bounds.x + corner_size - 8.0, bounds.y + bounds.height - edge_thickness + 8.0),
+                Size::new(bounds.width - corner_size * 2.0 + 16.0, edge_thickness),
+            );
+            frame.draw_image(edge_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+
+        // Left edge
+        if let Some(handle) = self.get_atlas_texture(left_atlas) {
+            let edge_bounds = Rectangle::new(
+                Point::new(bounds.x - 8.0, bounds.y + corner_size - 8.0),
+                Size::new(edge_thickness, bounds.height - corner_size * 2.0 + 16.0),
+            );
+            frame.draw_image(edge_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+
+        // Right edge
+        if let Some(handle) = self.get_atlas_texture(right_atlas) {
+            let edge_bounds = Rectangle::new(
+                Point::new(bounds.x + bounds.width - edge_thickness + 8.0, bounds.y + corner_size - 8.0),
+                Size::new(edge_thickness, bounds.height - corner_size * 2.0 + 16.0),
+            );
+            frame.draw_image(edge_bounds, canvas::Image::new(handle).opacity(alpha));
+        }
+    }
+
+    /// Load an atlas texture by name, extracting the region from the atlas file.
+    fn get_atlas_texture(&self, atlas_name: &str) -> Option<ImageHandle> {
+        use crate::atlas::ATLAS_DB;
+
+        let info = ATLAS_DB.get(atlas_name)?;
+
+        // Get the full texture first
+        let _ = self.get_or_load_texture(info.file);
+        if let Some((tex_w, tex_h)) = self.get_texture_size(info.file) {
+            // Calculate pixel coordinates from normalized tex_coords
+            let x = (info.left_tex_coord * tex_w).round() as u32;
+            let y = (info.top_tex_coord * tex_h).round() as u32;
+            let w = ((info.right_tex_coord - info.left_tex_coord) * tex_w).round() as u32;
+            let h = ((info.bottom_tex_coord - info.top_tex_coord) * tex_h).round() as u32;
+
+            self.get_or_load_texture_region(info.file, x, y, w, h)
+        } else {
+            None
+        }
     }
 
     /// Load a texture and cache its ImageHandle.

@@ -173,6 +173,8 @@ pub struct Frame {
     pub tex_coords: Option<(f32, f32, f32, f32)>,
     /// Atlas name (if set via SetAtlas).
     pub atlas: Option<String>,
+    /// NineSlice layout type (e.g., "PortraitFrameTemplate", "ButtonFrameTemplateNoPortrait").
+    pub nine_slice_layout: Option<String>,
 }
 
 impl Frame {
@@ -226,6 +228,7 @@ impl Frame {
             vert_tile: false,
             tex_coords: None,
             atlas: None,
+            nine_slice_layout: None,
         }
     }
 
