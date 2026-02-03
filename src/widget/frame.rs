@@ -165,6 +165,10 @@ pub struct Frame {
     pub horiz_tile: bool,
     /// Tile texture vertically.
     pub vert_tile: bool,
+    /// Texture coordinates (left, right, top, bottom).
+    pub tex_coords: Option<(f32, f32, f32, f32)>,
+    /// Atlas name (if set via SetAtlas).
+    pub atlas: Option<String>,
 }
 
 impl Frame {
@@ -214,6 +218,8 @@ impl Frame {
             draw_sub_layer: 0,
             horiz_tile: false,
             vert_tile: false,
+            tex_coords: None,
+            atlas: None,
         }
     }
 

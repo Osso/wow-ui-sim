@@ -8534,18 +8534,24 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let c_texture = lua.create_table()?;
     c_texture.set(
         "GetAtlasInfo",
-        lua.create_function(|lua, _atlas_name: String| {
-            // Return atlas info table (or nil if not found)
-            // Fields: width, height, leftTexCoord, rightTexCoord, topTexCoord, bottomTexCoord, file
-            let info = lua.create_table()?;
-            info.set("width", 64)?;
-            info.set("height", 64)?;
-            info.set("leftTexCoord", 0.0)?;
-            info.set("rightTexCoord", 1.0)?;
-            info.set("topTexCoord", 0.0)?;
-            info.set("bottomTexCoord", 1.0)?;
-            info.set("file", "")?;
-            Ok(Value::Table(info))
+        lua.create_function(|lua, atlas_name: String| {
+            // Look up atlas in our database
+            if let Some(atlas_info) = crate::atlas::get_atlas_info(&atlas_name) {
+                let info = lua.create_table()?;
+                info.set("width", atlas_info.width)?;
+                info.set("height", atlas_info.height)?;
+                info.set("leftTexCoord", atlas_info.left_tex_coord)?;
+                info.set("rightTexCoord", atlas_info.right_tex_coord)?;
+                info.set("topTexCoord", atlas_info.top_tex_coord)?;
+                info.set("bottomTexCoord", atlas_info.bottom_tex_coord)?;
+                info.set("file", atlas_info.file)?;
+                info.set("tilesHorizontally", atlas_info.tiles_horizontally)?;
+                info.set("tilesVertically", atlas_info.tiles_vertically)?;
+                Ok(Value::Table(info))
+            } else {
+                // Return nil for unknown atlases
+                Ok(Value::Nil)
+            }
         })?,
     )?;
     c_texture.set(
@@ -14630,11 +14636,40 @@ impl UserData for FrameHandle {
                 Value::String(s) => Some(s.to_string_lossy().to_string()),
                 _ => None,
             });
+            let use_atlas_size = args_vec.get(1).map(|v| matches!(v, Value::Boolean(true))).unwrap_or(false);
 
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                // Store atlas as texture path (atlas lookup would happen in renderer)
-                frame.texture = atlas_name.map(|n| format!("Atlas:{}", n));
+            if let Some(name) = atlas_name {
+                // Look up atlas info
+                if let Some(atlas_info) = crate::atlas::get_atlas_info(&name) {
+                    let mut state = this.state.borrow_mut();
+                    if let Some(frame) = state.widgets.get_mut(this.id) {
+                        // Set texture file from atlas
+                        frame.texture = Some(atlas_info.file.to_string());
+                        // Set texture coordinates
+                        frame.tex_coords = Some((
+                            atlas_info.left_tex_coord,
+                            atlas_info.right_tex_coord,
+                            atlas_info.top_tex_coord,
+                            atlas_info.bottom_tex_coord,
+                        ));
+                        // Set tiling flags
+                        frame.horiz_tile = atlas_info.tiles_horizontally;
+                        frame.vert_tile = atlas_info.tiles_vertically;
+                        // Store atlas name
+                        frame.atlas = Some(name);
+                        // Optionally set size from atlas
+                        if use_atlas_size {
+                            frame.width = atlas_info.width as f32;
+                            frame.height = atlas_info.height as f32;
+                        }
+                    }
+                } else {
+                    // Unknown atlas - just store the name
+                    let mut state = this.state.borrow_mut();
+                    if let Some(frame) = state.widgets.get_mut(this.id) {
+                        frame.atlas = Some(name);
+                    }
+                }
             }
             Ok(())
         });
@@ -14645,9 +14680,7 @@ impl UserData for FrameHandle {
             let atlas = state
                 .widgets
                 .get(this.id)
-                .and_then(|f| f.texture.as_ref())
-                .and_then(|t| t.strip_prefix("Atlas:"))
-                .map(|s| s.to_string());
+                .and_then(|f| f.atlas.clone());
             match atlas {
                 Some(name) => Ok(Value::String(lua.create_string(&name)?)),
                 None => Ok(Value::Nil),
@@ -14905,8 +14938,36 @@ impl UserData for FrameHandle {
         });
 
         // SetTexCoord(left, right, top, bottom) - for Texture widgets
-        methods.add_method("SetTexCoord", |_, _this, _args: mlua::MultiValue| {
-            // Store texture coordinates if needed
+        // Can also be called with 8 values for corner-based coords
+        methods.add_method("SetTexCoord", |_, this, args: mlua::MultiValue| {
+            let args_vec: Vec<Value> = args.into_iter().collect();
+            if args_vec.len() >= 4 {
+                let left = match &args_vec[0] {
+                    Value::Number(n) => *n as f32,
+                    Value::Integer(n) => *n as f32,
+                    _ => 0.0,
+                };
+                let right = match &args_vec[1] {
+                    Value::Number(n) => *n as f32,
+                    Value::Integer(n) => *n as f32,
+                    _ => 1.0,
+                };
+                let top = match &args_vec[2] {
+                    Value::Number(n) => *n as f32,
+                    Value::Integer(n) => *n as f32,
+                    _ => 0.0,
+                };
+                let bottom = match &args_vec[3] {
+                    Value::Number(n) => *n as f32,
+                    Value::Integer(n) => *n as f32,
+                    _ => 1.0,
+                };
+
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.tex_coords = Some((left, right, top, bottom));
+                }
+            }
             Ok(())
         });
 

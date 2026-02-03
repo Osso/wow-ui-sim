@@ -3,6 +3,7 @@
 //! A standalone environment for testing World of Warcraft addons outside the game.
 //! Embeds Lua 5.1 and implements the WoW widget API.
 
+pub mod atlas;
 pub mod error;
 pub mod event;
 pub mod iced_app;
