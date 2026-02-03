@@ -1394,9 +1394,6 @@ impl App {
                 self.get_or_load_texture(tex_path)
             };
 
-            if handle_opt.is_none() && (tex_path.contains("UIFramePortrait") || tex_path.contains("FrameGeneral")) {
-                eprintln!("[draw_texture] FAILED TO LOAD: {}", tex_path);
-            }
             if let Some(handle) = handle_opt {
                 // Check if tiling is enabled
                 if f.horiz_tile || f.vert_tile {

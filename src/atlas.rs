@@ -189,6 +189,21 @@ pub static ATLAS_DB: LazyLock<HashMap<&'static str, AtlasInfo>> = LazyLock::new(
 });
 
 /// Look up atlas information by name.
+/// WoW atlas names may have prefixes:
+/// - `_` indicates horizontal tiling
+/// - `!` indicates vertical tiling
+/// These prefixes are stripped for lookup but the tiling info is in the atlas data.
 pub fn get_atlas_info(name: &str) -> Option<&'static AtlasInfo> {
-    ATLAS_DB.get(name)
+    // Try exact match first
+    if let Some(info) = ATLAS_DB.get(name) {
+        return Some(info);
+    }
+
+    // Strip leading _ or ! prefix and try again
+    let stripped = name.trim_start_matches(['_', '!']);
+    if stripped != name {
+        return ATLAS_DB.get(stripped);
+    }
+
+    None
 }
