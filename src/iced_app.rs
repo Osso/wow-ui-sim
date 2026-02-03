@@ -345,25 +345,30 @@ impl App {
                     }
                 }
                 CanvasMessage::MouseUp(pos) => {
-                    let released_on = self.hit_test(pos);
-                    if let Some(frame_id) = released_on {
-                        let env = self.env.borrow();
-                        let button_val =
-                            mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
-
-                        if self.mouse_down_frame == Some(frame_id) {
-                            let down_val = mlua::Value::Boolean(false);
-                            let _ = env.fire_script_handler(
-                                frame_id,
-                                "OnClick",
-                                vec![button_val.clone(), down_val],
-                            );
-                        }
-
-                        let _ = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val]);
-                        drop(env);
-                        self.drain_console();
+                    // Check if click is on addon list checkbox
+                    if self.handle_addon_checkbox_click(pos) {
                         self.frame_cache.clear();
+                    } else {
+                        let released_on = self.hit_test(pos);
+                        if let Some(frame_id) = released_on {
+                            let env = self.env.borrow();
+                            let button_val =
+                                mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
+
+                            if self.mouse_down_frame == Some(frame_id) {
+                                let down_val = mlua::Value::Boolean(false);
+                                let _ = env.fire_script_handler(
+                                    frame_id,
+                                    "OnClick",
+                                    vec![button_val.clone(), down_val],
+                                );
+                            }
+
+                            let _ = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val]);
+                            drop(env);
+                            self.drain_console();
+                            self.frame_cache.clear();
+                        }
                     }
                     self.mouse_down_frame = None;
                     self.pressed_frame = None;
@@ -2028,6 +2033,71 @@ impl App {
                 crate::widget::TextJustify::Center,
             );
         }
+    }
+
+    /// Handle click on addon list checkbox, returns true if a checkbox was clicked
+    fn handle_addon_checkbox_click(&self, pos: Point) -> bool {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+
+        // Find AddonList frame
+        let addonlist_rect = state.widgets.all_ids().into_iter()
+            .find(|&id| {
+                state.widgets.get(id)
+                    .map(|f| f.name.as_deref() == Some("AddonList"))
+                    .unwrap_or(false)
+            })
+            .and_then(|id| {
+                let screen_width = 1920.0; // TODO: get actual screen size
+                let screen_height = 1080.0;
+                Some(compute_frame_rect(&state.widgets, id, screen_width, screen_height))
+            });
+
+        let rect = match addonlist_rect {
+            Some(r) => r,
+            None => return false,
+        };
+
+        // Content area bounds (must match draw_addon_list_entries)
+        let list_x = rect.x * UI_SCALE;
+        let list_y = rect.y * UI_SCALE;
+        let list_height = rect.height * UI_SCALE;
+
+        let content_left = list_x + 12.0;
+        let content_top = list_y + 65.0;
+        let content_bottom = list_y + list_height - 32.0;
+
+        let entry_height = 20.0;
+        let checkbox_size = 14.0;
+
+        // Check if click is in the checkbox column area
+        let checkbox_right = content_left + checkbox_size + 10.0; // Some extra margin for easier clicking
+
+        if pos.x < content_left || pos.x > checkbox_right {
+            return false;
+        }
+        if pos.y < content_top || pos.y > content_bottom {
+            return false;
+        }
+
+        // Calculate which addon was clicked
+        let relative_y = pos.y - content_top + self.scroll_offset;
+        let addon_index = (relative_y / entry_height).floor() as usize;
+
+        // Need to drop state borrow before mutating
+        drop(state);
+        drop(env);
+
+        // Toggle addon enabled state
+        let env = self.env.borrow();
+        let mut state = env.state().borrow_mut();
+
+        if addon_index < state.addons.len() {
+            state.addons[addon_index].enabled = !state.addons[addon_index].enabled;
+            return true;
+        }
+
+        false
     }
 }
 
