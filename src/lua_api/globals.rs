@@ -15525,6 +15525,51 @@ impl UserData for FrameHandle {
             Ok(Value::Nil)
         });
 
+        // Helper to create a button texture child if it doesn't exist
+        fn get_or_create_button_texture(
+            state: &mut crate::lua_api::SimState,
+            button_id: u64,
+            key: &str,
+        ) -> u64 {
+            // Check if texture child already exists
+            if let Some(frame) = state.widgets.get(button_id) {
+                if let Some(&tex_id) = frame.children_keys.get(key) {
+                    return tex_id;
+                }
+            }
+
+            // Create new texture child
+            let mut texture = Frame::new(WidgetType::Texture, None, Some(button_id));
+            // Set texture to fill parent (SetAllPoints behavior)
+            texture.anchors.push(crate::widget::Anchor {
+                point: crate::widget::AnchorPoint::TopLeft,
+                relative_to: None,
+                relative_to_id: Some(button_id as usize),
+                relative_point: crate::widget::AnchorPoint::TopLeft,
+                x_offset: 0.0,
+                y_offset: 0.0,
+            });
+            texture.anchors.push(crate::widget::Anchor {
+                point: crate::widget::AnchorPoint::BottomRight,
+                relative_to: None,
+                relative_to_id: Some(button_id as usize),
+                relative_point: crate::widget::AnchorPoint::BottomRight,
+                x_offset: 0.0,
+                y_offset: 0.0,
+            });
+            let texture_id = texture.id;
+
+            state.widgets.register(texture);
+            state.widgets.add_child(button_id, texture_id);
+
+            // Store in children_keys
+            if let Some(frame) = state.widgets.get_mut(button_id) {
+                frame.children_keys.insert(key.to_string(), texture_id);
+            }
+
+            texture_id
+        }
+
         // SetNormalTexture(texture) - Set texture for normal state
         methods.add_method("SetNormalTexture", |_, this, texture: Value| {
             let path = match texture {
@@ -15533,9 +15578,18 @@ impl UserData for FrameHandle {
                 _ => None,
             };
             let mut state = this.state.borrow_mut();
+
+            // Store path on button for renderer
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.normal_texture = path;
+                frame.normal_texture = path.clone();
             }
+
+            // Create/get texture child and set its texture
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
+
             Ok(())
         });
 
@@ -15547,9 +15601,18 @@ impl UserData for FrameHandle {
                 _ => None,
             };
             let mut state = this.state.borrow_mut();
+
+            // Store path on button for renderer
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.highlight_texture = path;
+                frame.highlight_texture = path.clone();
             }
+
+            // Create/get texture child and set its texture
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
+
             Ok(())
         });
 
@@ -15561,9 +15624,18 @@ impl UserData for FrameHandle {
                 _ => None,
             };
             let mut state = this.state.borrow_mut();
+
+            // Store path on button for renderer
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.pushed_texture = path;
+                frame.pushed_texture = path.clone();
             }
+
+            // Create/get texture child and set its texture
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
+
             Ok(())
         });
 
@@ -15575,9 +15647,18 @@ impl UserData for FrameHandle {
                 _ => None,
             };
             let mut state = this.state.borrow_mut();
+
+            // Store path on button for renderer
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.disabled_texture = path;
+                frame.disabled_texture = path.clone();
             }
+
+            // Create/get texture child and set its texture
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
+
             Ok(())
         });
 

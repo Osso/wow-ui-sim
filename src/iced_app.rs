@@ -121,7 +121,7 @@ fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
     create_test_button(&env);
 }
 
-/// Create a test button below AddonList to demonstrate texture rendering.
+/// Create test buttons below AddonList to demonstrate texture rendering.
 fn create_test_button(env: &WowLuaEnv) {
     let lua_code = r#"
         -- Create test button with WoW 3-slice gold button textures
@@ -137,36 +137,43 @@ fn create_test_button(env: &WowLuaEnv) {
         btn:SetRightTexture("Interface\\Buttons\\UI-DialogBox-goldbutton-up-right")
 
         -- Set button text directly
-        btn:SetText("Test Button")
+        btn:SetText("3-Slice Button")
 
         btn:Show()
         print("[Test] Created TestTextureButton with 3-slice gold button textures")
 
-        -- Debug: Check NineSlice system
-        if AddonList and AddonList.NineSlice then
-            local ns = AddonList.NineSlice
-            print("[NineSlice] Frame name:", ns:GetName())
-            print("[NineSlice] Parent:", ns:GetParent() and ns:GetParent():GetName())
-            print("[NineSlice] Width x Height:", ns:GetWidth(), "x", ns:GetHeight())
-            print("[NineSlice] Visible:", ns:IsVisible())
-            local numChildren = 0
-            for i = 1, ns:GetNumChildren() do numChildren = numChildren + 1 end
-            print("[NineSlice] NumChildren:", numChildren)
-            if ns.TopLeftCorner then
-                local tlc = ns.TopLeftCorner
-                print("[NineSlice] TopLeftCorner size:", tlc:GetWidth(), "x", tlc:GetHeight())
-                print("[NineSlice] TopLeftCorner texture:", tlc:GetTexture())
-                print("[NineSlice] TopLeftCorner atlas:", tlc:GetAtlas())
-                print("[NineSlice] TopLeftCorner visible:", tlc:IsVisible())
-                print("[NineSlice] TopLeftCorner drawLayer:", tlc:GetDrawLayer())
-                local numPoints = tlc:GetNumPoints()
-                print("[NineSlice] TopLeftCorner numPoints:", numPoints)
-                if numPoints > 0 then
-                    local p, rel, rp, x, y = tlc:GetPoint(1)
-                    print("[NineSlice] TopLeftCorner point1:", p, rel and rel:GetName(), rp, x, y)
-                end
-            end
-        end
+        -- Create second test button with standard normal/pushed/highlight textures
+        -- Panel button textures are 80x22 visible content, so scale proportionally
+        local btn2 = CreateFrame("Button", "TestHoverButton", UIParent)
+        btn2:SetSize(120, 22)
+        btn2:SetPoint("TOP", TestTextureButton, "BOTTOM", 0, -10)
+        btn2:SetFrameStrata("HIGH")
+        btn2:SetFrameLevel(100)
+
+        -- Set standard button textures (panel button style)
+        btn2:SetNormalTexture("Interface\\Buttons\\UI-Panel-Button-Up")
+        btn2:SetPushedTexture("Interface\\Buttons\\UI-Panel-Button-Down")
+        btn2:SetHighlightTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
+
+        -- Button text
+        btn2:SetText("Hover Me!")
+
+        -- Enable mouse interaction
+        btn2:EnableMouse(true)
+
+        -- Add click handler for feedback
+        btn2:SetScript("OnClick", function(self)
+            print("[Test] TestHoverButton clicked!")
+        end)
+        btn2:SetScript("OnEnter", function(self)
+            print("[Test] TestHoverButton: mouse entered")
+        end)
+        btn2:SetScript("OnLeave", function(self)
+            print("[Test] TestHoverButton: mouse left")
+        end)
+
+        btn2:Show()
+        print("[Test] Created TestHoverButton with normal/pushed/highlight textures")
     "#;
 
     if let Err(e) = env.lua().load(lua_code).exec() {
@@ -1066,27 +1073,29 @@ impl App {
                 .then_with(|| a.0.cmp(&b.0))
         });
 
-        // Find TestTextureButton and its children
-        let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
-            state
-                .widgets
-                .get(id)
-                .map(|f| f.name.as_deref() == Some("TestTextureButton"))
-                .unwrap_or(false)
-        });
+        // Find test buttons (TestTextureButton and TestHoverButton) and their children
         let mut test_button_ids = std::collections::HashSet::new();
-        if let Some(root_id) = test_button_id {
-            let mut queue = vec![root_id];
-            while let Some(id) = queue.pop() {
-                test_button_ids.insert(id);
-                if let Some(f) = state.widgets.get(id) {
-                    queue.extend(f.children.iter().copied());
+        for test_name in ["TestTextureButton", "TestHoverButton"] {
+            let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
+                state
+                    .widgets
+                    .get(id)
+                    .map(|f| f.name.as_deref() == Some(test_name))
+                    .unwrap_or(false)
+            });
+            if let Some(root_id) = test_button_id {
+                let mut queue = vec![root_id];
+                while let Some(id) = queue.pop() {
+                    test_button_ids.insert(id);
+                    if let Some(f) = state.widgets.get(id) {
+                        queue.extend(f.children.iter().copied());
+                    }
                 }
             }
         }
 
         for (id, f, rect, checked) in frames {
-            // Only show AddonList frame and children, plus TestTextureButton and its children
+            // Only show AddonList frame and children, plus test buttons and their children
             if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
                 continue;
             }
@@ -1123,7 +1132,11 @@ impl App {
                     self.draw_frame_widget(frame, bounds, f);
                 }
                 WidgetType::Button => {
-                    self.draw_button_widget(frame, bounds, f);
+                    // Resolve textures from both button fields and child textures
+                    let normal_tex = self.resolve_button_texture(f, "NormalTexture", &state.widgets);
+                    let pushed_tex = self.resolve_button_texture(f, "PushedTexture", &state.widgets);
+                    let highlight_tex = self.resolve_button_texture(f, "HighlightTexture", &state.widgets);
+                    self.draw_button_widget(frame, bounds, f, id, normal_tex.as_deref(), pushed_tex.as_deref(), highlight_tex.as_deref());
                 }
                 WidgetType::Texture => {
                     self.draw_texture_widget(frame, bounds, f);
@@ -1342,12 +1355,45 @@ impl App {
         }
     }
 
+    /// Resolve texture path for a button state by checking both direct fields and child textures.
+    fn resolve_button_texture(
+        &self,
+        button: &crate::widget::Frame,
+        key: &str,
+        registry: &crate::widget::WidgetRegistry,
+    ) -> Option<String> {
+        // First check child texture (may have atlas set via SetAtlas)
+        if let Some(&tex_id) = button.children_keys.get(key) {
+            if let Some(tex) = registry.get(tex_id) {
+                if tex.texture.is_some() {
+                    return tex.texture.clone();
+                }
+            }
+        }
+
+        // Fall back to button's direct fields
+        match key {
+            "NormalTexture" => button.normal_texture.clone(),
+            "PushedTexture" => button.pushed_texture.clone(),
+            "HighlightTexture" => button.highlight_texture.clone(),
+            "DisabledTexture" => button.disabled_texture.clone(),
+            _ => None,
+        }
+    }
+
     fn draw_button_widget(
         &self,
         frame: &mut canvas::Frame,
         bounds: Rectangle,
         f: &crate::widget::Frame,
+        frame_id: u64,
+        normal_tex: Option<&str>,
+        pushed_tex: Option<&str>,
+        highlight_tex: Option<&str>,
     ) {
+        let is_pressed = self.pressed_frame == Some(frame_id);
+        let is_hovered = self.hovered_frame == Some(frame_id);
+
         // Try 3-slice button rendering first (gold button style)
         if let (Some(left_path), Some(middle_path), Some(right_path)) =
             (&f.left_texture, &f.middle_texture, &f.right_texture)
@@ -1390,45 +1436,84 @@ impl App {
             }
         }
 
-        // Try single normal texture
-        if let Some(ref tex_path) = f.normal_texture {
-            if let Some(handle) = self.get_or_load_texture(tex_path) {
+        // Select texture based on button state: pressed > normal
+        let button_texture = if is_pressed {
+            pushed_tex.or(normal_tex)
+        } else {
+            normal_tex
+        };
+
+        // Try single texture (pushed or normal)
+        let mut drew_background = false;
+        if let Some(tex_path) = button_texture {
+            // Panel button textures use TexCoords: 0.625 width, 0.6875 height
+            // The actual content is 80x22 within a 128x32 texture
+            let handle = if tex_path.to_lowercase().contains("ui-panel-button") {
+                // Load just the visible portion using TexCoords
+                self.get_or_load_texture_region(tex_path, 0, 0, 80, 22)
+            } else {
+                self.get_or_load_texture(tex_path)
+            };
+
+            if let Some(handle) = handle {
                 // Draw the texture scaled to button bounds
                 frame.draw_image(bounds, canvas::Image::new(handle));
-
-                // Draw button text on top
-                if let Some(ref txt) = f.text {
-                    TextRenderer::draw_centered_text(
-                        frame,
-                        txt,
-                        bounds,
-                        f.font_size,
-                        Color::from_rgba(
-                            f.text_color.r,
-                            f.text_color.g,
-                            f.text_color.b,
-                            f.text_color.a * f.alpha,
-                        ),
-                        wow_font_to_iced(f.font.as_deref()),
-                    );
-                }
-                return;
+                drew_background = true;
             }
         }
 
         // Fallback: default button styling (dark red gradient-like)
-        frame.fill_rectangle(
-            bounds.position(),
-            bounds.size(),
-            Color::from_rgba(0.15, 0.05, 0.05, 0.95 * f.alpha),
-        );
+        if !drew_background {
+            // Use different color when pressed for visual feedback
+            let bg_color = if is_pressed {
+                Color::from_rgba(0.20, 0.08, 0.08, 0.95 * f.alpha)
+            } else if is_hovered {
+                Color::from_rgba(0.18, 0.07, 0.07, 0.95 * f.alpha)
+            } else {
+                Color::from_rgba(0.15, 0.05, 0.05, 0.95 * f.alpha)
+            };
 
-        frame.stroke(
-            &Path::rectangle(bounds.position(), bounds.size()),
-            Stroke::default()
-                .with_color(Color::from_rgba(0.6, 0.45, 0.15, f.alpha))
-                .with_width(1.5),
-        );
+            frame.fill_rectangle(bounds.position(), bounds.size(), bg_color);
+
+            // Border - brighter when hovered
+            let border_color = if is_hovered || is_pressed {
+                Color::from_rgba(0.8, 0.6, 0.2, f.alpha)
+            } else {
+                Color::from_rgba(0.6, 0.45, 0.15, f.alpha)
+            };
+
+            frame.stroke(
+                &Path::rectangle(bounds.position(), bounds.size()),
+                Stroke::default().with_color(border_color).with_width(1.5),
+            );
+        }
+
+        // Draw highlight texture overlay when hovered (and not pressed)
+        // WoW uses additive blending for highlight - we approximate with semi-transparent overlay
+        if is_hovered && !is_pressed {
+            if let Some(highlight_path) = highlight_tex {
+                // Panel button highlight uses same TexCoords: 0.625 width, 0.6875 height
+                let handle = if highlight_path.to_lowercase().contains("ui-panel-button") {
+                    self.get_or_load_texture_region(highlight_path, 0, 0, 80, 22)
+                } else {
+                    self.get_or_load_texture(highlight_path)
+                };
+
+                if let Some(handle) = handle {
+                    // Draw highlight with reduced opacity to simulate additive effect
+                    let mut img = canvas::Image::new(handle);
+                    img = img.opacity(0.5 * f.alpha);
+                    frame.draw_image(bounds, img);
+                }
+            } else if drew_background {
+                // No highlight texture, draw a subtle highlight overlay
+                frame.fill_rectangle(
+                    bounds.position(),
+                    bounds.size(),
+                    Color::from_rgba(1.0, 0.9, 0.6, 0.15 * f.alpha),
+                );
+            }
+        }
 
         // Draw button text (centered)
         if let Some(ref txt) = f.text {
