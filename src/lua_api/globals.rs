@@ -322,6 +322,15 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
         if let Some(pid) = parent_id {
             state.widgets.add_child(pid, frame_id);
+
+            // Inherit strata and level from parent (like wowless does)
+            let parent_props = state.widgets.get(pid).map(|p| (p.frame_strata, p.frame_level));
+            if let Some((parent_strata, parent_level)) = parent_props {
+                if let Some(f) = state.widgets.get_mut(frame_id) {
+                    f.frame_strata = parent_strata;
+                    f.frame_level = parent_level + 1;
+                }
+            }
         }
 
         // Handle template-based child elements
@@ -589,16 +598,73 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                 needs_tooltip_fontstrings = true;
             }
 
-            // PortraitFrameTemplate creates TitleContainer, NineSlice, CloseButton, and PortraitContainer
-            if tmpl.contains("PortraitFrameTemplate") || tmpl.contains("PortraitFrameFlatTemplate") {
-                // Create TitleContainer frame
-                let title_container = Frame::new(WidgetType::Frame, None, Some(frame_id));
+            // PortraitFrameTemplate and ButtonFrameTemplate create TitleContainer, NineSlice, CloseButton, and PortraitContainer
+            // ButtonFrameTemplate inherits from ButtonFrameBaseTemplate which inherits from PortraitFrameBaseTemplate
+            if tmpl.contains("PortraitFrame") || tmpl.contains("ButtonFrameTemplate") {
+                // Get parent's strata for inheritance
+                let parent_strata = state.widgets.get(frame_id).map(|f| f.frame_strata).unwrap_or_default();
+                let parent_level = state.widgets.get(frame_id).map(|f| f.frame_level).unwrap_or(0);
+
+                // Create TitleContainer frame - positioned at top of frame
+                let mut title_container = Frame::new(WidgetType::Frame, None, Some(frame_id));
+                title_container.frame_strata = parent_strata;
+                title_container.frame_level = 510; // High level for title to be on top
+                title_container.height = 20.0;
+                // Anchors: TOPLEFT x=58, y=-1; TOPRIGHT x=-24, y=-1
+                title_container.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::TopLeft,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: crate::widget::AnchorPoint::TopLeft,
+                    x_offset: 58.0,
+                    y_offset: -1.0,
+                });
+                title_container.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::TopRight,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: crate::widget::AnchorPoint::TopRight,
+                    x_offset: -24.0,
+                    y_offset: -1.0,
+                });
                 let title_container_id = title_container.id;
                 state.widgets.register(title_container);
                 state.widgets.add_child(frame_id, title_container_id);
 
-                // Create TitleText FontString inside TitleContainer
-                let title_text = Frame::new(WidgetType::FontString, None, Some(title_container_id));
+                // Create TitleText FontString inside TitleContainer - centered
+                let mut title_text = Frame::new(WidgetType::FontString, None, Some(title_container_id));
+                title_text.frame_strata = parent_strata;
+                title_text.frame_level = 511;
+                title_text.draw_layer = crate::widget::DrawLayer::Overlay;
+                title_text.justify_h = crate::widget::TextJustify::Center;
+                title_text.justify_v = crate::widget::TextJustify::Center;
+                title_text.font_size = 14.0;
+                title_text.text_color = crate::widget::Color::new(1.0, 0.82, 0.0, 1.0); // Gold
+                // Anchor to fill TitleContainer with slight top offset
+                title_text.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::Top,
+                    relative_to: None,
+                    relative_to_id: Some(title_container_id as usize),
+                    relative_point: crate::widget::AnchorPoint::Top,
+                    x_offset: 0.0,
+                    y_offset: -5.0,
+                });
+                title_text.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::Left,
+                    relative_to: None,
+                    relative_to_id: Some(title_container_id as usize),
+                    relative_point: crate::widget::AnchorPoint::Left,
+                    x_offset: 0.0,
+                    y_offset: 0.0,
+                });
+                title_text.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::Right,
+                    relative_to: None,
+                    relative_to_id: Some(title_container_id as usize),
+                    relative_point: crate::widget::AnchorPoint::Right,
+                    x_offset: 0.0,
+                    y_offset: 0.0,
+                });
                 let title_text_id = title_text.id;
                 state.widgets.register(title_text);
                 state.widgets.add_child(title_container_id, title_text_id);
@@ -606,20 +672,39 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                     tc.children_keys.insert("TitleText".to_string(), title_text_id);
                 }
 
-                // Create NineSlice frame
-                let nine_slice = Frame::new(WidgetType::Frame, None, Some(frame_id));
+                // Create NineSlice frame (border decoration)
+                let mut nine_slice = Frame::new(WidgetType::Frame, None, Some(frame_id));
+                nine_slice.frame_strata = parent_strata;
+                nine_slice.frame_level = parent_level + 1;
                 let nine_slice_id = nine_slice.id;
                 state.widgets.register(nine_slice);
                 state.widgets.add_child(frame_id, nine_slice_id);
 
-                // Create CloseButton
-                let close_button = Frame::new(WidgetType::Button, None, Some(frame_id));
+                // Create CloseButton - top right corner
+                let mut close_button = Frame::new(WidgetType::Button, None, Some(frame_id));
+                close_button.frame_strata = parent_strata;
+                close_button.frame_level = 512; // Above title
+                close_button.width = 24.0;
+                close_button.height = 24.0;
+                close_button.anchors.push(crate::widget::Anchor {
+                    point: crate::widget::AnchorPoint::TopRight,
+                    relative_to: None,
+                    relative_to_id: Some(frame_id as usize),
+                    relative_point: crate::widget::AnchorPoint::TopRight,
+                    x_offset: -4.0,
+                    y_offset: -4.0,
+                });
                 let close_button_id = close_button.id;
                 state.widgets.register(close_button);
                 state.widgets.add_child(frame_id, close_button_id);
 
-                // Create PortraitContainer
-                let portrait_container = Frame::new(WidgetType::Frame, None, Some(frame_id));
+                // Create PortraitContainer (for portrait icon, usually hidden)
+                let mut portrait_container = Frame::new(WidgetType::Frame, None, Some(frame_id));
+                portrait_container.frame_strata = parent_strata;
+                portrait_container.frame_level = 400;
+                portrait_container.width = 1.0;
+                portrait_container.height = 1.0;
+                portrait_container.visible = false; // Usually hidden via ButtonFrameTemplate_HidePortrait
                 let portrait_container_id = portrait_container.id;
                 state.widgets.register(portrait_container);
                 state.widgets.add_child(frame_id, portrait_container_id);
@@ -13922,8 +14007,24 @@ impl UserData for FrameHandle {
                 _ => None,
             };
             let mut state = this.state.borrow_mut();
+
+            // Get parent's strata and level for inheritance
+            let parent_props = new_parent_id.and_then(|pid| {
+                state.widgets.get(pid).map(|p| (p.frame_strata, p.frame_level))
+            });
+
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.parent_id = new_parent_id;
+
+                // Inherit strata and level from parent (like wowless does)
+                if let Some((parent_strata, parent_level)) = parent_props {
+                    if !frame.has_fixed_frame_strata {
+                        frame.frame_strata = parent_strata;
+                    }
+                    if !frame.has_fixed_frame_level {
+                        frame.frame_level = parent_level + 1;
+                    }
+                }
             }
             Ok(())
         });
@@ -13961,6 +14062,7 @@ impl UserData for FrameHandle {
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 if let Some(s) = crate::widget::FrameStrata::from_str(&strata) {
                     frame.frame_strata = s;
+                    frame.has_fixed_frame_strata = true;
                 }
             }
             Ok(())
@@ -13982,6 +14084,7 @@ impl UserData for FrameHandle {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.frame_level = level;
+                frame.has_fixed_frame_level = true;
             }
             Ok(())
         });
@@ -13993,15 +14096,21 @@ impl UserData for FrameHandle {
             Ok(level)
         });
 
-        // SetFixedFrameStrata(fixed) - Controls if strata is fixed
-        methods.add_method("SetFixedFrameStrata", |_, _this, _fixed: bool| {
-            // Accept but don't track (affects strata inheritance behavior)
+        // SetFixedFrameStrata(fixed) - Controls if strata is inherited from parent
+        methods.add_method("SetFixedFrameStrata", |_, this, fixed: bool| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.has_fixed_frame_strata = fixed;
+            }
             Ok(())
         });
 
-        // SetFixedFrameLevel(fixed) - Controls if level is fixed
-        methods.add_method("SetFixedFrameLevel", |_, _this, _fixed: bool| {
-            // Accept but don't track (affects level inheritance behavior)
+        // SetFixedFrameLevel(fixed) - Controls if level is inherited from parent
+        methods.add_method("SetFixedFrameLevel", |_, this, fixed: bool| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.has_fixed_frame_level = fixed;
+            }
             Ok(())
         });
 
@@ -14786,11 +14895,25 @@ impl UserData for FrameHandle {
             Ok(())
         });
 
-        // SetTitle(title) - for DefaultPanelTemplate frames
+        // SetTitle(title) - for PortraitFrame/ButtonFrame templates
+        // In WoW: self:GetTitleText():SetText(title) where GetTitleText returns self.TitleContainer.TitleText
         methods.add_method("SetTitle", |_, this, title: Option<String>| {
             let mut state = this.state.borrow_mut();
+
+            // Find TitleContainer.TitleText and update its text
+            let title_text_id = state.widgets.get(this.id)
+                .and_then(|f| f.children_keys.get("TitleContainer").copied())
+                .and_then(|tc_id| state.widgets.get(tc_id))
+                .and_then(|tc| tc.children_keys.get("TitleText").copied());
+
+            if let Some(tt_id) = title_text_id {
+                if let Some(title_text) = state.widgets.get_mut(tt_id) {
+                    title_text.text = title.clone();
+                }
+            }
+
+            // Also store on frame itself for GetTitle
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                // Store title in a field, typically used for TitleText child
                 frame.title = title;
             }
             Ok(())

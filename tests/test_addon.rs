@@ -183,6 +183,26 @@ fn test_strata_level() {
 }
 
 #[test]
+fn test_strata_inheritance() {
+    let env = WowLuaEnv::new().unwrap();
+    load_test_addon(&env).unwrap();
+    fire_addon_loaded(&env);
+
+    // Child should inherit HIGH strata from parent
+    let child_strata: String = env.eval("return TestStrataChild:GetFrameStrata()").unwrap();
+    let child_level: i32 = env.eval("return TestStrataChild:GetFrameLevel()").unwrap();
+
+    // Grandchild should also inherit HIGH strata
+    let grandchild_strata: String = env.eval("return TestStrataGrandchild:GetFrameStrata()").unwrap();
+    let grandchild_level: i32 = env.eval("return TestStrataGrandchild:GetFrameLevel()").unwrap();
+
+    assert_eq!(child_strata, "HIGH", "Child should inherit HIGH strata from parent");
+    assert_eq!(child_level, 6, "Child level should be parent level + 1");
+    assert_eq!(grandchild_strata, "HIGH", "Grandchild should inherit HIGH strata");
+    assert_eq!(grandchild_level, 7, "Grandchild level should be child level + 1");
+}
+
+#[test]
 fn test_texture_creation() {
     let env = WowLuaEnv::new().unwrap();
     load_test_addon(&env).unwrap();
@@ -241,7 +261,8 @@ fn test_all_frames_created() {
             "TestBottomLeft", "TestBottomRight", "TestParent",
             "TestChild1", "TestChild2", "TestVisibility",
             "TestEvents", "TestCustomFields",
-            "TestAlpha", "TestStrataLevel", "TestMouse",
+            "TestAlpha", "TestStrataLevel", "TestStrataParent",
+            "TestStrataChild", "TestStrataGrandchild", "TestMouse",
             "TestTextureParent", "TestTexture",
             "TestFontParent", "TestFontString",
             "TestGetPoint"
@@ -254,7 +275,7 @@ fn test_all_frames_created() {
         )
         .unwrap();
 
-    assert_eq!(count, 19, "All 19 test frames should be created");
+    assert_eq!(count, 22, "All 22 test frames should be created");
 }
 
 #[test]

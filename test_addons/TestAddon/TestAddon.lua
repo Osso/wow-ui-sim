@@ -179,6 +179,48 @@ function ns.tests.StrataLevel()
     }
 end
 
+-- Test 7b: Frame strata inheritance from parent
+function ns.tests.StrataInheritance()
+    -- Create parent with HIGH strata
+    local parent = CreateFrame("Frame", "TestStrataParent", UIParent)
+    parent:SetSize(100, 100)
+    parent:SetPoint("CENTER", 250, 100)
+    parent:SetFrameStrata("HIGH")
+    parent:SetFrameLevel(5)
+
+    -- Create child - should inherit HIGH strata and level 6
+    local child = CreateFrame("Frame", "TestStrataChild", parent)
+    child:SetSize(50, 50)
+    child:SetPoint("CENTER")
+
+    local childStrata = child:GetFrameStrata()
+    local childLevel = child:GetFrameLevel()
+
+    -- Create grandchild - should inherit HIGH strata and level 7
+    local grandchild = CreateFrame("Frame", "TestStrataGrandchild", child)
+    grandchild:SetSize(25, 25)
+    grandchild:SetPoint("CENTER")
+
+    local grandchildStrata = grandchild:GetFrameStrata()
+    local grandchildLevel = grandchild:GetFrameLevel()
+
+    return {
+        name = "StrataInheritance",
+        expected = {
+            childStrata = "HIGH",
+            childLevel = 6,
+            grandchildStrata = "HIGH",
+            grandchildLevel = 7
+        },
+        actual = {
+            childStrata = childStrata,
+            childLevel = childLevel,
+            grandchildStrata = grandchildStrata,
+            grandchildLevel = grandchildLevel
+        }
+    }
+end
+
 -- Test 8: Mouse interaction
 function ns.tests.MouseEnabled()
     local frame = CreateFrame("Frame", "TestMouse", UIParent)

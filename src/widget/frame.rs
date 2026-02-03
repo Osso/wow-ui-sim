@@ -99,8 +99,12 @@ pub struct Frame {
     pub registered_events: HashSet<String>,
     /// Frame level (draw order within strata).
     pub frame_level: i32,
+    /// Whether frame level was explicitly set (not inherited from parent).
+    pub has_fixed_frame_level: bool,
     /// Frame strata (major draw order).
     pub frame_strata: FrameStrata,
+    /// Whether frame strata was explicitly set (not inherited from parent).
+    pub has_fixed_frame_strata: bool,
     /// Alpha transparency (0.0 - 1.0).
     pub alpha: f32,
     /// Whether mouse is enabled.
@@ -185,7 +189,9 @@ impl Frame {
             visible: true,
             registered_events: HashSet::new(),
             frame_level: 0,
+            has_fixed_frame_level: false,
             frame_strata: FrameStrata::Medium,
+            has_fixed_frame_strata: false,
             alpha: 1.0,
             mouse_enabled: false,
             texture: None,
