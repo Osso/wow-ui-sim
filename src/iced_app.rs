@@ -371,7 +371,8 @@ impl App {
             },
             Message::Scroll(_dx, dy) => {
                 let scroll_speed = 30.0;
-                self.scroll_offset += dy * scroll_speed;
+                // Negate dy: positive dy means scroll up, which should decrease offset
+                self.scroll_offset -= dy * scroll_speed;
                 let max_scroll = 2600.0;
                 self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
                 self.frame_cache.clear();
