@@ -81,24 +81,37 @@ impl shader::Primitive for WowUiPrimitive {
             }
         }
 
-        // Resolve texture indices and UV coordinates for pending textures
-        let mut resolved_quads = self.quads.clone();
-        for request in &self.quads.texture_requests {
-            if let Some(entry) = atlas.get(&request.path) {
-                let start = request.vertex_start as usize;
-                let end = start + request.vertex_count as usize;
-                for vertex in &mut resolved_quads.vertices[start..end] {
-                    if vertex.tex_index == -2 {
-                        vertex.tex_index = entry.layer;
-                        // Scale UV coordinates to actual texture region within atlas layer
-                        vertex.tex_coords[0] = entry.uv_x + vertex.tex_coords[0] * entry.uv_width;
-                        vertex.tex_coords[1] = entry.uv_y + vertex.tex_coords[1] * entry.uv_height;
+        // Check if any vertices need texture resolution (tex_index == -2)
+        let needs_resolution = self
+            .quads
+            .vertices
+            .iter()
+            .any(|v| v.tex_index == -2);
+
+        if needs_resolution {
+            // Clone and resolve texture indices only when needed
+            let mut resolved_quads = self.quads.clone();
+            for request in &self.quads.texture_requests {
+                if let Some(entry) = atlas.get(&request.path) {
+                    let start = request.vertex_start as usize;
+                    let end = start + request.vertex_count as usize;
+                    for vertex in &mut resolved_quads.vertices[start..end] {
+                        if vertex.tex_index == -2 {
+                            vertex.tex_index = entry.layer;
+                            // Scale UV coordinates to actual texture region within atlas layer
+                            vertex.tex_coords[0] =
+                                entry.uv_x + vertex.tex_coords[0] * entry.uv_width;
+                            vertex.tex_coords[1] =
+                                entry.uv_y + vertex.tex_coords[1] * entry.uv_height;
+                        }
                     }
                 }
             }
+            pipeline.prepare(device, queue, viewport, &resolved_quads);
+        } else {
+            // No resolution needed, use quads directly
+            pipeline.prepare(device, queue, viewport, &self.quads);
         }
-
-        pipeline.prepare(device, queue, viewport, &resolved_quads);
     }
 
     fn render(
@@ -108,6 +121,6 @@ impl shader::Primitive for WowUiPrimitive {
         target: &wgpu::TextureView,
         clip_bounds: &Rectangle<u32>,
     ) {
-        pipeline.render(encoder, target, clip_bounds, &self.quads, self.clear_color);
+        pipeline.render(encoder, target, clip_bounds);
     }
 }

@@ -29,6 +29,13 @@
 
 Uses **Lua 5.1** via mlua (WoW's Lua version).
 
+### Running the Simulator
+
+**Always use `timeout 20` or less** when running the simulator to prevent hung processes:
+```bash
+WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 15 cargo run --bin wow-ui-sim
+```
+
 ### Environment Variables
 
 - `WOW_SIM_NO_SAVED_VARS=1` - Skip loading WTF SavedVariables for faster startup (~18% of load time)

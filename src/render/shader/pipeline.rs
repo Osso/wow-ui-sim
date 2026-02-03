@@ -51,6 +51,8 @@ pub struct WowUiPipeline {
     viewport_size: (u32, u32),
     /// GPU texture atlas for texture storage.
     texture_atlas: GpuTextureAtlas,
+    /// Number of indices in the last uploaded batch (for render).
+    last_index_count: usize,
 }
 
 impl std::fmt::Debug for WowUiPipeline {
@@ -169,16 +171,17 @@ impl WowUiPipeline {
         if !quads.indices.is_empty() {
             queue.write_buffer(&self.index_buffer, 0, bytemuck::cast_slice(&quads.indices));
         }
+
+        // Store index count for render
+        self.last_index_count = quads.indices.len();
     }
 
-    /// Render the quads.
+    /// Render the quads using data uploaded in prepare().
     pub fn render(
         &self,
         encoder: &mut wgpu::CommandEncoder,
         target: &wgpu::TextureView,
         clip_bounds: &Rectangle<u32>,
-        quads: &QuadBatch,
-        _clear_color: [f32; 4],
     ) {
         // Use LoadOp::Load to preserve iced's UI elements (console border, etc.)
         // The scissor rect only affects draw calls, not clear operations.
@@ -213,8 +216,8 @@ impl WowUiPipeline {
         render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
         render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint32);
 
-        if !quads.indices.is_empty() {
-            render_pass.draw_indexed(0..quads.indices.len() as u32, 0, 0..1);
+        if self.last_index_count > 0 {
+            render_pass.draw_indexed(0..self.last_index_count as u32, 0, 0..1);
         }
     }
 
@@ -300,6 +303,7 @@ impl shader::Pipeline for WowUiPipeline {
             _format: format,
             viewport_size: (0, 0),
             texture_atlas,
+            last_index_count: 0,
         }
     }
 }

@@ -244,12 +244,24 @@ pub struct App {
     debug_borders: bool,
     /// Use GPU shader renderer instead of canvas (experimental).
     use_shader_renderer: bool,
+    /// Track which textures have been uploaded to GPU atlas (avoid re-sending pixel data).
+    gpu_uploaded_textures: RefCell<std::collections::HashSet<String>>,
+    /// Cached quad batch for shader (avoids rebuilding every frame).
+    cached_quads: RefCell<Option<(Size, QuadBatch)>>,
+    /// Flag to invalidate quad cache (set when content changes).
+    quads_dirty: std::cell::Cell<bool>,
     /// FPS counter: frame count since last update (interior mutability for draw()).
     frame_count: std::cell::Cell<u32>,
     /// FPS counter: last FPS calculation time.
     fps_last_time: std::time::Instant,
     /// Current FPS value.
     fps: f32,
+    /// Frame render time in ms (interior mutability for draw()).
+    frame_time_ms: std::cell::Cell<f32>,
+    /// Smoothed frame time (5-second EMA).
+    frame_time_avg: std::cell::Cell<f32>,
+    /// Frame time for display (updated every 1 second with FPS).
+    frame_time_display: f32,
 }
 
 impl App {
@@ -331,9 +343,15 @@ impl App {
             lua_rx: Some(lua_rx),
             debug_borders,
             use_shader_renderer,
+            gpu_uploaded_textures: RefCell::new(std::collections::HashSet::new()),
+            cached_quads: RefCell::new(None),
+            quads_dirty: std::cell::Cell::new(true),
             frame_count: std::cell::Cell::new(0),
             fps_last_time: std::time::Instant::now(),
             fps: 0.0,
+            frame_time_ms: std::cell::Cell::new(0.0),
+            frame_time_avg: std::cell::Cell::new(0.0),
+            frame_time_display: 0.0,
         };
 
         (app, Task::none())
@@ -352,6 +370,7 @@ impl App {
                 }
                 self.drain_console();
                 self.frame_cache.clear();
+                self.quads_dirty.set(true);
             }
             Message::CanvasEvent(canvas_msg) => match canvas_msg {
                 CanvasMessage::MouseMove(pos) => {
@@ -368,6 +387,7 @@ impl App {
                         self.hovered_frame = new_hovered;
                         self.drain_console();
                         self.frame_cache.clear();
+                        self.quads_dirty.set(true);
                     }
                 }
                 CanvasMessage::MouseDown(pos) => {
@@ -381,12 +401,14 @@ impl App {
                         drop(env);
                         self.drain_console();
                         self.frame_cache.clear();
+                        self.quads_dirty.set(true);
                     }
                 }
                 CanvasMessage::MouseUp(pos) => {
                     // Check if click is on addon list checkbox
                     if self.handle_addon_checkbox_click(pos) {
                         self.frame_cache.clear();
+                        self.quads_dirty.set(true);
                     } else {
                         let released_on = self.hit_test(pos);
                         if let Some(frame_id) = released_on {
@@ -407,6 +429,7 @@ impl App {
                             drop(env);
                             self.drain_console();
                             self.frame_cache.clear();
+                            self.quads_dirty.set(true);
                         }
                     }
                     self.mouse_down_frame = None;
@@ -420,6 +443,7 @@ impl App {
                 let max_scroll = 2600.0;
                 self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
                 self.frame_cache.clear();
+                self.quads_dirty.set(true);
             }
             Message::ReloadUI => {
                 self.log_messages.push("Reloading UI...".to_string());
@@ -437,6 +461,7 @@ impl App {
                 self.drain_console();
                 self.log_messages.push("UI reloaded.".to_string());
                 self.frame_cache.clear();
+                self.quads_dirty.set(true);
             }
             Message::CommandInputChanged(input) => {
                 self.command_input = input;
@@ -469,6 +494,7 @@ impl App {
                     self.drain_console();
                     self.command_input.clear();
                     self.frame_cache.clear();
+                    self.quads_dirty.set(true);
                 }
             }
             Message::ProcessTimers => {
@@ -479,6 +505,7 @@ impl App {
                     if elapsed >= std::time::Duration::from_secs(1) {
                         let frames = self.frame_count.get();
                         self.fps = frames as f32 / elapsed.as_secs_f32();
+                        self.frame_time_display = self.frame_time_avg.get();
                         self.frame_count.set(0);
                         self.fps_last_time = now;
                     }
@@ -493,6 +520,7 @@ impl App {
                     Ok(count) if count > 0 => {
                         self.drain_console();
                         self.frame_cache.clear();
+                        self.quads_dirty.set(true);
                     }
                     Err(e) => {
                         eprintln!("Timer error: {}", e);
@@ -522,9 +550,13 @@ impl App {
     }
 
     fn view(&self) -> Element<'_, Message> {
-        // Title with FPS counter (when using shader renderer)
+        // Title with FPS counter and frame time (when using shader renderer)
         let title_text = if self.use_shader_renderer {
-            format!("WoW UI Simulator  [{:.1} FPS]", self.fps)
+            format!(
+                "WoW UI Simulator  [{:.1} FPS | {:.2}ms]",
+                self.fps,
+                self.frame_time_display
+            )
         } else {
             "WoW UI Simulator".to_string()
         };
@@ -680,8 +712,8 @@ impl App {
     }
 
     fn subscription(&self) -> Subscription<Message> {
-        // Timer for processing WoW timers and debug commands (~30fps)
-        iced::time::every(std::time::Duration::from_millis(33)).map(|_| Message::ProcessTimers)
+        // Timer for processing WoW timers and debug commands (~60fps)
+        iced::time::every(std::time::Duration::from_millis(16)).map(|_| Message::ProcessTimers)
     }
 
     fn drain_console(&mut self) {
@@ -765,6 +797,7 @@ impl App {
                     // Refresh display
                     self.drain_console();
                     self.frame_cache.clear();
+                    self.quads_dirty.set(true);
                 }
             }
         }
@@ -1193,28 +1226,57 @@ impl shader::Program<Message> for &App {
         _cursor: mouse::Cursor,
         bounds: Rectangle,
     ) -> Self::Primitive {
+        let start = std::time::Instant::now();
+
         // Increment frame counter for FPS calculation
         self.frame_count.set(self.frame_count.get() + 1);
 
-        let quads = self.build_quad_batch(bounds.size());
+        // Use cached quads if available and not dirty
+        let size = bounds.size();
+        let mut cache = self.cached_quads.borrow_mut();
+        let quads = if self.quads_dirty.get() || cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true) {
+            // Rebuild quad batch
+            let new_quads = self.build_quad_batch(size);
+            *cache = Some((size, new_quads.clone()));
+            self.quads_dirty.set(false);
+            new_quads
+        } else {
+            // Use cached quads
+            cache.as_ref().unwrap().1.clone()
+        };
 
-        // Load textures for any texture requests
+        // Load ONLY NEW textures (skip ones already uploaded to GPU atlas)
         let mut textures = Vec::new();
-        let mut tex_mgr = self.texture_manager.borrow_mut();
-        for request in &quads.texture_requests {
-            // Only load if not already in the list
-            if textures.iter().any(|t: &GpuTextureData| t.path == request.path) {
-                continue;
-            }
-            if let Some(tex_data) = tex_mgr.load(&request.path) {
-                textures.push(GpuTextureData {
-                    path: request.path.clone(),
-                    width: tex_data.width,
-                    height: tex_data.height,
-                    rgba: tex_data.pixels.clone(),
-                });
+        let mut uploaded = self.gpu_uploaded_textures.borrow_mut();
+        {
+            let mut tex_mgr = self.texture_manager.borrow_mut();
+            for request in &quads.texture_requests {
+                // Skip if already uploaded to GPU
+                if uploaded.contains(&request.path) {
+                    continue;
+                }
+                // Skip if already in this batch
+                if textures.iter().any(|t: &GpuTextureData| t.path == request.path) {
+                    continue;
+                }
+                if let Some(tex_data) = tex_mgr.load(&request.path) {
+                    textures.push(GpuTextureData {
+                        path: request.path.clone(),
+                        width: tex_data.width,
+                        height: tex_data.height,
+                        rgba: tex_data.pixels.clone(),
+                    });
+                    // Mark as uploaded (will be uploaded in prepare())
+                    uploaded.insert(request.path.clone());
+                }
             }
         }
+
+        // Update frame time with EMA (alpha = 0.33 for ~5 sample smoothing)
+        let elapsed_ms = start.elapsed().as_secs_f32() * 1000.0;
+        self.frame_time_ms.set(elapsed_ms);
+        let avg = self.frame_time_avg.get();
+        self.frame_time_avg.set(0.33 * elapsed_ms + 0.67 * avg);
 
         WowUiPrimitive::with_textures(quads, textures)
     }
