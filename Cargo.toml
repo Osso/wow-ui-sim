@@ -14,7 +14,7 @@ dirs = "5.0"
 thiserror = "2.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-image = { version = "0.25", features = ["webp-encoder"] }
+image = "0.25"
 image-blp = "1"
 tokio = { version = "1", features = ["sync", "rt", "time"] }
 libc = "0.2"
@@ -28,16 +28,12 @@ iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio"] }
 iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
 
 [[bin]]
-name = "wow-lua"
-path = "src/bin/wow_lua.rs"
+name = "wow-sim"
+path = "src/bin/wow_sim.rs"
 
 [[bin]]
 name = "gen_atlas"
 path = "tools/gen_atlas.rs"
-
-[[bin]]
-name = "convert_textures"
-path = "tools/convert_textures.rs"
 
 [dev-dependencies]
 insta = "1.42"

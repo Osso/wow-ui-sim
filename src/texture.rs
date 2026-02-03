@@ -164,7 +164,7 @@ impl TextureManager {
     /// Try to resolve a path within a given base directory.
     fn try_resolve_in_dir(&self, base: &Path, path: &str) -> Option<PathBuf> {
         // Try different extensions
-        for ext in &["PNG", "png", "tga", "TGA", "blp", "BLP", "jpg", "JPG"] {
+        for ext in &["webp", "WEBP", "PNG", "png", "tga", "TGA", "blp", "BLP", "jpg", "JPG"] {
             let file_path = base.join(format!("{}.{}", path, ext));
             if file_path.exists() {
                 return Some(file_path);
@@ -195,7 +195,7 @@ impl TextureManager {
 
             if is_last {
                 // For the filename, try with different extensions
-                for ext in &["PNG", "png", "tga", "TGA", "blp", "BLP", "jpg", "JPG"] {
+                for ext in &["webp", "WEBP", "PNG", "png", "tga", "TGA", "blp", "BLP", "jpg", "JPG"] {
                     let with_ext = format!("{}.{}", component, ext);
                     if let Some(entry) = self.find_case_insensitive(&current, &with_ext) {
                         return Some(entry);

@@ -1,77 +1,102 @@
-//! Lua REPL client for wow-ui-sim.
+//! WoW UI Simulator CLI
 //!
-//! Connects to a running wow-ui-sim instance and executes Lua code.
+//! Multi-purpose CLI for the WoW UI simulator.
 //!
 //! Usage:
-//!   wow-lua                     # Interactive REPL
-//!   wow-lua -e "print('hi')"    # Execute code and exit
-//!   wow-lua script.lua          # Execute file and exit
-//!   wow-lua --list              # List running servers
+//!   wow-sim lua                      # Interactive Lua REPL
+//!   wow-sim lua -e "print('hi')"     # Execute code and exit
+//!   wow-sim extract-textures         # Extract textures to WebP
 
+use clap::{Parser, Subcommand};
 use std::io::{self, BufRead, Write};
 use std::path::PathBuf;
 use wow_ui_sim::lua_server::client;
 
-fn main() {
-    let args: Vec<String> = std::env::args().collect();
-
-    // Parse arguments
-    if args.len() > 1 {
-        match args[1].as_str() {
-            "--help" | "-h" => {
-                print_help();
-                return;
-            }
-            "--list" | "-l" => {
-                list_servers();
-                return;
-            }
-            "-e" => {
-                if args.len() < 3 {
-                    eprintln!("Error: -e requires code argument");
-                    std::process::exit(1);
-                }
-                let code = args[2..].join(" ");
-                execute_and_exit(&code);
-                return;
-            }
-            arg if !arg.starts_with('-') => {
-                // Treat as file path
-                execute_file_and_exit(arg);
-                return;
-            }
-            _ => {
-                eprintln!("Unknown option: {}", args[1]);
-                print_help();
-                std::process::exit(1);
-            }
-        }
-    }
-
-    // Interactive REPL
-    run_repl();
+#[derive(Parser)]
+#[command(name = "wow-sim")]
+#[command(about = "WoW UI Simulator CLI tools")]
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
 }
 
-fn print_help() {
-    println!("wow-lua - Lua REPL for wow-ui-sim");
-    println!();
-    println!("Usage:");
-    println!("  wow-lua                     Interactive REPL");
-    println!("  wow-lua -e <code>           Execute code and exit");
-    println!("  wow-lua <file.lua>          Execute file and exit");
-    println!("  wow-lua --list              List running servers");
-    println!();
-    println!("REPL Commands:");
-    println!("  .exit, .quit                Exit the REPL");
-    println!("  .servers                    List running servers");
-    println!("  .connect <path>             Connect to specific server");
+#[derive(Subcommand)]
+enum Commands {
+    /// Lua REPL - connect to running wow-ui-sim and execute Lua code
+    Lua {
+        /// Execute code and exit
+        #[arg(short = 'e', long)]
+        exec: Option<String>,
+
+        /// Execute file and exit
+        #[arg(short = 'f', long)]
+        file: Option<PathBuf>,
+
+        /// List running servers
+        #[arg(short = 'l', long)]
+        list: bool,
+    },
+
+    /// Extract textures referenced by addons to WebP format
+    ExtractTextures {
+        /// Path to addons directory to scan
+        #[arg(long, default_value_os_t = default_addons_path())]
+        addons: PathBuf,
+
+        /// Path to WoW Interface directory (for BLP textures)
+        #[arg(long, default_value_os_t = default_interface_path())]
+        interface: PathBuf,
+
+        /// Output directory for WebP textures
+        #[arg(long, short, default_value = "./textures")]
+        output: PathBuf,
+    },
+}
+
+fn default_addons_path() -> PathBuf {
+    dirs::home_dir()
+        .unwrap_or_default()
+        .join("Projects/wow/reference-addons")
+}
+
+fn default_interface_path() -> PathBuf {
+    dirs::home_dir()
+        .unwrap_or_default()
+        .join("Projects/wow/Interface")
+}
+
+fn main() {
+    let cli = Cli::parse();
+
+    match cli.command {
+        Commands::Lua { exec, file, list } => {
+            if list {
+                list_servers();
+            } else if let Some(code) = exec {
+                execute_and_exit(&code);
+            } else if let Some(path) = file {
+                execute_file_and_exit(&path);
+            } else {
+                run_repl();
+            }
+        }
+        Commands::ExtractTextures {
+            addons,
+            interface,
+            output,
+        } => {
+            let (found, missing) =
+                wow_ui_sim::extract_textures::extract_textures(&addons, &interface, &output);
+            println!("\nSummary: {} converted, {} missing", found, missing);
+        }
+    }
 }
 
 fn list_servers() {
     let servers = client::find_servers();
     if servers.is_empty() {
         println!("No wow-ui-sim servers found.");
-        println!("Start wow-ui-sim first, then run wow-lua.");
+        println!("Start wow-ui-sim first, then run wow-sim lua.");
     } else {
         println!("Running servers:");
         for server in &servers {
@@ -88,7 +113,7 @@ fn find_server() -> Option<PathBuf> {
     let servers = client::find_servers();
     if servers.is_empty() {
         eprintln!("Error: No wow-ui-sim server found.");
-        eprintln!("Start wow-ui-sim first, then run wow-lua.");
+        eprintln!("Start wow-ui-sim first, then run wow-sim lua.");
         return None;
     }
     if servers.len() > 1 {
@@ -120,11 +145,11 @@ fn execute_and_exit(code: &str) {
     }
 }
 
-fn execute_file_and_exit(path: &str) {
+fn execute_file_and_exit(path: &PathBuf) {
     let code = match std::fs::read_to_string(path) {
         Ok(c) => c,
         Err(e) => {
-            eprintln!("Error reading {}: {}", path, e);
+            eprintln!("Error reading {}: {}", path.display(), e);
             std::process::exit(1);
         }
     };

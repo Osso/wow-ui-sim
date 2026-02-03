@@ -25,8 +25,11 @@ use crate::texture::TextureManager;
 use crate::widget::{AnchorPoint, TextJustify, WidgetType};
 use crate::LayoutRect;
 
-/// Default path to wow-ui-textures repository.
-const DEFAULT_TEXTURES_PATH: &str = "/home/osso/Repos/wow-ui-textures";
+/// Default path to local WebP textures (preferred).
+const LOCAL_TEXTURES_PATH: &str = "./textures";
+
+/// Fallback path to wow-ui-textures repository.
+const FALLBACK_TEXTURES_PATH: &str = "/home/osso/Repos/wow-ui-textures";
 
 /// Default path to WoW Interface directory (extracted game files).
 const DEFAULT_INTERFACE_PATH: &str = "/home/osso/Projects/wow/Interface";
@@ -53,7 +56,13 @@ mod palette {
 
 /// Run the iced UI with the given Lua environment.
 pub fn run_iced_ui(env: WowLuaEnv) -> Result<(), Box<dyn std::error::Error>> {
-    run_iced_ui_with_textures(env, PathBuf::from(DEFAULT_TEXTURES_PATH))
+    // Prefer local WebP textures, fall back to full repo
+    let textures_path = if PathBuf::from(LOCAL_TEXTURES_PATH).exists() {
+        PathBuf::from(LOCAL_TEXTURES_PATH)
+    } else {
+        PathBuf::from(FALLBACK_TEXTURES_PATH)
+    };
+    run_iced_ui_with_textures(env, textures_path)
 }
 
 /// Run the iced UI with the given Lua environment and textures path.
@@ -217,9 +226,14 @@ impl App {
         let env = INIT_ENV
             .with(|cell| cell.borrow_mut().take())
             .expect("WowLuaEnv not initialized");
-        let textures_path = INIT_TEXTURES
-            .with(|cell| cell.borrow_mut().take())
-            .unwrap_or_else(|| PathBuf::from(DEFAULT_TEXTURES_PATH));
+        let textures_path = INIT_TEXTURES.with(|cell| cell.borrow_mut().take()).unwrap_or_else(|| {
+            // Prefer local WebP textures, fall back to full repo
+            if PathBuf::from(LOCAL_TEXTURES_PATH).exists() {
+                PathBuf::from(LOCAL_TEXTURES_PATH)
+            } else {
+                PathBuf::from(FALLBACK_TEXTURES_PATH)
+            }
+        });
 
         let env_rc = Rc::new(RefCell::new(env));
 

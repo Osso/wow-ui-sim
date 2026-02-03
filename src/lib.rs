@@ -7,6 +7,7 @@ pub mod atlas;
 pub mod cvars;
 pub mod error;
 pub mod event;
+pub mod extract_textures;
 pub mod iced_app;
 pub mod loader;
 pub mod lua_api;
