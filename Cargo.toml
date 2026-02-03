@@ -22,6 +22,7 @@ glob = "0.3"
 clap = { version = "4", features = ["derive"] }
 regex = "1"
 walkdir = "2"
+phf = { version = "0.11", features = ["macros"] }
 
 # Iced GUI
 iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio"] }
@@ -34,6 +35,10 @@ path = "src/bin/wow_sim.rs"
 [[bin]]
 name = "gen_atlas"
 path = "tools/gen_atlas.rs"
+
+[[bin]]
+name = "gen_global_strings"
+path = "tools/gen_global_strings.rs"
 
 [dev-dependencies]
 insta = "1.42"

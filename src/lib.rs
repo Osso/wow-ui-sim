@@ -5,6 +5,8 @@
 
 #[path = "../data/atlas.rs"]
 pub mod atlas;
+#[path = "../data/global_strings.rs"]
+pub mod global_strings;
 pub mod cvars;
 pub mod error;
 pub mod event;

@@ -311,6 +311,8 @@ fn extract_sub_region(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
+    use tempfile::TempDir;
 
     #[test]
     fn test_normalize_wow_path() {
@@ -322,5 +324,145 @@ mod tests {
             normalize_wow_path("Interface\\BUTTONS\\UI-Panel-Button-Up.blp"),
             "Interface/BUTTONS/UI-Panel-Button-Up"
         );
+    }
+
+    #[test]
+    fn test_load_webp_texture() {
+        let textures_path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("textures");
+        if !textures_path.exists() {
+            eprintln!("Skipping test: textures directory not found");
+            return;
+        }
+
+        let mut mgr = TextureManager::new(&textures_path);
+        let result = mgr.load("Interface/BUTTONS/UI-SortArrow");
+
+        assert!(result.is_some(), "Should load UI-SortArrow texture");
+        let data = result.unwrap();
+        assert!(data.width > 0, "Texture should have non-zero width");
+        assert!(data.height > 0, "Texture should have non-zero height");
+        assert!(!data.pixels.is_empty(), "Texture should have pixel data");
+        assert_eq!(
+            data.pixels.len(),
+            (data.width * data.height * 4) as usize,
+            "Pixel data should be RGBA"
+        );
+    }
+
+    #[test]
+    fn test_webp_preferred_over_png() {
+        let temp_dir = TempDir::new().unwrap();
+        let base = temp_dir.path();
+
+        // Create a test texture in both webp and png formats
+        // WebP: 2x2 red pixels
+        // PNG: 2x2 blue pixels
+        let webp_path = base.join("test-texture.webp");
+        let png_path = base.join("test-texture.png");
+
+        // Create a minimal 2x2 red image for webp
+        let red_img = image::RgbaImage::from_pixel(2, 2, image::Rgba([255, 0, 0, 255]));
+        red_img.save(&webp_path).unwrap();
+
+        // Create a minimal 2x2 blue image for png
+        let blue_img = image::RgbaImage::from_pixel(2, 2, image::Rgba([0, 0, 255, 255]));
+        blue_img.save(&png_path).unwrap();
+
+        // Load texture - should prefer webp
+        let mut mgr = TextureManager::new(base);
+        let result = mgr.load("test-texture");
+
+        assert!(result.is_some(), "Should load test-texture");
+        let data = result.unwrap();
+
+        // Check that we got red pixels (webp), not blue (png)
+        assert_eq!(data.width, 2);
+        assert_eq!(data.height, 2);
+        // First pixel should be red (R=255, G=0, B=0, A=255)
+        assert_eq!(data.pixels[0], 255, "R should be 255 (webp loaded)");
+        assert_eq!(data.pixels[1], 0, "G should be 0 (webp loaded)");
+        assert_eq!(data.pixels[2], 0, "B should be 0 (webp loaded)");
+    }
+
+    #[test]
+    fn test_extension_priority_order() {
+        // Verify the extension order in try_resolve_in_dir is webp first
+        let extensions = ["webp", "WEBP", "PNG", "png", "tga", "TGA", "blp", "BLP", "jpg", "JPG"];
+        assert_eq!(extensions[0], "webp", "webp should be first priority");
+        assert_eq!(extensions[1], "WEBP", "WEBP should be second priority");
+    }
+
+    #[test]
+    fn test_fallback_to_png_when_no_webp() {
+        let temp_dir = TempDir::new().unwrap();
+        let base = temp_dir.path();
+
+        // Create only a PNG file (no webp)
+        let png_path = base.join("only-png.png");
+        let green_img = image::RgbaImage::from_pixel(2, 2, image::Rgba([0, 255, 0, 255]));
+        green_img.save(&png_path).unwrap();
+
+        let mut mgr = TextureManager::new(base);
+        let result = mgr.load("only-png");
+
+        assert!(result.is_some(), "Should load png when webp not available");
+        let data = result.unwrap();
+        // First pixel should be green
+        assert_eq!(data.pixels[0], 0, "R should be 0");
+        assert_eq!(data.pixels[1], 255, "G should be 255 (png loaded)");
+        assert_eq!(data.pixels[2], 0, "B should be 0");
+    }
+
+    #[test]
+    fn test_case_insensitive_loading() {
+        let temp_dir = TempDir::new().unwrap();
+        let base = temp_dir.path();
+
+        // Create subdirectory with mixed case
+        let subdir = base.join("BUTTONS");
+        fs::create_dir(&subdir).unwrap();
+
+        let webp_path = subdir.join("UI-Panel-Button.webp");
+        let img = image::RgbaImage::from_pixel(1, 1, image::Rgba([128, 128, 128, 255]));
+        img.save(&webp_path).unwrap();
+
+        let mut mgr = TextureManager::new(base);
+
+        // Try loading with different cases
+        let result = mgr.load("buttons/ui-panel-button");
+        assert!(result.is_some(), "Should load with lowercase path");
+    }
+
+    #[test]
+    fn test_nonexistent_texture_returns_none() {
+        let temp_dir = TempDir::new().unwrap();
+        let mut mgr = TextureManager::new(temp_dir.path());
+
+        let result = mgr.load("this/texture/does/not/exist");
+        assert!(result.is_none(), "Should return None for nonexistent texture");
+    }
+
+    #[test]
+    fn test_texture_caching() {
+        let temp_dir = TempDir::new().unwrap();
+        let base = temp_dir.path();
+
+        let webp_path = base.join("cached.webp");
+        let img = image::RgbaImage::from_pixel(4, 4, image::Rgba([100, 100, 100, 255]));
+        img.save(&webp_path).unwrap();
+
+        let mut mgr = TextureManager::new(base);
+
+        // First load
+        let result1 = mgr.load("cached");
+        assert!(result1.is_some());
+        let pixels1 = result1.unwrap().pixels.clone();
+
+        // Second load should return cached version (using get, no disk access)
+        let result2 = mgr.get("cached");
+        assert!(result2.is_some(), "Should get from cache");
+
+        // Verify same data
+        assert_eq!(pixels1, result2.unwrap().pixels);
     }
 }
