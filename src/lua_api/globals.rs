@@ -9892,6 +9892,12 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     globals.set("DECLINE", "Decline")?;
     globals.set("ENABLE", "Enable")?;
     globals.set("DISABLE", "Disable")?;
+    globals.set("ADDON_LIST", "Addons")?;
+    globals.set("ENABLE_ALL_ADDONS", "Enable All")?;
+    globals.set("DISABLE_ALL_ADDONS", "Disable All")?;
+    globals.set("ADDON_LOADED", "Loaded")?;
+    globals.set("ADDON_DEPENDENCIES", "Dependencies")?;
+    globals.set("ADDON_DEP_DISABLED", "Dependency Disabled")?;
     globals.set("HIGHLIGHTING", "Highlighting:")?;
     globals.set("READY", "Ready")?;
     globals.set("NOT_READY", "Not Ready")?;
@@ -13523,7 +13529,23 @@ impl UserData for FrameHandle {
         });
 
         methods.add_meta_function(MetaMethod::NewIndex, |lua: &Lua, (ud, key, value): (mlua::AnyUserData, String, Value)| {
-            let frame_id: u64 = ud.borrow::<FrameHandle>()?.id;
+            let handle = ud.borrow::<FrameHandle>()?;
+            let frame_id: u64 = handle.id;
+            let state_rc = Rc::clone(&handle.state);
+            drop(handle);
+
+            // If assigning a FrameHandle value, update children_keys in the Rust widget registry
+            // This syncs parentKey relationships from Lua space to Rust
+            if let Value::UserData(child_ud) = &value {
+                if let Ok(child_handle) = child_ud.borrow::<FrameHandle>() {
+                    let child_id = child_handle.id;
+                    drop(child_handle);
+                    let mut state = state_rc.borrow_mut();
+                    if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
+                        parent_frame.children_keys.insert(key.clone(), child_id);
+                    }
+                }
+            }
 
             // Get or create the fields table
             let fields_table: mlua::Table = lua.globals().get::<mlua::Table>("__frame_fields").unwrap_or_else(|_| {
@@ -14909,6 +14931,10 @@ impl UserData for FrameHandle {
             if let Some(tt_id) = title_text_id {
                 if let Some(title_text) = state.widgets.get_mut(tt_id) {
                     title_text.text = title.clone();
+                    // Auto-size height if not set (FontStrings need height for rendering)
+                    if title_text.height == 0.0 {
+                        title_text.height = title_text.font_size.max(12.0);
+                    }
                 }
             }
 
