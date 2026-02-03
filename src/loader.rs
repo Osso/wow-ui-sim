@@ -386,7 +386,8 @@ fn create_frame_from_xml(
         ));
     }
 
-    // Set size
+    // Set size - check frame first, then inherit from templates
+    let mut size_set = false;
     if let Some(size) = frame.size() {
         let (x, y) = get_size_values(size);
         if let (Some(x), Some(y)) = (x, y) {
@@ -396,6 +397,25 @@ fn create_frame_from_xml(
         "#,
                 x, y
             ));
+            size_set = true;
+        }
+    }
+    // If no size on frame, check inherited templates
+    if !size_set && !inherits.is_empty() {
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in &template_chain {
+            if let Some(size) = template_entry.frame.size() {
+                let (x, y) = get_size_values(size);
+                if let (Some(x), Some(y)) = (x, y) {
+                    lua_code.push_str(&format!(
+                        r#"
+        frame:SetSize({}, {})
+        "#,
+                        x, y
+                    ));
+                    break;
+                }
+            }
         }
     }
 
