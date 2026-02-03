@@ -1182,6 +1182,12 @@ impl App {
         let screen_width = size.width;
         let screen_height = size.height;
 
+        // Add background quad first (replaces LoadOp::Clear to preserve iced UI)
+        batch.push_solid(
+            Rectangle::new(Point::ORIGIN, size),
+            [palette::BG_DARK.r, palette::BG_DARK.g, palette::BG_DARK.b, 1.0],
+        );
+
         // Find AddonList frame and collect descendant IDs
         let mut addonlist_ids = std::collections::HashSet::new();
         let addonlist_id = state.widgets.all_ids().into_iter().find(|&id| {

@@ -178,20 +178,18 @@ impl WowUiPipeline {
         target: &wgpu::TextureView,
         clip_bounds: &Rectangle<u32>,
         quads: &QuadBatch,
-        clear_color: [f32; 4],
+        _clear_color: [f32; 4],
     ) {
+        // Use LoadOp::Load to preserve iced's UI elements (console border, etc.)
+        // The scissor rect only affects draw calls, not clear operations.
+        // We draw a background quad instead of using clear.
         let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("WoW UI Render Pass"),
             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
                 view: target,
                 resolve_target: None,
                 ops: wgpu::Operations {
-                    load: wgpu::LoadOp::Clear(wgpu::Color {
-                        r: clear_color[0] as f64,
-                        g: clear_color[1] as f64,
-                        b: clear_color[2] as f64,
-                        a: clear_color[3] as f64,
-                    }),
+                    load: wgpu::LoadOp::Load,
                     store: wgpu::StoreOp::Store,
                 },
                 depth_slice: None,
@@ -201,6 +199,7 @@ impl WowUiPipeline {
             occlusion_query_set: None,
         });
 
+        // Set scissor rect BEFORE any drawing (including background clear)
         render_pass.set_scissor_rect(
             clip_bounds.x,
             clip_bounds.y,
