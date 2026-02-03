@@ -9,7 +9,7 @@ use iced::mouse;
 use iced::widget::canvas::{self, Cache, Canvas, Geometry, Path, Stroke};
 use iced::widget::image::Handle as ImageHandle;
 use iced::widget::shader::{self, Shader};
-use iced::widget::{button, column, container, row, scrollable, text, text_input, Column};
+use iced::widget::{button, column, container, row, scrollable, stack, text, text_input, Column};
 use iced::window::screenshot::Screenshot;
 use iced::{window, Border, Color, Element, Event, Font, Length, Point, Rectangle, Size, Theme};
 use iced::{Subscription, Task};
@@ -207,6 +207,20 @@ pub enum CanvasMessage {
     MouseUp(Point),
 }
 
+/// Text overlay wrapper for shader mode.
+///
+/// This renders only text (FontStrings) on a transparent background,
+/// layered on top of the shader which renders textures/backgrounds.
+pub struct TextOverlay<'a> {
+    app: &'a App,
+}
+
+impl<'a> TextOverlay<'a> {
+    pub fn new(app: &'a App) -> Self {
+        Self { app }
+    }
+}
+
 /// Application state.
 pub struct App {
     env: Rc<RefCell<WowLuaEnv>>,
@@ -216,6 +230,8 @@ pub struct App {
     /// Cache of loaded texture image handles (uses RefCell for interior mutability during draw).
     image_handles: Rc<RefCell<HashMap<String, ImageHandle>>>,
     frame_cache: Cache,
+    /// Cache for text-only overlay (used in shader mode).
+    text_cache: Cache,
     hovered_frame: Option<u64>,
     pressed_frame: Option<u64>,
     mouse_down_frame: Option<u64>,
@@ -304,6 +320,7 @@ impl App {
             texture_manager,
             image_handles: Rc::new(RefCell::new(HashMap::new())),
             frame_cache: Cache::new(),
+            text_cache: Cache::new(),
             hovered_frame: None,
             pressed_frame: None,
             mouse_down_frame: None,
@@ -515,12 +532,21 @@ impl App {
 
         // Render surface - either shader (GPU) or canvas (CPU)
         let render_container: Element<'_, Message> = if self.use_shader_renderer {
-            // GPU shader rendering - uses shader::Program impl for &App
+            // GPU shader rendering with text overlay
+            // Layer 1: Shader for textures/backgrounds
             let shader: Shader<Message, &App> = Shader::new(self)
                 .width(Length::Fill)
                 .height(Length::Fill);
 
-            container(shader)
+            // Layer 2: Canvas for text only (transparent background)
+            let text_overlay: Canvas<TextOverlay<'_>, Message> = Canvas::new(TextOverlay::new(self))
+                .width(Length::Fill)
+                .height(Length::Fill);
+
+            // Stack shader and text overlay
+            let stacked = stack![shader, text_overlay];
+
+            container(stacked)
                 .width(Length::FillPortion(3))
                 .height(Length::Fill)
                 .style(|_| container::Style {
@@ -1062,6 +1088,41 @@ impl canvas::Program<Message> for &App {
             );
 
             self.draw_wow_frames(frame, bounds.size());
+        });
+
+        vec![geometry]
+    }
+}
+
+/// Canvas program implementation for text overlay (used in shader mode).
+///
+/// This renders only FontString widgets with a transparent background,
+/// allowing it to be layered on top of the shader which handles textures.
+impl canvas::Program<Message> for TextOverlay<'_> {
+    type State = ();
+
+    fn update(
+        &self,
+        _state: &mut Self::State,
+        _event: &Event,
+        _bounds: Rectangle,
+        _cursor: mouse::Cursor,
+    ) -> Option<canvas::Action<Message>> {
+        // Text overlay doesn't handle events - the shader layer handles them
+        None
+    }
+
+    fn draw(
+        &self,
+        _state: &Self::State,
+        renderer: &iced::Renderer,
+        _theme: &Theme,
+        bounds: Rectangle,
+        _cursor: mouse::Cursor,
+    ) -> Vec<Geometry> {
+        let geometry = self.app.text_cache.draw(renderer, bounds.size(), |frame| {
+            // Transparent background - let shader show through
+            self.app.draw_text_overlay(frame, bounds.size());
         });
 
         vec![geometry]
@@ -1616,6 +1677,287 @@ impl App {
                 .with_color(crosshair_color)
                 .with_width(1.0),
         );
+    }
+
+    /// Draw only text elements (FontStrings, button text, etc.) for shader overlay.
+    ///
+    /// This is used in shader mode where the GPU renders textures/backgrounds,
+    /// and this canvas overlay handles only text rendering on top.
+    fn draw_text_overlay(&self, frame: &mut canvas::Frame, size: Size) {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+
+        let screen_width = size.width;
+        let screen_height = size.height;
+
+        // Find AddonList frame and collect descendant IDs (same as draw_wow_frames)
+        let mut addonlist_ids = std::collections::HashSet::new();
+        let addonlist_id = state.widgets.all_ids().into_iter().find(|&id| {
+            state
+                .widgets
+                .get(id)
+                .map(|f| f.name.as_deref() == Some("AddonList"))
+                .unwrap_or(false)
+        });
+
+        if let Some(root_id) = addonlist_id {
+            let mut queue = vec![root_id];
+            while let Some(id) = queue.pop() {
+                addonlist_ids.insert(id);
+                if let Some(f) = state.widgets.get(id) {
+                    queue.extend(f.children.iter().copied());
+                }
+            }
+        }
+
+        // Collect and sort frames (same sorting as draw_wow_frames)
+        let mut frames: Vec<_> = state
+            .widgets
+            .all_ids()
+            .into_iter()
+            .filter_map(|id| {
+                let f = state.widgets.get(id)?;
+                let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
+                Some((id, f, rect))
+            })
+            .collect();
+
+        frames.sort_by(|a, b| {
+            a.1.frame_strata
+                .cmp(&b.1.frame_strata)
+                .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
+                .then_with(|| {
+                    let is_region = |t: &WidgetType| {
+                        matches!(t, WidgetType::Texture | WidgetType::FontString)
+                    };
+                    match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
+                        (true, true) => {
+                            a.1.draw_layer
+                                .cmp(&b.1.draw_layer)
+                                .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer))
+                        }
+                        (false, true) => std::cmp::Ordering::Less,
+                        (true, false) => std::cmp::Ordering::Greater,
+                        (false, false) => std::cmp::Ordering::Equal,
+                    }
+                })
+                .then_with(|| a.0.cmp(&b.0))
+        });
+
+        // Find test buttons and their children
+        let mut test_button_ids = std::collections::HashSet::new();
+        for test_name in ["TestTextureButton", "TestHoverButton"] {
+            let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
+                state
+                    .widgets
+                    .get(id)
+                    .map(|f| f.name.as_deref() == Some(test_name))
+                    .unwrap_or(false)
+            });
+            if let Some(root_id) = test_button_id {
+                let mut queue = vec![root_id];
+                while let Some(id) = queue.pop() {
+                    test_button_ids.insert(id);
+                    if let Some(f) = state.widgets.get(id) {
+                        queue.extend(f.children.iter().copied());
+                    }
+                }
+            }
+        }
+
+        // Capture AddonList rect for addon entries
+        let addonlist_rect = addonlist_id.and_then(|root_id| {
+            frames.iter().find(|(id, _, _)| *id == root_id).map(|(_, _, r)| r.clone())
+        });
+
+        // Draw only text elements
+        for (id, f, rect) in frames {
+            if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
+                continue;
+            }
+            if !f.visible {
+                continue;
+            }
+            if rect.width <= 0.0 || rect.height <= 0.0 {
+                continue;
+            }
+
+            let x = rect.x * UI_SCALE;
+            let y = rect.y * UI_SCALE;
+            let w = rect.width * UI_SCALE;
+            let h = rect.height * UI_SCALE;
+            let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
+
+            match f.widget_type {
+                WidgetType::FontString => {
+                    self.draw_fontstring_widget(frame, bounds, f);
+                }
+                WidgetType::Button => {
+                    // Draw button text only (no textures)
+                    self.draw_button_text(frame, bounds, f);
+                }
+                WidgetType::EditBox => {
+                    // Draw editbox text only (no background)
+                    self.draw_editbox_text(frame, bounds, f);
+                }
+                WidgetType::CheckButton => {
+                    // Draw checkbox label text only
+                    self.draw_checkbutton_text(frame, bounds, f);
+                }
+                _ => {}
+            }
+        }
+
+        // Draw addon list entries text
+        if let Some(ref rect) = addonlist_rect {
+            self.draw_addon_list_entries_text(frame, rect, &*state);
+        }
+    }
+
+    /// Draw only the text portion of a button (for text overlay).
+    fn draw_button_text(&self, frame: &mut canvas::Frame, bounds: Rectangle, f: &crate::widget::Frame) {
+        if let Some(ref txt) = f.text {
+            let clean_text = strip_wow_markup(txt);
+            TextRenderer::draw_justified_text(
+                frame,
+                &clean_text,
+                bounds,
+                f.font_size,
+                Color::from_rgba(
+                    f.text_color.r,
+                    f.text_color.g,
+                    f.text_color.b,
+                    f.text_color.a * f.alpha,
+                ),
+                wow_font_to_iced(f.font.as_deref()),
+                TextJustify::Center,
+                TextJustify::Center,
+            );
+        }
+    }
+
+    /// Draw only the text portion of an editbox (for text overlay).
+    fn draw_editbox_text(&self, frame: &mut canvas::Frame, bounds: Rectangle, f: &crate::widget::Frame) {
+        if let Some(ref txt) = f.text {
+            let padding = 4.0;
+            let text_bounds = Rectangle::new(
+                Point::new(bounds.x + padding, bounds.y),
+                Size::new(bounds.width - padding * 2.0, bounds.height),
+            );
+            TextRenderer::draw_justified_text(
+                frame,
+                txt,
+                text_bounds,
+                f.font_size,
+                Color::from_rgba(
+                    f.text_color.r,
+                    f.text_color.g,
+                    f.text_color.b,
+                    f.text_color.a * f.alpha,
+                ),
+                Font::DEFAULT,
+                TextJustify::Left,
+                TextJustify::Center,
+            );
+        }
+    }
+
+    /// Draw only the text portion of a checkbox (for text overlay).
+    fn draw_checkbutton_text(&self, frame: &mut canvas::Frame, bounds: Rectangle, f: &crate::widget::Frame) {
+        // Most checkbuttons have their label as a separate FontString child, not f.text
+        // This handles any direct text on the checkbox itself
+        if let Some(ref txt) = f.text {
+            let clean_text = strip_wow_markup(txt);
+            let label_x = bounds.x + 20.0; // Offset past checkbox
+            let label_bounds = Rectangle::new(
+                Point::new(label_x, bounds.y),
+                Size::new(bounds.width - 20.0, bounds.height),
+            );
+            TextRenderer::draw_justified_text(
+                frame,
+                &clean_text,
+                label_bounds,
+                f.font_size,
+                Color::from_rgba(
+                    f.text_color.r,
+                    f.text_color.g,
+                    f.text_color.b,
+                    f.text_color.a * f.alpha,
+                ),
+                wow_font_to_iced(f.font.as_deref()),
+                TextJustify::Left,
+                TextJustify::Center,
+            );
+        }
+    }
+
+    /// Draw addon list entries text only (for text overlay).
+    fn draw_addon_list_entries_text(
+        &self,
+        frame: &mut canvas::Frame,
+        addon_list_rect: &LayoutRect,
+        state: &crate::lua_api::SimState,
+    ) {
+        let addons = &state.addons;
+        if addons.is_empty() {
+            return;
+        }
+
+        // Content area bounds (same as draw_addon_list_entries)
+        let list_x = addon_list_rect.x * UI_SCALE;
+        let list_y = addon_list_rect.y * UI_SCALE;
+        let list_width = addon_list_rect.width * UI_SCALE;
+        let list_height = addon_list_rect.height * UI_SCALE;
+
+        let content_left = list_x + 12.0;
+        let content_right = list_x + list_width - 40.0;
+        let content_top = list_y + 65.0;
+        let content_bottom = list_y + list_height - 32.0;
+        let content_width = content_right - content_left;
+
+        let entry_height = 20.0;
+        let checkbox_size = 14.0;
+        let checkbox_margin = 4.0;
+
+        let visible_height = content_bottom - content_top;
+        let first_visible = (self.scroll_offset / entry_height).floor() as usize;
+        let visible_count = ((visible_height / entry_height).ceil() as usize) + 1;
+
+        for (i, addon) in addons.iter().enumerate().skip(first_visible).take(visible_count) {
+            let relative_y = (i as f32 * entry_height) - self.scroll_offset;
+            let entry_y = content_top + relative_y;
+
+            if entry_y + entry_height < content_top || entry_y > content_bottom {
+                continue;
+            }
+
+            // Addon title text (positioned after checkbox)
+            let text_x = content_left + checkbox_size + checkbox_margin;
+            let text_width = content_width - checkbox_size - checkbox_margin;
+
+            // Text color based on load status
+            let text_color = if addon.loaded {
+                Color::from_rgba(1.0, 0.82, 0.0, 1.0) // Gold for loaded
+            } else if addon.enabled {
+                Color::from_rgba(1.0, 0.3, 0.3, 1.0) // Red for failed to load
+            } else {
+                Color::from_rgba(0.5, 0.5, 0.5, 1.0) // Gray for disabled
+            };
+
+            TextRenderer::draw_justified_text(
+                frame,
+                &addon.title,
+                Rectangle::new(
+                    Point::new(text_x, entry_y),
+                    Size::new(text_width, entry_height),
+                ),
+                12.0,
+                text_color,
+                Font::DEFAULT,
+                crate::widget::TextJustify::Left,
+                crate::widget::TextJustify::Center,
+            );
+        }
     }
 
     fn draw_frame_widget(
