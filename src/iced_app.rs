@@ -1176,9 +1176,10 @@ impl App {
             }
         }
 
-        // Draw scroll bar for AddonList if it exists
+        // Draw scroll bar and addon entries for AddonList if it exists
         if let Some(ref rect) = addonlist_rect {
             self.draw_addon_list_scrollbar(frame, rect, screen_width);
+            self.draw_addon_list_entries(frame, rect, &state);
         }
 
         // Draw center crosshair
@@ -1917,6 +1918,115 @@ impl App {
         });
 
         frame.fill(&arrow, arrow_color);
+    }
+
+    /// Draw addon list entries directly (fallback when ScrollBox/DataProvider doesn't render)
+    fn draw_addon_list_entries(
+        &self,
+        frame: &mut canvas::Frame,
+        addon_list_rect: &crate::LayoutRect,
+        state: &crate::lua_api::SimState,
+    ) {
+        let addons = &state.addons;
+        if addons.is_empty() {
+            return;
+        }
+
+        // Content area bounds
+        let list_x = addon_list_rect.x * UI_SCALE;
+        let list_y = addon_list_rect.y * UI_SCALE;
+        let list_width = addon_list_rect.width * UI_SCALE;
+        let list_height = addon_list_rect.height * UI_SCALE;
+
+        // Content area starts below title bar and ends above bottom buttons
+        let content_left = list_x + 12.0;
+        let content_right = list_x + list_width - 40.0; // Leave room for scroll bar
+        let content_top = list_y + 65.0;
+        let content_bottom = list_y + list_height - 32.0;
+        let content_width = content_right - content_left;
+
+        let entry_height = 20.0;
+        let checkbox_size = 14.0;
+        let checkbox_margin = 4.0;
+
+        // Calculate visible entries based on scroll offset
+        let visible_height = content_bottom - content_top;
+
+        // Skip entries scrolled above visible area
+        let first_visible = (self.scroll_offset / entry_height).floor() as usize;
+        let visible_count = ((visible_height / entry_height).ceil() as usize) + 1;
+
+        for (i, addon) in addons.iter().enumerate().skip(first_visible).take(visible_count) {
+            let relative_y = (i as f32 * entry_height) - self.scroll_offset;
+            let entry_y = content_top + relative_y;
+
+            // Skip if outside content area
+            if entry_y + entry_height < content_top || entry_y > content_bottom {
+                continue;
+            }
+
+            // Draw checkbox
+            let cb_x = content_left;
+            let cb_y = entry_y + (entry_height - checkbox_size) / 2.0;
+
+            // Checkbox background
+            frame.fill_rectangle(
+                Point::new(cb_x, cb_y),
+                Size::new(checkbox_size, checkbox_size),
+                Color::from_rgba(0.1, 0.1, 0.12, 0.9),
+            );
+
+            // Checkbox border
+            frame.stroke(
+                &Path::rectangle(Point::new(cb_x, cb_y), Size::new(checkbox_size, checkbox_size)),
+                Stroke::default()
+                    .with_color(Color::from_rgba(0.5, 0.4, 0.25, 1.0))
+                    .with_width(1.0),
+            );
+
+            // Draw checkmark if enabled
+            if addon.enabled {
+                let check_color = Color::from_rgba(0.4, 0.8, 0.3, 1.0);
+                let margin = 3.0;
+                // Draw checkmark as two lines
+                frame.stroke(
+                    &Path::new(|builder| {
+                        builder.move_to(Point::new(cb_x + margin, cb_y + checkbox_size / 2.0));
+                        builder.line_to(Point::new(cb_x + checkbox_size / 2.5, cb_y + checkbox_size - margin));
+                        builder.line_to(Point::new(cb_x + checkbox_size - margin, cb_y + margin));
+                    }),
+                    Stroke::default().with_color(check_color).with_width(2.0),
+                );
+            }
+
+            // Draw addon title
+            let text_x = cb_x + checkbox_size + checkbox_margin;
+            let text_y = entry_y;
+            let text_width = content_width - checkbox_size - checkbox_margin;
+
+            // Text color based on load status
+            let text_color = if addon.loaded {
+                Color::from_rgba(1.0, 0.82, 0.0, 1.0) // Gold for loaded
+            } else if addon.enabled {
+                Color::from_rgba(1.0, 0.3, 0.3, 1.0) // Red for failed to load
+            } else {
+                Color::from_rgba(0.5, 0.5, 0.5, 1.0) // Gray for disabled
+            };
+
+            TextRenderer::draw_justified_text(
+                frame,
+                &addon.title,
+                Rectangle::new(
+                    Point::new(text_x, text_y),
+                    Size::new(text_width, entry_height),
+                ),
+                12.0,
+                text_color,
+                Font::DEFAULT,
+                crate::widget::TextJustify::Left,
+                crate::widget::TextJustify::Center,
+            );
+        }
     }
 }
 
