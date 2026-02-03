@@ -5321,11 +5321,13 @@ checksum = "f17a85883d4e6d00e8a97c586de764dabcc06133f7f1d55dce5cdc070ad7fe59"
 name = "wow-ui-sim"
 version = "0.1.0"
 dependencies = [
+ "bytemuck",
  "clap",
  "dirs",
  "glob",
  "iced",
  "iced-layout-inspector",
+ "iced_wgpu",
  "image 0.25.9",
  "image-blp",
  "insta",
@@ -5342,6 +5344,7 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "walkdir",
+ "wgpu",
 ]
 
 [[package]]

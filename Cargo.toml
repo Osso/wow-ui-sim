@@ -25,8 +25,13 @@ walkdir = "2"
 phf = { version = "0.11", features = ["macros"] }
 
 # Iced GUI
-iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio"] }
+iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio", "wgpu"] }
+iced_wgpu = "0.14"
 iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
+
+# GPU rendering
+wgpu = "27.0"
+bytemuck = { version = "1.21", features = ["derive"] }
 
 [[bin]]
 name = "wow-sim"

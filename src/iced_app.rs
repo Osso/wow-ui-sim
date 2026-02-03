@@ -6,12 +6,15 @@ use std::path::PathBuf;
 use std::rc::Rc;
 
 use iced::mouse;
-use iced::widget::canvas::{self, Cache, Canvas, Event, Geometry, Path, Stroke};
+use iced::widget::canvas::{self, Cache, Canvas, Geometry, Path, Stroke};
 use iced::widget::image::Handle as ImageHandle;
+use iced::widget::shader::{self, Shader};
 use iced::widget::{button, column, container, row, scrollable, text, text_input, Column};
 use iced::window::screenshot::Screenshot;
-use iced::{window, Border, Color, Element, Font, Length, Point, Rectangle, Size, Theme};
+use iced::{window, Border, Color, Element, Event, Font, Length, Point, Rectangle, Size, Theme};
 use iced::{Subscription, Task};
+
+use crate::render::{BlendMode, GpuTextureData, QuadBatch, WowUiPrimitive};
 
 use iced_layout_inspector::server::{self as debug_server, Command as DebugCommand, ScreenshotData};
 use tokio::sync::oneshot;
@@ -192,6 +195,8 @@ pub enum Message {
     ProcessTimers,
     CanvasEvent(CanvasMessage),
     ScreenshotTaken(Screenshot),
+    /// Tick for FPS display refresh.
+    FpsTick,
 }
 
 /// Canvas-specific messages.
@@ -221,6 +226,14 @@ pub struct App {
     lua_rx: Option<std::sync::mpsc::Receiver<LuaCommand>>,
     /// Draw red debug borders around all frames when true.
     debug_borders: bool,
+    /// Use GPU shader renderer instead of canvas (experimental).
+    use_shader_renderer: bool,
+    /// FPS counter: frame count since last update (interior mutability for draw()).
+    frame_count: std::cell::Cell<u32>,
+    /// FPS counter: last FPS calculation time.
+    fps_last_time: std::time::Instant,
+    /// Current FPS value.
+    fps: f32,
 }
 
 impl App {
@@ -278,6 +291,11 @@ impl App {
         );
 
         let debug_borders = std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
+        let use_shader_renderer = std::env::var("WOW_SIM_USE_SHADER").is_ok();
+
+        if use_shader_renderer {
+            eprintln!("[wow-ui-sim] Using GPU shader renderer (experimental)");
+        }
 
         let app = App {
             env: env_rc,
@@ -295,6 +313,10 @@ impl App {
             pending_screenshot: None,
             lua_rx: Some(lua_rx),
             debug_borders,
+            use_shader_renderer,
+            frame_count: std::cell::Cell::new(0),
+            fps_last_time: std::time::Instant::now(),
+            fps: 0.0,
         };
 
         (app, Task::none())
@@ -433,6 +455,18 @@ impl App {
                 }
             }
             Message::ProcessTimers => {
+                // Update FPS counter (every ~1 second)
+                if self.use_shader_renderer {
+                    let now = std::time::Instant::now();
+                    let elapsed = now.duration_since(self.fps_last_time);
+                    if elapsed >= std::time::Duration::from_secs(1) {
+                        let frames = self.frame_count.get();
+                        self.fps = frames as f32 / elapsed.as_secs_f32();
+                        self.frame_count.set(0);
+                        self.fps_last_time = now;
+                    }
+                }
+
                 // Process WoW timers
                 let timer_result = {
                     let env = self.env.borrow();
@@ -462,32 +496,63 @@ impl App {
                     let _ = respond.send(Ok(data));
                 }
             }
+            Message::FpsTick => {
+                // FPS display is updated via ProcessTimers, this is unused
+            }
         }
 
         Task::none()
     }
 
     fn view(&self) -> Element<'_, Message> {
-        // Title
-        let title = text("WoW UI Simulator").size(20).color(palette::GOLD);
+        // Title with FPS counter (when using shader renderer)
+        let title_text = if self.use_shader_renderer {
+            format!("WoW UI Simulator  [{:.1} FPS]", self.fps)
+        } else {
+            "WoW UI Simulator".to_string()
+        };
+        let title = text(title_text).size(20).color(palette::GOLD);
 
-        // Canvas for WoW frames
-        let canvas: Canvas<&App, Message> = Canvas::new(self)
-            .width(Length::Fill)
-            .height(Length::Fill);
+        // Render surface - either shader (GPU) or canvas (CPU)
+        let render_container: Element<'_, Message> = if self.use_shader_renderer {
+            // GPU shader rendering - uses shader::Program impl for &App
+            let shader: Shader<Message, &App> = Shader::new(self)
+                .width(Length::Fill)
+                .height(Length::Fill);
 
-        let canvas_container = container(canvas)
-            .width(Length::FillPortion(3))
-            .height(Length::Fill)
-            .style(|_| container::Style {
-                background: Some(iced::Background::Color(palette::BG_DARK)),
-                border: Border {
-                    color: palette::BORDER_HIGHLIGHT,
-                    width: 2.0,
-                    radius: 4.0.into(),
-                },
-                ..Default::default()
-            });
+            container(shader)
+                .width(Length::FillPortion(3))
+                .height(Length::Fill)
+                .style(|_| container::Style {
+                    background: Some(iced::Background::Color(palette::BG_DARK)),
+                    border: Border {
+                        color: palette::BORDER_HIGHLIGHT,
+                        width: 2.0,
+                        radius: 4.0.into(),
+                    },
+                    ..Default::default()
+                })
+                .into()
+        } else {
+            // CPU canvas rendering (original)
+            let canvas: Canvas<&App, Message> = Canvas::new(self)
+                .width(Length::Fill)
+                .height(Length::Fill);
+
+            container(canvas)
+                .width(Length::FillPortion(3))
+                .height(Length::Fill)
+                .style(|_| container::Style {
+                    background: Some(iced::Background::Color(palette::BG_DARK)),
+                    border: Border {
+                        color: palette::BORDER_HIGHLIGHT,
+                        width: 2.0,
+                        radius: 4.0.into(),
+                    },
+                    ..Default::default()
+                })
+                .into()
+        };
 
         // Frames sidebar
         let frames_list = self.build_frames_sidebar();
@@ -510,7 +575,7 @@ impl App {
         });
 
         // Main content row
-        let content_row = row![canvas_container, sidebar].spacing(6);
+        let content_row = row![render_container, sidebar].spacing(6);
 
         // Event buttons
         let event_buttons = row![
@@ -1003,7 +1068,347 @@ impl canvas::Program<Message> for &App {
     }
 }
 
+/// Shader program implementation for GPU rendering of WoW frames.
+impl shader::Program<Message> for &App {
+    type State = ();
+    type Primitive = WowUiPrimitive;
+
+    fn update(
+        &self,
+        _state: &mut Self::State,
+        event: &Event,
+        bounds: Rectangle,
+        cursor: mouse::Cursor,
+    ) -> Option<shader::Action<Message>> {
+        match event {
+            Event::Mouse(mouse_event) => match mouse_event {
+                mouse::Event::CursorMoved { position } => {
+                    if bounds.contains(*position) {
+                        let local = Point::new(position.x - bounds.x, position.y - bounds.y);
+                        return Some(shader::Action::publish(Message::CanvasEvent(
+                            CanvasMessage::MouseMove(local),
+                        )));
+                    }
+                }
+                mouse::Event::ButtonPressed(mouse::Button::Left) => {
+                    if let Some(pos) = cursor.position_in(bounds) {
+                        return Some(shader::Action::publish(Message::CanvasEvent(
+                            CanvasMessage::MouseDown(pos),
+                        )));
+                    }
+                }
+                mouse::Event::ButtonReleased(mouse::Button::Left) => {
+                    if let Some(pos) = cursor.position_in(bounds) {
+                        return Some(shader::Action::publish(Message::CanvasEvent(
+                            CanvasMessage::MouseUp(pos),
+                        )));
+                    }
+                }
+                mouse::Event::WheelScrolled { delta } => {
+                    let dy = match delta {
+                        mouse::ScrollDelta::Lines { y, .. } => *y,
+                        mouse::ScrollDelta::Pixels { y, .. } => *y / 30.0,
+                    };
+                    return Some(shader::Action::publish(Message::Scroll(0.0, dy)));
+                }
+                _ => {}
+            },
+            Event::Keyboard(keyboard_event) => {
+                use iced::keyboard;
+                if let keyboard::Event::KeyPressed { key, modifiers, .. } = keyboard_event {
+                    if modifiers.control() && *key == keyboard::Key::Character("r".into()) {
+                        return Some(shader::Action::publish(Message::ReloadUI));
+                    }
+                }
+            }
+            _ => {}
+        }
+        None
+    }
+
+    fn draw(
+        &self,
+        _state: &Self::State,
+        _cursor: mouse::Cursor,
+        bounds: Rectangle,
+    ) -> Self::Primitive {
+        // Increment frame counter for FPS calculation
+        self.frame_count.set(self.frame_count.get() + 1);
+
+        let quads = self.build_quad_batch(bounds.size());
+
+        // Load textures for any texture requests
+        let mut textures = Vec::new();
+        let mut tex_mgr = self.texture_manager.borrow_mut();
+        for request in &quads.texture_requests {
+            // Only load if not already in the list
+            if textures.iter().any(|t: &GpuTextureData| t.path == request.path) {
+                continue;
+            }
+            if let Some(tex_data) = tex_mgr.load(&request.path) {
+                textures.push(GpuTextureData {
+                    path: request.path.clone(),
+                    width: tex_data.width,
+                    height: tex_data.height,
+                    rgba: tex_data.pixels.clone(),
+                });
+            }
+        }
+
+        WowUiPrimitive::with_textures(quads, textures)
+    }
+
+    fn mouse_interaction(
+        &self,
+        _state: &Self::State,
+        _bounds: Rectangle,
+        _cursor: mouse::Cursor,
+    ) -> mouse::Interaction {
+        mouse::Interaction::default()
+    }
+}
+
 impl App {
+    /// Build a QuadBatch for GPU shader rendering.
+    ///
+    /// This mirrors draw_wow_frames but builds a QuadBatch instead of drawing to canvas.
+    /// Currently renders solid colors only - texture support requires atlas integration.
+    fn build_quad_batch(&self, size: Size) -> QuadBatch {
+        let mut batch = QuadBatch::with_capacity(1000);
+
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+
+        let screen_width = size.width;
+        let screen_height = size.height;
+
+        // Find AddonList frame and collect descendant IDs
+        let mut addonlist_ids = std::collections::HashSet::new();
+        let addonlist_id = state.widgets.all_ids().into_iter().find(|&id| {
+            state
+                .widgets
+                .get(id)
+                .map(|f| f.name.as_deref() == Some("AddonList"))
+                .unwrap_or(false)
+        });
+
+        if let Some(root_id) = addonlist_id {
+            let mut queue = vec![root_id];
+            while let Some(id) = queue.pop() {
+                addonlist_ids.insert(id);
+                if let Some(f) = state.widgets.get(id) {
+                    queue.extend(f.children.iter().copied());
+                }
+            }
+        }
+
+        // Collect and sort frames (same sorting as draw_wow_frames)
+        let mut frames: Vec<_> = state
+            .widgets
+            .all_ids()
+            .into_iter()
+            .filter_map(|id| {
+                let f = state.widgets.get(id)?;
+                let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
+                Some((id, f, rect))
+            })
+            .collect();
+
+        frames.sort_by(|a, b| {
+            a.1.frame_strata
+                .cmp(&b.1.frame_strata)
+                .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
+                .then_with(|| {
+                    let is_region = |t: &WidgetType| {
+                        matches!(t, WidgetType::Texture | WidgetType::FontString)
+                    };
+                    match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
+                        (true, true) => a.1.draw_layer.cmp(&b.1.draw_layer)
+                            .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer)),
+                        (false, true) => std::cmp::Ordering::Less,
+                        (true, false) => std::cmp::Ordering::Greater,
+                        (false, false) => std::cmp::Ordering::Equal,
+                    }
+                })
+                .then_with(|| a.0.cmp(&b.0))
+        });
+
+        // Find test buttons
+        let mut test_button_ids = std::collections::HashSet::new();
+        for test_name in ["TestTextureButton", "TestHoverButton"] {
+            let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
+                state
+                    .widgets
+                    .get(id)
+                    .map(|f| f.name.as_deref() == Some(test_name))
+                    .unwrap_or(false)
+            });
+            if let Some(root_id) = test_button_id {
+                let mut queue = vec![root_id];
+                while let Some(id) = queue.pop() {
+                    test_button_ids.insert(id);
+                    if let Some(f) = state.widgets.get(id) {
+                        queue.extend(f.children.iter().copied());
+                    }
+                }
+            }
+        }
+
+        for (id, f, rect) in frames {
+            // Only show AddonList frame and children, plus test buttons
+            if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
+                continue;
+            }
+            if !f.visible {
+                continue;
+            }
+            if rect.width <= 0.0 || rect.height <= 0.0 {
+                continue;
+            }
+
+            let x = rect.x * UI_SCALE;
+            let y = rect.y * UI_SCALE;
+            let w = rect.width * UI_SCALE;
+            let h = rect.height * UI_SCALE;
+            let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
+
+            match f.widget_type {
+                WidgetType::Frame => {
+                    self.build_frame_quads(&mut batch, bounds, f);
+                }
+                WidgetType::Button => {
+                    let is_pressed = self.pressed_frame == Some(id);
+                    let is_hovered = self.hovered_frame == Some(id);
+                    self.build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
+                }
+                WidgetType::Texture => {
+                    self.build_texture_quads(&mut batch, bounds, f);
+                }
+                WidgetType::FontString => {
+                    // Text is handled separately (not in quad batch)
+                    // For now, skip - will use iced text overlay
+                }
+                WidgetType::CheckButton => {
+                    let is_pressed = self.pressed_frame == Some(id);
+                    let is_hovered = self.hovered_frame == Some(id);
+                    self.build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
+                }
+                WidgetType::EditBox => {
+                    self.build_editbox_quads(&mut batch, bounds, f);
+                }
+                _ => {}
+            }
+        }
+
+        batch
+    }
+
+    /// Build quads for a Frame widget (backdrop).
+    fn build_frame_quads(&self, batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+        // Draw backdrop if enabled
+        if f.backdrop.enabled {
+            let bg = &f.backdrop.bg_color;
+            batch.push_solid(bounds, [bg.r, bg.g, bg.b, bg.a * f.alpha]);
+
+            // Border
+            if f.backdrop.edge_size > 0.0 {
+                let bc = &f.backdrop.border_color;
+                batch.push_border(bounds, f.backdrop.edge_size.max(1.0), [bc.r, bc.g, bc.b, bc.a * f.alpha]);
+            }
+        }
+
+        // NineSlice rendering - for now, just draw a placeholder border
+        if f.nine_slice_layout.is_some() {
+            // TODO: Implement NineSlice with texture atlas
+            // For now, draw a gold border to indicate NineSlice frame
+            batch.push_border(bounds, 2.0, [0.6, 0.45, 0.15, f.alpha]);
+        }
+    }
+
+    /// Build quads for a Button widget.
+    fn build_button_quads(
+        &self,
+        batch: &mut QuadBatch,
+        bounds: Rectangle,
+        f: &crate::widget::Frame,
+        is_pressed: bool,
+        is_hovered: bool,
+    ) {
+        // Determine which texture to use based on state
+        let texture_path = if is_pressed {
+            f.pushed_texture.as_ref().or(f.normal_texture.as_ref())
+        } else {
+            f.normal_texture.as_ref()
+        };
+
+        // Render button texture or fallback to solid color
+        if let Some(tex_path) = texture_path {
+            batch.push_textured_path(bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+        } else {
+            // Fallback solid color
+            let bg_color = if is_pressed {
+                [0.20, 0.08, 0.08, 0.95 * f.alpha]
+            } else if is_hovered {
+                [0.18, 0.07, 0.07, 0.95 * f.alpha]
+            } else {
+                [0.15, 0.05, 0.05, 0.95 * f.alpha]
+            };
+            batch.push_solid(bounds, bg_color);
+
+            // Border for solid color fallback
+            let border_color = if is_hovered || is_pressed {
+                [0.8, 0.6, 0.2, f.alpha]
+            } else {
+                [0.6, 0.45, 0.15, f.alpha]
+            };
+            batch.push_border(bounds, 1.5, border_color);
+        }
+
+        // Highlight texture overlay on hover
+        if is_hovered && !is_pressed {
+            if let Some(ref highlight_path) = f.highlight_texture {
+                batch.push_textured_path(bounds, highlight_path, [1.0, 1.0, 1.0, 0.5 * f.alpha], BlendMode::Additive);
+            } else {
+                // Fallback highlight
+                batch.push_quad(
+                    bounds,
+                    Rectangle::new(Point::ORIGIN, Size::new(1.0, 1.0)),
+                    [1.0, 0.9, 0.6, 0.15 * f.alpha],
+                    -1,
+                    BlendMode::Additive,
+                );
+            }
+        }
+    }
+
+    /// Build quads for a Texture widget.
+    fn build_texture_quads(&self, batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+        // Color texture
+        if let Some(color) = f.color_texture {
+            batch.push_solid(bounds, [color.r, color.g, color.b, color.a * f.alpha]);
+            return;
+        }
+
+        // File texture
+        if let Some(ref tex_path) = f.texture {
+            // Use white tint by default, let the texture show through
+            batch.push_textured_path(
+                bounds,
+                tex_path,
+                [1.0, 1.0, 1.0, f.alpha],
+                BlendMode::Alpha,
+            );
+        }
+    }
+
+    /// Build quads for an EditBox widget.
+    fn build_editbox_quads(&self, batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+        // Background
+        batch.push_solid(bounds, [0.06, 0.06, 0.08, 0.9 * f.alpha]);
+        // Border
+        batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, f.alpha]);
+    }
+
     fn draw_wow_frames(&self, frame: &mut canvas::Frame, size: Size) {
 
         let env = self.env.borrow();
