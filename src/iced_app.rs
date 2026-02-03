@@ -1138,7 +1138,16 @@ impl App {
                     let normal_tex = self.resolve_button_texture(f, "NormalTexture", &state.widgets);
                     let pushed_tex = self.resolve_button_texture(f, "PushedTexture", &state.widgets);
                     let highlight_tex = self.resolve_button_texture(f, "HighlightTexture", &state.widgets);
-                    self.draw_button_widget(frame, bounds, f, id, normal_tex.as_deref(), pushed_tex.as_deref(), highlight_tex.as_deref());
+                    // Also resolve tex_coords (for atlas textures)
+                    let normal_coords = self.resolve_button_tex_coords(f, "NormalTexture", &state.widgets);
+                    let pushed_coords = self.resolve_button_tex_coords(f, "PushedTexture", &state.widgets);
+                    let highlight_coords = self.resolve_button_tex_coords(f, "HighlightTexture", &state.widgets);
+                    self.draw_button_widget(
+                        frame, bounds, f, id,
+                        normal_tex.as_deref(), normal_coords,
+                        pushed_tex.as_deref(), pushed_coords,
+                        highlight_tex.as_deref(), highlight_coords,
+                    );
                 }
                 WidgetType::Texture => {
                     self.draw_texture_widget(frame, bounds, f);
@@ -1315,6 +1324,21 @@ impl App {
         }
     }
 
+    /// Resolve tex_coords for a button texture from child texture (set via atlas).
+    fn resolve_button_tex_coords(
+        &self,
+        button: &crate::widget::Frame,
+        key: &str,
+        registry: &crate::widget::WidgetRegistry,
+    ) -> Option<(f32, f32, f32, f32)> {
+        if let Some(&tex_id) = button.children_keys.get(key) {
+            if let Some(tex) = registry.get(tex_id) {
+                return tex.tex_coords;
+            }
+        }
+        None
+    }
+
     fn draw_button_widget(
         &self,
         frame: &mut canvas::Frame,
@@ -1322,8 +1346,11 @@ impl App {
         f: &crate::widget::Frame,
         frame_id: u64,
         normal_tex: Option<&str>,
+        normal_coords: Option<(f32, f32, f32, f32)>,
         pushed_tex: Option<&str>,
+        pushed_coords: Option<(f32, f32, f32, f32)>,
         highlight_tex: Option<&str>,
+        highlight_coords: Option<(f32, f32, f32, f32)>,
     ) {
         let is_pressed = self.pressed_frame == Some(frame_id);
         let is_hovered = self.hovered_frame == Some(frame_id);
@@ -1370,20 +1397,33 @@ impl App {
             }
         }
 
-        // Select texture based on button state: pressed > normal
-        let button_texture = if is_pressed {
-            pushed_tex.or(normal_tex)
+        // Select texture and tex_coords based on button state: pressed > normal
+        let (button_texture, button_coords) = if is_pressed {
+            (pushed_tex.or(normal_tex), pushed_coords.or(normal_coords))
         } else {
-            normal_tex
+            (normal_tex, normal_coords)
         };
 
         // Try single texture (pushed or normal)
         let mut drew_background = false;
         if let Some(tex_path) = button_texture {
-            // Panel button textures use TexCoords: 0.625 width, 0.6875 height
-            // The actual content is 80x22 within a 128x32 texture
-            let handle = if tex_path.to_lowercase().contains("ui-panel-button") {
-                // Load just the visible portion using TexCoords
+            // Load texture region based on tex_coords (for atlas textures) or special cases
+            let handle = if let Some((left, right, top, bottom)) = button_coords {
+                // Atlas texture - extract sub-region using tex_coords
+                // First load the texture to get its size
+                let _ = self.get_or_load_texture(tex_path);
+                if let Some((tex_w, tex_h)) = self.get_texture_size(tex_path) {
+                    let x = (left * tex_w).round() as u32;
+                    let y = (top * tex_h).round() as u32;
+                    let w = ((right - left) * tex_w).round() as u32;
+                    let h = ((bottom - top) * tex_h).round() as u32;
+                    self.get_or_load_texture_region(tex_path, x, y, w, h)
+                } else {
+                    self.get_or_load_texture(tex_path)
+                }
+            } else if tex_path.to_lowercase().contains("ui-panel-button") {
+                // Panel button textures use TexCoords: 0.625 width, 0.6875 height
+                // The actual content is 80x22 within a 128x32 texture
                 self.get_or_load_texture_region(tex_path, 0, 0, 80, 22)
             } else {
                 self.get_or_load_texture(tex_path)
@@ -1426,8 +1466,20 @@ impl App {
         // WoW uses additive blending for highlight - we approximate with semi-transparent overlay
         if is_hovered && !is_pressed {
             if let Some(highlight_path) = highlight_tex {
-                // Panel button highlight uses same TexCoords: 0.625 width, 0.6875 height
-                let handle = if highlight_path.to_lowercase().contains("ui-panel-button") {
+                // Load texture region based on tex_coords (for atlas textures) or special cases
+                let handle = if let Some((left, right, top, bottom)) = highlight_coords {
+                    // Atlas texture - extract sub-region using tex_coords
+                    let _ = self.get_or_load_texture(highlight_path);
+                    if let Some((tex_w, tex_h)) = self.get_texture_size(highlight_path) {
+                        let x = (left * tex_w).round() as u32;
+                        let y = (top * tex_h).round() as u32;
+                        let w = ((right - left) * tex_w).round() as u32;
+                        let h = ((bottom - top) * tex_h).round() as u32;
+                        self.get_or_load_texture_region(highlight_path, x, y, w, h)
+                    } else {
+                        self.get_or_load_texture(highlight_path)
+                    }
+                } else if highlight_path.to_lowercase().contains("ui-panel-button") {
                     self.get_or_load_texture_region(highlight_path, 0, 0, 80, 22)
                 } else {
                     self.get_or_load_texture(highlight_path)
