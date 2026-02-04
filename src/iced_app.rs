@@ -151,6 +151,8 @@ pub enum Message {
     InspectorMouseEnabledToggled(bool),
     /// Apply inspector changes to the frame.
     InspectorApply,
+    /// Toggle frames panel collapsed state.
+    ToggleFramesPanel,
 }
 
 /// Canvas-specific messages.
@@ -239,6 +241,8 @@ pub struct App {
     inspector_position: Point,
     /// Inspector panel state (editable fields).
     inspector_state: InspectorState,
+    /// Whether the frames panel is collapsed.
+    frames_panel_collapsed: bool,
 }
 
 impl App {
@@ -339,6 +343,7 @@ impl App {
             inspector_visible: false,
             inspector_position: Point::new(100.0, 100.0),
             inspector_state: InspectorState::default(),
+            frames_panel_collapsed: true,
         };
 
         (app, Task::none())
@@ -569,6 +574,9 @@ impl App {
                     self.quads_dirty.set(true);
                 }
             }
+            Message::ToggleFramesPanel => {
+                self.frames_panel_collapsed = !self.frames_panel_collapsed;
+            }
         }
 
         Task::none()
@@ -625,25 +633,59 @@ impl App {
             })
             .into();
 
-        // Frames sidebar
-        let frames_list = self.build_frames_sidebar();
-        let sidebar = container(
-            scrollable(frames_list)
-                .width(Length::Fill)
-                .height(Length::Fill),
-        )
-        .width(180)
-        .height(Length::Fill)
-        .padding(6)
-        .style(|_| container::Style {
-            background: Some(iced::Background::Color(palette::BG_PANEL)),
-            border: Border {
-                color: palette::BORDER,
-                width: 1.0,
-                radius: 4.0.into(),
-            },
-            ..Default::default()
-        });
+        // Frames sidebar with collapse toggle
+        let toggle_label = if self.frames_panel_collapsed {
+            "▶ Frames"
+        } else {
+            "▼ Frames"
+        };
+        let toggle_btn = button(text(toggle_label).size(12))
+            .on_press(Message::ToggleFramesPanel)
+            .padding([2, 6])
+            .style(|_, _| button::Style {
+                background: None,
+                text_color: palette::TEXT_PRIMARY,
+                ..Default::default()
+            });
+
+        let sidebar = if self.frames_panel_collapsed {
+            container(toggle_btn)
+                .width(Length::Shrink)
+                .height(Length::Shrink)
+                .padding(6)
+                .style(|_| container::Style {
+                    background: Some(iced::Background::Color(palette::BG_PANEL)),
+                    border: Border {
+                        color: palette::BORDER,
+                        width: 1.0,
+                        radius: 4.0.into(),
+                    },
+                    ..Default::default()
+                })
+        } else {
+            let frames_list = self.build_frames_sidebar();
+            container(
+                column![
+                    toggle_btn,
+                    scrollable(frames_list)
+                        .width(Length::Fill)
+                        .height(Length::Fill),
+                ]
+                .spacing(4),
+            )
+            .width(180)
+            .height(Length::Fill)
+            .padding(6)
+            .style(|_| container::Style {
+                background: Some(iced::Background::Color(palette::BG_PANEL)),
+                border: Border {
+                    color: palette::BORDER,
+                    width: 1.0,
+                    radius: 4.0.into(),
+                },
+                ..Default::default()
+            })
+        };
 
         // Main content row
         let content_row = row![render_container, sidebar].spacing(6);
