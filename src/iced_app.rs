@@ -1794,18 +1794,6 @@ impl App {
             let h = rect.height * UI_SCALE;
             let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
 
-            // DEBUG: Purple border around AddonList root frame
-            if Some(id) == addonlist_id {
-                use std::sync::atomic::{AtomicU32, Ordering};
-                static PRINT_COUNT: AtomicU32 = AtomicU32::new(0);
-                if PRINT_COUNT.fetch_add(1, Ordering::Relaxed) < 3 {
-                    eprintln!("[DEBUG] AddonList rect: ({:.1}, {:.1}) {:.1}x{:.1}", rect.x, rect.y, rect.width, rect.height);
-                    eprintln!("[DEBUG] AddonList bounds: ({:.1}, {:.1}) {:.1}x{:.1}", bounds.x, bounds.y, bounds.width, bounds.height);
-                    eprintln!("[DEBUG] Canvas size: {:.1}x{:.1}", size.width, size.height);
-                }
-                batch.push_border(bounds, 3.0, [0.6, 0.0, 0.8, 1.0]); // Purple
-            }
-
             match f.widget_type {
                 WidgetType::Frame => {
                     self.build_frame_quads(&mut batch, bounds, f);
@@ -1934,9 +1922,6 @@ impl App {
                 );
             }
         }
-
-        // DEBUG: Red border around button bounds (shader layer)
-        batch.push_border(bounds, 2.0, [1.0, 0.0, 0.0, 1.0]);
     }
 
     /// Build quads for a Texture widget.
