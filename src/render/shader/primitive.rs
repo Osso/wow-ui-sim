@@ -65,8 +65,15 @@ impl shader::Primitive for WowUiPrimitive {
         device: &wgpu::Device,
         queue: &wgpu::Queue,
         bounds: &Rectangle,
-        _viewport: &Viewport,
+        viewport: &Viewport,
     ) {
+        // Scale bounds to physical pixels to match viewport dimensions
+        let scale = viewport.scale_factor() as f32;
+        let physical_bounds = Rectangle::new(
+            iced::Point::new(bounds.x * scale, bounds.y * scale),
+            iced::Size::new(bounds.width * scale, bounds.height * scale),
+        );
+
         // Upload new textures to the atlas
         let atlas = pipeline.texture_atlas_mut();
         for tex_data in &self.textures {
@@ -109,10 +116,20 @@ impl shader::Primitive for WowUiPrimitive {
                     }
                 }
             }
-            pipeline.prepare(device, queue, bounds, &resolved_quads);
+            // Scale vertex positions to physical
+            for vertex in resolved_quads.vertices.iter_mut() {
+                vertex.position[0] *= scale;
+                vertex.position[1] *= scale;
+            }
+            pipeline.prepare(device, queue, &physical_bounds, &resolved_quads);
         } else {
-            // No resolution needed, use quads directly
-            pipeline.prepare(device, queue, bounds, &self.quads);
+            // Scale vertex positions to physical
+            let mut scaled_quads = self.quads.clone();
+            for vertex in scaled_quads.vertices.iter_mut() {
+                vertex.position[0] *= scale;
+                vertex.position[1] *= scale;
+            }
+            pipeline.prepare(device, queue, &physical_bounds, &scaled_quads);
         }
     }
 

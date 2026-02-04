@@ -205,7 +205,17 @@ impl WowUiPipeline {
             occlusion_query_set: None,
         });
 
-        // Set scissor rect BEFORE any drawing (including background clear)
+        // Set viewport to match clip bounds - this ensures coordinates map correctly
+        render_pass.set_viewport(
+            clip_bounds.x as f32,
+            clip_bounds.y as f32,
+            clip_bounds.width as f32,
+            clip_bounds.height as f32,
+            0.0,
+            1.0,
+        );
+
+        // Set scissor rect to clip drawing to widget bounds
         render_pass.set_scissor_rect(
             clip_bounds.x,
             clip_bounds.y,
