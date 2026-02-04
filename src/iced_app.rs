@@ -200,6 +200,8 @@ pub struct App {
     frame_time_avg: std::cell::Cell<f32>,
     /// Frame time for display (updated every 1 second with FPS).
     frame_time_display: f32,
+    /// Current mouse position in canvas coordinates.
+    mouse_position: Option<Point>,
 }
 
 impl App {
@@ -295,6 +297,7 @@ impl App {
             frame_time_ms: std::cell::Cell::new(0.0),
             frame_time_avg: std::cell::Cell::new(0.0),
             frame_time_display: 0.0,
+            mouse_position: None,
         };
 
         (app, Task::none())
@@ -317,6 +320,7 @@ impl App {
             }
             Message::CanvasEvent(canvas_msg) => match canvas_msg {
                 CanvasMessage::MouseMove(pos) => {
+                    self.mouse_position = Some(pos);
                     let new_hovered = self.hit_test(pos);
                     if new_hovered != self.hovered_frame {
                         let env = self.env.borrow();
@@ -491,11 +495,16 @@ impl App {
     }
 
     fn view(&self) -> Element<'_, Message> {
-        // Title with FPS counter and frame time
+        // Title with FPS counter, frame time, and mouse coords
+        let mouse_str = match self.mouse_position {
+            Some(pos) => format!(" | ({:.0}, {:.0})", pos.x, pos.y),
+            None => String::new(),
+        };
         let title_text = format!(
-            "WoW UI Simulator  [{:.1} FPS | {:.2}ms]",
+            "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}]",
             self.fps,
-            self.frame_time_display
+            self.frame_time_display,
+            mouse_str
         );
         let title = text(title_text).size(20).color(palette::GOLD);
 
