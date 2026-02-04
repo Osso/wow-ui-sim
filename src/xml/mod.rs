@@ -88,6 +88,9 @@ pub struct FrameXml {
     pub propagate_mouse_input: Option<String>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
+    /// Button text attribute (localization key or literal text).
+    #[serde(rename = "@text")]
+    pub text: Option<String>,
 
     // Child elements collected via $value to allow multiples
     #[serde(rename = "$value", default)]

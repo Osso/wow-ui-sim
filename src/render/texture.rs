@@ -5,7 +5,7 @@ use iced::widget::image::Handle as ImageHandle;
 use iced::Rectangle;
 
 /// UI scale factor (1.0 = pixel-perfect, no scaling).
-pub const UI_SCALE: f32 = 0.75;
+pub const UI_SCALE: f32 = 1.0;
 
 /// Draw a texture scaled to fit the target rectangle.
 pub fn draw_scaled_texture(frame: &mut Frame, bounds: Rectangle, handle: &ImageHandle, alpha: f32) {
