@@ -619,8 +619,8 @@ impl App {
             stack![shader, text_overlay].into()
         };
 
-        let render_container: Element<'_, Message> = container(stacked)
-            .width(Length::FillPortion(3))
+        let render_container = container(stacked)
+            .width(Length::Fill)
             .height(Length::Fill)
             .style(|_| container::Style {
                 background: Some(iced::Background::Color(palette::BG_DARK)),
@@ -630,10 +630,9 @@ impl App {
                     radius: 4.0.into(),
                 },
                 ..Default::default()
-            })
-            .into();
+            });
 
-        // Frames sidebar with collapse toggle
+        // Frames sidebar with collapse toggle (floats over canvas)
         let toggle_label = if self.frames_panel_collapsed {
             "▶ Frames"
         } else {
@@ -648,10 +647,8 @@ impl App {
                 ..Default::default()
             });
 
-        let sidebar = if self.frames_panel_collapsed {
+        let sidebar_panel = if self.frames_panel_collapsed {
             container(toggle_btn)
-                .width(Length::Shrink)
-                .height(Length::Shrink)
                 .padding(6)
                 .style(|_| container::Style {
                     background: Some(iced::Background::Color(palette::BG_PANEL)),
@@ -669,12 +666,11 @@ impl App {
                     toggle_btn,
                     scrollable(frames_list)
                         .width(Length::Fill)
-                        .height(Length::Fill),
+                        .height(600),
                 ]
                 .spacing(4),
             )
-            .width(180)
-            .height(Length::Fill)
+            .width(240)
             .padding(6)
             .style(|_| container::Style {
                 background: Some(iced::Background::Color(palette::BG_PANEL)),
@@ -687,8 +683,13 @@ impl App {
             })
         };
 
-        // Main content row
-        let content_row = row![render_container, sidebar].spacing(6);
+        // Position sidebar at top-right corner
+        let sidebar_positioned = container(sidebar_panel)
+            .width(Length::Fill)
+            .align_x(iced::alignment::Horizontal::Right);
+
+        // Stack canvas with floating sidebar
+        let content_row = stack![render_container, sidebar_positioned];
 
         // Event buttons
         let event_buttons = row![
@@ -1212,8 +1213,6 @@ impl App {
     fn build_frames_sidebar(&self) -> Column<'_, Message> {
         let mut col = Column::new().spacing(2);
 
-        col = col.push(text("Frames").size(14).color(palette::TEXT_PRIMARY));
-
         let env = self.env.borrow();
         let state = env.state().borrow();
 
@@ -1255,7 +1254,7 @@ impl App {
                     display
                 };
 
-                col = col.push(text(display).size(10).color(palette::TEXT_MUTED));
+                col = col.push(text(display).size(14).color(palette::TEXT_MUTED));
 
                 count += 1;
                 if count >= 15 {
