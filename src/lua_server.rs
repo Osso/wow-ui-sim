@@ -16,6 +16,13 @@ pub enum Request {
     Exec { code: String },
     /// Ping to check if server is alive
     Ping,
+    /// Dump the frame tree
+    DumpTree {
+        /// Filter by name (substring match)
+        filter: Option<String>,
+        /// Only show visible frames
+        visible_only: bool,
+    },
 }
 
 /// Response from the Lua server.
@@ -27,12 +34,19 @@ pub enum Response {
     Error(String),
     /// Pong response
     Pong,
+    /// Frame tree dump
+    Tree(String),
 }
 
 /// Command sent to the app from the Lua server.
 pub enum LuaCommand {
     Exec {
         code: String,
+        respond: mpsc::Sender<Response>,
+    },
+    DumpTree {
+        filter: Option<String>,
+        visible_only: bool,
         respond: mpsc::Sender<Response>,
     },
 }
@@ -166,6 +180,24 @@ fn handle_connection(
                     }
                 }
             }
+            Request::DumpTree { filter, visible_only } => {
+                let (resp_tx, resp_rx) = mpsc::channel();
+                if cmd_tx
+                    .send(LuaCommand::DumpTree {
+                        filter,
+                        visible_only,
+                        respond: resp_tx,
+                    })
+                    .is_err()
+                {
+                    Response::Error("App closed".into())
+                } else {
+                    match resp_rx.recv_timeout(std::time::Duration::from_secs(30)) {
+                        Ok(r) => r,
+                        Err(_) => Response::Error("Timeout".into()),
+                    }
+                }
+            }
         };
 
         writeln!(stream, "{}", serde_json::to_string(&response).unwrap())?;
@@ -205,6 +237,7 @@ pub mod client {
             Response::Output(s) => Ok(s),
             Response::Error(e) => Err(e),
             Response::Pong => Err("Unexpected pong".into()),
+            Response::Tree(_) => Err("Unexpected tree".into()),
         }
     }
 
@@ -238,5 +271,34 @@ pub mod client {
         glob::glob("/tmp/wow-lua-*.sock")
             .map(|paths| paths.filter_map(Result::ok).collect())
             .unwrap_or_default()
+    }
+
+    /// Dump the frame tree.
+    pub fn dump_tree<P: AsRef<Path>>(
+        socket: P,
+        filter: Option<String>,
+        visible_only: bool,
+    ) -> Result<String, String> {
+        let mut stream =
+            UnixStream::connect(socket).map_err(|e| format!("Connect failed: {}", e))?;
+
+        let request = Request::DumpTree { filter, visible_only };
+        writeln!(stream, "{}", serde_json::to_string(&request).unwrap())
+            .map_err(|e| format!("Write failed: {}", e))?;
+
+        let mut reader = BufReader::new(stream);
+        let mut line = String::new();
+        reader
+            .read_line(&mut line)
+            .map_err(|e| format!("Read failed: {}", e))?;
+
+        let response: Response =
+            serde_json::from_str(&line).map_err(|e| format!("Invalid response: {}", e))?;
+
+        match response {
+            Response::Tree(s) => Ok(s),
+            Response::Error(e) => Err(e),
+            _ => Err("Unexpected response".into()),
+        }
     }
 }

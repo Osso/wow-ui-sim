@@ -51,6 +51,17 @@ enum Commands {
         #[arg(long, short, default_value = "./textures")]
         output: PathBuf,
     },
+
+    /// Dump the rendered frame tree with absolute coordinates
+    DumpTree {
+        /// Filter by frame name (substring match)
+        #[arg(short, long)]
+        filter: Option<String>,
+
+        /// Show only visible frames
+        #[arg(long)]
+        visible_only: bool,
+    },
 }
 
 fn default_addons_path() -> PathBuf {
@@ -88,6 +99,9 @@ fn main() {
             let (found, missing) =
                 wow_ui_sim::extract_textures::extract_textures(&addons, &interface, &output);
             println!("\nSummary: {} converted, {} missing", found, missing);
+        }
+        Commands::DumpTree { filter, visible_only } => {
+            dump_tree(filter, visible_only);
         }
     }
 }
@@ -154,6 +168,26 @@ fn execute_file_and_exit(path: &PathBuf) {
         }
     };
     execute_and_exit(&code);
+}
+
+fn dump_tree(filter: Option<String>, visible_only: bool) {
+    let socket = match std::env::var("WOW_LUA_SOCKET") {
+        Ok(s) => PathBuf::from(s),
+        Err(_) => match find_server() {
+            Some(s) => s,
+            None => std::process::exit(1),
+        },
+    };
+
+    match client::dump_tree(&socket, filter, visible_only) {
+        Ok(tree) => {
+            println!("{}", tree);
+        }
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            std::process::exit(1);
+        }
+    }
 }
 
 fn run_repl() {

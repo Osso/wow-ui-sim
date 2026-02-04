@@ -64,8 +64,8 @@ impl shader::Primitive for WowUiPrimitive {
         pipeline: &mut Self::Pipeline,
         device: &wgpu::Device,
         queue: &wgpu::Queue,
-        _bounds: &Rectangle,
-        viewport: &Viewport,
+        bounds: &Rectangle,
+        _viewport: &Viewport,
     ) {
         // Upload new textures to the atlas
         let atlas = pipeline.texture_atlas_mut();
@@ -96,6 +96,7 @@ impl shader::Primitive for WowUiPrimitive {
                     let start = request.vertex_start as usize;
                     let end = start + request.vertex_count as usize;
                     let tex_idx = entry.tex_index();
+
                     for vertex in resolved_quads.vertices[start..end].iter_mut() {
                         if vertex.tex_index == -2 {
                             vertex.tex_index = tex_idx;
@@ -108,10 +109,10 @@ impl shader::Primitive for WowUiPrimitive {
                     }
                 }
             }
-            pipeline.prepare(device, queue, viewport, &resolved_quads);
+            pipeline.prepare(device, queue, bounds, &resolved_quads);
         } else {
             // No resolution needed, use quads directly
-            pipeline.prepare(device, queue, viewport, &self.quads);
+            pipeline.prepare(device, queue, bounds, &self.quads);
         }
     }
 

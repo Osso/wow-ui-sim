@@ -2,7 +2,7 @@
 
 use super::atlas::GpuTextureAtlas;
 use super::quad::{QuadBatch, QuadVertex};
-use iced::widget::shader::{self, Viewport};
+use iced::widget::shader;
 use iced::Rectangle;
 use std::mem;
 use wgpu::util::DeviceExt;
@@ -124,15 +124,18 @@ impl WowUiPipeline {
         &mut self,
         device: &wgpu::Device,
         queue: &wgpu::Queue,
-        viewport: &Viewport,
+        bounds: &iced::Rectangle,
         quads: &QuadBatch,
     ) {
-        let physical_size = viewport.physical_size();
+        // Use widget bounds for projection (not full viewport)
+        // This makes coordinates relative to the widget like canvas does
+        let width = bounds.width as u32;
+        let height = bounds.height as u32;
 
-        // Update projection if viewport changed
-        if self.viewport_size != (physical_size.width, physical_size.height) {
-            self.viewport_size = (physical_size.width, physical_size.height);
-            let uniforms = Uniforms::new(physical_size.width as f32, physical_size.height as f32);
+        // Update projection if size changed
+        if self.viewport_size != (width, height) {
+            self.viewport_size = (width, height);
+            let uniforms = Uniforms::new(bounds.width, bounds.height);
             queue.write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(&[uniforms]));
         }
 

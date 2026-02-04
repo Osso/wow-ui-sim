@@ -267,6 +267,168 @@ impl QuadBatch {
         });
     }
 
+    /// Push a horizontal 3-slice texture by path (left cap, stretched middle, right cap).
+    ///
+    /// Used for WoW button textures with fixed left/right caps and stretchable middle.
+    /// Texture is loaded on-demand and resolved during prepare().
+    ///
+    /// # Arguments
+    /// * `bounds` - Target screen rectangle
+    /// * `left_cap_width` - Width of left cap in screen pixels
+    /// * `right_cap_width` - Width of right cap in screen pixels
+    /// * `path` - Texture path (will be resolved during prepare)
+    /// * `tex_width` - Source texture width in pixels (for UV calculation)
+    /// * `color` - Vertex color/tint with alpha
+    pub fn push_three_slice_h_path(
+        &mut self,
+        bounds: Rectangle,
+        left_cap_width: f32,
+        right_cap_width: f32,
+        path: &str,
+        tex_width: f32,
+        color: [f32; 4],
+    ) {
+        // If bounds too small, just draw scaled
+        if bounds.width <= left_cap_width + right_cap_width {
+            self.push_textured_path(bounds, path, color, BlendMode::Alpha);
+            return;
+        }
+
+        let middle_width = bounds.width - left_cap_width - right_cap_width;
+
+        // UV coordinates as ratios
+        let left_uv = left_cap_width / tex_width;
+        let right_uv_start = 1.0 - (right_cap_width / tex_width);
+
+        // Track vertex start for all 3 quads
+        let vertex_start = self.vertices.len() as u32;
+
+        // Left cap
+        self.push_quad(
+            Rectangle::new(
+                iced::Point::new(bounds.x, bounds.y),
+                iced::Size::new(left_cap_width, bounds.height),
+            ),
+            Rectangle::new(iced::Point::ORIGIN, iced::Size::new(left_uv, 1.0)),
+            color,
+            -2,
+            BlendMode::Alpha,
+        );
+
+        // Middle (stretched)
+        self.push_quad(
+            Rectangle::new(
+                iced::Point::new(bounds.x + left_cap_width, bounds.y),
+                iced::Size::new(middle_width, bounds.height),
+            ),
+            Rectangle::new(
+                iced::Point::new(left_uv, 0.0),
+                iced::Size::new(right_uv_start - left_uv, 1.0),
+            ),
+            color,
+            -2,
+            BlendMode::Alpha,
+        );
+
+        // Right cap
+        self.push_quad(
+            Rectangle::new(
+                iced::Point::new(bounds.x + bounds.width - right_cap_width, bounds.y),
+                iced::Size::new(right_cap_width, bounds.height),
+            ),
+            Rectangle::new(
+                iced::Point::new(right_uv_start, 0.0),
+                iced::Size::new(1.0 - right_uv_start, 1.0),
+            ),
+            color,
+            -2,
+            BlendMode::Alpha,
+        );
+
+        // Single texture request covers all 12 vertices (3 quads * 4 vertices)
+        self.texture_requests.push(TextureRequest {
+            path: path.to_string(),
+            vertex_start,
+            vertex_count: 12,
+        });
+    }
+
+    /// Push a horizontal 3-slice texture with custom blend mode.
+    pub fn push_three_slice_h_path_blend(
+        &mut self,
+        bounds: Rectangle,
+        left_cap_width: f32,
+        right_cap_width: f32,
+        path: &str,
+        tex_width: f32,
+        color: [f32; 4],
+        blend_mode: BlendMode,
+    ) {
+        // If bounds too small, just draw scaled
+        if bounds.width <= left_cap_width + right_cap_width {
+            self.push_textured_path(bounds, path, color, blend_mode);
+            return;
+        }
+
+        let middle_width = bounds.width - left_cap_width - right_cap_width;
+
+        // UV coordinates as ratios
+        let left_uv = left_cap_width / tex_width;
+        let right_uv_start = 1.0 - (right_cap_width / tex_width);
+
+        // Track vertex start for all 3 quads
+        let vertex_start = self.vertices.len() as u32;
+
+        // Left cap
+        self.push_quad(
+            Rectangle::new(
+                iced::Point::new(bounds.x, bounds.y),
+                iced::Size::new(left_cap_width, bounds.height),
+            ),
+            Rectangle::new(iced::Point::ORIGIN, iced::Size::new(left_uv, 1.0)),
+            color,
+            -2,
+            blend_mode,
+        );
+
+        // Middle (stretched)
+        self.push_quad(
+            Rectangle::new(
+                iced::Point::new(bounds.x + left_cap_width, bounds.y),
+                iced::Size::new(middle_width, bounds.height),
+            ),
+            Rectangle::new(
+                iced::Point::new(left_uv, 0.0),
+                iced::Size::new(right_uv_start - left_uv, 1.0),
+            ),
+            color,
+            -2,
+            blend_mode,
+        );
+
+        // Right cap
+        self.push_quad(
+            Rectangle::new(
+                iced::Point::new(bounds.x + bounds.width - right_cap_width, bounds.y),
+                iced::Size::new(right_cap_width, bounds.height),
+            ),
+            Rectangle::new(
+                iced::Point::new(right_uv_start, 0.0),
+                iced::Size::new(1.0 - right_uv_start, 1.0),
+            ),
+            color,
+            -2,
+            blend_mode,
+        );
+
+        // Single texture request covers all 12 vertices (3 quads * 4 vertices)
+        self.texture_requests.push(TextureRequest {
+            path: path.to_string(),
+            vertex_start,
+            vertex_count: 12,
+        });
+    }
+
     /// Push a horizontal 3-slice texture (left cap, stretched middle, right cap).
     ///
     /// Used for WoW button textures that have fixed left/right caps with a

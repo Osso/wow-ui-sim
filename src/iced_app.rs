@@ -41,8 +41,8 @@ const DEFAULT_INTERFACE_PATH: &str = "/home/osso/Projects/wow/Interface";
 const DEFAULT_ADDONS_PATH: &str = "/home/osso/Projects/wow/reference-addons";
 
 /// Panel offset to move AddonList away from the top-left corner
-const PANEL_OFFSET_X: f32 = 50.0;
-const PANEL_OFFSET_Y: f32 = 50.0;
+const PANEL_OFFSET_X: f32 = 30.0;
+const PANEL_OFFSET_Y: f32 = 20.0;
 
 // WoW-inspired color palette
 mod palette {
@@ -123,70 +123,8 @@ fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
     ) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
     }
-
-    // Create test button with textures
-    create_test_button(&env);
 }
 
-/// Create test buttons below AddonList to demonstrate texture rendering.
-fn create_test_button(env: &WowLuaEnv) {
-    let lua_code = r#"
-        -- Create test button with WoW 3-slice gold button textures
-        local btn = CreateFrame("Button", "TestTextureButton", UIParent)
-        btn:SetSize(180, 32)
-        btn:SetPoint("TOP", AddonList, "BOTTOM", 0, -20)
-        btn:SetFrameStrata("HIGH")
-        btn:SetFrameLevel(100)
-
-        -- Set 3-slice button textures (gold button style)
-        btn:SetLeftTexture("Interface\\Buttons\\UI-DialogBox-goldbutton-up-left")
-        btn:SetMiddleTexture("Interface\\Buttons\\UI-DialogBox-goldbutton-up-middle")
-        btn:SetRightTexture("Interface\\Buttons\\UI-DialogBox-goldbutton-up-right")
-
-        -- Set button text directly
-        btn:SetText("3-Slice Button")
-
-        btn:Show()
-        print("[Test] Created TestTextureButton with 3-slice gold button textures")
-
-        -- Create second test button with standard normal/pushed/highlight textures
-        -- Panel button textures are 80x22 visible content, so scale proportionally
-        local btn2 = CreateFrame("Button", "TestHoverButton", UIParent)
-        btn2:SetSize(120, 22)
-        btn2:SetPoint("TOP", TestTextureButton, "BOTTOM", 0, -10)
-        btn2:SetFrameStrata("HIGH")
-        btn2:SetFrameLevel(100)
-
-        -- Set standard button textures (panel button style)
-        btn2:SetNormalTexture("Interface\\Buttons\\UI-Panel-Button-Up")
-        btn2:SetPushedTexture("Interface\\Buttons\\UI-Panel-Button-Down")
-        btn2:SetHighlightTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
-
-        -- Button text
-        btn2:SetText("Hover Me!")
-
-        -- Enable mouse interaction
-        btn2:EnableMouse(true)
-
-        -- Add click handler for feedback
-        btn2:SetScript("OnClick", function(self)
-            print("[Test] TestHoverButton clicked!")
-        end)
-        btn2:SetScript("OnEnter", function(self)
-            print("[Test] TestHoverButton: mouse entered")
-        end)
-        btn2:SetScript("OnLeave", function(self)
-            print("[Test] TestHoverButton: mouse left")
-        end)
-
-        btn2:Show()
-        print("[Test] Created TestHoverButton with normal/pushed/highlight textures")
-    "#;
-
-    if let Err(e) = env.lua().load(lua_code).exec() {
-        eprintln!("[Test] Failed to create test button: {}", e);
-    }
-}
 
 /// Application messages.
 #[derive(Debug, Clone)]
@@ -323,7 +261,8 @@ impl App {
         );
 
         let debug_borders = std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
-        let use_shader_renderer = std::env::var("WOW_SIM_USE_SHADER").is_ok();
+        // Shader renderer is default; use WOW_SIM_NO_SHADER=1 for canvas mode
+        let use_shader_renderer = std::env::var("WOW_SIM_NO_SHADER").is_err();
 
         if use_shader_renderer {
             eprintln!("[wow-ui-sim] Using GPU shader renderer (experimental)");
@@ -803,6 +742,10 @@ impl App {
                     self.frame_cache.clear();
                     self.quads_dirty.set(true);
                 }
+                LuaCommand::DumpTree { filter, visible_only, respond } => {
+                    let tree = self.build_frame_tree_dump(filter.as_deref(), visible_only);
+                    let _ = respond.send(LuaResponse::Tree(tree));
+                }
             }
         }
     }
@@ -929,6 +872,156 @@ impl App {
         for &child_id in &frame.children {
             self.dump_frame_recursive(registry, child_id, depth + 1, screen_width, screen_height, lines);
         }
+    }
+
+    /// Build a frame tree dump with absolute screen coordinates.
+    fn build_frame_tree_dump(&self, filter: Option<&str>, visible_only: bool) -> String {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        let screen_width = self.screen_size.width;
+        let screen_height = self.screen_size.height;
+
+        let mut lines = Vec::new();
+
+        // Find root frames (no parent) - UIParent children are shown under UIParent
+        let mut root_ids: Vec<u64> = state
+            .widgets
+            .all_ids()
+            .into_iter()
+            .filter(|&id| {
+                state
+                    .widgets
+                    .get(id)
+                    .map(|f| f.parent_id.is_none())
+                    .unwrap_or(false)
+            })
+            .collect();
+        root_ids.sort();
+
+        for id in root_ids {
+            self.build_tree_recursive(
+                &state.widgets,
+                id,
+                "",
+                true,
+                screen_width,
+                screen_height,
+                filter,
+                visible_only,
+                &mut lines,
+            );
+        }
+
+        if lines.is_empty() {
+            "No frames found".to_string()
+        } else {
+            lines.join("\n")
+        }
+    }
+
+    fn build_tree_recursive(
+        &self,
+        registry: &crate::widget::WidgetRegistry,
+        id: u64,
+        prefix: &str,
+        is_last: bool,
+        screen_width: f32,
+        screen_height: f32,
+        filter: Option<&str>,
+        visible_only: bool,
+        lines: &mut Vec<String>,
+    ) {
+        let Some(frame) = registry.get(id) else {
+            return;
+        };
+
+        // Check visibility filter
+        if visible_only && !frame.visible {
+            return;
+        }
+
+        // Check name filter
+        let name = frame.name.as_deref().unwrap_or("(anon)");
+        let matches_filter = filter.map(|f| name.to_lowercase().contains(&f.to_lowercase())).unwrap_or(true);
+
+        // Compute absolute screen coordinates
+        let rect = compute_frame_rect(registry, id, screen_width, screen_height);
+        let abs_x = rect.x * UI_SCALE + PANEL_OFFSET_X;
+        let abs_y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
+        let abs_w = rect.width * UI_SCALE;
+        let abs_h = rect.height * UI_SCALE;
+
+        let type_str = frame.widget_type.as_str();
+        let vis_str = if frame.visible { "" } else { " [hidden]" };
+
+        // Get children that match the filter
+        let mut children: Vec<u64> = frame.children.iter().copied().collect();
+        if filter.is_some() || visible_only {
+            children.retain(|&child_id| {
+                self.subtree_matches(registry, child_id, screen_width, screen_height, filter, visible_only)
+            });
+        }
+
+        // Only output if matches filter or has matching children
+        if matches_filter || !children.is_empty() {
+            let connector = if is_last { "└─ " } else { "├─ " };
+            lines.push(format!(
+                "{}{}{} ({}) @ ({:.0},{:.0}) {:.0}x{:.0}{}",
+                prefix, connector, name, type_str, abs_x, abs_y, abs_w, abs_h, vis_str
+            ));
+
+            // Recurse into children with updated prefix
+            let child_prefix = format!("{}{}", prefix, if is_last { "   " } else { "│  " });
+            for (i, &child_id) in children.iter().enumerate() {
+                let is_last_child = i == children.len() - 1;
+                self.build_tree_recursive(
+                    registry,
+                    child_id,
+                    &child_prefix,
+                    is_last_child,
+                    screen_width,
+                    screen_height,
+                    filter,
+                    visible_only,
+                    lines,
+                );
+            }
+        }
+    }
+
+    /// Check if a frame or any descendant matches the filter criteria.
+    fn subtree_matches(
+        &self,
+        registry: &crate::widget::WidgetRegistry,
+        id: u64,
+        screen_width: f32,
+        screen_height: f32,
+        filter: Option<&str>,
+        visible_only: bool,
+    ) -> bool {
+        let Some(frame) = registry.get(id) else {
+            return false;
+        };
+
+        if visible_only && !frame.visible {
+            return false;
+        }
+
+        let name = frame.name.as_deref().unwrap_or("(anon)");
+        let matches = filter.map(|f| name.to_lowercase().contains(&f.to_lowercase())).unwrap_or(true);
+
+        if matches {
+            return true;
+        }
+
+        // Check children
+        for &child_id in &frame.children {
+            if self.subtree_matches(registry, child_id, screen_width, screen_height, filter, visible_only) {
+                return true;
+            }
+        }
+
+        false
     }
 
     fn build_frames_sidebar(&self) -> Column<'_, Message> {
@@ -1159,6 +1252,7 @@ impl canvas::Program<Message> for TextOverlay<'_> {
     ) -> Vec<Geometry> {
         let geometry = self.app.text_cache.draw(renderer, bounds.size(), |frame| {
             // Transparent background - let shader show through
+            // Pass canvas origin offset so coordinates can be adjusted
             self.app.draw_text_overlay(frame, bounds.size());
         });
 
@@ -1366,30 +1460,9 @@ impl App {
                 .then_with(|| a.0.cmp(&b.0))
         });
 
-        // Find test buttons
-        let mut test_button_ids = std::collections::HashSet::new();
-        for test_name in ["TestTextureButton", "TestHoverButton"] {
-            let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
-                state
-                    .widgets
-                    .get(id)
-                    .map(|f| f.name.as_deref() == Some(test_name))
-                    .unwrap_or(false)
-            });
-            if let Some(root_id) = test_button_id {
-                let mut queue = vec![root_id];
-                while let Some(id) = queue.pop() {
-                    test_button_ids.insert(id);
-                    if let Some(f) = state.widgets.get(id) {
-                        queue.extend(f.children.iter().copied());
-                    }
-                }
-            }
-        }
-
         for (id, f, rect) in frames {
-            // Only show AddonList frame and children, plus test buttons
-            if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
+            // Only show AddonList frame and children
+            if !addonlist_ids.contains(&id) {
                 continue;
             }
             if !f.visible {
@@ -1476,7 +1549,18 @@ impl App {
 
         // Render button texture or fallback to solid color
         if let Some(tex_path) = texture_path {
-            batch.push_textured_path(bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+            // WoW button textures are 128x32 with thin gold borders (~3px)
+            // Use 3-slice rendering to preserve the end caps while stretching the middle
+            const BUTTON_TEX_WIDTH: f32 = 128.0;
+            const BUTTON_CAP_WIDTH: f32 = 4.0;
+            batch.push_three_slice_h_path(
+                bounds,
+                BUTTON_CAP_WIDTH,
+                BUTTON_CAP_WIDTH,
+                tex_path,
+                BUTTON_TEX_WIDTH,
+                [1.0, 1.0, 1.0, f.alpha],
+            );
         } else {
             // Fallback solid color
             let bg_color = if is_pressed {
@@ -1497,10 +1581,20 @@ impl App {
             batch.push_border(bounds, 1.5, border_color);
         }
 
-        // Highlight texture overlay on hover
+        // Highlight texture overlay on hover (also uses 3-slice since it's 128x32)
         if is_hovered && !is_pressed {
             if let Some(ref highlight_path) = f.highlight_texture {
-                batch.push_textured_path(bounds, highlight_path, [1.0, 1.0, 1.0, 0.5 * f.alpha], BlendMode::Additive);
+                const BUTTON_TEX_WIDTH: f32 = 128.0;
+                const BUTTON_CAP_WIDTH: f32 = 4.0;
+                batch.push_three_slice_h_path_blend(
+                    bounds,
+                    BUTTON_CAP_WIDTH,
+                    BUTTON_CAP_WIDTH,
+                    highlight_path,
+                    BUTTON_TEX_WIDTH,
+                    [1.0, 1.0, 1.0, 0.5 * f.alpha],
+                    BlendMode::Additive,
+                );
             } else {
                 // Fallback highlight
                 batch.push_quad(
@@ -1512,6 +1606,9 @@ impl App {
                 );
             }
         }
+
+        // DEBUG: Red border around button bounds (shader layer)
+        batch.push_border(bounds, 2.0, [1.0, 0.0, 0.0, 1.0]);
     }
 
     /// Build quads for a Texture widget.
@@ -1617,35 +1714,14 @@ impl App {
                 .then_with(|| a.0.cmp(&b.0))
         });
 
-        // Find test buttons (TestTextureButton and TestHoverButton) and their children
-        let mut test_button_ids = std::collections::HashSet::new();
-        for test_name in ["TestTextureButton", "TestHoverButton"] {
-            let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
-                state
-                    .widgets
-                    .get(id)
-                    .map(|f| f.name.as_deref() == Some(test_name))
-                    .unwrap_or(false)
-            });
-            if let Some(root_id) = test_button_id {
-                let mut queue = vec![root_id];
-                while let Some(id) = queue.pop() {
-                    test_button_ids.insert(id);
-                    if let Some(f) = state.widgets.get(id) {
-                        queue.extend(f.children.iter().copied());
-                    }
-                }
-            }
-        }
-
         // Capture AddonList rect before consuming frames
         let addonlist_rect = addonlist_id.and_then(|root_id| {
             frames.iter().find(|(id, _, _, _)| *id == root_id).map(|(_, _, r, _)| r.clone())
         });
 
         for (id, f, rect, checked) in frames {
-            // Only show AddonList frame and children, plus test buttons and their children
-            if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
+            // Only show AddonList frame and children
+            if !addonlist_ids.contains(&id) {
                 continue;
             }
             if !f.visible {
@@ -1816,27 +1892,6 @@ impl App {
                 .then_with(|| a.0.cmp(&b.0))
         });
 
-        // Find test buttons and their children
-        let mut test_button_ids = std::collections::HashSet::new();
-        for test_name in ["TestTextureButton", "TestHoverButton"] {
-            let test_button_id = state.widgets.all_ids().into_iter().find(|&id| {
-                state
-                    .widgets
-                    .get(id)
-                    .map(|f| f.name.as_deref() == Some(test_name))
-                    .unwrap_or(false)
-            });
-            if let Some(root_id) = test_button_id {
-                let mut queue = vec![root_id];
-                while let Some(id) = queue.pop() {
-                    test_button_ids.insert(id);
-                    if let Some(f) = state.widgets.get(id) {
-                        queue.extend(f.children.iter().copied());
-                    }
-                }
-            }
-        }
-
         // Capture AddonList rect for addon entries
         let addonlist_rect = addonlist_id.and_then(|root_id| {
             frames.iter().find(|(id, _, _)| *id == root_id).map(|(_, _, r)| r.clone())
@@ -1844,7 +1899,7 @@ impl App {
 
         // Draw only text elements
         for (id, f, rect) in frames {
-            if !addonlist_ids.contains(&id) && !test_button_ids.contains(&id) {
+            if !addonlist_ids.contains(&id) {
                 continue;
             }
             if !f.visible {
@@ -1865,7 +1920,6 @@ impl App {
                     self.draw_fontstring_widget(frame, bounds, f);
                 }
                 WidgetType::Button => {
-                    // Draw button text only (no textures)
                     self.draw_button_text(frame, bounds, f);
                 }
                 WidgetType::EditBox => {
