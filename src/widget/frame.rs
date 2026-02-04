@@ -204,7 +204,7 @@ impl Frame {
             text_color: Color::new(1.0, 0.8, 0.2, 1.0), // Default gold text for visibility
             font: None,
             font_size: 14.0,
-            justify_h: TextJustify::Left,  // WoW defaults to LEFT
+            justify_h: TextJustify::Center,  // WoW FontStrings default to CENTER
             justify_v: TextJustify::Center,
             attributes: HashMap::new(),
             backdrop: Backdrop::default(),
