@@ -386,37 +386,45 @@ fn create_frame_from_xml(
         ));
     }
 
-    // Set size - check frame first, then inherit from templates
-    let mut size_set = false;
-    if let Some(size) = frame.size() {
-        let (x, y) = get_size_values(size);
-        if let (Some(x), Some(y)) = (x, y) {
-            lua_code.push_str(&format!(
-                r#"
-        frame:SetSize({}, {})
-        "#,
-                x, y
-            ));
-            size_set = true;
-        }
-    }
-    // If no size on frame, check inherited templates
-    if !size_set && !inherits.is_empty() {
+    // Set size - inherit from templates (base to derived), then frame itself overrides
+    let mut final_width: Option<f32> = None;
+    let mut final_height: Option<f32> = None;
+
+    // First collect sizes from inherited templates (most derived wins)
+    if !inherits.is_empty() {
         let template_chain = crate::xml::get_template_chain(inherits);
         for template_entry in &template_chain {
             if let Some(size) = template_entry.frame.size() {
                 let (x, y) = get_size_values(size);
-                if let (Some(x), Some(y)) = (x, y) {
-                    lua_code.push_str(&format!(
-                        r#"
-        frame:SetSize({}, {})
-        "#,
-                        x, y
-                    ));
-                    break;
+                if let Some(x) = x {
+                    final_width = Some(x);
+                }
+                if let Some(y) = y {
+                    final_height = Some(y);
                 }
             }
         }
+    }
+
+    // Frame's own size overrides template sizes
+    if let Some(size) = frame.size() {
+        let (x, y) = get_size_values(size);
+        if let Some(x) = x {
+            final_width = Some(x);
+        }
+        if let Some(y) = y {
+            final_height = Some(y);
+        }
+    }
+
+    // Apply the final size
+    if let (Some(w), Some(h)) = (final_width, final_height) {
+        lua_code.push_str(&format!(
+            r#"
+        frame:SetSize({}, {})
+        "#,
+            w, h
+        ));
     }
 
     // Set anchors
@@ -571,6 +579,9 @@ fn create_frame_from_xml(
 
     // Apply button textures from this frame's XML (NormalTexture, PushedTexture, etc.)
     apply_button_textures(env, frame, &name)?;
+
+    // Apply button text if the text attribute is set
+    apply_button_text(env, frame, &name, inherits)?;
 
     // Fire OnLoad script after frame is fully configured
     // In WoW, OnLoad fires at the end of frame creation from XML
@@ -878,6 +889,49 @@ fn apply_button_textures(
                 button_name, e
             ))
         })?;
+    }
+
+    Ok(())
+}
+
+/// Apply button text from the text attribute on a button.
+/// The text attribute is a localization key that gets resolved to actual text.
+fn apply_button_text(
+    env: &WowLuaEnv,
+    frame_xml: &crate::xml::FrameXml,
+    button_name: &str,
+    inherits: &str,
+) -> Result<(), LoadError> {
+    // Check for text attribute on the frame itself first
+    let text = if let Some(t) = &frame_xml.text {
+        Some(t.clone())
+    } else if !inherits.is_empty() {
+        // Check inherited templates for text attribute
+        let template_chain = crate::xml::get_template_chain(inherits);
+        template_chain
+            .iter()
+            .find_map(|entry| entry.frame.text.clone())
+    } else {
+        None
+    };
+
+    if let Some(text_key) = text {
+        // In WoW, text attribute is a localization key or literal text.
+        // We try to resolve it via global lookup (e.g., CANCEL -> "Cancel").
+        // If not found, use the literal value.
+        let lua_code = format!(
+            r#"
+            local frame = {}
+            if frame and frame.SetText then
+                local text = _G["{}"] or "{}"
+                frame:SetText(text)
+            end
+            "#,
+            button_name,
+            escape_lua_string(&text_key),
+            escape_lua_string(&text_key)
+        );
+        env.exec(&lua_code).ok(); // Ignore errors (SetText might not exist)
     }
 
     Ok(())
