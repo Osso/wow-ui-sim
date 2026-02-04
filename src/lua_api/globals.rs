@@ -13254,14 +13254,11 @@ fn create_standard_font_objects(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Calculate frame width from explicit size or anchors (recursive)
+/// Calculate frame width from anchors or explicit size (recursive).
+/// WoW behavior: anchors defining opposite edges override explicit size.
 fn calculate_frame_width(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
     if let Some(frame) = widgets.get(id) {
-        // If explicit width is set, use it
-        if frame.width > 0.0 {
-            return frame.width;
-        }
-        // Try to calculate from left+right anchors
+        // Try to calculate from left+right anchors first (they override explicit size)
         use crate::widget::AnchorPoint::*;
         let left_anchors = [TopLeft, BottomLeft, Left];
         let right_anchors = [TopRight, BottomRight, Right];
@@ -13275,25 +13272,23 @@ fn calculate_frame_width(widgets: &crate::widget::WidgetRegistry, id: u64) -> f3
                     // Recursively calculate parent width
                     let parent_width = calculate_frame_width(widgets, pid);
                     if parent_width > 0.0 {
-                        return parent_width - left_anchor.x_offset + right_anchor.x_offset;
+                        return (parent_width - left_anchor.x_offset + right_anchor.x_offset).max(0.0);
                     }
                 }
             }
         }
+        // Fall back to explicit width
         frame.width
     } else {
         0.0
     }
 }
 
-/// Calculate frame height from explicit size or anchors (recursive)
+/// Calculate frame height from anchors or explicit size (recursive).
+/// WoW behavior: anchors defining opposite edges override explicit size.
 fn calculate_frame_height(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
     if let Some(frame) = widgets.get(id) {
-        // If explicit height is set, use it
-        if frame.height > 0.0 {
-            return frame.height;
-        }
-        // Try to calculate from top+bottom anchors
+        // Try to calculate from top+bottom anchors first (they override explicit size)
         use crate::widget::AnchorPoint::*;
         let top_anchors = [TopLeft, TopRight, Top];
         let bottom_anchors = [BottomLeft, BottomRight, Bottom];
@@ -13307,11 +13302,12 @@ fn calculate_frame_height(widgets: &crate::widget::WidgetRegistry, id: u64) -> f
                     // Recursively calculate parent height
                     let parent_height = calculate_frame_height(widgets, pid);
                     if parent_height > 0.0 {
-                        return parent_height + top_anchor.y_offset - bottom_anchor.y_offset;
+                        return (parent_height + top_anchor.y_offset - bottom_anchor.y_offset).max(0.0);
                     }
                 }
             }
         }
+        // Fall back to explicit height
         frame.height
     } else {
         0.0

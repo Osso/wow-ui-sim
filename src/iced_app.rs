@@ -1934,13 +1934,29 @@ impl App {
 
         // File texture
         if let Some(ref tex_path) = f.texture {
-            // Use white tint by default, let the texture show through
-            batch.push_textured_path(
-                bounds,
-                tex_path,
-                [1.0, 1.0, 1.0, f.alpha],
-                BlendMode::Alpha,
-            );
+            // Check if we have tex_coords (from SetAtlas or SetTexCoord)
+            if let Some((left, right, top, bottom)) = f.tex_coords {
+                // Atlas texture - use sub-region UV coordinates
+                let uvs = Rectangle::new(
+                    Point::new(left, top),
+                    Size::new(right - left, bottom - top),
+                );
+                batch.push_textured_path_uv(
+                    bounds,
+                    uvs,
+                    tex_path,
+                    [1.0, 1.0, 1.0, f.alpha],
+                    BlendMode::Alpha,
+                );
+            } else {
+                // Full texture - use default UVs
+                batch.push_textured_path(
+                    bounds,
+                    tex_path,
+                    [1.0, 1.0, 1.0, f.alpha],
+                    BlendMode::Alpha,
+                );
+            }
         }
     }
 
@@ -3447,35 +3463,24 @@ fn compute_frame_rect(
             }
         }
 
-        let computed_width = if frame.width == 0.0 {
-            if let (Some(lx), Some(rx)) = (left_x, right_x) {
-                Some((rx - lx).max(0.0))
-            } else {
-                None
-            }
-        } else {
-            None
-        };
-
-        let computed_height = if frame.height == 0.0 {
-            if let (Some(ty), Some(by)) = (top_y, bottom_y) {
-                Some((by - ty).max(0.0))
-            } else {
-                None
-            }
-        } else {
-            None
-        };
-
-        let final_width = if frame.width > 0.0 {
+        // WoW behavior: anchors defining opposite edges override explicit size.
+        // Explicit size is only a fallback when the opposite edge anchor is missing.
+        let final_width = if let (Some(lx), Some(rx)) = (left_x, right_x) {
+            // Both left and right edges defined by anchors - compute width from them
+            (rx - lx).max(0.0)
+        } else if frame.width > 0.0 {
             frame.width
         } else {
-            computed_width.unwrap_or(0.0)
+            0.0
         };
-        let final_height = if frame.height > 0.0 {
+
+        let final_height = if let (Some(ty), Some(by)) = (top_y, bottom_y) {
+            // Both top and bottom edges defined by anchors - compute height from them
+            (by - ty).max(0.0)
+        } else if frame.height > 0.0 {
             frame.height
         } else {
-            computed_height.unwrap_or(0.0)
+            0.0
         };
 
         let final_x =
