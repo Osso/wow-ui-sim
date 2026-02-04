@@ -580,20 +580,14 @@ impl App {
             Some(pos) => format!(" | mouse:({:.0},{:.0})", pos.x, pos.y),
             None => String::new(),
         };
-        // Show canvas size from cached quads
-        let canvas_str = {
-            let cache = self.cached_quads.borrow();
-            if let Some((size, _)) = cache.as_ref() {
-                format!(" | canvas:{}x{}", size.width as i32, size.height as i32)
-            } else {
-                String::new()
-            }
-        };
+        // Show screen size (WoW logical coords = canvas size)
+        let screen = self.screen_size.get();
+        let screen_str = format!(" | screen:{}x{}", screen.width as i32, screen.height as i32);
         let title_text = format!(
             "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}{}]",
             self.fps,
             self.frame_time_display,
-            canvas_str,
+            screen_str,
             mouse_str
         );
         let title = text(title_text).size(20).color(palette::GOLD);
