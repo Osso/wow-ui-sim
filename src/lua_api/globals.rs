@@ -15575,81 +15575,83 @@ impl UserData for FrameHandle {
         // GetPushedTextOffset() - Get text offset when button is pushed
         methods.add_method("GetPushedTextOffset", |_, _this, ()| Ok((0.0_f64, 0.0_f64)));
 
-        // GetNormalTexture() - Get the normal state texture
+        // GetNormalTexture() - Get or create the normal state texture
+        // In WoW, this returns the texture object, creating it if necessary
+        // Always calls get_or_create_button_texture to ensure anchors are set
         methods.add_method("GetNormalTexture", |lua, this, ()| {
-            let state = this.state.borrow();
-            if let Some(frame) = state.widgets.get(this.id) {
-                if let Some(&tex_id) = frame.children_keys.get("NormalTexture") {
-                    drop(state);
-                    let handle = FrameHandle {
-                        id: tex_id,
-                        state: Rc::clone(&this.state),
-                    };
-                    return lua.create_userdata(handle).map(Value::UserData);
-                }
-            }
-            Ok(Value::Nil)
+            let tex_id = get_or_create_button_texture(&mut this.state.borrow_mut(), this.id, "NormalTexture");
+            let handle = FrameHandle {
+                id: tex_id,
+                state: Rc::clone(&this.state),
+            };
+            lua.create_userdata(handle).map(Value::UserData)
         });
 
-        // GetHighlightTexture() - Get the highlight state texture
+        // GetHighlightTexture() - Get or create the highlight state texture
         methods.add_method("GetHighlightTexture", |lua, this, ()| {
-            let state = this.state.borrow();
-            if let Some(frame) = state.widgets.get(this.id) {
-                if let Some(&tex_id) = frame.children_keys.get("HighlightTexture") {
-                    drop(state);
-                    let handle = FrameHandle {
-                        id: tex_id,
-                        state: Rc::clone(&this.state),
-                    };
-                    return lua.create_userdata(handle).map(Value::UserData);
-                }
-            }
-            Ok(Value::Nil)
+            let tex_id = get_or_create_button_texture(&mut this.state.borrow_mut(), this.id, "HighlightTexture");
+            let handle = FrameHandle {
+                id: tex_id,
+                state: Rc::clone(&this.state),
+            };
+            lua.create_userdata(handle).map(Value::UserData)
         });
 
-        // GetPushedTexture() - Get the pushed state texture
+        // GetPushedTexture() - Get or create the pushed state texture
         methods.add_method("GetPushedTexture", |lua, this, ()| {
-            let state = this.state.borrow();
-            if let Some(frame) = state.widgets.get(this.id) {
-                if let Some(&tex_id) = frame.children_keys.get("PushedTexture") {
-                    drop(state);
-                    let handle = FrameHandle {
-                        id: tex_id,
-                        state: Rc::clone(&this.state),
-                    };
-                    return lua.create_userdata(handle).map(Value::UserData);
-                }
-            }
-            Ok(Value::Nil)
+            let tex_id = get_or_create_button_texture(&mut this.state.borrow_mut(), this.id, "PushedTexture");
+            let handle = FrameHandle {
+                id: tex_id,
+                state: Rc::clone(&this.state),
+            };
+            lua.create_userdata(handle).map(Value::UserData)
         });
 
-        // GetDisabledTexture() - Get the disabled state texture
+        // GetDisabledTexture() - Get or create the disabled state texture
         methods.add_method("GetDisabledTexture", |lua, this, ()| {
-            let state = this.state.borrow();
-            if let Some(frame) = state.widgets.get(this.id) {
-                if let Some(&tex_id) = frame.children_keys.get("DisabledTexture") {
-                    drop(state);
-                    let handle = FrameHandle {
-                        id: tex_id,
-                        state: Rc::clone(&this.state),
-                    };
-                    return lua.create_userdata(handle).map(Value::UserData);
-                }
-            }
-            Ok(Value::Nil)
+            let tex_id = get_or_create_button_texture(&mut this.state.borrow_mut(), this.id, "DisabledTexture");
+            let handle = FrameHandle {
+                id: tex_id,
+                state: Rc::clone(&this.state),
+            };
+            lua.create_userdata(handle).map(Value::UserData)
         });
 
         // Helper to create a button texture child if it doesn't exist
+        // Also ensures existing textures have proper anchors to fill the button
         fn get_or_create_button_texture(
             state: &mut crate::lua_api::SimState,
             button_id: u64,
             key: &str,
         ) -> u64 {
-            // Check if texture child already exists
-            if let Some(frame) = state.widgets.get(button_id) {
-                if let Some(&tex_id) = frame.children_keys.get(key) {
-                    return tex_id;
+            // Check if texture child already exists - copy the id to avoid borrow conflict
+            let existing_tex_id = state.widgets.get(button_id)
+                .and_then(|frame| frame.children_keys.get(key).copied());
+
+            if let Some(tex_id) = existing_tex_id {
+                // Ensure existing texture has anchors to fill parent
+                if let Some(tex) = state.widgets.get_mut(tex_id) {
+                    if tex.anchors.is_empty() {
+                        // Add anchors to fill parent button
+                        tex.anchors.push(crate::widget::Anchor {
+                            point: crate::widget::AnchorPoint::TopLeft,
+                            relative_to: None,
+                            relative_to_id: Some(button_id as usize),
+                            relative_point: crate::widget::AnchorPoint::TopLeft,
+                            x_offset: 0.0,
+                            y_offset: 0.0,
+                        });
+                        tex.anchors.push(crate::widget::Anchor {
+                            point: crate::widget::AnchorPoint::BottomRight,
+                            relative_to: None,
+                            relative_to_id: Some(button_id as usize),
+                            relative_point: crate::widget::AnchorPoint::BottomRight,
+                            x_offset: 0.0,
+                            y_offset: 0.0,
+                        });
+                    }
                 }
+                return tex_id;
             }
 
             // Create new texture child
