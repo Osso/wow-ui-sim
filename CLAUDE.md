@@ -57,15 +57,16 @@ Each addon shows timing: `(total: io=X xml=X lua=X sv=X)`
 
 ### Texture Sources (in order of priority)
 
-1. `~/Repos/wow-ui-textures` - wow-ui-textures repo (PNG versions of WoW textures)
-2. `~/Projects/wow/Interface` - Extracted WoW game files (BLP format)
-3. Addon directories - For addon-specific textures
+1. `./textures` - Local WebP textures (fastest, smallest)
+2. `~/Repos/wow-ui-textures` - wow-ui-textures repo (PNG versions of WoW textures)
+3. `~/Projects/wow/Interface` - Extracted WoW game files (BLP format)
+4. Addon directories - For addon-specific textures
 
 ### Texture Path Resolution
 
 WoW paths like `Interface\\Buttons\\UI-Panel-Button-Up` are resolved by:
 1. Normalizing backslashes to forward slashes
-2. Trying extensions: PNG, png, TGA, tga, BLP, blp
+2. Trying extensions: webp, WEBP, PNG, png, TGA, tga, BLP, blp, jpg, JPG
 3. Case-insensitive directory matching
 
 ### Button Textures
