@@ -135,6 +135,22 @@ pub enum Message {
     ScreenshotTaken(Screenshot),
     /// Tick for FPS display refresh.
     FpsTick,
+    /// Close the inspector panel.
+    InspectorClose,
+    /// Inspector width input changed.
+    InspectorWidthChanged(String),
+    /// Inspector height input changed.
+    InspectorHeightChanged(String),
+    /// Inspector alpha input changed.
+    InspectorAlphaChanged(String),
+    /// Inspector frame level input changed.
+    InspectorLevelChanged(String),
+    /// Inspector visible checkbox toggled.
+    InspectorVisibleToggled(bool),
+    /// Inspector mouse enabled checkbox toggled.
+    InspectorMouseEnabledToggled(bool),
+    /// Apply inspector changes to the frame.
+    InspectorApply,
 }
 
 /// Canvas-specific messages.
@@ -143,6 +159,7 @@ pub enum CanvasMessage {
     MouseMove(Point),
     MouseDown(Point),
     MouseUp(Point),
+    MiddleClick(Point),
 }
 
 /// Text overlay wrapper for shader mode.
@@ -157,6 +174,17 @@ impl<'a> TextOverlay<'a> {
     pub fn new(app: &'a App) -> Self {
         Self { app }
     }
+}
+
+/// Inspector panel state for editing frame properties.
+#[derive(Default, Clone)]
+pub struct InspectorState {
+    pub width: String,
+    pub height: String,
+    pub alpha: String,
+    pub frame_level: String,
+    pub visible: bool,
+    pub mouse_enabled: bool,
 }
 
 /// Application state.
@@ -174,7 +202,8 @@ pub struct App {
     pressed_frame: Option<u64>,
     mouse_down_frame: Option<u64>,
     scroll_offset: f32,
-    screen_size: Size,
+    /// Current canvas size (updated each frame for layout calculations).
+    screen_size: std::cell::Cell<Size>,
     debug_rx: Option<mpsc::Receiver<DebugCommand>>,
     pending_screenshot: Option<oneshot::Sender<Result<ScreenshotData, String>>>,
     lua_rx: Option<std::sync::mpsc::Receiver<LuaCommand>>,
@@ -202,6 +231,14 @@ pub struct App {
     frame_time_display: f32,
     /// Current mouse position in canvas coordinates.
     mouse_position: Option<Point>,
+    /// Currently inspected frame ID.
+    inspected_frame: Option<u64>,
+    /// Whether the inspector panel is visible.
+    inspector_visible: bool,
+    /// Position of the inspector panel.
+    inspector_position: Point,
+    /// Inspector panel state (editable fields).
+    inspector_state: InspectorState,
 }
 
 impl App {
@@ -282,7 +319,7 @@ impl App {
             pressed_frame: None,
             mouse_down_frame: None,
             scroll_offset: 0.0,
-            screen_size: Size::new(600.0, 450.0),
+            screen_size: std::cell::Cell::new(Size::new(800.0, 600.0)), // Initial, updated each frame
             debug_rx: Some(cmd_rx),
             pending_screenshot: None,
             lua_rx: Some(lua_rx),
@@ -298,6 +335,10 @@ impl App {
             frame_time_avg: std::cell::Cell::new(0.0),
             frame_time_display: 0.0,
             mouse_position: None,
+            inspected_frame: None,
+            inspector_visible: false,
+            inspector_position: Point::new(100.0, 100.0),
+            inspector_state: InspectorState::default(),
         };
 
         (app, Task::none())
@@ -381,6 +422,15 @@ impl App {
                     }
                     self.mouse_down_frame = None;
                     self.pressed_frame = None;
+                }
+                CanvasMessage::MiddleClick(pos) => {
+                    // Open inspector for the frame under cursor
+                    if let Some(frame_id) = self.hit_test(pos) {
+                        self.populate_inspector(frame_id);
+                        self.inspected_frame = Some(frame_id);
+                        self.inspector_visible = true;
+                        self.inspector_position = Point::new(pos.x + 10.0, pos.y + 10.0);
+                    }
                 }
             },
             Message::Scroll(_dx, dy) => {
@@ -489,21 +539,61 @@ impl App {
             Message::FpsTick => {
                 // FPS display is updated via ProcessTimers, this is unused
             }
+            Message::InspectorClose => {
+                self.inspector_visible = false;
+                self.inspected_frame = None;
+            }
+            Message::InspectorWidthChanged(val) => {
+                self.inspector_state.width = val;
+            }
+            Message::InspectorHeightChanged(val) => {
+                self.inspector_state.height = val;
+            }
+            Message::InspectorAlphaChanged(val) => {
+                self.inspector_state.alpha = val;
+            }
+            Message::InspectorLevelChanged(val) => {
+                self.inspector_state.frame_level = val;
+            }
+            Message::InspectorVisibleToggled(val) => {
+                self.inspector_state.visible = val;
+            }
+            Message::InspectorMouseEnabledToggled(val) => {
+                self.inspector_state.mouse_enabled = val;
+            }
+            Message::InspectorApply => {
+                if let Some(frame_id) = self.inspected_frame {
+                    self.apply_inspector_changes(frame_id);
+                    self.frame_cache.clear();
+                    self.text_cache.clear();
+                    self.quads_dirty.set(true);
+                }
+            }
         }
 
         Task::none()
     }
 
     fn view(&self) -> Element<'_, Message> {
-        // Title with FPS counter, frame time, and mouse coords
+        // Title with FPS counter, frame time, canvas size, and mouse coords (raw canvas pixels)
         let mouse_str = match self.mouse_position {
-            Some(pos) => format!(" | ({:.0}, {:.0})", pos.x, pos.y),
+            Some(pos) => format!(" | mouse:({:.0},{:.0})", pos.x, pos.y),
             None => String::new(),
         };
+        // Show canvas size from cached quads
+        let canvas_str = {
+            let cache = self.cached_quads.borrow();
+            if let Some((size, _)) = cache.as_ref() {
+                format!(" | canvas:{}x{}", size.width as i32, size.height as i32)
+            } else {
+                String::new()
+            }
+        };
         let title_text = format!(
-            "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}]",
+            "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}{}]",
             self.fps,
             self.frame_time_display,
+            canvas_str,
             mouse_str
         );
         let title = text(title_text).size(20).color(palette::GOLD);
@@ -519,8 +609,13 @@ impl App {
             .width(Length::Fill)
             .height(Length::Fill);
 
-        // Stack shader and text overlay
-        let stacked = stack![shader, text_overlay];
+        // Stack shader and text overlay, optionally add inspector panel
+        let stacked: Element<'_, Message> = if self.inspector_visible {
+            let inspector = self.build_inspector_panel();
+            stack![shader, text_overlay, inspector].into()
+        } else {
+            stack![shader, text_overlay].into()
+        };
 
         let render_container: Element<'_, Message> = container(stacked)
             .width(Length::FillPortion(3))
@@ -769,8 +864,8 @@ impl App {
     fn dump_wow_frames(&self) -> String {
         let env = self.env.borrow();
         let state = env.state().borrow();
-        let screen_width = self.screen_size.width;
-        let screen_height = self.screen_size.height;
+        let screen_width = self.screen_size.get().width;
+        let screen_height = self.screen_size.get().height;
 
         let mut lines = Vec::new();
         lines.push("WoW UI Simulator - Frame Dump".to_string());
@@ -855,12 +950,13 @@ impl App {
         }
     }
 
-    /// Build a frame tree dump with absolute screen coordinates.
+    /// Build a frame tree dump with absolute screen coordinates (WoW units).
     fn build_frame_tree_dump(&self, filter: Option<&str>, visible_only: bool) -> String {
         let env = self.env.borrow();
         let state = env.state().borrow();
-        let screen_width = self.screen_size.width;
-        let screen_height = self.screen_size.height;
+        // Use WoW logical screen size for layout calculation
+        let screen_width = self.screen_size.get().width;
+        let screen_height = self.screen_size.get().height;
 
         let mut lines = Vec::new();
 
@@ -921,16 +1017,28 @@ impl App {
             return;
         }
 
-        // Check name filter
-        let name = frame.name.as_deref().unwrap_or("(anon)");
+        // Check name filter - use truncated text for anonymous frames with text
+        let raw_name = frame.name.as_deref();
+        let is_anon = raw_name.map(|n| n.starts_with("__anon_") || n.starts_with("__fs_") || n.starts_with("__tex_")).unwrap_or(true);
+        let name = if is_anon && frame.text.is_some() {
+            let text = frame.text.as_ref().unwrap();
+            // Return truncated text for display (stored in a leaked string for lifetime)
+            if text.len() > 20 {
+                Box::leak(format!("\"{}...\"", &text[..17]).into_boxed_str())
+            } else {
+                Box::leak(format!("\"{}\"", text).into_boxed_str())
+            }
+        } else {
+            raw_name.unwrap_or("(anon)")
+        };
         let matches_filter = filter.map(|f| name.to_lowercase().contains(&f.to_lowercase())).unwrap_or(true);
 
-        // Compute absolute screen coordinates
+        // Compute absolute coordinates in WoW units (not scaled for display)
         let rect = compute_frame_rect(registry, id, screen_width, screen_height);
-        let abs_x = rect.x * UI_SCALE;
-        let abs_y = rect.y * UI_SCALE;
-        let abs_w = rect.width * UI_SCALE;
-        let abs_h = rect.height * UI_SCALE;
+        let abs_x = rect.x;
+        let abs_y = rect.y;
+        let abs_w = rect.width;
+        let abs_h = rect.height;
 
         let type_str = frame.widget_type.as_str();
         let vis_str = if frame.visible { "" } else { " [hidden]" };
@@ -957,25 +1065,59 @@ impl App {
                 prefix, connector, name, type_str, abs_x, abs_y, abs_w, abs_h, size_info, vis_str
             ));
 
-            // Show anchor information
+            // Show anchor information with computed absolute coordinates
             let child_prefix = format!("{}{}", prefix, if is_last { "   " } else { "│  " });
+
+            // Get parent rect for anchor calculations
+            let parent_rect = if let Some(parent_id) = frame.parent_id {
+                compute_frame_rect(registry, parent_id, screen_width, screen_height)
+            } else {
+                LayoutRect {
+                    x: 0.0,
+                    y: 0.0,
+                    width: screen_width,
+                    height: screen_height,
+                }
+            };
+
             for anchor in &frame.anchors {
-                let rel_name = if let Some(rel_id) = anchor.relative_to_id {
-                    registry.get(rel_id as u64)
+                let (rel_name, relative_rect) = if let Some(rel_id) = anchor.relative_to_id {
+                    let rel_rect = compute_frame_rect(registry, rel_id as u64, screen_width, screen_height);
+                    let name = registry.get(rel_id as u64)
                         .and_then(|f| f.name.as_deref())
-                        .unwrap_or("(anon)")
+                        .unwrap_or("(anon)");
+                    (name, rel_rect)
                 } else {
-                    anchor.relative_to.as_deref().unwrap_or("$parent")
+                    (anchor.relative_to.as_deref().unwrap_or("$parent"), parent_rect)
                 };
+
+                // Calculate the absolute position where this anchor resolves to
+                let (anchor_x, anchor_y) = anchor_position(
+                    anchor.relative_point,
+                    relative_rect.x,
+                    relative_rect.y,
+                    relative_rect.width,
+                    relative_rect.height,
+                );
+                let target_x = anchor_x + anchor.x_offset;
+                let target_y = anchor_y - anchor.y_offset;
+
                 lines.push(format!(
-                    "{}   📍 {} → {}:{} offset({:.0},{:.0})",
+                    "{}   📍 {} → {}:{} offset({:.0},{:.0}) → ({:.0},{:.0})",
                     child_prefix,
                     anchor.point.as_str(),
                     rel_name,
                     anchor.relative_point.as_str(),
                     anchor.x_offset,
-                    anchor.y_offset
+                    anchor.y_offset,
+                    target_x,
+                    target_y
                 ));
+            }
+
+            // Show texture path for Texture widgets
+            if let Some(tex_path) = &frame.texture {
+                lines.push(format!("{}   🖼️ {}", child_prefix, tex_path));
             }
 
             // Recurse into children with updated prefix
@@ -1096,6 +1238,10 @@ impl App {
         let scale_x = UI_SCALE;
         let scale_y = UI_SCALE;
 
+        // Use WoW logical screen size for layout calculation
+        let screen_width = self.screen_size.get().width;
+        let screen_height = self.screen_size.get().height;
+
         let mut frames: Vec<_> = state
             .widgets
             .all_ids()
@@ -1120,8 +1266,8 @@ impl App {
                 let rect = compute_frame_rect(
                     &state.widgets,
                     id,
-                    self.screen_size.width,
-                    self.screen_size.height,
+                    screen_width,
+                    screen_height,
                 );
                 Some((id, frame.frame_strata, frame.frame_level, rect))
             })
@@ -1148,6 +1294,205 @@ impl App {
             }
         }
         None
+    }
+
+    /// Populate inspector state from a frame's properties.
+    fn populate_inspector(&mut self, frame_id: u64) {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        if let Some(frame) = state.widgets.get(frame_id) {
+            self.inspector_state = InspectorState {
+                width: format!("{:.0}", frame.width),
+                height: format!("{:.0}", frame.height),
+                alpha: format!("{:.2}", frame.alpha),
+                frame_level: format!("{}", frame.frame_level),
+                visible: frame.visible,
+                mouse_enabled: frame.mouse_enabled,
+            };
+        }
+    }
+
+    /// Apply inspector changes to the frame.
+    fn apply_inspector_changes(&mut self, frame_id: u64) {
+        let env = self.env.borrow();
+        let mut state = env.state().borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(frame_id) {
+            if let Ok(w) = self.inspector_state.width.parse::<f32>() {
+                frame.width = w;
+            }
+            if let Ok(h) = self.inspector_state.height.parse::<f32>() {
+                frame.height = h;
+            }
+            if let Ok(a) = self.inspector_state.alpha.parse::<f32>() {
+                frame.alpha = a.clamp(0.0, 1.0);
+            }
+            if let Ok(l) = self.inspector_state.frame_level.parse::<i32>() {
+                frame.frame_level = l;
+            }
+            frame.visible = self.inspector_state.visible;
+            frame.mouse_enabled = self.inspector_state.mouse_enabled;
+        }
+    }
+
+    /// Build the inspector panel widget.
+    fn build_inspector_panel(&self) -> Element<'_, Message> {
+        use iced::widget::{checkbox, space, Container};
+        use iced::Padding;
+
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+
+        let frame_id = self.inspected_frame.unwrap_or(0);
+        let frame = state.widgets.get(frame_id);
+
+        // Header with frame info
+        let (name, widget_type, computed_rect) = match frame {
+            Some(f) => {
+                let rect = compute_frame_rect(
+                    &state.widgets,
+                    frame_id,
+                    self.screen_size.get().width,
+                    self.screen_size.get().height,
+                );
+                (
+                    f.name.clone().unwrap_or_else(|| "(anon)".to_string()),
+                    f.widget_type.as_str().to_string(),
+                    rect,
+                )
+            }
+            None => ("(none)".to_string(), "".to_string(), LayoutRect::default()),
+        };
+
+        // Title bar with close button
+        let title = row![
+            text(format!("{} [{}]", name, widget_type))
+                .size(14)
+                .color(palette::GOLD),
+            space::horizontal(),
+            button(text("×").size(14))
+                .on_press(Message::InspectorClose)
+                .padding(2)
+                .style(|_, _| button::Style {
+                    background: Some(iced::Background::Color(Color::TRANSPARENT)),
+                    text_color: palette::TEXT_SECONDARY,
+                    ..Default::default()
+                }),
+        ]
+        .spacing(5)
+        .align_y(iced::Alignment::Center);
+
+        // ID and position (read-only)
+        let id_row = text(format!("ID: {}  Pos: ({:.0}, {:.0})", frame_id, computed_rect.x, computed_rect.y))
+            .size(11)
+            .color(palette::TEXT_SECONDARY);
+
+        // Width/Height inputs
+        let size_row = row![
+            text("W:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.width)
+                .on_input(Message::InspectorWidthChanged)
+                .size(11)
+                .width(50),
+            text("H:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.height)
+                .on_input(Message::InspectorHeightChanged)
+                .size(11)
+                .width(50),
+        ]
+        .spacing(5)
+        .align_y(iced::Alignment::Center);
+
+        // Alpha and Level inputs
+        let alpha_level_row = row![
+            text("Alpha:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.alpha)
+                .on_input(Message::InspectorAlphaChanged)
+                .size(11)
+                .width(40),
+            text("Level:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.frame_level)
+                .on_input(Message::InspectorLevelChanged)
+                .size(11)
+                .width(40),
+        ]
+        .spacing(5)
+        .align_y(iced::Alignment::Center);
+
+        // Checkboxes
+        let checkbox_row = row![
+            checkbox(self.inspector_state.visible)
+                .label("Visible")
+                .on_toggle(Message::InspectorVisibleToggled)
+                .size(14)
+                .text_size(11),
+            checkbox(self.inspector_state.mouse_enabled)
+                .label("Mouse")
+                .on_toggle(Message::InspectorMouseEnabledToggled)
+                .size(14)
+                .text_size(11),
+        ]
+        .spacing(10);
+
+        // Anchors display (read-only)
+        let anchors_text = match frame {
+            Some(f) if !f.anchors.is_empty() => {
+                let anchor_strs: Vec<String> = f
+                    .anchors
+                    .iter()
+                    .map(|a| {
+                        let rel = a.relative_to.as_deref().unwrap_or("$parent");
+                        format!(
+                            "{:?}→{} {:?} ({:.0},{:.0})",
+                            a.point, rel, a.relative_point, a.x_offset, a.y_offset
+                        )
+                    })
+                    .collect();
+                anchor_strs.join("\n")
+            }
+            _ => "No anchors".to_string(),
+        };
+        let anchors_display = text(anchors_text).size(10).color(palette::TEXT_MUTED);
+
+        // Apply button
+        let apply_btn = button(text("Apply").size(12))
+            .on_press(Message::InspectorApply)
+            .padding(Padding::from([4, 12]));
+
+        let content = column![
+            title,
+            id_row,
+            size_row,
+            alpha_level_row,
+            checkbox_row,
+            text("Anchors:").size(11).color(palette::TEXT_SECONDARY),
+            anchors_display,
+            apply_btn,
+        ]
+        .spacing(6)
+        .padding(8);
+
+        let panel: Container<'_, Message> = container(content)
+            .style(|_| container::Style {
+                background: Some(iced::Background::Color(palette::BG_PANEL)),
+                border: Border {
+                    color: palette::BORDER_HIGHLIGHT,
+                    width: 1.0,
+                    radius: 4.0.into(),
+                },
+                ..Default::default()
+            })
+            .width(220);
+
+        // Position the panel at the inspector_position
+        // We use a container with padding to offset the panel
+        let x_pad = self.inspector_position.x.max(0.0);
+        let y_pad = self.inspector_position.y.max(0.0);
+
+        container(panel)
+            .padding(Padding::new(0.0).top(y_pad).left(x_pad))
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .into()
     }
 }
 
@@ -1223,6 +1568,13 @@ impl shader::Program<Message> for &App {
                         )));
                     }
                 }
+                mouse::Event::ButtonPressed(mouse::Button::Middle) => {
+                    if let Some(pos) = cursor.position_in(bounds) {
+                        return Some(shader::Action::publish(Message::CanvasEvent(
+                            CanvasMessage::MiddleClick(pos),
+                        )));
+                    }
+                }
                 mouse::Event::WheelScrolled { delta } => {
                     let dy = match delta {
                         mouse::ScrollDelta::Lines { y, .. } => *y,
@@ -1256,8 +1608,9 @@ impl shader::Program<Message> for &App {
         // Increment frame counter for FPS calculation
         self.frame_count.set(self.frame_count.get() + 1);
 
-        // Use cached quads if available and not dirty
+        // Update screen size from canvas bounds (used by other functions)
         let size = bounds.size();
+        self.screen_size.set(size);
         let mut cache = self.cached_quads.borrow_mut();
         let quads = if self.quads_dirty.get() || cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true) {
             // Rebuild quad batch
@@ -1327,6 +1680,7 @@ impl App {
         let env = self.env.borrow();
         let state = env.state().borrow();
 
+        // Use canvas size for layout - WoW coords map 1:1 to canvas pixels
         let screen_width = size.width;
         let screen_height = size.height;
 
@@ -1404,6 +1758,18 @@ impl App {
             let w = rect.width * UI_SCALE;
             let h = rect.height * UI_SCALE;
             let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
+
+            // DEBUG: Purple border around AddonList root frame (print once)
+            if Some(id) == addonlist_id {
+                use std::sync::atomic::{AtomicBool, Ordering};
+                static PRINTED: AtomicBool = AtomicBool::new(false);
+                if !PRINTED.swap(true, Ordering::Relaxed) {
+                    eprintln!("[DEBUG] AddonList rect: ({:.1}, {:.1}) {:.1}x{:.1}", rect.x, rect.y, rect.width, rect.height);
+                    eprintln!("[DEBUG] AddonList bounds: ({:.1}, {:.1}) {:.1}x{:.1}", bounds.x, bounds.y, bounds.width, bounds.height);
+                    eprintln!("[DEBUG] Canvas size: {:.1}x{:.1}", size.width, size.height);
+                }
+                batch.push_border(bounds, 3.0, [0.6, 0.0, 0.8, 1.0]); // Purple
+            }
 
             match f.widget_type {
                 WidgetType::Frame => {

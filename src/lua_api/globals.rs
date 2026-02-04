@@ -4892,20 +4892,20 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     // GetPhysicalScreenSize() - Return physical screen dimensions
     let get_physical_screen_size = lua.create_function(|_, ()| {
         // Return simulated 1920x1080 screen
-        Ok((1920, 1080))
+        Ok((1280, 720))
     })?;
     globals.set("GetPhysicalScreenSize", get_physical_screen_size)?;
 
     // GetScreenWidth() - Return screen width in UI units
     globals.set(
         "GetScreenWidth",
-        lua.create_function(|_, ()| Ok(1920.0))?,
+        lua.create_function(|_, ()| Ok(1280.0))?,
     )?;
 
     // GetScreenHeight() - Return screen height in UI units
     globals.set(
         "GetScreenHeight",
-        lua.create_function(|_, ()| Ok(1080.0))?,
+        lua.create_function(|_, ()| Ok(720.0))?,
     )?;
 
     // UnitAttackSpeed(unit) - Return attack speed info

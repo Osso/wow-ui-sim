@@ -150,7 +150,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if wow_ui_path.exists() {
         let blizzard_addons = [
             ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
+            ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
             ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
+            ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
+            ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
             ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
             ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
             ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
@@ -327,9 +330,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 print("[AddonList] OnLoad error:", err)
             end
 
-            -- Position and show
-            AddonList:ClearAllPoints()
-            AddonList:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -10)
+            -- Show (use XML-defined anchor)
             AddonList:Show()
 
             -- Update the addon list
