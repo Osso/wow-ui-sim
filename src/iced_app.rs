@@ -1941,13 +1941,65 @@ impl App {
                     Point::new(left, top),
                     Size::new(right - left, bottom - top),
                 );
-                batch.push_textured_path_uv(
-                    bounds,
-                    uvs,
-                    tex_path,
-                    [1.0, 1.0, 1.0, f.alpha],
-                    BlendMode::Alpha,
-                );
+
+                // Handle tiling for edge pieces
+                if f.horiz_tile || f.vert_tile {
+                    // Get tile size from frame dimensions (set by SetAtlas with useAtlasSize)
+                    let tile_w = f.width.max(1.0);
+                    let tile_h = f.height.max(1.0);
+
+                    if f.horiz_tile && !f.vert_tile {
+                        // Horizontal tiling only
+                        let mut x = bounds.x;
+                        while x < bounds.x + bounds.width {
+                            let w = (bounds.x + bounds.width - x).min(tile_w);
+                            let tile_bounds = Rectangle::new(Point::new(x, bounds.y), Size::new(w, bounds.height));
+                            // Adjust UV for partial tiles
+                            let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
+                            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uvs.height));
+                            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+                            x += tile_w;
+                        }
+                    } else if f.vert_tile && !f.horiz_tile {
+                        // Vertical tiling only
+                        let mut y = bounds.y;
+                        while y < bounds.y + bounds.height {
+                            let h = (bounds.y + bounds.height - y).min(tile_h);
+                            let tile_bounds = Rectangle::new(Point::new(bounds.x, y), Size::new(bounds.width, h));
+                            // Adjust UV for partial tiles
+                            let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
+                            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uvs.width, uv_h));
+                            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+                            y += tile_h;
+                        }
+                    } else {
+                        // Both directions - grid tiling
+                        let mut y = bounds.y;
+                        while y < bounds.y + bounds.height {
+                            let h = (bounds.y + bounds.height - y).min(tile_h);
+                            let mut x = bounds.x;
+                            while x < bounds.x + bounds.width {
+                                let w = (bounds.x + bounds.width - x).min(tile_w);
+                                let tile_bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
+                                let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
+                                let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
+                                let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uv_h));
+                                batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+                                x += tile_w;
+                            }
+                            y += tile_h;
+                        }
+                    }
+                } else {
+                    // No tiling - render once
+                    batch.push_textured_path_uv(
+                        bounds,
+                        uvs,
+                        tex_path,
+                        [1.0, 1.0, 1.0, f.alpha],
+                        BlendMode::Alpha,
+                    );
+                }
             } else {
                 // Full texture - use default UVs
                 batch.push_textured_path(

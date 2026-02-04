@@ -13457,6 +13457,15 @@ impl UserData for FrameHandle {
             Ok(len)
         });
 
+        // __eq metamethod - compare FrameHandles by id
+        // This is needed because __index creates new userdata objects when accessing children_keys,
+        // so ParentFrame.child and ChildFrame would be different userdata objects with the same id
+        methods.add_meta_function(MetaMethod::Eq, |_lua: &Lua, (ud1, ud2): (mlua::AnyUserData, mlua::AnyUserData)| {
+            let handle1 = ud1.borrow::<FrameHandle>()?;
+            let handle2 = ud2.borrow::<FrameHandle>()?;
+            Ok(handle1.id == handle2.id)
+        });
+
         // GetName()
         methods.add_method("GetName", |_, this, ()| {
             let state = this.state.borrow();
@@ -14844,8 +14853,51 @@ impl UserData for FrameHandle {
             Ok(())
         });
 
-        // SetBorder(hasBorder) - set whether frame has border
-        methods.add_method("SetBorder", |_, _this, _has_border: Option<bool>| {
+        // SetBorder(layoutName) - set nine-slice border layout (for PortraitFrameMixin)
+        // This is called by ButtonFrameTemplate_HidePortrait to switch to a non-portrait layout
+        methods.add_method("SetBorder", |lua, this, layout_name: Option<String>| {
+            if let Some(layout) = layout_name {
+                // Get the frame name from state
+                let state = this.state.borrow();
+                let frame_name = state
+                    .widgets
+                    .get(this.id)
+                    .and_then(|f| f.name.clone())
+                    .unwrap_or_else(|| format!("__frame_{}", this.id));
+                drop(state);
+
+                // Try to call NineSliceUtil.ApplyLayout if it exists
+                // This will update the NineSlice child's textures
+                let code = format!(
+                    r#"
+                    local frame = {0}
+                    local layoutName = "{1}"
+                    if frame and frame.NineSlice then
+                        if NineSliceUtil and NineSliceUtil.ApplyLayout and NineSliceUtil.GetLayout then
+                            local layoutTable = NineSliceUtil.GetLayout(layoutName)
+                            if layoutTable then
+                                NineSliceUtil.ApplyLayout(frame.NineSlice, layoutTable)
+                            end
+                        else
+                            -- Fallback: If layout is NoPortrait variant, update corners directly
+                            local ns = frame.NineSlice
+                            if layoutName:find("NoPortrait") and ns.TopLeftCorner then
+                                -- Switch from portrait corner to regular corner
+                                local atlas = ns.TopLeftCorner:GetAtlas()
+                                if atlas and atlas:find("Portrait") then
+                                    local newAtlas = atlas:gsub("Portrait", "")
+                                    ns.TopLeftCorner:SetAtlas(newAtlas, true)
+                                end
+                            end
+                        end
+                    end
+                    "#,
+                    frame_name, layout
+                );
+                if let Err(e) = lua.load(&code).exec() {
+                    eprintln!("SetBorder Lua error: {}", e);
+                }
+            }
             Ok(())
         });
 
@@ -14876,6 +14928,37 @@ impl UserData for FrameHandle {
 
         // SetPortraitToUnit(unit) - set portrait from unit
         methods.add_method("SetPortraitToUnit", |_, _this, _unit: String| {
+            Ok(())
+        });
+
+        // SetPortraitShown(shown) - show/hide the portrait container
+        // Called by ButtonFrameTemplate_HidePortrait to hide the portrait area
+        methods.add_method("SetPortraitShown", |lua, this, shown: bool| {
+            // Get the frame name from state
+            let state = this.state.borrow();
+            let frame_name = state
+                .widgets
+                .get(this.id)
+                .and_then(|f| f.name.clone())
+                .unwrap_or_else(|| format!("__frame_{}", this.id));
+            drop(state);
+
+            // Hide/show the PortraitContainer child frame
+            let code = format!(
+                r#"
+                local frame = {}
+                if frame and frame.PortraitContainer then
+                    if {} then
+                        frame.PortraitContainer:Show()
+                    else
+                        frame.PortraitContainer:Hide()
+                    end
+                end
+                "#,
+                frame_name,
+                if shown { "true" } else { "false" }
+            );
+            let _ = lua.load(&code).exec();
             Ok(())
         });
 
