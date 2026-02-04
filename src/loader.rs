@@ -573,6 +573,19 @@ fn create_frame_from_xml(
                     name, parent_key, actual_child_name
                 );
                 env.exec(&lua_code).ok(); // Ignore errors (parent might not exist yet)
+
+                // Also update Rust-side children_keys for SetTitle and other methods
+                let state = env.state().borrow();
+                if let (Some(parent_id), Some(child_id)) = (
+                    state.widgets.get_id_by_name(&name),
+                    state.widgets.get_id_by_name(&actual_child_name),
+                ) {
+                    drop(state);
+                    let mut state = env.state().borrow_mut();
+                    if let Some(parent_frame) = state.widgets.get_mut(parent_id) {
+                        parent_frame.children_keys.insert(parent_key.clone(), child_id);
+                    }
+                }
             }
         }
     }
@@ -663,6 +676,19 @@ fn instantiate_template_children(
                     parent_name, parent_key, actual_child_name
                 );
                 env.exec(&lua_code).ok();
+
+                // Also update Rust-side children_keys for SetTitle and other methods
+                let state = env.state().borrow();
+                if let (Some(parent_id), Some(child_id)) = (
+                    state.widgets.get_id_by_name(parent_name),
+                    state.widgets.get_id_by_name(&actual_child_name),
+                ) {
+                    drop(state);
+                    let mut state = env.state().borrow_mut();
+                    if let Some(parent_frame) = state.widgets.get_mut(parent_id) {
+                        parent_frame.children_keys.insert(parent_key.clone(), child_id);
+                    }
+                }
             }
         }
     }
