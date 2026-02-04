@@ -680,7 +680,7 @@ impl App {
             .log_messages
             .iter()
             .rev()
-            .take(10)
+            .take(5)
             .rev()
             .cloned()
             .collect::<Vec<_>>()
@@ -697,7 +697,7 @@ impl App {
             .height(Length::Fill),
         )
         .width(Length::Fill)
-        .height(160)
+        .height(80)
         .padding(6)
         .style(|_| container::Style {
             background: Some(iced::Background::Color(palette::BG_INPUT)),
