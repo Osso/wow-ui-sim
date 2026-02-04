@@ -40,6 +40,10 @@ const DEFAULT_INTERFACE_PATH: &str = "/home/osso/Projects/wow/Interface";
 /// Default path to addons directory.
 const DEFAULT_ADDONS_PATH: &str = "/home/osso/Projects/wow/reference-addons";
 
+/// Panel offset to move AddonList away from the top-left corner
+const PANEL_OFFSET_X: f32 = 50.0;
+const PANEL_OFFSET_Y: f32 = 50.0;
+
 // WoW-inspired color palette
 mod palette {
     use iced::Color;
@@ -1395,8 +1399,8 @@ impl App {
                 continue;
             }
 
-            let x = rect.x * UI_SCALE;
-            let y = rect.y * UI_SCALE;
+            let x = rect.x * UI_SCALE + PANEL_OFFSET_X;
+            let y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
             let w = rect.width * UI_SCALE;
             let h = rect.height * UI_SCALE;
             let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
@@ -1651,8 +1655,8 @@ impl App {
                 continue;
             }
 
-            let x = rect.x * UI_SCALE;
-            let y = rect.y * UI_SCALE;
+            let x = rect.x * UI_SCALE + PANEL_OFFSET_X;
+            let y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
             let w = rect.width * UI_SCALE;
             let h = rect.height * UI_SCALE;
 
@@ -1718,8 +1722,14 @@ impl App {
 
         // Draw scroll bar and addon entries for AddonList if it exists
         if let Some(ref rect) = addonlist_rect {
-            self.draw_addon_list_scrollbar(frame, rect, screen_width);
-            self.draw_addon_list_entries(frame, rect, &state);
+            let offset_rect = LayoutRect {
+                x: rect.x + PANEL_OFFSET_X / UI_SCALE,
+                y: rect.y + PANEL_OFFSET_Y / UI_SCALE,
+                width: rect.width,
+                height: rect.height,
+            };
+            self.draw_addon_list_scrollbar(frame, &offset_rect, screen_width);
+            self.draw_addon_list_entries(frame, &offset_rect, &state);
         }
 
         // Draw center crosshair
@@ -1844,8 +1854,8 @@ impl App {
                 continue;
             }
 
-            let x = rect.x * UI_SCALE;
-            let y = rect.y * UI_SCALE;
+            let x = rect.x * UI_SCALE + PANEL_OFFSET_X;
+            let y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
             let w = rect.width * UI_SCALE;
             let h = rect.height * UI_SCALE;
             let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
@@ -1870,9 +1880,15 @@ impl App {
             }
         }
 
-        // Draw addon list entries text
+        // Draw addon list entries text (apply offset to addon list rect)
         if let Some(ref rect) = addonlist_rect {
-            self.draw_addon_list_entries_text(frame, rect, &*state);
+            let offset_rect = LayoutRect {
+                x: rect.x + PANEL_OFFSET_X / UI_SCALE,
+                y: rect.y + PANEL_OFFSET_Y / UI_SCALE,
+                width: rect.width,
+                height: rect.height,
+            };
+            self.draw_addon_list_entries_text(frame, &offset_rect, &*state);
         }
     }
 
@@ -3037,8 +3053,9 @@ impl App {
         };
 
         // Content area bounds (must match draw_addon_list_entries)
-        let list_x = rect.x * UI_SCALE;
-        let list_y = rect.y * UI_SCALE;
+        // Apply panel offset since the panel is rendered with offset
+        let list_x = rect.x * UI_SCALE + PANEL_OFFSET_X;
+        let list_y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
         let list_height = rect.height * UI_SCALE;
 
         let content_left = list_x + 12.0;
