@@ -149,12 +149,20 @@ pub struct Frame {
     pub text_scale: f64,
     /// Normal texture path (for Button widgets).
     pub normal_texture: Option<String>,
+    /// Normal texture UV coords (left, right, top, bottom) for atlas-based buttons.
+    pub normal_tex_coords: Option<(f32, f32, f32, f32)>,
     /// Pushed texture path (for Button widgets).
     pub pushed_texture: Option<String>,
+    /// Pushed texture UV coords for atlas-based buttons.
+    pub pushed_tex_coords: Option<(f32, f32, f32, f32)>,
     /// Highlight texture path (for Button widgets).
     pub highlight_texture: Option<String>,
+    /// Highlight texture UV coords for atlas-based buttons.
+    pub highlight_tex_coords: Option<(f32, f32, f32, f32)>,
     /// Disabled texture path (for Button widgets).
     pub disabled_texture: Option<String>,
+    /// Disabled texture UV coords for atlas-based buttons.
+    pub disabled_tex_coords: Option<(f32, f32, f32, f32)>,
     /// Left cap texture for 3-slice buttons.
     pub left_texture: Option<String>,
     /// Middle (stretchable) texture for 3-slice buttons.
@@ -216,9 +224,13 @@ impl Frame {
             word_wrap: false,
             text_scale: 1.0,
             normal_texture: None,
+            normal_tex_coords: None,
             pushed_texture: None,
+            pushed_tex_coords: None,
             highlight_texture: None,
+            highlight_tex_coords: None,
             disabled_texture: None,
+            disabled_tex_coords: None,
             left_texture: None,
             middle_texture: None,
             right_texture: None,

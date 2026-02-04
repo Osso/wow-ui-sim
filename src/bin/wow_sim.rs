@@ -62,6 +62,16 @@ enum Commands {
         #[arg(long)]
         visible_only: bool,
     },
+
+    /// Convert a BLP texture file to WebP format
+    ConvertTexture {
+        /// Input BLP file path
+        input: PathBuf,
+
+        /// Output WebP file path (defaults to input with .webp extension)
+        #[arg(short, long)]
+        output: Option<PathBuf>,
+    },
 }
 
 fn default_addons_path() -> PathBuf {
@@ -103,7 +113,53 @@ fn main() {
         Commands::DumpTree { filter, visible_only } => {
             dump_tree(filter, visible_only);
         }
+        Commands::ConvertTexture { input, output } => {
+            convert_texture(&input, output.as_ref());
+        }
     }
+}
+
+fn convert_texture(input: &PathBuf, output: Option<&PathBuf>) {
+    use image_blp::{convert::blp_to_image, parser::load_blp};
+
+    // Determine output path
+    let output_path = match output {
+        Some(p) => p.clone(),
+        None => input.with_extension("webp"),
+    };
+
+    // Load BLP
+    let blp = match load_blp(input) {
+        Ok(b) => b,
+        Err(e) => {
+            eprintln!("Error loading BLP {}: {}", input.display(), e);
+            std::process::exit(1);
+        }
+    };
+
+    // Convert to image
+    let img = match blp_to_image(&blp, 0) {
+        Ok(i) => i,
+        Err(e) => {
+            eprintln!("Error converting BLP: {}", e);
+            std::process::exit(1);
+        }
+    };
+
+    // Save as WebP
+    let rgba = img.to_rgba8();
+    if let Err(e) = rgba.save(&output_path) {
+        eprintln!("Error saving WebP {}: {}", output_path.display(), e);
+        std::process::exit(1);
+    }
+
+    println!(
+        "Converted {} -> {} ({}x{})",
+        input.display(),
+        output_path.display(),
+        rgba.width(),
+        rgba.height()
+    );
 }
 
 fn list_servers() {

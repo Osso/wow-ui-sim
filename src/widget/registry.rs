@@ -20,6 +20,13 @@ impl WidgetRegistry {
     /// Register a new widget.
     pub fn register(&mut self, widget: Frame) -> u64 {
         let id = widget.id;
+        // Debug: check for re-registration that would lose children
+        if let Some(existing) = self.widgets.get(&id) {
+            if !existing.children.is_empty() {
+                eprintln!("[WARN] Re-registering widget id={} name={:?} which has {} children!",
+                    id, existing.name, existing.children.len());
+            }
+        }
         if let Some(ref name) = widget.name {
             self.names.insert(name.clone(), id);
         }
@@ -58,6 +65,13 @@ impl WidgetRegistry {
 
     /// Add a child to a parent widget.
     pub fn add_child(&mut self, parent_id: u64, child_id: u64) {
+        let parent_name = self.widgets.get(&parent_id).and_then(|p| p.name.clone());
+        let child_name = self.widgets.get(&child_id).and_then(|c| c.name.clone());
+        if parent_name.as_deref() == Some("AddonList") || child_name.as_ref().map(|n| n.contains("anon")).unwrap_or(false) {
+            eprintln!("[DEBUG add_child] parent_id={} ({:?}) child_id={} ({:?}) found_parent={}",
+                parent_id, parent_name, child_id, child_name,
+                self.widgets.contains_key(&parent_id));
+        }
         if let Some(parent) = self.widgets.get_mut(&parent_id) {
             parent.children.push(child_id);
         }

@@ -268,13 +268,20 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             .and_then(|v| lua.coerce_string(v).ok().flatten())
             .map(|s| s.to_string_lossy().to_string());
 
-        let parent_id: Option<u64> = args_iter.next().and_then(|v| {
+        let parent_arg = args_iter.next();
+        let parent_id: Option<u64> = parent_arg.as_ref().and_then(|v| {
             if let Value::UserData(ud) = v {
                 ud.borrow::<FrameHandle>().ok().map(|h| h.id)
             } else {
                 None
             }
         });
+
+        // Debug: trace ForceLoad parent
+        if name_raw.as_ref().map(|n| n.contains("ForceLoad") || n.contains("anon")).unwrap_or(false) {
+            eprintln!("[DEBUG CreateFrame] name={:?} parent_arg={:?} parent_id={:?}",
+                name_raw, parent_arg.as_ref().map(|v| v.type_name()), parent_id);
+        }
 
         // Get template parameter (4th argument)
         let template: Option<String> = args_iter
@@ -899,6 +906,22 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             state.widgets.register(border_tex);
             state.widgets.add_child(frame_id, border_id);
 
+            // Create Text fontstring for button label
+            let mut text_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
+            // Center the text on the button
+            text_fs.anchors.push(crate::widget::Anchor {
+                point: crate::widget::AnchorPoint::Center,
+                relative_to: None,
+                relative_to_id: Some(frame_id as usize),
+                relative_point: crate::widget::AnchorPoint::Center,
+                x_offset: 0.0,
+                y_offset: 0.0,
+            });
+            text_fs.draw_layer = crate::widget::DrawLayer::Overlay;
+            let text_id = text_fs.id;
+            state.widgets.register(text_fs);
+            state.widgets.add_child(frame_id, text_id);
+
             // Store texture references as children_keys
             if let Some(btn) = state.widgets.get_mut(frame_id) {
                 btn.children_keys.insert("NormalTexture".to_string(), normal_id);
@@ -908,6 +931,7 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                 btn.children_keys.insert("Icon".to_string(), icon_id);
                 btn.children_keys.insert("IconOverlay".to_string(), icon_overlay_id);
                 btn.children_keys.insert("Border".to_string(), border_id);
+                btn.children_keys.insert("Text".to_string(), text_id);
             }
         }
 
@@ -14667,6 +14691,20 @@ impl UserData for FrameHandle {
                 // Look up atlas info
                 if let Some(atlas_info) = crate::atlas::get_atlas_info(&name) {
                     let mut state = this.state.borrow_mut();
+
+                    // Get parent info - find which children_key this frame is registered as
+                    let parent_info: Option<(u64, Option<String>)> = state.widgets.get(this.id).and_then(|f| {
+                        f.parent_id.and_then(|pid| {
+                            state.widgets.get(pid).map(|parent| {
+                                // Find which key in parent's children_keys maps to this.id
+                                let key = parent.children_keys.iter()
+                                    .find(|(_, child_id)| **child_id == this.id)
+                                    .map(|(k, _)| k.clone());
+                                (pid, key)
+                            })
+                        })
+                    });
+
                     if let Some(frame) = state.widgets.get_mut(this.id) {
                         // Set texture file from atlas
                         frame.texture = Some(atlas_info.file.to_string());
@@ -14681,11 +14719,48 @@ impl UserData for FrameHandle {
                         frame.horiz_tile = atlas_info.tiles_horizontally;
                         frame.vert_tile = atlas_info.tiles_vertically;
                         // Store atlas name
-                        frame.atlas = Some(name);
+                        frame.atlas = Some(name.clone());
                         // Optionally set size from atlas
                         if use_atlas_size {
                             frame.width = atlas_info.width as f32;
                             frame.height = atlas_info.height as f32;
+                        }
+                    }
+
+                    // If this texture is a child of a button (NormalTexture, PushedTexture, etc.),
+                    // also update the parent button's texture field and tex_coords so rendering picks it up
+                    if let Some((parent_id, parent_key_opt)) = parent_info {
+                        if let Some(parent) = state.widgets.get_mut(parent_id as u64) {
+                            if matches!(parent.widget_type, crate::widget::WidgetType::Button | crate::widget::WidgetType::CheckButton) {
+                                let texture_path = atlas_info.file.to_string();
+                                let tex_coords = (
+                                    atlas_info.left_tex_coord,
+                                    atlas_info.right_tex_coord,
+                                    atlas_info.top_tex_coord,
+                                    atlas_info.bottom_tex_coord,
+                                );
+                                if let Some(parent_key) = parent_key_opt {
+                                    match parent_key.as_str() {
+                                        "NormalTexture" => {
+                                            parent.normal_texture = Some(texture_path);
+                                            parent.normal_tex_coords = Some(tex_coords);
+                                        }
+                                        "PushedTexture" => {
+                                            parent.pushed_texture = Some(texture_path);
+                                            parent.pushed_tex_coords = Some(tex_coords);
+                                        }
+                                        "HighlightTexture" => {
+                                            parent.highlight_texture = Some(texture_path);
+                                            parent.highlight_tex_coords = Some(tex_coords);
+                                        }
+                                        "DisabledTexture" => {
+                                            parent.disabled_texture = Some(texture_path);
+                                            parent.disabled_tex_coords = Some(tex_coords);
+                                        }
+                                        _ => {}
+                                    }
+                                }
+                            }
                         }
                     }
                 } else {
@@ -14754,22 +14829,52 @@ impl UserData for FrameHandle {
         // ClearTextureSlice() - Clear 9-slice configuration
         methods.add_method("ClearTextureSlice", |_, _this, ()| Ok(()));
 
-        // SetText(text) - for FontString widgets
-        // Auto-sizes the FontString to fit the text content
+        // SetText(text) - for FontString and Button widgets
+        // Auto-sizes FontStrings to fit content; for Buttons, also sets Text child fontstring
         methods.add_method("SetText", |_, this, text: Option<String>| {
             let mut state = this.state.borrow_mut();
+
+            // Get the Text child ID if this is a Button
+            let text_child_id = state.widgets.get(this.id)
+                .and_then(|f| f.children_keys.get("Text").copied());
+
+            // Debug: log all SetText calls on buttons with "Enable" or "All" text
+            let frame_name = state.widgets.get(this.id).and_then(|f| f.name.clone());
+            let widget_type = state.widgets.get(this.id).map(|f| format!("{:?}", f.widget_type));
+            if text.as_ref().map(|t| t.contains("Enable") || t.contains("TEST")).unwrap_or(false) {
+                eprintln!("[DEBUG SetText] frame={:?} type={:?} text={:?} text_child_id={:?}",
+                    frame_name, widget_type, text, text_child_id);
+            }
+
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                // Calculate auto-size dimensions if width/height is 0
+                // Calculate auto-size dimensions if width/height is 0 (for FontStrings)
                 if let Some(ref txt) = text {
                     // Auto-size: ~7 pixels per character for width, font_size for height
+                    let did_autosize = frame.width == 0.0 || frame.height == 0.0;
                     if frame.width == 0.0 {
                         frame.width = txt.len() as f32 * 7.0;
                     }
                     if frame.height == 0.0 {
                         frame.height = frame.font_size.max(12.0);
                     }
+                    if txt.contains("ADDON_FORCE_LOAD") {
+                        eprintln!("[DEBUG SetText] text='{}' did_autosize={} final_size={}x{}",
+                            txt, did_autosize, frame.width, frame.height);
+                    }
                 }
-                frame.text = text;
+                frame.text = text.clone();
+            }
+
+            // For Buttons, also set text on the Text fontstring child
+            if let Some(text_id) = text_child_id {
+                if let Some(text_fs) = state.widgets.get_mut(text_id) {
+                    if let Some(ref txt) = text {
+                        // Auto-size the fontstring
+                        text_fs.width = txt.len() as f32 * 7.0;
+                        text_fs.height = text_fs.font_size.max(12.0);
+                    }
+                    text_fs.text = text;
+                }
             }
             Ok(())
         });
@@ -15822,47 +15927,18 @@ impl UserData for FrameHandle {
 
         // GetFontString() - Get button's text font string
         methods.add_method("GetFontString", |lua, this, ()| {
-            // Return stub fontstring - buttons have text layers
-            // Note: All methods take (_self, ...) because Lua passes self when using colon syntax
             let state = this.state.borrow();
-            if let Some(_frame) = state.widgets.get(this.id) {
-                // Create a more complete stub fontstring with common methods
-                let fs = lua.create_table()?;
-                fs.set("SetText", lua.create_function(|_, (_self, _text): (Value, Option<String>)| Ok(()))?)?;
-                fs.set("SetFormattedText", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-                fs.set("GetText", lua.create_function(|_, _self: Value| Ok(""))?)?;
-                fs.set("SetFont", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-                fs.set("SetTextColor", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-                fs.set("SetJustifyH", lua.create_function(|_, (_self, _justify): (Value, String)| Ok(()))?)?;
-                fs.set("SetJustifyV", lua.create_function(|_, (_self, _justify): (Value, String)| Ok(()))?)?;
-                fs.set("GetStringWidth", lua.create_function(|_, _self: Value| Ok(0.0_f64))?)?;
-                fs.set("GetStringHeight", lua.create_function(|_, _self: Value| Ok(12.0_f64))?)?;
-                fs.set("GetUnboundedStringWidth", lua.create_function(|_, _self: Value| Ok(0.0_f64))?)?;
-                // Additional methods for Cell compatibility
-                fs.set("SetWordWrap", lua.create_function(|_, (_self, _wrap): (Value, bool)| Ok(()))?)?;
-                fs.set("GetWordWrap", lua.create_function(|_, _self: Value| Ok(false))?)?;
-                fs.set("SetNonSpaceWrap", lua.create_function(|_, (_self, _wrap): (Value, bool)| Ok(()))?)?;
-                fs.set("GetNonSpaceWrap", lua.create_function(|_, _self: Value| Ok(false))?)?;
-                fs.set("SetPoint", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-                fs.set("ClearAllPoints", lua.create_function(|_, _self: Value| Ok(()))?)?;
-                fs.set("SetWidth", lua.create_function(|_, (_self, _w): (Value, f64)| Ok(()))?)?;
-                fs.set("SetHeight", lua.create_function(|_, (_self, _h): (Value, f64)| Ok(()))?)?;
-                fs.set("SetSize", lua.create_function(|_, (_self, _w, _h): (Value, f64, f64)| Ok(()))?)?;
-                fs.set("GetWidth", lua.create_function(|_, _self: Value| Ok(0.0_f64))?)?;
-                fs.set("GetHeight", lua.create_function(|_, _self: Value| Ok(12.0_f64))?)?;
-                fs.set("SetAlpha", lua.create_function(|_, (_self, _alpha): (Value, f64)| Ok(()))?)?;
-                fs.set("GetAlpha", lua.create_function(|_, _self: Value| Ok(1.0_f64))?)?;
-                fs.set("Show", lua.create_function(|_, _self: Value| Ok(()))?)?;
-                fs.set("Hide", lua.create_function(|_, _self: Value| Ok(()))?)?;
-                fs.set("IsShown", lua.create_function(|_, _self: Value| Ok(true))?)?;
-                fs.set("SetShadowColor", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-                fs.set("SetShadowOffset", lua.create_function(|_, (_self, _x, _y): (Value, f64, f64)| Ok(()))?)?;
-                fs.set("SetSpacing", lua.create_function(|_, (_self, _spacing): (Value, f64)| Ok(()))?)?;
-                fs.set("SetMaxLines", lua.create_function(|_, (_self, _lines): (Value, i32)| Ok(()))?)?;
-                Ok(Value::Table(fs))
-            } else {
-                Ok(Value::Nil)
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(&text_id) = frame.children_keys.get("Text") {
+                    drop(state);
+                    let handle = FrameHandle {
+                        id: text_id,
+                        state: Rc::clone(&this.state),
+                    };
+                    return lua.create_userdata(handle).map(Value::UserData);
+                }
             }
+            Ok(Value::Nil)
         });
 
         // SetFontString(fontstring) - Set button's text font string

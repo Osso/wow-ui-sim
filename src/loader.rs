@@ -427,9 +427,20 @@ fn create_frame_from_xml(
         ));
     }
 
-    // Set anchors
+    // Set anchors - inherit from templates if frame doesn't define its own
+    // Frame's own anchors override template anchors (WoW behavior)
     if let Some(anchors) = frame.anchors() {
         lua_code.push_str(&generate_anchors_code(anchors, parent));
+    } else if !inherits.is_empty() {
+        // No direct anchors - check templates
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in template_chain.iter().rev() {
+            // Most derived template with anchors wins
+            if let Some(anchors) = template_entry.frame.anchors() {
+                lua_code.push_str(&generate_anchors_code(anchors, parent));
+                break;
+            }
+        }
     }
 
     // Set hidden state
@@ -543,6 +554,20 @@ fn create_frame_from_xml(
 
     // Handle child Frames recursively
     if let Some(frames) = frame.frames() {
+        if name.starts_with("AddonList") {
+            eprintln!("[DEBUG] {}: frames() has {} children", name, frames.elements.len());
+            for child in &frames.elements {
+                let child_name = match child {
+                    crate::xml::FrameElement::Frame(f) => f.name.clone(),
+                    crate::xml::FrameElement::CheckButton(f) => f.name.clone(),
+                    crate::xml::FrameElement::Button(f) => f.name.clone(),
+                    crate::xml::FrameElement::EditBox(f) => f.name.clone(),
+                    crate::xml::FrameElement::DropdownButton(f) => f.name.clone(),
+                    _ => Some("(other)".to_string()),
+                };
+                eprintln!("[DEBUG]   child: {:?}", child_name);
+            }
+        }
         for child in &frames.elements {
             let (child_frame, child_type) = match child {
                 crate::xml::FrameElement::Frame(f) => (f, "Frame"),
@@ -561,6 +586,11 @@ fn create_frame_from_xml(
                 _ => continue, // Skip unsupported types for now
             };
             let child_name = create_frame_from_xml(env, child_frame, child_type, Some(&name))?;
+
+            if name.starts_with("AddonList") {
+                eprintln!("[DEBUG] {}: created child type={} name={:?} parentKey={:?}",
+                    name, child_type, child_name, child_frame.parent_key);
+            }
 
             // Handle parentKey for child frames (works for both named and anonymous frames)
             // The Lua assignment triggers __newindex which syncs to Rust children_keys
@@ -885,12 +915,12 @@ fn apply_button_textures(
     }
 
     if !lua_code.is_empty() {
-        env.exec(&lua_code).map_err(|e| {
-            LoadError::Lua(format!(
+        if let Err(e) = env.exec(&lua_code) {
+            return Err(LoadError::Lua(format!(
                 "Failed to apply button textures to {}: {}",
                 button_name, e
-            ))
-        })?;
+            )));
+        }
     }
 
     Ok(())

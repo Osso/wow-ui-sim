@@ -125,6 +125,25 @@ AddonList [Button] (x=50, y=400, w=80, h=22) visible
     Text [FontString] (x=430, y=508, w=80, h=22) visible text="Cancel"
 ```
 
+### Convert Texture (BLP to WebP)
+
+Convert a single BLP texture to WebP format:
+
+```bash
+wow-sim convert-texture ~/Projects/wow/Interface/BUTTONS/redbuttons.BLP -o ./textures/buttons/redbuttons.webp
+```
+
+### Extract Textures (Batch)
+
+Extract all textures referenced by addons to WebP format:
+
+```bash
+wow-sim extract-textures                    # Use default paths
+wow-sim extract-textures --output ./tex     # Custom output directory
+```
+
+This scans addon XML/Lua files for texture references and converts them from BLP to WebP.
+
 ## Textures
 
 ### Texture Sources (in order of priority)

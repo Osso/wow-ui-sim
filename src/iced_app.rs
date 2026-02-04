@@ -1856,27 +1856,45 @@ impl App {
         is_pressed: bool,
         is_hovered: bool,
     ) {
-        // Determine which texture to use based on state
-        let texture_path = if is_pressed {
-            f.pushed_texture.as_ref().or(f.normal_texture.as_ref())
+        // Determine which texture and tex_coords to use based on state
+        let (texture_path, tex_coords) = if is_pressed {
+            (
+                f.pushed_texture.as_ref().or(f.normal_texture.as_ref()),
+                f.pushed_tex_coords.or(f.normal_tex_coords),
+            )
         } else {
-            f.normal_texture.as_ref()
+            (f.normal_texture.as_ref(), f.normal_tex_coords)
         };
 
         // Render button texture or fallback to solid color
         if let Some(tex_path) = texture_path {
-            // WoW button textures are 128x32 with thin gold borders (~3px)
-            // Use 3-slice rendering to preserve the end caps while stretching the middle
-            const BUTTON_TEX_WIDTH: f32 = 128.0;
-            const BUTTON_CAP_WIDTH: f32 = 4.0;
-            batch.push_three_slice_h_path(
-                bounds,
-                BUTTON_CAP_WIDTH,
-                BUTTON_CAP_WIDTH,
-                tex_path,
-                BUTTON_TEX_WIDTH,
-                [1.0, 1.0, 1.0, f.alpha],
-            );
+            if let Some((left, right, top, bottom)) = tex_coords {
+                // Atlas texture - use sub-region UV coordinates
+                let uvs = Rectangle::new(
+                    Point::new(left, top),
+                    Size::new(right - left, bottom - top),
+                );
+                batch.push_textured_path_uv(
+                    bounds,
+                    uvs,
+                    tex_path,
+                    [1.0, 1.0, 1.0, f.alpha],
+                    BlendMode::Alpha,
+                );
+            } else {
+                // WoW button textures are 128x32 with thin gold borders (~3px)
+                // Use 3-slice rendering to preserve the end caps while stretching the middle
+                const BUTTON_TEX_WIDTH: f32 = 128.0;
+                const BUTTON_CAP_WIDTH: f32 = 4.0;
+                batch.push_three_slice_h_path(
+                    bounds,
+                    BUTTON_CAP_WIDTH,
+                    BUTTON_CAP_WIDTH,
+                    tex_path,
+                    BUTTON_TEX_WIDTH,
+                    [1.0, 1.0, 1.0, f.alpha],
+                );
+            }
         } else {
             // Fallback solid color
             let bg_color = if is_pressed {
@@ -1897,20 +1915,36 @@ impl App {
             batch.push_border(bounds, 1.5, border_color);
         }
 
-        // Highlight texture overlay on hover (also uses 3-slice since it's 128x32)
+        // Highlight texture overlay on hover
         if is_hovered && !is_pressed {
             if let Some(ref highlight_path) = f.highlight_texture {
-                const BUTTON_TEX_WIDTH: f32 = 128.0;
-                const BUTTON_CAP_WIDTH: f32 = 4.0;
-                batch.push_three_slice_h_path_blend(
-                    bounds,
-                    BUTTON_CAP_WIDTH,
-                    BUTTON_CAP_WIDTH,
-                    highlight_path,
-                    BUTTON_TEX_WIDTH,
-                    [1.0, 1.0, 1.0, 0.5 * f.alpha],
-                    BlendMode::Additive,
-                );
+                if let Some((left, right, top, bottom)) = f.highlight_tex_coords {
+                    // Atlas-based highlight
+                    let uvs = Rectangle::new(
+                        Point::new(left, top),
+                        Size::new(right - left, bottom - top),
+                    );
+                    batch.push_textured_path_uv(
+                        bounds,
+                        uvs,
+                        highlight_path,
+                        [1.0, 1.0, 1.0, 0.5 * f.alpha],
+                        BlendMode::Additive,
+                    );
+                } else {
+                    // Non-atlas highlight (3-slice)
+                    const BUTTON_TEX_WIDTH: f32 = 128.0;
+                    const BUTTON_CAP_WIDTH: f32 = 4.0;
+                    batch.push_three_slice_h_path_blend(
+                        bounds,
+                        BUTTON_CAP_WIDTH,
+                        BUTTON_CAP_WIDTH,
+                        highlight_path,
+                        BUTTON_TEX_WIDTH,
+                        [1.0, 1.0, 1.0, 0.5 * f.alpha],
+                        BlendMode::Additive,
+                    );
+                }
             } else {
                 // Fallback highlight
                 batch.push_quad(
@@ -2127,6 +2161,34 @@ impl App {
                         .with_color(Color::from_rgb(1.0, 0.0, 0.0))
                         .with_width(1.0),
                 );
+            }
+
+            // Draw special colored borders for key frames (always enabled for debugging)
+            // Purple box around AddonList panel
+            if f.name.as_deref() == Some("AddonList") {
+                let border_path = Path::rectangle(bounds.position(), bounds.size());
+                frame.stroke(
+                    &border_path,
+                    Stroke::default()
+                        .with_color(Color::from_rgb(0.6, 0.0, 0.8)) // Purple
+                        .with_width(3.0),
+                );
+            }
+            // Green box around TitleContainer - find it via parent's children_keys
+            if let Some(parent_id) = f.parent_id {
+                if let Some(parent) = state.widgets.get(parent_id) {
+                    if parent.name.as_deref() == Some("AddonList") {
+                        if parent.children_keys.get("TitleContainer") == Some(&id) {
+                            let border_path = Path::rectangle(bounds.position(), bounds.size());
+                            frame.stroke(
+                                &border_path,
+                                Stroke::default()
+                                    .with_color(Color::from_rgb(0.0, 1.0, 0.0)) // Green
+                                    .with_width(3.0),
+                            );
+                        }
+                    }
+                }
             }
 
             // Draw debug anchor points if enabled
