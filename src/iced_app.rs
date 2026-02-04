@@ -2014,11 +2014,6 @@ impl App {
                 .then_with(|| a.0.cmp(&b.0))
         });
 
-        // Capture AddonList rect for addon entries
-        let addonlist_rect = addonlist_id.and_then(|root_id| {
-            frames.iter().find(|(id, _, _)| *id == root_id).map(|(_, _, r)| r.clone())
-        });
-
         // Draw only text elements
         for (id, f, rect) in frames {
             if !addonlist_ids.contains(&id) {
@@ -2085,11 +2080,6 @@ impl App {
                     frame.fill(&dot, anchor_color);
                 }
             }
-        }
-
-        // Draw addon list entries text
-        if let Some(ref rect) = addonlist_rect {
-            self.draw_addon_list_entries_text(frame, rect, &*state);
         }
     }
 
