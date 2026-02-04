@@ -3517,18 +3517,40 @@ fn compute_frame_rect(
 
         // WoW behavior: anchors defining opposite edges override explicit size.
         // Explicit size is only a fallback when the opposite edge anchor is missing.
-        let final_width = if let (Some(lx), Some(rx)) = (left_x, right_x) {
+        // When anchors create inverted bounds (e.g., TOPLEFT→TOPRIGHT, TOPRIGHT→TOPLEFT),
+        // WoW swaps them to get positive dimensions. This is used by ButtonFrameTemplate_HidePortrait.
+        let (final_left_x, final_right_x) = if let (Some(lx), Some(rx)) = (left_x, right_x) {
+            if lx > rx {
+                (Some(rx), Some(lx)) // Swap inverted bounds
+            } else {
+                (Some(lx), Some(rx))
+            }
+        } else {
+            (left_x, right_x)
+        };
+
+        let (final_top_y, final_bottom_y) = if let (Some(ty), Some(by)) = (top_y, bottom_y) {
+            if ty > by {
+                (Some(by), Some(ty)) // Swap inverted bounds
+            } else {
+                (Some(ty), Some(by))
+            }
+        } else {
+            (top_y, bottom_y)
+        };
+
+        let final_width = if let (Some(lx), Some(rx)) = (final_left_x, final_right_x) {
             // Both left and right edges defined by anchors - compute width from them
-            (rx - lx).max(0.0)
+            rx - lx
         } else if frame.width > 0.0 {
             frame.width
         } else {
             0.0
         };
 
-        let final_height = if let (Some(ty), Some(by)) = (top_y, bottom_y) {
+        let final_height = if let (Some(ty), Some(by)) = (final_top_y, final_bottom_y) {
             // Both top and bottom edges defined by anchors - compute height from them
-            (by - ty).max(0.0)
+            by - ty
         } else if frame.height > 0.0 {
             frame.height
         } else {
@@ -3536,9 +3558,9 @@ fn compute_frame_rect(
         };
 
         let final_x =
-            left_x.unwrap_or_else(|| right_x.map(|rx| rx - final_width).unwrap_or(parent_rect.x));
+            final_left_x.unwrap_or_else(|| final_right_x.map(|rx| rx - final_width).unwrap_or(parent_rect.x));
         let final_y =
-            top_y.unwrap_or_else(|| bottom_y.map(|by| by - final_height).unwrap_or(parent_rect.y));
+            final_top_y.unwrap_or_else(|| final_bottom_y.map(|by| by - final_height).unwrap_or(parent_rect.y));
 
         return LayoutRect {
             x: final_x,
