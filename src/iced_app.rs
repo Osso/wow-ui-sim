@@ -40,10 +40,6 @@ const DEFAULT_INTERFACE_PATH: &str = "/home/osso/Projects/wow/Interface";
 /// Default path to addons directory.
 const DEFAULT_ADDONS_PATH: &str = "/home/osso/Projects/wow/reference-addons";
 
-/// Panel offset to move AddonList away from the top-left corner
-const PANEL_OFFSET_X: f32 = 30.0;
-const PANEL_OFFSET_Y: f32 = 20.0;
-
 // WoW-inspired color palette
 mod palette {
     use iced::Color;
@@ -184,8 +180,8 @@ pub struct App {
     lua_rx: Option<std::sync::mpsc::Receiver<LuaCommand>>,
     /// Draw red debug borders around all frames when true.
     debug_borders: bool,
-    /// Use GPU shader renderer instead of canvas (experimental).
-    use_shader_renderer: bool,
+    /// Draw green anchor points on all frames when true.
+    debug_anchors: bool,
     /// Track which textures have been uploaded to GPU atlas (avoid re-sending pixel data).
     gpu_uploaded_textures: RefCell<std::collections::HashSet<String>>,
     /// Cached quad batch for shader (avoids rebuilding every frame).
@@ -260,12 +256,16 @@ impl App {
             lua_server::socket_path().display()
         );
 
-        let debug_borders = std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
-        // Shader renderer is default; use WOW_SIM_NO_SHADER=1 for canvas mode
-        let use_shader_renderer = std::env::var("WOW_SIM_NO_SHADER").is_err();
+        // Debug modes: WOW_SIM_DEBUG_ELEMENTS enables both borders and anchors
+        let debug_elements = std::env::var("WOW_SIM_DEBUG_ELEMENTS").is_ok();
+        let debug_borders = debug_elements || std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
+        let debug_anchors = debug_elements || std::env::var("WOW_SIM_DEBUG_ANCHORS").is_ok();
 
-        if use_shader_renderer {
-            eprintln!("[wow-ui-sim] Using GPU shader renderer (experimental)");
+        if debug_borders || debug_anchors {
+            eprintln!(
+                "[wow-ui-sim] Debug mode: borders={} anchors={}",
+                debug_borders, debug_anchors
+            );
         }
 
         let app = App {
@@ -285,7 +285,7 @@ impl App {
             pending_screenshot: None,
             lua_rx: Some(lua_rx),
             debug_borders,
-            use_shader_renderer,
+            debug_anchors,
             gpu_uploaded_textures: RefCell::new(std::collections::HashSet::new()),
             cached_quads: RefCell::new(None),
             quads_dirty: std::cell::Cell::new(true),
@@ -442,16 +442,14 @@ impl App {
             }
             Message::ProcessTimers => {
                 // Update FPS counter (every ~1 second)
-                if self.use_shader_renderer {
-                    let now = std::time::Instant::now();
-                    let elapsed = now.duration_since(self.fps_last_time);
-                    if elapsed >= std::time::Duration::from_secs(1) {
-                        let frames = self.frame_count.get();
-                        self.fps = frames as f32 / elapsed.as_secs_f32();
-                        self.frame_time_display = self.frame_time_avg.get();
-                        self.frame_count.set(0);
-                        self.fps_last_time = now;
-                    }
+                let now = std::time::Instant::now();
+                let elapsed = now.duration_since(self.fps_last_time);
+                if elapsed >= std::time::Duration::from_secs(1) {
+                    let frames = self.frame_count.get();
+                    self.fps = frames as f32 / elapsed.as_secs_f32();
+                    self.frame_time_display = self.frame_time_avg.get();
+                    self.frame_count.set(0);
+                    self.fps_last_time = now;
                 }
 
                 // Process WoW timers
@@ -493,67 +491,41 @@ impl App {
     }
 
     fn view(&self) -> Element<'_, Message> {
-        // Title with FPS counter and frame time (when using shader renderer)
-        let title_text = if self.use_shader_renderer {
-            format!(
-                "WoW UI Simulator  [{:.1} FPS | {:.2}ms]",
-                self.fps,
-                self.frame_time_display
-            )
-        } else {
-            "WoW UI Simulator".to_string()
-        };
+        // Title with FPS counter and frame time
+        let title_text = format!(
+            "WoW UI Simulator  [{:.1} FPS | {:.2}ms]",
+            self.fps,
+            self.frame_time_display
+        );
         let title = text(title_text).size(20).color(palette::GOLD);
 
-        // Render surface - either shader (GPU) or canvas (CPU)
-        let render_container: Element<'_, Message> = if self.use_shader_renderer {
-            // GPU shader rendering with text overlay
-            // Layer 1: Shader for textures/backgrounds
-            let shader: Shader<Message, &App> = Shader::new(self)
-                .width(Length::Fill)
-                .height(Length::Fill);
+        // GPU shader rendering with text overlay
+        // Layer 1: Shader for textures/backgrounds
+        let shader: Shader<Message, &App> = Shader::new(self)
+            .width(Length::Fill)
+            .height(Length::Fill);
 
-            // Layer 2: Canvas for text only (transparent background)
-            let text_overlay: Canvas<TextOverlay<'_>, Message> = Canvas::new(TextOverlay::new(self))
-                .width(Length::Fill)
-                .height(Length::Fill);
+        // Layer 2: Canvas for text and debug overlays (transparent background)
+        let text_overlay: Canvas<TextOverlay<'_>, Message> = Canvas::new(TextOverlay::new(self))
+            .width(Length::Fill)
+            .height(Length::Fill);
 
-            // Stack shader and text overlay
-            let stacked = stack![shader, text_overlay];
+        // Stack shader and text overlay
+        let stacked = stack![shader, text_overlay];
 
-            container(stacked)
-                .width(Length::FillPortion(3))
-                .height(Length::Fill)
-                .style(|_| container::Style {
-                    background: Some(iced::Background::Color(palette::BG_DARK)),
-                    border: Border {
-                        color: palette::BORDER_HIGHLIGHT,
-                        width: 2.0,
-                        radius: 4.0.into(),
-                    },
-                    ..Default::default()
-                })
-                .into()
-        } else {
-            // CPU canvas rendering (original)
-            let canvas: Canvas<&App, Message> = Canvas::new(self)
-                .width(Length::Fill)
-                .height(Length::Fill);
-
-            container(canvas)
-                .width(Length::FillPortion(3))
-                .height(Length::Fill)
-                .style(|_| container::Style {
-                    background: Some(iced::Background::Color(palette::BG_DARK)),
-                    border: Border {
-                        color: palette::BORDER_HIGHLIGHT,
-                        width: 2.0,
-                        radius: 4.0.into(),
-                    },
-                    ..Default::default()
-                })
-                .into()
-        };
+        let render_container: Element<'_, Message> = container(stacked)
+            .width(Length::FillPortion(3))
+            .height(Length::Fill)
+            .style(|_| container::Style {
+                background: Some(iced::Background::Color(palette::BG_DARK)),
+                border: Border {
+                    color: palette::BORDER_HIGHLIGHT,
+                    width: 2.0,
+                    radius: 4.0.into(),
+                },
+                ..Default::default()
+            })
+            .into();
 
         // Frames sidebar
         let frames_list = self.build_frames_sidebar();
@@ -946,8 +918,8 @@ impl App {
 
         // Compute absolute screen coordinates
         let rect = compute_frame_rect(registry, id, screen_width, screen_height);
-        let abs_x = rect.x * UI_SCALE + PANEL_OFFSET_X;
-        let abs_y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
+        let abs_x = rect.x * UI_SCALE;
+        let abs_y = rect.y * UI_SCALE;
         let abs_w = rect.width * UI_SCALE;
         let abs_h = rect.height * UI_SCALE;
 
@@ -965,13 +937,39 @@ impl App {
         // Only output if matches filter or has matching children
         if matches_filter || !children.is_empty() {
             let connector = if is_last { "└─ " } else { "├─ " };
+            // Show size mismatch if stored size differs from computed
+            let size_info = if (frame.width - rect.width).abs() > 0.1 || (frame.height - rect.height).abs() > 0.1 {
+                format!(" [stored={:.0}x{:.0}]", frame.width, frame.height)
+            } else {
+                String::new()
+            };
             lines.push(format!(
-                "{}{}{} ({}) @ ({:.0},{:.0}) {:.0}x{:.0}{}",
-                prefix, connector, name, type_str, abs_x, abs_y, abs_w, abs_h, vis_str
+                "{}{}{} ({}) @ ({:.0},{:.0}) {:.0}x{:.0}{}{}",
+                prefix, connector, name, type_str, abs_x, abs_y, abs_w, abs_h, size_info, vis_str
             ));
 
-            // Recurse into children with updated prefix
+            // Show anchor information
             let child_prefix = format!("{}{}", prefix, if is_last { "   " } else { "│  " });
+            for anchor in &frame.anchors {
+                let rel_name = if let Some(rel_id) = anchor.relative_to_id {
+                    registry.get(rel_id as u64)
+                        .and_then(|f| f.name.as_deref())
+                        .unwrap_or("(anon)")
+                } else {
+                    anchor.relative_to.as_deref().unwrap_or("$parent")
+                };
+                lines.push(format!(
+                    "{}   📍 {} → {}:{} offset({:.0},{:.0})",
+                    child_prefix,
+                    anchor.point.as_str(),
+                    rel_name,
+                    anchor.relative_point.as_str(),
+                    anchor.x_offset,
+                    anchor.y_offset
+                ));
+            }
+
+            // Recurse into children with updated prefix
             for (i, &child_id) in children.iter().enumerate() {
                 let is_last_child = i == children.len() - 1;
                 self.build_tree_recursive(
@@ -1144,87 +1142,7 @@ impl App {
     }
 }
 
-/// Canvas program implementation for rendering WoW frames.
-impl canvas::Program<Message> for &App {
-    type State = ();
-
-    fn update(
-        &self,
-        _state: &mut Self::State,
-        event: &Event,
-        bounds: Rectangle,
-        cursor: mouse::Cursor,
-    ) -> Option<canvas::Action<Message>> {
-        match event {
-            Event::Mouse(mouse_event) => match mouse_event {
-                mouse::Event::CursorMoved { position } => {
-                    if bounds.contains(*position) {
-                        let local = Point::new(position.x - bounds.x, position.y - bounds.y);
-                        return Some(canvas::Action::publish(Message::CanvasEvent(
-                            CanvasMessage::MouseMove(local),
-                        )));
-                    }
-                }
-                mouse::Event::ButtonPressed(mouse::Button::Left) => {
-                    if let Some(pos) = cursor.position_in(bounds) {
-                        return Some(canvas::Action::publish(Message::CanvasEvent(
-                            CanvasMessage::MouseDown(pos),
-                        )));
-                    }
-                }
-                mouse::Event::ButtonReleased(mouse::Button::Left) => {
-                    if let Some(pos) = cursor.position_in(bounds) {
-                        return Some(canvas::Action::publish(Message::CanvasEvent(
-                            CanvasMessage::MouseUp(pos),
-                        )));
-                    }
-                }
-                mouse::Event::WheelScrolled { delta } => {
-                    let dy = match delta {
-                        mouse::ScrollDelta::Lines { y, .. } => *y,
-                        mouse::ScrollDelta::Pixels { y, .. } => *y / 30.0,
-                    };
-                    return Some(canvas::Action::publish(Message::Scroll(0.0, dy)));
-                }
-                _ => {}
-            },
-            Event::Keyboard(keyboard_event) => {
-                use iced::keyboard;
-                if let keyboard::Event::KeyPressed { key, modifiers, .. } = keyboard_event {
-                    if modifiers.control() && *key == keyboard::Key::Character("r".into()) {
-                        return Some(canvas::Action::publish(Message::ReloadUI));
-                    }
-                }
-            }
-            _ => {}
-        }
-        None
-    }
-
-    fn draw(
-        &self,
-        _state: &Self::State,
-        renderer: &iced::Renderer,
-        _theme: &Theme,
-        bounds: Rectangle,
-        _cursor: mouse::Cursor,
-    ) -> Vec<Geometry> {
-        let geometry = self.frame_cache.draw(renderer, bounds.size(), |frame| {
-            // Dark background
-            frame.fill_rectangle(
-                Point::ORIGIN,
-                frame.size(),
-                Color::from_rgb(0.05, 0.05, 0.08),
-            );
-
-            self.draw_wow_frames(frame, bounds.size());
-        });
-
-        vec![geometry]
-    }
-}
-
-/// Canvas program implementation for text overlay (used in shader mode).
+/// Canvas program implementation for text overlay.
 ///
 /// This renders only FontString widgets with a transparent background,
 /// allowing it to be layered on top of the shader which handles textures.
@@ -1392,7 +1310,7 @@ impl shader::Program<Message> for &App {
 impl App {
     /// Build a QuadBatch for GPU shader rendering.
     ///
-    /// This mirrors draw_wow_frames but builds a QuadBatch instead of drawing to canvas.
+    /// This mirrors build_quad_batch but builds a QuadBatch instead of drawing to canvas.
     /// Currently renders solid colors only - texture support requires atlas integration.
     fn build_quad_batch(&self, size: Size) -> QuadBatch {
         let mut batch = QuadBatch::with_capacity(1000);
@@ -1429,7 +1347,7 @@ impl App {
             }
         }
 
-        // Collect and sort frames (same sorting as draw_wow_frames)
+        // Collect and sort frames (same sorting as build_quad_batch)
         let mut frames: Vec<_> = state
             .widgets
             .all_ids()
@@ -1472,8 +1390,8 @@ impl App {
                 continue;
             }
 
-            let x = rect.x * UI_SCALE + PANEL_OFFSET_X;
-            let y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
+            let x = rect.x * UI_SCALE;
+            let y = rect.y * UI_SCALE;
             let w = rect.width * UI_SCALE;
             let h = rect.height * UI_SCALE;
             let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
@@ -1639,198 +1557,7 @@ impl App {
         batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, f.alpha]);
     }
 
-    fn draw_wow_frames(&self, frame: &mut canvas::Frame, size: Size) {
-
-        let env = self.env.borrow();
-        let state = env.state().borrow();
-
-        let screen_width = size.width;
-        let screen_height = size.height;
-
-        // Find AddonList frame and collect descendant IDs
-        let mut addonlist_ids = std::collections::HashSet::new();
-        let addonlist_id = state.widgets.all_ids().into_iter().find(|&id| {
-            state
-                .widgets
-                .get(id)
-                .map(|f| f.name.as_deref() == Some("AddonList"))
-                .unwrap_or(false)
-        });
-
-        if let Some(root_id) = addonlist_id {
-            let mut queue = vec![root_id];
-            while let Some(id) = queue.pop() {
-                addonlist_ids.insert(id);
-                if let Some(f) = state.widgets.get(id) {
-                    queue.extend(f.children.iter().copied());
-                }
-            }
-        }
-
-        // Collect and sort frames
-        let mut frames: Vec<_> = state
-            .widgets
-            .all_ids()
-            .into_iter()
-            .filter_map(|id| {
-                let f = state.widgets.get(id)?;
-                let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
-                // Check for __checked attribute, default to true for addon list checkboxes
-                let checked = if let Some(crate::widget::AttributeValue::Boolean(c)) =
-                    f.attributes.get("__checked")
-                {
-                    *c
-                } else {
-                    // Default to checked for CheckButton widgets (most are addon enable checkboxes)
-                    f.widget_type == WidgetType::CheckButton
-                };
-                Some((id, f, rect, checked))
-            })
-            .collect();
-
-        frames.sort_by(|a, b| {
-            a.1.frame_strata
-                .cmp(&b.1.frame_strata)
-                .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
-                .then_with(|| {
-                    // Regions (Texture, FontString) render within their frame
-                    // sorted by draw_layer then draw_sub_layer.
-                    // Non-regions (Frame, Button, etc.) render before their child regions.
-                    let is_region = |t: &WidgetType| {
-                        matches!(t, WidgetType::Texture | WidgetType::FontString)
-                    };
-                    match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
-                        (true, true) => {
-                            // Both regions: sort by draw_layer, then draw_sub_layer
-                            a.1.draw_layer
-                                .cmp(&b.1.draw_layer)
-                                .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer))
-                        }
-                        (false, true) => std::cmp::Ordering::Less, // Frame before region
-                        (true, false) => std::cmp::Ordering::Greater, // Region after frame
-                        (false, false) => std::cmp::Ordering::Equal, // Both frames: use id
-                    }
-                })
-                .then_with(|| a.0.cmp(&b.0))
-        });
-
-        // Capture AddonList rect before consuming frames
-        let addonlist_rect = addonlist_id.and_then(|root_id| {
-            frames.iter().find(|(id, _, _, _)| *id == root_id).map(|(_, _, r, _)| r.clone())
-        });
-
-        for (id, f, rect, checked) in frames {
-            // Only show AddonList frame and children
-            if !addonlist_ids.contains(&id) {
-                continue;
-            }
-            if !f.visible {
-                continue;
-            }
-            if rect.width <= 0.0 || rect.height <= 0.0 {
-                continue;
-            }
-
-            let x = rect.x * UI_SCALE + PANEL_OFFSET_X;
-            let y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
-            let w = rect.width * UI_SCALE;
-            let h = rect.height * UI_SCALE;
-
-            // Note: We don't apply scroll offset to XML-parsed AddonList frames here.
-            // All XML frames in AddonList are decoration (panel textures, borders, buttons).
-            // The actual scrollable addon entries are rendered by draw_addon_list_entries()
-            // which handles its own scroll offset.
-
-            let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
-
-            match f.widget_type {
-                WidgetType::Frame => {
-                    self.draw_frame_widget(frame, bounds, f);
-                }
-                WidgetType::Button => {
-                    // Resolve textures from both button fields and child textures
-                    let normal_tex = self.resolve_button_texture(f, "NormalTexture", &state.widgets);
-                    let pushed_tex = self.resolve_button_texture(f, "PushedTexture", &state.widgets);
-                    let highlight_tex = self.resolve_button_texture(f, "HighlightTexture", &state.widgets);
-                    // Also resolve tex_coords (for atlas textures)
-                    let normal_coords = self.resolve_button_tex_coords(f, "NormalTexture", &state.widgets);
-                    let pushed_coords = self.resolve_button_tex_coords(f, "PushedTexture", &state.widgets);
-                    let highlight_coords = self.resolve_button_tex_coords(f, "HighlightTexture", &state.widgets);
-                    self.draw_button_widget(
-                        frame, bounds, f, id,
-                        normal_tex.as_deref(), normal_coords,
-                        pushed_tex.as_deref(), pushed_coords,
-                        highlight_tex.as_deref(), highlight_coords,
-                    );
-                }
-                WidgetType::Texture => {
-                    self.draw_texture_widget(frame, bounds, f);
-                }
-                WidgetType::FontString => {
-                    self.draw_fontstring_widget(frame, bounds, f);
-                }
-                WidgetType::EditBox => {
-                    self.draw_editbox_widget(frame, bounds, f);
-                }
-                WidgetType::CheckButton => {
-                    self.draw_checkbutton_widget(frame, bounds, f, checked);
-                }
-                WidgetType::ScrollFrame => {
-                    self.draw_scrollframe_widget(frame, bounds, f);
-                }
-                WidgetType::Slider => {
-                    self.draw_slider_widget(frame, bounds);
-                }
-                _ => {}
-            }
-
-            // Draw debug border if enabled
-            if self.debug_borders {
-                let border_path = Path::rectangle(bounds.position(), bounds.size());
-                frame.stroke(
-                    &border_path,
-                    Stroke::default()
-                        .with_color(Color::from_rgb(1.0, 0.0, 0.0))
-                        .with_width(1.0),
-                );
-            }
-        }
-
-        // Draw scroll bar and addon entries for AddonList if it exists
-        if let Some(ref rect) = addonlist_rect {
-            let offset_rect = LayoutRect {
-                x: rect.x + PANEL_OFFSET_X / UI_SCALE,
-                y: rect.y + PANEL_OFFSET_Y / UI_SCALE,
-                width: rect.width,
-                height: rect.height,
-            };
-            self.draw_addon_list_scrollbar(frame, &offset_rect, screen_width);
-            self.draw_addon_list_entries(frame, &offset_rect, &state);
-        }
-
-        // Draw center crosshair
-        let cx = screen_width / 2.0;
-        let cy = screen_height / 2.0;
-        let crosshair_color = Color::from_rgba(1.0, 1.0, 1.0, 0.3);
-
-        frame.stroke(
-            &Path::line(Point::new(cx - 20.0, cy), Point::new(cx + 20.0, cy)),
-            Stroke::default()
-                .with_color(crosshair_color)
-                .with_width(1.0),
-        );
-        frame.stroke(
-            &Path::line(Point::new(cx, cy - 20.0), Point::new(cx, cy + 20.0)),
-            Stroke::default()
-                .with_color(crosshair_color)
-                .with_width(1.0),
-        );
-    }
-
-    /// Draw only text elements (FontStrings, button text, etc.) for shader overlay.
-    ///
-    /// This is used in shader mode where the GPU renders textures/backgrounds,
-    /// and this canvas overlay handles only text rendering on top.
+    /// Draw text elements and debug overlays (borders, anchor points).
     fn draw_text_overlay(&self, frame: &mut canvas::Frame, size: Size) {
         let env = self.env.borrow();
         let state = env.state().borrow();
@@ -1838,7 +1565,7 @@ impl App {
         let screen_width = size.width;
         let screen_height = size.height;
 
-        // Find AddonList frame and collect descendant IDs (same as draw_wow_frames)
+        // Find AddonList frame and collect descendant IDs (same as build_quad_batch)
         let mut addonlist_ids = std::collections::HashSet::new();
         let addonlist_id = state.widgets.all_ids().into_iter().find(|&id| {
             state
@@ -1858,7 +1585,7 @@ impl App {
             }
         }
 
-        // Collect and sort frames (same sorting as draw_wow_frames)
+        // Collect and sort frames (same sorting as build_quad_batch)
         let mut frames: Vec<_> = state
             .widgets
             .all_ids()
@@ -1909,8 +1636,8 @@ impl App {
                 continue;
             }
 
-            let x = rect.x * UI_SCALE + PANEL_OFFSET_X;
-            let y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
+            let x = rect.x * UI_SCALE;
+            let y = rect.y * UI_SCALE;
             let w = rect.width * UI_SCALE;
             let h = rect.height * UI_SCALE;
             let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
@@ -1932,17 +1659,42 @@ impl App {
                 }
                 _ => {}
             }
+
+            // Draw debug border if enabled
+            if self.debug_borders {
+                let border_path = Path::rectangle(bounds.position(), bounds.size());
+                frame.stroke(
+                    &border_path,
+                    Stroke::default()
+                        .with_color(Color::from_rgb(1.0, 0.0, 0.0))
+                        .with_width(1.0),
+                );
+            }
+
+            // Draw debug anchor points if enabled
+            if self.debug_anchors {
+                let anchor_color = Color::from_rgb(0.0, 1.0, 0.0);
+                let dot_radius = 4.0;
+
+                for anchor in &f.anchors {
+                    // Get the position of this anchor point on the element
+                    let (ax, ay) = anchor_position(
+                        anchor.point,
+                        bounds.x,
+                        bounds.y,
+                        bounds.width,
+                        bounds.height,
+                    );
+                    // Draw a filled circle at the anchor point
+                    let dot = Path::circle(Point::new(ax, ay), dot_radius);
+                    frame.fill(&dot, anchor_color);
+                }
+            }
         }
 
-        // Draw addon list entries text (apply offset to addon list rect)
+        // Draw addon list entries text
         if let Some(ref rect) = addonlist_rect {
-            let offset_rect = LayoutRect {
-                x: rect.x + PANEL_OFFSET_X / UI_SCALE,
-                y: rect.y + PANEL_OFFSET_Y / UI_SCALE,
-                width: rect.width,
-                height: rect.height,
-            };
-            self.draw_addon_list_entries_text(frame, &offset_rect, &*state);
+            self.draw_addon_list_entries_text(frame, rect, &*state);
         }
     }
 
@@ -3107,9 +2859,8 @@ impl App {
         };
 
         // Content area bounds (must match draw_addon_list_entries)
-        // Apply panel offset since the panel is rendered with offset
-        let list_x = rect.x * UI_SCALE + PANEL_OFFSET_X;
-        let list_y = rect.y * UI_SCALE + PANEL_OFFSET_Y;
+        let list_x = rect.x * UI_SCALE;
+        let list_y = rect.y * UI_SCALE;
         let list_height = rect.height * UI_SCALE;
 
         let content_left = list_x + 12.0;
