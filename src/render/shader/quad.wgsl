@@ -1,9 +1,11 @@
 // WoW UI Quad Shader
 //
 // Renders textured/colored quads for UI elements.
-// Supports solid colors and tiered texture array sampling.
-// Textures are stored in 4 tiers: 64x64, 128x128, 256x256, 512x512.
-// tex_index encodes tier and layer: tier * 1000 + layer.
+// Supports solid colors and tiered 2D texture sampling.
+// Textures are stored in 4 tier atlases: 64x64, 128x128, 256x256, 512x512 cells.
+// Each tier is a large 2D texture with textures packed in a grid.
+// tex_index encodes tier: 0-3 for the 4 tiers.
+// UV coordinates are pre-transformed to select the correct sub-region.
 
 // Uniforms (group 0)
 struct Uniforms {
@@ -13,18 +15,19 @@ struct Uniforms {
 @group(0) @binding(0)
 var<uniform> uniforms: Uniforms;
 
-// Tiered texture arrays (group 1)
+// Tiered 2D texture atlases (group 1)
+// Each tier is a large texture with multiple sub-textures packed in a grid
 @group(1) @binding(0)
-var tier_64: texture_2d_array<f32>;    // 64x64 textures
+var tier_64: texture_2d<f32>;     // Atlas for 64x64 textures
 
 @group(1) @binding(1)
-var tier_128: texture_2d_array<f32>;   // 128x128 textures
+var tier_128: texture_2d<f32>;    // Atlas for 128x128 textures
 
 @group(1) @binding(2)
-var tier_256: texture_2d_array<f32>;   // 256x256 textures
+var tier_256: texture_2d<f32>;    // Atlas for 256x256 textures
 
 @group(1) @binding(3)
-var tier_512: texture_2d_array<f32>;   // 512x512 textures
+var tier_512: texture_2d<f32>;    // Atlas for 512x512 textures
 
 @group(1) @binding(4)
 var texture_sampler: sampler;
@@ -41,8 +44,9 @@ struct VertexInput {
 // Vertex output / Fragment input
 struct VertexOutput {
     @builtin(position) clip_position: vec4<f32>,
-    @location(0) tex_coords: vec2<f32>,
-    @location(1) color: vec4<f32>,
+    // Use linear interpolation for 2D UI (no perspective correction needed)
+    @location(0) @interpolate(linear) tex_coords: vec2<f32>,
+    @location(1) @interpolate(linear) color: vec4<f32>,
     @location(2) @interpolate(flat) tex_index: i32,
     @location(3) @interpolate(flat) flags: u32,
 }
@@ -67,30 +71,28 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
 
-// Sample from the appropriate tier based on encoded tex_index
+// Sample from the appropriate tier based on tex_index
+// tex_index directly indicates which tier (0-3)
+// UV coordinates are already transformed to the correct sub-region
 fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
-    // Decode tier and layer from tex_index (tier * 1000 + layer)
-    let tier = tex_index / 1000;
-    let layer = tex_index % 1000;
+    // Clamp tex_coords to valid range
+    let uv = clamp(tex_coords, vec2<f32>(0.0), vec2<f32>(0.9999));
 
-    // Sample from the appropriate tier
-    switch tier {
-        case 0: {
-            return textureSample(tier_64, texture_sampler, tex_coords, layer);
-        }
-        case 1: {
-            return textureSample(tier_128, texture_sampler, tex_coords, layer);
-        }
-        case 2: {
-            return textureSample(tier_256, texture_sampler, tex_coords, layer);
-        }
-        case 3: {
-            return textureSample(tier_512, texture_sampler, tex_coords, layer);
-        }
-        default: {
-            // Invalid tier, return magenta for debugging
-            return vec4<f32>(1.0, 0.0, 1.0, 1.0);
-        }
+    // Sample all tiers unconditionally to avoid control flow issues
+    let s0 = textureSampleLevel(tier_64, texture_sampler, uv, 0.0);
+    let s1 = textureSampleLevel(tier_128, texture_sampler, uv, 0.0);
+    let s2 = textureSampleLevel(tier_256, texture_sampler, uv, 0.0);
+    let s3 = textureSampleLevel(tier_512, texture_sampler, uv, 0.0);
+
+    // Select result based on tier
+    if tex_index == 0 {
+        return s0;
+    } else if tex_index == 1 {
+        return s1;
+    } else if tex_index == 2 {
+        return s2;
+    } else {
+        return s3;
     }
 }
 
@@ -103,9 +105,8 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         // Solid color or pending texture (-1 = solid, -2 = pending)
         color = in.color;
     } else {
-        // Sample from tiered texture array
+        // Textured quad - sample from the appropriate tier atlas
         let tex_color = sample_tiered_texture(in.tex_index, in.tex_coords);
-        // Multiply by vertex color for tinting
         color = tex_color * in.color;
     }
 

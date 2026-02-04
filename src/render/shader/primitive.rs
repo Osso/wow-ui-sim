@@ -95,10 +95,11 @@ impl shader::Primitive for WowUiPrimitive {
                 if let Some(entry) = atlas.get(&request.path) {
                     let start = request.vertex_start as usize;
                     let end = start + request.vertex_count as usize;
-                    for vertex in &mut resolved_quads.vertices[start..end] {
+                    let tex_idx = entry.tex_index();
+                    for vertex in resolved_quads.vertices[start..end].iter_mut() {
                         if vertex.tex_index == -2 {
-                            vertex.tex_index = entry.tex_index();
-                            // Scale UV coordinates to actual texture region within atlas layer
+                            vertex.tex_index = tex_idx;
+                            // Scale UV coordinates to actual texture region within atlas
                             vertex.tex_coords[0] =
                                 entry.uv_x + vertex.tex_coords[0] * entry.uv_width;
                             vertex.tex_coords[1] =

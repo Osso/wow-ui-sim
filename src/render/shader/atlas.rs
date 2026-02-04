@@ -1,53 +1,39 @@
-//! GPU texture atlas with size tiers for efficient memory usage.
+//! GPU texture atlas with size tiers and 2D grid packing.
 //!
-//! Uses multiple texture arrays at different resolutions:
-//! - Tier 0: 64x64 (icons, small UI elements)
-//! - Tier 1: 128x128 (buttons, medium elements)
-//! - Tier 2: 256x256 (panels, frames)
-//! - Tier 3: 512x512 (large textures, backgrounds)
+//! Uses multiple 2D textures at different cell sizes:
+//! - Tier 0: 64x64 cells (icons, small UI elements)
+//! - Tier 1: 128x128 cells (buttons, medium elements)
+//! - Tier 2: 256x256 cells (panels, frames)
+//! - Tier 3: 512x512 cells (large textures, backgrounds)
 //!
-//! Each texture is placed in the smallest tier that fits it.
+//! Each tier is a large 2D texture (ATLAS_SIZE x ATLAS_SIZE) with textures
+//! packed in a grid. UV coordinates select the correct sub-region.
+//! This avoids WGSL's "dynamically uniform" requirement for texture array indices.
 
 use std::collections::HashMap;
 
-/// Texture tiers with their sizes.
+/// Cell sizes for each tier.
 pub const TIER_SIZES: [u32; 4] = [64, 128, 256, 512];
 
 /// Number of tiers.
 pub const NUM_TIERS: usize = 4;
 
-/// Maximum layers per tier.
-const MAX_LAYERS_PER_TIER: u32 = 64;
-
-/// Tier index constants for encoding in tex_index.
-pub const TIER_64: u32 = 0;
-pub const TIER_128: u32 = 1;
-pub const TIER_256: u32 = 2;
-pub const TIER_512: u32 = 3;
-
-/// Encode tier and layer into a single tex_index.
-/// Format: tier * 1000 + layer
-pub fn encode_tex_index(tier: u32, layer: u32) -> i32 {
-    (tier * 1000 + layer) as i32
-}
-
-/// Decode tex_index into (tier, layer).
-pub fn decode_tex_index(tex_index: i32) -> (u32, u32) {
-    let idx = tex_index as u32;
-    (idx / 1000, idx % 1000)
-}
+/// Size of each tier's atlas texture.
+const ATLAS_SIZE: u32 = 4096;
 
 /// Entry for a texture in the atlas.
 #[derive(Debug, Clone, Copy)]
 pub struct TextureEntry {
     /// Tier index (0-3).
     pub tier: u32,
-    /// Layer index within the tier.
-    pub layer: u32,
+    /// Grid position X within the tier atlas.
+    pub grid_x: u32,
+    /// Grid position Y within the tier atlas.
+    pub grid_y: u32,
     /// Original texture dimensions.
     pub original_width: u32,
     pub original_height: u32,
-    /// UV rectangle within the layer.
+    /// UV rectangle within the atlas (pre-computed for the grid cell).
     pub uv_x: f32,
     pub uv_y: f32,
     pub uv_width: f32,
@@ -55,9 +41,9 @@ pub struct TextureEntry {
 }
 
 impl TextureEntry {
-    /// Get the encoded texture index for the shader.
+    /// Get the tier index for the shader.
     pub fn tex_index(&self) -> i32 {
-        encode_tex_index(self.tier, self.layer)
+        self.tier as i32
     }
 
     /// Get UV rectangle for the shader.
@@ -69,22 +55,30 @@ impl TextureEntry {
     }
 }
 
-/// A single tier's texture array.
-struct TierArray {
+/// A single tier's 2D texture atlas.
+struct TierAtlas {
     texture: wgpu::Texture,
     view: wgpu::TextureView,
-    size: u32,
-    next_layer: u32,
+    cell_size: u32,
+    /// Grid dimensions (how many cells fit in each direction).
+    grid_size: u32,
+    /// Next available grid position (linear index).
+    next_slot: u32,
 }
 
-impl TierArray {
-    fn new(device: &wgpu::Device, size: u32, tier_index: usize) -> Self {
+impl TierAtlas {
+    fn new(device: &wgpu::Device, cell_size: u32, tier_index: usize) -> Self {
+        let grid_size = ATLAS_SIZE / cell_size;
+
         let texture = device.create_texture(&wgpu::TextureDescriptor {
-            label: Some(&format!("WoW UI Texture Tier {} ({}x{})", tier_index, size, size)),
+            label: Some(&format!(
+                "WoW UI Tier {} Atlas ({}x{} cells)",
+                tier_index, cell_size, cell_size
+            )),
             size: wgpu::Extent3d {
-                width: size,
-                height: size,
-                depth_or_array_layers: MAX_LAYERS_PER_TIER,
+                width: ATLAS_SIZE,
+                height: ATLAS_SIZE,
+                depth_or_array_layers: 1,
             },
             mip_level_count: 1,
             sample_count: 1,
@@ -95,39 +89,51 @@ impl TierArray {
         });
 
         let view = texture.create_view(&wgpu::TextureViewDescriptor {
-            label: Some(&format!("WoW UI Texture Tier {} View", tier_index)),
-            dimension: Some(wgpu::TextureViewDimension::D2Array),
+            label: Some(&format!("WoW UI Tier {} Atlas View", tier_index)),
+            dimension: Some(wgpu::TextureViewDimension::D2),
             ..Default::default()
         });
 
         Self {
             texture,
             view,
-            size,
-            next_layer: 0,
+            cell_size,
+            grid_size,
+            next_slot: 0,
         }
     }
 
     fn is_full(&self) -> bool {
-        self.next_layer >= MAX_LAYERS_PER_TIER
+        self.next_slot >= self.grid_size * self.grid_size
     }
 
-    fn allocate_layer(&mut self) -> Option<u32> {
+    fn allocate_slot(&mut self) -> Option<(u32, u32)> {
         if self.is_full() {
             return None;
         }
-        let layer = self.next_layer;
-        self.next_layer += 1;
-        Some(layer)
+        let slot = self.next_slot;
+        self.next_slot += 1;
+        let grid_x = slot % self.grid_size;
+        let grid_y = slot / self.grid_size;
+        Some((grid_x, grid_y))
+    }
+
+    /// Get pixel offset for a grid position.
+    fn pixel_offset(&self, grid_x: u32, grid_y: u32) -> (u32, u32) {
+        (grid_x * self.cell_size, grid_y * self.cell_size)
+    }
+
+    /// Get UV offset for a grid position.
+    fn uv_offset(&self, grid_x: u32, grid_y: u32) -> (f32, f32) {
+        let cell_uv = self.cell_size as f32 / ATLAS_SIZE as f32;
+        (grid_x as f32 * cell_uv, grid_y as f32 * cell_uv)
     }
 }
 
 /// GPU texture atlas with multiple size tiers.
 pub struct GpuTextureAtlas {
-    /// Texture arrays for each tier.
-    tiers: [TierArray; NUM_TIERS],
-    /// Shared sampler.
-    sampler: wgpu::Sampler,
+    /// 2D texture atlases for each tier.
+    tiers: [TierAtlas; NUM_TIERS],
     /// Bind group for shader access.
     bind_group: wgpu::BindGroup,
     /// Bind group layout.
@@ -139,8 +145,8 @@ pub struct GpuTextureAtlas {
 impl GpuTextureAtlas {
     /// Create a new tiered GPU texture atlas.
     pub fn new(device: &wgpu::Device) -> Self {
-        // Create tier arrays
-        let tiers = std::array::from_fn(|i| TierArray::new(device, TIER_SIZES[i], i));
+        // Create tier atlases
+        let tiers = std::array::from_fn(|i| TierAtlas::new(device, TIER_SIZES[i], i));
 
         let sampler = device.create_sampler(&wgpu::SamplerDescriptor {
             label: Some("WoW UI Texture Sampler"),
@@ -153,49 +159,50 @@ impl GpuTextureAtlas {
             ..Default::default()
         });
 
+        // Bind group layout for 4 regular 2D textures + sampler
         let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
             label: Some("WoW UI Tiered Texture Bind Group Layout"),
             entries: &[
-                // Tier 0 (64x64)
+                // Tier 0 (64x64 cells)
                 wgpu::BindGroupLayoutEntry {
                     binding: 0,
                     visibility: wgpu::ShaderStages::FRAGMENT,
                     ty: wgpu::BindingType::Texture {
                         sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2Array,
+                        view_dimension: wgpu::TextureViewDimension::D2,
                         multisampled: false,
                     },
                     count: None,
                 },
-                // Tier 1 (128x128)
+                // Tier 1 (128x128 cells)
                 wgpu::BindGroupLayoutEntry {
                     binding: 1,
                     visibility: wgpu::ShaderStages::FRAGMENT,
                     ty: wgpu::BindingType::Texture {
                         sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2Array,
+                        view_dimension: wgpu::TextureViewDimension::D2,
                         multisampled: false,
                     },
                     count: None,
                 },
-                // Tier 2 (256x256)
+                // Tier 2 (256x256 cells)
                 wgpu::BindGroupLayoutEntry {
                     binding: 2,
                     visibility: wgpu::ShaderStages::FRAGMENT,
                     ty: wgpu::BindingType::Texture {
                         sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2Array,
+                        view_dimension: wgpu::TextureViewDimension::D2,
                         multisampled: false,
                     },
                     count: None,
                 },
-                // Tier 3 (512x512)
+                // Tier 3 (512x512 cells)
                 wgpu::BindGroupLayoutEntry {
                     binding: 3,
                     visibility: wgpu::ShaderStages::FRAGMENT,
                     ty: wgpu::BindingType::Texture {
                         sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2Array,
+                        view_dimension: wgpu::TextureViewDimension::D2,
                         multisampled: false,
                     },
                     count: None,
@@ -239,7 +246,6 @@ impl GpuTextureAtlas {
 
         Self {
             tiers,
-            sampler,
             bind_group,
             bind_group_layout,
             texture_map: HashMap::new(),
@@ -303,53 +309,66 @@ impl GpuTextureAtlas {
 
         // Select tier
         let tier_idx = self.select_tier(width, height)?;
-        let tier_size = self.tiers[tier_idx].size;
+        let cell_size = self.tiers[tier_idx].cell_size;
 
-        // Allocate layer
-        let layer = self.tiers[tier_idx].allocate_layer()?;
+        // Allocate grid slot
+        let (grid_x, grid_y) = self.tiers[tier_idx].allocate_slot()?;
 
-        // Prepare texture data (before borrowing tier for upload)
-        let data = Self::prepare_texture_data_static(width, height, rgba_data, tier_size);
+        // Prepare texture data (fit into cell)
+        let data = Self::prepare_texture_data_static(width, height, rgba_data, cell_size);
 
-        // Upload to GPU
+        // Calculate pixel offset in the atlas
+        let (pixel_x, pixel_y) = self.tiers[tier_idx].pixel_offset(grid_x, grid_y);
+
+        // Upload to GPU at the correct position
         queue.write_texture(
             wgpu::TexelCopyTextureInfo {
                 texture: &self.tiers[tier_idx].texture,
                 mip_level: 0,
                 origin: wgpu::Origin3d {
-                    x: 0,
-                    y: 0,
-                    z: layer,
+                    x: pixel_x,
+                    y: pixel_y,
+                    z: 0,
                 },
                 aspect: wgpu::TextureAspect::All,
             },
             &data,
             wgpu::TexelCopyBufferLayout {
                 offset: 0,
-                bytes_per_row: Some(tier_size * 4),
-                rows_per_image: Some(tier_size),
+                bytes_per_row: Some(cell_size * 4),
+                rows_per_image: Some(cell_size),
             },
             wgpu::Extent3d {
-                width: tier_size,
-                height: tier_size,
+                width: cell_size,
+                height: cell_size,
                 depth_or_array_layers: 1,
             },
         );
 
-        // Calculate UV coordinates
-        let (uv_width, uv_height) = if width <= tier_size && height <= tier_size {
-            (width as f32 / tier_size as f32, height as f32 / tier_size as f32)
+        // Calculate UV coordinates within the atlas
+        let (uv_base_x, uv_base_y) = self.tiers[tier_idx].uv_offset(grid_x, grid_y);
+        let cell_uv_size = cell_size as f32 / ATLAS_SIZE as f32;
+
+        // UV width/height based on actual texture size within the cell
+        let (uv_width, uv_height) = if width <= cell_size && height <= cell_size {
+            // Texture fits in cell, UV covers only the texture portion
+            (
+                (width as f32 / ATLAS_SIZE as f32),
+                (height as f32 / ATLAS_SIZE as f32),
+            )
         } else {
-            (1.0, 1.0)
+            // Texture was scaled down, UV covers entire cell
+            (cell_uv_size, cell_uv_size)
         };
 
         let entry = TextureEntry {
             tier: tier_idx as u32,
-            layer,
+            grid_x,
+            grid_y,
             original_width: width,
             original_height: height,
-            uv_x: 0.0,
-            uv_y: 0.0,
+            uv_x: uv_base_x,
+            uv_y: uv_base_y,
             uv_width,
             uv_height,
         };
@@ -358,19 +377,19 @@ impl GpuTextureAtlas {
         Some(entry)
     }
 
-    /// Prepare texture data to fit the tier size.
+    /// Prepare texture data to fit the cell size.
     fn prepare_texture_data_static(
         width: u32,
         height: u32,
         rgba_data: &[u8],
-        tier_size: u32,
+        cell_size: u32,
     ) -> Vec<u8> {
         // If texture fits, pad with zeros
-        if width <= tier_size && height <= tier_size {
-            let mut padded = vec![0u8; (tier_size * tier_size * 4) as usize];
+        if width <= cell_size && height <= cell_size {
+            let mut padded = vec![0u8; (cell_size * cell_size * 4) as usize];
             for y in 0..height {
                 let src_offset = (y * width * 4) as usize;
-                let dst_offset = (y * tier_size * 4) as usize;
+                let dst_offset = (y * cell_size * 4) as usize;
                 let row_bytes = (width * 4) as usize;
                 if src_offset + row_bytes <= rgba_data.len() {
                     padded[dst_offset..dst_offset + row_bytes]
@@ -381,16 +400,16 @@ impl GpuTextureAtlas {
         }
 
         // Scale down to fit
-        let mut scaled = vec![0u8; (tier_size * tier_size * 4) as usize];
-        let x_ratio = width as f32 / tier_size as f32;
-        let y_ratio = height as f32 / tier_size as f32;
+        let mut scaled = vec![0u8; (cell_size * cell_size * 4) as usize];
+        let x_ratio = width as f32 / cell_size as f32;
+        let y_ratio = height as f32 / cell_size as f32;
 
-        for dst_y in 0..tier_size {
-            for dst_x in 0..tier_size {
+        for dst_y in 0..cell_size {
+            for dst_x in 0..cell_size {
                 let src_x = ((dst_x as f32 * x_ratio) as u32).min(width - 1);
                 let src_y = ((dst_y as f32 * y_ratio) as u32).min(height - 1);
                 let src_offset = ((src_y * width + src_x) * 4) as usize;
-                let dst_offset = ((dst_y * tier_size + dst_x) * 4) as usize;
+                let dst_offset = ((dst_y * cell_size + dst_x) * 4) as usize;
                 if src_offset + 4 <= rgba_data.len() {
                     scaled[dst_offset..dst_offset + 4]
                         .copy_from_slice(&rgba_data[src_offset..src_offset + 4]);
@@ -404,7 +423,7 @@ impl GpuTextureAtlas {
     pub fn clear(&mut self) {
         self.texture_map.clear();
         for tier in &mut self.tiers {
-            tier.next_layer = 0;
+            tier.next_slot = 0;
         }
     }
 
@@ -422,12 +441,13 @@ impl GpuTextureAtlas {
     pub fn memory_stats(&self) -> TierStats {
         let mut stats = TierStats::default();
         for (i, tier) in self.tiers.iter().enumerate() {
-            let size = TIER_SIZES[i];
-            let layer_bytes = (size * size * 4) as usize;
-            let tier_bytes = layer_bytes * MAX_LAYERS_PER_TIER as usize;
+            // Each tier uses one ATLAS_SIZE x ATLAS_SIZE texture
+            let tier_bytes = (ATLAS_SIZE * ATLAS_SIZE * 4) as usize;
             stats.allocated_bytes += tier_bytes;
-            stats.used_layers[i] = tier.next_layer as usize;
-            stats.used_bytes += layer_bytes * tier.next_layer as usize;
+            stats.used_slots[i] = tier.next_slot as usize;
+            // Approximate used bytes based on slots
+            let slot_bytes = (tier.cell_size * tier.cell_size * 4) as usize;
+            stats.used_bytes += slot_bytes * tier.next_slot as usize;
         }
         stats
     }
@@ -438,7 +458,7 @@ impl GpuTextureAtlas {
 pub struct TierStats {
     pub allocated_bytes: usize,
     pub used_bytes: usize,
-    pub used_layers: [usize; NUM_TIERS],
+    pub used_slots: [usize; NUM_TIERS],
 }
 
 impl std::fmt::Debug for GpuTextureAtlas {
@@ -446,10 +466,10 @@ impl std::fmt::Debug for GpuTextureAtlas {
         let stats = self.memory_stats();
         f.debug_struct("GpuTextureAtlas")
             .field("texture_count", &self.texture_map.len())
-            .field("tier_64_layers", &stats.used_layers[0])
-            .field("tier_128_layers", &stats.used_layers[1])
-            .field("tier_256_layers", &stats.used_layers[2])
-            .field("tier_512_layers", &stats.used_layers[3])
+            .field("tier_64_slots", &stats.used_slots[0])
+            .field("tier_128_slots", &stats.used_slots[1])
+            .field("tier_256_slots", &stats.used_slots[2])
+            .field("tier_512_slots", &stats.used_slots[3])
             .field("used_mb", &(stats.used_bytes / 1024 / 1024))
             .field("allocated_mb", &(stats.allocated_bytes / 1024 / 1024))
             .finish()
