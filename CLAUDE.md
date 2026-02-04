@@ -25,6 +25,46 @@
 
 **Texture Coordinates**: 8 values - `tlx, tly, blx, bly, trx, try, brx, bry` (top-left, bottom-left, top-right, bottom-right)
 
+## Lua + Rust Architecture
+
+WoW frames exist in **two parallel systems** that must stay in sync:
+
+### Rust Side (rendering)
+- `widget::Frame` struct with `WidgetRegistry` HashMap
+- Used for layout computation and rendering
+- Parent-child via `children: Vec<u64>` and `children_keys: HashMap<String, u64>`
+
+### Lua Side (WoW API)
+- `FrameHandle` userdata with metatables
+- Used for running actual addon Lua code
+- Parent-child via Lua table properties: `parent.TitleContainer = frame`
+
+### How They Connect
+
+Each `FrameHandle` stores an `id: u64` pointing to the Rust `Frame`. Method calls like `:SetText()` use this ID to update Rust state:
+
+```rust
+methods.add_method("SetText", |_, this, text: String| {
+    let mut state = this.state.borrow_mut();
+    state.widgets.get_mut(this.id).text = Some(text);  // Updates Rust via ID
+});
+```
+
+### Automatic Sync via `__newindex`
+
+When Lua assigns a frame to a property (`parent.Child = frame`), the `__newindex` metamethod automatically syncs to Rust `children_keys`:
+
+```rust
+// In FrameHandle's __newindex metamethod (globals.rs)
+if let Value::UserData(child_ud) = &value {
+    if let Ok(child_handle) = child_ud.borrow::<FrameHandle>() {
+        parent_frame.children_keys.insert(key, child_handle.id);
+    }
+}
+```
+
+This allows Rust methods like `SetTitle()` to find child frames via fast HashMap lookup instead of querying Lua. Test: `test_lua_property_syncs_to_rust_children_keys`.
+
 ## Performance
 
 Uses **Lua 5.1** via mlua (WoW's Lua version).
@@ -40,6 +80,9 @@ WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 15 cargo run --bin wow-ui-si
 
 - `WOW_SIM_NO_SAVED_VARS=1` - Skip loading WTF SavedVariables for faster startup (~18% of load time)
 - `WOW_SIM_NO_ADDONS=1` - Skip loading third-party addons (for faster texture testing)
+- `WOW_SIM_DEBUG_ELEMENTS=1` - Show debug visualization: red borders around elements and green dots at anchor points
+- `WOW_SIM_DEBUG_BORDERS=1` - Show only red borders around elements
+- `WOW_SIM_DEBUG_ANCHORS=1` - Show only green dots at anchor points
 
 ### Timing Breakdown
 
@@ -52,6 +95,35 @@ Each addon shows timing: `(total: io=X xml=X lua=X sv=X)`
 ### Known Issues
 
 - `BetterWardrobe/ColorFilter.lua` has very large constant tables (works in WoW's patched LuaJIT)
+
+## CLI Tools
+
+The `wow-sim` binary provides CLI tools for interacting with a running simulator.
+
+### Lua REPL
+
+```bash
+wow-sim lua                    # Interactive Lua REPL
+wow-sim lua -e "print('hi')"   # Execute code and exit
+wow-sim lua -l                 # List running servers
+```
+
+### Dump Frame Tree
+
+Dump the rendered frame tree with absolute coordinates (requires running simulator):
+
+```bash
+wow-sim dump-tree                      # Dump all frames
+wow-sim dump-tree --filter Button      # Filter by name substring
+wow-sim dump-tree --visible-only       # Show only visible frames
+```
+
+Output shows frame hierarchy with absolute screen coordinates and dimensions:
+```
+AddonList [Button] (x=50, y=400, w=80, h=22) visible
+  CancelButton [Button] (x=430, y=508, w=80, h=22) visible
+    Text [FontString] (x=430, y=508, w=80, h=22) visible text="Cancel"
+```
 
 ## Textures
 

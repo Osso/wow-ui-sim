@@ -368,3 +368,57 @@ fn test_parent_visibility_propagation() {
     assert!(!parent_frame.visible, "Parent's visible flag should be false");
     assert!(child_frame.visible, "Child's own visible flag should be true");
 }
+
+#[test]
+fn test_lua_property_syncs_to_rust_children_keys() {
+    // Test that Lua property assignment (parent.ChildKey = frame) automatically
+    // syncs to Rust children_keys via __newindex metamethod.
+    // This enables Rust methods like SetTitle to find child frames.
+    let env = WowLuaEnv::new().unwrap();
+
+    // Create parent and child frames, then assign child to parent property
+    env.exec(r#"
+        local parent = CreateFrame("Frame", "TestParentWithKey", UIParent)
+        local child = CreateFrame("Frame", "TestChildWithKey", parent)
+        local fontstring = parent:CreateFontString("TestFontStringWithKey")
+
+        -- Assign frames to parent properties (like XML parentKey does)
+        parent.MyChild = child
+        parent.TitleContainer = child
+        child.TitleText = fontstring
+    "#).unwrap();
+
+    // Verify Lua-side assignment works
+    let lua_child_exists: bool = env.eval("return TestParentWithKey.MyChild ~= nil").unwrap();
+    let lua_title_container: bool = env.eval("return TestParentWithKey.TitleContainer ~= nil").unwrap();
+    let lua_title_text: bool = env.eval("return TestParentWithKey.TitleContainer.TitleText ~= nil").unwrap();
+    assert!(lua_child_exists, "Lua property MyChild should exist");
+    assert!(lua_title_container, "Lua property TitleContainer should exist");
+    assert!(lua_title_text, "Lua property TitleText should exist");
+
+    // Verify Rust-side children_keys was updated via __newindex
+    let state = env.state().borrow();
+    let parent_id = state.widgets.get_id_by_name("TestParentWithKey").expect("Parent should exist");
+    let child_id = state.widgets.get_id_by_name("TestChildWithKey").expect("Child should exist");
+    let fontstring_id = state.widgets.get_id_by_name("TestFontStringWithKey").expect("FontString should exist");
+
+    let parent_frame = state.widgets.get(parent_id).expect("Parent frame should exist");
+    let child_frame = state.widgets.get(child_id).expect("Child frame should exist");
+
+    // Check children_keys was populated by __newindex
+    assert_eq!(
+        parent_frame.children_keys.get("MyChild"),
+        Some(&child_id),
+        "Rust children_keys should have MyChild pointing to child"
+    );
+    assert_eq!(
+        parent_frame.children_keys.get("TitleContainer"),
+        Some(&child_id),
+        "Rust children_keys should have TitleContainer pointing to child"
+    );
+    assert_eq!(
+        child_frame.children_keys.get("TitleText"),
+        Some(&fontstring_id),
+        "Child's children_keys should have TitleText pointing to fontstring"
+    );
+}
