@@ -554,20 +554,6 @@ fn create_frame_from_xml(
 
     // Handle child Frames recursively
     if let Some(frames) = frame.frames() {
-        if name.starts_with("AddonList") {
-            eprintln!("[DEBUG] {}: frames() has {} children", name, frames.elements.len());
-            for child in &frames.elements {
-                let child_name = match child {
-                    crate::xml::FrameElement::Frame(f) => f.name.clone(),
-                    crate::xml::FrameElement::CheckButton(f) => f.name.clone(),
-                    crate::xml::FrameElement::Button(f) => f.name.clone(),
-                    crate::xml::FrameElement::EditBox(f) => f.name.clone(),
-                    crate::xml::FrameElement::DropdownButton(f) => f.name.clone(),
-                    _ => Some("(other)".to_string()),
-                };
-                eprintln!("[DEBUG]   child: {:?}", child_name);
-            }
-        }
         for child in &frames.elements {
             let (child_frame, child_type) = match child {
                 crate::xml::FrameElement::Frame(f) => (f, "Frame"),
@@ -586,11 +572,6 @@ fn create_frame_from_xml(
                 _ => continue, // Skip unsupported types for now
             };
             let child_name = create_frame_from_xml(env, child_frame, child_type, Some(&name))?;
-
-            if name.starts_with("AddonList") {
-                eprintln!("[DEBUG] {}: created child type={} name={:?} parentKey={:?}",
-                    name, child_type, child_name, child_frame.parent_key);
-            }
 
             // Handle parentKey for child frames (works for both named and anonymous frames)
             // The Lua assignment triggers __newindex which syncs to Rust children_keys
@@ -631,6 +612,24 @@ fn create_frame_from_xml(
         name
     );
     env.exec(&onload_code).ok(); // Ignore errors (OnLoad might not be set)
+
+    // Fire OnShow for visible frames after OnLoad
+    // In WoW, OnShow fires when a frame becomes visible, including at creation if visible
+    let onshow_code = format!(
+        r#"
+        local frame = {}
+        if frame:IsVisible() then
+            local handler = frame:GetScript("OnShow")
+            if handler then
+                handler(frame)
+            elseif type(frame.OnShow) == "function" then
+                frame:OnShow()
+            end
+        end
+        "#,
+        name
+    );
+    env.exec(&onshow_code).ok(); // Ignore errors (OnShow might not be set)
 
     Ok(Some(name))
 }
@@ -951,12 +950,19 @@ fn apply_button_text(
         // In WoW, text attribute is a localization key or literal text.
         // We try to resolve it via global lookup (e.g., CANCEL -> "Cancel").
         // If not found, use the literal value.
+        // Set text on both the button AND its Text fontstring child to ensure rendering works.
         let lua_code = format!(
             r#"
             local frame = {}
-            if frame and frame.SetText then
+            if frame then
                 local text = _G["{}"] or "{}"
-                frame:SetText(text)
+                if frame.SetText then
+                    frame:SetText(text)
+                end
+                -- Also set text directly on the Text fontstring child
+                if frame.Text and frame.Text.SetText then
+                    frame.Text:SetText(text)
+                end
             end
             "#,
             button_name,
@@ -1181,7 +1187,7 @@ fn create_fontstring_from_xml(
         }
     );
 
-    // Set text
+    // Set text (Lua call for compatibility; actual text/sizing set in Rust below)
     if let Some(text) = &fontstring.text {
         lua_code.push_str(&format!(
             r#"
@@ -1294,7 +1300,30 @@ fn create_fontstring_from_xml(
             "Failed to create fontstring {} on {}: {}",
             fs_name, parent_name, e
         ))
-    })
+    })?;
+
+    // Set text and auto-size dimensions directly in Rust
+    // This bypasses the Lua SetText method which doesn't trigger our Rust code
+    // due to the fake metatable setup
+    if let Some(text) = &fontstring.text {
+        let state = env.state();
+        let mut state_ref = state.borrow_mut();
+        if let Some(frame_id) = state_ref.widgets.get_id_by_name(&fs_name) {
+            if let Some(frame) = state_ref.widgets.get_mut(frame_id) {
+                // Set text
+                frame.text = Some(text.clone());
+                // Auto-size: ~7 pixels per character for width, font_size for height
+                if frame.width == 0.0 {
+                    frame.width = text.len() as f32 * 7.0;
+                }
+                if frame.height == 0.0 {
+                    frame.height = frame.font_size.max(12.0);
+                }
+            }
+        }
+    }
+
+    Ok(())
 }
 
 /// Load an XML file, processing its elements.

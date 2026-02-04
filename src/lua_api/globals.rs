@@ -277,12 +277,6 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             }
         });
 
-        // Debug: trace ForceLoad parent
-        if name_raw.as_ref().map(|n| n.contains("ForceLoad") || n.contains("anon")).unwrap_or(false) {
-            eprintln!("[DEBUG CreateFrame] name={:?} parent_arg={:?} parent_id={:?}",
-                name_raw, parent_arg.as_ref().map(|v| v.type_name()), parent_id);
-        }
-
         // Get template parameter (4th argument)
         let template: Option<String> = args_iter
             .next()
@@ -13709,10 +13703,39 @@ impl UserData for FrameHandle {
         );
 
         // Show()
-        methods.add_method("Show", |_, this, ()| {
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.visible = true;
+        methods.add_method("Show", |lua, this, ()| {
+            let was_hidden = {
+                let state = this.state.borrow();
+                state
+                    .widgets
+                    .get(this.id)
+                    .map(|f| !f.visible)
+                    .unwrap_or(false)
+            };
+
+            {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.visible = true;
+                }
+            }
+
+            // Fire OnShow if transitioning from hidden to visible
+            if was_hidden {
+                if let Ok(Some(scripts_table)) =
+                    lua.globals().get::<Option<mlua::Table>>("__scripts")
+                {
+                    let frame_key = format!("{}_OnShow", this.id);
+                    if let Ok(Some(handler)) =
+                        scripts_table.get::<Option<mlua::Function>>(frame_key.as_str())
+                    {
+                        // Get frame userdata reference
+                        let frame_ref_key = format!("__frame_{}", this.id);
+                        if let Ok(frame_ud) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
+                            let _ = handler.call::<()>(frame_ud);
+                        }
+                    }
+                }
             }
             Ok(())
         });
@@ -14838,28 +14861,14 @@ impl UserData for FrameHandle {
             let text_child_id = state.widgets.get(this.id)
                 .and_then(|f| f.children_keys.get("Text").copied());
 
-            // Debug: log all SetText calls on buttons with "Enable" or "All" text
-            let frame_name = state.widgets.get(this.id).and_then(|f| f.name.clone());
-            let widget_type = state.widgets.get(this.id).map(|f| format!("{:?}", f.widget_type));
-            if text.as_ref().map(|t| t.contains("Enable") || t.contains("TEST")).unwrap_or(false) {
-                eprintln!("[DEBUG SetText] frame={:?} type={:?} text={:?} text_child_id={:?}",
-                    frame_name, widget_type, text, text_child_id);
-            }
-
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 // Calculate auto-size dimensions if width/height is 0 (for FontStrings)
                 if let Some(ref txt) = text {
-                    // Auto-size: ~7 pixels per character for width, font_size for height
-                    let did_autosize = frame.width == 0.0 || frame.height == 0.0;
                     if frame.width == 0.0 {
                         frame.width = txt.len() as f32 * 7.0;
                     }
                     if frame.height == 0.0 {
                         frame.height = frame.font_size.max(12.0);
-                    }
-                    if txt.contains("ADDON_FORCE_LOAD") {
-                        eprintln!("[DEBUG SetText] text='{}' did_autosize={} final_size={}x{}",
-                            txt, did_autosize, frame.width, frame.height);
                     }
                 }
                 frame.text = text.clone();
@@ -14869,7 +14878,6 @@ impl UserData for FrameHandle {
             if let Some(text_id) = text_child_id {
                 if let Some(text_fs) = state.widgets.get_mut(text_id) {
                     if let Some(ref txt) = text {
-                        // Auto-size the fontstring
                         text_fs.width = txt.len() as f32 * 7.0;
                         text_fs.height = text_fs.font_size.max(12.0);
                     }
