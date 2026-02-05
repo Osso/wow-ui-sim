@@ -3,6 +3,7 @@
 //! Provides both canvas-based (CPU) and shader-based (GPU) rendering.
 
 pub mod shader;
+pub mod software;
 pub mod text;
 pub mod texture;
 

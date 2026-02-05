@@ -93,6 +93,33 @@ enum Commands {
         #[arg(short, long)]
         output: Option<PathBuf>,
     },
+
+    /// Render UI to an image file (standalone, no GUI needed)
+    Screenshot {
+        /// Output file path (format detected from extension: png, webp, jpg)
+        #[arg(short, long, default_value = "screenshot.png")]
+        output: PathBuf,
+
+        /// Image width in pixels
+        #[arg(long, default_value_t = 1024)]
+        width: u32,
+
+        /// Image height in pixels
+        #[arg(long, default_value_t = 768)]
+        height: u32,
+
+        /// Render only this frame subtree (name substring match)
+        #[arg(short, long)]
+        filter: Option<String>,
+
+        /// Skip loading third-party addons (faster startup)
+        #[arg(long)]
+        no_addons: bool,
+
+        /// Skip loading SavedVariables (faster startup)
+        #[arg(long)]
+        no_saved_vars: bool,
+    },
 }
 
 fn default_addons_path() -> PathBuf {
@@ -144,6 +171,16 @@ fn main() {
         }
         Commands::ConvertTexture { input, output } => {
             convert_texture(&input, output.as_ref());
+        }
+        Commands::Screenshot {
+            output,
+            width,
+            height,
+            filter,
+            no_addons,
+            no_saved_vars,
+        } => {
+            screenshot_standalone(output, width, height, filter, no_addons, no_saved_vars);
         }
     }
 }
@@ -485,7 +522,109 @@ fn dump_standalone(
 
     eprintln!("\n=== Frame Tree ===\n");
 
-    for (id, _) in roots {
-        print_frame(widgets, id, 0, &filter, visible_only);
+    for (id, _) in &roots {
+        print_frame(widgets, *id, 0, &filter, visible_only);
     }
+
+}
+
+fn screenshot_standalone(
+    output: PathBuf,
+    width: u32,
+    height: u32,
+    filter: Option<String>,
+    no_addons: bool,
+    no_saved_vars: bool,
+) {
+    use wow_ui_sim::iced_app::build_quad_batch_for_registry;
+    use wow_ui_sim::render::software::render_to_image;
+    use wow_ui_sim::texture::TextureManager;
+
+    // Set environment variables for the loader
+    if no_addons {
+        unsafe { std::env::set_var("WOW_SIM_NO_ADDONS", "1") };
+    }
+    if no_saved_vars {
+        unsafe { std::env::set_var("WOW_SIM_NO_SAVED_VARS", "1") };
+    }
+
+    // Create Lua environment
+    let env = match WowLuaEnv::new() {
+        Ok(e) => e,
+        Err(e) => {
+            eprintln!("Failed to create Lua environment: {}", e);
+            std::process::exit(1);
+        }
+    };
+
+    // Load Blizzard SharedXML for base UI support
+    let wow_ui_path = dirs::home_dir()
+        .unwrap_or_default()
+        .join("Projects/wow/reference-addons/wow-ui-source");
+
+    if wow_ui_path.exists() {
+        let blizzard_addons = [
+            ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
+            ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
+            ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
+            ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
+            ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
+            ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
+            ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
+            ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
+            ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
+        ];
+
+        for (name, toc) in blizzard_addons {
+            let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
+            if toc_path.exists() {
+                match load_addon(&env, &toc_path) {
+                    Ok(r) => {
+                        eprintln!(
+                            "{} loaded: {} Lua, {} XML, {} warnings",
+                            name, r.lua_files, r.xml_files, r.warnings.len()
+                        );
+                    }
+                    Err(e) => eprintln!("{} failed: {}", name, e),
+                }
+            }
+        }
+    } else {
+        eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
+    }
+
+    // Build quad batch
+    let state = env.state().borrow();
+    let widgets = &state.widgets;
+
+    let batch = build_quad_batch_for_registry(
+        widgets,
+        (width as f32, height as f32),
+        filter.as_deref(),
+        None,
+        None,
+    );
+
+    eprintln!(
+        "QuadBatch: {} quads, {} texture requests",
+        batch.quad_count(),
+        batch.texture_requests.len()
+    );
+
+    // Set up texture manager
+    let home = dirs::home_dir().unwrap_or_default();
+    let mut tex_mgr = TextureManager::new(home.join("Repos/wow-ui-textures"))
+        .with_interface_path(home.join("Projects/wow/Interface"))
+        .with_addons_path(home.join("Projects/wow/reference-addons"));
+
+    // Render
+    let img = render_to_image(&batch, &mut tex_mgr, width, height);
+
+    // Save
+    if let Err(e) = img.save(&output) {
+        eprintln!("Failed to save image: {}", e);
+        std::process::exit(1);
+    }
+
+    eprintln!("Saved {}x{} screenshot to {}", width, height, output.display());
 }

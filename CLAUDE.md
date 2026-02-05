@@ -144,6 +144,17 @@ wow-sim lua -e "print('hi')"   # Execute code and exit
 wow-sim lua -l                 # List running servers
 ```
 
+### Screenshot (Standalone)
+
+Render the UI to an image file without starting the GUI (CPU software rasterizer, no GPU needed). Text is not rendered — this is for debugging frame layout and textures.
+
+```bash
+wow-sim screenshot                                          # Render to screenshot.png (1024x768)
+wow-sim screenshot -o frame.png --filter AddonList          # Render only AddonList subtree
+wow-sim screenshot --width 1920 --height 1080               # Custom resolution
+wow-sim screenshot --no-addons --no-saved-vars              # Fast: skip extras
+```
+
 ### Dump Frame Tree (Standalone)
 
 Load UI and dump the frame tree without starting the GUI (for debugging):
