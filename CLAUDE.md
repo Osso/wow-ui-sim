@@ -213,31 +213,37 @@ This scans addon XML/Lua files for texture references and converts them from BLP
 
 ### Texture Sources (in order of priority)
 
-1. `./textures` - Local WebP textures (fastest, smallest)
-2. `~/Repos/wow-ui-textures` - wow-ui-textures repo (PNG versions of WoW textures)
-3. `~/Projects/wow/Interface` - Extracted WoW game files (BLP format)
-4. Addon directories - For addon-specific textures
+1. `./textures` - Local WebP textures (fastest, smallest, ~45MB for ~1740 files)
+2. `~/Projects/wow/Interface` - Extracted WoW game files (BLP format, fallback)
+3. Addon directories - For addon-specific textures
+
+### Adding Missing Textures
+
+**Always convert from BLP game files**, never from `~/Repos/wow-ui-textures`. The `wow-ui-textures` PNG repo has textures at different resolutions than the BLP game files (e.g. `UIFrameMetal2x` is 1024x1024 in the PNG repo but 512x512 in the BLP). Using the wrong resolution causes nine-slice pieces to sample incorrect regions, rendering the wrong part of the texture.
+
+```bash
+# Find the BLP file (case-insensitive)
+find ~/Projects/wow/Interface -iname "UIFrameMetal2x.BLP"
+
+# Convert to webp (lowercase filename, matching existing convention)
+wow-sim convert-texture ~/Projects/wow/Interface/FrameGeneral/UIFrameMetal2x.BLP \
+  -o ./textures/framegeneral/uiframemetal2x.webp
+```
+
+Naming convention: lowercase directory and filename, no hyphens where the original BLP name has none (e.g. `UIFrameMetal2x.BLP` → `uiframemetal2x.webp`).
 
 ### Texture Path Resolution
 
 WoW paths like `Interface\\Buttons\\UI-Panel-Button-Up` are resolved by:
 1. Normalizing backslashes to forward slashes
-2. Trying extensions: webp, WEBP, PNG, png, TGA, tga, BLP, blp, jpg, JPG
-3. Case-insensitive directory matching
+2. Stripping `Interface/` prefix
+3. Trying extensions: webp, WEBP, PNG, png, TGA, tga, BLP, blp, jpg, JPG
+4. Case-insensitive directory matching as fallback
 
 ### Button Textures
 
 Standard WoW button textures in `Interface/Buttons/`:
-- `UI-Panel-Button-Up.PNG` - Normal state (128x32, dark red gradient with gold border)
-- `UI-Panel-Button-Down.PNG` - Pressed state
-- `UI-Panel-Button-Highlight.PNG` - Hover state
-- `UI-Panel-Button-Disabled.PNG` - Disabled state
-
-### Current Goal: Render WoW Buttons
-
-Making button textures render correctly via:
-- `SetNormalTexture("Interface\\Buttons\\UI-Panel-Button-Up")`
-- `SetPushedTexture("Interface\\Buttons\\UI-Panel-Button-Down")`
-- `SetHighlightTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")`
-
-These are stored in Frame fields: `normal_texture`, `pushed_texture`, `highlight_texture`, `disabled_texture`
+- `UI-Panel-Button-Up` - Normal state (128x32, dark red gradient with gold border)
+- `UI-Panel-Button-Down` - Pressed state
+- `UI-Panel-Button-Highlight` - Hover state
+- `UI-Panel-Button-Disabled` - Disabled state
