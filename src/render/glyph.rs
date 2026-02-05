@@ -280,8 +280,9 @@ pub fn emit_text_quads(
     // Emit quads for each glyph
     for run in buffer.layout_runs() {
         // Horizontal offset based on justification.
-        // For auto-sized FontStrings (width=0), CENTER means center the text ON bounds.x.
-        // For explicit width, CENTER means center text within the bounds.
+        // For explicit width, apply justification within bounds.
+        // For width=0 (auto-sized FontStrings), text starts at bounds.x (LEFT behavior).
+        // This matches WoW where auto-sized FontStrings flow from their anchor point.
         let run_width = run.line_w;
         let x_offset = if bounds.width > 0.0 {
             match justify_h {
@@ -290,12 +291,9 @@ pub fn emit_text_quads(
                 TextJustify::Right => bounds.width - run_width,
             }
         } else {
-            // Width=0: position text relative to bounds.x as the anchor point
-            match justify_h {
-                TextJustify::Left => 0.0,             // Text starts at bounds.x
-                TextJustify::Center => -run_width / 2.0, // Text centered ON bounds.x
-                TextJustify::Right => -run_width,     // Text ends at bounds.x
-            }
+            // Width=0: text starts at bounds.x regardless of justify_h
+            // This is correct for auto-sized FontStrings positioned by single anchor
+            0.0
         };
 
         for glyph in run.glyphs.iter() {
