@@ -66,6 +66,31 @@ impl App {
                             mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
 
                         if self.mouse_down_frame == Some(frame_id) {
+                            // CheckButton auto-toggles checked state before OnClick
+                            {
+                                let mut state = env.state().borrow_mut();
+                                let is_checkbutton = state.widgets.get(frame_id)
+                                    .map(|f| f.widget_type == crate::widget::WidgetType::CheckButton)
+                                    .unwrap_or(false);
+                                if is_checkbutton {
+                                    let old_checked = state.widgets.get(frame_id)
+                                        .and_then(|f| f.attributes.get("__checked"))
+                                        .and_then(|v| if let crate::widget::AttributeValue::Boolean(b) = v { Some(*b) } else { None })
+                                        .unwrap_or(false);
+                                    let new_checked = !old_checked;
+                                    if let Some(frame) = state.widgets.get_mut(frame_id) {
+                                        frame.attributes.insert("__checked".to_string(), crate::widget::AttributeValue::Boolean(new_checked));
+                                    }
+                                    if let Some(frame) = state.widgets.get(frame_id) {
+                                        if let Some(&tex_id) = frame.children_keys.get("CheckedTexture") {
+                                            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                                                tex.visible = new_checked;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
                             let down_val = mlua::Value::Boolean(false);
                             let _ = env.fire_script_handler(
                                 frame_id,
