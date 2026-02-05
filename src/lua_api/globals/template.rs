@@ -47,12 +47,15 @@ pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names
     // Fire OnLoad for all child frames created during template application.
     // This is deferred until after ALL templates so that child OnLoad handlers
     // can access KeyValues from any template in the chain (not just earlier ones).
+    // Example: Controller's OnLoad calls parent:InitButton() which needs atlasName
+    // from BigRedThreeSliceButtonTemplate, a later template in the chain.
     for child_name in &all_child_names {
         fire_on_load(lua, child_name);
     }
 
-    // Fire OnLoad on the frame itself after all templates and children are ready
-    fire_on_load(lua, frame_name);
+    // NOTE: Do NOT fire parent OnLoad here. For XML-created frames, xml_frame.rs
+    // fires OnLoad after all layers/children/textures are processed. For Lua
+    // CreateFrame() calls, WoW does not fire OnLoad at all.
 }
 
 /// Apply a single template's children to a frame.

@@ -632,7 +632,8 @@ fn test_template_children_not_duplicated() {
 /// deferred until after ALL templates in the chain are applied.
 #[test]
 fn test_three_slice_button_texture_scaling() {
-    clear_templates();
+    // NOTE: Do NOT call clear_templates() here - it would race with parallel tests
+    // that depend on globally-registered templates (e.g. nine_slice_child_fills_parent_bounds).
     let env = WowLuaEnv::new().unwrap();
 
     // Register the three-slice template chain from XML
