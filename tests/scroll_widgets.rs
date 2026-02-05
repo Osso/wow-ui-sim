@@ -246,3 +246,24 @@ fn test_hybrid_scroll_template() {
     assert!(has_up, "HybridScrollBar should have ScrollUpButton");
     assert!(has_down, "HybridScrollBar should have ScrollDownButton");
 }
+
+// ============================================================================
+// TextureKitConstants Tests (requires SharedXML)
+// ============================================================================
+
+#[test]
+fn test_texture_kit_constants_defined() {
+    let env = env_with_shared_xml();
+
+    // TextureKitConstants is defined in TextureUtil.lua (SharedXMLBase).
+    // It only loads if Constants.LFG_ROLEConstants is available.
+    let defined: bool = env
+        .eval("return type(TextureKitConstants) == 'table'")
+        .unwrap();
+    assert!(defined, "TextureKitConstants should be defined after loading SharedXML");
+
+    let use_atlas_size: bool = env
+        .eval("return TextureKitConstants.UseAtlasSize == true")
+        .unwrap();
+    assert!(use_atlas_size, "TextureKitConstants.UseAtlasSize should be true");
+}

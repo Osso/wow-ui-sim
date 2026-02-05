@@ -4,6 +4,7 @@ use super::globals::addon_api::register_addon_api;
 use super::globals::create_frame::create_frame_function;
 use super::globals::font_api::create_standard_font_objects;
 use super::globals::c_collection_api::register_c_collection_api;
+use super::globals::constants_api::register_constants_api;
 use super::globals::c_item_api::register_c_item_api;
 use super::globals::c_map_api::register_c_map_api;
 use super::globals::c_misc_api::register_c_misc_api;
@@ -291,6 +292,7 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     register_pool_api(lua, Rc::clone(&state))?;
     register_timer_api(lua, Rc::clone(&state))?;
     register_enum_api(lua)?;
+    register_constants_api(lua)?;
     register_c_map_api(lua)?;
     register_c_quest_api(lua)?;
     register_c_collection_api(lua)?;
