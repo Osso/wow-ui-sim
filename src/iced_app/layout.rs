@@ -54,6 +54,10 @@ pub fn compute_frame_rect(
         let mut right_x: Option<f32> = None;
         let mut top_y: Option<f32> = None;
         let mut bottom_y: Option<f32> = None;
+        // Center position from TOP/BOTTOM/CENTER anchors with x offset
+        let mut center_x: Option<f32> = None;
+        // Center position from LEFT/RIGHT/CENTER anchors with y offset
+        let mut center_y: Option<f32> = None;
 
         for anchor in &frame.anchors {
             let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
@@ -91,17 +95,24 @@ pub fn compute_frame_rect(
                 }
                 AnchorPoint::Top => {
                     top_y = Some(target_y);
+                    center_x = Some(target_x); // TOP anchor x offset sets horizontal center
                 }
                 AnchorPoint::Bottom => {
                     bottom_y = Some(target_y);
+                    center_x = Some(target_x); // BOTTOM anchor x offset sets horizontal center
                 }
                 AnchorPoint::Left => {
                     left_x = Some(target_x);
+                    center_y = Some(target_y); // LEFT anchor y offset sets vertical center
                 }
                 AnchorPoint::Right => {
                     right_x = Some(target_x);
+                    center_y = Some(target_y); // RIGHT anchor y offset sets vertical center
                 }
-                AnchorPoint::Center => {}
+                AnchorPoint::Center => {
+                    center_x = Some(target_x);
+                    center_y = Some(target_y);
+                }
             }
         }
 
@@ -147,17 +158,23 @@ pub fn compute_frame_rect(
             0.0
         };
 
-        // When no horizontal anchors, center on parent. This handles frames with only TOP/BOTTOM anchors.
+        // Horizontal position priority: left_x > right_x > center_x > parent center
         let final_x = final_left_x.unwrap_or_else(|| {
-            final_right_x
-                .map(|rx| rx - final_width)
-                .unwrap_or_else(|| parent_rect.x + (parent_rect.width - final_width) / 2.0)
+            final_right_x.map(|rx| rx - final_width).unwrap_or_else(|| {
+                // Use center_x if set by TOP/BOTTOM/CENTER anchor with x offset
+                center_x
+                    .map(|cx| cx - final_width / 2.0)
+                    .unwrap_or_else(|| parent_rect.x + (parent_rect.width - final_width) / 2.0)
+            })
         });
-        // When no vertical anchors, center on parent.
+        // Vertical position priority: top_y > bottom_y > center_y > parent center
         let final_y = final_top_y.unwrap_or_else(|| {
-            final_bottom_y
-                .map(|by| by - final_height)
-                .unwrap_or_else(|| parent_rect.y + (parent_rect.height - final_height) / 2.0)
+            final_bottom_y.map(|by| by - final_height).unwrap_or_else(|| {
+                // Use center_y if set by LEFT/RIGHT/CENTER anchor with y offset
+                center_y
+                    .map(|cy| cy - final_height / 2.0)
+                    .unwrap_or_else(|| parent_rect.y + (parent_rect.height - final_height) / 2.0)
+            })
         });
 
         return LayoutRect {
