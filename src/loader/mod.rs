@@ -365,6 +365,40 @@ mod tests {
     }
 
     #[test]
+    fn test_xml_keyvalue_global_type_resolves_global_string() {
+        let env = WowLuaEnv::new().unwrap();
+
+        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-kv-global");
+        std::fs::create_dir_all(&temp_dir).unwrap();
+        let xml_path = temp_dir.join("test_kv_global.xml");
+        std::fs::write(
+            &xml_path,
+            r#"<Ui>
+                <Frame name="KeyValueGlobalFrame" parent="UIParent">
+                    <KeyValues>
+                        <KeyValue key="instructionText" value="SEARCH" type="global"/>
+                    </KeyValues>
+                </Frame>
+            </Ui>"#,
+        )
+        .unwrap();
+
+        let addon_table = env.create_addon_table().unwrap();
+        let ctx = AddonContext {
+            name: "TestAddon",
+            table: addon_table,
+            addon_root: &temp_dir,
+        };
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
+
+        // type="global" should resolve "SEARCH" via _G["SEARCH"] which is "Search"
+        let val: String = env.eval("return KeyValueGlobalFrame.instructionText").unwrap();
+        assert_eq!(val, "Search", "type='global' should resolve via global string lookup");
+
+        std::fs::remove_file(&xml_path).ok();
+    }
+
+    #[test]
     fn test_xml_anchors_with_offset() {
         let env = WowLuaEnv::new().unwrap();
 

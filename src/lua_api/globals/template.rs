@@ -111,6 +111,7 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
             let value = match kv.value_type.as_deref() {
                 Some("number") => kv.value.clone(),
                 Some("boolean") => kv.value.to_lowercase(),
+                Some("global") => format!("_G[\"{}\"]", escape_lua_string(&kv.value)),
                 _ => format!("\"{}\"", escape_lua_string(&kv.value)),
             };
             let code = format!(
@@ -487,6 +488,7 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
             let value = match kv.value_type.as_deref() {
                 Some("number") => kv.value.clone(),
                 Some("boolean") => kv.value.to_lowercase(),
+                Some("global") => format!("_G[\"{}\"]", escape_lua_string(&kv.value)),
                 _ => format!("\"{}\"", escape_lua_string(&kv.value)),
             };
             let code = format!(
