@@ -148,17 +148,17 @@ pub fn register_c_system_api(lua: &Lua) -> Result<()> {
         "GetAtlasInfo",
         lua.create_function(|lua, atlas_name: String| {
             // Look up atlas in our database
-            if let Some(atlas_info) = crate::atlas::get_atlas_info(&atlas_name) {
+            if let Some(lookup) = crate::atlas::get_atlas_info(&atlas_name) {
                 let info = lua.create_table()?;
-                info.set("width", atlas_info.width)?;
-                info.set("height", atlas_info.height)?;
-                info.set("leftTexCoord", atlas_info.left_tex_coord)?;
-                info.set("rightTexCoord", atlas_info.right_tex_coord)?;
-                info.set("topTexCoord", atlas_info.top_tex_coord)?;
-                info.set("bottomTexCoord", atlas_info.bottom_tex_coord)?;
-                info.set("file", atlas_info.file)?;
-                info.set("tilesHorizontally", atlas_info.tiles_horizontally)?;
-                info.set("tilesVertically", atlas_info.tiles_vertically)?;
+                info.set("width", lookup.width())?;
+                info.set("height", lookup.height())?;
+                info.set("leftTexCoord", lookup.info.left_tex_coord)?;
+                info.set("rightTexCoord", lookup.info.right_tex_coord)?;
+                info.set("topTexCoord", lookup.info.top_tex_coord)?;
+                info.set("bottomTexCoord", lookup.info.bottom_tex_coord)?;
+                info.set("file", lookup.info.file)?;
+                info.set("tilesHorizontally", lookup.info.tiles_horizontally)?;
+                info.set("tilesVertically", lookup.info.tiles_vertically)?;
                 Ok(Value::Table(info))
             } else {
                 // Return nil for unknown atlases

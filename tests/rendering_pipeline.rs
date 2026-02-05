@@ -160,11 +160,11 @@ fn layer2_atlas_db_returns_scroll_bar_entries() {
     let up = get_atlas_info("ui-scrollbar-scrollupbutton-up");
     assert!(up.is_some(), "Atlas DB should have scroll up button entry");
     let up = up.unwrap();
-    assert!(up.width > 0 && up.height > 0, "Atlas entry should have dimensions");
+    assert!(up.width() > 0 && up.height() > 0, "Atlas entry should have dimensions");
     assert!(
-        up.file.to_lowercase().contains("scrollbar"),
+        up.info.file.to_lowercase().contains("scrollbar"),
         "Atlas file path should reference scrollbar: {}",
-        up.file,
+        up.info.file,
     );
 
     let down = get_atlas_info("ui-scrollbar-scrolldownbutton-up");

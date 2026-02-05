@@ -99,7 +99,8 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
         if let Some(name) = atlas_name {
             // Look up atlas info
-            if let Some(atlas_info) = crate::atlas::get_atlas_info(&name) {
+            if let Some(lookup) = crate::atlas::get_atlas_info(&name) {
+                let atlas_info = lookup.info;
                 let mut state = this.state.borrow_mut();
 
                 // Get parent info - find which children_key this frame is registered as
@@ -136,10 +137,10 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     frame.vert_tile = atlas_info.tiles_vertically;
                     // Store atlas name
                     frame.atlas = Some(name.clone());
-                    // Optionally set size from atlas
+                    // Optionally set size from atlas (use logical dimensions)
                     if use_atlas_size {
-                        frame.width = atlas_info.width as f32;
-                        frame.height = atlas_info.height as f32;
+                        frame.width = lookup.width() as f32;
+                        frame.height = lookup.height() as f32;
                     }
                 }
 
