@@ -502,3 +502,121 @@ fn test_create_frame_from_xml_with_keyvalues() {
     assert_eq!(my_number, 42);
     assert!(my_bool);
 }
+
+/// Template children (child frames, textures, fontstrings) must be created exactly once.
+/// Both CreateFrame (via apply_templates_from_registry) and xml_frame.rs
+/// (via instantiate_template_children) were creating the same children, causing duplicates.
+/// A duplicate CloseButton, for example, renders once at the correct position and once
+/// centered in the parent frame (ghost element).
+#[test]
+fn test_template_children_not_duplicated() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+
+    // Register a base CloseButton template (no anchors)
+    let base_xml = r#"
+        <Ui>
+            <Button name="TestCloseButtonBase" virtual="true">
+                <Size x="24" y="24"/>
+            </Button>
+        </Ui>
+    "#;
+    let base_ui = parse_xml(base_xml).unwrap();
+    if let XmlElement::Button(frame) = &base_ui.elements[0] {
+        create_frame_from_xml(&env, frame, "Button", None).unwrap();
+    }
+
+    // Register a CloseButton template with anchors (inherits the base)
+    let anchored_xml = r#"
+        <Ui>
+            <Button name="TestCloseButtonAnchored" virtual="true" inherits="TestCloseButtonBase">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-2" y="-2"/>
+                </Anchors>
+            </Button>
+        </Ui>
+    "#;
+    let anchored_ui = parse_xml(anchored_xml).unwrap();
+    if let XmlElement::Button(frame) = &anchored_ui.elements[0] {
+        create_frame_from_xml(&env, frame, "Button", None).unwrap();
+    }
+
+    // Register a panel template whose child Button inherits anchors (no inline anchors)
+    let template_xml = r#"
+        <Ui>
+            <Frame name="TestPanelTemplate" virtual="true">
+                <Size x="400" y="300"/>
+                <Frames>
+                    <Button name="$parentCloseButton" parentKey="CloseButton"
+                            inherits="TestCloseButtonAnchored"/>
+                </Frames>
+            </Frame>
+        </Ui>
+    "#;
+
+    let template_ui = parse_xml(template_xml).unwrap();
+    if let XmlElement::Frame(frame) = &template_ui.elements[0] {
+        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+    }
+
+    // Create a frame inheriting that template
+    let frame_xml = r#"
+        <Ui>
+            <Frame name="TestPanelInstance" parent="UIParent" inherits="TestPanelTemplate">
+                <Anchors>
+                    <Anchor point="CENTER"/>
+                </Anchors>
+            </Frame>
+        </Ui>
+    "#;
+
+    let frame_ui = parse_xml(frame_xml).unwrap();
+    if let XmlElement::Frame(frame) = &frame_ui.elements[0] {
+        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+    }
+
+    // The CloseButton should exist
+    let has_close: bool = env
+        .eval("return TestPanelInstance.CloseButton ~= nil")
+        .unwrap();
+    assert!(has_close, "CloseButton should exist from template");
+
+    // Count how many children are Button-type (there should be exactly 1)
+    let state = env.state().borrow();
+    let registry = &state.widgets;
+    let frame_id = registry.get_id_by_name("TestPanelInstance").unwrap();
+    let frame = registry.get(frame_id).unwrap();
+
+    let button_children: Vec<u64> = frame
+        .children
+        .iter()
+        .filter(|&&child_id| {
+            registry
+                .get(child_id)
+                .map(|c| c.widget_type == wow_ui_sim::widget::WidgetType::Button)
+                .unwrap_or(false)
+        })
+        .copied()
+        .collect();
+
+    assert_eq!(
+        button_children.len(),
+        1,
+        "Template child Button should be created exactly once, found {}. \
+         IDs: {:?}, names: {:?}",
+        button_children.len(),
+        button_children,
+        button_children
+            .iter()
+            .map(|&id| registry.get(id).and_then(|f| f.name.clone()))
+            .collect::<Vec<_>>()
+    );
+
+    // The CloseButton should have anchors from the template
+    let close_btn = registry.get(button_children[0]).unwrap();
+    assert!(
+        !close_btn.anchors.is_empty(),
+        "Template child CloseButton should have anchors from template (TOPRIGHT), \
+         but has none - it would render centered as a ghost element"
+    );
+}

@@ -249,17 +249,12 @@ pub fn create_frame_from_xml(
     }
 
     // Execute the creation code
+    // NOTE: CreateFrame with an inherits parameter already calls apply_templates_from_registry
+    // which creates template children (frames, textures, fontstrings, button textures).
+    // Do NOT call instantiate_template_children here - that would duplicate everything.
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
     })?;
-
-    // Instantiate children from inherited templates
-    if !inherits.is_empty() {
-        let template_chain = crate::xml::get_template_chain(inherits);
-        for template_entry in template_chain {
-            instantiate_template_children(env, &template_entry.frame, &name, &template_entry.name)?;
-        }
-    }
 
     // Handle Layers (textures and fontstrings)
     for layers in frame.layers() {
@@ -358,74 +353,4 @@ pub fn create_frame_from_xml(
     env.exec(&onshow_code).ok(); // Ignore errors (OnShow might not be set)
 
     Ok(Some(name))
-}
-
-/// Instantiate children from a template onto a frame.
-/// This creates textures, fontstrings, and child frames defined in the template.
-pub fn instantiate_template_children(
-    env: &WowLuaEnv,
-    template: &crate::xml::FrameXml,
-    parent_name: &str,
-    _template_name: &str,
-) -> Result<(), LoadError> {
-    // Handle Layers (textures and fontstrings from template)
-    for layers in template.layers() {
-        for layer in &layers.layers {
-            let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
-
-            // Create textures from template
-            for texture in layer.textures() {
-                create_texture_from_xml(env, texture, parent_name, draw_layer)?;
-            }
-
-            // Create fontstrings from template
-            for fontstring in layer.font_strings() {
-                create_fontstring_from_xml(env, fontstring, parent_name, draw_layer)?;
-            }
-        }
-    }
-
-    // Handle child Frames from template recursively
-    if let Some(frames) = template.frames() {
-        for child in &frames.elements {
-            let (child_frame, child_type) = match child {
-                crate::xml::FrameElement::Frame(f) => (f, "Frame"),
-                crate::xml::FrameElement::Button(f) | crate::xml::FrameElement::ItemButton(f) => (f, "Button"),
-                crate::xml::FrameElement::CheckButton(f) => (f, "CheckButton"),
-                crate::xml::FrameElement::EditBox(f) | crate::xml::FrameElement::EventEditBox(f) => (f, "EditBox"),
-                crate::xml::FrameElement::ScrollFrame(f) => (f, "ScrollFrame"),
-                crate::xml::FrameElement::Slider(f) => (f, "Slider"),
-                crate::xml::FrameElement::StatusBar(f) => (f, "StatusBar"),
-                crate::xml::FrameElement::EventFrame(f) => (f, "Frame"), // EventFrame is just a Frame
-                crate::xml::FrameElement::EventButton(f) => (f, "Button"), // EventButton is just a Button
-                crate::xml::FrameElement::DropdownButton(f) | crate::xml::FrameElement::DropDownToggleButton(f) => (f, "Button"), // Dropdown buttons
-                crate::xml::FrameElement::Cooldown(f) => (f, "Cooldown"),
-                crate::xml::FrameElement::GameTooltip(f) => (f, "GameTooltip"),
-                crate::xml::FrameElement::Model(f) | crate::xml::FrameElement::ModelScene(f) => (f, "Frame"), // Model frames
-                _ => continue,
-            };
-
-            // Create the child frame with parent_name as parent
-            let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name))?;
-
-            // Handle parentKey for template child frames
-            // The Lua assignment triggers __newindex which syncs to Rust children_keys
-            if let (Some(actual_child_name), Some(parent_key)) =
-                (child_name, &child_frame.parent_key)
-            {
-                let lua_code = format!(
-                    r#"
-                    {}.{} = {}
-                    "#,
-                    parent_name, parent_key, actual_child_name
-                );
-                env.exec(&lua_code).ok();
-            }
-        }
-    }
-
-    // Apply button textures from template (NormalTexture, PushedTexture, etc.)
-    apply_button_textures(env, template, parent_name)?;
-
-    Ok(())
 }

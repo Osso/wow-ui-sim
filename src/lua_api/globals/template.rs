@@ -67,6 +67,41 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
         }
     }
 
+    // Apply anchors from template (only if frame has no anchors yet)
+    if let Some(anchors) = template.anchors() {
+        let mut code = format!(
+            r#"
+            local frame = {}
+            if frame and frame.GetNumPoints and frame:GetNumPoints() == 0 then
+            "#,
+            frame_name
+        );
+        for anchor in &anchors.anchors {
+            let point = &anchor.point;
+            let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
+            let (x, y) = if let Some(offset) = &anchor.offset {
+                if let Some(abs) = &offset.abs_dimension {
+                    (abs.x.unwrap_or(0.0), abs.y.unwrap_or(0.0))
+                } else {
+                    (0.0, 0.0)
+                }
+            } else {
+                (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
+            };
+            let rel_str = match anchor.relative_to.as_deref() {
+                Some("$parent") => format!("{}:GetParent()", frame_name),
+                Some(rel) => rel.to_string(),
+                None => "nil".to_string(),
+            };
+            code.push_str(&format!(
+                "                frame:SetPoint(\"{}\", {}, \"{}\", {}, {})\n",
+                point, rel_str, relative_point, x, y
+            ));
+        }
+        code.push_str("            end\n");
+        let _ = lua.load(&code).exec();
+    }
+
     // Apply mixin from template (must be before scripts)
     apply_mixin(lua, &template.mixin, frame_name);
 

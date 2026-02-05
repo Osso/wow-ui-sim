@@ -95,7 +95,6 @@ Each addon shows timing: `(total: io=X xml=X lua=X sv=X)`
 ### Known Issues
 
 - `BetterWardrobe/ColorFilter.lua` has very large constant tables (works in WoW's patched LuaJIT)
-- Template children are instantiated **twice**: once by `CreateFrame` → `apply_templates_from_registry` and again by `xml_frame.rs` → `instantiate_template_children`. This causes duplicate frames in the tree (e.g. two AddonListCloseButtons). Not functionally broken but wasteful.
 
 ### Button Texture Rendering
 
