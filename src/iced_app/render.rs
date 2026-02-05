@@ -641,33 +641,6 @@ impl App {
                 );
             }
 
-            // Draw special colored borders for key frames
-            if f.name.as_deref() == Some("AddonList") {
-                let border_path = Path::rectangle(bounds.position(), bounds.size());
-                frame.stroke(
-                    &border_path,
-                    Stroke::default()
-                        .with_color(Color::from_rgb(0.6, 0.0, 0.8)) // Purple
-                        .with_width(3.0),
-                );
-            }
-            // Green box around TitleContainer
-            if let Some(parent_id) = f.parent_id {
-                if let Some(parent) = state.widgets.get(parent_id) {
-                    if parent.name.as_deref() == Some("AddonList") {
-                        if parent.children_keys.get("TitleContainer") == Some(&id) {
-                            let border_path = Path::rectangle(bounds.position(), bounds.size());
-                            frame.stroke(
-                                &border_path,
-                                Stroke::default()
-                                    .with_color(Color::from_rgb(0.0, 1.0, 0.0)) // Green
-                                    .with_width(3.0),
-                            );
-                        }
-                    }
-                }
-            }
-
             // Draw debug anchor points if enabled
             if self.debug_anchors {
                 let anchor_color = Color::from_rgb(0.0, 1.0, 0.0);
