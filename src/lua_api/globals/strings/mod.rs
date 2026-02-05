@@ -171,6 +171,12 @@ pub fn register_icon_list(lua: &Lua, globals: &mlua::Table) -> Result<()> {
 
 /// Main entry point: registers all UI string constants.
 pub fn register_all_ui_strings(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    // Register generated global strings first (20k+ from WoW CSV exports).
+    // Curated constants below override these where they overlap.
+    for (name, value) in &crate::global_strings::GLOBAL_STRINGS {
+        globals.set(*name, *value)?;
+    }
+
     // Error strings
     register_strings(globals, ERROR_STRINGS)?;
 
