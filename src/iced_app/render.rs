@@ -311,9 +311,21 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
 
             // Handle tiling for edge pieces
             if f.horiz_tile || f.vert_tile {
-                // Get tile size from frame dimensions (set by SetAtlas with useAtlasSize)
-                let tile_w = f.width.max(1.0);
-                let tile_h = f.height.max(1.0);
+                // Get tile size from frame dimensions. If frame has no explicit size,
+                // use the UV region's pixel dimensions as the tile size.
+                // For atlas textures, UV is in 0..1 range; multiply by 128 (typical atlas slice)
+                // as a fallback when we don't have the actual texture dimensions.
+                let tile_w = if f.width > 1.0 {
+                    f.width
+                } else {
+                    // Estimate tile size from UV width - typical atlas is 128px or 256px
+                    ((right - left) * 128.0).max(8.0)
+                };
+                let tile_h = if f.height > 1.0 {
+                    f.height
+                } else {
+                    ((bottom - top) * 128.0).max(8.0)
+                };
 
                 if f.horiz_tile && !f.vert_tile {
                     // Horizontal tiling only
