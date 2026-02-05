@@ -464,6 +464,75 @@ fn test_checkbutton_template_no_orphaned_children() {
     );
 }
 
+/// Verify that SetAtlas on a reused default texture correctly propagates the
+/// texture path back to the parent CheckButton's normal_texture field.
+/// This is the code path used by MinimalCheckboxArtTemplate.
+#[test]
+fn test_checkbutton_setatlas_propagates_to_parent() {
+    let env = WowLuaEnv::new().unwrap();
+
+    // Simulate exactly what the template code generates for NormalTexture:
+    //   local tex = parent.NormalTexture  (reuse default)
+    //   parent.NormalTexture = tex
+    //   parent:SetNormalTexture(tex)
+    //   tex:SetAtlas("checkbox-minimal")
+    env.exec(
+        r#"
+        local cb = CreateFrame("CheckButton", "TestCbAtlasProp", UIParent)
+        cb:SetSize(30, 29)
+        cb:SetPoint("CENTER")
+
+        local parent = TestCbAtlasProp
+        if parent and parent.SetNormalTexture then
+            local tex = parent.NormalTexture
+            if tex == nil then
+                error("NormalTexture default child not found")
+            end
+            parent.NormalTexture = tex
+            parent:SetNormalTexture(tex)
+            tex:SetAtlas("checkbox-minimal")
+        end
+    "#,
+    )
+    .unwrap();
+
+    let state = env.state().borrow();
+    let registry = &state.widgets;
+
+    let cb_id = registry.get_id_by_name("TestCbAtlasProp").unwrap();
+    let cb = registry.get(cb_id).unwrap();
+
+    // The parent CheckButton's normal_texture should be set by SetAtlas propagation
+    assert!(
+        cb.normal_texture.is_some(),
+        "CheckButton's normal_texture should be set via SetAtlas propagation, got None"
+    );
+
+    // The texture path should come from the atlas lookup
+    assert!(
+        cb.normal_texture
+            .as_ref()
+            .unwrap()
+            .contains("minimalcheckbox"),
+        "normal_texture should contain the atlas file path, got: {:?}",
+        cb.normal_texture
+    );
+
+    // The child texture itself should also have the texture set
+    let normal_tex_id = cb.children_keys.get("NormalTexture").unwrap();
+    let normal_tex = registry.get(*normal_tex_id).unwrap();
+    assert!(
+        normal_tex.texture.is_some(),
+        "NormalTexture child should have texture set via SetAtlas"
+    );
+
+    // The child texture should have fill-parent anchors (from SetNormalTexture/get_or_create)
+    assert!(
+        !normal_tex.anchors.is_empty(),
+        "NormalTexture child should have anchors (fill-parent)"
+    );
+}
+
 // ============================================================================
 // CreateTexture and CreateFontString Tests
 // ============================================================================

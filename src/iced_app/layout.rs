@@ -36,12 +36,16 @@ pub fn compute_frame_rect(
         }
     };
 
+    let scale = frame.scale;
+
     if frame.anchors.is_empty() {
+        let w = frame.width * scale;
+        let h = frame.height * scale;
         return LayoutRect {
-            x: parent_rect.x + (parent_rect.width - frame.width) / 2.0,
-            y: parent_rect.y + (parent_rect.height - frame.height) / 2.0,
-            width: frame.width,
-            height: frame.height,
+            x: parent_rect.x + (parent_rect.width - w) / 2.0,
+            y: parent_rect.y + (parent_rect.height - h) / 2.0,
+            width: w,
+            height: h,
         };
     }
 
@@ -129,7 +133,7 @@ pub fn compute_frame_rect(
             // Both left and right edges defined by anchors - compute width from them
             rx - lx
         } else if frame.width > 0.0 {
-            frame.width
+            frame.width * scale
         } else {
             0.0
         };
@@ -138,7 +142,7 @@ pub fn compute_frame_rect(
             // Both top and bottom edges defined by anchors - compute height from them
             by - ty
         } else if frame.height > 0.0 {
-            frame.height
+            frame.height * scale
         } else {
             0.0
         };
@@ -157,8 +161,8 @@ pub fn compute_frame_rect(
     }
 
     let anchor = &frame.anchors[0];
-    let width = frame.width;
-    let height = frame.height;
+    let width = frame.width * scale;
+    let height = frame.height * scale;
 
     // For single anchor, check if it has a specific relativeTo frame
     let relative_rect = if let Some(rel_id) = anchor.relative_to_id {

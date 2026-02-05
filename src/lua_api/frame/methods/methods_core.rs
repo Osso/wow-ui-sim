@@ -386,14 +386,36 @@ fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Scale methods
 fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetEffectiveScale() - get combined scale of frame and parents
-    methods.add_method("GetEffectiveScale", |_, _this, ()| Ok(1.0f32));
-
     // GetScale() - get frame's scale
-    methods.add_method("GetScale", |_, _this, ()| Ok(1.0f32));
+    methods.add_method("GetScale", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.scale).unwrap_or(1.0))
+    });
 
-    // SetScale(scale) - set frame's scale
-    methods.add_method("SetScale", |_, _this, _scale: f32| Ok(()));
+    // SetScale(scale) - set frame's scale factor (affects visible size)
+    methods.add_method("SetScale", |_, this, scale: f32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(this.id) {
+            f.scale = scale;
+        }
+        Ok(())
+    });
+
+    // GetEffectiveScale() - get product of all ancestor scales * this frame's scale
+    methods.add_method("GetEffectiveScale", |_, this, ()| {
+        let state = this.state.borrow();
+        let mut scale = 1.0f32;
+        let mut current_id = Some(this.id);
+        while let Some(id) = current_id {
+            if let Some(f) = state.widgets.get(id) {
+                scale *= f.scale;
+                current_id = f.parent_id;
+            } else {
+                break;
+            }
+        }
+        Ok(scale)
+    });
 
     // SetIgnoreParentScale(ignore) - set whether frame ignores parent scale
     methods.add_method("SetIgnoreParentScale", |_, _this, _ignore: bool| Ok(()));

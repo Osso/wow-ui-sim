@@ -121,13 +121,16 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 if let Some(frame) = state.widgets.get_mut(this.id) {
                     // Set texture file from atlas
                     frame.texture = Some(atlas_info.file.to_string());
-                    // Set texture coordinates
-                    frame.tex_coords = Some((
+                    // Set atlas base texture coordinates (the sub-region on the file)
+                    let atlas_uvs = (
                         atlas_info.left_tex_coord,
                         atlas_info.right_tex_coord,
                         atlas_info.top_tex_coord,
                         atlas_info.bottom_tex_coord,
-                    ));
+                    );
+                    frame.atlas_tex_coords = Some(atlas_uvs);
+                    // Set rendering tex_coords to the full atlas sub-region
+                    frame.tex_coords = Some(atlas_uvs);
                     // Set tiling flags
                     frame.horiz_tile = atlas_info.tiles_horizontally;
                     frame.vert_tile = atlas_info.tiles_vertically;
@@ -293,6 +296,7 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // SetTexCoord(left, right, top, bottom) - for Texture widgets
+    // When atlas is active, coords are relative to the atlas sub-region (0-1 maps to atlas bounds)
     // Can also be called with 8 values for corner-based coords
     methods.add_method("SetTexCoord", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
@@ -320,7 +324,19 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.tex_coords = Some((left, right, top, bottom));
+                // When atlas is active, remap coords relative to the atlas sub-region
+                if let Some((al, ar, at, ab)) = frame.atlas_tex_coords {
+                    let aw = ar - al;
+                    let ah = ab - at;
+                    frame.tex_coords = Some((
+                        al + left * aw,
+                        al + right * aw,
+                        at + top * ah,
+                        at + bottom * ah,
+                    ));
+                } else {
+                    frame.tex_coords = Some((left, right, top, bottom));
+                }
             }
         }
         Ok(())

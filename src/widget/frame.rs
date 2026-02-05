@@ -107,6 +107,8 @@ pub struct Frame {
     pub has_fixed_frame_strata: bool,
     /// Alpha transparency (0.0 - 1.0).
     pub alpha: f32,
+    /// Scale factor (affects visible size; default 1.0).
+    pub scale: f32,
     /// Whether mouse is enabled.
     pub mouse_enabled: bool,
     /// Texture path (for Texture widgets).
@@ -185,8 +187,11 @@ pub struct Frame {
     pub horiz_tile: bool,
     /// Tile texture vertically.
     pub vert_tile: bool,
-    /// Texture coordinates (left, right, top, bottom).
+    /// Texture coordinates (left, right, top, bottom) — final UV coords used for rendering.
     pub tex_coords: Option<(f32, f32, f32, f32)>,
+    /// Atlas base texture coordinates — the sub-region on the texture file.
+    /// SetTexCoord remaps relative to these when an atlas is active.
+    pub atlas_tex_coords: Option<(f32, f32, f32, f32)>,
     /// Atlas name (if set via SetAtlas).
     pub atlas: Option<String>,
     /// NineSlice layout type (e.g., "PortraitFrameTemplate", "ButtonFrameTemplateNoPortrait").
@@ -211,6 +216,7 @@ impl Frame {
             frame_strata: FrameStrata::Medium,
             has_fixed_frame_strata: false,
             alpha: 1.0,
+            scale: 1.0,
             mouse_enabled: false,
             texture: None,
             color_texture: None,
@@ -251,6 +257,7 @@ impl Frame {
             horiz_tile: false,
             vert_tile: false,
             tex_coords: None,
+            atlas_tex_coords: None,
             atlas: None,
             nine_slice_layout: None,
         }

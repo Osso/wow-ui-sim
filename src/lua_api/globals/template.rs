@@ -576,10 +576,14 @@ fn create_button_texture_from_template(
     parent_key: &str,
     setter_method: &str,
 ) {
+    // Use the XML parentKey if present, otherwise derive from parent_key.
+    // Default children_keys entries are "NormalTexture", "PushedTexture", etc.,
+    // so we append "Texture" to the parent_key ("Normal" → "NormalTexture").
+    let default_parent_key = format!("{}Texture", parent_key);
     let actual_parent_key = texture
         .parent_key
         .as_deref()
-        .unwrap_or(parent_key);
+        .unwrap_or(&default_parent_key);
 
     let child_name = texture
         .name
