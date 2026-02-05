@@ -164,6 +164,22 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
+    // SetHighlightAtlas(atlasName) - Set highlight texture via atlas
+    methods.add_method("SetHighlightAtlas", |_, this, atlas_name: String| {
+        let mut state = this.state.borrow_mut();
+        let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
+        if let Some(atlas_info) = crate::atlas::get_atlas_info(&atlas_name) {
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.atlas = Some(atlas_name);
+                tex.texture = Some(atlas_info.file.to_string());
+            }
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.highlight_texture = Some(atlas_info.file.to_string());
+            }
+        }
+        Ok(())
+    });
+
     // SetPushedTexture(texture) - Set texture for pushed state
     methods.add_method("SetPushedTexture", |_, this, texture: Value| {
         let path = match &texture {

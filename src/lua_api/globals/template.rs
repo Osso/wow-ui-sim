@@ -38,16 +38,26 @@ pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names
         return;
     }
 
+    let mut all_child_names = Vec::new();
     for entry in &chain {
-        apply_single_template(lua, frame_name, entry);
+        let child_names = apply_single_template(lua, frame_name, entry);
+        all_child_names.extend(child_names);
     }
 
-    // Fire OnLoad after all templates are applied
+    // Fire OnLoad for all child frames created during template application.
+    // This is deferred until after ALL templates so that child OnLoad handlers
+    // can access KeyValues from any template in the chain (not just earlier ones).
+    for child_name in &all_child_names {
+        fire_on_load(lua, child_name);
+    }
+
+    // Fire OnLoad on the frame itself after all templates and children are ready
     fire_on_load(lua, frame_name);
 }
 
 /// Apply a single template's children to a frame.
-fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
+/// Returns names of child frames created (for deferred OnLoad).
+fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> Vec<String> {
     let template = &entry.frame;
 
     // Apply size from template if defined
@@ -99,6 +109,20 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
             ));
         }
         code.push_str("            end\n");
+        let _ = lua.load(&code).exec();
+    }
+
+    // Apply setAllPoints from template (only if frame has no anchors yet)
+    if template.set_all_points == Some(true) {
+        let code = format!(
+            r#"
+            local frame = {}
+            if frame and frame.GetNumPoints and frame:GetNumPoints() == 0 then
+                frame:SetAllPoints(true)
+            end
+            "#,
+            frame_name
+        );
         let _ = lua.load(&code).exec();
     }
 
@@ -172,12 +196,14 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
     }
 
     // Create child Frames from template
-    create_child_frames(lua, template, frame_name);
+    let child_names = create_child_frames(lua, template, frame_name);
 
     // Apply scripts from template
     if let Some(scripts) = template.scripts() {
         apply_scripts_from_template(lua, scripts, frame_name);
     }
+
+    child_names
 }
 
 /// Apply mixin(s) to a frame. The mixin attribute can be comma-separated.
@@ -217,16 +243,20 @@ fn fire_on_load(lua: &Lua, frame_name: &str) {
 }
 
 /// Create child frames from a FrameXml's `<Frames>` section.
-fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str) {
+/// Returns the names of created child frames (for deferred OnLoad).
+fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str) -> Vec<String> {
+    let mut child_names = Vec::new();
     let Some(frames) = frame.frames() else {
-        return;
+        return child_names;
     };
     for child in &frames.elements {
         let Some((child_frame, child_type)) = frame_element_type(child) else {
             continue;
         };
-        create_child_frame_from_template(lua, child_frame, child_type, parent_name);
+        let name = create_child_frame_from_template(lua, child_frame, child_type, parent_name);
+        child_names.push(name);
     }
+    child_names
 }
 
 /// Create a texture from template XML.
@@ -399,7 +429,7 @@ fn create_child_frame_from_template(
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     parent_name: &str,
-) {
+) -> String {
     let child_name = frame
         .name
         .as_ref()
@@ -467,10 +497,12 @@ fn create_child_frame_from_template(
     // This handles elements defined directly on the child XML, not via inherits.
     apply_inline_frame_content(lua, frame, &child_name);
 
-    // Fire OnLoad after all content (inherited + inline) is applied.
-    // This must be after apply_inline_frame_content so KeyValues like
-    // normalTexture are available when OnLoad runs.
-    fire_on_load(lua, &child_name);
+    // NOTE: Do NOT fire OnLoad here. Child OnLoad is deferred until after ALL templates
+    // in the chain are applied by apply_templates_from_registry. This is required because
+    // child OnLoad handlers (e.g. ButtonControllerMixin:OnLoad → InitButton) may depend on
+    // KeyValues from later templates in the chain (e.g. atlasName from BigRedThreeSliceButtonTemplate).
+
+    child_name
 }
 
 /// Apply inline content from a FrameXml to an already-created frame.

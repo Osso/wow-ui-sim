@@ -620,3 +620,115 @@ fn test_template_children_not_duplicated() {
          but has none - it would render centered as a ghost element"
     );
 }
+
+/// Three-slice buttons (like Enable All) use atlas textures for Left/Right/Center pieces.
+/// The ThreeSliceButtonMixin.InitButton() fetches atlas info, then UpdateScale() sizes
+/// the texture children proportionally to the button height. If InitButton doesn't run,
+/// the textures remain at their atlas natural size (e.g. 114x128 for a 22px button).
+///
+/// Template chain: ThreeSliceButtonTemplate → BigRedThreeSliceButtonTemplate → SharedButtonSmallTemplate
+/// Key issue: Controller child's OnLoad (from ThreeSliceButtonTemplate) calls parent:InitButton(),
+/// which needs atlasName (a KeyValue from BigRedThreeSliceButtonTemplate). Child OnLoad must be
+/// deferred until after ALL templates in the chain are applied.
+#[test]
+fn test_three_slice_button_texture_scaling() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+
+    // Register the three-slice template chain from XML
+    let xml = r#"
+        <Ui>
+            <Button name="ThreeSliceButtonTemplate" mixin="ThreeSliceButtonMixin" virtual="true">
+                <Size x="20" y="20"/>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="Left">
+                            <Anchors><Anchor point="TOPLEFT"/></Anchors>
+                        </Texture>
+                        <Texture parentKey="Right">
+                            <Anchors><Anchor point="TOPRIGHT"/></Anchors>
+                        </Texture>
+                        <Texture parentKey="Center">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+                                <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Frame parentKey="Controller" mixin="ButtonControllerMixin">
+                        <Scripts>
+                            <OnLoad method="OnLoad"/>
+                        </Scripts>
+                    </Frame>
+                </Frames>
+            </Button>
+            <Button name="BigRedThreeSliceButtonTemplate" inherits="ThreeSliceButtonTemplate" virtual="true">
+                <Size x="441" y="128"/>
+                <KeyValues>
+                    <KeyValue key="atlasName" value="128-RedButton" type="string"/>
+                </KeyValues>
+            </Button>
+            <Button name="SharedButtonSmallTemplate" inherits="BigRedThreeSliceButtonTemplate" virtual="true">
+                <Size x="138" y="28"/>
+            </Button>
+        </Ui>
+    "#;
+    let ui = parse_xml(xml).unwrap();
+    for element in &ui.elements {
+        if let XmlElement::Button(frame) = element {
+            if let Some(ref name) = frame.name {
+                register_template(name, "Button", frame.clone());
+            }
+        }
+    }
+
+    // Define the required Lua mixins
+    env.exec(
+        r#"
+        ThreeSliceButtonMixin = {}
+
+        function ThreeSliceButtonMixin:InitButton()
+            self.leftAtlasInfo = C_Texture.GetAtlasInfo(self.atlasName .. "-Left")
+            self.rightAtlasInfo = C_Texture.GetAtlasInfo(self.atlasName .. "-Right")
+            self:SetHighlightAtlas(self.atlasName .. "-Highlight")
+        end
+
+        ButtonControllerMixin = {}
+
+        function ButtonControllerMixin:OnLoad()
+            self:GetParent():InitButton()
+        end
+        "#,
+    )
+    .unwrap();
+
+    // Check that C_Texture.GetAtlasInfo works for the red button atlas
+    let has_atlas: bool = env
+        .eval("return C_Texture.GetAtlasInfo('128-RedButton-Left') ~= nil")
+        .unwrap();
+    assert!(has_atlas, "128-RedButton-Left atlas should exist");
+
+    // Verify the Controller child's OnLoad can call parent's InitButton successfully.
+    // InitButton needs atlasName (a KeyValue from BigRedThreeSliceButtonTemplate).
+    // This tests that child OnLoad is deferred until after all templates are applied.
+    let init_result: String = env
+        .eval(
+            r#"
+            local btn = CreateFrame("Button", "TestThreeSliceBtn", UIParent, "SharedButtonSmallTemplate")
+            btn:SetSize(120, 22)
+
+            if not btn.leftAtlasInfo then return "leftAtlasInfo nil - InitButton never ran" end
+            if not btn.rightAtlasInfo then return "rightAtlasInfo nil" end
+
+            return "ok"
+            "#,
+        )
+        .unwrap();
+    assert!(
+        init_result.starts_with("ok"),
+        "Three-slice InitButton should have run via Controller OnLoad: {}",
+        init_result
+    );
+}
