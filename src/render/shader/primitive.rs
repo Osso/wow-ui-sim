@@ -29,6 +29,11 @@ pub struct WowUiPrimitive {
     pub clear_color: [f32; 4],
     /// Texture data to upload (path -> image data).
     pub textures: Vec<GpuTextureData>,
+    /// Glyph atlas RGBA data for text rendering (2048x2048).
+    /// When Some, uploaded to the GPU glyph atlas texture.
+    pub glyph_atlas_data: Option<Vec<u8>>,
+    /// Size of the glyph atlas (width = height).
+    pub glyph_atlas_size: u32,
 }
 
 impl WowUiPrimitive {
@@ -38,6 +43,8 @@ impl WowUiPrimitive {
             quads,
             clear_color: [0.05, 0.05, 0.08, 1.0], // Dark WoW-style background
             textures: Vec::new(),
+            glyph_atlas_data: None,
+            glyph_atlas_size: 0,
         }
     }
 
@@ -47,6 +54,8 @@ impl WowUiPrimitive {
             quads,
             clear_color: [0.05, 0.05, 0.08, 1.0],
             textures,
+            glyph_atlas_data: None,
+            glyph_atlas_size: 0,
         }
     }
 
@@ -86,6 +95,11 @@ impl shader::Primitive for WowUiPrimitive {
                     &tex_data.rgba,
                 );
             }
+        }
+
+        // Upload glyph atlas if present
+        if let Some(ref glyph_data) = self.glyph_atlas_data {
+            atlas.upload_glyph_atlas(queue, glyph_data, self.glyph_atlas_size);
         }
 
         // Check if any vertices need texture resolution (tex_index == -2)

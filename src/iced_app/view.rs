@@ -1,6 +1,5 @@
 //! App::view() and subscription methods plus UI building helpers.
 
-use iced::widget::canvas::Canvas;
 use iced::widget::shader::Shader;
 use iced::widget::{
     button, checkbox, column, container, row, scrollable, space, stack, text, text_input, Column,
@@ -13,7 +12,6 @@ use crate::LayoutRect;
 
 use super::app::App;
 use super::layout::compute_frame_rect;
-use super::state::TextOverlay;
 use super::styles::{event_button_style, input_style, palette, run_button_style};
 use super::Message;
 
@@ -36,23 +34,17 @@ impl App {
         );
         let title = text(title_text).size(20).color(palette::GOLD);
 
-        // GPU shader rendering with text overlay
-        // Layer 1: Shader for textures/backgrounds
+        // GPU shader rendering (textures + text via glyph atlas)
         let shader: Shader<Message, &App> = Shader::new(self)
             .width(Length::Fill)
             .height(Length::Fill);
 
-        // Layer 2: Canvas for text and debug overlays (transparent background)
-        let text_overlay: Canvas<TextOverlay<'_>, Message> = Canvas::new(TextOverlay::new(self))
-            .width(Length::Fill)
-            .height(Length::Fill);
-
-        // Stack shader and text overlay, optionally add inspector panel
+        // Stack shader, optionally add inspector panel
         let stacked: Element<'_, Message> = if self.inspector_visible {
             let inspector = self.build_inspector_panel();
-            stack![shader, text_overlay, inspector].into()
+            stack![shader, inspector].into()
         } else {
-            stack![shader, text_overlay].into()
+            shader.into()
         };
 
         let render_container = container(stacked)

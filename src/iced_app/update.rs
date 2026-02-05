@@ -250,7 +250,6 @@ impl App {
                 if let Some(frame_id) = self.inspected_frame {
                     self.apply_inspector_changes(frame_id);
                     self.frame_cache.clear();
-                    self.text_cache.clear();
                     self.quads_dirty.set(true);
                 }
             }

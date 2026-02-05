@@ -1,23 +1,25 @@
 //! App struct definition and core initialization.
 
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::path::PathBuf;
 use std::rc::Rc;
 
 use iced::widget::canvas::Cache;
-use iced::widget::image::Handle as ImageHandle;
 use iced::{Point, Size, Task};
 use tokio::sync::mpsc;
 use tokio::sync::oneshot;
 
 use crate::lua_api::WowLuaEnv;
 use crate::lua_server;
+use crate::render::{GlyphAtlas, WowFontSystem};
 use crate::texture::TextureManager;
 use iced_layout_inspector::server::{self as debug_server, ScreenshotData};
 
 use super::state::InspectorState;
 use super::Message;
+
+/// Default path to WoW TTF fonts.
+pub const DEFAULT_FONTS_PATH: &str = "./fonts";
 
 /// Default path to local WebP textures (preferred).
 pub const LOCAL_TEXTURES_PATH: &str = "./textures";
@@ -80,11 +82,9 @@ pub struct App {
     pub(crate) log_messages: Vec<String>,
     pub(crate) command_input: String,
     pub(crate) texture_manager: Rc<RefCell<TextureManager>>,
-    /// Cache of loaded texture image handles (uses RefCell for interior mutability during draw).
-    pub(crate) image_handles: Rc<RefCell<HashMap<String, ImageHandle>>>,
+    pub(crate) font_system: Rc<RefCell<WowFontSystem>>,
+    pub(crate) glyph_atlas: Rc<RefCell<GlyphAtlas>>,
     pub(crate) frame_cache: Cache,
-    /// Cache for text-only overlay (used in shader mode).
-    pub(crate) text_cache: Cache,
     pub(crate) hovered_frame: Option<u64>,
     pub(crate) pressed_frame: Option<u64>,
     pub(crate) mouse_down_frame: Option<u64>,
@@ -95,8 +95,12 @@ pub struct App {
     pub(crate) pending_screenshot: Option<oneshot::Sender<Result<ScreenshotData, String>>>,
     pub(crate) lua_rx: Option<std::sync::mpsc::Receiver<lua_server::LuaCommand>>,
     /// Draw red debug borders around all frames when true.
+    /// TODO: Re-implement as shader quads in build_quad_batch_for_registry.
+    #[allow(dead_code)]
     pub(crate) debug_borders: bool,
     /// Draw green anchor points on all frames when true.
+    /// TODO: Re-implement as shader quads in build_quad_batch_for_registry.
+    #[allow(dead_code)]
     pub(crate) debug_anchors: bool,
     /// Track which textures have been uploaded to GPU atlas (avoid re-sending pixel data).
     pub(crate) gpu_uploaded_textures: RefCell<std::collections::HashSet<String>>,
@@ -168,6 +172,11 @@ impl App {
                 .with_addons_path(DEFAULT_ADDONS_PATH),
         ));
 
+        let font_system = Rc::new(RefCell::new(
+            WowFontSystem::new(&PathBuf::from(DEFAULT_FONTS_PATH)),
+        ));
+        let glyph_atlas = Rc::new(RefCell::new(GlyphAtlas::new()));
+
         // Initialize debug server
         let (cmd_rx, _guard) = debug_server::init();
         eprintln!(
@@ -202,9 +211,9 @@ impl App {
             log_messages,
             command_input: String::new(),
             texture_manager,
-            image_handles: Rc::new(RefCell::new(HashMap::new())),
+            font_system,
+            glyph_atlas,
             frame_cache: Cache::new(),
-            text_cache: Cache::new(),
             hovered_frame: None,
             pressed_frame: None,
             mouse_down_frame: None,

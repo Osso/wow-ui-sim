@@ -2,7 +2,7 @@
 //!
 //! This module is split into several submodules:
 //! - `app`: App struct and initialization
-//! - `state`: State structs (InspectorState, TextOverlay, CanvasMessage)
+//! - `state`: State structs (InspectorState, CanvasMessage)
 //! - `styles`: UI styling functions and color palette
 //! - `layout`: Frame layout computation and anchor positioning
 //! - `view`: App::view() and subscription methods
@@ -27,7 +27,7 @@ use crate::lua_api::WowLuaEnv;
 pub use app::App;
 pub use layout::{anchor_position, compute_frame_rect, frame_position_from_anchor};
 pub use render::build_quad_batch_for_registry;
-pub use state::{CanvasMessage, InspectorState, TextOverlay};
+pub use state::{CanvasMessage, InspectorState};
 pub use styles::palette;
 
 pub use app::DebugOptions;

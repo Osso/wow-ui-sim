@@ -603,6 +603,7 @@ fn screenshot_standalone(
         filter.as_deref(),
         None,
         None,
+        None, // No text rendering in headless screenshots (yet)
     );
 
     eprintln!(

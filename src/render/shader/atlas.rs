@@ -130,10 +130,18 @@ impl TierAtlas {
     }
 }
 
+/// Texture index used for glyph atlas quads.
+pub const GLYPH_ATLAS_TEX_INDEX: i32 = 4;
+
 /// GPU texture atlas with multiple size tiers.
 pub struct GpuTextureAtlas {
     /// 2D texture atlases for each tier.
     tiers: [TierAtlas; NUM_TIERS],
+    /// Glyph atlas texture for text rendering.
+    glyph_texture: wgpu::Texture,
+    #[allow(dead_code)] // Kept alive for bind group reference
+    glyph_view: wgpu::TextureView,
+    glyph_atlas_size: u32,
     /// Bind group for shader access.
     bind_group: wgpu::BindGroup,
     /// Bind group layout.
@@ -148,6 +156,24 @@ impl GpuTextureAtlas {
         // Create tier atlases
         let tiers = std::array::from_fn(|i| TierAtlas::new(device, TIER_SIZES[i], i));
 
+        // Create glyph atlas texture (2048x2048)
+        let glyph_atlas_size = 2048;
+        let glyph_texture = device.create_texture(&wgpu::TextureDescriptor {
+            label: Some("Glyph Atlas"),
+            size: wgpu::Extent3d {
+                width: glyph_atlas_size,
+                height: glyph_atlas_size,
+                depth_or_array_layers: 1,
+            },
+            mip_level_count: 1,
+            sample_count: 1,
+            dimension: wgpu::TextureDimension::D2,
+            format: wgpu::TextureFormat::Rgba8Unorm,
+            usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
+            view_formats: &[],
+        });
+        let glyph_view = glyph_texture.create_view(&wgpu::TextureViewDescriptor::default());
+
         let sampler = device.create_sampler(&wgpu::SamplerDescriptor {
             label: Some("WoW UI Texture Sampler"),
             address_mode_u: wgpu::AddressMode::ClampToEdge,
@@ -159,66 +185,37 @@ impl GpuTextureAtlas {
             ..Default::default()
         });
 
-        // Bind group layout for 4 regular 2D textures + sampler
+        let texture_entry = |binding: u32| wgpu::BindGroupLayoutEntry {
+            binding,
+            visibility: wgpu::ShaderStages::FRAGMENT,
+            ty: wgpu::BindingType::Texture {
+                sample_type: wgpu::TextureSampleType::Float { filterable: true },
+                view_dimension: wgpu::TextureViewDimension::D2,
+                multisampled: false,
+            },
+            count: None,
+        };
+
+        // Bind group layout: 4 tier textures + sampler + glyph atlas
         let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
-            label: Some("WoW UI Tiered Texture Bind Group Layout"),
+            label: Some("WoW UI Texture Bind Group Layout"),
             entries: &[
-                // Tier 0 (64x64 cells)
-                wgpu::BindGroupLayoutEntry {
-                    binding: 0,
-                    visibility: wgpu::ShaderStages::FRAGMENT,
-                    ty: wgpu::BindingType::Texture {
-                        sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2,
-                        multisampled: false,
-                    },
-                    count: None,
-                },
-                // Tier 1 (128x128 cells)
-                wgpu::BindGroupLayoutEntry {
-                    binding: 1,
-                    visibility: wgpu::ShaderStages::FRAGMENT,
-                    ty: wgpu::BindingType::Texture {
-                        sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2,
-                        multisampled: false,
-                    },
-                    count: None,
-                },
-                // Tier 2 (256x256 cells)
-                wgpu::BindGroupLayoutEntry {
-                    binding: 2,
-                    visibility: wgpu::ShaderStages::FRAGMENT,
-                    ty: wgpu::BindingType::Texture {
-                        sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2,
-                        multisampled: false,
-                    },
-                    count: None,
-                },
-                // Tier 3 (512x512 cells)
-                wgpu::BindGroupLayoutEntry {
-                    binding: 3,
-                    visibility: wgpu::ShaderStages::FRAGMENT,
-                    ty: wgpu::BindingType::Texture {
-                        sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        view_dimension: wgpu::TextureViewDimension::D2,
-                        multisampled: false,
-                    },
-                    count: None,
-                },
-                // Sampler
+                texture_entry(0), // Tier 0 (64x64 cells)
+                texture_entry(1), // Tier 1 (128x128 cells)
+                texture_entry(2), // Tier 2 (256x256 cells)
+                texture_entry(3), // Tier 3 (512x512 cells)
                 wgpu::BindGroupLayoutEntry {
                     binding: 4,
                     visibility: wgpu::ShaderStages::FRAGMENT,
                     ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
                     count: None,
                 },
+                texture_entry(5), // Glyph atlas
             ],
         });
 
         let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
-            label: Some("WoW UI Tiered Texture Bind Group"),
+            label: Some("WoW UI Texture Bind Group"),
             layout: &bind_group_layout,
             entries: &[
                 wgpu::BindGroupEntry {
@@ -241,11 +238,18 @@ impl GpuTextureAtlas {
                     binding: 4,
                     resource: wgpu::BindingResource::Sampler(&sampler),
                 },
+                wgpu::BindGroupEntry {
+                    binding: 5,
+                    resource: wgpu::BindingResource::TextureView(&glyph_view),
+                },
             ],
         });
 
         Self {
             tiers,
+            glyph_texture,
+            glyph_view,
+            glyph_atlas_size,
             bind_group,
             bind_group_layout,
             texture_map: HashMap::new(),
@@ -435,6 +439,32 @@ impl GpuTextureAtlas {
     /// Check if atlas is empty.
     pub fn is_empty(&self) -> bool {
         self.texture_map.is_empty()
+    }
+
+    /// Upload glyph atlas RGBA data to the GPU.
+    ///
+    /// The data must be exactly `size * size * 4` bytes of RGBA.
+    pub fn upload_glyph_atlas(&self, queue: &wgpu::Queue, rgba_data: &[u8], size: u32) {
+        assert_eq!(size, self.glyph_atlas_size);
+        queue.write_texture(
+            wgpu::TexelCopyTextureInfo {
+                texture: &self.glyph_texture,
+                mip_level: 0,
+                origin: wgpu::Origin3d::ZERO,
+                aspect: wgpu::TextureAspect::All,
+            },
+            rgba_data,
+            wgpu::TexelCopyBufferLayout {
+                offset: 0,
+                bytes_per_row: Some(size * 4),
+                rows_per_image: Some(size),
+            },
+            wgpu::Extent3d {
+                width: size,
+                height: size,
+                depth_or_array_layers: 1,
+            },
+        );
     }
 
     /// Get memory usage statistics.

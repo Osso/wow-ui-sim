@@ -29,6 +29,9 @@ iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio", "
 iced_wgpu = "0.14"
 iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
 
+# Text rendering
+cosmic-text = "0.15"
+
 # GPU rendering
 wgpu = "27.0"
 bytemuck = { version = "1.21", features = ["derive"] }

@@ -32,6 +32,9 @@ var tier_512: texture_2d<f32>;    // Atlas for 512x512 textures
 @group(1) @binding(4)
 var texture_sampler: sampler;
 
+@group(1) @binding(5)
+var glyph_atlas: texture_2d<f32>; // Glyph atlas for text rendering
+
 // Vertex input
 struct VertexInput {
     @location(0) position: vec2<f32>,
@@ -72,17 +75,18 @@ const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
 
 // Sample from the appropriate tier based on tex_index
-// tex_index directly indicates which tier (0-3)
+// tex_index 0-3: tiered texture atlases, 4: glyph atlas
 // UV coordinates are already transformed to the correct sub-region
 fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
     // Clamp tex_coords to valid range
     let uv = clamp(tex_coords, vec2<f32>(0.0), vec2<f32>(0.9999));
 
-    // Sample all tiers unconditionally to avoid control flow issues
+    // Sample all textures unconditionally to avoid control flow issues
     let s0 = textureSampleLevel(tier_64, texture_sampler, uv, 0.0);
     let s1 = textureSampleLevel(tier_128, texture_sampler, uv, 0.0);
     let s2 = textureSampleLevel(tier_256, texture_sampler, uv, 0.0);
     let s3 = textureSampleLevel(tier_512, texture_sampler, uv, 0.0);
+    let sg = textureSampleLevel(glyph_atlas, texture_sampler, uv, 0.0);
 
     // Select result based on tier
     if tex_index == 0 {
@@ -91,8 +95,10 @@ fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
         return s1;
     } else if tex_index == 2 {
         return s2;
-    } else {
+    } else if tex_index == 3 {
         return s3;
+    } else {
+        return sg;
     }
 }
 
