@@ -95,6 +95,43 @@ Each addon shows timing: `(total: io=X xml=X lua=X sv=X)`
 ### Known Issues
 
 - `BetterWardrobe/ColorFilter.lua` has very large constant tables (works in WoW's patched LuaJIT)
+- Template children are instantiated **twice**: once by `CreateFrame` → `apply_templates_from_registry` and again by `xml_frame.rs` → `instantiate_template_children`. This causes duplicate frames in the tree (e.g. two AddonListCloseButtons). Not functionally broken but wasteful.
+
+### Button Texture Rendering
+
+WoW buttons are **transparent by default** — `build_button_quads` renders nothing when `normal_texture` is None. Visuals come from:
+- `SetNormalTexture`/`SetPushedTexture` etc. → stored in `normal_texture`/`pushed_texture` fields, state-dependent
+- Child Texture widgets with custom parentKeys → render independently via `build_texture_quads`, NOT state-dependent
+
+`SetAtlas` on a child texture propagates to the parent button's fields ONLY for standard parentKeys: `NormalTexture`, `PushedTexture`, `HighlightTexture`, `DisabledTexture`. Custom parentKeys do NOT propagate — the child renders independently.
+
+**Button texture patterns in Blizzard UI:**
+
+| Pattern | Example | How textures work |
+|---------|---------|-------------------|
+| Standard slots | UIPanelCloseButton | `<NormalTexture atlas="RedButton-Exit"/>` → propagates to button's `normal_texture` field |
+| Single child texture | MinimalScrollBar Back/Forward | `<Texture parentKey="Texture"/>` → atlas set via `ButtonStateBehaviorMixin.OnLoad` → renders as child |
+| Three-slice | SharedButtonSmallTemplate (Enable All) | `<Texture parentKey="Left/Right/Center"/>` → atlas set via `ThreeSliceButtonMixin.InitButton()` → children render independently |
+
+### ThreeSliceButtonTemplate
+
+Three-part horizontally-stretched button used for most Blizzard UI action buttons.
+
+**Template chain:** `SharedButtonSmallTemplate` → `BigRedThreeSliceButtonTemplate` → `ThreeSliceButtonTemplate`
+
+**Structure:** 3 child Texture widgets (parentKey "Left", "Right", "Center") + FontString for text. Center has `horizTile=true`.
+
+**Mixin:** `ThreeSliceButtonMixin` sets atlas on children via `InitButton()` (OnLoad) and `UpdateButton()` (state changes). Atlas naming convention: `"atlasName-Left"`, `"atlasName-Right"`, `"_atlasName-Center"` (center has underscore prefix). State suffixes: `""` (normal), `"-Pressed"`, `"-Disabled"`.
+
+**Scale logic:** `UpdateScale()` calculates scale from `buttonHeight / leftAtlasInfo.height`, applies to Left/Right, and uses `SetTexCoord()` to crop edges when button is too narrow for both.
+
+**Key insight:** These buttons have NO `NormalTexture` set — all visuals come from child textures. The button itself must be transparent for the children to show through.
+
+### Dump Limitations
+
+- `--filter` matches frame **names** only, not parentKey names
+- Anonymous frames (parentKey-only) show as `(anonymous)` and won't match filters
+- Debug script hook: `src/main.rs` loads `/tmp/debug-scrollbox-update.lua` before GUI starts (not available in dump command)
 
 ## CLI Tools
 

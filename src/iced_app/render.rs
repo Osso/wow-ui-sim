@@ -257,25 +257,9 @@ pub fn build_button_quads(
                 [1.0, 1.0, 1.0, f.alpha],
             );
         }
-    } else {
-        // Fallback solid color
-        let bg_color = if is_pressed {
-            [0.20, 0.08, 0.08, 0.95 * f.alpha]
-        } else if is_hovered {
-            [0.18, 0.07, 0.07, 0.95 * f.alpha]
-        } else {
-            [0.15, 0.05, 0.05, 0.95 * f.alpha]
-        };
-        batch.push_solid(bounds, bg_color);
-
-        // Border for solid color fallback
-        let border_color = if is_hovered || is_pressed {
-            [0.8, 0.6, 0.2, f.alpha]
-        } else {
-            [0.6, 0.45, 0.15, f.alpha]
-        };
-        batch.push_border(bounds, 1.5, border_color);
     }
+    // In WoW, buttons without NormalTexture are transparent - their visuals come
+    // from child Texture widgets (e.g. MinimalScrollBar steppers, ThreeSliceButton Left/Right/Center).
 
     // Highlight texture overlay on hover
     if is_hovered && !is_pressed {
