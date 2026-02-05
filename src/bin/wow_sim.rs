@@ -463,9 +463,17 @@ fn dump_standalone(
             let vis = if frame.visible { "visible" } else { "hidden" };
             let size = format!("{}x{}", frame.width as i32, frame.height as i32);
 
+            // Show parentKey children if any
+            let keys: Vec<_> = frame.children_keys.keys().collect();
+            let keys_str = if keys.is_empty() {
+                String::new()
+            } else {
+                format!(" keys=[{}]", keys.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", "))
+            };
+
             println!(
-                "{}{} [{:?}] ({}) {}",
-                indent, name, frame.widget_type, size, vis
+                "{}{} [{:?}] ({}) {}{}",
+                indent, name, frame.widget_type, size, vis, keys_str
             );
         }
 
