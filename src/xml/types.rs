@@ -177,6 +177,14 @@ impl FrameXml {
             _ => None,
         })
     }
+
+    /// Get the ThumbTexture element if present (Slider-specific).
+    pub fn thumb_texture(&self) -> Option<&TextureXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::ThumbTexture(t) => Some(t),
+            _ => None,
+        })
+    }
 }
 
 /// Child elements that can appear inside a Frame.
