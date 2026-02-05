@@ -22,9 +22,20 @@ fn substitute_parent_name(name: &str, parent_name: Option<&str>) -> String {
 pub fn add_create_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // CreateTexture(name, layer, inherits, subLevel)
     methods.add_method("CreateTexture", |lua, this, args: mlua::MultiValue| {
+        use crate::widget::DrawLayer;
+
         let args: Vec<Value> = args.into_iter().collect();
 
         let name_raw: Option<String> = args.first().and_then(|v| {
+            if let Value::String(s) = v {
+                Some(s.to_string_lossy().to_string())
+            } else {
+                None
+            }
+        });
+
+        // Parse layer argument (second parameter)
+        let layer: Option<String> = args.get(1).and_then(|v| {
             if let Value::String(s) = v {
                 Some(s.to_string_lossy().to_string())
             } else {
@@ -39,7 +50,15 @@ pub fn add_create_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             substitute_parent_name(&n, parent_name)
         });
 
-        let texture = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
+        let mut texture = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
+
+        // Apply layer if specified
+        if let Some(layer_str) = layer {
+            if let Some(draw_layer) = DrawLayer::from_str(&layer_str) {
+                texture.draw_layer = draw_layer;
+            }
+        }
+
         let texture_id = texture.id;
 
         {
@@ -113,9 +132,20 @@ pub fn add_create_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // CreateFontString(name, layer, inherits)
     methods.add_method("CreateFontString", |lua, this, args: mlua::MultiValue| {
+        use crate::widget::DrawLayer;
+
         let args: Vec<Value> = args.into_iter().collect();
 
         let name_raw: Option<String> = args.first().and_then(|v| {
+            if let Value::String(s) = v {
+                Some(s.to_string_lossy().to_string())
+            } else {
+                None
+            }
+        });
+
+        // Parse layer argument (second parameter)
+        let layer: Option<String> = args.get(1).and_then(|v| {
             if let Value::String(s) = v {
                 Some(s.to_string_lossy().to_string())
             } else {
@@ -130,7 +160,15 @@ pub fn add_create_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             substitute_parent_name(&n, parent_name)
         });
 
-        let fontstring = Frame::new(WidgetType::FontString, name.clone(), Some(this.id));
+        let mut fontstring = Frame::new(WidgetType::FontString, name.clone(), Some(this.id));
+
+        // Apply layer if specified
+        if let Some(layer_str) = layer {
+            if let Some(draw_layer) = DrawLayer::from_str(&layer_str) {
+                fontstring.draw_layer = draw_layer;
+            }
+        }
+
         let fontstring_id = fontstring.id;
 
         {
