@@ -81,6 +81,20 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
         create_thumb_texture_from_template(lua, thumb, frame_name);
     }
 
+    // Create button textures (NormalTexture, PushedTexture, etc.)
+    if let Some(tex) = template.normal_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Normal", "SetNormalTexture");
+    }
+    if let Some(tex) = template.pushed_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Pushed", "SetPushedTexture");
+    }
+    if let Some(tex) = template.disabled_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Disabled", "SetDisabledTexture");
+    }
+    if let Some(tex) = template.highlight_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Highlight", "SetHighlightTexture");
+    }
+
     // Create child Frames from template
     if let Some(frames) = template.frames() {
         for child in &frames.elements {
@@ -394,6 +408,71 @@ fn create_thumb_texture_from_template(
     // Register as global if named
     if thumb.name.is_some() {
         code.push_str(&format!("            _G[\"{}\"] = thumb\n", child_name));
+    }
+
+    code.push_str("        end\n");
+
+    let _ = lua.load(&code).exec();
+}
+
+/// Create a button texture from template XML (NormalTexture, PushedTexture, etc.).
+fn create_button_texture_from_template(
+    lua: &Lua,
+    texture: &crate::xml::TextureXml,
+    parent_name: &str,
+    parent_key: &str,
+    setter_method: &str,
+) {
+    let child_name = texture
+        .name
+        .as_ref()
+        .map(|n| n.replace("$parent", parent_name))
+        .unwrap_or_else(|| format!("__tex_{}", rand_id()));
+
+    let mut code = format!(
+        r#"
+        local parent = {}
+        if parent and parent.{} then
+            local tex = parent:CreateTexture("{}", "ARTWORK")
+        "#,
+        parent_name, setter_method, child_name,
+    );
+
+    // Apply size
+    if let Some(size) = &texture.size {
+        let (width, height) = get_size_values(size);
+        if let (Some(w), Some(h)) = (width, height) {
+            code.push_str(&format!("            tex:SetSize({}, {})\n", w, h));
+        }
+    }
+
+    // Apply texture file
+    if let Some(file) = &texture.file {
+        code.push_str(&format!(
+            "            tex:SetTexture(\"{}\")\n",
+            escape_lua_string(file)
+        ));
+    }
+
+    // Apply atlas
+    if let Some(atlas) = &texture.atlas {
+        code.push_str(&format!(
+            "            tex:SetAtlas(\"{}\")\n",
+            escape_lua_string(atlas)
+        ));
+    }
+
+    // Set as the specific button texture and parentKey
+    code.push_str(&format!("            parent:{}(tex)\n", setter_method));
+    if let Some(pk) = &texture.parent_key {
+        code.push_str(&format!("            parent.{} = tex\n", pk));
+    } else {
+        code.push_str(&format!("            parent.{} = tex\n", parent_key));
+    }
+
+    // Register as global if named
+    if texture.name.is_some() {
+        code.push_str(&format!("            _G[\"{}\"] = tex\n", child_name));
     }
 
     code.push_str("        end\n");

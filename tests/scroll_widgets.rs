@@ -173,6 +173,42 @@ fn test_slider_has_fontstrings() {
 }
 
 // ============================================================================
+// Button Texture Tests (requires SharedXML)
+// ============================================================================
+
+#[test]
+fn test_scroll_button_has_textures() {
+    let env = env_with_shared_xml();
+
+    env.exec(
+        r#"
+        local sf = CreateFrame("ScrollFrame", "TestScrollBtnTex", UIParent, "FauxScrollFrameTemplate")
+        sf:SetSize(200, 300)
+    "#,
+    )
+    .unwrap();
+
+    // Check that ScrollUpButton has its textures from UIPanelScrollUpButtonTemplate
+    let has_normal: bool = env
+        .eval("return TestScrollBtnTex.ScrollBar.ScrollUpButton.Normal ~= nil")
+        .unwrap();
+    let has_pushed: bool = env
+        .eval("return TestScrollBtnTex.ScrollBar.ScrollUpButton.Pushed ~= nil")
+        .unwrap();
+    let has_disabled: bool = env
+        .eval("return TestScrollBtnTex.ScrollBar.ScrollUpButton.Disabled ~= nil")
+        .unwrap();
+    let has_highlight: bool = env
+        .eval("return TestScrollBtnTex.ScrollBar.ScrollUpButton.Highlight ~= nil")
+        .unwrap();
+
+    assert!(has_normal, "ScrollUpButton should have Normal texture");
+    assert!(has_pushed, "ScrollUpButton should have Pushed texture");
+    assert!(has_disabled, "ScrollUpButton should have Disabled texture");
+    assert!(has_highlight, "ScrollUpButton should have Highlight texture");
+}
+
+// ============================================================================
 // HybridScrollBarTemplate Tests (requires SharedXML)
 // ============================================================================
 
