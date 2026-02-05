@@ -217,6 +217,9 @@ impl GlyphAtlas {
 /// * `justify_h` - Horizontal justification
 /// * `justify_v` - Vertical justification
 /// * `glyph_tex_index` - Texture index for the glyph atlas in the GPU atlas
+/// * `shadow_color` - Optional shadow color (render shadow if alpha > 0)
+/// * `shadow_offset` - Shadow offset (x, y) in pixels
+#[allow(clippy::too_many_arguments)]
 pub fn emit_text_quads(
     batch: &mut QuadBatch,
     font_system: &mut WowFontSystem,
@@ -229,6 +232,8 @@ pub fn emit_text_quads(
     justify_h: TextJustify,
     justify_v: TextJustify,
     glyph_tex_index: i32,
+    shadow_color: Option<[f32; 4]>,
+    shadow_offset: (f32, f32),
 ) {
     if text.is_empty() || bounds.height <= 0.0 {
         return;
@@ -277,50 +282,80 @@ pub fn emit_text_quads(
         TextJustify::Right => bounds.height - total_height, // BOTTOM
     };
 
-    // Emit quads for each glyph
-    for run in buffer.layout_runs() {
-        // Horizontal offset based on justification.
-        // For explicit width, apply justification within bounds.
-        // For width=0 (auto-sized FontStrings), text starts at bounds.x (LEFT behavior).
-        // This matches WoW where auto-sized FontStrings flow from their anchor point.
-        let run_width = run.line_w;
-        let x_offset = if bounds.width > 0.0 {
-            match justify_h {
-                TextJustify::Left => 0.0,
-                TextJustify::Center => (bounds.width - run_width) / 2.0,
-                TextJustify::Right => bounds.width - run_width,
-            }
-        } else {
-            // Width=0: text starts at bounds.x regardless of justify_h
-            // This is correct for auto-sized FontStrings positioned by single anchor
-            0.0
-        };
+    // Check if we should render a shadow
+    let has_shadow = shadow_color.map(|c| c[3] > 0.0).unwrap_or(false);
 
-        for glyph in run.glyphs.iter() {
-            let physical_glyph = glyph.physical((0.0, 0.0), 1.0);
+    // Helper closure to emit glyph quads with given color and offset
+    let emit_glyphs = |batch: &mut QuadBatch,
+                       glyph_atlas: &mut GlyphAtlas,
+                       font_system: &mut WowFontSystem,
+                       glyph_color: [f32; 4],
+                       offset_x: f32,
+                       offset_y: f32| {
+        for run in buffer.layout_runs() {
+            // Horizontal offset based on justification.
+            // For explicit width, apply justification within bounds.
+            // For width=0 (auto-sized FontStrings), text starts at bounds.x (LEFT behavior).
+            // This matches WoW where auto-sized FontStrings flow from their anchor point.
+            let run_width = run.line_w;
+            let x_offset = if bounds.width > 0.0 {
+                match justify_h {
+                    TextJustify::Left => 0.0,
+                    TextJustify::Center => (bounds.width - run_width) / 2.0,
+                    TextJustify::Right => bounds.width - run_width,
+                }
+            } else {
+                // Width=0: text starts at bounds.x regardless of justify_h
+                // This is correct for auto-sized FontStrings positioned by single anchor
+                0.0
+            };
 
-            if let Some(entry) =
-                glyph_atlas.ensure_glyph(font_system, physical_glyph.cache_key)
-            {
-                // Glyph positioning:
-                // physical_glyph.x is pen position
-                // physical_glyph.y includes baseline offset, entry.top is bitmap offset
-                let glyph_x = bounds.x + x_offset + physical_glyph.x as f32;
-                let glyph_y =
-                    bounds.y + y_offset + run.line_y + physical_glyph.y as f32 - entry.top as f32;
+            for glyph in run.glyphs.iter() {
+                let physical_glyph = glyph.physical((0.0, 0.0), 1.0);
 
-                let glyph_bounds = Rectangle::new(
-                    iced::Point::new(glyph_x, glyph_y),
-                    iced::Size::new(entry.width as f32, entry.height as f32),
-                );
+                if let Some(entry) =
+                    glyph_atlas.ensure_glyph(font_system, physical_glyph.cache_key)
+                {
+                    // Glyph positioning:
+                    // physical_glyph.x is pen position
+                    // physical_glyph.y includes baseline offset, entry.top is bitmap offset
+                    let glyph_x =
+                        bounds.x + x_offset + physical_glyph.x as f32 + offset_x;
+                    let glyph_y = bounds.y
+                        + y_offset
+                        + run.line_y
+                        + physical_glyph.y as f32
+                        - entry.top as f32
+                        + offset_y;
 
-                let uv = Rectangle::new(
-                    iced::Point::new(entry.uv_x, entry.uv_y),
-                    iced::Size::new(entry.uv_w, entry.uv_h),
-                );
+                    let glyph_bounds = Rectangle::new(
+                        iced::Point::new(glyph_x, glyph_y),
+                        iced::Size::new(entry.width as f32, entry.height as f32),
+                    );
 
-                batch.push_quad(glyph_bounds, uv, color, glyph_tex_index, BlendMode::Alpha);
+                    let uv = Rectangle::new(
+                        iced::Point::new(entry.uv_x, entry.uv_y),
+                        iced::Size::new(entry.uv_w, entry.uv_h),
+                    );
+
+                    batch.push_quad(glyph_bounds, uv, glyph_color, glyph_tex_index, BlendMode::Alpha);
+                }
             }
         }
+    };
+
+    // Render shadow first (behind main text)
+    if has_shadow {
+        emit_glyphs(
+            batch,
+            glyph_atlas,
+            font_system,
+            shadow_color.unwrap(),
+            shadow_offset.0,
+            shadow_offset.1,
+        );
     }
+
+    // Render main text
+    emit_glyphs(batch, glyph_atlas, font_system, color, 0.0, 0.0);
 }

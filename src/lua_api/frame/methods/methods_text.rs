@@ -219,17 +219,55 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // SetShadowOffset(x, y) - set shadow offset for FontStrings
-    methods.add_method("SetShadowOffset", |_, _this, (_x, _y): (f64, f64)| Ok(()));
+    methods.add_method("SetShadowOffset", |_, this, (x, y): (f64, f64)| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.shadow_offset = (x as f32, y as f32);
+        }
+        Ok(())
+    });
 
     // GetShadowOffset() - get shadow offset for FontStrings
-    methods.add_method("GetShadowOffset", |_, _this, ()| Ok((0.0_f64, 0.0_f64)));
+    methods.add_method("GetShadowOffset", |_, this, ()| {
+        let state = this.state.borrow();
+        let (x, y) = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.shadow_offset)
+            .unwrap_or((0.0, 0.0));
+        Ok((x as f64, y as f64))
+    });
 
     // SetShadowColor(r, g, b, a) - set shadow color for FontStrings
-    methods.add_method("SetShadowColor", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetShadowColor", |_, this, args: mlua::MultiValue| {
+        let values: Vec<f32> = args
+            .into_iter()
+            .filter_map(|v| match v {
+                Value::Number(n) => Some(n as f32),
+                Value::Integer(n) => Some(n as f32),
+                _ => None,
+            })
+            .collect();
+        let r = values.first().copied().unwrap_or(0.0);
+        let g = values.get(1).copied().unwrap_or(0.0);
+        let b = values.get(2).copied().unwrap_or(0.0);
+        let a = values.get(3).copied().unwrap_or(1.0);
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.shadow_color = crate::widget::Color::new(r, g, b, a);
+        }
+        Ok(())
+    });
 
     // GetShadowColor() - get shadow color for FontStrings
-    methods.add_method("GetShadowColor", |_, _this, ()| {
-        Ok((0.0_f64, 0.0_f64, 0.0_f64, 1.0_f64))
+    methods.add_method("GetShadowColor", |_, this, ()| {
+        let state = this.state.borrow();
+        let color = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.shadow_color)
+            .unwrap_or(crate::widget::Color::new(0.0, 0.0, 0.0, 0.0));
+        Ok((color.r as f64, color.g as f64, color.b as f64, color.a as f64))
     });
 
     // SetFont(font, size, flags) - for FontString widgets

@@ -508,6 +508,8 @@ pub struct FontStringXml {
     pub size: Option<SizeXml>,
     #[serde(rename = "Anchors")]
     pub anchors: Option<AnchorsXml>,
+    #[serde(rename = "Shadow")]
+    pub shadow: Option<ShadowXml>,
     #[serde(rename = "Scripts")]
     pub scripts: Option<ScriptsXml>,
 }
@@ -524,6 +526,41 @@ pub struct ColorXml {
     pub a: Option<f32>,
     #[serde(rename = "@color")]
     pub color: Option<String>,
+}
+
+/// Shadow element for FontStrings - contains offset and color.
+#[derive(Debug, Deserialize, Clone, Default)]
+pub struct ShadowXml {
+    #[serde(rename = "Offset")]
+    pub offset: Option<ShadowOffsetXml>,
+    #[serde(rename = "Color")]
+    pub color: Option<ColorXml>,
+}
+
+/// Shadow offset - can have direct x/y attributes or nested AbsDimension.
+#[derive(Debug, Deserialize, Clone)]
+pub struct ShadowOffsetXml {
+    /// Direct x attribute (from `<Offset x="1" y="-1"/>`)
+    #[serde(rename = "@x")]
+    pub x: Option<f32>,
+    /// Direct y attribute
+    #[serde(rename = "@y")]
+    pub y: Option<f32>,
+    /// Nested AbsDimension (from `<Offset><AbsDimension x="1" y="-1"/></Offset>`)
+    #[serde(rename = "AbsDimension")]
+    pub abs_dimension: Option<AbsDimensionXml>,
+}
+
+impl ShadowOffsetXml {
+    /// Get the x offset, preferring direct attribute over nested AbsDimension.
+    pub fn x(&self) -> f32 {
+        self.x.or_else(|| self.abs_dimension.as_ref().and_then(|d| d.x)).unwrap_or(0.0)
+    }
+
+    /// Get the y offset, preferring direct attribute over nested AbsDimension.
+    pub fn y(&self) -> f32 {
+        self.y.or_else(|| self.abs_dimension.as_ref().and_then(|d| d.y)).unwrap_or(0.0)
+    }
 }
 
 /// Child frames container - can contain any frame-like element.

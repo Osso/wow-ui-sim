@@ -518,11 +518,17 @@ pub fn build_quad_batch_for_registry(
                             f.text_color.b,
                             f.text_color.a * f.alpha,
                         ];
+                        let shadow = if f.shadow_color.a > 0.0 {
+                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
+                        } else {
+                            None
+                        };
                         emit_text_quads(
                             &mut batch, font_sys, glyph_atlas, txt, bounds,
                             f.font.as_deref(), f.font_size, color,
                             TextJustify::Center, TextJustify::Center,
                             GLYPH_ATLAS_TEX_INDEX,
+                            shadow, f.shadow_offset,
                         );
                     }
                 }
@@ -539,6 +545,11 @@ pub fn build_quad_batch_for_registry(
                             f.text_color.b,
                             f.text_color.a * f.alpha,
                         ];
+                        let shadow = if f.shadow_color.a > 0.0 {
+                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
+                        } else {
+                            None
+                        };
                         emit_text_quads(
                             &mut batch,
                             font_sys,
@@ -551,6 +562,8 @@ pub fn build_quad_batch_for_registry(
                             f.justify_h,
                             f.justify_v,
                             GLYPH_ATLAS_TEX_INDEX,
+                            shadow,
+                            f.shadow_offset,
                         );
                     }
                 }
@@ -567,6 +580,11 @@ pub fn build_quad_batch_for_registry(
                             f.text_color.b,
                             f.text_color.a * f.alpha,
                         ];
+                        let shadow = if f.shadow_color.a > 0.0 {
+                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
+                        } else {
+                            None
+                        };
                         // CheckButton label is offset to the right of the checkbox
                         let label_bounds = Rectangle::new(
                             Point::new(bounds.x + 20.0, bounds.y),
@@ -577,6 +595,7 @@ pub fn build_quad_batch_for_registry(
                             f.font.as_deref(), f.font_size, color,
                             TextJustify::Left, TextJustify::Center,
                             GLYPH_ATLAS_TEX_INDEX,
+                            shadow, f.shadow_offset,
                         );
                     }
                 }
@@ -596,11 +615,17 @@ pub fn build_quad_batch_for_registry(
                             f.text_color.b,
                             f.text_color.a * f.alpha,
                         ];
+                        let shadow = if f.shadow_color.a > 0.0 {
+                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
+                        } else {
+                            None
+                        };
                         emit_text_quads(
                             &mut batch, font_sys, glyph_atlas, txt, text_bounds,
                             f.font.as_deref(), f.font_size, color,
                             TextJustify::Left, TextJustify::Center,
                             GLYPH_ATLAS_TEX_INDEX,
+                            shadow, f.shadow_offset,
                         );
                     }
                 }

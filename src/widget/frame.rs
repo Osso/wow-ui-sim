@@ -123,6 +123,10 @@ pub struct Frame {
     pub title: Option<String>,
     /// Text color for FontStrings.
     pub text_color: Color,
+    /// Shadow color for FontStrings (defaults to transparent = no shadow).
+    pub shadow_color: Color,
+    /// Shadow offset (x, y) in pixels for FontStrings.
+    pub shadow_offset: (f32, f32),
     /// Font name (for FontString widgets).
     pub font: Option<String>,
     /// Font size (for FontString widgets).
@@ -224,6 +228,8 @@ impl Frame {
             text: None,
             title: None,
             text_color: Color::new(1.0, 0.8, 0.2, 1.0), // Default gold text for visibility
+            shadow_color: Color::new(0.0, 0.0, 0.0, 0.0), // Transparent = no shadow by default
+            shadow_offset: (0.0, 0.0),
             font: None,
             font_size: 14.0,
             justify_h: TextJustify::Center,  // WoW FontStrings default to CENTER
