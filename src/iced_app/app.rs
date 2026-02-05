@@ -31,10 +31,18 @@ pub const DEFAULT_INTERFACE_PATH: &str = "/home/osso/Projects/wow/Interface";
 /// Default path to addons directory.
 pub const DEFAULT_ADDONS_PATH: &str = "/home/osso/Projects/wow/reference-addons";
 
+/// Debug visualization options.
+#[derive(Default, Clone)]
+pub struct DebugOptions {
+    pub borders: bool,
+    pub anchors: bool,
+}
+
 // Thread-local storage for init params
 thread_local! {
     pub static INIT_ENV: RefCell<Option<WowLuaEnv>> = const { RefCell::new(None) };
     pub static INIT_TEXTURES: RefCell<Option<PathBuf>> = const { RefCell::new(None) };
+    pub static INIT_DEBUG: RefCell<Option<DebugOptions>> = const { RefCell::new(None) };
 }
 
 /// Fire the standard WoW startup events.
@@ -176,10 +184,11 @@ impl App {
             lua_server::socket_path().display()
         );
 
-        // Debug modes: WOW_SIM_DEBUG_ELEMENTS enables both borders and anchors
+        // Debug modes: from CLI flags or env vars
+        let init_debug = INIT_DEBUG.with(|cell| cell.borrow_mut().take()).unwrap_or_default();
         let debug_elements = std::env::var("WOW_SIM_DEBUG_ELEMENTS").is_ok();
-        let debug_borders = debug_elements || std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
-        let debug_anchors = debug_elements || std::env::var("WOW_SIM_DEBUG_ANCHORS").is_ok();
+        let debug_borders = init_debug.borders || debug_elements || std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
+        let debug_anchors = init_debug.anchors || debug_elements || std::env::var("WOW_SIM_DEBUG_ANCHORS").is_ok();
 
         if debug_borders || debug_anchors {
             eprintln!(

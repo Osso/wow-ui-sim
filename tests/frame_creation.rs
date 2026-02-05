@@ -390,6 +390,80 @@ fn test_checkbutton_with_label() {
     assert_eq!(label_text, "Enable Feature");
 }
 
+/// When a CheckButton template (e.g., MinimalCheckboxArtTemplate) creates textures via
+/// SetNormalTexture/SetPushedTexture/etc., it should reuse the default children from
+/// create_widget_type_defaults, not create duplicates that orphan the defaults.
+/// Orphaned default children with no anchors center themselves in the parent, causing
+/// visual artifacts (ghost rectangles in the middle of the panel).
+#[test]
+fn test_checkbutton_template_no_orphaned_children() {
+    let env = WowLuaEnv::new().unwrap();
+
+    // Simulate what create_button_texture_from_template generates:
+    // reuse existing default textures from children_keys instead of creating new ones.
+    env.exec(
+        r#"
+        local cb = CreateFrame("CheckButton", "TestCbOrphans", UIParent)
+        cb:SetSize(30, 29)
+        cb:SetPoint("CENTER")
+
+        -- Reuse existing default children (same pattern as the fixed template code)
+        local normal = cb.NormalTexture
+        cb:SetNormalTexture(normal)
+        normal:SetTexture("Interface\\common\\minimalcheckbox")
+
+        local pushed = cb.PushedTexture
+        cb:SetPushedTexture(pushed)
+        pushed:SetTexture("Interface\\common\\minimalcheckbox")
+
+        local highlight = cb.HighlightTexture
+        cb:SetHighlightTexture(highlight)
+        highlight:SetTexture("Interface\\common\\minimalcheckbox")
+
+        -- CheckedTexture/DisabledCheckedTexture don't have defaults,
+        -- so these create new children via get_or_create_button_texture
+        cb:SetCheckedTexture("Interface\\common\\minimalcheckbox")
+        cb:SetDisabledCheckedTexture("Interface\\common\\minimalcheckbox")
+    "#,
+    )
+    .unwrap();
+
+    // Inspect the Rust-side widget tree: every child should either be referenced
+    // in children_keys or have anchors. No orphaned anchorless texture children.
+    let state = env.state().borrow();
+    let registry = &state.widgets;
+
+    let cb_id = registry.get_id_by_name("TestCbOrphans").unwrap();
+    let cb = registry.get(cb_id).unwrap();
+
+    let referenced_ids: std::collections::HashSet<u64> =
+        cb.children_keys.values().copied().collect();
+
+    let mut orphaned = Vec::new();
+    for &child_id in &cb.children {
+        if referenced_ids.contains(&child_id) {
+            continue;
+        }
+        let child = registry.get(child_id).unwrap();
+        if child.anchors.is_empty()
+            && child.texture.is_none()
+            && child.text.is_none()
+            && child.width == 0.0
+            && child.height == 0.0
+        {
+            orphaned.push((child_id, child.widget_type));
+        }
+    }
+
+    assert!(
+        orphaned.is_empty(),
+        "CheckButton has {} orphaned children (0x0, no anchors, no content) \
+         that will render as ghost elements centered in the parent: {:?}",
+        orphaned.len(),
+        orphaned
+    );
+}
+
 // ============================================================================
 // CreateTexture and CreateFontString Tests
 // ============================================================================

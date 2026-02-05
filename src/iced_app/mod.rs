@@ -30,7 +30,8 @@ pub use render::build_quad_batch_for_registry;
 pub use state::{CanvasMessage, InspectorState, TextOverlay};
 pub use styles::palette;
 
-use app::{FALLBACK_TEXTURES_PATH, INIT_ENV, INIT_TEXTURES, LOCAL_TEXTURES_PATH};
+pub use app::DebugOptions;
+use app::{FALLBACK_TEXTURES_PATH, INIT_DEBUG, INIT_ENV, INIT_TEXTURES, LOCAL_TEXTURES_PATH};
 
 /// Application messages.
 #[derive(Debug, Clone)]
@@ -66,24 +67,26 @@ pub enum Message {
 }
 
 /// Run the iced UI with the given Lua environment.
-pub fn run_iced_ui(env: WowLuaEnv) -> Result<(), Box<dyn std::error::Error>> {
+pub fn run_iced_ui(env: WowLuaEnv, debug: DebugOptions) -> Result<(), Box<dyn std::error::Error>> {
     // Prefer local WebP textures, fall back to full repo
     let textures_path = if PathBuf::from(LOCAL_TEXTURES_PATH).exists() {
         PathBuf::from(LOCAL_TEXTURES_PATH)
     } else {
         PathBuf::from(FALLBACK_TEXTURES_PATH)
     };
-    run_iced_ui_with_textures(env, textures_path)
+    run_iced_ui_with_textures(env, textures_path, debug)
 }
 
 /// Run the iced UI with the given Lua environment and textures path.
 pub fn run_iced_ui_with_textures(
     env: WowLuaEnv,
     textures_path: PathBuf,
+    debug: DebugOptions,
 ) -> Result<(), Box<dyn std::error::Error>> {
     // Store in thread-local for the boot function
     INIT_ENV.with(|cell| *cell.borrow_mut() = Some(env));
     INIT_TEXTURES.with(|cell| *cell.borrow_mut() = Some(textures_path));
+    INIT_DEBUG.with(|cell| *cell.borrow_mut() = Some(debug));
 
     iced::application(App::boot, App::update, App::view)
         .title(App::title)

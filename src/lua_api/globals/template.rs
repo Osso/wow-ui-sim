@@ -565,6 +565,10 @@ fn create_thumb_texture_from_template(
 }
 
 /// Create a button texture from template XML (NormalTexture, PushedTexture, etc.).
+///
+/// Reuses existing default texture children (from create_widget_type_defaults) when
+/// available, to avoid orphaning them. Orphaned 0x0 anchorless children would center
+/// themselves in the parent frame, causing ghost rectangles.
 fn create_button_texture_from_template(
     lua: &Lua,
     texture: &crate::xml::TextureXml,
@@ -572,19 +576,32 @@ fn create_button_texture_from_template(
     parent_key: &str,
     setter_method: &str,
 ) {
+    let actual_parent_key = texture
+        .parent_key
+        .as_deref()
+        .unwrap_or(parent_key);
+
     let child_name = texture
         .name
         .as_ref()
-        .map(|n| n.replace("$parent", parent_name))
+        .map(|n| n.replace("$parent", parent_name));
+
+    // Reuse existing default texture child if available (e.g., from create_widget_type_defaults),
+    // otherwise create a new one. This prevents orphaned children that render as ghost elements.
+    let tex_name = child_name
+        .clone()
         .unwrap_or_else(|| format!("__tex_{}", rand_id()));
 
     let mut code = format!(
         r#"
         local parent = {}
         if parent and parent.{} then
-            local tex = parent:CreateTexture("{}", "ARTWORK")
+            local tex = parent.{}
+            if tex == nil then
+                tex = parent:CreateTexture("{}", "ARTWORK")
+            end
         "#,
-        parent_name, setter_method, child_name,
+        parent_name, setter_method, actual_parent_key, tex_name,
     );
 
     // Apply size
@@ -595,14 +612,10 @@ fn create_button_texture_from_template(
         }
     }
 
-    // Register parentKey first so children_keys is populated, then call setter
+    // Register parentKey so children_keys is populated, then call setter
     // method which uses get_or_create_button_texture (finds existing child), then
     // SetAtlas can propagate to parent via the parent_key lookup
-    if let Some(pk) = &texture.parent_key {
-        code.push_str(&format!("            parent.{} = tex\n", pk));
-    } else {
-        code.push_str(&format!("            parent.{} = tex\n", parent_key));
-    }
+    code.push_str(&format!("            parent.{} = tex\n", actual_parent_key));
     code.push_str(&format!("            parent:{}(tex)\n", setter_method));
 
     // Apply texture file
@@ -622,8 +635,8 @@ fn create_button_texture_from_template(
     }
 
     // Register as global if named
-    if texture.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = tex\n", child_name));
+    if child_name.is_some() {
+        code.push_str(&format!("            _G[\"{}\"] = tex\n", tex_name));
     }
 
     code.push_str("        end\n");

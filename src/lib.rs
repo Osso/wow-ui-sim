@@ -23,7 +23,7 @@ pub mod widget;
 pub mod xml;
 
 pub use error::{Error, Result};
-pub use iced_app::{run_iced_ui, run_iced_ui_with_textures};
+pub use iced_app::{run_iced_ui, run_iced_ui_with_textures, DebugOptions};
 
 /// Computed layout position for a frame.
 #[derive(Debug, Clone, Copy, Default)]

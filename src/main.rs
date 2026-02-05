@@ -1,9 +1,34 @@
 use std::path::PathBuf;
+use clap::Parser;
 use tracing_subscriber::EnvFilter;
 use wow_ui_sim::loader::{load_addon, load_addon_with_saved_vars, LoadTiming};
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
 use wow_ui_sim::toc::TocFile;
+
+#[derive(Parser)]
+#[command(name = "wow-ui-sim", about = "WoW UI Simulator")]
+struct Args {
+    /// Skip loading WTF SavedVariables (faster startup)
+    #[arg(long)]
+    no_saved_vars: bool,
+
+    /// Skip loading third-party addons
+    #[arg(long)]
+    no_addons: bool,
+
+    /// Show debug borders and anchor points on all elements
+    #[arg(long)]
+    debug_elements: bool,
+
+    /// Show red debug borders around all elements
+    #[arg(long)]
+    debug_borders: bool,
+
+    /// Show green anchor points on all elements
+    #[arg(long)]
+    debug_anchors: bool,
+}
 
 /// Apply resource limits to prevent runaway memory/CPU usage.
 /// Defaults: 10GB memory, 1 CPU core.
@@ -109,6 +134,7 @@ fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let args = Args::parse();
     apply_resource_limits();
 
     tracing_subscriber::fmt()
@@ -118,13 +144,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let env = WowLuaEnv::new()?;
     let mut saved_vars = SavedVariablesManager::new();
 
-    // Check if SavedVariables loading is disabled (for faster startup)
-    // Set WOW_SIM_NO_SAVED_VARS=1 to skip loading WTF files
-    let skip_saved_vars = std::env::var("WOW_SIM_NO_SAVED_VARS")
-        .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
-        .unwrap_or(false);
+    let skip_saved_vars = args.no_saved_vars
+        || std::env::var("WOW_SIM_NO_SAVED_VARS")
+            .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
+            .unwrap_or(false);
     if skip_saved_vars {
-        println!("SavedVariables loading disabled (WOW_SIM_NO_SAVED_VARS set)");
+        println!("SavedVariables loading disabled");
     } else {
         // Configure WTF loading for character "Haky" on "Burning Blade"
         let wtf_path = PathBuf::from("/syncthing/Sync/Projects/wow/WTF");
@@ -177,14 +202,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    // Check if addon loading is disabled (for faster startup during texture testing)
-    // Set WOW_SIM_NO_ADDONS=1 to skip loading third-party addons
-    let skip_addons = std::env::var("WOW_SIM_NO_ADDONS")
-        .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
-        .unwrap_or(false);
+    let skip_addons = args.no_addons
+        || std::env::var("WOW_SIM_NO_ADDONS")
+            .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
+            .unwrap_or(false);
 
     if skip_addons {
-        println!("\nAddon loading disabled (WOW_SIM_NO_ADDONS set)");
+        println!("\nAddon loading disabled");
     }
 
     // Scan and load all addons from reference-addons directory
@@ -358,7 +382,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     // Run the iced UI
-    wow_ui_sim::run_iced_ui(env)?;
+    let debug = wow_ui_sim::DebugOptions {
+        borders: args.debug_borders || args.debug_elements,
+        anchors: args.debug_anchors || args.debug_elements,
+    };
+    wow_ui_sim::run_iced_ui(env, debug)?;
 
     Ok(())
 }
