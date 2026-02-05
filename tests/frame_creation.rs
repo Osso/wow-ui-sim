@@ -522,3 +522,4 @@ fn test_checkbutton_text_from_global_string() {
     let label: String = env.eval("return TestCbGlobalStr.Text:GetText()").unwrap();
     assert_eq!(label, "Load out of date AddOns");
 }
+

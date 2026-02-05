@@ -40,8 +40,14 @@ pub fn create_fontstring_from_xml(
         }
     );
 
-    // Set text (Lua call for compatibility; actual text/sizing set in Rust below)
-    if let Some(text) = &fontstring.text {
+    // Resolve text: XML text attributes are localization keys looked up in global strings.
+    let resolved_text = fontstring.text.as_ref().map(|key| {
+        crate::global_strings::get_global_string(key)
+            .map(|s| s.to_string())
+            .unwrap_or_else(|| key.clone())
+    });
+
+    if let Some(text) = &resolved_text {
         lua_code.push_str(&format!(
             r#"
         fs:SetText("{}")
@@ -158,7 +164,7 @@ pub fn create_fontstring_from_xml(
     // Set text and auto-size dimensions directly in Rust
     // This bypasses the Lua SetText method which doesn't trigger our Rust code
     // due to the fake metatable setup
-    if let Some(text) = &fontstring.text {
+    if let Some(text) = &resolved_text {
         let state = env.state();
         let mut state_ref = state.borrow_mut();
         if let Some(frame_id) = state_ref.widgets.get_id_by_name(&fs_name) {
@@ -177,4 +183,36 @@ pub fn create_fontstring_from_xml(
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::lua_api::WowLuaEnv;
+    use crate::xml::FontStringXml;
+
+    #[test]
+    fn xml_fontstring_text_resolves_global_string_key() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(r#"CreateFrame("Frame", "TestFSParent", UIParent)"#)
+            .unwrap();
+
+        let fs = FontStringXml {
+            name: Some("TestFSResolved".to_string()),
+            text: Some("ADDON_FORCE_LOAD".to_string()),
+            ..Default::default()
+        };
+        create_fontstring_from_xml(&env, &fs, "TestFSParent", "ARTWORK").unwrap();
+
+        // Verify Lua-side text is resolved
+        let text: String = env.eval("return TestFSResolved:GetText()").unwrap();
+        assert_eq!(text, "Load out of date AddOns");
+
+        // Verify Rust-side text is resolved
+        let state = env.state();
+        let state_ref = state.borrow();
+        let id = state_ref.widgets.get_id_by_name("TestFSResolved").unwrap();
+        let frame = state_ref.widgets.get(id).unwrap();
+        assert_eq!(frame.text.as_deref(), Some("Load out of date AddOns"));
+    }
 }

@@ -317,11 +317,13 @@ fn create_fontstring_from_template(
         }
     }
 
-    // Apply text
-    if let Some(text) = &fontstring.text {
+    // Apply text (resolve localization key via global strings)
+    if let Some(text_key) = &fontstring.text {
+        let resolved = crate::global_strings::get_global_string(text_key)
+            .unwrap_or(text_key.as_str());
         code.push_str(&format!(
             "            fs:SetText(\"{}\")\n",
-            escape_lua_string(text)
+            escape_lua_string(resolved)
         ));
     }
 
