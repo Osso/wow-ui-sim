@@ -538,6 +538,7 @@ fn screenshot_standalone(
 ) {
     use wow_ui_sim::iced_app::build_quad_batch_for_registry;
     use wow_ui_sim::render::software::render_to_image;
+    use wow_ui_sim::render::{GlyphAtlas, WowFontSystem};
     use wow_ui_sim::texture::TextureManager;
 
     // Set environment variables for the loader
@@ -593,6 +594,11 @@ fn screenshot_standalone(
         eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
     }
 
+    // Set up font system and glyph atlas for text rendering
+    let fonts_path = PathBuf::from("./fonts");
+    let mut font_system = WowFontSystem::new(&fonts_path);
+    let mut glyph_atlas = GlyphAtlas::new();
+
     // Build quad batch
     let state = env.state().borrow();
     let widgets = &state.widgets;
@@ -603,7 +609,7 @@ fn screenshot_standalone(
         filter.as_deref(),
         None,
         None,
-        None, // No text rendering in headless screenshots (yet)
+        Some((&mut font_system, &mut glyph_atlas)),
     );
 
     eprintln!(
@@ -624,8 +630,16 @@ fn screenshot_standalone(
         .with_interface_path(home.join("Projects/wow/Interface"))
         .with_addons_path(home.join("Projects/wow/reference-addons"));
 
+    // Get glyph atlas data for text rendering
+    let glyph_data = if glyph_atlas.is_dirty() {
+        let (data, size, _) = glyph_atlas.texture_data();
+        Some((data, size))
+    } else {
+        None
+    };
+
     // Render
-    let img = render_to_image(&batch, &mut tex_mgr, width, height);
+    let img = render_to_image(&batch, &mut tex_mgr, width, height, glyph_data);
 
     // Save
     if let Err(e) = img.save(&output) {

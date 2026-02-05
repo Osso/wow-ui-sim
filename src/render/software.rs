@@ -14,11 +14,15 @@ use crate::texture::TextureManager;
 /// Creates a headless GPU device, sets up the same WowUiPipeline used by
 /// the iced GUI, and renders to an offscreen texture. The result is read
 /// back to CPU memory as an RgbaImage.
+///
+/// When `glyph_atlas_data` is provided, text glyphs are rendered using the
+/// glyph atlas texture.
 pub fn render_to_image(
     batch: &QuadBatch,
     tex_mgr: &mut TextureManager,
     width: u32,
     height: u32,
+    glyph_atlas_data: Option<(&[u8], u32)>,
 ) -> RgbaImage {
     // Load textures for all requests
     let mut textures = Vec::new();
@@ -38,7 +42,13 @@ pub fn render_to_image(
         }
     }
 
-    let primitive = WowUiPrimitive::with_textures(batch.clone(), textures);
+    let mut primitive = WowUiPrimitive::with_textures(batch.clone(), textures);
+
+    // Attach glyph atlas if provided
+    if let Some((data, size)) = glyph_atlas_data {
+        primitive.glyph_atlas_data = Some(data.to_vec());
+        primitive.glyph_atlas_size = size;
+    }
 
     // Create headless wgpu device
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {

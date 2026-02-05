@@ -169,12 +169,8 @@ pub fn create_fontstring_from_xml(
         let mut state_ref = state.borrow_mut();
         if let Some(frame_id) = state_ref.widgets.get_id_by_name(&fs_name) {
             if let Some(frame) = state_ref.widgets.get_mut(frame_id) {
-                // Set text
                 frame.text = Some(text.clone());
-                // Auto-size: ~7 pixels per character for width, font_size for height
-                if frame.width == 0.0 {
-                    frame.width = text.len() as f32 * 7.0;
-                }
+                // Auto-size height to font size; width is measured by renderer
                 if frame.height == 0.0 {
                     frame.height = frame.font_size.max(12.0);
                 }

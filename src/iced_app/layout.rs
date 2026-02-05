@@ -147,10 +147,18 @@ pub fn compute_frame_rect(
             0.0
         };
 
-        let final_x =
-            final_left_x.unwrap_or_else(|| final_right_x.map(|rx| rx - final_width).unwrap_or(parent_rect.x));
-        let final_y =
-            final_top_y.unwrap_or_else(|| final_bottom_y.map(|by| by - final_height).unwrap_or(parent_rect.y));
+        // When no horizontal anchors, center on parent. This handles frames with only TOP/BOTTOM anchors.
+        let final_x = final_left_x.unwrap_or_else(|| {
+            final_right_x
+                .map(|rx| rx - final_width)
+                .unwrap_or_else(|| parent_rect.x + (parent_rect.width - final_width) / 2.0)
+        });
+        // When no vertical anchors, center on parent.
+        let final_y = final_top_y.unwrap_or_else(|| {
+            final_bottom_y
+                .map(|by| by - final_height)
+                .unwrap_or_else(|| parent_rect.y + (parent_rect.height - final_height) / 2.0)
+        });
 
         return LayoutRect {
             x: final_x,

@@ -29,8 +29,7 @@ struct GlyphEntry {
     /// Glyph bitmap dimensions in pixels.
     width: u32,
     height: u32,
-    /// Swash placement offsets from pen position to image top-left.
-    left: i32,
+    /// Swash placement offset from pen position to image top edge.
     top: i32,
 }
 
@@ -189,7 +188,6 @@ impl GlyphAtlas {
             uv_h: height as f32 / GLYPH_ATLAS_SIZE as f32,
             width,
             height,
-            left: image.placement.left,
             top: image.placement.top,
         };
 
@@ -232,7 +230,7 @@ pub fn emit_text_quads(
     justify_v: TextJustify,
     glyph_tex_index: i32,
 ) {
-    if text.is_empty() || bounds.width <= 0.0 || bounds.height <= 0.0 {
+    if text.is_empty() || bounds.height <= 0.0 {
         return;
     }
 
@@ -246,8 +244,11 @@ pub fn emit_text_quads(
     let metrics = Metrics::new(font_size, line_height);
     let attrs = font_system.attrs_owned(font_path);
 
+    // Use a large width for shaping if bounds.width is 0 (auto-sized FontStrings)
+    let shape_width = if bounds.width > 0.0 { bounds.width } else { 10000.0 };
+
     let mut buffer = Buffer::new(&mut font_system.font_system, metrics);
-    buffer.set_size(&mut font_system.font_system, Some(bounds.width), Some(bounds.height));
+    buffer.set_size(&mut font_system.font_system, Some(shape_width), Some(bounds.height));
     buffer.set_text(
         &mut font_system.font_system,
         &stripped,
@@ -257,14 +258,19 @@ pub fn emit_text_quads(
     );
     buffer.shape_until_scroll(&mut font_system.font_system, true);
 
-    // Calculate total text height for vertical justification
+    // Calculate total text height for vertical justification.
+    // For single-line text, use line_height. For multi-line, use last line's position + line_height.
     let layout_runs: Vec<_> = buffer.layout_runs().collect();
-    let total_height = layout_runs
-        .last()
-        .map(|run| run.line_y + line_height)
-        .unwrap_or(0.0);
+    let num_lines = layout_runs.len();
+    let total_height = if num_lines <= 1 {
+        line_height
+    } else {
+        layout_runs.last().map(|run| run.line_y + line_height).unwrap_or(line_height)
+    };
 
-    // Vertical offset based on justification
+    // Vertical offset based on justification.
+    // Always use bounds.height for centering, even if smaller than total_height.
+    // This ensures text is visually centered within the widget bounds.
     let y_offset = match justify_v {
         TextJustify::Left => 0.0,   // TOP
         TextJustify::Center => (bounds.height - total_height) / 2.0,
@@ -273,12 +279,23 @@ pub fn emit_text_quads(
 
     // Emit quads for each glyph
     for run in buffer.layout_runs() {
-        // Horizontal offset based on justification
+        // Horizontal offset based on justification.
+        // For auto-sized FontStrings (width=0), CENTER means center the text ON bounds.x.
+        // For explicit width, CENTER means center text within the bounds.
         let run_width = run.line_w;
-        let x_offset = match justify_h {
-            TextJustify::Left => 0.0,
-            TextJustify::Center => (bounds.width - run_width) / 2.0,
-            TextJustify::Right => bounds.width - run_width,
+        let x_offset = if bounds.width > 0.0 {
+            match justify_h {
+                TextJustify::Left => 0.0,
+                TextJustify::Center => (bounds.width - run_width) / 2.0,
+                TextJustify::Right => bounds.width - run_width,
+            }
+        } else {
+            // Width=0: position text relative to bounds.x as the anchor point
+            match justify_h {
+                TextJustify::Left => 0.0,             // Text starts at bounds.x
+                TextJustify::Center => -run_width / 2.0, // Text centered ON bounds.x
+                TextJustify::Right => -run_width,     // Text ends at bounds.x
+            }
         };
 
         for glyph in run.glyphs.iter() {
@@ -287,11 +304,10 @@ pub fn emit_text_quads(
             if let Some(entry) =
                 glyph_atlas.ensure_glyph(font_system, physical_glyph.cache_key)
             {
-                // Glyph positioning based on glyphon's approach:
-                // x = physical_glyph.x + placement.left
-                // y = line_y + physical_glyph.y - placement.top
-                let glyph_x =
-                    bounds.x + x_offset + physical_glyph.x as f32 + entry.left as f32;
+                // Glyph positioning:
+                // physical_glyph.x is pen position
+                // physical_glyph.y includes baseline offset, entry.top is bitmap offset
+                let glyph_x = bounds.x + x_offset + physical_glyph.x as f32;
                 let glyph_y =
                     bounds.y + y_offset + run.line_y + physical_glyph.y as f32 - entry.top as f32;
 

@@ -17,14 +17,11 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .and_then(|f| f.children_keys.get("Text").copied());
 
         if let Some(frame) = state.widgets.get_mut(this.id) {
-            // Calculate auto-size dimensions if width/height is 0 (for FontStrings)
-            if let Some(ref txt) = text {
-                if frame.width == 0.0 {
-                    frame.width = txt.len() as f32 * 7.0;
-                }
-                if frame.height == 0.0 {
-                    frame.height = frame.font_size.max(12.0);
-                }
+            // Auto-size height if not set (for FontStrings).
+            // Width is NOT auto-sized here; the renderer measures text to get actual width.
+            // This avoids centering issues from rough estimates vs actual text measurement.
+            if text.is_some() && frame.height == 0.0 {
+                frame.height = frame.font_size.max(12.0);
             }
             frame.text = text.clone();
         }
@@ -32,8 +29,7 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         // For Buttons, also set text on the Text fontstring child
         if let Some(text_id) = text_child_id {
             if let Some(text_fs) = state.widgets.get_mut(text_id) {
-                if let Some(ref txt) = text {
-                    text_fs.width = txt.len() as f32 * 7.0;
+                if text.is_some() && text_fs.height == 0.0 {
                     text_fs.height = text_fs.font_size.max(12.0);
                 }
                 text_fs.text = text;
@@ -63,10 +59,7 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             let text = result.to_string_lossy().to_string();
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                // Auto-size: ~7 pixels per character for width, font_size for height
-                if frame.width == 0.0 {
-                    frame.width = text.len() as f32 * 7.0;
-                }
+                // Auto-size height; width is measured by renderer
                 if frame.height == 0.0 {
                     frame.height = frame.font_size.max(12.0);
                 }

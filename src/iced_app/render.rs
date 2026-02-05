@@ -476,7 +476,10 @@ pub fn build_quad_batch_for_registry(
         if !f.visible {
             continue;
         }
-        if rect.width <= 0.0 || rect.height <= 0.0 {
+        // Skip frames with no dimensions, but allow FontStrings with width=0
+        // (they auto-size to text content during rendering)
+        let is_fontstring = matches!(f.widget_type, WidgetType::FontString);
+        if rect.height <= 0.0 || (rect.width <= 0.0 && !is_fontstring) {
             continue;
         }
 
@@ -494,6 +497,7 @@ pub fn build_quad_batch_for_registry(
                 let is_pressed = pressed_frame == Some(id);
                 let is_hovered = hovered_frame == Some(id);
                 build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
+                // Render button text if present (centered in button bounds)
                 if let Some((ref mut font_sys, ref mut glyph_atlas)) = text_ctx {
                     if let Some(ref txt) = f.text {
                         let color = [
