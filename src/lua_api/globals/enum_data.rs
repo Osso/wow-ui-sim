@@ -1,0 +1,603 @@
+//! Enum constant data for WoW API.
+//!
+//! This file contains only DATA - static arrays of enum values.
+//! The registration logic is in enum_api.rs.
+
+/// Enum definition: (enum_name, &[(variant_name, value)])
+pub type EnumDef = (&'static str, &'static [(&'static str, i32)]);
+
+/// Sequential enum: (enum_name, &[variant_names]) - values are 0, 1, 2, ...
+pub type SeqEnumDef = (&'static str, &'static [&'static str]);
+
+// ============================================================================
+// Role & Character Enums
+// ============================================================================
+
+pub const LFG_ROLE: EnumDef = ("LFGRole", &[("Tank", 0), ("Healer", 1), ("Damage", 2)]);
+
+pub const UNIT_SEX: EnumDef = ("UnitSex", &[("Male", 2), ("Female", 3)]);
+
+pub const GAME_MODE: SeqEnumDef = ("GameMode", &["Standard", "Plunderstorm", "WoWHack"]);
+
+pub const PROFESSION: EnumDef = (
+    "Profession",
+    &[
+        ("Mining", 1),
+        ("Skinning", 2),
+        ("Herbalism", 3),
+        ("Blacksmithing", 4),
+        ("Leatherworking", 5),
+        ("Alchemy", 6),
+        ("Tailoring", 7),
+        ("Engineering", 8),
+        ("Enchanting", 9),
+        ("Fishing", 10),
+        ("Cooking", 11),
+        ("Jewelcrafting", 12),
+        ("Inscription", 13),
+        ("Archaeology", 14),
+    ],
+);
+
+// ============================================================================
+// Store & Transaction Enums
+// ============================================================================
+
+pub const VAS_TRANSACTION_PURCHASE_RESULT: SeqEnumDef = (
+    "VasTransactionPurchaseResult",
+    &[
+        "Ok",
+        "NotAvailable",
+        "InProgress",
+        "OnlyOneVasAtATime",
+        "InvalidDestinationAccount",
+        "InvalidSourceAccount",
+        "InvalidCharacter",
+        "NotEnoughMoney",
+        "NotEligible",
+        "TransferServiceDisabled",
+        "DifferentRegion",
+        "RealmNotEligible",
+        "CharacterNotOnAccount",
+        "TooManyCharacters",
+        "InternalError",
+        "PendingOtherProduct",
+        "PendingItemDelivery",
+        "PurchaseInProgress",
+        "GenericError",
+        "DisallowedSourceAccount",
+        "DisallowedDestinationAccount",
+        "LowerBoxLevel",
+        "MaxCharactersOnServer",
+        "CantAffordService",
+        "ServiceAvailable",
+        "CharacterHasGuildBank",
+        "NameNotAvailable",
+        "CharacterBelongsToGuild",
+        "LockedForVas",
+        "MoveInProgress",
+        "AgeRestriction",
+        "UnderMinAge",
+        "BoostedTooRecently",
+        "NewPlayerRestrictions",
+        "CannotRestore",
+        "GuildHasGuildBank",
+        "CharacterArenaTeam",
+        "CharacterTransferInProgress",
+        "CharacterTransferPending",
+        "RaceClassComboNotEligible",
+        "InvalidStartingLevel",
+        "ProxyBadRequestContained",
+        "ProxyCharacterTransferredNoBoostInProgress",
+        "DbRealmNotEligible",
+        "DbCannotMoveGuildmaster",
+        "DbMaxCharactersOnServer",
+        "DbNoMixedAlliance",
+        "DbDuplicateCharacterName",
+        "DbHasMail",
+        "DbMoveInProgress",
+        "DbUnderMinLevelReq",
+        "DbIneligibleTargetRealm",
+        "DbTransferDateTooSoon",
+        "DbCharLocked",
+        "DbAllianceNotEligible",
+        "DbTooMuchMoneyForLevel",
+        "DbHasAuctions",
+        "DbLastSaveTooRecent",
+        "DbNameNotAvailable",
+        "DbLastRenameTooRecent",
+        "DbAlreadyRenameFlagged",
+        "DbCustomizeAlreadyRequested",
+        "DbLastCustomizeTooSoon",
+        "DbFactionChangeTooSoon",
+        "DbRaceClassComboIneligible",
+        "DbPendingItemAudit",
+        "DbGuildRankInsufficient",
+        "DbCharacterWithoutGuild",
+        "DbGmSenorityInsufficient",
+        "DbAuthenticatorInsufficient",
+        "DbIneligibleMapID",
+        "DbBpayDeliveryPending",
+        "DbHasBpayToken",
+        "DbHasHeirloomItem",
+        "DbResultAccountRestricted",
+        "DbLastSaveTooDistant",
+        "DbCagedPetInInventory",
+        "DbOnBoostCooldown",
+        "DbPvEPvPTransferNotAllowed",
+        "DbNewLeaderInvalid",
+        "DbNeedsLevelSquish",
+        "DbHasNewPlayerExperienceRestriction",
+        "DbHasCraftingOrders",
+        "DbInvalidName",
+        "DbNeedsEraChoice",
+        "DbCannotMoveArenaCaptn",
+    ],
+);
+
+pub const STORE_ERROR: SeqEnumDef = (
+    "StoreError",
+    &[
+        "InvalidPaymentMethod",
+        "PaymentFailed",
+        "WrongCurrency",
+        "BattlepayDisabled",
+        "InsufficientBalance",
+        "Other",
+        "AlreadyOwned",
+        "ParentalControlsNoPurchase",
+        "PurchaseDenied",
+        "ConsumableTokenOwned",
+        "TooManyTokens",
+        "ItemUnavailable",
+        "ClientRestricted",
+    ],
+);
+
+pub const GAME_RULE: SeqEnumDef = (
+    "GameRule",
+    &[
+        "PlayerCastBarDisabled",
+        "TargetCastBarDisabled",
+        "NameplateCastBarDisabled",
+        "UserAddonsDisabled",
+        "EncounterJournalDisabled",
+        "EjSuggestedContentDisabled",
+        "EjDungeonsDisabled",
+        "EjRaidsDisabled",
+        "EjItemSetsDisabled",
+        "ExperienceBarDisabled",
+        "ActionButtonTypeOverlayStrategy",
+    ],
+);
+
+// ============================================================================
+// Animation Enums
+// ============================================================================
+
+pub const SCRIPTED_ANIMATION_BEHAVIOR: SeqEnumDef = (
+    "ScriptedAnimationBehavior",
+    &[
+        "None",
+        "TargetShake",
+        "TargetKnockBack",
+        "SourceRecoil",
+        "SourceCollideWithTarget",
+        "Bounce",
+        "Jump",
+        "Spiral",
+        "JumpCurve",
+        "RunAway",
+        "SpellCastDirectional",
+    ],
+);
+
+pub const SCRIPTED_ANIMATION_TRAJECTORY: SeqEnumDef = (
+    "ScriptedAnimationTrajectory",
+    &[
+        "AtSource",
+        "AtTarget",
+        "Direct",
+        "ForcedGroundAtTarget",
+        "ForcedGroundAtSource",
+        "BetweenTargetandSource",
+    ],
+);
+
+// ============================================================================
+// UI Widget Enums
+// ============================================================================
+
+pub const UI_WIDGET_VISUALIZATION_TYPE: SeqEnumDef = (
+    "UIWidgetVisualizationType",
+    &[
+        "IconAndText",
+        "CaptureBar",
+        "StatusBar",
+        "DoubleStatusBar",
+        "IconTextAndBackground",
+        "DoubleIconAndText",
+        "StackedResourceTracker",
+        "IconTextAndCurrencies",
+        "TextWithState",
+        "HorizontalCurrencies",
+        "BulletTextList",
+        "ScenarioHeaderCurrenciesAndBackground",
+        "TextureAndText",
+        "SpellDisplay",
+        "DoubleStateIconRow",
+        "TextureAndTextRow",
+        "ZoneControl",
+        "CaptureZone",
+        "TextureWithAnimation",
+        "DiscreteProgressSteps",
+        "ScenarioHeaderTimer",
+        "TextColumnRow",
+        "Spacer",
+        "UnitPowerBar",
+        "FillUpFrames",
+        "TextWithSubtext",
+        "MapPinAnimation",
+        "ItemDisplay",
+        "TugOfWar",
+        "ControlZone",
+        "SpellWithChargesDisplay",
+    ],
+);
+
+pub const UI_WIDGET_TOOLTIP_LOCATION: SeqEnumDef = (
+    "UIWidgetTooltipLocation",
+    &["Default", "BottomLeft", "Left", "TopLeft", "Top", "TopRight", "Right", "BottomRight", "Bottom"],
+);
+
+pub const UI_WIDGET_TEXT_SIZE_TYPE: EnumDef = (
+    "UIWidgetTextSizeType",
+    &[("Small", 0), ("Medium", 1), ("Large", 2), ("Huge", 3), ("Standard", 4)],
+);
+
+pub const UI_WIDGET_FLAG: EnumDef = (
+    "UIWidgetFlag",
+    &[("UniversalWidget", 1), ("KeepCenteredHorizontallyWithShift", 2)],
+);
+
+pub const FLIGHT_PATH_FACTION: SeqEnumDef = (
+    "FlightPathFaction",
+    &[
+        "Horde",
+        "Alliance",
+        "Neutral",
+        "FriendlyToHordeAndAlliance",
+        "RestedOnlyOnGround",
+        "RequiresHordeQuestline",
+        "RequiresAllianceQuestline",
+        "TaxiNodeFlyable",
+        "NotAccountCompletable",
+        "RestedAllowMount",
+    ],
+);
+
+pub const UI_WIDGET_SCALE: SeqEnumDef = (
+    "UIWidgetScale",
+    &["OneHundred", "Ninety", "Eighty", "Seventy", "Sixty", "Fifty"],
+);
+
+pub const WIDGET_REWARD_SHOWN_STATE: SeqEnumDef = (
+    "UIWidgetRewardShownState",
+    &["Hidden", "Shown", "PartiallyShown"],
+);
+
+pub const WIDGET_ICON_SIZE_TYPE: SeqEnumDef = (
+    "WidgetIconSizeType",
+    &["Standard", "Small", "Medium", "Large"],
+);
+
+// ============================================================================
+// Spell Display Enums
+// ============================================================================
+
+pub const SPELL_DISPLAY_BORDER_COLOR: SeqEnumDef = (
+    "SpellDisplayBorderColor",
+    &["None", "Black", "Red", "Yellow", "Green", "Blue"],
+);
+
+pub const SPELL_DISPLAY_ICON_DISPLAY_TYPE: SeqEnumDef = (
+    "SpellDisplayIconDisplayType",
+    &["Buff", "Debuff", "Circular"],
+);
+
+pub const SPELL_DISPLAY_TEXT_SHOWN_STATE: SeqEnumDef = (
+    "SpellDisplayTextShownStateType",
+    &["Shown", "Hidden", "ShowOnMouseover"],
+);
+
+pub const SPELL_DISPLAY_TINT: SeqEnumDef = (
+    "SpellDisplayTint",
+    &[
+        "None",
+        "Red",
+        "Yellow",
+        "Green",
+        "White",
+        "Bronze",
+        "Purple",
+        "RedGrayscale",
+        "YellowGrayscale",
+        "GreenGrayscale",
+    ],
+);
+
+// ============================================================================
+// Status Bar Enums
+// ============================================================================
+
+pub const STATUS_BAR_COLOR_TINT_VALUE: SeqEnumDef = (
+    "StatusBarColorTintValue",
+    &["None", "Black", "White", "Red", "Yellow", "Orange", "Purple", "Green", "Blue"],
+);
+
+pub const STATUS_BAR_OVERRIDE_TEXT_SHOWN: SeqEnumDef = (
+    "StatusBarOverrideBarTextShownType",
+    &["Never", "Always", "OnlyOnMouseover", "OnlyNotOnMouseover"],
+);
+
+pub const STATUS_BAR_VALUE_TEXT_TYPE: SeqEnumDef = (
+    "StatusBarValueTextType",
+    &["Hidden", "Percentage", "Value", "Time", "TimeShowOneLevelOnly", "ValueOverMax", "ValueOverMaxNormalized"],
+);
+
+// ============================================================================
+// Widget State Enums
+// ============================================================================
+
+pub const WIDGET_SHOWN_STATE: SeqEnumDef = (
+    "WidgetShownState",
+    &["Shown", "Hidden", "ShownOnMouseover", "ShownIfNotEmpty", "ShownIfEmpty"],
+);
+
+pub const WIDGET_ENABLED_STATE: SeqEnumDef = (
+    "WidgetEnabledState",
+    &["Disabled", "Enabled", "Red", "White", "Green", "Gold", "Artifact", "Black", "ColorTwo", "Yellow"],
+);
+
+pub const WIDGET_OPACITY_TYPE: SeqEnumDef = (
+    "WidgetOpacityType",
+    &["OneHundred", "SeventyFive", "Fifty", "TwentyFive", "Zero"],
+);
+
+pub const WIDGET_ANIMATION_TYPE: SeqEnumDef = ("WidgetAnimationType", &["None", "Fade"]);
+
+pub const WIDGET_SHOW_GLOW_STATE: SeqEnumDef = (
+    "WidgetShowGlowState",
+    &["HideGlow", "ShowGlow"],
+);
+
+pub const WIDGET_GLOW_ANIM_TYPE: SeqEnumDef = (
+    "WidgetGlowAnimType",
+    &["None", "Pulse", "FullPulse"],
+);
+
+pub const ICON_AND_TEXT_WIDGET_STATE: SeqEnumDef = (
+    "IconAndTextWidgetState",
+    &["Hidden", "Shown", "ShownWithDynamicIconFlashing", "ShownWithDynamicIconNotFlashing"],
+);
+
+pub const ICON_STATE: SeqEnumDef = (
+    "IconState",
+    &["Hidden", "ShowState1", "ShowState2", "ShowState1Flashing", "ShowState2Flashing"],
+);
+
+// ============================================================================
+// Zone Control Enums
+// ============================================================================
+
+pub const ZONE_CONTROL_STATE: SeqEnumDef = ("ZoneControlState", &["State1", "State2", "State3"]);
+
+pub const ZONE_CONTROL_MODE: SeqEnumDef = (
+    "ZoneControlMode",
+    &["TwoSections", "ThreeSections", "FiveSections"],
+);
+
+pub const ZONE_CONTROL_ACTIVE_STATE: SeqEnumDef = (
+    "ZoneControlActiveState",
+    &["Inactive", "State1Active", "State2Active", "BothStatesActive"],
+);
+
+pub const ZONE_CONTROL_FILL_TYPE: SeqEnumDef = (
+    "ZoneControlFillType",
+    &["SingleFillClockwise", "SingleFillCounterClockwise", "DoubleFillClockwise", "DoubleFillCounterClockwise"],
+);
+
+pub const ZONE_CONTROL_DANGER_FLASH_TYPE: SeqEnumDef = (
+    "ZoneControlDangerFlashType",
+    &["ShowOnHazardousState", "AlwaysShow"],
+);
+
+pub const ZONE_CONTROL_LEADING_EDGE_TYPE: SeqEnumDef = (
+    "ZoneControlLeadingEdgeType",
+    &["None", "UseLeadingEdge"],
+);
+
+pub const CAPTURE_BAR_FILL_DIRECTION: SeqEnumDef = (
+    "CaptureBarWidgetFillDirectionType",
+    &["RightToLeft", "LeftToRight"],
+);
+
+// ============================================================================
+// Misc Widget Enums
+// ============================================================================
+
+pub const UI_WIDGET_TEXTURE_TEXT_SIZE: SeqEnumDef = (
+    "UIWidgetTextureAndTextSizeType",
+    &["Small", "Medium", "Large", "Standard"],
+);
+
+pub const MAP_PIN_ANIMATION_TYPE: SeqEnumDef = (
+    "MapPinAnimationType",
+    &["None", "Pulse"],
+);
+
+pub const TUG_OF_WAR_MARKER_ARROW: SeqEnumDef = (
+    "TugOfWarMarkerArrowShownState",
+    &["Hidden", "Shown", "ShownWithPulseAnim"],
+);
+
+pub const ICON_AND_TEXT_SHIFT_TYPE: SeqEnumDef = (
+    "IconAndTextShiftTextType",
+    &["None", "ShiftRight", "ShiftLeft"],
+);
+
+pub const ITEM_DISPLAY_TEXT_STYLE: SeqEnumDef = (
+    "ItemDisplayTextDisplayStyle",
+    &["Default", "ShowName"],
+);
+
+pub const WIDGET_ICON_SOURCE_TYPE: SeqEnumDef = (
+    "WidgetIconSourceType",
+    &["Default", "Spell"],
+);
+
+pub const WIDGET_TEXT_HORIZONTAL_ALIGNMENT: EnumDef = (
+    "WidgetTextHorizontalAlignmentType",
+    &[("Left", 0), ("Center", 1), ("Right", 2)],
+);
+
+pub const BAG_INDEX: EnumDef = (
+    "BagIndex",
+    &[("Backpack", 0), ("ReagentBag", 5)],
+);
+
+pub const WIDGET_UNIT_POWER_BAR_FLASH_MOMENT: SeqEnumDef = (
+    "WidgetUnitPowerBarFlashMomentType",
+    &["FlashWhenMax", "FlashWhenMin", "FlashWhenEmpty", "FlashWhenFull"],
+);
+
+pub const UI_WIDGET_FONT_TYPE: SeqEnumDef = (
+    "UIWidgetFontType",
+    &["Normal", "Shadow", "Outline"],
+);
+
+pub const UI_WIDGET_BLEND_MODE: SeqEnumDef = (
+    "UIWidgetBlendModeType",
+    &["Default", "Additive"],
+);
+
+pub const UI_WIDGET_MOTION_TYPE: SeqEnumDef = (
+    "UIWidgetMotionType",
+    &["Instant", "Animated"],
+);
+
+pub const UI_WIDGET_UPDATE_ANIM_TYPE: SeqEnumDef = (
+    "UIWidgetUpdateAnimType",
+    &["None", "Flash"],
+);
+
+pub const UI_WIDGET_OVERRIDE_STATE: SeqEnumDef = (
+    "UIWidgetOverrideState",
+    &["NoOverride", "OverrideToShown", "OverrideToHidden"],
+);
+
+pub const UI_WIDGET_TEXT_FORMAT_TYPE: SeqEnumDef = (
+    "UIWidgetTextFormatType",
+    &["Default", "TooltipTitle", "TooltipBodyText"],
+);
+
+pub const UI_WIDGET_SPELL_COOLDOWN_TYPE: SeqEnumDef = (
+    "UIWidgetSpellButtonCooldownType",
+    &["None", "EdgeCooldown"],
+);
+
+pub const UI_WIDGET_BUTTON_ENABLED_STATE: SeqEnumDef = (
+    "UIWidgetButtonEnabledState",
+    &["Disabled", "Enabled", "Yellow", "RedDisabled", "GoldDisabled", "Gold", "Red"],
+);
+
+pub const UI_WIDGET_BUTTON_ICON_TYPE: SeqEnumDef = (
+    "UIWidgetButtonIconType",
+    &["None", "Expand", "Collapse"],
+);
+
+pub const UI_WIDGET_HORIZONTAL_DIRECTION: SeqEnumDef = (
+    "UIWidgetHorizontalDirection",
+    &["Default", "LeftToRight", "RightToLeft"],
+);
+
+pub const UI_WIDGET_LAYOUT_DIRECTION: SeqEnumDef = (
+    "UIWidgetLayoutDirection",
+    &["Default", "Vertical", "Horizontal", "Overlap"],
+);
+
+pub const UI_WIDGET_MODEL_SCENE_LAYER: SeqEnumDef = (
+    "UIWidgetModelSceneLayer",
+    &["None", "Front", "Back"],
+);
+
+// ============================================================================
+// All sequential enums (for batch registration)
+// ============================================================================
+
+pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
+    GAME_MODE,
+    VAS_TRANSACTION_PURCHASE_RESULT,
+    STORE_ERROR,
+    GAME_RULE,
+    SCRIPTED_ANIMATION_BEHAVIOR,
+    SCRIPTED_ANIMATION_TRAJECTORY,
+    UI_WIDGET_VISUALIZATION_TYPE,
+    UI_WIDGET_TOOLTIP_LOCATION,
+    FLIGHT_PATH_FACTION,
+    UI_WIDGET_SCALE,
+    WIDGET_REWARD_SHOWN_STATE,
+    WIDGET_ICON_SIZE_TYPE,
+    SPELL_DISPLAY_BORDER_COLOR,
+    SPELL_DISPLAY_ICON_DISPLAY_TYPE,
+    SPELL_DISPLAY_TEXT_SHOWN_STATE,
+    SPELL_DISPLAY_TINT,
+    STATUS_BAR_COLOR_TINT_VALUE,
+    STATUS_BAR_OVERRIDE_TEXT_SHOWN,
+    STATUS_BAR_VALUE_TEXT_TYPE,
+    WIDGET_SHOWN_STATE,
+    WIDGET_ENABLED_STATE,
+    WIDGET_OPACITY_TYPE,
+    WIDGET_ANIMATION_TYPE,
+    WIDGET_SHOW_GLOW_STATE,
+    WIDGET_GLOW_ANIM_TYPE,
+    ICON_AND_TEXT_WIDGET_STATE,
+    ICON_STATE,
+    ZONE_CONTROL_STATE,
+    ZONE_CONTROL_MODE,
+    ZONE_CONTROL_ACTIVE_STATE,
+    ZONE_CONTROL_FILL_TYPE,
+    ZONE_CONTROL_DANGER_FLASH_TYPE,
+    ZONE_CONTROL_LEADING_EDGE_TYPE,
+    CAPTURE_BAR_FILL_DIRECTION,
+    UI_WIDGET_TEXTURE_TEXT_SIZE,
+    MAP_PIN_ANIMATION_TYPE,
+    TUG_OF_WAR_MARKER_ARROW,
+    ICON_AND_TEXT_SHIFT_TYPE,
+    ITEM_DISPLAY_TEXT_STYLE,
+    WIDGET_ICON_SOURCE_TYPE,
+    WIDGET_UNIT_POWER_BAR_FLASH_MOMENT,
+    UI_WIDGET_FONT_TYPE,
+    UI_WIDGET_BLEND_MODE,
+    UI_WIDGET_MOTION_TYPE,
+    UI_WIDGET_UPDATE_ANIM_TYPE,
+    UI_WIDGET_OVERRIDE_STATE,
+    UI_WIDGET_TEXT_FORMAT_TYPE,
+    UI_WIDGET_SPELL_COOLDOWN_TYPE,
+    UI_WIDGET_BUTTON_ENABLED_STATE,
+    UI_WIDGET_BUTTON_ICON_TYPE,
+    UI_WIDGET_HORIZONTAL_DIRECTION,
+    UI_WIDGET_LAYOUT_DIRECTION,
+    UI_WIDGET_MODEL_SCENE_LAYER,
+];
+
+// All explicit value enums (for batch registration)
+pub const EXPLICIT_ENUMS: &[EnumDef] = &[
+    LFG_ROLE,
+    UNIT_SEX,
+    PROFESSION,
+    UI_WIDGET_TEXT_SIZE_TYPE,
+    UI_WIDGET_FLAG,
+    WIDGET_TEXT_HORIZONTAL_ALIGNMENT,
+    BAG_INDEX,
+];
