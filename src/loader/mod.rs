@@ -17,6 +17,7 @@ use std::path::Path;
 use std::time::Duration;
 
 pub use error::LoadError;
+pub use xml_frame::create_frame_from_xml;
 
 /// Result of loading an addon.
 #[derive(Debug)]
