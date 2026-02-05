@@ -57,14 +57,80 @@ pub fn register_addon_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
         })?,
     )?;
 
+    // EnableAddOn(addon, character) - enable a single addon by name or index
+    let state_for_enable_one = Rc::clone(&state);
     c_addons.set(
         "EnableAddOn",
-        lua.create_function(|_, _addon: String| Ok(()))?,
+        lua.create_function(move |_, (addon, _character): (Value, Option<String>)| {
+            let mut state = state_for_enable_one.borrow_mut();
+            match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    if let Some(a) = state.addons.get_mut(idx) {
+                        a.enabled = true;
+                    }
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    if let Some(a) = state.addons.iter_mut().find(|a| a.folder_name == &*name) {
+                        a.enabled = true;
+                    }
+                }
+                _ => {}
+            }
+            Ok(())
+        })?,
     )?;
 
+    // DisableAddOn(addon, character) - disable a single addon by name or index
+    let state_for_disable_one = Rc::clone(&state);
     c_addons.set(
         "DisableAddOn",
-        lua.create_function(|_, _addon: String| Ok(()))?,
+        lua.create_function(move |_, (addon, _character): (Value, Option<String>)| {
+            let mut state = state_for_disable_one.borrow_mut();
+            match addon {
+                Value::Integer(idx) => {
+                    let idx = (idx - 1) as usize;
+                    if let Some(a) = state.addons.get_mut(idx) {
+                        a.enabled = false;
+                    }
+                }
+                Value::String(ref s) => {
+                    let name = s.to_string_lossy();
+                    if let Some(a) = state.addons.iter_mut().find(|a| a.folder_name == &*name) {
+                        a.enabled = false;
+                    }
+                }
+                _ => {}
+            }
+            Ok(())
+        })?,
+    )?;
+
+    // EnableAllAddOns(character) - enable all addons
+    let state_for_enable_all = Rc::clone(&state);
+    c_addons.set(
+        "EnableAllAddOns",
+        lua.create_function(move |_, _character: Option<String>| {
+            let mut state = state_for_enable_all.borrow_mut();
+            for addon in &mut state.addons {
+                addon.enabled = true;
+            }
+            Ok(())
+        })?,
+    )?;
+
+    // DisableAllAddOns(character) - disable all addons
+    let state_for_disable_all = Rc::clone(&state);
+    c_addons.set(
+        "DisableAllAddOns",
+        lua.create_function(move |_, _character: Option<String>| {
+            let mut state = state_for_disable_all.borrow_mut();
+            for addon in &mut state.addons {
+                addon.enabled = false;
+            }
+            Ok(())
+        })?,
     )?;
 
     // GetNumAddOns - return actual addon count

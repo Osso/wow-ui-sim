@@ -119,3 +119,82 @@ fn test_load_blizzard_shared_xml() {
     let success_rate = total_loaded as f64 / total_attempted as f64 * 100.0;
     println!("Success rate: {:.1}%", success_rate);
 }
+
+const BLIZZARD_ADDON_LIST_TOC: &str =
+    "/home/osso/Projects/wow/Interface/AddOns/Blizzard_AddOnList/Blizzard_AddOnList.toc";
+
+/// Load SharedXML then Blizzard_AddOnList, returning the env.
+fn env_with_addon_list() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+
+    let base_path = Path::new(BLIZZARD_SHARED_XML_BASE_TOC);
+    if let Err(e) = load_addon(&env, base_path) {
+        eprintln!("Warning: Failed to load SharedXMLBase: {}", e);
+    }
+
+    let shared_path = Path::new(BLIZZARD_SHARED_XML_TOC);
+    if let Err(e) = load_addon(&env, shared_path) {
+        eprintln!("Warning: Failed to load SharedXML: {}", e);
+    }
+
+    let addon_list_path = Path::new(BLIZZARD_ADDON_LIST_TOC);
+    let result = load_addon(&env, addon_list_path).expect("Failed to load Blizzard_AddOnList");
+    println!(
+        "Loaded {}: {} Lua, {} XML, {} warnings",
+        result.name, result.lua_files, result.xml_files, result.warnings.len()
+    );
+    for w in &result.warnings {
+        println!("  WARN: {}", w);
+    }
+
+    env
+}
+
+#[test]
+fn test_addon_list_enable_all_button_has_texture() {
+    let env = env_with_addon_list();
+
+    // EnableAllButton should exist as a child of AddonList
+    let exists: bool = env
+        .eval("return AddonList ~= nil and AddonList.EnableAllButton ~= nil")
+        .unwrap_or(false);
+    assert!(exists, "AddonList.EnableAllButton should exist");
+
+    // It should be a Button widget inheriting SharedButtonSmallTemplate (ThreeSliceButton)
+    let is_button: bool = env
+        .eval("return AddonList.EnableAllButton:GetObjectType() == 'Button'")
+        .unwrap_or(false);
+    assert!(is_button, "EnableAllButton should be a Button");
+
+    // ThreeSliceButtonTemplate creates Left, Center, Right child textures
+    let has_children: bool = env
+        .eval(
+            r#"
+        local btn = AddonList.EnableAllButton
+        return btn.Left ~= nil and btn.Center ~= nil and btn.Right ~= nil
+    "#,
+        )
+        .unwrap_or(false);
+    assert!(
+        has_children,
+        "EnableAllButton should have Left/Center/Right child textures from ThreeSliceButtonTemplate"
+    );
+
+    // Show the button to trigger ButtonControllerMixin:OnShow → UpdateButton → SetAtlas
+    env.exec("AddonList.EnableAllButton:Show()").unwrap();
+
+    // Verify the Left texture has the 128-RedButton atlas set
+    let left_atlas: String = env
+        .eval(
+            r#"
+        local tex = AddonList.EnableAllButton.Left
+        return tex and tex:GetAtlas() or ""
+    "#,
+        )
+        .unwrap_or_default();
+    assert!(
+        left_atlas.contains("128-RedButton"),
+        "Left texture should have 128-RedButton atlas, got: '{}'",
+        left_atlas
+    );
+}
