@@ -10,6 +10,8 @@
 use clap::{Parser, Subcommand};
 use std::io::{self, BufRead, Write};
 use std::path::PathBuf;
+use wow_ui_sim::loader::load_addon;
+use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_server::client;
 
 #[derive(Parser)]
@@ -52,7 +54,7 @@ enum Commands {
         output: PathBuf,
     },
 
-    /// Dump the rendered frame tree with absolute coordinates
+    /// Dump the rendered frame tree with absolute coordinates (requires running server)
     DumpTree {
         /// Filter by frame name (substring match)
         #[arg(short, long)]
@@ -61,6 +63,25 @@ enum Commands {
         /// Show only visible frames
         #[arg(long)]
         visible_only: bool,
+    },
+
+    /// Load UI and dump frame tree (standalone, no server needed)
+    Dump {
+        /// Filter by frame name (substring match)
+        #[arg(short, long)]
+        filter: Option<String>,
+
+        /// Show only visible frames
+        #[arg(long)]
+        visible_only: bool,
+
+        /// Skip loading third-party addons (faster startup)
+        #[arg(long)]
+        no_addons: bool,
+
+        /// Skip loading SavedVariables (faster startup)
+        #[arg(long)]
+        no_saved_vars: bool,
     },
 
     /// Convert a BLP texture file to WebP format
@@ -112,6 +133,14 @@ fn main() {
         }
         Commands::DumpTree { filter, visible_only } => {
             dump_tree(filter, visible_only);
+        }
+        Commands::Dump {
+            filter,
+            visible_only,
+            no_addons,
+            no_saved_vars,
+        } => {
+            dump_standalone(filter, visible_only, no_addons, no_saved_vars);
         }
         Commands::ConvertTexture { input, output } => {
             convert_texture(&input, output.as_ref());
@@ -316,4 +345,139 @@ fn run_repl() {
     }
 
     println!("Goodbye!");
+}
+
+fn dump_standalone(
+    filter: Option<String>,
+    visible_only: bool,
+    no_addons: bool,
+    no_saved_vars: bool,
+) {
+    // Set environment variables for the loader
+    // SAFETY: We're single-threaded at this point
+    if no_addons {
+        unsafe { std::env::set_var("WOW_SIM_NO_ADDONS", "1") };
+    }
+    if no_saved_vars {
+        unsafe { std::env::set_var("WOW_SIM_NO_SAVED_VARS", "1") };
+    }
+
+    // Create Lua environment
+    let env = match WowLuaEnv::new() {
+        Ok(e) => e,
+        Err(e) => {
+            eprintln!("Failed to create Lua environment: {}", e);
+            std::process::exit(1);
+        }
+    };
+
+    // Load Blizzard SharedXML for base UI support
+    let wow_ui_path = dirs::home_dir()
+        .unwrap_or_default()
+        .join("Projects/wow/reference-addons/wow-ui-source");
+
+    if wow_ui_path.exists() {
+        let blizzard_addons = [
+            ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
+            ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
+            ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
+            ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
+            ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
+            ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
+            ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
+            ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
+            ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
+        ];
+
+        for (name, toc) in blizzard_addons {
+            let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
+            if toc_path.exists() {
+                match load_addon(&env, &toc_path) {
+                    Ok(r) => {
+                        eprintln!(
+                            "{} loaded: {} Lua, {} XML, {} warnings",
+                            name,
+                            r.lua_files,
+                            r.xml_files,
+                            r.warnings.len()
+                        );
+                    }
+                    Err(e) => eprintln!("{} failed: {}", name, e),
+                }
+            }
+        }
+    } else {
+        eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
+    }
+
+    // Dump the frame tree
+    let state = env.state().borrow();
+    let widgets = &state.widgets;
+
+    // Collect root frames (no parent)
+    let all_ids = widgets.all_ids();
+    let mut roots: Vec<_> = all_ids
+        .iter()
+        .filter_map(|&id| {
+            let w = widgets.get(id)?;
+            if w.parent_id.is_none() {
+                Some((id, w.name.clone()))
+            } else {
+                None
+            }
+        })
+        .collect();
+
+    // Sort by name for consistent output
+    roots.sort_by(|a, b| {
+        let name_a = a.1.as_deref().unwrap_or("");
+        let name_b = b.1.as_deref().unwrap_or("");
+        name_a.cmp(name_b)
+    });
+
+    fn print_frame(
+        widgets: &wow_ui_sim::widget::WidgetRegistry,
+        id: u64,
+        depth: usize,
+        filter: &Option<String>,
+        visible_only: bool,
+    ) {
+        let Some(frame) = widgets.get(id) else {
+            return;
+        };
+
+        // Filter by visibility
+        if visible_only && !frame.visible {
+            return;
+        }
+
+        // Filter by name
+        let name = frame.name.as_deref().unwrap_or("(anonymous)");
+        let matches_filter = filter
+            .as_ref()
+            .map(|f| name.to_lowercase().contains(&f.to_lowercase()))
+            .unwrap_or(true);
+
+        if matches_filter {
+            let indent = "  ".repeat(depth);
+            let vis = if frame.visible { "visible" } else { "hidden" };
+            let size = format!("{}x{}", frame.width as i32, frame.height as i32);
+
+            println!(
+                "{}{} [{:?}] ({}) {}",
+                indent, name, frame.widget_type, size, vis
+            );
+        }
+
+        // Print children
+        for &child_id in &frame.children {
+            print_frame(widgets, child_id, depth + 1, filter, visible_only);
+        }
+    }
+
+    eprintln!("\n=== Frame Tree ===\n");
+
+    for (id, _) in roots {
+        print_frame(widgets, id, 0, &filter, visible_only);
+    }
 }

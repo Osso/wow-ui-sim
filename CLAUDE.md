@@ -108,9 +108,27 @@ wow-sim lua -e "print('hi')"   # Execute code and exit
 wow-sim lua -l                 # List running servers
 ```
 
-### Dump Frame Tree
+### Dump Frame Tree (Standalone)
 
-Dump the rendered frame tree with absolute coordinates (requires running simulator):
+Load UI and dump the frame tree without starting the GUI (for debugging):
+
+```bash
+wow-sim dump --no-addons --no-saved-vars           # Fast: skip addons and saved vars
+wow-sim dump --filter ScrollBar                    # Filter by name substring
+wow-sim dump --visible-only                        # Show only visible frames
+wow-sim dump                                       # Full load with all addons
+```
+
+Output shows frame hierarchy with dimensions:
+```
+AddonList [Frame] (600x550) hidden
+  AddonListBg [Texture] (0x0) visible
+  AddonListCloseButton [Button] (24x24) visible
+```
+
+### Dump Frame Tree (Connected)
+
+Dump the rendered frame tree from a running simulator:
 
 ```bash
 wow-sim dump-tree                      # Dump all frames
