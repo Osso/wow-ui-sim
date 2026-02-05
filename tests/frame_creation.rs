@@ -505,3 +505,20 @@ fn test_addon_style_frame_creation() {
     let titlebar_strata: String = env.eval("return MyAddonTitleBar:GetFrameStrata()").unwrap();
     assert_eq!(titlebar_strata, "HIGH");
 }
+
+#[test]
+fn test_checkbutton_text_from_global_string() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local cb = CreateFrame("CheckButton", "TestCbGlobalStr", UIParent, "UICheckButtonTemplate")
+        cb:SetSize(24, 24)
+        cb.Text:SetText(ADDON_FORCE_LOAD)
+    "#,
+    )
+    .unwrap();
+
+    let label: String = env.eval("return TestCbGlobalStr.Text:GetText()").unwrap();
+    assert_eq!(label, "Load out of date AddOns");
+}
