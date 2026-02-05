@@ -191,7 +191,24 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // GetAtlas() - Get current atlas name
+    // NOTE: Mixins (e.g., MinimalScrollBarStepperScriptsMixin) can override GetAtlas
+    // with a Lua function. Since mlua's add_method takes priority over __index,
+    // we check for Lua overrides in __frame_fields before using the default.
     methods.add_method("GetAtlas", |lua, this, ()| {
+        // Check for Lua override (from Mixin)
+        if let Ok(fields_table) = lua.globals().get::<mlua::Table>("__frame_fields") {
+            if let Ok(frame_fields) = fields_table.get::<mlua::Table>(this.id) {
+                if let Ok(Value::Function(f)) = frame_fields.get::<Value>("GetAtlas") {
+                    // Create userdata for self parameter
+                    let ud = lua.create_userdata(FrameHandle {
+                        id: this.id,
+                        state: std::rc::Rc::clone(&this.state),
+                    })?;
+                    return f.call::<Value>(ud);
+                }
+            }
+        }
+        // Default: return atlas from Rust widget state
         let state = this.state.borrow();
         let atlas = state.widgets.get(this.id).and_then(|f| f.atlas.clone());
         match atlas {

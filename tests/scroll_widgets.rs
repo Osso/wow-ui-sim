@@ -267,3 +267,63 @@ fn test_texture_kit_constants_defined() {
         .unwrap();
     assert!(use_atlas_size, "TextureKitConstants.UseAtlasSize should be true");
 }
+
+// ============================================================================
+// MinimalScrollBar Atlas Texture Tests (requires SharedXML)
+// ============================================================================
+
+#[test]
+fn test_minimal_scrollbar_atlas_textures() {
+    let env = env_with_shared_xml();
+
+    env.exec(
+        r#"
+        local sb = CreateFrame("EventFrame", "TestMinScrollBarAtlas", UIParent, "MinimalScrollBar")
+        sb:SetSize(16, 200)
+    "#,
+    )
+    .unwrap();
+
+    // Back button should have Texture child with atlas set via OnLoad
+    let back_atlas: String = env
+        .eval(
+            r#"
+        local tex = TestMinScrollBarAtlas.Back.Texture
+        return tex:GetAtlas() or ""
+    "#,
+        )
+        .unwrap();
+    assert_eq!(
+        back_atlas, "minimal-scrollbar-arrow-top",
+        "Back button texture should have atlas set via OnLoad"
+    );
+
+    // GetTexture should return the resolved file path from the atlas database
+    let back_file: String = env
+        .eval(
+            r#"
+        local tex = TestMinScrollBarAtlas.Back.Texture
+        return tex:GetTexture() or ""
+    "#,
+        )
+        .unwrap();
+    assert!(
+        back_file.contains("minimalscrollbarproportional"),
+        "Back texture file should be resolved from atlas: got '{}'",
+        back_file
+    );
+
+    // Forward button should also have its atlas set
+    let forward_atlas: String = env
+        .eval(
+            r#"
+        local tex = TestMinScrollBarAtlas.Forward.Texture
+        return tex:GetAtlas() or ""
+    "#,
+        )
+        .unwrap();
+    assert_eq!(
+        forward_atlas, "minimal-scrollbar-arrow-bottom",
+        "Forward button texture should have atlas set via OnLoad"
+    );
+}

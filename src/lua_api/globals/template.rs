@@ -3,8 +3,30 @@
 //! This module provides functionality to apply XML templates from the registry
 //! when CreateFrame is called with a template name.
 
-use crate::xml::{get_template_chain, FrameElement, TemplateEntry};
+use crate::xml::{get_template_chain, FrameElement, FrameXml, TemplateEntry};
 use mlua::Lua;
+
+/// Extract the FrameXml and widget type string from a FrameElement.
+fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str)> {
+    match element {
+        FrameElement::Frame(f) => Some((f, "Frame")),
+        FrameElement::Button(f) | FrameElement::ItemButton(f) => Some((f, "Button")),
+        FrameElement::CheckButton(f) => Some((f, "CheckButton")),
+        FrameElement::EditBox(f) | FrameElement::EventEditBox(f) => Some((f, "EditBox")),
+        FrameElement::ScrollFrame(f) => Some((f, "ScrollFrame")),
+        FrameElement::Slider(f) => Some((f, "Slider")),
+        FrameElement::StatusBar(f) => Some((f, "StatusBar")),
+        FrameElement::EventFrame(f) => Some((f, "Frame")),
+        FrameElement::EventButton(f) => Some((f, "Button")),
+        FrameElement::DropdownButton(f) | FrameElement::DropDownToggleButton(f) => {
+            Some((f, "Button"))
+        }
+        FrameElement::Cooldown(f) => Some((f, "Cooldown")),
+        FrameElement::GameTooltip(f) => Some((f, "GameTooltip")),
+        FrameElement::Model(f) | FrameElement::ModelScene(f) => Some((f, "Frame")),
+        _ => None,
+    }
+}
 
 /// Apply templates from the registry to a frame.
 ///
@@ -19,6 +41,9 @@ pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names
     for entry in &chain {
         apply_single_template(lua, frame_name, entry);
     }
+
+    // Fire OnLoad after all templates are applied
+    fire_on_load(lua, frame_name);
 }
 
 /// Apply a single template's children to a frame.
@@ -41,6 +66,9 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
             let _ = lua.load(&code).exec();
         }
     }
+
+    // Apply mixin from template (must be before scripts)
+    apply_mixin(lua, &template.mixin, frame_name);
 
     // Apply KeyValues from template
     if let Some(key_values) = template.key_values() {
@@ -96,34 +124,60 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
     }
 
     // Create child Frames from template
-    if let Some(frames) = template.frames() {
-        for child in &frames.elements {
-            let (child_frame, child_type) = match child {
-                FrameElement::Frame(f) => (f, "Frame"),
-                FrameElement::Button(f) | FrameElement::ItemButton(f) => (f, "Button"),
-                FrameElement::CheckButton(f) => (f, "CheckButton"),
-                FrameElement::EditBox(f) | FrameElement::EventEditBox(f) => (f, "EditBox"),
-                FrameElement::ScrollFrame(f) => (f, "ScrollFrame"),
-                FrameElement::Slider(f) => (f, "Slider"),
-                FrameElement::StatusBar(f) => (f, "StatusBar"),
-                FrameElement::EventFrame(f) => (f, "Frame"),
-                FrameElement::EventButton(f) => (f, "Button"),
-                FrameElement::DropdownButton(f) | FrameElement::DropDownToggleButton(f) => {
-                    (f, "Button")
-                }
-                FrameElement::Cooldown(f) => (f, "Cooldown"),
-                FrameElement::GameTooltip(f) => (f, "GameTooltip"),
-                FrameElement::Model(f) | FrameElement::ModelScene(f) => (f, "Frame"),
-                _ => continue,
-            };
-
-            create_child_frame_from_template(lua, child_frame, child_type, frame_name);
-        }
-    }
+    create_child_frames(lua, template, frame_name);
 
     // Apply scripts from template
     if let Some(scripts) = template.scripts() {
         apply_scripts_from_template(lua, scripts, frame_name);
+    }
+}
+
+/// Apply mixin(s) to a frame. The mixin attribute can be comma-separated.
+fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
+    let Some(mixin_str) = mixin else { return };
+    if mixin_str.is_empty() {
+        return;
+    }
+
+    // Build a Mixin() call with all mixin names
+    let mixin_args: Vec<&str> = mixin_str.split(',').map(|s| s.trim()).collect();
+    let args = mixin_args.join(", ");
+    let code = format!(
+        "do local f = {} if f then Mixin(f, {}) end end",
+        frame_name, args
+    );
+    let _ = lua.load(&code).exec();
+}
+
+/// Fire OnLoad script on a frame after it's fully configured.
+fn fire_on_load(lua: &Lua, frame_name: &str) {
+    let code = format!(
+        r#"
+        local frame = {}
+        if frame then
+            local handler = frame:GetScript("OnLoad")
+            if handler then
+                handler(frame)
+            elseif type(frame.OnLoad) == "function" then
+                frame:OnLoad()
+            end
+        end
+        "#,
+        frame_name
+    );
+    let _ = lua.load(&code).exec();
+}
+
+/// Create child frames from a FrameXml's `<Frames>` section.
+fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str) {
+    let Some(frames) = frame.frames() else {
+        return;
+    };
+    for child in &frames.elements {
+        let Some((child_frame, child_type)) = frame_element_type(child) else {
+            continue;
+        };
+        create_child_frame_from_template(lua, child_frame, child_type, parent_name);
     }
 }
 
@@ -358,6 +412,87 @@ fn create_child_frame_from_template(
     code.push_str("        end\n");
 
     let _ = lua.load(&code).exec();
+
+    // Apply inline content from the child FrameXml (layers, key values, scripts, etc.)
+    // This handles elements defined directly on the child XML, not via inherits.
+    apply_inline_frame_content(lua, frame, &child_name);
+
+    // Fire OnLoad after all content (inherited + inline) is applied.
+    // This must be after apply_inline_frame_content so KeyValues like
+    // normalTexture are available when OnLoad runs.
+    fire_on_load(lua, &child_name);
+}
+
+/// Apply inline content from a FrameXml to an already-created frame.
+///
+/// This handles layers (textures, fontstrings), key values, scripts, child frames,
+/// button textures, and thumb textures that are defined directly in the XML element
+/// rather than through an inherited template.
+fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+    // Apply mixin (must be before scripts)
+    apply_mixin(lua, &frame.mixin, frame_name);
+
+    // Apply KeyValues
+    if let Some(key_values) = frame.key_values() {
+        for kv in &key_values.values {
+            let value = match kv.value_type.as_deref() {
+                Some("number") => kv.value.clone(),
+                Some("boolean") => kv.value.to_lowercase(),
+                _ => format!("\"{}\"", escape_lua_string(&kv.value)),
+            };
+            let code = format!(
+                "do local f = {} if f then f.{} = {} end end",
+                frame_name, kv.key, value
+            );
+            let _ = lua.load(&code).exec();
+        }
+    }
+
+    // Create textures from Layers
+    for layers in frame.layers() {
+        for layer in &layers.layers {
+            let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
+            for texture in layer.textures() {
+                create_texture_from_template(lua, texture, frame_name, draw_layer);
+            }
+            for fontstring in layer.font_strings() {
+                create_fontstring_from_template(lua, fontstring, frame_name, draw_layer);
+            }
+        }
+    }
+
+    // Create ThumbTexture
+    if let Some(thumb) = frame.thumb_texture() {
+        create_thumb_texture_from_template(lua, thumb, frame_name);
+    }
+
+    // Create button textures
+    if let Some(tex) = frame.normal_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Normal", "SetNormalTexture");
+    }
+    if let Some(tex) = frame.pushed_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Pushed", "SetPushedTexture");
+    }
+    if let Some(tex) = frame.disabled_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Disabled", "SetDisabledTexture");
+    }
+    if let Some(tex) = frame.highlight_texture() {
+        create_button_texture_from_template(
+            lua,
+            tex,
+            frame_name,
+            "Highlight",
+            "SetHighlightTexture",
+        );
+    }
+
+    // Create nested child frames
+    create_child_frames(lua, frame, frame_name);
+
+    // Apply scripts (after children so OnLoad can reference them)
+    if let Some(scripts) = frame.scripts() {
+        apply_scripts_from_template(lua, scripts, frame_name);
+    }
 }
 
 /// Create a thumb texture from template XML (for sliders).
