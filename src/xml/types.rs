@@ -178,6 +178,22 @@ impl FrameXml {
         })
     }
 
+    /// Get the CheckedTexture element if present (CheckButton-specific).
+    pub fn checked_texture(&self) -> Option<&TextureXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::CheckedTexture(t) => Some(t),
+            _ => None,
+        })
+    }
+
+    /// Get the DisabledCheckedTexture element if present (CheckButton-specific).
+    pub fn disabled_checked_texture(&self) -> Option<&TextureXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::DisabledCheckedTexture(t) => Some(t),
+            _ => None,
+        })
+    }
+
     /// Get the ThumbTexture element if present (Slider-specific).
     pub fn thumb_texture(&self) -> Option<&TextureXml> {
         self.children.iter().find_map(|c| match c {
@@ -204,6 +220,7 @@ pub enum FrameChildElement {
     DisabledTexture(TextureXml),
     HighlightTexture(TextureXml),
     CheckedTexture(TextureXml),
+    DisabledCheckedTexture(TextureXml),
     ButtonText(FontStringXml),
     NormalFont(FontRefXml),
     HighlightFont(FontRefXml),

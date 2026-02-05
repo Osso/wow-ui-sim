@@ -163,6 +163,14 @@ pub struct Frame {
     pub disabled_texture: Option<String>,
     /// Disabled texture UV coords for atlas-based buttons.
     pub disabled_tex_coords: Option<(f32, f32, f32, f32)>,
+    /// Checked texture path (for CheckButton widgets).
+    pub checked_texture: Option<String>,
+    /// Checked texture UV coords for atlas-based check buttons.
+    pub checked_tex_coords: Option<(f32, f32, f32, f32)>,
+    /// Disabled-checked texture path (for CheckButton widgets).
+    pub disabled_checked_texture: Option<String>,
+    /// Disabled-checked texture UV coords for atlas-based check buttons.
+    pub disabled_checked_tex_coords: Option<(f32, f32, f32, f32)>,
     /// Left cap texture for 3-slice buttons.
     pub left_texture: Option<String>,
     /// Middle (stretchable) texture for 3-slice buttons.
@@ -231,6 +239,10 @@ impl Frame {
             highlight_tex_coords: None,
             disabled_texture: None,
             disabled_tex_coords: None,
+            checked_texture: None,
+            checked_tex_coords: None,
+            disabled_checked_texture: None,
+            disabled_checked_tex_coords: None,
             left_texture: None,
             middle_texture: None,
             right_texture: None,

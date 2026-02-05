@@ -173,6 +173,14 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                                         parent.disabled_texture = Some(texture_path);
                                         parent.disabled_tex_coords = Some(tex_coords);
                                     }
+                                    "CheckedTexture" => {
+                                        parent.checked_texture = Some(texture_path);
+                                        parent.checked_tex_coords = Some(tex_coords);
+                                    }
+                                    "DisabledCheckedTexture" => {
+                                        parent.disabled_checked_texture = Some(texture_path);
+                                        parent.disabled_checked_tex_coords = Some(tex_coords);
+                                    }
                                     _ => {}
                                 }
                             }

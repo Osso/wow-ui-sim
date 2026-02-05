@@ -122,6 +122,18 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) {
     if let Some(tex) = template.highlight_texture() {
         create_button_texture_from_template(lua, tex, frame_name, "Highlight", "SetHighlightTexture");
     }
+    if let Some(tex) = template.checked_texture() {
+        create_button_texture_from_template(lua, tex, frame_name, "Checked", "SetCheckedTexture");
+    }
+    if let Some(tex) = template.disabled_checked_texture() {
+        create_button_texture_from_template(
+            lua,
+            tex,
+            frame_name,
+            "DisabledChecked",
+            "SetDisabledCheckedTexture",
+        );
+    }
 
     // Create child Frames from template
     create_child_frames(lua, template, frame_name);
@@ -581,6 +593,16 @@ fn create_button_texture_from_template(
         }
     }
 
+    // Register parentKey first so children_keys is populated, then call setter
+    // method which uses get_or_create_button_texture (finds existing child), then
+    // SetAtlas can propagate to parent via the parent_key lookup
+    if let Some(pk) = &texture.parent_key {
+        code.push_str(&format!("            parent.{} = tex\n", pk));
+    } else {
+        code.push_str(&format!("            parent.{} = tex\n", parent_key));
+    }
+    code.push_str(&format!("            parent:{}(tex)\n", setter_method));
+
     // Apply texture file
     if let Some(file) = &texture.file {
         code.push_str(&format!(
@@ -589,20 +611,12 @@ fn create_button_texture_from_template(
         ));
     }
 
-    // Apply atlas
+    // Apply atlas (after parentKey registration so SetAtlas can propagate to parent)
     if let Some(atlas) = &texture.atlas {
         code.push_str(&format!(
             "            tex:SetAtlas(\"{}\")\n",
             escape_lua_string(atlas)
         ));
-    }
-
-    // Set as the specific button texture and parentKey
-    code.push_str(&format!("            parent:{}(tex)\n", setter_method));
-    if let Some(pk) = &texture.parent_key {
-        code.push_str(&format!("            parent.{} = tex\n", pk));
-    } else {
-        code.push_str(&format!("            parent.{} = tex\n", parent_key));
     }
 
     // Register as global if named

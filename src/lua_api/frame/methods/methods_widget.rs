@@ -339,8 +339,6 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
         Ok(Value::UserData(ud))
     });
-    methods.add_method("SetCheckedTexture", |_, _this, _texture: Value| Ok(()));
-
     // ===== Cooldown methods =====
     methods.add_method("SetCooldown", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("SetCooldownUNIX", |_, _this, _args: mlua::MultiValue| Ok(()));

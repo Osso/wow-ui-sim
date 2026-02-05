@@ -116,22 +116,24 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // SetNormalTexture(texture) - Set texture for normal state
     methods.add_method("SetNormalTexture", |_, this, texture: Value| {
-        let path = match texture {
+        let path = match &texture {
             Value::String(s) => Some(s.to_str()?.to_string()),
-            Value::Nil => None,
             _ => None,
         };
+        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
 
-        // Store path on button for renderer
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.normal_texture = path.clone();
+        if !is_userdata {
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.normal_texture = path.clone();
+            }
         }
 
-        // Create/get texture child and set its texture
         let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
-            tex.texture = path;
+        if !is_userdata {
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
         }
 
         Ok(())
@@ -139,22 +141,24 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // SetHighlightTexture(texture) - Set texture for highlight state
     methods.add_method("SetHighlightTexture", |_, this, texture: Value| {
-        let path = match texture {
+        let path = match &texture {
             Value::String(s) => Some(s.to_str()?.to_string()),
-            Value::Nil => None,
             _ => None,
         };
+        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
 
-        // Store path on button for renderer
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.highlight_texture = path.clone();
+        if !is_userdata {
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.highlight_texture = path.clone();
+            }
         }
 
-        // Create/get texture child and set its texture
         let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
-            tex.texture = path;
+        if !is_userdata {
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
         }
 
         Ok(())
@@ -162,22 +166,24 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // SetPushedTexture(texture) - Set texture for pushed state
     methods.add_method("SetPushedTexture", |_, this, texture: Value| {
-        let path = match texture {
+        let path = match &texture {
             Value::String(s) => Some(s.to_str()?.to_string()),
-            Value::Nil => None,
             _ => None,
         };
+        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
 
-        // Store path on button for renderer
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.pushed_texture = path.clone();
+        if !is_userdata {
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.pushed_texture = path.clone();
+            }
         }
 
-        // Create/get texture child and set its texture
         let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
-            tex.texture = path;
+        if !is_userdata {
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
         }
 
         Ok(())
@@ -185,26 +191,86 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // SetDisabledTexture(texture) - Set texture for disabled state
     methods.add_method("SetDisabledTexture", |_, this, texture: Value| {
-        let path = match texture {
+        let path = match &texture {
             Value::String(s) => Some(s.to_str()?.to_string()),
-            Value::Nil => None,
             _ => None,
         };
+        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
 
-        // Store path on button for renderer
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.disabled_texture = path.clone();
+        if !is_userdata {
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.disabled_texture = path.clone();
+            }
         }
 
-        // Create/get texture child and set its texture
         let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
-            tex.texture = path;
+        if !is_userdata {
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                tex.texture = path;
+            }
         }
 
         Ok(())
     });
+
+    // SetCheckedTexture(texture) - Set texture for checked state (CheckButton)
+    methods.add_method("SetCheckedTexture", |_, this, texture: Value| {
+        let path = match &texture {
+            Value::String(s) => Some(s.to_str()?.to_string()),
+            _ => None,
+        };
+        let is_userdata = matches!(texture, Value::UserData(_));
+        let mut state = this.state.borrow_mut();
+
+        // Only overwrite parent path when given a string (not a texture object)
+        if !is_userdata {
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.checked_texture = path.clone();
+            }
+        }
+
+        let tex_id = get_or_create_button_texture(&mut state, this.id, "CheckedTexture");
+        if let Some(tex) = state.widgets.get_mut(tex_id) {
+            if !is_userdata {
+                tex.texture = path;
+            }
+            // CheckedTexture starts hidden (shown via SetChecked)
+            tex.visible = false;
+        }
+
+        Ok(())
+    });
+
+    // SetDisabledCheckedTexture(texture) - Set texture for disabled-checked state (CheckButton)
+    methods.add_method(
+        "SetDisabledCheckedTexture",
+        |_, this, texture: Value| {
+            let path = match &texture {
+                Value::String(s) => Some(s.to_str()?.to_string()),
+                _ => None,
+            };
+            let is_userdata = matches!(texture, Value::UserData(_));
+            let mut state = this.state.borrow_mut();
+
+            if !is_userdata {
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.disabled_checked_texture = path.clone();
+                }
+            }
+
+            let tex_id =
+                get_or_create_button_texture(&mut state, this.id, "DisabledCheckedTexture");
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
+                if !is_userdata {
+                    tex.texture = path;
+                }
+                tex.visible = false;
+            }
+
+            Ok(())
+        },
+    );
 
     // SetLeftTexture(texture) - Set left cap texture for 3-slice buttons
     methods.add_method("SetLeftTexture", |_, this, texture: Value| {
@@ -279,8 +345,21 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // IsEnabled() - Check if button is enabled
     methods.add_method("IsEnabled", |_, _this, ()| Ok(true));
 
-    // Click() - Simulate button click
-    methods.add_method("Click", |_, _this, ()| Ok(()));
+    // Click() - Simulate button click by firing OnClick handler
+    methods.add_method("Click", |lua, this, ()| {
+        let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
+        if let Some(table) = scripts_table {
+            let key = format!("{}_OnClick", this.id);
+            let handler: Option<mlua::Function> = table.get(key.as_str()).ok();
+            if let Some(handler) = handler {
+                let frame_key = format!("__frame_{}", this.id);
+                let frame: Value = lua.globals().get(frame_key.as_str())?;
+                let button = lua.create_string("LeftButton")?;
+                handler.call::<()>((frame, button, false))?;
+            }
+        }
+        Ok(())
+    });
 
     // RegisterForClicks(...) - Register which mouse buttons trigger clicks
     methods.add_method("RegisterForClicks", |_, _this, _args: mlua::MultiValue| {
