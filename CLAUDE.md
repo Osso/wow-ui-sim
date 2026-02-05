@@ -146,7 +146,7 @@ wow-sim lua -l                 # List running servers
 
 ### Screenshot (Standalone)
 
-Render the UI to an image file without starting the GUI (CPU software rasterizer, no GPU needed). Text is not rendered — this is for debugging frame layout and textures.
+Render the UI to an image file without starting the GUI (headless GPU, same shader pipeline as the live renderer). Text is not rendered — this is for debugging frame layout and textures.
 
 ```bash
 wow-sim screenshot                                          # Render to screenshot.png (1024x768)

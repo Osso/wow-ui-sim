@@ -32,6 +32,7 @@ iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector"
 # GPU rendering
 wgpu = "27.0"
 bytemuck = { version = "1.21", features = ["derive"] }
+pollster = "0.4"
 
 [[bin]]
 name = "wow-sim"

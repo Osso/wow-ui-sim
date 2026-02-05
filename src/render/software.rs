@@ -1,167 +1,174 @@
-//! CPU-based software rasterizer for producing screenshots.
+//! Headless GPU rendering for producing screenshots.
 //!
-//! Renders a QuadBatch to an image::RgbaImage without requiring a GPU.
-//! Supports solid color quads, textured quads with UV mapping, and alpha blending.
-//! Text (FontString) is not rendered — this is for debugging frame layout and textures.
+//! Uses the same wgpu shader pipeline as the iced GUI but drives it
+//! without a window. Produces pixel-identical output to the live renderer.
 
+use iced::widget::shader::Primitive;
 use image::RgbaImage;
 
-use super::shader::{BlendMode, QuadBatch};
+use super::shader::{GpuTextureData, QuadBatch, WowUiPrimitive};
 use crate::texture::TextureManager;
 
-/// Render a QuadBatch to an RGBA image using CPU rasterization.
+/// Render a QuadBatch to an RGBA image using headless wgpu.
 ///
-/// Iterates quads in batch order (already sorted by strata/level/layer),
-/// resolves pending texture requests via TextureManager, samples textures
-/// with nearest-neighbor filtering, and alpha-blends onto a black background.
+/// Creates a headless GPU device, sets up the same WowUiPipeline used by
+/// the iced GUI, and renders to an offscreen texture. The result is read
+/// back to CPU memory as an RgbaImage.
 pub fn render_to_image(
     batch: &QuadBatch,
     tex_mgr: &mut TextureManager,
     width: u32,
     height: u32,
 ) -> RgbaImage {
-    let mut img = RgbaImage::from_pixel(width, height, image::Rgba([0, 0, 0, 255]));
-
-    // Build a lookup from vertex index -> texture path for pending textures.
-    // A single TextureRequest can span multiple quads (e.g. three-slice: 3 quads, 12 vertices).
-    // Insert an entry for each quad's starting vertex within the request range.
-    let mut tex_lookup: std::collections::HashMap<u32, String> =
-        std::collections::HashMap::new();
-    for req in &batch.texture_requests {
-        let mut v = req.vertex_start;
-        let end = req.vertex_start + req.vertex_count;
-        while v < end {
-            tex_lookup.insert(v, req.path.clone());
-            v += 4; // Each quad is 4 vertices
-        }
-    }
-
-    // Pre-load all requested textures
-    for req in &batch.texture_requests {
-        tex_mgr.load(&req.path);
-    }
-
-    // Process quads (every 4 vertices = 1 quad, every 6 indices = 1 quad)
-    let num_quads = batch.indices.len() / 6;
-    for qi in 0..num_quads {
-        let idx_base = qi * 6;
-        // First triangle: indices[0], indices[1], indices[2] → TL, TR, BR
-        // The quad vertices are at indices[0]..indices[0]+3 (TL, TR, BR, BL)
-        let v0 = batch.indices[idx_base] as usize; // TL
-
-        let tl = &batch.vertices[v0];
-        let br = &batch.vertices[v0 + 2];
-
-        // Axis-aligned bounding rect
-        let x0 = tl.position[0];
-        let y0 = tl.position[1];
-        let x1 = br.position[0];
-        let y1 = br.position[1];
-
-        // Clamp to image bounds
-        let px0 = (x0.max(0.0) as u32).min(width);
-        let py0 = (y0.max(0.0) as u32).min(height);
-        let px1 = (x1.ceil().max(0.0) as u32).min(width);
-        let py1 = (y1.ceil().max(0.0) as u32).min(height);
-
-        if px0 >= px1 || py0 >= py1 {
+    // Load textures for all requests
+    let mut textures = Vec::new();
+    let mut seen = std::collections::HashSet::new();
+    for request in &batch.texture_requests {
+        if seen.contains(&request.path) {
             continue;
         }
+        if let Some(tex_data) = tex_mgr.load(&request.path) {
+            textures.push(GpuTextureData {
+                path: request.path.clone(),
+                width: tex_data.width,
+                height: tex_data.height,
+                rgba: tex_data.pixels.clone(),
+            });
+            seen.insert(request.path.clone());
+        }
+    }
 
-        // UV coords from TL and BR vertices
-        let uv_tl = tl.tex_coords;
-        let uv_br = br.tex_coords;
+    let primitive = WowUiPrimitive::with_textures(batch.clone(), textures);
 
-        // Vertex color (same for all 4 vertices in our quads)
-        let vc = tl.color;
+    // Create headless wgpu device
+    let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
+        backends: wgpu::Backends::all(),
+        ..Default::default()
+    });
 
-        // Blend mode
-        let blend_additive = tl.flags == BlendMode::Additive as u32;
+    let (device, queue) = pollster::block_on(async {
+        let adapter = instance
+            .request_adapter(&wgpu::RequestAdapterOptions {
+                power_preference: wgpu::PowerPreference::default(),
+                compatible_surface: None,
+                force_fallback_adapter: false,
+            })
+            .await
+            .expect("Failed to find GPU adapter");
 
-        // Determine texture source
-        let tex_data = if tl.tex_index == -2 {
-            // Pending texture — look up path
-            tex_lookup
-                .get(&(v0 as u32))
-                .and_then(|path| tex_mgr.get(path))
-        } else if tl.tex_index >= 0 {
-            // Pre-resolved texture index — not used in standalone mode
-            None
-        } else {
-            // tex_index == -1 → solid color
-            None
-        };
+        adapter
+            .request_device(&wgpu::DeviceDescriptor::default())
+            .await
+            .expect("Failed to create GPU device")
+    });
 
-        let is_solid = tl.tex_index == -1;
+    let format = wgpu::TextureFormat::Rgba8UnormSrgb;
 
-        for py in py0..py1 {
-            for px in px0..px1 {
-                // Compute source color
-                let (sr, sg, sb, sa) = if is_solid {
-                    // Solid color quad
-                    (vc[0], vc[1], vc[2], vc[3])
-                } else if let Some(tex) = tex_data {
-                    // Textured quad — sample texture at interpolated UV
-                    let t = if (x1 - x0).abs() > 0.001 {
-                        (px as f32 + 0.5 - x0) / (x1 - x0)
-                    } else {
-                        0.0
-                    };
-                    let s = if (y1 - y0).abs() > 0.001 {
-                        (py as f32 + 0.5 - y0) / (y1 - y0)
-                    } else {
-                        0.0
-                    };
+    // Create pipeline (same as iced uses)
+    use iced::widget::shader::Pipeline;
+    let mut pipeline = super::shader::WowUiPipeline::new(&device, &queue, format);
 
-                    let u = uv_tl[0] + t * (uv_br[0] - uv_tl[0]);
-                    let v = uv_tl[1] + s * (uv_br[1] - uv_tl[1]);
+    // Create render target texture
+    let render_texture = device.create_texture(&wgpu::TextureDescriptor {
+        label: Some("Screenshot Render Target"),
+        size: wgpu::Extent3d {
+            width,
+            height,
+            depth_or_array_layers: 1,
+        },
+        mip_level_count: 1,
+        sample_count: 1,
+        dimension: wgpu::TextureDimension::D2,
+        format,
+        usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::COPY_SRC,
+        view_formats: &[],
+    });
+    let render_view = render_texture.create_view(&wgpu::TextureViewDescriptor::default());
 
-                    // Nearest-neighbor sample
-                    let tx = ((u * tex.width as f32) as u32).min(tex.width.saturating_sub(1));
-                    let ty = ((v * tex.height as f32) as u32).min(tex.height.saturating_sub(1));
-                    let offset = ((ty * tex.width + tx) * 4) as usize;
+    // Prepare (uploads textures, resolves tex_index, uploads buffers)
+    let bounds = iced::Rectangle::new(
+        iced::Point::ORIGIN,
+        iced::Size::new(width as f32, height as f32),
+    );
+    let viewport = iced::widget::shader::Viewport::with_physical_size(
+        iced::Size::new(width, height),
+        1.0,
+    );
+    primitive.prepare(&mut pipeline, &device, &queue, &bounds, &viewport);
 
-                    if offset + 3 < tex.pixels.len() {
-                        let tr = tex.pixels[offset] as f32 / 255.0;
-                        let tg = tex.pixels[offset + 1] as f32 / 255.0;
-                        let tb = tex.pixels[offset + 2] as f32 / 255.0;
-                        let ta = tex.pixels[offset + 3] as f32 / 255.0;
-                        // Multiply by vertex color (tint)
-                        (tr * vc[0], tg * vc[1], tb * vc[2], ta * vc[3])
-                    } else {
-                        continue;
-                    }
-                } else {
-                    // No texture resolved and not solid — skip
-                    continue;
-                };
+    // Render
+    let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor {
+        label: Some("Screenshot Encoder"),
+    });
 
-                if sa <= 0.0 {
-                    continue;
-                }
+    let clip_bounds = iced::Rectangle::new(iced::Point::ORIGIN, iced::Size::new(width as f32, height as f32));
+    let clip_bounds_u32 = iced::Rectangle {
+        x: clip_bounds.x as u32,
+        y: clip_bounds.y as u32,
+        width: clip_bounds.width as u32,
+        height: clip_bounds.height as u32,
+    };
 
-                // Read destination pixel
-                let dst = img.get_pixel(px, py);
-                let dr = dst[0] as f32 / 255.0;
-                let dg = dst[1] as f32 / 255.0;
-                let db = dst[2] as f32 / 255.0;
+    pipeline.render_clear(
+        &mut encoder,
+        &render_view,
+        &clip_bounds_u32,
+        [0.05, 0.05, 0.08, 1.0],
+    );
 
-                // Blend
-                let (or, og, ob) = if blend_additive {
-                    // Additive: dst + src * alpha
-                    (dr + sr * sa, dg + sg * sa, db + sb * sa)
-                } else {
-                    // Alpha blend: src * alpha + dst * (1 - alpha)
-                    (
-                        sr * sa + dr * (1.0 - sa),
-                        sg * sa + dg * (1.0 - sa),
-                        sb * sa + db * (1.0 - sa),
-                    )
-                };
+    // Copy render target to readable buffer
+    let bytes_per_row = (width * 4 + 255) & !255; // Align to 256
+    let output_buffer = device.create_buffer(&wgpu::BufferDescriptor {
+        label: Some("Screenshot Output Buffer"),
+        size: (bytes_per_row * height) as u64,
+        usage: wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::MAP_READ,
+        mapped_at_creation: false,
+    });
 
-                let clamp = |v: f32| (v * 255.0).round().clamp(0.0, 255.0) as u8;
-                img.put_pixel(px, py, image::Rgba([clamp(or), clamp(og), clamp(ob), 255]));
-            }
+    encoder.copy_texture_to_buffer(
+        wgpu::TexelCopyTextureInfo {
+            texture: &render_texture,
+            mip_level: 0,
+            origin: wgpu::Origin3d::ZERO,
+            aspect: wgpu::TextureAspect::All,
+        },
+        wgpu::TexelCopyBufferInfo {
+            buffer: &output_buffer,
+            layout: wgpu::TexelCopyBufferLayout {
+                offset: 0,
+                bytes_per_row: Some(bytes_per_row),
+                rows_per_image: Some(height),
+            },
+        },
+        wgpu::Extent3d {
+            width,
+            height,
+            depth_or_array_layers: 1,
+        },
+    );
+
+    queue.submit(std::iter::once(encoder.finish()));
+
+    // Read back pixels
+    let buffer_slice = output_buffer.slice(..);
+    let (sender, receiver) = std::sync::mpsc::channel();
+    buffer_slice.map_async(wgpu::MapMode::Read, move |result| {
+        sender.send(result).unwrap();
+    });
+    let _ = device.poll(wgpu::PollType::Wait {
+        submission_index: None,
+        timeout: Some(std::time::Duration::from_secs(10)),
+    });
+    receiver.recv().unwrap().expect("Failed to map buffer");
+
+    let data = buffer_slice.get_mapped_range();
+    let mut img = RgbaImage::new(width, height);
+    for y in 0..height {
+        let src_offset = (y * bytes_per_row) as usize;
+        let row = &data[src_offset..src_offset + (width * 4) as usize];
+        for x in 0..width {
+            let i = (x * 4) as usize;
+            img.put_pixel(x, y, image::Rgba([row[i], row[i + 1], row[i + 2], row[i + 3]]));
         }
     }
 

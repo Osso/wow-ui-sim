@@ -234,6 +234,62 @@ impl WowUiPipeline {
         }
     }
 
+    /// Render with a clear operation (for standalone/headless rendering).
+    pub fn render_clear(
+        &self,
+        encoder: &mut wgpu::CommandEncoder,
+        target: &wgpu::TextureView,
+        clip_bounds: &Rectangle<u32>,
+        clear_color: [f32; 4],
+    ) {
+        let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+            label: Some("WoW UI Render Pass (Clear)"),
+            color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+                view: target,
+                resolve_target: None,
+                ops: wgpu::Operations {
+                    load: wgpu::LoadOp::Clear(wgpu::Color {
+                        r: clear_color[0] as f64,
+                        g: clear_color[1] as f64,
+                        b: clear_color[2] as f64,
+                        a: clear_color[3] as f64,
+                    }),
+                    store: wgpu::StoreOp::Store,
+                },
+                depth_slice: None,
+            })],
+            depth_stencil_attachment: None,
+            timestamp_writes: None,
+            occlusion_query_set: None,
+        });
+
+        render_pass.set_viewport(
+            clip_bounds.x as f32,
+            clip_bounds.y as f32,
+            clip_bounds.width as f32,
+            clip_bounds.height as f32,
+            0.0,
+            1.0,
+        );
+
+        render_pass.set_scissor_rect(
+            clip_bounds.x,
+            clip_bounds.y,
+            clip_bounds.width,
+            clip_bounds.height,
+        );
+
+        render_pass.set_pipeline(&self.pipeline);
+        render_pass.set_bind_group(0, &self.uniform_bind_group, &[]);
+        render_pass.set_bind_group(1, self.texture_atlas.bind_group(), &[]);
+        render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
+        render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint32);
+
+        if self.last_index_count > 0 {
+            render_pass.draw_indexed(0..self.last_index_count as u32, 0, 0..1);
+        }
+    }
+
     /// Get mutable access to the texture atlas.
     pub fn texture_atlas_mut(&mut self) -> &mut GpuTextureAtlas {
         &mut self.texture_atlas
