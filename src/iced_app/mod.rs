@@ -26,6 +26,7 @@ use crate::lua_api::WowLuaEnv;
 // Re-export public types
 pub use app::App;
 pub use layout::{anchor_position, compute_frame_rect, frame_position_from_anchor};
+pub use render::build_quad_batch_for_registry;
 pub use state::{CanvasMessage, InspectorState, TextOverlay};
 pub use styles::palette;
 

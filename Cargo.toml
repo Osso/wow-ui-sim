@@ -47,6 +47,7 @@ path = "tools/gen_global_strings.rs"
 
 [dev-dependencies]
 insta = "1.42"
+pollster = "0.4"
 tempfile = "3"
 
 [profile.release]

@@ -190,166 +190,98 @@ impl shader::Program<Message> for &App {
     }
 }
 
-impl App {
-    /// Build a QuadBatch for GPU shader rendering.
-    pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
-        let mut batch = QuadBatch::with_capacity(1000);
+/// Build quads for a Frame widget (backdrop).
+pub fn build_frame_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+    // Draw backdrop if enabled
+    if f.backdrop.enabled {
+        let bg = &f.backdrop.bg_color;
+        batch.push_solid(bounds, [bg.r, bg.g, bg.b, bg.a * f.alpha]);
 
-        let env = self.env.borrow();
-        let state = env.state().borrow();
-
-        // Use canvas size for layout - WoW coords map 1:1 to canvas pixels
-        let screen_width = size.width;
-        let screen_height = size.height;
-
-        // Add background quad first (replaces LoadOp::Clear to preserve iced UI)
-        batch.push_solid(
-            Rectangle::new(Point::ORIGIN, size),
-            [palette::BG_DARK.r, palette::BG_DARK.g, palette::BG_DARK.b, 1.0],
-        );
-
-        // Find AddonList frame and collect descendant IDs
-        let mut addonlist_ids = std::collections::HashSet::new();
-        let addonlist_id = state.widgets.all_ids().into_iter().find(|&id| {
-            state
-                .widgets
-                .get(id)
-                .map(|f| f.name.as_deref() == Some("AddonList"))
-                .unwrap_or(false)
-        });
-
-        if let Some(root_id) = addonlist_id {
-            let mut queue = vec![root_id];
-            while let Some(id) = queue.pop() {
-                addonlist_ids.insert(id);
-                if let Some(f) = state.widgets.get(id) {
-                    queue.extend(f.children.iter().copied());
-                }
-            }
-        }
-
-        // Collect and sort frames
-        let mut frames: Vec<_> = state
-            .widgets
-            .all_ids()
-            .into_iter()
-            .filter_map(|id| {
-                let f = state.widgets.get(id)?;
-                let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
-                Some((id, f, rect))
-            })
-            .collect();
-
-        frames.sort_by(|a, b| {
-            a.1.frame_strata
-                .cmp(&b.1.frame_strata)
-                .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
-                .then_with(|| {
-                    let is_region = |t: &WidgetType| {
-                        matches!(t, WidgetType::Texture | WidgetType::FontString)
-                    };
-                    match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
-                        (true, true) => a.1.draw_layer.cmp(&b.1.draw_layer)
-                            .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer)),
-                        (false, true) => std::cmp::Ordering::Less,
-                        (true, false) => std::cmp::Ordering::Greater,
-                        (false, false) => std::cmp::Ordering::Equal,
-                    }
-                })
-                .then_with(|| a.0.cmp(&b.0))
-        });
-
-        for (id, f, rect) in frames {
-            // Only show AddonList frame and children
-            if !addonlist_ids.contains(&id) {
-                continue;
-            }
-            if !f.visible {
-                continue;
-            }
-            if rect.width <= 0.0 || rect.height <= 0.0 {
-                continue;
-            }
-
-            let x = rect.x * UI_SCALE;
-            let y = rect.y * UI_SCALE;
-            let w = rect.width * UI_SCALE;
-            let h = rect.height * UI_SCALE;
-            let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
-
-            match f.widget_type {
-                WidgetType::Frame => {
-                    self.build_frame_quads(&mut batch, bounds, f);
-                }
-                WidgetType::Button => {
-                    let is_pressed = self.pressed_frame == Some(id);
-                    let is_hovered = self.hovered_frame == Some(id);
-                    self.build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
-                }
-                WidgetType::Texture => {
-                    self.build_texture_quads(&mut batch, bounds, f);
-                }
-                WidgetType::FontString => {
-                    // Text is handled separately (not in quad batch)
-                }
-                WidgetType::CheckButton => {
-                    let is_pressed = self.pressed_frame == Some(id);
-                    let is_hovered = self.hovered_frame == Some(id);
-                    self.build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
-                }
-                WidgetType::EditBox => {
-                    self.build_editbox_quads(&mut batch, bounds, f);
-                }
-                _ => {}
-            }
-        }
-
-        batch
-    }
-
-    /// Build quads for a Frame widget (backdrop).
-    fn build_frame_quads(&self, batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
-        // Draw backdrop if enabled
-        if f.backdrop.enabled {
-            let bg = &f.backdrop.bg_color;
-            batch.push_solid(bounds, [bg.r, bg.g, bg.b, bg.a * f.alpha]);
-
-            // Border
-            if f.backdrop.edge_size > 0.0 {
-                let bc = &f.backdrop.border_color;
-                batch.push_border(bounds, f.backdrop.edge_size.max(1.0), [bc.r, bc.g, bc.b, bc.a * f.alpha]);
-            }
-        }
-
-        // NineSlice rendering - for now, just draw a placeholder border
-        if f.nine_slice_layout.is_some() {
-            batch.push_border(bounds, 2.0, [0.6, 0.45, 0.15, f.alpha]);
+        // Border
+        if f.backdrop.edge_size > 0.0 {
+            let bc = &f.backdrop.border_color;
+            batch.push_border(bounds, f.backdrop.edge_size.max(1.0), [bc.r, bc.g, bc.b, bc.a * f.alpha]);
         }
     }
 
-    /// Build quads for a Button widget.
-    fn build_button_quads(
-        &self,
-        batch: &mut QuadBatch,
-        bounds: Rectangle,
-        f: &crate::widget::Frame,
-        is_pressed: bool,
-        is_hovered: bool,
-    ) {
-        // Determine which texture and tex_coords to use based on state
-        let (texture_path, tex_coords) = if is_pressed {
-            (
-                f.pushed_texture.as_ref().or(f.normal_texture.as_ref()),
-                f.pushed_tex_coords.or(f.normal_tex_coords),
-            )
+    // NineSlice rendering - for now, just draw a placeholder border
+    if f.nine_slice_layout.is_some() {
+        batch.push_border(bounds, 2.0, [0.6, 0.45, 0.15, f.alpha]);
+    }
+}
+
+/// Build quads for a Button widget.
+pub fn build_button_quads(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    f: &crate::widget::Frame,
+    is_pressed: bool,
+    is_hovered: bool,
+) {
+    // Determine which texture and tex_coords to use based on state
+    let (texture_path, tex_coords) = if is_pressed {
+        (
+            f.pushed_texture.as_ref().or(f.normal_texture.as_ref()),
+            f.pushed_tex_coords.or(f.normal_tex_coords),
+        )
+    } else {
+        (f.normal_texture.as_ref(), f.normal_tex_coords)
+    };
+
+    // Render button texture or fallback to solid color
+    if let Some(tex_path) = texture_path {
+        if let Some((left, right, top, bottom)) = tex_coords {
+            // Atlas texture - use sub-region UV coordinates
+            let uvs = Rectangle::new(
+                Point::new(left, top),
+                Size::new(right - left, bottom - top),
+            );
+            batch.push_textured_path_uv(
+                bounds,
+                uvs,
+                tex_path,
+                [1.0, 1.0, 1.0, f.alpha],
+                BlendMode::Alpha,
+            );
         } else {
-            (f.normal_texture.as_ref(), f.normal_tex_coords)
+            // WoW button textures are 128x32 with thin gold borders (~3px)
+            // Use 3-slice rendering to preserve the end caps while stretching the middle
+            const BUTTON_TEX_WIDTH: f32 = 128.0;
+            const BUTTON_CAP_WIDTH: f32 = 4.0;
+            batch.push_three_slice_h_path(
+                bounds,
+                BUTTON_CAP_WIDTH,
+                BUTTON_CAP_WIDTH,
+                tex_path,
+                BUTTON_TEX_WIDTH,
+                [1.0, 1.0, 1.0, f.alpha],
+            );
+        }
+    } else {
+        // Fallback solid color
+        let bg_color = if is_pressed {
+            [0.20, 0.08, 0.08, 0.95 * f.alpha]
+        } else if is_hovered {
+            [0.18, 0.07, 0.07, 0.95 * f.alpha]
+        } else {
+            [0.15, 0.05, 0.05, 0.95 * f.alpha]
         };
+        batch.push_solid(bounds, bg_color);
 
-        // Render button texture or fallback to solid color
-        if let Some(tex_path) = texture_path {
-            if let Some((left, right, top, bottom)) = tex_coords {
-                // Atlas texture - use sub-region UV coordinates
+        // Border for solid color fallback
+        let border_color = if is_hovered || is_pressed {
+            [0.8, 0.6, 0.2, f.alpha]
+        } else {
+            [0.6, 0.45, 0.15, f.alpha]
+        };
+        batch.push_border(bounds, 1.5, border_color);
+    }
+
+    // Highlight texture overlay on hover
+    if is_hovered && !is_pressed {
+        if let Some(ref highlight_path) = f.highlight_texture {
+            if let Some((left, right, top, bottom)) = f.highlight_tex_coords {
+                // Atlas-based highlight
                 let uvs = Rectangle::new(
                     Point::new(left, top),
                     Size::new(right - left, bottom - top),
@@ -357,181 +289,265 @@ impl App {
                 batch.push_textured_path_uv(
                     bounds,
                     uvs,
-                    tex_path,
-                    [1.0, 1.0, 1.0, f.alpha],
-                    BlendMode::Alpha,
+                    highlight_path,
+                    [1.0, 1.0, 1.0, 0.5 * f.alpha],
+                    BlendMode::Additive,
                 );
             } else {
-                // WoW button textures are 128x32 with thin gold borders (~3px)
-                // Use 3-slice rendering to preserve the end caps while stretching the middle
+                // Non-atlas highlight (3-slice)
                 const BUTTON_TEX_WIDTH: f32 = 128.0;
                 const BUTTON_CAP_WIDTH: f32 = 4.0;
-                batch.push_three_slice_h_path(
+                batch.push_three_slice_h_path_blend(
                     bounds,
                     BUTTON_CAP_WIDTH,
                     BUTTON_CAP_WIDTH,
-                    tex_path,
+                    highlight_path,
                     BUTTON_TEX_WIDTH,
-                    [1.0, 1.0, 1.0, f.alpha],
-                );
-            }
-        } else {
-            // Fallback solid color
-            let bg_color = if is_pressed {
-                [0.20, 0.08, 0.08, 0.95 * f.alpha]
-            } else if is_hovered {
-                [0.18, 0.07, 0.07, 0.95 * f.alpha]
-            } else {
-                [0.15, 0.05, 0.05, 0.95 * f.alpha]
-            };
-            batch.push_solid(bounds, bg_color);
-
-            // Border for solid color fallback
-            let border_color = if is_hovered || is_pressed {
-                [0.8, 0.6, 0.2, f.alpha]
-            } else {
-                [0.6, 0.45, 0.15, f.alpha]
-            };
-            batch.push_border(bounds, 1.5, border_color);
-        }
-
-        // Highlight texture overlay on hover
-        if is_hovered && !is_pressed {
-            if let Some(ref highlight_path) = f.highlight_texture {
-                if let Some((left, right, top, bottom)) = f.highlight_tex_coords {
-                    // Atlas-based highlight
-                    let uvs = Rectangle::new(
-                        Point::new(left, top),
-                        Size::new(right - left, bottom - top),
-                    );
-                    batch.push_textured_path_uv(
-                        bounds,
-                        uvs,
-                        highlight_path,
-                        [1.0, 1.0, 1.0, 0.5 * f.alpha],
-                        BlendMode::Additive,
-                    );
-                } else {
-                    // Non-atlas highlight (3-slice)
-                    const BUTTON_TEX_WIDTH: f32 = 128.0;
-                    const BUTTON_CAP_WIDTH: f32 = 4.0;
-                    batch.push_three_slice_h_path_blend(
-                        bounds,
-                        BUTTON_CAP_WIDTH,
-                        BUTTON_CAP_WIDTH,
-                        highlight_path,
-                        BUTTON_TEX_WIDTH,
-                        [1.0, 1.0, 1.0, 0.5 * f.alpha],
-                        BlendMode::Additive,
-                    );
-                }
-            } else {
-                // Fallback highlight
-                batch.push_quad(
-                    bounds,
-                    Rectangle::new(Point::ORIGIN, Size::new(1.0, 1.0)),
-                    [1.0, 0.9, 0.6, 0.15 * f.alpha],
-                    -1,
+                    [1.0, 1.0, 1.0, 0.5 * f.alpha],
                     BlendMode::Additive,
                 );
             }
+        } else {
+            // Fallback highlight
+            batch.push_quad(
+                bounds,
+                Rectangle::new(Point::ORIGIN, Size::new(1.0, 1.0)),
+                [1.0, 0.9, 0.6, 0.15 * f.alpha],
+                -1,
+                BlendMode::Additive,
+            );
         }
     }
+}
 
-    /// Build quads for a Texture widget.
-    fn build_texture_quads(&self, batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
-        // Color texture
-        if let Some(color) = f.color_texture {
-            batch.push_solid(bounds, [color.r, color.g, color.b, color.a * f.alpha]);
-            return;
-        }
+/// Build quads for a Texture widget.
+pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+    // Color texture
+    if let Some(color) = f.color_texture {
+        batch.push_solid(bounds, [color.r, color.g, color.b, color.a * f.alpha]);
+        return;
+    }
 
-        // File texture
-        if let Some(ref tex_path) = f.texture {
-            // Check if we have tex_coords (from SetAtlas or SetTexCoord)
-            if let Some((left, right, top, bottom)) = f.tex_coords {
-                // Atlas texture - use sub-region UV coordinates
-                let uvs = Rectangle::new(
-                    Point::new(left, top),
-                    Size::new(right - left, bottom - top),
-                );
+    // File texture
+    if let Some(ref tex_path) = f.texture {
+        // Check if we have tex_coords (from SetAtlas or SetTexCoord)
+        if let Some((left, right, top, bottom)) = f.tex_coords {
+            // Atlas texture - use sub-region UV coordinates
+            let uvs = Rectangle::new(
+                Point::new(left, top),
+                Size::new(right - left, bottom - top),
+            );
 
-                // Handle tiling for edge pieces
-                if f.horiz_tile || f.vert_tile {
-                    // Get tile size from frame dimensions (set by SetAtlas with useAtlasSize)
-                    let tile_w = f.width.max(1.0);
-                    let tile_h = f.height.max(1.0);
+            // Handle tiling for edge pieces
+            if f.horiz_tile || f.vert_tile {
+                // Get tile size from frame dimensions (set by SetAtlas with useAtlasSize)
+                let tile_w = f.width.max(1.0);
+                let tile_h = f.height.max(1.0);
 
-                    if f.horiz_tile && !f.vert_tile {
-                        // Horizontal tiling only
+                if f.horiz_tile && !f.vert_tile {
+                    // Horizontal tiling only
+                    let mut x = bounds.x;
+                    while x < bounds.x + bounds.width {
+                        let w = (bounds.x + bounds.width - x).min(tile_w);
+                        let tile_bounds = Rectangle::new(Point::new(x, bounds.y), Size::new(w, bounds.height));
+                        // Adjust UV for partial tiles
+                        let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
+                        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uvs.height));
+                        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+                        x += tile_w;
+                    }
+                } else if f.vert_tile && !f.horiz_tile {
+                    // Vertical tiling only
+                    let mut y = bounds.y;
+                    while y < bounds.y + bounds.height {
+                        let h = (bounds.y + bounds.height - y).min(tile_h);
+                        let tile_bounds = Rectangle::new(Point::new(bounds.x, y), Size::new(bounds.width, h));
+                        // Adjust UV for partial tiles
+                        let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
+                        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uvs.width, uv_h));
+                        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+                        y += tile_h;
+                    }
+                } else {
+                    // Both directions - grid tiling
+                    let mut y = bounds.y;
+                    while y < bounds.y + bounds.height {
+                        let h = (bounds.y + bounds.height - y).min(tile_h);
                         let mut x = bounds.x;
                         while x < bounds.x + bounds.width {
                             let w = (bounds.x + bounds.width - x).min(tile_w);
-                            let tile_bounds = Rectangle::new(Point::new(x, bounds.y), Size::new(w, bounds.height));
-                            // Adjust UV for partial tiles
+                            let tile_bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
                             let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
-                            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uvs.height));
+                            let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
+                            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uv_h));
                             batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
                             x += tile_w;
                         }
-                    } else if f.vert_tile && !f.horiz_tile {
-                        // Vertical tiling only
-                        let mut y = bounds.y;
-                        while y < bounds.y + bounds.height {
-                            let h = (bounds.y + bounds.height - y).min(tile_h);
-                            let tile_bounds = Rectangle::new(Point::new(bounds.x, y), Size::new(bounds.width, h));
-                            // Adjust UV for partial tiles
-                            let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
-                            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uvs.width, uv_h));
-                            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
-                            y += tile_h;
-                        }
-                    } else {
-                        // Both directions - grid tiling
-                        let mut y = bounds.y;
-                        while y < bounds.y + bounds.height {
-                            let h = (bounds.y + bounds.height - y).min(tile_h);
-                            let mut x = bounds.x;
-                            while x < bounds.x + bounds.width {
-                                let w = (bounds.x + bounds.width - x).min(tile_w);
-                                let tile_bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
-                                let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
-                                let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
-                                let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uv_h));
-                                batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
-                                x += tile_w;
-                            }
-                            y += tile_h;
-                        }
+                        y += tile_h;
                     }
-                } else {
-                    // No tiling - render once
-                    batch.push_textured_path_uv(
-                        bounds,
-                        uvs,
-                        tex_path,
-                        [1.0, 1.0, 1.0, f.alpha],
-                        BlendMode::Alpha,
-                    );
                 }
             } else {
-                // Full texture - use default UVs
-                batch.push_textured_path(
+                // No tiling - render once
+                batch.push_textured_path_uv(
                     bounds,
+                    uvs,
                     tex_path,
                     [1.0, 1.0, 1.0, f.alpha],
                     BlendMode::Alpha,
                 );
             }
+        } else {
+            // Full texture - use default UVs
+            batch.push_textured_path(
+                bounds,
+                tex_path,
+                [1.0, 1.0, 1.0, f.alpha],
+                BlendMode::Alpha,
+            );
+        }
+    }
+}
+
+/// Build quads for an EditBox widget.
+pub fn build_editbox_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+    // Background
+    batch.push_solid(bounds, [0.06, 0.06, 0.08, 0.9 * f.alpha]);
+    // Border
+    batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, f.alpha]);
+}
+
+/// Build a QuadBatch from a WidgetRegistry without needing an App instance.
+///
+/// This contains the sorting/filtering logic from `App::build_quad_batch` but
+/// takes a `WidgetRegistry` directly.
+pub fn build_quad_batch_for_registry(
+    registry: &crate::widget::WidgetRegistry,
+    screen_size: (f32, f32),
+    root_name: Option<&str>,
+    pressed_frame: Option<u64>,
+    hovered_frame: Option<u64>,
+) -> QuadBatch {
+    let mut batch = QuadBatch::with_capacity(1000);
+    let (screen_width, screen_height) = screen_size;
+    let size = Size::new(screen_width, screen_height);
+
+    // Add background quad
+    batch.push_solid(
+        Rectangle::new(Point::ORIGIN, size),
+        [palette::BG_DARK.r, palette::BG_DARK.g, palette::BG_DARK.b, 1.0],
+    );
+
+    // Determine which frames to render
+    let mut visible_ids = std::collections::HashSet::new();
+    if let Some(name) = root_name {
+        // Filter to subtree rooted at the named frame
+        let root_id = registry.all_ids().into_iter().find(|&id| {
+            registry
+                .get(id)
+                .map(|f| f.name.as_deref() == Some(name))
+                .unwrap_or(false)
+        });
+        if let Some(root_id) = root_id {
+            let mut queue = vec![root_id];
+            while let Some(id) = queue.pop() {
+                visible_ids.insert(id);
+                if let Some(f) = registry.get(id) {
+                    queue.extend(f.children.iter().copied());
+                }
+            }
+        }
+    }
+    let filter_to_subtree = root_name.is_some();
+
+    // Collect and sort frames
+    let mut frames: Vec<_> = registry
+        .all_ids()
+        .into_iter()
+        .filter_map(|id| {
+            let f = registry.get(id)?;
+            let rect = compute_frame_rect(registry, id, screen_width, screen_height);
+            Some((id, f, rect))
+        })
+        .collect();
+
+    frames.sort_by(|a, b| {
+        a.1.frame_strata
+            .cmp(&b.1.frame_strata)
+            .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
+            .then_with(|| {
+                let is_region = |t: &WidgetType| {
+                    matches!(t, WidgetType::Texture | WidgetType::FontString)
+                };
+                match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
+                    (true, true) => a.1.draw_layer.cmp(&b.1.draw_layer)
+                        .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer)),
+                    (false, true) => std::cmp::Ordering::Less,
+                    (true, false) => std::cmp::Ordering::Greater,
+                    (false, false) => std::cmp::Ordering::Equal,
+                }
+            })
+            .then_with(|| a.0.cmp(&b.0))
+    });
+
+    for (id, f, rect) in frames {
+        if filter_to_subtree && !visible_ids.contains(&id) {
+            continue;
+        }
+        if !f.visible {
+            continue;
+        }
+        if rect.width <= 0.0 || rect.height <= 0.0 {
+            continue;
+        }
+
+        let x = rect.x * UI_SCALE;
+        let y = rect.y * UI_SCALE;
+        let w = rect.width * UI_SCALE;
+        let h = rect.height * UI_SCALE;
+        let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
+
+        match f.widget_type {
+            WidgetType::Frame => {
+                build_frame_quads(&mut batch, bounds, f);
+            }
+            WidgetType::Button => {
+                let is_pressed = pressed_frame == Some(id);
+                let is_hovered = hovered_frame == Some(id);
+                build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
+            }
+            WidgetType::Texture => {
+                build_texture_quads(&mut batch, bounds, f);
+            }
+            WidgetType::FontString => {
+                // Text is handled separately (not in quad batch)
+            }
+            WidgetType::CheckButton => {
+                let is_pressed = pressed_frame == Some(id);
+                let is_hovered = hovered_frame == Some(id);
+                build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
+            }
+            WidgetType::EditBox => {
+                build_editbox_quads(&mut batch, bounds, f);
+            }
+            _ => {}
         }
     }
 
-    /// Build quads for an EditBox widget.
-    fn build_editbox_quads(&self, batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
-        // Background
-        batch.push_solid(bounds, [0.06, 0.06, 0.08, 0.9 * f.alpha]);
-        // Border
-        batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, f.alpha]);
+    batch
+}
+
+impl App {
+    /// Build a QuadBatch for GPU shader rendering.
+    pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        build_quad_batch_for_registry(
+            &state.widgets,
+            (size.width, size.height),
+            Some("AddonList"),
+            self.pressed_frame,
+            self.hovered_frame,
+        )
     }
 
     /// Draw text elements and debug overlays (borders, anchor points).
