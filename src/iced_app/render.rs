@@ -394,6 +394,10 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
 
 /// Build quads for an EditBox widget.
 pub fn build_editbox_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+    // Skip placeholder if child textures provide the border (e.g. SearchBoxTemplate)
+    if !f.children_keys.is_empty() {
+        return;
+    }
     // Background
     batch.push_solid(bounds, [0.06, 0.06, 0.08, 0.9 * f.alpha]);
     // Border
