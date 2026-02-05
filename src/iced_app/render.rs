@@ -218,51 +218,61 @@ pub fn build_button_quads(
     is_pressed: bool,
     is_hovered: bool,
 ) {
+    // If this button has child Texture widgets for NormalTexture/PushedTexture,
+    // those children render themselves. Skip rendering here to avoid double-draw
+    // (which breaks alpha transparency on semi-transparent textures like checkboxes).
+    let has_normal_child = f.children_keys.contains_key("NormalTexture");
+    let has_pushed_child = f.children_keys.contains_key("PushedTexture");
+
     // Determine which texture and tex_coords to use based on state
-    let (texture_path, tex_coords) = if is_pressed {
+    let (texture_path, tex_coords, skip) = if is_pressed {
         (
             f.pushed_texture.as_ref().or(f.normal_texture.as_ref()),
             f.pushed_tex_coords.or(f.normal_tex_coords),
+            if f.pushed_texture.is_some() { has_pushed_child } else { has_normal_child },
         )
     } else {
-        (f.normal_texture.as_ref(), f.normal_tex_coords)
+        (f.normal_texture.as_ref(), f.normal_tex_coords, has_normal_child)
     };
 
-    // Render button texture or fallback to solid color
-    if let Some(tex_path) = texture_path {
-        if let Some((left, right, top, bottom)) = tex_coords {
-            // Atlas texture - use sub-region UV coordinates
-            let uvs = Rectangle::new(
-                Point::new(left, top),
-                Size::new(right - left, bottom - top),
-            );
-            batch.push_textured_path_uv(
-                bounds,
-                uvs,
-                tex_path,
-                [1.0, 1.0, 1.0, f.alpha],
-                BlendMode::Alpha,
-            );
-        } else {
-            // WoW button textures are 128x32 with thin gold borders (~3px)
-            // Use 3-slice rendering to preserve the end caps while stretching the middle
-            const BUTTON_TEX_WIDTH: f32 = 128.0;
-            const BUTTON_CAP_WIDTH: f32 = 4.0;
-            batch.push_three_slice_h_path(
-                bounds,
-                BUTTON_CAP_WIDTH,
-                BUTTON_CAP_WIDTH,
-                tex_path,
-                BUTTON_TEX_WIDTH,
-                [1.0, 1.0, 1.0, f.alpha],
-            );
+    // Render button texture (unless a child Texture widget handles it)
+    if !skip {
+        if let Some(tex_path) = texture_path {
+            if let Some((left, right, top, bottom)) = tex_coords {
+                // Atlas texture - use sub-region UV coordinates
+                let uvs = Rectangle::new(
+                    Point::new(left, top),
+                    Size::new(right - left, bottom - top),
+                );
+                batch.push_textured_path_uv(
+                    bounds,
+                    uvs,
+                    tex_path,
+                    [1.0, 1.0, 1.0, f.alpha],
+                    BlendMode::Alpha,
+                );
+            } else {
+                // WoW button textures are 128x32 with thin gold borders (~3px)
+                // Use 3-slice rendering to preserve the end caps while stretching the middle
+                const BUTTON_TEX_WIDTH: f32 = 128.0;
+                const BUTTON_CAP_WIDTH: f32 = 4.0;
+                batch.push_three_slice_h_path(
+                    bounds,
+                    BUTTON_CAP_WIDTH,
+                    BUTTON_CAP_WIDTH,
+                    tex_path,
+                    BUTTON_TEX_WIDTH,
+                    [1.0, 1.0, 1.0, f.alpha],
+                );
+            }
         }
     }
     // In WoW, buttons without NormalTexture are transparent - their visuals come
     // from child Texture widgets (e.g. MinimalScrollBar steppers, ThreeSliceButton Left/Right/Center).
 
-    // Highlight texture overlay on hover
-    if is_hovered && !is_pressed {
+    // Highlight texture overlay on hover (skip if child Texture widget handles it)
+    let has_highlight_child = f.children_keys.contains_key("HighlightTexture");
+    if is_hovered && !is_pressed && !has_highlight_child {
         if let Some(ref highlight_path) = f.highlight_texture {
             if let Some((left, right, top, bottom)) = f.highlight_tex_coords {
                 // Atlas-based highlight

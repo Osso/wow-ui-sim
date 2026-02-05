@@ -704,9 +704,11 @@ fn create_button_texture_from_template(
 
     // Apply atlas (after parentKey registration so SetAtlas can propagate to parent)
     if let Some(atlas) = &texture.atlas {
+        let use_atlas_size = texture.use_atlas_size.unwrap_or(false);
         code.push_str(&format!(
-            "            tex:SetAtlas(\"{}\")\n",
-            escape_lua_string(atlas)
+            "            tex:SetAtlas(\"{}\", {})\n",
+            escape_lua_string(atlas),
+            use_atlas_size
         ));
     }
 

@@ -146,7 +146,7 @@ impl TextureManager {
             .or_else(|| normalized_path.strip_prefix("interface/"))
             .unwrap_or(normalized_path);
 
-        // Try wow-ui-textures repo first
+        // Try local textures first
         if let Some(result) = self.try_resolve_in_dir(&self.textures_path, path) {
             return Some(result);
         }

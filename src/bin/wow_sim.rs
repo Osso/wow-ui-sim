@@ -611,9 +611,15 @@ fn screenshot_standalone(
         batch.texture_requests.len()
     );
 
-    // Set up texture manager
+    // Set up texture manager (prefer local ./textures, fall back to wow-ui-textures repo)
     let home = dirs::home_dir().unwrap_or_default();
-    let mut tex_mgr = TextureManager::new(home.join("Repos/wow-ui-textures"))
+    let local_textures = PathBuf::from("./textures");
+    let textures_path = if local_textures.exists() {
+        local_textures
+    } else {
+        home.join("Repos/wow-ui-textures")
+    };
+    let mut tex_mgr = TextureManager::new(textures_path)
         .with_interface_path(home.join("Projects/wow/Interface"))
         .with_addons_path(home.join("Projects/wow/reference-addons"));
 
