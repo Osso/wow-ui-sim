@@ -126,6 +126,10 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 fn create_widget_type_defaults(state: &mut SimState, frame_id: u64, widget_type: WidgetType) {
     match widget_type {
         WidgetType::Button | WidgetType::CheckButton => {
+            // Buttons implicitly have mouse enabled in WoW
+            if let Some(frame) = state.widgets.get_mut(frame_id) {
+                frame.mouse_enabled = true;
+            }
             // Buttons always have these texture slots available
             let normal_tex = Frame::new(WidgetType::Texture, None, Some(frame_id));
             let normal_id = normal_tex.id;

@@ -844,3 +844,54 @@ fn minimal_checkbox_click_toggles_checked() {
         assert!(!tex.visible, "CheckedTexture should be hidden when unchecked");
     }
 }
+
+#[test]
+fn minimal_checkbox_mouse_enabled_by_default() {
+    let env = env_with_shared_xml();
+
+    env.exec(
+        r#"
+        local cb = CreateFrame("CheckButton", "TestMinCbMouse", UIParent, "MinimalCheckboxTemplate")
+        cb:SetPoint("CENTER")
+    "#,
+    )
+    .unwrap();
+
+    // CheckButton should have mouse enabled by default (like WoW)
+    let mouse_enabled: bool = env
+        .eval("return TestMinCbMouse:IsMouseEnabled()")
+        .unwrap();
+    assert!(
+        mouse_enabled,
+        "CheckButton should have mouse enabled by default"
+    );
+
+    // Also verify via Rust state
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("TestMinCbMouse").unwrap();
+    let frame = state.widgets.get(id).unwrap();
+    assert!(
+        frame.mouse_enabled,
+        "CheckButton frame.mouse_enabled should be true"
+    );
+}
+
+#[test]
+fn button_mouse_enabled_by_default() {
+    let env = env_with_shared_xml();
+
+    env.exec(
+        r#"
+        local btn = CreateFrame("Button", "TestBtnMouse", UIParent)
+        btn:SetPoint("CENTER")
+        btn:SetSize(100, 30)
+    "#,
+    )
+    .unwrap();
+
+    let mouse_enabled: bool = env.eval("return TestBtnMouse:IsMouseEnabled()").unwrap();
+    assert!(
+        mouse_enabled,
+        "Button should have mouse enabled by default"
+    );
+}
