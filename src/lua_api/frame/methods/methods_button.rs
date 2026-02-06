@@ -358,16 +358,57 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFontString", |_, _this, _fontstring: Value| Ok(()));
 
     // SetEnabled(enabled) - Enable/disable button
-    methods.add_method("SetEnabled", |_, _this, _enabled: bool| Ok(()));
+    methods.add_method("SetEnabled", |_, this, enabled: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.attributes.insert(
+                "__enabled".to_string(),
+                crate::widget::AttributeValue::Boolean(enabled),
+            );
+        }
+        Ok(())
+    });
 
     // Enable() - Enable button
-    methods.add_method("Enable", |_, _this, ()| Ok(()));
+    methods.add_method("Enable", |_, this, ()| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.attributes.insert(
+                "__enabled".to_string(),
+                crate::widget::AttributeValue::Boolean(true),
+            );
+        }
+        Ok(())
+    });
 
     // Disable() - Disable button
-    methods.add_method("Disable", |_, _this, ()| Ok(()));
+    methods.add_method("Disable", |_, this, ()| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.attributes.insert(
+                "__enabled".to_string(),
+                crate::widget::AttributeValue::Boolean(false),
+            );
+        }
+        Ok(())
+    });
 
     // IsEnabled() - Check if button is enabled
-    methods.add_method("IsEnabled", |_, _this, ()| Ok(true));
+    methods.add_method("IsEnabled", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state
+            .widgets
+            .get(this.id)
+            .and_then(|f| f.attributes.get("__enabled"))
+            .and_then(|v| {
+                if let crate::widget::AttributeValue::Boolean(b) = v {
+                    Some(*b)
+                } else {
+                    None
+                }
+            })
+            .unwrap_or(true))
+    });
 
     // Click() - Simulate button click by firing OnClick handler
     methods.add_method("Click", |lua, this, ()| {

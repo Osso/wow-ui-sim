@@ -162,6 +162,20 @@ impl WowLuaEnv {
         Ok(())
     }
 
+    /// Check if a script handler is registered for a widget.
+    pub fn has_script_handler(&self, widget_id: u64, handler_name: &str) -> bool {
+        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
+        if let Some(table) = scripts_table {
+            let frame_key = format!("{}_{}", widget_id, handler_name);
+            matches!(
+                table.get::<Value>(frame_key.as_str()),
+                Ok(Value::Function(_))
+            )
+        } else {
+            false
+        }
+    }
+
     /// Dispatch a slash command (e.g., "/wa options").
     /// Returns Ok(true) if a handler was found and called, Ok(false) if no handler matched.
     pub fn dispatch_slash_command(&self, input: &str) -> Result<bool> {

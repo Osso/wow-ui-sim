@@ -57,14 +57,39 @@ impl App {
                 }
                 CanvasMessage::MouseDown(pos) => {
                     if let Some(frame_id) = self.hit_test(pos) {
+                        // Check if button is disabled
+                        let is_enabled = {
+                            let env = self.env.borrow();
+                            let state = env.state().borrow();
+                            state
+                                .widgets
+                                .get(frame_id)
+                                .and_then(|f| f.attributes.get("__enabled"))
+                                .and_then(|v| {
+                                    if let crate::widget::AttributeValue::Boolean(b) = v {
+                                        Some(*b)
+                                    } else {
+                                        None
+                                    }
+                                })
+                                .unwrap_or(true)
+                        };
+                        if !is_enabled {
+                            return Task::none();
+                        }
+
                         self.mouse_down_frame = Some(frame_id);
                         self.pressed_frame = Some(frame_id);
                         let error = {
                             let env = self.env.borrow();
                             let button_val =
                                 mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
-                            match env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val]) {
-                                Err(e) => Some(format_script_error(&env, frame_id, "OnMouseDown", &e)),
+                            match env
+                                .fire_script_handler(frame_id, "OnMouseDown", vec![button_val])
+                            {
+                                Err(e) => {
+                                    Some(format_script_error(&env, frame_id, "OnMouseDown", &e))
+                                }
                                 Ok(_) => None,
                             }
                         };
@@ -149,13 +174,54 @@ impl App {
                 }
             },
             Message::Scroll(_dx, dy) => {
-                let scroll_speed = 30.0;
-                // Negate dy: positive dy means scroll up, which should decrease offset
-                self.scroll_offset -= dy * scroll_speed;
-                let max_scroll = 2600.0;
-                self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
-                self.frame_cache.clear();
-                self.quads_dirty.set(true);
+                // Fire OnMouseWheel on the frame under cursor, propagating up the
+                // parent chain until a frame with an OnMouseWheel handler is found.
+                let mut handled = false;
+                if let Some(pos) = self.mouse_position {
+                    if let Some(start_frame) = self.hit_test(pos) {
+                        let env = self.env.borrow();
+                        // Walk up the parent chain looking for OnMouseWheel handler
+                        let mut current = Some(start_frame);
+                        while let Some(frame_id) = current {
+                            if env.has_script_handler(frame_id, "OnMouseWheel") {
+                                let delta_val = mlua::Value::Number(dy as f64);
+                                if let Err(e) = env.fire_script_handler(
+                                    frame_id,
+                                    "OnMouseWheel",
+                                    vec![delta_val],
+                                ) {
+                                    let msg =
+                                        format_script_error(&env, frame_id, "OnMouseWheel", &e);
+                                    eprintln!("{}", msg);
+                                    self.log_messages.push(msg);
+                                }
+                                handled = true;
+                                break;
+                            }
+                            // Move to parent
+                            current = env
+                                .state()
+                                .borrow()
+                                .widgets
+                                .get(frame_id)
+                                .and_then(|f| f.parent_id);
+                        }
+                    }
+                }
+
+                if handled {
+                    self.drain_console();
+                    self.frame_cache.clear();
+                    self.quads_dirty.set(true);
+                } else {
+                    // Fallback: global scroll offset for debugging
+                    let scroll_speed = 30.0;
+                    self.scroll_offset -= dy * scroll_speed;
+                    let max_scroll = 2600.0;
+                    self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
+                    self.frame_cache.clear();
+                    self.quads_dirty.set(true);
+                }
             }
             Message::ReloadUI => {
                 self.log_messages.push("Reloading UI...".to_string());
