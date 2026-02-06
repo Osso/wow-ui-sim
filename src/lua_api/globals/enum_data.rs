@@ -466,6 +466,103 @@ pub const BAG_INDEX: EnumDef = (
     &[("Backpack", 0), ("ReagentBag", 5)],
 );
 
+// ============================================================================
+// Game System Enums
+// ============================================================================
+
+pub const SCREEN_LOCATION_TYPE: SeqEnumDef = (
+    "ScreenLocationType",
+    &[
+        "Center",
+        "Left",
+        "Right",
+        "Top",
+        "Bottom",
+        "TopLeft",
+        "TopRight",
+        "LeftOutside",
+        "RightOutside",
+        "LeftRight",
+        "TopBottom",
+        "LeftRightOutside",
+    ],
+);
+
+pub const START_TIMER_TYPE: SeqEnumDef = (
+    "StartTimerType",
+    &["PvPBeginTimer", "ChallengeModeCountdown", "PlayerCountdown", "PlunderstormCountdown"],
+);
+
+pub const QUEST_SESSION_RESULT: SeqEnumDef = (
+    "QuestSessionResult",
+    &[
+        "Ok", "NotInParty", "InvalidOwner", "AlreadyActive", "NotActive", "InRaid",
+        "OwnerRefused", "Timeout", "Disabled", "Started", "Stopped", "Joined", "Left",
+        "OwnerLeft", "ReadyCheckFailed", "PartyDestroyed", "MemberTimeout", "AlreadyMember",
+        "NotOwner", "AlreadyOwner", "AlreadyJoined", "NotMember", "Busy", "JoinRejected",
+        "Logout", "Empty", "QuestNotCompleted", "Resync", "Restricted", "InPetBattle",
+        "InvalidPublicParty", "Unknown", "InCombat", "MemberInCombat", "RestrictedCrossFaction",
+    ],
+);
+
+pub const REPUTATION_SORT_TYPE: SeqEnumDef = (
+    "ReputationSortType",
+    &["None", "Account", "Character"],
+);
+
+pub const QUEST_COMPLETE_SPELL_TYPE: SeqEnumDef = (
+    "QuestCompleteSpellType",
+    &[
+        "LegacyBehavior", "Follower", "Tradeskill", "Ability", "Aura", "Spell", "Unlock",
+        "Companion", "QuestlineUnlock", "QuestlineReward", "QuestlineUnlockPart", "PossibleReward",
+    ],
+);
+
+pub const BANK_LOCKED_REASON: SeqEnumDef = (
+    "BankLockedReason",
+    &["None", "NoAccountInventoryLock", "BankDisabled", "BankConversionFailed"],
+);
+
+pub const QUEST_SESSION_COMMAND: SeqEnumDef = (
+    "QuestSessionCommand",
+    &["None", "Start", "Stop", "SessionActiveNoCommand"],
+);
+
+pub const PLAYER_INTERACTION_TYPE: SeqEnumDef = (
+    "PlayerInteractionType",
+    &[
+        "None", "TradePartner", "Item", "Gossip", "QuestGiver", "Merchant", "TaxiNode",
+        "Trainer", "Banker", "AlliedRaceDetailsGiver", "GuildBanker", "Registrar", "Vendor",
+        "PetitionVendor", "GuildTabardVendor", "TalentMaster", "SpecializationMaster",
+        "MailInfo", "SpiritHealer", "AreaSpiritHealer", "Binder", "Auctioneer", "StableMaster",
+        "BattleMaster", "Transmogrifier", "LFGDungeon", "VoidStorageBanker",
+        "BlackMarketAuctioneer", "AdventureMap", "WorldMap", "GarrArchitect", "GarrTradeskill",
+        "GarrMission", "ShipmentCrafter", "GarrRecruitment", "GarrTalent", "Trophy",
+        "PlayerChoice", "ArtifactForge", "ObliterumForge", "ScrappingMachine",
+        "ContributionCollector", "AzeriteRespec", "IslandQueue", "ItemInteraction",
+        "ChromieTime", "CovenantPreview", "AnimaDiversion", "LegendaryCrafting",
+        "WeeklyRewards", "Soulbind", "CovenantSanctum", "NewPlayerGuide", "ItemUpgrade",
+        "AdventureJournal", "Renown", "AzeriteForge", "PerksProgramVendor",
+        "ProfessionsCraftingOrder", "Professions", "ProfessionsCustomerOrder", "TraitSystem",
+        "BarbersChoice", "JailersTowerBuffs", "MajorFactionRenown", "PersonalTabardVendor",
+        "ForgeMaster", "CharacterBanker", "AccountBanker", "ProfessionRespec",
+        "CornerstoneInteraction", "RenameNeighborhood", "HousingBulletinBoard",
+        "HousingPedestal", "CreateGuildNeighborhood", "NeighborhoodCharter", "GuildRename",
+        "OpenNeighborhoodCharterConfirmation", "OpenHouseFinder", "PlaceholderType79",
+    ],
+);
+
+pub const EVENT_TOAST_DISPLAY_TYPE: SeqEnumDef = (
+    "EventToastDisplayType",
+    &[
+        "NormalSingleLine", "NormalBlockText", "NormalTitleAndSubTitle", "NormalTextWithIcon",
+        "LargeTextWithIcon", "NormalTextWithIconAndRarity", "Scenario", "ChallengeMode",
+        "ScenarioClickExpand", "WeeklyRewardUnlock", "WeeklyRewardUpgrade",
+        "FlightpointDiscovered", "CapstoneUnlocked", "SingleLineWithIcon", "Scoreboard",
+        "HouseUpgradeAvailable",
+    ],
+);
+
 pub const WIDGET_UNIT_POWER_BAR_FLASH_MOMENT: SeqEnumDef = (
     "WidgetUnitPowerBarFlashMomentType",
     &["FlashWhenMax", "FlashWhenMin", "FlashWhenEmpty", "FlashWhenFull"],
@@ -589,6 +686,15 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     UI_WIDGET_HORIZONTAL_DIRECTION,
     UI_WIDGET_LAYOUT_DIRECTION,
     UI_WIDGET_MODEL_SCENE_LAYER,
+    SCREEN_LOCATION_TYPE,
+    START_TIMER_TYPE,
+    QUEST_SESSION_RESULT,
+    REPUTATION_SORT_TYPE,
+    QUEST_COMPLETE_SPELL_TYPE,
+    BANK_LOCKED_REASON,
+    QUEST_SESSION_COMMAND,
+    PLAYER_INTERACTION_TYPE,
+    EVENT_TOAST_DISPLAY_TYPE,
 ];
 
 // All explicit value enums (for batch registration)

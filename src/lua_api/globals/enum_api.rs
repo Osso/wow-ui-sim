@@ -267,6 +267,10 @@ fn register_ui_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
 fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
     seq_enum(lua, enum_table, "AddOnEnableState", &["None", "Some", "All"])?;
 
+    seq_enum(lua, enum_table, "AddOnProfilerMetric", &[
+        "RecentAverageTime", "SessionAverageTime", "PeakTime", "EncounterAverageTime",
+    ])?;
+
     seq_enum(lua, enum_table, "WeeklyRewardChestThresholdType", &[
         "None", "Activities", "Raid", "MythicPlus", "RankedPvP", "World",
     ])?;

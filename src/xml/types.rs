@@ -581,8 +581,8 @@ pub struct FontStringXml {
     pub justify_h: Option<String>,
     #[serde(rename = "@justifyV")]
     pub justify_v: Option<String>,
-    #[serde(rename = "Size")]
-    pub size: Option<SizeXml>,
+    #[serde(rename = "Size", default)]
+    pub size: Vec<SizeXml>,
     #[serde(rename = "Anchors")]
     pub anchors: Option<AnchorsXml>,
     #[serde(rename = "Color")]

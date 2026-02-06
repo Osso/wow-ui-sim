@@ -288,6 +288,7 @@ impl WowLuaEnv {
                 enabled: true,
                 loaded: false,
                 load_on_demand,
+                load_time_secs: 0.0,
             });
         }
         addons.sort_by(|a, b| a.folder_name.to_lowercase().cmp(&b.folder_name.to_lowercase()));

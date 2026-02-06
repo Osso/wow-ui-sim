@@ -219,6 +219,15 @@ fn register_name_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
+    // UnitPVPName(unit) -> name (returns PvP-formatted name with title)
+    globals.set(
+        "UnitPVPName",
+        lua.create_function(|lua, unit: String| {
+            let name = resolve_unit_name(&unit);
+            Ok(Value::String(lua.create_string(name)?))
+        })?,
+    )?;
+
     Ok(())
 }
 

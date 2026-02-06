@@ -47,7 +47,7 @@ fn generate_fontstring_properties_code(fs: &crate::xml::FontStringXml) -> String
         ));
     }
 
-    if let Some(size) = &fs.size {
+    if let Some(size) = fs.size.last() {
         let (x, y) = get_size_values(size);
         if let (Some(x), Some(y)) = (x, y) {
             code.push_str(&format!(

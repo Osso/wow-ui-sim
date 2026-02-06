@@ -439,7 +439,7 @@ fn create_fontstring_from_template(
 
 /// Append size and text setters for a fontstring.
 fn append_fontstring_size_and_text(code: &mut String, fs: &crate::xml::FontStringXml) {
-    if let Some(size) = &fs.size {
+    if let Some(size) = fs.size.last() {
         let (width, height) = get_size_values(size);
         if let (Some(w), Some(h)) = (width, height) {
             code.push_str(&format!("            fs:SetSize({}, {})\n", w, h));

@@ -87,6 +87,7 @@ pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
     register_c_artifact_ui(lua)?;
     register_c_super_track(lua)?;
     register_c_player_interaction_manager(lua)?;
+    register_c_paper_doll_info(lua)?;
 
     // TooltipDataProcessor - global for registering tooltip post-processing callbacks
     let tooltip_data_processor = lua.create_table()?;
@@ -255,6 +256,11 @@ fn register_c_pet_battles(lua: &Lua) -> Result<()> {
     c_pet_battles.set(
         "GetPower",
         lua.create_function(|_, (_owner, _pet_index): (i32, i32)| Ok(0i32))?,
+    )?;
+
+    c_pet_battles.set(
+        "GetAllEffectNames",
+        lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?,
     )?;
 
     globals.set("C_PetBattles", c_pet_battles)?;
@@ -1521,5 +1527,27 @@ fn register_c_player_interaction_manager(lua: &Lua) -> Result<()> {
     )?;
 
     globals.set("C_PlayerInteractionManager", c_player_interaction_manager)?;
+    Ok(())
+}
+
+fn register_c_paper_doll_info(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    let t = lua.create_table()?;
+
+    t.set("GetStatsError", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set(
+        "GetMinItemLevel",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    t.set(
+        "OffhandHasShield",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    t.set(
+        "OffhandHasWeapon",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+
+    globals.set("C_PaperDollInfo", t)?;
     Ok(())
 }

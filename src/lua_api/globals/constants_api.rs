@@ -49,6 +49,10 @@ pub fn register_constants_api(lua: &Lua) -> Result<()> {
         -- AccountStoreConsts (referenced by GameRulesUtil)
         Constants.AccountStoreConsts.PlunderstormStoreFrontID = 0
         Constants.AccountStoreConsts.WowhackStoreFrontID = 0
+
+        -- InventoryConstants (referenced by Blizzard_FrameXMLBase/Constants.lua)
+        Constants.InventoryConstants.NumBagSlots = 5
+        Constants.InventoryConstants.NumReagentBagSlots = 1
     "#,
     )
     .exec()?;

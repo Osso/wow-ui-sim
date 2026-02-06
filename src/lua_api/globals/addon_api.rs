@@ -17,23 +17,7 @@ pub fn register_addon_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
 
     register_global_constants(lua)?;
     register_legacy_globals(lua, &state)?;
-
-    // C_AddOnProfiler stub
-    let c_profiler = lua.create_table()?;
-    c_profiler.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
-    c_profiler.set(
-        "GetApplicationMetric",
-        lua.create_function(|_, _metric: Value| Ok(0))?,
-    )?;
-    c_profiler.set(
-        "GetOverallMetric",
-        lua.create_function(|_, _metric: Value| Ok(0))?,
-    )?;
-    c_profiler.set(
-        "GetAddOnMetric",
-        lua.create_function(|_, (_addon, _metric): (Value, Value)| Ok(0))?,
-    )?;
-    lua.globals().set("C_AddOnProfiler", c_profiler)?;
+    register_profiler(lua, &state)?;
 
     Ok(())
 }
@@ -291,6 +275,74 @@ fn register_global_constants(lua: &Lua) -> Result<()> {
     lua.globals()
         .set("ADDON_ACTIONS_BLOCKED", lua.create_table()?)?;
     lua.globals().set("AddOnPerformance", Value::Nil)?;
+    Ok(())
+}
+
+/// Register C_AddOnProfiler namespace and legacy memory usage globals.
+///
+/// Uses actual addon load times as a proxy for runtime profiler metrics.
+/// Application metric = total load time * 3 (simulates addons being ~33% of frame time).
+/// Overall metric = sum of all addon load times.
+/// Per-addon metric = that addon's load time.
+fn register_profiler(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let c_profiler = lua.create_table()?;
+
+    c_profiler.set("IsEnabled", lua.create_function(|_, ()| Ok(true))?)?;
+
+    let s = Rc::clone(state);
+    c_profiler.set(
+        "GetApplicationMetric",
+        lua.create_function(move |_, _metric: Value| {
+            let state = s.borrow();
+            let overall: f64 = state.addons.iter().map(|a| a.load_time_secs).sum();
+            // Application time = addon time * 3 so addons show as ~33% of total
+            Ok(overall * 3.0)
+        })?,
+    )?;
+
+    let s = Rc::clone(state);
+    c_profiler.set(
+        "GetOverallMetric",
+        lua.create_function(move |_, _metric: Value| {
+            let state = s.borrow();
+            let overall: f64 = state.addons.iter().map(|a| a.load_time_secs).sum();
+            Ok(overall)
+        })?,
+    )?;
+
+    let s = Rc::clone(state);
+    c_profiler.set(
+        "GetAddOnMetric",
+        lua.create_function(move |_, (addon, _metric): (Value, Value)| {
+            let state = s.borrow();
+            let val = find_addon_by_value(&state.addons, &addon)
+                .map(|a| a.load_time_secs)
+                .unwrap_or(0.0);
+            Ok(val)
+        })?,
+    )?;
+
+    lua.globals().set("C_AddOnProfiler", c_profiler)?;
+
+    // Legacy globals: UpdateAddOnMemoryUsage() and GetAddOnMemoryUsage(addon)
+    lua.globals().set(
+        "UpdateAddOnMemoryUsage",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+
+    let s = Rc::clone(state);
+    lua.globals().set(
+        "GetAddOnMemoryUsage",
+        lua.create_function(move |_, addon: Value| {
+            let state = s.borrow();
+            // Return simulated KB based on load time (rough heuristic: 1s load ≈ 500KB)
+            let kb = find_addon_by_value(&state.addons, &addon)
+                .map(|a| a.load_time_secs * 500.0)
+                .unwrap_or(0.0);
+            Ok(kb)
+        })?,
+    )?;
+
     Ok(())
 }
 

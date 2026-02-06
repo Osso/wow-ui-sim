@@ -44,6 +44,8 @@ pub struct AddonInfo {
     pub loaded: bool,
     /// Load on demand flag.
     pub load_on_demand: bool,
+    /// Total load time in seconds (for profiler metrics).
+    pub load_time_secs: f64,
 }
 
 /// Shared simulator state accessible from Lua.

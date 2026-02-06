@@ -129,12 +129,12 @@ pub fn resolve_anchor_offset(anchor: &crate::xml::AnchorXml) -> (f32, f32) {
 
 /// Resolve a relativeKey expression like "$parent.$parent.ScrollFrame" into a Lua expression.
 fn resolve_relative_key(key: &str, parent_expr: &str) -> String {
-    if !key.contains("$parent") && !key.contains("$Parent") {
+    if !key.contains("$parent") && !key.contains("$Parent") && !key.contains("$parentKey") {
         return key.to_string();
     }
     let mut expr = String::new();
     for part in key.split('.') {
-        if part == "$parent" || part == "$Parent" {
+        if part == "$parent" || part == "$Parent" || part == "$parentKey" {
             if expr.is_empty() {
                 expr = parent_expr.to_string();
             } else {

@@ -14,6 +14,7 @@ fn env_with_addons() -> WowLuaEnv {
             enabled: true,
             loaded: true,
             load_on_demand: false,
+            load_time_secs: 0.0,
         });
         state.addons.push(AddonInfo {
             folder_name: "LODAddon".into(),
@@ -22,6 +23,7 @@ fn env_with_addons() -> WowLuaEnv {
             enabled: false,
             loaded: false,
             load_on_demand: true,
+            load_time_secs: 0.0,
         });
     }
     env

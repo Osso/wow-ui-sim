@@ -291,9 +291,11 @@ fn load_single_addon(
 
     match load_addon_with_saved_vars(env, toc_path, saved_vars) {
         Ok(r) => {
+            let load_time_secs = r.timing.total().as_secs_f64();
             env.register_addon(AddonInfo {
                 folder_name: name.to_string(), title: title.clone(),
                 notes: notes.clone(), enabled: true, loaded: true, load_on_demand,
+                load_time_secs,
             });
             record_addon_success(name, &r, stats);
         }
@@ -301,6 +303,7 @@ fn load_single_addon(
             env.register_addon(AddonInfo {
                 folder_name: name.to_string(), title, notes,
                 enabled: true, loaded: false, load_on_demand,
+                load_time_secs: 0.0,
             });
             println!("✗ {} failed: {}", name, e);
             stats.fail_count += 1;
