@@ -133,28 +133,27 @@ fn effective_scale(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
 /// WoW coordinate system: origin at bottom-left, Y increases upward.
 /// `compute_frame_rect` returns top-left origin (screen coords, Y-down), so we convert.
 fn add_rect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_rect_full_methods(methods);
+    add_rect_edge_methods(methods);
+}
+
+/// GetRect, GetScaledRect, GetBounds
+fn add_rect_full_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetRect() -> left, bottom, width, height (unscaled, bottom-left origin)
     methods.add_method("GetRect", |_, this, ()| {
         let state = this.state.borrow();
         let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
         );
-        let left = rect.x;
         let bottom = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height;
-        Ok((left, bottom, rect.width, rect.height))
+        Ok((rect.x, bottom, rect.width, rect.height))
     });
 
     // GetScaledRect() -> left, bottom, width, height (scaled by effective scale)
     methods.add_method("GetScaledRect", |_, this, ()| {
         let state = this.state.borrow();
         let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
         );
         let scale = effective_scale(&state.widgets, this.id);
         let left = rect.x * scale;
@@ -162,80 +161,59 @@ fn add_rect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok((left, bottom, rect.width * scale, rect.height * scale))
     });
 
-    // GetLeft() -> left edge in WoW coords (from left of screen)
-    methods.add_method("GetLeft", |_, this, ()| {
-        let state = this.state.borrow();
-        let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
-        );
-        Ok(rect.x)
-    });
-
-    // GetRight() -> right edge in WoW coords (from left of screen)
-    methods.add_method("GetRight", |_, this, ()| {
-        let state = this.state.borrow();
-        let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
-        );
-        Ok(rect.x + rect.width)
-    });
-
-    // GetTop() -> top edge in WoW coords (from bottom of screen, Y-up)
-    methods.add_method("GetTop", |_, this, ()| {
-        let state = this.state.borrow();
-        let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
-        );
-        Ok(DEFAULT_SCREEN_HEIGHT - rect.y)
-    });
-
-    // GetBottom() -> bottom edge in WoW coords (from bottom of screen, Y-up)
-    methods.add_method("GetBottom", |_, this, ()| {
-        let state = this.state.borrow();
-        let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
-        );
-        Ok(DEFAULT_SCREEN_HEIGHT - rect.y - rect.height)
-    });
-
-    // GetCenter() -> centerX, centerY in WoW coords (bottom-left origin)
-    methods.add_method("GetCenter", |_, this, ()| {
-        let state = this.state.borrow();
-        let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
-        );
-        let cx = rect.x + rect.width / 2.0;
-        let cy = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height / 2.0;
-        Ok((cx, cy))
-    });
-
     // GetBounds() -> left, bottom, width, height (same as GetRect in practice)
     methods.add_method("GetBounds", |_, this, ()| {
         let state = this.state.borrow();
         let rect = compute_frame_rect(
-            &state.widgets,
-            this.id,
-            DEFAULT_SCREEN_WIDTH,
-            DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
         );
-        let left = rect.x;
         let bottom = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height;
-        Ok((left, bottom, rect.width, rect.height))
+        Ok((rect.x, bottom, rect.width, rect.height))
+    });
+}
+
+/// GetLeft, GetRight, GetTop, GetBottom, GetCenter
+fn add_rect_edge_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("GetLeft", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(rect.x)
+    });
+
+    methods.add_method("GetRight", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(rect.x + rect.width)
+    });
+
+    methods.add_method("GetTop", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(DEFAULT_SCREEN_HEIGHT - rect.y)
+    });
+
+    methods.add_method("GetBottom", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(DEFAULT_SCREEN_HEIGHT - rect.y - rect.height)
+    });
+
+    methods.add_method("GetCenter", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+        );
+        let cx = rect.x + rect.width / 2.0;
+        let cy = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height / 2.0;
+        Ok((cx, cy))
     });
 }
 
@@ -424,7 +402,12 @@ fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Child query: GetNumChildren, GetChildren
 fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetNumChildren() - return count of child frames
+    add_children_frame_methods(methods);
+    add_children_region_methods(methods);
+}
+
+/// GetNumChildren, GetChildren
+fn add_children_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetNumChildren", |_, this, ()| {
         let state = this.state.borrow();
         let count = state
@@ -435,13 +418,12 @@ fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(count as i32)
     });
 
-    // GetChildren() - return all child frames as multiple return values
     methods.add_method("GetChildren", |lua, this, ()| {
         let state = this.state.borrow();
         let mut result = mlua::MultiValue::new();
         if let Some(frame) = state.widgets.get(this.id) {
             let children = frame.children.clone();
-            drop(state); // Release borrow before creating userdata
+            drop(state);
 
             for child_id in children {
                 let handle = FrameHandle {
@@ -455,8 +437,10 @@ fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(result)
     });
+}
 
-    // GetNumRegions() - return count of child regions (Texture, FontString)
+/// GetNumRegions, GetRegions, GetAdditionalRegions
+fn add_children_region_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetNumRegions", |_, this, ()| {
         use crate::widget::WidgetType;
         let state = this.state.borrow();
@@ -470,7 +454,6 @@ fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(count as i32)
     });
 
-    // GetRegions() - return all child regions (Texture, FontString) as multiple return values
     methods.add_method("GetRegions", |lua, this, ()| {
         use crate::widget::WidgetType;
         let state = this.state.borrow();
@@ -500,7 +483,6 @@ fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(result)
     });
 
-    // GetAdditionalRegions() - stub (WoW extension point, returns nothing by default)
     methods.add_method("GetAdditionalRegions", |_, _this, ()| {
         Ok(mlua::MultiValue::new())
     });
@@ -636,10 +618,24 @@ fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("IsMouseWheelEnabled", |_, _this, ()| Ok(false));
 
     // EnableKeyboard(enable) - enable keyboard input for frame
-    methods.add_method("EnableKeyboard", |_, _this, _enable: bool| Ok(()));
+    methods.add_method("EnableKeyboard", |_, this, enable: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(this.id) {
+            f.keyboard_enabled = enable;
+        }
+        Ok(())
+    });
 
     // IsKeyboardEnabled()
-    methods.add_method("IsKeyboardEnabled", |_, _this, ()| Ok(false));
+    methods.add_method("IsKeyboardEnabled", |_, this, ()| {
+        let state = this.state.borrow();
+        let enabled = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.keyboard_enabled)
+            .unwrap_or(false);
+        Ok(enabled)
+    });
 }
 
 /// Scale methods

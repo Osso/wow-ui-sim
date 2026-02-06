@@ -68,8 +68,8 @@ pub enum Message {
     InspectorApply,
     /// Toggle frames panel collapsed state.
     ToggleFramesPanel,
-    /// Toggle game menu (Escape key).
-    ToggleGameMenu,
+    /// Keyboard input dispatched to Lua (WoW key name, e.g. "ESCAPE", "ENTER", "A").
+    KeyPress(String),
 }
 
 /// Run the iced UI with the given Lua environment.

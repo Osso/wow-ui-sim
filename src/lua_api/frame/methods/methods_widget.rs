@@ -27,6 +27,19 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_tooltip_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_tooltip_core_methods(methods);
+    add_tooltip_query_methods(methods);
+    add_tooltip_text_methods(methods);
+}
+
+/// SetOwner, ClearLines, AddLine, AddDoubleLine, spell/item stubs
+fn add_tooltip_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_tooltip_setup_methods(methods);
+    add_tooltip_line_methods(methods);
+    add_tooltip_data_stubs(methods);
+}
+
+fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetOwner(owner, anchor, x, y) - Set the tooltip's owner and anchor
     methods.add_method("SetOwner", |lua, this, args: mlua::MultiValue| {
         let mut args_iter = args.into_iter();
@@ -617,17 +630,33 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_editbox_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetFocus", |_, this, ()| {
-        if let Ok(mut s) = this.state.try_borrow_mut() {
+    methods.add_method("SetFocus", |lua, this, ()| {
+        let old_focus = {
+            let mut s = this.state.borrow_mut();
+            let old = s.focused_frame_id;
             s.focused_frame_id = Some(this.id);
+            old
+        };
+        if let Some(old_id) = old_focus {
+            if old_id != this.id {
+                fire_focus_handler(lua, old_id, "OnEditFocusLost")?;
+            }
         }
+        fire_focus_handler(lua, this.id, "OnEditFocusGained")?;
         Ok(())
     });
-    methods.add_method("ClearFocus", |_, this, ()| {
-        if let Ok(mut s) = this.state.try_borrow_mut() {
+    methods.add_method("ClearFocus", |lua, this, ()| {
+        let had_focus = {
+            let mut s = this.state.borrow_mut();
             if s.focused_frame_id == Some(this.id) {
                 s.focused_frame_id = None;
+                true
+            } else {
+                false
             }
+        };
+        if had_focus {
+            fire_focus_handler(lua, this.id, "OnEditFocusLost")?;
         }
         Ok(())
     });

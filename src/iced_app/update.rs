@@ -31,7 +31,7 @@ impl App {
             Message::InspectorMouseEnabledToggled(val) => self.inspector_state.mouse_enabled = val,
             Message::InspectorApply => self.handle_inspector_apply(),
             Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
-            Message::ToggleGameMenu => self.handle_toggle_game_menu(),
+            Message::KeyPress(ref key) => self.handle_key_press(key),
         }
 
         Task::none()
@@ -206,11 +206,11 @@ impl App {
         false
     }
 
-    fn handle_toggle_game_menu(&mut self) {
+    fn handle_key_press(&mut self, key: &str) {
         let env = self.env.borrow();
-        if let Err(e) = env.send_key_press("ESCAPE") {
+        if let Err(e) = env.send_key_press(key) {
             self.log_messages
-                .push(format!("GameMenu toggle error: {}", e));
+                .push(format!("KeyPress({}) error: {}", key, e));
         }
         drop(env);
         self.invalidate();

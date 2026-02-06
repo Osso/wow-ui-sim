@@ -54,8 +54,9 @@ pub fn create_frame_from_xml(
         LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
     })?;
 
-    create_layer_children(env, frame, &name)?;
+    // Child frames first: they may be referenced by layer children via relativeKey
     create_child_frames(env, frame, &name)?;
+    create_layer_children(env, frame, &name)?;
     apply_animation_groups(env, frame, &name, inherits)?;
 
     apply_button_textures(env, frame, &name)?;
