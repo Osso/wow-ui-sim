@@ -178,6 +178,8 @@ pub struct Frame {
     pub is_moving: bool,
     /// Whether text should word-wrap (for FontString widgets).
     pub word_wrap: bool,
+    /// Maximum number of lines to display (0 = unlimited, for FontString widgets).
+    pub max_lines: u32,
     /// Text scale factor (for FontString widgets).
     pub text_scale: f64,
     /// Normal texture path (for Button widgets).
@@ -269,7 +271,8 @@ impl Frame {
             resizable: false,
             clamped_to_screen: false,
             is_moving: false,
-            word_wrap: false,
+            word_wrap: true,
+            max_lines: 0,
             text_scale: 1.0,
             normal_texture: None,
             normal_tex_coords: None,

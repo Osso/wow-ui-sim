@@ -518,6 +518,10 @@ pub struct FontStringXml {
     pub scripts: Option<ScriptsXml>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
+    #[serde(rename = "@wordwrap")]
+    pub word_wrap: Option<bool>,
+    #[serde(rename = "@maxLines")]
+    pub max_lines: Option<u32>,
 }
 
 #[derive(Debug, Deserialize, Clone)]

@@ -456,14 +456,35 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     );
 
     // GetStringHeight() - for FontString widgets
-    methods.add_method("GetStringHeight", |_, this, ()| {
+    // Returns the pixel height of the rendered text, accounting for word wrapping.
+    methods.add_method("GetStringHeight", |lua, this, ()| {
         let state = this.state.borrow();
-        let height = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.font_size)
-            .unwrap_or(12.0);
-        Ok(height)
+        let (text, font_path, font_size, word_wrap, width) = match state.widgets.get(this.id) {
+            Some(f) => (
+                f.text.clone(),
+                f.font.clone(),
+                f.font_size,
+                f.word_wrap,
+                f.width,
+            ),
+            None => return Ok(12.0_f64),
+        };
+        drop(state);
+        let text = match text {
+            Some(t) if !t.is_empty() => t,
+            _ => return Ok((font_size * 1.2).ceil() as f64),
+        };
+        let wrap_width = if word_wrap && width > 0.0 {
+            Some(width)
+        } else {
+            None
+        };
+        if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
+            let mut fs = fs_rc.borrow_mut();
+            Ok(fs.measure_text_height(&text, font_path.as_deref(), font_size, wrap_width) as f64)
+        } else {
+            Ok((font_size * 1.2).ceil() as f64)
+        }
     });
 
     // SetWordWrap(wrap) - for FontString widgets
@@ -531,10 +552,24 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("CanNonSpaceWrap", |_, _this, ()| Ok(true));
 
     // SetMaxLines(maxLines) - for FontString widgets
-    methods.add_method("SetMaxLines", |_, _this, _max_lines: i32| Ok(()));
+    methods.add_method("SetMaxLines", |_, this, max_lines: i32| {
+        if let Ok(mut s) = this.state.try_borrow_mut() {
+            if let Some(frame) = s.widgets.get_mut(this.id) {
+                frame.max_lines = max_lines.max(0) as u32;
+            }
+        }
+        Ok(())
+    });
 
     // GetMaxLines() - for FontString widgets
-    methods.add_method("GetMaxLines", |_, _this, ()| Ok(0i32)); // 0 means unlimited
+    methods.add_method("GetMaxLines", |_, this, ()| {
+        if let Ok(s) = this.state.try_borrow() {
+            if let Some(frame) = s.widgets.get(this.id) {
+                return Ok(frame.max_lines as i32);
+            }
+        }
+        Ok(0i32) // 0 means unlimited
+    });
 
     // SetIndentedWordWrap(indent) - for FontString widgets
     methods.add_method("SetIndentedWordWrap", |_, _this, _indent: bool| Ok(()));

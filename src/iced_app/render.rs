@@ -548,6 +548,7 @@ pub fn build_quad_batch_for_registry(
                             GLYPH_ATLAS_TEX_INDEX,
                             shadow, f.shadow_offset,
                             f.font_outline,
+                            false, 0,
                         );
                     }
                 }
@@ -584,6 +585,8 @@ pub fn build_quad_batch_for_registry(
                             shadow,
                             f.shadow_offset,
                             f.font_outline,
+                            f.word_wrap,
+                            f.max_lines,
                         );
                     }
                 }
@@ -617,6 +620,7 @@ pub fn build_quad_batch_for_registry(
                             GLYPH_ATLAS_TEX_INDEX,
                             shadow, f.shadow_offset,
                             f.font_outline,
+                            false, 0,
                         );
                     }
                 }
@@ -648,6 +652,7 @@ pub fn build_quad_batch_for_registry(
                             GLYPH_ATLAS_TEX_INDEX,
                             shadow, f.shadow_offset,
                             f.font_outline,
+                            false, 0,
                         );
                     }
                 }

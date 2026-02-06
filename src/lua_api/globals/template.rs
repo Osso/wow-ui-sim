@@ -447,6 +447,18 @@ fn create_fontstring_from_template(
         code.push_str("            fs:SetAllPoints(true)\n");
     }
 
+    // Apply wordWrap (WoW default is true, only set when explicitly false)
+    if fontstring.word_wrap == Some(false) {
+        code.push_str("            fs:SetWordWrap(false)\n");
+    }
+
+    // Apply maxLines
+    if let Some(max_lines) = fontstring.max_lines {
+        if max_lines > 0 {
+            code.push_str(&format!("            fs:SetMaxLines({})\n", max_lines));
+        }
+    }
+
     // Apply parentKey
     if let Some(parent_key) = &fontstring.parent_key {
         code.push_str(&format!("            parent.{} = fs\n", parent_key));

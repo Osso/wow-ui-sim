@@ -158,6 +158,27 @@ pub fn create_fontstring_from_xml(
         }
     }
 
+    // Set wordWrap (WoW default is true, only emit if explicitly false)
+    if fontstring.word_wrap == Some(false) {
+        lua_code.push_str(
+            r#"
+        fs:SetWordWrap(false)
+        "#,
+        );
+    }
+
+    // Set maxLines
+    if let Some(max_lines) = fontstring.max_lines {
+        if max_lines > 0 {
+            lua_code.push_str(&format!(
+                r#"
+        fs:SetMaxLines({})
+        "#,
+                max_lines
+            ));
+        }
+    }
+
     // Set setAllPoints
     if fontstring.set_all_points == Some(true) {
         lua_code.push_str(

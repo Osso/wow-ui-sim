@@ -220,6 +220,8 @@ impl GlyphAtlas {
 /// * `shadow_color` - Optional shadow color (render shadow if alpha > 0)
 /// * `shadow_offset` - Shadow offset (x, y) in pixels
 /// * `outline` - Text outline style (None, Outline, ThickOutline)
+/// * `word_wrap` - Whether to wrap text at bounds width
+/// * `max_lines` - Maximum lines to render (0 = unlimited)
 #[allow(clippy::too_many_arguments)]
 pub fn emit_text_quads(
     batch: &mut QuadBatch,
@@ -236,6 +238,8 @@ pub fn emit_text_quads(
     shadow_color: Option<[f32; 4]>,
     shadow_offset: (f32, f32),
     outline: crate::widget::TextOutline,
+    word_wrap: bool,
+    max_lines: u32,
 ) {
     if text.is_empty() || bounds.height <= 0.0 {
         return;
@@ -251,8 +255,13 @@ pub fn emit_text_quads(
     let metrics = Metrics::new(font_size, line_height);
     let attrs = font_system.attrs_owned(font_path);
 
-    // Use a large width for shaping if bounds.width is 0 (auto-sized FontStrings)
-    let shape_width = if bounds.width > 0.0 { bounds.width } else { 10000.0 };
+    // Use bounds.width for wrapping only when word_wrap is enabled and bounds has width.
+    // Otherwise use a large width so text stays on a single line.
+    let shape_width = if word_wrap && bounds.width > 0.0 {
+        bounds.width
+    } else {
+        10000.0
+    };
 
     let mut buffer = Buffer::new(&mut font_system.font_system, metrics);
     buffer.set_size(&mut font_system.font_system, Some(shape_width), Some(bounds.height));
@@ -267,7 +276,10 @@ pub fn emit_text_quads(
 
     // Calculate total text height for vertical justification.
     // For single-line text, use line_height. For multi-line, use last line's position + line_height.
-    let layout_runs: Vec<_> = buffer.layout_runs().collect();
+    let mut layout_runs: Vec<_> = buffer.layout_runs().collect();
+    if max_lines > 0 {
+        layout_runs.truncate(max_lines as usize);
+    }
     let num_lines = layout_runs.len();
     let total_height = if num_lines <= 1 {
         line_height
@@ -287,14 +299,15 @@ pub fn emit_text_quads(
     // Check if we should render a shadow
     let has_shadow = shadow_color.map(|c| c[3] > 0.0).unwrap_or(false);
 
-    // Helper closure to emit glyph quads with given color and offset
+    // Helper closure to emit glyph quads with given color and offset.
+    // Iterates the (possibly truncated) layout_runs collected above.
     let emit_glyphs = |batch: &mut QuadBatch,
                        glyph_atlas: &mut GlyphAtlas,
                        font_system: &mut WowFontSystem,
                        glyph_color: [f32; 4],
                        offset_x: f32,
                        offset_y: f32| {
-        for run in buffer.layout_runs() {
+        for run in &layout_runs {
             // Horizontal offset based on justification.
             // For explicit width, apply justification within bounds.
             // For width=0 (auto-sized FontStrings), text starts at bounds.x (LEFT behavior).
