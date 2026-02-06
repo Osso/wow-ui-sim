@@ -2,6 +2,7 @@
 //! Cooldown, ScrollFrame, Model, ColorSelect, dragging/moving, ScrollBox.
 
 use super::FrameHandle;
+use crate::lua_api::tooltip::TooltipLine;
 use crate::widget::{AttributeValue, Frame, WidgetType};
 use mlua::{Result, UserDataMethods, Value};
 use std::rc::Rc;
@@ -9,25 +10,115 @@ use std::rc::Rc;
 /// Add widget-specific methods to FrameHandle UserData.
 pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // ===== GameTooltip-specific methods =====
-    // These methods are used by GameTooltip and similar tooltip frames
 
     // SetOwner(owner, anchor, x, y) - Set the tooltip's owner and anchor
-    methods.add_method("SetOwner", |_, _this, _args: mlua::MultiValue| {
-        // args: owner frame, anchor string, optional x, y offsets
+    methods.add_method("SetOwner", |lua, this, args: mlua::MultiValue| {
+        let mut args_iter = args.into_iter();
+        let owner_val = args_iter.next().unwrap_or(Value::Nil);
+        let anchor: String = match args_iter.next() {
+            Some(Value::String(s)) => s.to_string_lossy().to_string(),
+            _ => "ANCHOR_NONE".to_string(),
+        };
+
+        let owner_id = match &owner_val {
+            Value::UserData(ud) => ud.borrow::<FrameHandle>().ok().map(|h| h.id),
+            _ => None,
+        };
+
+        // Clear lines and set owner
+        {
+            let mut state = this.state.borrow_mut();
+            if let Some(td) = state.tooltips.get_mut(&this.id) {
+                td.lines.clear();
+                td.owner_id = owner_id;
+                td.anchor_type = anchor;
+            }
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.visible = true;
+            }
+        }
+
+        // Fire OnTooltipCleared
+        fire_tooltip_script(lua, this.id, "OnTooltipCleared")?;
         Ok(())
     });
 
     // ClearLines() - Clear all text lines from the tooltip
-    methods.add_method("ClearLines", |_, _this, ()| Ok(()));
+    methods.add_method("ClearLines", |lua, this, ()| {
+        {
+            let mut state = this.state.borrow_mut();
+            if let Some(td) = state.tooltips.get_mut(&this.id) {
+                td.lines.clear();
+            }
+        }
+        fire_tooltip_script(lua, this.id, "OnTooltipCleared")?;
+        Ok(())
+    });
 
     // AddLine(text, r, g, b, wrap) - Add a line of text
-    methods.add_method("AddLine", |_, _this, _args: mlua::MultiValue| {
-        // args: text, r (0-1), g (0-1), b (0-1), wrap (bool)
+    methods.add_method("AddLine", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let text = match it.next() {
+            Some(Value::String(s)) => s.to_string_lossy().to_string(),
+            Some(Value::Number(n)) => n.to_string(),
+            Some(Value::Integer(n)) => n.to_string(),
+            _ => return Ok(()),
+        };
+        let r = val_to_f32(it.next(), 1.0);
+        let g = val_to_f32(it.next(), 1.0);
+        let b = val_to_f32(it.next(), 1.0);
+        let wrap = match it.next() {
+            Some(Value::Boolean(w)) => w,
+            _ => false,
+        };
+
+        let mut state = this.state.borrow_mut();
+        if let Some(td) = state.tooltips.get_mut(&this.id) {
+            td.lines.push(TooltipLine {
+                left_text: text,
+                left_color: (r, g, b),
+                right_text: None,
+                right_color: (1.0, 1.0, 1.0),
+                wrap,
+            });
+        }
         Ok(())
     });
 
     // AddDoubleLine(leftText, rightText, lR, lG, lB, rR, rG, rB) - Add two-column line
-    methods.add_method("AddDoubleLine", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("AddDoubleLine", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let left = match it.next() {
+            Some(Value::String(s)) => s.to_string_lossy().to_string(),
+            Some(Value::Number(n)) => n.to_string(),
+            Some(Value::Integer(n)) => n.to_string(),
+            _ => return Ok(()),
+        };
+        let right = match it.next() {
+            Some(Value::String(s)) => s.to_string_lossy().to_string(),
+            Some(Value::Number(n)) => n.to_string(),
+            Some(Value::Integer(n)) => n.to_string(),
+            _ => String::new(),
+        };
+        let lr = val_to_f32(it.next(), 1.0);
+        let lg = val_to_f32(it.next(), 1.0);
+        let lb = val_to_f32(it.next(), 1.0);
+        let rr = val_to_f32(it.next(), 1.0);
+        let rg = val_to_f32(it.next(), 1.0);
+        let rb = val_to_f32(it.next(), 1.0);
+
+        let mut state = this.state.borrow_mut();
+        if let Some(td) = state.tooltips.get_mut(&this.id) {
+            td.lines.push(TooltipLine {
+                left_text: left,
+                left_color: (lr, lg, lb),
+                right_text: Some(right),
+                right_color: (rr, rg, rb),
+                wrap: false,
+            });
+        }
+        Ok(())
+    });
 
     // AddMessage(text, r, g, b, id, holdTime) - Add message to a scrolling message frame
     methods.add_method("AddMessage", |_, _this, _args: mlua::MultiValue| Ok(()));
@@ -35,95 +126,196 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // AddMsg(text, ...) - Alias for AddMessage (used by some addons like DBM)
     methods.add_method("AddMsg", |_, _this, _args: mlua::MultiValue| Ok(()));
 
-    // SetSpellByID(spellID) - Set tooltip to show spell info
+    // SetSpellByID(spellID) - Set tooltip to show spell info (no game data)
     methods.add_method("SetSpellByID", |_, _this, _spell_id: i32| Ok(()));
 
-    // SetItemByID(itemID) - Set tooltip to show item info
+    // SetItemByID(itemID) - Set tooltip to show item info (no game data)
     methods.add_method("SetItemByID", |_, _this, _item_id: i32| Ok(()));
 
-    // SetHyperlink(link) - Set tooltip from a hyperlink
+    // SetHyperlink(link) - Set tooltip from a hyperlink (no game data)
     methods.add_method("SetHyperlink", |_, _this, _link: String| Ok(()));
 
-    // SetUnitBuff(unit, index, filter) - Set tooltip to show unit buff
+    // SetUnitBuff/Debuff/Aura stubs (no game data)
     methods.add_method("SetUnitBuff", |_, _this, _args: mlua::MultiValue| Ok(()));
-
-    // SetUnitDebuff(unit, index, filter) - Set tooltip to show unit debuff
     methods.add_method("SetUnitDebuff", |_, _this, _args: mlua::MultiValue| Ok(()));
-
-    // SetUnitAura(unit, index, filter) - Set tooltip to show unit aura
     methods.add_method("SetUnitAura", |_, _this, _args: mlua::MultiValue| Ok(()));
-
-    // SetUnitBuffByAuraInstanceID(unit, auraInstanceID, filter)
     methods.add_method(
         "SetUnitBuffByAuraInstanceID",
         |_, _this, _args: mlua::MultiValue| Ok(()),
     );
-
-    // SetUnitDebuffByAuraInstanceID(unit, auraInstanceID, filter)
     methods.add_method(
         "SetUnitDebuffByAuraInstanceID",
         |_, _this, _args: mlua::MultiValue| Ok(()),
     );
 
     // NumLines() - Get number of lines in tooltip
-    methods.add_method("NumLines", |_, _this, ()| Ok(0));
+    methods.add_method("NumLines", |_, this, ()| {
+        let state = this.state.borrow();
+        let count = state
+            .tooltips
+            .get(&this.id)
+            .map(|td| td.lines.len())
+            .unwrap_or(0);
+        Ok(count as i32)
+    });
 
-    // GetUnit() - Get the unit this tooltip is showing info for
+    // GetUnit() - Get the unit this tooltip is showing info for (no game data)
     methods.add_method(
         "GetUnit",
         |_, _this, ()| -> Result<(Option<String>, Option<String>)> {
-            Ok((None, None)) // Returns name, unit
+            Ok((None, None))
         },
     );
 
-    // GetSpell() - Get the spell this tooltip is showing info for
+    // GetSpell() - Get the spell this tooltip is showing info for (no game data)
     methods.add_method(
         "GetSpell",
         |_, _this, ()| -> Result<(Option<String>, Option<i32>)> {
-            Ok((None, None)) // Returns name, spellID
+            Ok((None, None))
         },
     );
 
-    // GetItem() - Get the item this tooltip is showing info for
+    // GetItem() - Get the item this tooltip is showing info for (no game data)
     methods.add_method(
         "GetItem",
         |_, _this, ()| -> Result<(Option<String>, Option<String>)> {
-            Ok((None, None)) // Returns name, link
+            Ok((None, None))
         },
     );
 
-    // SetMinimumWidth(width) - Set minimum tooltip width
-    methods.add_method("SetMinimumWidth", |_, _this, _width: f32| Ok(()));
+    // SetMinimumWidth(width) / GetMinimumWidth()
+    methods.add_method("SetMinimumWidth", |_, this, width: f32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(td) = state.tooltips.get_mut(&this.id) {
+            td.min_width = width;
+        }
+        Ok(())
+    });
+    methods.add_method("GetMinimumWidth", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state
+            .tooltips
+            .get(&this.id)
+            .map(|td| td.min_width)
+            .unwrap_or(0.0))
+    });
 
-    // GetMinimumWidth() - Get minimum tooltip width
-    methods.add_method("GetMinimumWidth", |_, _this, ()| Ok(0.0_f32));
+    // SetPadding(padding) / GetPadding()
+    methods.add_method("SetPadding", |_, this, padding: f32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(td) = state.tooltips.get_mut(&this.id) {
+            td.padding = padding;
+        }
+        Ok(())
+    });
+    methods.add_method("GetPadding", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state
+            .tooltips
+            .get(&this.id)
+            .map(|td| td.padding)
+            .unwrap_or(0.0))
+    });
 
-    // SetPadding(width) - Set tooltip padding
-    methods.add_method("SetPadding", |_, _this, _width: f32| Ok(()));
-
-    // AddTexture(texture) - Add a texture to the tooltip
+    // AddTexture(texture) - Add a texture to the tooltip (stub)
     methods.add_method("AddTexture", |_, _this, _texture: String| Ok(()));
 
-    // SetText(text, r, g, b, wrap) - Set the tooltip's main text (overloaded for tooltips)
+    // SetText(text, r, g, b, wrap) - Clear and set first line (tooltip), or set frame text
     methods.add_method_mut("SetText", |_, this, args: mlua::MultiValue| {
         let mut args_iter = args.into_iter();
         if let Some(Value::String(text)) = args_iter.next() {
+            let text_str = text.to_string_lossy().to_string();
+            let r = val_to_f32(args_iter.next(), 1.0);
+            let g = val_to_f32(args_iter.next(), 1.0);
+            let b = val_to_f32(args_iter.next(), 1.0);
+            // 5th arg can be alpha (number) or wrap (bool)
+            let wrap = match args_iter.next() {
+                Some(Value::Boolean(w)) => w,
+                _ => false,
+            };
+
             let mut state = this.state.borrow_mut();
+            // If this is a tooltip, use tooltip data
+            if let Some(td) = state.tooltips.get_mut(&this.id) {
+                td.lines.clear();
+                td.lines.push(TooltipLine {
+                    left_text: text_str.clone(),
+                    left_color: (r, g, b),
+                    right_text: None,
+                    right_color: (1.0, 1.0, 1.0),
+                    wrap,
+                });
+            }
+            // Always set frame.text too
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.text = Some(text.to_string_lossy().to_string());
+                frame.text = Some(text_str);
             }
         }
         Ok(())
     });
 
-    // AppendText(text) - Append text to the tooltip
-    methods.add_method("AppendText", |_, _this, _text: String| Ok(()));
+    // AppendText(text) - Append to last line's left_text
+    methods.add_method("AppendText", |_, this, text: String| {
+        let mut state = this.state.borrow_mut();
+        if let Some(td) = state.tooltips.get_mut(&this.id) {
+            if let Some(last) = td.lines.last_mut() {
+                last.left_text.push_str(&text);
+            }
+        }
+        Ok(())
+    });
 
     // IsOwned(frame) - Check if tooltip is owned by a frame
-    methods.add_method("IsOwned", |_, _this, _frame: Value| Ok(false));
+    methods.add_method("IsOwned", |_, this, frame: Value| {
+        let check_id = match &frame {
+            Value::UserData(ud) => ud.borrow::<FrameHandle>().ok().map(|h| h.id),
+            _ => None,
+        };
+        let state = this.state.borrow();
+        let owned = state.tooltips.get(&this.id).is_some_and(|td| {
+            td.owner_id.is_some() && td.owner_id == check_id
+        });
+        Ok(owned)
+    });
 
-    // FadeOut() - Fade out the tooltip
-    methods.add_method("FadeOut", |_, _this, ()| Ok(()));
+    // GetOwner() - Return the owner frame
+    methods.add_method("GetOwner", |lua, this, ()| {
+        let owner_id = {
+            let state = this.state.borrow();
+            state.tooltips.get(&this.id).and_then(|td| td.owner_id)
+        };
+        match owner_id {
+            Some(id) => {
+                let key = format!("__frame_{}", id);
+                let val: Value = lua.globals().get(key.as_str())?;
+                Ok(val)
+            }
+            None => Ok(Value::Nil),
+        }
+    });
+
+    // GetAnchorType() - Return the anchor type string
+    methods.add_method("GetAnchorType", |_, this, ()| {
+        let state = this.state.borrow();
+        let anchor = state
+            .tooltips
+            .get(&this.id)
+            .map(|td| td.anchor_type.clone())
+            .unwrap_or_else(|| "ANCHOR_NONE".to_string());
+        Ok(anchor)
+    });
+
+    // FadeOut() - Hide tooltip, clear owner
+    methods.add_method("FadeOut", |_, this, ()| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.visible = false;
+        }
+        if let Some(td) = state.tooltips.get_mut(&this.id) {
+            td.owner_id = None;
+        }
+        Ok(())
+    });
 
     // ===== EditBox methods =====
     methods.add_method("SetFocus", |_, this, ()| {
@@ -623,4 +815,27 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetCountInvisibleLetters", |_, _this, _count: bool| Ok(()));
     // Note: GetCursorPosition and SetCursorPosition already defined above in EditBox section
     // Note: HighlightText already defined above in EditBox section
+}
+
+/// Extract f32 from a Lua Value, returning default if nil/absent.
+fn val_to_f32(val: Option<Value>, default: f32) -> f32 {
+    match val {
+        Some(Value::Number(n)) => n as f32,
+        Some(Value::Integer(n)) => n as f32,
+        _ => default,
+    }
+}
+
+/// Fire a script handler on a frame (e.g. OnTooltipCleared).
+fn fire_tooltip_script(lua: &mlua::Lua, frame_id: u64, handler: &str) -> mlua::Result<()> {
+    if let Ok(Some(scripts_table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
+        let key = format!("{}_{}", frame_id, handler);
+        if let Ok(Some(func)) = scripts_table.get::<Option<mlua::Function>>(key.as_str()) {
+            let frame_key = format!("__frame_{}", frame_id);
+            if let Ok(frame_ud) = lua.globals().get::<Value>(frame_key.as_str()) {
+                let _ = func.call::<()>(frame_ud);
+            }
+        }
+    }
+    Ok(())
 }

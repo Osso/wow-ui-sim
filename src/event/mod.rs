@@ -86,6 +86,10 @@ pub enum ScriptHandler {
     OnSizeChanged,
     OnLoad,
     OnAttributeChanged,
+    OnTooltipCleared,
+    OnTooltipSetItem,
+    OnTooltipSetUnit,
+    OnTooltipSetSpell,
 }
 
 impl ScriptHandler {
@@ -107,6 +111,10 @@ impl ScriptHandler {
             "OnSizeChanged" => Some(Self::OnSizeChanged),
             "OnLoad" => Some(Self::OnLoad),
             "OnAttributeChanged" => Some(Self::OnAttributeChanged),
+            "OnTooltipCleared" => Some(Self::OnTooltipCleared),
+            "OnTooltipSetItem" => Some(Self::OnTooltipSetItem),
+            "OnTooltipSetUnit" => Some(Self::OnTooltipSetUnit),
+            "OnTooltipSetSpell" => Some(Self::OnTooltipSetSpell),
             _ => None,
         }
     }
@@ -129,6 +137,10 @@ impl ScriptHandler {
             Self::OnSizeChanged => "OnSizeChanged",
             Self::OnLoad => "OnLoad",
             Self::OnAttributeChanged => "OnAttributeChanged",
+            Self::OnTooltipCleared => "OnTooltipCleared",
+            Self::OnTooltipSetItem => "OnTooltipSetItem",
+            Self::OnTooltipSetUnit => "OnTooltipSetUnit",
+            Self::OnTooltipSetSpell => "OnTooltipSetSpell",
         }
     }
 }

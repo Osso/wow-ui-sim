@@ -179,6 +179,15 @@ fn create_widget_type_defaults(state: &mut SimState, frame_id: u64, widget_type:
             }
         }
 
+        WidgetType::GameTooltip => {
+            // Initialize tooltip data and set TOOLTIP strata
+            state.tooltips.insert(frame_id, crate::lua_api::tooltip::TooltipData::default());
+            if let Some(frame) = state.widgets.get_mut(frame_id) {
+                frame.frame_strata = crate::widget::FrameStrata::Tooltip;
+                frame.has_fixed_frame_strata = true;
+            }
+        }
+
         WidgetType::Slider => {
             // Sliders have Low/High/Text fontstrings and ThumbTexture
             let low_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));

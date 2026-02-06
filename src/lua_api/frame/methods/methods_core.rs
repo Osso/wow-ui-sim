@@ -42,6 +42,18 @@ fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or("Frame");
         Ok(obj_type.to_string())
     });
+
+    // IsObjectType(type) - Check if object is or inherits from a type
+    methods.add_method("IsObjectType", |_, this, type_name: String| {
+        use crate::widget::WidgetType;
+        let state = this.state.borrow();
+        let wt = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.widget_type)
+            .unwrap_or(WidgetType::Frame);
+        Ok(widget_type_is_a(wt, &type_name))
+    });
 }
 
 /// Size methods: GetWidth, GetHeight, GetSize, SetWidth, SetHeight, SetSize
@@ -529,4 +541,28 @@ fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // UseRaidStylePartyFrames() -> bool (for EditModeManagerFrame)
     methods.add_method("UseRaidStylePartyFrames", |_, _this, ()| Ok(false));
+}
+
+/// Check if a widget type is or inherits from the given type name.
+/// WoW type hierarchy:
+/// - Region: base of all
+/// - Frame extends Region
+/// - Button extends Frame
+/// - CheckButton extends Button
+/// - GameTooltip extends Frame
+/// - EditBox, ScrollFrame, Slider, StatusBar, etc. extend Frame
+/// - FontString, Texture extend Region (not Frame)
+fn widget_type_is_a(wt: crate::widget::WidgetType, type_name: &str) -> bool {
+    use crate::widget::WidgetType;
+    // Exact match
+    if wt.as_str().eq_ignore_ascii_case(type_name) {
+        return true;
+    }
+    // Check parent types
+    match type_name.to_ascii_lowercase().as_str() {
+        "region" => true, // Everything is a Region
+        "frame" => !matches!(wt, WidgetType::FontString | WidgetType::Texture),
+        "button" => matches!(wt, WidgetType::Button | WidgetType::CheckButton),
+        _ => false,
+    }
 }

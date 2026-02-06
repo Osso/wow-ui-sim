@@ -35,6 +35,7 @@ pub enum WidgetType {
     ColorSelect,
     MessageFrame,
     SimpleHTML,
+    GameTooltip,
 }
 
 impl WidgetType {
@@ -55,6 +56,7 @@ impl WidgetType {
             "ColorSelect" => Some(Self::ColorSelect),
             "MessageFrame" | "ScrollingMessageFrame" => Some(Self::MessageFrame),
             "SimpleHTML" => Some(Self::SimpleHTML),
+            "GameTooltip" => Some(Self::GameTooltip),
             _ => None,
         }
     }
@@ -76,6 +78,7 @@ impl WidgetType {
             Self::ColorSelect => "ColorSelect",
             Self::MessageFrame => "MessageFrame",
             Self::SimpleHTML => "SimpleHTML",
+            Self::GameTooltip => "GameTooltip",
         }
     }
 }

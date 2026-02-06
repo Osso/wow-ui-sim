@@ -2,9 +2,10 @@
 
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
+use crate::lua_api::tooltip::TooltipData;
 use crate::widget::WidgetRegistry;
 use mlua::RegistryKey;
-use std::collections::VecDeque;
+use std::collections::{HashMap, VecDeque};
 use std::time::Instant;
 
 /// A pending timer callback.
@@ -57,6 +58,8 @@ pub struct SimState {
     pub addons: Vec<AddonInfo>,
     /// Console variables (CVars).
     pub cvars: CVarStorage,
+    /// Tooltip state for GameTooltip frames (keyed by frame ID).
+    pub tooltips: HashMap<u64, TooltipData>,
 }
 
 impl Default for SimState {
@@ -70,6 +73,7 @@ impl Default for SimState {
             focused_frame_id: None,
             addons: Vec::new(),
             cvars: CVarStorage::new(),
+            tooltips: HashMap::new(),
         }
     }
 }
