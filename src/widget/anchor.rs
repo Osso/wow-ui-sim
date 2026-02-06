@@ -66,10 +66,10 @@ pub struct Anchor {
 impl Default for Anchor {
     fn default() -> Self {
         Self {
-            point: AnchorPoint::Center,
+            point: AnchorPoint::TopLeft,
             relative_to: None,
             relative_to_id: None,
-            relative_point: AnchorPoint::Center,
+            relative_point: AnchorPoint::TopLeft,
             x_offset: 0.0,
             y_offset: 0.0,
         }

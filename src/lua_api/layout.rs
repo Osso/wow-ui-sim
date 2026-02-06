@@ -62,8 +62,8 @@ pub fn compute_frame_rect(
 
     if frame.anchors.is_empty() {
         return LayoutRect {
-            x: pr.x + (pr.width - width) / 2.0,
-            y: pr.y + (pr.height - height) / 2.0,
+            x: pr.x,
+            y: pr.y,
             width,
             height,
         };

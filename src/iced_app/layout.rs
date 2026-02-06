@@ -177,8 +177,8 @@ pub fn compute_frame_rect(
         let w = frame.width * scale;
         let h = frame.height * scale;
         return LayoutRect {
-            x: parent_rect.x + (parent_rect.width - w) / 2.0,
-            y: parent_rect.y + (parent_rect.height - h) / 2.0,
+            x: parent_rect.x,
+            y: parent_rect.y,
             width: w,
             height: h,
         };
