@@ -5,62 +5,57 @@ use crate::lua_api::WowLuaEnv;
 use super::error::LoadError;
 use super::helpers::escape_lua_string;
 
+/// Generate Lua code for a single button texture (atlas or file path).
+fn generate_button_texture_code(
+    button_name: &str,
+    method: &str,
+    texture: &crate::xml::TextureXml,
+) -> String {
+    if let Some(atlas) = &texture.atlas {
+        let getter = method.replace("Set", "Get");
+        format!(
+            r#"
+        do
+            local tex = {}:{}()
+            if tex then tex:SetAtlas("{}") end
+        end
+        "#,
+            button_name, getter, escape_lua_string(atlas)
+        )
+    } else if let Some(file) = &texture.file {
+        format!(
+            r#"
+        {}:{}("{}")
+        "#,
+            button_name, method, escape_lua_string(file)
+        )
+    } else {
+        String::new()
+    }
+}
+
 /// Apply button textures (NormalTexture, PushedTexture, etc.) from a FrameXml to a button.
 pub fn apply_button_textures(
     env: &WowLuaEnv,
     frame_xml: &crate::xml::FrameXml,
     button_name: &str,
 ) -> Result<(), LoadError> {
-    let mut lua_code = String::new();
+    let texture_slots: [(&str, Option<&crate::xml::TextureXml>); 4] = [
+        ("SetNormalTexture", frame_xml.normal_texture()),
+        ("SetPushedTexture", frame_xml.pushed_texture()),
+        ("SetHighlightTexture", frame_xml.highlight_texture()),
+        ("SetDisabledTexture", frame_xml.disabled_texture()),
+    ];
 
-    // Helper to generate SetXxxTexture call
-    let add_texture = |code: &mut String, method: &str, texture: &crate::xml::TextureXml| {
-        if let Some(atlas) = &texture.atlas {
-            // Use SetAtlas on the texture object
-            code.push_str(&format!(
-                r#"
-        do
-            local tex = {}:{}()
-            if tex then tex:SetAtlas("{}") end
-        end
-        "#,
-                button_name,
-                method.replace("Set", "Get"),
-                escape_lua_string(atlas)
-            ));
-        } else if let Some(file) = &texture.file {
-            // Use SetTexture directly on the button
-            code.push_str(&format!(
-                r#"
-        {}:{}("{}")
-        "#,
-                button_name,
-                method,
-                escape_lua_string(file)
-            ));
-        }
-    };
-
-    if let Some(tex) = frame_xml.normal_texture() {
-        add_texture(&mut lua_code, "SetNormalTexture", tex);
-    }
-    if let Some(tex) = frame_xml.pushed_texture() {
-        add_texture(&mut lua_code, "SetPushedTexture", tex);
-    }
-    if let Some(tex) = frame_xml.highlight_texture() {
-        add_texture(&mut lua_code, "SetHighlightTexture", tex);
-    }
-    if let Some(tex) = frame_xml.disabled_texture() {
-        add_texture(&mut lua_code, "SetDisabledTexture", tex);
-    }
+    let lua_code: String = texture_slots
+        .iter()
+        .filter_map(|(method, tex)| tex.map(|t| generate_button_texture_code(button_name, method, t)))
+        .collect();
 
     if !lua_code.is_empty() {
-        if let Err(e) = env.exec(&lua_code) {
-            return Err(LoadError::Lua(format!(
-                "Failed to apply button textures to {}: {}",
-                button_name, e
-            )));
-        }
+        env.exec(&lua_code).map_err(|e| {
+            LoadError::Lua(format!("Failed to apply button textures to {}: {}", button_name, e))
+        })?;
     }
 
     Ok(())

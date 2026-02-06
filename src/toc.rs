@@ -18,6 +18,32 @@ pub struct TocFile {
     pub files: Vec<PathBuf>,
 }
 
+/// Strip inline annotations like `[AllowLoadEnvironment Global]` from a TOC line.
+fn strip_annotations(line: &str) -> &str {
+    if let Some(pos) = line.find(" [") {
+        line[..pos].trim()
+    } else if line.ends_with(']') {
+        if let Some(pos) = line.find('[') {
+            line[..pos].trim()
+        } else {
+            line.trim()
+        }
+    } else {
+        line.trim()
+    }
+}
+
+/// Resolve addon name from Title metadata or directory name.
+fn resolve_addon_name(metadata: &HashMap<String, String>, addon_dir: &Path) -> String {
+    metadata.get("Title").cloned().unwrap_or_else(|| {
+        addon_dir
+            .file_name()
+            .and_then(|n| n.to_str())
+            .unwrap_or("Unknown")
+            .to_string()
+    })
+}
+
 impl TocFile {
     /// Parse a TOC file from its contents.
     pub fn parse(addon_dir: &Path, contents: &str) -> Self {
@@ -26,13 +52,10 @@ impl TocFile {
 
         for line in contents.lines() {
             let line = line.trim();
-
-            // Skip empty lines
             if line.is_empty() {
                 continue;
             }
 
-            // Metadata: ## Key: Value
             if let Some(rest) = line.strip_prefix("##") {
                 let rest = rest.trim();
                 if let Some((key, value)) = rest.split_once(':') {
@@ -41,58 +64,27 @@ impl TocFile {
                 continue;
             }
 
-            // Comments: # anything (including #@directives@)
             if line.starts_with('#') {
                 continue;
             }
 
-            // Handle locale-specific files with [AllowLoadTextLocale] annotation
-            // If enUS is not in the allowed list, skip this file since we use enUS
+            // Skip locale-restricted files that don't include enUS
             if line.contains("[AllowLoadTextLocale") && !line.contains("enUS") {
                 continue;
             }
 
-            // File path - handle placeholders before stripping annotations
-            // [TextLocale] is replaced with default locale (enUS)
-            // [Game] is replaced with game version folder (Standard for retail)
+            // Replace placeholders and strip annotations
             let line = line.replace("[TextLocale]", "enUS");
             let line = line.replace("[Game]", "Standard");
-
-            // Strip inline annotations like [AllowLoadEnvironment Global]
-            // Annotations are typically at the end after a space
-            let file_path = if let Some(bracket_pos) = line.find(" [") {
-                line[..bracket_pos].trim()
-            } else if line.ends_with(']') {
-                // Annotation at start of line without leading space
-                if let Some(bracket_pos) = line.find('[') {
-                    line[..bracket_pos].trim()
-                } else {
-                    line.trim()
-                }
-            } else {
-                line.trim()
-            };
-            let file_path = file_path.replace('\\', "/");
+            let file_path = strip_annotations(&line).replace('\\', "/");
             if !file_path.is_empty() {
                 files.push(PathBuf::from(file_path));
             }
         }
 
-        // Get name from Title metadata or directory name
-        let name = metadata
-            .get("Title")
-            .cloned()
-            .unwrap_or_else(|| {
-                addon_dir
-                    .file_name()
-                    .and_then(|n| n.to_str())
-                    .unwrap_or("Unknown")
-                    .to_string()
-            });
-
         TocFile {
             addon_dir: addon_dir.to_path_buf(),
-            name,
+            name: resolve_addon_name(&metadata, addon_dir),
             metadata,
             files,
         }

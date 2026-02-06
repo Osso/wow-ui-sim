@@ -407,6 +407,41 @@ fn serialize_value(out: &mut String, value: &Value, depth: usize) {
     }
 }
 
+/// Collect non-array entries from a table, sorted by key for deterministic output.
+fn collect_hash_entries(table: &Table, array_len: usize) -> Vec<(String, Value)> {
+    let mut entries = Vec::new();
+    let Ok(pairs) = table.clone().pairs::<Value, Value>().collect::<std::result::Result<Vec<_>, _>>() else {
+        return entries;
+    };
+    for (k, v) in pairs {
+        match &k {
+            Value::Integer(i) if *i >= 1 && *i <= array_len as i64 => continue,
+            Value::String(s) => {
+                if let Ok(key) = s.to_str() {
+                    entries.push((key.to_string(), v));
+                }
+            }
+            Value::Integer(i) => entries.push((i.to_string(), v)),
+            Value::Number(n) => entries.push((n.to_string(), v)),
+            _ => {}
+        }
+    }
+    entries.sort_by(|a, b| a.0.cmp(&b.0));
+    entries
+}
+
+/// Write a Lua-escaped key string (for `["key"]` syntax).
+fn write_escaped_key(out: &mut String, key: &str) {
+    for ch in key.chars() {
+        match ch {
+            '"' => out.push_str("\\\""),
+            '\\' => out.push_str("\\\\"),
+            '\n' => out.push_str("\\n"),
+            c => out.push(c),
+        }
+    }
+}
+
 /// Serialize a Lua table in WoW SavedVariables format.
 ///
 /// WoW uses a specific format:
@@ -416,12 +451,8 @@ fn serialize_value(out: &mut String, value: &Value, depth: usize) {
 fn serialize_table(out: &mut String, table: &Table, depth: usize) {
     out.push_str("{\n");
     let indent = "\t".repeat(depth + 1);
-    let closing_indent = "\t".repeat(depth);
-
-    // Determine array length: count sequential integer keys starting at 1
     let array_len = table.raw_len();
 
-    // Write array entries first (sequential integer keys 1..N)
     for i in 1..=array_len {
         let val: Value = match table.get(i as i64) {
             Ok(v) => v,
@@ -435,48 +466,15 @@ fn serialize_table(out: &mut String, table: &Table, depth: usize) {
         let _ = writeln!(out, ", -- [{}]", i);
     }
 
-    // Write non-array entries (string keys and integer keys outside 1..N)
-    let mut entries: Vec<(String, Value)> = Vec::new();
-    if let Ok(pairs) = table.clone().pairs::<Value, Value>().collect::<std::result::Result<Vec<_>, _>>() {
-        for (k, v) in pairs {
-            match &k {
-                Value::Integer(i) if *i >= 1 && *i <= array_len as i64 => continue, // already handled
-                Value::String(s) => {
-                    if let Ok(key) = s.to_str() {
-                        entries.push((key.to_string(), v));
-                    }
-                }
-                Value::Integer(i) => {
-                    entries.push((i.to_string(), v));
-                }
-                Value::Number(n) => {
-                    entries.push((n.to_string(), v));
-                }
-                _ => {} // skip non-serializable keys
-            }
-        }
-    }
-
-    // Sort string keys for deterministic output
-    entries.sort_by(|a, b| a.0.cmp(&b.0));
-
-    for (key, val) in &entries {
+    for (key, val) in &collect_hash_entries(table, array_len) {
         let _ = write!(out, "{}[\"", indent);
-        // Escape the key string
-        for ch in key.chars() {
-            match ch {
-                '"' => out.push_str("\\\""),
-                '\\' => out.push_str("\\\\"),
-                '\n' => out.push_str("\\n"),
-                c => out.push(c),
-            }
-        }
+        write_escaped_key(out, key);
         out.push_str("\"] = ");
         serialize_value(out, val, depth + 1);
         out.push_str(",\n");
     }
 
-    let _ = write!(out, "{}}}", closing_indent);
+    let _ = write!(out, "{}}}", "\t".repeat(depth));
 }
 
 #[cfg(test)]
