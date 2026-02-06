@@ -96,16 +96,35 @@ fn substitute_parent_name(
 }
 
 /// Register a new frame in the widget registry and set up parent-child relationship.
+/// If a named frame already exists, orphan the old one (remove from parent's children and hide).
 fn register_new_frame(
     state: &Rc<RefCell<SimState>>,
     widget_type: WidgetType,
     name: Option<String>,
     parent_id: Option<u64>,
 ) -> u64 {
-    let frame = Frame::new(widget_type, name, parent_id);
+    let frame = Frame::new(widget_type, name.clone(), parent_id);
     let frame_id = frame.id;
 
     let mut state = state.borrow_mut();
+
+    // If a frame with this name already exists, orphan it (WoW behavior: old frame
+    // becomes unreachable via global, but still exists in the registry).
+    if let Some(ref n) = name {
+        if let Some(old_id) = state.widgets.get_id_by_name(n) {
+            if let Some(old_frame) = state.widgets.get(old_id) {
+                if let Some(old_parent_id) = old_frame.parent_id {
+                    if let Some(old_parent) = state.widgets.get_mut(old_parent_id) {
+                        old_parent.children.retain(|&c| c != old_id);
+                    }
+                }
+            }
+            if let Some(old_frame) = state.widgets.get_mut(old_id) {
+                old_frame.visible = false;
+            }
+        }
+    }
+
     state.widgets.register(frame);
 
     if let Some(pid) = parent_id {

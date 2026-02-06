@@ -19,6 +19,7 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_cooldown_methods(methods);
     add_scrollframe_methods(methods);
     add_model_methods(methods);
+    add_model_scene_methods(methods);
     add_colorselect_methods(methods);
     add_drag_methods(methods);
     add_scrollbox_methods(methods);
@@ -892,6 +893,73 @@ fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     );
     methods.add_method("SetFromModelSceneID", |_, _this, _scene_id: i32| Ok(()));
     methods.add_method("GetModelSceneID", |_, _this, ()| Ok(0i32));
+}
+
+/// Native ModelScene methods (C++ side in WoW, stubs here).
+/// The Lua-side logic lives in ModelSceneMixin; these are the engine calls it invokes.
+fn add_model_scene_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_model_scene_rendering_stubs(methods);
+    add_model_scene_camera_stubs(methods);
+    add_model_scene_light_stubs(methods);
+    add_model_scene_fog_stubs(methods);
+}
+
+fn add_model_scene_rendering_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetAllowOverlappedModels", |_, _this, _allow: bool| Ok(()));
+    methods.add_method("IsAllowOverlappedModels", |_, _this, ()| Ok(false));
+    methods.add_method("SetPaused", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetDrawLayer", |_, _this, _args: mlua::MultiValue| Ok(()));
+    // Project3DPointTo2D(x, y, z) -> screenX, screenY, depthScale
+    methods.add_method(
+        "Project3DPointTo2D",
+        |_, _this, _args: mlua::MultiValue| -> Result<(f64, f64, f64)> {
+            Ok((0.0, 0.0, 1.0))
+        },
+    );
+    methods.add_method("SetViewInsets", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("GetViewInsets", |_, _this, ()| {
+        Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64))
+    });
+    methods.add_method("GetViewTranslation", |_, _this, ()| {
+        Ok((0.0_f64, 0.0_f64))
+    });
+}
+
+fn add_model_scene_camera_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetCameraPosition", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("GetCameraPosition", |_, _this, ()| {
+        Ok((0.0_f64, 0.0_f64, 0.0_f64))
+    });
+    methods.add_method("SetCameraOrientationByYawPitchRoll", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetCameraOrientationByAxisVectors", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("GetCameraForward", |_, _this, ()| Ok((0.0_f64, 0.0_f64, 1.0_f64)));
+    methods.add_method("GetCameraRight", |_, _this, ()| Ok((1.0_f64, 0.0_f64, 0.0_f64)));
+    methods.add_method("GetCameraUp", |_, _this, ()| Ok((0.0_f64, 1.0_f64, 0.0_f64)));
+    methods.add_method("SetCameraFieldOfView", |_, _this, _fov: f64| Ok(()));
+    methods.add_method("GetCameraFieldOfView", |_, _this, ()| Ok(0.785_f64));
+    methods.add_method("SetCameraNearClip", |_, _this, _clip: f64| Ok(()));
+    methods.add_method("SetCameraFarClip", |_, _this, _clip: f64| Ok(()));
+    methods.add_method("GetCameraNearClip", |_, _this, ()| Ok(0.1_f64));
+    methods.add_method("GetCameraFarClip", |_, _this, ()| Ok(100.0_f64));
+}
+
+fn add_model_scene_light_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetLightType", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetLightPosition", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("GetLightPosition", |_, _this, ()| Ok((0.0_f64, 0.0_f64, 0.0_f64)));
+    methods.add_method("SetLightDirection", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("GetLightDirection", |_, _this, ()| Ok((0.0_f64, -1.0_f64, 0.0_f64)));
+    methods.add_method("SetLightAmbientColor", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetLightDiffuseColor", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetLightVisible", |_, _this, _visible: bool| Ok(()));
+    methods.add_method("IsLightVisible", |_, _this, ()| Ok(true));
+}
+
+fn add_model_scene_fog_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetFogNear", |_, _this, _near: f64| Ok(()));
+    methods.add_method("SetFogFar", |_, _this, _far: f64| Ok(()));
+    methods.add_method("SetFogColor", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("ClearFog", |_, _this, ()| Ok(()));
 }
 
 fn add_colorselect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {

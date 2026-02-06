@@ -88,7 +88,6 @@ fn resolve_frame_name(frame: &crate::xml::FrameXml, parent_override: Option<&str
 }
 
 /// Build the initial `CreateFrame(...)` Lua code.
-/// If a frame with the same name already exists in globals, reuse it (WoW XML loader behavior).
 fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits: &str) -> String {
     let inherits_arg = if inherits.is_empty() {
         "nil".to_string()
@@ -97,11 +96,9 @@ fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits
     };
     format!(
         r#"
-        local frame = _G["{name}"]
-        if not frame then
-            frame = CreateFrame("{widget_type}", "{name}", {parent}, {inherits_arg})
-        end
+        local frame = CreateFrame("{}", "{}", {}, {})
         "#,
+        widget_type, name, parent, inherits_arg
     )
 }
 
@@ -344,7 +341,8 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
         crate::xml::FrameElement::DropdownButton(f) | crate::xml::FrameElement::DropDownToggleButton(f) => Some((f, "Button")),
         crate::xml::FrameElement::Cooldown(f) => Some((f, "Cooldown")),
         crate::xml::FrameElement::GameTooltip(f) => Some((f, "GameTooltip")),
-        crate::xml::FrameElement::Model(f) | crate::xml::FrameElement::ModelScene(f) => Some((f, "Frame")),
+        crate::xml::FrameElement::Model(f) => Some((f, "Model")),
+        crate::xml::FrameElement::ModelScene(f) => Some((f, "ModelScene")),
         crate::xml::FrameElement::TaxiRouteFrame(f)
         | crate::xml::FrameElement::ModelFFX(f)
         | crate::xml::FrameElement::TabardModel(f)

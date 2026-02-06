@@ -24,7 +24,8 @@ fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str
         }
         FrameElement::Cooldown(f) => Some((f, "Cooldown")),
         FrameElement::GameTooltip(f) => Some((f, "GameTooltip")),
-        FrameElement::Model(f) | FrameElement::ModelScene(f) => Some((f, "Frame")),
+        FrameElement::Model(f) => Some((f, "Model")),
+        FrameElement::ModelScene(f) => Some((f, "ModelScene")),
         _ => None,
     }
 }

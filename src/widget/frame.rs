@@ -136,6 +136,10 @@ pub struct Frame {
     pub scale: f32,
     /// Whether mouse is enabled.
     pub mouse_enabled: bool,
+    /// Whether keyboard input is enabled for this frame.
+    pub keyboard_enabled: bool,
+    /// Whether keyboard input propagates to parent frames.
+    pub propagate_keyboard_input: bool,
     /// Texture path (for Texture widgets).
     pub texture: Option<String>,
     /// Solid color texture (from SetColorTexture).
@@ -231,13 +235,14 @@ pub struct Frame {
     pub nine_slice_layout: Option<String>,
 }
 
-impl Frame {
-    pub fn new(widget_type: WidgetType, name: Option<String>, parent_id: Option<u64>) -> Self {
-        Self {
-            id: next_widget_id(),
-            widget_type,
-            name,
-            parent_id,
+/// Build a `Frame` with all defaults. `$id` is the expression for the `id` field.
+macro_rules! frame_defaults {
+    ($id:expr) => {
+        Frame {
+            id: $id,
+            widget_type: WidgetType::Frame,
+            name: None,
+            parent_id: None,
             children: Vec::new(),
             width: 0.0,
             height: 0.0,
@@ -251,18 +256,20 @@ impl Frame {
             alpha: 1.0,
             scale: 1.0,
             mouse_enabled: false,
+            keyboard_enabled: false,
+            propagate_keyboard_input: false,
             texture: None,
             color_texture: None,
             vertex_color: None,
             text: None,
             title: None,
-            text_color: Color::new(1.0, 0.8, 0.2, 1.0), // Default gold text for visibility
-            shadow_color: Color::new(0.0, 0.0, 0.0, 0.0), // Transparent = no shadow by default
+            text_color: Color::new(1.0, 0.8, 0.2, 1.0),
+            shadow_color: Color::new(0.0, 0.0, 0.0, 0.0),
             shadow_offset: (0.0, 0.0),
             font: None,
             font_size: 14.0,
             font_outline: TextOutline::None,
-            justify_h: TextJustify::Center,  // WoW FontStrings default to CENTER
+            justify_h: TextJustify::Center,
             justify_v: TextJustify::Center,
             attributes: HashMap::new(),
             backdrop: Backdrop::default(),
@@ -297,6 +304,23 @@ impl Frame {
             atlas_tex_coords: None,
             atlas: None,
             nine_slice_layout: None,
+        }
+    };
+}
+
+impl Default for Frame {
+    fn default() -> Self {
+        frame_defaults!(next_widget_id())
+    }
+}
+
+impl Frame {
+    pub fn new(widget_type: WidgetType, name: Option<String>, parent_id: Option<u64>) -> Self {
+        Self {
+            widget_type,
+            name,
+            parent_id,
+            ..Default::default()
         }
     }
 

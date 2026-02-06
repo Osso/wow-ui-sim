@@ -33,6 +33,22 @@ fn strip_annotations(line: &str) -> &str {
     }
 }
 
+/// Check if an inline `[AllowLoadGameType ...]` annotation includes a game type
+/// compatible with mainline retail WoW (standard mode).
+fn is_allowed_game_type(line: &str) -> bool {
+    let Some(start) = line.find("[AllowLoadGameType") else {
+        return true;
+    };
+    let rest = &line[start + "[AllowLoadGameType".len()..];
+    let Some(end) = rest.find(']') else {
+        return true;
+    };
+    let types = &rest[..end];
+    types
+        .split(',')
+        .any(|t| matches!(t.trim(), "mainline" | "standard"))
+}
+
 /// Resolve addon name from Title metadata or directory name.
 fn resolve_addon_name(metadata: &HashMap<String, String>, addon_dir: &Path) -> String {
     metadata.get("Title").cloned().unwrap_or_else(|| {
@@ -73,8 +89,14 @@ impl TocFile {
                 continue;
             }
 
+            // Skip game-type-restricted files that aren't for mainline/standard retail
+            if line.contains("[AllowLoadGameType") && !is_allowed_game_type(line) {
+                continue;
+            }
+
             // Replace placeholders and strip annotations
             let line = line.replace("[TextLocale]", "enUS");
+            let line = line.replace("[Family]", "Mainline");
             let line = line.replace("[Game]", "Standard");
             let file_path = strip_annotations(&line).replace('\\', "/");
             if !file_path.is_empty() {
@@ -355,5 +377,72 @@ Debug.lua [AllowLoadEnvironment Global, SomeFlag]
         assert_eq!(toc.files[0], PathBuf::from("Core.lua"));
         assert_eq!(toc.files[1], PathBuf::from("Dump.lua"));
         assert_eq!(toc.files[2], PathBuf::from("Debug.lua"));
+    }
+
+    #[test]
+    fn test_family_placeholder_resolves_to_mainline() {
+        let contents = r#"
+## Title: Blizzard_Colors
+Shared\ColorOverrides.lua
+[Family]\ColorConstants.lua
+[Family]\ColorManager.lua
+"#;
+        let toc = TocFile::parse(Path::new("/addons/Blizzard_Colors"), contents);
+
+        assert_eq!(toc.files.len(), 3);
+        assert_eq!(toc.files[0], PathBuf::from("Shared/ColorOverrides.lua"));
+        assert_eq!(toc.files[1], PathBuf::from("Mainline/ColorConstants.lua"));
+        assert_eq!(toc.files[2], PathBuf::from("Mainline/ColorManager.lua"));
+    }
+
+    #[test]
+    fn test_game_type_filter_skips_plunderstorm() {
+        let contents = r#"
+## Title: Blizzard_FrameXMLBase
+Constants.lua
+[Game]\GameModeConstants.lua [AllowLoadGameType plunderstorm]
+"#;
+        let toc = TocFile::parse(Path::new("/addons/Blizzard_FrameXMLBase"), contents);
+
+        assert_eq!(toc.files.len(), 1);
+        assert_eq!(toc.files[0], PathBuf::from("Constants.lua"));
+    }
+
+    #[test]
+    fn test_game_type_filter_allows_mainline_and_standard() {
+        let contents = r#"
+## Title: TestAddon
+Core.lua
+Mainline\Override.lua [AllowLoadGameType mainline]
+Standard\Mode.lua [AllowLoadGameType standard]
+Standard\Multi.lua [AllowLoadGameType standard, wowhack, plunderstorm]
+WoWLabs\Mode.lua [AllowLoadGameType plunderstorm]
+Classic\Mode.lua [AllowLoadGameType classic]
+Cata\Mode.lua [AllowLoadGameType wrath, cata, mists]
+"#;
+        let toc = TocFile::parse(Path::new("/addons/TestAddon"), contents);
+
+        assert_eq!(toc.files.len(), 4);
+        assert_eq!(toc.files[0], PathBuf::from("Core.lua"));
+        assert_eq!(toc.files[1], PathBuf::from("Mainline/Override.lua"));
+        assert_eq!(toc.files[2], PathBuf::from("Standard/Mode.lua"));
+        assert_eq!(toc.files[3], PathBuf::from("Standard/Multi.lua"));
+    }
+
+    #[test]
+    fn test_is_allowed_game_type() {
+        assert!(is_allowed_game_type("Core.lua"));
+        assert!(is_allowed_game_type("File.lua [AllowLoadGameType mainline]"));
+        assert!(is_allowed_game_type("File.lua [AllowLoadGameType standard]"));
+        assert!(is_allowed_game_type(
+            "File.lua [AllowLoadGameType standard, wowhack]"
+        ));
+        assert!(!is_allowed_game_type(
+            "File.lua [AllowLoadGameType plunderstorm]"
+        ));
+        assert!(!is_allowed_game_type("File.lua [AllowLoadGameType classic]"));
+        assert!(!is_allowed_game_type(
+            "File.lua [AllowLoadGameType wrath, cata, mists]"
+        ));
     }
 }

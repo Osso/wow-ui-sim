@@ -94,6 +94,18 @@ pub enum ScriptHandler {
     OnPostShow,
     OnPostHide,
     OnPostClick,
+    OnKeyDown,
+    OnKeyUp,
+    OnChar,
+    OnEnterPressed,
+    OnEscapePressed,
+    OnTabPressed,
+    OnSpacePressed,
+    OnEditFocusGained,
+    OnEditFocusLost,
+    OnTextChanged,
+    OnValueChanged,
+    OnMinMaxChanged,
 }
 
 impl ScriptHandler {
@@ -123,6 +135,18 @@ impl ScriptHandler {
             "OnPostShow" => Some(Self::OnPostShow),
             "OnPostHide" => Some(Self::OnPostHide),
             "OnPostClick" => Some(Self::OnPostClick),
+            "OnKeyDown" => Some(Self::OnKeyDown),
+            "OnKeyUp" => Some(Self::OnKeyUp),
+            "OnChar" => Some(Self::OnChar),
+            "OnEnterPressed" => Some(Self::OnEnterPressed),
+            "OnEscapePressed" => Some(Self::OnEscapePressed),
+            "OnTabPressed" => Some(Self::OnTabPressed),
+            "OnSpacePressed" => Some(Self::OnSpacePressed),
+            "OnEditFocusGained" => Some(Self::OnEditFocusGained),
+            "OnEditFocusLost" => Some(Self::OnEditFocusLost),
+            "OnTextChanged" => Some(Self::OnTextChanged),
+            "OnValueChanged" => Some(Self::OnValueChanged),
+            "OnMinMaxChanged" => Some(Self::OnMinMaxChanged),
             _ => None,
         }
     }
@@ -153,6 +177,18 @@ impl ScriptHandler {
             Self::OnPostShow => "OnPostShow",
             Self::OnPostHide => "OnPostHide",
             Self::OnPostClick => "OnPostClick",
+            Self::OnKeyDown => "OnKeyDown",
+            Self::OnKeyUp => "OnKeyUp",
+            Self::OnChar => "OnChar",
+            Self::OnEnterPressed => "OnEnterPressed",
+            Self::OnEscapePressed => "OnEscapePressed",
+            Self::OnTabPressed => "OnTabPressed",
+            Self::OnSpacePressed => "OnSpacePressed",
+            Self::OnEditFocusGained => "OnEditFocusGained",
+            Self::OnEditFocusLost => "OnEditFocusLost",
+            Self::OnTextChanged => "OnTextChanged",
+            Self::OnValueChanged => "OnValueChanged",
+            Self::OnMinMaxChanged => "OnMinMaxChanged",
         }
     }
 }
