@@ -5,8 +5,8 @@ use crate::lua_api::WowLuaEnv;
 use super::error::LoadError;
 use super::helpers::{escape_lua_string, generate_set_point_code, get_size_values, resolve_child_name};
 
-/// Generate Lua code for texture-specific properties (file, atlas, color, tiling, etc).
-fn generate_texture_properties_code(texture: &crate::xml::TextureXml) -> String {
+/// Generate Lua code for texture source (file or atlas) and size.
+fn generate_texture_source_code(texture: &crate::xml::TextureXml) -> String {
     let mut code = String::new();
 
     if let Some(file) = &texture.file {
@@ -41,6 +41,13 @@ fn generate_texture_properties_code(texture: &crate::xml::TextureXml) -> String 
         }
     }
 
+    code
+}
+
+/// Generate Lua code for texture visual properties (color, tiling, parentKey).
+fn generate_texture_visual_code(texture: &crate::xml::TextureXml) -> String {
+    let mut code = String::new();
+
     if let Some(color) = &texture.color {
         code.push_str(&format!(
             r#"
@@ -54,27 +61,15 @@ fn generate_texture_properties_code(texture: &crate::xml::TextureXml) -> String 
     }
 
     if texture.horiz_tile == Some(true) {
-        code.push_str(
-            r#"
-        tex:SetHorizTile(true)
-        "#,
-        );
+        code.push_str("\n        tex:SetHorizTile(true)\n        ");
     }
 
     if texture.vert_tile == Some(true) {
-        code.push_str(
-            r#"
-        tex:SetVertTile(true)
-        "#,
-        );
+        code.push_str("\n        tex:SetVertTile(true)\n        ");
     }
 
     if texture.set_all_points == Some(true) {
-        code.push_str(
-            r#"
-        tex:SetAllPoints(true)
-        "#,
-        );
+        code.push_str("\n        tex:SetAllPoints(true)\n        ");
     }
 
     if let Some(key) = &texture.parent_key {
@@ -110,7 +105,8 @@ pub fn create_texture_from_xml(
         parent_name, tex_name, draw_layer
     );
 
-    lua_code.push_str(&generate_texture_properties_code(texture));
+    lua_code.push_str(&generate_texture_source_code(texture));
+    lua_code.push_str(&generate_texture_visual_code(texture));
 
     if let Some(anchors) = &texture.anchors {
         lua_code.push_str(&generate_set_point_code(
@@ -120,6 +116,9 @@ pub fn create_texture_from_xml(
             parent_name,
             "parent",
         ));
+    } else if texture.set_all_points != Some(true) {
+        // WoW implicitly applies SetAllPoints to textures with no anchors
+        lua_code.push_str("\n        tex:SetAllPoints(true)\n        ");
     }
 
     env.exec(&lua_code).map_err(|e| {

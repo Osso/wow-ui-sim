@@ -3,7 +3,7 @@
 //! This module provides functionality to apply XML templates from the registry
 //! when CreateFrame is called with a template name.
 
-use crate::loader::helpers::generate_set_point_code;
+use crate::loader::helpers::{generate_animation_group_code, generate_set_point_code};
 use crate::xml::{get_template_chain, FrameElement, FrameXml, TemplateEntry};
 use mlua::Lua;
 
@@ -85,6 +85,9 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     // Create child Frames from template
     let child_names = create_child_frames(lua, template, frame_name);
 
+    // Apply animation groups from template
+    apply_animation_groups(lua, template, frame_name);
+
     // Apply scripts from template
     if let Some(scripts) = template.scripts() {
         apply_scripts_from_template(lua, scripts, frame_name);
@@ -101,12 +104,7 @@ fn apply_template_size(lua: &Lua, template: &FrameXml, frame_name: &str) {
         return;
     };
     let code = format!(
-        r#"
-        local frame = {}
-        if frame and frame:GetWidth() == 0 and frame:GetHeight() == 0 then
-            frame:SetSize({}, {})
-        end
-        "#,
+        "local frame = {} if frame then frame:SetSize({}, {}) end",
         frame_name, w, h
     );
     let _ = lua.load(&code).exec();
@@ -319,6 +317,11 @@ fn create_texture_from_template(
 
     append_texture_properties(&mut code, texture, "tex");
     append_anchors_and_parent_key(&mut code, &texture.anchors, texture.set_all_points, &texture.parent_key, "tex", "parent", parent_name);
+
+    // WoW implicitly applies SetAllPoints to textures with no anchors
+    if texture.anchors.is_none() && texture.set_all_points != Some(true) {
+        code.push_str("            tex:SetAllPoints(true)\n");
+    }
 
     // Register as global if named
     if texture.name.is_some() {
@@ -603,6 +606,9 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
 
     apply_inline_button_textures(lua, frame, frame_name);
 
+    // Apply animation groups
+    apply_animation_groups(lua, frame, frame_name);
+
     // Create nested child frames
     create_child_frames(lua, frame, frame_name);
 
@@ -610,6 +616,21 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
     if let Some(scripts) = frame.scripts() {
         apply_scripts_from_template(lua, scripts, frame_name);
     }
+}
+
+/// Apply animation groups from a FrameXml to an already-created frame.
+fn apply_animation_groups(lua: &Lua, frame: &FrameXml, frame_name: &str) {
+    let Some(anims) = frame.animations() else {
+        return;
+    };
+    let mut code = format!("local frame = {}\n", frame_name);
+    for group in &anims.animations {
+        if group.is_virtual == Some(true) {
+            continue;
+        }
+        code.push_str(&generate_animation_group_code(group, "frame"));
+    }
+    let _ = lua.load(&code).exec();
 }
 
 /// Apply KeyValues from inline frame content.

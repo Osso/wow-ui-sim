@@ -22,6 +22,8 @@ pub(crate) fn next_timer_id() -> u64 {
 pub struct WowLuaEnv {
     lua: Lua,
     state: Rc<RefCell<SimState>>,
+    /// OnUpdate handlers that errored are suppressed to avoid repeated stack traces.
+    on_update_errors: RefCell<std::collections::HashSet<u64>>,
 }
 
 impl WowLuaEnv {
@@ -41,7 +43,11 @@ impl WowLuaEnv {
         // Register global functions
         super::globals::register_globals(&lua, Rc::clone(&state))?;
 
-        Ok(Self { lua, state })
+        Ok(Self {
+            lua,
+            state,
+            on_update_errors: RefCell::new(std::collections::HashSet::new()),
+        })
     }
 
     /// Execute Lua code.
@@ -566,8 +572,12 @@ impl WowLuaEnv {
             let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
             if let Some(table) = scripts_table {
                 let elapsed_val = Value::Number(elapsed);
+                let mut errored_ids = self.on_update_errors.borrow_mut();
 
                 for widget_id in &frame_ids {
+                    if errored_ids.contains(widget_id) {
+                        continue;
+                    }
                     let frame_key = format!("{}_OnUpdate", widget_id);
                     let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
 
@@ -579,6 +589,7 @@ impl WowLuaEnv {
                             handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
                         {
                             eprintln!("OnUpdate error (frame {}): {}", widget_id, e);
+                            errored_ids.insert(*widget_id);
                         }
                     }
                 }
@@ -708,6 +719,6 @@ fn format_frame_entry(
             indent, anchor.point, anchor.relative_point, anchor.x_offset, anchor.y_offset
         );
     } else {
-        let _ = writeln!(output, "{}  └─ (no anchors - centered)", indent);
+        let _ = writeln!(output, "{}  └─ (no anchors - topleft of parent)", indent);
     }
 }

@@ -200,6 +200,13 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
     let highlight_id = create_child_widget(state, WidgetType::Texture, frame_id);
     let disabled_id = create_child_widget(state, WidgetType::Texture, frame_id);
 
+    // Button textures fill the parent by default (SetAllPoints equivalent)
+    for tex_id in [normal_id, pushed_id, highlight_id, disabled_id] {
+        if let Some(tex) = state.widgets.get_mut(tex_id) {
+            add_fill_parent_anchors(tex, frame_id);
+        }
+    }
+
     // HighlightTexture is only visible on hover in WoW
     if let Some(highlight) = state.widgets.get_mut(highlight_id) {
         highlight.draw_layer = crate::widget::DrawLayer::Highlight;
@@ -252,6 +259,27 @@ fn create_slider_defaults(state: &mut SimState, frame_id: u64) {
         slider.children_keys.insert("Text".to_string(), text_id);
         slider.children_keys.insert("ThumbTexture".to_string(), thumb_id);
     }
+}
+
+/// Add TOPLEFT+BOTTOMRIGHT anchors to fill the parent (equivalent to SetAllPoints).
+fn add_fill_parent_anchors(frame: &mut Frame, parent_id: u64) {
+    use crate::widget::{Anchor, AnchorPoint};
+    frame.anchors.push(Anchor {
+        point: AnchorPoint::TopLeft,
+        relative_to: None,
+        relative_to_id: Some(parent_id as usize),
+        relative_point: AnchorPoint::TopLeft,
+        x_offset: 0.0,
+        y_offset: 0.0,
+    });
+    frame.anchors.push(Anchor {
+        point: AnchorPoint::BottomRight,
+        relative_to: None,
+        relative_to_id: Some(parent_id as usize),
+        relative_point: AnchorPoint::BottomRight,
+        x_offset: 0.0,
+        y_offset: 0.0,
+    });
 }
 
 /// Create a child widget of the given type, register it, and add it as a child. Returns the ID.
