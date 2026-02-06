@@ -106,6 +106,17 @@ fn register_item_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
         ("Heirloom", 7), ("WoWToken", 8),
     ])?;
 
+    val_enum(lua, enum_table, "ItemQualityMeta", &[("NumValues", 9)])?;
+
+    val_enum(lua, enum_table, "WorldQuestQuality", &[
+        ("Common", 0), ("Rare", 1), ("Epic", 2),
+    ])?;
+
+    val_enum(lua, enum_table, "GarrFollowerQuality", &[
+        ("Common", 1), ("Uncommon", 2), ("Rare", 3),
+        ("Epic", 4), ("Legendary", 5), ("Title", 6),
+    ])?;
+
     seq_enum(lua, enum_table, "ItemMiscellaneousSubclass", &[
         "Junk", "Reagent", "CompanionPet", "Holiday", "Other", "Mount", "MountEquipment",
     ])?;

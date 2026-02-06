@@ -44,8 +44,6 @@ use mlua::{Lua, Result, Value};
 
 /// Register all miscellaneous C_* namespace APIs.
 pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-
     register_c_scenario_info(lua)?;
     register_c_tooltip_info(lua)?;
     register_c_pet_battles(lua)?;
@@ -89,8 +87,71 @@ pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
     register_c_player_interaction_manager(lua)?;
     register_c_paper_doll_info(lua)?;
     register_c_perks_program(lua)?;
+    register_c_color_overrides(lua)?;
     register_tooltip_data_processor(lua)?;
     Ok(())
+}
+
+fn register_c_color_overrides(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    let t = lua.create_table()?;
+
+    // Default WoW item quality colors (Poor=0 through WoWToken=8)
+    t.set(
+        "GetColorForQuality",
+        lua.create_function(|lua, quality: i32| {
+            create_quality_color(lua, quality)
+        })?,
+    )?;
+
+    t.set(
+        "GetDefaultColorForQuality",
+        lua.create_function(|lua, quality: i32| {
+            create_quality_color(lua, quality)
+        })?,
+    )?;
+
+    t.set(
+        "GetColorOverrideInfo",
+        lua.create_function(|_, _override_type: i32| Ok(Value::Nil))?,
+    )?;
+
+    t.set(
+        "ClearColorOverrides",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+
+    t.set(
+        "SetColorOverride",
+        lua.create_function(|_, (_override_type, _color): (i32, Value)| Ok(()))?,
+    )?;
+
+    t.set(
+        "RemoveColorOverride",
+        lua.create_function(|_, _override_type: i32| Ok(()))?,
+    )?;
+
+    globals.set("C_ColorOverrides", t)?;
+    Ok(())
+}
+
+/// Create a ColorMixin color via Lua's CreateColor for a given item quality.
+fn create_quality_color(lua: &mlua::Lua, quality: i32) -> Result<Value> {
+    let (r, g, b) = match quality {
+        0 => (0.62, 0.62, 0.62), // Poor (gray)
+        1 => (1.00, 1.00, 1.00), // Common (white)
+        2 => (0.12, 1.00, 0.00), // Uncommon (green)
+        3 => (0.00, 0.44, 0.87), // Rare (blue)
+        4 => (0.64, 0.21, 0.93), // Epic (purple)
+        5 => (1.00, 0.50, 0.00), // Legendary (orange)
+        6 => (0.90, 0.80, 0.50), // Artifact (gold)
+        7 => (0.00, 0.80, 1.00), // Heirloom (light blue)
+        8 => (0.00, 0.80, 1.00), // WoW Token
+        _ => (1.00, 1.00, 1.00),
+    };
+    // Call Lua-side CreateColor to get full ColorMixin support
+    let create_color: mlua::Function = lua.globals().get("CreateColor")?;
+    create_color.call::<Value>((r, g, b, 1.0))
 }
 
 fn register_tooltip_data_processor(lua: &Lua) -> Result<()> {
