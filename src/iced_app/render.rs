@@ -75,6 +75,9 @@ impl shader::Program<Message> for &App {
                     if modifiers.control() && *key == keyboard::Key::Character("r".into()) {
                         return Some(shader::Action::publish(Message::ReloadUI));
                     }
+                    if *key == keyboard::Key::Named(keyboard::key::Named::Escape) {
+                        return Some(shader::Action::publish(Message::ToggleGameMenu));
+                    }
                 }
             }
             _ => {}

@@ -1576,6 +1576,10 @@ fn register_c_paper_doll_info(lua: &Lua) -> Result<()> {
         "OffhandHasWeapon",
         lua.create_function(|_, ()| Ok(false))?,
     )?;
+    t.set(
+        "IsRangedSlotShown",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
 
     globals.set("C_PaperDollInfo", t)?;
     Ok(())

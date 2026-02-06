@@ -366,11 +366,6 @@ pub const WIDGET_ENABLED_STATE: SeqEnumDef = (
     &["Disabled", "Enabled", "Red", "White", "Green", "Gold", "Artifact", "Black", "ColorTwo", "Yellow"],
 );
 
-pub const WIDGET_OPACITY_TYPE: SeqEnumDef = (
-    "WidgetOpacityType",
-    &["OneHundred", "SeventyFive", "Fifty", "TwentyFive", "Zero"],
-);
-
 pub const WIDGET_ANIMATION_TYPE: SeqEnumDef = ("WidgetAnimationType", &["None", "Fade"]);
 
 pub const WIDGET_SHOW_GLOW_STATE: SeqEnumDef = (
@@ -435,7 +430,7 @@ pub const CAPTURE_BAR_FILL_DIRECTION: SeqEnumDef = (
 
 pub const UI_WIDGET_TEXTURE_TEXT_SIZE: SeqEnumDef = (
     "UIWidgetTextureAndTextSizeType",
-    &["Small", "Medium", "Large", "Standard"],
+    &["Small", "Medium", "Large", "Huge", "Standard", "Medium2"],
 );
 
 pub const MAP_PIN_ANIMATION_TYPE: SeqEnumDef = (
@@ -754,7 +749,23 @@ pub const HOUSING_ITEM_TOAST_TYPE: SeqEnumDef = (
 
 pub const VAS_SERVICE_TYPE: SeqEnumDef = (
     "VasServiceType",
-    &["FactionChange", "RaceChange", "AppearanceChange", "NameChange", "CharacterTransfer"],
+    &[
+        "FactionChange", "RaceChange", "AppearanceChange", "NameChange",
+        "CharacterTransfer", "GuildNameChange", "GuildFactionChange", "GuildTransfer",
+    ],
+);
+
+pub const ACTION_BAR_ORIENTATION: SeqEnumDef = (
+    "ActionBarOrientation",
+    &["Horizontal", "Vertical"],
+);
+
+pub const WIDGET_OPACITY_TYPE: SeqEnumDef = (
+    "WidgetOpacityType",
+    &[
+        "OneHundred", "Ninety", "Eighty", "Seventy", "Sixty", "Fifty",
+        "Forty", "Thirty", "Twenty", "Ten", "Zero",
+    ],
 );
 
 // ============================================================================
@@ -802,6 +813,230 @@ pub const FRAME_TUTORIAL_ACCOUNT: EnumDef = (
 );
 
 // ============================================================================
+// Edit Mode Enums (from EditModeManagerConstantsDocumentation.lua)
+// ============================================================================
+
+pub const ACTION_BAR_VISIBLE_SETTING: SeqEnumDef = (
+    "ActionBarVisibleSetting",
+    &["Always", "InCombat", "OutOfCombat", "Hidden"],
+);
+
+pub const EDIT_MODE_SYSTEM: SeqEnumDef = (
+    "EditModeSystem",
+    &[
+        "ActionBar", "CastBar", "Minimap", "UnitFrame", "EncounterBar",
+        "ExtraAbilities", "AuraFrame", "TalkingHeadFrame", "ChatFrame",
+        "VehicleLeaveButton", "LootFrame", "HudTooltip", "ObjectiveTracker",
+        "MicroMenu", "Bags", "StatusTrackingBar", "DurabilityFrame",
+        "TimerBars", "VehicleSeatIndicator", "ArchaeologyBar", "CooldownViewer",
+    ],
+);
+
+pub const EDIT_MODE_CHAT_FRAME_SETTING: SeqEnumDef = (
+    "EditModeChatFrameSetting",
+    &["WidthHundreds", "WidthTensAndOnes", "HeightHundreds", "HeightTensAndOnes"],
+);
+
+pub const EDIT_MODE_ACCOUNT_SETTING: SeqEnumDef = (
+    "EditModeAccountSetting",
+    &[
+        "ShowGrid", "GridSpacing", "SettingsExpanded", "ShowTargetAndFocus",
+        "ShowStanceBar", "ShowPetActionBar", "ShowPossessActionBar", "ShowCastBar",
+        "ShowEncounterBar", "ShowExtraAbilities", "ShowBuffsAndDebuffs",
+        "DeprecatedShowDebuffFrame", "ShowPartyFrames", "ShowRaidFrames",
+        "ShowTalkingHeadFrame", "ShowVehicleLeaveButton", "ShowBossFrames",
+        "ShowArenaFrames", "ShowLootFrame", "ShowHudTooltip", "ShowStatusTrackingBar2",
+        "ShowDurabilityFrame", "EnableSnap", "EnableAdvancedOptions", "ShowPetFrame",
+        "ShowTimerBars", "ShowVehicleSeatIndicator", "ShowArchaeologyBar", "ShowCooldownViewer",
+    ],
+);
+
+pub const EDIT_MODE_LAYOUT_TYPE: SeqEnumDef = (
+    "EditModeLayoutType",
+    &["Preset", "Account", "Character", "Override"],
+);
+
+pub const EDIT_MODE_UNIT_FRAME_SETTING: SeqEnumDef = (
+    "EditModeUnitFrameSetting",
+    &[
+        "HidePortrait", "CastBarUnderneath", "BuffsOnTop", "UseLargerFrame",
+        "UseRaidStylePartyFrames", "ShowPartyFrameBackground", "UseHorizontalGroups",
+        "CastBarOnSide", "ShowCastTime", "ViewRaidSize", "FrameWidth", "FrameHeight",
+        "DisplayBorder", "RaidGroupDisplayType", "SortPlayersBy", "RowSize",
+        "FrameSize", "ViewArenaSize",
+    ],
+);
+
+pub const EDIT_MODE_UNIT_FRAME_SYSTEM_INDICES: EnumDef = (
+    "EditModeUnitFrameSystemIndices",
+    &[
+        ("Player", 1), ("Target", 2), ("Focus", 3), ("Party", 4),
+        ("Raid", 5), ("Boss", 6), ("Arena", 7), ("Pet", 8),
+    ],
+);
+
+pub const EDIT_MODE_CAST_BAR_SETTING: SeqEnumDef = (
+    "EditModeCastBarSetting",
+    &["BarSize", "LockToPlayerFrame", "ShowCastTime"],
+);
+
+pub const EDIT_MODE_MINIMAP_SETTING: SeqEnumDef = (
+    "EditModeMinimapSetting",
+    &["HeaderUnderneath", "RotateMinimap", "Size"],
+);
+
+pub const EDIT_MODE_AURA_FRAME_SETTING: SeqEnumDef = (
+    "EditModeAuraFrameSetting",
+    &[
+        "Orientation", "IconWrap", "IconDirection", "IconLimitBuffFrame",
+        "IconLimitDebuffFrame", "IconSize", "IconPadding", "DeprecatedShowFull",
+    ],
+);
+
+pub const EDIT_MODE_AURA_FRAME_SYSTEM_INDICES: EnumDef = (
+    "EditModeAuraFrameSystemIndices",
+    &[("BuffFrame", 1), ("DebuffFrame", 2)],
+);
+
+pub const EDIT_MODE_BAGS_SETTING: SeqEnumDef = (
+    "EditModeBagsSetting",
+    &["Orientation", "Direction", "Size", "BagSlotPadding"],
+);
+
+pub const EDIT_MODE_MICRO_MENU_SETTING: SeqEnumDef = (
+    "EditModeMicroMenuSetting",
+    &["Orientation", "Order", "Size", "EyeSize"],
+);
+
+pub const EDIT_MODE_OBJECTIVE_TRACKER_SETTING: SeqEnumDef = (
+    "EditModeObjectiveTrackerSetting",
+    &["Height", "Opacity", "TextSize"],
+);
+
+pub const EDIT_MODE_STATUS_TRACKING_BAR_SETTING: SeqEnumDef = (
+    "EditModeStatusTrackingBarSetting",
+    &["Height", "Width", "TextSize"],
+);
+
+pub const EDIT_MODE_STATUS_TRACKING_BAR_SYSTEM_INDICES: EnumDef = (
+    "EditModeStatusTrackingBarSystemIndices",
+    &[("StatusTrackingBar1", 1), ("StatusTrackingBar2", 2)],
+);
+
+pub const EDIT_MODE_DURABILITY_FRAME_SETTING: SeqEnumDef = (
+    "EditModeDurabilityFrameSetting",
+    &["Size"],
+);
+
+pub const EDIT_MODE_TIMER_BARS_SETTING: SeqEnumDef = (
+    "EditModeTimerBarsSetting",
+    &["Size"],
+);
+
+pub const EDIT_MODE_VEHICLE_SEAT_INDICATOR_SETTING: SeqEnumDef = (
+    "EditModeVehicleSeatIndicatorSetting",
+    &["Size"],
+);
+
+pub const EDIT_MODE_ARCHAEOLOGY_BAR_SETTING: SeqEnumDef = (
+    "EditModeArchaeologyBarSetting",
+    &["Size"],
+);
+
+pub const EDIT_MODE_COOLDOWN_VIEWER_SETTING: SeqEnumDef = (
+    "EditModeCooldownViewerSetting",
+    &[
+        "Orientation", "IconLimit", "IconDirection", "IconSize", "IconPadding",
+        "Opacity", "VisibleSetting", "BarContent", "HideWhenInactive", "ShowTimer",
+        "ShowTooltips",
+    ],
+);
+
+pub const EDIT_MODE_COOLDOWN_VIEWER_SYSTEM_INDICES: EnumDef = (
+    "EditModeCooldownViewerSystemIndices",
+    &[("Essential", 1), ("Utility", 2), ("BuffIcon", 3), ("BuffBar", 4)],
+);
+
+pub const AURA_FRAME_ICON_DIRECTION: EnumDef = (
+    "AuraFrameIconDirection",
+    &[("Down", 0), ("Up", 1), ("Left", 0), ("Right", 1)],
+);
+
+pub const AURA_FRAME_ICON_WRAP: EnumDef = (
+    "AuraFrameIconWrap",
+    &[("Down", 0), ("Up", 1), ("Left", 0), ("Right", 1)],
+);
+
+pub const AURA_FRAME_ORIENTATION: SeqEnumDef = (
+    "AuraFrameOrientation",
+    &["Horizontal", "Vertical"],
+);
+
+pub const BAGS_DIRECTION: EnumDef = (
+    "BagsDirection",
+    &[("Left", 0), ("Right", 1), ("Up", 0), ("Down", 1)],
+);
+
+pub const MICRO_MENU_ORDER: SeqEnumDef = (
+    "MicroMenuOrder",
+    &["Default", "Reverse"],
+);
+
+pub const MICRO_MENU_ORIENTATION: SeqEnumDef = (
+    "MicroMenuOrientation",
+    &["Horizontal", "Vertical"],
+);
+
+pub const RAID_GROUP_DISPLAY_TYPE: SeqEnumDef = (
+    "RaidGroupDisplayType",
+    &["SeparateGroupsVertical", "SeparateGroupsHorizontal", "CombineGroupsVertical", "CombineGroupsHorizontal"],
+);
+
+pub const SORT_PLAYERS_BY: SeqEnumDef = (
+    "SortPlayersBy",
+    &["Role", "Group", "Alphabetical"],
+);
+
+pub const VIEW_ARENA_SIZE: SeqEnumDef = (
+    "ViewArenaSize",
+    &["Two", "Three"],
+);
+
+pub const VIEW_RAID_SIZE: SeqEnumDef = (
+    "ViewRaidSize",
+    &["Ten", "TwentyFive", "Forty"],
+);
+
+pub const COOLDOWN_VIEWER_BAR_CONTENT: SeqEnumDef = (
+    "CooldownViewerBarContent",
+    &["IconAndName", "IconOnly", "NameOnly"],
+);
+
+pub const COOLDOWN_VIEWER_ICON_DIRECTION: SeqEnumDef = (
+    "CooldownViewerIconDirection",
+    &["Left", "Right"],
+);
+
+pub const COOLDOWN_VIEWER_ORIENTATION: SeqEnumDef = (
+    "CooldownViewerOrientation",
+    &["Horizontal", "Vertical"],
+);
+
+pub const COOLDOWN_VIEWER_VISIBLE_SETTING: SeqEnumDef = (
+    "CooldownViewerVisibleSetting",
+    &["Always", "InCombat", "Hidden"],
+);
+
+// ============================================================================
+// Transmog Meta Enums
+// ============================================================================
+
+pub const TRANSMOG_COLLECTION_TYPE_META: EnumDef = (
+    "TransmogCollectionTypeMeta",
+    &[("NumValues", 30)],
+);
+
+// ============================================================================
 // All sequential enums (for batch registration)
 // ============================================================================
 
@@ -827,7 +1062,6 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     STATUS_BAR_VALUE_TEXT_TYPE,
     WIDGET_SHOWN_STATE,
     WIDGET_ENABLED_STATE,
-    WIDGET_OPACITY_TYPE,
     WIDGET_ANIMATION_TYPE,
     WIDGET_SHOW_GLOW_STATE,
     WIDGET_GLOW_ANIM_TYPE,
@@ -880,9 +1114,40 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     CALENDAR_STATUS,
     HOUSING_ITEM_TOAST_TYPE,
     VAS_SERVICE_TYPE,
+    ACTION_BAR_ORIENTATION,
+    WIDGET_OPACITY_TYPE,
     EDIT_MODE_ACTION_BAR_SETTING,
     GARR_AUTO_MISSION_EVENT_TYPE,
     CLUB_MEMBER_PRESENCE,
+    ACTION_BAR_VISIBLE_SETTING,
+    EDIT_MODE_SYSTEM,
+    EDIT_MODE_CHAT_FRAME_SETTING,
+    EDIT_MODE_ACCOUNT_SETTING,
+    EDIT_MODE_LAYOUT_TYPE,
+    EDIT_MODE_UNIT_FRAME_SETTING,
+    EDIT_MODE_CAST_BAR_SETTING,
+    EDIT_MODE_MINIMAP_SETTING,
+    EDIT_MODE_AURA_FRAME_SETTING,
+    EDIT_MODE_BAGS_SETTING,
+    EDIT_MODE_MICRO_MENU_SETTING,
+    EDIT_MODE_OBJECTIVE_TRACKER_SETTING,
+    EDIT_MODE_STATUS_TRACKING_BAR_SETTING,
+    EDIT_MODE_DURABILITY_FRAME_SETTING,
+    EDIT_MODE_TIMER_BARS_SETTING,
+    EDIT_MODE_VEHICLE_SEAT_INDICATOR_SETTING,
+    EDIT_MODE_ARCHAEOLOGY_BAR_SETTING,
+    EDIT_MODE_COOLDOWN_VIEWER_SETTING,
+    AURA_FRAME_ORIENTATION,
+    MICRO_MENU_ORDER,
+    MICRO_MENU_ORIENTATION,
+    RAID_GROUP_DISPLAY_TYPE,
+    SORT_PLAYERS_BY,
+    VIEW_ARENA_SIZE,
+    VIEW_RAID_SIZE,
+    COOLDOWN_VIEWER_BAR_CONTENT,
+    COOLDOWN_VIEWER_ICON_DIRECTION,
+    COOLDOWN_VIEWER_ORIENTATION,
+    COOLDOWN_VIEWER_VISIBLE_SETTING,
 ];
 
 // All explicit value enums (for batch registration)
@@ -899,4 +1164,12 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     BAG_SLOT_FLAGS,
     GARRISON_FOLLOWER_TYPE,
     FRAME_TUTORIAL_ACCOUNT,
+    TRANSMOG_COLLECTION_TYPE_META,
+    EDIT_MODE_UNIT_FRAME_SYSTEM_INDICES,
+    EDIT_MODE_AURA_FRAME_SYSTEM_INDICES,
+    EDIT_MODE_STATUS_TRACKING_BAR_SYSTEM_INDICES,
+    EDIT_MODE_COOLDOWN_VIEWER_SYSTEM_INDICES,
+    AURA_FRAME_ICON_DIRECTION,
+    AURA_FRAME_ICON_WRAP,
+    BAGS_DIRECTION,
 ];

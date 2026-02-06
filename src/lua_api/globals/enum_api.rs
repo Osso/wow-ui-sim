@@ -178,10 +178,10 @@ fn register_quest_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
 
 fn register_transmog_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
     seq_enum(lua, enum_table, "TransmogCollectionType", &[
-        "Head", "Shoulder", "Back", "Chest", "Shirt", "Tabard", "Wrist", "Hands",
+        "None", "Head", "Shoulder", "Back", "Chest", "Shirt", "Tabard", "Wrist", "Hands",
         "Waist", "Legs", "Feet", "Wand", "OneHAxe", "OneHSword", "OneHMace",
-        "Dagger", "Fist", "TwoHAxe", "TwoHSword", "TwoHMace", "Staff", "Polearm",
-        "Bow", "Gun", "Crossbow", "Warglaives", "Paired", "Shield", "Holdable",
+        "Dagger", "Fist", "Shield", "Holdable", "TwoHAxe", "TwoHSword", "TwoHMace",
+        "Staff", "Polearm", "Bow", "Gun", "Crossbow", "Warglaives", "Paired",
     ])?;
 
     val_enum(lua, enum_table, "TransmogSource", &[
@@ -215,10 +215,6 @@ fn register_housing_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
         ("Type_9_0", 123), ("Type_10_0", 124), ("Type_11_0", 125),
     ])?;
 
-    seq_enum(lua, enum_table, "HousingItemToastType", &[
-        "None", "PlaceableItem", "Cosmetic",
-    ])?;
-
     seq_enum(lua, enum_table, "HouseEditorMode", &[
         "None", "BasicDecor", "ExpertDecor", "Layout", "Customize",
     ])?;
@@ -247,14 +243,6 @@ fn register_ui_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
 
     seq_enum(lua, enum_table, "UIWidgetSetLayoutDirection", &[
         "Vertical", "Horizontal", "HorizontalReverse", "VerticalReverse",
-    ])?;
-
-    seq_enum(lua, enum_table, "EditModeSystem", &[
-        "ActionBar1", "ActionBar2", "ActionBar3", "ActionBar4", "ActionBar5",
-        "ActionBar6", "ActionBar7", "ActionBar8", "MainMenuBar", "MultiBarBottomLeft",
-        "MultiBarBottomRight", "MultiBarRight", "MultiBarLeft", "EncounterBar",
-        "StanceBar", "PetActionBar", "PossessActionBar", "ExtraAbilityContainer",
-        "MicroMenu", "BagsBar",
     ])?;
 
     Ok(())

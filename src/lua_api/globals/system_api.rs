@@ -290,6 +290,14 @@ fn register_secure_stubs(lua: &Lua) -> Result<()> {
     // RegisterStaticConstants - C function that fills table with constants (no-op in sim)
     globals.set("RegisterStaticConstants", lua.create_function(|_, _tbl: Value| Ok(()))?)?;
 
+    // GetButtonMetatable - returns a metatable for Button objects
+    globals.set("GetButtonMetatable", lua.create_function(|lua, ()| {
+        let mt = lua.create_table()?;
+        let index = lua.create_table()?;
+        mt.set("__index", index)?;
+        Ok(Value::Table(mt))
+    })?)?;
+
     // C_GamePad namespace
     let c_gamepad = lua.create_table()?;
     c_gamepad.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;

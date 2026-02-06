@@ -962,6 +962,20 @@ pub const TOTEM_SLOT_CONSTANTS: &[IntDef] = &[
 ];
 
 // ============================================================================
+// LFG Category Constants
+// ============================================================================
+
+pub const LFG_CATEGORY_CONSTANTS: &[IntDef] = &[
+    ("LE_LFG_CATEGORY_LFD", 1),
+    ("LE_LFG_CATEGORY_RF", 2),
+    ("LE_LFG_CATEGORY_SCENARIO", 3),
+    ("LE_LFG_CATEGORY_LFR", 4),
+    ("LE_LFG_CATEGORY_FLEXRAID", 5),
+    ("LE_LFG_CATEGORY_WORLDPVP", 6),
+    ("LE_LFG_CATEGORY_BATTLEFIELD", 7),
+];
+
+// ============================================================================
 // Game Error String Constants (LE_GAME_ERR_*)
 // These are string constants used as table keys in UIErrorsFrame.lua
 // ============================================================================

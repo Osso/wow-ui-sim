@@ -31,6 +31,7 @@ impl App {
             Message::InspectorMouseEnabledToggled(val) => self.inspector_state.mouse_enabled = val,
             Message::InspectorApply => self.handle_inspector_apply(),
             Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
+            Message::ToggleGameMenu => self.handle_toggle_game_menu(),
         }
 
         Task::none()
@@ -203,6 +204,23 @@ impl App {
                 .and_then(|f| f.parent_id);
         }
         false
+    }
+
+    fn handle_toggle_game_menu(&mut self) {
+        let env = self.env.borrow();
+        let result = env.exec(
+            "if GameMenuFrame and GameMenuFrame.IsShown and GameMenuFrame:IsShown() then \
+                GameMenuFrame:Hide() \
+            elseif GameMenuFrame and GameMenuFrame.Show then \
+                GameMenuFrame:Show() \
+            end",
+        );
+        if let Err(e) = result {
+            self.log_messages
+                .push(format!("GameMenu toggle error: {}", e));
+        }
+        drop(env);
+        self.invalidate();
     }
 
     fn handle_reload_ui(&mut self) {

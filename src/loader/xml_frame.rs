@@ -40,7 +40,7 @@ pub fn create_frame_from_xml(
     append_mixins_code(&mut lua_code, frame, inherits);
     append_size_code(&mut lua_code, frame, inherits);
     append_anchors_code(&mut lua_code, frame, inherits, parent);
-    append_hidden_code(&mut lua_code, frame);
+    append_hidden_code(&mut lua_code, frame, inherits);
     append_enable_mouse_code(&mut lua_code, frame, inherits);
     append_set_all_points_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
@@ -201,9 +201,18 @@ fn append_anchors_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inhe
     }
 }
 
-/// Append `frame:Hide()` if the frame is marked hidden.
-fn append_hidden_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
-    if frame.hidden == Some(true) {
+/// Append `frame:Hide()` if the frame is marked hidden (directly or via template).
+fn append_hidden_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
+    let mut hidden = frame.hidden;
+    if hidden.is_none() && !inherits.is_empty() {
+        for template_entry in &crate::xml::get_template_chain(inherits) {
+            if let Some(h) = template_entry.frame.hidden {
+                hidden = Some(h);
+                break;
+            }
+        }
+    }
+    if hidden == Some(true) {
         lua_code.push_str(
             r#"
         frame:Hide()

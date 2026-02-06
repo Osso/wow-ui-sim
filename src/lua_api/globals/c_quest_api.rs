@@ -18,58 +18,42 @@ pub fn register_c_quest_api(lua: &Lua) -> Result<()> {
 /// C_QuestLog namespace - quest log utilities.
 fn register_c_quest_log(lua: &Lua) -> Result<mlua::Table> {
     let t = lua.create_table()?;
-    t.set(
-        "IsQuestFlaggedCompleted",
-        lua.create_function(|_, _quest_id: i32| Ok(false))?,
-    )?;
-    t.set(
-        "GetNumQuestLogEntries",
-        lua.create_function(|_, ()| Ok((0i32, 0i32)))?,
-    )?;
-    t.set(
-        "GetInfo",
-        lua.create_function(|_, _quest_index: i32| Ok(Value::Nil))?,
-    )?;
-    t.set(
-        "GetQuestIDForLogIndex",
-        lua.create_function(|_, _quest_index: i32| Ok(0i32))?,
-    )?;
-    t.set(
-        "IsComplete",
-        lua.create_function(|_, _quest_id: i32| Ok(false))?,
-    )?;
-    t.set(
-        "IsOnQuest",
-        lua.create_function(|_, _quest_id: i32| Ok(false))?,
-    )?;
-    t.set(
-        "GetQuestObjectives",
-        lua.create_function(|lua, _quest_id: i32| lua.create_table())?,
-    )?;
-    t.set(
-        "GetMaxNumQuestsCanAccept",
-        lua.create_function(|_, ()| Ok(35i32))?,
-    )?;
-    t.set(
-        "GetTitleForQuestID",
-        lua.create_function(|lua, _quest_id: i32| {
-            Ok(Value::String(lua.create_string("Quest")?))
-        })?,
-    )?;
-    t.set(
-        "GetQuestTagInfo",
-        lua.create_function(|lua, _quest_id: i32| {
-            let info = lua.create_table()?;
-            info.set("tagID", 0)?;
-            info.set("tagName", "Quest")?;
-            info.set("worldQuestType", Value::Nil)?;
-            info.set("quality", 1)?;
-            info.set("isElite", false)?;
-            info.set("displayExpiration", false)?;
-            Ok(info)
-        })?,
-    )?;
+    register_quest_log_queries(lua, &t)?;
+    register_quest_log_info(lua, &t)?;
     Ok(t)
+}
+
+/// Quest log query methods (status checks, objectives, counts).
+fn register_quest_log_queries(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("IsQuestFlaggedCompleted", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("GetNumQuestLogEntries", lua.create_function(|_, ()| Ok((0i32, 0i32)))?)?;
+    t.set("GetInfo", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
+    t.set("GetQuestIDForLogIndex", lua.create_function(|_, _idx: i32| Ok(0i32))?)?;
+    t.set("IsComplete", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("IsOnQuest", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("GetQuestObjectives", lua.create_function(|lua, _id: i32| lua.create_table())?)?;
+    t.set("GetMaxNumQuestsCanAccept", lua.create_function(|_, ()| Ok(35i32))?)?;
+    t.set("ReadyForTurnIn", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("GetQuestAdditionalHighlights", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    Ok(())
+}
+
+/// Quest log info methods (titles, tags).
+fn register_quest_log_info(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetTitleForQuestID", lua.create_function(|lua, _id: i32| {
+        Ok(Value::String(lua.create_string("Quest")?))
+    })?)?;
+    t.set("GetQuestTagInfo", lua.create_function(|lua, _id: i32| {
+        let info = lua.create_table()?;
+        info.set("tagID", 0)?;
+        info.set("tagName", "Quest")?;
+        info.set("worldQuestType", Value::Nil)?;
+        info.set("quality", 1)?;
+        info.set("isElite", false)?;
+        info.set("displayExpiration", false)?;
+        Ok(info)
+    })?)?;
+    Ok(())
 }
 
 /// C_TaskQuest namespace - world quest/task utilities.

@@ -68,6 +68,8 @@ pub enum Message {
     InspectorApply,
     /// Toggle frames panel collapsed state.
     ToggleFramesPanel,
+    /// Toggle game menu (Escape key).
+    ToggleGameMenu,
 }
 
 /// Run the iced UI with the given Lua environment.
