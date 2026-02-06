@@ -51,25 +51,38 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
     t.set("GetSchoolString", lua.create_function(create_school_string)?)?;
     t.set(
         "GetSpellTexture",
-        lua.create_function(|_, _spell_id: i32| Ok(136243))?,
+        lua.create_function(|_, spell_id: i32| {
+            let icon = crate::spells::get_spell(spell_id as u32)
+                .map(|s| s.icon_file_data_id)
+                .unwrap_or(136243);
+            Ok(icon)
+        })?,
     )?;
     t.set(
         "GetSpellLink",
         lua.create_function(|lua, spell_id: i32| {
-            let link = format!("|cff71d5ff|Hspell:{}|h[Spell {}]|h|r", spell_id, spell_id);
+            let name = crate::spells::get_spell(spell_id as u32)
+                .map(|s| s.name)
+                .unwrap_or("Unknown");
+            let link = format!("|cff71d5ff|Hspell:{}|h[{}]|h|r", spell_id, name);
             Ok(Value::String(lua.create_string(&link)?))
         })?,
     )?;
     t.set(
         "GetSpellName",
         lua.create_function(|lua, spell_id: i32| {
-            Ok(Value::String(lua.create_string(&format!("Spell {}", spell_id))?))
+            let name = crate::spells::get_spell(spell_id as u32)
+                .map(|s| s.name)
+                .unwrap_or("Unknown");
+            Ok(Value::String(lua.create_string(name)?))
         })?,
     )?;
     t.set("GetSpellCooldown", lua.create_function(create_spell_cooldown)?)?;
     t.set(
         "DoesSpellExist",
-        lua.create_function(|_, spell_id: i32| Ok(spell_id > 0))?,
+        lua.create_function(|_, spell_id: i32| {
+            Ok(spell_id > 0 && crate::spells::get_spell(spell_id as u32).is_some())
+        })?,
     )?;
 
     Ok(t)
@@ -77,9 +90,14 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
 
 fn create_spell_info(lua: &Lua, spell_id: i32) -> Result<Value> {
     let info = lua.create_table()?;
-    info.set("name", format!("Spell {}", spell_id))?;
+    if let Some(spell) = crate::spells::get_spell(spell_id as u32) {
+        info.set("name", spell.name)?;
+        info.set("iconID", spell.icon_file_data_id as i64)?;
+    } else {
+        info.set("name", format!("Spell {}", spell_id))?;
+        info.set("iconID", 136243)?;
+    }
     info.set("spellID", spell_id)?;
-    info.set("iconID", 136243)?;
     info.set("castTime", 0)?;
     info.set("minRange", 0)?;
     info.set("maxRange", 0)?;

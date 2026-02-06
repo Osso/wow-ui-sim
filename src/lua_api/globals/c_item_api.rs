@@ -22,7 +22,38 @@ fn register_c_item(lua: &Lua) -> Result<()> {
 
     c_item.set(
         "GetItemInfo",
-        lua.create_function(|_, _item_id: Value| Ok(Value::Nil))?,
+        lua.create_function(|lua, item_id: Value| {
+            let id = parse_item_id_from_value(&item_id);
+            if id == 0 {
+                return Ok(Value::Nil);
+            }
+            let Some(item) = crate::items::get_item(id as u32) else {
+                return Ok(Value::Nil);
+            };
+            let color = quality_color(item.quality);
+            let link = format!(
+                "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
+                color, id, item.name
+            );
+            let result = lua.create_table()?;
+            result.set("itemName", item.name)?;
+            result.set("itemLink", lua.create_string(&link)?)?;
+            result.set("itemQuality", item.quality as i32)?;
+            result.set("itemLevel", item.item_level as i32)?;
+            result.set("itemMinLevel", item.required_level as i32)?;
+            result.set("itemType", item_class_from_inv_type(item.inventory_type))?;
+            result.set("itemSubType", "")?;
+            result.set("itemStackCount", item.stackable as i32)?;
+            result.set("itemEquipLoc", inv_type_to_equip_loc(item.inventory_type))?;
+            result.set("itemTexture", 134400)?;
+            result.set("sellPrice", item.sell_price as i64)?;
+            result.set("classID", 15)?;
+            result.set("subclassID", 0)?;
+            result.set("bindType", item.bonding as i32)?;
+            result.set("expacID", item.expansion_id as i32)?;
+            result.set("isCraftingReagent", false)?;
+            Ok(Value::Table(result))
+        })?,
     )?;
 
     c_item.set(
@@ -32,10 +63,19 @@ fn register_c_item(lua: &Lua) -> Result<()> {
             if id == 0 {
                 return Ok(mlua::MultiValue::new());
             }
+            let (class_name, subclass_name) =
+                if let Some(item) = crate::items::get_item(id as u32) {
+                    (
+                        item_class_from_inv_type(item.inventory_type),
+                        inv_type_to_subclass(item.inventory_type),
+                    )
+                } else {
+                    ("Miscellaneous", "Junk")
+                };
             Ok(mlua::MultiValue::from_vec(vec![
                 Value::Integer(id as i64),
-                Value::String(lua.create_string("Miscellaneous")?),
-                Value::String(lua.create_string("Junk")?),
+                Value::String(lua.create_string(class_name)?),
+                Value::String(lua.create_string(subclass_name)?),
                 Value::String(lua.create_string("")?),
                 Value::Integer(134400),
                 Value::Integer(15),
@@ -94,15 +134,34 @@ fn register_c_item(lua: &Lua) -> Result<()> {
     c_item.set(
         "GetItemNameByID",
         lua.create_function(|lua, item_id: i32| {
-            Ok(Value::String(
-                lua.create_string(&format!("Item {}", item_id))?,
-            ))
+            let name = crate::items::get_item(item_id as u32)
+                .map(|i| i.name)
+                .unwrap_or("Unknown");
+            Ok(Value::String(lua.create_string(name)?))
         })?,
     )?;
 
     c_item.set(
         "GetDetailedItemLevelInfo",
-        lua.create_function(|_, _item_link: Value| Ok((0i32, 0i32, 0i32)))?,
+        lua.create_function(|_, item_link: Value| {
+            let level = match &item_link {
+                Value::Integer(id) => crate::items::get_item(*id as u32)
+                    .map(|i| i.item_level as i32)
+                    .unwrap_or(0),
+                Value::String(s) => {
+                    if let Ok(s) = s.to_str() {
+                        parse_item_id_from_link(&s)
+                            .and_then(|id| crate::items::get_item(id as u32))
+                            .map(|i| i.item_level as i32)
+                            .unwrap_or(0)
+                    } else {
+                        0
+                    }
+                }
+                _ => 0,
+            };
+            Ok((level, 0i32, level))
+        })?,
     )?;
 
     c_item.set(
@@ -113,9 +172,14 @@ fn register_c_item(lua: &Lua) -> Result<()> {
     c_item.set(
         "GetItemLink",
         lua.create_function(|lua, item_id: i32| {
+            let (name, color) = if let Some(item) = crate::items::get_item(item_id as u32) {
+                (item.name, quality_color(item.quality))
+            } else {
+                ("Unknown", "ffffff")
+            };
             let link = format!(
-                "|cffffffff|Hitem:{}::::::::80:::::|h[Item {}]|h|r",
-                item_id, item_id
+                "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
+                color, item_id, name
             );
             Ok(Value::String(lua.create_string(&link)?))
         })?,
@@ -123,7 +187,12 @@ fn register_c_item(lua: &Lua) -> Result<()> {
 
     c_item.set(
         "GetItemQualityByID",
-        lua.create_function(|_, _item_id: i32| Ok(1i32))?,
+        lua.create_function(|_, item_id: i32| {
+            let quality = crate::items::get_item(item_id as u32)
+                .map(|i| i.quality as i32)
+                .unwrap_or(1);
+            Ok(quality)
+        })?,
     )?;
 
     c_item.set(
@@ -200,7 +269,42 @@ fn register_legacy_item_globals(lua: &Lua) -> Result<()> {
 
     globals.set(
         "GetItemInfo",
-        lua.create_function(|_, _item_id: Value| Ok(Value::Nil))?,
+        lua.create_function(|lua, item_id: Value| {
+            let id = parse_item_id_from_value(&item_id);
+            if id == 0 {
+                return Ok(mlua::MultiValue::new());
+            }
+            let Some(item) = crate::items::get_item(id as u32) else {
+                return Ok(mlua::MultiValue::new());
+            };
+            let color = quality_color(item.quality);
+            let link = format!(
+                "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
+                color, id, item.name
+            );
+            // Returns: name, link, quality, iLevel, reqLevel, class, subclass,
+            //          maxStack, equipSlot, texture, sellPrice, classID, subclassID,
+            //          bindType, expacID, setID, isCraftingReagent
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::String(lua.create_string(item.name)?),
+                Value::String(lua.create_string(&link)?),
+                Value::Integer(item.quality as i64),
+                Value::Integer(item.item_level as i64),
+                Value::Integer(item.required_level as i64),
+                Value::String(lua.create_string(item_class_from_inv_type(item.inventory_type))?),
+                Value::String(lua.create_string("")?),
+                Value::Integer(item.stackable as i64),
+                Value::String(lua.create_string(inv_type_to_equip_loc(item.inventory_type))?),
+                Value::Integer(134400),
+                Value::Integer(item.sell_price as i64),
+                Value::Integer(15),
+                Value::Integer(0),
+                Value::Integer(item.bonding as i64),
+                Value::Integer(item.expansion_id as i64),
+                Value::Nil,
+                Value::Boolean(false),
+            ]))
+        })?,
     )?;
 
     globals.set(
@@ -252,19 +356,32 @@ fn register_spell_globals(lua: &Lua) -> Result<()> {
     globals.set(
         "GetSpellLink",
         lua.create_function(|lua, spell_id: i32| {
-            let link = format!("|Hspell:{}|h[Spell {}]|h", spell_id, spell_id);
+            let name = crate::spells::get_spell(spell_id as u32)
+                .map(|s| s.name)
+                .unwrap_or("Unknown");
+            let link = format!("|cff71d5ff|Hspell:{}|h[{}]|h|r", spell_id, name);
             Ok(Value::String(lua.create_string(&link)?))
         })?,
     )?;
 
     globals.set(
         "GetSpellIcon",
-        lua.create_function(|_, _spell_id: i32| Ok(136243))?,
+        lua.create_function(|_, spell_id: i32| {
+            let icon = crate::spells::get_spell(spell_id as u32)
+                .map(|s| s.icon_file_data_id)
+                .unwrap_or(136243);
+            Ok(icon)
+        })?,
     )?;
 
     globals.set(
         "GetSpellTexture",
-        lua.create_function(|_, _spell_id: i32| Ok(136243))?,
+        lua.create_function(|_, spell_id: i32| {
+            let icon = crate::spells::get_spell(spell_id as u32)
+                .map(|s| s.icon_file_data_id)
+                .unwrap_or(136243);
+            Ok(icon)
+        })?,
     )?;
 
     globals.set(
@@ -452,6 +569,81 @@ fn item_subclass_name(class_id: i32, subclass_id: i32) -> &'static str {
         (4, 4) => "Plate",
         (4, 6) => "Shield",
         _ => "Unknown",
+    }
+}
+
+/// Quality ID to color hex string.
+fn quality_color(quality: u8) -> &'static str {
+    match quality {
+        0 => "9d9d9d",
+        1 => "ffffff",
+        2 => "1eff00",
+        3 => "0070dd",
+        4 => "a335ee",
+        5 => "ff8000",
+        6 => "e6cc80",
+        7 => "00ccff",
+        _ => "ffffff",
+    }
+}
+
+/// Map inventory type to a rough item class name.
+fn item_class_from_inv_type(inv_type: u8) -> &'static str {
+    match inv_type {
+        13 | 15 | 17 | 21 | 22 | 25 | 26 => "Weapon",
+        1..=12 | 14 | 16 | 23 => "Armor",
+        _ => "Miscellaneous",
+    }
+}
+
+/// Map inventory type to a rough subclass name.
+fn inv_type_to_subclass(inv_type: u8) -> &'static str {
+    match inv_type {
+        1 => "Head",
+        2 => "Neck",
+        3 => "Shoulder",
+        4 => "Shirt",
+        5 => "Chest",
+        6 => "Waist",
+        7 => "Legs",
+        8 => "Feet",
+        9 => "Wrist",
+        10 => "Hands",
+        11 => "Finger",
+        12 => "Trinket",
+        14 => "Shield",
+        16 => "Back",
+        _ => "Junk",
+    }
+}
+
+/// Map inventory type to WoW equip location string.
+fn inv_type_to_equip_loc(inv_type: u8) -> &'static str {
+    match inv_type {
+        1 => "INVTYPE_HEAD",
+        2 => "INVTYPE_NECK",
+        3 => "INVTYPE_SHOULDER",
+        4 => "INVTYPE_BODY",
+        5 => "INVTYPE_CHEST",
+        6 => "INVTYPE_WAIST",
+        7 => "INVTYPE_LEGS",
+        8 => "INVTYPE_FEET",
+        9 => "INVTYPE_WRIST",
+        10 => "INVTYPE_HAND",
+        11 => "INVTYPE_FINGER",
+        12 => "INVTYPE_TRINKET",
+        13 => "INVTYPE_WEAPON",
+        14 => "INVTYPE_SHIELD",
+        15 => "INVTYPE_RANGED",
+        16 => "INVTYPE_CLOAK",
+        17 => "INVTYPE_2HWEAPON",
+        20 => "INVTYPE_ROBE",
+        21 => "INVTYPE_WEAPONMAINHAND",
+        22 => "INVTYPE_WEAPONOFFHAND",
+        23 => "INVTYPE_HOLDABLE",
+        25 => "INVTYPE_THROWN",
+        26 => "INVTYPE_RANGEDRIGHT",
+        _ => "",
     }
 }
 

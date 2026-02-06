@@ -7,6 +7,10 @@
 pub mod atlas;
 #[path = "../data/global_strings.rs"]
 pub mod global_strings;
+#[path = "../data/items.rs"]
+pub mod items;
+#[path = "../data/spells.rs"]
+pub mod spells;
 pub mod cvars;
 pub mod error;
 pub mod event;

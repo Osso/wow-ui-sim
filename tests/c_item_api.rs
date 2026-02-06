@@ -13,10 +13,21 @@ fn env() -> WowLuaEnv {
 #[test]
 fn test_c_item_get_item_info_returns_nil() {
     let env = env();
+    // Item 42 doesn't exist in the DB, should return nil
     let is_nil: bool = env
-        .eval("return C_Item.GetItemInfo(12345) == nil")
+        .eval("return C_Item.GetItemInfo(42) == nil")
         .unwrap();
     assert!(is_nil);
+}
+
+#[test]
+fn test_c_item_get_item_info_returns_data() {
+    let env = env();
+    // Item 6948 (Hearthstone) exists in the DB
+    let name: String = env
+        .eval("local info = C_Item.GetItemInfo(6948); return info.itemName")
+        .unwrap();
+    assert_eq!(name, "Hearthstone");
 }
 
 // ============================================================================
@@ -106,9 +117,9 @@ fn test_c_item_get_item_quality_by_id() {
 #[test]
 fn test_c_item_get_item_link() {
     let env = env();
-    let link: String = env.eval("return C_Item.GetItemLink(12345)").unwrap();
-    assert!(link.contains("Hitem:12345"));
-    assert!(link.contains("[Item 12345]"));
+    let link: String = env.eval("return C_Item.GetItemLink(6948)").unwrap();
+    assert!(link.contains("Hitem:6948"));
+    assert!(link.contains("[Hearthstone]"));
 }
 
 // ============================================================================
@@ -118,8 +129,15 @@ fn test_c_item_get_item_link() {
 #[test]
 fn test_c_item_get_item_name_by_id() {
     let env = env();
+    let name: String = env.eval("return C_Item.GetItemNameByID(6948)").unwrap();
+    assert_eq!(name, "Hearthstone");
+}
+
+#[test]
+fn test_c_item_get_item_name_by_id_unknown() {
+    let env = env();
     let name: String = env.eval("return C_Item.GetItemNameByID(42)").unwrap();
-    assert_eq!(name, "Item 42");
+    assert_eq!(name, "Unknown");
 }
 
 // ============================================================================
@@ -171,10 +189,21 @@ fn test_c_item_get_item_class_info() {
 #[test]
 fn test_c_item_get_detailed_item_level_info() {
     let env = env();
+    // Non-existent item returns 0
     let (a, b, c): (i32, i32, i32) = env
-        .eval("return C_Item.GetDetailedItemLevelInfo(12345)")
+        .eval("return C_Item.GetDetailedItemLevelInfo(42)")
         .unwrap();
     assert_eq!((a, b, c), (0, 0, 0));
+}
+
+#[test]
+fn test_c_item_get_detailed_item_level_info_real() {
+    let env = env();
+    // Hearthstone (6948) has a real item level
+    let (level, _, _): (i32, i32, i32) = env
+        .eval("return C_Item.GetDetailedItemLevelInfo(6948)")
+        .unwrap();
+    assert!(level > 0);
 }
 
 // ============================================================================
@@ -337,7 +366,16 @@ fn test_get_spell_link() {
 #[test]
 fn test_get_spell_icon() {
     let env = env();
+    // Spell 100 exists with a real icon; just verify it returns a positive number
     let icon: i32 = env.eval("return GetSpellIcon(100)").unwrap();
+    assert!(icon > 0);
+}
+
+#[test]
+fn test_get_spell_icon_unknown() {
+    let env = env();
+    // Non-existent spell falls back to default icon
+    let icon: i32 = env.eval("return GetSpellIcon(999999999)").unwrap();
     assert_eq!(icon, 136243);
 }
 

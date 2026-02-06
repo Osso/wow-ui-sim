@@ -123,8 +123,16 @@ fn test_spell_get_spell_link() {
 #[test]
 fn test_spell_get_spell_name() {
     let env = env();
+    // Spell 100 = "Charge"
     let name: String = env.eval("return C_Spell.GetSpellName(100)").unwrap();
-    assert!(name.contains("100"), "Name should contain spell ID");
+    assert_eq!(name, "Charge");
+}
+
+#[test]
+fn test_spell_get_spell_name_unknown() {
+    let env = env();
+    let name: String = env.eval("return C_Spell.GetSpellName(999999999)").unwrap();
+    assert_eq!(name, "Unknown");
 }
 
 #[test]

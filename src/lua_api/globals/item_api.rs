@@ -35,6 +35,21 @@ fn parse_item_id_from_link(link: &str) -> i32 {
         .unwrap_or(0)
 }
 
+/// Quality ID to color hex string.
+fn quality_color(quality: u8) -> &'static str {
+    match quality {
+        0 => "9d9d9d",
+        1 => "ffffff",
+        2 => "1eff00",
+        3 => "0070dd",
+        4 => "a335ee",
+        5 => "ff8000",
+        6 => "e6cc80",
+        7 => "00ccff",
+        _ => "ffffff",
+    }
+}
+
 /// Create an item table with standard methods for the given item ID.
 fn create_item_table(lua: &Lua, item_id: i32) -> Result<mlua::Table> {
     let item = lua.create_table()?;
@@ -57,7 +72,10 @@ fn create_item_table(lua: &Lua, item_id: i32) -> Result<mlua::Table> {
         "GetItemName",
         lua.create_function(|lua, this: mlua::Table| {
             let id: i32 = this.get("itemID")?;
-            Ok(Value::String(lua.create_string(&format!("Item {}", id))?))
+            let name = crate::items::get_item(id as u32)
+                .map(|i| i.name)
+                .unwrap_or("Unknown");
+            Ok(Value::String(lua.create_string(name)?))
         })?,
     )?;
 
@@ -65,7 +83,15 @@ fn create_item_table(lua: &Lua, item_id: i32) -> Result<mlua::Table> {
         "GetItemLink",
         lua.create_function(|lua, this: mlua::Table| {
             let id: i32 = this.get("itemID")?;
-            let link = format!("|cff1eff00|Hitem:{}::::::::60:::::|h[Item {}]|h|r", id, id);
+            let (name, color) = if let Some(item) = crate::items::get_item(id as u32) {
+                (item.name, quality_color(item.quality))
+            } else {
+                ("Unknown", "ffffff")
+            };
+            let link = format!(
+                "|cff{}|Hitem:{}::::::::60:::::|h[{}]|h|r",
+                color, id, name
+            );
             Ok(Value::String(lua.create_string(&link)?))
         })?,
     )?;
@@ -77,7 +103,13 @@ fn create_item_table(lua: &Lua, item_id: i32) -> Result<mlua::Table> {
 
     item.set(
         "GetItemQuality",
-        lua.create_function(|_, _this: mlua::Table| Ok(1i32))?,
+        lua.create_function(|_, this: mlua::Table| {
+            let id: i32 = this.get("itemID")?;
+            let quality = crate::items::get_item(id as u32)
+                .map(|i| i.quality as i32)
+                .unwrap_or(1);
+            Ok(quality)
+        })?,
     )?;
 
     item.set(
