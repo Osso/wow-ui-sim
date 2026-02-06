@@ -93,7 +93,11 @@ impl shader::Program<Message> for &App {
         bounds: Rectangle,
     ) -> Self::Primitive {
         let start = std::time::Instant::now();
-        self.frame_count.set(self.frame_count.get() + 1);
+        let prev = self.frame_count.get();
+        self.frame_count.set(prev + 1);
+        if prev % 60 == 0 {
+            eprintln!("[DRAW DEBUG] frame_count now={}", prev + 1);
+        }
 
         let size = bounds.size();
         self.screen_size.set(size);
@@ -633,7 +637,7 @@ impl App {
 }
 
 /// Convert an iced keyboard key to a WoW key name string.
-fn iced_key_to_wow(key: &iced::keyboard::Key) -> Option<String> {
+pub(super) fn iced_key_to_wow(key: &iced::keyboard::Key) -> Option<String> {
     use iced::keyboard::Key;
     match key {
         Key::Named(named) => iced_named_key_to_wow(named),

@@ -4,6 +4,8 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+// --- Existing GameMenuFrame toggle tests ---
+
 #[test]
 fn test_escape_shows_game_menu() {
     let env = WowLuaEnv::new().unwrap();
@@ -73,4 +75,324 @@ fn test_escape_without_game_menu_frame() {
 
     // Should not error when GameMenuFrame doesn't exist
     env.send_key_press("ESCAPE").unwrap();
+}
+
+// --- OnKeyDown tests ---
+
+#[test]
+fn test_set_script_on_key_down() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.key_pressed = nil
+        local f = CreateFrame("Frame", "KeyTestFrame", UIParent)
+        f:EnableKeyboard(true)
+        f:Show()
+        f:SetScript("OnKeyDown", function(self, key)
+            _G.key_pressed = key
+        end)
+    "#,
+    )
+    .unwrap();
+
+    env.send_key_press("A").unwrap();
+
+    let key: String = env.eval("return _G.key_pressed").unwrap();
+    assert_eq!(key, "A");
+}
+
+#[test]
+fn test_enable_keyboard_gates_on_key_down() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.key_fired = false
+        local f = CreateFrame("Frame", "KeyGateFrame", UIParent)
+        f:Show()
+        -- keyboard NOT enabled
+        f:SetScript("OnKeyDown", function(self, key)
+            _G.key_fired = true
+        end)
+    "#,
+    )
+    .unwrap();
+
+    env.send_key_press("A").unwrap();
+
+    let fired: bool = env.eval("return _G.key_fired").unwrap();
+    assert!(!fired, "OnKeyDown should not fire when keyboard is disabled");
+
+    // Now enable keyboard and try again
+    env.exec("KeyGateFrame:EnableKeyboard(true)").unwrap();
+    env.send_key_press("A").unwrap();
+
+    let fired: bool = env.eval("return _G.key_fired").unwrap();
+    assert!(fired, "OnKeyDown should fire after EnableKeyboard(true)");
+}
+
+#[test]
+fn test_propagate_keyboard_input() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.parent_key = nil
+        _G.child_key = nil
+        local parent = CreateFrame("Frame", "PropParent", UIParent)
+        parent:EnableKeyboard(true)
+        parent:Show()
+        parent:SetScript("OnKeyDown", function(self, key)
+            _G.parent_key = key
+        end)
+
+        local child = CreateFrame("Frame", "PropChild", parent)
+        child:EnableKeyboard(true)
+        child:SetPropagateKeyboardInput(true)
+        child:Show()
+        child:SetScript("OnKeyDown", function(self, key)
+            _G.child_key = key
+        end)
+
+        -- Focus the child so it receives input first
+        child:SetFocus()
+    "#,
+    )
+    .unwrap();
+
+    env.send_key_press("X").unwrap();
+
+    let child_key: String = env.eval("return _G.child_key").unwrap();
+    assert_eq!(child_key, "X", "Child should receive OnKeyDown");
+
+    let parent_key: String = env.eval("return _G.parent_key").unwrap();
+    assert_eq!(parent_key, "X", "Parent should receive propagated OnKeyDown");
+}
+
+#[test]
+fn test_propagate_keyboard_input_stops_without_flag() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.parent_key = nil
+        local parent = CreateFrame("Frame", "NoPropParent", UIParent)
+        parent:EnableKeyboard(true)
+        parent:Show()
+        parent:SetScript("OnKeyDown", function(self, key)
+            _G.parent_key = key
+        end)
+
+        local child = CreateFrame("Frame", "NoPropChild", parent)
+        child:EnableKeyboard(true)
+        child:Show()
+        -- propagate is false by default
+        child:SetScript("OnKeyDown", function() end)
+
+        child:SetFocus()
+    "#,
+    )
+    .unwrap();
+
+    env.send_key_press("Y").unwrap();
+
+    let parent_key: mlua::Value = env.eval("return _G.parent_key").unwrap();
+    assert!(
+        matches!(parent_key, mlua::Value::Nil),
+        "Parent should NOT receive OnKeyDown without propagation"
+    );
+}
+
+// --- EditBox special handler tests ---
+
+#[test]
+fn test_editbox_on_escape_pressed() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.escape_handled = false
+        GameMenuFrame = CreateFrame("Frame", "GameMenuFrame", UIParent)
+        GameMenuFrame:Hide()
+
+        local eb = CreateFrame("EditBox", "EscEditBox", UIParent)
+        eb:SetFocus()
+        eb:SetScript("OnEscapePressed", function(self)
+            _G.escape_handled = true
+            return true  -- consume the event
+        end)
+    "#,
+    )
+    .unwrap();
+
+    env.send_key_press("ESCAPE").unwrap();
+
+    let handled: bool = env.eval("return _G.escape_handled").unwrap();
+    assert!(handled, "OnEscapePressed should fire on focused EditBox");
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(
+        !menu_shown,
+        "GameMenuFrame should NOT toggle when EditBox consumes Escape"
+    );
+}
+
+#[test]
+fn test_editbox_escape_not_consumed_falls_through() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.escape_fired = false
+        GameMenuFrame = CreateFrame("Frame", "GameMenuFrame", UIParent)
+        GameMenuFrame:Hide()
+
+        local eb = CreateFrame("EditBox", "FallEditBox", UIParent)
+        eb:SetFocus()
+        eb:SetScript("OnEscapePressed", function(self)
+            _G.escape_fired = true
+            -- return nil/false → does not consume
+        end)
+    "#,
+    )
+    .unwrap();
+
+    env.send_key_press("ESCAPE").unwrap();
+
+    let fired: bool = env.eval("return _G.escape_fired").unwrap();
+    assert!(fired, "OnEscapePressed should still fire");
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(
+        menu_shown,
+        "GameMenuFrame should toggle when EditBox doesn't consume Escape"
+    );
+}
+
+#[test]
+fn test_key_press_enter() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.enter_pressed = false
+        local eb = CreateFrame("EditBox", "EnterEditBox", UIParent)
+        eb:SetFocus()
+        eb:SetScript("OnEnterPressed", function(self)
+            _G.enter_pressed = true
+        end)
+    "#,
+    )
+    .unwrap();
+
+    env.send_key_press("ENTER").unwrap();
+
+    let pressed: bool = env.eval("return _G.enter_pressed").unwrap();
+    assert!(pressed, "OnEnterPressed should fire on focused EditBox");
+}
+
+// --- CloseSpecialWindows tests ---
+
+#[test]
+fn test_close_special_windows() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        GameMenuFrame = CreateFrame("Frame", "GameMenuFrame", UIParent)
+        GameMenuFrame:Hide()
+
+        -- Create a special frame and register it
+        local sf = CreateFrame("Frame", "SpecialTestFrame", UIParent)
+        sf:Show()
+        UISpecialFrames = UISpecialFrames or {}
+        table.insert(UISpecialFrames, "SpecialTestFrame")
+    "#,
+    )
+    .unwrap();
+
+    let visible: bool = env.eval("return SpecialTestFrame:IsShown()").unwrap();
+    assert!(visible, "Special frame should start visible");
+
+    env.send_key_press("ESCAPE").unwrap();
+
+    let visible: bool = env.eval("return SpecialTestFrame:IsShown()").unwrap();
+    assert!(!visible, "Special frame should be hidden by Escape");
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(
+        !menu_shown,
+        "GameMenuFrame should NOT toggle when special frames were closed"
+    );
+}
+
+// --- Escape priority chain test ---
+
+#[test]
+fn test_escape_priority_chain() {
+    let env = WowLuaEnv::new().unwrap();
+
+    // Set up all three layers: EditBox, special frame, GameMenuFrame
+    env.exec(
+        r#"
+        _G.escape_order = {}
+        GameMenuFrame = CreateFrame("Frame", "GameMenuFrame", UIParent)
+        GameMenuFrame:Hide()
+
+        local sf = CreateFrame("Frame", "PrioritySpecialFrame", UIParent)
+        sf:Show()
+        UISpecialFrames = UISpecialFrames or {}
+        table.insert(UISpecialFrames, "PrioritySpecialFrame")
+
+        local eb = CreateFrame("EditBox", "PriorityEditBox", UIParent)
+        eb:SetFocus()
+        eb:SetScript("OnEscapePressed", function(self)
+            table.insert(_G.escape_order, "editbox")
+            return true  -- consume
+        end)
+    "#,
+    )
+    .unwrap();
+
+    // First Escape: EditBox consumes it
+    env.send_key_press("ESCAPE").unwrap();
+
+    let count: i32 = env.eval("return #_G.escape_order").unwrap();
+    assert_eq!(count, 1, "One entry in escape_order after first Escape");
+    let first: String = env.eval("return _G.escape_order[1]").unwrap();
+    assert_eq!(first, "editbox", "First Escape consumed by EditBox");
+
+    let sf_visible: bool = env
+        .eval("return PrioritySpecialFrame:IsShown()")
+        .unwrap();
+    assert!(sf_visible, "Special frame still visible after EditBox consumed Escape");
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(!menu_shown, "GameMenuFrame still hidden");
+
+    // Remove EditBox handler (don't consume), clear focus
+    env.exec(
+        r#"
+        PriorityEditBox:ClearFocus()
+    "#,
+    )
+    .unwrap();
+
+    // Second Escape: special frame gets closed
+    env.send_key_press("ESCAPE").unwrap();
+
+    let sf_visible: bool = env
+        .eval("return PrioritySpecialFrame:IsShown()")
+        .unwrap();
+    assert!(!sf_visible, "Special frame hidden by second Escape");
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(!menu_shown, "GameMenuFrame still hidden (special frame consumed)");
+
+    // Third Escape: nothing else to close, GameMenuFrame toggles
+    env.send_key_press("ESCAPE").unwrap();
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(menu_shown, "Third Escape should toggle GameMenuFrame");
 }

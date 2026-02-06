@@ -215,8 +215,31 @@ impl App {
     }
 
     pub fn subscription(&self) -> Subscription<Message> {
-        // Timer for processing WoW timers and debug commands (~60fps)
-        iced::time::every(std::time::Duration::from_millis(16)).map(|_| Message::ProcessTimers)
+        let timer =
+            iced::time::every(std::time::Duration::from_millis(16)).map(|_| Message::ProcessTimers);
+
+        let keyboard = iced::event::listen_with(|event, status, _window| {
+            use iced::keyboard;
+            if let iced::Event::Keyboard(keyboard::Event::KeyPressed {
+                key, modifiers, ..
+            }) = &event
+            {
+                // Ctrl+R is a simulator-only shortcut
+                if modifiers.control() && *key == keyboard::Key::Character("r".into()) {
+                    return Some(Message::ReloadUI);
+                }
+                // Only dispatch to Lua when no iced widget captured the event
+                // (i.e., when the command input is not focused)
+                if matches!(status, iced::event::Status::Ignored) {
+                    if let Some(wow_key) = super::render::iced_key_to_wow(key) {
+                        return Some(Message::KeyPress(wow_key));
+                    }
+                }
+            }
+            None
+        });
+
+        Subscription::batch([timer, keyboard])
     }
 
     pub(crate) fn build_frames_sidebar(&self) -> Column<'_, Message> {
