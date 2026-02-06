@@ -196,12 +196,10 @@ pub fn build_button_quads(
     is_hovered: bool,
 ) {
     // If this button has child Texture widgets for NormalTexture/PushedTexture,
-    // those children render themselves. Skip rendering here to avoid double-draw
-    // (which breaks alpha transparency on semi-transparent textures like checkboxes).
+    // those children render themselves. Skip rendering here to avoid double-draw.
     let has_normal_child = f.children_keys.contains_key("NormalTexture");
     let has_pushed_child = f.children_keys.contains_key("PushedTexture");
 
-    // Determine which texture and tex_coords to use based on state
     let (texture_path, tex_coords, skip) = if is_pressed {
         (
             f.pushed_texture.as_ref().or(f.normal_texture.as_ref()),
@@ -212,182 +210,157 @@ pub fn build_button_quads(
         (f.normal_texture.as_ref(), f.normal_tex_coords, has_normal_child)
     };
 
-    // Render button texture (unless a child Texture widget handles it)
     if !skip {
-        if let Some(tex_path) = texture_path {
-            if let Some((left, right, top, bottom)) = tex_coords {
-                // Atlas texture - use sub-region UV coordinates
-                let uvs = Rectangle::new(
-                    Point::new(left, top),
-                    Size::new(right - left, bottom - top),
-                );
-                batch.push_textured_path_uv(
-                    bounds,
-                    uvs,
-                    tex_path,
-                    [1.0, 1.0, 1.0, f.alpha],
-                    BlendMode::Alpha,
-                );
-            } else {
-                // WoW button textures are 128x32 with thin gold borders (~3px)
-                // Use 3-slice rendering to preserve the end caps while stretching the middle
-                const BUTTON_TEX_WIDTH: f32 = 128.0;
-                const BUTTON_CAP_WIDTH: f32 = 4.0;
-                batch.push_three_slice_h_path(
-                    bounds,
-                    BUTTON_CAP_WIDTH,
-                    BUTTON_CAP_WIDTH,
-                    tex_path,
-                    BUTTON_TEX_WIDTH,
-                    [1.0, 1.0, 1.0, f.alpha],
-                );
-            }
-        }
+        emit_button_texture(batch, bounds, texture_path, tex_coords, f.alpha);
     }
-    // In WoW, buttons without NormalTexture are transparent - their visuals come
-    // from child Texture widgets (e.g. MinimalScrollBar steppers, ThreeSliceButton Left/Right/Center).
 
-    // Highlight texture overlay on hover (skip if child Texture widget handles it)
     let has_highlight_child = f.children_keys.contains_key("HighlightTexture");
     if is_hovered && !is_pressed && !has_highlight_child {
-        if let Some(ref highlight_path) = f.highlight_texture {
-            if let Some((left, right, top, bottom)) = f.highlight_tex_coords {
-                // Atlas-based highlight
-                let uvs = Rectangle::new(
-                    Point::new(left, top),
-                    Size::new(right - left, bottom - top),
-                );
-                batch.push_textured_path_uv(
-                    bounds,
-                    uvs,
-                    highlight_path,
-                    [1.0, 1.0, 1.0, 0.5 * f.alpha],
-                    BlendMode::Additive,
-                );
-            } else {
-                // Non-atlas highlight (3-slice)
-                const BUTTON_TEX_WIDTH: f32 = 128.0;
-                const BUTTON_CAP_WIDTH: f32 = 4.0;
-                batch.push_three_slice_h_path_blend(
-                    bounds,
-                    BUTTON_CAP_WIDTH,
-                    BUTTON_CAP_WIDTH,
-                    highlight_path,
-                    BUTTON_TEX_WIDTH,
-                    [1.0, 1.0, 1.0, 0.5 * f.alpha],
-                    BlendMode::Additive,
-                );
-            }
+        emit_button_highlight(batch, bounds, f);
+    }
+}
+
+/// Render the button's normal/pushed texture (atlas UV or 3-slice).
+fn emit_button_texture(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    texture_path: Option<&String>,
+    tex_coords: Option<(f32, f32, f32, f32)>,
+    alpha: f32,
+) {
+    let Some(tex_path) = texture_path else { return };
+    if let Some((left, right, top, bottom)) = tex_coords {
+        let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
+        batch.push_textured_path_uv(bounds, uvs, tex_path, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
+    } else {
+        const BUTTON_TEX_WIDTH: f32 = 128.0;
+        const BUTTON_CAP_WIDTH: f32 = 4.0;
+        batch.push_three_slice_h_path(
+            bounds, BUTTON_CAP_WIDTH, BUTTON_CAP_WIDTH,
+            tex_path, BUTTON_TEX_WIDTH, [1.0, 1.0, 1.0, alpha],
+        );
+    }
+}
+
+/// Render the button highlight overlay on hover.
+fn emit_button_highlight(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+    if let Some(highlight_path) = &f.highlight_texture {
+        if let Some((left, right, top, bottom)) = f.highlight_tex_coords {
+            let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
+            batch.push_textured_path_uv(
+                bounds, uvs, highlight_path,
+                [1.0, 1.0, 1.0, 0.5 * f.alpha], BlendMode::Additive,
+            );
         } else {
-            // Fallback highlight
-            batch.push_quad(
-                bounds,
-                Rectangle::new(Point::ORIGIN, Size::new(1.0, 1.0)),
-                [1.0, 0.9, 0.6, 0.15 * f.alpha],
-                -1,
-                BlendMode::Additive,
+            const BUTTON_TEX_WIDTH: f32 = 128.0;
+            const BUTTON_CAP_WIDTH: f32 = 4.0;
+            batch.push_three_slice_h_path_blend(
+                bounds, BUTTON_CAP_WIDTH, BUTTON_CAP_WIDTH,
+                highlight_path, BUTTON_TEX_WIDTH,
+                [1.0, 1.0, 1.0, 0.5 * f.alpha], BlendMode::Additive,
             );
         }
+    } else {
+        batch.push_quad(
+            bounds,
+            Rectangle::new(Point::ORIGIN, Size::new(1.0, 1.0)),
+            [1.0, 0.9, 0.6, 0.15 * f.alpha],
+            -1, BlendMode::Additive,
+        );
     }
 }
 
 /// Build quads for a Texture widget.
 pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
-    // Color texture
     if let Some(color) = f.color_texture {
         batch.push_solid(bounds, [color.r, color.g, color.b, color.a * f.alpha]);
         return;
     }
 
-    // File texture
-    if let Some(ref tex_path) = f.texture {
-        // Check if we have tex_coords (from SetAtlas or SetTexCoord)
-        if let Some((left, right, top, bottom)) = f.tex_coords {
-            // Atlas texture - use sub-region UV coordinates
-            let uvs = Rectangle::new(
-                Point::new(left, top),
-                Size::new(right - left, bottom - top),
-            );
+    let Some(tex_path) = &f.texture else { return };
 
-            // Handle tiling for edge pieces
-            if f.horiz_tile || f.vert_tile {
-                // Get tile size from frame dimensions. If frame has no explicit size,
-                // use the UV region's pixel dimensions as the tile size.
-                // For atlas textures, UV is in 0..1 range; multiply by 128 (typical atlas slice)
-                // as a fallback when we don't have the actual texture dimensions.
-                let tile_w = if f.width > 1.0 {
-                    f.width
-                } else {
-                    // Estimate tile size from UV width - typical atlas is 128px or 256px
-                    ((right - left) * 128.0).max(8.0)
-                };
-                let tile_h = if f.height > 1.0 {
-                    f.height
-                } else {
-                    ((bottom - top) * 128.0).max(8.0)
-                };
+    if let Some((left, right, top, bottom)) = f.tex_coords {
+        let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
 
-                if f.horiz_tile && !f.vert_tile {
-                    // Horizontal tiling only
-                    let mut x = bounds.x;
-                    while x < bounds.x + bounds.width {
-                        let w = (bounds.x + bounds.width - x).min(tile_w);
-                        let tile_bounds = Rectangle::new(Point::new(x, bounds.y), Size::new(w, bounds.height));
-                        // Adjust UV for partial tiles
-                        let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
-                        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uvs.height));
-                        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
-                        x += tile_w;
-                    }
-                } else if f.vert_tile && !f.horiz_tile {
-                    // Vertical tiling only
-                    let mut y = bounds.y;
-                    while y < bounds.y + bounds.height {
-                        let h = (bounds.y + bounds.height - y).min(tile_h);
-                        let tile_bounds = Rectangle::new(Point::new(bounds.x, y), Size::new(bounds.width, h));
-                        // Adjust UV for partial tiles
-                        let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
-                        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uvs.width, uv_h));
-                        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
-                        y += tile_h;
-                    }
-                } else {
-                    // Both directions - grid tiling
-                    let mut y = bounds.y;
-                    while y < bounds.y + bounds.height {
-                        let h = (bounds.y + bounds.height - y).min(tile_h);
-                        let mut x = bounds.x;
-                        while x < bounds.x + bounds.width {
-                            let w = (bounds.x + bounds.width - x).min(tile_w);
-                            let tile_bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
-                            let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
-                            let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
-                            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uv_h));
-                            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
-                            x += tile_w;
-                        }
-                        y += tile_h;
-                    }
-                }
-            } else {
-                // No tiling - render once
-                batch.push_textured_path_uv(
-                    bounds,
-                    uvs,
-                    tex_path,
-                    [1.0, 1.0, 1.0, f.alpha],
-                    BlendMode::Alpha,
-                );
-            }
+        if f.horiz_tile || f.vert_tile {
+            emit_tiled_texture(batch, bounds, &uvs, tex_path, f);
         } else {
-            // Full texture - use default UVs
-            batch.push_textured_path(
-                bounds,
-                tex_path,
-                [1.0, 1.0, 1.0, f.alpha],
-                BlendMode::Alpha,
-            );
+            batch.push_textured_path_uv(bounds, uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
         }
+    } else {
+        batch.push_textured_path(bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+    }
+}
+
+/// Compute tile dimensions from frame size or UV region as fallback.
+fn tile_dimensions(f: &crate::widget::Frame, uv_w: f32, uv_h: f32) -> (f32, f32) {
+    let tile_w = if f.width > 1.0 { f.width } else { (uv_w * 128.0).max(8.0) };
+    let tile_h = if f.height > 1.0 { f.height } else { (uv_h * 128.0).max(8.0) };
+    (tile_w, tile_h)
+}
+
+/// Emit tiled texture quads (horizontal, vertical, or both).
+fn emit_tiled_texture(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    uvs: &Rectangle,
+    tex_path: &str,
+    f: &crate::widget::Frame,
+) {
+    let (left, right, top, bottom) = (uvs.x, uvs.x + uvs.width, uvs.y, uvs.y + uvs.height);
+    let (tile_w, tile_h) = tile_dimensions(f, right - left, bottom - top);
+
+    if f.horiz_tile && !f.vert_tile {
+        emit_horiz_tiles(batch, bounds, uvs, tex_path, tile_w, f.alpha);
+    } else if f.vert_tile && !f.horiz_tile {
+        emit_vert_tiles(batch, bounds, uvs, tex_path, tile_h, f.alpha);
+    } else {
+        emit_grid_tiles(batch, bounds, uvs, tex_path, tile_w, tile_h, f.alpha);
+    }
+}
+
+/// Emit horizontally tiled texture quads.
+fn emit_horiz_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, alpha: f32) {
+    let mut x = bounds.x;
+    while x < bounds.x + bounds.width {
+        let w = (bounds.x + bounds.width - x).min(tile_w);
+        let tile_bounds = Rectangle::new(Point::new(x, bounds.y), Size::new(w, bounds.height));
+        let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
+        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uvs.height));
+        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
+        x += tile_w;
+    }
+}
+
+/// Emit vertically tiled texture quads.
+fn emit_vert_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_h: f32, alpha: f32) {
+    let mut y = bounds.y;
+    while y < bounds.y + bounds.height {
+        let h = (bounds.y + bounds.height - y).min(tile_h);
+        let tile_bounds = Rectangle::new(Point::new(bounds.x, y), Size::new(bounds.width, h));
+        let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
+        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uvs.width, uv_h));
+        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
+        y += tile_h;
+    }
+}
+
+/// Emit grid-tiled texture quads (both horizontal and vertical).
+fn emit_grid_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, tile_h: f32, alpha: f32) {
+    let mut y = bounds.y;
+    while y < bounds.y + bounds.height {
+        let h = (bounds.y + bounds.height - y).min(tile_h);
+        let mut x = bounds.x;
+        while x < bounds.x + bounds.width {
+            let w = (bounds.x + bounds.width - x).min(tile_w);
+            let tile_bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
+            let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
+            let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
+            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uv_h));
+            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
+            x += tile_w;
+        }
+        y += tile_h;
     }
 }
 

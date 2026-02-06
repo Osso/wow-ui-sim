@@ -64,140 +64,22 @@ pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names
 fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> Vec<String> {
     let template = &entry.frame;
 
-    // Apply size from template if defined
-    if let Some(size) = template.size() {
-        let (width, height) = get_size_values(size);
-        if let (Some(w), Some(h)) = (width, height) {
-            let code = format!(
-                r#"
-                local frame = {}
-                if frame and frame:GetWidth() == 0 and frame:GetHeight() == 0 then
-                    frame:SetSize({}, {})
-                end
-                "#,
-                frame_name, w, h
-            );
-            let _ = lua.load(&code).exec();
-        }
-    }
-
-    // Apply anchors from template (only if frame has no anchors yet)
-    if let Some(anchors) = template.anchors() {
-        let mut code = format!(
-            r#"
-            local frame = {}
-            if frame and frame.GetNumPoints and frame:GetNumPoints() == 0 then
-            "#,
-            frame_name
-        );
-        for anchor in &anchors.anchors {
-            let point = &anchor.point;
-            let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
-            let (x, y) = if let Some(offset) = &anchor.offset {
-                if let Some(abs) = &offset.abs_dimension {
-                    (abs.x.unwrap_or(0.0), abs.y.unwrap_or(0.0))
-                } else {
-                    (0.0, 0.0)
-                }
-            } else {
-                (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
-            };
-            let rel_str = match anchor.relative_to.as_deref() {
-                Some("$parent") => format!("{}:GetParent()", frame_name),
-                Some(rel) => rel.to_string(),
-                None => "nil".to_string(),
-            };
-            code.push_str(&format!(
-                "                frame:SetPoint(\"{}\", {}, \"{}\", {}, {})\n",
-                point, rel_str, relative_point, x, y
-            ));
-        }
-        code.push_str("            end\n");
-        let _ = lua.load(&code).exec();
-    }
-
-    // Apply setAllPoints from template (only if frame has no anchors yet)
-    if template.set_all_points == Some(true) {
-        let code = format!(
-            r#"
-            local frame = {}
-            if frame and frame.GetNumPoints and frame:GetNumPoints() == 0 then
-                frame:SetAllPoints(true)
-            end
-            "#,
-            frame_name
-        );
-        let _ = lua.load(&code).exec();
-    }
+    apply_template_size(lua, template, frame_name);
+    apply_template_anchors(lua, template, frame_name);
+    apply_template_set_all_points(lua, template, frame_name);
 
     // Apply mixin from template (must be before scripts)
     apply_mixin(lua, &template.mixin, frame_name);
 
-    // Apply KeyValues from template
-    if let Some(key_values) = template.key_values() {
-        for kv in &key_values.values {
-            let value = match kv.value_type.as_deref() {
-                Some("number") => kv.value.clone(),
-                Some("boolean") => kv.value.to_lowercase(),
-                Some("global") => format!("_G[\"{}\"]", escape_lua_string(&kv.value)),
-                _ => format!("\"{}\"", escape_lua_string(&kv.value)),
-            };
-            let code = format!(
-                r#"
-                local frame = {}
-                if frame then frame.{} = {} end
-                "#,
-                frame_name, kv.key, value
-            );
-            let _ = lua.load(&code).exec();
-        }
-    }
-
-    // Create textures from Layers
-    for layers in template.layers() {
-        for layer in &layers.layers {
-            let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
-
-            for texture in layer.textures() {
-                create_texture_from_template(lua, texture, frame_name, draw_layer);
-            }
-
-            for fontstring in layer.font_strings() {
-                create_fontstring_from_template(lua, fontstring, frame_name, draw_layer);
-            }
-        }
-    }
+    apply_key_values(lua, template.key_values(), frame_name);
+    apply_layers(lua, template, frame_name);
 
     // Create ThumbTexture for sliders
     if let Some(thumb) = template.thumb_texture() {
         create_thumb_texture_from_template(lua, thumb, frame_name);
     }
 
-    // Create button textures (NormalTexture, PushedTexture, etc.)
-    if let Some(tex) = template.normal_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Normal", "SetNormalTexture");
-    }
-    if let Some(tex) = template.pushed_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Pushed", "SetPushedTexture");
-    }
-    if let Some(tex) = template.disabled_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Disabled", "SetDisabledTexture");
-    }
-    if let Some(tex) = template.highlight_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Highlight", "SetHighlightTexture");
-    }
-    if let Some(tex) = template.checked_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Checked", "SetCheckedTexture");
-    }
-    if let Some(tex) = template.disabled_checked_texture() {
-        create_button_texture_from_template(
-            lua,
-            tex,
-            frame_name,
-            "DisabledChecked",
-            "SetDisabledCheckedTexture",
-        );
-    }
+    apply_button_textures(lua, template, frame_name);
 
     // Create child Frames from template
     let child_names = create_child_frames(lua, template, frame_name);
@@ -208,6 +90,155 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     }
 
     child_names
+}
+
+/// Apply size from template if frame has no size yet.
+fn apply_template_size(lua: &Lua, template: &FrameXml, frame_name: &str) {
+    let Some(size) = template.size() else { return };
+    let (width, height) = get_size_values(size);
+    let (Some(w), Some(h)) = (width, height) else {
+        return;
+    };
+    let code = format!(
+        r#"
+        local frame = {}
+        if frame and frame:GetWidth() == 0 and frame:GetHeight() == 0 then
+            frame:SetSize({}, {})
+        end
+        "#,
+        frame_name, w, h
+    );
+    let _ = lua.load(&code).exec();
+}
+
+/// Apply anchors from template (only if frame has no anchors yet).
+fn apply_template_anchors(lua: &Lua, template: &FrameXml, frame_name: &str) {
+    let Some(anchors) = template.anchors() else {
+        return;
+    };
+
+    let mut code = format!(
+        r#"
+        local frame = {}
+        if frame and frame.GetNumPoints and frame:GetNumPoints() == 0 then
+        "#,
+        frame_name
+    );
+    for anchor in &anchors.anchors {
+        let point = &anchor.point;
+        let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
+        let (x, y) = anchor_offset(anchor);
+        let rel_str = anchor_relative_to(anchor, frame_name);
+        code.push_str(&format!(
+            "                frame:SetPoint(\"{}\", {}, \"{}\", {}, {})\n",
+            point, rel_str, relative_point, x, y
+        ));
+    }
+    code.push_str("            end\n");
+    let _ = lua.load(&code).exec();
+}
+
+/// Extract offset (x, y) from an anchor element.
+fn anchor_offset(anchor: &crate::xml::AnchorXml) -> (f32, f32) {
+    if let Some(offset) = &anchor.offset {
+        if let Some(abs) = &offset.abs_dimension {
+            return (abs.x.unwrap_or(0.0), abs.y.unwrap_or(0.0));
+        }
+        return (0.0, 0.0);
+    }
+    (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
+}
+
+/// Get the Lua expression for an anchor's relativeTo.
+fn anchor_relative_to(anchor: &crate::xml::AnchorXml, frame_name: &str) -> String {
+    match anchor.relative_to.as_deref() {
+        Some("$parent") => format!("{}:GetParent()", frame_name),
+        Some(rel) => rel.to_string(),
+        None => "nil".to_string(),
+    }
+}
+
+/// Apply setAllPoints from template (only if frame has no anchors yet).
+fn apply_template_set_all_points(lua: &Lua, template: &FrameXml, frame_name: &str) {
+    if template.set_all_points != Some(true) {
+        return;
+    }
+    let code = format!(
+        r#"
+        local frame = {}
+        if frame and frame.GetNumPoints and frame:GetNumPoints() == 0 then
+            frame:SetAllPoints(true)
+        end
+        "#,
+        frame_name
+    );
+    let _ = lua.load(&code).exec();
+}
+
+/// Apply KeyValues to a frame from template or inline XML.
+fn apply_key_values(
+    lua: &Lua,
+    key_values: Option<&crate::xml::KeyValuesXml>,
+    frame_name: &str,
+) {
+    let Some(key_values) = key_values else { return };
+    for kv in &key_values.values {
+        let value = format_key_value(&kv.value, kv.value_type.as_deref());
+        let code = format!(
+            r#"
+            local frame = {}
+            if frame then frame.{} = {} end
+            "#,
+            frame_name, kv.key, value
+        );
+        let _ = lua.load(&code).exec();
+    }
+}
+
+/// Format a KeyValue value based on its type for Lua emission.
+fn format_key_value(value: &str, value_type: Option<&str>) -> String {
+    match value_type {
+        Some("number") => value.to_string(),
+        Some("boolean") => value.to_lowercase(),
+        Some("global") => format!("_G[\"{}\"]", escape_lua_string(value)),
+        _ => format!("\"{}\"", escape_lua_string(value)),
+    }
+}
+
+/// Create textures and fontstrings from template layers.
+fn apply_layers(lua: &Lua, template: &FrameXml, frame_name: &str) {
+    for layers in template.layers() {
+        for layer in &layers.layers {
+            let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
+            for texture in layer.textures() {
+                create_texture_from_template(lua, texture, frame_name, draw_layer);
+            }
+            for fontstring in layer.font_strings() {
+                create_fontstring_from_template(lua, fontstring, frame_name, draw_layer);
+            }
+        }
+    }
+}
+
+/// Apply standard button textures (Normal, Pushed, Disabled, Highlight, Checked).
+fn apply_button_textures(lua: &Lua, template: &FrameXml, frame_name: &str) {
+    let texture_specs: &[(&str, &str, Option<&crate::xml::TextureXml>)] = &[
+        ("Normal", "SetNormalTexture", template.normal_texture()),
+        ("Pushed", "SetPushedTexture", template.pushed_texture()),
+        ("Disabled", "SetDisabledTexture", template.disabled_texture()),
+        ("Highlight", "SetHighlightTexture", template.highlight_texture()),
+        ("Checked", "SetCheckedTexture", template.checked_texture()),
+        (
+            "DisabledChecked",
+            "SetDisabledCheckedTexture",
+            template.disabled_checked_texture(),
+        ),
+    ];
+    for &(parent_key, setter, tex_opt) in texture_specs {
+        if let Some(tex) = tex_opt {
+            create_button_texture_from_template(lua, tex, frame_name, parent_key, setter);
+        }
+    }
 }
 
 /// Apply mixin(s) to a frame. The mixin attribute can be comma-separated.
@@ -270,14 +301,12 @@ fn create_texture_from_template(
     parent_name: &str,
     draw_layer: &str,
 ) {
-    // Generate child name
     let child_name = texture
         .name
         .as_ref()
         .map(|n| n.replace("$parent", parent_name))
         .unwrap_or_else(|| format!("__tex_{}", rand_id()));
 
-    // Create the texture
     let mut code = format!(
         r#"
         local parent = {}
@@ -287,56 +316,8 @@ fn create_texture_from_template(
         parent_name, child_name, draw_layer,
     );
 
-    // Apply size
-    if let Some(size) = &texture.size {
-        let (width, height) = get_size_values(size);
-        if let (Some(w), Some(h)) = (width, height) {
-            code.push_str(&format!("            tex:SetSize({}, {})\n", w, h));
-        }
-    }
-
-    // Apply texture file
-    if let Some(file) = &texture.file {
-        code.push_str(&format!(
-            "            tex:SetTexture(\"{}\")\n",
-            escape_lua_string(file)
-        ));
-    }
-
-    // Apply atlas
-    if let Some(atlas) = &texture.atlas {
-        code.push_str(&format!(
-            "            tex:SetAtlas(\"{}\")\n",
-            escape_lua_string(atlas)
-        ));
-    }
-
-    // Apply color
-    if let Some(color) = &texture.color {
-        let r = color.r.unwrap_or(1.0);
-        let g = color.g.unwrap_or(1.0);
-        let b = color.b.unwrap_or(1.0);
-        let a = color.a.unwrap_or(1.0);
-        code.push_str(&format!(
-            "            tex:SetColorTexture({}, {}, {}, {})\n",
-            r, g, b, a
-        ));
-    }
-
-    // Apply anchors
-    if let Some(anchors) = &texture.anchors {
-        code.push_str(&generate_set_point_code(anchors, "tex", "parent", parent_name, "nil"));
-    }
-
-    // Apply setAllPoints
-    if texture.set_all_points == Some(true) {
-        code.push_str("            tex:SetAllPoints(true)\n");
-    }
-
-    // Apply parentKey
-    if let Some(parent_key) = &texture.parent_key {
-        code.push_str(&format!("            parent.{} = tex\n", parent_key));
-    }
+    append_texture_properties(&mut code, texture, "tex");
+    append_anchors_and_parent_key(&mut code, &texture.anchors, texture.set_all_points, &texture.parent_key, "tex", "parent", parent_name);
 
     // Register as global if named
     if texture.name.is_some() {
@@ -344,8 +325,62 @@ fn create_texture_from_template(
     }
 
     code.push_str("        end\n");
-
     let _ = lua.load(&code).exec();
+}
+
+/// Append texture-specific property setters (size, file, atlas, color) to Lua code.
+fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml, var: &str) {
+    if let Some(size) = &texture.size {
+        let (width, height) = get_size_values(size);
+        if let (Some(w), Some(h)) = (width, height) {
+            code.push_str(&format!("            {}:SetSize({}, {})\n", var, w, h));
+        }
+    }
+    if let Some(file) = &texture.file {
+        code.push_str(&format!(
+            "            {}:SetTexture(\"{}\")\n",
+            var,
+            escape_lua_string(file)
+        ));
+    }
+    if let Some(atlas) = &texture.atlas {
+        code.push_str(&format!(
+            "            {}:SetAtlas(\"{}\")\n",
+            var,
+            escape_lua_string(atlas)
+        ));
+    }
+    if let Some(color) = &texture.color {
+        let r = color.r.unwrap_or(1.0);
+        let g = color.g.unwrap_or(1.0);
+        let b = color.b.unwrap_or(1.0);
+        let a = color.a.unwrap_or(1.0);
+        code.push_str(&format!(
+            "            {}:SetColorTexture({}, {}, {}, {})\n",
+            var, r, g, b, a
+        ));
+    }
+}
+
+/// Append anchors, setAllPoints, and parentKey assignment to Lua code.
+fn append_anchors_and_parent_key(
+    code: &mut String,
+    anchors: &Option<crate::xml::AnchorsXml>,
+    set_all_points: Option<bool>,
+    parent_key: &Option<String>,
+    var: &str,
+    parent_var: &str,
+    parent_name: &str,
+) {
+    if let Some(anchors) = anchors {
+        code.push_str(&generate_set_point_code(anchors, var, parent_var, parent_name, "nil"));
+    }
+    if set_all_points == Some(true) {
+        code.push_str(&format!("            {}:SetAllPoints(true)\n", var));
+    }
+    if let Some(parent_key) = parent_key {
+        code.push_str(&format!("            {}.{} = {}\n", parent_var, parent_key, var));
+    }
 }
 
 /// Create a fontstring from template XML.
@@ -379,16 +414,38 @@ fn create_fontstring_from_template(
         }
     );
 
-    // Apply size
-    if let Some(size) = &fontstring.size {
+    append_fontstring_size_and_text(&mut code, fontstring);
+    append_fontstring_justify_and_color(&mut code, fontstring);
+    append_fontstring_shadow(&mut code, fontstring);
+    append_anchors_and_parent_key(
+        &mut code,
+        &fontstring.anchors,
+        fontstring.set_all_points,
+        &fontstring.parent_key,
+        "fs",
+        "parent",
+        parent_name,
+    );
+    append_fontstring_wrap_and_lines(&mut code, fontstring);
+
+    // Register as global if named
+    if fontstring.name.is_some() {
+        code.push_str(&format!("            _G[\"{}\"] = fs\n", child_name));
+    }
+
+    code.push_str("        end\n");
+    let _ = lua.load(&code).exec();
+}
+
+/// Append size and text setters for a fontstring.
+fn append_fontstring_size_and_text(code: &mut String, fs: &crate::xml::FontStringXml) {
+    if let Some(size) = &fs.size {
         let (width, height) = get_size_values(size);
         if let (Some(w), Some(h)) = (width, height) {
             code.push_str(&format!("            fs:SetSize({}, {})\n", w, h));
         }
     }
-
-    // Apply text (resolve localization key via global strings)
-    if let Some(text_key) = &fontstring.text {
+    if let Some(text_key) = &fs.text {
         let resolved = crate::global_strings::get_global_string(text_key)
             .unwrap_or(text_key.as_str());
         code.push_str(&format!(
@@ -396,19 +453,17 @@ fn create_fontstring_from_template(
             escape_lua_string(resolved)
         ));
     }
+}
 
-    // Apply justifyH
-    if let Some(justify_h) = &fontstring.justify_h {
+/// Append justification and text color for a fontstring.
+fn append_fontstring_justify_and_color(code: &mut String, fs: &crate::xml::FontStringXml) {
+    if let Some(justify_h) = &fs.justify_h {
         code.push_str(&format!("            fs:SetJustifyH(\"{}\")\n", justify_h));
     }
-
-    // Apply justifyV
-    if let Some(justify_v) = &fontstring.justify_v {
+    if let Some(justify_v) = &fs.justify_v {
         code.push_str(&format!("            fs:SetJustifyV(\"{}\")\n", justify_v));
     }
-
-    // Apply text color
-    if let Some(color) = &fontstring.color {
+    if let Some(color) = &fs.color {
         let r = color.r.unwrap_or(1.0);
         let g = color.g.unwrap_or(1.0);
         let b = color.b.unwrap_or(1.0);
@@ -418,61 +473,38 @@ fn create_fontstring_from_template(
             r, g, b, a
         ));
     }
+}
 
-    // Apply shadow
-    if let Some(shadow) = &fontstring.shadow {
-        if let Some(offset) = &shadow.offset {
-            let x = offset.x();
-            let y = offset.y();
-            code.push_str(&format!("            fs:SetShadowOffset({}, {})\n", x, y));
-        }
-        if let Some(color) = &shadow.color {
-            let r = color.r.unwrap_or(0.0);
-            let g = color.g.unwrap_or(0.0);
-            let b = color.b.unwrap_or(0.0);
-            let a = color.a.unwrap_or(1.0);
-            code.push_str(&format!(
-                "            fs:SetShadowColor({}, {}, {}, {})\n",
-                r, g, b, a
-            ));
-        }
+/// Append shadow offset and color for a fontstring.
+fn append_fontstring_shadow(code: &mut String, fs: &crate::xml::FontStringXml) {
+    let Some(shadow) = &fs.shadow else { return };
+    if let Some(offset) = &shadow.offset {
+        let x = offset.x();
+        let y = offset.y();
+        code.push_str(&format!("            fs:SetShadowOffset({}, {})\n", x, y));
     }
-
-    // Apply anchors
-    if let Some(anchors) = &fontstring.anchors {
-        code.push_str(&generate_set_point_code(anchors, "fs", "parent", parent_name, "nil"));
+    if let Some(color) = &shadow.color {
+        let r = color.r.unwrap_or(0.0);
+        let g = color.g.unwrap_or(0.0);
+        let b = color.b.unwrap_or(0.0);
+        let a = color.a.unwrap_or(1.0);
+        code.push_str(&format!(
+            "            fs:SetShadowColor({}, {}, {}, {})\n",
+            r, g, b, a
+        ));
     }
+}
 
-    // Apply setAllPoints
-    if fontstring.set_all_points == Some(true) {
-        code.push_str("            fs:SetAllPoints(true)\n");
-    }
-
-    // Apply wordWrap (WoW default is true, only set when explicitly false)
-    if fontstring.word_wrap == Some(false) {
+/// Append wordWrap and maxLines for a fontstring.
+fn append_fontstring_wrap_and_lines(code: &mut String, fs: &crate::xml::FontStringXml) {
+    if fs.word_wrap == Some(false) {
         code.push_str("            fs:SetWordWrap(false)\n");
     }
-
-    // Apply maxLines
-    if let Some(max_lines) = fontstring.max_lines {
+    if let Some(max_lines) = fs.max_lines {
         if max_lines > 0 {
             code.push_str(&format!("            fs:SetMaxLines({})\n", max_lines));
         }
     }
-
-    // Apply parentKey
-    if let Some(parent_key) = &fontstring.parent_key {
-        code.push_str(&format!("            parent.{} = fs\n", parent_key));
-    }
-
-    // Register as global if named
-    if fontstring.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = fs\n", child_name));
-    }
-
-    code.push_str("        end\n");
-
-    let _ = lua.load(&code).exec();
 }
 
 /// Create a child frame from template XML.
@@ -488,6 +520,28 @@ fn create_child_frame_from_template(
         .map(|n| n.replace("$parent", parent_name))
         .unwrap_or_else(|| format!("__frame_{}", rand_id()));
 
+    let code = build_create_child_code(frame, widget_type, parent_name, &child_name);
+    let _ = lua.load(&code).exec();
+
+    // Apply inline content from the child FrameXml (layers, key values, scripts, etc.)
+    // This handles elements defined directly on the child XML, not via inherits.
+    apply_inline_frame_content(lua, frame, &child_name);
+
+    // NOTE: Do NOT fire OnLoad here. Child OnLoad is deferred until after ALL templates
+    // in the chain are applied by apply_templates_from_registry. This is required because
+    // child OnLoad handlers (e.g. ButtonControllerMixin:OnLoad -> InitButton) may depend on
+    // KeyValues from later templates in the chain (e.g. atlasName from BigRedThreeSliceButtonTemplate).
+
+    child_name
+}
+
+/// Build Lua code to create a child frame with size, anchors, visibility, and parentKey.
+fn build_create_child_code(
+    frame: &crate::xml::FrameXml,
+    widget_type: &str,
+    parent_name: &str,
+    child_name: &str,
+) -> String {
     let inherits = frame.inherits.as_deref().unwrap_or("");
 
     let mut code = format!(
@@ -506,57 +560,27 @@ fn create_child_frame_from_template(
         }
     );
 
-    // Apply size
     if let Some(size) = frame.size() {
         let (width, height) = get_size_values(size);
         if let (Some(w), Some(h)) = (width, height) {
             code.push_str(&format!("            child:SetSize({}, {})\n", w, h));
         }
     }
-
-    // Apply anchors
     if let Some(anchors) = frame.anchors() {
-        code.push_str(&generate_set_point_code(
-            anchors,
-            "child",
-            "parent",
-            parent_name,
-            "nil",
-        ));
+        code.push_str(&generate_set_point_code(anchors, "child", "parent", parent_name, "nil"));
     }
-
-    // Apply setAllPoints
     if frame.set_all_points == Some(true) {
         code.push_str("            child:SetAllPoints(true)\n");
     }
-
-    // Apply hidden state
     if frame.hidden == Some(true) {
         code.push_str("            child:Hide()\n");
     }
-
-    // Apply parentKey
     if let Some(parent_key) = &frame.parent_key {
         code.push_str(&format!("            parent.{} = child\n", parent_key));
     }
-
-    // Register as global
     code.push_str(&format!("            _G[\"{}\"] = child\n", child_name));
-
     code.push_str("        end\n");
-
-    let _ = lua.load(&code).exec();
-
-    // Apply inline content from the child FrameXml (layers, key values, scripts, etc.)
-    // This handles elements defined directly on the child XML, not via inherits.
-    apply_inline_frame_content(lua, frame, &child_name);
-
-    // NOTE: Do NOT fire OnLoad here. Child OnLoad is deferred until after ALL templates
-    // in the chain are applied by apply_templates_from_registry. This is required because
-    // child OnLoad handlers (e.g. ButtonControllerMixin:OnLoad → InitButton) may depend on
-    // KeyValues from later templates in the chain (e.g. atlasName from BigRedThreeSliceButtonTemplate).
-
-    child_name
+    code
 }
 
 /// Apply inline content from a FrameXml to an already-created frame.
@@ -568,60 +592,15 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
     // Apply mixin (must be before scripts)
     apply_mixin(lua, &frame.mixin, frame_name);
 
-    // Apply KeyValues
-    if let Some(key_values) = frame.key_values() {
-        for kv in &key_values.values {
-            let value = match kv.value_type.as_deref() {
-                Some("number") => kv.value.clone(),
-                Some("boolean") => kv.value.to_lowercase(),
-                Some("global") => format!("_G[\"{}\"]", escape_lua_string(&kv.value)),
-                _ => format!("\"{}\"", escape_lua_string(&kv.value)),
-            };
-            let code = format!(
-                "do local f = {} if f then f.{} = {} end end",
-                frame_name, kv.key, value
-            );
-            let _ = lua.load(&code).exec();
-        }
-    }
-
-    // Create textures from Layers
-    for layers in frame.layers() {
-        for layer in &layers.layers {
-            let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
-            for texture in layer.textures() {
-                create_texture_from_template(lua, texture, frame_name, draw_layer);
-            }
-            for fontstring in layer.font_strings() {
-                create_fontstring_from_template(lua, fontstring, frame_name, draw_layer);
-            }
-        }
-    }
+    apply_inline_key_values(lua, frame, frame_name);
+    apply_layers(lua, frame, frame_name);
 
     // Create ThumbTexture
     if let Some(thumb) = frame.thumb_texture() {
         create_thumb_texture_from_template(lua, thumb, frame_name);
     }
 
-    // Create button textures
-    if let Some(tex) = frame.normal_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Normal", "SetNormalTexture");
-    }
-    if let Some(tex) = frame.pushed_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Pushed", "SetPushedTexture");
-    }
-    if let Some(tex) = frame.disabled_texture() {
-        create_button_texture_from_template(lua, tex, frame_name, "Disabled", "SetDisabledTexture");
-    }
-    if let Some(tex) = frame.highlight_texture() {
-        create_button_texture_from_template(
-            lua,
-            tex,
-            frame_name,
-            "Highlight",
-            "SetHighlightTexture",
-        );
-    }
+    apply_inline_button_textures(lua, frame, frame_name);
 
     // Create nested child frames
     create_child_frames(lua, frame, frame_name);
@@ -629,6 +608,36 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
     // Apply scripts (after children so OnLoad can reference them)
     if let Some(scripts) = frame.scripts() {
         apply_scripts_from_template(lua, scripts, frame_name);
+    }
+}
+
+/// Apply KeyValues from inline frame content.
+fn apply_inline_key_values(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+    let Some(key_values) = frame.key_values() else {
+        return;
+    };
+    for kv in &key_values.values {
+        let value = format_key_value(&kv.value, kv.value_type.as_deref());
+        let code = format!(
+            "do local f = {} if f then f.{} = {} end end",
+            frame_name, kv.key, value
+        );
+        let _ = lua.load(&code).exec();
+    }
+}
+
+/// Apply button textures from inline frame content.
+fn apply_inline_button_textures(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+    let texture_specs: &[(&str, &str, Option<&crate::xml::TextureXml>)] = &[
+        ("Normal", "SetNormalTexture", frame.normal_texture()),
+        ("Pushed", "SetPushedTexture", frame.pushed_texture()),
+        ("Disabled", "SetDisabledTexture", frame.disabled_texture()),
+        ("Highlight", "SetHighlightTexture", frame.highlight_texture()),
+    ];
+    for &(parent_key, setter, tex_opt) in texture_specs {
+        if let Some(tex) = tex_opt {
+            create_button_texture_from_template(lua, tex, frame_name, parent_key, setter);
+        }
     }
 }
 
@@ -653,15 +662,12 @@ fn create_thumb_texture_from_template(
         parent_name, child_name,
     );
 
-    // Apply size
     if let Some(size) = &thumb.size {
         let (width, height) = get_size_values(size);
         if let (Some(w), Some(h)) = (width, height) {
             code.push_str(&format!("            thumb:SetSize({}, {})\n", w, h));
         }
     }
-
-    // Apply texture file
     if let Some(file) = &thumb.file {
         code.push_str(&format!(
             "            thumb:SetTexture(\"{}\")\n",
@@ -669,7 +675,6 @@ fn create_thumb_texture_from_template(
         ));
     }
 
-    // Set as thumb texture and parentKey
     code.push_str("            parent:SetThumbTexture(thumb)\n");
     if let Some(parent_key) = &thumb.parent_key {
         code.push_str(&format!("            parent.{} = thumb\n", parent_key));
@@ -677,13 +682,11 @@ fn create_thumb_texture_from_template(
         code.push_str("            parent.ThumbTexture = thumb\n");
     }
 
-    // Register as global if named
     if thumb.name.is_some() {
         code.push_str(&format!("            _G[\"{}\"] = thumb\n", child_name));
     }
 
     code.push_str("        end\n");
-
     let _ = lua.load(&code).exec();
 }
 
@@ -699,9 +702,6 @@ fn create_button_texture_from_template(
     parent_key: &str,
     setter_method: &str,
 ) {
-    // Use the XML parentKey if present, otherwise derive from parent_key.
-    // Default children_keys entries are "NormalTexture", "PushedTexture", etc.,
-    // so we append "Texture" to the parent_key ("Normal" → "NormalTexture").
     let default_parent_key = format!("{}Texture", parent_key);
     let actual_parent_key = texture
         .parent_key
@@ -713,12 +713,30 @@ fn create_button_texture_from_template(
         .as_ref()
         .map(|n| n.replace("$parent", parent_name));
 
-    // Reuse existing default texture child if available (e.g., from create_widget_type_defaults),
-    // otherwise create a new one. This prevents orphaned children that render as ghost elements.
     let tex_name = child_name
         .clone()
         .unwrap_or_else(|| format!("__tex_{}", rand_id()));
 
+    let code = build_button_texture_code(
+        texture,
+        parent_name,
+        setter_method,
+        actual_parent_key,
+        &tex_name,
+        child_name.is_some(),
+    );
+    let _ = lua.load(&code).exec();
+}
+
+/// Build Lua code to create or reuse a button texture with properties applied.
+fn build_button_texture_code(
+    texture: &crate::xml::TextureXml,
+    parent_name: &str,
+    setter_method: &str,
+    actual_parent_key: &str,
+    tex_name: &str,
+    is_named: bool,
+) -> String {
     let mut code = format!(
         r#"
         local parent = {}
@@ -731,7 +749,6 @@ fn create_button_texture_from_template(
         parent_name, setter_method, actual_parent_key, tex_name,
     );
 
-    // Apply size
     if let Some(size) = &texture.size {
         let (width, height) = get_size_values(size);
         if let (Some(w), Some(h)) = (width, height) {
@@ -739,21 +756,16 @@ fn create_button_texture_from_template(
         }
     }
 
-    // Register parentKey so children_keys is populated, then call setter
-    // method which uses get_or_create_button_texture (finds existing child), then
-    // SetAtlas can propagate to parent via the parent_key lookup
+    // Register parentKey and call setter method
     code.push_str(&format!("            parent.{} = tex\n", actual_parent_key));
     code.push_str(&format!("            parent:{}(tex)\n", setter_method));
 
-    // Apply texture file
     if let Some(file) = &texture.file {
         code.push_str(&format!(
             "            tex:SetTexture(\"{}\")\n",
             escape_lua_string(file)
         ));
     }
-
-    // Apply atlas (after parentKey registration so SetAtlas can propagate to parent)
     if let Some(atlas) = &texture.atlas {
         let use_atlas_size = texture.use_atlas_size.unwrap_or(false);
         code.push_str(&format!(
@@ -763,14 +775,12 @@ fn create_button_texture_from_template(
         ));
     }
 
-    // Register as global if named
-    if child_name.is_some() {
+    if is_named {
         code.push_str(&format!("            _G[\"{}\"] = tex\n", tex_name));
     }
 
     code.push_str("        end\n");
-
-    let _ = lua.load(&code).exec();
+    code
 }
 
 /// Apply scripts from template.
@@ -794,7 +804,6 @@ fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, fram
     }
 }
 
-/// Generate Lua code for anchors on a child element.
 /// Get size values from a SizeXml.
 fn get_size_values(size: &crate::xml::SizeXml) -> (Option<f32>, Option<f32>) {
     if size.x.is_some() || size.y.is_some() {

@@ -7,48 +7,56 @@ use mlua::{Lua, Result, Value};
 /// Register quest-related C_* namespaces.
 pub fn register_c_quest_api(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
+    globals.set("C_QuestLog", register_c_quest_log(lua)?)?;
+    globals.set("C_TaskQuest", register_c_task_quest(lua)?)?;
+    globals.set("C_QuestInfoSystem", register_c_quest_info_system(lua)?)?;
+    globals.set("C_QuestLine", register_c_quest_line(lua)?)?;
+    globals.set("C_QuestOffer", register_c_quest_offer(lua)?)?;
+    Ok(())
+}
 
-    // C_QuestLog namespace - quest log utilities
-    let c_quest_log = lua.create_table()?;
-    c_quest_log.set(
+/// C_QuestLog namespace - quest log utilities.
+fn register_c_quest_log(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    t.set(
         "IsQuestFlaggedCompleted",
         lua.create_function(|_, _quest_id: i32| Ok(false))?,
     )?;
-    c_quest_log.set(
+    t.set(
         "GetNumQuestLogEntries",
         lua.create_function(|_, ()| Ok((0i32, 0i32)))?,
     )?;
-    c_quest_log.set(
+    t.set(
         "GetInfo",
         lua.create_function(|_, _quest_index: i32| Ok(Value::Nil))?,
     )?;
-    c_quest_log.set(
+    t.set(
         "GetQuestIDForLogIndex",
         lua.create_function(|_, _quest_index: i32| Ok(0i32))?,
     )?;
-    c_quest_log.set(
+    t.set(
         "IsComplete",
         lua.create_function(|_, _quest_id: i32| Ok(false))?,
     )?;
-    c_quest_log.set(
+    t.set(
         "IsOnQuest",
         lua.create_function(|_, _quest_id: i32| Ok(false))?,
     )?;
-    c_quest_log.set(
+    t.set(
         "GetQuestObjectives",
         lua.create_function(|lua, _quest_id: i32| lua.create_table())?,
     )?;
-    c_quest_log.set(
+    t.set(
         "GetMaxNumQuestsCanAccept",
         lua.create_function(|_, ()| Ok(35i32))?,
     )?;
-    c_quest_log.set(
+    t.set(
         "GetTitleForQuestID",
         lua.create_function(|lua, _quest_id: i32| {
             Ok(Value::String(lua.create_string("Quest")?))
         })?,
     )?;
-    c_quest_log.set(
+    t.set(
         "GetQuestTagInfo",
         lua.create_function(|lua, _quest_id: i32| {
             let info = lua.create_table()?;
@@ -61,82 +69,88 @@ pub fn register_c_quest_api(lua: &Lua) -> Result<()> {
             Ok(info)
         })?,
     )?;
-    globals.set("C_QuestLog", c_quest_log)?;
+    Ok(t)
+}
 
-    // C_TaskQuest namespace - world quest/task utilities
-    let c_task_quest = lua.create_table()?;
-    c_task_quest.set(
+/// C_TaskQuest namespace - world quest/task utilities.
+fn register_c_task_quest(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    t.set(
         "IsActive",
         lua.create_function(|_, _quest_id: i32| Ok(false))?,
     )?;
-    c_task_quest.set(
+    t.set(
         "GetQuestsOnMap",
         lua.create_function(|lua, _map_id: i32| lua.create_table())?,
     )?;
-    c_task_quest.set(
+    t.set(
         "GetQuestInfoByQuestID",
         lua.create_function(|_, _quest_id: i32| Ok(Value::Nil))?,
     )?;
-    c_task_quest.set(
+    t.set(
         "GetQuestLocation",
         lua.create_function(|_, (_quest_id, _map_id): (i32, i32)| Ok((0.0f64, 0.0f64)))?,
     )?;
-    c_task_quest.set(
+    t.set(
         "GetQuestsForPlayerByMapID",
         lua.create_function(|lua, _map_id: i32| lua.create_table())?,
     )?;
-    c_task_quest.set(
+    t.set(
         "GetQuestTimeLeftMinutes",
         lua.create_function(|_, _quest_id: i32| Ok(0i32))?,
     )?;
-    globals.set("C_TaskQuest", c_task_quest)?;
+    Ok(t)
+}
 
-    // C_QuestInfoSystem namespace - quest classification info
-    let c_quest_info_system = lua.create_table()?;
-    c_quest_info_system.set(
+/// C_QuestInfoSystem namespace - quest classification info.
+fn register_c_quest_info_system(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    t.set(
         "GetQuestClassification",
         lua.create_function(|_, _quest_id: i32| {
             // Returns Enum.QuestClassification value
             Ok(0) // Normal
         })?,
     )?;
-    c_quest_info_system.set(
+    t.set(
         "HasQuestRewardCurrencies",
         lua.create_function(|_, _quest_id: i32| Ok(false))?,
     )?;
-    globals.set("C_QuestInfoSystem", c_quest_info_system)?;
+    Ok(t)
+}
 
-    // C_QuestLine namespace - questline information
-    let c_quest_line = lua.create_table()?;
-    c_quest_line.set(
+/// C_QuestLine namespace - questline information.
+fn register_c_quest_line(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    t.set(
         "GetQuestLineInfo",
         lua.create_function(|_, (_quest_id, _map_id): (i32, Option<i32>)| Ok(Value::Nil))?,
     )?;
-    c_quest_line.set(
+    t.set(
         "GetQuestLineQuests",
         lua.create_function(|lua, _quest_line_id: i32| lua.create_table())?,
     )?;
-    c_quest_line.set(
+    t.set(
         "GetAvailableQuestLines",
         lua.create_function(|lua, _map_id: i32| lua.create_table())?,
     )?;
-    c_quest_line.set(
+    t.set(
         "IsComplete",
         lua.create_function(|_, _quest_line_id: i32| Ok(false))?,
     )?;
-    c_quest_line.set(
+    t.set(
         "RequestQuestLinesForMap",
         lua.create_function(|_, _map_id: i32| Ok(()))?,
     )?;
-    globals.set("C_QuestLine", c_quest_line)?;
+    Ok(t)
+}
 
-    // C_QuestOffer namespace - quest offer/reward info
-    let c_quest_offer = lua.create_table()?;
-    c_quest_offer.set(
+/// C_QuestOffer namespace - quest offer/reward info.
+fn register_c_quest_offer(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    t.set(
         "GetQuestOfferMajorFactionReputationRewards",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
-    globals.set("C_QuestOffer", c_quest_offer)?;
-
-    Ok(())
+    Ok(t)
 }

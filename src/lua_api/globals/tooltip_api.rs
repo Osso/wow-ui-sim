@@ -56,8 +56,15 @@ fn create_tooltip_frame(
 /// - `FriendsTooltip` - Tooltip for friends list
 /// - `FriendsListFrame` - Friends list UI frame
 pub fn register_tooltip_frames(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    register_game_tooltips(lua, &state)?;
+    register_friends_list_frame(lua, &state)?;
+    Ok(())
+}
+
+/// Register GameTooltip (with NineSlice child) and all other tooltip frames.
+fn register_game_tooltips(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     // GameTooltip - needs a NineSlice child frame for SharedTooltipTemplates
-    let gt_id = create_tooltip_frame(lua, &state, "GameTooltip")?;
+    let gt_id = create_tooltip_frame(lua, state, "GameTooltip")?;
     {
         let nine_slice = Frame::new(WidgetType::Frame, None, Some(gt_id));
         let nine_slice_id = nine_slice.id;
@@ -70,51 +77,50 @@ pub fn register_tooltip_frames(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resul
         }
     }
 
-    // Other tooltip frames
-    create_tooltip_frame(lua, &state, "ItemRefTooltip")?;
+    create_tooltip_frame(lua, state, "ItemRefTooltip")?;
     for i in 1..=2 {
-        create_tooltip_frame(lua, &state, &format!("ItemRefShoppingTooltip{}", i))?;
+        create_tooltip_frame(lua, state, &format!("ItemRefShoppingTooltip{}", i))?;
     }
     for i in 1..=2 {
-        create_tooltip_frame(lua, &state, &format!("ShoppingTooltip{}", i))?;
+        create_tooltip_frame(lua, state, &format!("ShoppingTooltip{}", i))?;
     }
-    create_tooltip_frame(lua, &state, "FriendsTooltip")?;
+    create_tooltip_frame(lua, state, "FriendsTooltip")?;
+    Ok(())
+}
 
-    // FriendsListFrame - not a tooltip, just a regular frame
+/// Register FriendsListFrame with a ScrollBox child.
+fn register_friends_list_frame(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let globals = lua.globals();
+    let ui_parent_id = state.borrow().widgets.get_id_by_name("UIParent");
+    let mut friends_frame = Frame::new(
+        WidgetType::Frame,
+        Some("FriendsListFrame".to_string()),
+        ui_parent_id,
+    );
+    friends_frame.visible = false;
+    friends_frame.width = 300.0;
+    friends_frame.height = 400.0;
+    let friends_id = friends_frame.id;
+    state.borrow_mut().widgets.register(friends_frame);
+
+    let scrollbox = Frame::new(WidgetType::Frame, None, Some(friends_id));
+    let scrollbox_id = scrollbox.id;
     {
-        let globals = lua.globals();
-        let ui_parent_id = state.borrow().widgets.get_id_by_name("UIParent");
-        let mut friends_frame = Frame::new(
-            WidgetType::Frame,
-            Some("FriendsListFrame".to_string()),
-            ui_parent_id,
-        );
-        friends_frame.visible = false;
-        friends_frame.width = 300.0;
-        friends_frame.height = 400.0;
-        let friends_id = friends_frame.id;
-        state.borrow_mut().widgets.register(friends_frame);
-
-        let scrollbox = Frame::new(WidgetType::Frame, None, Some(friends_id));
-        let scrollbox_id = scrollbox.id;
-        {
-            let mut s = state.borrow_mut();
-            s.widgets.register(scrollbox);
-            s.widgets.add_child(friends_id, scrollbox_id);
-            if let Some(f) = s.widgets.get_mut(friends_id) {
-                f.children_keys
-                    .insert("ScrollBox".to_string(), scrollbox_id);
-            }
+        let mut s = state.borrow_mut();
+        s.widgets.register(scrollbox);
+        s.widgets.add_child(friends_id, scrollbox_id);
+        if let Some(f) = s.widgets.get_mut(friends_id) {
+            f.children_keys
+                .insert("ScrollBox".to_string(), scrollbox_id);
         }
-
-        let handle = FrameHandle {
-            id: friends_id,
-            state: Rc::clone(&state),
-        };
-        let ud = lua.create_userdata(handle)?;
-        globals.set("FriendsListFrame", ud.clone())?;
-        globals.set(format!("__frame_{}", friends_id).as_str(), ud)?;
     }
 
+    let handle = FrameHandle {
+        id: friends_id,
+        state: Rc::clone(state),
+    };
+    let ud = lua.create_userdata(handle)?;
+    globals.set("FriendsListFrame", ud.clone())?;
+    globals.set(format!("__frame_{}", friends_id).as_str(), ud)?;
     Ok(())
 }

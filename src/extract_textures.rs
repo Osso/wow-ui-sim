@@ -116,6 +116,56 @@ pub fn convert_to_webp(src: &Path, dst: &Path) -> Result<(), Box<dyn std::error:
     Ok(())
 }
 
+/// Collect all texture references from addons and Blizzard base UI.
+fn collect_texture_references(addons_path: &Path) -> HashSet<String> {
+    println!("Scanning for texture references...");
+    let mut textures = find_texture_references(addons_path);
+
+    let wow_ui_source = addons_path.parent().map(|p| p.join("wow-ui-source"));
+    if let Some(ref ui_source) = wow_ui_source {
+        if ui_source.exists() {
+            textures.extend(find_texture_references(ui_source));
+        }
+    }
+
+    println!("Found {} unique texture references", textures.len());
+    textures
+}
+
+/// Convert a single texture reference, returning true if found/converted, false if missing.
+fn convert_texture_reference(
+    lookup_key: &str,
+    index: &HashMap<String, PathBuf>,
+    output_dir: &Path,
+) -> bool {
+    let out_file = output_dir.join(format!("{}.webp", lookup_key));
+
+    if out_file.exists() {
+        println!("SKIP: {}", lookup_key);
+        return true;
+    }
+
+    let Some(src_file) = index.get(lookup_key) else {
+        println!("MISS: {}", lookup_key);
+        return false;
+    };
+
+    if let Some(parent) = out_file.parent() {
+        std::fs::create_dir_all(parent).ok();
+    }
+
+    match convert_to_webp(src_file, &out_file) {
+        Ok(()) => {
+            println!("CONV: {}", lookup_key);
+            true
+        }
+        Err(e) => {
+            println!("FAIL: {} ({})", lookup_key, e);
+            false
+        }
+    }
+}
+
 /// Extract textures referenced by addons and convert to WebP.
 ///
 /// Returns (found, missing) counts.
@@ -124,19 +174,7 @@ pub fn extract_textures(
     interface_path: &Path,
     output_dir: &Path,
 ) -> (usize, usize) {
-    println!("Scanning for texture references...");
-    let mut textures = find_texture_references(addons_path);
-
-    // Also scan Blizzard base UI if it exists
-    let wow_ui_source = addons_path.parent().map(|p| p.join("wow-ui-source"));
-    if let Some(ref ui_source) = wow_ui_source {
-        if ui_source.exists() {
-            let base_textures = find_texture_references(ui_source);
-            textures.extend(base_textures);
-        }
-    }
-
-    println!("Found {} unique texture references", textures.len());
+    let textures = collect_texture_references(addons_path);
 
     println!("Building file index...");
     let index = build_file_index(interface_path);
@@ -148,42 +186,14 @@ pub fn extract_textures(
     let mut missing = 0;
 
     for texture_path in &textures {
-        // Strip "interface/" prefix for lookup
         let lookup_key = texture_path
             .strip_prefix("interface/")
             .unwrap_or(texture_path);
 
-        let out_file = output_dir.join(format!("{}.webp", lookup_key));
-
-        // Skip if already converted
-        if out_file.exists() {
-            println!("SKIP: {}", lookup_key);
+        if convert_texture_reference(lookup_key, &index, output_dir) {
             found += 1;
-            continue;
-        }
-
-        // Find source file
-        let Some(src_file) = index.get(lookup_key) else {
-            println!("MISS: {}", lookup_key);
+        } else {
             missing += 1;
-            continue;
-        };
-
-        // Create output directory
-        if let Some(parent) = out_file.parent() {
-            std::fs::create_dir_all(parent).ok();
-        }
-
-        // Convert to WebP
-        match convert_to_webp(src_file, &out_file) {
-            Ok(()) => {
-                println!("CONV: {}", lookup_key);
-                found += 1;
-            }
-            Err(e) => {
-                println!("FAIL: {} ({})", lookup_key, e);
-                missing += 1;
-            }
         }
     }
 

@@ -128,58 +128,16 @@ impl GlyphAtlas {
             return None;
         }
 
-        // Write glyph pixels into atlas as white + alpha
-        match image.content {
-            SwashContent::Mask => {
-                for y in 0..height {
-                    for x in 0..width {
-                        let src_idx = (y * width + x) as usize;
-                        let alpha = image.data.get(src_idx).copied().unwrap_or(0);
-                        let dst_x = self.cursor_x + x;
-                        let dst_y = self.cursor_y + y;
-                        let dst_idx = ((dst_y * GLYPH_ATLAS_SIZE + dst_x) * 4) as usize;
-                        self.pixels[dst_idx] = 255; // R
-                        self.pixels[dst_idx + 1] = 255; // G
-                        self.pixels[dst_idx + 2] = 255; // B
-                        self.pixels[dst_idx + 3] = alpha; // A
-                    }
-                }
-            }
-            SwashContent::Color => {
-                for y in 0..height {
-                    for x in 0..width {
-                        let src_idx = ((y * width + x) * 4) as usize;
-                        let dst_x = self.cursor_x + x;
-                        let dst_y = self.cursor_y + y;
-                        let dst_idx = ((dst_y * GLYPH_ATLAS_SIZE + dst_x) * 4) as usize;
-                        // Copy RGBA directly for color emoji/glyphs
-                        self.pixels[dst_idx] = image.data.get(src_idx).copied().unwrap_or(0);
-                        self.pixels[dst_idx + 1] =
-                            image.data.get(src_idx + 1).copied().unwrap_or(0);
-                        self.pixels[dst_idx + 2] =
-                            image.data.get(src_idx + 2).copied().unwrap_or(0);
-                        self.pixels[dst_idx + 3] =
-                            image.data.get(src_idx + 3).copied().unwrap_or(0);
-                    }
-                }
-            }
-            SwashContent::SubpixelMask => {
-                // Treat as regular mask using first channel
-                for y in 0..height {
-                    for x in 0..width {
-                        let src_idx = ((y * width + x) * 3) as usize;
-                        let alpha = image.data.get(src_idx).copied().unwrap_or(0);
-                        let dst_x = self.cursor_x + x;
-                        let dst_y = self.cursor_y + y;
-                        let dst_idx = ((dst_y * GLYPH_ATLAS_SIZE + dst_x) * 4) as usize;
-                        self.pixels[dst_idx] = 255;
-                        self.pixels[dst_idx + 1] = 255;
-                        self.pixels[dst_idx + 2] = 255;
-                        self.pixels[dst_idx + 3] = alpha;
-                    }
-                }
-            }
-        }
+        // Write glyph pixels into atlas
+        write_glyph_pixels(
+            &mut self.pixels,
+            self.cursor_x,
+            self.cursor_y,
+            width,
+            height,
+            &image.data,
+            image.content,
+        );
 
         let entry = GlyphEntry {
             uv_x: self.cursor_x as f32 / GLYPH_ATLAS_SIZE as f32,
@@ -197,6 +155,60 @@ impl GlyphAtlas {
         self.dirty = true;
 
         Some(entry)
+    }
+}
+
+/// Write glyph pixels into the atlas at the given cursor position.
+///
+/// Handles all swash content types: Mask (alpha-only), Color (RGBA), SubpixelMask (RGB).
+fn write_glyph_pixels(
+    pixels: &mut [u8],
+    cursor_x: u32,
+    cursor_y: u32,
+    width: u32,
+    height: u32,
+    data: &[u8],
+    content: SwashContent,
+) {
+    match content {
+        SwashContent::Mask => {
+            for y in 0..height {
+                for x in 0..width {
+                    let src_idx = (y * width + x) as usize;
+                    let alpha = data.get(src_idx).copied().unwrap_or(0);
+                    let dst_idx = (((cursor_y + y) * GLYPH_ATLAS_SIZE + cursor_x + x) * 4) as usize;
+                    pixels[dst_idx] = 255;
+                    pixels[dst_idx + 1] = 255;
+                    pixels[dst_idx + 2] = 255;
+                    pixels[dst_idx + 3] = alpha;
+                }
+            }
+        }
+        SwashContent::Color => {
+            for y in 0..height {
+                for x in 0..width {
+                    let src_idx = ((y * width + x) * 4) as usize;
+                    let dst_idx = (((cursor_y + y) * GLYPH_ATLAS_SIZE + cursor_x + x) * 4) as usize;
+                    pixels[dst_idx] = data.get(src_idx).copied().unwrap_or(0);
+                    pixels[dst_idx + 1] = data.get(src_idx + 1).copied().unwrap_or(0);
+                    pixels[dst_idx + 2] = data.get(src_idx + 2).copied().unwrap_or(0);
+                    pixels[dst_idx + 3] = data.get(src_idx + 3).copied().unwrap_or(0);
+                }
+            }
+        }
+        SwashContent::SubpixelMask => {
+            for y in 0..height {
+                for x in 0..width {
+                    let src_idx = ((y * width + x) * 3) as usize;
+                    let alpha = data.get(src_idx).copied().unwrap_or(0);
+                    let dst_idx = (((cursor_y + y) * GLYPH_ATLAS_SIZE + cursor_x + x) * 4) as usize;
+                    pixels[dst_idx] = 255;
+                    pixels[dst_idx + 1] = 255;
+                    pixels[dst_idx + 2] = 255;
+                    pixels[dst_idx + 3] = alpha;
+                }
+            }
+        }
     }
 }
 

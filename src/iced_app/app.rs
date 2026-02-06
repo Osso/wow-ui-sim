@@ -146,74 +146,15 @@ impl App {
     }
 
     pub fn boot() -> (Self, Task<Message>) {
-        // Take init params from thread-local
-        let env = INIT_ENV
-            .with(|cell| cell.borrow_mut().take())
-            .expect("WowLuaEnv not initialized");
-        let textures_path = INIT_TEXTURES.with(|cell| cell.borrow_mut().take()).unwrap_or_else(|| {
-            // Prefer local WebP textures, fall back to full repo
-            if PathBuf::from(LOCAL_TEXTURES_PATH).exists() {
-                PathBuf::from(LOCAL_TEXTURES_PATH)
-            } else {
-                PathBuf::from(FALLBACK_TEXTURES_PATH)
-            }
-        });
+        let (env_rc, textures_path, saved_vars) = Self::take_init_params();
 
-        let saved_vars = INIT_SAVED_VARS.with(|cell| cell.borrow_mut().take());
-        let env_rc = Rc::new(RefCell::new(env));
-
-        // Fire startup events
         fire_startup_events(&env_rc);
+        let log_messages = Self::collect_startup_logs(&env_rc);
 
-        // Collect console output from startup
-        let mut log_messages = vec!["UI loaded. Press Ctrl+R to reload.".to_string()];
-        {
-            let env = env_rc.borrow();
-            let mut state = env.state().borrow_mut();
-            log_messages.append(&mut state.console_output);
-        }
-
-        let texture_manager = Rc::new(RefCell::new(
-            TextureManager::new(textures_path)
-                .with_interface_path(DEFAULT_INTERFACE_PATH)
-                .with_addons_path(DEFAULT_ADDONS_PATH),
-        ));
-
-        let font_system = Rc::new(RefCell::new(
-            WowFontSystem::new(&PathBuf::from(DEFAULT_FONTS_PATH)),
-        ));
-        // Make font system available for Lua text measurement methods
-        env_rc.borrow().set_font_system(Rc::clone(&font_system));
-        let glyph_atlas = Rc::new(RefCell::new(GlyphAtlas::new()));
-
-        // Initialize debug server
-        let (cmd_rx, _guard) = debug_server::init();
-        eprintln!(
-            "[wow-ui-sim] Debug server at {}",
-            debug_server::socket_path().display()
-        );
-        // Keep guard alive by leaking it
-        std::mem::forget(_guard);
-
-        // Initialize Lua REPL server
-        let lua_rx = lua_server::init();
-        eprintln!(
-            "[wow-ui-sim] Lua server at {}",
-            lua_server::socket_path().display()
-        );
-
-        // Debug modes: from CLI flags or env vars
-        let init_debug = INIT_DEBUG.with(|cell| cell.borrow_mut().take()).unwrap_or_default();
-        let debug_elements = std::env::var("WOW_SIM_DEBUG_ELEMENTS").is_ok();
-        let debug_borders = init_debug.borders || debug_elements || std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
-        let debug_anchors = init_debug.anchors || debug_elements || std::env::var("WOW_SIM_DEBUG_ANCHORS").is_ok();
-
-        if debug_borders || debug_anchors {
-            eprintln!(
-                "[wow-ui-sim] Debug mode: borders={} anchors={}",
-                debug_borders, debug_anchors
-            );
-        }
+        let (texture_manager, font_system, glyph_atlas) =
+            Self::init_rendering(&env_rc, textures_path);
+        let (cmd_rx, lua_rx) = Self::init_servers();
+        let (debug_borders, debug_anchors) = Self::resolve_debug_flags();
 
         let app = App {
             env: env_rc,
@@ -227,7 +168,7 @@ impl App {
             pressed_frame: None,
             mouse_down_frame: None,
             scroll_offset: 0.0,
-            screen_size: std::cell::Cell::new(Size::new(800.0, 600.0)), // Initial, updated each frame
+            screen_size: std::cell::Cell::new(Size::new(800.0, 600.0)),
             debug_rx: Some(cmd_rx),
             pending_screenshot: None,
             lua_rx: Some(lua_rx),
@@ -253,6 +194,93 @@ impl App {
         };
 
         (app, Task::none())
+    }
+
+    /// Extract init params from thread-local storage.
+    fn take_init_params() -> (
+        Rc<RefCell<WowLuaEnv>>,
+        PathBuf,
+        Option<SavedVariablesManager>,
+    ) {
+        let env = INIT_ENV
+            .with(|cell| cell.borrow_mut().take())
+            .expect("WowLuaEnv not initialized");
+        let textures_path = INIT_TEXTURES.with(|cell| cell.borrow_mut().take()).unwrap_or_else(|| {
+            if PathBuf::from(LOCAL_TEXTURES_PATH).exists() {
+                PathBuf::from(LOCAL_TEXTURES_PATH)
+            } else {
+                PathBuf::from(FALLBACK_TEXTURES_PATH)
+            }
+        });
+        let saved_vars = INIT_SAVED_VARS.with(|cell| cell.borrow_mut().take());
+        (Rc::new(RefCell::new(env)), textures_path, saved_vars)
+    }
+
+    /// Drain console output collected during startup.
+    fn collect_startup_logs(env_rc: &Rc<RefCell<WowLuaEnv>>) -> Vec<String> {
+        let mut log_messages = vec!["UI loaded. Press Ctrl+R to reload.".to_string()];
+        let env = env_rc.borrow();
+        let mut state = env.state().borrow_mut();
+        log_messages.append(&mut state.console_output);
+        log_messages
+    }
+
+    /// Create texture manager, font system, and glyph atlas.
+    fn init_rendering(
+        env_rc: &Rc<RefCell<WowLuaEnv>>,
+        textures_path: PathBuf,
+    ) -> (
+        Rc<RefCell<TextureManager>>,
+        Rc<RefCell<WowFontSystem>>,
+        Rc<RefCell<GlyphAtlas>>,
+    ) {
+        let texture_manager = Rc::new(RefCell::new(
+            TextureManager::new(textures_path)
+                .with_interface_path(DEFAULT_INTERFACE_PATH)
+                .with_addons_path(DEFAULT_ADDONS_PATH),
+        ));
+        let font_system = Rc::new(RefCell::new(
+            WowFontSystem::new(&PathBuf::from(DEFAULT_FONTS_PATH)),
+        ));
+        env_rc.borrow().set_font_system(Rc::clone(&font_system));
+        let glyph_atlas = Rc::new(RefCell::new(GlyphAtlas::new()));
+        (texture_manager, font_system, glyph_atlas)
+    }
+
+    /// Start debug server and Lua REPL server.
+    fn init_servers() -> (
+        mpsc::Receiver<debug_server::Command>,
+        std::sync::mpsc::Receiver<lua_server::LuaCommand>,
+    ) {
+        let (cmd_rx, _guard) = debug_server::init();
+        eprintln!(
+            "[wow-ui-sim] Debug server at {}",
+            debug_server::socket_path().display()
+        );
+        std::mem::forget(_guard);
+
+        let lua_rx = lua_server::init();
+        eprintln!(
+            "[wow-ui-sim] Lua server at {}",
+            lua_server::socket_path().display()
+        );
+        (cmd_rx, lua_rx)
+    }
+
+    /// Resolve debug border/anchor flags from CLI and env vars.
+    fn resolve_debug_flags() -> (bool, bool) {
+        let init_debug = INIT_DEBUG.with(|cell| cell.borrow_mut().take()).unwrap_or_default();
+        let debug_elements = std::env::var("WOW_SIM_DEBUG_ELEMENTS").is_ok();
+        let debug_borders = init_debug.borders || debug_elements || std::env::var("WOW_SIM_DEBUG_BORDERS").is_ok();
+        let debug_anchors = init_debug.anchors || debug_elements || std::env::var("WOW_SIM_DEBUG_ANCHORS").is_ok();
+
+        if debug_borders || debug_anchors {
+            eprintln!(
+                "[wow-ui-sim] Debug mode: borders={} anchors={}",
+                debug_borders, debug_anchors
+            );
+        }
+        (debug_borders, debug_anchors)
     }
 }
 

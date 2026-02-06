@@ -178,7 +178,18 @@ pub fn draw_nine_slice_texture(
     let inner_width = bounds.width - corner_size * 2.0;
     let inner_height = bounds.height - corner_size * 2.0;
 
-    // Draw center (tiled or stretched)
+    draw_nine_slice_center(frame, bounds, handles, edge_size);
+    draw_nine_slice_corners(frame, bounds, handles, corner_size);
+    draw_nine_slice_edges(frame, bounds, handles, corner_size, edge_size, inner_width, inner_height);
+}
+
+/// Draw the center region of a 9-slice texture.
+fn draw_nine_slice_center(
+    frame: &mut Frame,
+    bounds: Rectangle,
+    handles: &NineSliceHandles,
+    edge_size: f32,
+) {
     if let Some(center) = &handles.center {
         let center_bounds = Rectangle {
             x: bounds.x + edge_size,
@@ -188,8 +199,15 @@ pub fn draw_nine_slice_texture(
         };
         frame.draw_image(center_bounds, canvas::Image::new(center.clone()));
     }
+}
 
-    // Draw corners
+/// Draw the four corners of a 9-slice texture.
+fn draw_nine_slice_corners(
+    frame: &mut Frame,
+    bounds: Rectangle,
+    handles: &NineSliceHandles,
+    corner_size: f32,
+) {
     if let Some(tl) = &handles.top_left {
         let tl_bounds = Rectangle {
             x: bounds.x,
@@ -229,8 +247,19 @@ pub fn draw_nine_slice_texture(
         };
         frame.draw_image(br_bounds, canvas::Image::new(br.clone()));
     }
+}
 
-    // Draw edges
+/// Draw the four edges of a 9-slice texture.
+#[allow(clippy::too_many_arguments)]
+fn draw_nine_slice_edges(
+    frame: &mut Frame,
+    bounds: Rectangle,
+    handles: &NineSliceHandles,
+    corner_size: f32,
+    edge_size: f32,
+    inner_width: f32,
+    inner_height: f32,
+) {
     if let Some(top) = &handles.top {
         let top_bounds = Rectangle {
             x: bounds.x + corner_size,

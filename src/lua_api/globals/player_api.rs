@@ -9,9 +9,16 @@ use mlua::{Lua, Result, Value};
 
 /// Register all player-related API functions to the Lua globals table.
 pub fn register_player_api(lua: &Lua) -> Result<()> {
+    register_battlenet_functions(lua)?;
+    register_specialization_functions(lua)?;
+    register_action_bar_functions(lua)?;
+    Ok(())
+}
+
+/// Register BattleNet social functions.
+fn register_battlenet_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    // BattleNet functions
     globals.set("BNFeaturesEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     globals.set("BNFeaturesEnabledAndConnected", lua.create_function(|_, ()| Ok(false))?)?;
     globals.set("BNConnected", lua.create_function(|_, ()| Ok(false))?)?;
@@ -30,10 +37,15 @@ pub fn register_player_api(lua: &Lua) -> Result<()> {
         ))
     })?)?;
 
-    // Specialization functions
-    globals.set("GetSpecialization", lua.create_function(|_, ()| Ok(1))?)?; // Returns current spec index (1-4)
+    Ok(())
+}
+
+/// Register specialization query functions.
+fn register_specialization_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    globals.set("GetSpecialization", lua.create_function(|_, ()| Ok(1))?)?;
     globals.set("GetSpecializationInfo", lua.create_function(|lua, spec_index: i32| {
-        // Returns: specID, name, description, icon, role, primaryStat
         let (id, name, role) = match spec_index {
             1 => (62, "Arcane", "DAMAGER"),
             2 => (63, "Fire", "DAMAGER"),
@@ -44,13 +56,12 @@ pub fn register_player_api(lua: &Lua) -> Result<()> {
             Value::Integer(id),
             Value::String(lua.create_string(name)?),
             Value::String(lua.create_string("Spec description")?),
-            Value::Integer(136116), // icon texture ID
+            Value::Integer(136116),
             Value::String(lua.create_string(role)?),
-            Value::Integer(4), // primaryStat (INT)
+            Value::Integer(4),
         ]))
     })?)?;
     globals.set("GetNumSpecializations", lua.create_function(|_, ()| Ok(4))?)?;
-    globals.set("GetNumSpecializationsForClassID", lua.create_function(|_, _class_id: i32| Ok(3))?)?;
     globals.set("GetSpecializationInfoByID", lua.create_function(|lua, _spec_id: i32| {
         Ok(mlua::MultiValue::from_vec(vec![
             Value::Integer(62),
@@ -61,7 +72,6 @@ pub fn register_player_api(lua: &Lua) -> Result<()> {
             Value::String(lua.create_string("MAGE")?),
         ]))
     })?)?;
-    // Alias for GetSpecializationInfoByID (used by Cell)
     globals.set("GetSpecializationInfoForSpecID", lua.create_function(|lua, _spec_id: i32| {
         Ok(mlua::MultiValue::from_vec(vec![
             Value::Integer(62),
@@ -73,8 +83,6 @@ pub fn register_player_api(lua: &Lua) -> Result<()> {
         ]))
     })?)?;
     globals.set("GetSpecializationInfoForClassID", lua.create_function(|lua, (_class_id, spec_index): (i32, i32)| {
-        // Returns: specID, name, description, icon, role, isRecommended, isAllowed
-        // Return nil if spec_index is out of range (most classes have 3-4 specs)
         if spec_index < 1 || spec_index > 4 {
             return Ok(mlua::MultiValue::new());
         }
@@ -91,24 +99,26 @@ pub fn register_player_api(lua: &Lua) -> Result<()> {
     globals.set("GetSpecializationRoleByID", lua.create_function(|lua, _spec_id: i32| {
         Ok(Value::String(lua.create_string("DAMAGER")?))
     })?)?;
-
-    // GetNumSpecializationsForClassID(classID, sex) - returns number of specs for a class
     globals.set(
         "GetNumSpecializationsForClassID",
         lua.create_function(|_, (_class_id, _sex): (Option<i32>, Option<i32>)| {
-            // Most classes have 3 specs, return 0 if classID is nil
             Ok(_class_id.map_or(0, |_| 3i32))
         })?,
     )?;
 
-    // Action bar functions - no actions in simulation
+    Ok(())
+}
+
+/// Register action bar query functions (all no-op in simulation).
+fn register_action_bar_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
     globals.set("HasAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
     globals.set("GetActionInfo", lua.create_function(|_, _slot: i32| Ok(Value::Nil))?)?;
     globals.set("GetActionTexture", lua.create_function(|_, _slot: i32| Ok(Value::Nil))?)?;
     globals.set("GetActionText", lua.create_function(|_, _slot: i32| Ok(Value::Nil))?)?;
     globals.set("GetActionCount", lua.create_function(|_, _slot: i32| Ok(0))?)?;
     globals.set("GetActionCooldown", lua.create_function(|_, _slot: i32| {
-        // Returns: start, duration, enable, modRate
         Ok((0.0_f64, 0.0_f64, 1, 1.0_f64))
     })?)?;
     globals.set("IsUsableAction", lua.create_function(|_, _slot: i32| Ok((false, false)))?)?;
@@ -118,7 +128,6 @@ pub fn register_player_api(lua: &Lua) -> Result<()> {
     globals.set("IsAutoRepeatAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
     globals.set("IsCurrentAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
     globals.set("GetActionCharges", lua.create_function(|_, _slot: i32| {
-        // Returns: currentCharges, maxCharges, cooldownStart, cooldownDuration, chargeModRate
         Ok((0, 0, 0.0_f64, 0.0_f64, 1.0_f64))
     })?)?;
     globals.set("GetPossessInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;

@@ -535,7 +535,20 @@ impl QuadBatch {
         let inner_height = bounds.height - corner_size * 2.0;
         let full_uv = Rectangle::new(iced::Point::ORIGIN, iced::Size::new(1.0, 1.0));
 
-        // Center
+        self.push_nine_slice_center(bounds, edge_size, textures, color, full_uv);
+        self.push_nine_slice_corners(bounds, corner_size, textures, color, full_uv);
+        self.push_nine_slice_edges(bounds, corner_size, edge_size, inner_width, inner_height, textures, color, full_uv);
+    }
+
+    /// Push the center quad of a 9-slice texture.
+    fn push_nine_slice_center(
+        &mut self,
+        bounds: Rectangle,
+        edge_size: f32,
+        textures: &NineSliceTextures,
+        color: [f32; 4],
+        full_uv: Rectangle,
+    ) {
         if let Some(tex) = textures.center {
             let center_bounds = Rectangle::new(
                 iced::Point::new(bounds.x + edge_size, bounds.y + edge_size),
@@ -543,8 +556,17 @@ impl QuadBatch {
             );
             self.push_quad(center_bounds, full_uv, color, tex, BlendMode::Alpha);
         }
+    }
 
-        // Corners
+    /// Push the four corner quads of a 9-slice texture.
+    fn push_nine_slice_corners(
+        &mut self,
+        bounds: Rectangle,
+        corner_size: f32,
+        textures: &NineSliceTextures,
+        color: [f32; 4],
+        full_uv: Rectangle,
+    ) {
         if let Some(tex) = textures.top_left {
             let corner = Rectangle::new(
                 iced::Point::new(bounds.x, bounds.y),
@@ -579,8 +601,21 @@ impl QuadBatch {
             );
             self.push_quad(corner, full_uv, color, tex, BlendMode::Alpha);
         }
+    }
 
-        // Edges
+    /// Push the four edge quads of a 9-slice texture.
+    #[allow(clippy::too_many_arguments)]
+    fn push_nine_slice_edges(
+        &mut self,
+        bounds: Rectangle,
+        corner_size: f32,
+        edge_size: f32,
+        inner_width: f32,
+        inner_height: f32,
+        textures: &NineSliceTextures,
+        color: [f32; 4],
+        full_uv: Rectangle,
+    ) {
         if let Some(tex) = textures.top {
             let edge = Rectangle::new(
                 iced::Point::new(bounds.x + corner_size, bounds.y),

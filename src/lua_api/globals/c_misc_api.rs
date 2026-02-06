@@ -767,74 +767,27 @@ fn register_c_gm_ticket_info(lua: &Lua) -> Result<()> {
 
 fn register_c_unit_auras(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-    let c_unit_auras = lua.create_table()?;
+    let t = lua.create_table()?;
 
-    c_unit_auras.set(
-        "GetAuraDataByIndex",
-        lua.create_function(|_, (_unit, _index, _filter): (String, i32, Option<String>)| {
-            Ok(Value::Nil)
-        })?,
-    )?;
-    c_unit_auras.set(
-        "GetAuraDataByAuraInstanceID",
-        lua.create_function(|_, (_unit, _aura_instance_id): (String, i32)| Ok(Value::Nil))?,
-    )?;
-    c_unit_auras.set(
-        "GetAuraDataBySlot",
-        lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(Value::Nil))?,
-    )?;
-    c_unit_auras.set(
-        "GetBuffDataByIndex",
-        lua.create_function(|_, (_unit, _index, _filter): (String, i32, Option<String>)| {
-            Ok(Value::Nil)
-        })?,
-    )?;
-    c_unit_auras.set(
-        "GetDebuffDataByIndex",
-        lua.create_function(|_, (_unit, _index, _filter): (String, i32, Option<String>)| {
-            Ok(Value::Nil)
-        })?,
-    )?;
-    c_unit_auras.set(
-        "GetPlayerAuraBySpellID",
-        lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?,
-    )?;
-    c_unit_auras.set(
-        "GetCooldownAuraBySpellID",
-        lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?,
-    )?;
-    c_unit_auras.set(
-        "IsAuraFilteredOutByInstanceID",
-        lua.create_function(
-            |_, (_unit, _aura_instance_id, _filter): (String, i32, String)| Ok(false),
-        )?,
-    )?;
-    c_unit_auras.set(
-        "WantsAlteredForm",
-        lua.create_function(|_, _unit: String| Ok(false))?,
-    )?;
-    c_unit_auras.set(
-        "AddPrivateAuraAnchor",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?,
-    )?;
-    c_unit_auras.set(
-        "RemovePrivateAuraAnchor",
-        lua.create_function(|_, _anchor_id: i32| Ok(()))?,
-    )?;
-    c_unit_auras.set(
-        "AddPrivateAuraAppliedSound",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-    )?;
-    c_unit_auras.set(
-        "RemovePrivateAuraAppliedSound",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-    )?;
-    c_unit_auras.set(
-        "SetPrivateWarningTextAnchor",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-    )?;
+    // Aura data queries
+    t.set("GetAuraDataByIndex", lua.create_function(|_, (_unit, _index, _filter): (String, i32, Option<String>)| Ok(Value::Nil))?)?;
+    t.set("GetAuraDataByAuraInstanceID", lua.create_function(|_, (_unit, _id): (String, i32)| Ok(Value::Nil))?)?;
+    t.set("GetAuraDataBySlot", lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(Value::Nil))?)?;
+    t.set("GetBuffDataByIndex", lua.create_function(|_, (_unit, _index, _filter): (String, i32, Option<String>)| Ok(Value::Nil))?)?;
+    t.set("GetDebuffDataByIndex", lua.create_function(|_, (_unit, _index, _filter): (String, i32, Option<String>)| Ok(Value::Nil))?)?;
+    t.set("GetPlayerAuraBySpellID", lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?)?;
+    t.set("GetCooldownAuraBySpellID", lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?)?;
+    t.set("IsAuraFilteredOutByInstanceID", lua.create_function(|_, (_unit, _id, _filter): (String, i32, String)| Ok(false))?)?;
+    t.set("WantsAlteredForm", lua.create_function(|_, _unit: String| Ok(false))?)?;
 
-    globals.set("C_UnitAuras", c_unit_auras)?;
+    // Private aura management
+    t.set("AddPrivateAuraAnchor", lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?)?;
+    t.set("RemovePrivateAuraAnchor", lua.create_function(|_, _anchor_id: i32| Ok(()))?)?;
+    t.set("AddPrivateAuraAppliedSound", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    t.set("RemovePrivateAuraAppliedSound", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    t.set("SetPrivateWarningTextAnchor", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+
+    globals.set("C_UnitAuras", t)?;
     Ok(())
 }
 
@@ -1069,46 +1022,34 @@ fn register_c_ui_widget(lua: &Lua) -> Result<()> {
 
 fn register_c_gossip_info(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-    let c_gossip_info = lua.create_table()?;
+    let t = lua.create_table()?;
 
-    c_gossip_info.set("GetNumOptions", lua.create_function(|_, ()| Ok(0i32))?)?;
-    c_gossip_info.set(
-        "GetOptions",
-        lua.create_function(|lua, ()| lua.create_table())?,
-    )?;
-    c_gossip_info.set("GetText", lua.create_function(|_, ()| Ok(""))?)?;
-    c_gossip_info.set(
-        "SelectOption",
-        lua.create_function(
-            |_, (_option_id, _text, _confirmed): (i32, Option<String>, Option<bool>)| Ok(()),
-        )?,
-    )?;
-    c_gossip_info.set("CloseGossip", lua.create_function(|_, ()| Ok(()))?)?;
-    c_gossip_info.set(
-        "GetNumActiveQuests",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_gossip_info.set(
-        "GetNumAvailableQuests",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_gossip_info.set(
-        "GetActiveQuests",
-        lua.create_function(|lua, ()| lua.create_table())?,
-    )?;
-    c_gossip_info.set(
-        "GetAvailableQuests",
-        lua.create_function(|lua, ()| lua.create_table())?,
-    )?;
-    c_gossip_info.set(
-        "SelectActiveQuest",
-        lua.create_function(|_, _index: i32| Ok(()))?,
-    )?;
-    c_gossip_info.set(
-        "SelectAvailableQuest",
-        lua.create_function(|_, _index: i32| Ok(()))?,
-    )?;
-    c_gossip_info.set(
+    // Core gossip functions
+    t.set("GetNumOptions", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetOptions", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetText", lua.create_function(|_, ()| Ok(""))?)?;
+    t.set("SelectOption", lua.create_function(|_, (_id, _text, _confirmed): (i32, Option<String>, Option<bool>)| Ok(()))?)?;
+    t.set("CloseGossip", lua.create_function(|_, ()| Ok(()))?)?;
+
+    // Quest-related gossip
+    t.set("GetNumActiveQuests", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetNumAvailableQuests", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetActiveQuests", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetAvailableQuests", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("SelectActiveQuest", lua.create_function(|_, _index: i32| Ok(()))?)?;
+    t.set("SelectAvailableQuest", lua.create_function(|_, _index: i32| Ok(()))?)?;
+
+    // Friendship reputation
+    register_gossip_friendship_methods(lua, &t)?;
+
+    t.set("ForceGossip", lua.create_function(|_, ()| Ok(false))?)?;
+
+    globals.set("C_GossipInfo", t)?;
+    Ok(())
+}
+
+fn register_gossip_friendship_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set(
         "GetFriendshipReputation",
         lua.create_function(|lua, _faction_id: Option<i32>| {
             let info = lua.create_table()?;
@@ -1124,7 +1065,7 @@ fn register_c_gossip_info(lua: &Lua) -> Result<()> {
             Ok(info)
         })?,
     )?;
-    c_gossip_info.set(
+    t.set(
         "GetFriendshipReputationRanks",
         lua.create_function(|lua, _faction_id: Option<i32>| {
             let info = lua.create_table()?;
@@ -1133,9 +1074,6 @@ fn register_c_gossip_info(lua: &Lua) -> Result<()> {
             Ok(info)
         })?,
     )?;
-    c_gossip_info.set("ForceGossip", lua.create_function(|_, ()| Ok(false))?)?;
-
-    globals.set("C_GossipInfo", c_gossip_info)?;
     Ok(())
 }
 
@@ -1281,25 +1219,30 @@ fn register_c_scenario(lua: &Lua) -> Result<()> {
 fn register_c_housing(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    // C_HousingCustomizeMode namespace
-    let c_housing_customize = lua.create_table()?;
-    c_housing_customize.set(
-        "IsHoveringDecor",
-        lua.create_function(|_, ()| Ok(false))?,
-    )?;
-    c_housing_customize.set(
-        "GetHoveredDecorInfo",
-        lua.create_function(|_, ()| Ok(Value::Nil))?,
-    )?;
-    c_housing_customize.set(
-        "GetDecorDyeSlots",
-        lua.create_function(|lua, _decor_id: i32| lua.create_table())?,
-    )?;
-    globals.set("C_HousingCustomizeMode", c_housing_customize)?;
+    register_c_housing_customize(lua, &globals)?;
+    register_c_dye_color(lua, &globals)?;
+    register_c_house_editor(lua, &globals)?;
+    register_c_housing_decor(lua, &globals)?;
 
-    // C_DyeColor namespace
-    let c_dye_color = lua.create_table()?;
-    c_dye_color.set(
+    let c_housing_basic_mode = lua.create_table()?;
+    c_housing_basic_mode.set("IsDecorSelected", lua.create_function(|_, ()| Ok(false))?)?;
+    c_housing_basic_mode.set("GetSelectedDecorInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    globals.set("C_HousingBasicMode", c_housing_basic_mode)?;
+
+    Ok(())
+}
+
+fn register_c_housing_customize(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsHoveringDecor", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetHoveredDecorInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("GetDecorDyeSlots", lua.create_function(|lua, _decor_id: i32| lua.create_table())?)?;
+    globals.set("C_HousingCustomizeMode", t)
+}
+
+fn register_c_dye_color(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "GetDyeColorInfo",
         lua.create_function(|lua, _dye_color_id: i32| {
             let info = lua.create_table()?;
@@ -1311,61 +1254,25 @@ fn register_c_housing(lua: &Lua) -> Result<()> {
             Ok(info)
         })?,
     )?;
-    globals.set("C_DyeColor", c_dye_color)?;
+    globals.set("C_DyeColor", t)
+}
 
-    // C_HouseEditor namespace
-    let c_house_editor = lua.create_table()?;
-    c_house_editor.set(
-        "IsHouseEditorActive",
-        lua.create_function(|_, ()| Ok(false))?,
-    )?;
-    c_house_editor.set(
-        "GetActiveHouseEditorMode",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_house_editor.set(
-        "ActivateHouseEditorMode",
-        lua.create_function(|_, _mode: i32| Ok(()))?,
-    )?;
-    c_house_editor.set(
-        "GetHouseEditorModeAvailability",
-        lua.create_function(|_, _mode: i32| Ok(false))?,
-    )?;
-    c_house_editor.set(
-        "IsHouseEditorModeActive",
-        lua.create_function(|_, _mode: i32| Ok(false))?,
-    )?;
-    globals.set("C_HouseEditor", c_house_editor)?;
+fn register_c_house_editor(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsHouseEditorActive", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetActiveHouseEditorMode", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("ActivateHouseEditorMode", lua.create_function(|_, _mode: i32| Ok(()))?)?;
+    t.set("GetHouseEditorModeAvailability", lua.create_function(|_, _mode: i32| Ok(false))?)?;
+    t.set("IsHouseEditorModeActive", lua.create_function(|_, _mode: i32| Ok(false))?)?;
+    globals.set("C_HouseEditor", t)
+}
 
-    // C_HousingDecor namespace
-    let c_housing_decor = lua.create_table()?;
-    c_housing_decor.set(
-        "GetHoveredDecorInfo",
-        lua.create_function(|_, ()| Ok(Value::Nil))?,
-    )?;
-    c_housing_decor.set(
-        "IsHoveringDecor",
-        lua.create_function(|_, ()| Ok(false))?,
-    )?;
-    c_housing_decor.set(
-        "GetDecorInfo",
-        lua.create_function(|_, _decor_id: i32| Ok(Value::Nil))?,
-    )?;
-    globals.set("C_HousingDecor", c_housing_decor)?;
-
-    // C_HousingBasicMode namespace
-    let c_housing_basic_mode = lua.create_table()?;
-    c_housing_basic_mode.set(
-        "IsDecorSelected",
-        lua.create_function(|_, ()| Ok(false))?,
-    )?;
-    c_housing_basic_mode.set(
-        "GetSelectedDecorInfo",
-        lua.create_function(|_, ()| Ok(Value::Nil))?,
-    )?;
-    globals.set("C_HousingBasicMode", c_housing_basic_mode)?;
-
-    Ok(())
+fn register_c_housing_decor(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetHoveredDecorInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("IsHoveringDecor", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetDecorInfo", lua.create_function(|_, _decor_id: i32| Ok(Value::Nil))?)?;
+    globals.set("C_HousingDecor", t)
 }
 
 fn register_c_game_rules(lua: &Lua) -> Result<()> {

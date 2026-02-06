@@ -153,26 +153,10 @@ pub struct GpuTextureAtlas {
 impl GpuTextureAtlas {
     /// Create a new tiered GPU texture atlas.
     pub fn new(device: &wgpu::Device) -> Self {
-        // Create tier atlases
         let tiers = std::array::from_fn(|i| TierAtlas::new(device, TIER_SIZES[i], i));
 
-        // Create glyph atlas texture (2048x2048)
         let glyph_atlas_size = 2048;
-        let glyph_texture = device.create_texture(&wgpu::TextureDescriptor {
-            label: Some("Glyph Atlas"),
-            size: wgpu::Extent3d {
-                width: glyph_atlas_size,
-                height: glyph_atlas_size,
-                depth_or_array_layers: 1,
-            },
-            mip_level_count: 1,
-            sample_count: 1,
-            dimension: wgpu::TextureDimension::D2,
-            format: wgpu::TextureFormat::Rgba8Unorm,
-            usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
-            view_formats: &[],
-        });
-        let glyph_view = glyph_texture.create_view(&wgpu::TextureViewDescriptor::default());
+        let (glyph_texture, glyph_view) = create_glyph_atlas(device, glyph_atlas_size);
 
         let sampler = device.create_sampler(&wgpu::SamplerDescriptor {
             label: Some("WoW UI Texture Sampler"),
@@ -185,65 +169,8 @@ impl GpuTextureAtlas {
             ..Default::default()
         });
 
-        let texture_entry = |binding: u32| wgpu::BindGroupLayoutEntry {
-            binding,
-            visibility: wgpu::ShaderStages::FRAGMENT,
-            ty: wgpu::BindingType::Texture {
-                sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                view_dimension: wgpu::TextureViewDimension::D2,
-                multisampled: false,
-            },
-            count: None,
-        };
-
-        // Bind group layout: 4 tier textures + sampler + glyph atlas
-        let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
-            label: Some("WoW UI Texture Bind Group Layout"),
-            entries: &[
-                texture_entry(0), // Tier 0 (64x64 cells)
-                texture_entry(1), // Tier 1 (128x128 cells)
-                texture_entry(2), // Tier 2 (256x256 cells)
-                texture_entry(3), // Tier 3 (512x512 cells)
-                wgpu::BindGroupLayoutEntry {
-                    binding: 4,
-                    visibility: wgpu::ShaderStages::FRAGMENT,
-                    ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
-                    count: None,
-                },
-                texture_entry(5), // Glyph atlas
-            ],
-        });
-
-        let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
-            label: Some("WoW UI Texture Bind Group"),
-            layout: &bind_group_layout,
-            entries: &[
-                wgpu::BindGroupEntry {
-                    binding: 0,
-                    resource: wgpu::BindingResource::TextureView(&tiers[0].view),
-                },
-                wgpu::BindGroupEntry {
-                    binding: 1,
-                    resource: wgpu::BindingResource::TextureView(&tiers[1].view),
-                },
-                wgpu::BindGroupEntry {
-                    binding: 2,
-                    resource: wgpu::BindingResource::TextureView(&tiers[2].view),
-                },
-                wgpu::BindGroupEntry {
-                    binding: 3,
-                    resource: wgpu::BindingResource::TextureView(&tiers[3].view),
-                },
-                wgpu::BindGroupEntry {
-                    binding: 4,
-                    resource: wgpu::BindingResource::Sampler(&sampler),
-                },
-                wgpu::BindGroupEntry {
-                    binding: 5,
-                    resource: wgpu::BindingResource::TextureView(&glyph_view),
-                },
-            ],
-        });
+        let (bind_group_layout, bind_group) =
+            create_atlas_bind_groups(device, &tiers, &glyph_view, &sampler);
 
         Self {
             tiers,
@@ -306,76 +233,34 @@ impl GpuTextureAtlas {
         height: u32,
         rgba_data: &[u8],
     ) -> Option<TextureEntry> {
-        // Check if already uploaded
         if let Some(entry) = self.texture_map.get(path) {
             return Some(*entry);
         }
 
-        // Select tier
         let tier_idx = self.select_tier(width, height)?;
         let cell_size = self.tiers[tier_idx].cell_size;
-
-        // Allocate grid slot
         let (grid_x, grid_y) = self.tiers[tier_idx].allocate_slot()?;
 
-        // Prepare texture data (fit into cell)
-        let data = Self::prepare_texture_data_static(width, height, rgba_data, cell_size);
-
-        // Calculate pixel offset in the atlas
-        let (pixel_x, pixel_y) = self.tiers[tier_idx].pixel_offset(grid_x, grid_y);
-
-        // Upload to GPU at the correct position
-        queue.write_texture(
-            wgpu::TexelCopyTextureInfo {
-                texture: &self.tiers[tier_idx].texture,
-                mip_level: 0,
-                origin: wgpu::Origin3d {
-                    x: pixel_x,
-                    y: pixel_y,
-                    z: 0,
-                },
-                aspect: wgpu::TextureAspect::All,
-            },
-            &data,
-            wgpu::TexelCopyBufferLayout {
-                offset: 0,
-                bytes_per_row: Some(cell_size * 4),
-                rows_per_image: Some(cell_size),
-            },
-            wgpu::Extent3d {
-                width: cell_size,
-                height: cell_size,
-                depth_or_array_layers: 1,
-            },
-        );
-
-        // Calculate UV coordinates within the atlas
-        let (uv_base_x, uv_base_y) = self.tiers[tier_idx].uv_offset(grid_x, grid_y);
-        let cell_uv_size = cell_size as f32 / ATLAS_SIZE as f32;
-
-        // UV width/height based on actual texture size within the cell
-        let (uv_width, uv_height) = if width <= cell_size && height <= cell_size {
-            // Texture fits in cell, UV covers only the texture portion
-            (
-                (width as f32 / ATLAS_SIZE as f32),
-                (height as f32 / ATLAS_SIZE as f32),
-            )
-        } else {
-            // Texture was scaled down, UV covers entire cell
-            (cell_uv_size, cell_uv_size)
-        };
-
-        let entry = TextureEntry {
-            tier: tier_idx as u32,
+        upload_cell_to_gpu(
+            queue,
+            &self.tiers[tier_idx],
             grid_x,
             grid_y,
-            original_width: width,
-            original_height: height,
-            uv_x: uv_base_x,
-            uv_y: uv_base_y,
-            uv_width,
-            uv_height,
-        };
+            width,
+            height,
+            rgba_data,
+            cell_size,
+        );
+
+        let entry = compute_texture_entry(
+            &self.tiers[tier_idx],
+            tier_idx,
+            grid_x,
+            grid_y,
+            width,
+            height,
+            cell_size,
+        );
 
         self.texture_map.insert(path.to_string(), entry);
         Some(entry)
@@ -489,6 +374,173 @@ pub struct TierStats {
     pub allocated_bytes: usize,
     pub used_bytes: usize,
     pub used_slots: [usize; NUM_TIERS],
+}
+
+/// Create the glyph atlas texture and view.
+fn create_glyph_atlas(
+    device: &wgpu::Device,
+    size: u32,
+) -> (wgpu::Texture, wgpu::TextureView) {
+    let texture = device.create_texture(&wgpu::TextureDescriptor {
+        label: Some("Glyph Atlas"),
+        size: wgpu::Extent3d {
+            width: size,
+            height: size,
+            depth_or_array_layers: 1,
+        },
+        mip_level_count: 1,
+        sample_count: 1,
+        dimension: wgpu::TextureDimension::D2,
+        format: wgpu::TextureFormat::Rgba8Unorm,
+        usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
+        view_formats: &[],
+    });
+    let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
+    (texture, view)
+}
+
+/// Create bind group layout and bind group for tier textures, sampler, and glyph atlas.
+fn create_atlas_bind_groups(
+    device: &wgpu::Device,
+    tiers: &[TierAtlas; NUM_TIERS],
+    glyph_view: &wgpu::TextureView,
+    sampler: &wgpu::Sampler,
+) -> (wgpu::BindGroupLayout, wgpu::BindGroup) {
+    let texture_entry = |binding: u32| wgpu::BindGroupLayoutEntry {
+        binding,
+        visibility: wgpu::ShaderStages::FRAGMENT,
+        ty: wgpu::BindingType::Texture {
+            sample_type: wgpu::TextureSampleType::Float { filterable: true },
+            view_dimension: wgpu::TextureViewDimension::D2,
+            multisampled: false,
+        },
+        count: None,
+    };
+
+    let layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+        label: Some("WoW UI Texture Bind Group Layout"),
+        entries: &[
+            texture_entry(0), // Tier 0 (64x64 cells)
+            texture_entry(1), // Tier 1 (128x128 cells)
+            texture_entry(2), // Tier 2 (256x256 cells)
+            texture_entry(3), // Tier 3 (512x512 cells)
+            wgpu::BindGroupLayoutEntry {
+                binding: 4,
+                visibility: wgpu::ShaderStages::FRAGMENT,
+                ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
+                count: None,
+            },
+            texture_entry(5), // Glyph atlas
+        ],
+    });
+
+    let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("WoW UI Texture Bind Group"),
+        layout: &layout,
+        entries: &[
+            wgpu::BindGroupEntry {
+                binding: 0,
+                resource: wgpu::BindingResource::TextureView(&tiers[0].view),
+            },
+            wgpu::BindGroupEntry {
+                binding: 1,
+                resource: wgpu::BindingResource::TextureView(&tiers[1].view),
+            },
+            wgpu::BindGroupEntry {
+                binding: 2,
+                resource: wgpu::BindingResource::TextureView(&tiers[2].view),
+            },
+            wgpu::BindGroupEntry {
+                binding: 3,
+                resource: wgpu::BindingResource::TextureView(&tiers[3].view),
+            },
+            wgpu::BindGroupEntry {
+                binding: 4,
+                resource: wgpu::BindingResource::Sampler(sampler),
+            },
+            wgpu::BindGroupEntry {
+                binding: 5,
+                resource: wgpu::BindingResource::TextureView(glyph_view),
+            },
+        ],
+    });
+
+    (layout, bind_group)
+}
+
+/// Upload texture data to a specific cell in a tier atlas.
+#[allow(clippy::too_many_arguments)]
+fn upload_cell_to_gpu(
+    queue: &wgpu::Queue,
+    tier: &TierAtlas,
+    grid_x: u32,
+    grid_y: u32,
+    width: u32,
+    height: u32,
+    rgba_data: &[u8],
+    cell_size: u32,
+) {
+    let data = GpuTextureAtlas::prepare_texture_data_static(width, height, rgba_data, cell_size);
+    let (pixel_x, pixel_y) = tier.pixel_offset(grid_x, grid_y);
+
+    queue.write_texture(
+        wgpu::TexelCopyTextureInfo {
+            texture: &tier.texture,
+            mip_level: 0,
+            origin: wgpu::Origin3d {
+                x: pixel_x,
+                y: pixel_y,
+                z: 0,
+            },
+            aspect: wgpu::TextureAspect::All,
+        },
+        &data,
+        wgpu::TexelCopyBufferLayout {
+            offset: 0,
+            bytes_per_row: Some(cell_size * 4),
+            rows_per_image: Some(cell_size),
+        },
+        wgpu::Extent3d {
+            width: cell_size,
+            height: cell_size,
+            depth_or_array_layers: 1,
+        },
+    );
+}
+
+/// Compute the UV coordinates and TextureEntry for a newly uploaded texture.
+fn compute_texture_entry(
+    tier: &TierAtlas,
+    tier_idx: usize,
+    grid_x: u32,
+    grid_y: u32,
+    width: u32,
+    height: u32,
+    cell_size: u32,
+) -> TextureEntry {
+    let (uv_base_x, uv_base_y) = tier.uv_offset(grid_x, grid_y);
+    let cell_uv_size = cell_size as f32 / ATLAS_SIZE as f32;
+
+    let (uv_width, uv_height) = if width <= cell_size && height <= cell_size {
+        (
+            width as f32 / ATLAS_SIZE as f32,
+            height as f32 / ATLAS_SIZE as f32,
+        )
+    } else {
+        (cell_uv_size, cell_uv_size)
+    };
+
+    TextureEntry {
+        tier: tier_idx as u32,
+        grid_x,
+        grid_y,
+        original_width: width,
+        original_height: height,
+        uv_x: uv_base_x,
+        uv_y: uv_base_y,
+        uv_width,
+        uv_height,
+    }
 }
 
 impl std::fmt::Debug for GpuTextureAtlas {

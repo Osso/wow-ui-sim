@@ -216,6 +216,12 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Hierarchy methods: GetParent, SetParent, GetNumChildren, GetChildren
 fn add_hierarchy_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_parent_methods(methods);
+    add_children_methods(methods);
+}
+
+/// Parent access: GetParent, SetParent
+fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetParent()
     methods.add_method("GetParent", |lua, this, ()| {
         let state = this.state.borrow();
@@ -263,7 +269,10 @@ fn add_hierarchy_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
 
+/// Child query: GetNumChildren, GetChildren
+fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetNumChildren() - return count of child frames
     methods.add_method("GetNumChildren", |_, this, ()| {
         let state = this.state.borrow();
@@ -299,7 +308,22 @@ fn add_hierarchy_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Strata and level methods
 fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetAlpha(alpha)
+    add_alpha_methods(methods);
+    add_strata_methods(methods);
+    add_level_methods(methods);
+
+    // SetToplevel(toplevel) - Mark frame as toplevel (raises on click)
+    methods.add_method("SetToplevel", |_, _this, _toplevel: bool| Ok(()));
+
+    // IsToplevel()
+    methods.add_method("IsToplevel", |_, _this, ()| Ok(false));
+
+    // NOTE: Raise() and Lower() methods are handled in __index metamethod
+    // to allow custom properties with these names to take precedence.
+}
+
+/// Alpha transparency methods.
+fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetAlpha", |_, this, alpha: f32| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -308,14 +332,15 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetAlpha()
     methods.add_method("GetAlpha", |_, this, ()| {
         let state = this.state.borrow();
         let alpha = state.widgets.get(this.id).map(|f| f.alpha).unwrap_or(1.0);
         Ok(alpha)
     });
+}
 
-    // SetFrameStrata(strata)
+/// Frame strata methods (major draw order).
+fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFrameStrata", |_, this, strata: String| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -327,7 +352,6 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetFrameStrata()
     methods.add_method("GetFrameStrata", |_, this, ()| {
         let state = this.state.borrow();
         let strata = state
@@ -338,7 +362,17 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(strata.to_string())
     });
 
-    // SetFrameLevel(level)
+    methods.add_method("SetFixedFrameStrata", |_, this, fixed: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.has_fixed_frame_strata = fixed;
+        }
+        Ok(())
+    });
+}
+
+/// Frame level methods (draw order within strata).
+fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFrameLevel", |_, this, level: i32| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -348,7 +382,6 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetFrameLevel()
     methods.add_method("GetFrameLevel", |_, this, ()| {
         let state = this.state.borrow();
         let level = state
@@ -359,16 +392,6 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(level)
     });
 
-    // SetFixedFrameStrata(fixed) - Controls if strata is inherited from parent
-    methods.add_method("SetFixedFrameStrata", |_, this, fixed: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.has_fixed_frame_strata = fixed;
-        }
-        Ok(())
-    });
-
-    // SetFixedFrameLevel(fixed) - Controls if level is inherited from parent
     methods.add_method("SetFixedFrameLevel", |_, this, fixed: bool| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -376,15 +399,6 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
-
-    // SetToplevel(toplevel) - Mark frame as toplevel (raises on click)
-    methods.add_method("SetToplevel", |_, _this, _toplevel: bool| Ok(()));
-
-    // IsToplevel()
-    methods.add_method("IsToplevel", |_, _this, ()| Ok(false));
-
-    // NOTE: Raise() and Lower() methods are handled in __index metamethod
-    // to allow custom properties with these names to take precedence.
 }
 
 /// Mouse and input methods
@@ -476,12 +490,15 @@ fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Miscellaneous frame-type-specific stubs
 fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetZoom() - for Minimap frame
+    add_minimap_methods(methods);
+    add_scrolling_message_methods(methods);
+    add_alert_and_data_provider_methods(methods);
+}
+
+/// Minimap and WorldMap stubs.
+fn add_minimap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetZoom", |_, _this, ()| Ok(0));
-
-    // SetZoom(zoom) - for Minimap frame
     methods.add_method("SetZoom", |_, _this, _zoom: i32| Ok(()));
-
     // GetCanvas() - for WorldMapFrame (returns self as the canvas)
     methods.add_method("GetCanvas", |lua, this, ()| {
         let handle = FrameHandle {
@@ -490,22 +507,19 @@ fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         };
         lua.create_userdata(handle)
     });
+}
 
-    // SetTextCopyable(copyable) - for EditBox/ScrollingMessageFrame
+/// ScrollingMessageFrame and EditBox stubs.
+fn add_scrolling_message_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetTextCopyable", |_, _this, _copyable: bool| Ok(()));
-
-    // SetInsertMode(mode) - for ScrollingMessageFrame
     methods.add_method("SetInsertMode", |_, _this, _mode: String| Ok(()));
-
-    // SetFading(fading) - for ScrollingMessageFrame
     methods.add_method("SetFading", |_, _this, _fading: bool| Ok(()));
-
-    // SetFadeDuration(duration) - for ScrollingMessageFrame
     methods.add_method("SetFadeDuration", |_, _this, _duration: f32| Ok(()));
-
-    // SetTimeVisible(time) - for ScrollingMessageFrame
     methods.add_method("SetTimeVisible", |_, _this, _time: f32| Ok(()));
+}
 
+/// Alert subsystem, data provider, and EditMode stubs.
+fn add_alert_and_data_provider_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // AddQueuedAlertFrameSubSystem(system) - for AlertFrame
     methods.add_method(
         "AddQueuedAlertFrameSubSystem",

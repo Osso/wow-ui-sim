@@ -12,9 +12,39 @@ use std::rc::Rc;
 
 /// Register quest-related frames.
 pub fn register_quest_frames(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
-    let globals = lua.globals();
+    let quest_id = register_quest_frame(lua, &state)?;
+    register_quest_panels(lua, &state, quest_id)?;
+    register_quest_buttons(lua, &state, quest_id)?;
+    Ok(())
+}
 
-    // Create QuestFrame - main quest dialog frame
+/// Helper to create a child frame, register it, and set it as a Lua global.
+fn create_child_frame(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    name: &str,
+    widget_type: WidgetType,
+    parent_id: u64,
+) -> Result<u64> {
+    let mut frame = Frame::new(widget_type, Some(name.to_string()), Some(parent_id));
+    frame.visible = false;
+    let frame_id = frame.id;
+    state.borrow_mut().widgets.register(frame);
+    state.borrow_mut().widgets.add_child(parent_id, frame_id);
+
+    let handle = FrameHandle {
+        id: frame_id,
+        state: Rc::clone(state),
+    };
+    let ud = lua.create_userdata(handle)?;
+    let globals = lua.globals();
+    globals.set(name, ud.clone())?;
+    globals.set(format!("__frame_{}", frame_id).as_str(), ud)?;
+    Ok(frame_id)
+}
+
+/// Create the main QuestFrame.
+fn register_quest_frame(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<u64> {
     let ui_parent_id = state.borrow().widgets.get_id_by_name("UIParent");
     let mut quest_frame = Frame::new(
         WidgetType::Frame,
@@ -29,130 +59,28 @@ pub fn register_quest_frames(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 
     let handle = FrameHandle {
         id: quest_id,
-        state: Rc::clone(&state),
+        state: Rc::clone(state),
     };
     let quest_ud = lua.create_userdata(handle)?;
-
+    let globals = lua.globals();
     globals.set("QuestFrame", quest_ud.clone())?;
-    let frame_key = format!("__frame_{}", quest_id);
-    globals.set(frame_key.as_str(), quest_ud)?;
+    globals.set(format!("__frame_{}", quest_id).as_str(), quest_ud)?;
 
-    // Create QuestFrameRewardPanel (used by WorldQuestTracker)
-    let mut reward_panel = Frame::new(
-        WidgetType::Frame,
-        Some("QuestFrameRewardPanel".to_string()),
-        Some(quest_id),
-    );
-    reward_panel.visible = false;
-    let reward_id = reward_panel.id;
-    state.borrow_mut().widgets.register(reward_panel);
-    state.borrow_mut().widgets.add_child(quest_id, reward_id);
+    Ok(quest_id)
+}
 
-    let reward_handle = FrameHandle {
-        id: reward_id,
-        state: Rc::clone(&state),
-    };
-    let reward_ud = lua.create_userdata(reward_handle)?;
-    globals.set("QuestFrameRewardPanel", reward_ud.clone())?;
-    globals.set(format!("__frame_{}", reward_id).as_str(), reward_ud)?;
+/// Register quest panel child frames (Reward, Detail, Progress).
+fn register_quest_panels(lua: &Lua, state: &Rc<RefCell<SimState>>, quest_id: u64) -> Result<()> {
+    create_child_frame(lua, state, "QuestFrameRewardPanel", WidgetType::Frame, quest_id)?;
+    create_child_frame(lua, state, "QuestFrameDetailPanel", WidgetType::Frame, quest_id)?;
+    create_child_frame(lua, state, "QuestFrameProgressPanel", WidgetType::Frame, quest_id)?;
+    Ok(())
+}
 
-    // Create QuestFrameCompleteQuestButton (used by WorldQuestTracker)
-    let mut complete_btn = Frame::new(
-        WidgetType::Button,
-        Some("QuestFrameCompleteQuestButton".to_string()),
-        Some(quest_id),
-    );
-    complete_btn.visible = false;
-    let btn_id = complete_btn.id;
-    state.borrow_mut().widgets.register(complete_btn);
-    state.borrow_mut().widgets.add_child(quest_id, btn_id);
-
-    let btn_handle = FrameHandle {
-        id: btn_id,
-        state: Rc::clone(&state),
-    };
-    let btn_ud = lua.create_userdata(btn_handle)?;
-    globals.set("QuestFrameCompleteQuestButton", btn_ud.clone())?;
-    globals.set(format!("__frame_{}", btn_id).as_str(), btn_ud)?;
-
-    // Create QuestFrameDetailPanel (used by WorldQuestTracker)
-    let mut detail_panel = Frame::new(
-        WidgetType::Frame,
-        Some("QuestFrameDetailPanel".to_string()),
-        Some(quest_id),
-    );
-    detail_panel.visible = false;
-    let detail_id = detail_panel.id;
-    state.borrow_mut().widgets.register(detail_panel);
-    state.borrow_mut().widgets.add_child(quest_id, detail_id);
-
-    let detail_handle = FrameHandle {
-        id: detail_id,
-        state: Rc::clone(&state),
-    };
-    let detail_ud = lua.create_userdata(detail_handle)?;
-    globals.set("QuestFrameDetailPanel", detail_ud.clone())?;
-    globals.set(format!("__frame_{}", detail_id).as_str(), detail_ud)?;
-
-    // Create QuestFrameProgressPanel (used by WorldQuestTracker)
-    let mut progress_panel = Frame::new(
-        WidgetType::Frame,
-        Some("QuestFrameProgressPanel".to_string()),
-        Some(quest_id),
-    );
-    progress_panel.visible = false;
-    let progress_id = progress_panel.id;
-    state.borrow_mut().widgets.register(progress_panel);
-    state.borrow_mut().widgets.add_child(quest_id, progress_id);
-
-    let progress_handle = FrameHandle {
-        id: progress_id,
-        state: Rc::clone(&state),
-    };
-    let progress_ud = lua.create_userdata(progress_handle)?;
-    globals.set("QuestFrameProgressPanel", progress_ud.clone())?;
-    globals.set(format!("__frame_{}", progress_id).as_str(), progress_ud)?;
-
-    // Create QuestFrameAcceptButton (used by WorldQuestTracker)
-    let mut accept_btn = Frame::new(
-        WidgetType::Button,
-        Some("QuestFrameAcceptButton".to_string()),
-        Some(quest_id),
-    );
-    accept_btn.visible = false;
-    let accept_id = accept_btn.id;
-    state.borrow_mut().widgets.register(accept_btn);
-    state.borrow_mut().widgets.add_child(quest_id, accept_id);
-
-    let accept_handle = FrameHandle {
-        id: accept_id,
-        state: Rc::clone(&state),
-    };
-    let accept_ud = lua.create_userdata(accept_handle)?;
-    globals.set("QuestFrameAcceptButton", accept_ud.clone())?;
-    globals.set(format!("__frame_{}", accept_id).as_str(), accept_ud)?;
-
-    // Create QuestFrameCompleteButton (used by WorldQuestTracker)
-    let mut quest_complete_btn = Frame::new(
-        WidgetType::Button,
-        Some("QuestFrameCompleteButton".to_string()),
-        Some(quest_id),
-    );
-    quest_complete_btn.visible = false;
-    let quest_complete_id = quest_complete_btn.id;
-    state.borrow_mut().widgets.register(quest_complete_btn);
-    state.borrow_mut().widgets.add_child(quest_id, quest_complete_id);
-
-    let quest_complete_handle = FrameHandle {
-        id: quest_complete_id,
-        state: Rc::clone(&state),
-    };
-    let quest_complete_ud = lua.create_userdata(quest_complete_handle)?;
-    globals.set("QuestFrameCompleteButton", quest_complete_ud.clone())?;
-    globals.set(
-        format!("__frame_{}", quest_complete_id).as_str(),
-        quest_complete_ud,
-    )?;
-
+/// Register quest button child frames (CompleteQuest, Accept, Complete).
+fn register_quest_buttons(lua: &Lua, state: &Rc<RefCell<SimState>>, quest_id: u64) -> Result<()> {
+    create_child_frame(lua, state, "QuestFrameCompleteQuestButton", WidgetType::Button, quest_id)?;
+    create_child_frame(lua, state, "QuestFrameAcceptButton", WidgetType::Button, quest_id)?;
+    create_child_frame(lua, state, "QuestFrameCompleteButton", WidgetType::Button, quest_id)?;
     Ok(())
 }

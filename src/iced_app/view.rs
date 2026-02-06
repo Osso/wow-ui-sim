@@ -251,115 +251,20 @@ impl App {
         let frame_id = self.inspected_frame.unwrap_or(0);
         let frame = state.widgets.get(frame_id);
 
-        // Header with frame info
-        let (name, widget_type, computed_rect) = match frame {
-            Some(f) => {
-                let rect = compute_frame_rect(
-                    &state.widgets,
-                    frame_id,
-                    self.screen_size.get().width,
-                    self.screen_size.get().height,
-                );
-                (
-                    f.name.clone().unwrap_or_else(|| "(anon)".to_string()),
-                    f.widget_type.as_str().to_string(),
-                    rect,
-                )
-            }
-            None => ("(none)".to_string(), "".to_string(), LayoutRect::default()),
-        };
+        let (name, widget_type, computed_rect) = Self::inspector_frame_info(
+            frame, frame_id, &state.widgets,
+            self.screen_size.get().width, self.screen_size.get().height,
+        );
 
-        // Title bar with close button
-        let title = row![
-            text(format!("{} [{}]", name, widget_type))
-                .size(14)
-                .color(palette::GOLD),
-            space::horizontal(),
-            button(text("x").size(14))
-                .on_press(Message::InspectorClose)
-                .padding(2)
-                .style(|_, _| button::Style {
-                    background: Some(iced::Background::Color(Color::TRANSPARENT)),
-                    text_color: palette::TEXT_SECONDARY,
-                    ..Default::default()
-                }),
-        ]
-        .spacing(5)
-        .align_y(iced::Alignment::Center);
-
-        // ID and position (read-only)
+        let title = Self::inspector_title_bar(&name, &widget_type);
         let id_row = text(format!("ID: {}  Pos: ({:.0}, {:.0})", frame_id, computed_rect.x, computed_rect.y))
             .size(11)
             .color(palette::TEXT_SECONDARY);
+        let size_row = self.inspector_size_row();
+        let alpha_level_row = self.inspector_alpha_level_row();
+        let checkbox_row = self.inspector_checkbox_row();
+        let anchors_display = Self::inspector_anchors_display(frame);
 
-        // Width/Height inputs
-        let size_row = row![
-            text("W:").size(11).color(palette::TEXT_SECONDARY),
-            text_input("", &self.inspector_state.width)
-                .on_input(Message::InspectorWidthChanged)
-                .size(11)
-                .width(50),
-            text("H:").size(11).color(palette::TEXT_SECONDARY),
-            text_input("", &self.inspector_state.height)
-                .on_input(Message::InspectorHeightChanged)
-                .size(11)
-                .width(50),
-        ]
-        .spacing(5)
-        .align_y(iced::Alignment::Center);
-
-        // Alpha and Level inputs
-        let alpha_level_row = row![
-            text("Alpha:").size(11).color(palette::TEXT_SECONDARY),
-            text_input("", &self.inspector_state.alpha)
-                .on_input(Message::InspectorAlphaChanged)
-                .size(11)
-                .width(40),
-            text("Level:").size(11).color(palette::TEXT_SECONDARY),
-            text_input("", &self.inspector_state.frame_level)
-                .on_input(Message::InspectorLevelChanged)
-                .size(11)
-                .width(40),
-        ]
-        .spacing(5)
-        .align_y(iced::Alignment::Center);
-
-        // Checkboxes
-        let checkbox_row = row![
-            checkbox(self.inspector_state.visible)
-                .label("Visible")
-                .on_toggle(Message::InspectorVisibleToggled)
-                .size(14)
-                .text_size(11),
-            checkbox(self.inspector_state.mouse_enabled)
-                .label("Mouse")
-                .on_toggle(Message::InspectorMouseEnabledToggled)
-                .size(14)
-                .text_size(11),
-        ]
-        .spacing(10);
-
-        // Anchors display (read-only)
-        let anchors_text = match frame {
-            Some(f) if !f.anchors.is_empty() => {
-                let anchor_strs: Vec<String> = f
-                    .anchors
-                    .iter()
-                    .map(|a| {
-                        let rel = a.relative_to.as_deref().unwrap_or("$parent");
-                        format!(
-                            "{:?}->{} {:?} ({:.0},{:.0})",
-                            a.point, rel, a.relative_point, a.x_offset, a.y_offset
-                        )
-                    })
-                    .collect();
-                anchor_strs.join("\n")
-            }
-            _ => "No anchors".to_string(),
-        };
-        let anchors_display = text(anchors_text).size(10).color(palette::TEXT_MUTED);
-
-        // Apply button
         let apply_btn = button(text("Apply").size(12))
             .on_press(Message::InspectorApply)
             .padding(Padding::from([4, 12]));
@@ -377,7 +282,135 @@ impl App {
         .spacing(6)
         .padding(8);
 
-        let panel: Container<'_, Message> = container(content)
+        Self::position_inspector_panel(content, self.inspector_position)
+    }
+
+    /// Extract name, type, and computed rect for the inspected frame.
+    fn inspector_frame_info(
+        frame: Option<&crate::widget::Frame>,
+        frame_id: u64,
+        widgets: &crate::widget::WidgetRegistry,
+        screen_width: f32,
+        screen_height: f32,
+    ) -> (String, String, LayoutRect) {
+        match frame {
+            Some(f) => {
+                let rect = compute_frame_rect(widgets, frame_id, screen_width, screen_height);
+                (
+                    f.name.clone().unwrap_or_else(|| "(anon)".to_string()),
+                    f.widget_type.as_str().to_string(),
+                    rect,
+                )
+            }
+            None => ("(none)".to_string(), "".to_string(), LayoutRect::default()),
+        }
+    }
+
+    /// Build the inspector title bar with close button.
+    fn inspector_title_bar<'a>(name: &str, widget_type: &str) -> Element<'a, Message> {
+        row![
+            text(format!("{} [{}]", name, widget_type))
+                .size(14)
+                .color(palette::GOLD),
+            space::horizontal(),
+            button(text("x").size(14))
+                .on_press(Message::InspectorClose)
+                .padding(2)
+                .style(|_, _| button::Style {
+                    background: Some(iced::Background::Color(Color::TRANSPARENT)),
+                    text_color: palette::TEXT_SECONDARY,
+                    ..Default::default()
+                }),
+        ]
+        .spacing(5)
+        .align_y(iced::Alignment::Center)
+        .into()
+    }
+
+    /// Build the width/height input row.
+    fn inspector_size_row(&self) -> Element<'_, Message> {
+        row![
+            text("W:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.width)
+                .on_input(Message::InspectorWidthChanged)
+                .size(11)
+                .width(50),
+            text("H:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.height)
+                .on_input(Message::InspectorHeightChanged)
+                .size(11)
+                .width(50),
+        ]
+        .spacing(5)
+        .align_y(iced::Alignment::Center)
+        .into()
+    }
+
+    /// Build the alpha/level input row.
+    fn inspector_alpha_level_row(&self) -> Element<'_, Message> {
+        row![
+            text("Alpha:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.alpha)
+                .on_input(Message::InspectorAlphaChanged)
+                .size(11)
+                .width(40),
+            text("Level:").size(11).color(palette::TEXT_SECONDARY),
+            text_input("", &self.inspector_state.frame_level)
+                .on_input(Message::InspectorLevelChanged)
+                .size(11)
+                .width(40),
+        ]
+        .spacing(5)
+        .align_y(iced::Alignment::Center)
+        .into()
+    }
+
+    /// Build the visible/mouse checkboxes row.
+    fn inspector_checkbox_row(&self) -> Element<'_, Message> {
+        row![
+            checkbox(self.inspector_state.visible)
+                .label("Visible")
+                .on_toggle(Message::InspectorVisibleToggled)
+                .size(14)
+                .text_size(11),
+            checkbox(self.inspector_state.mouse_enabled)
+                .label("Mouse")
+                .on_toggle(Message::InspectorMouseEnabledToggled)
+                .size(14)
+                .text_size(11),
+        ]
+        .spacing(10)
+        .into()
+    }
+
+    /// Format anchor info for the inspected frame.
+    fn inspector_anchors_display<'a>(frame: Option<&crate::widget::Frame>) -> Element<'a, Message> {
+        let anchors_text = match frame {
+            Some(f) if !f.anchors.is_empty() => {
+                let anchor_strs: Vec<String> = f
+                    .anchors
+                    .iter()
+                    .map(|a| {
+                        let rel = a.relative_to.as_deref().unwrap_or("$parent");
+                        format!(
+                            "{:?}->{} {:?} ({:.0},{:.0})",
+                            a.point, rel, a.relative_point, a.x_offset, a.y_offset
+                        )
+                    })
+                    .collect();
+                anchor_strs.join("\n")
+            }
+            _ => "No anchors".to_string(),
+        };
+        text(anchors_text).size(10).color(palette::TEXT_MUTED).into()
+    }
+
+    /// Wrap inspector content in a positioned panel container.
+    fn position_inspector_panel<'a>(
+        content: Column<'a, Message>,
+        position: iced::Point,
+    ) -> Element<'a, Message> {
+        let panel: Container<'a, Message> = container(content)
             .style(|_| container::Style {
                 background: Some(iced::Background::Color(palette::BG_PANEL)),
                 border: Border {
@@ -389,10 +422,8 @@ impl App {
             })
             .width(220);
 
-        // Position the panel at the inspector_position
-        // We use a container with padding to offset the panel
-        let x_pad = self.inspector_position.x.max(0.0);
-        let y_pad = self.inspector_position.y.max(0.0);
+        let x_pad = position.x.max(0.0);
+        let y_pad = position.y.max(0.0);
 
         container(panel)
             .padding(Padding::new(0.0).top(y_pad).left(x_pad))
@@ -615,44 +646,18 @@ impl App {
         visible_only: bool,
         lines: &mut Vec<String>,
     ) {
-        use super::layout::anchor_position;
-
         let Some(frame) = registry.get(id) else {
             return;
         };
 
-        // Check visibility filter
         if visible_only && !frame.visible {
             return;
         }
 
-        // Check name filter - use truncated text for anonymous frames with text
-        let raw_name = frame.name.as_deref();
-        let is_anon = raw_name.map(|n| n.starts_with("__anon_") || n.starts_with("__fs_") || n.starts_with("__tex_")).unwrap_or(true);
-        let name = if is_anon && frame.text.is_some() {
-            let text = frame.text.as_ref().unwrap();
-            // Return truncated text for display (stored in a leaked string for lifetime)
-            if text.len() > 20 {
-                Box::leak(format!("\"{}...\"", &text[..17]).into_boxed_str())
-            } else {
-                Box::leak(format!("\"{}\"", text).into_boxed_str())
-            }
-        } else {
-            raw_name.unwrap_or("(anon)")
-        };
+        let name = Self::tree_display_name(frame);
         let matches_filter = filter.map(|f| name.to_lowercase().contains(&f.to_lowercase())).unwrap_or(true);
-
-        // Compute absolute coordinates in WoW units (not scaled for display)
         let rect = compute_frame_rect(registry, id, screen_width, screen_height);
-        let abs_x = rect.x;
-        let abs_y = rect.y;
-        let abs_w = rect.width;
-        let abs_h = rect.height;
 
-        let type_str = frame.widget_type.as_str();
-        let vis_str = if frame.visible { "" } else { " [hidden]" };
-
-        // Get children that match the filter
         let mut children: Vec<u64> = frame.children.iter().copied().collect();
         if filter.is_some() || visible_only {
             children.retain(|&child_id| {
@@ -660,90 +665,101 @@ impl App {
             });
         }
 
-        // Only output if matches filter or has matching children
-        if matches_filter || !children.is_empty() {
-            let connector = if is_last { "+- " } else { "+- " };
-            // Show size mismatch if stored size differs from computed
-            let size_info = if (frame.width - rect.width).abs() > 0.1 || (frame.height - rect.height).abs() > 0.1 {
-                format!(" [stored={:.0}x{:.0}]", frame.width, frame.height)
+        if !matches_filter && children.is_empty() {
+            return;
+        }
+
+        let connector = if is_last { "+- " } else { "+- " };
+        let size_info = Self::tree_size_mismatch_info(frame, &rect);
+        let vis_str = if frame.visible { "" } else { " [hidden]" };
+        lines.push(format!(
+            "{}{}{} ({}) @ ({:.0},{:.0}) {:.0}x{:.0}{}{}",
+            prefix, connector, name, frame.widget_type.as_str(),
+            rect.x, rect.y, rect.width, rect.height, size_info, vis_str
+        ));
+
+        let child_prefix = format!("{}{}", prefix, if is_last { "   " } else { "|  " });
+        Self::emit_anchor_lines(registry, frame, &child_prefix, screen_width, screen_height, lines);
+
+        if let Some(tex_path) = &frame.texture {
+            lines.push(format!("{}   [texture] {}", child_prefix, tex_path));
+        }
+
+        for (i, &child_id) in children.iter().enumerate() {
+            self.build_tree_recursive(
+                registry, child_id, &child_prefix, i == children.len() - 1,
+                screen_width, screen_height, filter, visible_only, lines,
+            );
+        }
+    }
+
+    /// Derive a display name for a frame in the tree dump.
+    fn tree_display_name(frame: &crate::widget::Frame) -> &str {
+        let raw_name = frame.name.as_deref();
+        let is_anon = raw_name
+            .map(|n| n.starts_with("__anon_") || n.starts_with("__fs_") || n.starts_with("__tex_"))
+            .unwrap_or(true);
+        if is_anon && frame.text.is_some() {
+            let text = frame.text.as_ref().unwrap();
+            if text.len() > 20 {
+                Box::leak(format!("\"{}...\"", &text[..17]).into_boxed_str())
             } else {
-                String::new()
+                Box::leak(format!("\"{}\"", text).into_boxed_str())
+            }
+        } else {
+            raw_name.unwrap_or("(anon)")
+        }
+    }
+
+    /// Format size mismatch info if stored size differs from computed rect.
+    fn tree_size_mismatch_info(frame: &crate::widget::Frame, rect: &LayoutRect) -> String {
+        if (frame.width - rect.width).abs() > 0.1 || (frame.height - rect.height).abs() > 0.1 {
+            format!(" [stored={:.0}x{:.0}]", frame.width, frame.height)
+        } else {
+            String::new()
+        }
+    }
+
+    /// Emit anchor detail lines for a frame in the tree dump.
+    fn emit_anchor_lines(
+        registry: &crate::widget::WidgetRegistry,
+        frame: &crate::widget::Frame,
+        child_prefix: &str,
+        screen_width: f32,
+        screen_height: f32,
+        lines: &mut Vec<String>,
+    ) {
+        use super::layout::anchor_position;
+
+        let parent_rect = if let Some(parent_id) = frame.parent_id {
+            compute_frame_rect(registry, parent_id, screen_width, screen_height)
+        } else {
+            LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height }
+        };
+
+        for anchor in &frame.anchors {
+            let (rel_name, relative_rect) = if let Some(rel_id) = anchor.relative_to_id {
+                let rel_rect = compute_frame_rect(registry, rel_id as u64, screen_width, screen_height);
+                let name = registry.get(rel_id as u64)
+                    .and_then(|f| f.name.as_deref())
+                    .unwrap_or("(anon)");
+                (name, rel_rect)
+            } else {
+                (anchor.relative_to.as_deref().unwrap_or("$parent"), parent_rect)
             };
+
+            let (anchor_x, anchor_y) = anchor_position(
+                anchor.relative_point,
+                relative_rect.x, relative_rect.y,
+                relative_rect.width, relative_rect.height,
+            );
             lines.push(format!(
-                "{}{}{} ({}) @ ({:.0},{:.0}) {:.0}x{:.0}{}{}",
-                prefix, connector, name, type_str, abs_x, abs_y, abs_w, abs_h, size_info, vis_str
+                "{}   [anchor] {} -> {}:{} offset({:.0},{:.0}) -> ({:.0},{:.0})",
+                child_prefix, anchor.point.as_str(),
+                rel_name, anchor.relative_point.as_str(),
+                anchor.x_offset, anchor.y_offset,
+                anchor_x + anchor.x_offset, anchor_y - anchor.y_offset
             ));
-
-            // Show anchor information with computed absolute coordinates
-            let child_prefix = format!("{}{}", prefix, if is_last { "   " } else { "|  " });
-
-            // Get parent rect for anchor calculations
-            let parent_rect = if let Some(parent_id) = frame.parent_id {
-                compute_frame_rect(registry, parent_id, screen_width, screen_height)
-            } else {
-                LayoutRect {
-                    x: 0.0,
-                    y: 0.0,
-                    width: screen_width,
-                    height: screen_height,
-                }
-            };
-
-            for anchor in &frame.anchors {
-                let (rel_name, relative_rect) = if let Some(rel_id) = anchor.relative_to_id {
-                    let rel_rect = compute_frame_rect(registry, rel_id as u64, screen_width, screen_height);
-                    let name = registry.get(rel_id as u64)
-                        .and_then(|f| f.name.as_deref())
-                        .unwrap_or("(anon)");
-                    (name, rel_rect)
-                } else {
-                    (anchor.relative_to.as_deref().unwrap_or("$parent"), parent_rect)
-                };
-
-                // Calculate the absolute position where this anchor resolves to
-                let (anchor_x, anchor_y) = anchor_position(
-                    anchor.relative_point,
-                    relative_rect.x,
-                    relative_rect.y,
-                    relative_rect.width,
-                    relative_rect.height,
-                );
-                let target_x = anchor_x + anchor.x_offset;
-                let target_y = anchor_y - anchor.y_offset;
-
-                lines.push(format!(
-                    "{}   [anchor] {} -> {}:{} offset({:.0},{:.0}) -> ({:.0},{:.0})",
-                    child_prefix,
-                    anchor.point.as_str(),
-                    rel_name,
-                    anchor.relative_point.as_str(),
-                    anchor.x_offset,
-                    anchor.y_offset,
-                    target_x,
-                    target_y
-                ));
-            }
-
-            // Show texture path for Texture widgets
-            if let Some(tex_path) = &frame.texture {
-                lines.push(format!("{}   [texture] {}", child_prefix, tex_path));
-            }
-
-            // Recurse into children with updated prefix
-            for (i, &child_id) in children.iter().enumerate() {
-                let is_last_child = i == children.len() - 1;
-                self.build_tree_recursive(
-                    registry,
-                    child_id,
-                    &child_prefix,
-                    is_last_child,
-                    screen_width,
-                    screen_height,
-                    filter,
-                    visible_only,
-                    lines,
-                );
-            }
         }
     }
 

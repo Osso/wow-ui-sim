@@ -302,44 +302,11 @@ impl shader::Pipeline for WowUiPipeline {
         _queue: &wgpu::Queue,
         format: wgpu::TextureFormat,
     ) -> Self {
-        // Create texture atlas first (we need its bind group layout for the pipeline)
         let texture_atlas = GpuTextureAtlas::new(device);
 
-        // Create uniform buffer
-        let uniforms = Uniforms::new(1920.0, 1080.0); // Default, will be updated
-        let uniform_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-            label: Some("WoW UI Uniform Buffer"),
-            contents: bytemuck::cast_slice(&[uniforms]),
-            usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
-        });
+        let (uniform_buffer, uniform_bind_group_layout, uniform_bind_group) =
+            create_uniform_resources(device);
 
-        // Create bind group layout
-        let uniform_bind_group_layout =
-            device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
-                label: Some("WoW UI Uniform Bind Group Layout"),
-                entries: &[wgpu::BindGroupLayoutEntry {
-                    binding: 0,
-                    visibility: wgpu::ShaderStages::VERTEX,
-                    ty: wgpu::BindingType::Buffer {
-                        ty: wgpu::BufferBindingType::Uniform,
-                        has_dynamic_offset: false,
-                        min_binding_size: None,
-                    },
-                    count: None,
-                }],
-            });
-
-        // Create bind group
-        let uniform_bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
-            label: Some("WoW UI Uniform Bind Group"),
-            layout: &uniform_bind_group_layout,
-            entries: &[wgpu::BindGroupEntry {
-                binding: 0,
-                resource: uniform_buffer.as_entire_binding(),
-            }],
-        });
-
-        // Create initial buffers (will be resized as needed)
         let vertex_buffer = device.create_buffer(&wgpu::BufferDescriptor {
             label: Some("WoW UI Vertex Buffer"),
             size: 4096,
@@ -375,4 +342,41 @@ impl shader::Pipeline for WowUiPipeline {
             last_index_count: 0,
         }
     }
+}
+
+/// Create uniform buffer, bind group layout, and bind group for the projection matrix.
+fn create_uniform_resources(
+    device: &wgpu::Device,
+) -> (wgpu::Buffer, wgpu::BindGroupLayout, wgpu::BindGroup) {
+    let uniforms = Uniforms::new(1920.0, 1080.0);
+    let uniform_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
+        label: Some("WoW UI Uniform Buffer"),
+        contents: bytemuck::cast_slice(&[uniforms]),
+        usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+    });
+
+    let layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+        label: Some("WoW UI Uniform Bind Group Layout"),
+        entries: &[wgpu::BindGroupLayoutEntry {
+            binding: 0,
+            visibility: wgpu::ShaderStages::VERTEX,
+            ty: wgpu::BindingType::Buffer {
+                ty: wgpu::BufferBindingType::Uniform,
+                has_dynamic_offset: false,
+                min_binding_size: None,
+            },
+            count: None,
+        }],
+    });
+
+    let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("WoW UI Uniform Bind Group"),
+        layout: &layout,
+        entries: &[wgpu::BindGroupEntry {
+            binding: 0,
+            resource: uniform_buffer.as_entire_binding(),
+        }],
+    });
+
+    (uniform_buffer, layout, bind_group)
 }

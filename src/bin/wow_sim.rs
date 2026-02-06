@@ -334,7 +334,7 @@ fn run_repl() {
 
         let mut line = String::new();
         match stdin.lock().read_line(&mut line) {
-            Ok(0) => break, // EOF
+            Ok(0) => break,
             Ok(_) => {}
             Err(e) => {
                 eprintln!("Read error: {}", e);
@@ -347,54 +347,63 @@ fn run_repl() {
             continue;
         }
 
-        // Handle REPL commands
-        if line.starts_with('.') {
-            match line {
-                ".exit" | ".quit" | ".q" => break,
-                ".servers" => {
-                    list_servers();
-                    continue;
-                }
-                cmd if cmd.starts_with(".connect ") => {
-                    let path = cmd.strip_prefix(".connect ").unwrap().trim();
-                    socket = PathBuf::from(path);
-                    println!("Switched to {}", socket.display());
-                    continue;
-                }
-                _ => {
-                    eprintln!("Unknown command: {}", line);
-                    continue;
-                }
-            }
-        }
-
-        // Execute Lua code
-        match client::exec(&socket, line) {
-            Ok(output) => {
-                if !output.is_empty() {
-                    println!("{}", output);
-                }
-            }
-            Err(e) => {
-                eprintln!("Error: {}", e);
-            }
+        if !handle_repl_command(line, &mut socket) {
+            break;
         }
     }
 
     println!("Goodbye!");
 }
 
-fn dump_standalone(
-    filter: Option<String>,
-    visible_only: bool,
+/// Handle a REPL input line. Returns false to exit the loop.
+fn handle_repl_command(line: &str, socket: &mut PathBuf) -> bool {
+    if line.starts_with('.') {
+        match line {
+            ".exit" | ".quit" | ".q" => return false,
+            ".servers" => { list_servers(); }
+            cmd if cmd.starts_with(".connect ") => {
+                let path = cmd.strip_prefix(".connect ").unwrap().trim();
+                *socket = PathBuf::from(path);
+                println!("Switched to {}", socket.display());
+            }
+            _ => { eprintln!("Unknown command: {}", line); }
+        }
+        return true;
+    }
+
+    match client::exec(socket, line) {
+        Ok(output) => {
+            if !output.is_empty() {
+                println!("{}", output);
+            }
+        }
+        Err(e) => { eprintln!("Error: {}", e); }
+    }
+    true
+}
+
+/// Blizzard addon TOC entries loaded before user addons.
+const BLIZZARD_ADDONS: &[(&str, &str)] = &[
+    ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
+    ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
+    ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
+    ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
+    ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
+    ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
+    ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
+    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
+    ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
+];
+
+/// Set loader env vars and create a Lua environment with fonts and Blizzard addons loaded.
+/// Returns the env and font system Rc (needed for screenshot quad batch building).
+fn create_standalone_env(
     no_addons: bool,
     no_saved_vars: bool,
-) {
+) -> (WowLuaEnv, std::rc::Rc<std::cell::RefCell<wow_ui_sim::render::WowFontSystem>>) {
     use std::cell::RefCell;
     use std::rc::Rc;
 
-    // Set environment variables for the loader
-    // SAFETY: We're single-threaded at this point
     if no_addons {
         unsafe { std::env::set_var("WOW_SIM_NO_ADDONS", "1") };
     }
@@ -402,7 +411,6 @@ fn dump_standalone(
         unsafe { std::env::set_var("WOW_SIM_NO_SAVED_VARS", "1") };
     }
 
-    // Create Lua environment
     let env = match WowLuaEnv::new() {
         Ok(e) => e,
         Err(e) => {
@@ -411,63 +419,80 @@ fn dump_standalone(
         }
     };
 
-    // Set up font system for text measurement (needed during addon Lua execution)
-    let fonts_path = std::path::PathBuf::from("./fonts");
+    let fonts_path = PathBuf::from("./fonts");
     let font_system = Rc::new(RefCell::new(wow_ui_sim::render::WowFontSystem::new(&fonts_path)));
-    env.set_font_system(font_system);
+    env.set_font_system(Rc::clone(&font_system));
 
-    // Load Blizzard SharedXML for base UI support
-    let wow_ui_path = dirs::home_dir()
-        .unwrap_or_default()
-        .join("Projects/wow/reference-addons/wow-ui-source");
+    load_blizzard_addons(&env);
 
-    if wow_ui_path.exists() {
-        let blizzard_addons = [
-            ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-            ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
-            ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
-            ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
-            ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
-            ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
-            ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
-            ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
-            ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
-        ];
-
-        for (name, toc) in blizzard_addons {
-            let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
-            if toc_path.exists() {
-                match load_addon(&env, &toc_path) {
-                    Ok(r) => {
-                        eprintln!(
-                            "{} loaded: {} Lua, {} XML, {} warnings",
-                            name,
-                            r.lua_files,
-                            r.xml_files,
-                            r.warnings.len()
-                        );
-                    }
-                    Err(e) => eprintln!("{} failed: {}", name, e),
-                }
-            }
-        }
-    } else {
-        eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
-    }
-
-    // Scan and register all addons (metadata only) so C_AddOns.GetNumAddOns() works
     let addons_path = dirs::home_dir()
         .unwrap_or_default()
         .join("Projects/wow/reference-addons");
     env.scan_and_register_addons(&addons_path);
 
-    // Dump the frame tree
+    (env, font_system)
+}
+
+/// Load Blizzard base UI addons from the wow-ui-source directory.
+fn load_blizzard_addons(env: &WowLuaEnv) {
+    let wow_ui_path = dirs::home_dir()
+        .unwrap_or_default()
+        .join("Projects/wow/reference-addons/wow-ui-source");
+
+    if !wow_ui_path.exists() {
+        eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
+        return;
+    }
+
+    for (name, toc) in BLIZZARD_ADDONS {
+        let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
+        if toc_path.exists() {
+            match load_addon(env, &toc_path) {
+                Ok(r) => {
+                    eprintln!(
+                        "{} loaded: {} Lua, {} XML, {} warnings",
+                        name, r.lua_files, r.xml_files, r.warnings.len()
+                    );
+                }
+                Err(e) => eprintln!("{} failed: {}", name, e),
+            }
+        }
+    }
+}
+
+fn dump_standalone(
+    filter: Option<String>,
+    visible_only: bool,
+    no_addons: bool,
+    no_saved_vars: bool,
+) {
+    let (env, _font_system) = create_standalone_env(no_addons, no_saved_vars);
+
     let state = env.state().borrow();
     let widgets = &state.widgets;
 
-    // Collect root frames (no parent)
-    let all_ids = widgets.all_ids();
-    let mut roots: Vec<_> = all_ids
+    let mut roots = collect_root_frames(widgets);
+    roots.sort_by(|a, b| {
+        let name_a = a.1.as_deref().unwrap_or("");
+        let name_b = b.1.as_deref().unwrap_or("");
+        name_a.cmp(name_b)
+    });
+
+    let version_check = state.cvars.get_bool("checkAddonVersion");
+    eprintln!("Load out of date addons: {}", if version_check { "off" } else { "on" });
+    eprintln!("\n=== Frame Tree ===\n");
+
+    for (id, _) in &roots {
+        print_frame(widgets, *id, 0, &filter, visible_only);
+    }
+}
+
+/// Collect root frames (no parent) sorted by name.
+fn collect_root_frames(
+    widgets: &wow_ui_sim::widget::WidgetRegistry,
+) -> Vec<(u64, Option<String>)> {
+    widgets
+        .all_ids()
         .iter()
         .filter_map(|&id| {
             let w = widgets.get(id)?;
@@ -477,73 +502,47 @@ fn dump_standalone(
                 None
             }
         })
-        .collect();
+        .collect()
+}
 
-    // Sort by name for consistent output
-    roots.sort_by(|a, b| {
-        let name_a = a.1.as_deref().unwrap_or("");
-        let name_b = b.1.as_deref().unwrap_or("");
-        name_a.cmp(name_b)
-    });
+/// Recursively print a frame and its children.
+fn print_frame(
+    widgets: &wow_ui_sim::widget::WidgetRegistry,
+    id: u64,
+    depth: usize,
+    filter: &Option<String>,
+    visible_only: bool,
+) {
+    let Some(frame) = widgets.get(id) else { return };
 
-    fn print_frame(
-        widgets: &wow_ui_sim::widget::WidgetRegistry,
-        id: u64,
-        depth: usize,
-        filter: &Option<String>,
-        visible_only: bool,
-    ) {
-        let Some(frame) = widgets.get(id) else {
-            return;
+    if visible_only && !frame.visible {
+        return;
+    }
+
+    let name = frame.name.as_deref().unwrap_or("(anonymous)");
+    let matches_filter = filter
+        .as_ref()
+        .map(|f| name.to_lowercase().contains(&f.to_lowercase()))
+        .unwrap_or(true);
+
+    if matches_filter {
+        let indent = "  ".repeat(depth);
+        let vis = if frame.visible { "visible" } else { "hidden" };
+        let keys: Vec<_> = frame.children_keys.keys().collect();
+        let keys_str = if keys.is_empty() {
+            String::new()
+        } else {
+            format!(" keys=[{}]", keys.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", "))
         };
-
-        // Filter by visibility
-        if visible_only && !frame.visible {
-            return;
-        }
-
-        // Filter by name
-        let name = frame.name.as_deref().unwrap_or("(anonymous)");
-        let matches_filter = filter
-            .as_ref()
-            .map(|f| name.to_lowercase().contains(&f.to_lowercase()))
-            .unwrap_or(true);
-
-        if matches_filter {
-            let indent = "  ".repeat(depth);
-            let vis = if frame.visible { "visible" } else { "hidden" };
-            let size = format!("{}x{}", frame.width as i32, frame.height as i32);
-
-            // Show parentKey children if any
-            let keys: Vec<_> = frame.children_keys.keys().collect();
-            let keys_str = if keys.is_empty() {
-                String::new()
-            } else {
-                format!(" keys=[{}]", keys.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", "))
-            };
-
-            println!(
-                "{}{} [{:?}] ({}) {}{}",
-                indent, name, frame.widget_type, size, vis, keys_str
-            );
-        }
-
-        // Print children
-        for &child_id in &frame.children {
-            print_frame(widgets, child_id, depth + 1, filter, visible_only);
-        }
+        println!(
+            "{}{} [{:?}] ({}x{}) {}{}",
+            indent, name, frame.widget_type, frame.width as i32, frame.height as i32, vis, keys_str
+        );
     }
 
-    // Show persisted settings
-    let version_check = state.cvars.get_bool("checkAddonVersion");
-    eprintln!("Load out of date addons: {}", if version_check { "off" } else { "on" });
-
-    eprintln!("\n=== Frame Tree ===\n");
-
-    for (id, _) in &roots {
-        print_frame(widgets, *id, 0, &filter, visible_only);
+    for &child_id in &frame.children {
+        print_frame(widgets, child_id, depth + 1, filter, visible_only);
     }
-
 }
 
 fn screenshot_standalone(
@@ -554,122 +553,24 @@ fn screenshot_standalone(
     no_addons: bool,
     no_saved_vars: bool,
 ) {
-    use std::cell::RefCell;
-    use std::rc::Rc;
     use wow_ui_sim::iced_app::build_quad_batch_for_registry;
     use wow_ui_sim::render::software::render_to_image;
-    use wow_ui_sim::render::{GlyphAtlas, WowFontSystem};
+    use wow_ui_sim::render::GlyphAtlas;
     use wow_ui_sim::texture::TextureManager;
 
-    // Set environment variables for the loader
-    if no_addons {
-        unsafe { std::env::set_var("WOW_SIM_NO_ADDONS", "1") };
-    }
-    if no_saved_vars {
-        unsafe { std::env::set_var("WOW_SIM_NO_SAVED_VARS", "1") };
-    }
+    let (env, font_system) = create_standalone_env(no_addons, no_saved_vars);
+    run_debug_script(&env);
 
-    // Create Lua environment
-    let env = match WowLuaEnv::new() {
-        Ok(e) => e,
-        Err(e) => {
-            eprintln!("Failed to create Lua environment: {}", e);
-            std::process::exit(1);
-        }
-    };
-
-    // Set up font system for text measurement (needed during addon Lua execution)
-    let fonts_path = PathBuf::from("./fonts");
-    let font_system = Rc::new(RefCell::new(WowFontSystem::new(&fonts_path)));
-    env.set_font_system(Rc::clone(&font_system));
-
-    // Load Blizzard SharedXML for base UI support
-    let wow_ui_path = dirs::home_dir()
-        .unwrap_or_default()
-        .join("Projects/wow/reference-addons/wow-ui-source");
-
-    if wow_ui_path.exists() {
-        let blizzard_addons = [
-            ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-            ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
-            ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
-            ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
-            ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
-            ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
-            ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
-            ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
-            ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
-        ];
-
-        for (name, toc) in blizzard_addons {
-            let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
-            if toc_path.exists() {
-                match load_addon(&env, &toc_path) {
-                    Ok(r) => {
-                        eprintln!(
-                            "{} loaded: {} Lua, {} XML, {} warnings",
-                            name, r.lua_files, r.xml_files, r.warnings.len()
-                        );
-                    }
-                    Err(e) => eprintln!("{} failed: {}", name, e),
-                }
-            }
-        }
-    } else {
-        eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
-    }
-
-    // Scan and register all addons (metadata only) so C_AddOns.GetNumAddOns() works
-    let addons_path = dirs::home_dir()
-        .unwrap_or_default()
-        .join("Projects/wow/reference-addons");
-    env.scan_and_register_addons(&addons_path);
-
-    // Run debug script if it exists
-    let debug_script = PathBuf::from("/tmp/debug-screenshot.lua");
-    if debug_script.exists() {
-        let script = std::fs::read_to_string(&debug_script).unwrap_or_default();
-        if let Err(e) = env.exec(&script) {
-            eprintln!("[Debug] Script error: {}", e);
-        }
-    }
-
-    // Glyph atlas for text rendering
     let mut glyph_atlas = GlyphAtlas::new();
-
-    // Build quad batch (reuse font_system set up for Lua text measurement)
-    let state = env.state().borrow();
-    let widgets = &state.widgets;
-    let mut fs = font_system.borrow_mut();
-
-    let batch = build_quad_batch_for_registry(
-        widgets,
-        (width as f32, height as f32),
-        filter.as_deref(),
-        None,
-        None,
-        Some((&mut fs, &mut glyph_atlas)),
-    );
+    let batch = build_screenshot_batch(&env, &font_system, width, height, filter.as_deref(), &mut glyph_atlas);
 
     eprintln!(
         "QuadBatch: {} quads, {} texture requests",
-        batch.quad_count(),
-        batch.texture_requests.len()
+        batch.quad_count(), batch.texture_requests.len()
     );
 
-    // Set up texture manager (prefer local ./textures, fall back to wow-ui-textures repo)
-    let home = dirs::home_dir().unwrap_or_default();
-    let local_textures = PathBuf::from("./textures");
-    let textures_path = if local_textures.exists() {
-        local_textures
-    } else {
-        home.join("Repos/wow-ui-textures")
-    };
-    let mut tex_mgr = TextureManager::new(textures_path)
-        .with_interface_path(home.join("Projects/wow/Interface"))
-        .with_addons_path(home.join("Projects/wow/reference-addons"));
+    let mut tex_mgr = create_texture_manager();
 
-    // Get glyph atlas data for text rendering
     let glyph_data = if glyph_atlas.is_dirty() {
         let (data, size, _) = glyph_atlas.texture_data();
         Some((data, size))
@@ -677,14 +578,61 @@ fn screenshot_standalone(
         None
     };
 
-    // Render
     let img = render_to_image(&batch, &mut tex_mgr, width, height, glyph_data);
 
-    // Save
     if let Err(e) = img.save(&output) {
         eprintln!("Failed to save image: {}", e);
         std::process::exit(1);
     }
 
     eprintln!("Saved {}x{} screenshot to {}", width, height, output.display());
+}
+
+/// Run optional debug Lua script for screenshot debugging.
+fn run_debug_script(env: &WowLuaEnv) {
+    let debug_script = PathBuf::from("/tmp/debug-screenshot.lua");
+    if debug_script.exists() {
+        let script = std::fs::read_to_string(&debug_script).unwrap_or_default();
+        if let Err(e) = env.exec(&script) {
+            eprintln!("[Debug] Script error: {}", e);
+        }
+    }
+}
+
+/// Build quad batch for screenshot rendering.
+fn build_screenshot_batch(
+    env: &WowLuaEnv,
+    font_system: &std::rc::Rc<std::cell::RefCell<wow_ui_sim::render::WowFontSystem>>,
+    width: u32,
+    height: u32,
+    filter: Option<&str>,
+    glyph_atlas: &mut wow_ui_sim::render::GlyphAtlas,
+) -> wow_ui_sim::render::QuadBatch {
+    use wow_ui_sim::iced_app::build_quad_batch_for_registry;
+
+    let state = env.state().borrow();
+    let mut fs = font_system.borrow_mut();
+
+    build_quad_batch_for_registry(
+        &state.widgets,
+        (width as f32, height as f32),
+        filter, None, None,
+        Some((&mut fs, glyph_atlas)),
+    )
+}
+
+/// Create a TextureManager with local and fallback texture paths.
+fn create_texture_manager() -> wow_ui_sim::texture::TextureManager {
+    use wow_ui_sim::texture::TextureManager;
+
+    let home = dirs::home_dir().unwrap_or_default();
+    let local_textures = PathBuf::from("./textures");
+    let textures_path = if local_textures.exists() {
+        local_textures
+    } else {
+        home.join("Repos/wow-ui-textures")
+    };
+    TextureManager::new(textures_path)
+        .with_interface_path(home.join("Projects/wow/Interface"))
+        .with_addons_path(home.join("Projects/wow/reference-addons"))
 }
