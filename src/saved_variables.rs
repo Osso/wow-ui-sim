@@ -3,13 +3,16 @@
 //! WoW addons can declare SavedVariables and SavedVariablesPerCharacter in their
 //! .toc files. These are global Lua tables that persist between sessions.
 //!
-//! This module supports two modes:
-//! 1. JSON storage (default) - for simulator-generated saved variables
-//! 2. WTF loading - loads actual WoW SavedVariables from WTF directory
+//! Storage uses WoW-compatible Lua format (`VarName = { ... }`), so files can be
+//! shared between the simulator and a real WoW installation.
+//!
+//! Loading priority:
+//! 1. WTF directory (real WoW installation, if configured)
+//! 2. Simulator storage (~/.local/share/wow-ui-sim/SavedVariables/)
 
 use mlua::{Lua, Result, Table, Value};
-use serde_json::Value as JsonValue;
 use std::collections::HashMap;
+use std::fmt::Write;
 use std::fs;
 use std::path::PathBuf;
 
@@ -200,7 +203,7 @@ impl SavedVariablesManager {
 
     /// Get the storage path for account-wide saved variables.
     fn account_path(&self, addon_name: &str) -> PathBuf {
-        self.storage_dir.join(format!("{}.json", addon_name))
+        self.storage_dir.join(format!("{}.lua", addon_name))
     }
 
     /// Get the storage path for per-character saved variables.
@@ -208,7 +211,7 @@ impl SavedVariablesManager {
         self.storage_dir
             .join(&self.realm_name)
             .join(&self.character_name)
-            .join(format!("{}.json", addon_name))
+            .join(format!("{}.lua", addon_name))
     }
 
     /// Initialize saved variables for an addon before it loads.
@@ -254,7 +257,7 @@ impl SavedVariablesManager {
         Ok(())
     }
 
-    /// Load a single variable from storage.
+    /// Load a single variable from storage by executing the saved .lua file.
     fn load_variable(
         &self,
         lua: &Lua,
@@ -268,12 +271,12 @@ impl SavedVariablesManager {
             self.account_path(addon_name)
         };
 
-        // Try to load existing data
-        if let Ok(content) = fs::read_to_string(&path) {
-            if let Ok(json) = serde_json::from_str::<HashMap<String, JsonValue>>(&content) {
-                if let Some(var_data) = json.get(var_name) {
-                    return json_to_lua_table(lua, var_data);
-                }
+        if path.exists() {
+            // Execute the Lua file to set globals, then retrieve the variable
+            self.load_wtf_lua_file(lua, &path)?;
+            let val: Value = lua.globals().get(var_name)?;
+            if let Value::Table(t) = val {
+                return Ok(t);
             }
         }
 
@@ -281,55 +284,52 @@ impl SavedVariablesManager {
         lua.create_table()
     }
 
-    /// Save all registered variables for an addon.
+    /// Save all registered variables for an addon in WoW-compatible Lua format.
     pub fn save_addon(&self, lua: &Lua, addon_name: &str) -> Result<()> {
         let globals = lua.globals();
 
         // Save account-wide variables
         if let Some(vars) = self.registered.get(addon_name) {
-            let mut data: HashMap<String, JsonValue> = HashMap::new();
-            for var_name in vars {
-                if let Ok(table) = globals.get::<Table>(var_name.as_str()) {
-                    if let Ok(json) = lua_table_to_json(&table) {
-                        data.insert(var_name.clone(), json);
-                    }
-                }
-            }
-
-            if !data.is_empty() {
-                let path = self.account_path(addon_name);
-                if let Some(parent) = path.parent() {
-                    let _ = fs::create_dir_all(parent);
-                }
-                if let Ok(json) = serde_json::to_string_pretty(&data) {
-                    let _ = fs::write(&path, json);
-                }
-            }
+            self.write_vars_file(
+                &globals,
+                vars,
+                &self.account_path(addon_name),
+            );
         }
 
         // Save per-character variables
         if let Some(vars) = self.registered_per_char.get(addon_name) {
-            let mut data: HashMap<String, JsonValue> = HashMap::new();
-            for var_name in vars {
-                if let Ok(table) = globals.get::<Table>(var_name.as_str()) {
-                    if let Ok(json) = lua_table_to_json(&table) {
-                        data.insert(var_name.clone(), json);
-                    }
-                }
-            }
-
-            if !data.is_empty() {
-                let path = self.character_path(addon_name);
-                if let Some(parent) = path.parent() {
-                    let _ = fs::create_dir_all(parent);
-                }
-                if let Ok(json) = serde_json::to_string_pretty(&data) {
-                    let _ = fs::write(&path, json);
-                }
-            }
+            self.write_vars_file(
+                &globals,
+                vars,
+                &self.character_path(addon_name),
+            );
         }
 
+        let _ = lua;
         Ok(())
+    }
+
+    /// Write variable values to a .lua file in WoW SavedVariables format.
+    fn write_vars_file(&self, globals: &Table, vars: &[String], path: &PathBuf) {
+        let mut output = String::from("\n");
+        let mut has_data = false;
+
+        for var_name in vars {
+            let val: Value = match globals.get(var_name.as_str()) {
+                Ok(v) => v,
+                Err(_) => continue,
+            };
+            serialize_assignment(&mut output, var_name, &val);
+            has_data = true;
+        }
+
+        if has_data {
+            if let Some(parent) = path.parent() {
+                let _ = fs::create_dir_all(parent);
+            }
+            let _ = fs::write(path, output);
+        }
     }
 
     /// Save all registered variables for all addons.
@@ -362,108 +362,121 @@ impl Default for SavedVariablesManager {
     }
 }
 
-/// Convert a JSON value to a Lua table.
-fn json_to_lua_table(lua: &Lua, json: &JsonValue) -> Result<Table> {
-    let table = lua.create_table()?;
-
-    match json {
-        JsonValue::Object(obj) => {
-            for (k, v) in obj {
-                let lua_value = json_to_lua_value(lua, v)?;
-                table.set(k.as_str(), lua_value)?;
-            }
-        }
-        JsonValue::Array(arr) => {
-            for (i, v) in arr.iter().enumerate() {
-                let lua_value = json_to_lua_value(lua, v)?;
-                table.set(i + 1, lua_value)?;
-            }
-        }
-        _ => {}
-    }
-
-    Ok(table)
+/// Serialize a top-level `VarName = value` assignment in WoW SavedVariables format.
+fn serialize_assignment(out: &mut String, name: &str, value: &Value) {
+    let _ = write!(out, "{} = ", name);
+    serialize_value(out, value, 0);
+    out.push('\n');
 }
 
-/// Convert a JSON value to a Lua value.
-fn json_to_lua_value(lua: &Lua, json: &JsonValue) -> Result<Value> {
-    Ok(match json {
-        JsonValue::Null => Value::Nil,
-        JsonValue::Bool(b) => Value::Boolean(*b),
-        JsonValue::Number(n) => {
-            if let Some(i) = n.as_i64() {
-                Value::Integer(i)
-            } else if let Some(f) = n.as_f64() {
-                Value::Number(f)
+/// Serialize a Lua value to WoW SavedVariables format.
+fn serialize_value(out: &mut String, value: &Value, depth: usize) {
+    match value {
+        Value::Nil => out.push_str("nil"),
+        Value::Boolean(b) => out.push_str(if *b { "true" } else { "false" }),
+        Value::Integer(i) => {
+            let _ = write!(out, "{}", i);
+        }
+        Value::Number(n) => {
+            // Match WoW's format: use integer notation when possible
+            if n.fract() == 0.0 && n.abs() < i64::MAX as f64 {
+                let _ = write!(out, "{}", *n as i64);
             } else {
-                Value::Nil
+                let _ = write!(out, "{}", n);
             }
         }
-        JsonValue::String(s) => Value::String(lua.create_string(s)?),
-        JsonValue::Array(_) | JsonValue::Object(_) => Value::Table(json_to_lua_table(lua, json)?),
-    })
-}
-
-/// Convert a Lua table to JSON.
-fn lua_table_to_json(table: &Table) -> std::result::Result<JsonValue, String> {
-    let mut is_array = true;
-    let mut max_index: i64 = 0;
-
-    // First pass: determine if it's an array
-    for pair in table.clone().pairs::<Value, Value>() {
-        let (k, _) = pair.map_err(|e| e.to_string())?;
-        match k {
-            Value::Integer(i) if i > 0 => {
-                if i > max_index {
-                    max_index = i;
+        Value::String(s) => {
+            let Ok(s) = s.to_str() else { out.push_str("\"\""); return };
+            out.push('"');
+            for ch in s.chars() {
+                match ch {
+                    '"' => out.push_str("\\\""),
+                    '\\' => out.push_str("\\\\"),
+                    '\n' => out.push_str("\\n"),
+                    '\r' => out.push_str("\\r"),
+                    '\t' => out.push_str("\\t"),
+                    '\0' => out.push_str("\\0"),
+                    c => out.push(c),
                 }
             }
-            _ => {
-                is_array = false;
-                break;
+            out.push('"');
+        }
+        Value::Table(t) => serialize_table(out, t, depth),
+        // Functions, userdata, threads etc. are not serializable
+        _ => out.push_str("nil"),
+    }
+}
+
+/// Serialize a Lua table in WoW SavedVariables format.
+///
+/// WoW uses a specific format:
+/// - Array entries (sequential integer keys 1..N) are written without explicit keys
+/// - String/other keys use `["key"] = value` syntax
+/// - Tables are indented with tabs
+fn serialize_table(out: &mut String, table: &Table, depth: usize) {
+    out.push_str("{\n");
+    let indent = "\t".repeat(depth + 1);
+    let closing_indent = "\t".repeat(depth);
+
+    // Determine array length: count sequential integer keys starting at 1
+    let array_len = table.raw_len();
+
+    // Write array entries first (sequential integer keys 1..N)
+    for i in 1..=array_len {
+        let val: Value = match table.get(i as i64) {
+            Ok(v) => v,
+            Err(_) => break,
+        };
+        if val.is_nil() {
+            break;
+        }
+        let _ = write!(out, "{}", indent);
+        serialize_value(out, &val, depth + 1);
+        let _ = writeln!(out, ", -- [{}]", i);
+    }
+
+    // Write non-array entries (string keys and integer keys outside 1..N)
+    let mut entries: Vec<(String, Value)> = Vec::new();
+    if let Ok(pairs) = table.clone().pairs::<Value, Value>().collect::<std::result::Result<Vec<_>, _>>() {
+        for (k, v) in pairs {
+            match &k {
+                Value::Integer(i) if *i >= 1 && *i <= array_len as i64 => continue, // already handled
+                Value::String(s) => {
+                    if let Ok(key) = s.to_str() {
+                        entries.push((key.to_string(), v));
+                    }
+                }
+                Value::Integer(i) => {
+                    entries.push((i.to_string(), v));
+                }
+                Value::Number(n) => {
+                    entries.push((n.to_string(), v));
+                }
+                _ => {} // skip non-serializable keys
             }
         }
     }
 
-    if is_array && max_index > 0 {
-        // Convert as array
-        let mut arr = Vec::with_capacity(max_index as usize);
-        for i in 1..=max_index {
-            let v: Value = table.get(i).map_err(|e| e.to_string())?;
-            arr.push(lua_value_to_json(&v)?);
-        }
-        Ok(JsonValue::Array(arr))
-    } else {
-        // Convert as object
-        let mut obj = serde_json::Map::new();
-        for pair in table.clone().pairs::<Value, Value>() {
-            let (k, v) = pair.map_err(|e| e.to_string())?;
-            let key = match k {
-                Value::String(s) => s.to_str().map_err(|e| e.to_string())?.to_string(),
-                Value::Integer(i) => i.to_string(),
-                Value::Number(n) => n.to_string(),
-                _ => continue, // Skip non-string/number keys
-            };
-            obj.insert(key, lua_value_to_json(&v)?);
-        }
-        Ok(JsonValue::Object(obj))
-    }
-}
+    // Sort string keys for deterministic output
+    entries.sort_by(|a, b| a.0.cmp(&b.0));
 
-/// Convert a Lua value to JSON.
-fn lua_value_to_json(value: &Value) -> std::result::Result<JsonValue, String> {
-    Ok(match value {
-        Value::Nil => JsonValue::Null,
-        Value::Boolean(b) => JsonValue::Bool(*b),
-        Value::Integer(i) => JsonValue::Number((*i).into()),
-        Value::Number(n) => serde_json::Number::from_f64(*n)
-            .map(JsonValue::Number)
-            .unwrap_or(JsonValue::Null),
-        Value::String(s) => JsonValue::String(s.to_str().map_err(|e| e.to_string())?.to_string()),
-        Value::Table(t) => lua_table_to_json(t)?,
-        // Skip functions, userdata, threads, etc.
-        _ => JsonValue::Null,
-    })
+    for (key, val) in &entries {
+        let _ = write!(out, "{}[\"", indent);
+        // Escape the key string
+        for ch in key.chars() {
+            match ch {
+                '"' => out.push_str("\\\""),
+                '\\' => out.push_str("\\\\"),
+                '\n' => out.push_str("\\n"),
+                c => out.push(c),
+            }
+        }
+        out.push_str("\"] = ");
+        serialize_value(out, val, depth + 1);
+        out.push_str(",\n");
+    }
+
+    let _ = write!(out, "{}}}", closing_indent);
 }
 
 #[cfg(test)]
@@ -524,6 +537,90 @@ mod tests {
     }
 
     #[test]
+    fn test_save_produces_lua_format() {
+        let dir = tempdir().unwrap();
+        let lua = Lua::new();
+        let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+
+        mgr.init_for_addon(&lua, "TestAddon", &["TestDB".to_string()], &[])
+            .unwrap();
+
+        lua.load(r#"TestDB.name = "Haky"; TestDB.level = 70; TestDB.active = true"#)
+            .exec()
+            .unwrap();
+
+        mgr.save_addon(&lua, "TestAddon").unwrap();
+
+        let content = fs::read_to_string(dir.path().join("TestAddon.lua")).unwrap();
+        assert!(content.contains("TestDB = {"), "should have Lua assignment");
+        assert!(content.contains("[\"name\"] = \"Haky\""), "should have string value");
+        assert!(content.contains("[\"level\"] = 70"), "should have integer value");
+        assert!(content.contains("[\"active\"] = true"), "should have boolean value");
+    }
+
+    #[test]
+    fn test_save_nested_tables() {
+        let dir = tempdir().unwrap();
+        let lua = Lua::new();
+        let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+
+        mgr.init_for_addon(&lua, "TestAddon", &["TestDB".to_string()], &[])
+            .unwrap();
+
+        lua.load(r#"
+            TestDB.nested = { a = 1, b = { c = "deep" } }
+            TestDB.list = { 10, 20, 30 }
+        "#)
+            .exec()
+            .unwrap();
+
+        mgr.save_addon(&lua, "TestAddon").unwrap();
+
+        // Verify round-trip
+        let lua2 = Lua::new();
+        let mut mgr2 = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+        mgr2.init_for_addon(&lua2, "TestAddon", &["TestDB".to_string()], &[])
+            .unwrap();
+
+        let deep: String = lua2.load("return TestDB.nested.b.c").eval().unwrap();
+        assert_eq!(deep, "deep");
+
+        let second: i64 = lua2.load("return TestDB.list[2]").eval().unwrap();
+        assert_eq!(second, 20);
+
+        let len: i64 = lua2.load("return #TestDB.list").eval().unwrap();
+        assert_eq!(len, 3);
+    }
+
+    #[test]
+    fn test_save_string_escaping() {
+        let dir = tempdir().unwrap();
+        let lua = Lua::new();
+        let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+
+        mgr.init_for_addon(&lua, "TestAddon", &["TestDB".to_string()], &[])
+            .unwrap();
+
+        lua.load(r#"TestDB.msg = "line1\nline2"; TestDB.path = "C:\\Users\\test""#)
+            .exec()
+            .unwrap();
+
+        mgr.save_addon(&lua, "TestAddon").unwrap();
+
+        // Round-trip
+        let lua2 = Lua::new();
+        let mut mgr2 = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+        mgr2.init_for_addon(&lua2, "TestAddon", &["TestDB".to_string()], &[])
+            .unwrap();
+
+        let msg: String = lua2.load("return TestDB.msg").eval().unwrap();
+        assert_eq!(msg, "line1\nline2");
+
+        let path: String = lua2.load("return TestDB.path").eval().unwrap();
+        assert_eq!(path, "C:\\Users\\test");
+    }
+
+    #[test]
     fn test_per_character_variables() {
         let dir = tempdir().unwrap();
 
@@ -565,5 +662,82 @@ mod tests {
             let level: Value = lua.load("return CharDB.level").eval().unwrap();
             assert!(level.is_nil());
         }
+    }
+
+    #[test]
+    fn test_multiple_variables_per_addon() {
+        let dir = tempdir().unwrap();
+
+        {
+            let lua = Lua::new();
+            let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+
+            mgr.init_for_addon(
+                &lua,
+                "Angleur",
+                &["AngleurConfig".to_string(), "AngleurMinimapButton".to_string()],
+                &["AngleurCharacter".to_string()],
+            )
+            .unwrap();
+
+            lua.load(r#"
+                AngleurConfig.method = "oneKey"
+                AngleurMinimapButton.hide = true
+                AngleurCharacter.sleeping = false
+            "#)
+            .exec()
+            .unwrap();
+
+            mgr.save_addon(&lua, "Angleur").unwrap();
+        }
+
+        // Round-trip
+        {
+            let lua = Lua::new();
+            let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+
+            mgr.init_for_addon(
+                &lua,
+                "Angleur",
+                &["AngleurConfig".to_string(), "AngleurMinimapButton".to_string()],
+                &["AngleurCharacter".to_string()],
+            )
+            .unwrap();
+
+            let method: String = lua.load("return AngleurConfig.method").eval().unwrap();
+            assert_eq!(method, "oneKey");
+
+            let hide: bool = lua.load("return AngleurMinimapButton.hide").eval().unwrap();
+            assert!(hide);
+
+            let sleeping: bool = lua.load("return AngleurCharacter.sleeping").eval().unwrap();
+            assert!(!sleeping);
+        }
+    }
+
+    #[test]
+    fn test_serialize_format_matches_wow() {
+        // Verify the output format matches what WoW produces
+        let lua = Lua::new();
+        lua.load(r#"
+            TestVar = {
+                ["setting"] = "hello",
+                ["items"] = { 10, 20, 30 },
+            }
+        "#)
+        .exec()
+        .unwrap();
+
+        let val: Value = lua.globals().get("TestVar").unwrap();
+        let mut output = String::new();
+        serialize_assignment(&mut output, "TestVar", &val);
+
+        // Should start with assignment
+        assert!(output.starts_with("TestVar = {"));
+        // Array items should use `-- [N]` comments
+        assert!(output.contains("-- [1]"));
+        assert!(output.contains("-- [2]"));
+        // String keys should use ["key"] syntax
+        assert!(output.contains("[\"setting\"] = \"hello\""));
     }
 }
