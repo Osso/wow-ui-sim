@@ -227,52 +227,73 @@ pub fn generate_animation_group_code(
         code.push_str("\n        __ag:SetToFinalAlpha(true)\n        ");
     }
 
-    // Process child elements
+    emit_anim_group_children(&mut code, anim_group, frame_ref);
+    emit_anim_group_mixin(&mut code, anim_group);
+
+    code.push_str("\n        end\n        ");
+    code
+}
+
+/// Emit child elements (scripts, keyvalues, animations) for an animation group.
+fn emit_anim_group_children(
+    code: &mut String,
+    anim_group: &crate::xml::AnimationGroupXml,
+    frame_ref: &str,
+) {
     for element in &anim_group.elements {
         match element {
             crate::xml::AnimationElement::Scripts(scripts) => {
                 code.push_str(&generate_anim_group_scripts_code(scripts, "__ag"));
             }
             crate::xml::AnimationElement::KeyValues(kv) => {
-                for key_value in &kv.values {
-                    let value = match key_value.value_type.as_deref() {
-                        Some("number") => key_value.value.clone(),
-                        Some("boolean") => key_value.value.to_lowercase(),
-                        _ => format!("\"{}\"", escape_lua_string(&key_value.value)),
-                    };
-                    code.push_str(&format!(
-                        r#"
-        __ag.{} = {}
-        "#,
-                        key_value.key, value
-                    ));
-                }
+                emit_anim_key_values(code, kv);
             }
             crate::xml::AnimationElement::Unknown => {}
             _ => {
-                // Animation elements (Alpha, Translation, etc.)
-                let (anim_type_str, anim_xml) = match element {
-                    crate::xml::AnimationElement::Alpha(a) => ("Alpha", a),
-                    crate::xml::AnimationElement::Translation(a) => ("Translation", a),
-                    crate::xml::AnimationElement::LineTranslation(a) => ("LineTranslation", a),
-                    crate::xml::AnimationElement::Rotation(a) => ("Rotation", a),
-                    crate::xml::AnimationElement::Scale(a) => ("Scale", a),
-                    crate::xml::AnimationElement::LineScale(a) => ("LineScale", a),
-                    crate::xml::AnimationElement::Path(a) => ("Path", a),
-                    crate::xml::AnimationElement::FlipBook(a) => ("FlipBook", a),
-                    crate::xml::AnimationElement::VertexColor(a) => ("VertexColor", a),
-                    crate::xml::AnimationElement::TextureCoordTranslation(a) => {
-                        ("TextureCoordTranslation", a)
-                    }
-                    crate::xml::AnimationElement::Animation(a) => ("Animation", a),
-                    _ => continue,
-                };
-                code.push_str(&generate_animation_code(anim_xml, anim_type_str, frame_ref));
+                if let Some((type_str, xml)) = resolve_animation_element(element) {
+                    code.push_str(&generate_animation_code(xml, type_str, frame_ref));
+                }
             }
         }
     }
+}
 
-    // Apply mixin
+/// Emit KeyValue assignments for an animation group.
+fn emit_anim_key_values(code: &mut String, kv: &crate::xml::KeyValuesXml) {
+    for key_value in &kv.values {
+        let value = match key_value.value_type.as_deref() {
+            Some("number") => key_value.value.clone(),
+            Some("boolean") => key_value.value.to_lowercase(),
+            _ => format!("\"{}\"", escape_lua_string(&key_value.value)),
+        };
+        code.push_str(&format!("\n        __ag.{} = {}\n        ", key_value.key, value));
+    }
+}
+
+/// Resolve an AnimationElement variant to its type string and XML data.
+fn resolve_animation_element(
+    element: &crate::xml::AnimationElement,
+) -> Option<(&str, &crate::xml::AnimationXml)> {
+    match element {
+        crate::xml::AnimationElement::Alpha(a) => Some(("Alpha", a)),
+        crate::xml::AnimationElement::Translation(a) => Some(("Translation", a)),
+        crate::xml::AnimationElement::LineTranslation(a) => Some(("LineTranslation", a)),
+        crate::xml::AnimationElement::Rotation(a) => Some(("Rotation", a)),
+        crate::xml::AnimationElement::Scale(a) => Some(("Scale", a)),
+        crate::xml::AnimationElement::LineScale(a) => Some(("LineScale", a)),
+        crate::xml::AnimationElement::Path(a) => Some(("Path", a)),
+        crate::xml::AnimationElement::FlipBook(a) => Some(("FlipBook", a)),
+        crate::xml::AnimationElement::VertexColor(a) => Some(("VertexColor", a)),
+        crate::xml::AnimationElement::TextureCoordTranslation(a) => {
+            Some(("TextureCoordTranslation", a))
+        }
+        crate::xml::AnimationElement::Animation(a) => Some(("Animation", a)),
+        _ => None,
+    }
+}
+
+/// Emit Mixin() calls for an animation group.
+fn emit_anim_group_mixin(code: &mut String, anim_group: &crate::xml::AnimationGroupXml) {
     if let Some(mixin) = &anim_group.mixin {
         for m in mixin.split(',').map(|s| s.trim()) {
             if !m.is_empty() {
@@ -280,10 +301,6 @@ pub fn generate_animation_group_code(
             }
         }
     }
-
-    code.push_str("\n        end\n        ");
-
-    code
 }
 
 /// Format an optional string as a Lua string literal or "nil".
@@ -374,24 +391,57 @@ pub fn append_script_handler(
     handler_name: &str,
     script: &crate::xml::ScriptBodyXml,
 ) {
-    if let Some(func) = &script.function {
-        if func.is_empty() {
-            return; // Empty function name = no-op (used to override parent scripts)
-        }
-        code.push_str(&format!(
-            "\n        {target}:SetScript(\"{handler_name}\", {func})\n        "
-        ));
-    } else if let Some(method) = &script.method {
-        code.push_str(&format!(
-            "\n        {target}:SetScript(\"{handler_name}\", function(self, ...) self:{method}(...) end)\n        "
-        ));
-    } else if let Some(body) = &script.body {
-        let body = body.trim();
-        if !body.is_empty() {
+    let Some(new_handler) = build_handler_expr(script) else { return };
+
+    match script.inherit.as_deref() {
+        Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, true),
+        Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, false),
+        _ => {
             code.push_str(&format!(
-                "\n        {target}:SetScript(\"{handler_name}\", function(self, ...)\n            {body}\n        end)\n        "
+                "\n        {target}:SetScript(\"{handler_name}\", {new_handler})\n        "
             ));
         }
+    }
+}
+
+/// Emit a chained handler that wraps the existing handler (prepend=new first, else old first).
+fn emit_chained_handler(
+    code: &mut String,
+    target: &str,
+    handler_name: &str,
+    new_handler: &str,
+    prepend: bool,
+) {
+    let (first, second) = if prepend { ("__new", "__old") } else { ("__old", "__new") };
+    code.push_str(&format!(
+        r#"
+        do
+            local __old = {target}:GetScript("{handler_name}")
+            local __new = {new_handler}
+            if __old then
+                {target}:SetScript("{handler_name}", function(self, ...)
+                    {first}(self, ...)
+                    {second}(self, ...)
+                end)
+            else
+                {target}:SetScript("{handler_name}", __new)
+            end
+        end
+        "#
+    ));
+}
+
+/// Build the Lua expression for a script handler (without setting it).
+fn build_handler_expr(script: &crate::xml::ScriptBodyXml) -> Option<String> {
+    if let Some(func) = &script.function {
+        if func.is_empty() { return None; }
+        Some(func.clone())
+    } else if let Some(method) = &script.method {
+        Some(format!("function(self, ...) self:{method}(...) end"))
+    } else {
+        let body = script.body.as_deref()?.trim();
+        if body.is_empty() { return None; }
+        Some(format!("function(self, ...)\n            {body}\n        end"))
     }
 }
 

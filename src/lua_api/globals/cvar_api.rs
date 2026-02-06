@@ -50,7 +50,7 @@ fn register_c_cvar_namespace(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result
         }
     })?)?;
 
-    t.set("GetCVarBitfield", lua.create_function(|_, (_name, _index): (String, i32)| {
+    t.set("GetCVarBitfield", lua.create_function(|_, (_name, _index): (String, Option<i32>)| {
         Ok(false)
     })?)?;
 
@@ -139,8 +139,11 @@ fn register_binding_queries(lua: &Lua) -> Result<()> {
     globals.set(
         "GetBindingText",
         lua.create_function(
-            |lua, (key, _prefix, _abbrev): (String, Option<String>, Option<bool>)| {
-                Ok(Value::String(lua.create_string(&key)?))
+            |lua, (key, _prefix, _abbrev): (Option<String>, Option<String>, Option<bool>)| {
+                match key {
+                    Some(k) => Ok(Value::String(lua.create_string(&k)?)),
+                    None => Ok(Value::String(lua.create_string("")?)),
+                }
             },
         )?,
     )?;

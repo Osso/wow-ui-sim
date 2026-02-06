@@ -1366,6 +1366,8 @@ fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetLowerEmblemTexture", |_, _this, ()| -> Result<Option<String>> {
         Ok(None)
     });
+    methods.add_method("RefreshUnit", |_, _this, ()| Ok(()));
+    methods.add_method("RefreshCamera", |_, _this, ()| Ok(()));
 }
 
 /// Native ModelScene methods (C++ side in WoW, stubs here).

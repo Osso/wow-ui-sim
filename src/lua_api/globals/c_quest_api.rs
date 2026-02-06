@@ -35,6 +35,8 @@ fn register_quest_log_queries(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("GetMaxNumQuestsCanAccept", lua.create_function(|_, ()| Ok(35i32))?)?;
     t.set("ReadyForTurnIn", lua.create_function(|_, _id: i32| Ok(false))?)?;
     t.set("GetQuestAdditionalHighlights", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    t.set("SetMapForQuestPOIs", lua.create_function(|_, _map_id: i32| Ok(()))?)?;
+    t.set("GetZoneStoryInfo", lua.create_function(|_, _map_id: i32| Ok((Value::Nil, Value::Nil)))?)?;
     Ok(())
 }
 

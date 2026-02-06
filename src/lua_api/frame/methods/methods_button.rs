@@ -90,81 +90,90 @@ fn extract_texture_path(texture: &Value) -> Result<Option<String>, mlua::Error> 
     }
 }
 
-/// Set{Normal,Highlight}Texture - set texture by path or userdata.
+/// Resolved texture info: file path and optional UV coords (from atlas lookup).
+struct ResolvedTexture {
+    path: String,
+    tex_coords: Option<(f32, f32, f32, f32)>,
+}
+
+/// Resolve a texture string as either an atlas name or a file path.
+/// WoW's SetNormalTexture/etc. accept atlas names in addition to file paths.
+fn resolve_texture_string(name: &str) -> ResolvedTexture {
+    if let Some(lookup) = crate::atlas::get_atlas_info(name) {
+        let info = lookup.info;
+        ResolvedTexture {
+            path: info.file.to_string(),
+            tex_coords: Some((
+                info.left_tex_coord,
+                info.right_tex_coord,
+                info.top_tex_coord,
+                info.bottom_tex_coord,
+            )),
+        }
+    } else {
+        ResolvedTexture {
+            path: name.to_string(),
+            tex_coords: None,
+        }
+    }
+}
+
+/// Apply a resolved texture (path + optional atlas UVs) to a button field and its child texture.
+fn apply_button_texture_setter(
+    state: &mut crate::lua_api::SimState,
+    button_id: u64,
+    parent_key: &str,
+    texture: &Value,
+    set_button_field: fn(&mut crate::widget::Frame, Option<String>, Option<(f32, f32, f32, f32)>),
+) -> Result<(), mlua::Error> {
+    let path = extract_texture_path(texture)?;
+    let is_userdata = matches!(texture, Value::UserData(_));
+    if !is_userdata {
+        let resolved = path.as_ref().map(|p| resolve_texture_string(p));
+        let resolved_path = resolved.as_ref().map(|r| r.path.clone());
+        let tex_coords = resolved.as_ref().and_then(|r| r.tex_coords);
+        if let Some(frame) = state.widgets.get_mut(button_id) {
+            set_button_field(frame, resolved_path.clone(), tex_coords);
+        }
+        let tex_id = get_or_create_button_texture(state, button_id, parent_key);
+        if let Some(tex) = state.widgets.get_mut(tex_id) {
+            tex.texture = resolved_path;
+            tex.tex_coords = tex_coords;
+            tex.atlas_tex_coords = tex_coords;
+        }
+    } else {
+        get_or_create_button_texture(state, button_id, parent_key);
+    }
+    Ok(())
+}
+
+/// Set{Normal,Highlight}Texture - set texture by path, atlas name, or userdata.
 fn add_texture_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetNormalTexture", |_, this, texture: Value| {
-        let path = extract_texture_path(&texture)?;
-        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-        if !is_userdata {
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.normal_texture = path.clone();
-            }
-        }
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
-        if !is_userdata {
-            if let Some(tex) = state.widgets.get_mut(tex_id) {
-                tex.texture = path;
-            }
-        }
-        Ok(())
+        apply_button_texture_setter(&mut state, this.id, "NormalTexture", &texture,
+            |f, path, coords| { f.normal_texture = path; f.normal_tex_coords = coords; })
     });
 
     methods.add_method("SetHighlightTexture", |_, this, texture: Value| {
-        let path = extract_texture_path(&texture)?;
-        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-        if !is_userdata {
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.highlight_texture = path.clone();
-            }
-        }
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
-        if !is_userdata {
-            if let Some(tex) = state.widgets.get_mut(tex_id) {
-                tex.texture = path;
-            }
-        }
-        Ok(())
+        apply_button_texture_setter(&mut state, this.id, "HighlightTexture", &texture,
+            |f, path, coords| { f.highlight_texture = path; f.highlight_tex_coords = coords; })
     });
 }
 
-/// Set{Pushed,Disabled}Texture - set texture by path or userdata.
+/// Set{Pushed,Disabled}Texture - set texture by path, atlas name, or userdata.
 fn add_texture_setter_methods_2<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetPushedTexture", |_, this, texture: Value| {
-        let path = extract_texture_path(&texture)?;
-        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-        if !is_userdata {
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.pushed_texture = path.clone();
-            }
-        }
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
-        if !is_userdata {
-            if let Some(tex) = state.widgets.get_mut(tex_id) {
-                tex.texture = path;
-            }
-        }
-        Ok(())
+        apply_button_texture_setter(&mut state, this.id, "PushedTexture", &texture,
+            |f, path, coords| { f.pushed_texture = path; f.pushed_tex_coords = coords; })
     });
 
     methods.add_method("SetDisabledTexture", |_, this, texture: Value| {
-        let path = extract_texture_path(&texture)?;
-        let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-        if !is_userdata {
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.disabled_texture = path.clone();
-            }
-        }
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
-        if !is_userdata {
-            if let Some(tex) = state.widgets.get_mut(tex_id) {
-                tex.texture = path;
-            }
-        }
-        Ok(())
+        apply_button_texture_setter(&mut state, this.id, "DisabledTexture", &texture,
+            |f, path, coords| { f.disabled_texture = path; f.disabled_tex_coords = coords; })
     });
 }
 

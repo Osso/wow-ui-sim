@@ -637,6 +637,10 @@ fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetID() - Get frame ID
     methods.add_method("GetID", |_, _this, ()| Ok(0));
 
+    // GetMapID() / SetMapID() - Map canvas frame stubs
+    methods.add_method("GetMapID", |_, _this, ()| Ok(0));
+    methods.add_method("SetMapID", |_, _this, _map_id: i32| Ok(()));
+
     // EnableMouse(enable)
     methods.add_method("EnableMouse", |_, this, enable: bool| {
         let mut state = this.state.borrow_mut();

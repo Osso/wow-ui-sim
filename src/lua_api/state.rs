@@ -75,6 +75,9 @@ pub struct SimState {
     pub animation_groups: HashMap<u64, AnimGroupState>,
     /// Counter for generating unique animation group IDs.
     pub next_anim_group_id: u64,
+    /// Screen dimensions in UI coordinates.
+    pub screen_width: f32,
+    pub screen_height: f32,
 }
 
 impl Default for SimState {
@@ -94,6 +97,8 @@ impl Default for SimState {
             on_update_frames: HashSet::new(),
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
+            screen_width: 1024.0,
+            screen_height: 768.0,
         }
     }
 }

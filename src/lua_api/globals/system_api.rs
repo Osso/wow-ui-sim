@@ -34,6 +34,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_error_callstack_stubs(lua)?;
     register_network_stubs(lua)?;
     register_input_state_stubs(lua)?;
+    register_screen_size_functions(lua, &state)?;
     Ok(())
 }
 
@@ -427,5 +428,24 @@ fn register_input_state_stubs(lua: &Lua) -> Result<()> {
     globals.set("IsMouseButtonDown", lua.create_function(|_, _btn: Option<Value>| Ok(false))?)?;
     globals.set("GetMouseFocus", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     globals.set("GetMouseButtonClicked", lua.create_function(|_, ()| Ok(""))?)?;
+    Ok(())
+}
+
+/// Screen size functions reading from the rendering surface dimensions in SimState.
+fn register_screen_size_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let globals = lua.globals();
+    let st = Rc::clone(state);
+    globals.set("GetScreenWidth", lua.create_function(move |_, ()| {
+        Ok(st.borrow().screen_width as f64)
+    })?)?;
+    let st = Rc::clone(state);
+    globals.set("GetScreenHeight", lua.create_function(move |_, ()| {
+        Ok(st.borrow().screen_height as f64)
+    })?)?;
+    let st = Rc::clone(state);
+    globals.set("GetPhysicalScreenSize", lua.create_function(move |_, ()| {
+        let s = st.borrow();
+        Ok((s.screen_width as i32, s.screen_height as i32))
+    })?)?;
     Ok(())
 }

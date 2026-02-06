@@ -112,6 +112,7 @@ fn register_c_misc_api_game_menu(lua: &Lua) -> Result<()> {
     register_c_catalog_shop(lua)?;
     register_c_commentator(lua)?;
     register_c_challenge_mode(lua)?;
+    register_c_club(lua)?;
     register_c_club_finder(lua)?;
     register_c_artifact_and_azerite(lua)?;
     register_global_game_stubs(lua)?;
@@ -1726,6 +1727,21 @@ fn register_c_challenge_mode(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+fn register_c_club(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetSubscribedClubs", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetClubInfo", lua.create_function(|_, _club_id: i64| Ok(Value::Nil))?)?;
+    t.set("GetStreams", lua.create_function(|lua, _club_id: i64| lua.create_table())?)?;
+    t.set("GetClubMembers", lua.create_function(|lua, _club_id: i64| lua.create_table())?)?;
+    t.set("FocusMembers", lua.create_function(|_, _club_id: i64| Ok(()))?)?;
+    t.set("UnfocusMembers", lua.create_function(|_, _club_id: i64| Ok(()))?)?;
+    t.set("SetClubPresenceSubscription", lua.create_function(|_, _club_id: i64| Ok(()))?)?;
+    t.set("ClearClubPresenceSubscription", lua.create_function(|_, ()| Ok(()))?)?;
+    lua.globals().set("C_Club", t)?;
+    Ok(())
+}
+
 fn register_c_club_finder(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
@@ -1786,6 +1802,11 @@ fn register_global_account_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
     g.set("GetExpansionTrialInfo", lua.create_function(|_, ()| Ok((false, 0i32)))?)?;
     g.set("UnitTrialBankedLevels", lua.create_function(|_, _unit: Option<String>| Ok(0i32))?)?;
+    g.set("IsInGuild", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("SortQuestSortTypes", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("SortQuests", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("QuestMapUpdateAllQuests", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("QuestPOIUpdateIcons", lua.create_function(|_, ()| Ok(()))?)?;
     Ok(())
 }
 

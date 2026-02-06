@@ -64,8 +64,11 @@ fn register_binding_getters(lua: &Lua, globals: &mlua::Table) -> Result<()> {
     globals.set(
         "GetBindingText",
         lua.create_function(
-            |lua, (key, _prefix, _abbrev): (String, Option<String>, Option<bool>)| {
-                Ok(Value::String(lua.create_string(&key)?))
+            |lua, (key, _prefix, _abbrev): (Option<String>, Option<String>, Option<bool>)| {
+                match key {
+                    Some(k) => Ok(Value::String(lua.create_string(&k)?)),
+                    None => Ok(Value::String(lua.create_string("")?)),
+                }
             },
         )?,
     )?;
