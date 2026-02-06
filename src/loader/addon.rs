@@ -91,7 +91,14 @@ pub fn load_addon_internal(
         addon_root: &toc.addon_dir,
     };
 
-    for file in toc.file_paths() {
+    let overlay_dir = Path::new("Interface/AddOns").join(folder_name);
+
+    for (file_rel, file) in toc.files.iter().zip(toc.file_paths()) {
+        // Check local overlay first (./Interface/AddOns/{addon}/{file})
+        let file = {
+            let overlay = overlay_dir.join(file_rel);
+            if overlay.exists() { overlay } else { file }
+        };
         let ext = file.extension().and_then(|e| e.to_str()).unwrap_or("");
         match ext {
             "lua" => match load_lua_file(env, &file, &ctx, &mut result.timing) {
