@@ -329,39 +329,53 @@ fn create_layer_children(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &s
 /// Map a FrameElement variant to its (FrameXml, widget_type) pair.
 /// Returns None for unsupported element types.
 fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xml::FrameXml, &'static str)> {
+    use crate::xml::FrameElement;
     match child {
-        crate::xml::FrameElement::Frame(f) => Some((f, "Frame")),
-        crate::xml::FrameElement::Button(f) | crate::xml::FrameElement::ItemButton(f) => Some((f, "Button")),
-        crate::xml::FrameElement::CheckButton(f) => Some((f, "CheckButton")),
-        crate::xml::FrameElement::EditBox(f) | crate::xml::FrameElement::EventEditBox(f) => Some((f, "EditBox")),
-        crate::xml::FrameElement::ScrollFrame(f) => Some((f, "ScrollFrame")),
-        crate::xml::FrameElement::Slider(f) => Some((f, "Slider")),
-        crate::xml::FrameElement::StatusBar(f) => Some((f, "StatusBar")),
-        crate::xml::FrameElement::EventFrame(f) => Some((f, "Frame")),
-        crate::xml::FrameElement::EventButton(f) => Some((f, "Button")),
-        crate::xml::FrameElement::DropdownButton(f) | crate::xml::FrameElement::DropDownToggleButton(f) => Some((f, "Button")),
-        crate::xml::FrameElement::Cooldown(f) => Some((f, "Cooldown")),
-        crate::xml::FrameElement::GameTooltip(f) => Some((f, "GameTooltip")),
-        crate::xml::FrameElement::Model(f) => Some((f, "Model")),
-        crate::xml::FrameElement::ModelScene(f) => Some((f, "ModelScene")),
-        crate::xml::FrameElement::TaxiRouteFrame(f)
-        | crate::xml::FrameElement::ModelFFX(f)
-        | crate::xml::FrameElement::TabardModel(f)
-        | crate::xml::FrameElement::UiCamera(f)
-        | crate::xml::FrameElement::UnitPositionFrame(f)
-        | crate::xml::FrameElement::OffScreenFrame(f)
-        | crate::xml::FrameElement::Checkout(f)
-        | crate::xml::FrameElement::FogOfWarFrame(f)
-        | crate::xml::FrameElement::QuestPOIFrame(f)
-        | crate::xml::FrameElement::ArchaeologyDigSiteFrame(f)
-        | crate::xml::FrameElement::ScenarioPOIFrame(f)
-        | crate::xml::FrameElement::UIThemeContainerFrame(f)
-        | crate::xml::FrameElement::ContainedAlertFrame(f)
-        | crate::xml::FrameElement::MapScene(f)
-        | crate::xml::FrameElement::ScopedModifier(f)
-        | crate::xml::FrameElement::Line(f) => Some((f, "Frame")),
-        crate::xml::FrameElement::EventScrollFrame(f) => Some((f, "ScrollFrame")),
-        _ => None,
+        FrameElement::Frame(f) => Some((f, "Frame")),
+        FrameElement::Button(f)
+        | FrameElement::ItemButton(f)
+        | FrameElement::DropdownButton(f)
+        | FrameElement::DropDownToggleButton(f)
+        | FrameElement::EventButton(f) => Some((f, "Button")),
+        FrameElement::CheckButton(f) => Some((f, "CheckButton")),
+        FrameElement::EditBox(f)
+        | FrameElement::EventEditBox(f) => Some((f, "EditBox")),
+        FrameElement::ScrollFrame(f)
+        | FrameElement::EventScrollFrame(f) => Some((f, "ScrollFrame")),
+        FrameElement::Slider(f) => Some((f, "Slider")),
+        FrameElement::StatusBar(f) => Some((f, "StatusBar")),
+        FrameElement::Cooldown(f) => Some((f, "Cooldown")),
+        FrameElement::GameTooltip(f) => Some((f, "GameTooltip")),
+        FrameElement::ColorSelect(f) => Some((f, "ColorSelect")),
+        FrameElement::Model(f)
+        | FrameElement::DressUpModel(f) => Some((f, "Model")),
+        FrameElement::ModelScene(f) => Some((f, "ModelScene")),
+        FrameElement::PlayerModel(f)
+        | FrameElement::CinematicModel(f) => Some((f, "PlayerModel")),
+        FrameElement::MessageFrame(f)
+        | FrameElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame")),
+        FrameElement::SimpleHTML(f) => Some((f, "SimpleHTML")),
+        FrameElement::EventFrame(f)
+        | FrameElement::TaxiRouteFrame(f)
+        | FrameElement::ModelFFX(f)
+        | FrameElement::TabardModel(f)
+        | FrameElement::UiCamera(f)
+        | FrameElement::UnitPositionFrame(f)
+        | FrameElement::OffScreenFrame(f)
+        | FrameElement::Checkout(f)
+        | FrameElement::FogOfWarFrame(f)
+        | FrameElement::QuestPOIFrame(f)
+        | FrameElement::ArchaeologyDigSiteFrame(f)
+        | FrameElement::ScenarioPOIFrame(f)
+        | FrameElement::UIThemeContainerFrame(f)
+        | FrameElement::ContainedAlertFrame(f)
+        | FrameElement::MapScene(f)
+        | FrameElement::ScopedModifier(f)
+        | FrameElement::Line(f)
+        | FrameElement::Browser(f)
+        | FrameElement::Minimap(f)
+        | FrameElement::MovieFrame(f)
+        | FrameElement::WorldFrame(f) => Some((f, "Frame")),
     }
 }
 

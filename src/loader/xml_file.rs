@@ -1,7 +1,7 @@
 //! XML file loading and element processing.
 
 use crate::lua_api::WowLuaEnv;
-use crate::xml::{parse_xml_file, XmlElement};
+use crate::xml::{parse_xml_file, FrameXml, XmlElement};
 use std::path::Path;
 use std::time::Instant;
 
@@ -106,18 +106,33 @@ fn process_include(
     }
 }
 
-/// Process a frame-type XML element by dispatching to create_frame_from_xml.
-fn process_frame_element(env: &WowLuaEnv, element: &XmlElement) -> Result<(), LoadError> {
+/// Extract the FrameXml data and widget type string from an XmlElement.
+fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static str)> {
     match element {
-        XmlElement::Frame(f) => { create_frame_from_xml(env, f, "Frame", None)?; }
-        XmlElement::Button(f) | XmlElement::ItemButton(f) => {
-            create_frame_from_xml(env, f, "Button", None)?;
-        }
-        XmlElement::CheckButton(f) => { create_frame_from_xml(env, f, "CheckButton", None)?; }
-        XmlElement::EditBox(f) => { create_frame_from_xml(env, f, "EditBox", None)?; }
-        XmlElement::ScrollFrame(f) => { create_frame_from_xml(env, f, "ScrollFrame", None)?; }
-        XmlElement::Slider(f) => { create_frame_from_xml(env, f, "Slider", None)?; }
-        XmlElement::StatusBar(f) => { create_frame_from_xml(env, f, "StatusBar", None)?; }
+        XmlElement::Frame(f) => Some((f, "Frame")),
+        XmlElement::Button(f)
+        | XmlElement::ItemButton(f)
+        | XmlElement::DropDownToggleButton(f)
+        | XmlElement::DropdownButton(f)
+        | XmlElement::EventButton(f) => Some((f, "Button")),
+        XmlElement::CheckButton(f) => Some((f, "CheckButton")),
+        XmlElement::EditBox(f)
+        | XmlElement::EventEditBox(f) => Some((f, "EditBox")),
+        XmlElement::ScrollFrame(f)
+        | XmlElement::EventScrollFrame(f) => Some((f, "ScrollFrame")),
+        XmlElement::Slider(f) => Some((f, "Slider")),
+        XmlElement::StatusBar(f) => Some((f, "StatusBar")),
+        XmlElement::Cooldown(f) => Some((f, "Cooldown")),
+        XmlElement::GameTooltip(f) => Some((f, "GameTooltip")),
+        XmlElement::ColorSelect(f) => Some((f, "ColorSelect")),
+        XmlElement::Model(f)
+        | XmlElement::DressUpModel(f) => Some((f, "Model")),
+        XmlElement::ModelScene(f) => Some((f, "ModelScene")),
+        XmlElement::PlayerModel(f)
+        | XmlElement::CinematicModel(f) => Some((f, "PlayerModel")),
+        XmlElement::MessageFrame(f)
+        | XmlElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame")),
+        XmlElement::SimpleHTML(f) => Some((f, "SimpleHTML")),
         XmlElement::EventFrame(f)
         | XmlElement::TaxiRouteFrame(f)
         | XmlElement::ModelFFX(f)
@@ -134,17 +149,19 @@ fn process_frame_element(env: &WowLuaEnv, element: &XmlElement) -> Result<(), Lo
         | XmlElement::ContainedAlertFrame(f)
         | XmlElement::MapScene(f)
         | XmlElement::ScopedModifier(f)
-        | XmlElement::Line(f) => { create_frame_from_xml(env, f, "Frame", None)?; }
-        XmlElement::EventScrollFrame(f) => {
-            create_frame_from_xml(env, f, "ScrollFrame", None)?;
-        }
-        // Templates and non-frame elements - skip
-        XmlElement::Texture(_)
-        | XmlElement::FontString(_)
-        | XmlElement::AnimationGroup(_)
-        | XmlElement::Actor(_)
-        | XmlElement::Text(_) => {}
-        _ => {}
+        | XmlElement::Line(f)
+        | XmlElement::Browser(f)
+        | XmlElement::Minimap(f)
+        | XmlElement::MovieFrame(f)
+        | XmlElement::WorldFrame(f) => Some((f, "Frame")),
+        _ => None,
+    }
+}
+
+/// Process a frame-type XML element by dispatching to create_frame_from_xml.
+fn process_frame_element(env: &WowLuaEnv, element: &XmlElement) -> Result<(), LoadError> {
+    if let Some((frame_xml, widget_type)) = resolve_frame_element(element) {
+        create_frame_from_xml(env, frame_xml, widget_type, None)?;
     }
     Ok(())
 }
@@ -207,6 +224,51 @@ fn create_font_object(
 }
 
 /// Create a FontFamily object in Lua from XML definition.
+const FONT_FAMILY_LUA_TEMPLATE: &str = r#"
+{name} = {
+    __font = "Fonts/FRIZQT__.TTF",
+    __height = 12.0,
+    __outline = "",
+    __r = 1.0, __g = 1.0, __b = 1.0,
+    __justifyH = "CENTER",
+    __justifyV = "MIDDLE",
+    SetTextColor = function(self, r, g, b)
+        self.__r = r; self.__g = g; self.__b = b
+    end,
+    GetTextColor = function(self)
+        return self.__r, self.__g, self.__b
+    end,
+    SetFont = function(self, font, height, flags)
+        if font then self.__font = font end
+        if height then self.__height = height end
+        if flags then self.__outline = flags end
+    end,
+    GetFont = function(self)
+        return self.__font, self.__height, self.__outline
+    end,
+    SetJustifyH = function(self, justify)
+        self.__justifyH = justify
+    end,
+    GetJustifyH = function(self)
+        return self.__justifyH
+    end,
+    SetJustifyV = function(self, justify)
+        self.__justifyV = justify
+    end,
+    GetJustifyV = function(self)
+        return self.__justifyV
+    end,
+    CopyFontObject = function(self, source)
+        if source.__font then self.__font = source.__font end
+        if source.__height then self.__height = source.__height end
+        if source.__outline then self.__outline = source.__outline end
+        if source.__r then self.__r = source.__r end
+        if source.__g then self.__g = source.__g end
+        if source.__b then self.__b = source.__b end
+    end,
+}
+"#;
+
 fn create_font_family_object(
     env: &WowLuaEnv,
     font_family: &crate::xml::FontFamilyXml,
@@ -217,55 +279,7 @@ fn create_font_family_object(
     if name.is_empty() {
         return Ok(());
     }
-
-    let lua_code = format!(
-        r#"
-        {name} = {{
-            __font = "Fonts/FRIZQT__.TTF",
-            __height = 12.0,
-            __outline = "",
-            __r = 1.0, __g = 1.0, __b = 1.0,
-            __justifyH = "CENTER",
-            __justifyV = "MIDDLE",
-            SetTextColor = function(self, r, g, b)
-                self.__r = r; self.__g = g; self.__b = b
-            end,
-            GetTextColor = function(self)
-                return self.__r, self.__g, self.__b
-            end,
-            SetFont = function(self, font, height, flags)
-                if font then self.__font = font end
-                if height then self.__height = height end
-                if flags then self.__outline = flags end
-            end,
-            GetFont = function(self)
-                return self.__font, self.__height, self.__outline
-            end,
-            SetJustifyH = function(self, justify)
-                self.__justifyH = justify
-            end,
-            GetJustifyH = function(self)
-                return self.__justifyH
-            end,
-            SetJustifyV = function(self, justify)
-                self.__justifyV = justify
-            end,
-            GetJustifyV = function(self)
-                return self.__justifyV
-            end,
-            CopyFontObject = function(self, source)
-                if source.__font then self.__font = source.__font end
-                if source.__height then self.__height = source.__height end
-                if source.__outline then self.__outline = source.__outline end
-                if source.__r then self.__r = source.__r end
-                if source.__g then self.__g = source.__g end
-                if source.__b then self.__b = source.__b end
-            end,
-        }}
-        "#,
-        name = name
-    );
-
+    let lua_code = FONT_FAMILY_LUA_TEMPLATE.replace("{name}", name);
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!("Failed to create font family {}: {}", name, e))
     })
