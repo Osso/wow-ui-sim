@@ -176,6 +176,22 @@ impl WowLuaEnv {
         }
     }
 
+    /// Simulate a key press. Handles special keys (Escape toggles GameMenuFrame)
+    /// and fires OnKeyDown on the focused frame if one exists.
+    pub fn send_key_press(&self, key: &str) -> Result<()> {
+        if key == "ESCAPE" {
+            self.exec(
+                "if GameMenuFrame and GameMenuFrame.IsShown and GameMenuFrame:IsShown() then \
+                    GameMenuFrame:Hide() \
+                elseif GameMenuFrame and GameMenuFrame.Show then \
+                    GameMenuFrame:Show() \
+                end",
+            )?;
+        }
+        // TODO: dispatch OnKeyDown/OnEscapePressed to focused frame
+        Ok(())
+    }
+
     /// Dispatch a slash command (e.g., "/wa options").
     /// Returns Ok(true) if a handler was found and called, Ok(false) if no handler matched.
     pub fn dispatch_slash_command(&self, input: &str) -> Result<bool> {

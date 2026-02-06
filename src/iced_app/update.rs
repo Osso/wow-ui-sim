@@ -208,14 +208,7 @@ impl App {
 
     fn handle_toggle_game_menu(&mut self) {
         let env = self.env.borrow();
-        let result = env.exec(
-            "if GameMenuFrame and GameMenuFrame.IsShown and GameMenuFrame:IsShown() then \
-                GameMenuFrame:Hide() \
-            elseif GameMenuFrame and GameMenuFrame.Show then \
-                GameMenuFrame:Show() \
-            end",
-        );
-        if let Err(e) = result {
+        if let Err(e) = env.send_key_press("ESCAPE") {
             self.log_messages
                 .push(format!("GameMenu toggle error: {}", e));
         }
