@@ -9,6 +9,7 @@ use super::globals::c_collection_api::register_c_collection_api;
 use super::globals::c_item_api::register_c_item_api;
 use super::globals::c_map_api::register_c_map_api;
 use super::globals::c_misc_api::register_c_misc_api;
+use super::globals::c_stubs_api::register_c_stubs_api;
 use super::globals::c_quest_api::register_c_quest_api;
 use super::globals::c_system_api::register_c_system_api;
 use super::globals::constants_api::register_constants_api;
@@ -235,7 +236,11 @@ const FRAME_BASE_METHODS: &[&str] = &[
     "IsForbidden", "SetUserPlaced", "IsUserPlaced", "SetResizeBounds",
     "GetResizeBounds", "SetDontSavePosition", "GetDontSavePosition",
     "SetWindow", "GetWindow", "SetHyperlinksEnabled", "GetHyperlinksEnabled",
-    "AdjustPointsOffset",
+    "AdjustPointsOffset", "ClearPoint", "ClearPointsOffset",
+    "RegisterAllEvents", "IsRectValid", "IsObjectLoaded",
+    "IsMouseOver", "StopAnimating", "GetSourceLocation",
+    "Intersects", "SetAlphaFromBoolean", "EnableMouseMotion",
+    "ClearScripts", "IsDrawLayerEnabled",
 ];
 
 const TEXTURE_METHODS: &[&str] = &[
@@ -366,6 +371,7 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_c_item_api(lua)?;
     register_c_misc_api(lua)?;
     register_c_system_api(lua)?;
+    register_c_stubs_api(lua)?;
     register_mixin_api(lua)?;
     register_utility_api(lua)?;
     register_settings_api(lua)?;

@@ -41,6 +41,10 @@ fn register_pet_journal(lua: &Lua) -> Result<()> {
         "GetNumCollectedInfo",
         lua.create_function(|_, _species_id: i32| Ok((0i32, 0i32)))?,
     )?;
+    t.set(
+        "GetNumPetsNeedingFanfare",
+        lua.create_function(|_, ()| Ok(0i32))?,
+    )?;
     lua.globals().set("C_PetJournal", t)?;
     Ok(())
 }
@@ -75,6 +79,10 @@ fn register_mount_info_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set(
         "GetMountIDs",
         lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
+    t.set(
+        "GetNumMountsNeedingFanfare",
+        lua.create_function(|_, ()| Ok(0i32))?,
     )?;
     Ok(())
 }

@@ -129,7 +129,13 @@ impl WowLuaEnv {
                     let mut call_args = vec![frame, Value::String(self.lua.create_string(event)?)];
                     call_args.extend(args.iter().cloned());
 
-                    handler.call::<()>(MultiValue::from_vec(call_args))?;
+                    if let Err(e) = handler.call::<()>(MultiValue::from_vec(call_args)) {
+                        let state = self.state.borrow();
+                        let name = state.widgets.get(widget_id)
+                            .and_then(|f| f.name.as_deref())
+                            .unwrap_or("(anonymous)");
+                        eprintln!("[{}] {event} handler error on {name} (id={widget_id}): {e}", event);
+                    }
                 }
             }
         }

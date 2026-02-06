@@ -223,11 +223,15 @@ impl App {
             if let Ok(s) = env.lua().create_string("WoWUISim") {
                 let _ = env.fire_event_with_args("ADDON_LOADED", &[mlua::Value::String(s)]);
             }
+            let _ = env.fire_event("VARIABLES_LOADED");
             let _ = env.fire_event("PLAYER_LOGIN");
             let _ = env.fire_event_with_args(
                 "PLAYER_ENTERING_WORLD",
                 &[mlua::Value::Boolean(false), mlua::Value::Boolean(true)],
             );
+            let _ = env.fire_event("UPDATE_BINDINGS");
+            let _ = env.fire_event("DISPLAY_SIZE_CHANGED");
+            let _ = env.fire_event("UI_SCALE_CHANGED");
         }
         self.drain_console();
         self.log_messages.push("UI reloaded.".to_string());

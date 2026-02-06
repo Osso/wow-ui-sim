@@ -221,11 +221,6 @@ fn register_transmog_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
 // ============================================================================
 
 fn register_housing_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
-    val_enum(lua, enum_table, "GarrisonType", &[
-        ("Type_6_0", 2), ("Type_7_0", 3), ("Type_8_0", 111),
-        ("Type_9_0", 123), ("Type_10_0", 124), ("Type_11_0", 125),
-    ])?;
-
     seq_enum(lua, enum_table, "HouseEditorMode", &[
         "None", "BasicDecor", "ExpertDecor", "Layout", "Customize",
     ])?;

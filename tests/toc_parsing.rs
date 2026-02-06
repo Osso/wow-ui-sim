@@ -1,15 +1,18 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use wow_ui_sim::toc::TocFile;
 
-const BLIZZARD_SHARED_XML_BASE: &str =
-    "/home/osso/Projects/wow/reference-addons/wow-ui-source/Interface/AddOns/Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc";
+fn blizzard_shared_xml_base_toc() -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("Interface/BlizzardUI/Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc")
+}
 
 const ACE3_TOC: &str =
     "/home/osso/Projects/wow/reference-addons/Ace3/Ace3.toc";
 
 #[test]
 fn test_parse_blizzard_shared_xml_base() {
-    let toc = TocFile::from_file(Path::new(BLIZZARD_SHARED_XML_BASE))
+    let toc_path = blizzard_shared_xml_base_toc();
+    let toc = TocFile::from_file(&toc_path)
         .expect("Failed to read TOC file");
 
     assert_eq!(toc.name, "Blizzard_SharedXMLBase");
@@ -42,11 +45,9 @@ fn test_parse_ace3() {
     assert_eq!(toc.name, "Lib: Ace3");
     assert!(!toc.is_blizzard_addon());
 
-    // Should have interface version
     let versions = toc.interface_versions();
     assert!(!versions.is_empty(), "Expected interface version");
 
-    // Should have LibStub as first file
     assert!(
         toc.files[0].to_str().unwrap().contains("LibStub"),
         "Expected LibStub as first file"
@@ -55,12 +56,12 @@ fn test_parse_ace3() {
 
 #[test]
 fn test_file_paths_absolute() {
-    let toc = TocFile::from_file(Path::new(BLIZZARD_SHARED_XML_BASE))
+    let toc_path = blizzard_shared_xml_base_toc();
+    let toc = TocFile::from_file(&toc_path)
         .expect("Failed to read TOC file");
 
     let paths = toc.file_paths();
 
-    // All paths should be absolute and exist
     for path in &paths {
         assert!(path.is_absolute(), "Expected absolute path: {:?}", path);
         assert!(path.exists(), "File should exist: {:?}", path);
@@ -69,7 +70,8 @@ fn test_file_paths_absolute() {
 
 #[test]
 fn test_lua_and_xml_files() {
-    let toc = TocFile::from_file(Path::new(BLIZZARD_SHARED_XML_BASE))
+    let toc_path = blizzard_shared_xml_base_toc();
+    let toc = TocFile::from_file(&toc_path)
         .expect("Failed to read TOC file");
 
     let lua_count = toc.files.iter().filter(|f| {

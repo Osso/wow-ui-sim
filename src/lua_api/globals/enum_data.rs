@@ -168,6 +168,11 @@ pub const GAME_RULE: SeqEnumDef = (
         "EjItemSetsDisabled",
         "ExperienceBarDisabled",
         "ActionButtonTypeOverlayStrategy",
+        "MinimapDisabled",
+        "WorldMapDisabled",
+        "IngameMailNotificationDisabled",
+        "IngameTrackingDisabled",
+        "LandingPageFactionID",
     ],
 );
 
@@ -737,6 +742,16 @@ pub const GARRISON_FOLLOWER_TYPE: EnumDef = (
     ],
 );
 
+pub const GARRISON_TYPE: EnumDef = (
+    "GarrisonType",
+    &[
+        ("Type_6_0_Garrison", 2),
+        ("Type_7_0_Garrison", 3),
+        ("Type_8_0_Garrison", 9),
+        ("Type_9_0_Garrison", 111),
+    ],
+);
+
 pub const CALENDAR_STATUS: SeqEnumDef = (
     "CalendarStatus",
     &["Invited", "Available", "Declined", "Confirmed", "Out", "Standby", "Signedup", "NotSignedup", "Tentative"],
@@ -981,6 +996,11 @@ pub const BAGS_DIRECTION: EnumDef = (
     &[("Left", 0), ("Right", 1), ("Up", 0), ("Down", 1)],
 );
 
+pub const CLUB_FINDER_REQUEST_TYPE: EnumDef = (
+    "ClubFinderRequestType",
+    &[("None", 0), ("Guild", 1), ("Community", 2), ("All", 3)],
+);
+
 pub const MICRO_MENU_ORDER: SeqEnumDef = (
     "MicroMenuOrder",
     &["Default", "Reverse"],
@@ -1167,6 +1187,7 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     MINIMAP_TRACKING_FILTER,
     BAG_SLOT_FLAGS,
     GARRISON_FOLLOWER_TYPE,
+    GARRISON_TYPE,
     FRAME_TUTORIAL_ACCOUNT,
     TRANSMOG_COLLECTION_TYPE_META,
     EDIT_MODE_UNIT_FRAME_SYSTEM_INDICES,
@@ -1176,4 +1197,5 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     AURA_FRAME_ICON_DIRECTION,
     AURA_FRAME_ICON_WRAP,
     BAGS_DIRECTION,
+    CLUB_FINDER_REQUEST_TYPE,
 ];

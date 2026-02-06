@@ -102,7 +102,7 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 }
 
-/// ClearAllPoints() and AdjustPointsOffset(x, y)
+/// ClearAllPoints(), ClearPoint(point), ClearPointsOffset(), AdjustPointsOffset(x, y)
 fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("ClearAllPoints", |_, this, ()| {
         let mut state = this.state.borrow_mut();
@@ -111,6 +111,21 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
         }
         Ok(())
     });
+
+    // ClearPoint(point) - remove a specific anchor by point name
+    methods.add_method("ClearPoint", |_, this, point_name: String| {
+        let point = crate::widget::AnchorPoint::from_str(&point_name);
+        if let Some(point) = point {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.anchors.retain(|a| a.point != point);
+            }
+        }
+        Ok(())
+    });
+
+    // ClearPointsOffset() - stub
+    methods.add_method("ClearPointsOffset", |_, _this, ()| Ok(()));
 
     methods.add_method(
         "AdjustPointsOffset",

@@ -4,8 +4,8 @@
 use super::methods_helpers::get_mixin_override;
 use super::FrameHandle;
 use crate::lua_api::tooltip::TooltipLine;
-use crate::widget::{AttributeValue, Frame, WidgetType};
-use mlua::{Result, UserDataMethods, Value};
+use crate::widget::{AttributeValue, Color, WidgetType};
+use mlua::{Lua, Result, UserDataMethods, Value};
 use std::rc::Rc;
 
 /// Add widget-specific methods to FrameHandle UserData.
@@ -24,6 +24,7 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_drag_methods(methods);
     add_scrollbox_methods(methods);
     add_simplehtml_methods(methods);
+    add_shared_value_methods(methods);
 }
 
 fn add_tooltip_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -682,7 +683,12 @@ fn add_message_frame_callback_stubs<M: UserDataMethods<FrameHandle>>(methods: &m
 
 fn add_editbox_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_editbox_focus_methods(methods);
-    add_editbox_input_methods(methods);
+    add_editbox_cursor_methods(methods);
+    add_editbox_number_methods(methods);
+    add_editbox_limit_methods(methods);
+    add_editbox_flag_methods(methods);
+    add_editbox_history_methods(methods);
+    add_editbox_inset_methods(methods);
 }
 
 fn add_editbox_focus_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -722,17 +728,42 @@ fn add_editbox_focus_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(false)
     });
-    methods.add_method("SetCursorPosition", |_, _this, _pos: i32| Ok(()));
-    methods.add_method("GetCursorPosition", |_, _this, ()| Ok(0));
-    methods.add_method("HighlightText", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("Insert", |_, _this, _text: String| Ok(()));
-    methods.add_method("SetMaxLetters", |_, _this, _max: i32| Ok(()));
-    methods.add_method("GetMaxLetters", |_, _this, ()| Ok(0));
-    methods.add_method("SetMaxBytes", |_, _this, _max: i32| Ok(()));
-    methods.add_method("GetMaxBytes", |_, _this, ()| Ok(0));
 }
 
-fn add_editbox_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+fn add_editbox_cursor_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetCursorPosition", |_, this, pos: i32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_cursor_pos = pos;
+        }
+        Ok(())
+    });
+    methods.add_method("GetCursorPosition", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_cursor_pos).unwrap_or(0))
+    });
+    methods.add_method("HighlightText", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("Insert", |_, this, text: String| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            let current = frame.text.get_or_insert_with(String::new);
+            let pos = (frame.editbox_cursor_pos as usize).min(current.len());
+            current.insert_str(pos, &text);
+            frame.editbox_cursor_pos = (pos + text.len()) as i32;
+        }
+        Ok(())
+    });
+    methods.add_method("GetNumLetters", |_, this, ()| {
+        let state = this.state.borrow();
+        let len = state.widgets.get(this.id)
+            .and_then(|f| f.text.as_ref())
+            .map(|t| t.chars().count())
+            .unwrap_or(0);
+        Ok(len as i32)
+    });
+}
+
+fn add_editbox_number_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetNumber", |_, this, n: f64| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -749,113 +780,290 @@ fn add_editbox_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(0.0)
     });
-    methods.add_method("SetMultiLine", |_, _this, _multi: bool| Ok(()));
-    methods.add_method("IsMultiLine", |_, _this, ()| Ok(false));
-    methods.add_method("SetAutoFocus", |_, _this, _auto: bool| Ok(()));
-    methods.add_method("SetNumeric", |_, _this, _numeric: bool| Ok(()));
-    methods.add_method("IsNumeric", |_, _this, ()| Ok(false));
-    methods.add_method("IsPassword", |_, _this, ()| Ok(false));
-    methods.add_method("SetPassword", |_, _this, _pw: bool| Ok(()));
-    methods.add_method("SetBlinkSpeed", |_, _this, _speed: f64| Ok(()));
-    methods.add_method("SetHistoryLines", |_, _this, _lines: i32| Ok(()));
-    methods.add_method("AddHistoryLine", |_, _this, _text: String| Ok(()));
-    methods.add_method("GetHistoryLines", |_, _this, ()| Ok(0));
-    methods.add_method("SetTextInsets", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetTextInsets", |_, _this, ()| {
+}
+
+fn add_editbox_limit_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetMaxLetters", |_, this, max: i32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_max_letters = max;
+        }
+        Ok(())
+    });
+    methods.add_method("GetMaxLetters", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_max_letters).unwrap_or(0))
+    });
+    methods.add_method("SetMaxBytes", |_, this, max: i32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_max_bytes = max;
+        }
+        Ok(())
+    });
+    methods.add_method("GetMaxBytes", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_max_bytes).unwrap_or(0))
+    });
+}
+
+fn add_editbox_flag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_editbox_mode_flags(methods);
+    add_editbox_input_flags(methods);
+}
+
+fn add_editbox_mode_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetMultiLine", |_, this, multi: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_multi_line = multi;
+        }
+        Ok(())
+    });
+    methods.add_method("IsMultiLine", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_multi_line).unwrap_or(false))
+    });
+    methods.add_method("SetAutoFocus", |_, this, auto: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_auto_focus = auto;
+        }
+        Ok(())
+    });
+    methods.add_method("IsAutoFocus", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_auto_focus).unwrap_or(false))
+    });
+    methods.add_method("SetNumeric", |_, this, numeric: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_numeric = numeric;
+        }
+        Ok(())
+    });
+    methods.add_method("IsNumeric", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_numeric).unwrap_or(false))
+    });
+}
+
+fn add_editbox_input_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetPassword", |_, this, pw: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_password = pw;
+        }
+        Ok(())
+    });
+    methods.add_method("IsPassword", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_password).unwrap_or(false))
+    });
+    methods.add_method("SetBlinkSpeed", |_, this, speed: f64| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_blink_speed = speed;
+        }
+        Ok(())
+    });
+    methods.add_method("GetBlinkSpeed", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.editbox_blink_speed).unwrap_or(0.5))
+    });
+    methods.add_method("SetCountInvisibleLetters", |_, this, count: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_count_invisible_letters = count;
+        }
+        Ok(())
+    });
+}
+
+fn add_editbox_history_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("AddHistoryLine", |_, this, text: String| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_history.push(text);
+            let max = frame.editbox_history_max;
+            if max > 0 && frame.editbox_history.len() > max as usize {
+                frame.editbox_history.remove(0);
+            }
+        }
+        Ok(())
+    });
+    methods.add_method("GetHistoryLines", |_, this, ()| {
+        let state = this.state.borrow();
+        let count = state.widgets.get(this.id)
+            .map(|f| f.editbox_history.len())
+            .unwrap_or(0);
+        Ok(count as i32)
+    });
+    methods.add_method("SetHistoryLines", |_, this, max: i32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_history_max = max;
+        }
+        Ok(())
+    });
+}
+
+fn add_editbox_inset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetTextInsets", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let l = val_to_f32(it.next(), 0.0);
+        let r = val_to_f32(it.next(), 0.0);
+        let t = val_to_f32(it.next(), 0.0);
+        let b = val_to_f32(it.next(), 0.0);
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.editbox_text_insets = (l, r, t, b);
+        }
+        Ok(())
+    });
+    methods.add_method("GetTextInsets", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            let (l, r, t, b) = frame.editbox_text_insets;
+            return Ok((l, r, t, b));
+        }
         Ok((0.0_f32, 0.0_f32, 0.0_f32, 0.0_f32))
     });
-    methods.add_method("SetCountInvisibleLetters", |_, _this, _count: bool| Ok(()));
 }
 
 fn add_slider_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetMinMaxValues", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetMinMaxValues", |_, _this, ()| Ok((0.0_f64, 100.0_f64)));
-    methods.add_method("SetValue", |_, _this, _value: f64| Ok(()));
-    methods.add_method("GetValue", |_, _this, ()| Ok(0.0_f64));
-    methods.add_method("SetValueStep", |_, _this, _step: f64| Ok(()));
-    methods.add_method("GetValueStep", |_, _this, ()| Ok(1.0_f64));
-    methods.add_method("SetOrientation", |_, _this, _orientation: String| Ok(()));
-    methods.add_method("GetOrientation", |_, _this, ()| {
-        Ok("HORIZONTAL".to_string())
+    // Note: SetMinMaxValues/GetMinMaxValues/SetValue/GetValue are in add_shared_value_methods
+    add_slider_step_methods(methods);
+    add_slider_orientation_methods(methods);
+    add_slider_thumb_methods(methods);
+    add_slider_drag_methods(methods);
+}
+
+fn add_slider_step_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetValueStep", |_, this, step: f64| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.slider_step = step;
+        }
+        Ok(())
     });
+    methods.add_method("GetValueStep", |_, this, ()| {
+        let state = this.state.borrow();
+        let step = state.widgets.get(this.id).map(|f| f.slider_step).unwrap_or(1.0);
+        Ok(step)
+    });
+}
+
+fn add_slider_orientation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetOrientation", |_, this, orientation: String| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.slider_orientation = orientation.to_uppercase();
+        }
+        Ok(())
+    });
+    methods.add_method("GetOrientation", |_, this, ()| {
+        let state = this.state.borrow();
+        let orientation = state.widgets.get(this.id)
+            .map(|f| f.slider_orientation.clone())
+            .unwrap_or_else(|| "HORIZONTAL".to_string());
+        Ok(orientation)
+    });
+}
+
+fn add_slider_thumb_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetThumbTexture", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("GetThumbTexture", |lua, this, ()| {
-        // Create or return the thumb texture for slider
-        let texture_key = format!("__frame_{}_ThumbTexture", this.id);
-        if let Ok(existing) = lua.globals().get::<Value>(texture_key.as_str()) {
-            if !matches!(existing, Value::Nil) {
-                return Ok(existing);
-            }
-        }
-
-        let texture = Frame::new(WidgetType::Texture, None, Some(this.id));
-        let texture_id = texture.id;
-
-        {
-            let mut state = this.state.borrow_mut();
-            state.widgets.register(texture);
-            state.widgets.add_child(this.id, texture_id);
-        }
-
-        let handle = FrameHandle {
-            id: texture_id,
-            state: Rc::clone(&this.state),
-        };
-
-        let ud = lua.create_userdata(handle)?;
-        lua.globals().set(texture_key.as_str(), ud.clone())?;
-
-        let frame_key = format!("__frame_{}", texture_id);
-        lua.globals().set(frame_key.as_str(), ud.clone())?;
-
-        Ok(Value::UserData(ud))
+        get_or_create_child_texture(lua, this, "ThumbTexture")
     });
-    methods.add_method("SetObeyStepOnDrag", |_, _this, _obey: bool| Ok(()));
-    methods.add_method("SetStepsPerPage", |_, _this, _steps: i32| Ok(()));
-    methods.add_method("GetStepsPerPage", |_, _this, ()| Ok(1));
+}
+
+fn add_slider_drag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetObeyStepOnDrag", |_, this, obey: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.slider_obey_step_on_drag = obey;
+        }
+        Ok(())
+    });
+    methods.add_method("SetStepsPerPage", |_, this, steps: i32| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.slider_steps_per_page = steps;
+        }
+        Ok(())
+    });
+    methods.add_method("GetStepsPerPage", |_, this, ()| {
+        let state = this.state.borrow();
+        let steps = state.widgets.get(this.id).map(|f| f.slider_steps_per_page).unwrap_or(1);
+        Ok(steps)
+    });
 }
 
 fn add_statusbar_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetStatusBarTexture", |_, _this, _texture: Value| Ok(()));
-    methods.add_method("GetStatusBarTexture", |lua, this, ()| {
-        let texture_key = format!("__frame_{}_StatusBarTexture", this.id);
-        if let Ok(existing) = lua.globals().get::<Value>(texture_key.as_str()) {
-            if !matches!(existing, Value::Nil) {
-                return Ok(existing);
-            }
-        }
+    // Note: SetMinMaxValues/GetMinMaxValues/SetValue/GetValue are in add_shared_value_methods
+    add_statusbar_texture_methods(methods);
+    add_statusbar_color_methods(methods);
+    add_statusbar_fill_methods(methods);
+}
 
-        let texture = Frame::new(WidgetType::Texture, None, Some(this.id));
-        let texture_id = texture.id;
-
-        {
-            let mut state = this.state.borrow_mut();
-            state.widgets.register(texture);
-            state.widgets.add_child(this.id, texture_id);
-        }
-
-        let handle = FrameHandle {
-            id: texture_id,
-            state: Rc::clone(&this.state),
+fn add_statusbar_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetStatusBarTexture", |_, this, texture: Value| {
+        let path = match &texture {
+            Value::String(s) => Some(s.to_string_lossy().to_string()),
+            _ => None,
         };
-
-        let ud = lua.create_userdata(handle)?;
-        lua.globals().set(texture_key.as_str(), ud.clone())?;
-
-        let frame_key = format!("__frame_{}", texture_id);
-        lua.globals().set(frame_key.as_str(), ud.clone())?;
-
-        Ok(Value::UserData(ud))
-    });
-    methods.add_method("SetStatusBarColor", |_, _this, _args: mlua::MultiValue| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.statusbar_texture_path = path;
+        }
         Ok(())
     });
-    methods.add_method("GetStatusBarColor", |_, _this, ()| {
-        Ok((1.0_f32, 1.0_f32, 1.0_f32, 1.0_f32))
+    methods.add_method("GetStatusBarTexture", |lua, this, ()| {
+        get_or_create_child_texture(lua, this, "StatusBarTexture")
     });
     methods.add_method("SetRotatesTexture", |_, _this, _rotates: bool| Ok(()));
-    methods.add_method("SetReverseFill", |_, _this, _reverse: bool| Ok(()));
-    methods.add_method("SetFillStyle", |_, _this, _style: String| Ok(()));
+}
+
+fn add_statusbar_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetStatusBarColor", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let r = val_to_f32(it.next(), 1.0);
+        let g = val_to_f32(it.next(), 1.0);
+        let b = val_to_f32(it.next(), 1.0);
+        let a = val_to_f32(it.next(), 1.0);
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.statusbar_color = Some(Color::new(r, g, b, a));
+        }
+        Ok(())
+    });
+    methods.add_method("GetStatusBarColor", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            if let Some(c) = &frame.statusbar_color {
+                return Ok((c.r, c.g, c.b, c.a));
+            }
+        }
+        Ok((1.0_f32, 1.0_f32, 1.0_f32, 1.0_f32))
+    });
+}
+
+fn add_statusbar_fill_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetFillStyle", |_, this, style: String| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.statusbar_fill_style = style;
+        }
+        Ok(())
+    });
+    methods.add_method("SetReverseFill", |_, this, reverse: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.statusbar_reverse_fill = reverse;
+        }
+        Ok(())
+    });
 }
 
 fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -888,61 +1096,231 @@ fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(false)
     });
     methods.add_method("GetCheckedTexture", |lua, this, ()| {
-        let texture_key = format!("__frame_{}_CheckedTexture", this.id);
-        if let Ok(existing) = lua.globals().get::<Value>(texture_key.as_str()) {
-            if !matches!(existing, Value::Nil) {
-                return Ok(existing);
-            }
-        }
-
-        let texture = Frame::new(WidgetType::Texture, None, Some(this.id));
-        let texture_id = texture.id;
-
-        {
-            let mut state = this.state.borrow_mut();
-            state.widgets.register(texture);
-            state.widgets.add_child(this.id, texture_id);
-        }
-
-        let handle = FrameHandle {
-            id: texture_id,
-            state: Rc::clone(&this.state),
-        };
-
-        let ud = lua.create_userdata(handle)?;
-        lua.globals().set(texture_key.as_str(), ud.clone())?;
-
-        let frame_key = format!("__frame_{}", texture_id);
-        lua.globals().set(frame_key.as_str(), ud.clone())?;
-
-        Ok(Value::UserData(ud))
+        get_or_create_child_texture(lua, this, "CheckedTexture")
     });
 }
 
 fn add_cooldown_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetCooldown", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetCooldownUNIX", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetCooldownTimes", |_, _this, ()| Ok((0.0_f64, 0.0_f64)));
-    methods.add_method("SetSwipeColor", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetDrawSwipe", |_, _this, _draw: bool| Ok(()));
-    methods.add_method("SetDrawEdge", |_, _this, _draw: bool| Ok(()));
-    methods.add_method("SetDrawBling", |_, _this, _draw: bool| Ok(()));
-    methods.add_method("SetReverse", |_, _this, _reverse: bool| Ok(()));
-    methods.add_method("SetHideCountdownNumbers", |_, _this, _hide: bool| Ok(()));
+    add_cooldown_timing_methods(methods);
+    add_cooldown_display_methods(methods);
+    add_cooldown_state_methods(methods);
+}
+
+fn add_cooldown_timing_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetCooldown", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let start = match it.next() {
+            Some(Value::Number(n)) => n,
+            Some(Value::Integer(n)) => n as f64,
+            _ => 0.0,
+        };
+        let duration = match it.next() {
+            Some(Value::Number(n)) => n,
+            Some(Value::Integer(n)) => n as f64,
+            _ => 0.0,
+        };
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_start = start;
+            frame.cooldown_duration = duration;
+        }
+        Ok(())
+    });
+    methods.add_method("SetCooldownUNIX", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let start = match it.next() {
+            Some(Value::Number(n)) => n,
+            Some(Value::Integer(n)) => n as f64,
+            _ => 0.0,
+        };
+        let end = match it.next() {
+            Some(Value::Number(n)) => n,
+            Some(Value::Integer(n)) => n as f64,
+            _ => 0.0,
+        };
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_start = start;
+            frame.cooldown_duration = end - start;
+        }
+        Ok(())
+    });
+    methods.add_method("GetCooldownTimes", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            return Ok((frame.cooldown_start, frame.cooldown_duration));
+        }
+        Ok((0.0_f64, 0.0_f64))
+    });
+    methods.add_method("GetCooldownDuration", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.cooldown_duration).unwrap_or(0.0))
+    });
+}
+
+fn add_cooldown_display_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetSwipeColor", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let r = val_to_f32(it.next(), 0.0);
+        let g = val_to_f32(it.next(), 0.0);
+        let b = val_to_f32(it.next(), 0.0);
+        let a = val_to_f32(it.next(), 0.8);
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.attributes.insert(
+                "__swipe_color".to_string(),
+                AttributeValue::String(format!("{},{},{},{}", r, g, b, a)),
+            );
+        }
+        Ok(())
+    });
+    methods.add_method("SetDrawSwipe", |_, this, draw: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_draw_swipe = draw;
+        }
+        Ok(())
+    });
+    methods.add_method("SetDrawEdge", |_, this, draw: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_draw_edge = draw;
+        }
+        Ok(())
+    });
+    methods.add_method("SetDrawBling", |_, this, draw: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_draw_bling = draw;
+        }
+        Ok(())
+    });
+    methods.add_method("SetReverse", |_, this, reverse: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_reverse = reverse;
+        }
+        Ok(())
+    });
+    methods.add_method("SetHideCountdownNumbers", |_, this, hide: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_hide_countdown = hide;
+        }
+        Ok(())
+    });
     // Note: Clear() for Cooldown frames is handled in __index to avoid conflicts
     // with addons that use frame.Clear as a field
 }
 
+fn add_cooldown_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("Pause", |_, this, ()| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_paused = true;
+        }
+        Ok(())
+    });
+    methods.add_method("Resume", |_, this, ()| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_paused = false;
+        }
+        Ok(())
+    });
+    methods.add_method("IsPaused", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.cooldown_paused).unwrap_or(false))
+    });
+}
+
 fn add_scrollframe_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetScrollChild", |_, _this, _child: Value| Ok(()));
-    methods.add_method("GetScrollChild", |_, _this, ()| Ok(Value::Nil));
-    methods.add_method("SetHorizontalScroll", |_, _this, _offset: f64| Ok(()));
-    methods.add_method("GetHorizontalScroll", |_, _this, ()| Ok(0.0_f64));
-    methods.add_method("SetVerticalScroll", |_, _this, _offset: f64| Ok(()));
-    methods.add_method("GetVerticalScroll", |_, _this, ()| Ok(0.0_f64));
-    methods.add_method("GetHorizontalScrollRange", |_, _this, ()| Ok(0.0_f64));
-    methods.add_method("GetVerticalScrollRange", |_, _this, ()| Ok(0.0_f64));
+    add_scrollframe_child_methods(methods);
+    add_scrollframe_offset_methods(methods);
+    add_scrollframe_range_methods(methods);
+}
+
+fn add_scrollframe_child_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetScrollChild", |_, this, child: Value| {
+        let child_id = match &child {
+            Value::UserData(ud) => ud.borrow::<FrameHandle>().ok().map(|h| h.id),
+            _ => None,
+        };
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.scroll_child_id = child_id;
+        }
+        Ok(())
+    });
+    methods.add_method("GetScrollChild", |lua, this, ()| {
+        let child_id = {
+            let state = this.state.borrow();
+            state.widgets.get(this.id).and_then(|f| f.scroll_child_id)
+        };
+        match child_id {
+            Some(id) => {
+                let key = format!("__frame_{}", id);
+                lua.globals().get::<Value>(key.as_str())
+            }
+            None => Ok(Value::Nil),
+        }
+    });
     methods.add_method("UpdateScrollChildRect", |_, _this, ()| Ok(()));
+}
+
+fn add_scrollframe_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetHorizontalScroll", |_, this, offset: f64| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.scroll_horizontal = offset;
+        }
+        Ok(())
+    });
+    methods.add_method("GetHorizontalScroll", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.scroll_horizontal).unwrap_or(0.0))
+    });
+    methods.add_method("SetVerticalScroll", |lua, this, offset: f64| {
+        {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.scroll_vertical = offset;
+            }
+        }
+        fire_tooltip_script(lua, this.id, "OnScrollRangeChanged")?;
+        Ok(())
+    });
+    methods.add_method("GetVerticalScroll", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.scroll_vertical).unwrap_or(0.0))
+    });
+}
+
+fn add_scrollframe_range_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("GetHorizontalScrollRange", |_, this, ()| {
+        let state = this.state.borrow();
+        let frame = match state.widgets.get(this.id) {
+            Some(f) => f,
+            None => return Ok(0.0_f64),
+        };
+        let child_width = frame.scroll_child_id
+            .and_then(|cid| state.widgets.get(cid))
+            .map(|c| c.width as f64)
+            .unwrap_or(0.0);
+        Ok((child_width - frame.width as f64).max(0.0))
+    });
+    methods.add_method("GetVerticalScrollRange", |_, this, ()| {
+        let state = this.state.borrow();
+        let frame = match state.widgets.get(this.id) {
+            Some(f) => f,
+            None => return Ok(0.0_f64),
+        };
+        let child_height = frame.scroll_child_id
+            .and_then(|cid| state.widgets.get(cid))
+            .map(|c| c.height as f64)
+            .unwrap_or(0.0);
+        Ok((child_height - frame.height as f64).max(0.0))
+    });
 }
 
 fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -1325,6 +1703,133 @@ fn add_simplehtml_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 }
 
+/// Shared SetValue/GetValue/SetMinMaxValues/GetMinMaxValues that dispatch by widget type.
+/// Must be registered last so it overwrites both slider and statusbar individual registrations.
+fn add_shared_value_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_shared_set_value(methods);
+    add_shared_get_value(methods);
+    add_shared_set_min_max(methods);
+    add_shared_get_min_max(methods);
+}
+
+fn add_shared_set_value<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetValue", |lua, this, value: f64| {
+        let wtype = {
+            let s = this.state.borrow();
+            s.widgets.get(this.id).map(|f| f.widget_type)
+        };
+        match wtype {
+            Some(WidgetType::Slider) => set_slider_value(lua, this, value)?,
+            Some(WidgetType::StatusBar) => set_statusbar_value(lua, this, value)?,
+            _ => {}
+        }
+        Ok(())
+    });
+}
+
+fn add_shared_get_value<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("GetValue", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            return Ok(match frame.widget_type {
+                WidgetType::Slider => frame.slider_value,
+                WidgetType::StatusBar => frame.statusbar_value,
+                _ => 0.0,
+            });
+        }
+        Ok(0.0_f64)
+    });
+}
+
+fn add_shared_set_min_max<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetMinMaxValues", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let min = match it.next() {
+            Some(Value::Number(n)) => n,
+            Some(Value::Integer(n)) => n as f64,
+            _ => 0.0,
+        };
+        let max = match it.next() {
+            Some(Value::Number(n)) => n,
+            Some(Value::Integer(n)) => n as f64,
+            _ => 1.0,
+        };
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            match frame.widget_type {
+                WidgetType::Slider => {
+                    frame.slider_min = min;
+                    frame.slider_max = max;
+                    frame.slider_value = frame.slider_value.clamp(min, max);
+                }
+                WidgetType::StatusBar => {
+                    frame.statusbar_min = min;
+                    frame.statusbar_max = max;
+                    frame.statusbar_value = frame.statusbar_value.clamp(min, max);
+                }
+                _ => {}
+            }
+        }
+        Ok(())
+    });
+}
+
+fn add_shared_get_min_max<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("GetMinMaxValues", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            return Ok(match frame.widget_type {
+                WidgetType::Slider => (frame.slider_min, frame.slider_max),
+                WidgetType::StatusBar => (frame.statusbar_min, frame.statusbar_max),
+                _ => (0.0, 1.0),
+            });
+        }
+        Ok((0.0_f64, 1.0_f64))
+    });
+}
+
+fn set_slider_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua::Result<()> {
+    let clamped = {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            let clamped = value.clamp(frame.slider_min, frame.slider_max);
+            frame.slider_value = clamped;
+            clamped
+        } else {
+            return Ok(());
+        }
+    };
+    fire_value_changed(lua, this.id, clamped)
+}
+
+fn set_statusbar_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua::Result<()> {
+    let clamped = {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            let clamped = value.clamp(frame.statusbar_min, frame.statusbar_max);
+            frame.statusbar_value = clamped;
+            clamped
+        } else {
+            return Ok(());
+        }
+    };
+    fire_value_changed(lua, this.id, clamped)
+}
+
+/// Fire OnValueChanged script with the new value as argument.
+fn fire_value_changed(lua: &mlua::Lua, frame_id: u64, value: f64) -> mlua::Result<()> {
+    if let Ok(Some(scripts_table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
+        let key = format!("{}_OnValueChanged", frame_id);
+        if let Ok(Some(func)) = scripts_table.get::<Option<mlua::Function>>(key.as_str()) {
+            let frame_key = format!("__frame_{}", frame_id);
+            if let Ok(frame_ud) = lua.globals().get::<Value>(frame_key.as_str()) {
+                let _ = func.call::<()>((frame_ud, value));
+            }
+        }
+    }
+    Ok(())
+}
+
 // --- Helper functions ---
 
 /// Shared AddMessage implementation for AddMessage/AddMsg.
@@ -1460,4 +1965,24 @@ fn rgb_to_hsv(r: f64, g: f64, b: f64) -> (f64, f64, f64) {
     let h = if h < 0.0 { h + 360.0 } else { h };
 
     (h, s, v)
+}
+
+/// Look up or create a child texture by key and return it as a FrameHandle userdata.
+/// Used by GetThumbTexture, GetStatusBarTexture, etc.
+fn get_or_create_child_texture(
+    lua: &Lua,
+    this: &FrameHandle,
+    key: &str,
+) -> Result<Value> {
+    let mut state = this.state.borrow_mut();
+    let tex_id = super::methods_helpers::get_or_create_button_texture(
+        &mut state, this.id, key,
+    );
+    drop(state);
+    let handle = FrameHandle {
+        id: tex_id,
+        state: Rc::clone(&this.state),
+    };
+    let ud = lua.create_userdata(handle)?;
+    Ok(Value::UserData(ud))
 }

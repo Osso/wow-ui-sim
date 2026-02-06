@@ -110,6 +110,16 @@ fn register_c_misc_api_game_menu(lua: &Lua) -> Result<()> {
     register_game_rules_util(lua)?;
     register_game_menu_stubs(lua)?;
     register_c_catalog_shop(lua)?;
+    register_c_commentator(lua)?;
+    register_c_challenge_mode(lua)?;
+    register_c_club_finder(lua)?;
+    register_c_artifact_and_azerite(lua)?;
+    register_global_game_stubs(lua)?;
+    register_c_garrison(lua)?;
+    register_minimap_util(lua)?;
+    register_c_crafting_orders(lua)?;
+    register_expansion_landing_page(lua)?;
+    register_minimap_globals(lua)?;
     Ok(())
 }
 
@@ -652,6 +662,7 @@ fn register_c_pvp(lua: &Lua) -> Result<()> {
     c_pvp.set("IsPVPMap", lua.create_function(|_, ()| Ok(false))?)?;
     c_pvp.set("IsRatedMap", lua.create_function(|_, ()| Ok(false))?)?;
     c_pvp.set("IsInBrawl", lua.create_function(|_, ()| Ok(false))?)?;
+    c_pvp.set("IsActiveBattlefield", lua.create_function(|_, ()| Ok(false))?)?;
 
     globals.set("C_PvP", c_pvp)?;
     Ok(())
@@ -1084,6 +1095,10 @@ fn register_c_calendar(lua: &Lua) -> Result<()> {
         "GetMaxDate",
         lua.create_function(|_, ()| Ok((12i32, 31i32, 2030i32)))?,
     )?;
+    c_calendar.set(
+        "GetNumPendingInvites",
+        lua.create_function(|_, ()| Ok(0i32))?,
+    )?;
 
     globals.set("C_Calendar", c_calendar)?;
     Ok(())
@@ -1188,6 +1203,11 @@ fn register_c_housing(lua: &Lua) -> Result<()> {
     register_c_dye_color(lua, &globals)?;
     register_c_house_editor(lua, &globals)?;
     register_c_housing_decor(lua, &globals)?;
+
+    let c_housing = lua.create_table()?;
+    c_housing.set("GetTrackedHouseGuid", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    c_housing.set("IsInsideHouse", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("C_Housing", c_housing)?;
 
     let c_housing_basic_mode = lua.create_table()?;
     c_housing_basic_mode.set("IsDecorSelected", lua.create_function(|_, ()| Ok(false))?)?;
@@ -1578,6 +1598,10 @@ fn register_game_rules_util(lua: &Lua) -> Result<()> {
         "ShouldShowSplashScreen",
         lua.create_function(|_, ()| Ok(false))?,
     )?;
+    t.set(
+        "ShouldShowExpansionLandingPageButton",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
     lua.globals().set("GameRulesUtil", t)?;
     Ok(())
 }
@@ -1663,6 +1687,205 @@ fn register_c_splash_screen(lua: &Lua) -> Result<()> {
     lua.globals().set(
         "IsCharacterNewlyBoosted",
         lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    Ok(())
+}
+
+fn register_c_artifact_and_azerite(lua: &Lua) -> Result<()> {
+    let art = lua.create_table()?;
+    art.set("IsEquippedArtifactMaxed", lua.create_function(|_, ()| Ok(true))?)?;
+    art.set("IsEquippedArtifactDisabled", lua.create_function(|_, ()| Ok(false))?)?;
+    art.set("GetEquippedArtifactInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    lua.globals().set("C_ArtifactUI", art)?;
+
+    let az = lua.create_table()?;
+    az.set("FindActiveAzeriteItem", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    az.set("IsAzeriteItemAtMaxLevel", lua.create_function(|_, ()| Ok(true))?)?;
+    az.set("IsAzeriteItemEnabled", lua.create_function(|_, _item: Value| Ok(false))?)?;
+    lua.globals().set("C_AzeriteItem", az)?;
+    Ok(())
+}
+
+fn register_c_commentator(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetMode", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("IsSpectating", lua.create_function(|_, ()| Ok(false))?)?;
+    lua.globals().set("C_Commentator", t)?;
+    Ok(())
+}
+
+fn register_c_challenge_mode(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsChallengeModeActive", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetActiveChallengeMapID", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("GetActiveKeystoneInfo", lua.create_function(|_, ()| Ok((0i32, Value::Nil, false)))?)?;
+    t.set("GetCompletionInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("GetDeathCount", lua.create_function(|_, ()| Ok((0i32, 0i32)))?)?;
+    t.set("GetLeaverPenaltyWarningTimeLeft", lua.create_function(|_, ()| Ok(0.0f64))?)?;
+    lua.globals().set("C_ChallengeMode", t)?;
+    Ok(())
+}
+
+fn register_c_club_finder(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsListingEnabledFromFlags", lua.create_function(|_, _flags: Option<i32>| Ok(false))?)?;
+    t.set("PlayerGetClubInvitationList", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("PlayerRequestPendingClubsList", lua.create_function(|_, _request_type: Option<i32>| Ok(()))?)?;
+    lua.globals().set("C_ClubFinder", t)?;
+    Ok(())
+}
+
+fn register_global_game_stubs(lua: &Lua) -> Result<()> {
+    register_global_combat_stubs(lua)?;
+    register_global_action_stubs(lua)?;
+    register_global_account_stubs(lua)?;
+    register_actionbar_hotkey_color(lua)?;
+    Ok(())
+}
+
+/// Combat and world state global stubs.
+fn register_global_combat_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("GetTotemInfo", lua.create_function(|_, _slot: i32| {
+        Ok((false, Value::Nil, 0.0f64, 0.0f64, Value::Nil))
+    })?)?;
+    g.set("GetNegativeCorruptionEffectInfo", lua.create_function(|lua, ()| lua.create_table())?)?;
+    g.set("GetCorruption", lua.create_function(|_, ()| Ok(0.0f64))?)?;
+    g.set("GetCorruptionResistance", lua.create_function(|_, ()| Ok(0.0f64))?)?;
+    g.set("UnitHasVehicleUI", lua.create_function(|_, _unit: Option<String>| Ok(false))?)?;
+    g.set("HasArtifactEquipped", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("IsInActiveWorldPVP", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("IsWatchingHonorAsXP", lua.create_function(|_, ()| Ok(false))?)?;
+    Ok(())
+}
+
+/// Action bar slot query stubs (all return "no action" defaults).
+fn register_global_action_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("IsEquippedAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("IsConsumableAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("IsStackableAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("IsItemAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("IsCurrentAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("IsAutoRepeatAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("IsUsableAction", lua.create_function(|_, _s: Option<i32>| Ok((false, false)))?)?;
+    g.set("IsAttackAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("HasAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    g.set("GetActionText", lua.create_function(|_, _s: Option<i32>| Ok(Value::Nil))?)?;
+    g.set("GetActionCount", lua.create_function(|_, _s: Option<i32>| Ok(0i32))?)?;
+    g.set("GetActionTexture", lua.create_function(|_, _s: Option<i32>| Ok(Value::Nil))?)?;
+    g.set("GetActionInfo", lua.create_function(|_, _s: Option<i32>| Ok((Value::Nil, Value::Nil, Value::Nil)))?)?;
+    g.set("GetActionCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64, false)))?)?;
+    g.set("GetActionCharges", lua.create_function(|_, _s: Option<i32>| Ok((0i32, 0i32, 0.0f64, 0.0f64)))?)?;
+    Ok(())
+}
+
+/// Account and trial mode stubs.
+fn register_global_account_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("GetExpansionTrialInfo", lua.create_function(|_, ()| Ok((false, 0i32)))?)?;
+    g.set("UnitTrialBankedLevels", lua.create_function(|_, _unit: Option<String>| Ok(0i32))?)?;
+    Ok(())
+}
+
+/// ACTIONBAR_HOTKEY_FONT_COLOR as a raw table (CreateColor unavailable during registration).
+fn register_actionbar_hotkey_color(lua: &Lua) -> Result<()> {
+    let color = lua.create_table()?;
+    color.set("r", 0.6f64)?;
+    color.set("g", 0.6f64)?;
+    color.set("b", 0.6f64)?;
+    color.set("a", 1.0f64)?;
+    color.set("GetRGB", lua.create_function(|_, this: mlua::Table| {
+        Ok((this.get::<f64>("r")?, this.get::<f64>("g")?, this.get::<f64>("b")?))
+    })?)?;
+    lua.globals().set("ACTIONBAR_HOTKEY_FONT_COLOR", color)?;
+    Ok(())
+}
+
+/// C_Garrison namespace stubs.
+fn register_c_garrison(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetLandingPageGarrisonType", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set(
+        "IsLandingPageMinimapButtonVisible",
+        lua.create_function(|_, _garrison_type: i32| Ok(false))?,
+    )?;
+    t.set("GetFollowerShipments", lua.create_function(|lua, _id: Value| lua.create_table())?)?;
+    lua.globals().set("C_Garrison", t)?;
+    Ok(())
+}
+
+/// MinimapUtil namespace stubs.
+fn register_minimap_util(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
+        "SetTrackingFilterByFilterIndex",
+        lua.create_function(|_, (_index, _value): (i32, bool)| Ok(()))?,
+    )?;
+    t.set(
+        "GetFilterIndexForFilterID",
+        lua.create_function(|_, _filter_id: i32| Ok(Value::Nil))?,
+    )?;
+    lua.globals().set("MinimapUtil", t)?;
+    Ok(())
+}
+
+/// C_CraftingOrders namespace stubs.
+fn register_c_crafting_orders(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
+        "GetPersonalOrdersInfo",
+        lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
+    lua.globals().set("C_CraftingOrders", t)?;
+    Ok(())
+}
+
+/// ExpansionLandingPage global table stubs.
+fn register_expansion_landing_page(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsOverlayApplied", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetLandingPageType", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set(
+        "GetOverlayMinimapDisplayInfo",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    lua.globals().set("ExpansionLandingPage", t)?;
+    Ok(())
+}
+
+/// Minimap-related global functions.
+fn register_minimap_globals(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("HasNewMail", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set(
+        "GetLatestThreeSenders",
+        lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?,
+    )?;
+    g.set(
+        "DoesFollowerMatchCurrentGarrisonType",
+        lua.create_function(|_, _follower_type: Value| Ok(false))?,
+    )?;
+    g.set(
+        "ShowGarrisonLandingPage",
+        lua.create_function(|_, _garrison_type: Value| Ok(()))?,
+    )?;
+    g.set(
+        "ToggleExpansionLandingPage",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+    g.set(
+        "CovenantCalling_CheckCallings",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+    g.set(
+        "ToggleMajorFactionRenown",
+        lua.create_function(|_, _faction_id: Value| Ok(()))?,
+    )?;
+    g.set(
+        "GetGameTime",
+        lua.create_function(|_, ()| Ok((12i32, 0i32)))?,
     )?;
     Ok(())
 }

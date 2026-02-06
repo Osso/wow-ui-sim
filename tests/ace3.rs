@@ -165,31 +165,31 @@ fn test_load_details() {
 
 #[test]
 fn test_load_game_menu() {
-    let wow_ui_path = PathBuf::from(env!("HOME"))
-        .join("Projects/wow/reference-addons/wow-ui-source");
+    let blizzard_ui = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("Interface/BlizzardUI");
 
-    if !wow_ui_path.exists() {
-        eprintln!("Skipping: wow-ui-source not found");
+    if !blizzard_ui.exists() {
+        eprintln!("Skipping: BlizzardUI not found at {:?}", blizzard_ui);
         return;
     }
 
     let env = WowLuaEnv::new().unwrap();
 
     // First load Blizzard_SharedXML (already tested to work)
-    let shared_xml_base_toc = wow_ui_path.join("Interface/AddOns/Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
+    let shared_xml_base_toc = blizzard_ui.join("Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
     match load_addon(&env, &shared_xml_base_toc) {
         Ok(r) => println!("SharedXMLBase: {} Lua, {} XML", r.lua_files, r.xml_files),
         Err(e) => println!("SharedXMLBase failed: {}", e),
     }
 
-    let shared_xml_toc = wow_ui_path.join("Interface/AddOns/Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
+    let shared_xml_toc = blizzard_ui.join("Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
     match load_addon(&env, &shared_xml_toc) {
         Ok(r) => println!("SharedXML: {} Lua, {} XML (warnings: {})", r.lua_files, r.xml_files, r.warnings.len()),
         Err(e) => println!("SharedXML failed: {}", e),
     }
 
     // Now try loading GameMenu
-    let game_menu_toc = wow_ui_path.join("Interface/AddOns/Blizzard_GameMenu/Blizzard_GameMenu_Mainline.toc");
+    let game_menu_toc = blizzard_ui.join("Blizzard_GameMenu/Blizzard_GameMenu_Mainline.toc");
     let result = load_addon(&env, &game_menu_toc);
 
     match result {
@@ -258,6 +258,50 @@ fn test_load_dbm_core() {
     }
 }
 
+/// Load a Lua file into the env, ignoring missing files.
+fn load_lua_file(env: &WowLuaEnv, path: &std::path::Path, must_succeed: bool) {
+    if let Ok(code) = std::fs::read_to_string(path) {
+        if must_succeed {
+            env.exec(&code).unwrap_or_else(|e| panic!("{}: {}", path.display(), e));
+        } else {
+            let _ = env.exec(&code);
+        }
+    }
+}
+
+/// Load core Ace3 libraries from Details' Libs directory.
+fn load_details_core_libs(env: &WowLuaEnv, libs_dir: &std::path::Path) {
+    let lib_paths = [
+        ("LibStub/LibStub.lua", true),
+        ("CallbackHandler-1.0/CallbackHandler-1.0.lua", false),
+        ("AceTimer-3.0/AceTimer-3.0.lua", false),
+        ("AceSerializer-3.0/AceSerializer-3.0.lua", false),
+        ("AceComm-3.0/AceComm-3.0.lua", false),
+        ("LibSharedMedia-3.0/LibSharedMedia-3.0.lua", false),
+        ("LibDataBroker-1.1/LibDataBroker-1.1.lua", false),
+        ("LibDBIcon-1.0/LibDBIcon-1.0.lua", false),
+    ];
+    for (rel, must_succeed) in lib_paths {
+        load_lua_file(env, &libs_dir.join(rel), must_succeed);
+    }
+}
+
+/// Load a Lua file as a WoW addon chunk with (addonName, privateTable) varargs.
+fn load_addon_lua_chunk(env: &WowLuaEnv, path: &std::path::Path, addon_name: &str) {
+    let code = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("{}: {}", path.display(), e));
+    let escaped = code.replace('\\', "\\\\").replace('"', "\\\"").replace('\n', "\\n");
+    let wrapper = format!(
+        r#"local chunk, err = loadstring("{escaped}", "@{addon_name}/Init.lua")
+        if not chunk then error("compile: " .. tostring(err)) end
+        local ok, result = pcall(chunk, "{addon_name}", {{}})
+        if not ok then error("runtime: " .. tostring(result)) end"#,
+    );
+    match env.exec(&wrapper) {
+        Ok(_) => println!("{addon_name} Init.lua loaded"),
+        Err(e) => println!("{addon_name} Init.lua failed: {e}"),
+    }
+}
+
 #[test]
 fn test_load_weakauras_init() {
     let details_path = PathBuf::from(env!("HOME"))
@@ -271,108 +315,15 @@ fn test_load_weakauras_init() {
     }
 
     let env = WowLuaEnv::new().unwrap();
+    load_details_core_libs(&env, &details_path.parent().unwrap().join("Libs"));
+    load_addon_lua_chunk(&env, &weakauras_dir.join("Init.lua"), "WeakAuras");
 
-    // First load core libs from Details
-    let details_libs = details_path.parent().unwrap().join("Libs");
-
-    // Load LibStub first
-    let libstub_path = details_libs.join("LibStub/LibStub.lua");
-    if let Ok(code) = std::fs::read_to_string(&libstub_path) {
-        env.exec(&code).expect("LibStub should load");
-    }
-
-    // Load CallbackHandler
-    let cbh_path = details_libs.join("CallbackHandler-1.0/CallbackHandler-1.0.lua");
-    if let Ok(code) = std::fs::read_to_string(&cbh_path) {
-        let _ = env.exec(&code);
-    }
-
-    // Load AceTimer
-    let timer_path = details_libs.join("AceTimer-3.0/AceTimer-3.0.lua");
-    if let Ok(code) = std::fs::read_to_string(&timer_path) {
-        let _ = env.exec(&code);
-    }
-
-    // Load AceSerializer
-    let serializer_path = details_libs.join("AceSerializer-3.0/AceSerializer-3.0.lua");
-    if let Ok(code) = std::fs::read_to_string(&serializer_path) {
-        let _ = env.exec(&code);
-    }
-
-    // Load AceComm
-    let comm_path = details_libs.join("AceComm-3.0/AceComm-3.0.lua");
-    if let Ok(code) = std::fs::read_to_string(&comm_path) {
-        let _ = env.exec(&code);
-    }
-
-    // Load LibSharedMedia
-    let lsm_path = details_libs.join("LibSharedMedia-3.0/LibSharedMedia-3.0.lua");
-    if let Ok(code) = std::fs::read_to_string(&lsm_path) {
-        let _ = env.exec(&code);
-    }
-
-    // Load LibDataBroker
-    let ldb_path = details_libs.join("LibDataBroker-1.1/LibDataBroker-1.1.lua");
-    if let Ok(code) = std::fs::read_to_string(&ldb_path) {
-        let _ = env.exec(&code);
-    }
-
-    // Load LibDBIcon
-    let ldbi_path = details_libs.join("LibDBIcon-1.0/LibDBIcon-1.0.lua");
-    if let Ok(code) = std::fs::read_to_string(&ldbi_path) {
-        let _ = env.exec(&code);
-    }
-
-    // Now try loading WeakAuras Init.lua
-    // WoW loads addon files with varargs: (addonName, privateTable)
-    // We simulate this by using load() and passing the varargs
-    let init_path = weakauras_dir.join("Init.lua");
-    let init_code = std::fs::read_to_string(&init_path).expect("Should read Init.lua");
-
-    // Escape the Lua code for embedding in a string
-    let escaped_code = init_code.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n");
-
-    let wrapper = format!(
-        r#"
-        -- Create the private table for WeakAuras
-        local addonName = "WeakAuras"
-        local privateTable = {{}}
-
-        -- Load the Init.lua code as a function with varargs (use loadstring for Lua 5.1)
-        local code = "{}"
-        local chunk, err = loadstring(code, "@WeakAuras/Init.lua")
-        if not chunk then
-            error("Failed to compile WeakAuras Init.lua: " .. tostring(err))
-        end
-
-        -- Call the chunk with addon varargs
-        local ok, result = pcall(chunk, addonName, privateTable)
-        if not ok then
-            error("WeakAuras Init.lua runtime error: " .. tostring(result))
-        end
-        "#,
-        escaped_code
-    );
-
-    match env.exec(&wrapper) {
-        Ok(_) => {
-            println!("WeakAuras Init.lua loaded successfully!");
-
-            // Check if WeakAuras table exists
-            let wa_exists: bool = env.eval("return WeakAuras ~= nil").unwrap_or(false);
-            println!("WeakAuras table exists: {}", wa_exists);
-
-            if wa_exists {
-                let is_retail: bool = env.eval("return WeakAuras.IsRetail and WeakAuras.IsRetail() or false").unwrap_or(false);
-                println!("WeakAuras.IsRetail(): {}", is_retail);
-
-                let libs_ok: bool = env.eval("return WeakAuras.IsLibsOK and WeakAuras.IsLibsOK() or false").unwrap_or(false);
-                println!("WeakAuras.IsLibsOK(): {}", libs_ok);
-            }
-        }
-        Err(e) => {
-            println!("WeakAuras Init.lua failed: {}", e);
-        }
+    let wa_exists: bool = env.eval("return WeakAuras ~= nil").unwrap_or(false);
+    println!("WeakAuras table exists: {}", wa_exists);
+    if wa_exists {
+        let is_retail: bool = env.eval("return WeakAuras.IsRetail and WeakAuras.IsRetail() or false").unwrap_or(false);
+        let libs_ok: bool = env.eval("return WeakAuras.IsLibsOK and WeakAuras.IsLibsOK() or false").unwrap_or(false);
+        println!("IsRetail: {is_retail}, IsLibsOK: {libs_ok}");
     }
 }
 

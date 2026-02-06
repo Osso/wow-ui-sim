@@ -316,7 +316,7 @@ fn create_texture_from_template(
     );
 
     append_texture_properties(&mut code, texture, "tex");
-    append_anchors_and_parent_key(&mut code, &texture.anchors, texture.set_all_points, &texture.parent_key, "tex", "parent", parent_name);
+    append_anchors_and_parent_refs(&mut code, &texture.anchors, texture.set_all_points, &texture.parent_key, &texture.parent_array, "tex", "parent", parent_name);
 
     // WoW implicitly applies SetAllPoints to textures with no anchors
     if texture.anchors.is_none() && texture.set_all_points != Some(true) {
@@ -330,6 +330,18 @@ fn create_texture_from_template(
 
     code.push_str("        end\n");
     let _ = lua.load(&code).exec();
+
+    // Process animation groups on the texture
+    if let Some(anims) = &texture.animations {
+        let mut anim_code = format!("local frame = {}\n", child_name);
+        for group in &anims.animations {
+            if group.is_virtual == Some(true) {
+                continue;
+            }
+            anim_code.push_str(&generate_animation_group_code(group, "frame"));
+        }
+        let _ = lua.load(&anim_code).exec();
+    }
 }
 
 /// Append texture-specific property setters (size, file, atlas, color) to Lua code.
@@ -366,12 +378,13 @@ fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml
     }
 }
 
-/// Append anchors, setAllPoints, and parentKey assignment to Lua code.
-fn append_anchors_and_parent_key(
+/// Append anchors, setAllPoints, parentKey, and parentArray assignment to Lua code.
+fn append_anchors_and_parent_refs(
     code: &mut String,
     anchors: &Option<crate::xml::AnchorsXml>,
     set_all_points: Option<bool>,
     parent_key: &Option<String>,
+    parent_array: &Option<String>,
     var: &str,
     parent_var: &str,
     parent_name: &str,
@@ -384,6 +397,12 @@ fn append_anchors_and_parent_key(
     }
     if let Some(parent_key) = parent_key {
         code.push_str(&format!("            {}.{} = {}\n", parent_var, parent_key, var));
+    }
+    if let Some(parent_array) = parent_array {
+        code.push_str(&format!(
+            "            {parent_var}.{parent_array} = {parent_var}.{parent_array} or {{}}\n\
+             table.insert({parent_var}.{parent_array}, {var})\n"
+        ));
     }
 }
 
@@ -421,11 +440,12 @@ fn create_fontstring_from_template(
     append_fontstring_size_and_text(&mut code, fontstring);
     append_fontstring_justify_and_color(&mut code, fontstring);
     append_fontstring_shadow(&mut code, fontstring);
-    append_anchors_and_parent_key(
+    append_anchors_and_parent_refs(
         &mut code,
         &fontstring.anchors,
         fontstring.set_all_points,
         &fontstring.parent_key,
+        &fontstring.parent_array,
         "fs",
         "parent",
         parent_name,
@@ -581,6 +601,23 @@ fn build_create_child_code(
     }
     if let Some(parent_key) = &frame.parent_key {
         code.push_str(&format!("            parent.{} = child\n", parent_key));
+    }
+    // parentArray from the frame itself or inherited templates
+    let parent_array = frame.parent_array.clone().or_else(|| {
+        let inherits = frame.inherits.as_deref().unwrap_or("");
+        if inherits.is_empty() { return None; }
+        for entry in &crate::xml::get_template_chain(inherits) {
+            if let Some(pa) = &entry.frame.parent_array {
+                return Some(pa.clone());
+            }
+        }
+        None
+    });
+    if let Some(parent_array) = &parent_array {
+        code.push_str(&format!(
+            "            parent.{parent_array} = parent.{parent_array} or {{}}\n\
+             table.insert(parent.{parent_array}, child)\n"
+        ));
     }
     code.push_str(&format!("            _G[\"{}\"] = child\n", child_name));
     code.push_str("        end\n");

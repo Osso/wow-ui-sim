@@ -307,6 +307,12 @@ fn emit_grid_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, te
     }
 }
 
+/// Build quads for a Minimap widget - dark circular map area.
+pub fn build_minimap_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+    // Dark background fill for the minimap area
+    batch.push_solid(bounds, [0.05, 0.08, 0.05, f.alpha]);
+}
+
 /// Build quads for an EditBox widget.
 pub fn build_editbox_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
     // Skip placeholder if child textures provide the border (e.g. SearchBoxTemplate)
@@ -452,6 +458,7 @@ fn emit_frame_quads(
 ) {
     match f.widget_type {
         WidgetType::Frame => build_frame_quads(batch, bounds, f),
+        WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
         WidgetType::Button => {
             build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
             if let Some((fs, ga)) = text_ctx {

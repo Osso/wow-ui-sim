@@ -113,6 +113,32 @@ fn append_parent_key_code(lua_code: &mut String, frame: &crate::xml::FrameXml, p
             parent, parent_key
         ));
     }
+    append_parent_array_code(lua_code, frame, parent);
+}
+
+/// Append parentArray insertion from the frame or its inherited templates.
+fn append_parent_array_code(lua_code: &mut String, frame: &crate::xml::FrameXml, parent: &str) {
+    // Check the frame itself first
+    if let Some(parent_array) = &frame.parent_array {
+        lua_code.push_str(&format!(
+            "\n        {parent}.{parent_array} = {parent}.{parent_array} or {{}}\n        \
+             table.insert({parent}.{parent_array}, frame)\n        ",
+        ));
+        return;
+    }
+    // Check inherited templates
+    let inherits = frame.inherits.as_deref().unwrap_or("");
+    if !inherits.is_empty() {
+        for entry in &crate::xml::get_template_chain(inherits) {
+            if let Some(parent_array) = &entry.frame.parent_array {
+                lua_code.push_str(&format!(
+                    "\n        {parent}.{parent_array} = {parent}.{parent_array} or {{}}\n        \
+                     table.insert({parent}.{parent_array}, frame)\n        ",
+                ));
+                return;
+            }
+        }
+    }
 }
 
 /// Collect mixins from inherited templates and the frame itself, then append Mixin() calls.
@@ -381,17 +407,28 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
 
 /// Recursively create child frames and assign parentKey references.
 fn create_child_frames(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
-    let frames = match frame.frames() {
-        Some(f) => f,
-        None => return Ok(()),
-    };
+    if let Some(frames) = frame.frames() {
+        create_frame_elements(env, &frames.elements, name)?;
+    }
+    // ScrollChild children are parented to the ScrollFrame just like regular children
+    if let Some(scroll_child) = frame.scroll_child() {
+        create_frame_elements(env, &scroll_child.children, name)?;
+    }
+    Ok(())
+}
 
-    for child in &frames.elements {
+/// Create frames from a list of FrameElement, assigning parentKey references.
+fn create_frame_elements(
+    env: &WowLuaEnv,
+    elements: &[crate::xml::FrameElement],
+    parent_name: &str,
+) -> Result<(), LoadError> {
+    for child in elements {
         let (child_frame, child_type) = match frame_element_to_type(child) {
             Some(pair) => pair,
             None => continue,
         };
-        let child_name = create_frame_from_xml(env, child_frame, child_type, Some(name))?;
+        let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name))?;
 
         // Assign parentKey so the parent can reference the child.
         // The Lua assignment triggers __newindex which syncs to Rust children_keys.
@@ -399,12 +436,10 @@ fn create_child_frames(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &str
             (child_name.clone(), &child_frame.parent_key)
         {
             let lua_code = format!(
-                r#"
-                    {}.{} = {}
-                    "#,
-                name, parent_key, actual_child_name
+                "\n                    {}.{} = {}\n                    ",
+                parent_name, parent_key, actual_child_name
             );
-            env.exec(&lua_code).ok(); // Ignore errors (parent might not exist yet)
+            env.exec(&lua_code).ok();
         }
     }
     Ok(())
@@ -440,7 +475,9 @@ fn exec_animation_groups(env: &WowLuaEnv, anims: &crate::xml::AnimationsXml, nam
         }
         anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
     }
-    env.exec(&anim_code).ok();
+    if let Err(e) = env.exec(&anim_code) {
+        eprintln!("[AnimSetup] error: {}", e);
+    }
 }
 
 /// Fire OnLoad and OnShow lifecycle scripts after the frame is fully configured.
@@ -459,7 +496,9 @@ fn fire_lifecycle_scripts(env: &WowLuaEnv, name: &str) {
         "#,
         name
     );
-    env.exec(&onload_code).ok();
+    if let Err(e) = env.exec(&onload_code) {
+        eprintln!("[OnLoad] {} error: {}", name, e);
+    }
 
     // In WoW, OnShow fires when a frame becomes visible, including at creation if visible.
     let onshow_code = format!(
@@ -476,5 +515,7 @@ fn fire_lifecycle_scripts(env: &WowLuaEnv, name: &str) {
         "#,
         name
     );
-    env.exec(&onshow_code).ok();
+    if let Err(e) = env.exec(&onshow_code) {
+        eprintln!("[OnShow] {} error: {}", name, e);
+    }
 }

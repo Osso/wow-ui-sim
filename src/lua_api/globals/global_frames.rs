@@ -11,29 +11,19 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 /// Look up a named widget and register it as a Lua global.
+/// Look up or create a frame by name and expose it as a Lua global.
+/// If the frame already exists in the widget registry (e.g. from builtin_frames),
+/// reuse it. Otherwise create a new one on demand. This avoids hardcoding frames
+/// in builtin_frames.rs just so global_frames.rs can find them.
 fn register_frame_global(lua: &Lua, state: &Rc<RefCell<SimState>>, name: &str) -> Result<u64> {
     let id = {
-        let st = state.borrow();
-        st.widgets.get_id_by_name(name).unwrap()
-    };
-    let ud = lua.create_userdata(FrameHandle {
-        id,
-        state: Rc::clone(state),
-    })?;
-    lua.globals().set(name, ud)?;
-    Ok(id)
-}
-
-/// Create a new frame widget and register it as a Lua global.
-fn create_and_register_frame_global(
-    lua: &Lua,
-    state: &Rc<RefCell<SimState>>,
-    name: &str,
-) -> Result<u64> {
-    let id = {
         let mut st = state.borrow_mut();
-        let frame = Frame::new(WidgetType::Frame, Some(name.to_string()), None);
-        st.widgets.register(frame)
+        if let Some(existing) = st.widgets.get_id_by_name(name) {
+            existing
+        } else {
+            let frame = Frame::new(WidgetType::Frame, Some(name.to_string()), None);
+            st.widgets.register(frame)
+        }
     };
     let ud = lua.create_userdata(FrameHandle {
         id,
@@ -318,14 +308,14 @@ fn register_misc_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     register_frame_global(lua, state, "ContainerFrameCombinedBags")?;
     register_frame_global(lua, state, "LootFrame")?;
 
-    let addon_compartment_id = create_and_register_frame_global(lua, state, "AddonCompartmentFrame")?;
+    let addon_compartment_id = register_frame_global(lua, state, "AddonCompartmentFrame")?;
     setup_addon_compartment(lua, addon_compartment_id)?;
     eprintln!("DEBUG: after AddonCompartmentFrame");
 
     register_frame_global(lua, state, "ScenarioObjectiveTracker")?;
     register_frame_global(lua, state, "RaidWarningFrame")?;
 
-    create_and_register_frame_global(lua, state, "FriendsFrame")?;
+    register_frame_global(lua, state, "FriendsFrame")?;
 
     setup_party_member_frame_pool(lua)?;
     Ok(())

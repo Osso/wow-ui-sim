@@ -34,6 +34,21 @@ fn test_minimap_exists() {
     let env = env();
     let exists: bool = env.eval("return Minimap ~= nil").unwrap();
     assert!(exists);
+    // Without Blizzard_Minimap loaded, Minimap is a stub Frame.
+    // The proper Minimap widget type comes from addon XML loading.
+    let is_frame: bool = env.eval("return Minimap:IsObjectType('Frame')").unwrap();
+    assert!(is_frame, "Minimap should be a Frame subtype");
+}
+
+#[test]
+fn test_garrison_type_enum() {
+    let env = env();
+    let exists: bool = env.eval("return Enum ~= nil").unwrap();
+    assert!(exists, "Enum should exist");
+    let gt_exists: bool = env.eval("return Enum.GarrisonType ~= nil").unwrap();
+    assert!(gt_exists, "Enum.GarrisonType should exist");
+    let val: i32 = env.eval("return Enum.GarrisonType.Type_9_0_Garrison").unwrap();
+    assert_eq!(val, 111);
 }
 
 #[test]

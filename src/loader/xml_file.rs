@@ -151,9 +151,9 @@ fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static st
         | XmlElement::ScopedModifier(f)
         | XmlElement::Line(f)
         | XmlElement::Browser(f)
-        | XmlElement::Minimap(f)
         | XmlElement::MovieFrame(f)
         | XmlElement::WorldFrame(f) => Some((f, "Frame")),
+        XmlElement::Minimap(f) => Some((f, "Minimap")),
         _ => None,
     }
 }

@@ -48,6 +48,7 @@ fn register_constants_table(lua: &Lua) -> Result<()> {
         Constants.EditModeConsts.EditModeMinGridSpacing = 20
         Constants.EditModeConsts.EditModeMaxGridSpacing = 300
         Constants.EditModeConsts.EditModeMaxLayoutsPerType = 5
+        Constants.MajorFactionsConsts.PLUNDERSTORM_MAJOR_FACTION_ID = 0
     "#,
     )
     .exec()

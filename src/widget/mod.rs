@@ -37,6 +37,7 @@ pub enum WidgetType {
     MessageFrame,
     SimpleHTML,
     GameTooltip,
+    Minimap,
 }
 
 impl WidgetType {
@@ -59,6 +60,7 @@ impl WidgetType {
             "MessageFrame" | "ScrollingMessageFrame" => Some(Self::MessageFrame),
             "SimpleHTML" => Some(Self::SimpleHTML),
             "GameTooltip" => Some(Self::GameTooltip),
+            "Minimap" => Some(Self::Minimap),
             _ => None,
         }
     }
@@ -82,6 +84,7 @@ impl WidgetType {
             Self::MessageFrame => "MessageFrame",
             Self::SimpleHTML => "SimpleHTML",
             Self::GameTooltip => "GameTooltip",
+            Self::Minimap => "Minimap",
         }
     }
 }

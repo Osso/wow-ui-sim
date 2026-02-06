@@ -9,6 +9,9 @@ pub mod events {
     pub const PLAYER_ENTERING_WORLD: &str = "PLAYER_ENTERING_WORLD";
     pub const ADDON_LOADED: &str = "ADDON_LOADED";
     pub const VARIABLES_LOADED: &str = "VARIABLES_LOADED";
+    pub const UPDATE_BINDINGS: &str = "UPDATE_BINDINGS";
+    pub const DISPLAY_SIZE_CHANGED: &str = "DISPLAY_SIZE_CHANGED";
+    pub const UI_SCALE_CHANGED: &str = "UI_SCALE_CHANGED";
     pub const PLAYER_TARGET_CHANGED: &str = "PLAYER_TARGET_CHANGED";
     pub const UNIT_HEALTH: &str = "UNIT_HEALTH";
     pub const UNIT_POWER_UPDATE: &str = "UNIT_POWER_UPDATE";
@@ -222,5 +225,10 @@ impl ScriptRegistry {
         self.handlers
             .get_mut(&widget_id)
             .and_then(|h| h.remove(&handler))
+    }
+
+    /// Remove all script handlers for a widget.
+    pub fn remove_all(&mut self, widget_id: u64) {
+        self.handlers.remove(&widget_id);
     }
 }

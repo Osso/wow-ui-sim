@@ -8,6 +8,7 @@ pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_set_script_methods(methods);
     add_get_script_method(methods);
     add_hook_and_wrap_methods(methods);
+    add_clear_scripts_method(methods);
     add_has_script_method(methods);
 }
 
@@ -125,6 +126,58 @@ fn add_hook_and_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         "UnwrapScript",
         |_, _this, (_target, _script): (mlua::Value, String)| Ok(()),
     );
+}
+
+/// ClearScripts() - remove all script handlers for this frame.
+fn add_clear_scripts_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("ClearScripts", |lua, this, ()| {
+        let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
+        if let Some(table) = scripts_table {
+            // Iterate all keys and remove those starting with "{id}_"
+            let prefix = format!("{}_", this.id);
+            let keys: Vec<String> = table
+                .pairs::<String, Value>()
+                .filter_map(|pair| {
+                    if let Ok((k, _)) = pair {
+                        if k.starts_with(&prefix) {
+                            return Some(k);
+                        }
+                    }
+                    None
+                })
+                .collect();
+            for key in keys {
+                let _ = table.set(key.as_str(), Value::Nil);
+            }
+        }
+
+        // Also clear from hooks table
+        let hooks_table: Option<mlua::Table> = lua.globals().get("__script_hooks").ok();
+        if let Some(table) = hooks_table {
+            let prefix = format!("{}_", this.id);
+            let keys: Vec<String> = table
+                .pairs::<String, Value>()
+                .filter_map(|pair| {
+                    if let Ok((k, _)) = pair {
+                        if k.starts_with(&prefix) {
+                            return Some(k);
+                        }
+                    }
+                    None
+                })
+                .collect();
+            for key in keys {
+                let _ = table.set(key.as_str(), Value::Nil);
+            }
+        }
+
+        // Clear script entries in state
+        let mut state = this.state.borrow_mut();
+        state.scripts.remove_all(this.id);
+        state.on_update_frames.remove(&this.id);
+
+        Ok(())
+    });
 }
 
 /// HasScript(scriptType) - check if frame supports a script handler type.

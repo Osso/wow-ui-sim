@@ -95,11 +95,39 @@ fn lookup_fallback_method(
         }
     }
 
-    // Lower() and Raise() adjust frame stacking order (no-op in simulator)
-    if key == "Lower" || key == "Raise" {
-        return Ok(Some(Value::Function(
-            lua.create_function(|_, _: mlua::MultiValue| Ok(()))?,
-        )));
+    // Lower() and Raise() adjust frame stacking order
+    if key == "Lower" {
+        let state_clone = Rc::clone(state_rc);
+        return Ok(Some(Value::Function(lua.create_function(
+            move |_, args: mlua::MultiValue| {
+                // First arg is self (the frame handle)
+                if let Some(Value::UserData(ud)) = args.into_iter().next() {
+                    if let Ok(handle) = ud.borrow::<FrameHandle>() {
+                        let mut state = state_clone.borrow_mut();
+                        if let Some(frame) = state.widgets.get_mut(handle.id) {
+                            frame.frame_level = (frame.frame_level - 1).max(0);
+                        }
+                    }
+                }
+                Ok(())
+            },
+        )?)));
+    }
+    if key == "Raise" {
+        let state_clone = Rc::clone(state_rc);
+        return Ok(Some(Value::Function(lua.create_function(
+            move |_, args: mlua::MultiValue| {
+                if let Some(Value::UserData(ud)) = args.into_iter().next() {
+                    if let Ok(handle) = ud.borrow::<FrameHandle>() {
+                        let mut state = state_clone.borrow_mut();
+                        if let Some(frame) = state.widgets.get_mut(handle.id) {
+                            frame.frame_level += 1;
+                        }
+                    }
+                }
+                Ok(())
+            },
+        )?)));
     }
 
     Ok(None)

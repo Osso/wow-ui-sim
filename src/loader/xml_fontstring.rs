@@ -14,84 +14,61 @@ fn resolve_fontstring_text(text_key: Option<&str>) -> Option<String> {
     })
 }
 
-/// Generate Lua code for fontstring properties (justification, color, size, etc).
-fn generate_fontstring_properties_code(fs: &crate::xml::FontStringXml) -> String {
+/// Generate Lua code for fontstring visual properties (justification, color, size, wrapping).
+fn generate_fontstring_visual_code(fs: &crate::xml::FontStringXml) -> String {
     let mut code = String::new();
 
     if let Some(justify_h) = &fs.justify_h {
-        code.push_str(&format!(
-            r#"
-        fs:SetJustifyH("{}")
-        "#,
-            justify_h
-        ));
+        code.push_str(&format!("\n        fs:SetJustifyH(\"{}\")\n        ", justify_h));
     }
     if let Some(justify_v) = &fs.justify_v {
-        code.push_str(&format!(
-            r#"
-        fs:SetJustifyV("{}")
-        "#,
-            justify_v
-        ));
+        code.push_str(&format!("\n        fs:SetJustifyV(\"{}\")\n        ", justify_v));
     }
 
     if let Some(color) = &fs.color {
         code.push_str(&format!(
-            r#"
-        fs:SetTextColor({}, {}, {}, {})
-        "#,
-            color.r.unwrap_or(1.0),
-            color.g.unwrap_or(1.0),
-            color.b.unwrap_or(1.0),
-            color.a.unwrap_or(1.0)
+            "\n        fs:SetTextColor({}, {}, {}, {})\n        ",
+            color.r.unwrap_or(1.0), color.g.unwrap_or(1.0),
+            color.b.unwrap_or(1.0), color.a.unwrap_or(1.0)
         ));
     }
 
     if let Some(size) = fs.size.last() {
         let (x, y) = get_size_values(size);
         if let (Some(x), Some(y)) = (x, y) {
-            code.push_str(&format!(
-                r#"
-        fs:SetSize({}, {})
-        "#,
-                x, y
-            ));
+            code.push_str(&format!("\n        fs:SetSize({}, {})\n        ", x, y));
         }
     }
 
     if fs.word_wrap == Some(false) {
-        code.push_str(
-            r#"
-        fs:SetWordWrap(false)
-        "#,
-        );
+        code.push_str("\n        fs:SetWordWrap(false)\n        ");
     }
 
     if let Some(max_lines) = fs.max_lines {
         if max_lines > 0 {
-            code.push_str(&format!(
-                r#"
-        fs:SetMaxLines({})
-        "#,
-                max_lines
-            ));
+            code.push_str(&format!("\n        fs:SetMaxLines({})\n        ", max_lines));
         }
     }
 
     if fs.set_all_points == Some(true) {
-        code.push_str(
-            r#"
-        fs:SetAllPoints(true)
-        "#,
-        );
+        code.push_str("\n        fs:SetAllPoints(true)\n        ");
     }
 
+    code
+}
+
+/// Generate Lua code for fontstring parent references (parentKey, parentArray).
+fn generate_fontstring_parent_code(fs: &crate::xml::FontStringXml) -> String {
+    let mut code = String::new();
+
     if let Some(key) = &fs.parent_key {
+        code.push_str(&format!("\n        parent.{} = fs\n        ", key));
+    }
+
+    if let Some(parent_array) = &fs.parent_array {
         code.push_str(&format!(
-            r#"
-        parent.{} = fs
-        "#,
-            key
+            "\n        parent.{parent_array} = parent.{parent_array} or {{}}\n        \
+             table.insert(parent.{parent_array}, fs)\n        ",
         ));
     }
 
@@ -151,7 +128,8 @@ pub fn create_fontstring_from_xml(
         ));
     }
 
-    lua_code.push_str(&generate_fontstring_properties_code(fontstring));
+    lua_code.push_str(&generate_fontstring_visual_code(fontstring));
+    lua_code.push_str(&generate_fontstring_parent_code(fontstring));
 
     if let Some(anchors) = &fontstring.anchors {
         lua_code.push_str(&generate_set_point_code(

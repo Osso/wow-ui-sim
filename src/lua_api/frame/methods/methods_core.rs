@@ -22,6 +22,7 @@ pub fn add_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_strata_level_methods(methods);
     add_mouse_input_methods(methods);
     add_scale_methods(methods);
+    add_region_query_methods(methods);
     add_misc_methods(methods);
 }
 
@@ -519,6 +520,31 @@ fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let alpha = state.widgets.get(this.id).map(|f| f.alpha).unwrap_or(1.0);
         Ok(alpha)
     });
+
+    // GetEffectiveAlpha() - walk parent chain multiplying alpha values
+    methods.add_method("GetEffectiveAlpha", |_, this, ()| {
+        let state = this.state.borrow();
+        let mut alpha = 1.0f32;
+        let mut current_id = Some(this.id);
+        while let Some(id) = current_id {
+            if let Some(f) = state.widgets.get(id) {
+                alpha *= f.alpha;
+                current_id = f.parent_id;
+            } else {
+                break;
+            }
+        }
+        Ok(alpha)
+    });
+
+    // SetAlphaFromBoolean(flag) - set alpha to 1.0 if true, 0.0 if false
+    methods.add_method("SetAlphaFromBoolean", |_, this, flag: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.alpha = if flag { 1.0 } else { 0.0 };
+        }
+        Ok(())
+    });
 }
 
 /// Frame strata methods (major draw order).
@@ -551,6 +577,16 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+
+    methods.add_method("HasFixedFrameStrata", |_, this, ()| {
+        let state = this.state.borrow();
+        let fixed = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.has_fixed_frame_strata)
+            .unwrap_or(false);
+        Ok(fixed)
+    });
 }
 
 /// Frame level methods (draw order within strata).
@@ -580,6 +616,16 @@ fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             frame.has_fixed_frame_level = fixed;
         }
         Ok(())
+    });
+
+    methods.add_method("HasFixedFrameLevel", |_, this, ()| {
+        let state = this.state.borrow();
+        let fixed = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.has_fixed_frame_level)
+            .unwrap_or(false);
+        Ok(fixed)
     });
 }
 
@@ -636,6 +682,55 @@ fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(false);
         Ok(enabled)
     });
+
+    add_mouse_motion_methods(methods);
+}
+
+/// Mouse motion and click enabled methods.
+fn add_mouse_motion_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("EnableMouseMotion", |_, this, enable: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.mouse_motion_enabled = enable;
+        }
+        Ok(())
+    });
+
+    methods.add_method("IsMouseMotionEnabled", |_, this, ()| {
+        let state = this.state.borrow();
+        let enabled = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.mouse_motion_enabled)
+            .unwrap_or(false);
+        Ok(enabled)
+    });
+
+    methods.add_method("SetMouseMotionEnabled", |_, this, enable: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.mouse_motion_enabled = enable;
+        }
+        Ok(())
+    });
+
+    methods.add_method("SetMouseClickEnabled", |_, this, enable: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.mouse_enabled = enable;
+        }
+        Ok(())
+    });
+
+    methods.add_method("IsMouseClickEnabled", |_, this, ()| {
+        let state = this.state.borrow();
+        let enabled = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.mouse_enabled)
+            .unwrap_or(false);
+        Ok(enabled)
+    });
 }
 
 /// Scale methods
@@ -684,17 +779,90 @@ fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetIgnoreParentAlpha", |_, _this, ()| Ok(false));
 }
 
+/// Region/frame query methods: IsRectValid, IsObjectLoaded, IsMouseOver, etc.
+fn add_region_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // IsRectValid() - true if the frame has at least one anchor
+    methods.add_method("IsRectValid", |_, this, ()| {
+        let state = this.state.borrow();
+        let valid = state
+            .widgets
+            .get(this.id)
+            .map(|f| !f.anchors.is_empty())
+            .unwrap_or(false);
+        Ok(valid)
+    });
+
+    // IsObjectLoaded() - always true in the simulator
+    methods.add_method("IsObjectLoaded", |_, _this, ()| Ok(true));
+
+    // IsMouseOver() - stub returning false
+    methods.add_method("IsMouseOver", |_, _this, _args: mlua::MultiValue| Ok(false));
+
+    // StopAnimating() - stub
+    methods.add_method("StopAnimating", |_, _this, ()| Ok(()));
+
+    // GetSourceLocation() - no debug info in simulator
+    methods.add_method("GetSourceLocation", |_, _this, ()| Ok(Value::Nil));
+
+    // Intersects(region) - stub returning false
+    methods.add_method("Intersects", |_, _this, _region: Value| Ok(false));
+
+    // IsDrawLayerEnabled(layer) - stub returning true
+    methods.add_method("IsDrawLayerEnabled", |_, _this, _layer: String| Ok(true));
+
+    // SetDrawLayerEnabled(layer, enabled) - stub
+    methods.add_method(
+        "SetDrawLayerEnabled",
+        |_, _this, (_layer, _enabled): (String, bool)| Ok(()),
+    );
+}
+
 /// Miscellaneous frame-type-specific stubs
 fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_minimap_methods(methods);
     add_scrolling_message_methods(methods);
     add_alert_and_data_provider_methods(methods);
+    // DropdownButtonMixin stub
+    methods.add_method("IsMenuOpen", |_, _this, ()| Ok(false));
 }
 
 /// Minimap and WorldMap stubs.
 fn add_minimap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetZoom", |_, _this, ()| Ok(0));
     methods.add_method("SetZoom", |_, _this, _zoom: i32| Ok(()));
+    methods.add_method("GetZoomLevels", |_, _this, ()| Ok(5));
+    methods.add_method("GetPingPosition", |_, _this, ()| Ok((0.0f64, 0.0f64)));
+    methods.add_method("PingLocation", |_, _this, (_x, _y): (f64, f64)| Ok(()));
+    methods.add_method("UpdateBlips", |_, _this, ()| Ok(()));
+    // Texture setters (no-op stubs)
+    methods.add_method("SetBlipTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetMaskTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetIconTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetPOIArrowTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetCorpsePOIArrowTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetStaticPOIArrowTexture", |_, _this, _asset: Value| Ok(()));
+    // Quest/Task/Arch blob setters (no-op stubs)
+    methods.add_method("SetQuestBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetQuestBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetQuestBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetQuestBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetQuestBlobRingTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetQuestBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
+    methods.add_method("SetQuestBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetTaskBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetTaskBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetTaskBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetTaskBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetTaskBlobRingTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetTaskBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
+    methods.add_method("SetTaskBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetArchBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetArchBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetArchBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetArchBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
+    methods.add_method("SetArchBlobRingTexture", |_, _this, _asset: Value| Ok(()));
+    methods.add_method("SetArchBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
+    methods.add_method("SetArchBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
     // GetCanvas() - for WorldMapFrame (returns self as the canvas)
     methods.add_method("GetCanvas", |lua, this, ()| {
         let handle = FrameHandle {

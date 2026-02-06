@@ -233,6 +233,98 @@ pub struct Frame {
     pub atlas: Option<String>,
     /// NineSlice layout type (e.g., "PortraitFrameTemplate", "ButtonFrameTemplateNoPortrait").
     pub nine_slice_layout: Option<String>,
+    /// Whether this frame receives ALL events (set by RegisterAllEvents).
+    pub register_all_events: bool,
+    /// Whether this frame clips its children to its bounds.
+    pub clips_children: bool,
+    /// Whether mouse motion events are enabled.
+    pub mouse_motion_enabled: bool,
+
+    // --- Slider fields ---
+    /// Current slider value.
+    pub slider_value: f64,
+    /// Slider minimum value.
+    pub slider_min: f64,
+    /// Slider maximum value.
+    pub slider_max: f64,
+    /// Slider step size.
+    pub slider_step: f64,
+    /// Slider orientation ("HORIZONTAL" or "VERTICAL").
+    pub slider_orientation: String,
+    /// Whether slider obeys step on drag.
+    pub slider_obey_step_on_drag: bool,
+    /// Number of steps per page for slider.
+    pub slider_steps_per_page: i32,
+
+    // --- StatusBar fields ---
+    /// Current statusbar value.
+    pub statusbar_value: f64,
+    /// StatusBar minimum value.
+    pub statusbar_min: f64,
+    /// StatusBar maximum value.
+    pub statusbar_max: f64,
+    /// StatusBar color.
+    pub statusbar_color: Option<Color>,
+    /// StatusBar texture path.
+    pub statusbar_texture_path: Option<String>,
+    /// StatusBar fill style ("STANDARD", "CENTER", etc.).
+    pub statusbar_fill_style: String,
+    /// Whether statusbar fills in reverse.
+    pub statusbar_reverse_fill: bool,
+    /// StatusBar orientation ("HORIZONTAL" or "VERTICAL").
+    pub statusbar_orientation: String,
+
+    // --- EditBox fields ---
+    /// Cursor position in editbox.
+    pub editbox_cursor_pos: i32,
+    /// Maximum letters allowed (0 = unlimited).
+    pub editbox_max_letters: i32,
+    /// Maximum bytes allowed (0 = unlimited).
+    pub editbox_max_bytes: i32,
+    /// Whether editbox is multi-line.
+    pub editbox_multi_line: bool,
+    /// Whether editbox auto-focuses.
+    pub editbox_auto_focus: bool,
+    /// Whether editbox is numeric-only.
+    pub editbox_numeric: bool,
+    /// Whether editbox masks input as password.
+    pub editbox_password: bool,
+    /// Cursor blink speed in seconds.
+    pub editbox_blink_speed: f64,
+    /// History lines.
+    pub editbox_history: Vec<String>,
+    /// Maximum history lines (0 = unlimited).
+    pub editbox_history_max: i32,
+    /// Text insets (left, right, top, bottom).
+    pub editbox_text_insets: (f32, f32, f32, f32),
+    /// Whether to count invisible letters.
+    pub editbox_count_invisible_letters: bool,
+
+    // --- ScrollFrame fields ---
+    /// Scroll child frame ID.
+    pub scroll_child_id: Option<u64>,
+    /// Horizontal scroll offset.
+    pub scroll_horizontal: f64,
+    /// Vertical scroll offset.
+    pub scroll_vertical: f64,
+
+    // --- Cooldown fields ---
+    /// Cooldown start time.
+    pub cooldown_start: f64,
+    /// Cooldown duration in seconds.
+    pub cooldown_duration: f64,
+    /// Whether cooldown is reversed.
+    pub cooldown_reverse: bool,
+    /// Whether to draw the swipe animation.
+    pub cooldown_draw_swipe: bool,
+    /// Whether to draw the edge highlight.
+    pub cooldown_draw_edge: bool,
+    /// Whether to draw the bling animation at end.
+    pub cooldown_draw_bling: bool,
+    /// Whether to hide countdown numbers.
+    pub cooldown_hide_countdown: bool,
+    /// Whether cooldown is paused.
+    pub cooldown_paused: bool,
 }
 
 /// Build a `Frame` with all defaults. `$id` is the expression for the `id` field.
@@ -304,6 +396,57 @@ macro_rules! frame_defaults {
             atlas_tex_coords: None,
             atlas: None,
             nine_slice_layout: None,
+            register_all_events: false,
+            clips_children: false,
+            mouse_motion_enabled: false,
+
+            // Slider
+            slider_value: 0.0,
+            slider_min: 0.0,
+            slider_max: 100.0,
+            slider_step: 1.0,
+            slider_orientation: "HORIZONTAL".to_string(),
+            slider_obey_step_on_drag: false,
+            slider_steps_per_page: 1,
+
+            // StatusBar
+            statusbar_value: 0.0,
+            statusbar_min: 0.0,
+            statusbar_max: 1.0,
+            statusbar_color: None,
+            statusbar_texture_path: None,
+            statusbar_fill_style: "STANDARD".to_string(),
+            statusbar_reverse_fill: false,
+            statusbar_orientation: "HORIZONTAL".to_string(),
+
+            // EditBox
+            editbox_cursor_pos: 0,
+            editbox_max_letters: 0,
+            editbox_max_bytes: 0,
+            editbox_multi_line: false,
+            editbox_auto_focus: false,
+            editbox_numeric: false,
+            editbox_password: false,
+            editbox_blink_speed: 0.5,
+            editbox_history: Vec::new(),
+            editbox_history_max: 0,
+            editbox_text_insets: (0.0, 0.0, 0.0, 0.0),
+            editbox_count_invisible_letters: false,
+
+            // ScrollFrame
+            scroll_child_id: None,
+            scroll_horizontal: 0.0,
+            scroll_vertical: 0.0,
+
+            // Cooldown
+            cooldown_start: 0.0,
+            cooldown_duration: 0.0,
+            cooldown_reverse: false,
+            cooldown_draw_swipe: true,
+            cooldown_draw_edge: false,
+            cooldown_draw_bling: true,
+            cooldown_hide_countdown: false,
+            cooldown_paused: false,
         }
     };
 }
@@ -390,7 +533,7 @@ impl Frame {
     }
 
     pub fn is_registered_for_event(&self, event: &str) -> bool {
-        self.registered_events.contains(event)
+        self.register_all_events || self.registered_events.contains(event)
     }
 }
 

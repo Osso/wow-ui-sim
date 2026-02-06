@@ -112,6 +112,8 @@ pub struct FrameXml {
     /// Button text attribute (localization key or literal text).
     #[serde(rename = "@text")]
     pub text: Option<String>,
+    #[serde(rename = "@parentArray")]
+    pub parent_array: Option<String>,
 
     // Child elements collected via $value to allow multiples
     #[serde(rename = "$value", default)]
@@ -181,6 +183,13 @@ impl FrameXml {
     pub fn animations(&self) -> Option<&AnimationsXml> {
         self.children.iter().find_map(|c| match c {
             FrameChildElement::Animations(a) => Some(a),
+            _ => None,
+        })
+    }
+
+    pub fn scroll_child(&self) -> Option<&ScrollChildXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::ScrollChild(sc) => Some(sc),
             _ => None,
         })
     }
@@ -554,12 +563,16 @@ pub struct TextureXml {
     pub vert_tile: Option<bool>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
+    #[serde(rename = "@parentArray")]
+    pub parent_array: Option<String>,
     #[serde(rename = "Size")]
     pub size: Option<SizeXml>,
     #[serde(rename = "Anchors")]
     pub anchors: Option<AnchorsXml>,
     #[serde(rename = "Color")]
     pub color: Option<ColorXml>,
+    #[serde(rename = "Animations")]
+    pub animations: Option<AnimationsXml>,
     #[serde(rename = "Scripts")]
     pub scripts: Option<ScriptsXml>,
 }
@@ -594,6 +607,8 @@ pub struct FontStringXml {
     pub scripts: Option<ScriptsXml>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
+    #[serde(rename = "@parentArray")]
+    pub parent_array: Option<String>,
     #[serde(rename = "@wordwrap")]
     pub word_wrap: Option<bool>,
     #[serde(rename = "@maxLines")]

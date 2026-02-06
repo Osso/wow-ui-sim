@@ -198,6 +198,7 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     // Existing UI modules
     ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
     ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
+    ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
     ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
 ];
 

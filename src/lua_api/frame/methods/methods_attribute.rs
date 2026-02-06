@@ -150,7 +150,22 @@ fn add_security_and_input_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M
         "SetFlattensRenderLayers",
         |_, _this, _flatten: Option<bool>| Ok(()),
     );
-    methods.add_method("SetClipsChildren", |_, _this, _clips: Option<bool>| Ok(()));
+    methods.add_method("SetClipsChildren", |_, this, clips: Option<bool>| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.clips_children = clips.unwrap_or(false);
+        }
+        Ok(())
+    });
+    methods.add_method("DoesClipChildren", |_, this, ()| {
+        let state = this.state.borrow();
+        let clips = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.clips_children)
+            .unwrap_or(false);
+        Ok(clips)
+    });
     methods.add_method(
         "SetMotionScriptsWhileDisabled",
         |_, _this, _enabled: Option<bool>| Ok(()),

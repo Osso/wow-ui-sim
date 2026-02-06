@@ -674,14 +674,15 @@ fn test_minimal_scrollbar_rust_children_keys() {
 // AddonList ScrollBox Behavioral Tests (requires full Blizzard addon stack)
 // ============================================================================
 
-const BLIZZARD_ADDONS_BASE: &str =
-    "/home/osso/Projects/wow/reference-addons/wow-ui-source/Interface/AddOns";
+fn blizzard_addons_base() -> std::path::PathBuf {
+    std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("Interface/BlizzardUI")
+}
 const USER_ADDONS_PATH: &str = "/home/osso/Projects/wow/Interface/AddOns";
 
 /// Load all Blizzard addons needed for AddonList + scan user addons.
 fn env_with_addon_list() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    let base = std::path::Path::new(BLIZZARD_ADDONS_BASE);
+    let base = blizzard_addons_base();
 
     let addon_dirs = [
         "Blizzard_SharedXMLBase",

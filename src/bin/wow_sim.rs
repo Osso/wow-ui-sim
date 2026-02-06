@@ -418,6 +418,7 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     // Existing UI modules
     ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
     ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
+    ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
     ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
 ];
 
@@ -497,6 +498,11 @@ fn fire_startup_events(env: &WowLuaEnv) {
         eprintln!("Error firing ADDON_LOADED: {}", e);
     }
 
+    eprintln!("[Startup] Firing VARIABLES_LOADED");
+    if let Err(e) = env.fire_event("VARIABLES_LOADED") {
+        eprintln!("Error firing VARIABLES_LOADED: {}", e);
+    }
+
     eprintln!("[Startup] Firing PLAYER_LOGIN");
     if let Err(e) = env.fire_event("PLAYER_LOGIN") {
         eprintln!("Error firing PLAYER_LOGIN: {}", e);
@@ -511,6 +517,26 @@ fn fire_startup_events(env: &WowLuaEnv) {
         ],
     ) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
+    }
+
+    eprintln!("[Startup] Firing UPDATE_BINDINGS");
+    if let Err(e) = env.fire_event("UPDATE_BINDINGS") {
+        eprintln!("Error firing UPDATE_BINDINGS: {}", e);
+    }
+
+    eprintln!("[Startup] Firing DISPLAY_SIZE_CHANGED");
+    if let Err(e) = env.fire_event("DISPLAY_SIZE_CHANGED") {
+        eprintln!("Error firing DISPLAY_SIZE_CHANGED: {}", e);
+    }
+
+    eprintln!("[Startup] Firing UI_SCALE_CHANGED");
+    if let Err(e) = env.fire_event("UI_SCALE_CHANGED") {
+        eprintln!("Error firing UI_SCALE_CHANGED: {}", e);
+    }
+
+    eprintln!("[Startup] Firing PLAYER_LEAVING_WORLD");
+    if let Err(e) = env.fire_event("PLAYER_LEAVING_WORLD") {
+        eprintln!("Error firing PLAYER_LEAVING_WORLD: {}", e);
     }
 }
 

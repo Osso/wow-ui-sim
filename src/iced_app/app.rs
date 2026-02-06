@@ -61,6 +61,11 @@ pub fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
         eprintln!("Error firing ADDON_LOADED: {}", e);
     }
 
+    println!("[Startup] Firing VARIABLES_LOADED");
+    if let Err(e) = env.fire_event("VARIABLES_LOADED") {
+        eprintln!("Error firing VARIABLES_LOADED: {}", e);
+    }
+
     println!("[Startup] Firing PLAYER_LOGIN");
     if let Err(e) = env.fire_event("PLAYER_LOGIN") {
         eprintln!("Error firing PLAYER_LOGIN: {}", e);
@@ -75,6 +80,21 @@ pub fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
         ],
     ) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
+    }
+
+    println!("[Startup] Firing UPDATE_BINDINGS");
+    if let Err(e) = env.fire_event("UPDATE_BINDINGS") {
+        eprintln!("Error firing UPDATE_BINDINGS: {}", e);
+    }
+
+    println!("[Startup] Firing DISPLAY_SIZE_CHANGED");
+    if let Err(e) = env.fire_event("DISPLAY_SIZE_CHANGED") {
+        eprintln!("Error firing DISPLAY_SIZE_CHANGED: {}", e);
+    }
+
+    println!("[Startup] Firing UI_SCALE_CHANGED");
+    if let Err(e) = env.fire_event("UI_SCALE_CHANGED") {
+        eprintln!("Error firing UI_SCALE_CHANGED: {}", e);
     }
 }
 

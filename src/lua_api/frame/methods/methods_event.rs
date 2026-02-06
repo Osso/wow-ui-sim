@@ -50,9 +50,18 @@ fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
     methods.add_method("IsEventRegistered", |_, this, event: String| {
         let state = this.state.borrow();
         if let Some(frame) = state.widgets.get(this.id) {
-            return Ok(frame.registered_events.contains(&event));
+            return Ok(frame.register_all_events || frame.registered_events.contains(&event));
         }
         Ok(false)
+    });
+
+    // RegisterAllEvents() - register for all events
+    methods.add_method("RegisterAllEvents", |_, this, ()| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.register_all_events = true;
+        }
+        Ok(())
     });
 }
 

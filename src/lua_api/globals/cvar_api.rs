@@ -10,7 +10,61 @@ use std::rc::Rc;
 /// Register CVar and key binding global functions.
 pub fn register_cvar_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     register_cvar_functions(lua, &state)?;
+    register_c_cvar_namespace(lua, &state)?;
     register_key_binding_functions(lua)?;
+    Ok(())
+}
+
+/// C_CVar namespace — wraps the same CVar store as GetCVar/SetCVar.
+fn register_c_cvar_namespace(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let t = lua.create_table()?;
+
+    let s = Rc::clone(state);
+    t.set("GetCVar", lua.create_function(move |lua, cvar: String| {
+        let state = s.borrow();
+        match state.cvars.get(&cvar) {
+            Some(value) => Ok(Value::String(lua.create_string(&value)?)),
+            None => Ok(Value::Nil),
+        }
+    })?)?;
+
+    let s = Rc::clone(state);
+    t.set("SetCVar", lua.create_function(move |_, (cvar, value): (String, Option<String>)| {
+        let state = s.borrow();
+        state.cvars.set(&cvar, value.as_deref().unwrap_or(""));
+        Ok(true)
+    })?)?;
+
+    let s = Rc::clone(state);
+    t.set("GetCVarBool", lua.create_function(move |_, cvar: String| {
+        let state = s.borrow();
+        Ok(state.cvars.get_bool(&cvar))
+    })?)?;
+
+    let s = Rc::clone(state);
+    t.set("GetCVarDefault", lua.create_function(move |lua, cvar: String| {
+        let state = s.borrow();
+        match state.cvars.get(&cvar) {
+            Some(value) => Ok(Value::String(lua.create_string(&value)?)),
+            None => Ok(Value::Nil),
+        }
+    })?)?;
+
+    t.set("GetCVarBitfield", lua.create_function(|_, (_name, _index): (String, i32)| {
+        Ok(false)
+    })?)?;
+
+    t.set("SetCVarBitfield", lua.create_function(|_, (_name, _index, _value, _script): (String, i32, bool, Option<String>)| {
+        Ok(true)
+    })?)?;
+
+    t.set("RegisterCVar", lua.create_function(|_, (_name, _value): (String, Option<String>)| {
+        Ok(())
+    })?)?;
+
+    t.set("ResetTestCVars", lua.create_function(|_, ()| Ok(()))?)?;
+
+    lua.globals().set("C_CVar", t)?;
     Ok(())
 }
 

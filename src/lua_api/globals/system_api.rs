@@ -33,6 +33,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_streaming_stubs(lua)?;
     register_error_callstack_stubs(lua)?;
     register_network_stubs(lua)?;
+    register_input_state_stubs(lua)?;
     Ok(())
 }
 
@@ -197,6 +198,11 @@ fn register_reload_ui(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             Ok(vec![Value::String(event_str), Value::String(addon_name)])
         })?;
 
+        fire_event_to_listeners(lua, &state, "VARIABLES_LOADED", |lua| {
+            let event_str = lua.create_string("VARIABLES_LOADED")?;
+            Ok(vec![Value::String(event_str)])
+        })?;
+
         fire_event_to_listeners(lua, &state, "PLAYER_LOGIN", |lua| {
             let event_str = lua.create_string("PLAYER_LOGIN")?;
             Ok(vec![Value::String(event_str)])
@@ -205,6 +211,21 @@ fn register_reload_ui(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         fire_event_to_listeners(lua, &state, "PLAYER_ENTERING_WORLD", |lua| {
             let event_str = lua.create_string("PLAYER_ENTERING_WORLD")?;
             Ok(vec![Value::String(event_str), Value::Boolean(false), Value::Boolean(true)])
+        })?;
+
+        fire_event_to_listeners(lua, &state, "UPDATE_BINDINGS", |lua| {
+            let event_str = lua.create_string("UPDATE_BINDINGS")?;
+            Ok(vec![Value::String(event_str)])
+        })?;
+
+        fire_event_to_listeners(lua, &state, "DISPLAY_SIZE_CHANGED", |lua| {
+            let event_str = lua.create_string("DISPLAY_SIZE_CHANGED")?;
+            Ok(vec![Value::String(event_str)])
+        })?;
+
+        fire_event_to_listeners(lua, &state, "UI_SCALE_CHANGED", |lua| {
+            let event_str = lua.create_string("UI_SCALE_CHANGED")?;
+            Ok(vec![Value::String(event_str)])
         })?;
 
         state.borrow_mut().console_output.push("UI Reloaded".to_string());
@@ -284,10 +305,14 @@ fn register_secure_stubs(lua: &Lua) -> Result<()> {
     globals.set("RegisterStaticConstants", lua.create_function(|_, _tbl: Value| Ok(()))?)?;
 
     // GetFrameMetatable/GetButtonMetatable - return metatables with __index
+    // The __index table must contain forwarding functions so that
+    // CopyTable(GetFrameMetatable().__index) produces a table where
+    // e.g. LOCAL_CHECK_Frame.GetAttribute(frame, ...) works.
     for name in &["GetFrameMetatable", "GetButtonMetatable"] {
         globals.set(*name, lua.create_function(|lua, ()| {
             let mt = lua.create_table()?;
-            mt.set("__index", lua.create_table()?)?;
+            let index = create_frame_method_forwarders(lua)?;
+            mt.set("__index", index)?;
             Ok(Value::Table(mt))
         })?)?;
     }
@@ -296,6 +321,28 @@ fn register_secure_stubs(lua: &Lua) -> Result<()> {
     globals.set("C_AssistedCombat", register_c_assisted_combat(lua)?)?;
     globals.set("C_Widget", register_c_widget(lua)?)?;
     Ok(())
+}
+
+/// Build a table of forwarding functions for Frame methods.
+///
+/// SecureTemplates.lua does `LOCAL_CHECK_Frame = CopyTable(GetFrameMetatable().__index)`
+/// then calls `LOCAL_CHECK_Frame.GetAttribute(frame, ...)` — i.e. methods as plain
+/// functions with explicit self. We create Lua closures that forward these calls.
+fn create_frame_method_forwarders(lua: &Lua) -> Result<mlua::Table> {
+    let index = lua.create_table()?;
+    let methods = &[
+        "GetAttribute", "SetAttribute", "GetParent", "GetName",
+        "GetObjectType", "IsObjectType", "GetFrameStrata",
+        "GetFrameLevel", "IsShown", "IsVisible", "GetWidth",
+        "GetHeight", "GetSize", "GetScale", "GetAlpha",
+    ];
+    for method in methods {
+        let forwarder = lua.load(format!(
+            "return function(self, ...) return self:{method}(...) end"
+        )).eval::<mlua::Function>()?;
+        index.set(*method, forwarder)?;
+    }
+    Ok(index)
 }
 
 /// C_GamePad namespace stubs.
@@ -366,5 +413,19 @@ fn register_network_stubs(lua: &Lua) -> Result<()> {
         "GetNetStats",
         lua.create_function(|_, ()| Ok((0.0f64, 0.0f64, 0.0f64, 0.0f64)))?,
     )?;
+    Ok(())
+}
+
+/// Keyboard/mouse modifier state stubs (simulator has no real input state).
+fn register_input_state_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    globals.set("IsShiftKeyDown", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("IsControlKeyDown", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("IsAltKeyDown", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("IsModifierKeyDown", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("IsModifiedClick", lua.create_function(|_, _action: Option<String>| Ok(false))?)?;
+    globals.set("IsMouseButtonDown", lua.create_function(|_, _btn: Option<Value>| Ok(false))?)?;
+    globals.set("GetMouseFocus", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    globals.set("GetMouseButtonClicked", lua.create_function(|_, ()| Ok(""))?)?;
     Ok(())
 }

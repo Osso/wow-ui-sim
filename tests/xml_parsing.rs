@@ -1,12 +1,14 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use wow_ui_sim::xml::{parse_xml, parse_xml_file, AnimationElement, FrameChildElement, XmlElement};
 
-const BLIZZARD_DIR: &str =
-    "/home/osso/Projects/wow/reference-addons/wow-ui-source/Interface/AddOns/Blizzard_SharedXMLBase";
+fn blizzard_dir() -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("Interface/BlizzardUI/Blizzard_SharedXMLBase")
+}
 
 #[test]
 fn test_parse_callback_registrant_xml() {
-    let path = Path::new(BLIZZARD_DIR).join("CallbackRegistrant.xml");
+    let path = blizzard_dir().join("CallbackRegistrant.xml");
     let ui = parse_xml_file(&path).expect("Failed to parse XML");
 
     // Should have Script and Frame elements
@@ -37,7 +39,7 @@ fn test_parse_callback_registrant_xml() {
 
 #[test]
 fn test_parse_color_swatch_xml() {
-    let path = Path::new(BLIZZARD_DIR).join("ColorSwatch.xml");
+    let path = blizzard_dir().join("ColorSwatch.xml");
     let ui = parse_xml_file(&path).expect("Failed to parse XML");
 
     // Find the ColorSwatchTemplate frame
@@ -70,7 +72,7 @@ fn test_parse_color_swatch_xml() {
 #[test]
 fn test_parse_all_xml_in_shared_xml_base() {
     // Try to parse all XML files in the directory
-    let dir = Path::new(BLIZZARD_DIR);
+    let dir = blizzard_dir();
     let mut parsed = 0;
     let mut failed = Vec::new();
 

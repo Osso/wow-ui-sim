@@ -186,6 +186,17 @@ fn register_c_minimap(lua: &Lua) -> Result<mlua::Table> {
         "SetPlayerTexture",
         lua.create_function(|_, (_file_id, _icon_id): (i32, i32)| Ok(()))?,
     )?;
+    // Tracking system stubs
+    t.set("GetNumTrackingTypes", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetTrackingInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    t.set("GetTrackingFilter", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    t.set("ClearAllTracking", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set(
+        "SetTrackingFilterByFilterIndex",
+        lua.create_function(|_, (_index, _value): (i32, bool)| Ok(()))?,
+    )?;
+    t.set("ShouldUseHybridMinimap", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetUiMapID", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
 
     Ok(t)
 }
