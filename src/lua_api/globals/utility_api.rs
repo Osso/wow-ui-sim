@@ -7,154 +7,98 @@ use mlua::{Lua, Result, Value};
 
 /// Register all utility API functions.
 pub fn register_utility_api(lua: &Lua) -> Result<()> {
+    register_table_functions(lua)?;
+    register_string_functions(lua)?;
+    register_global_access(lua)?;
+    register_security_functions(lua)?;
+    register_error_handlers(lua)?;
+    register_misc_stubs(lua)?;
+    register_lua_stdlib_aliases(lua)?;
+    register_mixin_system(lua)?;
+    Ok(())
+}
+
+/// Table manipulation: wipe, tinsert, tremove, tInvert, tContains, tIndexOf,
+/// tFilter, CopyTable, MergeTable.
+fn register_table_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-
-    // strsplit(delimiter, str, limit) - WoW string utility
-    let strsplit = lua.create_function(|lua, args: mlua::MultiValue| {
-        let args: Vec<Value> = args.into_iter().collect();
-
-        let delimiter = args
-            .first()
-            .and_then(|v| {
-                if let Value::String(s) = v {
-                    Some(s.to_string_lossy().to_string())
-                } else {
-                    None
-                }
-            })
-            .unwrap_or_else(|| " ".to_string());
-
-        let input = args
-            .get(1)
-            .and_then(|v| {
-                if let Value::String(s) = v {
-                    Some(s.to_string_lossy().to_string())
-                } else {
-                    None
-                }
-            })
-            .unwrap_or_default();
-
-        let limit = args.get(2).and_then(|v| {
-            if let Value::Integer(n) = v {
-                Some(*n as usize)
-            } else if let Value::Number(n) = v {
-                Some(*n as usize)
-            } else {
-                None
-            }
-        });
-
-        let parts: Vec<&str> = if let Some(limit) = limit {
-            input.splitn(limit, &delimiter).collect()
-        } else {
-            input.split(&delimiter).collect()
-        };
-
-        let mut result = mlua::MultiValue::new();
-        for part in parts {
-            result.push_back(Value::String(lua.create_string(part)?));
-        }
-        Ok(result)
-    })?;
-    globals.set("strsplit", strsplit)?;
-
-    // getglobal(name) - Get a global variable by name (old WoW API)
-    let getglobal_fn = lua.create_function(|lua, name: String| {
-        let globals = lua.globals();
-        let value: Value = globals.get(name.as_str()).unwrap_or(Value::Nil);
-        Ok(value)
-    })?;
-    globals.set("getglobal", getglobal_fn)?;
-
-    // setglobal(name, value) - Set a global variable by name (old WoW API)
-    let setglobal_fn = lua.create_function(|lua, (name, value): (String, Value)| {
-        lua.globals().set(name.as_str(), value)?;
-        Ok(())
-    })?;
-    globals.set("setglobal", setglobal_fn)?;
-
-    // loadstring(code, name) - Compile a string of Lua code and return it as a function
-    // This is a Lua 5.1 function that WoW uses (replaced by load() in Lua 5.2+)
-    let loadstring_fn = lua.create_function(|lua, (code, name): (String, Option<String>)| {
-        let chunk_name = name.unwrap_or_else(|| "=(loadstring)".to_string());
-        match lua.load(&code).set_name(&chunk_name).into_function() {
-            Ok(func) => Ok((Value::Function(func), Value::Nil)),
-            Err(e) => Ok((Value::Nil, Value::String(lua.create_string(&e.to_string())?))),
-        }
-    })?;
-    globals.set("loadstring", loadstring_fn)?;
 
     // wipe(table) - Clear a table in place
     let wipe = lua.create_function(|_, table: mlua::Table| {
-        // Get all keys first to avoid modification during iteration
         let keys: Vec<Value> = table
             .pairs::<Value, Value>()
             .filter_map(|r| r.ok().map(|(k, _)| k))
             .collect();
-
         for key in keys {
             table.set(key, Value::Nil)?;
         }
         Ok(table)
     })?;
     globals.set("wipe", wipe.clone())?;
-
-    // Also set table.wipe for convenience
     let table_lib: mlua::Table = globals.get("table")?;
     table_lib.set("wipe", wipe)?;
 
     // tinsert - alias for table.insert
-    let tinsert = lua.create_function(|lua, args: mlua::MultiValue| {
-        let table_insert: mlua::Function =
-            lua.globals().get::<mlua::Table>("table")?.get("insert")?;
-        table_insert.call::<()>(args)?;
-        Ok(())
-    })?;
-    globals.set("tinsert", tinsert)?;
+    globals.set(
+        "tinsert",
+        lua.create_function(|lua, args: mlua::MultiValue| {
+            let table_insert: mlua::Function =
+                lua.globals().get::<mlua::Table>("table")?.get("insert")?;
+            table_insert.call::<()>(args)?;
+            Ok(())
+        })?,
+    )?;
 
     // tremove - alias for table.remove
-    let tremove = lua.create_function(|lua, args: mlua::MultiValue| {
-        let table_remove: mlua::Function =
-            lua.globals().get::<mlua::Table>("table")?.get("remove")?;
-        table_remove.call::<Value>(args)
-    })?;
-    globals.set("tremove", tremove)?;
+    globals.set(
+        "tremove",
+        lua.create_function(|lua, args: mlua::MultiValue| {
+            let table_remove: mlua::Function =
+                lua.globals().get::<mlua::Table>("table")?.get("remove")?;
+            table_remove.call::<Value>(args)
+        })?,
+    )?;
 
     // tInvert - invert table (swap keys and values)
-    let tinvert = lua.create_function(|lua, tbl: mlua::Table| {
-        let result = lua.create_table()?;
-        for pair in tbl.pairs::<Value, Value>() {
-            let (k, v) = pair?;
-            result.set(v, k)?;
-        }
-        Ok(result)
-    })?;
-    globals.set("tInvert", tinvert)?;
+    globals.set(
+        "tInvert",
+        lua.create_function(|lua, tbl: mlua::Table| {
+            let result = lua.create_table()?;
+            for pair in tbl.pairs::<Value, Value>() {
+                let (k, v) = pair?;
+                result.set(v, k)?;
+            }
+            Ok(result)
+        })?,
+    )?;
 
     // tContains - check if table contains value
-    let tcontains = lua.create_function(|_, (tbl, value): (mlua::Table, Value)| {
-        for pair in tbl.pairs::<Value, Value>() {
-            let (_, v) = pair?;
-            if v == value {
-                return Ok(true);
+    globals.set(
+        "tContains",
+        lua.create_function(|_, (tbl, value): (mlua::Table, Value)| {
+            for pair in tbl.pairs::<Value, Value>() {
+                let (_, v) = pair?;
+                if v == value {
+                    return Ok(true);
+                }
             }
-        }
-        Ok(false)
-    })?;
-    globals.set("tContains", tcontains)?;
+            Ok(false)
+        })?,
+    )?;
 
     // tIndexOf - get index of value in array-like table
-    let tindexof = lua.create_function(|_, (tbl, value): (mlua::Table, Value)| {
-        for pair in tbl.pairs::<i32, Value>() {
-            let (k, v) = pair?;
-            if v == value {
-                return Ok(Value::Integer(k as i64));
+    globals.set(
+        "tIndexOf",
+        lua.create_function(|_, (tbl, value): (mlua::Table, Value)| {
+            for pair in tbl.pairs::<i32, Value>() {
+                let (k, v) = pair?;
+                if v == value {
+                    return Ok(Value::Integer(k as i64));
+                }
             }
-        }
-        Ok(Value::Nil)
-    })?;
-    globals.set("tIndexOf", tindexof)?;
+            Ok(Value::Nil)
+        })?,
+    )?;
 
     // tFilter - filter table with predicate (in-place)
     globals.set(
@@ -190,7 +134,6 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
                     if let Ok(cached) = seen.get::<mlua::Table>(inner.clone()) {
                         Value::Table(cached)
                     } else {
-                        // Recursively copy
                         let copy_table: mlua::Function = lua.globals().get("CopyTable")?;
                         copy_table.call((inner, seen.clone()))?
                     }
@@ -215,12 +158,141 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // SecureCmdOptionParse - parse secure command option strings
+    Ok(())
+}
+
+/// String functions: strsplit.
+fn register_string_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    // strsplit(delimiter, str, limit) - WoW string utility
+    globals.set(
+        "strsplit",
+        lua.create_function(|lua, args: mlua::MultiValue| {
+            let args: Vec<Value> = args.into_iter().collect();
+
+            let delimiter = args
+                .first()
+                .and_then(|v| {
+                    if let Value::String(s) = v {
+                        Some(s.to_string_lossy().to_string())
+                    } else {
+                        None
+                    }
+                })
+                .unwrap_or_else(|| " ".to_string());
+
+            let input = args
+                .get(1)
+                .and_then(|v| {
+                    if let Value::String(s) = v {
+                        Some(s.to_string_lossy().to_string())
+                    } else {
+                        None
+                    }
+                })
+                .unwrap_or_default();
+
+            let limit = args.get(2).and_then(|v| match v {
+                Value::Integer(n) => Some(*n as usize),
+                Value::Number(n) => Some(*n as usize),
+                _ => None,
+            });
+
+            let parts: Vec<&str> = if let Some(limit) = limit {
+                input.splitn(limit, &delimiter).collect()
+            } else {
+                input.split(&delimiter).collect()
+            };
+
+            let mut result = mlua::MultiValue::new();
+            for part in parts {
+                result.push_back(Value::String(lua.create_string(part)?));
+            }
+            Ok(result)
+        })?,
+    )?;
+
+    Ok(())
+}
+
+/// Global access: getglobal, setglobal, loadstring, GetCurrentEnvironment.
+fn register_global_access(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    globals.set(
+        "getglobal",
+        lua.create_function(|lua, name: String| {
+            let value: Value = lua.globals().get(name.as_str()).unwrap_or(Value::Nil);
+            Ok(value)
+        })?,
+    )?;
+
+    globals.set(
+        "setglobal",
+        lua.create_function(|lua, (name, value): (String, Value)| {
+            lua.globals().set(name.as_str(), value)?;
+            Ok(())
+        })?,
+    )?;
+
+    // loadstring(code, name) - Compile a string of Lua code and return it as a function
+    globals.set(
+        "loadstring",
+        lua.create_function(|lua, (code, name): (String, Option<String>)| {
+            let chunk_name = name.unwrap_or_else(|| "=(loadstring)".to_string());
+            match lua.load(&code).set_name(&chunk_name).into_function() {
+                Ok(func) => Ok((Value::Function(func), Value::Nil)),
+                Err(e) => Ok((Value::Nil, Value::String(lua.create_string(&e.to_string())?))),
+            }
+        })?,
+    )?;
+
+    globals.set(
+        "GetCurrentEnvironment",
+        lua.create_function(|lua, ()| Ok(lua.globals()))?,
+    )?;
+
+    Ok(())
+}
+
+/// Security functions: issecure, issecurevariable, securecall, securecallfunction,
+/// secureexecuterange, forceinsecure, hooksecurefunc, SecureHandler stubs,
+/// state/attribute driver stubs, SecureCmdOptionParse.
+fn register_security_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    globals.set("issecure", lua.create_function(|_, ()| Ok(false))?)?;
+
+    globals.set(
+        "issecurevariable",
+        lua.create_function(|_, (_table, _var): (Option<Value>, String)| Ok((true, Value::Nil)))?,
+    )?;
+
+    globals.set(
+        "securecall",
+        lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
+            func.call::<mlua::MultiValue>(args)
+        })?,
+    )?;
+
+    globals.set(
+        "securecallfunction",
+        lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
+            func.call::<mlua::MultiValue>(args)
+        })?,
+    )?;
+
+    globals.set("forceinsecure", lua.create_function(|_, ()| Ok(()))?)?;
+
+    register_hooksecurefunc(lua)?;
+    register_secureexecuterange(lua)?;
+    register_secure_handler_stubs(lua)?;
+
+    // SecureCmdOptionParse - returns the default (last) option
     globals.set(
         "SecureCmdOptionParse",
         lua.create_function(|lua, options: String| {
-            // Returns the result of parsing a secure option string like "[mod:shift] action1; action2"
-            // In simulation, just return the default (last) option
             if let Some(last) = options.split(';').last() {
                 Ok(Value::String(lua.create_string(last.trim())?))
             } else {
@@ -229,192 +301,156 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // issecure() - check if current execution is in secure context
-    globals.set("issecure", lua.create_function(|_, ()| Ok(false))?)?;
+    Ok(())
+}
 
-    // issecurevariable(table, variable) - check if variable is secure
-    globals.set(
-        "issecurevariable",
-        lua.create_function(|_, (_table, _var): (Option<Value>, String)| {
-            // Returns: isSecure, taint
-            Ok((true, Value::Nil))
+/// hooksecurefunc(name, hook) or hooksecurefunc(table, name, hook).
+fn register_hooksecurefunc(lua: &Lua) -> Result<()> {
+    lua.globals().set(
+        "hooksecurefunc",
+        lua.create_function(|lua, args: mlua::MultiValue| {
+            let args: Vec<Value> = args.into_iter().collect();
+
+            let (table, name, hook) = if args.len() == 2 {
+                let name = if let Value::String(s) = &args[0] {
+                    s.to_string_lossy().to_string()
+                } else {
+                    String::new()
+                };
+                (lua.globals(), name, args[1].clone())
+            } else if args.len() >= 3 {
+                let table = if let Value::Table(t) = &args[0] {
+                    t.clone()
+                } else {
+                    lua.globals()
+                };
+                let name = if let Value::String(s) = &args[1] {
+                    s.to_string_lossy().to_string()
+                } else {
+                    String::new()
+                };
+                (table, name, args[2].clone())
+            } else {
+                return Ok(());
+            };
+
+            let original: Value = table.get::<Value>(name.as_str())?;
+            if let (Value::Function(orig_fn), Value::Function(hook_fn)) = (original, hook) {
+                let wrapper = lua.create_function(move |_, args: mlua::MultiValue| {
+                    let result = orig_fn.call::<mlua::MultiValue>(args.clone())?;
+                    let _ = hook_fn.call::<mlua::MultiValue>(args);
+                    Ok(result)
+                })?;
+                table.set(name.as_str(), wrapper)?;
+            }
+
+            Ok(())
         })?,
     )?;
+    Ok(())
+}
 
-    // securecall(func, ...) - call a function in secure context
-    globals.set(
-        "securecall",
-        lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
-            func.call::<mlua::MultiValue>(args)
-        })?,
-    )?;
-
-    // forceinsecure() - mark current execution as insecure
-    globals.set("forceinsecure", lua.create_function(|_, ()| Ok(()))?)?;
-
-    // hooksecurefunc(name, hook) or hooksecurefunc(table, name, hook)
-    let hooksecurefunc = lua.create_function(|lua, args: mlua::MultiValue| {
-        let args: Vec<Value> = args.into_iter().collect();
-
-        let (table, name, hook) = if args.len() == 2 {
-            // hooksecurefunc("FuncName", hookFunc)
-            let name = if let Value::String(s) = &args[0] {
-                s.to_string_lossy().to_string()
-            } else {
-                String::new()
-            };
-            let hook = args[1].clone();
-            (lua.globals(), name, hook)
-        } else if args.len() >= 3 {
-            // hooksecurefunc(someTable, "FuncName", hookFunc)
-            let table = if let Value::Table(t) = &args[0] {
-                t.clone()
-            } else {
-                lua.globals()
-            };
-            let name = if let Value::String(s) = &args[1] {
-                s.to_string_lossy().to_string()
-            } else {
-                String::new()
-            };
-            let hook = args[2].clone();
-            (table, name, hook)
-        } else {
-            return Ok(());
-        };
-
-        // Get the original function
-        let original: Value = table.get::<Value>(name.as_str())?;
-
-        if let (Value::Function(orig_fn), Value::Function(hook_fn)) = (original, hook) {
-            // Create a wrapper that calls original then hook
-            let wrapper = lua.create_function(move |_, args: mlua::MultiValue| {
-                // Call original
-                let result = orig_fn.call::<mlua::MultiValue>(args.clone())?;
-                // Call hook (ignoring its result)
-                let _ = hook_fn.call::<mlua::MultiValue>(args);
-                Ok(result)
-            })?;
-
-            table.set(name.as_str(), wrapper)?;
-        }
-
-        Ok(())
-    })?;
-    globals.set("hooksecurefunc", hooksecurefunc)?;
-
-    // nop() - no-operation function
-    let nop = lua.create_function(|_, _: mlua::MultiValue| Ok(()))?;
-    globals.set("nop", nop)?;
-
-    // Sound functions (no-ops in simulation)
-    globals.set(
-        "PlaySound",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-    )?;
-    globals.set(
-        "StopSound",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-    )?;
-    globals.set(
-        "PlaySoundFile",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-    )?;
-
-    // securecallfunction(func, ...) - calls a function in protected mode
-    let securecallfunction =
-        lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
-            // In WoW this provides taint protection, but for simulation we just call it
-            func.call::<mlua::MultiValue>(args)
-        })?;
-    globals.set("securecallfunction", securecallfunction)?;
-
-    // secureexecuterange(tbl, func, ...) - calls func(key, value, ...) for each entry in tbl
-    let secureexecuterange = lua.create_function(
-        |_lua, (tbl, func, args): (mlua::Table, mlua::Function, mlua::MultiValue)| {
-            // Iterate through the table and call func(key, value, ...) for each entry
-            for pair in tbl.pairs::<mlua::Value, mlua::Value>() {
-                if let Ok((key, value)) = pair {
-                    let mut call_args = mlua::MultiValue::new();
-                    call_args.push_front(value);
-                    call_args.push_front(key);
-                    // Append the extra arguments
-                    for arg in args.iter() {
-                        call_args.push_back(arg.clone());
-                    }
-                    if let Err(e) = func.call::<()>(call_args) {
-                        // Log but don't propagate errors (WoW behavior)
-                        tracing::warn!("secureexecuterange callback error: {}", e);
+/// secureexecuterange(tbl, func, ...) - calls func(key, value, ...) for each entry.
+fn register_secureexecuterange(lua: &Lua) -> Result<()> {
+    lua.globals().set(
+        "secureexecuterange",
+        lua.create_function(
+            |_, (tbl, func, args): (mlua::Table, mlua::Function, mlua::MultiValue)| {
+                for pair in tbl.pairs::<Value, Value>() {
+                    if let Ok((key, value)) = pair {
+                        let mut call_args = mlua::MultiValue::new();
+                        call_args.push_front(value);
+                        call_args.push_front(key);
+                        for arg in args.iter() {
+                            call_args.push_back(arg.clone());
+                        }
+                        if let Err(e) = func.call::<()>(call_args) {
+                            tracing::warn!("secureexecuterange callback error: {}", e);
+                        }
                     }
                 }
-            }
-            Ok(())
-        },
+                Ok(())
+            },
+        )?,
     )?;
-    globals.set("secureexecuterange", secureexecuterange)?;
+    Ok(())
+}
 
-    // geterrorhandler() - returns error handler function
-    let geterrorhandler = lua.create_function(|lua, ()| {
-        // Return a simple error handler that just prints
-        let handler = lua.create_function(|_, msg: String| {
-            println!("Lua error: {}", msg);
-            Ok(())
-        })?;
-        Ok(handler)
-    })?;
-    globals.set("geterrorhandler", geterrorhandler)?;
+/// SecureHandler stubs and state/attribute driver stubs.
+fn register_secure_handler_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
 
-    // seterrorhandler(func) - sets the error handler function
-    let seterrorhandler = lua.create_function(|_, _handler: mlua::Function| {
-        // Accept the handler but don't actually use it (stub)
-        Ok(())
-    })?;
-    globals.set("seterrorhandler", seterrorhandler)?;
-
-    // SecureHandler functions (secure frame management stubs)
-    let secure_handler_set_frame_ref = lua.create_function(
-        |_, (_frame, _name, _target): (mlua::Value, String, mlua::Value)| Ok(()),
-    )?;
-    globals.set("SecureHandlerSetFrameRef", secure_handler_set_frame_ref)?;
-
-    let secure_handler_execute = lua.create_function(
-        |_, (_frame, _body, _args): (mlua::Value, String, mlua::MultiValue)| Ok(()),
-    )?;
-    globals.set("SecureHandlerExecute", secure_handler_execute)?;
-
-    let secure_handler_wrap_script =
-        lua.create_function(|_, (_frame, _script, _body): (mlua::Value, String, String)| Ok(()))?;
-    globals.set("SecureHandlerWrapScript", secure_handler_wrap_script)?;
-
-    // Secure state driver functions
     globals.set(
-        "RegisterStateDriver",
-        lua.create_function(|_, (_frame, _attribute, _state_driver): (Value, String, String)| {
-            // Secure state drivers are not fully implemented in simulation
+        "SecureHandlerSetFrameRef",
+        lua.create_function(|_, (_frame, _name, _target): (Value, String, Value)| Ok(()))?,
+    )?;
+    globals.set(
+        "SecureHandlerExecute",
+        lua.create_function(|_, (_frame, _body, _args): (Value, String, mlua::MultiValue)| {
             Ok(())
         })?,
+    )?;
+    globals.set(
+        "SecureHandlerWrapScript",
+        lua.create_function(|_, (_frame, _script, _body): (Value, String, String)| Ok(()))?,
+    )?;
+
+    globals.set(
+        "RegisterStateDriver",
+        lua.create_function(|_, (_frame, _attr, _driver): (Value, String, String)| Ok(()))?,
     )?;
     globals.set(
         "UnregisterStateDriver",
-        lua.create_function(|_, (_frame, _attribute): (Value, String)| Ok(()))?,
+        lua.create_function(|_, (_frame, _attr): (Value, String)| Ok(()))?,
     )?;
     globals.set(
         "RegisterAttributeDriver",
-        lua.create_function(|_, (_frame, _attribute, _driver): (Value, String, String)| Ok(()))?,
+        lua.create_function(|_, (_frame, _attr, _driver): (Value, String, String)| Ok(()))?,
     )?;
     globals.set(
         "UnregisterAttributeDriver",
-        lua.create_function(|_, (_frame, _attribute): (Value, String)| Ok(()))?,
+        lua.create_function(|_, (_frame, _attr): (Value, String)| Ok(()))?,
     )?;
 
-    // GetCurrentEnvironment() - returns the current global environment table
-    let get_current_environment = lua.create_function(|lua, ()| {
-        // Return _G (the global environment table)
-        Ok(lua.globals())
-    })?;
-    globals.set("GetCurrentEnvironment", get_current_environment)?;
+    Ok(())
+}
 
-    // Lua stdlib global aliases (WoW compatibility)
+/// Error handler functions: geterrorhandler, seterrorhandler.
+fn register_error_handlers(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    globals.set(
+        "geterrorhandler",
+        lua.create_function(|lua, ()| {
+            let handler = lua.create_function(|_, msg: String| {
+                println!("Lua error: {}", msg);
+                Ok(())
+            })?;
+            Ok(handler)
+        })?,
+    )?;
+
+    globals.set(
+        "seterrorhandler",
+        lua.create_function(|_, _handler: mlua::Function| Ok(()))?,
+    )?;
+
+    Ok(())
+}
+
+/// Misc stubs: nop, sound functions.
+fn register_misc_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    let nop = lua.create_function(|_, _: mlua::MultiValue| Ok(()))?;
+    globals.set("nop", nop.clone())?;
+    globals.set("PlaySound", nop.clone())?;
+    globals.set("StopSound", nop.clone())?;
+    globals.set("PlaySoundFile", nop)?;
+    Ok(())
+}
+
+/// Lua stdlib global aliases (string, math, table, bit) for WoW compatibility.
+fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
     lua.load(
         r##"
         -- String library aliases
@@ -481,7 +517,6 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
         tconcat = table.concat
 
         -- Bitwise operations (Lua 5.1 bit library compatibility)
-        -- WoW uses bit.* functions for bitwise operations
         bit = bit or {}
         bit.band = function(a, b)
             local result = 0
@@ -531,8 +566,11 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
     "##,
     )
     .exec()?;
+    Ok(())
+}
 
-    // Mixin system (WoW C++ intrinsics)
+/// Mixin system: Mixin, CreateFromMixins, CreateAndInitFromMixin.
+fn register_mixin_system(lua: &Lua) -> Result<()> {
     lua.load(
         r##"
         function Mixin(object, ...)
@@ -561,6 +599,5 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
     "##,
     )
     .exec()?;
-
     Ok(())
 }

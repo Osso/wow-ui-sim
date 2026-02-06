@@ -775,63 +775,23 @@ fn create_button_texture_from_template(
 
 /// Apply scripts from template.
 fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, frame_name: &str) {
-    let mut code = format!(
-        r#"
-        local frame = {}
-        if frame then
-        "#,
-        frame_name
-    );
+    use crate::loader::helpers::apply_script_handlers;
 
-    // Helper to add script handler
-    let add_handler = |code: &mut String, handler_name: &str, script: &crate::xml::ScriptBodyXml| {
-        if let Some(func) = &script.function {
-            if func.is_empty() {
-                // Empty function means no-op (used to override parent scripts)
-                return;
-            }
-            code.push_str(&format!(
-                "            frame:SetScript(\"{}\", {})\n",
-                handler_name, func
-            ));
-        } else if let Some(method) = &script.method {
-            code.push_str(&format!(
-                "            frame:SetScript(\"{}\", function(self, ...) self:{}(...) end)\n",
-                handler_name, method
-            ));
-        } else if let Some(body) = &script.body {
-            let body = body.trim();
-            if !body.is_empty() {
-                code.push_str(&format!(
-                    "            frame:SetScript(\"{}\", function(self, ...)\n                {}\n            end)\n",
-                    handler_name, body
-                ));
-            }
-        }
-    };
+    let handlers_code = apply_script_handlers("frame", &[
+        ("OnLoad", scripts.on_load.last()),
+        ("OnEvent", scripts.on_event.last()),
+        ("OnUpdate", scripts.on_update.last()),
+        ("OnClick", scripts.on_click.last()),
+        ("OnShow", scripts.on_show.last()),
+        ("OnHide", scripts.on_hide.last()),
+    ]);
 
-    if let Some(on_load) = scripts.on_load.last() {
-        add_handler(&mut code, "OnLoad", on_load);
+    if !handlers_code.is_empty() {
+        let code = format!(
+            "\n        local frame = {frame_name}\n        if frame then\n        {handlers_code}\n        end\n"
+        );
+        let _ = lua.load(&code).exec();
     }
-    if let Some(on_event) = scripts.on_event.last() {
-        add_handler(&mut code, "OnEvent", on_event);
-    }
-    if let Some(on_update) = scripts.on_update.last() {
-        add_handler(&mut code, "OnUpdate", on_update);
-    }
-    if let Some(on_click) = scripts.on_click.last() {
-        add_handler(&mut code, "OnClick", on_click);
-    }
-    if let Some(on_show) = scripts.on_show.last() {
-        add_handler(&mut code, "OnShow", on_show);
-    }
-    if let Some(on_hide) = scripts.on_hide.last() {
-        add_handler(&mut code, "OnHide", on_hide);
-    }
-
-    code.push_str("        end\n");
-
-    let _ = lua.load(&code).exec();
 }
 
 /// Generate Lua code for anchors on a child element.

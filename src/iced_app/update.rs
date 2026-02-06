@@ -399,49 +399,34 @@ impl App {
         }
     }
 
-    pub(crate) fn process_lua_commands(&mut self) {
-        // Collect lua commands
-        let commands: Vec<_> = if let Some(ref rx) = self.lua_rx {
-            let mut cmds = Vec::new();
-            while let Ok(cmd) = rx.try_recv() {
-                cmds.push(cmd);
+    /// Execute Lua code from the REPL server and return the response.
+    fn exec_lua_command(&self, code: &str) -> LuaResponse {
+        let env = self.env.borrow();
+        env.state().borrow_mut().console_output.clear();
+        let result = env.exec(code);
+        match result {
+            Ok(()) => {
+                let mut state = env.state().borrow_mut();
+                let output = state.console_output.join("\n");
+                state.console_output.clear();
+                LuaResponse::Output(output)
             }
-            cmds
-        } else {
-            Vec::new()
-        };
+            Err(e) => LuaResponse::Error(e.to_string()),
+        }
+    }
 
-        // Handle each command
+    pub(crate) fn process_lua_commands(&mut self) {
+        let commands: Vec<_> = self
+            .lua_rx
+            .as_ref()
+            .map(|rx| std::iter::from_fn(|| rx.try_recv().ok()).collect())
+            .unwrap_or_default();
+
         for cmd in commands {
             match cmd {
                 LuaCommand::Exec { code, respond } => {
-                    // Clear console output before execution
-                    {
-                        let env = self.env.borrow();
-                        env.state().borrow_mut().console_output.clear();
-                    }
-
-                    // Execute the Lua code
-                    let result = {
-                        let env = self.env.borrow();
-                        env.exec(&code)
-                    };
-
-                    // Collect output and send response
-                    let response = match result {
-                        Ok(()) => {
-                            let env = self.env.borrow();
-                            let mut state = env.state().borrow_mut();
-                            let output = state.console_output.join("\n");
-                            state.console_output.clear();
-                            LuaResponse::Output(output)
-                        }
-                        Err(e) => LuaResponse::Error(e.to_string()),
-                    };
-
+                    let response = self.exec_lua_command(&code);
                     let _ = respond.send(response);
-
-                    // Refresh display
                     self.drain_console();
                     self.frame_cache.clear();
                     self.quads_dirty.set(true);

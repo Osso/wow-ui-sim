@@ -331,6 +331,49 @@ pub fn generate_animation_group_code(
     code
 }
 
+/// Format an optional string as a Lua string literal or "nil".
+fn lua_opt_str(s: Option<&str>) -> String {
+    match s.filter(|s| !s.is_empty()) {
+        Some(s) => format!("\"{}\"", escape_lua_string(s)),
+        None => "nil".to_string(),
+    }
+}
+
+/// Append a Lua method call with a single numeric argument if the value is Some.
+fn emit_num_call(code: &mut String, target: &str, method: &str, val: Option<f32>) {
+    if let Some(v) = val {
+        code.push_str(&format!("\n        {target}:{method}({v})\n        "));
+    }
+}
+
+/// Append a Lua method call with a single string argument if the value is Some.
+fn emit_str_call(code: &mut String, target: &str, method: &str, val: Option<&str>) {
+    if let Some(v) = val {
+        code.push_str(&format!(
+            "\n        {target}:{method}(\"{}\")\n        ",
+            escape_lua_string(v)
+        ));
+    }
+}
+
+/// Append a Lua method call with two numeric arguments if either value is Some.
+fn emit_pair_call(
+    code: &mut String,
+    target: &str,
+    method: &str,
+    a: Option<f32>,
+    b: Option<f32>,
+    default: f32,
+) {
+    if a.is_some() || b.is_some() {
+        code.push_str(&format!(
+            "\n        {target}:{method}({}, {})\n        ",
+            a.unwrap_or(default),
+            b.unwrap_or(default)
+        ));
+    }
+}
+
 /// Generate Lua code for a single animation element within a group.
 fn generate_animation_code(
     anim: &crate::xml::AnimationXml,
@@ -339,172 +382,73 @@ fn generate_animation_code(
 ) -> String {
     let mut code = String::new();
 
-    let anim_name = anim.name.as_deref().unwrap_or("");
-
     code.push_str(&format!(
-        r#"
-        local __anim = __ag:CreateAnimation("{}", {})
-        "#,
-        anim_type,
-        if anim_name.is_empty() {
-            "nil".to_string()
-        } else {
-            format!("\"{}\"", escape_lua_string(anim_name))
-        },
+        "\n        local __anim = __ag:CreateAnimation(\"{anim_type}\", {})\n        ",
+        lua_opt_str(anim.name.as_deref()),
     ));
 
-    // Set parentKey
     if let Some(parent_key) = &anim.parent_key {
-        code.push_str(&format!(
-            r#"
-        __ag.{} = __anim
-        "#,
-            parent_key
-        ));
+        code.push_str(&format!("\n        __ag.{parent_key} = __anim\n        "));
     }
 
-    // Duration
-    if let Some(dur) = anim.duration {
-        code.push_str(&format!(
-            r#"
-        __anim:SetDuration({})
-        "#,
-            dur
-        ));
-    }
+    emit_num_call(&mut code, "__anim", "SetDuration", anim.duration);
+    emit_num_call(&mut code, "__anim", "SetOrder", anim.order.map(|o| o as f32));
+    emit_num_call(&mut code, "__anim", "SetStartDelay", anim.start_delay);
+    emit_num_call(&mut code, "__anim", "SetEndDelay", anim.end_delay);
+    emit_str_call(&mut code, "__anim", "SetSmoothing", anim.smoothing.as_deref());
+    emit_num_call(&mut code, "__anim", "SetFromAlpha", anim.from_alpha);
+    emit_num_call(&mut code, "__anim", "SetToAlpha", anim.to_alpha);
+    emit_pair_call(&mut code, "__anim", "SetOffset", anim.offset_x, anim.offset_y, 0.0);
+    emit_pair_call(&mut code, "__anim", "SetScale", anim.scale_x, anim.scale_y, 1.0);
+    emit_pair_call(&mut code, "__anim", "SetScaleFrom", anim.from_scale_x, anim.from_scale_y, 1.0);
+    emit_pair_call(&mut code, "__anim", "SetScaleTo", anim.to_scale_x, anim.to_scale_y, 1.0);
+    emit_num_call(&mut code, "__anim", "SetDegrees", anim.degrees);
+    emit_str_call(&mut code, "__anim", "SetChildKey", anim.child_key.as_deref());
+    emit_str_call(&mut code, "__anim", "SetTargetName", anim.target.as_deref());
+    emit_str_call(&mut code, "__anim", "SetTargetKey", anim.target_key.as_deref());
 
-    // Order
-    if let Some(order) = anim.order {
-        code.push_str(&format!(
-            r#"
-        __anim:SetOrder({})
-        "#,
-            order
-        ));
-    }
+    code
+}
 
-    // Delays
-    if let Some(delay) = anim.start_delay {
+/// Append a single SetScript call for a script handler to the code buffer.
+pub fn append_script_handler(
+    code: &mut String,
+    target: &str,
+    handler_name: &str,
+    script: &crate::xml::ScriptBodyXml,
+) {
+    if let Some(func) = &script.function {
+        if func.is_empty() {
+            return; // Empty function name = no-op (used to override parent scripts)
+        }
         code.push_str(&format!(
-            r#"
-        __anim:SetStartDelay({})
-        "#,
-            delay
+            "\n        {target}:SetScript(\"{handler_name}\", {func})\n        "
         ));
-    }
-    if let Some(delay) = anim.end_delay {
+    } else if let Some(method) = &script.method {
         code.push_str(&format!(
-            r#"
-        __anim:SetEndDelay({})
-        "#,
-            delay
+            "\n        {target}:SetScript(\"{handler_name}\", function(self, ...) self:{method}(...) end)\n        "
         ));
+    } else if let Some(body) = &script.body {
+        let body = body.trim();
+        if !body.is_empty() {
+            code.push_str(&format!(
+                "\n        {target}:SetScript(\"{handler_name}\", function(self, ...)\n            {body}\n        end)\n        "
+            ));
+        }
     }
+}
 
-    // Smoothing
-    if let Some(smoothing) = &anim.smoothing {
-        code.push_str(&format!(
-            r#"
-        __anim:SetSmoothing("{}")
-        "#,
-            escape_lua_string(smoothing)
-        ));
+/// Apply a list of (handler_name, optional_script) pairs to a target.
+pub fn apply_script_handlers(
+    target: &str,
+    handlers: &[(&str, Option<&crate::xml::ScriptBodyXml>)],
+) -> String {
+    let mut code = String::new();
+    for (name, script) in handlers {
+        if let Some(s) = script {
+            append_script_handler(&mut code, target, name, s);
+        }
     }
-
-    // Alpha
-    if let Some(val) = anim.from_alpha {
-        code.push_str(&format!(
-            r#"
-        __anim:SetFromAlpha({})
-        "#,
-            val
-        ));
-    }
-    if let Some(val) = anim.to_alpha {
-        code.push_str(&format!(
-            r#"
-        __anim:SetToAlpha({})
-        "#,
-            val
-        ));
-    }
-
-    // Translation
-    if anim.offset_x.is_some() || anim.offset_y.is_some() {
-        code.push_str(&format!(
-            r#"
-        __anim:SetOffset({}, {})
-        "#,
-            anim.offset_x.unwrap_or(0.0),
-            anim.offset_y.unwrap_or(0.0)
-        ));
-    }
-
-    // Scale
-    if anim.scale_x.is_some() || anim.scale_y.is_some() {
-        code.push_str(&format!(
-            r#"
-        __anim:SetScale({}, {})
-        "#,
-            anim.scale_x.unwrap_or(1.0),
-            anim.scale_y.unwrap_or(1.0)
-        ));
-    }
-    if anim.from_scale_x.is_some() || anim.from_scale_y.is_some() {
-        code.push_str(&format!(
-            r#"
-        __anim:SetScaleFrom({}, {})
-        "#,
-            anim.from_scale_x.unwrap_or(1.0),
-            anim.from_scale_y.unwrap_or(1.0)
-        ));
-    }
-    if anim.to_scale_x.is_some() || anim.to_scale_y.is_some() {
-        code.push_str(&format!(
-            r#"
-        __anim:SetScaleTo({}, {})
-        "#,
-            anim.to_scale_x.unwrap_or(1.0),
-            anim.to_scale_y.unwrap_or(1.0)
-        ));
-    }
-
-    // Rotation
-    if let Some(deg) = anim.degrees {
-        code.push_str(&format!(
-            r#"
-        __anim:SetDegrees({})
-        "#,
-            deg
-        ));
-    }
-
-    // childKey / target / targetKey
-    if let Some(child_key) = &anim.child_key {
-        code.push_str(&format!(
-            r#"
-        __anim:SetChildKey("{}")
-        "#,
-            escape_lua_string(child_key)
-        ));
-    }
-    if let Some(target) = &anim.target {
-        code.push_str(&format!(
-            r#"
-        __anim:SetTargetName("{}")
-        "#,
-            escape_lua_string(target)
-        ));
-    }
-    if let Some(target_key) = &anim.target_key {
-        code.push_str(&format!(
-            r#"
-        __anim:SetTargetKey("{}")
-        "#,
-            escape_lua_string(target_key)
-        ));
-    }
-
     code
 }
 
@@ -513,117 +457,23 @@ fn generate_anim_group_scripts_code(
     scripts: &crate::xml::ScriptsXml,
     group_ref: &str,
 ) -> String {
-    let mut code = String::new();
-
-    let add_handler = |code: &mut String,
-                       handler_name: &str,
-                       script: &crate::xml::ScriptBodyXml,
-                       target: &str| {
-        if let Some(func) = &script.function {
-            code.push_str(&format!(
-                r#"
-        {}:SetScript("{}", {})
-        "#,
-                target, handler_name, func
-            ));
-        } else if let Some(method) = &script.method {
-            code.push_str(&format!(
-                r#"
-        {}:SetScript("{}", function(self, ...) self:{}(...) end)
-        "#,
-                target, handler_name, method
-            ));
-        } else if let Some(body) = &script.body {
-            let body = body.trim();
-            if !body.is_empty() {
-                code.push_str(&format!(
-                    r#"
-        {}:SetScript("{}", function(self, ...)
-            {}
-        end)
-        "#,
-                    target, handler_name, body
-                ));
-            }
-        }
-    };
-
-    if let Some(handler) = scripts.on_play.last() {
-        add_handler(&mut code, "OnPlay", handler, group_ref);
-    }
-    if let Some(handler) = scripts.on_finished.last() {
-        add_handler(&mut code, "OnFinished", handler, group_ref);
-    }
-    if let Some(handler) = scripts.on_stop.last() {
-        add_handler(&mut code, "OnStop", handler, group_ref);
-    }
-    if let Some(handler) = scripts.on_loop.last() {
-        add_handler(&mut code, "OnLoop", handler, group_ref);
-    }
-    if let Some(handler) = scripts.on_pause.last() {
-        add_handler(&mut code, "OnPause", handler, group_ref);
-    }
-
-    code
+    apply_script_handlers(group_ref, &[
+        ("OnPlay", scripts.on_play.last()),
+        ("OnFinished", scripts.on_finished.last()),
+        ("OnStop", scripts.on_stop.last()),
+        ("OnLoop", scripts.on_loop.last()),
+        ("OnPause", scripts.on_pause.last()),
+    ])
 }
 
 /// Generate Lua code for setting script handlers.
 pub fn generate_scripts_code(scripts: &crate::xml::ScriptsXml) -> String {
-    let mut code = String::new();
-
-    // Helper to generate code for a single script handler
-    let add_handler = |code: &mut String, handler_name: &str, script: &crate::xml::ScriptBodyXml| {
-        if let Some(func) = &script.function {
-            // Reference to a global function
-            code.push_str(&format!(
-                r#"
-        frame:SetScript("{}", {})
-        "#,
-                handler_name, func
-            ));
-        } else if let Some(method) = &script.method {
-            // Call a method on the frame
-            code.push_str(&format!(
-                r#"
-        frame:SetScript("{}", function(self, ...) self:{}(...) end)
-        "#,
-                handler_name, method
-            ));
-        } else if let Some(body) = &script.body {
-            let body = body.trim();
-            if !body.is_empty() {
-                // Inline script body
-                code.push_str(&format!(
-                    r#"
-        frame:SetScript("{}", function(self, ...)
-            {}
-        end)
-        "#,
-                    handler_name, body
-                ));
-            }
-        }
-    };
-
-    // Process scripts - use last handler if multiple are specified (WoW behavior)
-    if let Some(on_load) = scripts.on_load.last() {
-        add_handler(&mut code, "OnLoad", on_load);
-    }
-    if let Some(on_event) = scripts.on_event.last() {
-        add_handler(&mut code, "OnEvent", on_event);
-    }
-    if let Some(on_update) = scripts.on_update.last() {
-        add_handler(&mut code, "OnUpdate", on_update);
-    }
-    if let Some(on_click) = scripts.on_click.last() {
-        add_handler(&mut code, "OnClick", on_click);
-    }
-    if let Some(on_show) = scripts.on_show.last() {
-        add_handler(&mut code, "OnShow", on_show);
-    }
-    if let Some(on_hide) = scripts.on_hide.last() {
-        add_handler(&mut code, "OnHide", on_hide);
-    }
-
-    code
+    apply_script_handlers("frame", &[
+        ("OnLoad", scripts.on_load.last()),
+        ("OnEvent", scripts.on_event.last()),
+        ("OnUpdate", scripts.on_update.last()),
+        ("OnClick", scripts.on_click.last()),
+        ("OnShow", scripts.on_show.last()),
+        ("OnHide", scripts.on_hide.last()),
+    ])
 }
