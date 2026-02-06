@@ -25,10 +25,7 @@ pub fn load_lua_file(
     let code = code.strip_prefix('\u{feff}').unwrap_or(&code);
     // Transform path to WoW-style for debugstack (libraries expect "AddOns/..." pattern)
     let path_str = path.display().to_string();
-    let chunk_name = if let Some(pos) = path_str.find("reference-addons/") {
-        // Transform: .../reference-addons/Details/... -> Interface/AddOns/Details/...
-        format!("@Interface/AddOns/{}", &path_str[pos + 17..])
-    } else if let Some(pos) = path_str.find("AddOns/") {
+    let chunk_name = if let Some(pos) = path_str.find("AddOns/") {
         format!("@Interface/{}", &path_str[pos..])
     } else {
         format!("@{}", path_str)

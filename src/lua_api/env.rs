@@ -380,7 +380,7 @@ impl WowLuaEnv {
                 continue;
             }
             let name = path.file_name().unwrap().to_str().unwrap().to_string();
-            if name.starts_with('.') || name == "wow-ui-source" {
+            if name.starts_with('.') || name == "BlizzardUI" {
                 continue;
             }
             // Find TOC file

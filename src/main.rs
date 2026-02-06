@@ -79,7 +79,7 @@ fn find_toc_file(addon_dir: &PathBuf) -> Option<PathBuf> {
     wow_ui_sim::loader::find_toc_file(addon_dir)
 }
 
-/// Scan reference-addons directory and return sorted list of addon directories
+/// Scan addons directory and return sorted list of addon directories
 fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
     let mut addons = Vec::new();
 
@@ -90,7 +90,7 @@ fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
                 let name = path.file_name().unwrap().to_str().unwrap().to_string();
                 // Skip hidden directories and special directories
                 let skip = name.starts_with('.')
-                    || name == "wow-ui-source";
+                    || name == "BlizzardUI";
                 if !skip {
                     if let Some(toc) = find_toc_file(&path) {
                         addons.push((name, toc));
@@ -160,56 +160,56 @@ fn configure_saved_vars(args: &Args) -> SavedVariablesManager {
     saved_vars
 }
 
+/// Blizzard addons loaded in dependency order.
+const BLIZZARD_ADDONS: &[(&str, &str)] = &[
+    // Foundation (no new deps)
+    ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
+    ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
+    ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
+    ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
+    ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
+    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase_Mainline.toc"),
+    // ActionBar dependency chain
+    ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
+    ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
+    ("Blizzard_HelpPlate", "Blizzard_HelpPlate.toc"),
+    ("Blizzard_AccessibilityTemplates", "Blizzard_AccessibilityTemplates.toc"),
+    ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
+    ("Blizzard_UIParent", "Blizzard_UIParent_Mainline.toc"),
+    ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
+    ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
+    ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
+    ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
+    ("Blizzard_StoreUI", "Blizzard_StoreUI_Mainline.toc"),
+    ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
+    ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
+    ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
+    ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
+    ("Blizzard_UIParentPanelManager", "Blizzard_UIParentPanelManager_Mainline.toc"),
+    ("Blizzard_Settings_Shared", "Blizzard_Settings_Shared_Mainline.toc"),
+    ("Blizzard_SettingsDefinitions_Shared", "Blizzard_SettingsDefinitions_Shared.toc"),
+    ("Blizzard_SettingsDefinitions_Frame", "Blizzard_SettingsDefinitions_Frame_Mainline.toc"),
+    ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil_Mainline.toc"),
+    ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
+    ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
+    ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
+    ("Blizzard_UIPanels_Game", "Blizzard_UIPanels_Game_Mainline.toc"),
+    ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
+    // Existing UI modules
+    ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
+    ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
+    ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
+];
+
 /// Load Blizzard SharedXML and base UI addons.
 fn load_blizzard_addons(env: &WowLuaEnv) {
-    let wow_ui_path = PathBuf::from(env!("HOME"))
-        .join("Projects/wow/reference-addons/wow-ui-source");
-    if !wow_ui_path.exists() {
+    let blizzard_ui_path = PathBuf::from("./Interface/BlizzardUI");
+    if !blizzard_ui_path.exists() {
         return;
     }
 
-    let blizzard_addons = [
-        // Foundation (no new deps)
-        ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-        ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
-        ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
-        ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
-        ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
-        ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase_Mainline.toc"),
-        // ActionBar dependency chain
-        ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
-        ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
-        ("Blizzard_HelpPlate", "Blizzard_HelpPlate.toc"),
-        ("Blizzard_AccessibilityTemplates", "Blizzard_AccessibilityTemplates.toc"),
-        ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
-        ("Blizzard_UIParent", "Blizzard_UIParent_Mainline.toc"),
-        ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
-        ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
-        ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
-        ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
-        ("Blizzard_StoreUI", "Blizzard_StoreUI_Mainline.toc"),
-        ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
-        ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
-        ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
-        ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
-        ("Blizzard_UIParentPanelManager", "Blizzard_UIParentPanelManager_Mainline.toc"),
-        ("Blizzard_Settings_Shared", "Blizzard_Settings_Shared_Mainline.toc"),
-        ("Blizzard_SettingsDefinitions_Shared", "Blizzard_SettingsDefinitions_Shared.toc"),
-        ("Blizzard_SettingsDefinitions_Frame", "Blizzard_SettingsDefinitions_Frame_Mainline.toc"),
-        ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil_Mainline.toc"),
-        ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
-        ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
-        ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
-        ("Blizzard_UIPanels_Game", "Blizzard_UIPanels_Game_Mainline.toc"),
-        ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
-        // Existing UI modules
-        ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
-        ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
-        ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
-    ];
-
-    for (name, toc) in blizzard_addons {
-        let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
+    for (name, toc) in BLIZZARD_ADDONS {
+        let toc_path = blizzard_ui_path.join(format!("{}/{}", name, toc));
         if !toc_path.exists() {
             continue;
         }
@@ -237,7 +237,7 @@ fn load_third_party_addons(args: &Args, env: &WowLuaEnv, saved_vars: &mut SavedV
         return;
     }
 
-    let addons_path = PathBuf::from(env!("HOME")).join("Projects/wow/reference-addons");
+    let addons_path = PathBuf::from("./Interface/AddOns");
     let addons = scan_addons(&addons_path);
 
     if addons.is_empty() {

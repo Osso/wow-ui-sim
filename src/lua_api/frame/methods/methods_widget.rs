@@ -28,18 +28,26 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 fn add_tooltip_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_tooltip_core_methods(methods);
-    add_tooltip_query_methods(methods);
-    add_tooltip_text_methods(methods);
 }
 
 /// SetOwner, ClearLines, AddLine, AddDoubleLine, spell/item stubs
 fn add_tooltip_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_tooltip_setup_methods(methods);
-    add_tooltip_line_methods(methods);
-    add_tooltip_data_stubs(methods);
+    add_tooltip_addline_methods(methods);
+    add_tooltip_doubleline_methods(methods);
+    add_tooltip_data_query_stubs(methods);
 }
 
 fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_tooltip_owner_methods(methods);
+    add_tooltip_query_methods(methods);
+    add_tooltip_padding_override_methods(methods);
+    add_tooltip_settext_methods(methods);
+    add_tooltip_info_methods(methods);
+    add_tooltip_state_methods(methods);
+}
+
+fn add_tooltip_owner_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetOwner(owner, anchor, x, y) - Set the tooltip's owner and anchor
     methods.add_method("SetOwner", |lua, this, args: mlua::MultiValue| {
         let mut args_iter = args.into_iter();
@@ -83,7 +91,9 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         fire_tooltip_script(lua, this.id, "OnTooltipCleared")?;
         Ok(())
     });
+}
 
+fn add_tooltip_addline_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // AddLine(text, r, g, b, wrap) - Add a line of text
     methods.add_method("AddLine", |_, this, args: mlua::MultiValue| {
         let mut it = args.into_iter();
@@ -113,7 +123,9 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
 
+fn add_tooltip_doubleline_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // AddDoubleLine(leftText, rightText, lR, lG, lB, rR, rG, rB) - Add two-column line
     methods.add_method("AddDoubleLine", |_, this, args: mlua::MultiValue| {
         let mut it = args.into_iter();
@@ -148,7 +160,9 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
 
+fn add_tooltip_data_query_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetSpellByID(spellID) - Set tooltip to show spell info (no game data)
     methods.add_method("SetSpellByID", |_, _this, _spell_id: i32| Ok(()));
 
@@ -181,7 +195,9 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(0);
         Ok(count as i32)
     });
+}
 
+fn add_tooltip_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetUnit() - Get the unit this tooltip is showing info for (no game data)
     methods.add_method(
         "GetUnit",
@@ -223,6 +239,11 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(0.0))
     });
 
+    // AddTexture(texture) - Add a texture to the tooltip (stub)
+    methods.add_method("AddTexture", |_, _this, _texture: String| Ok(()));
+}
+
+fn add_tooltip_padding_override_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetPadding(padding) / GetPadding()
     // These check for Lua mixin overrides first (e.g., ScrollBoxBaseMixin:GetPadding)
     // because Rust add_method methods shadow mixin methods stored in __frame_fields.
@@ -260,10 +281,9 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 .unwrap_or(0.0),
         ))
     });
+}
 
-    // AddTexture(texture) - Add a texture to the tooltip (stub)
-    methods.add_method("AddTexture", |_, _this, _texture: String| Ok(()));
-
+fn add_tooltip_settext_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetText(text, r, g, b, wrap) - Clear and set first line (tooltip), or set frame text
     // For SimpleHTML: strips HTML tags before storing plain text
     methods.add_method_mut("SetText", |_, this, args: mlua::MultiValue| {
@@ -315,7 +335,9 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
 
+fn add_tooltip_info_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // IsOwned(frame) - Check if tooltip is owned by a frame
     methods.add_method("IsOwned", |_, this, frame: Value| {
         let check_id = match &frame {
@@ -355,7 +377,9 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or_else(|| "ANCHOR_NONE".to_string());
         Ok(anchor)
     });
+}
 
+fn add_tooltip_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // FadeOut() - Hide tooltip, clear owner
     methods.add_method("FadeOut", |_, this, ()| {
         let mut state = this.state.borrow_mut();
@@ -370,6 +394,16 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_message_frame_add_methods(methods);
+    add_message_frame_count_methods(methods);
+    add_message_frame_fade_methods(methods);
+    add_message_frame_insert_methods(methods);
+    add_message_frame_scroll_methods(methods);
+    add_message_frame_misc_methods(methods);
+    add_message_frame_callback_stubs(methods);
+}
+
+fn add_message_frame_add_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // AddMessage(text, r, g, b, messageID, holdTime) - Add message to a MessageFrame
     methods.add_method("AddMessage", |_, this, args: mlua::MultiValue| {
         add_message_impl(this, args);
@@ -414,7 +448,9 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
 
+fn add_message_frame_count_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetNumMessages()
     methods.add_method("GetNumMessages", |_, this, ()| {
         let state = this.state.borrow();
@@ -442,7 +478,9 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(120);
         Ok(max as i32)
     });
+}
 
+fn add_message_frame_fade_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetFading(fading) - override the stub in methods_core
     methods.add_method("SetFading", |_, this, fading: bool| {
         let mut state = this.state.borrow_mut();
@@ -479,6 +517,10 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(secs)
     });
 
+    add_message_frame_fade_duration_methods(methods);
+}
+
+fn add_message_frame_fade_duration_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetFadeDuration(secs) - override the stub in methods_core
     methods.add_method("SetFadeDuration", |_, this, secs: f64| {
         let mut state = this.state.borrow_mut();
@@ -514,7 +556,9 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(1.0);
         Ok(power)
     });
+}
 
+fn add_message_frame_insert_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetInsertMode(mode) - override the stub in methods_core
     methods.add_method("SetInsertMode", |_, this, mode: String| {
         let mut state = this.state.borrow_mut();
@@ -532,7 +576,9 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or_else(|| "BOTTOM".to_string());
         Ok(mode)
     });
+}
 
+fn add_message_frame_scroll_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // Scroll methods (no-ops for now, no visual scrolling)
     methods.add_method("ScrollUp", |_, _this, ()| Ok(()));
     methods.add_method("ScrollDown", |_, _this, ()| Ok(()));
@@ -579,7 +625,9 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(true);
         Ok(allowed)
     });
+}
 
+fn add_message_frame_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetTextCopyable(copyable) / IsTextCopyable()
     methods.add_method("SetTextCopyable", |_, this, copyable: bool| {
         let mut state = this.state.borrow_mut();
@@ -616,7 +664,9 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok((String::new(), 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64))
     });
+}
 
+fn add_message_frame_callback_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // Callback stubs
     methods.add_method("SetOnScrollChangedCallback", |_, _this, _func: Value| Ok(()));
     methods.add_method("SetOnTextCopiedCallback", |_, _this, _func: Value| Ok(()));
@@ -630,6 +680,11 @@ fn add_message_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_editbox_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_editbox_focus_methods(methods);
+    add_editbox_input_methods(methods);
+}
+
+fn add_editbox_focus_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFocus", |lua, this, ()| {
         let old_focus = {
             let mut s = this.state.borrow_mut();
@@ -674,6 +729,9 @@ fn add_editbox_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetMaxLetters", |_, _this, ()| Ok(0));
     methods.add_method("SetMaxBytes", |_, _this, _max: i32| Ok(()));
     methods.add_method("GetMaxBytes", |_, _this, ()| Ok(0));
+}
+
+fn add_editbox_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetNumber", |_, this, n: f64| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -992,6 +1050,11 @@ fn add_model_scene_fog_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_colorselect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_colorselect_rgb_methods(methods);
+    add_colorselect_hsv_methods(methods);
+}
+
+fn add_colorselect_rgb_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetColorRGB(r, g, b) - Set the RGB color
     methods.add_method("SetColorRGB", |_, this, (r, g, b): (f64, f64, f64)| {
         let mut state = this.state.borrow_mut();
@@ -1026,7 +1089,9 @@ fn add_colorselect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok((1.0, 1.0, 1.0))
     });
+}
 
+fn add_colorselect_hsv_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetColorHSV(h, s, v) - Set the HSV color
     methods.add_method("SetColorHSV", |_, this, (h, s, v): (f64, f64, f64)| {
         let (r, g, b) = hsv_to_rgb(h, s, v);
@@ -1081,6 +1146,12 @@ fn add_colorselect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_drag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_drag_start_stop_methods(methods);
+    add_drag_clamp_methods(methods);
+    add_drag_resize_methods(methods);
+}
+
+fn add_drag_start_stop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("StartMoving", |_, this, ()| {
         if let Ok(mut s) = this.state.try_borrow_mut() {
             if let Some(frame) = s.widgets.get_mut(this.id) {
@@ -1131,6 +1202,9 @@ fn add_drag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(false)
     });
+}
+
+fn add_drag_clamp_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetClampedToScreen", |_, this, clamped: bool| {
         if let Ok(mut s) = this.state.try_borrow_mut() {
             if let Some(frame) = s.widgets.get_mut(this.id) {
@@ -1150,6 +1224,9 @@ fn add_drag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetClampRectInsets", |_, _this, _args: mlua::MultiValue| {
         Ok(())
     });
+}
+
+fn add_drag_resize_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetResizeBounds", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("GetResizeBounds", |_, _this, ()| {
         Ok((0.0_f32, 0.0_f32, 0.0_f32, 0.0_f32))
@@ -1324,6 +1401,11 @@ fn fire_tooltip_script(lua: &mlua::Lua, frame_id: u64, handler: &str) -> mlua::R
         }
     }
     Ok(())
+}
+
+/// Fire a focus-related script handler (OnEditFocusGained/OnEditFocusLost).
+fn fire_focus_handler(lua: &mlua::Lua, frame_id: u64, handler: &str) -> mlua::Result<()> {
+    fire_tooltip_script(lua, frame_id, handler)
 }
 
 /// Convert HSV to RGB.

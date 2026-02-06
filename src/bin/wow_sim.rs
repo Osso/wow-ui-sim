@@ -123,9 +123,7 @@ enum Commands {
 }
 
 fn default_addons_path() -> PathBuf {
-    dirs::home_dir()
-        .unwrap_or_default()
-        .join("Projects/wow/reference-addons")
+    PathBuf::from("./Interface/AddOns")
 }
 
 fn default_interface_path() -> PathBuf {
@@ -453,27 +451,23 @@ fn create_standalone_env(
 
     load_blizzard_addons(&env);
 
-    let addons_path = dirs::home_dir()
-        .unwrap_or_default()
-        .join("Projects/wow/reference-addons");
+    let addons_path = PathBuf::from("./Interface/AddOns");
     env.scan_and_register_addons(&addons_path);
 
     (env, font_system)
 }
 
-/// Load Blizzard base UI addons from the wow-ui-source directory.
+/// Load Blizzard base UI addons from Interface/BlizzardUI.
 fn load_blizzard_addons(env: &WowLuaEnv) {
-    let wow_ui_path = dirs::home_dir()
-        .unwrap_or_default()
-        .join("Projects/wow/reference-addons/wow-ui-source");
+    let blizzard_ui_path = PathBuf::from("./Interface/BlizzardUI");
 
-    if !wow_ui_path.exists() {
-        eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
+    if !blizzard_ui_path.exists() {
+        eprintln!("Warning: Blizzard UI path not found: {}", blizzard_ui_path.display());
         return;
     }
 
     for (name, toc) in BLIZZARD_ADDONS {
-        let toc_path = wow_ui_path.join(format!("Interface/AddOns/{}/{}", name, toc));
+        let toc_path = blizzard_ui_path.join(format!("{}/{}", name, toc));
         if toc_path.exists() {
             match load_addon(env, &toc_path) {
                 Ok(r) => {
@@ -814,5 +808,5 @@ fn create_texture_manager() -> wow_ui_sim::texture::TextureManager {
     };
     TextureManager::new(textures_path)
         .with_interface_path(home.join("Projects/wow/Interface"))
-        .with_addons_path(home.join("Projects/wow/reference-addons"))
+        .with_addons_path(PathBuf::from("./Interface/AddOns"))
 }

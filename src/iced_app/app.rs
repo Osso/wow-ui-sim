@@ -32,7 +32,7 @@ pub const FALLBACK_TEXTURES_PATH: &str = "/home/osso/Repos/wow-ui-textures";
 pub const DEFAULT_INTERFACE_PATH: &str = "/home/osso/Projects/wow/Interface";
 
 /// Default path to addons directory.
-pub const DEFAULT_ADDONS_PATH: &str = "/home/osso/Projects/wow/reference-addons";
+pub const DEFAULT_ADDONS_PATH: &str = "./Interface/AddOns";
 
 /// Debug visualization options.
 #[derive(Default, Clone)]
