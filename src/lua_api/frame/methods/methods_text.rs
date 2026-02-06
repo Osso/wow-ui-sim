@@ -1,7 +1,10 @@
 //! Text/FontString methods: SetText, SetFont, SetJustifyH, etc.
 
 use super::FrameHandle;
+use crate::render::font::WowFontSystem;
 use mlua::{UserDataMethods, Value};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 /// Add text/FontString methods to FrameHandle UserData.
 pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -362,41 +365,82 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // GetStringWidth() - for FontString widgets
-    methods.add_method("GetStringWidth", |_, this, ()| {
+    methods.add_method("GetStringWidth", |lua, this, ()| {
         let state = this.state.borrow();
-        // Approximate: 7 pixels per character
-        let width = state
-            .widgets
-            .get(this.id)
-            .and_then(|f| f.text.as_ref())
-            .map(|t| t.len() as f32 * 7.0)
-            .unwrap_or(0.0);
-        Ok(width)
+        let (text, font_path, font_size) = match state.widgets.get(this.id) {
+            Some(f) => (
+                f.text.clone(),
+                f.font.clone(),
+                f.font_size,
+            ),
+            None => return Ok(0.0),
+        };
+        drop(state);
+
+        let text = match text {
+            Some(t) if !t.is_empty() => t,
+            _ => return Ok(0.0),
+        };
+
+        if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
+            let mut fs = fs_rc.borrow_mut();
+            Ok(fs.measure_text_width(&text, font_path.as_deref(), font_size) as f64)
+        } else {
+            // Fallback approximation when no font system is available (e.g. tests)
+            Ok(text.len() as f64 * 7.0)
+        }
     });
 
     // GetTextWidth() - alias for GetStringWidth (EditBox uses this)
-    methods.add_method("GetTextWidth", |_, this, ()| {
+    methods.add_method("GetTextWidth", |lua, this, ()| {
         let state = this.state.borrow();
-        let width = state
-            .widgets
-            .get(this.id)
-            .and_then(|f| f.text.as_ref())
-            .map(|t| t.len() as f32 * 7.0)
-            .unwrap_or(0.0);
-        Ok(width)
+        let (text, font_path, font_size) = match state.widgets.get(this.id) {
+            Some(f) => (
+                f.text.clone(),
+                f.font.clone(),
+                f.font_size,
+            ),
+            None => return Ok(0.0),
+        };
+        drop(state);
+
+        let text = match text {
+            Some(t) if !t.is_empty() => t,
+            _ => return Ok(0.0),
+        };
+
+        if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
+            let mut fs = fs_rc.borrow_mut();
+            Ok(fs.measure_text_width(&text, font_path.as_deref(), font_size) as f64)
+        } else {
+            Ok(text.len() as f64 * 7.0)
+        }
     });
 
     // GetUnboundedStringWidth() - string width without word wrap constraints
-    methods.add_method("GetUnboundedStringWidth", |_, this, ()| {
+    methods.add_method("GetUnboundedStringWidth", |lua, this, ()| {
         let state = this.state.borrow();
-        // Approximate: 7 pixels per character
-        let width = state
-            .widgets
-            .get(this.id)
-            .and_then(|f| f.text.as_ref())
-            .map(|t| t.len() as f32 * 7.0)
-            .unwrap_or(0.0);
-        Ok(width)
+        let (text, font_path, font_size) = match state.widgets.get(this.id) {
+            Some(f) => (
+                f.text.clone(),
+                f.font.clone(),
+                f.font_size,
+            ),
+            None => return Ok(0.0),
+        };
+        drop(state);
+
+        let text = match text {
+            Some(t) if !t.is_empty() => t,
+            _ => return Ok(0.0),
+        };
+
+        if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
+            let mut fs = fs_rc.borrow_mut();
+            Ok(fs.measure_text_width(&text, font_path.as_deref(), font_size) as f64)
+        } else {
+            Ok(text.len() as f64 * 7.0)
+        }
     });
 
     // GetFontObjectForAlphabet(alphabet) - returns self for font localization

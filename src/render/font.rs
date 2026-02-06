@@ -134,6 +134,35 @@ impl WowFontSystem {
     pub fn attrs_owned(&self, wow_path: Option<&str>) -> cosmic_text::AttrsOwned {
         cosmic_text::AttrsOwned::new(&self.attrs(wow_path))
     }
+
+    /// Measure the pixel width of a text string using cosmic-text shaping.
+    ///
+    /// `font_path` is the WoW font path (e.g. `Fonts\\FRIZQT__.TTF`).
+    /// Returns the width of the first layout line.
+    pub fn measure_text_width(&mut self, text: &str, font_path: Option<&str>, font_size: f32) -> f32 {
+        if text.is_empty() {
+            return 0.0;
+        }
+        let line_height = (font_size * 1.2).ceil();
+        let metrics = cosmic_text::Metrics::new(font_size, line_height);
+        let attrs = self.attrs_owned(font_path);
+        let mut buffer = cosmic_text::Buffer::new(&mut self.font_system, metrics);
+        buffer.set_size(&mut self.font_system, Some(10000.0), Some(line_height));
+        buffer.set_text(
+            &mut self.font_system,
+            text,
+            &attrs.as_attrs(),
+            cosmic_text::Shaping::Advanced,
+            None,
+        );
+        buffer.shape_until_scroll(&mut self.font_system, true);
+
+        buffer
+            .layout_runs()
+            .map(|run| run.line_w)
+            .next()
+            .unwrap_or(0.0)
+    }
 }
 
 /// Normalize a WoW font path to uppercase with forward slashes for map lookup.
@@ -228,5 +257,27 @@ mod tests {
         let runs: Vec<_> = buffer.layout_runs().collect();
         assert!(!runs.is_empty(), "No layout runs produced");
         assert!(!runs[0].glyphs.is_empty(), "No glyphs in first run");
+    }
+
+    #[test]
+    fn measure_text_width_returns_positive() {
+        let mut fs = WowFontSystem::new(&fonts_dir());
+        let w = fs.measure_text_width("Hello", Some(WOW_FONT_FRIZ), 14.0);
+        assert!(w > 0.0, "Expected positive width, got {w}");
+    }
+
+    #[test]
+    fn measure_text_width_empty_is_zero() {
+        let mut fs = WowFontSystem::new(&fonts_dir());
+        let w = fs.measure_text_width("", Some(WOW_FONT_FRIZ), 14.0);
+        assert_eq!(w, 0.0);
+    }
+
+    #[test]
+    fn measure_text_width_scales_with_length() {
+        let mut fs = WowFontSystem::new(&fonts_dir());
+        let short = fs.measure_text_width("Hi", Some(WOW_FONT_FRIZ), 14.0);
+        let long = fs.measure_text_width("Hello World", Some(WOW_FONT_FRIZ), 14.0);
+        assert!(long > short, "Longer text should be wider: {long} > {short}");
     }
 }

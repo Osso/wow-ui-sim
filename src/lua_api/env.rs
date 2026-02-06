@@ -3,6 +3,7 @@
 use super::builtin_frames::create_builtin_frames;
 use super::layout::{compute_frame_rect, get_parent_depth};
 use super::state::{AddonInfo, PendingTimer, SimState};
+use crate::render::font::WowFontSystem;
 use crate::Result;
 use mlua::{Lua, MultiValue, Value};
 use std::cell::RefCell;
@@ -221,6 +222,14 @@ impl WowLuaEnv {
     /// Get access to the simulator state.
     pub fn state(&self) -> &Rc<RefCell<SimState>> {
         &self.state
+    }
+
+    /// Set the font system for text measurement from Lua API methods.
+    ///
+    /// This stores the font system as Lua app_data so that methods like
+    /// `GetStringWidth()` can measure text accurately via cosmic-text.
+    pub fn set_font_system(&self, font_system: Rc<RefCell<WowFontSystem>>) {
+        self.lua.set_app_data(font_system);
     }
 
     /// Register an addon in the addon list.

@@ -390,6 +390,9 @@ fn dump_standalone(
     no_addons: bool,
     no_saved_vars: bool,
 ) {
+    use std::cell::RefCell;
+    use std::rc::Rc;
+
     // Set environment variables for the loader
     // SAFETY: We're single-threaded at this point
     if no_addons {
@@ -407,6 +410,11 @@ fn dump_standalone(
             std::process::exit(1);
         }
     };
+
+    // Set up font system for text measurement (needed during addon Lua execution)
+    let fonts_path = std::path::PathBuf::from("./fonts");
+    let font_system = Rc::new(RefCell::new(wow_ui_sim::render::WowFontSystem::new(&fonts_path)));
+    env.set_font_system(font_system);
 
     // Load Blizzard SharedXML for base UI support
     let wow_ui_path = dirs::home_dir()
@@ -540,6 +548,8 @@ fn screenshot_standalone(
     no_addons: bool,
     no_saved_vars: bool,
 ) {
+    use std::cell::RefCell;
+    use std::rc::Rc;
     use wow_ui_sim::iced_app::build_quad_batch_for_registry;
     use wow_ui_sim::render::software::render_to_image;
     use wow_ui_sim::render::{GlyphAtlas, WowFontSystem};
@@ -561,6 +571,11 @@ fn screenshot_standalone(
             std::process::exit(1);
         }
     };
+
+    // Set up font system for text measurement (needed during addon Lua execution)
+    let fonts_path = PathBuf::from("./fonts");
+    let font_system = Rc::new(RefCell::new(WowFontSystem::new(&fonts_path)));
+    env.set_font_system(Rc::clone(&font_system));
 
     // Load Blizzard SharedXML for base UI support
     let wow_ui_path = dirs::home_dir()
@@ -607,14 +622,13 @@ fn screenshot_standalone(
         }
     }
 
-    // Set up font system and glyph atlas for text rendering
-    let fonts_path = PathBuf::from("./fonts");
-    let mut font_system = WowFontSystem::new(&fonts_path);
+    // Glyph atlas for text rendering
     let mut glyph_atlas = GlyphAtlas::new();
 
-    // Build quad batch
+    // Build quad batch (reuse font_system set up for Lua text measurement)
     let state = env.state().borrow();
     let widgets = &state.widgets;
+    let mut fs = font_system.borrow_mut();
 
     let batch = build_quad_batch_for_registry(
         widgets,
@@ -622,7 +636,7 @@ fn screenshot_standalone(
         filter.as_deref(),
         None,
         None,
-        Some((&mut font_system, &mut glyph_atlas)),
+        Some((&mut fs, &mut glyph_atlas)),
     );
 
     eprintln!(

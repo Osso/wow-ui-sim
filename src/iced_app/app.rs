@@ -175,6 +175,8 @@ impl App {
         let font_system = Rc::new(RefCell::new(
             WowFontSystem::new(&PathBuf::from(DEFAULT_FONTS_PATH)),
         ));
+        // Make font system available for Lua text measurement methods
+        env_rc.borrow().set_font_system(Rc::clone(&font_system));
         let glyph_atlas = Rc::new(RefCell::new(GlyphAtlas::new()));
 
         // Initialize debug server

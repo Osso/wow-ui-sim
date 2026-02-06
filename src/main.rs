@@ -1,8 +1,11 @@
+use std::cell::RefCell;
 use std::path::PathBuf;
+use std::rc::Rc;
 use clap::Parser;
 use tracing_subscriber::EnvFilter;
 use wow_ui_sim::loader::{load_addon, load_addon_with_saved_vars, LoadTiming};
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
+use wow_ui_sim::render::WowFontSystem;
 use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
 use wow_ui_sim::toc::TocFile;
 
@@ -142,6 +145,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
 
     let env = WowLuaEnv::new()?;
+
+    // Set up font system for text measurement during addon loading
+    let font_system = Rc::new(RefCell::new(WowFontSystem::new(&PathBuf::from("./fonts"))));
+    env.set_font_system(Rc::clone(&font_system));
+
     let mut saved_vars = SavedVariablesManager::new();
 
     let skip_saved_vars = args.no_saved_vars
