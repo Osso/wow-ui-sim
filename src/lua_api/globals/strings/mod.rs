@@ -203,6 +203,8 @@ fn register_game_constants(globals: &mlua::Table) -> Result<()> {
     register_strings(globals, RAID_TARGET_STRINGS)?;
     register_floats(globals, TAXI_FLOAT_CONSTANTS)?;
     register_strings(globals, KEYBOARD_MODIFIER_STRINGS)?;
+    register_ints(globals, TOTEM_SLOT_CONSTANTS)?;
+    register_strings(globals, GAME_ERROR_STRINGS)?;
     Ok(())
 }
 

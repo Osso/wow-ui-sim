@@ -88,6 +88,7 @@ pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
     register_c_super_track(lua)?;
     register_c_player_interaction_manager(lua)?;
     register_c_paper_doll_info(lua)?;
+    register_c_perks_program(lua)?;
 
     // TooltipDataProcessor - global for registering tooltip post-processing callbacks
     let tooltip_data_processor = lua.create_table()?;
@@ -262,6 +263,10 @@ fn register_c_pet_battles(lua: &Lua) -> Result<()> {
         "GetAllEffectNames",
         lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?,
     )?;
+    c_pet_battles.set(
+        "GetAllStates",
+        lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
 
     globals.set("C_PetBattles", c_pet_battles)?;
     Ok(())
@@ -301,6 +306,10 @@ fn register_c_trade_skill(lua: &Lua) -> Result<()> {
     c_trade_skill.set(
         "GetAllRecipeIDs",
         lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
+    c_trade_skill.set(
+        "GetProfessionSkillLineID",
+        lua.create_function(|_, _profession: Value| Ok(0i32))?,
     )?;
 
     globals.set("C_TradeSkillUI", c_trade_skill)?;
@@ -485,6 +494,14 @@ fn register_c_player_info(lua: &Lua) -> Result<()> {
     )?;
     c_player_info.set(
         "IsPlayerInChromieTime",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    c_player_info.set(
+        "IsTradingPostAvailable",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    c_player_info.set(
+        "IsTutorialsTabAvailable",
         lua.create_function(|_, ()| Ok(false))?,
     )?;
 
@@ -1504,6 +1521,18 @@ fn register_c_super_track(lua: &Lua) -> Result<()> {
         "IsSuperTrackingMapPin",
         lua.create_function(|_, ()| Ok(false))?,
     )?;
+    c_super_track.set(
+        "GetSuperTrackedVignette",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    c_super_track.set(
+        "IsSuperTrackingAnything",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    c_super_track.set(
+        "GetSuperTrackedContent",
+        lua.create_function(|_, ()| Ok((Value::Nil, Value::Nil)))?,
+    )?;
 
     globals.set("C_SuperTrack", c_super_track)?;
     Ok(())
@@ -1549,5 +1578,18 @@ fn register_c_paper_doll_info(lua: &Lua) -> Result<()> {
     )?;
 
     globals.set("C_PaperDollInfo", t)?;
+    Ok(())
+}
+
+fn register_c_perks_program(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    let t = lua.create_table()?;
+
+    t.set(
+        "IsTradingPostAvailable",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+
+    globals.set("C_PerksProgram", t)?;
     Ok(())
 }

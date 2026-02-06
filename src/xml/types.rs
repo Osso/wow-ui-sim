@@ -59,6 +59,7 @@ pub enum XmlElement {
     ContainedAlertFrame(FrameXml),
     MapScene(FrameXml),
     ScopedModifier(FrameXml),
+    Line(FrameXml),
     // Texture/Font regions
     Texture(TextureXml),
     FontString(FontStringXml),
@@ -703,6 +704,7 @@ pub enum FrameElement {
     ContainedAlertFrame(FrameXml),
     MapScene(FrameXml),
     ScopedModifier(FrameXml),
+    Line(FrameXml),
 }
 
 /// Script include (file attribute is optional for inline scripts).

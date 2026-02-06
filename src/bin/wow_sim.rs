@@ -390,7 +390,7 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
     ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
     ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
-    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
+    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase_Mainline.toc"),
     // ActionBar dependency chain
     ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
     ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
@@ -481,6 +481,9 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
                         "{} loaded: {} Lua, {} XML, {} warnings",
                         name, r.lua_files, r.xml_files, r.warnings.len()
                     );
+                    for w in &r.warnings {
+                        eprintln!("  [!] {}", w);
+                    }
                 }
                 Err(e) => eprintln!("{} failed: {}", name, e),
             }
@@ -497,6 +500,11 @@ fn dump_standalone(
     let (env, _font_system) = create_standalone_env(no_addons, no_saved_vars);
 
     init_addon_list(&env);
+
+    // Load debug script if present
+    if let Ok(script) = std::fs::read_to_string("/tmp/debug-scrollbox-update.lua") {
+        let _ = env.exec(&script);
+    }
 
     // Print addon list
     let _ = env.exec(

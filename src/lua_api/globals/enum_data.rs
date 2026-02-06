@@ -183,6 +183,7 @@ pub const SCRIPTED_ANIMATION_BEHAVIOR: SeqEnumDef = (
         "TargetKnockBack",
         "SourceRecoil",
         "SourceCollideWithTarget",
+        "UIParentShake",
         "Bounce",
         "Jump",
         "Spiral",
@@ -197,10 +198,11 @@ pub const SCRIPTED_ANIMATION_TRAJECTORY: SeqEnumDef = (
     &[
         "AtSource",
         "AtTarget",
-        "Direct",
-        "ForcedGroundAtTarget",
-        "ForcedGroundAtSource",
-        "BetweenTargetandSource",
+        "Straight",
+        "CurveLeft",
+        "CurveRight",
+        "CurveRandom",
+        "HalfwayBetween",
     ],
 );
 
@@ -278,12 +280,17 @@ pub const FLIGHT_PATH_FACTION: SeqEnumDef = (
 
 pub const UI_WIDGET_SCALE: SeqEnumDef = (
     "UIWidgetScale",
-    &["OneHundred", "Ninety", "Eighty", "Seventy", "Sixty", "Fifty"],
+    &[
+        "OneHundred", "Ninty", "Eighty", "Seventy", "Sixty", "Fifty",
+        "OneHundredTen", "OneHundredTwenty", "OneHundredThirty", "OneHundredForty",
+        "OneHundredFifty", "OneHundredSixty", "OneHundredSeventy", "OneHundredEighty",
+        "OneHundredNinety", "TwoHundred",
+    ],
 );
 
 pub const WIDGET_REWARD_SHOWN_STATE: SeqEnumDef = (
     "UIWidgetRewardShownState",
-    &["Hidden", "Shown", "PartiallyShown"],
+    &["Hidden", "ShownEarned", "ShownUnearned"],
 );
 
 pub const WIDGET_ICON_SIZE_TYPE: SeqEnumDef = (
@@ -297,7 +304,7 @@ pub const WIDGET_ICON_SIZE_TYPE: SeqEnumDef = (
 
 pub const SPELL_DISPLAY_BORDER_COLOR: SeqEnumDef = (
     "SpellDisplayBorderColor",
-    &["None", "Black", "Red", "Yellow", "Green", "Blue"],
+    &["None", "Black", "White", "Red", "Yellow", "Orange", "Purple", "Green", "Blue"],
 );
 
 pub const SPELL_DISPLAY_ICON_DISPLAY_TYPE: SeqEnumDef = (
@@ -629,6 +636,172 @@ pub const UI_WIDGET_MODEL_SCENE_LAYER: SeqEnumDef = (
 );
 
 // ============================================================================
+// Report & Moderation Enums
+// ============================================================================
+
+pub const SEND_REPORT_RESULT: SeqEnumDef = (
+    "SendReportResult",
+    &["Success", "GeneralError", "TooManyReports", "RequiresChatLine", "RequiresChatLineOrVoice", "RequiresScreenshot"],
+);
+
+// ============================================================================
+// Edit Mode Enums
+// ============================================================================
+
+pub const EDIT_MODE_ACTION_BAR_SYSTEM_INDICES: EnumDef = (
+    "EditModeActionBarSystemIndices",
+    &[
+        ("MainBar", 1), ("Bar2", 2), ("Bar3", 3), ("RightBar1", 4), ("RightBar2", 5),
+        ("ExtraBar1", 6), ("ExtraBar2", 7), ("ExtraBar3", 8),
+        ("StanceBar", 11), ("PetActionBar", 12), ("PossessActionBar", 13),
+    ],
+);
+
+pub const EDIT_MODE_PRESET_LAYOUTS: SeqEnumDef = (
+    "EditModePresetLayouts",
+    &["Modern", "Classic"],
+);
+
+pub const BAGS_ORIENTATION: SeqEnumDef = (
+    "BagsOrientation",
+    &["Horizontal", "Vertical"],
+);
+
+// ============================================================================
+// Settings & UI Enums
+// ============================================================================
+
+pub const COLOR_OVERRIDE: SeqEnumDef = (
+    "ColorOverride",
+    &[
+        "ItemQualityPoor", "ItemQualityCommon", "ItemQualityUncommon", "ItemQualityRare",
+        "ItemQualityEpic", "ItemQualityLegendary", "ItemQualityArtifact", "ItemQualityAccount",
+    ],
+);
+
+pub const CLUB_STREAM_TYPE: SeqEnumDef = (
+    "ClubStreamType",
+    &["General", "Guild", "Officer", "Other"],
+);
+
+pub const RECRUIT_A_FRIEND_REWARDS_VERSION: SeqEnumDef = (
+    "RecruitAFriendRewardsVersion",
+    &["InvalidVersion", "UnusedVersionOne", "VersionTwo", "VersionThree"],
+);
+
+pub const MINIMAP_TRACKING_FILTER: EnumDef = (
+    "MinimapTrackingFilter",
+    &[
+        ("Unfiltered", 0), ("Auctioneer", 1), ("Banker", 2), ("Battlemaster", 4),
+        ("TaxiNode", 8), ("VenderFood", 16), ("Innkeeper", 32), ("Mailbox", 64),
+        ("TrainerProfession", 128), ("VendorReagent", 256), ("Repair", 512),
+        ("TrivialQuests", 1024), ("Stablemaster", 2048), ("Transmogrifier", 4096),
+        ("POI", 8192), ("Target", 16384), ("Focus", 32768), ("QuestPOIs", 65536),
+        ("Digsites", 131072), ("Barber", 262144), ("ItemUpgrade", 524288),
+        ("VendorPoison", 1048576), ("AccountCompletedQuests", 2097152), ("AccountBanker", 4194304),
+    ],
+);
+
+pub const CUSTOM_BINDING_TYPE: SeqEnumDef = (
+    "CustomBindingType",
+    &["VoicePushToTalk"],
+);
+
+pub const CALENDAR_EVENT_TYPE: SeqEnumDef = (
+    "CalendarEventType",
+    &["Raid", "Dungeon", "PvP", "Meeting", "Other", "HeroicDeprecated"],
+);
+
+pub const CAMERA_MODE_ASPECT_RATIO: SeqEnumDef = (
+    "CameraModeAspectRatio",
+    &["Default", "LegacyLetterbox", "HighDefinition_16_X_9", "Cinemascope_2_Dot_4_X_1"],
+);
+
+pub const BAG_SLOT_FLAGS: EnumDef = (
+    "BagSlotFlags",
+    &[
+        ("DisableAutoSort", 1), ("ClassEquipment", 2), ("ClassConsumables", 4),
+        ("ClassProfessionGoods", 8), ("ClassJunk", 16), ("ClassQuestItems", 32),
+        ("ExcludeJunkSell", 64), ("ClassReagents", 128),
+        ("ExpansionCurrent", 256), ("ExpansionLegacy", 512),
+    ],
+);
+
+pub const GARRISON_FOLLOWER_TYPE: EnumDef = (
+    "GarrisonFollowerType",
+    &[
+        ("FollowerType_6_0_GarrisonFollower", 1),
+        ("FollowerType_6_0_Boat", 2),
+        ("FollowerType_7_0_GarrisonFollower", 4),
+        ("FollowerType_8_0_GarrisonFollower", 22),
+        ("FollowerType_9_0_GarrisonFollower", 123),
+    ],
+);
+
+pub const CALENDAR_STATUS: SeqEnumDef = (
+    "CalendarStatus",
+    &["Invited", "Available", "Declined", "Confirmed", "Out", "Standby", "Signedup", "NotSignedup", "Tentative"],
+);
+
+pub const HOUSING_ITEM_TOAST_TYPE: SeqEnumDef = (
+    "HousingItemToastType",
+    &["Room", "Fixture", "Customization", "Decor"],
+);
+
+// ============================================================================
+// Store & Service Enums
+// ============================================================================
+
+pub const VAS_SERVICE_TYPE: SeqEnumDef = (
+    "VasServiceType",
+    &["FactionChange", "RaceChange", "AppearanceChange", "NameChange", "CharacterTransfer"],
+);
+
+// ============================================================================
+// Edit Mode Setting Enums
+// ============================================================================
+
+pub const EDIT_MODE_ACTION_BAR_SETTING: SeqEnumDef = (
+    "EditModeActionBarSetting",
+    &[
+        "Orientation", "NumRows", "NumIcons", "IconSize", "IconPadding",
+        "VisibleSetting", "HideBarArt", "DeprecatedSnapToSide", "HideBarScrolling", "AlwaysShowButtons",
+    ],
+);
+
+// ============================================================================
+// Garrison Enums
+// ============================================================================
+
+pub const GARR_AUTO_MISSION_EVENT_TYPE: SeqEnumDef = (
+    "GarrAutoMissionEventType",
+    &[
+        "MeleeDamage", "RangeDamage", "SpellMeleeDamage", "SpellRangeDamage",
+        "Heal", "PeriodicDamage", "PeriodicHeal", "ApplyAura", "RemoveAura", "Died",
+    ],
+);
+
+// ============================================================================
+// Club / Communities Enums
+// ============================================================================
+
+pub const CLUB_MEMBER_PRESENCE: SeqEnumDef = (
+    "ClubMemberPresence",
+    &["Unknown", "Online", "OnlineMobile", "Offline", "Away", "Busy"],
+);
+
+// ============================================================================
+// Tutorial Enums
+// ============================================================================
+
+pub const FRAME_TUTORIAL_ACCOUNT: EnumDef = (
+    "FrameTutorialAccount",
+    &[
+        ("BindToAccountUntilEquip", 11),
+    ],
+);
+
+// ============================================================================
 // All sequential enums (for batch registration)
 // ============================================================================
 
@@ -695,6 +868,21 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     QUEST_SESSION_COMMAND,
     PLAYER_INTERACTION_TYPE,
     EVENT_TOAST_DISPLAY_TYPE,
+    SEND_REPORT_RESULT,
+    EDIT_MODE_PRESET_LAYOUTS,
+    BAGS_ORIENTATION,
+    COLOR_OVERRIDE,
+    CLUB_STREAM_TYPE,
+    RECRUIT_A_FRIEND_REWARDS_VERSION,
+    CUSTOM_BINDING_TYPE,
+    CALENDAR_EVENT_TYPE,
+    CAMERA_MODE_ASPECT_RATIO,
+    CALENDAR_STATUS,
+    HOUSING_ITEM_TOAST_TYPE,
+    VAS_SERVICE_TYPE,
+    EDIT_MODE_ACTION_BAR_SETTING,
+    GARR_AUTO_MISSION_EVENT_TYPE,
+    CLUB_MEMBER_PRESENCE,
 ];
 
 // All explicit value enums (for batch registration)
@@ -706,4 +894,9 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     UI_WIDGET_FLAG,
     WIDGET_TEXT_HORIZONTAL_ALIGNMENT,
     BAG_INDEX,
+    EDIT_MODE_ACTION_BAR_SYSTEM_INDICES,
+    MINIMAP_TRACKING_FILTER,
+    BAG_SLOT_FLAGS,
+    GARRISON_FOLLOWER_TYPE,
+    FRAME_TUTORIAL_ACCOUNT,
 ];

@@ -948,3 +948,65 @@ pub const CLASS_NAMES_DATA: &[(&'static str, &'static str)] = &[
 /// (r, g, b, a)
 pub const TOOLTIP_DEFAULT_COLOR: (f64, f64, f64, f64) = (1.0, 1.0, 1.0, 1.0);
 pub const TOOLTIP_DEFAULT_BG_COLOR: (f64, f64, f64, f64) = (0.0, 0.0, 0.0, 1.0);
+
+// ============================================================================
+// Totem Slot Constants
+// ============================================================================
+
+pub const TOTEM_SLOT_CONSTANTS: &[IntDef] = &[
+    ("FIRE_TOTEM_SLOT", 1),
+    ("EARTH_TOTEM_SLOT", 2),
+    ("WATER_TOTEM_SLOT", 3),
+    ("AIR_TOTEM_SLOT", 4),
+    ("MAX_TOTEMS", 4),
+];
+
+// ============================================================================
+// Game Error String Constants (LE_GAME_ERR_*)
+// These are string constants used as table keys in UIErrorsFrame.lua
+// ============================================================================
+
+pub const GAME_ERROR_STRINGS: &[StringDef] = &[
+    ("LE_GAME_ERR_SPELL_FAILED_TOTEMS", "You don't have the required totem."),
+    ("LE_GAME_ERR_SPELL_FAILED_EQUIPPED_ITEM", "You need to equip the required item."),
+    ("LE_GAME_ERR_SPELL_ALREADY_KNOWN_S", "You already know %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_SHAPESHIFT_FORM_S", "Can't do that while %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_ALREADY_AT_FULL_MANA", "Already at full mana."),
+    ("LE_GAME_ERR_OUT_OF_MANA", "Not enough mana."),
+    ("LE_GAME_ERR_SPELL_OUT_OF_RANGE", "Out of range."),
+    ("LE_GAME_ERR_SPELL_FAILED_S", "%s failed."),
+    ("LE_GAME_ERR_SPELL_FAILED_REAGENTS", "Missing reagent."),
+    ("LE_GAME_ERR_SPELL_FAILED_REAGENTS_GENERIC", "Missing reagent."),
+    ("LE_GAME_ERR_SPELL_FAILED_NOTUNSHEATHED", "You need to unsheathe your weapon."),
+    ("LE_GAME_ERR_SPELL_UNLEARNED_S", "You have unlearned %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_EQUIPPED_SPECIFIC_ITEM", "You need to equip a specific item."),
+    ("LE_GAME_ERR_SPELL_FAILED_ALREADY_AT_FULL_POWER_S", "Already at full %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_EQUIPPED_ITEM_CLASS_S", "You need to equip a %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_ALREADY_AT_FULL_HEALTH", "Already at full health."),
+    ("LE_GAME_ERR_SPELL_FAILED_CANT_FLY_HERE", "You can't fly here."),
+    ("LE_GAME_ERR_GENERIC_NO_VALID_TARGETS", "No valid targets."),
+    ("LE_GAME_ERR_ITEM_COOLDOWN", "Item is not ready yet."),
+    ("LE_GAME_ERR_CANT_USE_ITEM", "You can't use that item."),
+    ("LE_GAME_ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS", "Another action is in progress."),
+    ("LE_GAME_ERR_ABILITY_COOLDOWN", "Ability is not ready yet."),
+    ("LE_GAME_ERR_SPELL_COOLDOWN", "Spell is not ready yet."),
+    ("LE_GAME_ERR_OUT_OF_HOLY_POWER", "Not enough Holy Power."),
+    ("LE_GAME_ERR_OUT_OF_POWER_DISPLAY", "Not enough power."),
+    ("LE_GAME_ERR_OUT_OF_SOUL_SHARDS", "Not enough Soul Shards."),
+    ("LE_GAME_ERR_OUT_OF_FOCUS", "Not enough Focus."),
+    ("LE_GAME_ERR_OUT_OF_COMBO_POINTS", "Not enough Combo Points."),
+    ("LE_GAME_ERR_OUT_OF_CHI", "Not enough Chi."),
+    ("LE_GAME_ERR_OUT_OF_PAIN", "Not enough Pain."),
+    ("LE_GAME_ERR_OUT_OF_HEALTH", "Not enough Health."),
+    ("LE_GAME_ERR_OUT_OF_RAGE", "Not enough Rage."),
+    ("LE_GAME_ERR_OUT_OF_ENERGY", "Not enough Energy."),
+    ("LE_GAME_ERR_OUT_OF_ARCANE_CHARGES", "Not enough Arcane Charges."),
+    ("LE_GAME_ERR_OUT_OF_RUNES", "Not enough Runes."),
+    ("LE_GAME_ERR_OUT_OF_RUNIC_POWER", "Not enough Runic Power."),
+    ("LE_GAME_ERR_OUT_OF_LUNAR_POWER", "Not enough Astral Power."),
+    ("LE_GAME_ERR_OUT_OF_INSANITY", "Not enough Insanity."),
+    ("LE_GAME_ERR_OUT_OF_MAELSTROM", "Not enough Maelstrom."),
+    ("LE_GAME_ERR_OUT_OF_FURY", "Not enough Fury."),
+    ("LE_GAME_ERR_OUT_OF_RANGE", "Out of range."),
+    ("LE_GAME_ERR_OUT_OF_ESSENCE", "Not enough Essence."),
+];

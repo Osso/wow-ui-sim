@@ -25,6 +25,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_reload_ui(lua, Rc::clone(&state))?;
     register_build_type_checks(lua)?;
     register_battlenet_stubs(lua)?;
+    register_secure_stubs(lua)?;
     Ok(())
 }
 
@@ -264,5 +265,51 @@ fn register_battlenet_stubs(lua: &Lua) -> Result<()> {
             Value::Boolean(false),
         ))
     })?)?;
+    Ok(())
+}
+
+/// Register secure environment stubs.
+fn register_secure_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    // SwapToGlobalEnvironment - used by StoreUI to swap secure env back to global
+    globals.set("SwapToGlobalEnvironment", lua.create_function(|_, ()| Ok(()))?)?;
+
+    // IsGMClient - returns whether the player is a GM
+    globals.set("IsGMClient", lua.create_function(|_, ()| Ok(false))?)?;
+
+    // GetFrameMetatable - returns a metatable for Frame objects
+    // SecureTemplates.lua does CopyTable(GetFrameMetatable().__index)
+    globals.set("GetFrameMetatable", lua.create_function(|lua, ()| {
+        let mt = lua.create_table()?;
+        let index = lua.create_table()?;
+        mt.set("__index", index)?;
+        Ok(Value::Table(mt))
+    })?)?;
+
+    // RegisterStaticConstants - C function that fills table with constants (no-op in sim)
+    globals.set("RegisterStaticConstants", lua.create_function(|_, _tbl: Value| Ok(()))?)?;
+
+    // C_GamePad namespace
+    let c_gamepad = lua.create_table()?;
+    c_gamepad.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    c_gamepad.set("GetActiveDeviceID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    c_gamepad.set("GetDeviceMappedState", lua.create_function(|_, _id: Option<i32>| Ok(Value::Nil))?)?;
+    c_gamepad.set("SetLedColor", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    c_gamepad.set("GetConfig", lua.create_function(|lua, ()| lua.create_table())?)?;
+    c_gamepad.set("GetCombinedDeviceID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    c_gamepad.set("GetPowerLevel", lua.create_function(|_, _id: Option<i32>| Ok(Value::Nil))?)?;
+    globals.set("C_GamePad", c_gamepad)?;
+
+    // C_AssistedCombat namespace
+    let c_assisted_combat = lua.create_table()?;
+    c_assisted_combat.set("GetActionSpell", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    c_assisted_combat.set("GetNextCastSpell", lua.create_function(|_, _check: Option<bool>| Ok(Value::Nil))?)?;
+    c_assisted_combat.set("GetRotationSpells", lua.create_function(|lua, ()| lua.create_table())?)?;
+    c_assisted_combat.set("IsAvailable", lua.create_function(|lua, ()| {
+        Ok((false, Value::String(lua.create_string("Not available")?)))
+    })?)?;
+    globals.set("C_AssistedCombat", c_assisted_combat)?;
+
     Ok(())
 }

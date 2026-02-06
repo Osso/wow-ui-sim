@@ -379,6 +379,14 @@ fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         };
         let mut state = this.state.borrow_mut();
 
+        // Remove from old parent's children list
+        let old_parent_id = state.widgets.get(this.id).and_then(|f| f.parent_id);
+        if let Some(old_pid) = old_parent_id {
+            if let Some(old_parent) = state.widgets.get_mut(old_pid) {
+                old_parent.children.retain(|&id| id != this.id);
+            }
+        }
+
         // Get parent's strata and level for inheritance
         let parent_props = new_parent_id.and_then(|pid| {
             state
@@ -400,6 +408,16 @@ fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 }
             }
         }
+
+        // Add to new parent's children list
+        if let Some(new_pid) = new_parent_id {
+            if let Some(new_parent) = state.widgets.get_mut(new_pid) {
+                if !new_parent.children.contains(&this.id) {
+                    new_parent.children.push(this.id);
+                }
+            }
+        }
+
         Ok(())
     });
 }

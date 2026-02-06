@@ -12,6 +12,15 @@ pub fn register_player_api(lua: &Lua) -> Result<()> {
     register_battlenet_functions(lua)?;
     register_specialization_functions(lua)?;
     register_action_bar_functions(lua)?;
+    register_timerunning_functions(lua)?;
+    Ok(())
+}
+
+fn register_timerunning_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    globals.set("PlayerIsTimerunning", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("IsPlayerAtEffectiveMaxLevel", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("IsXPUserDisabled", lua.create_function(|_, ()| Ok(false))?)?;
     Ok(())
 }
 

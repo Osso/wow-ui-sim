@@ -175,7 +175,7 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
         ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
         ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
         ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
-        ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
+        ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase_Mainline.toc"),
         // ActionBar dependency chain
         ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
         ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),

@@ -133,7 +133,8 @@ fn process_frame_element(env: &WowLuaEnv, element: &XmlElement) -> Result<(), Lo
         | XmlElement::UIThemeContainerFrame(f)
         | XmlElement::ContainedAlertFrame(f)
         | XmlElement::MapScene(f)
-        | XmlElement::ScopedModifier(f) => { create_frame_from_xml(env, f, "Frame", None)?; }
+        | XmlElement::ScopedModifier(f)
+        | XmlElement::Line(f) => { create_frame_from_xml(env, f, "Frame", None)?; }
         XmlElement::EventScrollFrame(f) => {
             create_frame_from_xml(env, f, "ScrollFrame", None)?;
         }

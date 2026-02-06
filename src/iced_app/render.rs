@@ -619,7 +619,7 @@ impl App {
         build_quad_batch_for_registry(
             &state.widgets,
             (size.width, size.height),
-            Some("AddonList"),
+            None,
             self.pressed_frame,
             self.hovered_frame,
             Some((&mut font_sys, &mut glyph_atlas)),

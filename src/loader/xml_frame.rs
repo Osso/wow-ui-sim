@@ -347,7 +347,8 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
         | crate::xml::FrameElement::UIThemeContainerFrame(f)
         | crate::xml::FrameElement::ContainedAlertFrame(f)
         | crate::xml::FrameElement::MapScene(f)
-        | crate::xml::FrameElement::ScopedModifier(f) => Some((f, "Frame")),
+        | crate::xml::FrameElement::ScopedModifier(f)
+        | crate::xml::FrameElement::Line(f) => Some((f, "Frame")),
         crate::xml::FrameElement::EventScrollFrame(f) => Some((f, "ScrollFrame")),
         _ => None,
     }
