@@ -273,12 +273,15 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetFont(font, size, flags) - for FontString widgets
     methods.add_method(
         "SetFont",
-        |_, this, (font, size, _flags): (String, Option<f32>, Option<String>)| {
+        |_, this, (font, size, flags): (String, Option<f32>, Option<String>)| {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.font = Some(font);
                 if let Some(s) = size {
                     frame.font_size = s;
+                }
+                if let Some(ref f) = flags {
+                    frame.font_outline = crate::widget::TextOutline::from_wow_str(f);
                 }
             }
             Ok(true) // Returns success
@@ -321,16 +324,22 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetFont() - for FontString widgets, returns fontFile, fontHeight, fontFlags
     methods.add_method("GetFont", |lua, this, ()| {
         let state = this.state.borrow();
-        let font_size = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.font_size)
-            .unwrap_or(12.0);
-        // Return: fontFile, fontHeight, fontFlags
+        let frame = state.widgets.get(this.id);
+        let font_path = frame
+            .and_then(|f| f.font.as_deref())
+            .unwrap_or("Fonts\\FRIZQT__.TTF");
+        let font_size = frame.map(|f| f.font_size).unwrap_or(12.0);
+        let flags = frame
+            .map(|f| match f.font_outline {
+                crate::widget::TextOutline::None => "",
+                crate::widget::TextOutline::Outline => "OUTLINE",
+                crate::widget::TextOutline::ThickOutline => "THICKOUTLINE",
+            })
+            .unwrap_or("");
         Ok(mlua::MultiValue::from_vec(vec![
-            Value::String(lua.create_string("Fonts\\FRIZQT__.TTF")?),
+            Value::String(lua.create_string(font_path)?),
             Value::Number(font_size as f64),
-            Value::String(lua.create_string("")?), // flags
+            Value::String(lua.create_string(flags)?),
         ]))
     });
 

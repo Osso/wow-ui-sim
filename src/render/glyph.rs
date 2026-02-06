@@ -219,6 +219,7 @@ impl GlyphAtlas {
 /// * `glyph_tex_index` - Texture index for the glyph atlas in the GPU atlas
 /// * `shadow_color` - Optional shadow color (render shadow if alpha > 0)
 /// * `shadow_offset` - Shadow offset (x, y) in pixels
+/// * `outline` - Text outline style (None, Outline, ThickOutline)
 #[allow(clippy::too_many_arguments)]
 pub fn emit_text_quads(
     batch: &mut QuadBatch,
@@ -234,6 +235,7 @@ pub fn emit_text_quads(
     glyph_tex_index: i32,
     shadow_color: Option<[f32; 4]>,
     shadow_offset: (f32, f32),
+    outline: crate::widget::TextOutline,
 ) {
     if text.is_empty() || bounds.height <= 0.0 {
         return;
@@ -344,7 +346,24 @@ pub fn emit_text_quads(
         }
     };
 
-    // Render shadow first (behind main text)
+    // Render outline first (behind everything)
+    if outline != crate::widget::TextOutline::None {
+        let outline_color = [0.0_f32, 0.0, 0.0, color[3]]; // Black outline with same alpha
+        let d = match outline {
+            crate::widget::TextOutline::Outline => 1.0_f32,
+            crate::widget::TextOutline::ThickOutline => 2.0,
+            crate::widget::TextOutline::None => unreachable!(),
+        };
+        // 8 compass directions for outline
+        for &(dx, dy) in &[
+            (-d, 0.0), (d, 0.0), (0.0, -d), (0.0, d),
+            (-d, -d), (d, -d), (-d, d), (d, d),
+        ] {
+            emit_glyphs(batch, glyph_atlas, font_system, outline_color, dx, dy);
+        }
+    }
+
+    // Render shadow (behind main text, in front of outline)
     if has_shadow {
         emit_glyphs(
             batch,

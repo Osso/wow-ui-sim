@@ -529,6 +529,7 @@ pub fn build_quad_batch_for_registry(
                             TextJustify::Center, TextJustify::Center,
                             GLYPH_ATLAS_TEX_INDEX,
                             shadow, f.shadow_offset,
+                            f.font_outline,
                         );
                     }
                 }
@@ -564,6 +565,7 @@ pub fn build_quad_batch_for_registry(
                             GLYPH_ATLAS_TEX_INDEX,
                             shadow,
                             f.shadow_offset,
+                            f.font_outline,
                         );
                     }
                 }
@@ -596,6 +598,7 @@ pub fn build_quad_batch_for_registry(
                             TextJustify::Left, TextJustify::Center,
                             GLYPH_ATLAS_TEX_INDEX,
                             shadow, f.shadow_offset,
+                            f.font_outline,
                         );
                     }
                 }
@@ -626,6 +629,7 @@ pub fn build_quad_batch_for_registry(
                             TextJustify::Left, TextJustify::Center,
                             GLYPH_ATLAS_TEX_INDEX,
                             shadow, f.shadow_offset,
+                            f.font_outline,
                         );
                     }
                 }

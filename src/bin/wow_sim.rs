@@ -594,6 +594,15 @@ fn screenshot_standalone(
         eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
     }
 
+    // Run debug script if it exists
+    let debug_script = PathBuf::from("/tmp/debug-screenshot.lua");
+    if debug_script.exists() {
+        let script = std::fs::read_to_string(&debug_script).unwrap_or_default();
+        if let Err(e) = env.exec(&script) {
+            eprintln!("[Debug] Script error: {}", e);
+        }
+    }
+
     // Set up font system and glyph atlas for text rendering
     let fonts_path = PathBuf::from("./fonts");
     let mut font_system = WowFontSystem::new(&fonts_path);

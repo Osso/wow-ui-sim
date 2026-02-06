@@ -55,6 +55,31 @@ impl TextJustify {
     }
 }
 
+/// Text outline style for FontStrings.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum TextOutline {
+    #[default]
+    None,
+    /// Normal outline (1px).
+    Outline,
+    /// Thick outline (2px).
+    ThickOutline,
+}
+
+impl TextOutline {
+    /// Parse from WoW flag string (e.g., "OUTLINE", "THICKOUTLINE", "OUTLINE, MONOCHROME").
+    pub fn from_wow_str(s: &str) -> Self {
+        let upper = s.to_uppercase();
+        if upper.contains("THICKOUTLINE") {
+            TextOutline::ThickOutline
+        } else if upper.contains("OUTLINE") || upper.contains("NORMAL") {
+            TextOutline::Outline
+        } else {
+            TextOutline::None
+        }
+    }
+}
+
 /// Backdrop configuration for frames.
 #[derive(Debug, Clone, Default)]
 pub struct Backdrop {
@@ -131,6 +156,8 @@ pub struct Frame {
     pub font: Option<String>,
     /// Font size (for FontString widgets).
     pub font_size: f32,
+    /// Font outline style (OUTLINE, THICKOUTLINE).
+    pub font_outline: TextOutline,
     /// Horizontal text justification (LEFT, CENTER, RIGHT).
     pub justify_h: TextJustify,
     /// Vertical text justification (TOP, MIDDLE, BOTTOM).
@@ -232,6 +259,7 @@ impl Frame {
             shadow_offset: (0.0, 0.0),
             font: None,
             font_size: 14.0,
+            font_outline: TextOutline::None,
             justify_h: TextJustify::Center,  // WoW FontStrings default to CENTER
             justify_v: TextJustify::Center,
             attributes: HashMap::new(),
