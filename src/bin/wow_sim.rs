@@ -520,6 +520,10 @@ fn dump_standalone(
         }
     }
 
+    // Show persisted settings
+    let version_check = state.cvars.get_bool("checkAddonVersion");
+    eprintln!("Load out of date addons: {}", if version_check { "off" } else { "on" });
+
     eprintln!("\n=== Frame Tree ===\n");
 
     for (id, _) in &roots {
