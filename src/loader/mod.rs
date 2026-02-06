@@ -3,7 +3,7 @@
 mod addon;
 mod button;
 mod error;
-mod helpers;
+pub(crate) mod helpers;
 mod lua_file;
 mod xml_file;
 mod xml_fontstring;

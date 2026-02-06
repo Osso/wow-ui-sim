@@ -3,7 +3,114 @@
 use crate::lua_api::WowLuaEnv;
 
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, get_size_values, rand_id};
+use super::helpers::{escape_lua_string, generate_set_point_code, get_size_values, resolve_child_name};
+
+/// Resolve a text key through the global strings table.
+fn resolve_fontstring_text(text_key: Option<&str>) -> Option<String> {
+    text_key.map(|key| {
+        crate::global_strings::get_global_string(key)
+            .map(|s| s.to_string())
+            .unwrap_or_else(|| key.to_string())
+    })
+}
+
+/// Generate Lua code for fontstring properties (justification, color, size, etc).
+fn generate_fontstring_properties_code(fs: &crate::xml::FontStringXml) -> String {
+    let mut code = String::new();
+
+    if let Some(justify_h) = &fs.justify_h {
+        code.push_str(&format!(
+            r#"
+        fs:SetJustifyH("{}")
+        "#,
+            justify_h
+        ));
+    }
+    if let Some(justify_v) = &fs.justify_v {
+        code.push_str(&format!(
+            r#"
+        fs:SetJustifyV("{}")
+        "#,
+            justify_v
+        ));
+    }
+
+    if let Some(color) = &fs.color {
+        code.push_str(&format!(
+            r#"
+        fs:SetTextColor({}, {}, {}, {})
+        "#,
+            color.r.unwrap_or(1.0),
+            color.g.unwrap_or(1.0),
+            color.b.unwrap_or(1.0),
+            color.a.unwrap_or(1.0)
+        ));
+    }
+
+    if let Some(size) = &fs.size {
+        let (x, y) = get_size_values(size);
+        if let (Some(x), Some(y)) = (x, y) {
+            code.push_str(&format!(
+                r#"
+        fs:SetSize({}, {})
+        "#,
+                x, y
+            ));
+        }
+    }
+
+    if fs.word_wrap == Some(false) {
+        code.push_str(
+            r#"
+        fs:SetWordWrap(false)
+        "#,
+        );
+    }
+
+    if let Some(max_lines) = fs.max_lines {
+        if max_lines > 0 {
+            code.push_str(&format!(
+                r#"
+        fs:SetMaxLines({})
+        "#,
+                max_lines
+            ));
+        }
+    }
+
+    if fs.set_all_points == Some(true) {
+        code.push_str(
+            r#"
+        fs:SetAllPoints(true)
+        "#,
+        );
+    }
+
+    if let Some(key) = &fs.parent_key {
+        code.push_str(&format!(
+            r#"
+        parent.{} = fs
+        "#,
+            key
+        ));
+    }
+
+    code
+}
+
+/// Sync fontstring text and auto-size height directly in Rust widget state.
+fn sync_fontstring_text_to_rust(env: &WowLuaEnv, fs_name: &str, text: &str) {
+    let state = env.state();
+    let mut state_ref = state.borrow_mut();
+    if let Some(frame_id) = state_ref.widgets.get_id_by_name(fs_name) {
+        if let Some(frame) = state_ref.widgets.get_mut(frame_id) {
+            frame.text = Some(text.to_string());
+            if frame.height == 0.0 {
+                frame.height = frame.font_size.max(12.0);
+            }
+        }
+    }
+}
 
 /// Create a fontstring from XML definition.
 pub fn create_fontstring_from_xml(
@@ -12,18 +119,13 @@ pub fn create_fontstring_from_xml(
     parent_name: &str,
     draw_layer: &str,
 ) -> Result<(), LoadError> {
-    // Skip virtual fontstrings
     if fontstring.is_virtual == Some(true) {
         return Ok(());
     }
 
-    let fs_name = fontstring
-        .name
-        .clone()
-        .map(|n| n.replace("$parent", parent_name))
-        .unwrap_or_else(|| format!("__fs_{}", rand_id()));
-
+    let fs_name = resolve_child_name(fontstring.name.as_deref(), parent_name, "__fs_");
     let inherits = fontstring.inherits.as_deref().unwrap_or("");
+    let resolved_text = resolve_fontstring_text(fontstring.text.as_deref());
 
     let mut lua_code = format!(
         r#"
@@ -40,13 +142,6 @@ pub fn create_fontstring_from_xml(
         }
     );
 
-    // Resolve text: XML text attributes are localization keys looked up in global strings.
-    let resolved_text = fontstring.text.as_ref().map(|key| {
-        crate::global_strings::get_global_string(key)
-            .map(|s| s.to_string())
-            .unwrap_or_else(|| key.clone())
-    });
-
     if let Some(text) = &resolved_text {
         lua_code.push_str(&format!(
             r#"
@@ -56,145 +151,15 @@ pub fn create_fontstring_from_xml(
         ));
     }
 
-    // Set justification
-    if let Some(justify_h) = &fontstring.justify_h {
-        lua_code.push_str(&format!(
-            r#"
-        fs:SetJustifyH("{}")
-        "#,
-            justify_h
-        ));
-    }
-    if let Some(justify_v) = &fontstring.justify_v {
-        lua_code.push_str(&format!(
-            r#"
-        fs:SetJustifyV("{}")
-        "#,
-            justify_v
-        ));
-    }
+    lua_code.push_str(&generate_fontstring_properties_code(fontstring));
 
-    // Set text color
-    if let Some(color) = &fontstring.color {
-        let r = color.r.unwrap_or(1.0);
-        let g = color.g.unwrap_or(1.0);
-        let b = color.b.unwrap_or(1.0);
-        let a = color.a.unwrap_or(1.0);
-        lua_code.push_str(&format!(
-            r#"
-        fs:SetTextColor({}, {}, {}, {})
-        "#,
-            r, g, b, a
-        ));
-    }
-
-    // Set size
-    if let Some(size) = &fontstring.size {
-        let (x, y) = get_size_values(size);
-        if let (Some(x), Some(y)) = (x, y) {
-            lua_code.push_str(&format!(
-                r#"
-        fs:SetSize({}, {})
-        "#,
-                x, y
-            ));
-        }
-    }
-
-    // Set anchors
     if let Some(anchors) = &fontstring.anchors {
-        for anchor in &anchors.anchors {
-            let point = &anchor.point;
-            let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
-
-            let (x, y) = if let Some(offset) = &anchor.offset {
-                if let Some(abs) = &offset.abs_dimension {
-                    (abs.x.unwrap_or(0.0), abs.y.unwrap_or(0.0))
-                } else {
-                    (0.0, 0.0)
-                }
-            } else {
-                (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
-            };
-
-            // Handle relativeKey first, then relativeTo
-            let rel = if let Some(key) = anchor.relative_key.as_deref() {
-                // Handle $parent chains like "$parent.$parent.ScrollFrame"
-                if key.contains("$parent") || key.contains("$Parent") {
-                    let parts: Vec<&str> = key.split('.').collect();
-                    let mut expr = String::new();
-                    for part in parts {
-                        if part == "$parent" || part == "$Parent" {
-                            if expr.is_empty() {
-                                expr = "parent".to_string();
-                            } else {
-                                expr = format!("{}:GetParent()", expr);
-                            }
-                        } else if !part.is_empty() {
-                            expr = format!("{}[\"{}\"]", expr, part);
-                        }
-                    }
-                    if expr.is_empty() { "parent".to_string() } else { expr }
-                } else {
-                    key.to_string()
-                }
-            } else {
-                match anchor.relative_to.as_deref() {
-                    Some("$parent") | None => "parent".to_string(),
-                    Some(r) if r.contains("$parent") || r.contains("$Parent") => {
-                        // Replace any $parent/$Parent pattern (e.g., $parent_Sibling, $parentColorSwatch)
-                        r.replace("$parent", parent_name).replace("$Parent", parent_name)
-                    }
-                    Some(r) => r.to_string(),
-                }
-            };
-
-            lua_code.push_str(&format!(
-                r#"
-        fs:SetPoint("{}", {}, "{}", {}, {})
-        "#,
-                point, rel, relative_point, x, y
-            ));
-        }
-    }
-
-    // Set wordWrap (WoW default is true, only emit if explicitly false)
-    if fontstring.word_wrap == Some(false) {
-        lua_code.push_str(
-            r#"
-        fs:SetWordWrap(false)
-        "#,
-        );
-    }
-
-    // Set maxLines
-    if let Some(max_lines) = fontstring.max_lines {
-        if max_lines > 0 {
-            lua_code.push_str(&format!(
-                r#"
-        fs:SetMaxLines({})
-        "#,
-                max_lines
-            ));
-        }
-    }
-
-    // Set setAllPoints
-    if fontstring.set_all_points == Some(true) {
-        lua_code.push_str(
-            r#"
-        fs:SetAllPoints(true)
-        "#,
-        );
-    }
-
-    // Set parentKey if specified
-    if let Some(key) = &fontstring.parent_key {
-        lua_code.push_str(&format!(
-            r#"
-        parent.{} = fs
-        "#,
-            key
+        lua_code.push_str(&generate_set_point_code(
+            anchors,
+            "fs",
+            "parent",
+            parent_name,
+            "parent",
         ));
     }
 
@@ -205,21 +170,8 @@ pub fn create_fontstring_from_xml(
         ))
     })?;
 
-    // Set text and auto-size dimensions directly in Rust
-    // This bypasses the Lua SetText method which doesn't trigger our Rust code
-    // due to the fake metatable setup
     if let Some(text) = &resolved_text {
-        let state = env.state();
-        let mut state_ref = state.borrow_mut();
-        if let Some(frame_id) = state_ref.widgets.get_id_by_name(&fs_name) {
-            if let Some(frame) = state_ref.widgets.get_mut(frame_id) {
-                frame.text = Some(text.clone());
-                // Auto-size height to font size; width is measured by renderer
-                if frame.height == 0.0 {
-                    frame.height = frame.font_size.max(12.0);
-                }
-            }
-        }
+        sync_fontstring_text_to_rust(env, &fs_name, text);
     }
 
     Ok(())

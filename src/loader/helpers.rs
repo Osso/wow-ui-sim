@@ -107,74 +107,103 @@ pub fn escape_lua_string(s: &str) -> String {
         .replace('\r', "\\r")
 }
 
-/// Generate Lua code for setting anchors.
-pub fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str) -> String {
+/// Resolve a child widget name, replacing $parent with parent name.
+/// Returns the resolved name, or generates a random one with the given prefix.
+pub fn resolve_child_name(name: Option<&str>, parent_name: &str, prefix: &str) -> String {
+    name.map(|n| n.replace("$parent", parent_name))
+        .unwrap_or_else(|| format!("{}{}", prefix, rand_id()))
+}
+
+/// Get the x/y offset from an anchor element.
+pub fn resolve_anchor_offset(anchor: &crate::xml::AnchorXml) -> (f32, f32) {
+    if let Some(offset) = &anchor.offset {
+        if let Some(abs) = &offset.abs_dimension {
+            (abs.x.unwrap_or(0.0), abs.y.unwrap_or(0.0))
+        } else {
+            (0.0, 0.0)
+        }
+    } else {
+        (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
+    }
+}
+
+/// Resolve a relativeKey expression like "$parent.$parent.ScrollFrame" into a Lua expression.
+fn resolve_relative_key(key: &str, parent_expr: &str) -> String {
+    if !key.contains("$parent") && !key.contains("$Parent") {
+        return key.to_string();
+    }
+    let mut expr = String::new();
+    for part in key.split('.') {
+        if part == "$parent" || part == "$Parent" {
+            if expr.is_empty() {
+                expr = parent_expr.to_string();
+            } else {
+                expr = format!("{}:GetParent()", expr);
+            }
+        } else if !part.is_empty() {
+            expr = format!("{}[\"{}\"]", expr, part);
+        }
+    }
+    if expr.is_empty() { parent_expr.to_string() } else { expr }
+}
+
+/// Resolve the relative target for an anchor.
+///
+/// - `parent_expr`: Lua expression for $parent in relativeKey (e.g. `"parent"` or a frame name)
+/// - `parent_name`: actual parent name for $parent substitution in relativeTo strings
+/// - `default_relative`: value when no relativeTo is specified (e.g. `"nil"` or `"parent"`)
+pub fn resolve_anchor_relative(
+    anchor: &crate::xml::AnchorXml,
+    parent_expr: &str,
+    parent_name: &str,
+    default_relative: &str,
+) -> String {
+    if let Some(key) = anchor.relative_key.as_deref() {
+        resolve_relative_key(key, parent_expr)
+    } else {
+        match anchor.relative_to.as_deref() {
+            Some("$parent") => parent_expr.to_string(),
+            Some(r) if r.contains("$parent") || r.contains("$Parent") => {
+                r.replace("$parent", parent_name).replace("$Parent", parent_name)
+            }
+            Some(r) => r.to_string(),
+            None => default_relative.to_string(),
+        }
+    }
+}
+
+/// Generate Lua SetPoint calls for a list of anchors.
+///
+/// - `target_var`: the Lua variable to call SetPoint on (e.g. `"frame"`, `"fs"`, `"tex"`)
+/// - `parent_expr`: Lua expression for $parent in relativeKey
+/// - `parent_name`: actual parent name for $parent replacement in relativeTo
+/// - `default_relative`: value when no relativeTo is specified
+pub fn generate_set_point_code(
+    anchors: &crate::xml::AnchorsXml,
+    target_var: &str,
+    parent_expr: &str,
+    parent_name: &str,
+    default_relative: &str,
+) -> String {
     let mut code = String::new();
     for anchor in &anchors.anchors {
         let point = &anchor.point;
-        let relative_to = anchor.relative_to.as_deref();
-        let relative_key = anchor.relative_key.as_deref();
         let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
-
-        // Get offset from either direct attributes or nested Offset element
-        let (x, y) = if let Some(offset) = &anchor.offset {
-            if let Some(abs) = &offset.abs_dimension {
-                (abs.x.unwrap_or(0.0), abs.y.unwrap_or(0.0))
-            } else {
-                (0.0, 0.0)
-            }
-        } else {
-            (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
-        };
-
-        // Handle relativeKey (e.g., "$parent.Performance", "$parent.$parent.ScrollFrame") first, then relativeTo
-        let rel_str = if let Some(key) = relative_key {
-            // relativeKey format: "$parent", "$parent.ChildKey", "$parent.$parent.ChildKey", etc.
-            if key.contains("$parent") || key.contains("$Parent") {
-                // Split on dots and build expression
-                let parts: Vec<&str> = key.split('.').collect();
-                let mut expr = String::new();
-                for part in parts {
-                    if part == "$parent" || part == "$Parent" {
-                        if expr.is_empty() {
-                            expr = parent_ref.to_string();
-                        } else {
-                            expr = format!("{}:GetParent()", expr);
-                        }
-                    } else if !part.is_empty() {
-                        // Access this as a property/child key
-                        expr = format!("{}[\"{}\"]", expr, part);
-                    }
-                }
-                if expr.is_empty() {
-                    parent_ref.to_string()
-                } else {
-                    expr
-                }
-            } else {
-                // No $parent pattern - use as global name
-                key.to_string()
-            }
-        } else {
-            match relative_to {
-                Some("$parent") => parent_ref.to_string(),
-                Some(rel) if rel.contains("$parent") || rel.contains("$Parent") => {
-                    // Replace any $parent/$Parent pattern (e.g., $parent_Sibling, $parentColorSwatch)
-                    rel.replace("$parent", parent_ref).replace("$Parent", parent_ref)
-                }
-                Some(rel) => rel.to_string(),
-                None => "nil".to_string(),
-            }
-        };
-
+        let (x, y) = resolve_anchor_offset(anchor);
+        let rel = resolve_anchor_relative(anchor, parent_expr, parent_name, default_relative);
         code.push_str(&format!(
             r#"
-        frame:SetPoint("{}", {}, "{}", {}, {})
+        {}:SetPoint("{}", {}, "{}", {}, {})
         "#,
-            point, rel_str, relative_point, x, y
+            target_var, point, rel, relative_point, x, y
         ));
     }
     code
+}
+
+/// Generate Lua code for setting anchors on a frame.
+pub fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str) -> String {
+    generate_set_point_code(anchors, "frame", parent_ref, parent_ref, "nil")
 }
 
 /// Generate Lua code for creating an animation group and its child animations from XML.

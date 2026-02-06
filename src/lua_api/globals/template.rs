@@ -3,6 +3,7 @@
 //! This module provides functionality to apply XML templates from the registry
 //! when CreateFrame is called with a template name.
 
+use crate::loader::helpers::generate_set_point_code;
 use crate::xml::{get_template_chain, FrameElement, FrameXml, TemplateEntry};
 use mlua::Lua;
 
@@ -324,7 +325,7 @@ fn create_texture_from_template(
 
     // Apply anchors
     if let Some(anchors) = &texture.anchors {
-        code.push_str(&generate_anchors_code_for_child(anchors, parent_name, "tex"));
+        code.push_str(&generate_set_point_code(anchors, "tex", "parent", parent_name, "nil"));
     }
 
     // Apply setAllPoints
@@ -439,7 +440,7 @@ fn create_fontstring_from_template(
 
     // Apply anchors
     if let Some(anchors) = &fontstring.anchors {
-        code.push_str(&generate_anchors_code_for_child(anchors, parent_name, "fs"));
+        code.push_str(&generate_set_point_code(anchors, "fs", "parent", parent_name, "nil"));
     }
 
     // Apply setAllPoints
@@ -515,10 +516,12 @@ fn create_child_frame_from_template(
 
     // Apply anchors
     if let Some(anchors) = frame.anchors() {
-        code.push_str(&generate_anchors_code_for_child(
+        code.push_str(&generate_set_point_code(
             anchors,
-            parent_name,
             "child",
+            "parent",
+            parent_name,
+            "nil",
         ));
     }
 
@@ -832,70 +835,6 @@ fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, fram
 }
 
 /// Generate Lua code for anchors on a child element.
-fn generate_anchors_code_for_child(
-    anchors: &crate::xml::AnchorsXml,
-    parent_name: &str,
-    var_name: &str,
-) -> String {
-    let mut code = String::new();
-    for anchor in &anchors.anchors {
-        let point = &anchor.point;
-        let relative_to = anchor.relative_to.as_deref();
-        let relative_key = anchor.relative_key.as_deref();
-        let relative_point = anchor.relative_point.as_deref().unwrap_or(point.as_str());
-
-        let (x, y) = if let Some(offset) = &anchor.offset {
-            if let Some(abs) = &offset.abs_dimension {
-                (abs.x.unwrap_or(0.0), abs.y.unwrap_or(0.0))
-            } else {
-                (0.0, 0.0)
-            }
-        } else {
-            (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
-        };
-
-        let rel_str = if let Some(key) = relative_key {
-            if key.contains("$parent") || key.contains("$Parent") {
-                let parts: Vec<&str> = key.split('.').collect();
-                let mut expr = String::new();
-                for part in parts {
-                    if part == "$parent" || part == "$Parent" {
-                        if expr.is_empty() {
-                            expr = "parent".to_string();
-                        } else {
-                            expr = format!("{}:GetParent()", expr);
-                        }
-                    } else if !part.is_empty() {
-                        expr = format!("{}[\"{}\"]", expr, part);
-                    }
-                }
-                if expr.is_empty() {
-                    "parent".to_string()
-                } else {
-                    expr
-                }
-            } else {
-                key.to_string()
-            }
-        } else {
-            match relative_to {
-                Some("$parent") => "parent".to_string(),
-                Some(rel) if rel.contains("$parent") || rel.contains("$Parent") => rel
-                    .replace("$parent", parent_name)
-                    .replace("$Parent", parent_name),
-                Some(rel) => rel.to_string(),
-                None => "nil".to_string(),
-            }
-        };
-
-        code.push_str(&format!(
-            "            {}:SetPoint(\"{}\", {}, \"{}\", {}, {})\n",
-            var_name, point, rel_str, relative_point, x, y
-        ));
-    }
-    code
-}
-
 /// Get size values from a SizeXml.
 fn get_size_values(size: &crate::xml::SizeXml) -> (Option<f32>, Option<f32>) {
     if size.x.is_some() || size.y.is_some() {
