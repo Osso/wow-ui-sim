@@ -384,14 +384,42 @@ fn handle_repl_command(line: &str, socket: &mut PathBuf) -> bool {
 
 /// Blizzard addon TOC entries loaded before user addons.
 const BLIZZARD_ADDONS: &[(&str, &str)] = &[
+    // Foundation (no new deps)
     ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
     ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
     ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
     ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
     ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
+    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
+    // ActionBar dependency chain
+    ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
+    ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
+    ("Blizzard_HelpPlate", "Blizzard_HelpPlate.toc"),
+    ("Blizzard_AccessibilityTemplates", "Blizzard_AccessibilityTemplates.toc"),
+    ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
+    ("Blizzard_UIParent", "Blizzard_UIParent_Mainline.toc"),
+    ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
+    ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
+    ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
+    ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
+    ("Blizzard_StoreUI", "Blizzard_StoreUI_Mainline.toc"),
+    ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
+    ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
+    ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
+    ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
+    ("Blizzard_UIParentPanelManager", "Blizzard_UIParentPanelManager_Mainline.toc"),
+    ("Blizzard_Settings_Shared", "Blizzard_Settings_Shared_Mainline.toc"),
+    ("Blizzard_SettingsDefinitions_Shared", "Blizzard_SettingsDefinitions_Shared.toc"),
+    ("Blizzard_SettingsDefinitions_Frame", "Blizzard_SettingsDefinitions_Frame_Mainline.toc"),
+    ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil_Mainline.toc"),
+    ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
+    ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
+    ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
+    ("Blizzard_UIPanels_Game", "Blizzard_UIPanels_Game_Mainline.toc"),
+    ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
+    // Existing UI modules
     ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
     ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
-    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
     ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
 ];
 
@@ -468,6 +496,25 @@ fn dump_standalone(
 ) {
     let (env, _font_system) = create_standalone_env(no_addons, no_saved_vars);
 
+    init_addon_list(&env);
+
+    // Print addon list
+    let _ = env.exec(
+        r#"
+        local num = C_AddOns.GetNumAddOns()
+        if num > 0 then
+            print("\n=== Addons (" .. num .. ") ===\n")
+            for i = 1, num do
+                local name, title, notes, loadable, reason, security = C_AddOns.GetAddOnInfo(i)
+                local loaded = C_AddOns.IsAddOnLoaded(i)
+                local enabled = C_AddOns.GetAddOnEnableState(i) > 0
+                local status = loaded and "loaded" or (enabled and "enabled" or "disabled")
+                print(string.format("  [%d] %s (%s) [%s]", i, tostring(title), tostring(name), status))
+            end
+        end
+        "#,
+    );
+
     let state = env.state().borrow();
     let widgets = &state.widgets;
 
@@ -519,10 +566,10 @@ fn print_frame(
         return;
     }
 
-    let name = frame.name.as_deref().unwrap_or("(anonymous)");
+    let display_name = resolve_display_name(widgets, frame, id);
     let matches_filter = filter
         .as_ref()
-        .map(|f| name.to_lowercase().contains(&f.to_lowercase()))
+        .map(|f| display_name.to_lowercase().contains(&f.to_lowercase()))
         .unwrap_or(true);
 
     if matches_filter {
@@ -534,15 +581,128 @@ fn print_frame(
         } else {
             format!(" keys=[{}]", keys.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", "))
         };
+        let text_str = resolve_display_text(widgets, frame)
+            .map(|t| format!(" text={:?}", t))
+            .unwrap_or_default();
+        let font_str = if frame.widget_type == wow_ui_sim::widget::WidgetType::FontString {
+            format!(" font={:?} size={}", frame.font.as_deref().unwrap_or("(none)"), frame.font_size)
+        } else {
+            String::new()
+        };
         println!(
-            "{}{} [{:?}] ({}x{}) {}{}",
-            indent, name, frame.widget_type, frame.width as i32, frame.height as i32, vis, keys_str
+            "{}{} [{:?}] ({}x{}) {}{}{}{}",
+            indent, display_name, frame.widget_type, frame.width as i32, frame.height as i32, vis, text_str, font_str, keys_str
         );
     }
 
     for &child_id in &frame.children {
         print_frame(widgets, child_id, depth + 1, filter, visible_only);
     }
+}
+
+/// Resolve a display name for a frame: use its global name, or look up its
+/// parentKey from the parent's children_keys, falling back to "(anonymous)".
+fn resolve_display_name(
+    widgets: &wow_ui_sim::widget::WidgetRegistry,
+    frame: &wow_ui_sim::widget::Frame,
+    id: u64,
+) -> String {
+    // Use global name if it's a real name (not auto-generated)
+    if let Some(ref name) = frame.name {
+        if !name.starts_with("__anon_")
+            && !name.starts_with("__frame_")
+            && !name.starts_with("__tex_")
+            && !name.starts_with("__fs_")
+        {
+            return name.clone();
+        }
+    }
+
+    // Look up parentKey from parent's children_keys
+    if let Some(parent_id) = frame.parent_id {
+        if let Some(parent) = widgets.get(parent_id) {
+            for (key, &child_id) in &parent.children_keys {
+                if child_id == id {
+                    return format!(".{}", key);
+                }
+            }
+        }
+    }
+
+    frame
+        .name
+        .as_deref()
+        .unwrap_or("(anonymous)")
+        .to_string()
+}
+
+/// Get display text for a frame: its own text, or text from a Title/TitleText child.
+fn resolve_display_text(
+    widgets: &wow_ui_sim::widget::WidgetRegistry,
+    frame: &wow_ui_sim::widget::Frame,
+) -> Option<String> {
+    // Use frame's own text if present
+    if let Some(ref t) = frame.text {
+        if !t.is_empty() {
+            return Some(strip_wow_escapes(t));
+        }
+    }
+
+    // Check Title/TitleText children for text
+    for key in &["Title", "TitleText"] {
+        if let Some(&child_id) = frame.children_keys.get(*key) {
+            if let Some(child) = widgets.get(child_id) {
+                if let Some(ref t) = child.text {
+                    if !t.is_empty() {
+                        return Some(strip_wow_escapes(t));
+                    }
+                }
+            }
+        }
+    }
+
+    None
+}
+
+/// Strip WoW escape sequences (|T...|t texture, |c...|r color) for cleaner display.
+fn strip_wow_escapes(s: &str) -> String {
+    let mut result = String::with_capacity(s.len());
+    let mut chars = s.chars().peekable();
+    while let Some(c) = chars.next() {
+        if c == '|' {
+            match chars.peek() {
+                Some('T') | Some('t') => {
+                    // |Tpath:h:w:x:y|t - skip texture escape
+                    if chars.peek() == Some(&'T') {
+                        chars.next();
+                        while let Some(&ch) = chars.peek() {
+                            chars.next();
+                            if ch == '|' {
+                                chars.next(); // skip 't'
+                                break;
+                            }
+                        }
+                    } else {
+                        chars.next(); // lowercase t is end marker, already consumed
+                    }
+                }
+                Some('c') => {
+                    // |cFFRRGGBB - skip color code (10 chars total: |c + 8 hex)
+                    chars.next();
+                    for _ in 0..8 {
+                        chars.next();
+                    }
+                }
+                Some('r') => {
+                    chars.next(); // |r = color reset
+                }
+                _ => result.push(c),
+            }
+        } else {
+            result.push(c);
+        }
+    }
+    result.trim().to_string()
 }
 
 fn screenshot_standalone(
@@ -553,12 +713,11 @@ fn screenshot_standalone(
     no_addons: bool,
     no_saved_vars: bool,
 ) {
-    use wow_ui_sim::iced_app::build_quad_batch_for_registry;
     use wow_ui_sim::render::software::render_to_image;
     use wow_ui_sim::render::GlyphAtlas;
-    use wow_ui_sim::texture::TextureManager;
 
     let (env, font_system) = create_standalone_env(no_addons, no_saved_vars);
+    init_addon_list(&env);
     run_debug_script(&env);
 
     let mut glyph_atlas = GlyphAtlas::new();
@@ -586,6 +745,19 @@ fn screenshot_standalone(
     }
 
     eprintln!("Saved {}x{} screenshot to {}", width, height, output.display());
+}
+
+/// Show and populate AddonList (matches main.rs GUI init).
+fn init_addon_list(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if AddonList and AddonListMixin then
+            pcall(function() AddonListMixin.OnLoad(AddonList) end)
+            AddonList:Show()
+            if AddonList_Update then pcall(AddonList_Update) end
+        end
+        "#,
+    );
 }
 
 /// Run optional debug Lua script for screenshot debugging.

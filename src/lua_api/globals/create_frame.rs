@@ -181,6 +181,12 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
     let highlight_id = create_child_widget(state, WidgetType::Texture, frame_id);
     let disabled_id = create_child_widget(state, WidgetType::Texture, frame_id);
 
+    // HighlightTexture is only visible on hover in WoW
+    if let Some(highlight) = state.widgets.get_mut(highlight_id) {
+        highlight.draw_layer = crate::widget::DrawLayer::Highlight;
+        highlight.visible = false;
+    }
+
     // Text fontstring for button label
     let mut text_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
     text_fs.anchors.push(crate::widget::Anchor {
