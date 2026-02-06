@@ -268,18 +268,19 @@ fn add_tooltip_padding_override_methods<M: UserDataMethods<FrameHandle>>(methods
         }
         Ok(())
     });
-    methods.add_method("GetPadding", |lua, this, ()| -> Result<Value> {
+    methods.add_method("GetPadding", |lua, this, ()| -> Result<mlua::MultiValue> {
         if let Some((func, ud)) = get_mixin_override(lua, this.id, "GetPadding") {
-            return func.call::<Value>(ud);
+            return func.call::<mlua::MultiValue>(ud);
         }
         let state = this.state.borrow();
-        Ok(Value::Number(
+        let padding = Value::Number(
             state
                 .tooltips
                 .get(&this.id)
                 .map(|td| td.padding as f64)
                 .unwrap_or(0.0),
-        ))
+        );
+        Ok(mlua::MultiValue::from_iter(std::iter::once(padding)))
     });
 }
 
@@ -980,6 +981,13 @@ fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     );
     methods.add_method("SetFromModelSceneID", |_, _this, _scene_id: i32| Ok(()));
     methods.add_method("GetModelSceneID", |_, _this, ()| Ok(0i32));
+    methods.add_method("CycleVariation", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("GetUpperEmblemTexture", |_, _this, ()| -> Result<Option<String>> {
+        Ok(None)
+    });
+    methods.add_method("GetLowerEmblemTexture", |_, _this, ()| -> Result<Option<String>> {
+        Ok(None)
+    });
 }
 
 /// Native ModelScene methods (C++ side in WoW, stubs here).

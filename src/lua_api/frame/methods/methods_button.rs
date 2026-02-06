@@ -11,7 +11,8 @@ pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_pushed_text_offset_methods(methods);
     add_texture_getter_methods(methods);
     add_texture_setter_methods(methods);
-    add_highlight_atlas_method(methods);
+    add_texture_setter_methods_2(methods);
+    add_atlas_setter_methods(methods);
     add_checked_texture_methods(methods);
     add_three_slice_methods(methods);
     add_font_string_methods(methods);
@@ -89,23 +90,17 @@ fn extract_texture_path(texture: &Value) -> Result<Option<String>, mlua::Error> 
     }
 }
 
-/// Set{Normal,Highlight,Pushed,Disabled}Texture - set texture by path or userdata.
-///
-/// When given a string path: updates both the parent button's field and the child texture.
-/// When given a userdata: only ensures the child texture exists with anchors.
+/// Set{Normal,Highlight}Texture - set texture by path or userdata.
 fn add_texture_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetNormalTexture
     methods.add_method("SetNormalTexture", |_, this, texture: Value| {
         let path = extract_texture_path(&texture)?;
         let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-
         if !is_userdata {
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.normal_texture = path.clone();
             }
         }
-
         let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
         if !is_userdata {
             if let Some(tex) = state.widgets.get_mut(tex_id) {
@@ -115,18 +110,15 @@ fn add_texture_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         Ok(())
     });
 
-    // SetHighlightTexture
     methods.add_method("SetHighlightTexture", |_, this, texture: Value| {
         let path = extract_texture_path(&texture)?;
         let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-
         if !is_userdata {
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.highlight_texture = path.clone();
             }
         }
-
         let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
         if !is_userdata {
             if let Some(tex) = state.widgets.get_mut(tex_id) {
@@ -135,19 +127,19 @@ fn add_texture_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         }
         Ok(())
     });
+}
 
-    // SetPushedTexture
+/// Set{Pushed,Disabled}Texture - set texture by path or userdata.
+fn add_texture_setter_methods_2<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetPushedTexture", |_, this, texture: Value| {
         let path = extract_texture_path(&texture)?;
         let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-
         if !is_userdata {
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.pushed_texture = path.clone();
             }
         }
-
         let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
         if !is_userdata {
             if let Some(tex) = state.widgets.get_mut(tex_id) {
@@ -157,18 +149,15 @@ fn add_texture_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         Ok(())
     });
 
-    // SetDisabledTexture
     methods.add_method("SetDisabledTexture", |_, this, texture: Value| {
         let path = extract_texture_path(&texture)?;
         let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
-
         if !is_userdata {
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.disabled_texture = path.clone();
             }
         }
-
         let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
         if !is_userdata {
             if let Some(tex) = state.widgets.get_mut(tex_id) {
@@ -179,30 +168,88 @@ fn add_texture_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
     });
 }
 
-/// SetHighlightAtlas - set highlight texture via atlas lookup.
+/// Set{Normal,Pushed,Disabled,Highlight}Atlas - set button textures via atlas lookup.
+fn add_atlas_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_normal_atlas_method(methods);
+    add_pushed_atlas_method(methods);
+    add_disabled_atlas_method(methods);
+    add_highlight_atlas_method(methods);
+}
+
+fn add_normal_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetNormalAtlas", |_, this, atlas_name: String| {
+        let mut state = this.state.borrow_mut();
+        let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
+        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            f.normal_texture = Some(file);
+            f.normal_tex_coords = Some(coords);
+        });
+        Ok(())
+    });
+}
+
+fn add_pushed_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetPushedAtlas", |_, this, atlas_name: String| {
+        let mut state = this.state.borrow_mut();
+        let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
+        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            f.pushed_texture = Some(file);
+            f.pushed_tex_coords = Some(coords);
+        });
+        Ok(())
+    });
+}
+
+fn add_disabled_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetDisabledAtlas", |_, this, atlas_name: String| {
+        let mut state = this.state.borrow_mut();
+        let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
+        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            f.disabled_texture = Some(file);
+            f.disabled_tex_coords = Some(coords);
+        });
+        Ok(())
+    });
+}
+
 fn add_highlight_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetHighlightAtlas", |_, this, atlas_name: String| {
         let mut state = this.state.borrow_mut();
         let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
-        if let Some(lookup) = crate::atlas::get_atlas_info(&atlas_name) {
-            let tex_coords = (
-                lookup.info.left_tex_coord,
-                lookup.info.right_tex_coord,
-                lookup.info.top_tex_coord,
-                lookup.info.bottom_tex_coord,
-            );
-            if let Some(tex) = state.widgets.get_mut(tex_id) {
-                tex.atlas = Some(atlas_name);
-                tex.texture = Some(lookup.info.file.to_string());
-                tex.tex_coords = Some(tex_coords);
-            }
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.highlight_texture = Some(lookup.info.file.to_string());
-                frame.highlight_tex_coords = Some(tex_coords);
-            }
-        }
+        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            f.highlight_texture = Some(file);
+            f.highlight_tex_coords = Some(coords);
+        });
         Ok(())
     });
+}
+
+/// Apply atlas info to both the child texture widget and the parent button field.
+fn apply_atlas_to_button<F>(
+    state: &mut std::cell::RefMut<'_, crate::lua_api::SimState>,
+    button_id: u64,
+    tex_id: u64,
+    atlas_name: &str,
+    set_button_field: F,
+) where
+    F: FnOnce(&mut crate::widget::Frame, String, (f32, f32, f32, f32)),
+{
+    if let Some(lookup) = crate::atlas::get_atlas_info(atlas_name) {
+        let tex_coords = (
+            lookup.info.left_tex_coord,
+            lookup.info.right_tex_coord,
+            lookup.info.top_tex_coord,
+            lookup.info.bottom_tex_coord,
+        );
+        if let Some(tex) = state.widgets.get_mut(tex_id) {
+            tex.atlas = Some(atlas_name.to_string());
+            tex.texture = Some(lookup.info.file.to_string());
+            tex.tex_coords = Some(tex_coords);
+        }
+        if let Some(frame) = state.widgets.get_mut(button_id) {
+            set_button_field(frame, lookup.info.file.to_string(), tex_coords);
+        }
+    }
 }
 
 /// Set{Checked,DisabledChecked}Texture - checked state textures for CheckButton.

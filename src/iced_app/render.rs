@@ -69,18 +69,7 @@ impl shader::Program<Message> for &App {
                 }
                 _ => {}
             },
-            Event::Keyboard(keyboard_event) => {
-                use iced::keyboard;
-                if let keyboard::Event::KeyPressed { key, modifiers, .. } = keyboard_event {
-                    // Ctrl+R is a simulator-only shortcut, not dispatched to Lua
-                    if modifiers.control() && *key == keyboard::Key::Character("r".into()) {
-                        return Some(shader::Action::publish(Message::ReloadUI));
-                    }
-                    if let Some(wow_key) = iced_key_to_wow(key) {
-                        return Some(shader::Action::publish(Message::KeyPress(wow_key)));
-                    }
-                }
-            }
+            Event::Keyboard(_) => {}
             _ => {}
         }
         None
@@ -93,11 +82,7 @@ impl shader::Program<Message> for &App {
         bounds: Rectangle,
     ) -> Self::Primitive {
         let start = std::time::Instant::now();
-        let prev = self.frame_count.get();
-        self.frame_count.set(prev + 1);
-        if prev % 60 == 0 {
-            eprintln!("[DRAW DEBUG] frame_count now={}", prev + 1);
-        }
+        self.frame_count.set(self.frame_count.get() + 1);
 
         let size = bounds.size();
         self.screen_size.set(size);

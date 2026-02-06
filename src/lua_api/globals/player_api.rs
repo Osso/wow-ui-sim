@@ -51,6 +51,13 @@ fn register_battlenet_functions(lua: &Lua) -> Result<()> {
 
 /// Register specialization query functions.
 fn register_specialization_functions(lua: &Lua) -> Result<()> {
+    register_spec_basic_queries(lua)?;
+    register_spec_info_lookups(lua)?;
+    Ok(())
+}
+
+/// Basic spec queries: GetSpecialization, GetSpecializationInfo, GetNumSpecializations.
+fn register_spec_basic_queries(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     globals.set("GetSpecialization", lua.create_function(|_, ()| Ok(1))?)?;
@@ -71,6 +78,23 @@ fn register_specialization_functions(lua: &Lua) -> Result<()> {
         ]))
     })?)?;
     globals.set("GetNumSpecializations", lua.create_function(|_, ()| Ok(4))?)?;
+    globals.set("GetSpecializationRoleByID", lua.create_function(|lua, _spec_id: i32| {
+        Ok(Value::String(lua.create_string("DAMAGER")?))
+    })?)?;
+    globals.set(
+        "GetNumSpecializationsForClassID",
+        lua.create_function(|_, (_class_id, _sex): (Option<i32>, Option<i32>)| {
+            Ok(_class_id.map_or(0, |_| 3i32))
+        })?,
+    )?;
+
+    Ok(())
+}
+
+/// Spec info lookups by ID or class: GetSpecializationInfoByID, ForSpecID, ForClassID.
+fn register_spec_info_lookups(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
     globals.set("GetSpecializationInfoByID", lua.create_function(|lua, _spec_id: i32| {
         Ok(mlua::MultiValue::from_vec(vec![
             Value::Integer(62),
@@ -105,15 +129,6 @@ fn register_specialization_functions(lua: &Lua) -> Result<()> {
             Value::Boolean(true),
         ]))
     })?)?;
-    globals.set("GetSpecializationRoleByID", lua.create_function(|lua, _spec_id: i32| {
-        Ok(Value::String(lua.create_string("DAMAGER")?))
-    })?)?;
-    globals.set(
-        "GetNumSpecializationsForClassID",
-        lua.create_function(|_, (_class_id, _sex): (Option<i32>, Option<i32>)| {
-            Ok(_class_id.map_or(0, |_| 3i32))
-        })?,
-    )?;
 
     Ok(())
 }
@@ -122,24 +137,24 @@ fn register_specialization_functions(lua: &Lua) -> Result<()> {
 fn register_action_bar_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    globals.set("HasAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
-    globals.set("GetActionInfo", lua.create_function(|_, _slot: i32| Ok(Value::Nil))?)?;
-    globals.set("GetActionTexture", lua.create_function(|_, _slot: i32| Ok(Value::Nil))?)?;
-    globals.set("GetActionText", lua.create_function(|_, _slot: i32| Ok(Value::Nil))?)?;
-    globals.set("GetActionCount", lua.create_function(|_, _slot: i32| Ok(0))?)?;
-    globals.set("GetActionCooldown", lua.create_function(|_, _slot: i32| {
+    globals.set("HasAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
+    globals.set("GetActionInfo", lua.create_function(|_, _slot: Value| Ok(Value::Nil))?)?;
+    globals.set("GetActionTexture", lua.create_function(|_, _slot: Value| Ok(Value::Nil))?)?;
+    globals.set("GetActionText", lua.create_function(|_, _slot: Value| Ok(Value::Nil))?)?;
+    globals.set("GetActionCount", lua.create_function(|_, _slot: Value| Ok(0))?)?;
+    globals.set("GetActionCooldown", lua.create_function(|_, _slot: Value| {
         Ok((0.0_f64, 0.0_f64, 1, 1.0_f64))
     })?)?;
-    globals.set("IsUsableAction", lua.create_function(|_, _slot: i32| Ok((false, false)))?)?;
-    globals.set("IsConsumableAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
-    globals.set("IsStackableAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
-    globals.set("IsAttackAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
-    globals.set("IsAutoRepeatAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
-    globals.set("IsCurrentAction", lua.create_function(|_, _slot: i32| Ok(false))?)?;
-    globals.set("GetActionCharges", lua.create_function(|_, _slot: i32| {
+    globals.set("IsUsableAction", lua.create_function(|_, _slot: Value| Ok((false, false)))?)?;
+    globals.set("IsConsumableAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
+    globals.set("IsStackableAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
+    globals.set("IsAttackAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
+    globals.set("IsAutoRepeatAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
+    globals.set("IsCurrentAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
+    globals.set("GetActionCharges", lua.create_function(|_, _slot: Value| {
         Ok((0, 0, 0.0_f64, 0.0_f64, 1.0_f64))
     })?)?;
-    globals.set("GetPossessInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    globals.set("GetPossessInfo", lua.create_function(|_, _index: Value| Ok(Value::Nil))?)?;
     globals.set("GetActionBarPage", lua.create_function(|_, ()| Ok(1))?)?;
     globals.set("GetBonusBarOffset", lua.create_function(|_, ()| Ok(0))?)?;
     globals.set("GetOverrideBarIndex", lua.create_function(|_, ()| Ok(Value::Nil))?)?;

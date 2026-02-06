@@ -52,6 +52,7 @@ pub fn register_unit_api(lua: &Lua) -> Result<()> {
     register_casting_functions(lua)?;
     register_aura_functions(lua)?;
     register_weapon_enchant_functions(lua)?;
+    register_xp_functions(lua)?;
     Ok(())
 }
 
@@ -428,7 +429,6 @@ fn register_casting_functions(lua: &Lua) -> Result<()> {
 fn register_aura_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    // Individual aura query stubs
     let aura_stubs: &[&str] = &["UnitAura", "UnitBuff", "UnitDebuff"];
     for &name in aura_stubs {
         globals.set(
@@ -444,7 +444,12 @@ fn register_aura_functions(lua: &Lua) -> Result<()> {
         lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?,
     )?;
 
-    // AuraUtil namespace
+    globals.set("AuraUtil", register_aura_util(lua)?)?;
+    Ok(())
+}
+
+/// AuraUtil namespace stubs.
+fn register_aura_util(lua: &Lua) -> Result<mlua::Table> {
     let aura_util = lua.create_table()?;
     aura_util.set(
         "ForEachAura",
@@ -482,9 +487,7 @@ fn register_aura_functions(lua: &Lua) -> Result<()> {
             Ok(Value::Nil)
         })?,
     )?;
-    globals.set("AuraUtil", aura_util)?;
-
-    Ok(())
+    Ok(aura_util)
 }
 
 /// Register GetWeaponEnchantInfo.
@@ -498,5 +501,16 @@ fn register_weapon_enchant_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
+    Ok(())
+}
+
+/// Register UnitXP, UnitXPMax, UnitTrialXP, GetXPExhaustion, GetRestState.
+fn register_xp_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    globals.set("UnitXP", lua.create_function(|_, _unit: String| Ok(5000i32))?)?;
+    globals.set("UnitXPMax", lua.create_function(|_, _unit: String| Ok(10000i32))?)?;
+    globals.set("UnitTrialXP", lua.create_function(|_, _unit: String| Ok(0i32))?)?;
+    globals.set("GetXPExhaustion", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    globals.set("GetRestState", lua.create_function(|_, ()| Ok(1i32))?)?;
     Ok(())
 }

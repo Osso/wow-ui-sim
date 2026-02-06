@@ -40,11 +40,22 @@ fn register_cvar_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
 
 /// Register key binding query and mutation functions.
 fn register_key_binding_functions(lua: &Lua) -> Result<()> {
+    register_binding_queries(lua)?;
+    register_binding_mutations(lua)?;
+    Ok(())
+}
+
+/// Binding query functions: GetBindingKey, GetBinding, GetNumBindings, etc.
+fn register_binding_queries(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     globals.set(
         "GetBindingKey",
         lua.create_function(|_, _action: String| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetBindingKeyForAction",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?,
     )?;
     globals.set(
         "GetBinding",
@@ -63,6 +74,30 @@ fn register_key_binding_functions(lua: &Lua) -> Result<()> {
         "GetNumBindings",
         lua.create_function(|_, ()| Ok(0))?,
     )?;
+    globals.set(
+        "GetCurrentBindingSet",
+        lua.create_function(|_, ()| Ok(1))?,
+    )?;
+    globals.set(
+        "GetBindingAction",
+        lua.create_function(|_, (_key, _check_override): (String, Option<bool>)| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetBindingText",
+        lua.create_function(
+            |lua, (key, _prefix, _abbrev): (String, Option<String>, Option<bool>)| {
+                Ok(Value::String(lua.create_string(&key)?))
+            },
+        )?,
+    )?;
+
+    Ok(())
+}
+
+/// Binding mutation functions: SetBinding, SetBindingClick, SaveBindings, etc.
+fn register_binding_mutations(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
     globals.set(
         "SetBinding",
         lua.create_function(|_, (_key, _action): (String, Option<String>)| Ok(true))?,
@@ -86,28 +121,12 @@ fn register_key_binding_functions(lua: &Lua) -> Result<()> {
         lua.create_function(|_, (_key, _macro): (String, String)| Ok(true))?,
     )?;
     globals.set(
-        "GetCurrentBindingSet",
-        lua.create_function(|_, ()| Ok(1))?,
-    )?;
-    globals.set(
         "SaveBindings",
         lua.create_function(|_, _which: i32| Ok(()))?,
     )?;
     globals.set(
         "LoadBindings",
         lua.create_function(|_, _which: i32| Ok(()))?,
-    )?;
-    globals.set(
-        "GetBindingAction",
-        lua.create_function(|_, (_key, _check_override): (String, Option<bool>)| Ok(Value::Nil))?,
-    )?;
-    globals.set(
-        "GetBindingText",
-        lua.create_function(
-            |lua, (key, _prefix, _abbrev): (String, Option<String>, Option<bool>)| {
-                Ok(Value::String(lua.create_string(&key)?))
-            },
-        )?,
     )?;
 
     Ok(())

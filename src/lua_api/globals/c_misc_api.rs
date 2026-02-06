@@ -44,6 +44,13 @@ use mlua::{Lua, Result, Value};
 
 /// Register all miscellaneous C_* namespace APIs.
 pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
+    register_c_misc_api_core(lua)?;
+    register_c_misc_api_ui(lua)?;
+    register_c_misc_api_game_menu(lua)?;
+    Ok(())
+}
+
+fn register_c_misc_api_core(lua: &Lua) -> Result<()> {
     register_c_scenario_info(lua)?;
     register_c_tooltip_info(lua)?;
     register_c_pet_battles(lua)?;
@@ -64,6 +71,10 @@ pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
     register_c_gm_ticket_info(lua)?;
     register_c_unit_auras(lua)?;
     register_c_currency_info(lua)?;
+    Ok(())
+}
+
+fn register_c_misc_api_ui(lua: &Lua) -> Result<()> {
     register_c_vignette_info(lua)?;
     register_c_area_poi(lua)?;
     register_c_player_choice(lua)?;
@@ -89,6 +100,16 @@ pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
     register_c_perks_program(lua)?;
     register_c_color_overrides(lua)?;
     register_tooltip_data_processor(lua)?;
+    Ok(())
+}
+
+fn register_c_misc_api_game_menu(lua: &Lua) -> Result<()> {
+    register_c_external_event_url(lua)?;
+    register_c_store_public(lua)?;
+    register_kiosk(lua)?;
+    register_game_rules_util(lua)?;
+    register_game_menu_stubs(lua)?;
+    register_c_catalog_shop(lua)?;
     Ok(())
 }
 
@@ -1511,5 +1532,119 @@ fn register_c_perks_program(lua: &Lua) -> Result<()> {
     )?;
 
     globals.set("C_PerksProgram", t)?;
+    Ok(())
+}
+
+fn register_c_external_event_url(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("HasURL", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsNew", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("LaunchURL", lua.create_function(|_, ()| Ok(()))?)?;
+    lua.globals().set("C_ExternalEventURL", t)?;
+    Ok(())
+}
+
+fn register_c_store_public(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set(
+        "IsDisabledByParentalControls",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    lua.globals().set("C_StorePublic", t)?;
+    Ok(())
+}
+
+fn register_kiosk(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    lua.globals().set("Kiosk", t)?;
+    Ok(())
+}
+
+fn register_game_rules_util(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
+        "GetActiveAccountStore",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    t.set("ShouldShowAddOns", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set(
+        "ShouldShowSplashScreen",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    lua.globals().set("GameRulesUtil", t)?;
+    Ok(())
+}
+
+fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    let nop = lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?;
+
+    globals.set(
+        "CurrentVersionHasNewUnseenSettings",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    globals.set(
+        "StaticPopup_Visible",
+        lua.create_function(|_, _which: String| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "IsRestrictedAccount",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    globals.set("Logout", nop.clone())?;
+    globals.set("Quit", nop.clone())?;
+    globals.set("ForceLogout", nop.clone())?;
+    globals.set("ForceQuit", nop.clone())?;
+    globals.set("ShowMacroFrame", nop.clone())?;
+    globals.set("ToggleHelpFrame", nop.clone())?;
+    globals.set("ToggleStoreUI", nop.clone())?;
+    globals.set("UpdateMicroButtons", nop.clone())?;
+    globals.set(
+        "CanAutoSetGamePadCursorControl",
+        lua.create_function(|_, _enable: bool| Ok(false))?,
+    )?;
+    globals.set("SetGamePadCursorControl", nop.clone())?;
+
+    let soundkit = lua.create_table()?;
+    soundkit.set("IG_MAINMENU_OPTION", 851)?;
+    soundkit.set("IG_MAINMENU_LOGOUT", 852)?;
+    soundkit.set("IG_MAINMENU_QUIT", 854)?;
+    soundkit.set("IG_MAINMENU_OPEN", 850)?;
+    soundkit.set("IG_MAINMENU_CLOSE", 851)?;
+    globals.set("SOUNDKIT", soundkit)?;
+
+    register_c_splash_screen(lua)?;
+    Ok(())
+}
+
+fn register_c_catalog_shop(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("IsShop2Enabled", lua.create_function(|_, ()| Ok(false))?)?;
+    lua.globals().set("C_CatalogShop", t)?;
+    Ok(())
+}
+
+fn register_c_splash_screen(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
+        "RequestLatestSplashScreen",
+        lua.create_function(|_, _from_game_menu: Option<bool>| Ok(()))?,
+    )?;
+    t.set(
+        "AcknowledgeSplashScreen",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+    t.set(
+        "CanViewSplashScreen",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    lua.globals().set("C_SplashScreen", t)?;
+
+    lua.globals().set(
+        "IsCharacterNewlyBoosted",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
     Ok(())
 }

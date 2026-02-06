@@ -295,8 +295,8 @@ pub struct AnimHandle {
 }
 
 impl AnimGroupHandle {
-    /// Register playback control methods: Play, Stop, Pause, Finish, Restart, PlaySynced.
-    fn add_playback_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+    /// Register Play, Restart, PlaySynced methods.
+    fn add_play_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("Play", |_, this, args: MultiValue| {
             let args: Vec<Value> = args.into_iter().collect();
             let reverse = args.first().and_then(|v| {
@@ -317,6 +317,33 @@ impl AnimGroupHandle {
             Ok(())
         });
 
+        methods.add_method("Restart", |_, this, args: MultiValue| {
+            let args: Vec<Value> = args.into_iter().collect();
+            let reverse = args.first().and_then(|v| {
+                if let Value::Boolean(b) = v { Some(*b) } else { None }
+            }).unwrap_or(false);
+
+            let mut state = this.state.borrow_mut();
+            if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
+                group.playing = true;
+                group.paused = false;
+                group.finished = false;
+                group.reverse = reverse;
+                group.elapsed = 0.0;
+                for anim in &mut group.animations {
+                    anim.elapsed = 0.0;
+                }
+            }
+            Ok(())
+        });
+
+        methods.add_method("PlaySynced", |_, _this, _args: MultiValue| {
+            Ok(())
+        });
+    }
+
+    /// Register Stop, Pause, Finish methods.
+    fn add_stop_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("Stop", |_, this, ()| {
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
@@ -349,30 +376,6 @@ impl AnimGroupHandle {
                 }
                 group.elapsed = group.total_duration();
             }
-            Ok(())
-        });
-
-        methods.add_method("Restart", |_, this, args: MultiValue| {
-            let args: Vec<Value> = args.into_iter().collect();
-            let reverse = args.first().and_then(|v| {
-                if let Value::Boolean(b) = v { Some(*b) } else { None }
-            }).unwrap_or(false);
-
-            let mut state = this.state.borrow_mut();
-            if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
-                group.playing = true;
-                group.paused = false;
-                group.finished = false;
-                group.reverse = reverse;
-                group.elapsed = 0.0;
-                for anim in &mut group.animations {
-                    anim.elapsed = 0.0;
-                }
-            }
-            Ok(())
-        });
-
-        methods.add_method("PlaySynced", |_, _this, _args: MultiValue| {
             Ok(())
         });
     }
@@ -622,9 +625,76 @@ impl AnimGroupHandle {
     }
 }
 
+impl AnimGroupHandle {
+    /// __index metamethod: look up custom fields (set by Mixin, KeyValues, etc.)
+    fn add_index_metamethod<M: UserDataMethods<Self>>(methods: &mut M) {
+        methods.add_meta_function(
+            mlua::MetaMethod::Index,
+            |lua: &Lua, (ud, key): (mlua::AnyUserData, Value)| {
+                let handle = ud.borrow::<AnimGroupHandle>()?;
+                let group_id = handle.group_id;
+                drop(handle);
+
+                let key_str = match &key {
+                    Value::String(s) => s.to_string_lossy().to_string(),
+                    _ => return Ok(Value::Nil),
+                };
+
+                if let Ok(fields_table) = lua.globals().get::<mlua::Table>("__anim_group_fields") {
+                    if let Ok(group_fields) = fields_table.get::<mlua::Table>(group_id) {
+                        let value: Value = group_fields.get::<Value>(key_str.as_str()).unwrap_or(Value::Nil);
+                        if value != Value::Nil {
+                            return Ok(value);
+                        }
+                    }
+                }
+
+                Ok(Value::Nil)
+            },
+        );
+    }
+
+    /// __newindex metamethod: store custom fields (used by Mixin, KeyValues, etc.)
+    fn add_newindex_metamethod<M: UserDataMethods<Self>>(methods: &mut M) {
+        methods.add_meta_function(
+            mlua::MetaMethod::NewIndex,
+            |lua: &Lua, (ud, key, value): (mlua::AnyUserData, String, Value)| {
+                let handle = ud.borrow::<AnimGroupHandle>()?;
+                let group_id = handle.group_id;
+                drop(handle);
+
+                let fields_table = get_or_create_table(lua, "__anim_group_fields");
+                let group_fields: mlua::Table =
+                    fields_table
+                        .get::<mlua::Table>(group_id)
+                        .unwrap_or_else(|_| {
+                            let t = lua.create_table().unwrap();
+                            fields_table.set(group_id, t.clone()).unwrap();
+                            t
+                        });
+
+                group_fields.set(key, value)?;
+                Ok(())
+            },
+        );
+    }
+}
+
+/// Get or create a named global Lua table.
+fn get_or_create_table(lua: &Lua, name: &str) -> mlua::Table {
+    lua.globals()
+        .get::<mlua::Table>(name)
+        .unwrap_or_else(|_| {
+            let t = lua.create_table().unwrap();
+            lua.globals().set(name, t.clone()).unwrap();
+            t
+        })
+}
+
 impl UserData for AnimGroupHandle {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        Self::add_playback_methods(methods);
+        Self::add_play_methods(methods);
+        Self::add_stop_methods(methods);
         Self::add_state_query_methods(methods);
         Self::add_looping_methods(methods);
         Self::add_timing_methods(methods);
@@ -632,12 +702,14 @@ impl UserData for AnimGroupHandle {
         Self::add_script_methods(methods);
         Self::add_identity_methods(methods);
         Self::add_animation_management_methods(methods);
+        Self::add_index_metamethod(methods);
+        Self::add_newindex_metamethod(methods);
     }
 }
 
 impl AnimHandle {
-    /// Register timing methods: SetDuration, GetDuration, delays, and order.
-    fn add_timing_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+    /// Register duration methods: SetDuration, GetDuration.
+    fn add_duration_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("SetDuration", |_, this, dur: f64| {
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
@@ -654,8 +726,10 @@ impl AnimHandle {
                 .and_then(|g| g.animations.get(this.anim_index))
                 .map_or(0.0, |a| a.duration))
         });
+    }
 
-        // Delays
+    /// Register delay and order methods.
+    fn add_delay_and_order_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("SetStartDelay", |_, this, delay: f64| {
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
@@ -690,7 +764,6 @@ impl AnimHandle {
                 .map_or(0.0, |a| a.end_delay))
         });
 
-        // Order
         methods.add_method("SetOrder", |_, this, order: u32| {
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
@@ -1020,7 +1093,8 @@ impl AnimHandle {
 
 impl UserData for AnimHandle {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        Self::add_timing_methods(methods);
+        Self::add_duration_methods(methods);
+        Self::add_delay_and_order_methods(methods);
         Self::add_property_methods(methods);
         Self::add_playback_methods(methods);
         Self::add_progress_methods(methods);

@@ -28,6 +28,30 @@ fn register_metadata_functions(
     c_addons: &mlua::Table,
     state: &Rc<RefCell<SimState>>,
 ) -> Result<()> {
+    register_metadata_core(lua, c_addons, state)?;
+    register_metadata_by_index(lua, c_addons, state)?;
+
+    c_addons.set(
+        "GetAddOnSecurity",
+        lua.create_function(|lua, _index: i64| {
+            Ok(Value::String(lua.create_string("INSECURE")?))
+        })?,
+    )?;
+
+    let s = Rc::clone(state);
+    c_addons.set(
+        "GetNumAddOns",
+        lua.create_function(move |_, ()| Ok(s.borrow().addons.len() as i32))?,
+    )?;
+
+    Ok(())
+}
+
+fn register_metadata_core(
+    lua: &Lua,
+    c_addons: &mlua::Table,
+    state: &Rc<RefCell<SimState>>,
+) -> Result<()> {
     let s = Rc::clone(state);
     c_addons.set(
         "GetAddOnMetadata",
@@ -42,31 +66,36 @@ fn register_metadata_functions(
         lua.create_function(move |lua, index_or_name: Value| {
             let state = s.borrow();
             let addon = find_addon_by_value(&state.addons, &index_or_name);
-
-            if let Some(addon) = addon {
-                Ok((
-                    Value::String(lua.create_string(&addon.folder_name)?),
-                    Value::String(lua.create_string(&addon.title)?),
-                    Value::String(lua.create_string(&addon.notes)?),
-                    Value::Boolean(true), // loadable
-                    Value::Nil,           // reason
-                    Value::String(lua.create_string("INSECURE")?),
-                    Value::Boolean(false), // newVersion
-                ))
-            } else {
-                Ok((
-                    Value::Nil,
-                    Value::Nil,
-                    Value::Nil,
-                    Value::Boolean(false),
-                    Value::Nil,
-                    Value::Nil,
-                    Value::Boolean(false),
-                ))
-            }
+            addon_info_tuple(lua, addon)
         })?,
     )?;
+    Ok(())
+}
 
+fn addon_info_tuple(lua: &Lua, addon: Option<&AddonInfo>) -> Result<(Value, Value, Value, Value, Value, Value, Value)> {
+    if let Some(addon) = addon {
+        Ok((
+            Value::String(lua.create_string(&addon.folder_name)?),
+            Value::String(lua.create_string(&addon.title)?),
+            Value::String(lua.create_string(&addon.notes)?),
+            Value::Boolean(true),
+            Value::Nil,
+            Value::String(lua.create_string("INSECURE")?),
+            Value::Boolean(false),
+        ))
+    } else {
+        Ok((
+            Value::Nil, Value::Nil, Value::Nil,
+            Value::Boolean(false), Value::Nil, Value::Nil, Value::Boolean(false),
+        ))
+    }
+}
+
+fn register_metadata_by_index(
+    lua: &Lua,
+    c_addons: &mlua::Table,
+    state: &Rc<RefCell<SimState>>,
+) -> Result<()> {
     let s = Rc::clone(state);
     c_addons.set(
         "GetAddOnName",
@@ -104,20 +133,6 @@ fn register_metadata_functions(
             }
         })?,
     )?;
-
-    c_addons.set(
-        "GetAddOnSecurity",
-        lua.create_function(|lua, _index: i64| {
-            Ok(Value::String(lua.create_string("INSECURE")?))
-        })?,
-    )?;
-
-    let s = Rc::clone(state);
-    c_addons.set(
-        "GetNumAddOns",
-        lua.create_function(move |_, ()| Ok(s.borrow().addons.len() as i32))?,
-    )?;
-
     Ok(())
 }
 
@@ -267,6 +282,10 @@ fn register_stub_functions(lua: &Lua, c_addons: &mlua::Table) -> Result<()> {
         "LoadAddOn",
         lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
     )?;
+    c_addons.set(
+        "GetScriptsDisallowedForBeta",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
     Ok(())
 }
 
@@ -348,6 +367,12 @@ fn register_profiler(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
 
 /// Register legacy global functions that mirror C_AddOns.
 fn register_legacy_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    register_legacy_addon_query(lua, state)?;
+    register_legacy_addon_stubs(lua, state)?;
+    Ok(())
+}
+
+fn register_legacy_addon_query(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
 
     let s = Rc::clone(state);
@@ -367,11 +392,6 @@ fn register_legacy_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
         })?,
     )?;
 
-    globals.set(
-        "LoadAddOn",
-        lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
-    )?;
-
     let s = Rc::clone(state);
     globals.set(
         "IsAddOnLoadOnDemand",
@@ -383,6 +403,22 @@ fn register_legacy_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
         })?,
     )?;
 
+    let s = Rc::clone(state);
+    globals.set(
+        "GetAddOnMetadata",
+        lua.create_function(move |lua, (addon, field): (String, String)| {
+            resolve_metadata(&s, lua, &addon, &field)
+        })?,
+    )?;
+    Ok(())
+}
+
+fn register_legacy_addon_stubs(lua: &Lua, _state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let globals = lua.globals();
+    globals.set(
+        "LoadAddOn",
+        lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
+    )?;
     globals.set(
         "GetAddOnOptionalDependencies",
         lua.create_function(|_, _addon: String| Ok(mlua::MultiValue::new()))?,
@@ -391,20 +427,10 @@ fn register_legacy_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
         "GetAddOnDependencies",
         lua.create_function(|_, _addon: String| Ok(mlua::MultiValue::new()))?,
     )?;
-
     globals.set(
         "GetAddOnEnableState",
         lua.create_function(|_, (_addon, _character): (Value, Option<String>)| Ok(2i32))?,
     )?;
-
-    let s = Rc::clone(state);
-    globals.set(
-        "GetAddOnMetadata",
-        lua.create_function(move |lua, (addon, field): (String, String)| {
-            resolve_metadata(&s, lua, &addon, &field)
-        })?,
-    )?;
-
     Ok(())
 }
 

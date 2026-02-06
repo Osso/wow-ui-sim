@@ -451,6 +451,9 @@ fn create_standalone_env(
 
     load_blizzard_addons(&env);
 
+    // Override functions that Blizzard code defines but depend on unimplemented systems
+    let _ = env.exec("UpdateMicroButtons = function() end");
+
     let addons_path = PathBuf::from("./Interface/AddOns");
     env.scan_and_register_addons(&addons_path);
 
@@ -493,8 +496,6 @@ fn dump_standalone(
 ) {
     let (env, _font_system) = create_standalone_env(no_addons, no_saved_vars);
 
-    init_addon_list(&env);
-
     // Load debug script if present
     if let Ok(script) = std::fs::read_to_string("/tmp/debug-scrollbox-update.lua") {
         let _ = env.exec(&script);
@@ -529,6 +530,9 @@ fn dump_standalone(
 
     let version_check = state.cvars.get_bool("checkAddonVersion");
     eprintln!("Load out of date addons: {}", if version_check { "off" } else { "on" });
+
+    // Quick anchor diagnostic
+    print_anchor_diagnostic(widgets);
     eprintln!("\n=== Frame Tree ===\n");
 
     for (id, _) in &roots {
@@ -552,6 +556,76 @@ fn collect_root_frames(
             }
         })
         .collect()
+}
+
+/// Print anchor diagnostic showing counts and details of unanchored frames.
+fn print_anchor_diagnostic(widgets: &wow_ui_sim::widget::WidgetRegistry) {
+    let mut anchored = 0;
+    let mut unanchored = 0;
+    let mut unanchored_keys: std::collections::HashMap<String, Vec<String>> =
+        std::collections::HashMap::new();
+    for id in widgets.all_ids() {
+        let Some(w) = widgets.get(id) else { continue };
+        if !w.anchors.is_empty() {
+            anchored += 1;
+            continue;
+        }
+        unanchored += 1;
+        let parent_key = find_parent_key(widgets, w, id);
+        let parent_name = w
+            .parent_id
+            .and_then(|pid| widgets.get(pid))
+            .and_then(|p| p.name.clone())
+            .unwrap_or_else(|| "(no parent)".into());
+        let detail = format!(
+            "  {:?} on {} ({:?})",
+            w.widget_type, parent_name, w.name
+        );
+        let key = parent_key.unwrap_or_else(|| "(no key)".into());
+        unanchored_keys.entry(key).or_default().push(detail);
+    }
+    let mut kv: Vec<_> = unanchored_keys
+        .iter()
+        .map(|(k, v)| (k.clone(), v.len()))
+        .collect();
+    kv.sort_by(|a, b| b.1.cmp(&a.1));
+    eprintln!("Anchored: {anchored}, Unanchored: {unanchored}");
+    eprintln!("Top unanchored keys: {:?}", &kv[..kv.len().min(15)]);
+    // Show first 3 examples for top 5 keys
+    for (key, _) in kv.iter().take(5) {
+        if let Some(details) = unanchored_keys.get(key) {
+            eprintln!("  {}:", key);
+            for d in details.iter().take(3) {
+                eprintln!("  {}", d);
+            }
+        }
+    }
+    // Break down "(no key)" by widget type
+    if let Some(no_key) = unanchored_keys.get("(no key)") {
+        let mut by_type: std::collections::HashMap<String, usize> =
+            std::collections::HashMap::new();
+        for d in no_key {
+            let wtype = d.trim().split(' ').next().unwrap_or("?");
+            *by_type.entry(wtype.to_string()).or_default() += 1;
+        }
+        let mut tv: Vec<_> = by_type.iter().collect();
+        tv.sort_by(|a, b| b.1.cmp(a.1));
+        eprintln!("  (no key) by type: {:?}", tv);
+    }
+}
+
+/// Find the parentKey name for a widget in its parent's children_keys.
+fn find_parent_key(
+    widgets: &wow_ui_sim::widget::WidgetRegistry,
+    w: &wow_ui_sim::widget::Frame,
+    id: u64,
+) -> Option<String> {
+    let pid = w.parent_id?;
+    let p = widgets.get(pid)?;
+    p.children_keys
+        .iter()
+        .find(|(_, cid)| **cid == id)
+        .map(|(k, _)| k.clone())
 }
 
 /// Recursively print a frame and its children.
@@ -719,7 +793,6 @@ fn screenshot_standalone(
     use wow_ui_sim::render::GlyphAtlas;
 
     let (env, font_system) = create_standalone_env(no_addons, no_saved_vars);
-    init_addon_list(&env);
     run_debug_script(&env);
 
     let mut glyph_atlas = GlyphAtlas::new();
@@ -747,19 +820,6 @@ fn screenshot_standalone(
     }
 
     eprintln!("Saved {}x{} screenshot to {}", width, height, output.display());
-}
-
-/// Show and populate AddonList (matches main.rs GUI init).
-fn init_addon_list(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if AddonList and AddonListMixin then
-            pcall(function() AddonListMixin.OnLoad(AddonList) end)
-            AddonList:Show()
-            if AddonList_Update then pcall(AddonList_Update) end
-        end
-        "#,
-    );
 }
 
 /// Run optional debug Lua script for screenshot debugging.

@@ -512,6 +512,11 @@ impl App {
                 let _ = respond.send(Err("Submit not implemented".to_string()));
                 None
             }
+            DebugCommand::Key { key, respond } => {
+                self.handle_key_press(&key);
+                let _ = respond.send(Ok(()));
+                None
+            }
             DebugCommand::Screenshot { respond } => {
                 // Store the responder and initiate screenshot
                 self.pending_screenshot = Some(respond);

@@ -252,8 +252,7 @@ const TEXTURE_METHODS: &[&str] = &[
     "SetHorizTile", "GetHorizTile", "SetVertTile", "GetVertTile",
     "SetNonBlocking", "GetNonBlocking", "SetBlockingLoadsRequested",
     "IsBlockingLoadRequested", "GetNumRegionsByLayer", "GetRegionsByLayer",
-    "GetNumChildren", "PlaySoundFile", "ClearNineSlice", "ApplyLayout",
-    "MarkDirty", "IsLayoutFrame", "AddLayoutChildren", "ClearLayout",
+    "GetNumChildren", "PlaySoundFile", "ClearNineSlice",
     "SetAutomaticFrameLevelEnabled", "IsAutomaticFrameLevelEnabled",
 ];
 

@@ -387,49 +387,9 @@ fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
 
 /// Run post-load Lua test scripts and debug hooks.
 fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Error>> {
-    env.exec(
-        r#"
-        local num = C_AddOns.GetNumAddOns()
-        print("C_AddOns.GetNumAddOns() =", num)
-        if num > 0 then
-            for i = 1, math.min(5, num) do
-                local name, title = C_AddOns.GetAddOnInfo(i)
-                print(string.format("  [%d] %s - %s", i, tostring(name), tostring(title)))
-            end
-        end
-
-        print("AddonList type:", type(AddonList))
-        print("AddonListMixin type:", type(AddonListMixin))
-        print("AddonList_Update type:", type(AddonList_Update))
-        print("CreateTreeDataProvider type:", type(CreateTreeDataProvider))
-        print("CreateScrollBoxListTreeListView type:", type(CreateScrollBoxListTreeListView))
-        print("ScrollUtil type:", type(ScrollUtil))
-        "#,
-    )?;
-
-    env.exec(
-        r#"
-        if AddonList and AddonListMixin then
-            local ok, err = pcall(function()
-                AddonListMixin.OnLoad(AddonList)
-            end)
-            if not ok then
-                print("[AddonList] OnLoad error:", err)
-            end
-            AddonList:Show()
-            if AddonList_Update then
-                local updateOk, updateErr = pcall(AddonList_Update)
-                if updateOk then
-                    print("[AddonList] Initialized and updated successfully")
-                else
-                    print("[AddonList] Update error:", updateErr)
-                end
-            end
-        else
-            print("[AddonList] AddonList or AddonListMixin not found")
-        end
-        "#,
-    )?;
+    // Override functions that Blizzard code defines but depend on unimplemented systems.
+    // These must run after addon loading since Blizzard code overwrites our Rust stubs.
+    let _ = env.exec("UpdateMicroButtons = function() end");
 
     let debug_script = PathBuf::from("/tmp/debug-scrollbox-update.lua");
     if debug_script.exists() {

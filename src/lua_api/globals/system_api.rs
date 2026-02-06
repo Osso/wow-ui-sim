@@ -7,14 +7,17 @@
 //! - `SlashCmdList` - Slash command registry table
 //! - `FireEvent()` - Simulator utility to fire events for testing
 //! - `ReloadUI()` - Reload the interface (fires startup events again)
+//! - `GetTime()` - Returns seconds since UI load
 //! - Build type checks: `IsPublicTestClient()`, `IsBetaBuild()`, `IsPublicBuild()`
 //! - Battle.net stubs: `BNFeaturesEnabled()`, `BNConnected()`, etc.
+//! - Streaming stubs: `GetFileStreamingStatus()`, `GetBackgroundLoadingStatus()`
 
 use crate::lua_api::frame::FrameHandle;
 use crate::lua_api::SimState;
 use mlua::{Lua, Result, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::time::Instant;
 
 /// Register system utility functions in the Lua global namespace.
 pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
@@ -26,6 +29,9 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_build_type_checks(lua)?;
     register_battlenet_stubs(lua)?;
     register_secure_stubs(lua)?;
+    register_time_functions(lua)?;
+    register_streaming_stubs(lua)?;
+    register_error_callstack_stubs(lua)?;
     Ok(())
 }
 
@@ -323,4 +329,30 @@ fn register_c_widget(lua: &Lua) -> Result<mlua::Table> {
     t.set("IsRenderableWidget", lua.create_function(|_, _widget: Value| Ok(false))?)?;
     t.set("IsWidget", lua.create_function(|_, _widget: Value| Ok(false))?)?;
     Ok(t)
+}
+
+/// Register `GetTime()` - returns seconds since UI load.
+fn register_time_functions(lua: &Lua) -> Result<()> {
+    let start = Instant::now();
+    let get_time = lua.create_function(move |_, ()| {
+        Ok(start.elapsed().as_secs_f64())
+    })?;
+    lua.globals().set("GetTime", get_time)?;
+    Ok(())
+}
+
+/// Register streaming status stubs (simulator has no streaming).
+fn register_streaming_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    globals.set("GetFileStreamingStatus", lua.create_function(|_, ()| Ok(0i32))?)?;
+    globals.set("GetBackgroundLoadingStatus", lua.create_function(|_, ()| Ok(0i32))?)?;
+    Ok(())
+}
+
+/// Register error callstack height stubs (used by ErrorUtil.lua).
+fn register_error_callstack_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    globals.set("GetCallstackHeight", lua.create_function(|_, ()| Ok(2i32))?)?;
+    globals.set("SetErrorCallstackHeight", lua.create_function(|_, _height: i32| Ok(()))?)?;
+    Ok(())
 }
