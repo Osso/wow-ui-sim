@@ -88,6 +88,7 @@ fn resolve_frame_name(frame: &crate::xml::FrameXml, parent_override: Option<&str
 }
 
 /// Build the initial `CreateFrame(...)` Lua code.
+/// If a frame with the same name already exists in globals, reuse it (WoW XML loader behavior).
 fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits: &str) -> String {
     let inherits_arg = if inherits.is_empty() {
         "nil".to_string()
@@ -96,9 +97,11 @@ fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits
     };
     format!(
         r#"
-        local frame = CreateFrame("{}", "{}", {}, {})
+        local frame = _G["{name}"]
+        if not frame then
+            frame = CreateFrame("{widget_type}", "{name}", {parent}, {inherits_arg})
+        end
         "#,
-        widget_type, name, parent, inherits_arg
     )
 }
 

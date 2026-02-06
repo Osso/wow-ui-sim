@@ -89,134 +89,57 @@ pub fn register_c_misc_api(lua: &Lua) -> Result<()> {
     register_c_player_interaction_manager(lua)?;
     register_c_paper_doll_info(lua)?;
     register_c_perks_program(lua)?;
+    register_tooltip_data_processor(lua)?;
+    Ok(())
+}
 
-    // TooltipDataProcessor - global for registering tooltip post-processing callbacks
-    let tooltip_data_processor = lua.create_table()?;
-    tooltip_data_processor.set(
+fn register_tooltip_data_processor(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "AddTooltipPostCall",
         lua.create_function(|_, (_data_type, _callback): (Option<i32>, mlua::Function)| Ok(()))?,
     )?;
-    globals.set("TooltipDataProcessor", tooltip_data_processor)?;
-
+    lua.globals().set("TooltipDataProcessor", t)?;
     Ok(())
 }
 
 fn register_c_scenario_info(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-    let c_scenario_info = lua.create_table()?;
-
-    c_scenario_info.set(
-        "GetScenarioInfo",
-        lua.create_function(|_, ()| {
-            Ok(mlua::MultiValue::from_vec(vec![
-                Value::Nil,
-                Value::Integer(0),
-                Value::Integer(0),
-                Value::Integer(0),
-                Value::Boolean(false),
-                Value::Boolean(false),
-            ]))
-        })?,
-    )?;
-    c_scenario_info.set(
-        "GetScenarioStepInfo",
-        lua.create_function(|_, _step: Option<i32>| {
-            Ok((Value::Nil, Value::Nil, Value::Integer(0), Value::Integer(0)))
-        })?,
-    )?;
-    c_scenario_info.set(
-        "GetCriteriaInfo",
-        lua.create_function(|_, _criteria_index: i32| {
-            Ok((
-                Value::Nil,
-                Value::Nil,
-                Value::Boolean(false),
-                Value::Integer(0),
-                Value::Integer(0),
-            ))
-        })?,
-    )?;
-    c_scenario_info.set(
-        "GetCriteriaInfoByStep",
-        lua.create_function(|_, (_step, _criteria): (i32, i32)| {
-            Ok((
-                Value::Nil,
-                Value::Nil,
-                Value::Boolean(false),
-                Value::Integer(0),
-                Value::Integer(0),
-            ))
-        })?,
-    )?;
-    c_scenario_info.set(
-        "IsInScenario",
-        lua.create_function(|_, ()| Ok(false))?,
-    )?;
-
-    globals.set("C_ScenarioInfo", c_scenario_info)?;
+    let t = lua.create_table()?;
+    t.set("GetScenarioInfo", lua.create_function(|_, ()| {
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::Nil, Value::Integer(0), Value::Integer(0),
+            Value::Integer(0), Value::Boolean(false), Value::Boolean(false),
+        ]))
+    })?)?;
+    t.set("GetScenarioStepInfo", lua.create_function(|_, _step: Option<i32>| {
+        Ok((Value::Nil, Value::Nil, Value::Integer(0), Value::Integer(0)))
+    })?)?;
+    let criteria_stub = lua.create_function(|_, _args: mlua::MultiValue| {
+        Ok((Value::Nil, Value::Nil, Value::Boolean(false), Value::Integer(0), Value::Integer(0)))
+    })?;
+    t.set("GetCriteriaInfo", criteria_stub.clone())?;
+    t.set("GetCriteriaInfoByStep", criteria_stub)?;
+    t.set("IsInScenario", lua.create_function(|_, ()| Ok(false))?)?;
+    lua.globals().set("C_ScenarioInfo", t)?;
     Ok(())
 }
 
 fn register_c_tooltip_info(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-    let c_tooltip_info = lua.create_table()?;
-
-    c_tooltip_info.set(
-        "GetItemByID",
-        lua.create_function(|lua, _item_id: i32| {
+    let t = lua.create_table()?;
+    // All tooltip getters return {type=N, lines={}} stub
+    for (name, type_id) in &[
+        ("GetItemByID", 1), ("GetItemByGUID", 1), ("GetBagItem", 1),
+        ("GetSpellByID", 2), ("GetUnit", 3), ("GetHyperlink", 1),
+    ] {
+        let tid = *type_id;
+        t.set(*name, lua.create_function(move |lua, _args: mlua::MultiValue| {
             let info = lua.create_table()?;
-            info.set("type", 1)?;
+            info.set("type", tid)?;
             info.set("lines", lua.create_table()?)?;
             Ok(info)
-        })?,
-    )?;
-    c_tooltip_info.set(
-        "GetItemByGUID",
-        lua.create_function(|lua, _item_guid: String| {
-            let info = lua.create_table()?;
-            info.set("type", 1)?;
-            info.set("lines", lua.create_table()?)?;
-            Ok(info)
-        })?,
-    )?;
-    c_tooltip_info.set(
-        "GetBagItem",
-        lua.create_function(|lua, (_bag, _slot): (i32, i32)| {
-            let info = lua.create_table()?;
-            info.set("type", 1)?;
-            info.set("lines", lua.create_table()?)?;
-            Ok(info)
-        })?,
-    )?;
-    c_tooltip_info.set(
-        "GetSpellByID",
-        lua.create_function(|lua, _spell_id: i32| {
-            let info = lua.create_table()?;
-            info.set("type", 2)?;
-            info.set("lines", lua.create_table()?)?;
-            Ok(info)
-        })?,
-    )?;
-    c_tooltip_info.set(
-        "GetUnit",
-        lua.create_function(|lua, _unit: String| {
-            let info = lua.create_table()?;
-            info.set("type", 3)?;
-            info.set("lines", lua.create_table()?)?;
-            Ok(info)
-        })?,
-    )?;
-    c_tooltip_info.set(
-        "GetHyperlink",
-        lua.create_function(|lua, _link: String| {
-            let info = lua.create_table()?;
-            info.set("type", 1)?;
-            info.set("lines", lua.create_table()?)?;
-            Ok(info)
-        })?,
-    )?;
-
-    globals.set("C_TooltipInfo", c_tooltip_info)?;
+        })?)?;
+    }
+    lua.globals().set("C_TooltipInfo", t)?;
     Ok(())
 }
 
@@ -317,59 +240,31 @@ fn register_c_trade_skill(lua: &Lua) -> Result<()> {
 }
 
 fn register_c_mythic_plus(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-    let c_mythic_plus = lua.create_table()?;
+    let t = lua.create_table()?;
+    register_mythic_plus_keystone(lua, &t)?;
+    register_mythic_plus_season(lua, &t)?;
+    lua.globals().set("C_MythicPlus", t)?;
+    Ok(())
+}
 
-    c_mythic_plus.set(
-        "GetRunHistory",
-        lua.create_function(
-            |lua, (_include_prev_weeks, _include_incomplete): (Option<bool>, Option<bool>)| {
-                lua.create_table()
-            },
-        )?,
-    )?;
-    c_mythic_plus.set(
-        "GetOwnedKeystoneLevel",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_mythic_plus.set(
-        "GetOwnedKeystoneChallengeMapID",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_mythic_plus.set(
-        "GetOwnedKeystoneMapID",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_mythic_plus.set(
-        "GetCurrentAffixes",
-        lua.create_function(|lua, ()| lua.create_table())?,
-    )?;
-    c_mythic_plus.set(
-        "GetSeasonInfo",
-        lua.create_function(|_, ()| Ok((1i32, 0i32, 0i32)))?,
-    )?;
-    c_mythic_plus.set(
-        "GetCurrentSeason",
-        lua.create_function(|_, ()| Ok(1i32))?,
-    )?;
-    c_mythic_plus.set(
-        "GetRewardLevelFromKeystoneLevel",
-        lua.create_function(|_, _keystone_level: i32| Ok(0i32))?,
-    )?;
-    c_mythic_plus.set(
-        "GetWeeklyBestForMap",
-        lua.create_function(|_, _map_challenge_mode_id: i32| Ok(Value::Nil))?,
-    )?;
-    c_mythic_plus.set(
-        "GetOverallDungeonScore",
-        lua.create_function(|_, ()| Ok(0.0_f64))?,
-    )?;
-    c_mythic_plus.set(
-        "IsMythicPlusActive",
-        lua.create_function(|_, ()| Ok(false))?,
-    )?;
+fn register_mythic_plus_keystone(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetRunHistory", lua.create_function(
+        |lua, _args: mlua::MultiValue| lua.create_table(),
+    )?)?;
+    t.set("GetOwnedKeystoneLevel", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetOwnedKeystoneChallengeMapID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetOwnedKeystoneMapID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetCurrentAffixes", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetRewardLevelFromKeystoneLevel", lua.create_function(|_, _level: i32| Ok(0i32))?)?;
+    t.set("GetWeeklyBestForMap", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    Ok(())
+}
 
-    globals.set("C_MythicPlus", c_mythic_plus)?;
+fn register_mythic_plus_season(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetSeasonInfo", lua.create_function(|_, ()| Ok((1i32, 0i32, 0i32)))?)?;
+    t.set("GetCurrentSeason", lua.create_function(|_, ()| Ok(1i32))?)?;
+    t.set("GetOverallDungeonScore", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    t.set("IsMythicPlusActive", lua.create_function(|_, ()| Ok(false))?)?;
     Ok(())
 }
 
@@ -510,58 +405,32 @@ fn register_c_player_info(lua: &Lua) -> Result<()> {
 }
 
 fn register_c_party_info(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-    let c_party_info = lua.create_table()?;
+    let t = lua.create_table()?;
+    register_party_invite_stubs(lua, &t)?;
+    register_party_management_stubs(lua, &t)?;
+    lua.globals().set("C_PartyInfo", t)?;
+    Ok(())
+}
 
-    c_party_info.set(
-        "GetActiveCategories",
-        lua.create_function(|lua, ()| lua.create_table())?,
-    )?;
-    c_party_info.set(
-        "GetInviteConfirmationInfo",
-        lua.create_function(|_, _invite_guid: String| Ok(Value::Nil))?,
-    )?;
-    c_party_info.set(
-        "GetInviteReferralInfo",
-        lua.create_function(|_, _invite_guid: String| Ok(Value::Nil))?,
-    )?;
-    c_party_info.set(
-        "ConfirmInviteUnit",
-        lua.create_function(|_, _invite_guid: String| Ok(()))?,
-    )?;
-    c_party_info.set(
-        "DeclineInviteUnit",
-        lua.create_function(|_, _invite_guid: String| Ok(()))?,
-    )?;
-    c_party_info.set(
-        "IsPartyFull",
-        lua.create_function(|_, _category: Option<i32>| Ok(false))?,
-    )?;
-    c_party_info.set(
-        "AllowedToDoPartyConversion",
-        lua.create_function(|_, _to_raid: bool| Ok(true))?,
-    )?;
-    c_party_info.set("CanInvite", lua.create_function(|_, ()| Ok(true))?)?;
-    c_party_info.set(
-        "InviteUnit",
-        lua.create_function(|_, _name: String| Ok(()))?,
-    )?;
-    c_party_info.set(
-        "LeaveParty",
-        lua.create_function(|_, _category: Option<i32>| Ok(()))?,
-    )?;
-    c_party_info.set("ConvertToParty", lua.create_function(|_, ()| Ok(()))?)?;
-    c_party_info.set("ConvertToRaid", lua.create_function(|_, ()| Ok(()))?)?;
-    c_party_info.set(
-        "GetMinLevel",
-        lua.create_function(|_, _category: Option<i32>| Ok(1i32))?,
-    )?;
-    c_party_info.set(
-        "GetGatheringRequestInfo",
-        lua.create_function(|_, ()| Ok(Value::Nil))?,
-    )?;
+fn register_party_invite_stubs(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetActiveCategories", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetInviteConfirmationInfo", lua.create_function(|_, _g: String| Ok(Value::Nil))?)?;
+    t.set("GetInviteReferralInfo", lua.create_function(|_, _g: String| Ok(Value::Nil))?)?;
+    t.set("ConfirmInviteUnit", lua.create_function(|_, _g: String| Ok(()))?)?;
+    t.set("DeclineInviteUnit", lua.create_function(|_, _g: String| Ok(()))?)?;
+    t.set("IsPartyFull", lua.create_function(|_, _cat: Option<i32>| Ok(false))?)?;
+    t.set("CanInvite", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set("InviteUnit", lua.create_function(|_, _name: String| Ok(()))?)?;
+    Ok(())
+}
 
-    globals.set("C_PartyInfo", c_party_info)?;
+fn register_party_management_stubs(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("AllowedToDoPartyConversion", lua.create_function(|_, _r: bool| Ok(true))?)?;
+    t.set("LeaveParty", lua.create_function(|_, _cat: Option<i32>| Ok(()))?)?;
+    t.set("ConvertToParty", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("ConvertToRaid", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("GetMinLevel", lua.create_function(|_, _cat: Option<i32>| Ok(1i32))?)?;
+    t.set("GetGatheringRequestInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     Ok(())
 }
 
@@ -815,60 +684,46 @@ fn register_c_unit_auras(lua: &Lua) -> Result<()> {
 }
 
 fn register_c_currency_info(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-    let c_currency_info = lua.create_table()?;
+    let t = lua.create_table()?;
+    register_currency_lookup_stubs(lua, &t)?;
+    register_currency_list_stubs(lua, &t)?;
+    lua.globals().set("C_CurrencyInfo", t)?;
+    Ok(())
+}
 
-    c_currency_info.set(
-        "GetCurrencyInfo",
-        lua.create_function(|lua, currency_id: i32| {
-            let info = lua.create_table()?;
-            info.set("name", format!("Currency {}", currency_id))?;
-            info.set("currencyID", currency_id)?;
-            info.set("quantity", 0)?;
-            info.set("maxQuantity", 0)?;
-            info.set("quality", 1)?;
-            info.set("iconFileID", 0)?;
-            info.set("discovered", false)?;
-            info.set("isAccountWide", false)?;
-            info.set("isAccountTransferable", false)?;
-            info.set("transferPercentage", 0)?;
-            Ok(Value::Table(info))
-        })?,
-    )?;
-    c_currency_info.set(
-        "GetCurrencyInfoFromLink",
-        lua.create_function(|_, _link: String| Ok(Value::Nil))?,
-    )?;
-    c_currency_info.set(
-        "GetCurrencyListSize",
-        lua.create_function(|_, ()| Ok(0))?,
-    )?;
-    c_currency_info.set(
-        "GetCurrencyListInfo",
-        lua.create_function(|_, _index: i32| Ok(Value::Nil))?,
-    )?;
-    c_currency_info.set(
-        "GetWarResourcesCurrencyID",
-        lua.create_function(|_, ()| Ok(1560))?,
-    )?;
-    c_currency_info.set(
-        "GetAzeriteCurrencyID",
-        lua.create_function(|_, ()| Ok(1553))?,
-    )?;
-    c_currency_info.set(
-        "GetBasicCurrencyInfo",
-        lua.create_function(|lua, (currency_id, _quantity): (i32, Option<i32>)| {
-            let info = lua.create_table()?;
-            info.set("name", format!("Currency {}", currency_id))?;
-            info.set("currencyID", currency_id)?;
-            info.set("quantity", 0)?;
-            info.set("iconFileID", 0)?;
-            info.set("displayAmount", 0)?;
-            Ok(Value::Table(info))
-        })?,
-    )?;
+fn register_currency_lookup_stubs(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetCurrencyInfo", lua.create_function(|lua, currency_id: i32| {
+        let info = lua.create_table()?;
+        info.set("name", format!("Currency {}", currency_id))?;
+        info.set("currencyID", currency_id)?;
+        info.set("quantity", 0)?;
+        info.set("maxQuantity", 0)?;
+        info.set("quality", 1)?;
+        info.set("iconFileID", 0)?;
+        info.set("discovered", false)?;
+        info.set("isAccountWide", false)?;
+        info.set("isAccountTransferable", false)?;
+        info.set("transferPercentage", 0)?;
+        Ok(Value::Table(info))
+    })?)?;
+    t.set("GetBasicCurrencyInfo", lua.create_function(|lua, (cid, _qty): (i32, Option<i32>)| {
+        let info = lua.create_table()?;
+        info.set("name", format!("Currency {}", cid))?;
+        info.set("currencyID", cid)?;
+        info.set("quantity", 0)?;
+        info.set("iconFileID", 0)?;
+        info.set("displayAmount", 0)?;
+        Ok(Value::Table(info))
+    })?)?;
+    t.set("GetCurrencyInfoFromLink", lua.create_function(|_, _link: String| Ok(Value::Nil))?)?;
+    Ok(())
+}
 
-    globals.set("C_CurrencyInfo", c_currency_info)?;
+fn register_currency_list_stubs(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetCurrencyListSize", lua.create_function(|_, ()| Ok(0))?)?;
+    t.set("GetCurrencyListInfo", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
+    t.set("GetWarResourcesCurrencyID", lua.create_function(|_, ()| Ok(1560))?)?;
+    t.set("GetAzeriteCurrencyID", lua.create_function(|_, ()| Ok(1553))?)?;
     Ok(())
 }
 
@@ -1394,7 +1249,7 @@ fn register_c_class_color(lua: &Lua) -> Result<()> {
             })?;
             color.set("GenerateHexColor", generate_hex)?;
 
-            let wrap_text = lua.create_function(move |lua, text: String| {
+            let wrap_text = lua.create_function(move |lua, (_self, text): (Value, String)| {
                 let hex = format!(
                     "{:02x}{:02x}{:02x}",
                     (r * 255.0) as u8,

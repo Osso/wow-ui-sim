@@ -254,7 +254,11 @@ pub const UI_WIDGET_TOOLTIP_LOCATION: SeqEnumDef = (
 
 pub const UI_WIDGET_TEXT_SIZE_TYPE: EnumDef = (
     "UIWidgetTextSizeType",
-    &[("Small", 0), ("Medium", 1), ("Large", 2), ("Huge", 3), ("Standard", 4)],
+    &[
+        ("Small12Pt", 0), ("Medium16Pt", 1), ("Large24Pt", 2), ("Huge27Pt", 3),
+        ("Standard14Pt", 4), ("Small10Pt", 5), ("Small11Pt", 6), ("Medium18Pt", 7),
+        ("Large20Pt", 8),
+    ],
 );
 
 pub const UI_WIDGET_FLAG: EnumDef = (
@@ -612,7 +616,7 @@ pub const UI_WIDGET_BUTTON_ENABLED_STATE: SeqEnumDef = (
 
 pub const UI_WIDGET_BUTTON_ICON_TYPE: SeqEnumDef = (
     "UIWidgetButtonIconType",
-    &["None", "Expand", "Collapse"],
+    &["Exit", "Speak", "Undo", "Checkmark", "RedX"],
 );
 
 pub const UI_WIDGET_HORIZONTAL_DIRECTION: SeqEnumDef = (
