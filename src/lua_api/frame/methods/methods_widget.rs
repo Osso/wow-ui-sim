@@ -1,6 +1,7 @@
 //! Widget-specific methods: GameTooltip, EditBox, Slider, StatusBar, CheckButton,
 //! Cooldown, ScrollFrame, Model, ColorSelect, dragging/moving, ScrollBox.
 
+use super::methods_helpers::get_mixin_override;
 use super::FrameHandle;
 use crate::lua_api::tooltip::TooltipLine;
 use crate::widget::{AttributeValue, Frame, WidgetType};
@@ -453,20 +454,41 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // SetPadding(padding) / GetPadding()
-    methods.add_method("SetPadding", |_, this, padding: f32| {
+    // These check for Lua mixin overrides first (e.g., ScrollBoxBaseMixin:GetPadding)
+    // because Rust add_method methods shadow mixin methods stored in __frame_fields.
+    methods.add_method("SetPadding", |lua, this, args: mlua::MultiValue| {
+        if let Some((func, ud)) = get_mixin_override(lua, this.id, "SetPadding") {
+            let mut call_args = vec![ud];
+            call_args.extend(args);
+            return func.call::<()>(mlua::MultiValue::from_iter(call_args));
+        }
+        let padding = args
+            .into_iter()
+            .next()
+            .and_then(|v| match v {
+                Value::Number(n) => Some(n as f32),
+                Value::Integer(n) => Some(n as f32),
+                _ => None,
+            })
+            .unwrap_or(0.0);
         let mut state = this.state.borrow_mut();
         if let Some(td) = state.tooltips.get_mut(&this.id) {
             td.padding = padding;
         }
         Ok(())
     });
-    methods.add_method("GetPadding", |_, this, ()| {
+    methods.add_method("GetPadding", |lua, this, ()| -> Result<Value> {
+        if let Some((func, ud)) = get_mixin_override(lua, this.id, "GetPadding") {
+            return func.call::<Value>(ud);
+        }
         let state = this.state.borrow();
-        Ok(state
-            .tooltips
-            .get(&this.id)
-            .map(|td| td.padding)
-            .unwrap_or(0.0))
+        Ok(Value::Number(
+            state
+                .tooltips
+                .get(&this.id)
+                .map(|td| td.padding as f64)
+                .unwrap_or(0.0),
+        ))
     });
 
     // AddTexture(texture) - Add a texture to the tooltip (stub)

@@ -237,6 +237,55 @@ impl WowLuaEnv {
         self.state.borrow_mut().addons.push(info);
     }
 
+    /// Scan an addons directory and register all found addons (metadata only, no loading).
+    pub fn scan_and_register_addons(&self, addons_path: &std::path::Path) {
+        use crate::toc::TocFile;
+        let entries = match std::fs::read_dir(addons_path) {
+            Ok(e) => e,
+            Err(_) => return,
+        };
+        let mut addons: Vec<AddonInfo> = Vec::new();
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if !path.is_dir() {
+                continue;
+            }
+            let name = path.file_name().unwrap().to_str().unwrap().to_string();
+            if name.starts_with('.') || name == "wow-ui-source" {
+                continue;
+            }
+            // Find TOC file
+            let toc_path = crate::loader::find_toc_file(&path);
+            let Some(toc_path) = toc_path else { continue };
+            let toc = TocFile::from_file(&toc_path).ok();
+            let (title, notes, load_on_demand) = toc
+                .as_ref()
+                .map(|t| {
+                    let title = t.metadata.get("Title").cloned().unwrap_or_else(|| name.clone());
+                    let notes = t.metadata.get("Notes").cloned().unwrap_or_default();
+                    let lod = t.metadata.get("LoadOnDemand").map(|v| v == "1").unwrap_or(false);
+                    (title, notes, lod)
+                })
+                .unwrap_or_else(|| (name.clone(), String::new(), false));
+            addons.push(AddonInfo {
+                folder_name: name,
+                title,
+                notes,
+                enabled: true,
+                loaded: false,
+                load_on_demand,
+            });
+        }
+        addons.sort_by(|a, b| a.folder_name.to_lowercase().cmp(&b.folder_name.to_lowercase()));
+        let mut state = self.state.borrow_mut();
+        for addon in addons {
+            // Don't register duplicates (Blizzard addons may already be registered)
+            if !state.addons.iter().any(|a| a.folder_name == addon.folder_name) {
+                state.addons.push(addon);
+            }
+        }
+    }
+
     /// Schedule a timer callback.
     pub fn schedule_timer(
         &self,

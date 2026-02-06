@@ -1,6 +1,34 @@
 //! Helper functions for frame methods.
 
 use crate::widget::{Anchor, AnchorPoint, Frame, WidgetType};
+use mlua::{Lua, Value};
+
+/// Check if a Lua mixin override exists for the given method on a frame.
+///
+/// When Blizzard's Mixin() applies a mixin table to a FrameHandle, methods are stored
+/// in `__frame_fields[frame_id]`. Rust UserData methods (via add_method) are resolved
+/// before `__index`, so they shadow mixin methods. This helper allows Rust methods to
+/// detect and delegate to mixin overrides.
+///
+/// Returns `(function, frame_userdata)` if an override exists, None otherwise.
+pub fn get_mixin_override(
+    lua: &Lua,
+    frame_id: u64,
+    method_name: &str,
+) -> Option<(mlua::Function, Value)> {
+    let fields_table = lua
+        .globals()
+        .get::<mlua::Table>("__frame_fields")
+        .ok()?;
+    let frame_fields = fields_table.get::<mlua::Table>(frame_id).ok()?;
+    let func = match frame_fields.get::<Value>(method_name) {
+        Ok(Value::Function(f)) => f,
+        _ => return None,
+    };
+    let frame_key = format!("__frame_{}", frame_id);
+    let ud = lua.globals().get::<Value>(&*frame_key).ok()?;
+    Some((func, ud))
+}
 
 /// Calculate frame width from anchors or explicit size (recursive).
 /// WoW behavior: anchors defining opposite edges override explicit size.

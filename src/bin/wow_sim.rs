@@ -455,6 +455,12 @@ fn dump_standalone(
         eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
     }
 
+    // Scan and register all addons (metadata only) so C_AddOns.GetNumAddOns() works
+    let addons_path = dirs::home_dir()
+        .unwrap_or_default()
+        .join("Projects/wow/reference-addons");
+    env.scan_and_register_addons(&addons_path);
+
     // Dump the frame tree
     let state = env.state().borrow();
     let widgets = &state.widgets;
@@ -612,6 +618,12 @@ fn screenshot_standalone(
     } else {
         eprintln!("Warning: Blizzard UI path not found: {}", wow_ui_path.display());
     }
+
+    // Scan and register all addons (metadata only) so C_AddOns.GetNumAddOns() works
+    let addons_path = dirs::home_dir()
+        .unwrap_or_default()
+        .join("Projects/wow/reference-addons");
+    env.scan_and_register_addons(&addons_path);
 
     // Run debug script if it exists
     let debug_script = PathBuf::from("/tmp/debug-screenshot.lua");

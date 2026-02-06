@@ -76,38 +76,7 @@ fn apply_resource_limits() {
 
 /// Find the best .toc file for an addon directory (prefer _Mainline.toc for retail)
 fn find_toc_file(addon_dir: &PathBuf) -> Option<PathBuf> {
-    let addon_name = addon_dir.file_name()?.to_str()?;
-
-    // Priority order for retail WoW
-    let toc_variants = [
-        format!("{}_Mainline.toc", addon_name),
-        format!("{}.toc", addon_name),
-    ];
-
-    for variant in &toc_variants {
-        let toc_path = addon_dir.join(variant);
-        if toc_path.exists() {
-            return Some(toc_path);
-        }
-    }
-
-    // Fallback: find any .toc file
-    if let Ok(entries) = std::fs::read_dir(addon_dir) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.extension().map(|e| e == "toc").unwrap_or(false) {
-                // Skip non-mainline variants
-                let name = path.file_name().unwrap().to_str().unwrap();
-                if !name.contains("_Cata") && !name.contains("_Wrath") &&
-                   !name.contains("_TBC") && !name.contains("_Vanilla") &&
-                   !name.contains("_Mists") {
-                    return Some(path);
-                }
-            }
-        }
-    }
-
-    None
+    wow_ui_sim::loader::find_toc_file(addon_dir)
 }
 
 /// Scan reference-addons directory and return sorted list of addon directories

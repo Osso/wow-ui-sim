@@ -13,11 +13,45 @@ mod xml_texture;
 use crate::lua_api::WowLuaEnv;
 use crate::saved_variables::SavedVariablesManager;
 use crate::toc::TocFile;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 pub use error::LoadError;
 pub use xml_frame::create_frame_from_xml;
+
+/// Find the TOC file for an addon directory.
+/// Prefers Mainline variant, then exact name match, then any non-Classic TOC.
+pub fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
+    let addon_name = addon_dir.file_name()?.to_str()?;
+    let toc_variants = [
+        format!("{}_Mainline.toc", addon_name),
+        format!("{}.toc", addon_name),
+    ];
+    for variant in &toc_variants {
+        let toc_path = addon_dir.join(variant);
+        if toc_path.exists() {
+            return Some(toc_path);
+        }
+    }
+    // Fallback: find any .toc file (skip Classic/TBC/etc.)
+    if let Ok(entries) = std::fs::read_dir(addon_dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.extension().map(|e| e == "toc").unwrap_or(false) {
+                let name = path.file_name().unwrap().to_str().unwrap();
+                if !name.contains("_Cata")
+                    && !name.contains("_Wrath")
+                    && !name.contains("_TBC")
+                    && !name.contains("_Vanilla")
+                    && !name.contains("_Mists")
+                {
+                    return Some(path);
+                }
+            }
+        }
+    }
+    None
+}
 
 /// Result of loading an addon.
 #[derive(Debug)]
