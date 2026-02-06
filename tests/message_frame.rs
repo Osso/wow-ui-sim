@@ -232,3 +232,132 @@ fn test_insert_mode_top_prepends() {
         .unwrap();
     assert_eq!(text, "Second");
 }
+
+#[test]
+fn test_backfill_message_prepends() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFBack", UIParent)
+        f:AddMessage("First")
+        f:BackFillMessage("BackFilled")
+    "#,
+    )
+    .unwrap();
+
+    let count: i32 = env.eval("return TestMFBack:GetNumMessages()").unwrap();
+    assert_eq!(count, 2);
+
+    // BackFilled should be at index 1 (inserted at front)
+    let text: String = env
+        .eval("local t = TestMFBack:GetMessageInfo(1); return t")
+        .unwrap();
+    assert_eq!(text, "BackFilled");
+}
+
+#[test]
+fn test_fade_power_set_get() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFPower", UIParent)
+        f:SetFadePower(2.5)
+    "#,
+    )
+    .unwrap();
+
+    let power: f64 = env.eval("return TestMFPower:GetFadePower()").unwrap();
+    assert_eq!(power, 2.5);
+}
+
+#[test]
+fn test_scroll_offset_set_get() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFScroll", UIParent)
+        f:AddMessage("Line")
+        f:SetScrollOffset(5)
+    "#,
+    )
+    .unwrap();
+
+    let offset: i32 = env.eval("return TestMFScroll:GetScrollOffset()").unwrap();
+    assert_eq!(offset, 5);
+}
+
+#[test]
+fn test_scroll_allowed_set_get() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFScrollAllow", UIParent)
+        f:SetScrollAllowed(false)
+    "#,
+    )
+    .unwrap();
+
+    let allowed: bool = env
+        .eval("return TestMFScrollAllow:IsScrollAllowed()")
+        .unwrap();
+    assert!(!allowed);
+}
+
+#[test]
+fn test_text_copyable_set_get() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFCopy", UIParent)
+        f:SetTextCopyable(true)
+    "#,
+    )
+    .unwrap();
+
+    let copyable: bool = env.eval("return TestMFCopy:IsTextCopyable()").unwrap();
+    assert!(copyable);
+}
+
+#[test]
+fn test_has_message_by_id() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFByID", UIParent)
+        f:AddMessage("Tagged", 1, 1, 1, 1, 42)
+        f:AddMessage("Untagged")
+    "#,
+    )
+    .unwrap();
+
+    let has_42: bool = env.eval("return TestMFByID:HasMessageByID(42)").unwrap();
+    assert!(has_42, "Should find message with ID 42");
+
+    let has_99: bool = env.eval("return TestMFByID:HasMessageByID(99)").unwrap();
+    assert!(!has_99, "Should not find message with ID 99");
+}
+
+#[test]
+fn test_max_lines_truncates_existing() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFTrunc", UIParent)
+        f:AddMessage("One")
+        f:AddMessage("Two")
+        f:AddMessage("Three")
+        f:SetMaxLines(2)
+    "#,
+    )
+    .unwrap();
+
+    let count: i32 = env.eval("return TestMFTrunc:GetNumMessages()").unwrap();
+    assert_eq!(count, 2, "SetMaxLines should truncate existing messages");
+}

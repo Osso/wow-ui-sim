@@ -434,3 +434,175 @@ pub fn generate_scripts_code(scripts: &crate::xml::ScriptsXml) -> String {
         ("OnHide", scripts.on_hide.last()),
     ])
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_normalize_path_backslashes() {
+        assert_eq!(normalize_path("Interface\\Buttons\\UI-Button"), "Interface/Buttons/UI-Button");
+    }
+
+    #[test]
+    fn test_normalize_path_already_forward() {
+        assert_eq!(normalize_path("Interface/Buttons/UI-Button"), "Interface/Buttons/UI-Button");
+    }
+
+    #[test]
+    fn test_normalize_path_empty() {
+        assert_eq!(normalize_path(""), "");
+    }
+
+    #[test]
+    fn test_escape_lua_string_backslash() {
+        assert_eq!(escape_lua_string("a\\b"), "a\\\\b");
+    }
+
+    #[test]
+    fn test_escape_lua_string_quotes() {
+        assert_eq!(escape_lua_string(r#"say "hello""#), r#"say \"hello\""#);
+    }
+
+    #[test]
+    fn test_escape_lua_string_newlines() {
+        assert_eq!(escape_lua_string("line1\nline2\rline3"), "line1\\nline2\\rline3");
+    }
+
+    #[test]
+    fn test_escape_lua_string_combined() {
+        assert_eq!(escape_lua_string("a\\b\n\"c\""), "a\\\\b\\n\\\"c\\\"");
+    }
+
+    #[test]
+    fn test_resolve_child_name_with_parent() {
+        let name = resolve_child_name(Some("$parentTitle"), "MyFrame", "anon_");
+        assert_eq!(name, "MyFrameTitle");
+    }
+
+    #[test]
+    fn test_resolve_child_name_no_parent_placeholder() {
+        let name = resolve_child_name(Some("ExplicitName"), "MyFrame", "anon_");
+        assert_eq!(name, "ExplicitName");
+    }
+
+    #[test]
+    fn test_resolve_child_name_none_generates_prefix() {
+        let name = resolve_child_name(None, "MyFrame", "anon_");
+        assert!(name.starts_with("anon_"), "Should start with prefix, got: {}", name);
+    }
+
+    #[test]
+    fn test_resolve_relative_key_simple_name() {
+        let result = resolve_relative_key("ScrollFrame", "parent");
+        assert_eq!(result, "ScrollFrame");
+    }
+
+    #[test]
+    fn test_resolve_relative_key_parent() {
+        let result = resolve_relative_key("$parent", "parent");
+        assert_eq!(result, "parent");
+    }
+
+    #[test]
+    fn test_resolve_relative_key_parent_child() {
+        let result = resolve_relative_key("$parent.ScrollFrame", "parent");
+        assert_eq!(result, r#"parent["ScrollFrame"]"#);
+    }
+
+    #[test]
+    fn test_resolve_relative_key_double_parent() {
+        let result = resolve_relative_key("$parent.$parent.ScrollFrame", "parent");
+        assert_eq!(result, r#"parent:GetParent()["ScrollFrame"]"#);
+    }
+
+    #[test]
+    fn test_lua_opt_str_some() {
+        assert_eq!(lua_opt_str(Some("hello")), r#""hello""#);
+    }
+
+    #[test]
+    fn test_lua_opt_str_none() {
+        assert_eq!(lua_opt_str(None), "nil");
+    }
+
+    #[test]
+    fn test_lua_opt_str_empty() {
+        assert_eq!(lua_opt_str(Some("")), "nil");
+    }
+
+    #[test]
+    fn test_emit_num_call_some() {
+        let mut code = String::new();
+        emit_num_call(&mut code, "__anim", "SetDuration", Some(0.5));
+        assert!(code.contains("__anim:SetDuration(0.5)"));
+    }
+
+    #[test]
+    fn test_emit_num_call_none() {
+        let mut code = String::new();
+        emit_num_call(&mut code, "__anim", "SetDuration", None);
+        assert!(code.is_empty());
+    }
+
+    #[test]
+    fn test_emit_str_call_some() {
+        let mut code = String::new();
+        emit_str_call(&mut code, "__anim", "SetSmoothing", Some("IN_OUT"));
+        assert!(code.contains(r#"__anim:SetSmoothing("IN_OUT")"#));
+    }
+
+    #[test]
+    fn test_emit_pair_call_both() {
+        let mut code = String::new();
+        emit_pair_call(&mut code, "__anim", "SetOffset", Some(10.0), Some(20.0), 0.0);
+        assert!(code.contains("__anim:SetOffset(10, 20)"));
+    }
+
+    #[test]
+    fn test_emit_pair_call_one_only() {
+        let mut code = String::new();
+        emit_pair_call(&mut code, "__anim", "SetScale", Some(2.0), None, 1.0);
+        assert!(code.contains("__anim:SetScale(2, 1)"));
+    }
+
+    #[test]
+    fn test_emit_pair_call_none() {
+        let mut code = String::new();
+        emit_pair_call(&mut code, "__anim", "SetScale", None, None, 1.0);
+        assert!(code.is_empty());
+    }
+
+    #[test]
+    fn test_get_size_values_direct() {
+        let size = crate::xml::SizeXml {
+            x: Some(100.0),
+            y: Some(200.0),
+            abs_dimension: None,
+        };
+        assert_eq!(get_size_values(&size), (Some(100.0), Some(200.0)));
+    }
+
+    #[test]
+    fn test_get_size_values_abs_dimension() {
+        let size = crate::xml::SizeXml {
+            x: None,
+            y: None,
+            abs_dimension: Some(crate::xml::AbsDimensionXml {
+                x: Some(50.0),
+                y: Some(75.0),
+            }),
+        };
+        assert_eq!(get_size_values(&size), (Some(50.0), Some(75.0)));
+    }
+
+    #[test]
+    fn test_get_size_values_empty() {
+        let size = crate::xml::SizeXml {
+            x: None,
+            y: None,
+            abs_dimension: None,
+        };
+        assert_eq!(get_size_values(&size), (None, None));
+    }
+}

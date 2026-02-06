@@ -1,8 +1,9 @@
 //! App::update() method and related logic.
 
-use iced::{window, Task};
+use iced::{window, Point, Task};
 use iced_layout_inspector::server::{Command as DebugCommand, ScreenshotData};
 
+use crate::lua_api::WowLuaEnv;
 use crate::lua_server::{LuaCommand, Response as LuaResponse};
 
 use super::app::App;
@@ -12,355 +13,389 @@ use super::Message;
 impl App {
     pub fn update(&mut self, message: Message) -> Task<Message> {
         match message {
-            Message::FireEvent(event) => {
-                {
-                    let env = self.env.borrow();
-                    if let Err(e) = env.fire_event(&event) {
-                        self.log_messages.push(format!("Event error: {}", e));
-                    } else {
-                        self.log_messages.push(format!("Fired: {}", event));
-                    }
-                }
-                self.drain_console();
-                self.frame_cache.clear();
-                self.quads_dirty.set(true);
-            }
-            Message::CanvasEvent(canvas_msg) => match canvas_msg {
-                CanvasMessage::MouseMove(pos) => {
-                    self.mouse_position = Some(pos);
-                    let new_hovered = self.hit_test(pos);
-                    if new_hovered != self.hovered_frame {
-                        let errors = {
-                            let env = self.env.borrow();
-                            let mut errs = Vec::new();
-                            if let Some(old_id) = self.hovered_frame {
-                                if let Err(e) = env.fire_script_handler(old_id, "OnLeave", vec![]) {
-                                    errs.push(format_script_error(&env, old_id, "OnLeave", &e));
-                                }
-                            }
-                            if let Some(new_id) = new_hovered {
-                                if let Err(e) = env.fire_script_handler(new_id, "OnEnter", vec![]) {
-                                    errs.push(format_script_error(&env, new_id, "OnEnter", &e));
-                                }
-                            }
-                            errs
-                        };
-                        for msg in errors {
-                            eprintln!("{}", msg);
-                            self.log_messages.push(msg);
-                        }
-                        self.hovered_frame = new_hovered;
-                        self.drain_console();
-                        self.frame_cache.clear();
-                        self.quads_dirty.set(true);
-                    }
-                }
-                CanvasMessage::MouseDown(pos) => {
-                    if let Some(frame_id) = self.hit_test(pos) {
-                        // Check if button is disabled
-                        let is_enabled = {
-                            let env = self.env.borrow();
-                            let state = env.state().borrow();
-                            state
-                                .widgets
-                                .get(frame_id)
-                                .and_then(|f| f.attributes.get("__enabled"))
-                                .and_then(|v| {
-                                    if let crate::widget::AttributeValue::Boolean(b) = v {
-                                        Some(*b)
-                                    } else {
-                                        None
-                                    }
-                                })
-                                .unwrap_or(true)
-                        };
-                        if !is_enabled {
-                            return Task::none();
-                        }
-
-                        self.mouse_down_frame = Some(frame_id);
-                        self.pressed_frame = Some(frame_id);
-                        let error = {
-                            let env = self.env.borrow();
-                            let button_val =
-                                mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
-                            match env
-                                .fire_script_handler(frame_id, "OnMouseDown", vec![button_val])
-                            {
-                                Err(e) => {
-                                    Some(format_script_error(&env, frame_id, "OnMouseDown", &e))
-                                }
-                                Ok(_) => None,
-                            }
-                        };
-                        if let Some(msg) = error {
-                            eprintln!("{}", msg);
-                            self.log_messages.push(msg);
-                        }
-                        self.drain_console();
-                        self.frame_cache.clear();
-                        self.quads_dirty.set(true);
-                    }
-                }
-                CanvasMessage::MouseUp(pos) => {
-                    let released_on = self.hit_test(pos);
-                    if let Some(frame_id) = released_on {
-                        let errors = {
-                            let env = self.env.borrow();
-                            let mut errs = Vec::new();
-                            let button_val =
-                                mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
-
-                            if self.mouse_down_frame == Some(frame_id) {
-                                // CheckButton auto-toggles checked state before OnClick
-                                {
-                                    let mut state = env.state().borrow_mut();
-                                    let is_checkbutton = state.widgets.get(frame_id)
-                                        .map(|f| f.widget_type == crate::widget::WidgetType::CheckButton)
-                                        .unwrap_or(false);
-                                    if is_checkbutton {
-                                        let old_checked = state.widgets.get(frame_id)
-                                            .and_then(|f| f.attributes.get("__checked"))
-                                            .and_then(|v| if let crate::widget::AttributeValue::Boolean(b) = v { Some(*b) } else { None })
-                                            .unwrap_or(false);
-                                        let new_checked = !old_checked;
-                                        if let Some(frame) = state.widgets.get_mut(frame_id) {
-                                            frame.attributes.insert("__checked".to_string(), crate::widget::AttributeValue::Boolean(new_checked));
-                                        }
-                                        if let Some(frame) = state.widgets.get(frame_id) {
-                                            if let Some(&tex_id) = frame.children_keys.get("CheckedTexture") {
-                                                if let Some(tex) = state.widgets.get_mut(tex_id) {
-                                                    tex.visible = new_checked;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-                                let down_val = mlua::Value::Boolean(false);
-                                if let Err(e) = env.fire_script_handler(
-                                    frame_id,
-                                    "OnClick",
-                                    vec![button_val.clone(), down_val],
-                                ) {
-                                    errs.push(format_script_error(&env, frame_id, "OnClick", &e));
-                                }
-                            }
-
-                            if let Err(e) = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val]) {
-                                errs.push(format_script_error(&env, frame_id, "OnMouseUp", &e));
-                            }
-                            errs
-                        };
-                        for msg in errors {
-                            eprintln!("{}", msg);
-                            self.log_messages.push(msg);
-                        }
-                        self.drain_console();
-                        self.frame_cache.clear();
-                        self.quads_dirty.set(true);
-                    }
-                    self.mouse_down_frame = None;
-                    self.pressed_frame = None;
-                }
-                CanvasMessage::MiddleClick(pos) => {
-                    // Open inspector for the frame under cursor
-                    if let Some(frame_id) = self.hit_test(pos) {
-                        self.populate_inspector(frame_id);
-                        self.inspected_frame = Some(frame_id);
-                        self.inspector_visible = true;
-                        self.inspector_position = iced::Point::new(pos.x + 10.0, pos.y + 10.0);
-                    }
-                }
-            },
-            Message::Scroll(_dx, dy) => {
-                // Fire OnMouseWheel on the frame under cursor, propagating up the
-                // parent chain until a frame with an OnMouseWheel handler is found.
-                let mut handled = false;
-                if let Some(pos) = self.mouse_position {
-                    if let Some(start_frame) = self.hit_test(pos) {
-                        let env = self.env.borrow();
-                        // Walk up the parent chain looking for OnMouseWheel handler
-                        let mut current = Some(start_frame);
-                        while let Some(frame_id) = current {
-                            if env.has_script_handler(frame_id, "OnMouseWheel") {
-                                let delta_val = mlua::Value::Number(dy as f64);
-                                if let Err(e) = env.fire_script_handler(
-                                    frame_id,
-                                    "OnMouseWheel",
-                                    vec![delta_val],
-                                ) {
-                                    let msg =
-                                        format_script_error(&env, frame_id, "OnMouseWheel", &e);
-                                    eprintln!("{}", msg);
-                                    self.log_messages.push(msg);
-                                }
-                                handled = true;
-                                break;
-                            }
-                            // Move to parent
-                            current = env
-                                .state()
-                                .borrow()
-                                .widgets
-                                .get(frame_id)
-                                .and_then(|f| f.parent_id);
-                        }
-                    }
-                }
-
-                if handled {
-                    self.drain_console();
-                    self.frame_cache.clear();
-                    self.quads_dirty.set(true);
-                } else {
-                    // Fallback: global scroll offset for debugging
-                    let scroll_speed = 30.0;
-                    self.scroll_offset -= dy * scroll_speed;
-                    let max_scroll = 2600.0;
-                    self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
-                    self.frame_cache.clear();
-                    self.quads_dirty.set(true);
-                }
-            }
-            Message::ReloadUI => {
-                self.log_messages.push("Reloading UI...".to_string());
-                {
-                    let env = self.env.borrow();
-                    if let Ok(s) = env.lua().create_string("WoWUISim") {
-                        let _ = env.fire_event_with_args("ADDON_LOADED", &[mlua::Value::String(s)]);
-                    }
-                    let _ = env.fire_event("PLAYER_LOGIN");
-                    let _ = env.fire_event_with_args(
-                        "PLAYER_ENTERING_WORLD",
-                        &[mlua::Value::Boolean(false), mlua::Value::Boolean(true)],
-                    );
-                }
-                self.drain_console();
-                self.log_messages.push("UI reloaded.".to_string());
-                self.frame_cache.clear();
-                self.quads_dirty.set(true);
-            }
-            Message::CommandInputChanged(input) => {
-                self.command_input = input;
-            }
-            Message::ExecuteCommand => {
-                let cmd = self.command_input.clone();
-                if !cmd.is_empty() {
-                    self.log_messages.push(format!("> {}", cmd));
-
-                    let cmd_lower = cmd.to_lowercase();
-                    if cmd_lower == "/frames" || cmd_lower == "/f" {
-                        let env = self.env.borrow();
-                        let dump = env.dump_frames();
-                        eprintln!("{}", dump);
-                        let line_count = dump.lines().count();
-                        self.log_messages
-                            .push(format!("Dumped {} frames to stderr", line_count / 2));
-                    } else {
-                        let env = self.env.borrow();
-                        match env.dispatch_slash_command(&cmd) {
-                            Ok(true) => {}
-                            Ok(false) => {
-                                self.log_messages.push(format!("Unknown command: {}", cmd));
-                            }
-                            Err(e) => {
-                                self.log_messages.push(format!("Command error: {}", e));
-                            }
-                        }
-                    }
-                    self.drain_console();
-                    self.command_input.clear();
-                    self.frame_cache.clear();
-                    self.quads_dirty.set(true);
-                }
-            }
-            Message::ProcessTimers => {
-                // Update FPS counter (every ~1 second)
-                let now = std::time::Instant::now();
-                let elapsed = now.duration_since(self.fps_last_time);
-                if elapsed >= std::time::Duration::from_secs(1) {
-                    let frames = self.frame_count.get();
-                    self.fps = frames as f32 / elapsed.as_secs_f32();
-                    self.frame_time_display = self.frame_time_avg.get();
-                    self.frame_count.set(0);
-                    self.fps_last_time = now;
-                }
-
-                // Process WoW timers
-                {
-                    let env = self.env.borrow();
-                    match env.process_timers() {
-                        Err(e) => eprintln!("Timer error: {}", e),
-                        _ => {}
-                    }
-                }
-
-                // Fire OnUpdate handlers
-                let on_update_elapsed = now.duration_since(self.last_on_update_time);
-                self.last_on_update_time = now;
-                {
-                    let env = self.env.borrow();
-                    if let Err(e) = env.fire_on_update(on_update_elapsed.as_secs_f64()) {
-                        eprintln!("OnUpdate error: {}", e);
-                    }
-                }
-
-                self.drain_console();
-                self.frame_cache.clear();
-                self.quads_dirty.set(true);
-
-                // Process debug commands (using try_recv in blocking context)
-                return self.process_debug_commands();
-            }
-            Message::ScreenshotTaken(screenshot) => {
-                if let Some(respond) = self.pending_screenshot.take() {
-                    let data = ScreenshotData {
-                        width: screenshot.size.width,
-                        height: screenshot.size.height,
-                        pixels: screenshot.rgba.to_vec(),
-                    };
-                    let _ = respond.send(Ok(data));
-                }
-            }
-            Message::FpsTick => {
-                // FPS display is updated via ProcessTimers, this is unused
-            }
-            Message::InspectorClose => {
-                self.inspector_visible = false;
-                self.inspected_frame = None;
-            }
-            Message::InspectorWidthChanged(val) => {
-                self.inspector_state.width = val;
-            }
-            Message::InspectorHeightChanged(val) => {
-                self.inspector_state.height = val;
-            }
-            Message::InspectorAlphaChanged(val) => {
-                self.inspector_state.alpha = val;
-            }
-            Message::InspectorLevelChanged(val) => {
-                self.inspector_state.frame_level = val;
-            }
-            Message::InspectorVisibleToggled(val) => {
-                self.inspector_state.visible = val;
-            }
-            Message::InspectorMouseEnabledToggled(val) => {
-                self.inspector_state.mouse_enabled = val;
-            }
-            Message::InspectorApply => {
-                if let Some(frame_id) = self.inspected_frame {
-                    self.apply_inspector_changes(frame_id);
-                    self.frame_cache.clear();
-                    self.quads_dirty.set(true);
-                }
-            }
-            Message::ToggleFramesPanel => {
-                self.frames_panel_collapsed = !self.frames_panel_collapsed;
-            }
+            Message::FireEvent(event) => self.handle_fire_event(&event),
+            Message::CanvasEvent(canvas_msg) => return self.handle_canvas_event(canvas_msg),
+            Message::Scroll(dx, dy) => self.handle_scroll(dx, dy),
+            Message::ReloadUI => self.handle_reload_ui(),
+            Message::CommandInputChanged(input) => self.command_input = input,
+            Message::ExecuteCommand => self.handle_execute_command(),
+            Message::ProcessTimers => return self.handle_process_timers(),
+            Message::ScreenshotTaken(screenshot) => self.handle_screenshot_taken(screenshot),
+            Message::FpsTick => {}
+            Message::InspectorClose => self.handle_inspector_close(),
+            Message::InspectorWidthChanged(val) => self.inspector_state.width = val,
+            Message::InspectorHeightChanged(val) => self.inspector_state.height = val,
+            Message::InspectorAlphaChanged(val) => self.inspector_state.alpha = val,
+            Message::InspectorLevelChanged(val) => self.inspector_state.frame_level = val,
+            Message::InspectorVisibleToggled(val) => self.inspector_state.visible = val,
+            Message::InspectorMouseEnabledToggled(val) => self.inspector_state.mouse_enabled = val,
+            Message::InspectorApply => self.handle_inspector_apply(),
+            Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
         }
 
         Task::none()
+    }
+
+    // ── Event handlers ──────────────────────────────────────────────────
+
+    fn handle_fire_event(&mut self, event: &str) {
+        {
+            let env = self.env.borrow();
+            if let Err(e) = env.fire_event(event) {
+                self.log_messages.push(format!("Event error: {}", e));
+            } else {
+                self.log_messages.push(format!("Fired: {}", event));
+            }
+        }
+        self.invalidate();
+    }
+
+    fn handle_canvas_event(&mut self, canvas_msg: CanvasMessage) -> Task<Message> {
+        match canvas_msg {
+            CanvasMessage::MouseMove(pos) => self.handle_mouse_move(pos),
+            CanvasMessage::MouseDown(pos) => self.handle_mouse_down(pos),
+            CanvasMessage::MouseUp(pos) => self.handle_mouse_up(pos),
+            CanvasMessage::MiddleClick(pos) => self.handle_middle_click(pos),
+        }
+        Task::none()
+    }
+
+    fn handle_mouse_move(&mut self, pos: Point) {
+        self.mouse_position = Some(pos);
+        let new_hovered = self.hit_test(pos);
+        if new_hovered == self.hovered_frame {
+            return;
+        }
+
+        let errors = {
+            let env = self.env.borrow();
+            let mut errs = Vec::new();
+            if let Some(old_id) = self.hovered_frame {
+                if let Err(e) = env.fire_script_handler(old_id, "OnLeave", vec![]) {
+                    errs.push(format_script_error(&env, old_id, "OnLeave", &e));
+                }
+            }
+            if let Some(new_id) = new_hovered {
+                if let Err(e) = env.fire_script_handler(new_id, "OnEnter", vec![]) {
+                    errs.push(format_script_error(&env, new_id, "OnEnter", &e));
+                }
+            }
+            errs
+        };
+        self.push_errors(errors);
+        self.hovered_frame = new_hovered;
+        self.invalidate();
+    }
+
+    fn handle_mouse_down(&mut self, pos: Point) {
+        let Some(frame_id) = self.hit_test(pos) else {
+            return;
+        };
+
+        if !self.is_frame_enabled(frame_id) {
+            return;
+        }
+
+        self.mouse_down_frame = Some(frame_id);
+        self.pressed_frame = Some(frame_id);
+
+        let error = {
+            let env = self.env.borrow();
+            let button_val = mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
+            env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val])
+                .err()
+                .map(|e| format_script_error(&env, frame_id, "OnMouseDown", &e))
+        };
+        if let Some(msg) = error {
+            self.push_errors(vec![msg]);
+        }
+        self.invalidate();
+    }
+
+    fn handle_mouse_up(&mut self, pos: Point) {
+        let released_on = self.hit_test(pos);
+        if let Some(frame_id) = released_on {
+            let errors = {
+                let env = self.env.borrow();
+                let mut errs = Vec::new();
+                let button_val =
+                    mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
+
+                if self.mouse_down_frame == Some(frame_id) {
+                    self.toggle_checkbutton_if_needed(frame_id, &env);
+
+                    let down_val = mlua::Value::Boolean(false);
+                    if let Err(e) = env.fire_script_handler(
+                        frame_id,
+                        "OnClick",
+                        vec![button_val.clone(), down_val],
+                    ) {
+                        errs.push(format_script_error(&env, frame_id, "OnClick", &e));
+                    }
+                }
+
+                if let Err(e) =
+                    env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val])
+                {
+                    errs.push(format_script_error(&env, frame_id, "OnMouseUp", &e));
+                }
+                errs
+            };
+            self.push_errors(errors);
+            self.invalidate();
+        }
+        self.mouse_down_frame = None;
+        self.pressed_frame = None;
+    }
+
+    fn handle_middle_click(&mut self, pos: Point) {
+        if let Some(frame_id) = self.hit_test(pos) {
+            self.populate_inspector(frame_id);
+            self.inspected_frame = Some(frame_id);
+            self.inspector_visible = true;
+            self.inspector_position = Point::new(pos.x + 10.0, pos.y + 10.0);
+        }
+    }
+
+    fn handle_scroll(&mut self, _dx: f32, dy: f32) {
+        if self.fire_mouse_wheel(dy) {
+            self.invalidate();
+        } else {
+            let scroll_speed = 30.0;
+            self.scroll_offset -= dy * scroll_speed;
+            let max_scroll = 2600.0;
+            self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
+            self.frame_cache.clear();
+            self.quads_dirty.set(true);
+        }
+    }
+
+    /// Propagate OnMouseWheel up the parent chain. Returns true if handled.
+    fn fire_mouse_wheel(&mut self, dy: f32) -> bool {
+        let pos = match self.mouse_position {
+            Some(p) => p,
+            None => return false,
+        };
+        let start_frame = match self.hit_test(pos) {
+            Some(f) => f,
+            None => return false,
+        };
+
+        let env = self.env.borrow();
+        let mut current = Some(start_frame);
+        while let Some(frame_id) = current {
+            if env.has_script_handler(frame_id, "OnMouseWheel") {
+                let delta_val = mlua::Value::Number(dy as f64);
+                if let Err(e) =
+                    env.fire_script_handler(frame_id, "OnMouseWheel", vec![delta_val])
+                {
+                    let msg = format_script_error(&env, frame_id, "OnMouseWheel", &e);
+                    eprintln!("{}", msg);
+                    self.log_messages.push(msg);
+                }
+                return true;
+            }
+            current = env
+                .state()
+                .borrow()
+                .widgets
+                .get(frame_id)
+                .and_then(|f| f.parent_id);
+        }
+        false
+    }
+
+    fn handle_reload_ui(&mut self) {
+        self.log_messages.push("Reloading UI...".to_string());
+        {
+            let env = self.env.borrow();
+            if let Ok(s) = env.lua().create_string("WoWUISim") {
+                let _ = env.fire_event_with_args("ADDON_LOADED", &[mlua::Value::String(s)]);
+            }
+            let _ = env.fire_event("PLAYER_LOGIN");
+            let _ = env.fire_event_with_args(
+                "PLAYER_ENTERING_WORLD",
+                &[mlua::Value::Boolean(false), mlua::Value::Boolean(true)],
+            );
+        }
+        self.drain_console();
+        self.log_messages.push("UI reloaded.".to_string());
+        self.frame_cache.clear();
+        self.quads_dirty.set(true);
+    }
+
+    fn handle_execute_command(&mut self) {
+        let cmd = self.command_input.clone();
+        if cmd.is_empty() {
+            return;
+        }
+
+        self.log_messages.push(format!("> {}", cmd));
+        self.execute_command_inner(&cmd);
+        self.drain_console();
+        self.command_input.clear();
+        self.frame_cache.clear();
+        self.quads_dirty.set(true);
+    }
+
+    fn execute_command_inner(&mut self, cmd: &str) {
+        let cmd_lower = cmd.to_lowercase();
+        if cmd_lower == "/frames" || cmd_lower == "/f" {
+            let env = self.env.borrow();
+            let dump = env.dump_frames();
+            eprintln!("{}", dump);
+            let line_count = dump.lines().count();
+            self.log_messages
+                .push(format!("Dumped {} frames to stderr", line_count / 2));
+        } else {
+            let env = self.env.borrow();
+            match env.dispatch_slash_command(cmd) {
+                Ok(true) => {}
+                Ok(false) => {
+                    self.log_messages.push(format!("Unknown command: {}", cmd));
+                }
+                Err(e) => {
+                    self.log_messages.push(format!("Command error: {}", e));
+                }
+            }
+        }
+    }
+
+    fn handle_process_timers(&mut self) -> Task<Message> {
+        self.update_fps_counter();
+        self.run_wow_timers();
+        self.fire_on_update();
+        self.invalidate();
+        self.process_debug_commands()
+    }
+
+    fn update_fps_counter(&mut self) {
+        let now = std::time::Instant::now();
+        let elapsed = now.duration_since(self.fps_last_time);
+        if elapsed >= std::time::Duration::from_secs(1) {
+            let frames = self.frame_count.get();
+            self.fps = frames as f32 / elapsed.as_secs_f32();
+            self.frame_time_display = self.frame_time_avg.get();
+            self.frame_count.set(0);
+            self.fps_last_time = now;
+        }
+    }
+
+    fn run_wow_timers(&self) {
+        let env = self.env.borrow();
+        if let Err(e) = env.process_timers() {
+            eprintln!("Timer error: {}", e);
+        }
+    }
+
+    fn fire_on_update(&mut self) {
+        let now = std::time::Instant::now();
+        let elapsed = now.duration_since(self.last_on_update_time);
+        self.last_on_update_time = now;
+        let env = self.env.borrow();
+        if let Err(e) = env.fire_on_update(elapsed.as_secs_f64()) {
+            eprintln!("OnUpdate error: {}", e);
+        }
+    }
+
+    fn handle_screenshot_taken(&mut self, screenshot: iced::window::screenshot::Screenshot) {
+        if let Some(respond) = self.pending_screenshot.take() {
+            let data = ScreenshotData {
+                width: screenshot.size.width,
+                height: screenshot.size.height,
+                pixels: screenshot.rgba.to_vec(),
+            };
+            let _ = respond.send(Ok(data));
+        }
+    }
+
+    fn handle_inspector_close(&mut self) {
+        self.inspector_visible = false;
+        self.inspected_frame = None;
+    }
+
+    fn handle_inspector_apply(&mut self) {
+        if let Some(frame_id) = self.inspected_frame {
+            self.apply_inspector_changes(frame_id);
+            self.frame_cache.clear();
+            self.quads_dirty.set(true);
+        }
+    }
+
+    // ── Helpers ──────────────────────────────────────────────────────────
+
+    /// Drain console, clear frame cache, and mark quads dirty.
+    fn invalidate(&mut self) {
+        self.drain_console();
+        self.frame_cache.clear();
+        self.quads_dirty.set(true);
+    }
+
+    /// Log errors to both stderr and the in-app log.
+    fn push_errors(&mut self, errors: Vec<String>) {
+        for msg in errors {
+            eprintln!("{}", msg);
+            self.log_messages.push(msg);
+        }
+    }
+
+    /// Check whether a frame's `__enabled` attribute is true (default: true).
+    fn is_frame_enabled(&self, frame_id: u64) -> bool {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        state
+            .widgets
+            .get(frame_id)
+            .and_then(|f| f.attributes.get("__enabled"))
+            .and_then(|v| {
+                if let crate::widget::AttributeValue::Boolean(b) = v {
+                    Some(*b)
+                } else {
+                    None
+                }
+            })
+            .unwrap_or(true)
+    }
+
+    /// Toggle CheckButton checked state before OnClick (WoW behavior).
+    fn toggle_checkbutton_if_needed(&self, frame_id: u64, env: &WowLuaEnv) {
+        let mut state = env.state().borrow_mut();
+        let is_checkbutton = state
+            .widgets
+            .get(frame_id)
+            .map(|f| f.widget_type == crate::widget::WidgetType::CheckButton)
+            .unwrap_or(false);
+        if !is_checkbutton {
+            return;
+        }
+
+        let old_checked = state
+            .widgets
+            .get(frame_id)
+            .and_then(|f| f.attributes.get("__checked"))
+            .and_then(|v| {
+                if let crate::widget::AttributeValue::Boolean(b) = v {
+                    Some(*b)
+                } else {
+                    None
+                }
+            })
+            .unwrap_or(false);
+        let new_checked = !old_checked;
+
+        if let Some(frame) = state.widgets.get_mut(frame_id) {
+            frame.attributes.insert(
+                "__checked".to_string(),
+                crate::widget::AttributeValue::Boolean(new_checked),
+            );
+        }
+        if let Some(frame) = state.widgets.get(frame_id) {
+            if let Some(&tex_id) = frame.children_keys.get("CheckedTexture") {
+                if let Some(tex) = state.widgets.get_mut(tex_id) {
+                    tex.visible = new_checked;
+                }
+            }
+        }
     }
 
     pub(crate) fn drain_console(&mut self) {
@@ -431,7 +466,11 @@ impl App {
                     self.frame_cache.clear();
                     self.quads_dirty.set(true);
                 }
-                LuaCommand::DumpTree { filter, visible_only, respond } => {
+                LuaCommand::DumpTree {
+                    filter,
+                    visible_only,
+                    respond,
+                } => {
                     let tree = self.build_frame_tree_dump(filter.as_deref(), visible_only);
                     let _ = respond.send(LuaResponse::Tree(tree));
                 }

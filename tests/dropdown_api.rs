@@ -416,3 +416,82 @@ fn test_noop_functions_dont_error() {
     )
     .unwrap();
 }
+
+// ============================================================================
+// UIDropDownMenu_SetSelectedName
+// ============================================================================
+
+#[test]
+fn test_set_selected_name() {
+    let env = env();
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame", "TestSelName", UIParent)
+        UIDropDownMenu_SetSelectedName(frame, "MyItem")
+    "#,
+    )
+    .unwrap();
+    let name: String = env.eval("return TestSelName.selectedName").unwrap();
+    assert_eq!(name, "MyItem");
+}
+
+// ============================================================================
+// UIDropDownMenu_SetAnchor
+// ============================================================================
+
+#[test]
+fn test_set_anchor() {
+    let env = env();
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame", "TestAnchorDD", UIParent)
+        UIDropDownMenu_SetAnchor(frame, 10, -5, "TOPLEFT", frame, "BOTTOMLEFT")
+    "#,
+    )
+    .unwrap();
+    let x: f64 = env.eval("return TestAnchorDD.xOffset").unwrap();
+    let y: f64 = env.eval("return TestAnchorDD.yOffset").unwrap();
+    let point: String = env.eval("return TestAnchorDD.point").unwrap();
+    let rel_point: String = env.eval("return TestAnchorDD.relativePoint").unwrap();
+    assert_eq!(x, 10.0);
+    assert_eq!(y, -5.0);
+    assert_eq!(point, "TOPLEFT");
+    assert_eq!(rel_point, "BOTTOMLEFT");
+}
+
+// ============================================================================
+// UIDropDownMenu_SetInitializeFunction
+// ============================================================================
+
+#[test]
+fn test_set_initialize_function() {
+    let env = env();
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame", "TestInitFunc", UIParent)
+        UIDropDownMenu_SetInitializeFunction(frame, function() end)
+    "#,
+    )
+    .unwrap();
+    let has_init: bool = env
+        .eval("return TestInitFunc.initialize ~= nil")
+        .unwrap();
+    assert!(has_init, "SetInitializeFunction should store init on frame");
+}
+
+// ============================================================================
+// UIDropDownMenu_SetFrameStrata
+// ============================================================================
+
+#[test]
+fn test_set_frame_strata() {
+    let env = env();
+    env.exec(
+        r#"
+        UIDropDownMenu_SetFrameStrata(DropDownList1, "DIALOG")
+    "#,
+    )
+    .unwrap();
+    let strata: String = env.eval("return DropDownList1:GetFrameStrata()").unwrap();
+    assert_eq!(strata, "DIALOG");
+}

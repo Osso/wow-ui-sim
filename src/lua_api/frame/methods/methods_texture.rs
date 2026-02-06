@@ -1,12 +1,25 @@
 //! Texture-related methods: SetTexture, SetAtlas, SetTexCoord, etc.
 
 use super::FrameHandle;
-use crate::widget::WidgetType;
+use crate::widget::{Frame, WidgetType};
 use mlua::{UserDataMethods, Value};
 
 /// Add texture-related methods to FrameHandle UserData.
 pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetTexture(path) - for Texture widgets
+    add_texture_path_methods(methods);
+    add_tiling_methods(methods);
+    add_blend_and_desaturation_methods(methods);
+    add_atlas_methods(methods);
+    add_pixel_grid_methods(methods);
+    add_nine_slice_methods(methods);
+    add_vertex_color_methods(methods);
+    add_tex_coord_methods(methods);
+    add_mask_methods(methods);
+    add_draw_layer_methods(methods);
+}
+
+/// SetTexture, GetTexture, SetColorTexture.
+fn add_texture_path_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetTexture", |_, this, path: Option<String>| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -15,7 +28,6 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetTexture() - for Texture widgets
     methods.add_method("GetTexture", |_, this, ()| {
         let state = this.state.borrow();
         let texture = state
@@ -25,7 +37,23 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(texture)
     });
 
-    // SetHorizTile(tile) - Enable/disable horizontal tiling
+    methods.add_method(
+        "SetColorTexture",
+        |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.color_texture =
+                    Some(crate::widget::Color::new(r, g, b, a.unwrap_or(1.0)));
+                // Clear file texture when setting color texture
+                frame.texture = None;
+            }
+            Ok(())
+        },
+    );
+}
+
+/// SetHorizTile, GetHorizTile, SetVertTile, GetVertTile.
+fn add_tiling_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetHorizTile", |_, this, tile: bool| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -34,7 +62,6 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetHorizTile() - Check if horizontal tiling is enabled
     methods.add_method("GetHorizTile", |_, this, ()| {
         let state = this.state.borrow();
         let tile = state
@@ -45,7 +72,6 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(tile)
     });
 
-    // SetVertTile(tile) - Enable/disable vertical tiling
     methods.add_method("SetVertTile", |_, this, tile: bool| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -54,7 +80,6 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetVertTile() - Check if vertical tiling is enabled
     methods.add_method("GetVertTile", |_, this, ()| {
         let state = this.state.borrow();
         let tile = state
@@ -64,28 +89,30 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(false);
         Ok(tile)
     });
+}
 
-    // SetBlendMode(blendMode) - Set texture blend mode (ADD, ALPHAKEY, BLEND, DISABLE, MOD)
+/// SetBlendMode, GetBlendMode, SetDesaturated, IsDesaturated.
+fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetBlendMode", |_, _this, _mode: Option<String>| {
         // Stub - blend mode is a rendering hint
         Ok(())
     });
 
-    // GetBlendMode() - Get texture blend mode
     methods.add_method("GetBlendMode", |_, _this, ()| {
         Ok("BLEND") // Default blend mode
     });
 
-    // SetDesaturated(desaturation) - Set texture desaturation
     methods.add_method("SetDesaturated", |_, _this, _desaturated: bool| {
         // Stub - desaturation is a rendering effect
         Ok(())
     });
 
-    // IsDesaturated() - Check if texture is desaturated
     methods.add_method("IsDesaturated", |_, _this, ()| Ok(false));
+}
 
-    // SetAtlas(atlasName, useAtlasSize, filterMode, resetTexCoords) - Set texture from atlas
+/// SetAtlas, GetAtlas.
+fn add_atlas_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // SetAtlas(atlasName, useAtlasSize, filterMode, resetTexCoords)
     methods.add_method("SetAtlas", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
         let atlas_name = args_vec.first().and_then(|v| match v {
@@ -98,99 +125,13 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(false);
 
         if let Some(name) = atlas_name {
-            // Look up atlas info
             if let Some(lookup) = crate::atlas::get_atlas_info(&name) {
                 let atlas_info = lookup.info;
                 let mut state = this.state.borrow_mut();
 
-                // Get parent info - find which children_key this frame is registered as
-                let parent_info: Option<(u64, Option<String>)> =
-                    state.widgets.get(this.id).and_then(|f| {
-                        f.parent_id.and_then(|pid| {
-                            state.widgets.get(pid).map(|parent| {
-                                // Find which key in parent's children_keys maps to this.id
-                                let key = parent
-                                    .children_keys
-                                    .iter()
-                                    .find(|(_, child_id)| **child_id == this.id)
-                                    .map(|(k, _)| k.clone());
-                                (pid, key)
-                            })
-                        })
-                    });
-
-                if let Some(frame) = state.widgets.get_mut(this.id) {
-                    // Set texture file from atlas
-                    frame.texture = Some(atlas_info.file.to_string());
-                    // Set atlas base texture coordinates (the sub-region on the file)
-                    let atlas_uvs = (
-                        atlas_info.left_tex_coord,
-                        atlas_info.right_tex_coord,
-                        atlas_info.top_tex_coord,
-                        atlas_info.bottom_tex_coord,
-                    );
-                    frame.atlas_tex_coords = Some(atlas_uvs);
-                    // Set rendering tex_coords to the full atlas sub-region
-                    frame.tex_coords = Some(atlas_uvs);
-                    // Set tiling flags
-                    frame.horiz_tile = atlas_info.tiles_horizontally;
-                    frame.vert_tile = atlas_info.tiles_vertically;
-                    // Store atlas name
-                    frame.atlas = Some(name.clone());
-                    // Optionally set size from atlas (use logical dimensions)
-                    if use_atlas_size {
-                        frame.width = lookup.width() as f32;
-                        frame.height = lookup.height() as f32;
-                    }
-                }
-
-                // If this texture is a child of a button (NormalTexture, PushedTexture, etc.),
-                // also update the parent button's texture field and tex_coords so rendering picks it up
-                if let Some((parent_id, parent_key_opt)) = parent_info {
-                    if let Some(parent) = state.widgets.get_mut(parent_id as u64) {
-                        if matches!(
-                            parent.widget_type,
-                            WidgetType::Button | WidgetType::CheckButton
-                        ) {
-                            let texture_path = atlas_info.file.to_string();
-                            let tex_coords = (
-                                atlas_info.left_tex_coord,
-                                atlas_info.right_tex_coord,
-                                atlas_info.top_tex_coord,
-                                atlas_info.bottom_tex_coord,
-                            );
-                            if let Some(parent_key) = parent_key_opt {
-                                match parent_key.as_str() {
-                                    "NormalTexture" => {
-                                        parent.normal_texture = Some(texture_path);
-                                        parent.normal_tex_coords = Some(tex_coords);
-                                    }
-                                    "PushedTexture" => {
-                                        parent.pushed_texture = Some(texture_path);
-                                        parent.pushed_tex_coords = Some(tex_coords);
-                                    }
-                                    "HighlightTexture" => {
-                                        parent.highlight_texture = Some(texture_path);
-                                        parent.highlight_tex_coords = Some(tex_coords);
-                                    }
-                                    "DisabledTexture" => {
-                                        parent.disabled_texture = Some(texture_path);
-                                        parent.disabled_tex_coords = Some(tex_coords);
-                                    }
-                                    "CheckedTexture" => {
-                                        parent.checked_texture = Some(texture_path);
-                                        parent.checked_tex_coords = Some(tex_coords);
-                                    }
-                                    "DisabledCheckedTexture" => {
-                                        parent.disabled_checked_texture = Some(texture_path);
-                                        parent.disabled_checked_tex_coords = Some(tex_coords);
-                                    }
-                                    _ => {}
-                                }
-                            }
-                        }
-                    }
-                }
+                let parent_info = find_parent_key(&state.widgets, this.id);
+                apply_atlas_to_frame(&mut state.widgets, this.id, atlas_info, &name, &lookup, use_atlas_size);
+                propagate_atlas_to_button(&mut state.widgets, parent_info, atlas_info);
             } else {
                 // Unknown atlas - just store the name
                 let mut state = this.state.borrow_mut();
@@ -203,24 +144,13 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // GetAtlas() - Get current atlas name
-    // NOTE: Mixins (e.g., MinimalScrollBarStepperScriptsMixin) can override GetAtlas
-    // with a Lua function. Since mlua's add_method takes priority over __index,
-    // we check for Lua overrides in __frame_fields before using the default.
+    // NOTE: Mixins can override GetAtlas with a Lua function. Since mlua's
+    // add_method takes priority over __index, we check for Lua overrides
+    // in __frame_fields before using the default.
     methods.add_method("GetAtlas", |lua, this, ()| {
-        // Check for Lua override (from Mixin)
-        if let Ok(fields_table) = lua.globals().get::<mlua::Table>("__frame_fields") {
-            if let Ok(frame_fields) = fields_table.get::<mlua::Table>(this.id) {
-                if let Ok(Value::Function(f)) = frame_fields.get::<Value>("GetAtlas") {
-                    // Create userdata for self parameter
-                    let ud = lua.create_userdata(FrameHandle {
-                        id: this.id,
-                        state: std::rc::Rc::clone(&this.state),
-                    })?;
-                    return f.call::<Value>(ud);
-                }
-            }
+        if let Some(result) = call_lua_override(lua, this, "GetAtlas")? {
+            return Ok(result);
         }
-        // Default: return atlas from Rust widget state
         let state = this.state.borrow();
         let atlas = state.widgets.get(this.id).and_then(|f| f.atlas.clone());
         match atlas {
@@ -228,58 +158,185 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             None => Ok(Value::Nil),
         }
     });
+}
 
-    // SetSnapToPixelGrid(snap) - Set whether texture snaps to pixel grid
-    methods.add_method("SetSnapToPixelGrid", |_, _this, _snap: bool| {
-        // No-op for now, just store the state if needed
-        Ok(())
-    });
+/// Check __frame_fields for a Lua override of a method and call it if present.
+fn call_lua_override(
+    lua: &mlua::Lua,
+    this: &FrameHandle,
+    method_name: &str,
+) -> mlua::Result<Option<Value>> {
+    if let Ok(fields_table) = lua.globals().get::<mlua::Table>("__frame_fields") {
+        if let Ok(frame_fields) = fields_table.get::<mlua::Table>(this.id) {
+            if let Ok(Value::Function(f)) = frame_fields.get::<Value>(method_name) {
+                let ud = lua.create_userdata(FrameHandle {
+                    id: this.id,
+                    state: std::rc::Rc::clone(&this.state),
+                })?;
+                return Ok(Some(f.call::<Value>(ud)?));
+            }
+        }
+    }
+    Ok(None)
+}
 
-    // IsSnappingToPixelGrid() - Get whether texture snaps to pixel grid
+/// Find which parent_key this frame is registered as in its parent's children_keys.
+fn find_parent_key(
+    widgets: &crate::widget::WidgetRegistry,
+    frame_id: u64,
+) -> Option<(u64, Option<String>)> {
+    widgets.get(frame_id).and_then(|f| {
+        f.parent_id.and_then(|pid| {
+            widgets.get(pid).map(|parent| {
+                let key = parent
+                    .children_keys
+                    .iter()
+                    .find(|(_, child_id)| **child_id == frame_id)
+                    .map(|(k, _)| k.clone());
+                (pid, key)
+            })
+        })
+    })
+}
+
+/// Apply atlas info to a frame: set texture, UVs, tiling, atlas name, and optionally size.
+fn apply_atlas_to_frame(
+    widgets: &mut crate::widget::WidgetRegistry,
+    frame_id: u64,
+    atlas_info: &crate::atlas::AtlasInfo,
+    atlas_name: &str,
+    lookup: &crate::atlas::AtlasLookup,
+    use_atlas_size: bool,
+) {
+    if let Some(frame) = widgets.get_mut(frame_id) {
+        frame.texture = Some(atlas_info.file.to_string());
+        let atlas_uvs = (
+            atlas_info.left_tex_coord,
+            atlas_info.right_tex_coord,
+            atlas_info.top_tex_coord,
+            atlas_info.bottom_tex_coord,
+        );
+        frame.atlas_tex_coords = Some(atlas_uvs);
+        frame.tex_coords = Some(atlas_uvs);
+        frame.horiz_tile = atlas_info.tiles_horizontally;
+        frame.vert_tile = atlas_info.tiles_vertically;
+        frame.atlas = Some(atlas_name.to_string());
+        if use_atlas_size {
+            frame.width = lookup.width() as f32;
+            frame.height = lookup.height() as f32;
+        }
+    }
+}
+
+/// If the frame is a standard button texture child (NormalTexture, PushedTexture, etc.),
+/// propagate the atlas texture path and UV coords to the parent button.
+fn propagate_atlas_to_button(
+    widgets: &mut crate::widget::WidgetRegistry,
+    parent_info: Option<(u64, Option<String>)>,
+    atlas_info: &crate::atlas::AtlasInfo,
+) {
+    let Some((parent_id, Some(parent_key))) = parent_info else {
+        return;
+    };
+    let Some(parent) = widgets.get_mut(parent_id) else {
+        return;
+    };
+    if !matches!(
+        parent.widget_type,
+        WidgetType::Button | WidgetType::CheckButton
+    ) {
+        return;
+    }
+    let texture_path = atlas_info.file.to_string();
+    let tex_coords = (
+        atlas_info.left_tex_coord,
+        atlas_info.right_tex_coord,
+        atlas_info.top_tex_coord,
+        atlas_info.bottom_tex_coord,
+    );
+    set_button_texture_field(parent, &parent_key, texture_path, tex_coords);
+}
+
+/// Set the appropriate texture field on a button based on the parent key name.
+fn set_button_texture_field(
+    parent: &mut Frame,
+    parent_key: &str,
+    texture_path: String,
+    tex_coords: (f32, f32, f32, f32),
+) {
+    match parent_key {
+        "NormalTexture" => {
+            parent.normal_texture = Some(texture_path);
+            parent.normal_tex_coords = Some(tex_coords);
+        }
+        "PushedTexture" => {
+            parent.pushed_texture = Some(texture_path);
+            parent.pushed_tex_coords = Some(tex_coords);
+        }
+        "HighlightTexture" => {
+            parent.highlight_texture = Some(texture_path);
+            parent.highlight_tex_coords = Some(tex_coords);
+        }
+        "DisabledTexture" => {
+            parent.disabled_texture = Some(texture_path);
+            parent.disabled_tex_coords = Some(tex_coords);
+        }
+        "CheckedTexture" => {
+            parent.checked_texture = Some(texture_path);
+            parent.checked_tex_coords = Some(tex_coords);
+        }
+        "DisabledCheckedTexture" => {
+            parent.disabled_checked_texture = Some(texture_path);
+            parent.disabled_checked_tex_coords = Some(tex_coords);
+        }
+        _ => {}
+    }
+}
+
+/// SetSnapToPixelGrid, IsSnappingToPixelGrid, SetTexelSnappingBias, GetTexelSnappingBias.
+fn add_pixel_grid_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetSnapToPixelGrid", |_, _this, _snap: bool| Ok(()));
+
     methods.add_method("IsSnappingToPixelGrid", |_, _this, ()| Ok(false));
 
-    // SetTexelSnappingBias(bias) - Set texel snapping bias for pixel-perfect rendering
-    methods.add_method("SetTexelSnappingBias", |_, _this, _bias: f32| {
-        // No-op - this controls sub-pixel texture positioning
-        Ok(())
-    });
+    methods.add_method("SetTexelSnappingBias", |_, _this, _bias: f32| Ok(()));
 
-    // GetTexelSnappingBias() - Get texel snapping bias
     methods.add_method("GetTexelSnappingBias", |_, _this, ()| Ok(0.0_f32));
+}
 
-    // SetTextureSliceMargins(left, right, top, bottom) - Set 9-slice margins
+/// SetTextureSliceMargins, GetTextureSliceMargins, SetTextureSliceMode,
+/// GetTextureSliceMode, ClearTextureSlice.
+fn add_nine_slice_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method(
         "SetTextureSliceMargins",
         |_, _this, (_left, _right, _top, _bottom): (f32, f32, f32, f32)| Ok(()),
     );
 
-    // GetTextureSliceMargins() - Get 9-slice margins
     methods.add_method("GetTextureSliceMargins", |_, _this, ()| {
         Ok((0.0_f32, 0.0_f32, 0.0_f32, 0.0_f32))
     });
 
-    // SetTextureSliceMode(mode) - Set 9-slice mode
     methods.add_method("SetTextureSliceMode", |_, _this, _mode: i32| Ok(()));
 
-    // GetTextureSliceMode() - Get 9-slice mode
     methods.add_method("GetTextureSliceMode", |_, _this, ()| Ok(0i32));
 
-    // ClearTextureSlice() - Clear 9-slice configuration
     methods.add_method("ClearTextureSlice", |_, _this, ()| Ok(()));
+}
 
-    // SetVertexColor(r, g, b, a) - for Texture widgets
+/// SetVertexColor, GetVertexColor, SetCenterColor.
+fn add_vertex_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method(
         "SetVertexColor",
         |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.vertex_color = Some(crate::widget::Color::new(r, g, b, a.unwrap_or(1.0)));
+                frame.vertex_color =
+                    Some(crate::widget::Color::new(r, g, b, a.unwrap_or(1.0)));
             }
             Ok(())
         },
     );
 
-    // GetVertexColor() - get vertex color for Texture widgets
     methods.add_method("GetVertexColor", |_, this, ()| {
         let state = this.state.borrow();
         if let Some(frame) = state.widgets.get(this.id) {
@@ -291,96 +348,79 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // SetCenterColor(r, g, b, a) - for NineSlice frames (sets center fill color)
-    methods.add_method("SetCenterColor", |_, _this, _args: mlua::MultiValue| {
-        // NineSlice center color - just stub for now
-        Ok(())
-    });
+    methods.add_method("SetCenterColor", |_, _this, _args: mlua::MultiValue| Ok(()));
+}
 
-    // SetTexCoord(left, right, top, bottom) - for Texture widgets
-    // When atlas is active, coords are relative to the atlas sub-region (0-1 maps to atlas bounds)
-    // Can also be called with 8 values for corner-based coords
+/// SetTexCoord - with atlas-relative coordinate remapping.
+fn add_tex_coord_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetTexCoord", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
         if args_vec.len() >= 4 {
-            let left = match &args_vec[0] {
-                Value::Number(n) => *n as f32,
-                Value::Integer(n) => *n as f32,
-                _ => 0.0,
-            };
-            let right = match &args_vec[1] {
-                Value::Number(n) => *n as f32,
-                Value::Integer(n) => *n as f32,
-                _ => 1.0,
-            };
-            let top = match &args_vec[2] {
-                Value::Number(n) => *n as f32,
-                Value::Integer(n) => *n as f32,
-                _ => 0.0,
-            };
-            let bottom = match &args_vec[3] {
-                Value::Number(n) => *n as f32,
-                Value::Integer(n) => *n as f32,
-                _ => 1.0,
-            };
+            let left = value_to_f32(&args_vec[0], 0.0);
+            let right = value_to_f32(&args_vec[1], 1.0);
+            let top = value_to_f32(&args_vec[2], 0.0);
+            let bottom = value_to_f32(&args_vec[3], 1.0);
 
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                // When atlas is active, remap coords relative to the atlas sub-region
-                if let Some((al, ar, at, ab)) = frame.atlas_tex_coords {
-                    let aw = ar - al;
-                    let ah = ab - at;
-                    frame.tex_coords = Some((
-                        al + left * aw,
-                        al + right * aw,
-                        at + top * ah,
-                        at + bottom * ah,
-                    ));
-                } else {
-                    frame.tex_coords = Some((left, right, top, bottom));
-                }
+                frame.tex_coords =
+                    Some(remap_tex_coords(frame.atlas_tex_coords, left, right, top, bottom));
             }
         }
         Ok(())
     });
+}
 
-    // AddMaskTexture(mask) - add a mask texture to this texture
-    methods.add_method("AddMaskTexture", |_, _this, _mask: Value| {
-        // Mask textures control alpha blending on parent texture
-        Ok(())
-    });
+/// Convert a Lua Value to f32, with a default if it's not a number.
+fn value_to_f32(value: &Value, default: f32) -> f32 {
+    match value {
+        Value::Number(n) => *n as f32,
+        Value::Integer(n) => *n as f32,
+        _ => default,
+    }
+}
 
-    // RemoveMaskTexture(mask) - remove a mask texture from this texture
+/// Remap texture coordinates relative to atlas sub-region if active,
+/// otherwise return them as-is.
+fn remap_tex_coords(
+    atlas_tex_coords: Option<(f32, f32, f32, f32)>,
+    left: f32,
+    right: f32,
+    top: f32,
+    bottom: f32,
+) -> (f32, f32, f32, f32) {
+    if let Some((al, ar, at, ab)) = atlas_tex_coords {
+        let aw = ar - al;
+        let ah = ab - at;
+        (
+            al + left * aw,
+            al + right * aw,
+            at + top * ah,
+            at + bottom * ah,
+        )
+    } else {
+        (left, right, top, bottom)
+    }
+}
+
+/// AddMaskTexture, RemoveMaskTexture, GetNumMaskTextures, GetMaskTexture.
+fn add_mask_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("AddMaskTexture", |_, _this, _mask: Value| Ok(()));
+
     methods.add_method("RemoveMaskTexture", |_, _this, _mask: Value| Ok(()));
 
-    // GetNumMaskTextures() - get number of mask textures
     methods.add_method("GetNumMaskTextures", |_, _this, ()| Ok(0));
 
-    // GetMaskTexture(index) - get mask texture by index
     methods.add_method("GetMaskTexture", |_, _this, _index: i32| Ok(Value::Nil));
+}
 
-    // SetColorTexture(r, g, b, a) - for Texture widgets
-    methods.add_method(
-        "SetColorTexture",
-        |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.color_texture = Some(crate::widget::Color::new(r, g, b, a.unwrap_or(1.0)));
-                // Clear file texture when setting color texture
-                frame.texture = None;
-            }
-            Ok(())
-        },
-    );
-
-    // SetGradient(orientation, minColor, maxColor) - set gradient on texture
+/// SetGradient, SetDrawLayer, GetDrawLayer.
+fn add_draw_layer_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetGradient", |_, _this, _args: mlua::MultiValue| Ok(()));
 
-    // SetDrawLayer(layer, sublayer) - set draw layer for texture/fontstring
     methods.add_method("SetDrawLayer", |_, _this, _args: mlua::MultiValue| Ok(()));
 
-    // GetDrawLayer() - get draw layer for texture/fontstring
     methods.add_method("GetDrawLayer", |_, _this, ()| {
-        // Returns: layer, sublayer
         Ok(("ARTWORK", 0i32))
     });
 }

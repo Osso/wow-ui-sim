@@ -330,3 +330,34 @@ fn test_addon_actions_blocked_table() {
         .unwrap();
     assert!(is_table);
 }
+
+// ============================================================================
+// Legacy GetAddOnEnableState (always returns 2)
+// ============================================================================
+
+#[test]
+fn test_legacy_get_addon_enable_state_always_returns_2() {
+    let env = env_with_addons();
+    // Even for disabled addons, legacy GetAddOnEnableState always returns 2
+    let state: i32 = env
+        .eval("return GetAddOnEnableState(2, 'LODAddon')")
+        .unwrap();
+    assert_eq!(state, 2, "Legacy GetAddOnEnableState should always return 2");
+}
+
+// ============================================================================
+// Legacy IsAddOnLoadOnDemand
+// ============================================================================
+
+#[test]
+fn test_legacy_is_addon_load_on_demand() {
+    let env = env_with_addons();
+    let lod: bool = env
+        .eval("return IsAddOnLoadOnDemand('LODAddon')")
+        .unwrap();
+    assert!(lod);
+    let not_lod: bool = env
+        .eval("return IsAddOnLoadOnDemand('MyAddon')")
+        .unwrap();
+    assert!(!not_lod);
+}

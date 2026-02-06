@@ -6,47 +6,54 @@ use mlua::{Lua, Result, Value};
 
 /// Register collection-related C_* namespaces.
 pub fn register_c_collection_api(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
+    register_pet_journal(lua)?;
+    register_mount_journal(lua)?;
+    register_toy_box(lua)?;
+    register_transmog_collection(lua)?;
+    register_transmog(lua)?;
+    register_transmog_util(lua)?;
+    register_heirloom(lua)?;
+    register_transmog_sets(lua)?;
+    Ok(())
+}
 
-    // C_PetJournal namespace - battle pet utilities
-    let c_pet_journal = lua.create_table()?;
-    c_pet_journal.set(
-        "GetNumPets",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_pet_journal.set(
+/// C_PetJournal namespace - battle pet utilities.
+fn register_pet_journal(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetNumPets", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set(
         "GetPetInfoByIndex",
         lua.create_function(|_, _index: i32| Ok(Value::Nil))?,
     )?;
-    c_pet_journal.set(
+    t.set(
         "GetPetInfoByPetID",
         lua.create_function(|_, _pet_id: String| Ok(Value::Nil))?,
     )?;
-    c_pet_journal.set(
+    t.set(
         "GetPetInfoBySpeciesID",
         lua.create_function(|_, _species_id: i32| Ok(Value::Nil))?,
     )?;
-    c_pet_journal.set(
+    t.set(
         "PetIsSummonable",
         lua.create_function(|_, _pet_id: String| Ok(false))?,
     )?;
-    c_pet_journal.set(
+    t.set(
         "GetNumCollectedInfo",
         lua.create_function(|_, _species_id: i32| Ok((0i32, 0i32)))?,
     )?;
-    globals.set("C_PetJournal", c_pet_journal)?;
+    lua.globals().set("C_PetJournal", t)?;
+    Ok(())
+}
 
-    // C_MountJournal namespace - mount collection
-    let c_mount_journal = lua.create_table()?;
-    c_mount_journal.set(
-        "GetNumMounts",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_mount_journal.set(
+/// C_MountJournal namespace - mount collection.
+fn register_mount_journal(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetNumMounts", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set(
         "GetNumDisplayedMounts",
         lua.create_function(|_, ()| Ok(0i32))?,
     )?;
-    c_mount_journal.set(
+    t.set(
         "GetMountInfoByID",
         lua.create_function(|_, _mount_id: i32| {
             // Returns: name, spellID, icon, isActive, isUsable, sourceType, isFavorite,
@@ -67,73 +74,69 @@ pub fn register_c_collection_api(lua: &Lua) -> Result<()> {
             ))
         })?,
     )?;
-    c_mount_journal.set(
+    t.set(
         "GetMountIDs",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
-    c_mount_journal.set(
+    t.set(
         "GetCollectedFilterSetting",
         lua.create_function(|_, _filter_index: i32| Ok(true))?,
     )?;
-    c_mount_journal.set(
+    t.set(
         "SetCollectedFilterSetting",
         lua.create_function(|_, (_filter_index, _is_checked): (i32, bool)| Ok(()))?,
     )?;
-    c_mount_journal.set(
+    t.set(
         "GetIsFavorite",
         lua.create_function(|_, _mount_index: i32| Ok((false, false)))?,
     )?;
-    c_mount_journal.set(
+    t.set(
         "SetIsFavorite",
         lua.create_function(|_, (_mount_index, _is_favorite): (i32, bool)| Ok(()))?,
     )?;
-    c_mount_journal.set(
-        "Summon",
-        lua.create_function(|_, _mount_id: i32| Ok(()))?,
-    )?;
-    c_mount_journal.set(
-        "Dismiss",
-        lua.create_function(|_, ()| Ok(()))?,
-    )?;
-    globals.set("C_MountJournal", c_mount_journal)?;
+    t.set("Summon", lua.create_function(|_, _mount_id: i32| Ok(()))?)?;
+    t.set("Dismiss", lua.create_function(|_, ()| Ok(()))?)?;
+    lua.globals().set("C_MountJournal", t)?;
+    Ok(())
+}
 
-    // C_ToyBox namespace - toy collection
-    let c_toy_box = lua.create_table()?;
-    c_toy_box.set(
+/// C_ToyBox namespace - toy collection.
+fn register_toy_box(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "GetToyInfo",
         lua.create_function(|_, _item_id: i32| {
             // Returns: itemID, toyName, icon, isFavorite, hasFanfare, itemQuality
             Ok((0i32, "", 0i32, false, false, 0i32))
         })?,
     )?;
-    c_toy_box.set(
+    t.set(
         "IsToyUsable",
         lua.create_function(|_, _item_id: i32| Ok(false))?,
     )?;
-    c_toy_box.set(
-        "GetNumToys",
-        lua.create_function(|_, ()| Ok(0i32))?,
-    )?;
-    c_toy_box.set(
+    t.set("GetNumToys", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set(
         "GetToyFromIndex",
         lua.create_function(|_, _index: i32| Ok(0i32))?,
     )?;
-    c_toy_box.set(
+    t.set(
         "GetNumFilteredToys",
         lua.create_function(|_, ()| Ok(0i32))?,
     )?;
-    globals.set("C_ToyBox", c_toy_box)?;
+    lua.globals().set("C_ToyBox", t)?;
+    Ok(())
+}
 
-    // C_TransmogCollection namespace - transmog/appearance collection
-    let c_transmog_collection = lua.create_table()?;
-    c_transmog_collection.set(
+/// C_TransmogCollection namespace - transmog/appearance collection.
+fn register_transmog_collection(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "GetAppearanceSources",
         lua.create_function(|lua, _appearance_id: i32| lua.create_table())?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetSourceInfo",
         lua.create_function(|lua, _source_id: i32| {
-            // Returns sourceInfo table
             let info = lua.create_table()?;
             info.set("sourceID", 0)?;
             info.set("visualID", 0)?;
@@ -143,97 +146,99 @@ pub fn register_c_collection_api(lua: &Lua) -> Result<()> {
             Ok(info)
         })?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "PlayerHasTransmog",
         lua.create_function(|_, (_item_id, _appearance_mod): (i32, Option<i32>)| Ok(false))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "PlayerHasTransmogByItemInfo",
         lua.create_function(|_, _item_info: String| Ok(false))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "PlayerHasTransmogItemModifiedAppearance",
         lua.create_function(|_, _item_modified_appearance_id: i32| Ok(false))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetItemInfo",
         lua.create_function(|_, _item_modified_appearance_id: i32| Ok(Value::Nil))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetAllAppearanceSources",
         lua.create_function(|lua, _visual_id: i32| lua.create_table())?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetIllusions",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetOutfits",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetNumMaxOutfits",
         lua.create_function(|_, ()| Ok(20i32))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetOutfitInfo",
         lua.create_function(|_, _outfit_id: i32| {
             Ok((Value::Nil, Value::Nil)) // name, icon
         })?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetAppearanceCameraID",
         lua.create_function(|_, _appearance_id: i32| Ok(0i32))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetCategoryAppearances",
         lua.create_function(|lua, (_category, _location): (i32, Value)| lua.create_table())?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "PlayerKnowsSource",
         lua.create_function(|_, _source_id: i32| Ok(false))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "IsAppearanceHiddenVisual",
         lua.create_function(|_, _appearance_id: i32| Ok(false))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "IsSourceTypeFilterChecked",
         lua.create_function(|_, _filter: i32| Ok(true))?,
     )?;
-    c_transmog_collection.set(
+    t.set(
         "GetShowMissingSourceInItemTooltips",
         lua.create_function(|_, ()| Ok(true))?,
     )?;
-    globals.set("C_TransmogCollection", c_transmog_collection)?;
+    lua.globals().set("C_TransmogCollection", t)?;
+    Ok(())
+}
 
-    // C_Transmog namespace - transmogrification API
-    let c_transmog = lua.create_table()?;
-    c_transmog.set(
+/// C_Transmog namespace - transmogrification API.
+fn register_transmog(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "GetAllSetAppearancesByID",
-        lua.create_function(|lua, _set_id: i32| {
-            // Returns array of appearance info for a transmog set
-            lua.create_table()
-        })?,
+        lua.create_function(|lua, _set_id: i32| lua.create_table())?,
     )?;
-    c_transmog.set(
+    t.set(
         "GetAppliedSourceID",
         lua.create_function(|_, _slot: i32| Ok(Value::Nil))?,
     )?;
-    c_transmog.set(
+    t.set(
         "GetSlotInfo",
         lua.create_function(|_, _slot: i32| {
             Ok((false, false, false, false, false, Value::Nil))
         })?,
     )?;
-    globals.set("C_Transmog", c_transmog)?;
+    lua.globals().set("C_Transmog", t)?;
+    Ok(())
+}
 
-    // TransmogUtil - utility functions for transmog system
-    let transmog_util = lua.create_table()?;
-    transmog_util.set(
+/// TransmogUtil - utility functions for transmog system.
+fn register_transmog_util(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "GetTransmogLocation",
         lua.create_function(|lua, (slot, transmog_type, modification): (String, i32, i32)| {
-            // Return a transmog location table
             let location = lua.create_table()?;
             location.set("slotName", slot)?;
             location.set("transmogType", transmog_type)?;
@@ -241,7 +246,7 @@ pub fn register_c_collection_api(lua: &Lua) -> Result<()> {
             Ok(location)
         })?,
     )?;
-    transmog_util.set(
+    t.set(
         "CreateTransmogLocation",
         lua.create_function(|lua, (slot_id, transmog_type, modification): (i32, i32, i32)| {
             let location = lua.create_table()?;
@@ -251,62 +256,71 @@ pub fn register_c_collection_api(lua: &Lua) -> Result<()> {
             Ok(location)
         })?,
     )?;
-    transmog_util.set(
+    t.set(
         "GetBestItemModifiedAppearanceID",
         lua.create_function(|_, _item_loc: mlua::Value| Ok(Value::Nil))?,
     )?;
-    globals.set("TransmogUtil", transmog_util)?;
+    lua.globals().set("TransmogUtil", t)?;
+    Ok(())
+}
 
-    // C_Heirloom namespace - heirloom collection
-    let c_heirloom = lua.create_table()?;
-    c_heirloom.set(
+/// C_Heirloom namespace - heirloom collection.
+fn register_heirloom(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "GetHeirloomInfo",
         lua.create_function(|_, _item_id: i32| {
-            // Returns: name, itemEquipLoc, isPvP, itemTexture, upgradeLevel, source, searchFiltered, effectiveLevel, minLevel, maxLevel
-            Ok((Value::Nil, Value::Nil, false, 0i32, 0i32, 0i32, false, 0i32, 0i32, 0i32))
+            // Returns: name, itemEquipLoc, isPvP, itemTexture, upgradeLevel, source,
+            // searchFiltered, effectiveLevel, minLevel, maxLevel
+            Ok((
+                Value::Nil, Value::Nil, false, 0i32, 0i32, 0i32, false, 0i32, 0i32, 0i32,
+            ))
         })?,
     )?;
-    c_heirloom.set(
+    t.set(
         "GetHeirloomMaxUpgradeLevel",
         lua.create_function(|_, _item_id: i32| Ok(0i32))?,
     )?;
-    c_heirloom.set(
+    t.set(
         "GetNumHeirlooms",
         lua.create_function(|_, ()| Ok(0i32))?,
     )?;
-    c_heirloom.set(
+    t.set(
         "GetNumKnownHeirlooms",
         lua.create_function(|_, ()| Ok(0i32))?,
     )?;
-    c_heirloom.set(
+    t.set(
         "PlayerHasHeirloom",
         lua.create_function(|_, _item_id: i32| Ok(false))?,
     )?;
-    c_heirloom.set(
+    t.set(
         "GetHeirloomLink",
         lua.create_function(|_, _item_id: i32| Ok(Value::Nil))?,
     )?;
-    c_heirloom.set(
+    t.set(
         "CanHeirloomUpgradeFromPending",
         lua.create_function(|_, _item_id: i32| Ok(false))?,
     )?;
-    c_heirloom.set(
+    t.set(
         "GetClassAndSpecFilters",
         lua.create_function(|_, ()| Ok((0i32, 0i32)))?,
     )?;
-    globals.set("C_Heirloom", c_heirloom)?;
+    lua.globals().set("C_Heirloom", t)?;
+    Ok(())
+}
 
-    // C_TransmogSets namespace - transmog set collection
-    let c_transmog_sets = lua.create_table()?;
-    c_transmog_sets.set(
+/// C_TransmogSets namespace - transmog set collection.
+fn register_transmog_sets(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
         "GetBaseSetID",
         lua.create_function(|_, _set_id: i32| Ok(0i32))?,
     )?;
-    c_transmog_sets.set(
+    t.set(
         "GetVariantSets",
         lua.create_function(|lua, _set_id: i32| lua.create_table())?,
     )?;
-    c_transmog_sets.set(
+    t.set(
         "GetSetInfo",
         lua.create_function(|lua, _set_id: i32| {
             let info = lua.create_table()?;
@@ -319,27 +333,26 @@ pub fn register_c_collection_api(lua: &Lua) -> Result<()> {
             Ok(info)
         })?,
     )?;
-    c_transmog_sets.set(
+    t.set(
         "GetSetPrimaryAppearances",
         lua.create_function(|lua, _set_id: i32| lua.create_table())?,
     )?;
-    c_transmog_sets.set(
+    t.set(
         "GetAllSets",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
-    c_transmog_sets.set(
+    t.set(
         "GetUsableSets",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
-    c_transmog_sets.set(
+    t.set(
         "IsBaseSetCollected",
         lua.create_function(|_, _set_id: i32| Ok(false))?,
     )?;
-    c_transmog_sets.set(
+    t.set(
         "GetSourcesForSlot",
         lua.create_function(|lua, (_set_id, _slot): (i32, i32)| lua.create_table())?,
     )?;
-    globals.set("C_TransmogSets", c_transmog_sets)?;
-
+    lua.globals().set("C_TransmogSets", t)?;
     Ok(())
 }

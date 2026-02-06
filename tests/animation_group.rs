@@ -459,6 +459,369 @@ fn restart_resets_and_plays() {
     "#).unwrap();
 }
 
+// ============================================================================
+// AnimGroup: IsReverse, IsPendingFinish, GetLoopState, GetElapsed, GetProgress
+// ============================================================================
+
+#[test]
+fn play_reverse() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimReverse", UIParent)
+        local ag = f:CreateAnimationGroup()
+        ag:Play(true)
+        assert(ag:IsReverse() == true, "Should be reverse after Play(true)")
+    "#).unwrap();
+}
+
+#[test]
+fn is_pending_finish_after_stop() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimPending", UIParent)
+        local ag = f:CreateAnimationGroup()
+        assert(ag:IsPendingFinish() == false, "Not pending initially")
+        ag:Play()
+        ag:Stop()
+        assert(ag:IsPendingFinish() == true, "Pending finish after Stop")
+    "#).unwrap();
+}
+
+#[test]
+fn get_loop_state_returns_looping() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimLoopState", UIParent)
+        local ag = f:CreateAnimationGroup()
+        ag:SetLooping("BOUNCE")
+        assert(ag:GetLoopState() == "BOUNCE", "GetLoopState should match SetLooping")
+    "#).unwrap();
+}
+
+#[test]
+fn get_elapsed_increases_after_tick() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimElapsed", UIParent)
+        _G.testAG = f:CreateAnimationGroup()
+        local anim = _G.testAG:CreateAnimation("Alpha")
+        anim:SetDuration(1.0)
+        _G.testAG:Play()
+    "#).unwrap();
+
+    env.fire_on_update(0.3).unwrap();
+
+    let elapsed: f64 = env.eval("return _G.testAG:GetElapsed()").unwrap();
+    assert!(
+        (elapsed - 0.3).abs() < 0.05,
+        "GetElapsed should be ~0.3, got {}",
+        elapsed
+    );
+}
+
+#[test]
+fn get_progress_at_halfway() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimProgress", UIParent)
+        _G.testAGP = f:CreateAnimationGroup()
+        local anim = _G.testAGP:CreateAnimation("Alpha")
+        anim:SetDuration(1.0)
+        _G.testAGP:Play()
+    "#).unwrap();
+
+    env.fire_on_update(0.5).unwrap();
+
+    let progress: f64 = env.eval("return _G.testAGP:GetProgress()").unwrap();
+    assert!(
+        (progress - 0.5).abs() < 0.05,
+        "GetProgress should be ~0.5, got {}",
+        progress
+    );
+}
+
+// ============================================================================
+// AnimGroup: GetToFinalAlpha, GetAlpha, HookScript, PlaySynced, RemoveAnimations
+// ============================================================================
+
+#[test]
+fn get_to_final_alpha_getter() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimGTFA", UIParent)
+        local ag = f:CreateAnimationGroup()
+        ag:SetToFinalAlpha(true)
+        assert(ag:GetToFinalAlpha() == true, "GetToFinalAlpha should return true")
+    "#).unwrap();
+}
+
+#[test]
+fn group_get_alpha_stub() {
+    let env = setup();
+    let alpha: f64 = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimGA", UIParent)
+        local ag = f:CreateAnimationGroup()
+        return ag:GetAlpha()
+    "#).unwrap();
+    assert_eq!(alpha, 1.0, "GetAlpha stub should return 1.0");
+}
+
+#[test]
+fn hook_script_stores_handler() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimHook", UIParent)
+        local ag = f:CreateAnimationGroup()
+        ag:HookScript("OnFinished", function() end)
+        assert(ag:HasScript("OnFinished") == true, "HookScript should register handler")
+    "#).unwrap();
+}
+
+#[test]
+fn play_synced_no_error() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimSync", UIParent)
+        local ag = f:CreateAnimationGroup()
+        ag:PlaySynced()
+    "#).unwrap();
+}
+
+#[test]
+fn remove_animations_clears_list() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimRemove", UIParent)
+        local ag = f:CreateAnimationGroup()
+        ag:CreateAnimation("Alpha")
+        ag:CreateAnimation("Translation")
+        local a1, a2 = ag:GetAnimations()
+        assert(a1 ~= nil and a2 ~= nil, "Should have 2 animations")
+        ag:RemoveAnimations()
+        local b1 = ag:GetAnimations()
+        assert(b1 == nil, "Should have no animations after RemoveAnimations")
+    "#).unwrap();
+}
+
+#[test]
+fn get_script_returns_function() {
+    let env = setup();
+    let is_func: bool = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimGetScript", UIParent)
+        local ag = f:CreateAnimationGroup()
+        ag:SetScript("OnPlay", function() end)
+        return type(ag:GetScript("OnPlay")) == "function"
+    "#).unwrap();
+    assert!(is_func, "GetScript should return the function");
+}
+
+#[test]
+fn get_script_nil_when_absent() {
+    let env = setup();
+    let is_nil: bool = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimGetScriptNil", UIParent)
+        local ag = f:CreateAnimationGroup()
+        return ag:GetScript("OnPlay") == nil
+    "#).unwrap();
+    assert!(is_nil, "GetScript should return nil for unset handlers");
+}
+
+// ============================================================================
+// Anim: property methods (SetOffset, SetChange, SetScale, SetDegrees, etc.)
+// ============================================================================
+
+#[test]
+fn animation_set_offset_no_error() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimOffset", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Translation")
+        anim:SetOffset(10, -5)
+    "#).unwrap();
+}
+
+#[test]
+fn animation_set_change_alpha() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimChange", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        anim:SetFromAlpha(0.2)
+        anim:SetChange(0.5)
+        local to = anim:GetToAlpha()
+        assert(math.abs(to - 0.7) < 0.01, "SetChange should set to_alpha = from_alpha + change, got " .. to)
+    "#).unwrap();
+}
+
+#[test]
+fn animation_set_scale_no_error() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimScale", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Scale")
+        anim:SetScale(2.0, 3.0)
+        anim:SetScaleFrom(0.5, 0.5)
+        anim:SetScaleTo(1.5, 1.5)
+    "#).unwrap();
+}
+
+#[test]
+fn animation_set_degrees_no_error() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimDeg", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Rotation")
+        anim:SetDegrees(360)
+        anim:SetOrigin("CENTER", 0, 0)
+    "#).unwrap();
+}
+
+// ============================================================================
+// Anim: state query methods (IsStopped, IsDelaying, GetProgress, GetSmoothProgress, GetElapsed)
+// ============================================================================
+
+#[test]
+fn animation_is_stopped_initially() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimStopped", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        assert(anim:IsStopped() == true, "Should be stopped initially")
+    "#).unwrap();
+}
+
+#[test]
+fn animation_is_delaying_stub() {
+    let env = setup();
+    let delaying: bool = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimDelaying", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        return anim:IsDelaying()
+    "#).unwrap();
+    assert!(!delaying, "IsDelaying stub should return false");
+}
+
+#[test]
+fn animation_get_progress_with_duration() {
+    let env = setup();
+    let progress: f64 = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimProg", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        anim:SetDuration(1.0)
+        return anim:GetProgress()
+    "#).unwrap();
+    assert_eq!(progress, 0.0, "Progress should be 0.0 at start with duration set");
+}
+
+#[test]
+fn animation_get_smooth_progress_with_duration() {
+    let env = setup();
+    let progress: f64 = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimSmProg", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        anim:SetDuration(1.0)
+        return anim:GetSmoothProgress()
+    "#).unwrap();
+    assert_eq!(progress, 0.0, "Smooth progress should be 0.0 at start with duration set");
+}
+
+#[test]
+fn animation_get_elapsed_default() {
+    let env = setup();
+    let elapsed: f64 = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimElapsed2", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        return anim:GetElapsed()
+    "#).unwrap();
+    assert_eq!(elapsed, 0.0);
+}
+
+// ============================================================================
+// Anim: target and accessor methods
+// ============================================================================
+
+#[test]
+fn animation_set_get_target_no_error() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimTarget", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        anim:SetTarget(f)
+        anim:SetChildKey("SomeChild")
+        anim:SetTargetKey("SomeKey")
+        anim:SetTargetName("SomeName")
+        anim:SetTargetParent()
+    "#).unwrap();
+}
+
+#[test]
+fn animation_get_name() {
+    let env = setup();
+    let name: String = env.eval(r#"
+        local f = CreateFrame("Frame", "TestAnimName", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha", "FadeIn")
+        return anim:GetName()
+    "#).unwrap();
+    assert_eq!(name, "FadeIn");
+}
+
+#[test]
+fn animation_playback_stubs_no_error() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimStubs", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        anim:Play()
+        anim:Pause()
+        anim:Stop()
+        anim:Restart()
+        anim:Finish()
+    "#).unwrap();
+}
+
+// ============================================================================
+// Anim: script handlers
+// ============================================================================
+
+#[test]
+fn animation_set_has_script() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimScript", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        assert(anim:HasScript("OnFinished") == false)
+        anim:SetScript("OnFinished", function() end)
+        assert(anim:HasScript("OnFinished") == true)
+        anim:SetScript("OnFinished", nil)
+        assert(anim:HasScript("OnFinished") == false)
+    "#).unwrap();
+}
+
+#[test]
+fn animation_hook_script() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAnimHookScript", UIParent)
+        local ag = f:CreateAnimationGroup()
+        local anim = ag:CreateAnimation("Alpha")
+        anim:HookScript("OnPlay", function() end)
+        assert(anim:HasScript("OnPlay") == true)
+    "#).unwrap();
+}
+
 #[test]
 fn animation_delays() {
     let env = setup();
