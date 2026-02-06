@@ -369,15 +369,24 @@ pub fn register_addon_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
     )?;
 
     // IsAddonVersionCheckEnabled - check if addon version validation is enabled
+    let state_for_version_check = Rc::clone(&state);
     c_addons.set(
         "IsAddonVersionCheckEnabled",
-        lua.create_function(|_, ()| Ok(false))?,
+        lua.create_function(move |_, ()| {
+            let state = state_for_version_check.borrow();
+            Ok(state.cvars.get_bool("checkAddonVersion"))
+        })?,
     )?;
 
     // SetAddonVersionCheck - toggle addon version validation
+    let state_for_set_version = Rc::clone(&state);
     c_addons.set(
         "SetAddonVersionCheck",
-        lua.create_function(|_, _enabled: bool| Ok(()))?,
+        lua.create_function(move |_, enabled: bool| {
+            let state = state_for_set_version.borrow();
+            state.cvars.set("checkAddonVersion", if enabled { "1" } else { "0" });
+            Ok(())
+        })?,
     )?;
 
     globals.set("C_AddOns", c_addons)?;
