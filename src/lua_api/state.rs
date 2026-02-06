@@ -2,6 +2,7 @@
 
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
+use crate::lua_api::animation::AnimGroupState;
 use crate::lua_api::message_frame::MessageFrameData;
 use crate::lua_api::simple_html::SimpleHtmlData;
 use crate::lua_api::tooltip::TooltipData;
@@ -68,6 +69,10 @@ pub struct SimState {
     pub message_frames: HashMap<u64, MessageFrameData>,
     /// Frame IDs with active OnUpdate script handlers.
     pub on_update_frames: HashSet<u64>,
+    /// Animation groups keyed by unique group ID.
+    pub animation_groups: HashMap<u64, AnimGroupState>,
+    /// Counter for generating unique animation group IDs.
+    pub next_anim_group_id: u64,
 }
 
 impl Default for SimState {
@@ -85,6 +90,8 @@ impl Default for SimState {
             simple_htmls: HashMap::new(),
             message_frames: HashMap::new(),
             on_update_frames: HashSet::new(),
+            animation_groups: HashMap::new(),
+            next_anim_group_id: 1,
         }
     }
 }

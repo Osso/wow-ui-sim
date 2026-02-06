@@ -177,6 +177,367 @@ pub fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str)
     code
 }
 
+/// Generate Lua code for creating an animation group and its child animations from XML.
+pub fn generate_animation_group_code(
+    anim_group: &crate::xml::AnimationGroupXml,
+    frame_ref: &str,
+) -> String {
+    let mut code = String::new();
+
+    let group_name = anim_group.name.as_deref().unwrap_or("");
+    let inherits = anim_group.inherits.as_deref().unwrap_or("");
+
+    code.push_str(&format!(
+        r#"
+        do
+        local __ag = {}:CreateAnimationGroup({}, {})
+        "#,
+        frame_ref,
+        if group_name.is_empty() {
+            "nil".to_string()
+        } else {
+            format!("\"{}\"", escape_lua_string(group_name))
+        },
+        if inherits.is_empty() {
+            "nil".to_string()
+        } else {
+            format!("\"{}\"", escape_lua_string(inherits))
+        },
+    ));
+
+    // Set parentKey
+    if let Some(parent_key) = &anim_group.parent_key {
+        code.push_str(&format!(
+            r#"
+        {}.{} = __ag
+        "#,
+            frame_ref, parent_key
+        ));
+    }
+
+    // Set looping
+    if let Some(looping) = &anim_group.looping {
+        code.push_str(&format!(
+            r#"
+        __ag:SetLooping("{}")
+        "#,
+            escape_lua_string(looping)
+        ));
+    }
+
+    // Set setToFinalAlpha
+    if anim_group.set_to_final_alpha == Some(true) {
+        code.push_str(
+            r#"
+        __ag:SetToFinalAlpha(true)
+        "#,
+        );
+    }
+
+    // Process child elements
+    for element in &anim_group.elements {
+        match element {
+            crate::xml::AnimationElement::Scripts(scripts) => {
+                code.push_str(&generate_anim_group_scripts_code(scripts, "__ag"));
+            }
+            crate::xml::AnimationElement::KeyValues(kv) => {
+                for key_value in &kv.values {
+                    let value = match key_value.value_type.as_deref() {
+                        Some("number") => key_value.value.clone(),
+                        Some("boolean") => key_value.value.to_lowercase(),
+                        _ => format!("\"{}\"", escape_lua_string(&key_value.value)),
+                    };
+                    code.push_str(&format!(
+                        r#"
+        __ag.{} = {}
+        "#,
+                        key_value.key, value
+                    ));
+                }
+            }
+            crate::xml::AnimationElement::Unknown => {}
+            _ => {
+                // Animation elements (Alpha, Translation, etc.)
+                let (anim_type_str, anim_xml) = match element {
+                    crate::xml::AnimationElement::Alpha(a) => ("Alpha", a),
+                    crate::xml::AnimationElement::Translation(a) => ("Translation", a),
+                    crate::xml::AnimationElement::LineTranslation(a) => ("LineTranslation", a),
+                    crate::xml::AnimationElement::Rotation(a) => ("Rotation", a),
+                    crate::xml::AnimationElement::Scale(a) => ("Scale", a),
+                    crate::xml::AnimationElement::LineScale(a) => ("LineScale", a),
+                    crate::xml::AnimationElement::Path(a) => ("Path", a),
+                    crate::xml::AnimationElement::FlipBook(a) => ("FlipBook", a),
+                    crate::xml::AnimationElement::VertexColor(a) => ("VertexColor", a),
+                    crate::xml::AnimationElement::TextureCoordTranslation(a) => {
+                        ("TextureCoordTranslation", a)
+                    }
+                    crate::xml::AnimationElement::Animation(a) => ("Animation", a),
+                    _ => continue,
+                };
+                code.push_str(&generate_animation_code(anim_xml, anim_type_str, frame_ref));
+            }
+        }
+    }
+
+    // Apply mixin
+    if let Some(mixin) = &anim_group.mixin {
+        for m in mixin.split(',').map(|s| s.trim()) {
+            if !m.is_empty() {
+                code.push_str(&format!(
+                    r#"
+        if {} then Mixin(__ag, {}) end
+        "#,
+                    m, m
+                ));
+            }
+        }
+    }
+
+    code.push_str(
+        r#"
+        end
+        "#,
+    );
+
+    code
+}
+
+/// Generate Lua code for a single animation element within a group.
+fn generate_animation_code(
+    anim: &crate::xml::AnimationXml,
+    anim_type: &str,
+    _frame_ref: &str,
+) -> String {
+    let mut code = String::new();
+
+    let anim_name = anim.name.as_deref().unwrap_or("");
+
+    code.push_str(&format!(
+        r#"
+        local __anim = __ag:CreateAnimation("{}", {})
+        "#,
+        anim_type,
+        if anim_name.is_empty() {
+            "nil".to_string()
+        } else {
+            format!("\"{}\"", escape_lua_string(anim_name))
+        },
+    ));
+
+    // Set parentKey
+    if let Some(parent_key) = &anim.parent_key {
+        code.push_str(&format!(
+            r#"
+        __ag.{} = __anim
+        "#,
+            parent_key
+        ));
+    }
+
+    // Duration
+    if let Some(dur) = anim.duration {
+        code.push_str(&format!(
+            r#"
+        __anim:SetDuration({})
+        "#,
+            dur
+        ));
+    }
+
+    // Order
+    if let Some(order) = anim.order {
+        code.push_str(&format!(
+            r#"
+        __anim:SetOrder({})
+        "#,
+            order
+        ));
+    }
+
+    // Delays
+    if let Some(delay) = anim.start_delay {
+        code.push_str(&format!(
+            r#"
+        __anim:SetStartDelay({})
+        "#,
+            delay
+        ));
+    }
+    if let Some(delay) = anim.end_delay {
+        code.push_str(&format!(
+            r#"
+        __anim:SetEndDelay({})
+        "#,
+            delay
+        ));
+    }
+
+    // Smoothing
+    if let Some(smoothing) = &anim.smoothing {
+        code.push_str(&format!(
+            r#"
+        __anim:SetSmoothing("{}")
+        "#,
+            escape_lua_string(smoothing)
+        ));
+    }
+
+    // Alpha
+    if let Some(val) = anim.from_alpha {
+        code.push_str(&format!(
+            r#"
+        __anim:SetFromAlpha({})
+        "#,
+            val
+        ));
+    }
+    if let Some(val) = anim.to_alpha {
+        code.push_str(&format!(
+            r#"
+        __anim:SetToAlpha({})
+        "#,
+            val
+        ));
+    }
+
+    // Translation
+    if anim.offset_x.is_some() || anim.offset_y.is_some() {
+        code.push_str(&format!(
+            r#"
+        __anim:SetOffset({}, {})
+        "#,
+            anim.offset_x.unwrap_or(0.0),
+            anim.offset_y.unwrap_or(0.0)
+        ));
+    }
+
+    // Scale
+    if anim.scale_x.is_some() || anim.scale_y.is_some() {
+        code.push_str(&format!(
+            r#"
+        __anim:SetScale({}, {})
+        "#,
+            anim.scale_x.unwrap_or(1.0),
+            anim.scale_y.unwrap_or(1.0)
+        ));
+    }
+    if anim.from_scale_x.is_some() || anim.from_scale_y.is_some() {
+        code.push_str(&format!(
+            r#"
+        __anim:SetScaleFrom({}, {})
+        "#,
+            anim.from_scale_x.unwrap_or(1.0),
+            anim.from_scale_y.unwrap_or(1.0)
+        ));
+    }
+    if anim.to_scale_x.is_some() || anim.to_scale_y.is_some() {
+        code.push_str(&format!(
+            r#"
+        __anim:SetScaleTo({}, {})
+        "#,
+            anim.to_scale_x.unwrap_or(1.0),
+            anim.to_scale_y.unwrap_or(1.0)
+        ));
+    }
+
+    // Rotation
+    if let Some(deg) = anim.degrees {
+        code.push_str(&format!(
+            r#"
+        __anim:SetDegrees({})
+        "#,
+            deg
+        ));
+    }
+
+    // childKey / target / targetKey
+    if let Some(child_key) = &anim.child_key {
+        code.push_str(&format!(
+            r#"
+        __anim:SetChildKey("{}")
+        "#,
+            escape_lua_string(child_key)
+        ));
+    }
+    if let Some(target) = &anim.target {
+        code.push_str(&format!(
+            r#"
+        __anim:SetTargetName("{}")
+        "#,
+            escape_lua_string(target)
+        ));
+    }
+    if let Some(target_key) = &anim.target_key {
+        code.push_str(&format!(
+            r#"
+        __anim:SetTargetKey("{}")
+        "#,
+            escape_lua_string(target_key)
+        ));
+    }
+
+    code
+}
+
+/// Generate Lua code for animation group script handlers (OnPlay, OnFinished, etc.).
+fn generate_anim_group_scripts_code(
+    scripts: &crate::xml::ScriptsXml,
+    group_ref: &str,
+) -> String {
+    let mut code = String::new();
+
+    let add_handler = |code: &mut String,
+                       handler_name: &str,
+                       script: &crate::xml::ScriptBodyXml,
+                       target: &str| {
+        if let Some(func) = &script.function {
+            code.push_str(&format!(
+                r#"
+        {}:SetScript("{}", {})
+        "#,
+                target, handler_name, func
+            ));
+        } else if let Some(method) = &script.method {
+            code.push_str(&format!(
+                r#"
+        {}:SetScript("{}", function(self, ...) self:{}(...) end)
+        "#,
+                target, handler_name, method
+            ));
+        } else if let Some(body) = &script.body {
+            let body = body.trim();
+            if !body.is_empty() {
+                code.push_str(&format!(
+                    r#"
+        {}:SetScript("{}", function(self, ...)
+            {}
+        end)
+        "#,
+                    target, handler_name, body
+                ));
+            }
+        }
+    };
+
+    if let Some(handler) = scripts.on_play.last() {
+        add_handler(&mut code, "OnPlay", handler, group_ref);
+    }
+    if let Some(handler) = scripts.on_finished.last() {
+        add_handler(&mut code, "OnFinished", handler, group_ref);
+    }
+    if let Some(handler) = scripts.on_stop.last() {
+        add_handler(&mut code, "OnStop", handler, group_ref);
+    }
+    if let Some(handler) = scripts.on_loop.last() {
+        add_handler(&mut code, "OnLoop", handler, group_ref);
+    }
+    if let Some(handler) = scripts.on_pause.last() {
+        add_handler(&mut code, "OnPause", handler, group_ref);
+    }
+
+    code
+}
+
 /// Generate Lua code for setting script handlers.
 pub fn generate_scripts_code(scripts: &crate::xml::ScriptsXml) -> String {
     let mut code = String::new();

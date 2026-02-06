@@ -164,6 +164,14 @@ impl FrameXml {
         })
     }
 
+    /// Get the Animations element if present.
+    pub fn animations(&self) -> Option<&AnimationsXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::Animations(a) => Some(a),
+            _ => None,
+        })
+    }
+
     /// Get the NormalTexture element if present (Button-specific).
     pub fn normal_texture(&self) -> Option<&TextureXml> {
         self.children.iter().find_map(|c| match c {
@@ -420,6 +428,17 @@ pub struct ScriptsXml {
     pub on_show: Vec<ScriptBodyXml>,
     #[serde(rename = "OnHide", default)]
     pub on_hide: Vec<ScriptBodyXml>,
+    // Animation group scripts
+    #[serde(rename = "OnPlay", default)]
+    pub on_play: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnFinished", default)]
+    pub on_finished: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnStop", default)]
+    pub on_stop: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnLoop", default)]
+    pub on_loop: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnPause", default)]
+    pub on_pause: Vec<ScriptBodyXml>,
 }
 
 #[derive(Debug, Deserialize, Clone)]

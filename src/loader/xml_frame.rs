@@ -4,7 +4,7 @@ use crate::lua_api::WowLuaEnv;
 
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, generate_anchors_code, generate_scripts_code, get_size_values, rand_id};
+use super::helpers::{escape_lua_string, generate_anchors_code, generate_animation_group_code, generate_scripts_code, get_size_values, rand_id};
 use super::xml_fontstring::create_fontstring_from_xml;
 use super::xml_texture::create_texture_from_xml;
 
@@ -343,6 +343,48 @@ pub fn create_frame_from_xml(
                     name, parent_key, actual_child_name
                 );
                 env.exec(&lua_code).ok(); // Ignore errors (parent might not exist yet)
+            }
+        }
+    }
+
+    // Handle Animations (AnimationGroup elements)
+    if let Some(anims) = frame.animations() {
+        let mut anim_code = String::new();
+        anim_code.push_str(&format!(
+            r#"
+            local frame = {}
+            "#,
+            name
+        ));
+        for anim_group_xml in &anims.animations {
+            // Skip virtual animation groups
+            if anim_group_xml.is_virtual == Some(true) {
+                continue;
+            }
+            anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
+        }
+        env.exec(&anim_code).ok();
+    }
+
+    // Also handle animation groups from inherited templates
+    if !inherits.is_empty() {
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in &template_chain {
+            if let Some(anims) = template_entry.frame.animations() {
+                let mut anim_code = String::new();
+                anim_code.push_str(&format!(
+                    r#"
+                    local frame = {}
+                    "#,
+                    name
+                ));
+                for anim_group_xml in &anims.animations {
+                    if anim_group_xml.is_virtual == Some(true) {
+                        continue;
+                    }
+                    anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
+                }
+                env.exec(&anim_code).ok();
             }
         }
     }

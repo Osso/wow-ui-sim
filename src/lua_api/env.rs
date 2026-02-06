@@ -440,40 +440,41 @@ impl WowLuaEnv {
         !self.state.borrow().timers.is_empty()
     }
 
-    /// Fire OnUpdate handlers for all frames that have them registered.
+    /// Fire OnUpdate handlers for all frames that have them registered,
+    /// then tick animation groups.
     /// `elapsed` is the time in seconds since the last frame.
     pub fn fire_on_update(&self, elapsed: f64) -> Result<()> {
+        // Fire frame OnUpdate handlers
         let frame_ids: Vec<u64> = {
             let state = self.state.borrow();
             state.on_update_frames.iter().copied().collect()
         };
 
-        if frame_ids.is_empty() {
-            return Ok(());
-        }
+        if !frame_ids.is_empty() {
+            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
+            if let Some(table) = scripts_table {
+                let elapsed_val = Value::Number(elapsed);
 
-        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-        let Some(table) = scripts_table else {
-            return Ok(());
-        };
+                for widget_id in frame_ids {
+                    let frame_key = format!("{}_OnUpdate", widget_id);
+                    let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
 
-        let elapsed_val = Value::Number(elapsed);
+                    if let Some(handler) = handler {
+                        let frame_ref_key = format!("__frame_{}", widget_id);
+                        let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
 
-        for widget_id in frame_ids {
-            let frame_key = format!("{}_OnUpdate", widget_id);
-            let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-
-            if let Some(handler) = handler {
-                let frame_ref_key = format!("__frame_{}", widget_id);
-                let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
-
-                if let Err(e) =
-                    handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
-                {
-                    eprintln!("OnUpdate error (frame {}): {}", widget_id, e);
+                        if let Err(e) =
+                            handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
+                        {
+                            eprintln!("OnUpdate error (frame {}): {}", widget_id, e);
+                        }
+                    }
                 }
             }
         }
+
+        // Tick animation groups
+        super::animation::tick_animation_groups(&self.state, &self.lua, elapsed)?;
 
         Ok(())
     }

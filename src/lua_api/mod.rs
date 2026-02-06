@@ -1,5 +1,6 @@
 //! Lua API bindings implementing WoW's addon API.
 
+pub mod animation;
 mod builtin_frames;
 mod env;
 mod frame;
