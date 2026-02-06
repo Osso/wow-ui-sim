@@ -1612,7 +1612,10 @@ fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
     )?;
     globals.set("SetGamePadCursorControl", nop.clone())?;
     globals.set("SetPortraitTexture", nop.clone())?;
+    globals.set("ChangeActionBarPage", nop.clone())?;
     globals.set("StaticPopup_UpdateAll", nop.clone())?;
+    globals.set("StaticPopup_Show", nop.clone())?;
+    globals.set("StaticPopup_Hide", nop.clone())?;
     globals.set(
         "IsTutorialFlagged",
         lua.create_function(|_, _flag: i32| Ok(false))?,
@@ -1650,6 +1653,10 @@ fn register_c_splash_screen(lua: &Lua) -> Result<()> {
     t.set(
         "CanViewSplashScreen",
         lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    t.set(
+        "SendSplashScreenCloseTelem",
+        lua.create_function(|_, ()| Ok(()))?,
     )?;
     lua.globals().set("C_SplashScreen", t)?;
 
