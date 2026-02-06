@@ -7,6 +7,7 @@ mod frame_methods;
 mod globals;
 mod globals_legacy;
 mod layout;
+pub mod simple_html;
 mod state;
 pub mod tooltip;
 
@@ -15,6 +16,7 @@ pub use env::WowLuaEnv;
 pub use layout::{
     anchor_position, compute_frame_rect, frame_position_from_anchor, get_parent_depth, LayoutRect,
 };
+pub use simple_html::SimpleHtmlData;
 pub use state::{AddonInfo, PendingTimer, SimState};
 pub use tooltip::TooltipData;
 

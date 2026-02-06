@@ -222,21 +222,27 @@ impl App {
                 }
 
                 // Process WoW timers
-                let timer_result = {
+                {
                     let env = self.env.borrow();
-                    env.process_timers()
-                };
-                match timer_result {
-                    Ok(count) if count > 0 => {
-                        self.drain_console();
-                        self.frame_cache.clear();
-                        self.quads_dirty.set(true);
+                    match env.process_timers() {
+                        Err(e) => eprintln!("Timer error: {}", e),
+                        _ => {}
                     }
-                    Err(e) => {
-                        eprintln!("Timer error: {}", e);
-                    }
-                    _ => {}
                 }
+
+                // Fire OnUpdate handlers
+                let on_update_elapsed = now.duration_since(self.last_on_update_time);
+                self.last_on_update_time = now;
+                {
+                    let env = self.env.borrow();
+                    if let Err(e) = env.fire_on_update(on_update_elapsed.as_secs_f64()) {
+                        eprintln!("OnUpdate error: {}", e);
+                    }
+                }
+
+                self.drain_console();
+                self.frame_cache.clear();
+                self.quads_dirty.set(true);
 
                 // Process debug commands (using try_recv in blocking context)
                 return self.process_debug_commands();

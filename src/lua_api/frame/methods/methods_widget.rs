@@ -221,6 +221,7 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("AddTexture", |_, _this, _texture: String| Ok(()));
 
     // SetText(text, r, g, b, wrap) - Clear and set first line (tooltip), or set frame text
+    // For SimpleHTML: strips HTML tags before storing plain text
     methods.add_method_mut("SetText", |_, this, args: mlua::MultiValue| {
         let mut args_iter = args.into_iter();
         if let Some(Value::String(text)) = args_iter.next() {
@@ -246,9 +247,15 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     wrap,
                 });
             }
+            // For SimpleHTML, strip HTML tags before storing
+            let store_text = if state.simple_htmls.contains_key(&this.id) {
+                strip_html_tags(&text_str)
+            } else {
+                text_str
+            };
             // Always set frame.text too
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.text = Some(text_str);
+                frame.text = Some(store_text);
             }
         }
         Ok(())
@@ -815,10 +822,92 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetCountInvisibleLetters", |_, _this, _count: bool| Ok(()));
     // Note: GetCursorPosition and SetCursorPosition already defined above in EditBox section
     // Note: HighlightText already defined above in EditBox section
+
+    // ===== SimpleHTML methods =====
+
+    // SetHyperlinkFormat(format)
+    methods.add_method("SetHyperlinkFormat", |_, this, format: String| {
+        let mut state = this.state.borrow_mut();
+        if let Some(data) = state.simple_htmls.get_mut(&this.id) {
+            data.hyperlink_format = format;
+        }
+        Ok(())
+    });
+
+    // GetHyperlinkFormat()
+    methods.add_method("GetHyperlinkFormat", |_, this, ()| {
+        let state = this.state.borrow();
+        let format = state
+            .simple_htmls
+            .get(&this.id)
+            .map(|d| d.hyperlink_format.clone())
+            .unwrap_or_else(|| "|H%s|h%s|h".to_string());
+        Ok(format)
+    });
+
+    // SetHyperlinksEnabled(enabled)
+    methods.add_method("SetHyperlinksEnabled", |_, this, enabled: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(data) = state.simple_htmls.get_mut(&this.id) {
+            data.hyperlinks_enabled = enabled;
+        }
+        Ok(())
+    });
+
+    // GetHyperlinksEnabled()
+    methods.add_method("GetHyperlinksEnabled", |_, this, ()| {
+        let state = this.state.borrow();
+        let enabled = state
+            .simple_htmls
+            .get(&this.id)
+            .map(|d| d.hyperlinks_enabled)
+            .unwrap_or(true);
+        Ok(enabled)
+    });
+
+    // GetContentHeight() - estimate based on text length and font size
+    methods.add_method("GetContentHeight", |_, this, ()| {
+        let state = this.state.borrow();
+        let frame = match state.widgets.get(this.id) {
+            Some(f) => f,
+            None => return Ok(0.0_f64),
+        };
+        let text = match &frame.text {
+            Some(t) if !t.is_empty() => t,
+            _ => return Ok(0.0_f64),
+        };
+        let font_size = frame.font_size.max(12.0) as f64;
+        let line_height = font_size * 1.2;
+        let width = frame.width.max(200.0) as f64;
+        let chars_per_line = (width / (font_size * 0.6)).max(1.0);
+        let estimated_lines = (text.len() as f64 / chars_per_line).ceil().max(1.0);
+        Ok(estimated_lines * line_height)
+    });
+
+    // GetTextData() - return empty table (no HTML parsing yet)
+    methods.add_method("GetTextData", |lua, _this, ()| {
+        let table = lua.create_table()?;
+        Ok(table)
+    });
+}
+
+/// Strip HTML tags from a string, returning plain text.
+pub(super) fn strip_html_tags(html: &str) -> String {
+    let mut result = String::with_capacity(html.len());
+    let mut in_tag = false;
+    for ch in html.chars() {
+        match ch {
+            '<' => in_tag = true,
+            '>' => in_tag = false,
+            _ if !in_tag => result.push(ch),
+            _ => {}
+        }
+    }
+    result
 }
 
 /// Extract f32 from a Lua Value, returning default if nil/absent.
-fn val_to_f32(val: Option<Value>, default: f32) -> f32 {
+pub(super) fn val_to_f32(val: Option<Value>, default: f32) -> f32 {
     match val {
         Some(Value::Number(n)) => n as f32,
         Some(Value::Integer(n)) => n as f32,

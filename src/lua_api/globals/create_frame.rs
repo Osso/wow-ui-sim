@@ -111,9 +111,11 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 
         // Apply templates from the registry (if template specified)
         if let Some(ref tmpl) = template {
-            if let Some(ref frame_name) = name {
-                apply_templates_from_registry(lua, frame_name, tmpl);
-            }
+            let ref_name = match &name {
+                Some(n) => n.clone(),
+                None => format!("__frame_{}", frame_id),
+            };
+            apply_templates_from_registry(lua, &ref_name, tmpl);
         }
 
         Ok(ud)
@@ -186,6 +188,11 @@ fn create_widget_type_defaults(state: &mut SimState, frame_id: u64, widget_type:
                 frame.frame_strata = crate::widget::FrameStrata::Tooltip;
                 frame.has_fixed_frame_strata = true;
             }
+        }
+
+        WidgetType::SimpleHTML => {
+            // Initialize SimpleHTML state
+            state.simple_htmls.insert(frame_id, crate::lua_api::simple_html::SimpleHtmlData::default());
         }
 
         WidgetType::Slider => {

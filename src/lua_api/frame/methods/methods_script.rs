@@ -9,20 +9,42 @@ pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetScript", |lua, this, (handler, func): (String, Value)| {
         let handler_type = crate::event::ScriptHandler::from_str(&handler);
 
-        if let (Some(h), Value::Function(f)) = (handler_type, func) {
-            // Store function in a global Lua table for later retrieval
-            let scripts_table: mlua::Table = lua.globals().get("__scripts").unwrap_or_else(|_| {
-                let t = lua.create_table().unwrap();
-                lua.globals().set("__scripts", t.clone()).unwrap();
-                t
-            });
+        if let Some(h) = handler_type {
+            if let Value::Function(f) = func {
+                // Store function in a global Lua table for later retrieval
+                let scripts_table: mlua::Table =
+                    lua.globals().get("__scripts").unwrap_or_else(|_| {
+                        let t = lua.create_table().unwrap();
+                        lua.globals().set("__scripts", t.clone()).unwrap();
+                        t
+                    });
 
-            let frame_key = format!("{}_{}", this.id, handler);
-            scripts_table.set(frame_key.as_str(), f)?;
+                let frame_key = format!("{}_{}", this.id, handler);
+                scripts_table.set(frame_key.as_str(), f)?;
 
-            // Mark that this widget has this handler
-            let mut state = this.state.borrow_mut();
-            state.scripts.set(this.id, h, 1); // Just mark it exists
+                // Mark that this widget has this handler
+                let mut state = this.state.borrow_mut();
+                state.scripts.set(this.id, h, 1); // Just mark it exists
+
+                // Track OnUpdate registrations for efficient dispatch
+                if h == crate::event::ScriptHandler::OnUpdate {
+                    state.on_update_frames.insert(this.id);
+                }
+            } else {
+                // nil func: remove the handler
+                let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
+                if let Some(table) = scripts_table {
+                    let frame_key = format!("{}_{}", this.id, handler);
+                    table.set(frame_key.as_str(), mlua::Value::Nil)?;
+                }
+
+                let mut state = this.state.borrow_mut();
+                state.scripts.remove(this.id, h);
+
+                if h == crate::event::ScriptHandler::OnUpdate {
+                    state.on_update_frames.remove(&this.id);
+                }
+            }
         }
         Ok(())
     });

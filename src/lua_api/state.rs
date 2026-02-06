@@ -2,10 +2,11 @@
 
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
+use crate::lua_api::simple_html::SimpleHtmlData;
 use crate::lua_api::tooltip::TooltipData;
 use crate::widget::WidgetRegistry;
 use mlua::RegistryKey;
-use std::collections::{HashMap, VecDeque};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::time::Instant;
 
 /// A pending timer callback.
@@ -60,6 +61,10 @@ pub struct SimState {
     pub cvars: CVarStorage,
     /// Tooltip state for GameTooltip frames (keyed by frame ID).
     pub tooltips: HashMap<u64, TooltipData>,
+    /// SimpleHTML state (keyed by frame ID).
+    pub simple_htmls: HashMap<u64, SimpleHtmlData>,
+    /// Frame IDs with active OnUpdate script handlers.
+    pub on_update_frames: HashSet<u64>,
 }
 
 impl Default for SimState {
@@ -74,6 +79,8 @@ impl Default for SimState {
             addons: Vec::new(),
             cvars: CVarStorage::new(),
             tooltips: HashMap::new(),
+            simple_htmls: HashMap::new(),
+            on_update_frames: HashSet::new(),
         }
     }
 }

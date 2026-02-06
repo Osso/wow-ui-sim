@@ -132,6 +132,8 @@ pub struct App {
     pub(crate) inspector_state: InspectorState,
     /// Whether the frames panel is collapsed.
     pub(crate) frames_panel_collapsed: bool,
+    /// Last time OnUpdate handlers were fired (for elapsed calculation).
+    pub(crate) last_on_update_time: std::time::Instant,
 }
 
 impl App {
@@ -241,6 +243,7 @@ impl App {
             inspector_position: Point::new(100.0, 100.0),
             inspector_state: InspectorState::default(),
             frames_panel_collapsed: true,
+            last_on_update_time: std::time::Instant::now(),
         };
 
         (app, Task::none())
