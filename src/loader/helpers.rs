@@ -213,54 +213,18 @@ pub fn generate_animation_group_code(
 ) -> String {
     let mut code = String::new();
 
-    let group_name = anim_group.name.as_deref().unwrap_or("");
-    let inherits = anim_group.inherits.as_deref().unwrap_or("");
-
     code.push_str(&format!(
-        r#"
-        do
-        local __ag = {}:CreateAnimationGroup({}, {})
-        "#,
-        frame_ref,
-        if group_name.is_empty() {
-            "nil".to_string()
-        } else {
-            format!("\"{}\"", escape_lua_string(group_name))
-        },
-        if inherits.is_empty() {
-            "nil".to_string()
-        } else {
-            format!("\"{}\"", escape_lua_string(inherits))
-        },
+        "\n        do\n        local __ag = {frame_ref}:CreateAnimationGroup({}, {})\n        ",
+        lua_opt_str(anim_group.name.as_deref()),
+        lua_opt_str(anim_group.inherits.as_deref()),
     ));
 
-    // Set parentKey
     if let Some(parent_key) = &anim_group.parent_key {
-        code.push_str(&format!(
-            r#"
-        {}.{} = __ag
-        "#,
-            frame_ref, parent_key
-        ));
+        code.push_str(&format!("\n        {frame_ref}.{parent_key} = __ag\n        "));
     }
-
-    // Set looping
-    if let Some(looping) = &anim_group.looping {
-        code.push_str(&format!(
-            r#"
-        __ag:SetLooping("{}")
-        "#,
-            escape_lua_string(looping)
-        ));
-    }
-
-    // Set setToFinalAlpha
+    emit_str_call(&mut code, "__ag", "SetLooping", anim_group.looping.as_deref());
     if anim_group.set_to_final_alpha == Some(true) {
-        code.push_str(
-            r#"
-        __ag:SetToFinalAlpha(true)
-        "#,
-        );
+        code.push_str("\n        __ag:SetToFinalAlpha(true)\n        ");
     }
 
     // Process child elements
@@ -312,21 +276,12 @@ pub fn generate_animation_group_code(
     if let Some(mixin) = &anim_group.mixin {
         for m in mixin.split(',').map(|s| s.trim()) {
             if !m.is_empty() {
-                code.push_str(&format!(
-                    r#"
-        if {} then Mixin(__ag, {}) end
-        "#,
-                    m, m
-                ));
+                code.push_str(&format!("\n        if {m} then Mixin(__ag, {m}) end\n        "));
             }
         }
     }
 
-    code.push_str(
-        r#"
-        end
-        "#,
-    );
+    code.push_str("\n        end\n        ");
 
     code
 }
@@ -392,7 +347,9 @@ fn generate_animation_code(
     }
 
     emit_num_call(&mut code, "__anim", "SetDuration", anim.duration);
-    emit_num_call(&mut code, "__anim", "SetOrder", anim.order.map(|o| o as f32));
+    if let Some(order) = anim.order {
+        code.push_str(&format!("\n        __anim:SetOrder({order})\n        "));
+    }
     emit_num_call(&mut code, "__anim", "SetStartDelay", anim.start_delay);
     emit_num_call(&mut code, "__anim", "SetEndDelay", anim.end_delay);
     emit_str_call(&mut code, "__anim", "SetSmoothing", anim.smoothing.as_deref());
