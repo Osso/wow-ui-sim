@@ -513,6 +513,11 @@ fn register_party_management_stubs(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("ConvertToRaid", lua.create_function(|_, ()| Ok(()))?)?;
     t.set("GetMinLevel", lua.create_function(|_, _cat: Option<i32>| Ok(1i32))?)?;
     t.set("GetGatheringRequestInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    // GetInstanceAbandonVoteTime() -> duration, timeLeft
+    t.set(
+        "GetInstanceAbandonVoteTime",
+        lua.create_function(|_, ()| Ok((0.0f64, 0.0f64)))?,
+    )?;
     Ok(())
 }
 
@@ -1606,6 +1611,12 @@ fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
         lua.create_function(|_, _enable: bool| Ok(false))?,
     )?;
     globals.set("SetGamePadCursorControl", nop.clone())?;
+    globals.set("SetPortraitTexture", nop.clone())?;
+    globals.set("StaticPopup_UpdateAll", nop.clone())?;
+    globals.set(
+        "IsTutorialFlagged",
+        lua.create_function(|_, _flag: i32| Ok(false))?,
+    )?;
 
     let soundkit = lua.create_table()?;
     soundkit.set("IG_MAINMENU_OPTION", 851)?;

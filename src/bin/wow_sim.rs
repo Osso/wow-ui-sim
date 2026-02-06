@@ -488,6 +488,32 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
     }
 }
 
+fn fire_startup_events(env: &WowLuaEnv) {
+    eprintln!("[Startup] Firing ADDON_LOADED");
+    if let Err(e) = env.fire_event_with_args(
+        "ADDON_LOADED",
+        &[mlua::Value::String(env.lua().create_string("WoWUISim").unwrap())],
+    ) {
+        eprintln!("Error firing ADDON_LOADED: {}", e);
+    }
+
+    eprintln!("[Startup] Firing PLAYER_LOGIN");
+    if let Err(e) = env.fire_event("PLAYER_LOGIN") {
+        eprintln!("Error firing PLAYER_LOGIN: {}", e);
+    }
+
+    eprintln!("[Startup] Firing PLAYER_ENTERING_WORLD");
+    if let Err(e) = env.fire_event_with_args(
+        "PLAYER_ENTERING_WORLD",
+        &[
+            mlua::Value::Boolean(true),  // isInitialLogin
+            mlua::Value::Boolean(false), // isReloadingUi
+        ],
+    ) {
+        eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
+    }
+}
+
 fn dump_standalone(
     filter: Option<String>,
     visible_only: bool,
@@ -500,6 +526,9 @@ fn dump_standalone(
     if let Ok(script) = std::fs::read_to_string("/tmp/debug-scrollbox-update.lua") {
         let _ = env.exec(&script);
     }
+
+    // Fire startup events (same as GUI path)
+    fire_startup_events(&env);
 
     // Print addon list
     let _ = env.exec(

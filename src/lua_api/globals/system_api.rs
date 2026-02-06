@@ -32,6 +32,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_time_functions(lua)?;
     register_streaming_stubs(lua)?;
     register_error_callstack_stubs(lua)?;
+    register_network_stubs(lua)?;
     Ok(())
 }
 
@@ -354,5 +355,16 @@ fn register_error_callstack_stubs(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     globals.set("GetCallstackHeight", lua.create_function(|_, ()| Ok(2i32))?)?;
     globals.set("SetErrorCallstackHeight", lua.create_function(|_, _height: i32| Ok(()))?)?;
+    Ok(())
+}
+
+/// Network stats stubs (simulator has no real network).
+fn register_network_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    // GetNetStats() -> bandwidthIn, bandwidthOut, latencyHome, latencyWorld
+    globals.set(
+        "GetNetStats",
+        lua.create_function(|_, ()| Ok((0.0f64, 0.0f64, 0.0f64, 0.0f64)))?,
+    )?;
     Ok(())
 }
