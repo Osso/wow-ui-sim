@@ -337,6 +337,45 @@ impl WowLuaEnv {
         }
     }
 
+    /// Remove registry keys for a finished or cancelled timer.
+    fn cleanup_timer(&self, timer: PendingTimer) {
+        self.lua.remove_registry_value(timer.callback_key).ok();
+        if let Some(hk) = timer.handle_key {
+            self.lua.remove_registry_value(hk).ok();
+        }
+    }
+
+    /// Fire a single timer callback, returning true if it fired successfully.
+    fn fire_timer_callback(&self, timer: &PendingTimer) -> bool {
+        let Ok(callback) = self.lua.registry_value::<mlua::Function>(&timer.callback_key) else {
+            return false;
+        };
+        let handle: Option<mlua::Table> = timer
+            .handle_key
+            .as_ref()
+            .and_then(|k| self.lua.registry_value(k).ok());
+        let result = match handle {
+            Some(h) => callback.call::<()>(h),
+            None => callback.call::<()>(()),
+        };
+        if let Err(e) = result {
+            eprintln!("Timer callback error: {}", e);
+        }
+        true
+    }
+
+    /// Check if a ticker should repeat and decrement its remaining count.
+    fn ticker_should_repeat(timer: &mut PendingTimer) -> bool {
+        match &mut timer.remaining {
+            Some(n) if *n > 1 => {
+                *n -= 1;
+                true
+            }
+            Some(_) => false,
+            None => true,
+        }
+    }
+
     /// Process any timers that are ready to fire.
     /// Returns the number of callbacks invoked.
     pub fn process_timers(&self) -> Result<usize> {
@@ -344,90 +383,42 @@ impl WowLuaEnv {
         let mut fired = 0;
         let mut to_reschedule = Vec::new();
 
-        // Collect timers that need to fire
         let mut state = self.state.borrow_mut();
         let mut i = 0;
         while i < state.timers.len() {
             if state.timers[i].cancelled {
-                // Remove cancelled timers and clean up registry
-                let timer = state.timers.remove(i).unwrap();
-                self.lua.remove_registry_value(timer.callback_key).ok();
-                if let Some(hk) = timer.handle_key {
-                    self.lua.remove_registry_value(hk).ok();
-                }
+                self.cleanup_timer(state.timers.remove(i).unwrap());
                 continue;
             }
 
             if state.timers[i].fire_at <= now {
                 let mut timer = state.timers.remove(i).unwrap();
+                // Drop state borrow before calling Lua callback
+                drop(state);
 
-                // Get the callback from registry
-                if let Ok(callback) = self.lua.registry_value::<mlua::Function>(&timer.callback_key)
-                {
-                    // Get the handle table if present (for NewTimer/NewTicker)
-                    let handle: Option<mlua::Table> = timer
-                        .handle_key
-                        .as_ref()
-                        .and_then(|k| self.lua.registry_value(k).ok());
-
-                    // Drop state borrow before calling Lua
-                    drop(state);
-
-                    // Call the callback with the handle as argument (if present)
-                    let result = if let Some(h) = handle {
-                        callback.call::<()>(h)
-                    } else {
-                        callback.call::<()>(())
-                    };
-                    if let Err(e) = result {
-                        eprintln!("Timer callback error: {}", e);
-                    }
+                if self.fire_timer_callback(&timer) {
                     fired += 1;
-
-                    // Re-borrow state
                     state = self.state.borrow_mut();
 
-                    // Check if this is a ticker that should repeat
                     if let Some(interval) = timer.interval {
-                        let should_repeat = match &mut timer.remaining {
-                            Some(n) if *n > 1 => {
-                                *n -= 1;
-                                true
-                            }
-                            Some(_) => false, // Last iteration
-                            None => true,     // Infinite ticker
-                        };
-
-                        if should_repeat {
+                        if Self::ticker_should_repeat(&mut timer) {
                             timer.fire_at = now + interval;
                             to_reschedule.push(timer);
                         } else {
-                            // Clean up registry keys for finished timer
-                            self.lua.remove_registry_value(timer.callback_key).ok();
-                            if let Some(hk) = timer.handle_key {
-                                self.lua.remove_registry_value(hk).ok();
-                            }
+                            self.cleanup_timer(timer);
                         }
                     } else {
-                        // One-shot timer, clean up registry keys
-                        self.lua.remove_registry_value(timer.callback_key).ok();
-                        if let Some(hk) = timer.handle_key {
-                            self.lua.remove_registry_value(hk).ok();
-                        }
+                        self.cleanup_timer(timer);
                     }
                 } else {
-                    // Callback not found, clean up
-                    self.lua.remove_registry_value(timer.callback_key).ok();
-                    if let Some(hk) = timer.handle_key {
-                        self.lua.remove_registry_value(hk).ok();
-                    }
+                    self.cleanup_timer(timer);
+                    state = self.state.borrow_mut();
                 }
                 continue;
             }
             i += 1;
         }
 
-        // Re-add tickers that should repeat
         for timer in to_reschedule {
             state.timers.push_back(timer);
         }

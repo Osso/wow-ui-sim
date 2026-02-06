@@ -20,13 +20,48 @@ pub struct AddonContext<'a> {
     pub addon_root: &'a Path,
 }
 
+/// Initialize saved variables for an addon (WTF first, then JSON fallback).
+fn init_saved_variables(
+    env: &WowLuaEnv,
+    toc: &TocFile,
+    folder_name: &str,
+    mgr: &mut SavedVariablesManager,
+) -> Vec<String> {
+    let mut warnings = Vec::new();
+    match mgr.load_wtf_for_addon(env.lua(), folder_name) {
+        Ok(count) if count > 0 => {
+            tracing::debug!("Loaded {} WTF SavedVariables file(s) for {}", count, toc.name);
+        }
+        Ok(_) => {
+            let saved_vars = toc.saved_variables();
+            let saved_vars_per_char = toc.saved_variables_per_character();
+            if !saved_vars.is_empty() || !saved_vars_per_char.is_empty() {
+                if let Err(e) =
+                    mgr.init_for_addon(env.lua(), folder_name, &saved_vars, &saved_vars_per_char)
+                {
+                    warnings.push(format!(
+                        "Failed to initialize saved variables for {}: {}",
+                        folder_name, e
+                    ));
+                }
+            }
+        }
+        Err(e) => {
+            warnings.push(format!(
+                "Failed to load WTF SavedVariables for {}: {}",
+                folder_name, e
+            ));
+        }
+    }
+    warnings
+}
+
 /// Internal addon loading with optional saved variables.
 pub fn load_addon_internal(
     env: &WowLuaEnv,
     toc: &TocFile,
     saved_vars_mgr: Option<&mut SavedVariablesManager>,
 ) -> Result<LoadResult, LoadError> {
-    // WoW passes the folder name (not Title) as the addon name vararg
     let folder_name = toc
         .addon_dir
         .file_name()
@@ -41,44 +76,14 @@ pub fn load_addon_internal(
         warnings: Vec::new(),
     };
 
-    // Initialize saved variables before loading addon files
     if let Some(mgr) = saved_vars_mgr {
         let sv_start = Instant::now();
-        // First try to load WTF saved variables from real WoW installation
-        match mgr.load_wtf_for_addon(env.lua(), folder_name) {
-            Ok(count) if count > 0 => {
-                tracing::debug!("Loaded {} WTF SavedVariables file(s) for {}", count, toc.name);
-            }
-            Ok(_) => {
-                // No WTF files found, fall back to JSON storage
-                let saved_vars = toc.saved_variables();
-                let saved_vars_per_char = toc.saved_variables_per_character();
-
-                if !saved_vars.is_empty() || !saved_vars_per_char.is_empty() {
-                    if let Err(e) = mgr.init_for_addon(
-                        env.lua(),
-                        folder_name,
-                        &saved_vars,
-                        &saved_vars_per_char,
-                    ) {
-                        result.warnings.push(format!(
-                            "Failed to initialize saved variables for {}: {}",
-                            folder_name, e
-                        ));
-                    }
-                }
-            }
-            Err(e) => {
-                result.warnings.push(format!(
-                    "Failed to load WTF SavedVariables for {}: {}",
-                    folder_name, e
-                ));
-            }
-        }
+        result
+            .warnings
+            .extend(init_saved_variables(env, toc, folder_name, mgr));
         result.timing.saved_vars_time = sv_start.elapsed();
     }
 
-    // Create the shared private table for this addon (WoW passes this as second vararg)
     let addon_table = env.create_addon_table().map_err(|e| LoadError::Lua(e.to_string()))?;
     let ctx = AddonContext {
         name: folder_name,
@@ -88,7 +93,6 @@ pub fn load_addon_internal(
 
     for file in toc.file_paths() {
         let ext = file.extension().and_then(|e| e.to_str()).unwrap_or("");
-
         match ext {
             "lua" => match load_lua_file(env, &file, &ctx, &mut result.timing) {
                 Ok(()) => result.lua_files += 1,

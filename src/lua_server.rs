@@ -139,6 +139,21 @@ fn run_server(cmd_tx: mpsc::Sender<LuaCommand>, path: PathBuf) {
     }
 }
 
+/// Send a command and wait for a response with timeout.
+fn send_command(
+    cmd_tx: &mpsc::Sender<LuaCommand>,
+    build: impl FnOnce(mpsc::Sender<Response>) -> LuaCommand,
+) -> Response {
+    let (resp_tx, resp_rx) = mpsc::channel();
+    if cmd_tx.send(build(resp_tx)).is_err() {
+        return Response::Error("App closed".into());
+    }
+    match resp_rx.recv_timeout(std::time::Duration::from_secs(30)) {
+        Ok(r) => r,
+        Err(_) => Response::Error("Timeout".into()),
+    }
+}
+
 fn handle_connection(
     mut stream: UnixStream,
     cmd_tx: &mpsc::Sender<LuaCommand>,
@@ -163,40 +178,10 @@ fn handle_connection(
         let response = match request {
             Request::Ping => Response::Pong,
             Request::Exec { code } => {
-                let (resp_tx, resp_rx) = mpsc::channel();
-                if cmd_tx
-                    .send(LuaCommand::Exec {
-                        code,
-                        respond: resp_tx,
-                    })
-                    .is_err()
-                {
-                    Response::Error("App closed".into())
-                } else {
-                    // Wait for response with timeout
-                    match resp_rx.recv_timeout(std::time::Duration::from_secs(30)) {
-                        Ok(r) => r,
-                        Err(_) => Response::Error("Timeout".into()),
-                    }
-                }
+                send_command(cmd_tx, |respond| LuaCommand::Exec { code, respond })
             }
             Request::DumpTree { filter, visible_only } => {
-                let (resp_tx, resp_rx) = mpsc::channel();
-                if cmd_tx
-                    .send(LuaCommand::DumpTree {
-                        filter,
-                        visible_only,
-                        respond: resp_tx,
-                    })
-                    .is_err()
-                {
-                    Response::Error("App closed".into())
-                } else {
-                    match resp_rx.recv_timeout(std::time::Duration::from_secs(30)) {
-                        Ok(r) => r,
-                        Err(_) => Response::Error("Timeout".into()),
-                    }
-                }
+                send_command(cmd_tx, |respond| LuaCommand::DumpTree { filter, visible_only, respond })
             }
         };
 

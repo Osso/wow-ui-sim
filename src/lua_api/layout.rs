@@ -26,6 +26,24 @@ pub fn get_parent_depth(registry: &WidgetRegistry, id: u64) -> usize {
     depth
 }
 
+/// Get the parent rect, falling back to the screen rect if no parent.
+fn parent_rect(
+    registry: &WidgetRegistry,
+    parent_id: Option<u64>,
+    screen_width: f32,
+    screen_height: f32,
+) -> LayoutRect {
+    match parent_id {
+        Some(pid) => compute_frame_rect(registry, pid, screen_width, screen_height),
+        None => LayoutRect {
+            x: 0.0,
+            y: 0.0,
+            width: screen_width,
+            height: screen_height,
+        },
+    }
+}
+
 /// Compute frame rect for debugging (same algorithm as renderer).
 pub fn compute_frame_rect(
     registry: &WidgetRegistry,
@@ -40,53 +58,22 @@ pub fn compute_frame_rect(
 
     let width = frame.width;
     let height = frame.height;
+    let pr = parent_rect(registry, frame.parent_id, screen_width, screen_height);
 
-    // If no anchors, default to center of parent
     if frame.anchors.is_empty() {
-        let parent_rect = if let Some(parent_id) = frame.parent_id {
-            compute_frame_rect(registry, parent_id, screen_width, screen_height)
-        } else {
-            LayoutRect {
-                x: 0.0,
-                y: 0.0,
-                width: screen_width,
-                height: screen_height,
-            }
-        };
-
         return LayoutRect {
-            x: parent_rect.x + (parent_rect.width - width) / 2.0,
-            y: parent_rect.y + (parent_rect.height - height) / 2.0,
+            x: pr.x + (pr.width - width) / 2.0,
+            y: pr.y + (pr.height - height) / 2.0,
             width,
             height,
         };
     }
 
     let anchor = &frame.anchors[0];
-
-    let parent_rect = if let Some(parent_id) = frame.parent_id {
-        compute_frame_rect(registry, parent_id, screen_width, screen_height)
-    } else {
-        LayoutRect {
-            x: 0.0,
-            y: 0.0,
-            width: screen_width,
-            height: screen_height,
-        }
-    };
-
-    let (parent_anchor_x, parent_anchor_y) = anchor_position(
-        anchor.relative_point,
-        parent_rect.x,
-        parent_rect.y,
-        parent_rect.width,
-        parent_rect.height,
-    );
-
-    let target_x = parent_anchor_x + anchor.x_offset;
+    let (pax, pay) = anchor_position(anchor.relative_point, pr.x, pr.y, pr.width, pr.height);
+    let target_x = pax + anchor.x_offset;
     // WoW uses Y-up coordinate system, screen uses Y-down
-    let target_y = parent_anchor_y - anchor.y_offset;
-
+    let target_y = pay - anchor.y_offset;
     let (frame_x, frame_y) =
         frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
 
