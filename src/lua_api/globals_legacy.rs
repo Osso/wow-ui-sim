@@ -173,23 +173,33 @@ fn register_custom_getmetatable(lua: &Lua) -> Result<()> {
 fn build_frame_metatable(lua: &Lua, ud: &mlua::AnyUserData) -> Result<Value> {
     let mt = lua.create_table()?;
     let index_table = lua.create_table()?;
-
-    for &name in FRAME_METHOD_NAMES {
-        if let Ok(method) = ud.get::<mlua::Function>(name) {
-            index_table.set(name, method)?;
-        }
-    }
-
+    populate_method_index(ud, &index_table)?;
     mt.set("__index", index_table)?;
     Ok(Value::Table(mt))
 }
 
-/// All method names exposed via `getmetatable(frame).__index`.
-///
-/// Organized by widget type. Some names appear in multiple categories
-/// (e.g. SetMinMaxValues, SetValue) because different widget types share them.
-const FRAME_METHOD_NAMES: &[&str] = &[
-    // Frame base methods
+/// Populate an index table with all frame method names from the categorized lists.
+fn populate_method_index(ud: &mlua::AnyUserData, index_table: &mlua::Table) -> Result<()> {
+    for methods in ALL_METHOD_GROUPS {
+        for &name in *methods {
+            if let Ok(method) = ud.get::<mlua::Function>(name) {
+                index_table.set(name, method)?;
+            }
+        }
+    }
+    Ok(())
+}
+
+/// All method name groups, organized by widget type.
+const ALL_METHOD_GROUPS: &[&[&str]] = &[
+    FRAME_BASE_METHODS, TEXTURE_METHODS, BUTTON_METHODS,
+    EDITBOX_METHODS, SLIDER_METHODS, SCROLLFRAME_METHODS,
+    STATUSBAR_METHODS, CHECKBUTTON_METHODS, MODEL_METHODS,
+    COLORSELECT_METHODS, COOLDOWN_METHODS, MESSAGEFRAME_METHODS,
+    GAMETOOLTIP_METHODS,
+];
+
+const FRAME_BASE_METHODS: &[&str] = &[
     "GetName", "GetWidth", "GetHeight", "SetSize", "SetWidth", "SetHeight",
     "SetPoint", "ClearAllPoints", "GetPoint", "GetNumPoints", "Show", "Hide",
     "IsShown", "IsVisible", "SetShown", "SetAlpha", "GetAlpha", "SetScale",
@@ -226,7 +236,9 @@ const FRAME_METHOD_NAMES: &[&str] = &[
     "GetResizeBounds", "SetDontSavePosition", "GetDontSavePosition",
     "SetWindow", "GetWindow", "SetHyperlinksEnabled", "GetHyperlinksEnabled",
     "AdjustPointsOffset",
-    // Texture methods
+];
+
+const TEXTURE_METHODS: &[&str] = &[
     "SetTexture", "GetTexture", "SetTexCoord",
     "GetTexCoord", "SetVertexColor", "GetVertexColor", "SetDesaturated",
     "IsDesaturated", "SetBlendMode", "GetBlendMode", "SetRotation",
@@ -243,7 +255,9 @@ const FRAME_METHOD_NAMES: &[&str] = &[
     "GetNumChildren", "PlaySoundFile", "ClearNineSlice", "ApplyLayout",
     "MarkDirty", "IsLayoutFrame", "AddLayoutChildren", "ClearLayout",
     "SetAutomaticFrameLevelEnabled", "IsAutomaticFrameLevelEnabled",
-    // Button methods
+];
+
+const BUTTON_METHODS: &[&str] = &[
     "Click", "SetNormalTexture", "GetNormalTexture", "SetPushedTexture",
     "GetPushedTexture", "SetHighlightTexture", "GetHighlightTexture",
     "SetDisabledTexture", "GetDisabledTexture", "SetNormalFontObject",
@@ -253,8 +267,11 @@ const FRAME_METHOD_NAMES: &[&str] = &[
     "SetButtonState", "GetButtonState", "LockHighlight", "UnlockHighlight",
     "RegisterForClicks", "RegisterForMouse", "GetMotionScriptsWhileDisabled",
     "SetMotionScriptsWhileDisabled", "GetFontString", "SetFontString",
-    "GetTextWidth", "GetTextHeight", "GetNumLines", "GetMaxLines", "GetUnboundedStringWidth", "GetFontObjectForAlphabet",
-    // EditBox methods
+    "GetTextWidth", "GetTextHeight", "GetNumLines", "GetMaxLines",
+    "GetUnboundedStringWidth", "GetFontObjectForAlphabet",
+];
+
+const EDITBOX_METHODS: &[&str] = &[
     "SetMaxLetters", "GetMaxLetters", "SetMaxBytes", "GetMaxBytes",
     "SetNumber", "GetNumber", "SetMultiLine", "IsMultiLine",
     "SetAutoFocus", "HasFocus", "SetFocus", "ClearFocus", "Insert",
@@ -265,23 +282,33 @@ const FRAME_METHOD_NAMES: &[&str] = &[
     "SetCountInvisibleLetters", "IsCountInvisibleLetters",
     "SetSecurityDisablePaste", "SetSecurityDisableSetText", "SetSecureText",
     "SetVisibleTextByteLimit", "GetUTF8CursorPosition",
-    // Slider methods
+];
+
+const SLIDER_METHODS: &[&str] = &[
     "SetMinMaxValues", "GetMinMaxValues", "SetValue", "GetValue",
     "SetValueStep", "GetValueStep", "SetStepsPerPage", "GetStepsPerPage",
     "SetOrientation", "GetOrientation", "SetThumbTexture", "GetThumbTexture",
     "SetObeyStepOnDrag", "GetObeyStepOnDrag",
-    // ScrollFrame methods
+];
+
+const SCROLLFRAME_METHODS: &[&str] = &[
     "SetScrollChild", "GetScrollChild", "SetHorizontalScroll",
     "GetHorizontalScroll", "SetVerticalScroll", "GetVerticalScroll",
     "GetHorizontalScrollRange", "GetVerticalScrollRange", "UpdateScrollChildRect",
-    // StatusBar methods
+];
+
+const STATUSBAR_METHODS: &[&str] = &[
     "SetStatusBarTexture", "GetStatusBarTexture", "SetStatusBarColor",
     "GetStatusBarColor", "SetStatusBarDesaturated", "GetStatusBarDesaturated",
     "SetStatusBarAtlas", "SetFillStyle", "GetFillStyle",
     "SetReverseFill", "GetReverseFill", "SetRotatesTexture", "GetRotatesTexture",
-    // CheckButton methods
+];
+
+const CHECKBUTTON_METHODS: &[&str] = &[
     "SetChecked", "GetChecked", "GetCheckedTexture", "SetCheckedTexture",
-    // Model methods
+];
+
+const MODEL_METHODS: &[&str] = &[
     "SetModel", "GetModel", "SetModelScale", "GetModelScale",
     "SetPosition", "GetPosition", "SetFacing", "GetFacing",
     "SetSequence", "GetSequence", "SetCamera", "GetCamera",
@@ -291,19 +318,27 @@ const FRAME_METHOD_NAMES: &[&str] = &[
     "SetModelDrawLayer", "GetModelDrawLayer", "UseModelCenterToTransform",
     "SetCamDistanceScale", "GetCamDistanceScale", "SetPortraitZoom",
     "SetDesaturation", "SetSequenceTime", "SetAnimation",
-    // ColorSelect methods
+];
+
+const COLORSELECT_METHODS: &[&str] = &[
     "SetColorRGB", "GetColorRGB", "SetColorHSV", "GetColorHSV",
-    // Cooldown methods
+];
+
+const COOLDOWN_METHODS: &[&str] = &[
     "SetCooldown", "Clear", "GetCooldownTimes", "SetCooldownDuration",
     "GetCooldownDuration", "SetHideCountdownNumbers", "SetDrawSwipe",
     "SetDrawBling", "SetDrawEdge", "SetSwipeColor", "SetSwipeTexture",
     "SetBlingTexture", "SetEdgeTexture", "SetEdgeScale", "SetUseCircularEdge",
     "SetReverse", "GetReverse",
-    // MessageFrame methods
+];
+
+const MESSAGEFRAME_METHODS: &[&str] = &[
     "AddMessage", "AddMsg", "SetFading", "GetFading", "SetFadeDuration",
     "GetFadeDuration", "SetFadePower", "GetFadePower", "SetTimeVisible",
     "GetTimeVisible", "SetInsertMode", "GetInsertMode",
-    // GameTooltip methods
+];
+
+const GAMETOOLTIP_METHODS: &[&str] = &[
     "SetOwner", "GetOwner", "AddLine", "AddDoubleLine", "SetPadding",
     "GetPadding", "NumLines", "GetLine", "ClearLines", "SetMinimumWidth",
     "SetAnchorType", "GetAnchorType", "SetHyperlink",

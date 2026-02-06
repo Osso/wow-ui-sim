@@ -8,113 +8,103 @@ use mlua::{Lua, Result, Value};
 pub fn register_c_map_api(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    // C_Map namespace - map and area information
-    let c_map = lua.create_table()?;
-    c_map.set(
+    globals.set("C_Map", register_c_map(lua)?)?;
+    register_zone_text_functions(lua)?;
+    globals.set("UiMapPoint", register_ui_map_point(lua)?)?;
+    globals.set("C_MapExplorationInfo", register_c_map_exploration(lua)?)?;
+    globals.set("C_DateAndTime", register_c_date_and_time(lua)?)?;
+    globals.set("C_Minimap", register_c_minimap(lua)?)?;
+    globals.set("C_Navigation", register_c_navigation(lua)?)?;
+    globals.set("C_TaxiMap", register_c_taxi_map(lua)?)?;
+
+    Ok(())
+}
+
+/// C_Map namespace - map and area information.
+fn register_c_map(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+
+    t.set(
         "GetAreaInfo",
         lua.create_function(|lua, area_id: i32| {
-            // Return area name for the given area ID
-            // In simulation, return a placeholder
             Ok(Value::String(lua.create_string(&format!("Area_{}", area_id))?))
         })?,
     )?;
-    c_map.set(
+    t.set(
         "GetMapInfo",
         lua.create_function(|lua, map_id: i32| {
-            // Return map info table
             let info = lua.create_table()?;
             info.set("mapID", map_id)?;
             info.set("name", format!("Map_{}", map_id))?;
-            info.set("mapType", 3)?; // Zone type
+            info.set("mapType", 3)?;
             info.set("parentMapID", 0)?;
             Ok(Value::Table(info))
         })?,
     )?;
-    c_map.set(
+    t.set(
         "GetBestMapForUnit",
-        lua.create_function(|_, _unit: String| {
-            // Return a default map ID
-            Ok(Value::Integer(1)) // Durotar
-        })?,
+        lua.create_function(|_, _unit: String| Ok(Value::Integer(1)))?,
     )?;
-    c_map.set(
-        "GetPlayerMapPosition",
-        lua.create_function(|lua, (_map_id, _unit): (i32, String)| {
-            // Return a position vector (x, y)
-            let pos = lua.create_table()?;
-            pos.set("x", 0.5)?;
-            pos.set("y", 0.5)?;
-            Ok(Value::Table(pos))
-        })?,
-    )?;
-    c_map.set(
+    t.set("GetPlayerMapPosition", lua.create_function(create_player_map_position)?)?;
+    t.set(
         "GetMapChildrenInfo",
         lua.create_function(|lua, (_map_id, _map_type, _all_descendants): (i32, Option<i32>, Option<bool>)| {
-            // Return empty table of child maps
             lua.create_table()
         })?,
     )?;
-    c_map.set(
-        "GetWorldPosFromMapPos",
-        lua.create_function(|lua, (map_id, pos): (i32, Value)| {
-            // pos is a Vector2DMixin with x, y fields
-            // Returns (instanceID, Vector2DMixin with world coordinates)
-            let (x, y) = if let Value::Table(ref t) = pos {
-                let x: f64 = t.get("x").unwrap_or(0.5);
-                let y: f64 = t.get("y").unwrap_or(0.5);
-                (x, y)
-            } else {
-                (0.5, 0.5)
-            };
-            // Convert map coords (0-1) to world coords (arbitrary scale)
-            // Use a simple scale of 1000 units per map
-            let world_x = x * 1000.0;
-            let world_y = y * 1000.0;
-            let world_pos = lua.create_table()?;
-            world_pos.set("x", world_x)?;
-            world_pos.set("y", world_y)?;
-            // Add GetXY method
-            world_pos.set(
-                "GetXY",
-                lua.create_function(move |_, _: Value| Ok((world_x, world_y)))?,
-            )?;
-            // Instance ID is typically same as map_id for simplicity
-            Ok((map_id, world_pos))
-        })?,
-    )?;
-    c_map.set(
+    t.set("GetWorldPosFromMapPos", lua.create_function(create_world_pos_from_map_pos)?)?;
+    t.set(
         "GetMapWorldSize",
-        lua.create_function(|_, _map_id: i32| {
-            // Return width, height in world units (arbitrary scale)
-            Ok((1000.0f64, 1000.0f64))
-        })?,
-    )?;
-    globals.set("C_Map", c_map)?;
-
-    // Zone text functions
-    globals.set(
-        "GetRealZoneText",
-        lua.create_function(|_, ()| Ok("Stormwind City"))?,
-    )?;
-    globals.set(
-        "GetZoneText",
-        lua.create_function(|_, ()| Ok("Stormwind City"))?,
-    )?;
-    globals.set(
-        "GetSubZoneText",
-        lua.create_function(|_, ()| Ok("Trade District"))?,
-    )?;
-    globals.set(
-        "GetMinimapZoneText",
-        lua.create_function(|_, ()| Ok("Trade District"))?,
+        lua.create_function(|_, _map_id: i32| Ok((1000.0f64, 1000.0f64)))?,
     )?;
 
-    // UiMapPoint - map point creation helper
-    let ui_map_point = lua.create_table()?;
-    ui_map_point.set(
+    Ok(t)
+}
+
+fn create_player_map_position(lua: &Lua, (_map_id, _unit): (i32, String)) -> Result<Value> {
+    let pos = lua.create_table()?;
+    pos.set("x", 0.5)?;
+    pos.set("y", 0.5)?;
+    Ok(Value::Table(pos))
+}
+
+fn create_world_pos_from_map_pos(lua: &Lua, (map_id, pos): (i32, Value)) -> Result<(i32, mlua::Table)> {
+    let (x, y) = if let Value::Table(ref t) = pos {
+        let x: f64 = t.get("x").unwrap_or(0.5);
+        let y: f64 = t.get("y").unwrap_or(0.5);
+        (x, y)
+    } else {
+        (0.5, 0.5)
+    };
+    let world_x = x * 1000.0;
+    let world_y = y * 1000.0;
+    let world_pos = lua.create_table()?;
+    world_pos.set("x", world_x)?;
+    world_pos.set("y", world_y)?;
+    world_pos.set(
+        "GetXY",
+        lua.create_function(move |_, _: Value| Ok((world_x, world_y)))?,
+    )?;
+    Ok((map_id, world_pos))
+}
+
+/// Zone text functions (GetRealZoneText, GetZoneText, etc.).
+fn register_zone_text_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    globals.set("GetRealZoneText", lua.create_function(|_, ()| Ok("Stormwind City"))?)?;
+    globals.set("GetZoneText", lua.create_function(|_, ()| Ok("Stormwind City"))?)?;
+    globals.set("GetSubZoneText", lua.create_function(|_, ()| Ok("Trade District"))?)?;
+    globals.set("GetMinimapZoneText", lua.create_function(|_, ()| Ok("Trade District"))?)?;
+    Ok(())
+}
+
+/// UiMapPoint - map point creation helper.
+fn register_ui_map_point(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+
+    t.set(
         "CreateFromVector2D",
         lua.create_function(|lua, (map_id, pos): (i32, Value)| {
-            // Extract x, y from position table
             let (x, y) = if let Value::Table(ref t) = pos {
                 let x: f64 = t.get("x").unwrap_or(0.5);
                 let y: f64 = t.get("y").unwrap_or(0.5);
@@ -122,7 +112,6 @@ pub fn register_c_map_api(lua: &Lua) -> Result<()> {
             } else {
                 (0.5, 0.5)
             };
-            // Create a map point table
             let point = lua.create_table()?;
             point.set("uiMapID", map_id)?;
             point.set("x", x)?;
@@ -130,7 +119,7 @@ pub fn register_c_map_api(lua: &Lua) -> Result<()> {
             Ok(point)
         })?,
     )?;
-    ui_map_point.set(
+    t.set(
         "CreateFromCoordinates",
         lua.create_function(|lua, (map_id, x, y): (i32, f64, f64)| {
             let point = lua.create_table()?;
@@ -140,29 +129,31 @@ pub fn register_c_map_api(lua: &Lua) -> Result<()> {
             Ok(point)
         })?,
     )?;
-    globals.set("UiMapPoint", ui_map_point)?;
 
-    // C_MapExplorationInfo namespace - map exploration data
-    let c_map_exploration = lua.create_table()?;
-    c_map_exploration.set(
+    Ok(t)
+}
+
+/// C_MapExplorationInfo namespace - map exploration data.
+fn register_c_map_exploration(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+
+    t.set(
         "GetExploredAreaIDsAtPosition",
-        lua.create_function(|lua, (_map_id, _pos): (i32, Value)| {
-            // Return empty table (no explored areas in sim)
-            lua.create_table()
-        })?,
+        lua.create_function(|lua, (_map_id, _pos): (i32, Value)| lua.create_table())?,
     )?;
-    c_map_exploration.set(
+    t.set(
         "GetExploredMapTextures",
-        lua.create_function(|lua, _map_id: i32| {
-            // Return empty table (no textures in sim)
-            lua.create_table()
-        })?,
+        lua.create_function(|lua, _map_id: i32| lua.create_table())?,
     )?;
-    globals.set("C_MapExplorationInfo", c_map_exploration)?;
 
-    // C_DateAndTime namespace - date/time utilities
-    let c_date_time = lua.create_table()?;
-    c_date_time.set(
+    Ok(t)
+}
+
+/// C_DateAndTime namespace - date/time utilities.
+fn register_c_date_and_time(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+
+    t.set(
         "GetCurrentCalendarTime",
         lua.create_function(|lua, ()| {
             let info = lua.create_table()?;
@@ -175,75 +166,50 @@ pub fn register_c_map_api(lua: &Lua) -> Result<()> {
             Ok(info)
         })?,
     )?;
-    c_date_time.set(
-        "GetServerTimeLocal",
-        lua.create_function(|_, ()| Ok(0i64))?,
-    )?;
-    c_date_time.set(
-        "GetSecondsUntilDailyReset",
-        lua.create_function(|_, ()| Ok(86400i32))?,
-    )?;
-    c_date_time.set(
-        "GetSecondsUntilWeeklyReset",
-        lua.create_function(|_, ()| Ok(604800i32))?,
-    )?;
-    globals.set("C_DateAndTime", c_date_time)?;
+    t.set("GetServerTimeLocal", lua.create_function(|_, ()| Ok(0i64))?)?;
+    t.set("GetSecondsUntilDailyReset", lua.create_function(|_, ()| Ok(86400i32))?)?;
+    t.set("GetSecondsUntilWeeklyReset", lua.create_function(|_, ()| Ok(604800i32))?)?;
 
-    // C_Minimap namespace - minimap utilities
-    let c_minimap = lua.create_table()?;
-    c_minimap.set(
+    Ok(t)
+}
+
+/// C_Minimap namespace - minimap utilities.
+fn register_c_minimap(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+
+    t.set(
         "IsInsideQuestBlob",
         lua.create_function(|_, (_quest_id, _x, _y): (i32, f64, f64)| Ok(false))?,
     )?;
-    c_minimap.set(
-        "GetViewRadius",
-        lua.create_function(|_, ()| Ok(200.0f64))?,
-    )?;
-    c_minimap.set(
+    t.set("GetViewRadius", lua.create_function(|_, ()| Ok(200.0f64))?)?;
+    t.set(
         "SetPlayerTexture",
         lua.create_function(|_, (_file_id, _icon_id): (i32, i32)| Ok(()))?,
     )?;
-    globals.set("C_Minimap", c_minimap)?;
 
-    // C_Navigation namespace - quest navigation waypoints
-    let c_navigation = lua.create_table()?;
-    c_navigation.set(
-        "GetFrame",
-        lua.create_function(|_, ()| Ok(Value::Nil))?,
-    )?;
-    c_navigation.set(
-        "GetDistance",
-        lua.create_function(|_, ()| Ok(0.0f64))?,
-    )?;
-    c_navigation.set(
-        "GetDestination",
-        lua.create_function(|_, ()| Ok(Value::Nil))?,
-    )?;
-    c_navigation.set(
-        "IsAutoFollowEnabled",
-        lua.create_function(|_, ()| Ok(false))?,
-    )?;
-    c_navigation.set(
-        "SetAutoFollowEnabled",
-        lua.create_function(|_, _enabled: bool| Ok(()))?,
-    )?;
-    globals.set("C_Navigation", c_navigation)?;
+    Ok(t)
+}
 
-    // C_TaxiMap namespace - flight path utilities
-    let c_taxi_map = lua.create_table()?;
-    c_taxi_map.set(
-        "GetAllTaxiNodes",
-        lua.create_function(|lua, _map_id: i32| lua.create_table())?,
-    )?;
-    c_taxi_map.set(
-        "GetTaxiNodesForMap",
-        lua.create_function(|lua, _map_id: i32| lua.create_table())?,
-    )?;
-    c_taxi_map.set(
-        "ShouldMapShowTaxiNodes",
-        lua.create_function(|_, _map_id: i32| Ok(true))?,
-    )?;
-    globals.set("C_TaxiMap", c_taxi_map)?;
+/// C_Navigation namespace - quest navigation waypoints.
+fn register_c_navigation(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
 
-    Ok(())
+    t.set("GetFrame", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("GetDistance", lua.create_function(|_, ()| Ok(0.0f64))?)?;
+    t.set("GetDestination", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("IsAutoFollowEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("SetAutoFollowEnabled", lua.create_function(|_, _enabled: bool| Ok(()))?)?;
+
+    Ok(t)
+}
+
+/// C_TaxiMap namespace - flight path utilities.
+fn register_c_taxi_map(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+
+    t.set("GetAllTaxiNodes", lua.create_function(|lua, _map_id: i32| lua.create_table())?)?;
+    t.set("GetTaxiNodesForMap", lua.create_function(|lua, _map_id: i32| lua.create_table())?)?;
+    t.set("ShouldMapShowTaxiNodes", lua.create_function(|_, _map_id: i32| Ok(true))?)?;
+
+    Ok(t)
 }

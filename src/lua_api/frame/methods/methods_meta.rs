@@ -7,34 +7,117 @@ use std::rc::Rc;
 
 /// Add metamethods to FrameHandle UserData.
 pub fn add_metamethods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // Support custom field access via __index/__newindex
-    // This allows addons to do: frame.customField = value
+    add_index_metamethod(methods);
+    add_newindex_metamethod(methods);
+    add_len_and_eq_metamethods(methods);
+}
 
+/// Look up a child frame by numeric index (1-indexed).
+fn lookup_child_by_index(
+    lua: &Lua,
+    state_rc: &Rc<std::cell::RefCell<crate::lua_api::SimState>>,
+    frame_id: u64,
+    idx: i64,
+) -> mlua::Result<Value> {
+    if idx > 0 {
+        let state = state_rc.borrow();
+        if let Some(frame) = state.widgets.get(frame_id) {
+            if let Some(&child_id) = frame.children.get((idx - 1) as usize) {
+                drop(state);
+                let child_handle = FrameHandle {
+                    id: child_id,
+                    state: Rc::clone(state_rc),
+                };
+                return lua.create_userdata(child_handle).map(Value::UserData);
+            }
+        }
+    }
+    Ok(Value::Nil)
+}
+
+/// Look up a child frame by name from children_keys.
+fn lookup_child_by_key(
+    lua: &Lua,
+    state_rc: &Rc<std::cell::RefCell<crate::lua_api::SimState>>,
+    frame_id: u64,
+    key: &str,
+) -> mlua::Result<Option<Value>> {
+    let state = state_rc.borrow();
+    if let Some(frame) = state.widgets.get(frame_id) {
+        if let Some(&child_id) = frame.children_keys.get(key) {
+            drop(state);
+            let child_handle = FrameHandle {
+                id: child_id,
+                state: Rc::clone(state_rc),
+            };
+            return lua.create_userdata(child_handle).map(|ud| Some(Value::UserData(ud)));
+        }
+    }
+    Ok(None)
+}
+
+/// Look up a value from the __frame_fields Lua table.
+fn lookup_custom_field(lua: &Lua, frame_id: u64, key: &str) -> Option<Value> {
+    let fields_table: Option<mlua::Table> = lua.globals().get("__frame_fields").ok();
+    if let Some(table) = fields_table {
+        let frame_fields: Option<mlua::Table> = table.get::<mlua::Table>(frame_id).ok();
+        if let Some(fields) = frame_fields {
+            let value: Value = fields.get::<Value>(key).unwrap_or(Value::Nil);
+            if value != Value::Nil {
+                return Some(value);
+            }
+        }
+    }
+    None
+}
+
+/// Handle special fallback methods (Clear for Cooldown, Lower, Raise).
+fn lookup_fallback_method(
+    lua: &Lua,
+    state_rc: &Rc<std::cell::RefCell<crate::lua_api::SimState>>,
+    frame_id: u64,
+    key: &str,
+) -> mlua::Result<Option<Value>> {
+    // Cooldown:Clear() - only for Cooldown frame type
+    if key == "Clear" {
+        let is_cooldown = {
+            let state = state_rc.borrow();
+            state
+                .widgets
+                .get(frame_id)
+                .map(|f| f.widget_type == WidgetType::Cooldown)
+                .unwrap_or(false)
+        };
+        if is_cooldown {
+            return Ok(Some(Value::Function(
+                lua.create_function(|_, _: mlua::MultiValue| Ok(()))?,
+            )));
+        }
+    }
+
+    // Lower() and Raise() adjust frame stacking order (no-op in simulator)
+    if key == "Lower" || key == "Raise" {
+        return Ok(Some(Value::Function(
+            lua.create_function(|_, _: mlua::MultiValue| Ok(()))?,
+        )));
+    }
+
+    Ok(None)
+}
+
+/// __index metamethod - field access on FrameHandle.
+fn add_index_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_meta_function(
         MetaMethod::Index,
         |lua: &Lua, (ud, key): (mlua::AnyUserData, Value)| {
-            // Try to get from the custom fields table
             let handle = ud.borrow::<FrameHandle>()?;
             let frame_id = handle.id;
             let state_rc = Rc::clone(&handle.state);
-            drop(handle); // Release borrow before accessing state
+            drop(handle);
 
             // Handle numeric indices - returns n-th child frame (1-indexed)
             if let Value::Integer(idx) = key {
-                if idx > 0 {
-                    let state = state_rc.borrow();
-                    if let Some(frame) = state.widgets.get(frame_id) {
-                        if let Some(&child_id) = frame.children.get((idx - 1) as usize) {
-                            drop(state);
-                            let child_handle = FrameHandle {
-                                id: child_id,
-                                state: Rc::clone(&state_rc),
-                            };
-                            return lua.create_userdata(child_handle).map(Value::UserData);
-                        }
-                    }
-                }
-                return Ok(Value::Nil);
+                return lookup_child_by_index(lua, &state_rc, frame_id, idx);
             }
 
             // Convert key to string for named access
@@ -44,65 +127,28 @@ pub fn add_metamethods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             };
 
             // First check children_keys (for template-created children like "Text")
-            {
-                let state = state_rc.borrow();
-                if let Some(frame) = state.widgets.get(frame_id) {
-                    if let Some(&child_id) = frame.children_keys.get(&key) {
-                        // Create userdata for the child frame
-                        drop(state); // Release borrow before creating userdata
-                        let child_handle = FrameHandle {
-                            id: child_id,
-                            state: Rc::clone(&state_rc),
-                        };
-                        return lua.create_userdata(child_handle).map(Value::UserData);
-                    }
-                }
+            if let Some(child) = lookup_child_by_key(lua, &state_rc, frame_id, &key)? {
+                return Ok(child);
             }
 
-            let fields_table: Option<mlua::Table> = lua.globals().get("__frame_fields").ok();
-
-            if let Some(table) = fields_table {
-                let frame_fields: Option<mlua::Table> = table.get::<mlua::Table>(frame_id).ok();
-                if let Some(fields) = frame_fields {
-                    let value: Value = fields.get::<Value>(key.as_str()).unwrap_or(Value::Nil);
-                    if value != Value::Nil {
-                        return Ok(value);
-                    }
-                }
+            // Check custom fields table
+            if let Some(value) = lookup_custom_field(lua, frame_id, &key) {
+                return Ok(value);
             }
 
-            // Special handling for Cooldown:Clear() - only for Cooldown frame type
-            // This avoids conflicts with addons that use frame.Clear as a field
-            if key == "Clear" {
-                let is_cooldown = {
-                    let state = state_rc.borrow();
-                    state
-                        .widgets
-                        .get(frame_id)
-                        .map(|f| f.widget_type == WidgetType::Cooldown)
-                        .unwrap_or(false)
-                };
-                if is_cooldown {
-                    return Ok(Value::Function(
-                        lua.create_function(|_, _: mlua::MultiValue| Ok(()))?,
-                    ));
-                }
-            }
-
-            // Fallback methods that might conflict with custom properties
-            // These are only returned if no custom field was found above
-            if key == "Lower" || key == "Raise" {
-                // Lower() and Raise() adjust frame stacking order (no-op in simulator)
-                return Ok(Value::Function(
-                    lua.create_function(|_, _: mlua::MultiValue| Ok(()))?,
-                ));
+            // Check fallback methods (Clear, Lower, Raise)
+            if let Some(func) = lookup_fallback_method(lua, &state_rc, frame_id, &key)? {
+                return Ok(func);
             }
 
             // Not found in custom fields, return nil (methods are handled separately by mlua)
             Ok(Value::Nil)
         },
     );
+}
 
+/// __newindex metamethod - field assignment on FrameHandle.
+fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_meta_function(
         MetaMethod::NewIndex,
         |lua: &Lua, (ud, key, value): (mlua::AnyUserData, String, Value)| {
@@ -112,7 +158,6 @@ pub fn add_metamethods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             drop(handle);
 
             // If assigning a FrameHandle value, update children_keys in the Rust widget registry
-            // This syncs parentKey relationships from Lua space to Rust
             if let Value::UserData(child_ud) = &value {
                 if let Ok(child_handle) = child_ud.borrow::<FrameHandle>() {
                     let child_id = child_handle.id;
@@ -148,8 +193,11 @@ pub fn add_metamethods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             Ok(())
         },
     );
+}
 
-    // __len metamethod - returns number of children (for array-like iteration)
+/// __len and __eq metamethods.
+fn add_len_and_eq_metamethods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // __len - returns number of children (for array-like iteration)
     methods.add_meta_function(MetaMethod::Len, |_lua: &Lua, ud: mlua::AnyUserData| {
         let handle = ud.borrow::<FrameHandle>()?;
         let state = handle.state.borrow();
@@ -161,9 +209,8 @@ pub fn add_metamethods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(len)
     });
 
-    // __eq metamethod - compare FrameHandles by id
-    // This is needed because __index creates new userdata objects when accessing children_keys,
-    // so ParentFrame.child and ChildFrame would be different userdata objects with the same id
+    // __eq - compare FrameHandles by id
+    // Needed because __index creates new userdata objects for children_keys lookups
     methods.add_meta_function(
         MetaMethod::Eq,
         |_lua: &Lua, (ud1, ud2): (mlua::AnyUserData, mlua::AnyUserData)| {

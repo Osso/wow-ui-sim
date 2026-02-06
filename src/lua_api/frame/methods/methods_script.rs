@@ -5,28 +5,35 @@ use mlua::{UserDataMethods, Value};
 
 /// Add script handler methods to FrameHandle UserData.
 pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetScript(handler, func)
+    add_set_script_methods(methods);
+    add_get_script_method(methods);
+    add_hook_and_wrap_methods(methods);
+    add_has_script_method(methods);
+}
+
+/// Get or create the __scripts Lua table for storing script handlers.
+fn get_or_create_scripts_table(lua: &mlua::Lua) -> mlua::Table {
+    lua.globals().get("__scripts").unwrap_or_else(|_| {
+        let t = lua.create_table().unwrap();
+        lua.globals().set("__scripts", t.clone()).unwrap();
+        t
+    })
+}
+
+/// SetScript(handler, func) and SetOnClickHandler(func)
+fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetScript", |lua, this, (handler, func): (String, Value)| {
         let handler_type = crate::event::ScriptHandler::from_str(&handler);
 
         if let Some(h) = handler_type {
             if let Value::Function(f) = func {
-                // Store function in a global Lua table for later retrieval
-                let scripts_table: mlua::Table =
-                    lua.globals().get("__scripts").unwrap_or_else(|_| {
-                        let t = lua.create_table().unwrap();
-                        lua.globals().set("__scripts", t.clone()).unwrap();
-                        t
-                    });
-
+                let scripts_table = get_or_create_scripts_table(lua);
                 let frame_key = format!("{}_{}", this.id, handler);
                 scripts_table.set(frame_key.as_str(), f)?;
 
-                // Mark that this widget has this handler
                 let mut state = this.state.borrow_mut();
-                state.scripts.set(this.id, h, 1); // Just mark it exists
+                state.scripts.set(this.id, h, 1);
 
-                // Track OnUpdate registrations for efficient dispatch
                 if h == crate::event::ScriptHandler::OnUpdate {
                     state.on_update_frames.insert(this.id);
                 }
@@ -49,7 +56,24 @@ pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetScript(handler)
+    // SetOnClickHandler(func) - WoW 10.0+ convenience for setting OnClick
+    methods.add_method("SetOnClickHandler", |lua, this, func: Value| {
+        if let Value::Function(f) = func {
+            let scripts_table = get_or_create_scripts_table(lua);
+            let frame_key = format!("{}_OnClick", this.id);
+            scripts_table.set(frame_key.as_str(), f)?;
+
+            let mut state = this.state.borrow_mut();
+            state
+                .scripts
+                .set(this.id, crate::event::ScriptHandler::OnClick, 1);
+        }
+        Ok(())
+    });
+}
+
+/// GetScript(handler) - retrieve a stored script handler function.
+fn add_get_script_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetScript", |lua, this, handler: String| {
         let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
 
@@ -61,31 +85,12 @@ pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             Ok(Value::Nil)
         }
     });
+}
 
-    // SetOnClickHandler(func) - WoW 10.0+ method for setting OnClick handler (used by Edit Mode)
-    methods.add_method("SetOnClickHandler", |lua, this, func: Value| {
-        if let Value::Function(f) = func {
-            let scripts_table: mlua::Table = lua.globals().get("__scripts").unwrap_or_else(|_| {
-                let t = lua.create_table().unwrap();
-                lua.globals().set("__scripts", t.clone()).unwrap();
-                t
-            });
-
-            let frame_key = format!("{}_OnClick", this.id);
-            scripts_table.set(frame_key.as_str(), f)?;
-
-            let mut state = this.state.borrow_mut();
-            state
-                .scripts
-                .set(this.id, crate::event::ScriptHandler::OnClick, 1);
-        }
-        Ok(())
-    });
-
-    // HookScript(handler, func) - Hook into existing script handler
+/// HookScript, WrapScript, UnwrapScript - script chaining methods.
+fn add_hook_and_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("HookScript", |lua, this, (handler, func): (String, Value)| {
         if let Value::Function(f) = func {
-            // Store hook in a global table
             let hooks_table: mlua::Table =
                 lua.globals()
                     .get("__script_hooks")
@@ -96,7 +101,6 @@ pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     });
 
             let frame_key = format!("{}_{}", this.id, handler);
-            // Get existing hooks array or create new
             let hooks_array: mlua::Table = hooks_table
                 .get::<mlua::Table>(frame_key.as_str())
                 .unwrap_or_else(|_| {
@@ -104,31 +108,28 @@ pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     hooks_table.set(frame_key.as_str(), t.clone()).unwrap();
                     t
                 });
-            // Append the new hook
             let len = hooks_array.len().unwrap_or(0);
             hooks_array.set(len + 1, f)?;
         }
         Ok(())
     });
 
-    // WrapScript(frame, scriptType, preBody, postBody) - Wraps a secure script handler
+    // WrapScript - stub for secure script wrapping
     methods.add_method(
         "WrapScript",
-        |_, _this, (_target, _script, _pre_body): (mlua::Value, String, String)| {
-            // Stub for secure script wrapping - not implemented in simulator
-            Ok(())
-        },
+        |_, _this, (_target, _script, _pre_body): (mlua::Value, String, String)| Ok(()),
     );
 
-    // UnwrapScript(frame, scriptType) - Removes script wrapping
+    // UnwrapScript - stub for removing script wrapping
     methods.add_method(
         "UnwrapScript",
         |_, _this, (_target, _script): (mlua::Value, String)| Ok(()),
     );
+}
 
-    // HasScript(scriptType) - Check if frame supports a script handler
+/// HasScript(scriptType) - check if frame supports a script handler type.
+fn add_has_script_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("HasScript", |_, _this, script_type: String| {
-        // Most frames support common script types
         let common_scripts = [
             "OnClick",
             "OnEnter",

@@ -403,63 +403,43 @@ pub fn build_editbox_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, f.alpha]);
 }
 
-/// Build a QuadBatch from a WidgetRegistry without needing an App instance.
-///
-/// This contains the sorting/filtering logic from `App::build_quad_batch` but
-/// takes a `WidgetRegistry` directly.
-///
-/// When `text_ctx` is provided, FontString and button/editbox/checkbox text is
-/// rendered as glyph quads interleaved with texture quads (correct draw order).
-/// When `None`, text is skipped (legacy behavior for callers without fonts).
-pub fn build_quad_batch_for_registry(
+/// Collect all frame IDs in the subtree rooted at the named frame.
+fn collect_subtree_ids(
     registry: &crate::widget::WidgetRegistry,
-    screen_size: (f32, f32),
-    root_name: Option<&str>,
-    pressed_frame: Option<u64>,
-    hovered_frame: Option<u64>,
-    mut text_ctx: Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
-) -> QuadBatch {
-    let mut batch = QuadBatch::with_capacity(1000);
-    let (screen_width, screen_height) = screen_size;
-    let size = Size::new(screen_width, screen_height);
-
-    // Add background quad
-    batch.push_solid(
-        Rectangle::new(Point::ORIGIN, size),
-        [palette::BG_DARK.r, palette::BG_DARK.g, palette::BG_DARK.b, 1.0],
-    );
-
-    // Determine which frames to render
-    let mut visible_ids = std::collections::HashSet::new();
-    if let Some(name) = root_name {
-        // Filter to subtree rooted at the named frame
-        let root_id = registry.all_ids().into_iter().find(|&id| {
-            registry
-                .get(id)
-                .map(|f| f.name.as_deref() == Some(name))
-                .unwrap_or(false)
-        });
-        if let Some(root_id) = root_id {
-            let mut queue = vec![root_id];
-            while let Some(id) = queue.pop() {
-                visible_ids.insert(id);
-                if let Some(f) = registry.get(id) {
-                    queue.extend(f.children.iter().copied());
-                }
+    root_name: &str,
+) -> std::collections::HashSet<u64> {
+    let mut ids = std::collections::HashSet::new();
+    let root_id = registry.all_ids().into_iter().find(|&id| {
+        registry
+            .get(id)
+            .map(|f| f.name.as_deref() == Some(root_name))
+            .unwrap_or(false)
+    });
+    if let Some(root_id) = root_id {
+        let mut queue = vec![root_id];
+        while let Some(id) = queue.pop() {
+            ids.insert(id);
+            if let Some(f) = registry.get(id) {
+                queue.extend(f.children.iter().copied());
             }
         }
     }
-    let filter_to_subtree = root_name.is_some();
+    ids
+}
 
-    // Build set of frames with hidden ancestors (for parent-chain visibility check).
-    // In WoW, children of hidden frames are not rendered even if their own visible flag is true.
-    let mut hidden_ancestors = std::collections::HashSet::new();
+/// Build set of frame IDs that have a hidden ancestor.
+///
+/// In WoW, children of hidden frames are not rendered even if their own visible flag is true.
+fn build_hidden_ancestors(
+    registry: &crate::widget::WidgetRegistry,
+) -> std::collections::HashSet<u64> {
+    let mut hidden = std::collections::HashSet::new();
     for &id in &registry.all_ids() {
         let mut current = registry.get(id).and_then(|f| f.parent_id);
         while let Some(pid) = current {
             if let Some(parent) = registry.get(pid) {
                 if !parent.visible {
-                    hidden_ancestors.insert(id);
+                    hidden.insert(id);
                     break;
                 }
                 current = parent.parent_id;
@@ -468,8 +448,15 @@ pub fn build_quad_batch_for_registry(
             }
         }
     }
+    hidden
+}
 
-    // Collect and sort frames
+/// Collect all frames with computed rects, sorted by strata/level/draw-layer.
+fn collect_sorted_frames<'a>(
+    registry: &'a crate::widget::WidgetRegistry,
+    screen_width: f32,
+    screen_height: f32,
+) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect)> {
     let mut frames: Vec<_> = registry
         .all_ids()
         .into_iter()
@@ -499,9 +486,136 @@ pub fn build_quad_batch_for_registry(
             .then_with(|| a.0.cmp(&b.0))
     });
 
+    frames
+}
+
+/// Emit text quads for a widget, extracting color/shadow from the frame.
+fn emit_widget_text_quads(
+    batch: &mut QuadBatch,
+    font_sys: &mut WowFontSystem,
+    glyph_atlas: &mut GlyphAtlas,
+    f: &crate::widget::Frame,
+    text: &str,
+    text_bounds: Rectangle,
+    justify_h: TextJustify,
+    justify_v: TextJustify,
+    word_wrap: bool,
+    max_lines: u32,
+) {
+    let color = [
+        f.text_color.r,
+        f.text_color.g,
+        f.text_color.b,
+        f.text_color.a * f.alpha,
+    ];
+    let shadow = if f.shadow_color.a > 0.0 {
+        Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
+    } else {
+        None
+    };
+    emit_text_quads(
+        batch, font_sys, glyph_atlas, text, text_bounds,
+        f.font.as_deref(), f.font_size, color,
+        justify_h, justify_v,
+        GLYPH_ATLAS_TEX_INDEX,
+        shadow, f.shadow_offset,
+        f.font_outline,
+        word_wrap, max_lines,
+    );
+}
+
+/// Emit quads for a single visible frame based on its widget type.
+fn emit_frame_quads(
+    batch: &mut QuadBatch,
+    id: u64,
+    f: &crate::widget::Frame,
+    bounds: Rectangle,
+    pressed_frame: Option<u64>,
+    hovered_frame: Option<u64>,
+    text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+) {
+    match f.widget_type {
+        WidgetType::Frame => build_frame_quads(batch, bounds, f),
+        WidgetType::Button => {
+            build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
+            if let Some((fs, ga)) = text_ctx {
+                if let Some(ref txt) = f.text {
+                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, TextJustify::Center, TextJustify::Center, false, 0);
+                }
+            }
+        }
+        WidgetType::Texture => build_texture_quads(batch, bounds, f),
+        WidgetType::FontString => {
+            if let Some((fs, ga)) = text_ctx {
+                if let Some(ref txt) = f.text {
+                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, f.word_wrap, f.max_lines);
+                }
+            }
+        }
+        WidgetType::CheckButton => {
+            build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
+            if let Some((fs, ga)) = text_ctx {
+                if let Some(ref txt) = f.text {
+                    let label_bounds = Rectangle::new(
+                        Point::new(bounds.x + 20.0, bounds.y),
+                        Size::new(bounds.width - 20.0, bounds.height),
+                    );
+                    emit_widget_text_quads(batch, fs, ga, f, txt, label_bounds, TextJustify::Left, TextJustify::Center, false, 0);
+                }
+            }
+        }
+        WidgetType::EditBox => {
+            build_editbox_quads(batch, bounds, f);
+            if let Some((fs, ga)) = text_ctx {
+                if let Some(ref txt) = f.text {
+                    let padding = 4.0;
+                    let text_bounds = Rectangle::new(
+                        Point::new(bounds.x + padding, bounds.y),
+                        Size::new(bounds.width - padding * 2.0, bounds.height),
+                    );
+                    emit_widget_text_quads(batch, fs, ga, f, txt, text_bounds, TextJustify::Left, TextJustify::Center, false, 0);
+                }
+            }
+        }
+        _ => {}
+    }
+}
+
+/// Build a QuadBatch from a WidgetRegistry without needing an App instance.
+///
+/// This contains the sorting/filtering logic from `App::build_quad_batch` but
+/// takes a `WidgetRegistry` directly.
+///
+/// When `text_ctx` is provided, FontString and button/editbox/checkbox text is
+/// rendered as glyph quads interleaved with texture quads (correct draw order).
+/// When `None`, text is skipped (legacy behavior for callers without fonts).
+pub fn build_quad_batch_for_registry(
+    registry: &crate::widget::WidgetRegistry,
+    screen_size: (f32, f32),
+    root_name: Option<&str>,
+    pressed_frame: Option<u64>,
+    hovered_frame: Option<u64>,
+    mut text_ctx: Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+) -> QuadBatch {
+    let mut batch = QuadBatch::with_capacity(1000);
+    let (screen_width, screen_height) = screen_size;
+    let size = Size::new(screen_width, screen_height);
+
+    // Add background quad
+    batch.push_solid(
+        Rectangle::new(Point::ORIGIN, size),
+        [palette::BG_DARK.r, palette::BG_DARK.g, palette::BG_DARK.b, 1.0],
+    );
+
+    let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
+    let hidden_ancestors = build_hidden_ancestors(registry);
+    let frames = collect_sorted_frames(registry, screen_width, screen_height);
+
     for (id, f, rect) in frames {
-        if filter_to_subtree && !visible_ids.contains(&id) {
-            continue;
+        if let Some(ref ids) = visible_ids {
+            if !ids.contains(&id) {
+                continue;
+            }
         }
         if !f.visible || hidden_ancestors.contains(&id) {
             continue;
@@ -513,152 +627,11 @@ pub fn build_quad_batch_for_registry(
             continue;
         }
 
-        let x = rect.x * UI_SCALE;
-        let y = rect.y * UI_SCALE;
-        let w = rect.width * UI_SCALE;
-        let h = rect.height * UI_SCALE;
-        let bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
-
-        match f.widget_type {
-            WidgetType::Frame => {
-                build_frame_quads(&mut batch, bounds, f);
-            }
-            WidgetType::Button => {
-                let is_pressed = pressed_frame == Some(id);
-                let is_hovered = hovered_frame == Some(id);
-                build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
-                // Render button text if present (centered in button bounds)
-                if let Some((ref mut font_sys, ref mut glyph_atlas)) = text_ctx {
-                    if let Some(ref txt) = f.text {
-                        let color = [
-                            f.text_color.r,
-                            f.text_color.g,
-                            f.text_color.b,
-                            f.text_color.a * f.alpha,
-                        ];
-                        let shadow = if f.shadow_color.a > 0.0 {
-                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
-                        } else {
-                            None
-                        };
-                        emit_text_quads(
-                            &mut batch, font_sys, glyph_atlas, txt, bounds,
-                            f.font.as_deref(), f.font_size, color,
-                            TextJustify::Center, TextJustify::Center,
-                            GLYPH_ATLAS_TEX_INDEX,
-                            shadow, f.shadow_offset,
-                            f.font_outline,
-                            false, 0,
-                        );
-                    }
-                }
-            }
-            WidgetType::Texture => {
-                build_texture_quads(&mut batch, bounds, f);
-            }
-            WidgetType::FontString => {
-                if let Some((ref mut font_sys, ref mut glyph_atlas)) = text_ctx {
-                    if let Some(ref txt) = f.text {
-                        let color = [
-                            f.text_color.r,
-                            f.text_color.g,
-                            f.text_color.b,
-                            f.text_color.a * f.alpha,
-                        ];
-                        let shadow = if f.shadow_color.a > 0.0 {
-                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
-                        } else {
-                            None
-                        };
-                        emit_text_quads(
-                            &mut batch,
-                            font_sys,
-                            glyph_atlas,
-                            txt,
-                            bounds,
-                            f.font.as_deref(),
-                            f.font_size,
-                            color,
-                            f.justify_h,
-                            f.justify_v,
-                            GLYPH_ATLAS_TEX_INDEX,
-                            shadow,
-                            f.shadow_offset,
-                            f.font_outline,
-                            f.word_wrap,
-                            f.max_lines,
-                        );
-                    }
-                }
-            }
-            WidgetType::CheckButton => {
-                let is_pressed = pressed_frame == Some(id);
-                let is_hovered = hovered_frame == Some(id);
-                build_button_quads(&mut batch, bounds, f, is_pressed, is_hovered);
-                if let Some((ref mut font_sys, ref mut glyph_atlas)) = text_ctx {
-                    if let Some(ref txt) = f.text {
-                        let color = [
-                            f.text_color.r,
-                            f.text_color.g,
-                            f.text_color.b,
-                            f.text_color.a * f.alpha,
-                        ];
-                        let shadow = if f.shadow_color.a > 0.0 {
-                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
-                        } else {
-                            None
-                        };
-                        // CheckButton label is offset to the right of the checkbox
-                        let label_bounds = Rectangle::new(
-                            Point::new(bounds.x + 20.0, bounds.y),
-                            Size::new(bounds.width - 20.0, bounds.height),
-                        );
-                        emit_text_quads(
-                            &mut batch, font_sys, glyph_atlas, txt, label_bounds,
-                            f.font.as_deref(), f.font_size, color,
-                            TextJustify::Left, TextJustify::Center,
-                            GLYPH_ATLAS_TEX_INDEX,
-                            shadow, f.shadow_offset,
-                            f.font_outline,
-                            false, 0,
-                        );
-                    }
-                }
-            }
-            WidgetType::EditBox => {
-                build_editbox_quads(&mut batch, bounds, f);
-                if let Some((ref mut font_sys, ref mut glyph_atlas)) = text_ctx {
-                    if let Some(ref txt) = f.text {
-                        let padding = 4.0;
-                        let text_bounds = Rectangle::new(
-                            Point::new(bounds.x + padding, bounds.y),
-                            Size::new(bounds.width - padding * 2.0, bounds.height),
-                        );
-                        let color = [
-                            f.text_color.r,
-                            f.text_color.g,
-                            f.text_color.b,
-                            f.text_color.a * f.alpha,
-                        ];
-                        let shadow = if f.shadow_color.a > 0.0 {
-                            Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
-                        } else {
-                            None
-                        };
-                        emit_text_quads(
-                            &mut batch, font_sys, glyph_atlas, txt, text_bounds,
-                            f.font.as_deref(), f.font_size, color,
-                            TextJustify::Left, TextJustify::Center,
-                            GLYPH_ATLAS_TEX_INDEX,
-                            shadow, f.shadow_offset,
-                            f.font_outline,
-                            false, 0,
-                        );
-                    }
-                }
-            }
-            _ => {}
-        }
+        let bounds = Rectangle::new(
+            Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
+            Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
+        );
+        emit_frame_quads(&mut batch, id, f, bounds, pressed_frame, hovered_frame, &mut text_ctx);
     }
 
     batch

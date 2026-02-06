@@ -6,6 +6,15 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
 
+/// Extract a numeric value from a Lua argument list at the given index.
+fn extract_number(args: &[Value], index: usize) -> Option<f64> {
+    args.get(index).and_then(|v| match v {
+        Value::Number(n) => Some(*n),
+        Value::Integer(n) => Some(*n as f64),
+        _ => None,
+    })
+}
+
 /// Animation type (Alpha, Translation, etc.)
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum AnimationType {
@@ -700,9 +709,17 @@ impl AnimHandle {
         });
     }
 
-    /// Register property methods: smoothing, alpha, translation, scale, and rotation.
+    /// Register all property methods by delegating to sub-helpers.
     fn add_property_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        // Smoothing
+        Self::add_smoothing_methods(methods);
+        Self::add_alpha_property_methods(methods);
+        Self::add_translation_methods(methods);
+        Self::add_scale_methods(methods);
+        Self::add_rotation_methods(methods);
+    }
+
+    /// Register smoothing methods: SetSmoothing, GetSmoothing.
+    fn add_smoothing_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("SetSmoothing", |_, this, smooth: String| {
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
@@ -720,8 +737,10 @@ impl AnimHandle {
                 .map_or("NONE", |a| a.smoothing.as_str());
             Ok(Value::String(lua.create_string(s)?))
         });
+    }
 
-        // Alpha (Alpha animation type)
+    /// Register alpha property methods: SetFromAlpha, GetFromAlpha, SetToAlpha, GetToAlpha.
+    fn add_alpha_property_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("SetFromAlpha", |_, this, alpha: f64| {
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
@@ -755,12 +774,14 @@ impl AnimHandle {
                 .and_then(|g| g.animations.get(this.anim_index))
                 .map_or(1.0, |a| a.to_alpha))
         });
+    }
 
-        // Translation (store only, no visual effect)
+    /// Register translation methods: SetOffset, SetChange.
+    fn add_translation_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("SetOffset", |_, this, args: MultiValue| {
             let args: Vec<Value> = args.into_iter().collect();
-            let x = args.first().and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(0.0);
-            let y = args.get(1).and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(0.0);
+            let x = extract_number(&args, 0).unwrap_or(0.0);
+            let y = extract_number(&args, 1).unwrap_or(0.0);
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
                 if let Some(anim) = group.animations.get_mut(this.anim_index) {
@@ -772,13 +793,11 @@ impl AnimHandle {
         });
 
         methods.add_method("SetChange", |_, this, args: MultiValue| {
-            // SetChange is used for alpha change amounts in some contexts
             let args: Vec<Value> = args.into_iter().collect();
-            let val = args.first().and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(0.0);
+            let val = extract_number(&args, 0).unwrap_or(0.0);
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
                 if let Some(anim) = group.animations.get_mut(this.anim_index) {
-                    // For alpha anims, SetChange sets the delta
                     if anim.anim_type == AnimationType::Alpha {
                         anim.to_alpha = anim.from_alpha + val;
                     }
@@ -786,12 +805,14 @@ impl AnimHandle {
             }
             Ok(())
         });
+    }
 
-        // Scale (store only)
+    /// Register scale methods: SetScale, SetScaleFrom, SetScaleTo.
+    fn add_scale_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("SetScale", |_, this, args: MultiValue| {
             let args: Vec<Value> = args.into_iter().collect();
-            let x = args.first().and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(1.0);
-            let y = args.get(1).and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(1.0);
+            let x = extract_number(&args, 0).unwrap_or(1.0);
+            let y = extract_number(&args, 1).unwrap_or(1.0);
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
                 if let Some(anim) = group.animations.get_mut(this.anim_index) {
@@ -804,8 +825,8 @@ impl AnimHandle {
 
         methods.add_method("SetScaleFrom", |_, this, args: MultiValue| {
             let args: Vec<Value> = args.into_iter().collect();
-            let x = args.first().and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(1.0);
-            let y = args.get(1).and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(1.0);
+            let x = extract_number(&args, 0).unwrap_or(1.0);
+            let y = extract_number(&args, 1).unwrap_or(1.0);
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
                 if let Some(anim) = group.animations.get_mut(this.anim_index) {
@@ -818,8 +839,8 @@ impl AnimHandle {
 
         methods.add_method("SetScaleTo", |_, this, args: MultiValue| {
             let args: Vec<Value> = args.into_iter().collect();
-            let x = args.first().and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(1.0);
-            let y = args.get(1).and_then(|v| match v { Value::Number(n) => Some(*n), Value::Integer(n) => Some(*n as f64), _ => None }).unwrap_or(1.0);
+            let x = extract_number(&args, 0).unwrap_or(1.0);
+            let y = extract_number(&args, 1).unwrap_or(1.0);
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
                 if let Some(anim) = group.animations.get_mut(this.anim_index) {
@@ -829,8 +850,10 @@ impl AnimHandle {
             }
             Ok(())
         });
+    }
 
-        // Rotation (store only)
+    /// Register rotation methods: SetDegrees, SetOrigin.
+    fn add_rotation_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("SetDegrees", |_, this, degrees: f64| {
             let mut state = this.state.borrow_mut();
             if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
@@ -842,21 +865,18 @@ impl AnimHandle {
         });
 
         methods.add_method("SetOrigin", |_, _this, _args: MultiValue| {
-            // Store only, no visual effect
-            Ok(())
+            Ok(()) // Store only, no visual effect
         });
     }
 
-    /// Register playback control stubs, state queries, and progress methods.
+    /// Register playback control stubs and state queries.
     fn add_playback_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        // Playback control (per-animation stubs)
         methods.add_method("Play", |_, _this, ()| Ok(()));
         methods.add_method("Stop", |_, _this, ()| Ok(()));
         methods.add_method("Pause", |_, _this, ()| Ok(()));
         methods.add_method("Restart", |_, _this, ()| Ok(()));
         methods.add_method("Finish", |_, _this, ()| Ok(()));
 
-        // State queries
         methods.add_method("IsPlaying", |_, this, ()| {
             let state = this.state.borrow();
             Ok(state.animation_groups.get(&this.group_id).map_or(false, |g| g.playing))
@@ -877,11 +897,11 @@ impl AnimHandle {
             Ok(state.animation_groups.get(&this.group_id).map_or(true, |g| !g.playing && !g.paused))
         });
 
-        methods.add_method("IsDelaying", |_, _this, ()| {
-            Ok(false)
-        });
+        methods.add_method("IsDelaying", |_, _this, ()| Ok(false));
+    }
 
-        // Progress
+    /// Register progress query methods: GetProgress, GetSmoothProgress, GetElapsed.
+    fn add_progress_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("GetProgress", |_, this, ()| {
             let state = this.state.borrow();
             Ok(state.animation_groups.get(&this.group_id)
@@ -1003,6 +1023,7 @@ impl UserData for AnimHandle {
         Self::add_timing_methods(methods);
         Self::add_property_methods(methods);
         Self::add_playback_methods(methods);
+        Self::add_progress_methods(methods);
         Self::add_accessor_methods(methods);
         Self::add_script_methods(methods);
     }
@@ -1011,7 +1032,6 @@ impl UserData for AnimHandle {
 /// Advance all playing animation groups by `delta` seconds.
 /// Applies alpha animations to frame opacity and fires script callbacks.
 pub fn tick_animation_groups(state_rc: &Rc<RefCell<SimState>>, lua: &Lua, delta: f64) -> mlua::Result<()> {
-    // Collect IDs of playing groups
     let playing_ids: Vec<u64> = {
         let state = state_rc.borrow();
         state.animation_groups.iter()
@@ -1021,141 +1041,177 @@ pub fn tick_animation_groups(state_rc: &Rc<RefCell<SimState>>, lua: &Lua, delta:
     };
 
     for group_id in playing_ids {
-        // Advance elapsed time, compute alpha values and scripts to fire
-        let (finished, _alpha_apply, scripts_to_fire) = {
-            let mut state = state_rc.borrow_mut();
+        let (finished, scripts_to_fire) = advance_group(state_rc, &group_id, lua, delta);
+        fire_animation_scripts(state_rc, lua, group_id, finished, &scripts_to_fire, delta)?;
+    }
 
-            // Phase 1: advance animations and collect results
-            let (group_finished, alpha_to_apply, scripts_to_fire) = {
-                let Some(group) = state.animation_groups.get_mut(&group_id) else { continue };
+    Ok(())
+}
 
-                let effective_delta = delta * group.speed_multiplier;
-                group.elapsed += effective_delta;
+/// Advance a single animation group: update elapsed times, compute alpha, handle looping.
+/// Returns (group_finished, scripts_to_fire).
+fn advance_group(
+    state_rc: &Rc<RefCell<SimState>>,
+    group_id: &u64,
+    lua: &Lua,
+    delta: f64,
+) -> (bool, Vec<mlua::Function>) {
+    let mut state = state_rc.borrow_mut();
 
-                let owner_frame_id = group.owner_frame_id;
-
-                // Compute order groups and advance individual animations
-                let orders = group.order_groups();
-                let mut order_start = 0.0;
-                let mut alpha_to_apply: Option<(u64, f32)> = None;
-
-                for &order in &orders {
-                    let order_dur = group.animations.iter()
-                        .filter(|a| a.order == order)
-                        .map(|a| a.total_time())
-                        .fold(0.0_f64, f64::max);
-
-                    let time_in_group = (group.elapsed - order_start).clamp(0.0, order_dur);
-
-                    for anim in group.animations.iter_mut().filter(|a| a.order == order) {
-                        anim.elapsed = time_in_group.min(anim.total_time());
-                    }
-
-                    for anim in group.animations.iter().filter(|a| a.order == order) {
-                        if anim.anim_type == AnimationType::Alpha {
-                            let progress = if group.reverse {
-                                1.0 - anim.smooth_progress()
-                            } else {
-                                anim.smooth_progress()
-                            };
-                            let alpha = anim.from_alpha + (anim.to_alpha - anim.from_alpha) * progress;
-                            alpha_to_apply = Some((owner_frame_id, alpha as f32));
-                        }
-                    }
-
-                    order_start += order_dur;
-                }
-
-                let total_dur = group.total_duration();
-                let group_finished = group.elapsed >= total_dur;
-
-                let mut scripts_to_fire = Vec::new();
-
-                if group_finished {
-                    match group.looping {
-                        LoopType::None => {
-                            group.playing = false;
-                            group.finished = true;
-                            if let Some(key) = group.scripts.get("OnFinished") {
-                                if let Ok(func) = lua.registry_value::<mlua::Function>(key) {
-                                    scripts_to_fire.push(func);
-                                }
-                            }
-                        }
-                        LoopType::Repeat => {
-                            group.elapsed -= total_dur;
-                            for anim in &mut group.animations {
-                                anim.elapsed = 0.0;
-                            }
-                            if let Some(key) = group.scripts.get("OnLoop") {
-                                if let Ok(func) = lua.registry_value::<mlua::Function>(key) {
-                                    scripts_to_fire.push(func);
-                                }
-                            }
-                        }
-                        LoopType::Bounce => {
-                            group.elapsed -= total_dur;
-                            group.reverse = !group.reverse;
-                            for anim in &mut group.animations {
-                                anim.elapsed = 0.0;
-                            }
-                            if let Some(key) = group.scripts.get("OnLoop") {
-                                if let Ok(func) = lua.registry_value::<mlua::Function>(key) {
-                                    scripts_to_fire.push(func);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                (group_finished, alpha_to_apply, scripts_to_fire)
-            }; // `group` reference dropped here
-
-            // Phase 2: apply alpha to frame widget (animation_groups no longer borrowed)
-            if let Some((frame_id, alpha)) = alpha_to_apply {
-                if let Some(frame) = state.widgets.get_mut(frame_id) {
-                    frame.alpha = alpha;
-                }
-            }
-
-            (group_finished, alpha_to_apply, scripts_to_fire)
+    let (group_finished, alpha_to_apply, scripts_to_fire) = {
+        let Some(group) = state.animation_groups.get_mut(group_id) else {
+            return (false, Vec::new());
         };
 
-        // Fire scripts outside the borrow
-        for func in scripts_to_fire {
-            let handle = AnimGroupHandle {
-                group_id,
-                state: Rc::clone(state_rc),
-            };
-            let ud = lua.create_userdata(handle)?;
-            if let Err(e) = func.call::<()>(ud) {
-                eprintln!("Animation script error: {}", e);
+        let effective_delta = delta * group.speed_multiplier;
+        group.elapsed += effective_delta;
+
+        let alpha_to_apply = advance_order_groups(group);
+        let total_dur = group.total_duration();
+        let group_finished = group.elapsed >= total_dur;
+
+        let scripts_to_fire = if group_finished {
+            handle_group_finish(group, total_dur, lua)
+        } else {
+            Vec::new()
+        };
+
+        (group_finished, alpha_to_apply, scripts_to_fire)
+    };
+
+    if let Some((frame_id, alpha)) = alpha_to_apply {
+        if let Some(frame) = state.widgets.get_mut(frame_id) {
+            frame.alpha = alpha;
+        }
+    }
+
+    (group_finished, scripts_to_fire)
+}
+
+/// Advance animations within each order group, returning computed alpha if any.
+fn advance_order_groups(group: &mut AnimGroupState) -> Option<(u64, f32)> {
+    let owner_frame_id = group.owner_frame_id;
+    let orders = group.order_groups();
+    let mut order_start = 0.0;
+    let mut alpha_to_apply: Option<(u64, f32)> = None;
+
+    for &order in &orders {
+        let order_dur = group.animations.iter()
+            .filter(|a| a.order == order)
+            .map(|a| a.total_time())
+            .fold(0.0_f64, f64::max);
+
+        let time_in_group = (group.elapsed - order_start).clamp(0.0, order_dur);
+
+        for anim in group.animations.iter_mut().filter(|a| a.order == order) {
+            anim.elapsed = time_in_group.min(anim.total_time());
+        }
+
+        for anim in group.animations.iter().filter(|a| a.order == order) {
+            if anim.anim_type == AnimationType::Alpha {
+                let progress = if group.reverse {
+                    1.0 - anim.smooth_progress()
+                } else {
+                    anim.smooth_progress()
+                };
+                let alpha = anim.from_alpha + (anim.to_alpha - anim.from_alpha) * progress;
+                alpha_to_apply = Some((owner_frame_id, alpha as f32));
             }
         }
 
-        // Fire OnUpdate for the group if it's still playing
-        let on_update_func = {
-            let state = state_rc.borrow();
-            state.animation_groups.get(&group_id)
-                .and_then(|g| {
-                    if g.playing || !finished {
-                        g.scripts.get("OnUpdate")
-                            .and_then(|key| lua.registry_value::<mlua::Function>(key).ok())
-                    } else {
-                        None
-                    }
-                })
-        };
+        order_start += order_dur;
+    }
 
-        if let Some(func) = on_update_func {
-            let handle = AnimGroupHandle {
-                group_id,
-                state: Rc::clone(state_rc),
-            };
-            let ud = lua.create_userdata(handle)?;
-            if let Err(e) = func.call::<()>((ud, delta)) {
-                eprintln!("Animation OnUpdate error: {}", e);
+    alpha_to_apply
+}
+
+/// Handle a finished animation group: update state and collect scripts to fire.
+fn handle_group_finish(
+    group: &mut AnimGroupState,
+    total_dur: f64,
+    lua: &Lua,
+) -> Vec<mlua::Function> {
+    let mut scripts = Vec::new();
+
+    match group.looping {
+        LoopType::None => {
+            group.playing = false;
+            group.finished = true;
+            if let Some(key) = group.scripts.get("OnFinished") {
+                if let Ok(func) = lua.registry_value::<mlua::Function>(key) {
+                    scripts.push(func);
+                }
             }
+        }
+        LoopType::Repeat => {
+            group.elapsed -= total_dur;
+            for anim in &mut group.animations {
+                anim.elapsed = 0.0;
+            }
+            if let Some(key) = group.scripts.get("OnLoop") {
+                if let Ok(func) = lua.registry_value::<mlua::Function>(key) {
+                    scripts.push(func);
+                }
+            }
+        }
+        LoopType::Bounce => {
+            group.elapsed -= total_dur;
+            group.reverse = !group.reverse;
+            for anim in &mut group.animations {
+                anim.elapsed = 0.0;
+            }
+            if let Some(key) = group.scripts.get("OnLoop") {
+                if let Ok(func) = lua.registry_value::<mlua::Function>(key) {
+                    scripts.push(func);
+                }
+            }
+        }
+    }
+
+    scripts
+}
+
+/// Fire collected animation scripts and OnUpdate callback for a group.
+fn fire_animation_scripts(
+    state_rc: &Rc<RefCell<SimState>>,
+    lua: &Lua,
+    group_id: u64,
+    finished: bool,
+    scripts_to_fire: &[mlua::Function],
+    delta: f64,
+) -> mlua::Result<()> {
+    for func in scripts_to_fire {
+        let handle = AnimGroupHandle {
+            group_id,
+            state: Rc::clone(state_rc),
+        };
+        let ud = lua.create_userdata(handle)?;
+        if let Err(e) = func.call::<()>(ud) {
+            eprintln!("Animation script error: {}", e);
+        }
+    }
+
+    let on_update_func = {
+        let state = state_rc.borrow();
+        state.animation_groups.get(&group_id)
+            .and_then(|g| {
+                if g.playing || !finished {
+                    g.scripts.get("OnUpdate")
+                        .and_then(|key| lua.registry_value::<mlua::Function>(key).ok())
+                } else {
+                    None
+                }
+            })
+    };
+
+    if let Some(func) = on_update_func {
+        let handle = AnimGroupHandle {
+            group_id,
+            state: Rc::clone(state_rc),
+        };
+        let ud = lua.create_userdata(handle)?;
+        if let Err(e) = func.call::<()>((ud, delta)) {
+            eprintln!("Animation OnUpdate error: {}", e);
         }
     }
 

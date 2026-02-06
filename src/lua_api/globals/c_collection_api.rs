@@ -48,6 +48,14 @@ fn register_pet_journal(lua: &Lua) -> Result<()> {
 /// C_MountJournal namespace - mount collection.
 fn register_mount_journal(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
+    register_mount_info_methods(lua, &t)?;
+    register_mount_filter_methods(lua, &t)?;
+    lua.globals().set("C_MountJournal", t)?;
+    Ok(())
+}
+
+/// Mount info query methods: counts, GetMountInfoByID, GetMountIDs.
+fn register_mount_info_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("GetNumMounts", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set(
         "GetNumDisplayedMounts",
@@ -57,20 +65,10 @@ fn register_mount_journal(lua: &Lua) -> Result<()> {
         "GetMountInfoByID",
         lua.create_function(|_, _mount_id: i32| {
             // Returns: name, spellID, icon, isActive, isUsable, sourceType, isFavorite,
-            // isFactionSpecific, faction, shouldHideOnChar, isCollected, mountID, ...
+            // isFactionSpecific, faction, shouldHideOnChar, isCollected, mountID
             Ok((
-                Value::Nil, // name
-                Value::Nil, // spellID
-                Value::Nil, // icon
-                false,      // isActive
-                false,      // isUsable
-                0i32,       // sourceType
-                false,      // isFavorite
-                false,      // isFactionSpecific
-                Value::Nil, // faction
-                false,      // shouldHideOnChar
-                false,      // isCollected
-                0i32,       // mountID
+                Value::Nil, Value::Nil, Value::Nil, false, false, 0i32,
+                false, false, Value::Nil, false, false, 0i32,
             ))
         })?,
     )?;
@@ -78,6 +76,11 @@ fn register_mount_journal(lua: &Lua) -> Result<()> {
         "GetMountIDs",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
+    Ok(())
+}
+
+/// Mount filter and favorite methods: collected filter, favorites, summon/dismiss.
+fn register_mount_filter_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set(
         "GetCollectedFilterSetting",
         lua.create_function(|_, _filter_index: i32| Ok(true))?,
@@ -96,7 +99,6 @@ fn register_mount_journal(lua: &Lua) -> Result<()> {
     )?;
     t.set("Summon", lua.create_function(|_, _mount_id: i32| Ok(()))?)?;
     t.set("Dismiss", lua.create_function(|_, ()| Ok(()))?)?;
-    lua.globals().set("C_MountJournal", t)?;
     Ok(())
 }
 
@@ -130,6 +132,15 @@ fn register_toy_box(lua: &Lua) -> Result<()> {
 /// C_TransmogCollection namespace - transmog/appearance collection.
 fn register_transmog_collection(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
+    register_transmog_appearance_methods(lua, &t)?;
+    register_transmog_outfit_methods(lua, &t)?;
+    register_transmog_source_methods(lua, &t)?;
+    lua.globals().set("C_TransmogCollection", t)?;
+    Ok(())
+}
+
+/// Appearance query methods: sources, info, camera, categories.
+fn register_transmog_appearance_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set(
         "GetAppearanceSources",
         lua.create_function(|lua, _appearance_id: i32| lua.create_table())?,
@@ -147,25 +158,26 @@ fn register_transmog_collection(lua: &Lua) -> Result<()> {
         })?,
     )?;
     t.set(
-        "PlayerHasTransmog",
-        lua.create_function(|_, (_item_id, _appearance_mod): (i32, Option<i32>)| Ok(false))?,
-    )?;
-    t.set(
-        "PlayerHasTransmogByItemInfo",
-        lua.create_function(|_, _item_info: String| Ok(false))?,
-    )?;
-    t.set(
-        "PlayerHasTransmogItemModifiedAppearance",
-        lua.create_function(|_, _item_modified_appearance_id: i32| Ok(false))?,
-    )?;
-    t.set(
-        "GetItemInfo",
-        lua.create_function(|_, _item_modified_appearance_id: i32| Ok(Value::Nil))?,
-    )?;
-    t.set(
         "GetAllAppearanceSources",
         lua.create_function(|lua, _visual_id: i32| lua.create_table())?,
     )?;
+    t.set(
+        "GetAppearanceCameraID",
+        lua.create_function(|_, _appearance_id: i32| Ok(0i32))?,
+    )?;
+    t.set(
+        "GetCategoryAppearances",
+        lua.create_function(|lua, (_category, _location): (i32, Value)| lua.create_table())?,
+    )?;
+    t.set(
+        "IsAppearanceHiddenVisual",
+        lua.create_function(|_, _appearance_id: i32| Ok(false))?,
+    )?;
+    Ok(())
+}
+
+/// Outfit methods: illusions, outfits, outfit info.
+fn register_transmog_outfit_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set(
         "GetIllusions",
         lua.create_function(|lua, ()| lua.create_table())?,
@@ -184,21 +196,30 @@ fn register_transmog_collection(lua: &Lua) -> Result<()> {
             Ok((Value::Nil, Value::Nil)) // name, icon
         })?,
     )?;
+    Ok(())
+}
+
+/// Source and player ownership methods: transmog checks, filters, item info.
+fn register_transmog_source_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set(
-        "GetAppearanceCameraID",
-        lua.create_function(|_, _appearance_id: i32| Ok(0i32))?,
+        "PlayerHasTransmog",
+        lua.create_function(|_, (_item_id, _appearance_mod): (i32, Option<i32>)| Ok(false))?,
     )?;
     t.set(
-        "GetCategoryAppearances",
-        lua.create_function(|lua, (_category, _location): (i32, Value)| lua.create_table())?,
+        "PlayerHasTransmogByItemInfo",
+        lua.create_function(|_, _item_info: String| Ok(false))?,
+    )?;
+    t.set(
+        "PlayerHasTransmogItemModifiedAppearance",
+        lua.create_function(|_, _item_modified_appearance_id: i32| Ok(false))?,
+    )?;
+    t.set(
+        "GetItemInfo",
+        lua.create_function(|_, _item_modified_appearance_id: i32| Ok(Value::Nil))?,
     )?;
     t.set(
         "PlayerKnowsSource",
         lua.create_function(|_, _source_id: i32| Ok(false))?,
-    )?;
-    t.set(
-        "IsAppearanceHiddenVisual",
-        lua.create_function(|_, _appearance_id: i32| Ok(false))?,
     )?;
     t.set(
         "IsSourceTypeFilterChecked",
@@ -208,7 +229,6 @@ fn register_transmog_collection(lua: &Lua) -> Result<()> {
         "GetShowMissingSourceInItemTooltips",
         lua.create_function(|_, ()| Ok(true))?,
     )?;
-    lua.globals().set("C_TransmogCollection", t)?;
     Ok(())
 }
 

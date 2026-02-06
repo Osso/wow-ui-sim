@@ -3,6 +3,151 @@
 use crate::widget::{AnchorPoint, WidgetRegistry};
 use crate::LayoutRect;
 
+/// Resolved edge constraints from multiple anchors.
+struct AnchorEdges {
+    left_x: Option<f32>,
+    right_x: Option<f32>,
+    top_y: Option<f32>,
+    bottom_y: Option<f32>,
+    center_x: Option<f32>,
+    center_y: Option<f32>,
+}
+
+/// Resolve each anchor in a multi-anchor frame to edge constraints.
+fn resolve_multi_anchor_edges(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
+    parent_rect: LayoutRect,
+    screen_width: f32,
+    screen_height: f32,
+) -> AnchorEdges {
+    let mut edges = AnchorEdges {
+        left_x: None, right_x: None,
+        top_y: None, bottom_y: None,
+        center_x: None, center_y: None,
+    };
+
+    for anchor in &frame.anchors {
+        let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
+            compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
+        } else {
+            parent_rect
+        };
+
+        let (anchor_x, anchor_y) = anchor_position(
+            anchor.relative_point,
+            relative_rect.x, relative_rect.y,
+            relative_rect.width, relative_rect.height,
+        );
+        let target_x = anchor_x + anchor.x_offset;
+        let target_y = anchor_y - anchor.y_offset;
+
+        match anchor.point {
+            AnchorPoint::TopLeft     => { edges.left_x = Some(target_x); edges.top_y = Some(target_y); }
+            AnchorPoint::TopRight    => { edges.right_x = Some(target_x); edges.top_y = Some(target_y); }
+            AnchorPoint::BottomLeft  => { edges.left_x = Some(target_x); edges.bottom_y = Some(target_y); }
+            AnchorPoint::BottomRight => { edges.right_x = Some(target_x); edges.bottom_y = Some(target_y); }
+            AnchorPoint::Top         => { edges.top_y = Some(target_y); edges.center_x = Some(target_x); }
+            AnchorPoint::Bottom      => { edges.bottom_y = Some(target_y); edges.center_x = Some(target_x); }
+            AnchorPoint::Left        => { edges.left_x = Some(target_x); edges.center_y = Some(target_y); }
+            AnchorPoint::Right       => { edges.right_x = Some(target_x); edges.center_y = Some(target_y); }
+            AnchorPoint::Center      => { edges.center_x = Some(target_x); edges.center_y = Some(target_y); }
+        }
+    }
+
+    edges
+}
+
+/// Compute final rect from resolved edge constraints and frame size.
+///
+/// WoW behavior: anchors defining opposite edges override explicit size.
+/// When anchors create inverted bounds, WoW swaps them to get positive dimensions.
+fn compute_rect_from_edges(
+    edges: AnchorEdges,
+    frame: &crate::widget::Frame,
+    parent_rect: LayoutRect,
+    scale: f32,
+) -> LayoutRect {
+    // Swap inverted horizontal bounds
+    let (left_x, right_x) = if let (Some(lx), Some(rx)) = (edges.left_x, edges.right_x) {
+        if lx > rx { (Some(rx), Some(lx)) } else { (Some(lx), Some(rx)) }
+    } else {
+        (edges.left_x, edges.right_x)
+    };
+
+    // Swap inverted vertical bounds
+    let (top_y, bottom_y) = if let (Some(ty), Some(by)) = (edges.top_y, edges.bottom_y) {
+        if ty > by { (Some(by), Some(ty)) } else { (Some(ty), Some(by)) }
+    } else {
+        (edges.top_y, edges.bottom_y)
+    };
+
+    let width = match (left_x, right_x) {
+        (Some(lx), Some(rx)) => rx - lx,
+        _ if frame.width > 0.0 => frame.width * scale,
+        _ => 0.0,
+    };
+
+    let height = match (top_y, bottom_y) {
+        (Some(ty), Some(by)) => by - ty,
+        _ if frame.height > 0.0 => frame.height * scale,
+        _ => 0.0,
+    };
+
+    // Horizontal position priority: left > right > center > parent center
+    let x = left_x.unwrap_or_else(|| {
+        right_x.map(|rx| rx - width).unwrap_or_else(|| {
+            edges.center_x
+                .map(|cx| cx - width / 2.0)
+                .unwrap_or_else(|| parent_rect.x + (parent_rect.width - width) / 2.0)
+        })
+    });
+    // Vertical position priority: top > bottom > center > parent center
+    let y = top_y.unwrap_or_else(|| {
+        bottom_y.map(|by| by - height).unwrap_or_else(|| {
+            edges.center_y
+                .map(|cy| cy - height / 2.0)
+                .unwrap_or_else(|| parent_rect.y + (parent_rect.height - height) / 2.0)
+        })
+    });
+
+    LayoutRect { x, y, width, height }
+}
+
+/// Resolve a single-anchor frame's position.
+fn resolve_single_anchor(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
+    parent_rect: LayoutRect,
+    screen_width: f32,
+    screen_height: f32,
+) -> LayoutRect {
+    let anchor = &frame.anchors[0];
+    let scale = frame.scale;
+    let width = frame.width * scale;
+    let height = frame.height * scale;
+
+    let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
+        compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
+    } else {
+        parent_rect
+    };
+
+    let (anchor_x, anchor_y) = anchor_position(
+        anchor.relative_point,
+        relative_rect.x, relative_rect.y,
+        relative_rect.width, relative_rect.height,
+    );
+
+    let target_x = anchor_x + anchor.x_offset;
+    let target_y = anchor_y - anchor.y_offset;
+
+    let (frame_x, frame_y) =
+        frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
+
+    LayoutRect { x: frame_x, y: frame_y, width, height }
+}
+
 /// Compute frame rect with anchor resolution.
 pub fn compute_frame_rect(
     registry: &WidgetRegistry,
@@ -17,23 +162,13 @@ pub fn compute_frame_rect(
 
     // Special case: UIParent (id=1) fills the entire screen
     if frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1) {
-        return LayoutRect {
-            x: 0.0,
-            y: 0.0,
-            width: screen_width,
-            height: screen_height,
-        };
+        return LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height };
     }
 
     let parent_rect = if let Some(parent_id) = frame.parent_id {
         compute_frame_rect(registry, parent_id, screen_width, screen_height)
     } else {
-        LayoutRect {
-            x: 0.0,
-            y: 0.0,
-            width: screen_width,
-            height: screen_height,
-        }
+        LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height }
     };
 
     let scale = frame.scale;
@@ -50,172 +185,11 @@ pub fn compute_frame_rect(
     }
 
     if frame.anchors.len() >= 2 {
-        let mut left_x: Option<f32> = None;
-        let mut right_x: Option<f32> = None;
-        let mut top_y: Option<f32> = None;
-        let mut bottom_y: Option<f32> = None;
-        // Center position from TOP/BOTTOM/CENTER anchors with x offset
-        let mut center_x: Option<f32> = None;
-        // Center position from LEFT/RIGHT/CENTER anchors with y offset
-        let mut center_y: Option<f32> = None;
-
-        for anchor in &frame.anchors {
-            let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
-                compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
-            } else {
-                parent_rect
-            };
-
-            let (anchor_x, anchor_y) = anchor_position(
-                anchor.relative_point,
-                relative_rect.x,
-                relative_rect.y,
-                relative_rect.width,
-                relative_rect.height,
-            );
-            let target_x = anchor_x + anchor.x_offset;
-            let target_y = anchor_y - anchor.y_offset;
-
-            match anchor.point {
-                AnchorPoint::TopLeft => {
-                    left_x = Some(target_x);
-                    top_y = Some(target_y);
-                }
-                AnchorPoint::TopRight => {
-                    right_x = Some(target_x);
-                    top_y = Some(target_y);
-                }
-                AnchorPoint::BottomLeft => {
-                    left_x = Some(target_x);
-                    bottom_y = Some(target_y);
-                }
-                AnchorPoint::BottomRight => {
-                    right_x = Some(target_x);
-                    bottom_y = Some(target_y);
-                }
-                AnchorPoint::Top => {
-                    top_y = Some(target_y);
-                    center_x = Some(target_x); // TOP anchor x offset sets horizontal center
-                }
-                AnchorPoint::Bottom => {
-                    bottom_y = Some(target_y);
-                    center_x = Some(target_x); // BOTTOM anchor x offset sets horizontal center
-                }
-                AnchorPoint::Left => {
-                    left_x = Some(target_x);
-                    center_y = Some(target_y); // LEFT anchor y offset sets vertical center
-                }
-                AnchorPoint::Right => {
-                    right_x = Some(target_x);
-                    center_y = Some(target_y); // RIGHT anchor y offset sets vertical center
-                }
-                AnchorPoint::Center => {
-                    center_x = Some(target_x);
-                    center_y = Some(target_y);
-                }
-            }
-        }
-
-        // WoW behavior: anchors defining opposite edges override explicit size.
-        // Explicit size is only a fallback when the opposite edge anchor is missing.
-        // When anchors create inverted bounds (e.g., TOPLEFT→TOPRIGHT, TOPRIGHT→TOPLEFT),
-        // WoW swaps them to get positive dimensions. This is used by ButtonFrameTemplate_HidePortrait.
-        let (final_left_x, final_right_x) = if let (Some(lx), Some(rx)) = (left_x, right_x) {
-            if lx > rx {
-                (Some(rx), Some(lx)) // Swap inverted bounds
-            } else {
-                (Some(lx), Some(rx))
-            }
-        } else {
-            (left_x, right_x)
-        };
-
-        let (final_top_y, final_bottom_y) = if let (Some(ty), Some(by)) = (top_y, bottom_y) {
-            if ty > by {
-                (Some(by), Some(ty)) // Swap inverted bounds
-            } else {
-                (Some(ty), Some(by))
-            }
-        } else {
-            (top_y, bottom_y)
-        };
-
-        let final_width = if let (Some(lx), Some(rx)) = (final_left_x, final_right_x) {
-            // Both left and right edges defined by anchors - compute width from them
-            rx - lx
-        } else if frame.width > 0.0 {
-            frame.width * scale
-        } else {
-            0.0
-        };
-
-        let final_height = if let (Some(ty), Some(by)) = (final_top_y, final_bottom_y) {
-            // Both top and bottom edges defined by anchors - compute height from them
-            by - ty
-        } else if frame.height > 0.0 {
-            frame.height * scale
-        } else {
-            0.0
-        };
-
-        // Horizontal position priority: left_x > right_x > center_x > parent center
-        let final_x = final_left_x.unwrap_or_else(|| {
-            final_right_x.map(|rx| rx - final_width).unwrap_or_else(|| {
-                // Use center_x if set by TOP/BOTTOM/CENTER anchor with x offset
-                center_x
-                    .map(|cx| cx - final_width / 2.0)
-                    .unwrap_or_else(|| parent_rect.x + (parent_rect.width - final_width) / 2.0)
-            })
-        });
-        // Vertical position priority: top_y > bottom_y > center_y > parent center
-        let final_y = final_top_y.unwrap_or_else(|| {
-            final_bottom_y.map(|by| by - final_height).unwrap_or_else(|| {
-                // Use center_y if set by LEFT/RIGHT/CENTER anchor with y offset
-                center_y
-                    .map(|cy| cy - final_height / 2.0)
-                    .unwrap_or_else(|| parent_rect.y + (parent_rect.height - final_height) / 2.0)
-            })
-        });
-
-        return LayoutRect {
-            x: final_x,
-            y: final_y,
-            width: final_width,
-            height: final_height,
-        };
+        let edges = resolve_multi_anchor_edges(registry, frame, parent_rect, screen_width, screen_height);
+        return compute_rect_from_edges(edges, frame, parent_rect, scale);
     }
 
-    let anchor = &frame.anchors[0];
-    let width = frame.width * scale;
-    let height = frame.height * scale;
-
-    // For single anchor, check if it has a specific relativeTo frame
-    let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
-        compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
-    } else {
-        parent_rect
-    };
-
-    let (anchor_x, anchor_y) = anchor_position(
-        anchor.relative_point,
-        relative_rect.x,
-        relative_rect.y,
-        relative_rect.width,
-        relative_rect.height,
-    );
-
-    let target_x = anchor_x + anchor.x_offset;
-    let target_y = anchor_y - anchor.y_offset;
-
-    let (frame_x, frame_y) =
-        frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
-
-    LayoutRect {
-        x: frame_x,
-        y: frame_y,
-        width,
-        height,
-    }
+    resolve_single_anchor(registry, frame, parent_rect, screen_width, screen_height)
 }
 
 /// Get the position of an anchor point on a rectangle.

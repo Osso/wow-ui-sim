@@ -9,22 +9,11 @@ use image::RgbaImage;
 use super::shader::{GpuTextureData, QuadBatch, WowUiPrimitive};
 use crate::texture::TextureManager;
 
-/// Render a QuadBatch to an RGBA image using headless wgpu.
-///
-/// Creates a headless GPU device, sets up the same WowUiPipeline used by
-/// the iced GUI, and renders to an offscreen texture. The result is read
-/// back to CPU memory as an RgbaImage.
-///
-/// When `glyph_atlas_data` is provided, text glyphs are rendered using the
-/// glyph atlas texture.
-pub fn render_to_image(
+/// Load unique textures for all batch texture requests.
+fn load_batch_textures(
     batch: &QuadBatch,
     tex_mgr: &mut TextureManager,
-    width: u32,
-    height: u32,
-    glyph_atlas_data: Option<(&[u8], u32)>,
-) -> RgbaImage {
-    // Load textures for all requests
+) -> Vec<GpuTextureData> {
     let mut textures = Vec::new();
     let mut seen = std::collections::HashSet::new();
     for request in &batch.texture_requests {
@@ -41,22 +30,17 @@ pub fn render_to_image(
             seen.insert(request.path.clone());
         }
     }
+    textures
+}
 
-    let mut primitive = WowUiPrimitive::with_textures(batch.clone(), textures);
-
-    // Attach glyph atlas if provided
-    if let Some((data, size)) = glyph_atlas_data {
-        primitive.glyph_atlas_data = Some(data.to_vec());
-        primitive.glyph_atlas_size = size;
-    }
-
-    // Create headless wgpu device
+/// Create a headless wgpu device and queue.
+fn create_headless_device() -> (wgpu::Device, wgpu::Queue) {
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
         backends: wgpu::Backends::all(),
         ..Default::default()
     });
 
-    let (device, queue) = pollster::block_on(async {
+    pollster::block_on(async {
         let adapter = instance
             .request_adapter(&wgpu::RequestAdapterOptions {
                 power_preference: wgpu::PowerPreference::default(),
@@ -70,22 +54,19 @@ pub fn render_to_image(
             .request_device(&wgpu::DeviceDescriptor::default())
             .await
             .expect("Failed to create GPU device")
-    });
+    })
+}
 
-    let format = wgpu::TextureFormat::Rgba8UnormSrgb;
-
-    // Create pipeline (same as iced uses)
-    use iced::widget::shader::Pipeline;
-    let mut pipeline = super::shader::WowUiPipeline::new(&device, &queue, format);
-
-    // Create render target texture
-    let render_texture = device.create_texture(&wgpu::TextureDescriptor {
+/// Create a render target texture and its view.
+fn create_render_target(
+    device: &wgpu::Device,
+    width: u32,
+    height: u32,
+    format: wgpu::TextureFormat,
+) -> (wgpu::Texture, wgpu::TextureView) {
+    let texture = device.create_texture(&wgpu::TextureDescriptor {
         label: Some("Screenshot Render Target"),
-        size: wgpu::Extent3d {
-            width,
-            height,
-            depth_or_array_layers: 1,
-        },
+        size: wgpu::Extent3d { width, height, depth_or_array_layers: 1 },
         mip_level_count: 1,
         sample_count: 1,
         dimension: wgpu::TextureDimension::D2,
@@ -93,40 +74,19 @@ pub fn render_to_image(
         usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::COPY_SRC,
         view_formats: &[],
     });
-    let render_view = render_texture.create_view(&wgpu::TextureViewDescriptor::default());
+    let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
+    (texture, view)
+}
 
-    // Prepare (uploads textures, resolves tex_index, uploads buffers)
-    let bounds = iced::Rectangle::new(
-        iced::Point::ORIGIN,
-        iced::Size::new(width as f32, height as f32),
-    );
-    let viewport = iced::widget::shader::Viewport::with_physical_size(
-        iced::Size::new(width, height),
-        1.0,
-    );
-    primitive.prepare(&mut pipeline, &device, &queue, &bounds, &viewport);
-
-    // Render
-    let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor {
-        label: Some("Screenshot Encoder"),
-    });
-
-    let clip_bounds = iced::Rectangle::new(iced::Point::ORIGIN, iced::Size::new(width as f32, height as f32));
-    let clip_bounds_u32 = iced::Rectangle {
-        x: clip_bounds.x as u32,
-        y: clip_bounds.y as u32,
-        width: clip_bounds.width as u32,
-        height: clip_bounds.height as u32,
-    };
-
-    pipeline.render_clear(
-        &mut encoder,
-        &render_view,
-        &clip_bounds_u32,
-        [0.05, 0.05, 0.08, 1.0],
-    );
-
-    // Copy render target to readable buffer
+/// Copy render target to a readable buffer and read back pixels into an image.
+fn read_back_pixels(
+    device: &wgpu::Device,
+    queue: &wgpu::Queue,
+    encoder: wgpu::CommandEncoder,
+    render_texture: &wgpu::Texture,
+    width: u32,
+    height: u32,
+) -> RgbaImage {
     let bytes_per_row = (width * 4 + 255) & !255; // Align to 256
     let output_buffer = device.create_buffer(&wgpu::BufferDescriptor {
         label: Some("Screenshot Output Buffer"),
@@ -135,9 +95,10 @@ pub fn render_to_image(
         mapped_at_creation: false,
     });
 
+    let mut encoder = encoder;
     encoder.copy_texture_to_buffer(
         wgpu::TexelCopyTextureInfo {
-            texture: &render_texture,
+            texture: render_texture,
             mip_level: 0,
             origin: wgpu::Origin3d::ZERO,
             aspect: wgpu::TextureAspect::All,
@@ -150,16 +111,11 @@ pub fn render_to_image(
                 rows_per_image: Some(height),
             },
         },
-        wgpu::Extent3d {
-            width,
-            height,
-            depth_or_array_layers: 1,
-        },
+        wgpu::Extent3d { width, height, depth_or_array_layers: 1 },
     );
 
     queue.submit(std::iter::once(encoder.finish()));
 
-    // Read back pixels
     let buffer_slice = output_buffer.slice(..);
     let (sender, receiver) = std::sync::mpsc::channel();
     buffer_slice.map_async(wgpu::MapMode::Read, move |result| {
@@ -183,4 +139,49 @@ pub fn render_to_image(
     }
 
     img
+}
+
+/// Render a QuadBatch to an RGBA image using headless wgpu.
+///
+/// Creates a headless GPU device, sets up the same WowUiPipeline used by
+/// the iced GUI, and renders to an offscreen texture. The result is read
+/// back to CPU memory as an RgbaImage.
+///
+/// When `glyph_atlas_data` is provided, text glyphs are rendered using the
+/// glyph atlas texture.
+pub fn render_to_image(
+    batch: &QuadBatch,
+    tex_mgr: &mut TextureManager,
+    width: u32,
+    height: u32,
+    glyph_atlas_data: Option<(&[u8], u32)>,
+) -> RgbaImage {
+    let textures = load_batch_textures(batch, tex_mgr);
+    let mut primitive = WowUiPrimitive::with_textures(batch.clone(), textures);
+
+    if let Some((data, size)) = glyph_atlas_data {
+        primitive.glyph_atlas_data = Some(data.to_vec());
+        primitive.glyph_atlas_size = size;
+    }
+
+    let (device, queue) = create_headless_device();
+    let format = wgpu::TextureFormat::Rgba8UnormSrgb;
+
+    use iced::widget::shader::Pipeline;
+    let mut pipeline = super::shader::WowUiPipeline::new(&device, &queue, format);
+    let (render_texture, render_view) = create_render_target(&device, width, height, format);
+
+    // Prepare (uploads textures, resolves tex_index, uploads buffers)
+    let bounds = iced::Rectangle::new(iced::Point::ORIGIN, iced::Size::new(width as f32, height as f32));
+    let viewport = iced::widget::shader::Viewport::with_physical_size(iced::Size::new(width, height), 1.0);
+    primitive.prepare(&mut pipeline, &device, &queue, &bounds, &viewport);
+
+    // Render
+    let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor {
+        label: Some("Screenshot Encoder"),
+    });
+    let clip_bounds_u32 = iced::Rectangle { x: 0u32, y: 0u32, width, height };
+    pipeline.render_clear(&mut encoder, &render_view, &clip_bounds_u32, [0.05, 0.05, 0.08, 1.0]);
+
+    read_back_pixels(&device, &queue, encoder, &render_texture, width, height)
 }

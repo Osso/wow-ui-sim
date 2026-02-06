@@ -200,28 +200,104 @@ impl GlyphAtlas {
     }
 }
 
+/// Shape text into a cosmic-text buffer and return total text height.
+fn shape_text_to_runs(
+    font_system: &mut WowFontSystem,
+    text: &str,
+    font_path: Option<&str>,
+    font_size: f32,
+    bounds_width: f32,
+    bounds_height: f32,
+    word_wrap: bool,
+    max_lines: u32,
+) -> (Buffer, f32) {
+    let line_height = (font_size * 1.2).ceil();
+    let metrics = Metrics::new(font_size, line_height);
+    let attrs = font_system.attrs_owned(font_path);
+
+    let shape_width = if word_wrap && bounds_width > 0.0 { bounds_width } else { 10000.0 };
+
+    let mut buffer = Buffer::new(&mut font_system.font_system, metrics);
+    buffer.set_size(&mut font_system.font_system, Some(shape_width), Some(bounds_height));
+    buffer.set_text(
+        &mut font_system.font_system,
+        text,
+        &attrs.as_attrs(),
+        Shaping::Advanced,
+        None,
+    );
+    buffer.shape_until_scroll(&mut font_system.font_system, true);
+
+    // Calculate total text height (for vertical justification).
+    let mut runs: Vec<_> = buffer.layout_runs().collect();
+    if max_lines > 0 {
+        runs.truncate(max_lines as usize);
+    }
+    let total_height = if runs.len() <= 1 {
+        line_height
+    } else {
+        runs.last().map(|run| run.line_y + line_height).unwrap_or(line_height)
+    };
+
+    // We only need total_height; the buffer is returned for glyph iteration.
+    // The runs are re-collected from buffer later via layout_runs().
+    drop(runs);
+    (buffer, total_height)
+}
+
+/// Emit glyph quads for all layout runs with a given color and offset.
+#[allow(clippy::too_many_arguments)]
+fn emit_glyphs_for_runs(
+    batch: &mut QuadBatch,
+    glyph_atlas: &mut GlyphAtlas,
+    font_system: &mut WowFontSystem,
+    buffer: &Buffer,
+    bounds: Rectangle,
+    y_offset: f32,
+    justify_h: TextJustify,
+    glyph_color: [f32; 4],
+    offset_x: f32,
+    offset_y: f32,
+    glyph_tex_index: i32,
+    max_lines: u32,
+) {
+    let runs: Vec<_> = buffer.layout_runs().collect();
+    let runs = if max_lines > 0 { &runs[..runs.len().min(max_lines as usize)] } else { &runs };
+
+    for run in runs {
+        let x_offset = if bounds.width > 0.0 {
+            match justify_h {
+                TextJustify::Left => 0.0,
+                TextJustify::Center => (bounds.width - run.line_w) / 2.0,
+                TextJustify::Right => bounds.width - run.line_w,
+            }
+        } else {
+            0.0
+        };
+
+        for glyph in run.glyphs.iter() {
+            let pg = glyph.physical((0.0, 0.0), 1.0);
+            if let Some(entry) = glyph_atlas.ensure_glyph(font_system, pg.cache_key) {
+                let glyph_x = bounds.x + x_offset + pg.x as f32 + offset_x;
+                let glyph_y = bounds.y + y_offset + run.line_y + pg.y as f32 - entry.top as f32 + offset_y;
+                let glyph_bounds = Rectangle::new(
+                    iced::Point::new(glyph_x, glyph_y),
+                    iced::Size::new(entry.width as f32, entry.height as f32),
+                );
+                let uv = Rectangle::new(
+                    iced::Point::new(entry.uv_x, entry.uv_y),
+                    iced::Size::new(entry.uv_w, entry.uv_h),
+                );
+                batch.push_quad(glyph_bounds, uv, glyph_color, glyph_tex_index, BlendMode::Alpha);
+            }
+        }
+    }
+}
+
 /// Emit text quads into a QuadBatch.
 ///
 /// Shapes the text, rasterizes glyphs into the atlas, and pushes textured quads.
 /// The glyph atlas texture must be uploaded separately via `GlyphAtlas::texture_data()`.
-///
-/// # Arguments
-/// * `batch` - QuadBatch to append glyph quads to
-/// * `font_system` - WoW font system for shaping and rasterization
-/// * `glyph_atlas` - Glyph atlas for caching rasterized glyphs
-/// * `text` - Text to render
-/// * `bounds` - Screen rectangle for the text
-/// * `font_path` - WoW font path (e.g. `Fonts\\FRIZQT__.TTF`)
-/// * `font_size` - Font size in pixels
-/// * `color` - RGBA text color (0.0-1.0)
-/// * `justify_h` - Horizontal justification
-/// * `justify_v` - Vertical justification
-/// * `glyph_tex_index` - Texture index for the glyph atlas in the GPU atlas
-/// * `shadow_color` - Optional shadow color (render shadow if alpha > 0)
-/// * `shadow_offset` - Shadow offset (x, y) in pixels
-/// * `outline` - Text outline style (None, Outline, ThickOutline)
-/// * `word_wrap` - Whether to wrap text at bounds width
-/// * `max_lines` - Maximum lines to render (0 = unlimited)
 #[allow(clippy::too_many_arguments)]
 pub fn emit_text_quads(
     batch: &mut QuadBatch,
@@ -250,144 +326,42 @@ pub fn emit_text_quads(
         return;
     }
 
-    // Shape text with cosmic-text
-    let line_height = (font_size * 1.2).ceil();
-    let metrics = Metrics::new(font_size, line_height);
-    let attrs = font_system.attrs_owned(font_path);
-
-    // Use bounds.width for wrapping only when word_wrap is enabled and bounds has width.
-    // Otherwise use a large width so text stays on a single line.
-    let shape_width = if word_wrap && bounds.width > 0.0 {
-        bounds.width
-    } else {
-        10000.0
-    };
-
-    let mut buffer = Buffer::new(&mut font_system.font_system, metrics);
-    buffer.set_size(&mut font_system.font_system, Some(shape_width), Some(bounds.height));
-    buffer.set_text(
-        &mut font_system.font_system,
-        &stripped,
-        &attrs.as_attrs(),
-        Shaping::Advanced,
-        None,
+    let (buffer, total_height) = shape_text_to_runs(
+        font_system, &stripped, font_path, font_size,
+        bounds.width, bounds.height, word_wrap, max_lines,
     );
-    buffer.shape_until_scroll(&mut font_system.font_system, true);
 
-    // Calculate total text height for vertical justification.
-    // For single-line text, use line_height. For multi-line, use last line's position + line_height.
-    let mut layout_runs: Vec<_> = buffer.layout_runs().collect();
-    if max_lines > 0 {
-        layout_runs.truncate(max_lines as usize);
-    }
-    let num_lines = layout_runs.len();
-    let total_height = if num_lines <= 1 {
-        line_height
-    } else {
-        layout_runs.last().map(|run| run.line_y + line_height).unwrap_or(line_height)
-    };
-
-    // Vertical offset based on justification.
-    // Always use bounds.height for centering, even if smaller than total_height.
-    // This ensures text is visually centered within the widget bounds.
     let y_offset = match justify_v {
         TextJustify::Left => 0.0,   // TOP
         TextJustify::Center => (bounds.height - total_height) / 2.0,
         TextJustify::Right => bounds.height - total_height, // BOTTOM
     };
 
-    // Check if we should render a shadow
-    let has_shadow = shadow_color.map(|c| c[3] > 0.0).unwrap_or(false);
-
-    // Helper closure to emit glyph quads with given color and offset.
-    // Iterates the (possibly truncated) layout_runs collected above.
-    let emit_glyphs = |batch: &mut QuadBatch,
-                       glyph_atlas: &mut GlyphAtlas,
-                       font_system: &mut WowFontSystem,
-                       glyph_color: [f32; 4],
-                       offset_x: f32,
-                       offset_y: f32| {
-        for run in &layout_runs {
-            // Horizontal offset based on justification.
-            // For explicit width, apply justification within bounds.
-            // For width=0 (auto-sized FontStrings), text starts at bounds.x (LEFT behavior).
-            // This matches WoW where auto-sized FontStrings flow from their anchor point.
-            let run_width = run.line_w;
-            let x_offset = if bounds.width > 0.0 {
-                match justify_h {
-                    TextJustify::Left => 0.0,
-                    TextJustify::Center => (bounds.width - run_width) / 2.0,
-                    TextJustify::Right => bounds.width - run_width,
-                }
-            } else {
-                // Width=0: text starts at bounds.x regardless of justify_h
-                // This is correct for auto-sized FontStrings positioned by single anchor
-                0.0
-            };
-
-            for glyph in run.glyphs.iter() {
-                let physical_glyph = glyph.physical((0.0, 0.0), 1.0);
-
-                if let Some(entry) =
-                    glyph_atlas.ensure_glyph(font_system, physical_glyph.cache_key)
-                {
-                    // Glyph positioning:
-                    // physical_glyph.x is pen position
-                    // physical_glyph.y includes baseline offset, entry.top is bitmap offset
-                    let glyph_x =
-                        bounds.x + x_offset + physical_glyph.x as f32 + offset_x;
-                    let glyph_y = bounds.y
-                        + y_offset
-                        + run.line_y
-                        + physical_glyph.y as f32
-                        - entry.top as f32
-                        + offset_y;
-
-                    let glyph_bounds = Rectangle::new(
-                        iced::Point::new(glyph_x, glyph_y),
-                        iced::Size::new(entry.width as f32, entry.height as f32),
-                    );
-
-                    let uv = Rectangle::new(
-                        iced::Point::new(entry.uv_x, entry.uv_y),
-                        iced::Size::new(entry.uv_w, entry.uv_h),
-                    );
-
-                    batch.push_quad(glyph_bounds, uv, glyph_color, glyph_tex_index, BlendMode::Alpha);
-                }
-            }
-        }
+    let emit = |batch: &mut QuadBatch, ga: &mut GlyphAtlas, fs: &mut WowFontSystem,
+                c: [f32; 4], ox: f32, oy: f32| {
+        emit_glyphs_for_runs(batch, ga, fs, &buffer, bounds, y_offset, justify_h, c, ox, oy, glyph_tex_index, max_lines);
     };
 
     // Render outline first (behind everything)
     if outline != crate::widget::TextOutline::None {
-        let outline_color = [0.0_f32, 0.0, 0.0, color[3]]; // Black outline with same alpha
+        let outline_color = [0.0_f32, 0.0, 0.0, color[3]];
         let d = match outline {
             crate::widget::TextOutline::Outline => 1.0_f32,
             crate::widget::TextOutline::ThickOutline => 2.0,
             crate::widget::TextOutline::None => unreachable!(),
         };
-        // 8 compass directions for outline
-        for &(dx, dy) in &[
-            (-d, 0.0), (d, 0.0), (0.0, -d), (0.0, d),
-            (-d, -d), (d, -d), (-d, d), (d, d),
-        ] {
-            emit_glyphs(batch, glyph_atlas, font_system, outline_color, dx, dy);
+        for &(dx, dy) in &[(-d, 0.0), (d, 0.0), (0.0, -d), (0.0, d), (-d, -d), (d, -d), (-d, d), (d, d)] {
+            emit(batch, glyph_atlas, font_system, outline_color, dx, dy);
         }
     }
 
     // Render shadow (behind main text, in front of outline)
-    if has_shadow {
-        emit_glyphs(
-            batch,
-            glyph_atlas,
-            font_system,
-            shadow_color.unwrap(),
-            shadow_offset.0,
-            shadow_offset.1,
-        );
+    if let Some(sc) = shadow_color {
+        if sc[3] > 0.0 {
+            emit(batch, glyph_atlas, font_system, sc, shadow_offset.0, shadow_offset.1);
+        }
     }
 
     // Render main text
-    emit_glyphs(batch, glyph_atlas, font_system, color, 0.0, 0.0);
+    emit(batch, glyph_atlas, font_system, color, 0.0, 0.0);
 }

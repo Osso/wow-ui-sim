@@ -21,6 +21,25 @@ fn is_simple_html(handle: &FrameHandle) -> bool {
 
 /// Add text/FontString methods to FrameHandle UserData.
 pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_text_get_set_methods(methods);
+    add_title_methods(methods);
+    add_border_methods(methods);
+    add_portrait_methods(methods);
+    add_shadow_offset_methods(methods);
+    add_shadow_color_methods(methods);
+    add_set_font_method(methods);
+    add_get_font_method(methods);
+    add_font_object_methods(methods);
+    add_text_color_methods(methods);
+    add_justification_methods(methods);
+    add_text_measurement_methods(methods);
+    add_word_wrap_methods(methods);
+    add_text_scale_methods(methods);
+    add_spacing_methods(methods);
+}
+
+/// SetText, GetText, SetFormattedText.
+fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetText(text) - for FontString and Button widgets
     // Auto-sizes FontStrings to fit content; for Buttons, also sets Text child fontstring
     methods.add_method("SetText", |_, this, text: Option<String>| {
@@ -84,7 +103,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
 
+/// SetTitle, GetTitle, SetTitleOffsets.
+fn add_title_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetTitle(title) - for PortraitFrame/ButtonFrame templates
     // In WoW: self:GetTitleText():SetText(title) where GetTitleText returns self.TitleContainer.TitleText
     methods.add_method("SetTitle", |_, this, title: Option<String>| {
@@ -131,7 +153,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         // Stub - title offsets are a rendering detail
         Ok(())
     });
+}
 
+/// SetBorder, SetBorderColor, SetBorderInsets.
+fn add_border_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetBorder(layoutName) - set nine-slice border layout (for PortraitFrameMixin)
     // This is called by ButtonFrameTemplate_HidePortrait to switch to a non-portrait layout
     methods.add_method("SetBorder", |lua, this, layout_name: Option<String>| {
@@ -185,28 +210,27 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // SetBorderInsets(left, right, top, bottom) - set border insets
     methods.add_method("SetBorderInsets", |_, _this, _args: mlua::MultiValue| Ok(()));
+}
 
-    // SetPortraitTextureSizeAndOffset(size, x, y) - for portrait frames
+/// Portrait-related stubs: SetPortraitTextureSizeAndOffset, SetPortraitTextureRaw,
+/// SetPortraitToAsset, SetPortraitToUnit, SetPortraitShown.
+fn add_portrait_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method(
         "SetPortraitTextureSizeAndOffset",
         |_, _this, _args: mlua::MultiValue| Ok(()),
     );
 
-    // SetPortraitTextureRaw(tex) - set portrait texture
     methods.add_method("SetPortraitTextureRaw", |_, _this, _tex: Option<String>| {
         Ok(())
     });
 
-    // SetPortraitToAsset(fileID) - set portrait from file ID
     methods.add_method("SetPortraitToAsset", |_, _this, _file_id: i32| Ok(()));
 
-    // SetPortraitToUnit(unit) - set portrait from unit
     methods.add_method("SetPortraitToUnit", |_, _this, _unit: String| Ok(()));
 
     // SetPortraitShown(shown) - show/hide the portrait container
     // Called by ButtonFrameTemplate_HidePortrait to hide the portrait area
     methods.add_method("SetPortraitShown", |lua, this, shown: bool| {
-        // Get the frame name from state
         let state = this.state.borrow();
         let frame_name = state
             .widgets
@@ -215,7 +239,6 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or_else(|| format!("__frame_{}", this.id));
         drop(state);
 
-        // Hide/show the PortraitContainer child frame
         let code = format!(
             r#"
             local frame = {}
@@ -233,7 +256,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let _ = lua.load(&code).exec();
         Ok(())
     });
+}
 
+/// SetShadowOffset, GetShadowOffset.
+fn add_shadow_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetShadowOffset([textType,] x, y) - set shadow offset
     methods.add_method("SetShadowOffset", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
@@ -289,7 +315,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or((0.0, 0.0));
         Ok((x as f64, y as f64))
     });
+}
 
+/// SetShadowColor, GetShadowColor.
+fn add_shadow_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetShadowColor([textType,] r, g, b, a) - set shadow color
     methods.add_method("SetShadowColor", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
@@ -358,7 +387,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(crate::widget::Color::new(0.0, 0.0, 0.0, 0.0));
         Ok((color.r as f64, color.g as f64, color.b as f64, color.a as f64))
     });
+}
 
+/// SetFont([textType,] font, size, flags).
+fn add_set_font_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetFont([textType,] font, size, flags) - for FontString or SimpleHTML widgets
     // SimpleHTML: SetFont("h1", "Fonts\\FRIZQT__.TTF", 16, "OUTLINE")
     // Others: SetFont("Fonts\\FRIZQT__.TTF", 16, "OUTLINE")
@@ -421,10 +453,218 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(true)
     });
+}
 
+/// GetFont([textType]).
+fn add_get_font_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // GetFont([textType]) - for FontString or SimpleHTML widgets
+    // SimpleHTML: GetFont("h1") returns per-textType font
+    methods.add_method("GetFont", |lua, this, args: mlua::MultiValue| {
+        let args_vec: Vec<Value> = args.into_iter().collect();
+
+        // Check for SimpleHTML per-textType call
+        if let Some(Value::String(s)) = args_vec.first() {
+            let type_str = s.to_string_lossy().to_string();
+            if is_text_type(&type_str) {
+                let state = this.state.borrow();
+                if let Some(data) = state.simple_htmls.get(&this.id) {
+                    if let Some(style) = data.text_styles.get(&type_str) {
+                        let font = style.font.as_deref().unwrap_or("Fonts\\FRIZQT__.TTF");
+                        return Ok(mlua::MultiValue::from_vec(vec![
+                            Value::String(lua.create_string(font)?),
+                            Value::Number(style.font_size as f64),
+                            Value::String(lua.create_string("")?),
+                        ]));
+                    }
+                }
+                // Return defaults for unknown textType
+                return Ok(mlua::MultiValue::from_vec(vec![
+                    Value::String(lua.create_string("Fonts\\FRIZQT__.TTF")?),
+                    Value::Number(12.0),
+                    Value::String(lua.create_string("")?),
+                ]));
+            }
+        }
+
+        // Standard path
+        let state = this.state.borrow();
+        let frame = state.widgets.get(this.id);
+        let font_path = frame
+            .and_then(|f| f.font.as_deref())
+            .unwrap_or("Fonts\\FRIZQT__.TTF");
+        let font_size = frame.map(|f| f.font_size).unwrap_or(12.0);
+        let flags = frame
+            .map(|f| match f.font_outline {
+                crate::widget::TextOutline::None => "",
+                crate::widget::TextOutline::Outline => "OUTLINE",
+                crate::widget::TextOutline::ThickOutline => "THICKOUTLINE",
+            })
+            .unwrap_or("");
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string(font_path)?),
+            Value::Number(font_size as f64),
+            Value::String(lua.create_string(flags)?),
+        ]))
+    });
+}
+
+/// SetFontObject, GetFontObject, GetFontObjectForAlphabet.
+fn add_font_object_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // SetFontObject([textType,] fontObject or fontName) - copy font properties from a font object
+    // SimpleHTML: SetFontObject("h1", fontObject) stores per-textType font object
+    methods.add_method("SetFontObject", |lua, this, args: mlua::MultiValue| {
+        let args_vec: Vec<Value> = args.into_iter().collect();
+        let is_html = is_simple_html(this);
+
+        // Check for SimpleHTML per-textType call
+        if is_html && args_vec.len() >= 2 {
+            if let Some(Value::String(s)) = args_vec.first() {
+                let type_str = s.to_string_lossy().to_string();
+                if is_text_type(&type_str) {
+                    return set_font_object_for_text_type(lua, this, &type_str, &args_vec);
+                }
+            }
+        }
+
+        // Standard path
+        let font_object = args_vec.into_iter().next().unwrap_or(Value::Nil);
+        let font_table = resolve_font_table(lua, &font_object);
+        apply_font_table_to_frame(this, font_table.as_ref());
+
+        let store: mlua::Table = lua
+            .load(
+                "_G.__fontstring_font_objects = _G.__fontstring_font_objects or {}; return _G.__fontstring_font_objects",
+            )
+            .eval()?;
+        store.set(this.id, font_object)?;
+
+        Ok(())
+    });
+
+    // GetFontObject([textType]) - return the font object set via SetFontObject
+    methods.add_method("GetFontObject", |lua, this, args: mlua::MultiValue| {
+        let args_vec: Vec<Value> = args.into_iter().collect();
+
+        if let Some(Value::String(s)) = args_vec.first() {
+            let type_str = s.to_string_lossy().to_string();
+            if is_text_type(&type_str) {
+                let store: mlua::Table =
+                    lua.load("return _G.__fontstring_font_objects or {}").eval()?;
+                let key = format!("{}_{}", this.id, type_str);
+                let font: Value = store.get(key)?;
+                return Ok(font);
+            }
+        }
+
+        let store: mlua::Table =
+            lua.load("return _G.__fontstring_font_objects or {}").eval()?;
+        let font: Value = store.get(this.id)?;
+        Ok(font)
+    });
+
+    // GetFontObjectForAlphabet(alphabet) - returns self for font localization
+    // In WoW this returns different fonts for Latin/Cyrillic/etc.
+    // For simulation, just return self
+    methods.add_method(
+        "GetFontObjectForAlphabet",
+        |lua, this, _alphabet: Option<String>| {
+            let ud = lua.create_userdata(this.clone())?;
+            Ok(ud)
+        },
+    );
+}
+
+/// Handle SetFontObject for a SimpleHTML per-textType call.
+fn set_font_object_for_text_type(
+    lua: &mlua::Lua,
+    this: &FrameHandle,
+    type_str: &str,
+    args_vec: &[Value],
+) -> mlua::Result<()> {
+    let font_name = match args_vec.get(1) {
+        Some(Value::String(n)) => Some(n.to_string_lossy().to_string()),
+        Some(Value::Table(t)) => t.get::<Option<String>>("__fontPath").ok().flatten(),
+        _ => None,
+    };
+    let mut state = this.state.borrow_mut();
+    if let Some(data) = state.simple_htmls.get_mut(&this.id) {
+        let style = data.text_styles.entry(type_str.to_string()).or_insert_with(TextStyle::default);
+        style.font_object = font_name;
+    }
+    drop(state);
+    let store: mlua::Table = lua
+        .load("_G.__fontstring_font_objects = _G.__fontstring_font_objects or {}; return _G.__fontstring_font_objects")
+        .eval()?;
+    let key = format!("{}_{}", this.id, type_str);
+    if let Some(fo) = args_vec.get(1).cloned() {
+        store.set(key, fo)?;
+    }
+    Ok(())
+}
+
+/// Resolve a font object Value (table or name string) into an optional Table.
+fn resolve_font_table(lua: &mlua::Lua, font_object: &Value) -> Option<mlua::Table> {
+    match font_object {
+        Value::Table(t) => Some(t.clone()),
+        Value::String(name) => {
+            let name_str = name.to_string_lossy().to_string();
+            lua.globals()
+                .get::<Option<mlua::Table>>(name_str)
+                .ok()
+                .flatten()
+        }
+        _ => None,
+    }
+}
+
+/// Apply font properties from a Lua font table to the Rust frame.
+fn apply_font_table_to_frame(this: &FrameHandle, font_table: Option<&mlua::Table>) {
+    let Some(src) = font_table else { return };
+    let mut state = this.state.borrow_mut();
+    let Some(frame) = state.widgets.get_mut(this.id) else { return };
+
+    if let Ok(path) = src.get::<String>("__fontPath") {
+        frame.font = Some(path);
+    }
+    if let Ok(height) = src.get::<f64>("__fontHeight") {
+        frame.font_size = height as f32;
+    }
+    if let Ok(flags) = src.get::<String>("__fontFlags") {
+        frame.font_outline = crate::widget::TextOutline::from_wow_str(&flags);
+    }
+    if let (Ok(r), Ok(g), Ok(b), Ok(a)) = (
+        src.get::<f64>("__textColorR"),
+        src.get::<f64>("__textColorG"),
+        src.get::<f64>("__textColorB"),
+        src.get::<f64>("__textColorA"),
+    ) {
+        frame.text_color = crate::widget::Color::new(r as f32, g as f32, b as f32, a as f32);
+    }
+    if let (Ok(r), Ok(g), Ok(b), Ok(a)) = (
+        src.get::<f64>("__shadowColorR"),
+        src.get::<f64>("__shadowColorG"),
+        src.get::<f64>("__shadowColorB"),
+        src.get::<f64>("__shadowColorA"),
+    ) {
+        frame.shadow_color = crate::widget::Color::new(r as f32, g as f32, b as f32, a as f32);
+    }
+    if let (Ok(x), Ok(y)) = (
+        src.get::<f64>("__shadowOffsetX"),
+        src.get::<f64>("__shadowOffsetY"),
+    ) {
+        frame.shadow_offset = (x as f32, y as f32);
+    }
+    if let Ok(h) = src.get::<String>("__justifyH") {
+        frame.justify_h = crate::widget::TextJustify::from_wow_str(&h);
+    }
+    if let Ok(v) = src.get::<String>("__justifyV") {
+        frame.justify_v = crate::widget::TextJustify::from_wow_str(&v);
+    }
+}
+
+/// SetTextColor, GetTextColor.
+fn add_text_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetTextColor([textType,] r, g, b, a) - for FontString or SimpleHTML widgets
-    // SimpleHTML: SetTextColor("h1", r, g, b, a) stores per-textType color
-    // Others: SetTextColor(r, g, b, a)
     methods.add_method("SetTextColor", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
         let is_html = is_simple_html(this);
@@ -490,181 +730,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             Ok((1.0_f32, 1.0_f32, 1.0_f32, 1.0_f32))
         }
     });
+}
 
-    // SetFontObject([textType,] fontObject or fontName) - copy font properties from a font object
-    // SimpleHTML: SetFontObject("h1", fontObject) stores per-textType font object
-    methods.add_method("SetFontObject", |lua, this, args: mlua::MultiValue| {
-        let args_vec: Vec<Value> = args.into_iter().collect();
-        let is_html = is_simple_html(this);
-
-        // Check for SimpleHTML per-textType call
-        if is_html && args_vec.len() >= 2 {
-            if let Some(Value::String(s)) = args_vec.first() {
-                let type_str = s.to_string_lossy().to_string();
-                if is_text_type(&type_str) {
-                    let font_name = match args_vec.get(1) {
-                        Some(Value::String(n)) => Some(n.to_string_lossy().to_string()),
-                        Some(Value::Table(t)) => t.get::<Option<String>>("__fontPath").ok().flatten(),
-                        _ => None,
-                    };
-                    let mut state = this.state.borrow_mut();
-                    if let Some(data) = state.simple_htmls.get_mut(&this.id) {
-                        let style = data.text_styles.entry(type_str.clone()).or_insert_with(TextStyle::default);
-                        style.font_object = font_name;
-                    }
-                    drop(state);
-                    let store: mlua::Table = lua
-                        .load("_G.__fontstring_font_objects = _G.__fontstring_font_objects or {}; return _G.__fontstring_font_objects")
-                        .eval()?;
-                    let key = format!("{}_{}", this.id, type_str);
-                    if let Some(fo) = args_vec.into_iter().nth(1) {
-                        store.set(key, fo)?;
-                    }
-                    return Ok(());
-                }
-            }
-        }
-
-        // Standard path
-        let font_object = args_vec.into_iter().next().unwrap_or(Value::Nil);
-        let font_table: Option<mlua::Table> = match &font_object {
-            Value::Table(t) => Some(t.clone()),
-            Value::String(name) => {
-                let name_str = name.to_string_lossy().to_string();
-                lua.globals()
-                    .get::<Option<mlua::Table>>(name_str)
-                    .ok()
-                    .flatten()
-            }
-            _ => None,
-        };
-
-        if let Some(ref src) = font_table {
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                if let Ok(path) = src.get::<String>("__fontPath") {
-                    frame.font = Some(path);
-                }
-                if let Ok(height) = src.get::<f64>("__fontHeight") {
-                    frame.font_size = height as f32;
-                }
-                if let Ok(flags) = src.get::<String>("__fontFlags") {
-                    frame.font_outline = crate::widget::TextOutline::from_wow_str(&flags);
-                }
-                if let (Ok(r), Ok(g), Ok(b), Ok(a)) = (
-                    src.get::<f64>("__textColorR"),
-                    src.get::<f64>("__textColorG"),
-                    src.get::<f64>("__textColorB"),
-                    src.get::<f64>("__textColorA"),
-                ) {
-                    frame.text_color =
-                        crate::widget::Color::new(r as f32, g as f32, b as f32, a as f32);
-                }
-                if let (Ok(r), Ok(g), Ok(b), Ok(a)) = (
-                    src.get::<f64>("__shadowColorR"),
-                    src.get::<f64>("__shadowColorG"),
-                    src.get::<f64>("__shadowColorB"),
-                    src.get::<f64>("__shadowColorA"),
-                ) {
-                    frame.shadow_color =
-                        crate::widget::Color::new(r as f32, g as f32, b as f32, a as f32);
-                }
-                if let (Ok(x), Ok(y)) = (
-                    src.get::<f64>("__shadowOffsetX"),
-                    src.get::<f64>("__shadowOffsetY"),
-                ) {
-                    frame.shadow_offset = (x as f32, y as f32);
-                }
-                if let Ok(h) = src.get::<String>("__justifyH") {
-                    frame.justify_h = crate::widget::TextJustify::from_wow_str(&h);
-                }
-                if let Ok(v) = src.get::<String>("__justifyV") {
-                    frame.justify_v = crate::widget::TextJustify::from_wow_str(&v);
-                }
-            }
-        }
-
-        let store: mlua::Table = lua
-            .load(
-                "_G.__fontstring_font_objects = _G.__fontstring_font_objects or {}; return _G.__fontstring_font_objects",
-            )
-            .eval()?;
-        store.set(this.id, font_object)?;
-
-        Ok(())
-    });
-
-    // GetFontObject([textType]) - return the font object set via SetFontObject
-    methods.add_method("GetFontObject", |lua, this, args: mlua::MultiValue| {
-        let args_vec: Vec<Value> = args.into_iter().collect();
-
-        if let Some(Value::String(s)) = args_vec.first() {
-            let type_str = s.to_string_lossy().to_string();
-            if is_text_type(&type_str) {
-                let store: mlua::Table =
-                    lua.load("return _G.__fontstring_font_objects or {}").eval()?;
-                let key = format!("{}_{}", this.id, type_str);
-                let font: Value = store.get(key)?;
-                return Ok(font);
-            }
-        }
-
-        let store: mlua::Table =
-            lua.load("return _G.__fontstring_font_objects or {}").eval()?;
-        let font: Value = store.get(this.id)?;
-        Ok(font)
-    });
-
-    // GetFont([textType]) - for FontString or SimpleHTML widgets
-    // SimpleHTML: GetFont("h1") returns per-textType font
-    methods.add_method("GetFont", |lua, this, args: mlua::MultiValue| {
-        let args_vec: Vec<Value> = args.into_iter().collect();
-
-        // Check for SimpleHTML per-textType call
-        if let Some(Value::String(s)) = args_vec.first() {
-            let type_str = s.to_string_lossy().to_string();
-            if is_text_type(&type_str) {
-                let state = this.state.borrow();
-                if let Some(data) = state.simple_htmls.get(&this.id) {
-                    if let Some(style) = data.text_styles.get(&type_str) {
-                        let font = style.font.as_deref().unwrap_or("Fonts\\FRIZQT__.TTF");
-                        return Ok(mlua::MultiValue::from_vec(vec![
-                            Value::String(lua.create_string(font)?),
-                            Value::Number(style.font_size as f64),
-                            Value::String(lua.create_string("")?),
-                        ]));
-                    }
-                }
-                // Return defaults for unknown textType
-                return Ok(mlua::MultiValue::from_vec(vec![
-                    Value::String(lua.create_string("Fonts\\FRIZQT__.TTF")?),
-                    Value::Number(12.0),
-                    Value::String(lua.create_string("")?),
-                ]));
-            }
-        }
-
-        // Standard path
-        let state = this.state.borrow();
-        let frame = state.widgets.get(this.id);
-        let font_path = frame
-            .and_then(|f| f.font.as_deref())
-            .unwrap_or("Fonts\\FRIZQT__.TTF");
-        let font_size = frame.map(|f| f.font_size).unwrap_or(12.0);
-        let flags = frame
-            .map(|f| match f.font_outline {
-                crate::widget::TextOutline::None => "",
-                crate::widget::TextOutline::Outline => "OUTLINE",
-                crate::widget::TextOutline::ThickOutline => "THICKOUTLINE",
-            })
-            .unwrap_or("");
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::String(lua.create_string(font_path)?),
-            Value::Number(font_size as f64),
-            Value::String(lua.create_string(flags)?),
-        ]))
-    });
-
+/// SetJustifyH, SetJustifyV.
+fn add_justification_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetJustifyH([textType,] justify) - for FontString or SimpleHTML widgets
     methods.add_method("SetJustifyH", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
@@ -728,110 +797,31 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
 
+/// GetStringWidth, GetTextWidth, GetUnboundedStringWidth, GetStringHeight.
+fn add_text_measurement_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetStringWidth() - for FontString widgets
     methods.add_method("GetStringWidth", |lua, this, ()| {
-        let state = this.state.borrow();
-        let (text, font_path, font_size) = match state.widgets.get(this.id) {
-            Some(f) => (
-                f.text.clone(),
-                f.font.clone(),
-                f.font_size,
-            ),
-            None => return Ok(0.0),
-        };
-        drop(state);
-
-        let text = match text {
-            Some(t) if !t.is_empty() => t,
-            _ => return Ok(0.0),
-        };
-
-        if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
-            let mut fs = fs_rc.borrow_mut();
-            Ok(fs.measure_text_width(&text, font_path.as_deref(), font_size) as f64)
-        } else {
-            // Fallback approximation when no font system is available (e.g. tests)
-            Ok(text.len() as f64 * 7.0)
-        }
+        measure_text_width(lua, this)
     });
 
     // GetTextWidth() - alias for GetStringWidth (EditBox uses this)
     methods.add_method("GetTextWidth", |lua, this, ()| {
-        let state = this.state.borrow();
-        let (text, font_path, font_size) = match state.widgets.get(this.id) {
-            Some(f) => (
-                f.text.clone(),
-                f.font.clone(),
-                f.font_size,
-            ),
-            None => return Ok(0.0),
-        };
-        drop(state);
-
-        let text = match text {
-            Some(t) if !t.is_empty() => t,
-            _ => return Ok(0.0),
-        };
-
-        if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
-            let mut fs = fs_rc.borrow_mut();
-            Ok(fs.measure_text_width(&text, font_path.as_deref(), font_size) as f64)
-        } else {
-            Ok(text.len() as f64 * 7.0)
-        }
+        measure_text_width(lua, this)
     });
 
     // GetUnboundedStringWidth() - string width without word wrap constraints
     methods.add_method("GetUnboundedStringWidth", |lua, this, ()| {
-        let state = this.state.borrow();
-        let (text, font_path, font_size) = match state.widgets.get(this.id) {
-            Some(f) => (
-                f.text.clone(),
-                f.font.clone(),
-                f.font_size,
-            ),
-            None => return Ok(0.0),
-        };
-        drop(state);
-
-        let text = match text {
-            Some(t) if !t.is_empty() => t,
-            _ => return Ok(0.0),
-        };
-
-        if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
-            let mut fs = fs_rc.borrow_mut();
-            Ok(fs.measure_text_width(&text, font_path.as_deref(), font_size) as f64)
-        } else {
-            Ok(text.len() as f64 * 7.0)
-        }
+        measure_text_width(lua, this)
     });
-
-    // GetFontObjectForAlphabet(alphabet) - returns self for font localization
-    // In WoW this returns different fonts for Latin/Cyrillic/etc.
-    // For simulation, just return self
-    methods.add_method(
-        "GetFontObjectForAlphabet",
-        |lua, this, _alphabet: Option<String>| {
-            // Return the frame itself (as a userdata) - it's a font object
-            let ud = lua.create_userdata(this.clone())?;
-            Ok(ud)
-        },
-    );
 
     // GetStringHeight() - for FontString widgets
     // Returns the pixel height of the rendered text, accounting for word wrapping.
     methods.add_method("GetStringHeight", |lua, this, ()| {
         let state = this.state.borrow();
         let (text, font_path, font_size, word_wrap, width) = match state.widgets.get(this.id) {
-            Some(f) => (
-                f.text.clone(),
-                f.font.clone(),
-                f.font_size,
-                f.word_wrap,
-                f.width,
-            ),
+            Some(f) => (f.text.clone(), f.font.clone(), f.font_size, f.word_wrap, f.width),
             None => return Ok(12.0_f64),
         };
         drop(state);
@@ -851,8 +841,34 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             Ok((font_size * 1.2).ceil() as f64)
         }
     });
+}
 
-    // SetWordWrap(wrap) - for FontString widgets
+/// Shared implementation for GetStringWidth / GetTextWidth / GetUnboundedStringWidth.
+fn measure_text_width(lua: &mlua::Lua, this: &FrameHandle) -> mlua::Result<f64> {
+    let state = this.state.borrow();
+    let (text, font_path, font_size) = match state.widgets.get(this.id) {
+        Some(f) => (f.text.clone(), f.font.clone(), f.font_size),
+        None => return Ok(0.0),
+    };
+    drop(state);
+
+    let text = match text {
+        Some(t) if !t.is_empty() => t,
+        _ => return Ok(0.0),
+    };
+
+    if let Some(fs_rc) = lua.app_data_ref::<Rc<RefCell<WowFontSystem>>>() {
+        let mut fs = fs_rc.borrow_mut();
+        Ok(fs.measure_text_width(&text, font_path.as_deref(), font_size) as f64)
+    } else {
+        // Fallback approximation when no font system is available (e.g. tests)
+        Ok(text.len() as f64 * 7.0)
+    }
+}
+
+/// SetWordWrap, GetWordWrap, IsTruncated, CanWordWrap, GetWrappedWidth,
+/// SetNonSpaceWrap, CanNonSpaceWrap, SetMaxLines, GetMaxLines.
+fn add_word_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetWordWrap", |_, this, wrap: bool| {
         if let Ok(mut s) = this.state.try_borrow_mut() {
             if let Some(frame) = s.widgets.get_mut(this.id) {
@@ -862,7 +878,6 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetWordWrap() - check if word wrap is enabled
     methods.add_method("GetWordWrap", |_, this, ()| {
         if let Ok(s) = this.state.try_borrow() {
             if let Some(frame) = s.widgets.get(this.id) {
@@ -873,33 +888,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     // IsTruncated() - check if text is truncated (for FontString)
-    methods.add_method("IsTruncated", |_, _this, ()| {
-        // Return false since we don't actually render/measure text
-        Ok(false)
-    });
+    methods.add_method("IsTruncated", |_, _this, ()| Ok(false));
 
-    // SetTextScale(scale) - set text scale factor
-    methods.add_method("SetTextScale", |_, this, scale: f64| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.text_scale = scale;
-        }
-        Ok(())
-    });
-
-    // GetTextScale() - get text scale factor
-    methods.add_method("GetTextScale", |_, this, ()| {
-        let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            return Ok(frame.text_scale);
-        }
-        Ok(1.0_f64)
-    });
-
-    // CanWordWrap() - check if word wrap is supported
     methods.add_method("CanWordWrap", |_, _this, ()| Ok(true));
 
-    // GetWrappedWidth() - get width when wrapped
     methods.add_method("GetWrappedWidth", |_, this, ()| {
         let state = this.state.borrow();
         let width = state
@@ -910,13 +902,10 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(width)
     });
 
-    // SetNonSpaceWrap(wrap) - for FontString widgets
     methods.add_method("SetNonSpaceWrap", |_, _this, _wrap: bool| Ok(()));
 
-    // CanNonSpaceWrap() - check if non-space wrap is supported
     methods.add_method("CanNonSpaceWrap", |_, _this, ()| Ok(true));
 
-    // SetMaxLines(maxLines) - for FontString widgets
     methods.add_method("SetMaxLines", |_, this, max_lines: i32| {
         if let Ok(mut s) = this.state.try_borrow_mut() {
             if let Some(frame) = s.widgets.get_mut(this.id) {
@@ -926,7 +915,6 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // GetMaxLines() - for FontString widgets
     methods.add_method("GetMaxLines", |_, this, ()| {
         if let Ok(s) = this.state.try_borrow() {
             if let Some(frame) = s.widgets.get(this.id) {
@@ -935,7 +923,29 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(0i32) // 0 means unlimited
     });
+}
 
+/// SetTextScale, GetTextScale.
+fn add_text_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetTextScale", |_, this, scale: f64| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.text_scale = scale;
+        }
+        Ok(())
+    });
+
+    methods.add_method("GetTextScale", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            return Ok(frame.text_scale);
+        }
+        Ok(1.0_f64)
+    });
+}
+
+/// SetIndentedWordWrap, SetSpacing, GetSpacing.
+fn add_spacing_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetIndentedWordWrap([textType,] indent) - for FontString or SimpleHTML widgets
     methods.add_method("SetIndentedWordWrap", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();

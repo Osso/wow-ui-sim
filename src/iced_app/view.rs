@@ -16,30 +16,27 @@ use super::styles::{event_button_style, input_style, palette, run_button_style};
 use super::Message;
 
 impl App {
-    pub fn view(&self) -> Element<'_, Message> {
-        // Title with FPS counter, frame time, canvas size, and mouse coords (raw canvas pixels)
+    /// Build the title bar with FPS counter, frame time, canvas size, and mouse coords.
+    fn build_title_bar(&self) -> Element<'_, Message> {
         let mouse_str = match self.mouse_position {
             Some(pos) => format!(" | mouse:({:.0},{:.0})", pos.x, pos.y),
             None => String::new(),
         };
-        // Show screen size (WoW logical coords = canvas size)
         let screen = self.screen_size.get();
         let screen_str = format!(" | screen:{}x{}", screen.width as i32, screen.height as i32);
         let title_text = format!(
             "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}{}]",
-            self.fps,
-            self.frame_time_display,
-            screen_str,
-            mouse_str
+            self.fps, self.frame_time_display, screen_str, mouse_str
         );
-        let title = text(title_text).size(20).color(palette::GOLD);
+        text(title_text).size(20).color(palette::GOLD).into()
+    }
 
-        // GPU shader rendering (textures + text via glyph atlas)
+    /// Build the canvas area with optional inspector panel overlay.
+    fn build_canvas_area(&self) -> Container<'_, Message> {
         let shader: Shader<Message, &App> = Shader::new(self)
             .width(Length::Fill)
             .height(Length::Fill);
 
-        // Stack shader, optionally add inspector panel
         let stacked: Element<'_, Message> = if self.inspector_visible {
             let inspector = self.build_inspector_panel();
             stack![shader, inspector].into()
@@ -47,7 +44,7 @@ impl App {
             shader.into()
         };
 
-        let render_container = container(stacked)
+        container(stacked)
             .width(Length::Fill)
             .height(Length::Fill)
             .style(|_| container::Style {
@@ -58,14 +55,12 @@ impl App {
                     radius: 4.0.into(),
                 },
                 ..Default::default()
-            });
+            })
+    }
 
-        // Frames sidebar with collapse toggle (floats over canvas)
-        let toggle_label = if self.frames_panel_collapsed {
-            ">> Frames"
-        } else {
-            "<< Frames"
-        };
+    /// Build the collapsible frames sidebar panel.
+    fn build_sidebar_panel(&self) -> Container<'_, Message> {
+        let toggle_label = if self.frames_panel_collapsed { ">> Frames" } else { "<< Frames" };
         let toggle_btn = button(text(toggle_label).size(12))
             .on_press(Message::ToggleFramesPanel)
             .padding([2, 6])
@@ -75,52 +70,29 @@ impl App {
                 ..Default::default()
             });
 
-        let sidebar_panel = if self.frames_panel_collapsed {
-            container(toggle_btn)
-                .padding(6)
-                .style(|_| container::Style {
-                    background: Some(iced::Background::Color(palette::BG_PANEL)),
-                    border: Border {
-                        color: palette::BORDER,
-                        width: 1.0,
-                        radius: 4.0.into(),
-                    },
-                    ..Default::default()
-                })
+        let panel_style = |_: &_| container::Style {
+            background: Some(iced::Background::Color(palette::BG_PANEL)),
+            border: Border { color: palette::BORDER, width: 1.0, radius: 4.0.into() },
+            ..Default::default()
+        };
+
+        if self.frames_panel_collapsed {
+            container(toggle_btn).padding(6).style(panel_style)
         } else {
             let frames_list = self.build_frames_sidebar();
             container(
-                column![
-                    toggle_btn,
-                    scrollable(frames_list)
-                        .width(Length::Fill)
-                        .height(600),
-                ]
-                .spacing(4),
+                column![toggle_btn, scrollable(frames_list).width(Length::Fill).height(600)]
+                    .spacing(4),
             )
             .width(240)
             .padding(6)
-            .style(|_| container::Style {
-                background: Some(iced::Background::Color(palette::BG_PANEL)),
-                border: Border {
-                    color: palette::BORDER,
-                    width: 1.0,
-                    radius: 4.0.into(),
-                },
-                ..Default::default()
-            })
-        };
+            .style(panel_style)
+        }
+    }
 
-        // Position sidebar at top-right corner
-        let sidebar_positioned = container(sidebar_panel)
-            .width(Length::Fill)
-            .align_x(iced::alignment::Horizontal::Right);
-
-        // Stack canvas with floating sidebar
-        let content_row = stack![render_container, sidebar_positioned];
-
-        // Event buttons
-        let event_buttons = row![
+    /// Build the event trigger buttons row.
+    fn build_event_buttons(&self) -> Element<'_, Message> {
+        row![
             button(text("ADDON_LOADED").size(12))
                 .on_press(Message::FireEvent("ADDON_LOADED".to_string()))
                 .style(event_button_style),
@@ -131,10 +103,13 @@ impl App {
                 .on_press(Message::FireEvent("PLAYER_ENTERING_WORLD".to_string()))
                 .style(event_button_style),
         ]
-        .spacing(6);
+        .spacing(6)
+        .into()
+    }
 
-        // Command input
-        let command_row = row![
+    /// Build the command input row.
+    fn build_command_row(&self) -> Element<'_, Message> {
+        row![
             text_input("/command", &self.command_input)
                 .on_input(Message::CommandInputChanged)
                 .on_submit(Message::ExecuteCommand)
@@ -144,9 +119,12 @@ impl App {
                 .on_press(Message::ExecuteCommand)
                 .style(run_button_style),
         ]
-        .spacing(6);
+        .spacing(6)
+        .into()
+    }
 
-        // Console output
+    /// Build the console output area showing recent log messages.
+    fn build_console(&self) -> Container<'_, Message> {
         let console_text: String = self
             .log_messages
             .iter()
@@ -157,12 +135,9 @@ impl App {
             .collect::<Vec<_>>()
             .join("\n");
 
-        let console = container(
+        container(
             scrollable(
-                text(console_text)
-                    .size(12)
-                    .color(palette::CONSOLE_TEXT)
-                    .font(Font::MONOSPACE),
+                text(console_text).size(12).color(palette::CONSOLE_TEXT).font(Font::MONOSPACE),
             )
             .width(Length::Fill)
             .height(Length::Fill),
@@ -172,18 +147,30 @@ impl App {
         .padding(6)
         .style(|_| container::Style {
             background: Some(iced::Background::Color(palette::BG_INPUT)),
-            border: Border {
-                color: palette::BORDER,
-                width: 1.0,
-                radius: 4.0.into(),
-            },
+            border: Border { color: palette::BORDER, width: 1.0, radius: 4.0.into() },
             ..Default::default()
-        });
+        })
+    }
 
-        // Main layout
-        let main_column = column![title, content_row, event_buttons, command_row, console,]
-            .spacing(5)
-            .padding(7);
+    pub fn view(&self) -> Element<'_, Message> {
+        let title = self.build_title_bar();
+        let render_container = self.build_canvas_area();
+
+        // Position sidebar at top-right corner, stack over canvas
+        let sidebar_positioned = container(self.build_sidebar_panel())
+            .width(Length::Fill)
+            .align_x(iced::alignment::Horizontal::Right);
+        let content_row = stack![render_container, sidebar_positioned];
+
+        let main_column = column![
+            title,
+            content_row,
+            self.build_event_buttons(),
+            self.build_command_row(),
+            self.build_console(),
+        ]
+        .spacing(5)
+        .padding(7);
 
         container(main_column)
             .width(Length::Fill)
