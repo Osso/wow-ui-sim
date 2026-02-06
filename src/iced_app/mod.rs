@@ -22,6 +22,7 @@ use std::path::PathBuf;
 use iced::window::screenshot::Screenshot;
 
 use crate::lua_api::WowLuaEnv;
+use crate::saved_variables::SavedVariablesManager;
 
 // Re-export public types
 pub use app::App;
@@ -31,7 +32,10 @@ pub use state::{CanvasMessage, InspectorState};
 pub use styles::palette;
 
 pub use app::DebugOptions;
-use app::{FALLBACK_TEXTURES_PATH, INIT_DEBUG, INIT_ENV, INIT_TEXTURES, LOCAL_TEXTURES_PATH};
+use app::{
+    FALLBACK_TEXTURES_PATH, INIT_DEBUG, INIT_ENV, INIT_SAVED_VARS, INIT_TEXTURES,
+    LOCAL_TEXTURES_PATH,
+};
 
 /// Application messages.
 #[derive(Debug, Clone)]
@@ -67,14 +71,18 @@ pub enum Message {
 }
 
 /// Run the iced UI with the given Lua environment.
-pub fn run_iced_ui(env: WowLuaEnv, debug: DebugOptions) -> Result<(), Box<dyn std::error::Error>> {
+pub fn run_iced_ui(
+    env: WowLuaEnv,
+    debug: DebugOptions,
+    saved_vars: Option<SavedVariablesManager>,
+) -> Result<(), Box<dyn std::error::Error>> {
     // Prefer local WebP textures, fall back to full repo
     let textures_path = if PathBuf::from(LOCAL_TEXTURES_PATH).exists() {
         PathBuf::from(LOCAL_TEXTURES_PATH)
     } else {
         PathBuf::from(FALLBACK_TEXTURES_PATH)
     };
-    run_iced_ui_with_textures(env, textures_path, debug)
+    run_iced_ui_with_textures(env, textures_path, debug, saved_vars)
 }
 
 /// Run the iced UI with the given Lua environment and textures path.
@@ -82,11 +90,15 @@ pub fn run_iced_ui_with_textures(
     env: WowLuaEnv,
     textures_path: PathBuf,
     debug: DebugOptions,
+    saved_vars: Option<SavedVariablesManager>,
 ) -> Result<(), Box<dyn std::error::Error>> {
     // Store in thread-local for the boot function
     INIT_ENV.with(|cell| *cell.borrow_mut() = Some(env));
     INIT_TEXTURES.with(|cell| *cell.borrow_mut() = Some(textures_path));
     INIT_DEBUG.with(|cell| *cell.borrow_mut() = Some(debug));
+    if let Some(sv) = saved_vars {
+        INIT_SAVED_VARS.with(|cell| *cell.borrow_mut() = Some(sv));
+    }
 
     iced::application(App::boot, App::update, App::view)
         .title(App::title)

@@ -12,6 +12,7 @@ use tokio::sync::oneshot;
 use crate::lua_api::WowLuaEnv;
 use crate::lua_server;
 use crate::render::{GlyphAtlas, WowFontSystem};
+use crate::saved_variables::SavedVariablesManager;
 use crate::texture::TextureManager;
 use iced_layout_inspector::server::{self as debug_server, ScreenshotData};
 
@@ -45,6 +46,7 @@ thread_local! {
     pub static INIT_ENV: RefCell<Option<WowLuaEnv>> = const { RefCell::new(None) };
     pub static INIT_TEXTURES: RefCell<Option<PathBuf>> = const { RefCell::new(None) };
     pub static INIT_DEBUG: RefCell<Option<DebugOptions>> = const { RefCell::new(None) };
+    pub static INIT_SAVED_VARS: RefCell<Option<SavedVariablesManager>> = const { RefCell::new(None) };
 }
 
 /// Fire the standard WoW startup events.
@@ -134,6 +136,8 @@ pub struct App {
     pub(crate) frames_panel_collapsed: bool,
     /// Last time OnUpdate handlers were fired (for elapsed calculation).
     pub(crate) last_on_update_time: std::time::Instant,
+    /// SavedVariables manager for persisting addon data on exit.
+    pub(crate) saved_vars: Option<SavedVariablesManager>,
 }
 
 impl App {
@@ -155,6 +159,7 @@ impl App {
             }
         });
 
+        let saved_vars = INIT_SAVED_VARS.with(|cell| cell.borrow_mut().take());
         let env_rc = Rc::new(RefCell::new(env));
 
         // Fire startup events
@@ -244,8 +249,21 @@ impl App {
             inspector_state: InspectorState::default(),
             frames_panel_collapsed: true,
             last_on_update_time: std::time::Instant::now(),
+            saved_vars,
         };
 
         (app, Task::none())
+    }
+}
+
+impl Drop for App {
+    fn drop(&mut self) {
+        if let Some(ref saved_vars) = self.saved_vars {
+            let env = self.env.borrow();
+            match saved_vars.save_all(env.lua()) {
+                Ok(()) => eprintln!("[wow-ui-sim] SavedVariables saved"),
+                Err(e) => eprintln!("[wow-ui-sim] SavedVariables save error: {}", e),
+            }
+        }
     }
 }

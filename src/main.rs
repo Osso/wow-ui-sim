@@ -363,7 +363,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         borders: args.debug_borders || args.debug_elements,
         anchors: args.debug_anchors || args.debug_elements,
     };
-    wow_ui_sim::run_iced_ui(env, debug)?;
+    wow_ui_sim::run_iced_ui(env, debug, Some(saved_vars))?;
 
     Ok(())
 }
