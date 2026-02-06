@@ -318,10 +318,88 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
     });
 
-    // SetFontObject(fontObject) - for FontString widgets
-    methods.add_method("SetFontObject", |_, _this, _font_object: Value| {
-        // Would copy font settings from another FontString
+    // SetFontObject(fontObject or fontName) - copy font properties from a font object
+    methods.add_method("SetFontObject", |lua, this, font_object: Value| {
+        // Resolve font object: can be a table directly or a string name
+        let font_table: Option<mlua::Table> = match &font_object {
+            Value::Table(t) => Some(t.clone()),
+            Value::String(name) => {
+                let name_str = name.to_string_lossy().to_string();
+                lua.globals()
+                    .get::<Option<mlua::Table>>(name_str)
+                    .ok()
+                    .flatten()
+            }
+            _ => None,
+        };
+
+        if let Some(ref src) = font_table {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                // Copy font path, size, flags
+                if let Ok(path) = src.get::<String>("__fontPath") {
+                    frame.font = Some(path);
+                }
+                if let Ok(height) = src.get::<f64>("__fontHeight") {
+                    frame.font_size = height as f32;
+                }
+                if let Ok(flags) = src.get::<String>("__fontFlags") {
+                    frame.font_outline = crate::widget::TextOutline::from_wow_str(&flags);
+                }
+                // Copy text color
+                if let (Ok(r), Ok(g), Ok(b), Ok(a)) = (
+                    src.get::<f64>("__textColorR"),
+                    src.get::<f64>("__textColorG"),
+                    src.get::<f64>("__textColorB"),
+                    src.get::<f64>("__textColorA"),
+                ) {
+                    frame.text_color =
+                        crate::widget::Color::new(r as f32, g as f32, b as f32, a as f32);
+                }
+                // Copy shadow color
+                if let (Ok(r), Ok(g), Ok(b), Ok(a)) = (
+                    src.get::<f64>("__shadowColorR"),
+                    src.get::<f64>("__shadowColorG"),
+                    src.get::<f64>("__shadowColorB"),
+                    src.get::<f64>("__shadowColorA"),
+                ) {
+                    frame.shadow_color =
+                        crate::widget::Color::new(r as f32, g as f32, b as f32, a as f32);
+                }
+                // Copy shadow offset
+                if let (Ok(x), Ok(y)) = (
+                    src.get::<f64>("__shadowOffsetX"),
+                    src.get::<f64>("__shadowOffsetY"),
+                ) {
+                    frame.shadow_offset = (x as f32, y as f32);
+                }
+                // Copy justification
+                if let Ok(h) = src.get::<String>("__justifyH") {
+                    frame.justify_h = crate::widget::TextJustify::from_wow_str(&h);
+                }
+                if let Ok(v) = src.get::<String>("__justifyV") {
+                    frame.justify_v = crate::widget::TextJustify::from_wow_str(&v);
+                }
+            }
+        }
+
+        // Store the font object reference in a global table keyed by frame ID
+        let store: mlua::Table = lua
+            .load(
+                "_G.__fontstring_font_objects = _G.__fontstring_font_objects or {}; return _G.__fontstring_font_objects",
+            )
+            .eval()?;
+        store.set(this.id, font_object)?;
+
         Ok(())
+    });
+
+    // GetFontObject() - return the font object set via SetFontObject
+    methods.add_method("GetFontObject", |lua, this, ()| {
+        let store: mlua::Table =
+            lua.load("return _G.__fontstring_font_objects or {}").eval()?;
+        let font: Value = store.get(this.id)?;
+        Ok(font)
     });
 
     // GetFont() - for FontString widgets, returns fontFile, fontHeight, fontFlags

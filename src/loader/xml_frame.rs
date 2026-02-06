@@ -310,8 +310,24 @@ pub fn create_frame_from_xml(
                 crate::xml::FrameElement::DropdownButton(f) | crate::xml::FrameElement::DropDownToggleButton(f) => (f, "Button"), // Dropdown buttons
                 crate::xml::FrameElement::Cooldown(f) => (f, "Cooldown"),
                 crate::xml::FrameElement::GameTooltip(f) => (f, "GameTooltip"),
-                crate::xml::FrameElement::Model(f) | crate::xml::FrameElement::ModelScene(f) => (f, "Frame"), // Model frames
-                _ => continue, // Skip unsupported types for now
+                crate::xml::FrameElement::Model(f) | crate::xml::FrameElement::ModelScene(f) => (f, "Frame"),
+                crate::xml::FrameElement::TaxiRouteFrame(f)
+                | crate::xml::FrameElement::ModelFFX(f)
+                | crate::xml::FrameElement::TabardModel(f)
+                | crate::xml::FrameElement::UiCamera(f)
+                | crate::xml::FrameElement::UnitPositionFrame(f)
+                | crate::xml::FrameElement::OffScreenFrame(f)
+                | crate::xml::FrameElement::Checkout(f)
+                | crate::xml::FrameElement::FogOfWarFrame(f)
+                | crate::xml::FrameElement::QuestPOIFrame(f)
+                | crate::xml::FrameElement::ArchaeologyDigSiteFrame(f)
+                | crate::xml::FrameElement::ScenarioPOIFrame(f)
+                | crate::xml::FrameElement::UIThemeContainerFrame(f)
+                | crate::xml::FrameElement::ContainedAlertFrame(f)
+                | crate::xml::FrameElement::MapScene(f)
+                | crate::xml::FrameElement::ScopedModifier(f) => (f, "Frame"),
+                crate::xml::FrameElement::EventScrollFrame(f) => (f, "ScrollFrame"),
+                _ => continue,
             };
             let child_name = create_frame_from_xml(env, child_frame, child_type, Some(&name))?;
 

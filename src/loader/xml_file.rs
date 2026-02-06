@@ -76,8 +76,26 @@ pub fn load_xml_file(
             XmlElement::StatusBar(f) => {
                 create_frame_from_xml(env, f, "StatusBar", None)?;
             }
-            XmlElement::EventFrame(f) => {
+            XmlElement::EventFrame(f)
+            | XmlElement::TaxiRouteFrame(f)
+            | XmlElement::ModelFFX(f)
+            | XmlElement::TabardModel(f)
+            | XmlElement::UiCamera(f)
+            | XmlElement::UnitPositionFrame(f)
+            | XmlElement::OffScreenFrame(f)
+            | XmlElement::Checkout(f)
+            | XmlElement::FogOfWarFrame(f)
+            | XmlElement::QuestPOIFrame(f)
+            | XmlElement::ArchaeologyDigSiteFrame(f)
+            | XmlElement::ScenarioPOIFrame(f)
+            | XmlElement::UIThemeContainerFrame(f)
+            | XmlElement::ContainedAlertFrame(f)
+            | XmlElement::MapScene(f)
+            | XmlElement::ScopedModifier(f) => {
                 create_frame_from_xml(env, f, "Frame", None)?;
+            }
+            XmlElement::EventScrollFrame(f) => {
+                create_frame_from_xml(env, f, "ScrollFrame", None)?;
             }
             XmlElement::Texture(_) | XmlElement::FontString(_) => {
                 // Top-level textures/fontstrings are templates

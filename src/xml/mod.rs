@@ -11,11 +11,12 @@ pub use template::{
     TemplateEntry, TemplateInfo,
 };
 pub use types::{
-    AbsDimensionXml, ActorXml, AnchorXml, AnchorsXml, AnimationGroupXml, AnimationsXml,
-    BackdropXml, ColorXml, FontFamilyXml, FontRefXml, FontStringXml, FontXml, FrameChildElement,
-    FrameElement, FrameXml, FramesXml, IncludeXml, InsetsXml, KeyValueXml, KeyValuesXml,
-    LayerElement, LayerXml, LayersXml, OffsetXml, ResizeBoundsXml, ScriptBodyXml, ScriptXml,
-    ScriptsXml, ScrollChildXml, SizeXml, TextureXml, UiXml, XmlElement,
+    AbsDimensionXml, ActorXml, ActorsXml, AnchorXml, AnchorsXml, AnimationElement,
+    AnimationGroupXml, AnimationXml, AnimationsXml, BackdropXml, ColorXml, FontFamilyXml,
+    FontRefXml, FontStringXml, FontXml, FrameChildElement, FrameElement, FrameXml, FramesXml,
+    IncludeXml, InsetsXml, KeyValueXml, KeyValuesXml, LayerElement, LayerXml, LayersXml, OffsetXml,
+    ResizeBoundsXml, ScriptBodyXml, ScriptXml, ScriptsXml, ScrollChildXml, SizeXml, TextureXml,
+    UiXml, XmlElement,
 };
 
 #[cfg(test)]
