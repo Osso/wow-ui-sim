@@ -2,7 +2,9 @@
 
 use super::FrameHandle;
 use super::methods_helpers::{calculate_frame_height, calculate_frame_width};
-use mlua::{UserDataMethods, Value};
+use crate::lua_api::SimState;
+use mlua::{Lua, UserDataMethods, Value};
+use std::cell::RefCell;
 use std::rc::Rc;
 
 /// Add core frame methods to FrameHandle UserData.
@@ -92,6 +94,47 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 }
 
+/// Fire OnShow on a frame and recursively on its visible children.
+fn fire_on_show_recursive(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    id: u64,
+) -> mlua::Result<()> {
+    // Fire OnShow on this frame
+    if let Ok(Some(scripts_table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
+        let frame_key = format!("{}_OnShow", id);
+        if let Ok(Some(handler)) =
+            scripts_table.get::<Option<mlua::Function>>(frame_key.as_str())
+        {
+            let frame_ref_key = format!("__frame_{}", id);
+            if let Ok(frame_ud) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
+                let _ = handler.call::<()>(frame_ud);
+            }
+        }
+    }
+
+    // Collect visible children (borrow scoped)
+    let children: Vec<u64> = {
+        let st = state.borrow();
+        st.widgets
+            .get(id)
+            .map(|f| {
+                f.children
+                    .iter()
+                    .filter(|&&cid| st.widgets.get(cid).map(|c| c.visible).unwrap_or(false))
+                    .copied()
+                    .collect()
+            })
+            .unwrap_or_default()
+    };
+
+    for child_id in children {
+        fire_on_show_recursive(lua, state, child_id)?;
+    }
+
+    Ok(())
+}
+
 /// Visibility methods: Show, Hide, IsVisible, IsShown, SetShown
 fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // Show()
@@ -114,18 +157,7 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
         // Fire OnShow if transitioning from hidden to visible
         if was_hidden {
-            if let Ok(Some(scripts_table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
-                let frame_key = format!("{}_OnShow", this.id);
-                if let Ok(Some(handler)) =
-                    scripts_table.get::<Option<mlua::Function>>(frame_key.as_str())
-                {
-                    // Get frame userdata reference
-                    let frame_ref_key = format!("__frame_{}", this.id);
-                    if let Ok(frame_ud) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
-                        let _ = handler.call::<()>(frame_ud);
-                    }
-                }
-            }
+            fire_on_show_recursive(lua, &this.state, this.id)?;
         }
         Ok(())
     });
