@@ -2,6 +2,7 @@
 
 use crate::cvars::CVarStorage;
 use crate::event::{EventQueue, ScriptRegistry};
+use crate::lua_api::message_frame::MessageFrameData;
 use crate::lua_api::simple_html::SimpleHtmlData;
 use crate::lua_api::tooltip::TooltipData;
 use crate::widget::WidgetRegistry;
@@ -63,6 +64,8 @@ pub struct SimState {
     pub tooltips: HashMap<u64, TooltipData>,
     /// SimpleHTML state (keyed by frame ID).
     pub simple_htmls: HashMap<u64, SimpleHtmlData>,
+    /// MessageFrame state (keyed by frame ID).
+    pub message_frames: HashMap<u64, MessageFrameData>,
     /// Frame IDs with active OnUpdate script handlers.
     pub on_update_frames: HashSet<u64>,
 }
@@ -80,6 +83,7 @@ impl Default for SimState {
             cvars: CVarStorage::new(),
             tooltips: HashMap::new(),
             simple_htmls: HashMap::new(),
+            message_frames: HashMap::new(),
             on_update_frames: HashSet::new(),
         }
     }

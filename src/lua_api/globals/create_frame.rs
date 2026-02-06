@@ -195,6 +195,11 @@ fn create_widget_type_defaults(state: &mut SimState, frame_id: u64, widget_type:
             state.simple_htmls.insert(frame_id, crate::lua_api::simple_html::SimpleHtmlData::default());
         }
 
+        WidgetType::MessageFrame => {
+            // Initialize MessageFrame state
+            state.message_frames.insert(frame_id, crate::lua_api::message_frame::MessageFrameData::default());
+        }
+
         WidgetType::Slider => {
             // Sliders have Low/High/Text fontstrings and ThumbTexture
             let low_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
