@@ -451,6 +451,24 @@ pub fn build_quad_batch_for_registry(
     }
     let filter_to_subtree = root_name.is_some();
 
+    // Build set of frames with hidden ancestors (for parent-chain visibility check).
+    // In WoW, children of hidden frames are not rendered even if their own visible flag is true.
+    let mut hidden_ancestors = std::collections::HashSet::new();
+    for &id in &registry.all_ids() {
+        let mut current = registry.get(id).and_then(|f| f.parent_id);
+        while let Some(pid) = current {
+            if let Some(parent) = registry.get(pid) {
+                if !parent.visible {
+                    hidden_ancestors.insert(id);
+                    break;
+                }
+                current = parent.parent_id;
+            } else {
+                break;
+            }
+        }
+    }
+
     // Collect and sort frames
     let mut frames: Vec<_> = registry
         .all_ids()
@@ -485,7 +503,7 @@ pub fn build_quad_batch_for_registry(
         if filter_to_subtree && !visible_ids.contains(&id) {
             continue;
         }
-        if !f.visible {
+        if !f.visible || hidden_ancestors.contains(&id) {
             continue;
         }
         // Skip frames with no dimensions, but allow FontStrings with width=0

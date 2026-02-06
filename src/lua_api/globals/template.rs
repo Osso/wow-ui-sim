@@ -406,6 +406,18 @@ fn create_fontstring_from_template(
         code.push_str(&format!("            fs:SetJustifyV(\"{}\")\n", justify_v));
     }
 
+    // Apply text color
+    if let Some(color) = &fontstring.color {
+        let r = color.r.unwrap_or(1.0);
+        let g = color.g.unwrap_or(1.0);
+        let b = color.b.unwrap_or(1.0);
+        let a = color.a.unwrap_or(1.0);
+        code.push_str(&format!(
+            "            fs:SetTextColor({}, {}, {}, {})\n",
+            r, g, b, a
+        ));
+    }
+
     // Apply shadow
     if let Some(shadow) = &fontstring.shadow {
         if let Some(offset) = &shadow.offset {
@@ -428,6 +440,11 @@ fn create_fontstring_from_template(
     // Apply anchors
     if let Some(anchors) = &fontstring.anchors {
         code.push_str(&generate_anchors_code_for_child(anchors, parent_name, "fs"));
+    }
+
+    // Apply setAllPoints
+    if fontstring.set_all_points == Some(true) {
+        code.push_str("            fs:SetAllPoints(true)\n");
     }
 
     // Apply parentKey

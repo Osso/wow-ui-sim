@@ -88,6 +88,8 @@ pub struct FrameXml {
     pub propagate_mouse_input: Option<String>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
+    #[serde(rename = "@enableMouse")]
+    pub enable_mouse: Option<bool>,
     /// Button text attribute (localization key or literal text).
     #[serde(rename = "@text")]
     pub text: Option<String>,
@@ -508,10 +510,14 @@ pub struct FontStringXml {
     pub size: Option<SizeXml>,
     #[serde(rename = "Anchors")]
     pub anchors: Option<AnchorsXml>,
+    #[serde(rename = "Color")]
+    pub color: Option<ColorXml>,
     #[serde(rename = "Shadow")]
     pub shadow: Option<ShadowXml>,
     #[serde(rename = "Scripts")]
     pub scripts: Option<ScriptsXml>,
+    #[serde(rename = "@setAllPoints")]
+    pub set_all_points: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Clone)]

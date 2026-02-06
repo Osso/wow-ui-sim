@@ -74,6 +74,20 @@ pub fn create_fontstring_from_xml(
         ));
     }
 
+    // Set text color
+    if let Some(color) = &fontstring.color {
+        let r = color.r.unwrap_or(1.0);
+        let g = color.g.unwrap_or(1.0);
+        let b = color.b.unwrap_or(1.0);
+        let a = color.a.unwrap_or(1.0);
+        lua_code.push_str(&format!(
+            r#"
+        fs:SetTextColor({}, {}, {}, {})
+        "#,
+            r, g, b, a
+        ));
+    }
+
     // Set size
     if let Some(size) = &fontstring.size {
         let (x, y) = get_size_values(size);
@@ -142,6 +156,15 @@ pub fn create_fontstring_from_xml(
                 point, rel, relative_point, x, y
             ));
         }
+    }
+
+    // Set setAllPoints
+    if fontstring.set_all_points == Some(true) {
+        lua_code.push_str(
+            r#"
+        fs:SetAllPoints(true)
+        "#,
+        );
     }
 
     // Set parentKey if specified

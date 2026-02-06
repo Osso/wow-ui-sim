@@ -307,6 +307,20 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
     let nop = lua.create_function(|_, _: mlua::MultiValue| Ok(()))?;
     globals.set("nop", nop)?;
 
+    // Sound functions (no-ops in simulation)
+    globals.set(
+        "PlaySound",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
+    globals.set(
+        "StopSound",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
+    globals.set(
+        "PlaySoundFile",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
+
     // securecallfunction(func, ...) - calls a function in protected mode
     let securecallfunction =
         lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {

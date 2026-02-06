@@ -30,14 +30,25 @@ impl App {
                     self.mouse_position = Some(pos);
                     let new_hovered = self.hit_test(pos);
                     if new_hovered != self.hovered_frame {
-                        let env = self.env.borrow();
-                        if let Some(old_id) = self.hovered_frame {
-                            let _ = env.fire_script_handler(old_id, "OnLeave", vec![]);
+                        let errors = {
+                            let env = self.env.borrow();
+                            let mut errs = Vec::new();
+                            if let Some(old_id) = self.hovered_frame {
+                                if let Err(e) = env.fire_script_handler(old_id, "OnLeave", vec![]) {
+                                    errs.push(format_script_error(&env, old_id, "OnLeave", &e));
+                                }
+                            }
+                            if let Some(new_id) = new_hovered {
+                                if let Err(e) = env.fire_script_handler(new_id, "OnEnter", vec![]) {
+                                    errs.push(format_script_error(&env, new_id, "OnEnter", &e));
+                                }
+                            }
+                            errs
+                        };
+                        for msg in errors {
+                            eprintln!("{}", msg);
+                            self.log_messages.push(msg);
                         }
-                        if let Some(new_id) = new_hovered {
-                            let _ = env.fire_script_handler(new_id, "OnEnter", vec![]);
-                        }
-                        drop(env);
                         self.hovered_frame = new_hovered;
                         self.drain_console();
                         self.frame_cache.clear();
@@ -48,11 +59,19 @@ impl App {
                     if let Some(frame_id) = self.hit_test(pos) {
                         self.mouse_down_frame = Some(frame_id);
                         self.pressed_frame = Some(frame_id);
-                        let env = self.env.borrow();
-                        let button_val =
-                            mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
-                        let _ = env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val]);
-                        drop(env);
+                        let error = {
+                            let env = self.env.borrow();
+                            let button_val =
+                                mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
+                            match env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val]) {
+                                Err(e) => Some(format_script_error(&env, frame_id, "OnMouseDown", &e)),
+                                Ok(_) => None,
+                            }
+                        };
+                        if let Some(msg) = error {
+                            eprintln!("{}", msg);
+                            self.log_messages.push(msg);
+                        }
                         self.drain_console();
                         self.frame_cache.clear();
                         self.quads_dirty.set(true);
@@ -61,46 +80,57 @@ impl App {
                 CanvasMessage::MouseUp(pos) => {
                     let released_on = self.hit_test(pos);
                     if let Some(frame_id) = released_on {
-                        let env = self.env.borrow();
-                        let button_val =
-                            mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
+                        let errors = {
+                            let env = self.env.borrow();
+                            let mut errs = Vec::new();
+                            let button_val =
+                                mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
 
-                        if self.mouse_down_frame == Some(frame_id) {
-                            // CheckButton auto-toggles checked state before OnClick
-                            {
-                                let mut state = env.state().borrow_mut();
-                                let is_checkbutton = state.widgets.get(frame_id)
-                                    .map(|f| f.widget_type == crate::widget::WidgetType::CheckButton)
-                                    .unwrap_or(false);
-                                if is_checkbutton {
-                                    let old_checked = state.widgets.get(frame_id)
-                                        .and_then(|f| f.attributes.get("__checked"))
-                                        .and_then(|v| if let crate::widget::AttributeValue::Boolean(b) = v { Some(*b) } else { None })
+                            if self.mouse_down_frame == Some(frame_id) {
+                                // CheckButton auto-toggles checked state before OnClick
+                                {
+                                    let mut state = env.state().borrow_mut();
+                                    let is_checkbutton = state.widgets.get(frame_id)
+                                        .map(|f| f.widget_type == crate::widget::WidgetType::CheckButton)
                                         .unwrap_or(false);
-                                    let new_checked = !old_checked;
-                                    if let Some(frame) = state.widgets.get_mut(frame_id) {
-                                        frame.attributes.insert("__checked".to_string(), crate::widget::AttributeValue::Boolean(new_checked));
-                                    }
-                                    if let Some(frame) = state.widgets.get(frame_id) {
-                                        if let Some(&tex_id) = frame.children_keys.get("CheckedTexture") {
-                                            if let Some(tex) = state.widgets.get_mut(tex_id) {
-                                                tex.visible = new_checked;
+                                    if is_checkbutton {
+                                        let old_checked = state.widgets.get(frame_id)
+                                            .and_then(|f| f.attributes.get("__checked"))
+                                            .and_then(|v| if let crate::widget::AttributeValue::Boolean(b) = v { Some(*b) } else { None })
+                                            .unwrap_or(false);
+                                        let new_checked = !old_checked;
+                                        if let Some(frame) = state.widgets.get_mut(frame_id) {
+                                            frame.attributes.insert("__checked".to_string(), crate::widget::AttributeValue::Boolean(new_checked));
+                                        }
+                                        if let Some(frame) = state.widgets.get(frame_id) {
+                                            if let Some(&tex_id) = frame.children_keys.get("CheckedTexture") {
+                                                if let Some(tex) = state.widgets.get_mut(tex_id) {
+                                                    tex.visible = new_checked;
+                                                }
                                             }
                                         }
                                     }
                                 }
+
+                                let down_val = mlua::Value::Boolean(false);
+                                if let Err(e) = env.fire_script_handler(
+                                    frame_id,
+                                    "OnClick",
+                                    vec![button_val.clone(), down_val],
+                                ) {
+                                    errs.push(format_script_error(&env, frame_id, "OnClick", &e));
+                                }
                             }
 
-                            let down_val = mlua::Value::Boolean(false);
-                            let _ = env.fire_script_handler(
-                                frame_id,
-                                "OnClick",
-                                vec![button_val.clone(), down_val],
-                            );
+                            if let Err(e) = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val]) {
+                                errs.push(format_script_error(&env, frame_id, "OnMouseUp", &e));
+                            }
+                            errs
+                        };
+                        for msg in errors {
+                            eprintln!("{}", msg);
+                            self.log_messages.push(msg);
                         }
-
-                        let _ = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val]);
-                        drop(env);
                         self.drain_console();
                         self.frame_cache.clear();
                         self.quads_dirty.set(true);
@@ -424,5 +454,20 @@ impl App {
             frame.mouse_enabled = self.inspector_state.mouse_enabled;
         }
     }
+}
 
+/// Format a script handler error with frame context.
+fn format_script_error(
+    env: &crate::lua_api::WowLuaEnv,
+    frame_id: u64,
+    handler: &str,
+    error: &crate::Error,
+) -> String {
+    let state = env.state().borrow();
+    let name = state
+        .widgets
+        .get(frame_id)
+        .and_then(|f| f.name.as_deref())
+        .unwrap_or("(anon)");
+    format!("[{}] {} error: {}", name, handler, error)
 }

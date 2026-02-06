@@ -178,6 +178,25 @@ pub fn create_frame_from_xml(
         );
     }
 
+    // Set enableMouse (also check inherited templates)
+    let mut enable_mouse = frame.enable_mouse;
+    if enable_mouse.is_none() && !inherits.is_empty() {
+        let template_chain = crate::xml::get_template_chain(inherits);
+        for template_entry in &template_chain {
+            if let Some(em) = template_entry.frame.enable_mouse {
+                enable_mouse = Some(em);
+            }
+        }
+    }
+    if let Some(enabled) = enable_mouse {
+        lua_code.push_str(&format!(
+            r#"
+        frame:EnableMouse({})
+        "#,
+            if enabled { "true" } else { "false" }
+        ));
+    }
+
     // Handle setAllPoints from inherited templates first
     let mut has_set_all_points = false;
     if !inherits.is_empty() {
