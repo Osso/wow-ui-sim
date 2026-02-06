@@ -256,6 +256,76 @@ fn create_animation_group(lua: &mlua::Lua) -> mlua::Result<mlua::Table> {
         "GetScript",
         lua.create_function(|_, (_self, _event): (Value, String)| Ok(Value::Nil))?,
     )?;
+    anim_group.set(
+        "HasScript",
+        lua.create_function(|_, (_self, _event): (Value, String)| Ok(false))?,
+    )?;
+    anim_group.set(
+        "HookScript",
+        lua.create_function(
+            |_, (_self, _event, _handler): (Value, String, Option<mlua::Function>)| Ok(()),
+        )?,
+    )?;
+    anim_group.set(
+        "Restart",
+        lua.create_function(|_, (_self, _reverse): (Value, Option<bool>)| Ok(()))?,
+    )?;
+    anim_group.set(
+        "PlaySynced",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
+    anim_group.set(
+        "GetAnimationSpeedMultiplier",
+        lua.create_function(|_, _self: Value| Ok(1.0_f64))?,
+    )?;
+    anim_group.set(
+        "SetAnimationSpeedMultiplier",
+        lua.create_function(|_, (_self, _mult): (Value, f64)| Ok(()))?,
+    )?;
+    anim_group.set(
+        "IsSetToFinalAlpha",
+        lua.create_function(|_, _self: Value| Ok(false))?,
+    )?;
+    anim_group.set(
+        "IsPendingFinish",
+        lua.create_function(|_, _self: Value| Ok(false))?,
+    )?;
+    anim_group.set(
+        "IsReverse",
+        lua.create_function(|_, _self: Value| Ok(false))?,
+    )?;
+    anim_group.set(
+        "GetDuration",
+        lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim_group.set(
+        "GetElapsed",
+        lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim_group.set(
+        "GetProgress",
+        lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim_group.set(
+        "GetLoopState",
+        lua.create_function(|lua, _self: Value| Ok(Value::String(lua.create_string("NONE")?)))?,
+    )?;
+    anim_group.set(
+        "RemoveAnimations",
+        lua.create_function(|_, _self: Value| Ok(()))?,
+    )?;
+    anim_group.set(
+        "GetName",
+        lua.create_function(|_, _self: Value| Ok(Value::Nil))?,
+    )?;
+    anim_group.set(
+        "SetAlpha",
+        lua.create_function(|_, (_self, _alpha): (Value, f64)| Ok(()))?,
+    )?;
+    anim_group.set(
+        "GetAlpha",
+        lua.create_function(|_, _self: Value| Ok(1.0_f64))?,
+    )?;
     Ok(anim_group)
 }
 
@@ -335,6 +405,11 @@ fn create_animation(
     anim.set("Stop", lua.create_function(|_, _self: Value| Ok(()))?)?;
     anim.set("Pause", lua.create_function(|_, _self: Value| Ok(()))?)?;
     anim.set(
+        "Restart",
+        lua.create_function(|_, _self: Value| Ok(()))?,
+    )?;
+    anim.set("Finish", lua.create_function(|_, _self: Value| Ok(()))?)?;
+    anim.set(
         "IsPlaying",
         lua.create_function(|_, _self: Value| Ok(false))?,
     )?;
@@ -343,6 +418,14 @@ fn create_animation(
         lua.create_function(|_, _self: Value| Ok(false))?,
     )?;
     anim.set("IsDone", lua.create_function(|_, _self: Value| Ok(true))?)?;
+    anim.set(
+        "IsStopped",
+        lua.create_function(|_, _self: Value| Ok(true))?,
+    )?;
+    anim.set(
+        "IsDelaying",
+        lua.create_function(|_, _self: Value| Ok(false))?,
+    )?;
     // Parent accessors
     anim.set(
         "GetParent",
@@ -352,7 +435,7 @@ fn create_animation(
         "GetRegionParent",
         lua.create_function(|_, _self: Value| Ok(Value::Nil))?,
     )?;
-    // Progress
+    // Progress and timing
     anim.set(
         "GetProgress",
         lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
@@ -360,6 +443,65 @@ fn create_animation(
     anim.set(
         "GetSmoothProgress",
         lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim.set(
+        "GetElapsed",
+        lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim.set(
+        "GetStartDelay",
+        lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim.set(
+        "GetEndDelay",
+        lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim.set(
+        "GetOrder",
+        lua.create_function(|_, _self: Value| Ok(0_i32))?,
+    )?;
+    anim.set(
+        "GetSmoothing",
+        lua.create_function(|lua, _self: Value| Ok(Value::String(lua.create_string("NONE")?)))?,
+    )?;
+    // Target methods
+    anim.set(
+        "GetTarget",
+        lua.create_function(|_, _self: Value| Ok(Value::Nil))?,
+    )?;
+    anim.set(
+        "SetTarget",
+        lua.create_function(|_, (_self, _target): (Value, Value)| Ok(()))?,
+    )?;
+    anim.set(
+        "SetChildKey",
+        lua.create_function(|_, (_self, _key): (Value, String)| Ok(()))?,
+    )?;
+    anim.set(
+        "SetTargetKey",
+        lua.create_function(|_, (_self, _key): (Value, String)| Ok(()))?,
+    )?;
+    anim.set(
+        "SetTargetName",
+        lua.create_function(|_, (_self, _name): (Value, String)| Ok(()))?,
+    )?;
+    anim.set(
+        "SetTargetParent",
+        lua.create_function(|_, _self: Value| Ok(()))?,
+    )?;
+    // Alpha getters
+    anim.set(
+        "GetFromAlpha",
+        lua.create_function(|_, _self: Value| Ok(0.0_f64))?,
+    )?;
+    anim.set(
+        "GetToAlpha",
+        lua.create_function(|_, _self: Value| Ok(1.0_f64))?,
+    )?;
+    // Name
+    anim.set(
+        "GetName",
+        lua.create_function(|_, _self: Value| Ok(Value::Nil))?,
     )?;
     // Script handlers
     anim.set(
@@ -375,6 +517,12 @@ fn create_animation(
     anim.set(
         "HasScript",
         lua.create_function(|_, (_self, _event): (Value, String)| Ok(false))?,
+    )?;
+    anim.set(
+        "HookScript",
+        lua.create_function(
+            |_, (_self, _event, _handler): (Value, String, Option<mlua::Function>)| Ok(()),
+        )?,
     )?;
     Ok(anim)
 }
