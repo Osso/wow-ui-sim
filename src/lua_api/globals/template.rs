@@ -69,7 +69,7 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     apply_template_set_all_points(lua, template, frame_name);
 
     // Apply mixin from template (must be before scripts)
-    apply_mixin(lua, &template.mixin, frame_name);
+    apply_mixin(lua, &template.combined_mixin(), frame_name);
 
     apply_key_values(lua, template.key_values(), frame_name);
     apply_layers(lua, template, frame_name);
@@ -590,7 +590,7 @@ fn build_create_child_code(
 /// rather than through an inherited template.
 fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
     // Apply mixin (must be before scripts)
-    apply_mixin(lua, &frame.mixin, frame_name);
+    apply_mixin(lua, &frame.combined_mixin(), frame_name);
 
     apply_inline_key_values(lua, frame, frame_name);
     apply_layers(lua, frame, frame_name);

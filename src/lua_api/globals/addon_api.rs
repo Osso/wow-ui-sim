@@ -17,6 +17,24 @@ pub fn register_addon_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
 
     register_global_constants(lua)?;
     register_legacy_globals(lua, &state)?;
+
+    // C_AddOnProfiler stub
+    let c_profiler = lua.create_table()?;
+    c_profiler.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    c_profiler.set(
+        "GetApplicationMetric",
+        lua.create_function(|_, _metric: Value| Ok(0))?,
+    )?;
+    c_profiler.set(
+        "GetOverallMetric",
+        lua.create_function(|_, _metric: Value| Ok(0))?,
+    )?;
+    c_profiler.set(
+        "GetAddOnMetric",
+        lua.create_function(|_, (_addon, _metric): (Value, Value)| Ok(0))?,
+    )?;
+    lua.globals().set("C_AddOnProfiler", c_profiler)?;
+
     Ok(())
 }
 

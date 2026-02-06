@@ -121,12 +121,12 @@ fn append_mixins_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inher
     // Collect from inherited templates (base mixins first)
     if !inherits.is_empty() {
         for template_entry in &crate::xml::get_template_chain(inherits) {
-            collect_mixins_from_attr(&mut all_mixins, template_entry.frame.mixin.as_deref());
+            collect_mixins_from_attr(&mut all_mixins, template_entry.frame.combined_mixin().as_deref());
         }
     }
 
     // Direct mixins (override templates)
-    collect_mixins_from_attr(&mut all_mixins, frame.mixin.as_deref());
+    collect_mixins_from_attr(&mut all_mixins, frame.combined_mixin().as_deref());
 
     for m in &all_mixins {
         lua_code.push_str(&format!(

@@ -94,6 +94,8 @@ pub struct FrameXml {
     pub inherits: Option<String>,
     #[serde(rename = "@mixin")]
     pub mixin: Option<String>,
+    #[serde(rename = "@secureMixin")]
+    pub secure_mixin: Option<String>,
     #[serde(rename = "@hidden")]
     pub hidden: Option<bool>,
     #[serde(rename = "@virtual")]
@@ -116,6 +118,16 @@ pub struct FrameXml {
 }
 
 impl FrameXml {
+    /// Get combined mixin string (regular mixin + secureMixin).
+    pub fn combined_mixin(&self) -> Option<String> {
+        match (&self.mixin, &self.secure_mixin) {
+            (Some(m), Some(sm)) => Some(format!("{}, {}", m, sm)),
+            (Some(m), None) => Some(m.clone()),
+            (None, Some(sm)) => Some(sm.clone()),
+            (None, None) => None,
+        }
+    }
+
     /// Get the Size element if present.
     pub fn size(&self) -> Option<&SizeXml> {
         self.children.iter().find_map(|c| match c {

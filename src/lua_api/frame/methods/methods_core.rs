@@ -1,16 +1,22 @@
-//! Core frame methods: GetName, SetSize, Show/Hide, hierarchy, strata/level, mouse, scale.
+//! Core frame methods: GetName, SetSize, Show/Hide, hierarchy, strata/level, mouse, scale, rect.
 
 use super::FrameHandle;
 use super::methods_helpers::{calculate_frame_height, calculate_frame_width};
+use crate::lua_api::layout::compute_frame_rect;
 use crate::lua_api::SimState;
 use mlua::{Lua, UserDataMethods, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
 
+/// Default screen dimensions (matches WoW default and the simulator window size).
+const DEFAULT_SCREEN_WIDTH: f32 = 1024.0;
+const DEFAULT_SCREEN_HEIGHT: f32 = 768.0;
+
 /// Add core frame methods to FrameHandle UserData.
 pub fn add_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_identity_methods(methods);
     add_size_methods(methods);
+    add_rect_methods(methods);
     add_visibility_methods(methods);
     add_hierarchy_methods(methods);
     add_strata_level_methods(methods);
@@ -103,6 +109,133 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             frame.height = height;
         }
         Ok(())
+    });
+}
+
+/// Compute effective scale by walking up the parent chain.
+fn effective_scale(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
+    let mut scale = 1.0f32;
+    let mut current_id = Some(id);
+    while let Some(cid) = current_id {
+        if let Some(f) = widgets.get(cid) {
+            scale *= f.scale;
+            current_id = f.parent_id;
+        } else {
+            break;
+        }
+    }
+    scale
+}
+
+/// Rect/position methods: GetRect, GetScaledRect, GetLeft, GetRight, GetTop, GetBottom,
+/// GetCenter, GetBounds.
+///
+/// WoW coordinate system: origin at bottom-left, Y increases upward.
+/// `compute_frame_rect` returns top-left origin (screen coords, Y-down), so we convert.
+fn add_rect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // GetRect() -> left, bottom, width, height (unscaled, bottom-left origin)
+    methods.add_method("GetRect", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        let left = rect.x;
+        let bottom = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height;
+        Ok((left, bottom, rect.width, rect.height))
+    });
+
+    // GetScaledRect() -> left, bottom, width, height (scaled by effective scale)
+    methods.add_method("GetScaledRect", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        let scale = effective_scale(&state.widgets, this.id);
+        let left = rect.x * scale;
+        let bottom = (DEFAULT_SCREEN_HEIGHT - rect.y - rect.height) * scale;
+        Ok((left, bottom, rect.width * scale, rect.height * scale))
+    });
+
+    // GetLeft() -> left edge in WoW coords (from left of screen)
+    methods.add_method("GetLeft", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(rect.x)
+    });
+
+    // GetRight() -> right edge in WoW coords (from left of screen)
+    methods.add_method("GetRight", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(rect.x + rect.width)
+    });
+
+    // GetTop() -> top edge in WoW coords (from bottom of screen, Y-up)
+    methods.add_method("GetTop", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(DEFAULT_SCREEN_HEIGHT - rect.y)
+    });
+
+    // GetBottom() -> bottom edge in WoW coords (from bottom of screen, Y-up)
+    methods.add_method("GetBottom", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        Ok(DEFAULT_SCREEN_HEIGHT - rect.y - rect.height)
+    });
+
+    // GetCenter() -> centerX, centerY in WoW coords (bottom-left origin)
+    methods.add_method("GetCenter", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        let cx = rect.x + rect.width / 2.0;
+        let cy = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height / 2.0;
+        Ok((cx, cy))
+    });
+
+    // GetBounds() -> left, bottom, width, height (same as GetRect in practice)
+    methods.add_method("GetBounds", |_, this, ()| {
+        let state = this.state.borrow();
+        let rect = compute_frame_rect(
+            &state.widgets,
+            this.id,
+            DEFAULT_SCREEN_WIDTH,
+            DEFAULT_SCREEN_HEIGHT,
+        );
+        let left = rect.x;
+        let bottom = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height;
+        Ok((left, bottom, rect.width, rect.height))
     });
 }
 
