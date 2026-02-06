@@ -89,51 +89,12 @@ impl shader::Program<Message> for &App {
         bounds: Rectangle,
     ) -> Self::Primitive {
         let start = std::time::Instant::now();
-
-        // Increment frame counter for FPS calculation
         self.frame_count.set(self.frame_count.get() + 1);
 
-        // Update screen size from canvas bounds (used by other functions)
         let size = bounds.size();
         self.screen_size.set(size);
-        let mut cache = self.cached_quads.borrow_mut();
-        let quads = if self.quads_dirty.get() || cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true) {
-            // Rebuild quad batch
-            let new_quads = self.build_quad_batch(size);
-            *cache = Some((size, new_quads.clone()));
-            self.quads_dirty.set(false);
-            new_quads
-        } else {
-            // Use cached quads
-            cache.as_ref().unwrap().1.clone()
-        };
-
-        // Load ONLY NEW textures (skip ones already uploaded to GPU atlas)
-        let mut textures = Vec::new();
-        let mut uploaded = self.gpu_uploaded_textures.borrow_mut();
-        {
-            let mut tex_mgr = self.texture_manager.borrow_mut();
-            for request in &quads.texture_requests {
-                // Skip if already uploaded to GPU
-                if uploaded.contains(&request.path) {
-                    continue;
-                }
-                // Skip if already in this batch
-                if textures.iter().any(|t: &GpuTextureData| t.path == request.path) {
-                    continue;
-                }
-                if let Some(tex_data) = tex_mgr.load(&request.path) {
-                    textures.push(GpuTextureData {
-                        path: request.path.clone(),
-                        width: tex_data.width,
-                        height: tex_data.height,
-                        rgba: tex_data.pixels.clone(),
-                    });
-                    // Mark as uploaded (will be uploaded in prepare())
-                    uploaded.insert(request.path.clone());
-                }
-            }
-        }
+        let quads = self.get_or_rebuild_quads(size);
+        let textures = self.load_new_textures(&quads);
 
         // Update frame time with EMA (alpha = 0.33 for ~5 sample smoothing)
         let elapsed_ms = start.elapsed().as_secs_f32() * 1000.0;
@@ -142,18 +103,7 @@ impl shader::Program<Message> for &App {
         self.frame_time_avg.set(0.33 * elapsed_ms + 0.67 * avg);
 
         let mut primitive = WowUiPrimitive::with_textures(quads, textures);
-
-        // Include glyph atlas data if it has new glyphs
-        {
-            let mut ga = self.glyph_atlas.borrow_mut();
-            if ga.is_dirty() {
-                let (data, size, _) = ga.texture_data();
-                primitive.glyph_atlas_data = Some(data.to_vec());
-                primitive.glyph_atlas_size = size;
-                ga.mark_clean();
-            }
-        }
-
+        self.attach_dirty_glyph_atlas(&mut primitive);
         primitive
     }
 
@@ -611,6 +561,55 @@ pub fn build_quad_batch_for_registry(
 }
 
 impl App {
+    /// Return cached quads or rebuild if dirty/resized.
+    fn get_or_rebuild_quads(&self, size: Size) -> QuadBatch {
+        let mut cache = self.cached_quads.borrow_mut();
+        if self.quads_dirty.get() || cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true) {
+            let new_quads = self.build_quad_batch(size);
+            *cache = Some((size, new_quads.clone()));
+            self.quads_dirty.set(false);
+            new_quads
+        } else {
+            cache.as_ref().unwrap().1.clone()
+        }
+    }
+
+    /// Load textures not yet uploaded to the GPU atlas.
+    fn load_new_textures(&self, quads: &QuadBatch) -> Vec<GpuTextureData> {
+        let mut textures = Vec::new();
+        let mut uploaded = self.gpu_uploaded_textures.borrow_mut();
+        let mut tex_mgr = self.texture_manager.borrow_mut();
+        for request in &quads.texture_requests {
+            if uploaded.contains(&request.path) {
+                continue;
+            }
+            if textures.iter().any(|t: &GpuTextureData| t.path == request.path) {
+                continue;
+            }
+            if let Some(tex_data) = tex_mgr.load(&request.path) {
+                textures.push(GpuTextureData {
+                    path: request.path.clone(),
+                    width: tex_data.width,
+                    height: tex_data.height,
+                    rgba: tex_data.pixels.clone(),
+                });
+                uploaded.insert(request.path.clone());
+            }
+        }
+        textures
+    }
+
+    /// Attach glyph atlas data to the primitive if there are new glyphs.
+    fn attach_dirty_glyph_atlas(&self, primitive: &mut WowUiPrimitive) {
+        let mut ga = self.glyph_atlas.borrow_mut();
+        if ga.is_dirty() {
+            let (data, size, _) = ga.texture_data();
+            primitive.glyph_atlas_data = Some(data.to_vec());
+            primitive.glyph_atlas_size = size;
+            ga.mark_clean();
+        }
+    }
+
     /// Build a QuadBatch for GPU shader rendering.
     pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
         let env = self.env.borrow();

@@ -10,10 +10,42 @@ use iced::{Border, Color, Element, Font, Length, Padding, Subscription};
 use crate::render::texture::UI_SCALE;
 use crate::LayoutRect;
 
+use crate::widget::FrameStrata;
+
 use super::app::App;
 use super::layout::compute_frame_rect;
 use super::styles::{event_button_style, input_style, palette, run_button_style};
 use super::Message;
+
+/// Frame names excluded from hit testing (full-screen or non-interactive overlays).
+const HIT_TEST_EXCLUDED: &[&str] = &[
+    "UIParent", "Minimap", "WorldFrame",
+    "DEFAULT_CHAT_FRAME", "ChatFrame1",
+    "EventToastManagerFrame", "EditModeManagerFrame",
+];
+
+/// Collect visible, mouse-enabled frames with strata/level info for hit testing.
+fn collect_hittable_frames(
+    widgets: &crate::widget::WidgetRegistry,
+    screen_width: f32,
+    screen_height: f32,
+) -> Vec<(u64, FrameStrata, i32, LayoutRect)> {
+    widgets
+        .all_ids()
+        .into_iter()
+        .filter_map(|id| {
+            let frame = widgets.get(id)?;
+            if !frame.visible || !frame.mouse_enabled {
+                return None;
+            }
+            if frame.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n)) {
+                return None;
+            }
+            let rect = compute_frame_rect(widgets, id, screen_width, screen_height);
+            Some((id, frame.frame_strata, frame.frame_level, rect))
+        })
+        .collect()
+}
 
 impl App {
     /// Build the title bar with FPS counter, frame time, canvas size, and mouse coords.
@@ -436,66 +468,34 @@ impl App {
     pub(crate) fn hit_test(&self, pos: iced::Point) -> Option<u64> {
         let env = self.env.borrow();
         let state = env.state().borrow();
-
-        let scale_x = UI_SCALE;
-        let scale_y = UI_SCALE;
-
-        // Use WoW logical screen size for layout calculation
         let screen_width = self.screen_size.get().width;
         let screen_height = self.screen_size.get().height;
 
-        let mut frames: Vec<_> = state
-            .widgets
-            .all_ids()
-            .into_iter()
-            .filter_map(|id| {
-                let frame = state.widgets.get(id)?;
-                if !frame.visible || !frame.mouse_enabled {
-                    return None;
-                }
-                if matches!(
-                    frame.name.as_deref(),
-                    Some("UIParent")
-                        | Some("Minimap")
-                        | Some("WorldFrame")
-                        | Some("DEFAULT_CHAT_FRAME")
-                        | Some("ChatFrame1")
-                        | Some("EventToastManagerFrame")
-                        | Some("EditModeManagerFrame")
-                ) {
-                    return None;
-                }
-                let rect = compute_frame_rect(
-                    &state.widgets,
-                    id,
-                    screen_width,
-                    screen_height,
-                );
-                Some((id, frame.frame_strata, frame.frame_level, rect))
-            })
-            .collect();
-
+        let mut frames = collect_hittable_frames(&state.widgets, screen_width, screen_height);
         frames.sort_by(|a, b| {
             a.1.cmp(&b.1)
                 .then_with(|| a.2.cmp(&b.2))
                 .then_with(|| a.0.cmp(&b.0))
         });
 
-        for (id, _, _, rect) in frames.iter().rev() {
-            let scaled_x = rect.x * scale_x;
-            let scaled_y = rect.y * scale_y;
-            let scaled_w = rect.width * scale_x;
-            let scaled_h = rect.height * scale_y;
-
-            if pos.x >= scaled_x
-                && pos.x <= scaled_x + scaled_w
-                && pos.y >= scaled_y
-                && pos.y <= scaled_y + scaled_h
+        // Iterate top-to-bottom (highest strata/level first)
+        frames.iter().rev().find_map(|(id, _, _, rect)| {
+            let scaled = LayoutRect {
+                x: rect.x * UI_SCALE,
+                y: rect.y * UI_SCALE,
+                width: rect.width * UI_SCALE,
+                height: rect.height * UI_SCALE,
+            };
+            if pos.x >= scaled.x
+                && pos.x <= scaled.x + scaled.width
+                && pos.y >= scaled.y
+                && pos.y <= scaled.y + scaled.height
             {
-                return Some(*id);
+                Some(*id)
+            } else {
+                None
             }
-        }
-        None
+        })
     }
 
     /// Dump WoW frames for debug server.

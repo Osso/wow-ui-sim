@@ -288,69 +288,10 @@ impl QuadBatch {
         tex_width: f32,
         color: [f32; 4],
     ) {
-        // If bounds too small, just draw scaled
-        if bounds.width <= left_cap_width + right_cap_width {
-            self.push_textured_path(bounds, path, color, BlendMode::Alpha);
-            return;
-        }
-
-        let middle_width = bounds.width - left_cap_width - right_cap_width;
-
-        // UV coordinates as ratios
-        let left_uv = left_cap_width / tex_width;
-        let right_uv_start = 1.0 - (right_cap_width / tex_width);
-
-        // Track vertex start for all 3 quads
-        let vertex_start = self.vertices.len() as u32;
-
-        // Left cap
-        self.push_quad(
-            Rectangle::new(
-                iced::Point::new(bounds.x, bounds.y),
-                iced::Size::new(left_cap_width, bounds.height),
-            ),
-            Rectangle::new(iced::Point::ORIGIN, iced::Size::new(left_uv, 1.0)),
-            color,
-            -2,
-            BlendMode::Alpha,
+        self.push_three_slice_h_path_blend(
+            bounds, left_cap_width, right_cap_width,
+            path, tex_width, color, BlendMode::Alpha,
         );
-
-        // Middle (stretched)
-        self.push_quad(
-            Rectangle::new(
-                iced::Point::new(bounds.x + left_cap_width, bounds.y),
-                iced::Size::new(middle_width, bounds.height),
-            ),
-            Rectangle::new(
-                iced::Point::new(left_uv, 0.0),
-                iced::Size::new(right_uv_start - left_uv, 1.0),
-            ),
-            color,
-            -2,
-            BlendMode::Alpha,
-        );
-
-        // Right cap
-        self.push_quad(
-            Rectangle::new(
-                iced::Point::new(bounds.x + bounds.width - right_cap_width, bounds.y),
-                iced::Size::new(right_cap_width, bounds.height),
-            ),
-            Rectangle::new(
-                iced::Point::new(right_uv_start, 0.0),
-                iced::Size::new(1.0 - right_uv_start, 1.0),
-            ),
-            color,
-            -2,
-            BlendMode::Alpha,
-        );
-
-        // Single texture request covers all 12 vertices (3 quads * 4 vertices)
-        self.texture_requests.push(TextureRequest {
-            path: path.to_string(),
-            vertex_start,
-            vertex_count: 12,
-        });
     }
 
     /// Push a horizontal 3-slice texture with custom blend mode.
@@ -364,62 +305,13 @@ impl QuadBatch {
         color: [f32; 4],
         blend_mode: BlendMode,
     ) {
-        // If bounds too small, just draw scaled
         if bounds.width <= left_cap_width + right_cap_width {
             self.push_textured_path(bounds, path, color, blend_mode);
             return;
         }
 
-        let middle_width = bounds.width - left_cap_width - right_cap_width;
-
-        // UV coordinates as ratios
-        let left_uv = left_cap_width / tex_width;
-        let right_uv_start = 1.0 - (right_cap_width / tex_width);
-
-        // Track vertex start for all 3 quads
         let vertex_start = self.vertices.len() as u32;
-
-        // Left cap
-        self.push_quad(
-            Rectangle::new(
-                iced::Point::new(bounds.x, bounds.y),
-                iced::Size::new(left_cap_width, bounds.height),
-            ),
-            Rectangle::new(iced::Point::ORIGIN, iced::Size::new(left_uv, 1.0)),
-            color,
-            -2,
-            blend_mode,
-        );
-
-        // Middle (stretched)
-        self.push_quad(
-            Rectangle::new(
-                iced::Point::new(bounds.x + left_cap_width, bounds.y),
-                iced::Size::new(middle_width, bounds.height),
-            ),
-            Rectangle::new(
-                iced::Point::new(left_uv, 0.0),
-                iced::Size::new(right_uv_start - left_uv, 1.0),
-            ),
-            color,
-            -2,
-            blend_mode,
-        );
-
-        // Right cap
-        self.push_quad(
-            Rectangle::new(
-                iced::Point::new(bounds.x + bounds.width - right_cap_width, bounds.y),
-                iced::Size::new(right_cap_width, bounds.height),
-            ),
-            Rectangle::new(
-                iced::Point::new(right_uv_start, 0.0),
-                iced::Size::new(1.0 - right_uv_start, 1.0),
-            ),
-            color,
-            -2,
-            blend_mode,
-        );
+        self.push_three_slice_quads(bounds, left_cap_width, right_cap_width, tex_width, color, -2, blend_mode);
 
         // Single texture request covers all 12 vertices (3 quads * 4 vertices)
         self.texture_requests.push(TextureRequest {
@@ -450,15 +342,26 @@ impl QuadBatch {
         tex_width: f32,
         color: [f32; 4],
     ) {
-        // If bounds too small, just draw scaled
         if bounds.width <= left_cap_width + right_cap_width {
             self.push_textured(bounds, tex_index, color, BlendMode::Alpha);
             return;
         }
+        self.push_three_slice_quads(bounds, left_cap_width, right_cap_width, tex_width, color, tex_index, BlendMode::Alpha);
+    }
 
+    /// Emit the 3 quads (left cap, stretched middle, right cap) for horizontal 3-slice rendering.
+    #[allow(clippy::too_many_arguments)]
+    fn push_three_slice_quads(
+        &mut self,
+        bounds: Rectangle,
+        left_cap_width: f32,
+        right_cap_width: f32,
+        tex_width: f32,
+        color: [f32; 4],
+        tex_index: i32,
+        blend_mode: BlendMode,
+    ) {
         let middle_width = bounds.width - left_cap_width - right_cap_width;
-
-        // UV coordinates as ratios
         let left_uv = left_cap_width / tex_width;
         let right_uv_start = 1.0 - (right_cap_width / tex_width);
 
@@ -469,9 +372,7 @@ impl QuadBatch {
                 iced::Size::new(left_cap_width, bounds.height),
             ),
             Rectangle::new(iced::Point::ORIGIN, iced::Size::new(left_uv, 1.0)),
-            color,
-            tex_index,
-            BlendMode::Alpha,
+            color, tex_index, blend_mode,
         );
 
         // Middle (stretched)
@@ -484,9 +385,7 @@ impl QuadBatch {
                 iced::Point::new(left_uv, 0.0),
                 iced::Size::new(right_uv_start - left_uv, 1.0),
             ),
-            color,
-            tex_index,
-            BlendMode::Alpha,
+            color, tex_index, blend_mode,
         );
 
         // Right cap
@@ -499,9 +398,7 @@ impl QuadBatch {
                 iced::Point::new(right_uv_start, 0.0),
                 iced::Size::new(1.0 - right_uv_start, 1.0),
             ),
-            color,
-            tex_index,
-            BlendMode::Alpha,
+            color, tex_index, blend_mode,
         );
     }
 

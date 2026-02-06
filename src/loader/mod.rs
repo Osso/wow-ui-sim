@@ -124,6 +124,78 @@ mod tests {
     use lua_file::load_lua_file;
     use xml_file::load_xml_file;
 
+    /// Test context holding environment and temp directory for cleanup.
+    struct TestCtx {
+        env: WowLuaEnv,
+        temp_dir: PathBuf,
+    }
+
+    impl TestCtx {
+        /// Assert a Lua expression evaluates to true.
+        fn assert_lua_true(&self, expr: &str, msg: &str) {
+            let result: bool = self.env.eval(expr).unwrap();
+            assert!(result, "{}", msg);
+        }
+
+        /// Assert a Lua expression returns the expected string.
+        fn assert_lua_str(&self, expr: &str, expected: &str) {
+            let result: String = self.env.eval(expr).unwrap();
+            assert_eq!(result, expected);
+        }
+
+        /// Assert that a script handler is set on a frame.
+        fn assert_script_set(&self, frame: &str, handler: &str) {
+            let expr = format!("return {}:GetScript('{}') ~= nil", frame, handler);
+            let msg = format!("{} should be set on {}", handler, frame);
+            self.assert_lua_true(&expr, &msg);
+        }
+    }
+
+    impl Drop for TestCtx {
+        fn drop(&mut self) {
+            // Best-effort cleanup of temp files
+            let _ = std::fs::remove_dir_all(&self.temp_dir);
+        }
+    }
+
+    /// Create a test environment, write XML content, load it, return context.
+    fn load_test_xml(dir_suffix: &str, xml_content: &str) -> TestCtx {
+        let env = WowLuaEnv::new().unwrap();
+        let temp_dir = std::env::temp_dir().join(format!("wow-ui-sim-{}", dir_suffix));
+        std::fs::create_dir_all(&temp_dir).unwrap();
+        let xml_path = temp_dir.join("test.xml");
+        std::fs::write(&xml_path, xml_content).unwrap();
+
+        let addon_table = env.create_addon_table().unwrap();
+        let ctx = AddonContext {
+            name: "TestAddon",
+            table: addon_table,
+            addon_root: &temp_dir,
+        };
+        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
+
+        TestCtx { env, temp_dir }
+    }
+
+    /// Create a test environment, write a Lua file, load it, return context + addon table.
+    fn load_test_lua(dir_suffix: &str, lua_content: &str) -> (TestCtx, mlua::Table) {
+        let env = WowLuaEnv::new().unwrap();
+        let temp_dir = std::env::temp_dir().join(format!("wow-ui-sim-{}", dir_suffix));
+        std::fs::create_dir_all(&temp_dir).unwrap();
+        let lua_path = temp_dir.join("test.lua");
+        std::fs::write(&lua_path, lua_content).unwrap();
+
+        let addon_table = env.create_addon_table().unwrap();
+        let ctx = AddonContext {
+            name: "TestAddon",
+            table: addon_table.clone(),
+            addon_root: &temp_dir,
+        };
+        load_lua_file(&env, &lua_path, &ctx, &mut LoadTiming::default()).unwrap();
+
+        (TestCtx { env, temp_dir }, addon_table)
+    }
+
     #[test]
     fn test_load_lua_file() {
         let env = WowLuaEnv::new().unwrap();
@@ -151,14 +223,8 @@ mod tests {
 
     #[test]
     fn test_xml_frame_with_layers_and_scripts() {
-        let env = WowLuaEnv::new().unwrap();
-
-        // Create a temp XML file with layers, scripts, and child frames
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-xml");
-        std::fs::create_dir_all(&temp_dir).unwrap();
-        let xml_path = temp_dir.join("test.xml");
-        std::fs::write(
-            &xml_path,
+        let t = load_test_xml(
+            "test-xml",
             r#"<Ui>
                 <Frame name="TestXMLFrame" parent="UIParent">
                     <Size x="200" y="150"/>
@@ -204,55 +270,35 @@ mod tests {
                     </Frames>
                 </Frame>
             </Ui>"#,
-        )
-        .unwrap();
-
-        // Load the XML
-        let addon_table = env.create_addon_table().unwrap();
-        let ctx = AddonContext {
-            name: "TestAddon",
-            table: addon_table,
-            addon_root: &temp_dir,
-        };
-        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
-
-        // Verify frame was created
-        let frame_exists: bool = env.eval("return TestXMLFrame ~= nil").unwrap();
-        assert!(frame_exists, "TestXMLFrame should exist");
-
-        // Verify texture was created with parentKey
-        let bg_exists: bool = env.eval("return TestXMLFrame.bg ~= nil").unwrap();
-        assert!(bg_exists, "TestXMLFrame.bg should exist via parentKey");
-
-        // Verify fontstring was created with parentKey
-        let title_exists: bool = env.eval("return TestXMLFrame.title ~= nil").unwrap();
-        assert!(title_exists, "TestXMLFrame.title should exist via parentKey");
-
-        // Verify child button was created
-        let btn_exists: bool = env.eval("return TestXMLFrame_CloseBtn ~= nil").unwrap();
-        assert!(btn_exists, "TestXMLFrame_CloseBtn should exist");
-
-        // Verify button parentKey
-        let close_btn_exists: bool = env.eval("return TestXMLFrame.closeBtn ~= nil").unwrap();
-        assert!(
-            close_btn_exists,
-            "TestXMLFrame.closeBtn should exist via parentKey"
         );
 
-        // Verify OnLoad script was set (will fire when we call GetScript)
-        let has_onload: bool = env
-            .eval("return TestXMLFrame:GetScript('OnLoad') ~= nil")
-            .unwrap();
-        assert!(has_onload, "OnLoad handler should be set");
+        assert_layers_and_scripts_frame(&t);
+        assert_layers_and_scripts_children(&t);
+    }
 
-        // Verify OnClick script was set on the button
-        let has_onclick: bool = env
-            .eval("return TestXMLFrame_CloseBtn:GetScript('OnClick') ~= nil")
-            .unwrap();
-        assert!(has_onclick, "OnClick handler should be set on button");
+    fn assert_layers_and_scripts_frame(t: &TestCtx) {
+        t.assert_lua_true("return TestXMLFrame ~= nil", "TestXMLFrame should exist");
+        t.assert_lua_true(
+            "return TestXMLFrame.bg ~= nil",
+            "TestXMLFrame.bg should exist via parentKey",
+        );
+        t.assert_lua_true(
+            "return TestXMLFrame.title ~= nil",
+            "TestXMLFrame.title should exist via parentKey",
+        );
+        t.assert_script_set("TestXMLFrame", "OnLoad");
+    }
 
-        // Cleanup
-        std::fs::remove_file(&xml_path).ok();
+    fn assert_layers_and_scripts_children(t: &TestCtx) {
+        t.assert_lua_true(
+            "return TestXMLFrame_CloseBtn ~= nil",
+            "TestXMLFrame_CloseBtn should exist",
+        );
+        t.assert_lua_true(
+            "return TestXMLFrame.closeBtn ~= nil",
+            "TestXMLFrame.closeBtn should exist via parentKey",
+        );
+        t.assert_script_set("TestXMLFrame_CloseBtn", "OnClick");
     }
 
     #[test]
@@ -519,13 +565,8 @@ mod tests {
 
     #[test]
     fn test_xml_nested_child_frames() {
-        let env = WowLuaEnv::new().unwrap();
-
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-nested");
-        std::fs::create_dir_all(&temp_dir).unwrap();
-        let xml_path = temp_dir.join("test_nested.xml");
-        std::fs::write(
-            &xml_path,
+        let t = load_test_xml(
+            "test-nested",
             r#"<Ui>
                 <Frame name="ParentFrame" parent="UIParent">
                     <Size x="300" y="200"/>
@@ -541,60 +582,38 @@ mod tests {
                     </Frames>
                 </Frame>
             </Ui>"#,
-        )
-        .unwrap();
-
-        let addon_table = env.create_addon_table().unwrap();
-        let ctx = AddonContext {
-            name: "TestAddon",
-            table: addon_table,
-            addon_root: &temp_dir,
-        };
-        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
-
-        // Verify parent frame
-        let parent_exists: bool = env.eval("return ParentFrame ~= nil").unwrap();
-        assert!(parent_exists, "ParentFrame should exist");
-
-        // Verify child frame and parentKey
-        let child_exists: bool = env.eval("return ChildFrame ~= nil").unwrap();
-        assert!(child_exists, "ChildFrame should exist");
-
-        let child_key_exists: bool = env.eval("return ParentFrame.child == ChildFrame").unwrap();
-        assert!(child_key_exists, "ParentFrame.child should be ChildFrame");
-
-        // Verify grandchild button and parentKey
-        let grandchild_exists: bool = env.eval("return GrandchildButton ~= nil").unwrap();
-        assert!(grandchild_exists, "GrandchildButton should exist");
-
-        let grandchild_key_exists: bool = env
-            .eval("return ChildFrame.btn == GrandchildButton")
-            .unwrap();
-        assert!(
-            grandchild_key_exists,
-            "ChildFrame.btn should be GrandchildButton"
         );
 
-        // Verify parent relationships
-        let parent_name: String = env
-            .eval("return ChildFrame:GetParent():GetName() or 'nil'")
-            .unwrap();
-        assert_eq!(
-            parent_name, "ParentFrame",
-            "ChildFrame's parent should be ParentFrame, got {}",
-            parent_name
-        );
+        assert_nested_frames_exist(&t);
+        assert_nested_parent_relationships(&t);
+    }
 
-        let grandchild_parent_name: String = env
-            .eval("return GrandchildButton:GetParent():GetName() or 'nil'")
-            .unwrap();
-        assert_eq!(
-            grandchild_parent_name, "ChildFrame",
-            "GrandchildButton's parent should be ChildFrame, got {}",
-            grandchild_parent_name
+    fn assert_nested_frames_exist(t: &TestCtx) {
+        t.assert_lua_true("return ParentFrame ~= nil", "ParentFrame should exist");
+        t.assert_lua_true("return ChildFrame ~= nil", "ChildFrame should exist");
+        t.assert_lua_true(
+            "return ParentFrame.child == ChildFrame",
+            "ParentFrame.child should be ChildFrame",
         );
+        t.assert_lua_true(
+            "return GrandchildButton ~= nil",
+            "GrandchildButton should exist",
+        );
+        t.assert_lua_true(
+            "return ChildFrame.btn == GrandchildButton",
+            "ChildFrame.btn should be GrandchildButton",
+        );
+    }
 
-        std::fs::remove_file(&xml_path).ok();
+    fn assert_nested_parent_relationships(t: &TestCtx) {
+        t.assert_lua_str(
+            "return ChildFrame:GetParent():GetName() or 'nil'",
+            "ParentFrame",
+        );
+        t.assert_lua_str(
+            "return GrandchildButton:GetParent():GetName() or 'nil'",
+            "ChildFrame",
+        );
     }
 
     #[test]
@@ -686,13 +705,8 @@ mod tests {
 
     #[test]
     fn test_xml_multiple_anchors() {
-        let env = WowLuaEnv::new().unwrap();
-
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-multianchor");
-        std::fs::create_dir_all(&temp_dir).unwrap();
-        let xml_path = temp_dir.join("test_multianchor.xml");
-        std::fs::write(
-            &xml_path,
+        let t = load_test_xml(
+            "test-multianchor",
             r#"<Ui>
                 <Frame name="MultiAnchorFrame" parent="UIParent">
                     <Anchors>
@@ -701,57 +715,34 @@ mod tests {
                     </Anchors>
                 </Frame>
             </Ui>"#,
-        )
-        .unwrap();
+        );
 
-        let addon_table = env.create_addon_table().unwrap();
-        let ctx = AddonContext {
-            name: "TestAddon",
-            table: addon_table,
-            addon_root: &temp_dir,
-        };
-        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
-
-        // Verify frame has multiple anchor points
-        let num_points: i32 = env
+        let num_points: i32 = t
+            .env
             .eval("return MultiAnchorFrame:GetNumPoints()")
             .unwrap();
         assert_eq!(num_points, 2, "Frame should have 2 anchor points");
 
-        // Verify first anchor
-        let point1: String = env
-            .eval(
-                r#"
-                local point, _, relPoint, x, y = MultiAnchorFrame:GetPoint(1)
-                return string.format("%s,%s,%d,%d", point, relPoint, x, y)
-                "#,
-            )
-            .unwrap();
-        assert_eq!(point1, "TOPLEFT,TOPLEFT,10,-10");
-
-        // Verify second anchor
-        let point2: String = env
-            .eval(
-                r#"
-                local point, _, relPoint, x, y = MultiAnchorFrame:GetPoint(2)
-                return string.format("%s,%s,%d,%d", point, relPoint, x, y)
-                "#,
-            )
-            .unwrap();
-        assert_eq!(point2, "BOTTOMRIGHT,BOTTOMRIGHT,-10,10");
-
-        std::fs::remove_file(&xml_path).ok();
+        t.assert_lua_str(
+            r#"
+            local point, _, relPoint, x, y = MultiAnchorFrame:GetPoint(1)
+            return string.format("%s,%s,%d,%d", point, relPoint, x, y)
+            "#,
+            "TOPLEFT,TOPLEFT,10,-10",
+        );
+        t.assert_lua_str(
+            r#"
+            local point, _, relPoint, x, y = MultiAnchorFrame:GetPoint(2)
+            return string.format("%s,%s,%d,%d", point, relPoint, x, y)
+            "#,
+            "BOTTOMRIGHT,BOTTOMRIGHT,-10,10",
+        );
     }
 
     #[test]
     fn test_xml_all_script_handlers() {
-        let env = WowLuaEnv::new().unwrap();
-
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-allscripts");
-        std::fs::create_dir_all(&temp_dir).unwrap();
-        let xml_path = temp_dir.join("test_allscripts.xml");
-        std::fs::write(
-            &xml_path,
+        let t = load_test_xml(
+            "test-allscripts",
             r#"<Ui>
                 <Frame name="AllScriptsFrame" parent="UIParent">
                     <Scripts>
@@ -768,203 +759,127 @@ mod tests {
                     </Scripts>
                 </Button>
             </Ui>"#,
-        )
-        .unwrap();
+        );
 
-        let addon_table = env.create_addon_table().unwrap();
-        let ctx = AddonContext {
-            name: "TestAddon",
-            table: addon_table,
-            addon_root: &temp_dir,
-        };
-        load_xml_file(&env, &xml_path, &ctx, &mut LoadTiming::default()).unwrap();
-
-        // Verify all handlers are set
-        let has_onload: bool = env
-            .eval("return AllScriptsFrame:GetScript('OnLoad') ~= nil")
-            .unwrap();
-        assert!(has_onload, "OnLoad should be set");
-
-        let has_onevent: bool = env
-            .eval("return AllScriptsFrame:GetScript('OnEvent') ~= nil")
-            .unwrap();
-        assert!(has_onevent, "OnEvent should be set");
-
-        let has_onupdate: bool = env
-            .eval("return AllScriptsFrame:GetScript('OnUpdate') ~= nil")
-            .unwrap();
-        assert!(has_onupdate, "OnUpdate should be set");
-
-        let has_onshow: bool = env
-            .eval("return AllScriptsFrame:GetScript('OnShow') ~= nil")
-            .unwrap();
-        assert!(has_onshow, "OnShow should be set");
-
-        let has_onhide: bool = env
-            .eval("return AllScriptsFrame:GetScript('OnHide') ~= nil")
-            .unwrap();
-        assert!(has_onhide, "OnHide should be set");
-
-        let has_onclick: bool = env
-            .eval("return AllScriptsButton:GetScript('OnClick') ~= nil")
-            .unwrap();
-        assert!(has_onclick, "OnClick should be set on button");
-
-        std::fs::remove_file(&xml_path).ok();
+        for handler in &["OnLoad", "OnEvent", "OnUpdate", "OnShow", "OnHide"] {
+            t.assert_script_set("AllScriptsFrame", handler);
+        }
+        t.assert_script_set("AllScriptsButton", "OnClick");
     }
 
     #[test]
     fn test_local_function_closures() {
-        // This test verifies that local functions capture each other correctly in closures
+        // Verifies local functions capture each other correctly in closures
         // Replicates the ExtraQuestButton/widgets.lua issue where updateKeyDirection is nil
-        let env = WowLuaEnv::new().unwrap();
-
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-closures");
-        std::fs::create_dir_all(&temp_dir).unwrap();
-        let lua_path = temp_dir.join("closures.lua");
-        std::fs::write(
-            &lua_path,
+        let (_t, addon_table) = load_test_lua(
+            "test-closures",
             r#"
                 local _, addon = ...
-
                 local function innerFunc(x)
                     return x * 2
                 end
-
                 local function outerFunc(x)
-                    -- innerFunc should be captured as an upvalue
                     if not innerFunc then
                         error("innerFunc is nil!")
                     end
                     return innerFunc(x)
                 end
-
-                -- Store the result on the addon table for verification
                 addon.result = outerFunc(21)
-
-                -- Also test immediate call pattern
                 function addon:CreateSomething()
                     return outerFunc(10)
                 end
             "#,
-        )
-        .unwrap();
+        );
 
-        let addon_table = env.create_addon_table().unwrap();
-        let ctx = AddonContext {
-            name: "ClosureTest",
-            table: addon_table.clone(),
-            addon_root: &temp_dir,
-        };
-        load_lua_file(&env, &lua_path, &ctx, &mut LoadTiming::default()).unwrap();
-
-        // Verify the result was computed correctly
         let result: i32 = addon_table.get("result").unwrap();
         assert_eq!(result, 42, "innerFunc should be captured and work correctly");
 
-        // Verify the method works too (test via direct call)
         let create_something: mlua::Function = addon_table.get("CreateSomething").unwrap();
         let method_result: i32 = create_something.call(addon_table.clone()).unwrap();
         assert_eq!(method_result, 20, "outerFunc should still capture innerFunc");
+    }
 
-        std::fs::remove_file(&lua_path).ok();
+    /// Load multiple Lua files in sequence with a shared addon table, simulating TOC loading.
+    fn load_test_lua_files(
+        dir_suffix: &str,
+        addon_name: &str,
+        files: &[(&str, &str)],
+    ) -> (TestCtx, mlua::Table) {
+        let env = WowLuaEnv::new().unwrap();
+        let temp_dir = std::env::temp_dir().join(format!("wow-ui-sim-{}", dir_suffix));
+        std::fs::create_dir_all(&temp_dir).unwrap();
+
+        let addon_table = env.create_addon_table().unwrap();
+        let ctx = AddonContext {
+            name: addon_name,
+            table: addon_table.clone(),
+            addon_root: &temp_dir,
+        };
+
+        for (filename, content) in files {
+            let path = temp_dir.join(filename);
+            std::fs::write(&path, content).unwrap();
+            load_lua_file(&env, &path, &ctx, &mut LoadTiming::default())
+                .unwrap_or_else(|e| panic!("{} should load: {}", filename, e));
+        }
+
+        (TestCtx { env, temp_dir }, addon_table)
     }
 
     #[test]
     fn test_multi_file_closures() {
-        // This test simulates ExtraQuestButton's loading pattern:
-        // 1. widgets.lua defines local functions and addon:CreateButton
-        // 2. button.lua defines addon:CreateExtraButton which calls addon:CreateButton
-        // 3. addon.lua calls addon:CreateExtraButton
-        let env = WowLuaEnv::new().unwrap();
+        // Simulates ExtraQuestButton's loading pattern:
+        // widgets.lua -> button.lua -> addon.lua with cross-file closure capture
+        let (_t, addon_table) = load_test_lua_files(
+            "test-multifile",
+            "MultiFileTest",
+            &[
+                ("widgets.lua", MULTI_FILE_WIDGETS_LUA),
+                ("button.lua", MULTI_FILE_BUTTON_LUA),
+                ("addon.lua", MULTI_FILE_ADDON_LUA),
+            ],
+        );
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-multifile");
-        std::fs::create_dir_all(&temp_dir).unwrap();
-
-        // File 1: widgets.lua - defines local functions and addon method
-        let widgets_path = temp_dir.join("widgets.lua");
-        std::fs::write(
-            &widgets_path,
-            r#"
-                local _, addon = ...
-
-                local function updateKeyDirection(self)
-                    return "updated: " .. tostring(self)
-                end
-
-                local function onCVarUpdate(self, cvar)
-                    if cvar == "TestCVar" then
-                        -- This is the critical line - updateKeyDirection should be captured
-                        if not updateKeyDirection then
-                            error("updateKeyDirection is nil!")
-                        end
-                        self.result = updateKeyDirection(self)
-                    end
-                end
-
-                function addon:CreateButton(name)
-                    local button = { name = name }
-                    -- Call onCVarUpdate immediately during CreateButton
-                    onCVarUpdate(button, "TestCVar")
-                    return button
-                end
-            "#,
-        )
-        .unwrap();
-
-        // File 2: button.lua - calls addon:CreateButton
-        let button_path = temp_dir.join("button.lua");
-        std::fs::write(
-            &button_path,
-            r#"
-                local _, addon = ...
-
-                function addon:CreateExtraButton(name)
-                    -- This calls CreateButton which was defined in widgets.lua
-                    return addon:CreateButton(name .. "_extra")
-                end
-            "#,
-        )
-        .unwrap();
-
-        // File 3: addon.lua - calls addon:CreateExtraButton
-        let addon_lua_path = temp_dir.join("addon.lua");
-        std::fs::write(
-            &addon_lua_path,
-            r#"
-                local _, addon = ...
-
-                -- This should work: CreateExtraButton -> CreateButton -> onCVarUpdate -> updateKeyDirection
-                local button = addon:CreateExtraButton("test")
-                addon.testButton = button
-            "#,
-        )
-        .unwrap();
-
-        // Create shared addon table and context
-        let addon_table = env.create_addon_table().unwrap();
-        let ctx = AddonContext {
-            name: "MultiFileTest",
-            table: addon_table.clone(),
-            addon_root: &temp_dir,
-        };
-
-        // Load files in order (like TOC would)
-        load_lua_file(&env, &widgets_path, &ctx, &mut LoadTiming::default())
-            .expect("widgets.lua should load");
-        load_lua_file(&env, &button_path, &ctx, &mut LoadTiming::default())
-            .expect("button.lua should load");
-        load_lua_file(&env, &addon_lua_path, &ctx, &mut LoadTiming::default())
-            .expect("addon.lua should load");
-
-        // Verify the button was created and the closure worked
-        let test_button: mlua::Table = addon_table.get("testButton").expect("testButton should exist");
+        let test_button: mlua::Table =
+            addon_table.get("testButton").expect("testButton should exist");
         let result: String = test_button.get("result").expect("result should be set");
-        assert!(result.starts_with("updated:"), "updateKeyDirection should have been called, got: {}", result);
-
-        // Cleanup
-        std::fs::remove_file(&widgets_path).ok();
-        std::fs::remove_file(&button_path).ok();
-        std::fs::remove_file(&addon_lua_path).ok();
+        assert!(
+            result.starts_with("updated:"),
+            "updateKeyDirection should have been called, got: {}",
+            result
+        );
     }
+
+    const MULTI_FILE_WIDGETS_LUA: &str = r#"
+        local _, addon = ...
+        local function updateKeyDirection(self)
+            return "updated: " .. tostring(self)
+        end
+        local function onCVarUpdate(self, cvar)
+            if cvar == "TestCVar" then
+                if not updateKeyDirection then
+                    error("updateKeyDirection is nil!")
+                end
+                self.result = updateKeyDirection(self)
+            end
+        end
+        function addon:CreateButton(name)
+            local button = { name = name }
+            onCVarUpdate(button, "TestCVar")
+            return button
+        end
+    "#;
+
+    const MULTI_FILE_BUTTON_LUA: &str = r#"
+        local _, addon = ...
+        function addon:CreateExtraButton(name)
+            return addon:CreateButton(name .. "_extra")
+        end
+    "#;
+
+    const MULTI_FILE_ADDON_LUA: &str = r#"
+        local _, addon = ...
+        local button = addon:CreateExtraButton("test")
+        addon.testButton = button
+    "#;
 }
