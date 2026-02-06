@@ -304,6 +304,55 @@ fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(result)
     });
+
+    // GetNumRegions() - return count of child regions (Texture, FontString)
+    methods.add_method("GetNumRegions", |_, this, ()| {
+        use crate::widget::WidgetType;
+        let state = this.state.borrow();
+        let count = state.widgets.get(this.id).map(|f| {
+            f.children.iter().filter(|&&cid| {
+                state.widgets.get(cid).map(|c| {
+                    matches!(c.widget_type, WidgetType::Texture | WidgetType::FontString)
+                }).unwrap_or(false)
+            }).count()
+        }).unwrap_or(0);
+        Ok(count as i32)
+    });
+
+    // GetRegions() - return all child regions (Texture, FontString) as multiple return values
+    methods.add_method("GetRegions", |lua, this, ()| {
+        use crate::widget::WidgetType;
+        let state = this.state.borrow();
+        let mut result = mlua::MultiValue::new();
+        if let Some(frame) = state.widgets.get(this.id) {
+            let children = frame.children.clone();
+            drop(state);
+
+            for child_id in children {
+                let is_region = {
+                    let state = this.state.borrow();
+                    state.widgets.get(child_id).map(|f| {
+                        matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString)
+                    }).unwrap_or(false)
+                };
+                if is_region {
+                    let handle = FrameHandle {
+                        id: child_id,
+                        state: Rc::clone(&this.state),
+                    };
+                    if let Ok(ud) = lua.create_userdata(handle) {
+                        result.push_back(Value::UserData(ud));
+                    }
+                }
+            }
+        }
+        Ok(result)
+    });
+
+    // GetAdditionalRegions() - stub (WoW extension point, returns nothing by default)
+    methods.add_method("GetAdditionalRegions", |_, _this, ()| {
+        Ok(mlua::MultiValue::new())
+    });
 }
 
 /// Strata and level methods

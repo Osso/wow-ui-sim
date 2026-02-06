@@ -438,7 +438,12 @@ impl WowLuaEnv {
         // Fire frame OnUpdate handlers
         let frame_ids: Vec<u64> = {
             let state = self.state.borrow();
-            state.on_update_frames.iter().copied().collect()
+            state
+                .on_update_frames
+                .iter()
+                .copied()
+                .filter(|&id| state.widgets.get(id).map(|f| f.visible).unwrap_or(false))
+                .collect()
         };
 
         if !frame_ids.is_empty() {
@@ -446,7 +451,7 @@ impl WowLuaEnv {
             if let Some(table) = scripts_table {
                 let elapsed_val = Value::Number(elapsed);
 
-                for widget_id in frame_ids {
+                for widget_id in &frame_ids {
                     let frame_key = format!("{}_OnUpdate", widget_id);
                     let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
 
@@ -458,6 +463,30 @@ impl WowLuaEnv {
                             handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
                         {
                             eprintln!("OnUpdate error (frame {}): {}", widget_id, e);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Fire OnPostUpdate handlers
+        if !frame_ids.is_empty() {
+            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
+            if let Some(table) = scripts_table {
+                let elapsed_val = Value::Number(elapsed);
+
+                for widget_id in &frame_ids {
+                    let frame_key = format!("{}_OnPostUpdate", widget_id);
+                    let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+
+                    if let Some(handler) = handler {
+                        let frame_ref_key = format!("__frame_{}", widget_id);
+                        let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
+
+                        if let Err(e) =
+                            handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
+                        {
+                            eprintln!("OnPostUpdate error (frame {}): {}", widget_id, e);
                         }
                     }
                 }

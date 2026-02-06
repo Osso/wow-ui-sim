@@ -34,7 +34,7 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 let mut state = this.state.borrow_mut();
                 state.scripts.set(this.id, h, 1);
 
-                if h == crate::event::ScriptHandler::OnUpdate {
+                if h == crate::event::ScriptHandler::OnUpdate || h == crate::event::ScriptHandler::OnPostUpdate {
                     state.on_update_frames.insert(this.id);
                 }
             } else {
@@ -48,7 +48,7 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 let mut state = this.state.borrow_mut();
                 state.scripts.remove(this.id, h);
 
-                if h == crate::event::ScriptHandler::OnUpdate {
+                if h == crate::event::ScriptHandler::OnUpdate || h == crate::event::ScriptHandler::OnPostUpdate {
                     state.on_update_frames.remove(&this.id);
                 }
             }
@@ -167,6 +167,10 @@ fn add_has_script_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             "OnTabPressed",
             "OnSpacePressed",
             "OnReceiveDrag",
+            "OnPostUpdate",
+            "OnPostShow",
+            "OnPostHide",
+            "OnPostClick",
         ];
         Ok(common_scripts
             .iter()

@@ -90,6 +90,10 @@ pub enum ScriptHandler {
     OnTooltipSetItem,
     OnTooltipSetUnit,
     OnTooltipSetSpell,
+    OnPostUpdate,
+    OnPostShow,
+    OnPostHide,
+    OnPostClick,
 }
 
 impl ScriptHandler {
@@ -115,6 +119,10 @@ impl ScriptHandler {
             "OnTooltipSetItem" => Some(Self::OnTooltipSetItem),
             "OnTooltipSetUnit" => Some(Self::OnTooltipSetUnit),
             "OnTooltipSetSpell" => Some(Self::OnTooltipSetSpell),
+            "OnPostUpdate" => Some(Self::OnPostUpdate),
+            "OnPostShow" => Some(Self::OnPostShow),
+            "OnPostHide" => Some(Self::OnPostHide),
+            "OnPostClick" => Some(Self::OnPostClick),
             _ => None,
         }
     }
@@ -141,6 +149,10 @@ impl ScriptHandler {
             Self::OnTooltipSetItem => "OnTooltipSetItem",
             Self::OnTooltipSetUnit => "OnTooltipSetUnit",
             Self::OnTooltipSetSpell => "OnTooltipSetSpell",
+            Self::OnPostUpdate => "OnPostUpdate",
+            Self::OnPostShow => "OnPostShow",
+            Self::OnPostHide => "OnPostHide",
+            Self::OnPostClick => "OnPostClick",
         }
     }
 }
