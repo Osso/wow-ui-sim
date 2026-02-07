@@ -76,6 +76,8 @@ pub struct TextureXml {
     pub horiz_tile: Option<bool>,
     #[serde(rename = "@vertTile")]
     pub vert_tile: Option<bool>,
+    #[serde(rename = "@hidden")]
+    pub hidden: Option<bool>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
     #[serde(rename = "@parentArray")]
@@ -104,6 +106,8 @@ pub struct FontStringXml {
     pub mixin: Option<String>,
     #[serde(rename = "@virtual")]
     pub is_virtual: Option<bool>,
+    #[serde(rename = "@hidden")]
+    pub hidden: Option<bool>,
     #[serde(rename = "@text")]
     pub text: Option<String>,
     #[serde(rename = "@justifyH")]

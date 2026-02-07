@@ -154,6 +154,10 @@ pub fn create_texture_from_xml(
         lua_code.push_str("\n        tex:SetAllPoints(true)\n        ");
     }
 
+    if texture.hidden == Some(true) {
+        lua_code.push_str("\n        tex:Hide()\n        ");
+    }
+
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!(
             "Failed to create texture {} on {}: {}",

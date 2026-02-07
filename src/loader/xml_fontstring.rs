@@ -139,6 +139,10 @@ pub fn create_fontstring_from_xml(
         ));
     }
 
+    if fontstring.hidden == Some(true) {
+        lua_code.push_str("\n        fs:Hide()\n        ");
+    }
+
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!(
             "Failed to create fontstring {} on {}: {}",

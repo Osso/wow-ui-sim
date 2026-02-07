@@ -76,6 +76,12 @@ Uses **Lua 5.1** via mlua (WoW's Lua version).
 WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 15 cargo run --bin wow-sim
 ```
 
+### CLI Arguments
+
+- `--exec-lua "code"` - Execute Lua code after first frame render (GUI mode only, not available in screenshot/dump-tree subcommands)
+- `--no-addons` / `--no-saved-vars` - Same as environment variables below
+- `--delay <ms>` - Delay in milliseconds after firing startup events (for dump-tree/screenshot)
+
 ### Environment Variables
 
 - `WOW_SIM_NO_SAVED_VARS=1` - Skip loading WTF SavedVariables for faster startup (~18% of load time)
