@@ -137,7 +137,7 @@ impl shader::Primitive for WowUiPrimitive {
         bounds: &Rectangle,
         viewport: &Viewport,
     ) {
-        let scale = viewport.scale_factor() as f32;
+        let scale = viewport.scale_factor();
         let physical_bounds = Rectangle::new(
             iced::Point::new(bounds.x * scale, bounds.y * scale),
             iced::Size::new(bounds.width * scale, bounds.height * scale),

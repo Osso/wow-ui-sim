@@ -93,6 +93,7 @@ pub fn draw_texture_with_texcoords(
 ///
 /// Note: For proper 3-slice rendering, we need pre-sliced textures.
 /// This version draws the full texture scaled as a fallback.
+#[allow(clippy::too_many_arguments)]
 pub fn draw_horizontal_slice_texture(
     frame: &mut Frame,
     bounds: Rectangle,

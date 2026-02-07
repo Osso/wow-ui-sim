@@ -893,7 +893,7 @@ pub const TIME_STRINGS: &[StringDef] = &[
 // Icon List Data (for register_icon_list)
 // ============================================================================
 
-pub const ICON_LIST_DATA: &[(&'static str, i32)] = &[
+pub const ICON_LIST_DATA: &[(&str, i32)] = &[
     ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:", 1),
     ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:", 2),
     ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:", 3),
@@ -909,7 +909,7 @@ pub const ICON_LIST_DATA: &[(&'static str, i32)] = &[
 // ============================================================================
 
 /// (quality_index, r, g, b, hex)
-pub const ITEM_QUALITY_COLORS_DATA: &[(i32, f64, f64, f64, &'static str)] = &[
+pub const ITEM_QUALITY_COLORS_DATA: &[(i32, f64, f64, f64, &str)] = &[
     (0, 0.62, 0.62, 0.62, "ff9d9d9d"), // Poor (gray)
     (1, 1.00, 1.00, 1.00, "ffffffff"), // Common (white)
     (2, 0.12, 1.00, 0.00, "ff1eff00"), // Uncommon (green)
@@ -925,7 +925,7 @@ pub const ITEM_QUALITY_COLORS_DATA: &[(i32, f64, f64, f64, &'static str)] = &[
 // Class Names Data (for register_class_name_tables)
 // ============================================================================
 
-pub const CLASS_NAMES_DATA: &[(&'static str, &'static str)] = &[
+pub const CLASS_NAMES_DATA: &[(&str, &str)] = &[
     ("WARRIOR", "Warrior"),
     ("PALADIN", "Paladin"),
     ("HUNTER", "Hunter"),

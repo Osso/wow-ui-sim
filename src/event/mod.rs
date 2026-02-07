@@ -112,6 +112,7 @@ pub enum ScriptHandler {
 }
 
 impl ScriptHandler {
+    #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Option<Self> {
         match s {
             "OnEvent" => Some(Self::OnEvent),

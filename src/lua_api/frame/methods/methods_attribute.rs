@@ -27,8 +27,8 @@ fn add_get_set_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
 
         // Fall back to non-table attributes stored in Rust
         let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some(attr) = frame.attributes.get(&name) {
+        if let Some(frame) = state.widgets.get(this.id)
+            && let Some(attr) = frame.attributes.get(&name) {
                 return match attr {
                     AttributeValue::String(s) => Ok(Value::String(lua.create_string(s)?)),
                     AttributeValue::Number(n) => Ok(Value::Number(*n)),
@@ -36,7 +36,6 @@ fn add_get_set_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
                     AttributeValue::Nil => Ok(Value::Nil),
                 };
             }
-        }
         Ok(Value::Nil)
     });
 

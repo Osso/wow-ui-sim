@@ -553,6 +553,7 @@ pub enum FrameStrata {
 }
 
 impl FrameStrata {
+    #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Option<Self> {
         match s.to_uppercase().as_str() {
             "WORLD" => Some(Self::World),
@@ -596,6 +597,7 @@ pub enum DrawLayer {
 }
 
 impl DrawLayer {
+    #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Option<Self> {
         match s.to_uppercase().as_str() {
             "BACKGROUND" => Some(Self::Background),

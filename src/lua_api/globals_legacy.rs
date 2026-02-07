@@ -92,11 +92,10 @@ fn register_custom_ipairs(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
     let original_ipairs: mlua::Function = globals.get("ipairs")?;
 
     let custom_ipairs = lua.create_function(move |lua, value: Value| {
-        if let Value::UserData(ud) = &value {
-            if let Ok(handle) = ud.borrow::<FrameHandle>() {
+        if let Value::UserData(ud) = &value
+            && let Ok(handle) = ud.borrow::<FrameHandle>() {
                 return create_frame_children_iterator(lua, &handle, &state);
             }
-        }
         // Fall back to original ipairs for tables
         let original_ipairs: mlua::Function = lua.globals().get("__original_ipairs")?;
         original_ipairs.call(value)
@@ -156,11 +155,10 @@ fn register_custom_getmetatable(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     let custom_getmetatable = lua.create_function(|lua, value: Value| {
-        if let Value::UserData(ud) = &value {
-            if ud.borrow::<FrameHandle>().is_ok() {
+        if let Value::UserData(ud) = &value
+            && ud.borrow::<FrameHandle>().is_ok() {
                 return build_frame_metatable(lua, ud);
             }
-        }
         let real_getmetatable: mlua::Function = lua.globals().get("__real_getmetatable")?;
         real_getmetatable.call(value)
     })?;

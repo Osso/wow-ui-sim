@@ -112,15 +112,14 @@ impl TextureManager {
         }
 
         // Load the full texture first
-        if let Some(file_path) = self.resolve_path(&normalized) {
-            if let Ok(full_data) = load_texture_file(&file_path) {
+        if let Some(file_path) = self.resolve_path(&normalized)
+            && let Ok(full_data) = load_texture_file(&file_path) {
                 // Extract sub-region
                 if let Some(sub_data) = extract_sub_region(&full_data, x, y, width, height) {
                     self.sub_cache.insert(key.clone(), sub_data);
                     return self.sub_cache.get(&key);
                 }
             }
-        }
 
         None
     }
@@ -132,13 +131,10 @@ impl TextureManager {
             .strip_prefix("Interface/AddOns/")
             .or_else(|| normalized_path.strip_prefix("interface/Addons/"))
             .or_else(|| normalized_path.strip_prefix("interface/addons/"))
-        {
-            if let Some(addons_path) = &self.addons_path {
-                if let Some(result) = self.try_resolve_in_dir(addons_path, addon_relative) {
+            && let Some(addons_path) = &self.addons_path
+                && let Some(result) = self.try_resolve_in_dir(addons_path, addon_relative) {
                     return Some(result);
                 }
-            }
-        }
 
         // Remove "Interface/" prefix if present for game textures
         let path = normalized_path
@@ -152,11 +148,10 @@ impl TextureManager {
         }
 
         // Try WoW Interface directory (extracted game files)
-        if let Some(interface_path) = &self.interface_path {
-            if let Some(result) = self.try_resolve_in_dir(interface_path, path) {
+        if let Some(interface_path) = &self.interface_path
+            && let Some(result) = self.try_resolve_in_dir(interface_path, path) {
                 return Some(result);
             }
-        }
 
         None
     }
@@ -240,11 +235,10 @@ fn normalize_wow_path(path: &str) -> String {
     // Replace backslashes with forward slashes
     let normalized = path.replace('\\', "/");
     // Remove file extension if present
-    if let Some(pos) = normalized.rfind('.') {
-        if normalized[pos..].len() <= 5 {
+    if let Some(pos) = normalized.rfind('.')
+        && normalized[pos..].len() <= 5 {
             return normalized[..pos].to_string();
         }
-    }
     normalized
 }
 

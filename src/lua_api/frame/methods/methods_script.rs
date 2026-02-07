@@ -138,11 +138,10 @@ fn add_clear_scripts_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             let keys: Vec<String> = table
                 .pairs::<String, Value>()
                 .filter_map(|pair| {
-                    if let Ok((k, _)) = pair {
-                        if k.starts_with(&prefix) {
+                    if let Ok((k, _)) = pair
+                        && k.starts_with(&prefix) {
                             return Some(k);
                         }
-                    }
                     None
                 })
                 .collect();
@@ -158,11 +157,10 @@ fn add_clear_scripts_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             let keys: Vec<String> = table
                 .pairs::<String, Value>()
                 .filter_map(|pair| {
-                    if let Ok((k, _)) = pair {
-                        if k.starts_with(&prefix) {
+                    if let Ok((k, _)) = pair
+                        && k.starts_with(&prefix) {
                             return Some(k);
                         }
-                    }
                     None
                 })
                 .collect();

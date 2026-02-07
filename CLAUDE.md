@@ -73,7 +73,7 @@ Uses **Lua 5.1** via mlua (WoW's Lua version).
 
 **Always use `timeout 20` or less** when running the simulator to prevent hung processes:
 ```bash
-WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 15 cargo run --bin wow-ui-sim
+WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 15 cargo run --bin wow-sim
 ```
 
 ### Environment Variables
@@ -134,38 +134,32 @@ Three-part horizontally-stretched button used for most Blizzard UI action button
 
 ## CLI Tools
 
-The `wow-sim` binary provides CLI tools for interacting with a running simulator.
+Both `wow-sim` and `wow-cli` provide CLI subcommands. `wow-sim` subcommands use the same loading as the GUI; `wow-cli` subcommands either load standalone or connect to a running server.
 
-### Lua REPL
-
-```bash
-wow-sim lua                    # Interactive Lua REPL
-wow-sim lua -e "print('hi')"   # Execute code and exit
-wow-sim lua -l                 # List running servers
-```
-
-### Screenshot (Standalone)
+### Screenshot
 
 Render the UI to an image file without starting the GUI (headless GPU, same shader pipeline as the live renderer). Text is not rendered — this is for debugging frame layout and textures.
 
 ```bash
-wow-sim screenshot                                          # Render to screenshot.webp (1024x768, lossy q15)
-wow-sim screenshot -o frame.png --filter AddonList          # Render only AddonList subtree (PNG)
-wow-sim screenshot --width 1920 --height 1080               # Custom resolution
-wow-sim screenshot --no-addons --no-saved-vars              # Fast: skip extras
+wow-sim --no-addons --no-saved-vars screenshot                       # Render to screenshot.webp (1024x768, lossy q15)
+wow-sim screenshot -o frame.png --filter AddonList                   # Render only AddonList subtree (PNG)
+wow-sim screenshot --width 1920 --height 1080                        # Custom resolution
+wow-sim --no-addons --no-saved-vars screenshot -o fast.webp           # Fast: skip extras
 ```
 
 Default output is lossy WebP at quality 15 (small files). Use `-o file.png` or `-o file.jpg` for other formats.
 
-### Dump Frame Tree (Standalone)
+Also available via `wow-cli screenshot` (standalone loading, same options).
+
+### Dump Frame Tree
 
 Load UI and dump the frame tree without starting the GUI (for debugging):
 
 ```bash
-wow-sim dump --no-addons --no-saved-vars           # Fast: skip addons and saved vars
-wow-sim dump --filter ScrollBar                    # Filter by name substring
-wow-sim dump --visible-only                        # Show only visible frames
-wow-sim dump                                       # Full load with all addons
+wow-sim --no-addons --no-saved-vars dump-tree                # Fast: skip addons and saved vars
+wow-sim dump-tree --filter ScrollBar                         # Filter by name substring
+wow-sim dump-tree --visible-only                             # Show only visible frames
+wow-sim dump-tree                                            # Full load with all addons
 ```
 
 Output shows frame hierarchy with dimensions:
@@ -175,14 +169,24 @@ AddonList [Frame] (600x550) hidden
   AddonListCloseButton [Button] (24x24) visible
 ```
 
+Also available via `wow-cli dump` (standalone loading, same options).
+
+### Lua REPL
+
+```bash
+wow-cli lua                    # Interactive Lua REPL
+wow-cli lua -e "print('hi')"   # Execute code and exit
+wow-cli lua -l                 # List running servers
+```
+
 ### Dump Frame Tree (Connected)
 
 Dump the rendered frame tree from a running simulator:
 
 ```bash
-wow-sim dump-tree                      # Dump all frames
-wow-sim dump-tree --filter Button      # Filter by name substring
-wow-sim dump-tree --visible-only       # Show only visible frames
+wow-cli dump-tree                      # Dump all frames
+wow-cli dump-tree --filter Button      # Filter by name substring
+wow-cli dump-tree --visible-only       # Show only visible frames
 ```
 
 Output shows frame hierarchy with absolute screen coordinates and dimensions:
@@ -197,7 +201,7 @@ AddonList [Button] (x=50, y=400, w=80, h=22) visible
 Convert a single BLP texture to WebP format:
 
 ```bash
-wow-sim convert-texture ~/Projects/wow/Interface/BUTTONS/redbuttons.BLP -o ./textures/buttons/redbuttons.webp
+wow-cli convert-texture ~/Projects/wow/Interface/BUTTONS/redbuttons.BLP -o ./textures/buttons/redbuttons.webp
 ```
 
 ### Extract Textures (Batch)
@@ -205,8 +209,8 @@ wow-sim convert-texture ~/Projects/wow/Interface/BUTTONS/redbuttons.BLP -o ./tex
 Extract all textures referenced by addons to WebP format:
 
 ```bash
-wow-sim extract-textures                    # Use default paths
-wow-sim extract-textures --output ./tex     # Custom output directory
+wow-cli extract-textures                    # Use default paths
+wow-cli extract-textures --output ./tex     # Custom output directory
 ```
 
 This scans addon XML/Lua files for texture references and converts them from BLP to WebP.
@@ -228,7 +232,7 @@ This scans addon XML/Lua files for texture references and converts them from BLP
 find ~/Projects/wow/Interface -iname "UIFrameMetal2x.BLP"
 
 # Convert to webp (lowercase filename, matching existing convention)
-wow-sim convert-texture ~/Projects/wow/Interface/FrameGeneral/UIFrameMetal2x.BLP \
+wow-cli convert-texture ~/Projects/wow/Interface/FrameGeneral/UIFrameMetal2x.BLP \
   -o ./textures/framegeneral/uiframemetal2x.webp
 ```
 

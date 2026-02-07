@@ -21,8 +21,8 @@ fn lookup_child_by_index(
 ) -> mlua::Result<Value> {
     if idx > 0 {
         let state = state_rc.borrow();
-        if let Some(frame) = state.widgets.get(frame_id) {
-            if let Some(&child_id) = frame.children.get((idx - 1) as usize) {
+        if let Some(frame) = state.widgets.get(frame_id)
+            && let Some(&child_id) = frame.children.get((idx - 1) as usize) {
                 drop(state);
                 let child_handle = FrameHandle {
                     id: child_id,
@@ -30,7 +30,6 @@ fn lookup_child_by_index(
                 };
                 return lua.create_userdata(child_handle).map(Value::UserData);
             }
-        }
     }
     Ok(Value::Nil)
 }
@@ -43,8 +42,8 @@ fn lookup_child_by_key(
     key: &str,
 ) -> mlua::Result<Option<Value>> {
     let state = state_rc.borrow();
-    if let Some(frame) = state.widgets.get(frame_id) {
-        if let Some(&child_id) = frame.children_keys.get(key) {
+    if let Some(frame) = state.widgets.get(frame_id)
+        && let Some(&child_id) = frame.children_keys.get(key) {
             drop(state);
             let child_handle = FrameHandle {
                 id: child_id,
@@ -52,7 +51,6 @@ fn lookup_child_by_key(
             };
             return lua.create_userdata(child_handle).map(|ud| Some(Value::UserData(ud)));
         }
-    }
     Ok(None)
 }
 
@@ -101,14 +99,13 @@ fn lookup_fallback_method(
         return Ok(Some(Value::Function(lua.create_function(
             move |_, args: mlua::MultiValue| {
                 // First arg is self (the frame handle)
-                if let Some(Value::UserData(ud)) = args.into_iter().next() {
-                    if let Ok(handle) = ud.borrow::<FrameHandle>() {
+                if let Some(Value::UserData(ud)) = args.into_iter().next()
+                    && let Ok(handle) = ud.borrow::<FrameHandle>() {
                         let mut state = state_clone.borrow_mut();
                         if let Some(frame) = state.widgets.get_mut(handle.id) {
                             frame.frame_level = (frame.frame_level - 1).max(0);
                         }
                     }
-                }
                 Ok(())
             },
         )?)));
@@ -117,14 +114,13 @@ fn lookup_fallback_method(
         let state_clone = Rc::clone(state_rc);
         return Ok(Some(Value::Function(lua.create_function(
             move |_, args: mlua::MultiValue| {
-                if let Some(Value::UserData(ud)) = args.into_iter().next() {
-                    if let Ok(handle) = ud.borrow::<FrameHandle>() {
+                if let Some(Value::UserData(ud)) = args.into_iter().next()
+                    && let Ok(handle) = ud.borrow::<FrameHandle>() {
                         let mut state = state_clone.borrow_mut();
                         if let Some(frame) = state.widgets.get_mut(handle.id) {
                             frame.frame_level += 1;
                         }
                     }
-                }
                 Ok(())
             },
         )?)));
@@ -186,8 +182,8 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             drop(handle);
 
             // If assigning a FrameHandle value, update children_keys in the Rust widget registry
-            if let Value::UserData(child_ud) = &value {
-                if let Ok(child_handle) = child_ud.borrow::<FrameHandle>() {
+            if let Value::UserData(child_ud) = &value
+                && let Ok(child_handle) = child_ud.borrow::<FrameHandle>() {
                     let child_id = child_handle.id;
                     drop(child_handle);
                     let mut state = state_rc.borrow_mut();
@@ -195,7 +191,6 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                         parent_frame.children_keys.insert(key.clone(), child_id);
                     }
                 }
-            }
 
             // Get or create the fields table
             let fields_table: mlua::Table =

@@ -161,7 +161,7 @@ mod tests {
     /// Create a test environment, write XML content, load it, return context.
     fn load_test_xml(dir_suffix: &str, xml_content: &str) -> TestCtx {
         let env = WowLuaEnv::new().unwrap();
-        let temp_dir = std::env::temp_dir().join(format!("wow-ui-sim-{}", dir_suffix));
+        let temp_dir = std::env::temp_dir().join(format!("wow-sim-{}", dir_suffix));
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test.xml");
         std::fs::write(&xml_path, xml_content).unwrap();
@@ -180,7 +180,7 @@ mod tests {
     /// Create a test environment, write a Lua file, load it, return context + addon table.
     fn load_test_lua(dir_suffix: &str, lua_content: &str) -> (TestCtx, mlua::Table) {
         let env = WowLuaEnv::new().unwrap();
-        let temp_dir = std::env::temp_dir().join(format!("wow-ui-sim-{}", dir_suffix));
+        let temp_dir = std::env::temp_dir().join(format!("wow-sim-{}", dir_suffix));
         std::fs::create_dir_all(&temp_dir).unwrap();
         let lua_path = temp_dir.join("test.lua");
         std::fs::write(&lua_path, lua_content).unwrap();
@@ -201,7 +201,7 @@ mod tests {
         let env = WowLuaEnv::new().unwrap();
 
         // Create a temp Lua file
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let lua_path = temp_dir.join("test.lua");
         std::fs::write(&lua_path, "TEST_VAR = 42").unwrap();
@@ -316,7 +316,7 @@ mod tests {
         )
         .unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-scripts");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-scripts");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_func.xml");
         std::fs::write(
@@ -352,7 +352,7 @@ mod tests {
     fn test_xml_scripts_method_attribute() {
         let env = WowLuaEnv::new().unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-method");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-method");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_method.xml");
         std::fs::write(
@@ -400,7 +400,7 @@ mod tests {
     fn test_xml_keyvalues() {
         let env = WowLuaEnv::new().unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-kv");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-kv");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_kv.xml");
         std::fs::write(
@@ -448,7 +448,7 @@ mod tests {
     fn test_xml_keyvalue_global_type_resolves_global_string() {
         let env = WowLuaEnv::new().unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-kv-global");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-kv-global");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_kv_global.xml");
         std::fs::write(
@@ -482,7 +482,7 @@ mod tests {
     fn test_xml_anchors_with_offset() {
         let env = WowLuaEnv::new().unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-offset");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-offset");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_offset.xml");
         std::fs::write(
@@ -528,7 +528,7 @@ mod tests {
     fn test_xml_size_with_absdimension() {
         let env = WowLuaEnv::new().unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-abssize");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-abssize");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_abssize.xml");
         std::fs::write(
@@ -620,7 +620,7 @@ mod tests {
     fn test_xml_texture_color() {
         let env = WowLuaEnv::new().unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-texcolor");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-texcolor");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_texcolor.xml");
         std::fs::write(
@@ -666,7 +666,7 @@ mod tests {
     fn test_xml_virtual_frames_skipped() {
         let env = WowLuaEnv::new().unwrap();
 
-        let temp_dir = std::env::temp_dir().join("wow-ui-sim-test-virtual");
+        let temp_dir = std::env::temp_dir().join("wow-sim-test-virtual");
         std::fs::create_dir_all(&temp_dir).unwrap();
         let xml_path = temp_dir.join("test_virtual.xml");
         std::fs::write(
@@ -806,7 +806,7 @@ mod tests {
         files: &[(&str, &str)],
     ) -> (TestCtx, mlua::Table) {
         let env = WowLuaEnv::new().unwrap();
-        let temp_dir = std::env::temp_dir().join(format!("wow-ui-sim-{}", dir_suffix));
+        let temp_dir = std::env::temp_dir().join(format!("wow-sim-{}", dir_suffix));
         std::fs::create_dir_all(&temp_dir).unwrap();
 
         let addon_table = env.create_addon_table().unwrap();

@@ -122,11 +122,10 @@ fn collect_texture_references(addons_path: &Path) -> HashSet<String> {
     let mut textures = find_texture_references(addons_path);
 
     let wow_ui_source = addons_path.parent().map(|p| p.join("BlizzardUI"));
-    if let Some(ref ui_source) = wow_ui_source {
-        if ui_source.exists() {
+    if let Some(ref ui_source) = wow_ui_source
+        && ui_source.exists() {
             textures.extend(find_texture_references(ui_source));
         }
-    }
 
     println!("Found {} unique texture references", textures.len());
     textures

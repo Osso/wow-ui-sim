@@ -11,7 +11,7 @@ use std::sync::RwLock;
 fn default_storage_path() -> PathBuf {
     dirs::data_local_dir()
         .unwrap_or_else(|| PathBuf::from("."))
-        .join("wow-ui-sim")
+        .join("wow-sim")
         .join("cvars.json")
 }
 

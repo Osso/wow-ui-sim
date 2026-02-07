@@ -90,11 +90,10 @@ fn add_create_texture_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
         let mut texture = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
 
-        if let Some(layer_str) = layer {
-            if let Some(draw_layer) = DrawLayer::from_str(&layer_str) {
+        if let Some(layer_str) = layer
+            && let Some(draw_layer) = DrawLayer::from_str(&layer_str) {
                 texture.draw_layer = draw_layer;
             }
-        }
 
         register_child_widget(lua, this, texture, &name)
     });
@@ -123,11 +122,10 @@ fn add_create_font_string_method<M: UserDataMethods<FrameHandle>>(methods: &mut 
 
         let mut fontstring = Frame::new(WidgetType::FontString, name.clone(), Some(this.id));
 
-        if let Some(layer_str) = layer {
-            if let Some(draw_layer) = DrawLayer::from_str(&layer_str) {
+        if let Some(layer_str) = layer
+            && let Some(draw_layer) = DrawLayer::from_str(&layer_str) {
                 fontstring.draw_layer = draw_layer;
             }
-        }
 
         register_child_widget(lua, this, fontstring, &name)
     });
@@ -152,7 +150,7 @@ fn add_create_animation_group_method<M: UserDataMethods<FrameHandle>>(methods: &
                 group_id,
                 state: Rc::clone(&this.state),
             };
-            Ok(lua.create_userdata(handle)?)
+            lua.create_userdata(handle)
         },
     );
 }

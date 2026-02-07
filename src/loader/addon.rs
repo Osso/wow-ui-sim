@@ -35,8 +35,8 @@ fn init_saved_variables(
         Ok(_) => {
             let saved_vars = toc.saved_variables();
             let saved_vars_per_char = toc.saved_variables_per_character();
-            if !saved_vars.is_empty() || !saved_vars_per_char.is_empty() {
-                if let Err(e) =
+            if (!saved_vars.is_empty() || !saved_vars_per_char.is_empty())
+                && let Err(e) =
                     mgr.init_for_addon(env.lua(), folder_name, &saved_vars, &saved_vars_per_char)
                 {
                     warnings.push(format!(
@@ -44,7 +44,6 @@ fn init_saved_variables(
                         folder_name, e
                     ));
                 }
-            }
         }
         Err(e) => {
             warnings.push(format!(

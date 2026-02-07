@@ -44,11 +44,10 @@ fn generate_fontstring_visual_code(fs: &crate::xml::FontStringXml) -> String {
         code.push_str("\n        fs:SetWordWrap(false)\n        ");
     }
 
-    if let Some(max_lines) = fs.max_lines {
-        if max_lines > 0 {
+    if let Some(max_lines) = fs.max_lines
+        && max_lines > 0 {
             code.push_str(&format!("\n        fs:SetMaxLines({})\n        ", max_lines));
         }
-    }
 
     if fs.set_all_points == Some(true) {
         code.push_str("\n        fs:SetAllPoints(true)\n        ");
@@ -79,14 +78,13 @@ fn generate_fontstring_parent_code(fs: &crate::xml::FontStringXml) -> String {
 fn sync_fontstring_text_to_rust(env: &WowLuaEnv, fs_name: &str, text: &str) {
     let state = env.state();
     let mut state_ref = state.borrow_mut();
-    if let Some(frame_id) = state_ref.widgets.get_id_by_name(fs_name) {
-        if let Some(frame) = state_ref.widgets.get_mut(frame_id) {
+    if let Some(frame_id) = state_ref.widgets.get_id_by_name(fs_name)
+        && let Some(frame) = state_ref.widgets.get_mut(frame_id) {
             frame.text = Some(text.to_string());
             if frame.height == 0.0 {
                 frame.height = frame.font_size.max(12.0);
             }
         }
-    }
 }
 
 /// Create a fontstring from XML definition.

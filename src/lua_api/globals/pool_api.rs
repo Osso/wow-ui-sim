@@ -63,7 +63,7 @@ fn acquire_texture(lua: &Lua, this: mlua::Table) -> Result<mlua::Table> {
 fn create_frame_pool_fn(lua: &Lua) -> Result<mlua::Function> {
     lua.create_function(|lua, args: mlua::MultiValue| {
         let args: Vec<Value> = args.into_iter().collect();
-        let frame_type: String = args.get(0)
+        let frame_type: String = args.first()
             .and_then(|v| v.as_str())
             .map(|s| s.to_string())
             .unwrap_or_else(|| "Frame".to_string());

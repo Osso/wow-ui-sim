@@ -446,7 +446,7 @@ fn find_addon_by_value<'a>(addons: &'a [AddonInfo], value: &Value) -> Option<&'a
         Value::Integer(idx) => addons.get((*idx - 1) as usize),
         Value::String(s) => {
             let name = s.to_string_lossy();
-            addons.iter().find(|a| a.folder_name == &*name)
+            addons.iter().find(|a| a.folder_name == *name)
         }
         _ => None,
     }
@@ -463,7 +463,7 @@ fn set_addon_enabled(state: &Rc<RefCell<SimState>>, addon: &Value, enabled: bool
         }
         Value::String(s) => {
             let name = s.to_string_lossy();
-            if let Some(a) = state.addons.iter_mut().find(|a| a.folder_name == &*name) {
+            if let Some(a) = state.addons.iter_mut().find(|a| a.folder_name == *name) {
                 a.enabled = enabled;
             }
         }

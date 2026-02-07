@@ -27,7 +27,7 @@ fn register_c_map(lua: &Lua) -> Result<mlua::Table> {
     t.set(
         "GetAreaInfo",
         lua.create_function(|lua, area_id: i32| {
-            Ok(Value::String(lua.create_string(&format!("Area_{}", area_id))?))
+            Ok(Value::String(lua.create_string(format!("Area_{}", area_id))?))
         })?,
     )?;
     t.set(

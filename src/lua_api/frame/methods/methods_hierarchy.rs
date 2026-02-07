@@ -17,15 +17,14 @@ pub fn add_hierarchy_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetParent", |lua, this, ()| {
         let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some(parent_id) = frame.parent_id {
+        if let Some(frame) = state.widgets.get(this.id)
+            && let Some(parent_id) = frame.parent_id {
                 let handle = FrameHandle {
                     id: parent_id,
                     state: Rc::clone(&this.state),
                 };
                 return Ok(Value::UserData(lua.create_userdata(handle)?));
             }
-        }
         Ok(Value::Nil)
     });
 
@@ -45,11 +44,10 @@ fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: Option<u64>) {
     // Remove from old parent's children list
     let old_parent_id = widgets.get(child_id).and_then(|f| f.parent_id);
-    if let Some(old_pid) = old_parent_id {
-        if let Some(old_parent) = widgets.get_mut(old_pid) {
+    if let Some(old_pid) = old_parent_id
+        && let Some(old_parent) = widgets.get_mut(old_pid) {
             old_parent.children.retain(|&id| id != child_id);
         }
-    }
 
     // Get parent's strata and level for inheritance
     let parent_props = new_parent_id.and_then(|pid| {
@@ -72,13 +70,11 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
     }
 
     // Add to new parent's children list
-    if let Some(new_pid) = new_parent_id {
-        if let Some(new_parent) = widgets.get_mut(new_pid) {
-            if !new_parent.children.contains(&child_id) {
+    if let Some(new_pid) = new_parent_id
+        && let Some(new_parent) = widgets.get_mut(new_pid)
+            && !new_parent.children.contains(&child_id) {
                 new_parent.children.push(child_id);
             }
-        }
-    }
 }
 
 /// SetParentKey, GetParentKey
@@ -86,26 +82,24 @@ fn add_parent_key_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetParentKey", |_, this, key: String| {
         let mut state = this.state.borrow_mut();
         let parent_id = state.widgets.get(this.id).and_then(|f| f.parent_id);
-        if let Some(pid) = parent_id {
-            if let Some(parent) = state.widgets.get_mut(pid) {
+        if let Some(pid) = parent_id
+            && let Some(parent) = state.widgets.get_mut(pid) {
                 parent.children_keys.insert(key, this.id);
             }
-        }
         Ok(())
     });
 
     methods.add_method("GetParentKey", |lua, this, ()| {
         let state = this.state.borrow();
         let parent_id = state.widgets.get(this.id).and_then(|f| f.parent_id);
-        if let Some(pid) = parent_id {
-            if let Some(parent) = state.widgets.get(pid) {
+        if let Some(pid) = parent_id
+            && let Some(parent) = state.widgets.get(pid) {
                 for (key, &cid) in &parent.children_keys {
                     if cid == this.id {
                         return Ok(Value::String(lua.create_string(key.as_bytes())?));
                     }
                 }
             }
-        }
         Ok(Value::Nil)
     });
 }

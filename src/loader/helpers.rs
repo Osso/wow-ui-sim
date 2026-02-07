@@ -92,11 +92,11 @@ pub fn get_size_values(size: &crate::xml::SizeXml) -> (Option<f32>, Option<f32>)
 /// Generate a simple random ID for anonymous frames.
 pub fn rand_id() -> u32 {
     use std::time::{SystemTime, UNIX_EPOCH};
-    let nanos = SystemTime::now()
+    
+    SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap()
-        .subsec_nanos();
-    nanos
+        .subsec_nanos()
 }
 
 /// Escape a string for use in Lua code.

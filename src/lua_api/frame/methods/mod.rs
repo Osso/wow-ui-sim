@@ -33,6 +33,14 @@ mod methods_script;
 mod methods_text;
 mod methods_texture;
 mod methods_widget;
+mod widget_cooldown;
+mod widget_editbox;
+mod widget_message_frame;
+mod widget_misc;
+mod widget_model;
+mod widget_scroll;
+mod widget_slider;
+mod widget_tooltip;
 
 // Re-export helpers for use by other modules if needed
 #[allow(unused_imports)]

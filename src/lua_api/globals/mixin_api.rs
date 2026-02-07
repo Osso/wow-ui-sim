@@ -114,7 +114,7 @@ fn add_pin_nudge_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
 fn register_menu(lua: &Lua) -> Result<mlua::Table> {
     let menu = lua.create_table()?;
     menu.set("GetOpenMenu", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    menu.set("GetOpenMenuTags", lua.create_function(|lua, ()| Ok(lua.create_table()?))?)?;
+    menu.set("GetOpenMenuTags", lua.create_function(|lua, ()| lua.create_table())?)?;
     menu.set("PopupMenu", lua.create_function(|_, _args: mlua::Variadic<Value>| Ok(()))?)?;
     menu.set("OpenMenu", lua.create_function(|_, _args: mlua::Variadic<Value>| Ok(()))?)?;
     menu.set("CloseAll", lua.create_function(|_, ()| Ok(()))?)?;

@@ -61,6 +61,12 @@ impl std::fmt::Debug for GlyphAtlas {
     }
 }
 
+impl Default for GlyphAtlas {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl GlyphAtlas {
     pub fn new() -> Self {
         Self {
@@ -213,6 +219,7 @@ fn write_glyph_pixels(
 }
 
 /// Shape text into a cosmic-text buffer and return total text height.
+#[allow(clippy::too_many_arguments)]
 fn shape_text_to_runs(
     font_system: &mut WowFontSystem,
     text: &str,
@@ -368,11 +375,10 @@ pub fn emit_text_quads(
     }
 
     // Render shadow (behind main text, in front of outline)
-    if let Some(sc) = shadow_color {
-        if sc[3] > 0.0 {
+    if let Some(sc) = shadow_color
+        && sc[3] > 0.0 {
             emit(batch, glyph_atlas, font_system, sc, shadow_offset.0, shadow_offset.1);
         }
-    }
 
     // Render main text
     emit(batch, glyph_atlas, font_system, color, 0.0, 0.0);

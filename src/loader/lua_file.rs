@@ -34,7 +34,7 @@ pub fn load_lua_file(
     let table_clone = ctx.table.clone();
 
     let lua_start = Instant::now();
-    env.exec_with_varargs(&code, &chunk_name, ctx.name, table_clone)
+    env.exec_with_varargs(code, &chunk_name, ctx.name, table_clone)
         .map_err(|e| LoadError::Lua(e.to_string()))?;
     timing.lua_exec_time += lua_start.elapsed();
 

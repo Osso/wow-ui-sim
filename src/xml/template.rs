@@ -138,7 +138,7 @@ pub fn clear_templates() {
 // Texture template registry (virtual textures with mixin/inherits)
 // ---------------------------------------------------------------------------
 
-use super::types::TextureXml;
+use super::types_elements::TextureXml;
 
 /// Global registry of virtual texture templates.
 fn texture_template_registry() -> &'static RwLock<HashMap<String, TextureXml>> {
@@ -160,15 +160,14 @@ pub fn collect_texture_mixins(texture: &TextureXml) -> Vec<String> {
     if let Some(ref inherits) = texture.inherits {
         let registry = texture_template_registry().read().unwrap();
         for parent_name in inherits.split(',').map(|s| s.trim()) {
-            if let Some(parent) = registry.get(parent_name) {
-                if let Some(ref m) = parent.mixin {
+            if let Some(parent) = registry.get(parent_name)
+                && let Some(ref m) = parent.mixin {
                     for mixin in m.split(',').map(|s| s.trim()) {
                         if !mixin.is_empty() && !mixins.contains(&mixin.to_string()) {
                             mixins.push(mixin.to_string());
                         }
                     }
                 }
-            }
         }
     }
 

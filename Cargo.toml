@@ -3,7 +3,7 @@ name = "wow-ui-sim"
 version = "0.1.0"
 edition = "2024"
 description = "World of Warcraft UI simulator for addon development"
-default-run = "wow-ui-sim"
+default-run = "wow-sim"
 
 [dependencies]
 mlua = { version = "0.10", features = ["lua51", "vendored"] }
@@ -41,7 +41,11 @@ webp = "0.3.1"
 
 [[bin]]
 name = "wow-sim"
-path = "src/bin/wow_sim/main.rs"
+path = "src/main.rs"
+
+[[bin]]
+name = "wow-cli"
+path = "src/bin/wow_cli/main.rs"
 
 [[bin]]
 name = "gen_atlas"
@@ -69,5 +73,9 @@ pollster = "0.4"
 tempfile = "3"
 
 [profile.release]
+lto = false
+incremental = true
+
+[profile.dev]
 lto = false
 incremental = true

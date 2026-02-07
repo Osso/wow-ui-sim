@@ -124,7 +124,7 @@ fn register_spec_info_lookups(lua: &Lua) -> Result<()> {
         ]))
     })?)?;
     globals.set("GetSpecializationInfoForClassID", lua.create_function(|lua, (_class_id, spec_index): (i32, i32)| {
-        if spec_index < 1 || spec_index > 4 {
+        if !(1..=4).contains(&spec_index) {
             return Ok(mlua::MultiValue::new());
         }
         Ok(mlua::MultiValue::from_vec(vec![

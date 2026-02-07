@@ -1,33 +1,9 @@
 //! Frame tree dump and diagnostic utilities.
 
-use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::widget::WidgetRegistry;
+use crate::widget::{Frame, WidgetRegistry, WidgetType};
 
-/// Load the UI and dump the frame tree (standalone, no server needed).
-pub fn dump_standalone(
-    filter: Option<String>,
-    visible_only: bool,
-    no_addons: bool,
-    no_saved_vars: bool,
-) {
-    let (env, _font_system) = super::create_standalone_env(no_addons, no_saved_vars);
-
-    // Load debug script if present
-    if let Ok(script) = std::fs::read_to_string("/tmp/debug-scrollbox-update.lua") {
-        let _ = env.exec(&script);
-    }
-
-    super::fire_startup_events(&env);
-
-    // Hide frames that WoW's C++ engine hides by default (no target, no group, etc.).
-    // Must run AFTER startup events since PLAYER_ENTERING_WORLD handlers may re-show frames.
-    let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
-
-    print_addon_list(&env);
-
-    let state = env.state().borrow();
-    let widgets = &state.widgets;
-
+/// Dump the frame tree to stdout.
+pub fn print_frame_tree(widgets: &WidgetRegistry, filter: Option<&str>, visible_only: bool) {
     let mut roots = collect_root_frames(widgets);
     roots.sort_by(|a, b| {
         let name_a = a.1.as_deref().unwrap_or("");
@@ -35,37 +11,12 @@ pub fn dump_standalone(
         name_a.cmp(name_b)
     });
 
-    let version_check = state.cvars.get_bool("checkAddonVersion");
-    eprintln!(
-        "Load out of date addons: {}",
-        if version_check { "off" } else { "on" }
-    );
-
     print_anchor_diagnostic(widgets);
     eprintln!("\n=== Frame Tree ===\n");
 
     for (id, _) in &roots {
-        print_frame(widgets, *id, 0, &filter, visible_only);
+        print_frame(widgets, *id, 0, filter, visible_only);
     }
-}
-
-/// Print the addon list via Lua.
-fn print_addon_list(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        local num = C_AddOns.GetNumAddOns()
-        if num > 0 then
-            print("\n=== Addons (" .. num .. ") ===\n")
-            for i = 1, num do
-                local name, title, notes, loadable, reason, security = C_AddOns.GetAddOnInfo(i)
-                local loaded = C_AddOns.IsAddOnLoaded(i)
-                local enabled = C_AddOns.GetAddOnEnableState(i) > 0
-                local status = loaded and "loaded" or (enabled and "enabled" or "disabled")
-                print(string.format("  [%d] %s (%s) [%s]", i, tostring(title), tostring(name), status))
-            end
-        end
-        "#,
-    );
 }
 
 /// Collect root frames (no parent).
@@ -153,11 +104,7 @@ fn print_no_key_breakdown(no_key: &[String]) {
 }
 
 /// Find the parentKey name for a widget in its parent's children_keys.
-fn find_parent_key(
-    widgets: &WidgetRegistry,
-    w: &wow_ui_sim::widget::Frame,
-    id: u64,
-) -> Option<String> {
+fn find_parent_key(widgets: &WidgetRegistry, w: &Frame, id: u64) -> Option<String> {
     let pid = w.parent_id?;
     let p = widgets.get(pid)?;
     p.children_keys
@@ -171,7 +118,7 @@ fn print_frame(
     widgets: &WidgetRegistry,
     id: u64,
     depth: usize,
-    filter: &Option<String>,
+    filter: Option<&str>,
     visible_only: bool,
 ) {
     let Some(frame) = widgets.get(id) else { return };
@@ -182,7 +129,6 @@ fn print_frame(
 
     let display_name = resolve_display_name(widgets, frame, id);
     let matches_filter = filter
-        .as_ref()
         .map(|f| display_name.to_lowercase().contains(&f.to_lowercase()))
         .unwrap_or(true);
 
@@ -196,12 +142,7 @@ fn print_frame(
 }
 
 /// Format and print a single frame line.
-fn print_frame_line(
-    frame: &wow_ui_sim::widget::Frame,
-    display_name: &str,
-    depth: usize,
-    widgets: &WidgetRegistry,
-) {
+fn print_frame_line(frame: &Frame, display_name: &str, depth: usize, widgets: &WidgetRegistry) {
     let indent = "  ".repeat(depth);
     let vis = if frame.visible { "visible" } else { "hidden" };
     let keys: Vec<_> = frame.children_keys.keys().collect();
@@ -216,7 +157,7 @@ fn print_frame_line(
     let text_str = resolve_display_text(widgets, frame)
         .map(|t| format!(" text={:?}", t))
         .unwrap_or_default();
-    let font_str = if frame.widget_type == wow_ui_sim::widget::WidgetType::FontString {
+    let font_str = if frame.widget_type == WidgetType::FontString {
         format!(
             " font={:?} size={}",
             frame.font.as_deref().unwrap_or("(none)"),
@@ -240,30 +181,24 @@ fn print_frame_line(
 }
 
 /// Resolve a display name for a frame: global name, parentKey, or "(anonymous)".
-fn resolve_display_name(
-    widgets: &WidgetRegistry,
-    frame: &wow_ui_sim::widget::Frame,
-    id: u64,
-) -> String {
-    if let Some(ref name) = frame.name {
-        if !name.starts_with("__anon_")
+fn resolve_display_name(widgets: &WidgetRegistry, frame: &Frame, id: u64) -> String {
+    if let Some(ref name) = frame.name
+        && !name.starts_with("__anon_")
             && !name.starts_with("__frame_")
             && !name.starts_with("__tex_")
             && !name.starts_with("__fs_")
         {
             return name.clone();
         }
-    }
 
-    if let Some(parent_id) = frame.parent_id {
-        if let Some(parent) = widgets.get(parent_id) {
+    if let Some(parent_id) = frame.parent_id
+        && let Some(parent) = widgets.get(parent_id) {
             for (key, &child_id) in &parent.children_keys {
                 if child_id == id {
                     return format!(".{}", key);
                 }
             }
         }
-    }
 
     frame
         .name
@@ -273,26 +208,19 @@ fn resolve_display_name(
 }
 
 /// Get display text for a frame: its own text, or text from a Title/TitleText child.
-fn resolve_display_text(
-    widgets: &WidgetRegistry,
-    frame: &wow_ui_sim::widget::Frame,
-) -> Option<String> {
-    if let Some(ref t) = frame.text {
-        if !t.is_empty() {
+fn resolve_display_text(widgets: &WidgetRegistry, frame: &Frame) -> Option<String> {
+    if let Some(ref t) = frame.text
+        && !t.is_empty() {
             return Some(strip_wow_escapes(t));
         }
-    }
 
     for key in &["Title", "TitleText"] {
-        if let Some(&child_id) = frame.children_keys.get(*key) {
-            if let Some(child) = widgets.get(child_id) {
-                if let Some(ref t) = child.text {
-                    if !t.is_empty() {
+        if let Some(&child_id) = frame.children_keys.get(*key)
+            && let Some(child) = widgets.get(child_id)
+                && let Some(ref t) = child.text
+                    && !t.is_empty() {
                         return Some(strip_wow_escapes(t));
                     }
-                }
-            }
-        }
     }
 
     None

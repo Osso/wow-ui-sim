@@ -34,11 +34,10 @@ fn add_set_backdrop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 if let Ok(edge_size) = info.get::<f32>("edgeSize") {
                     frame.backdrop.edge_size = edge_size;
                 }
-                if let Ok(insets) = info.get::<mlua::Table>("insets") {
-                    if let Ok(left) = insets.get::<f32>("left") {
+                if let Ok(insets) = info.get::<mlua::Table>("insets")
+                    && let Ok(left) = insets.get::<f32>("left") {
                         frame.backdrop.insets = left;
                     }
-                }
             } else {
                 frame.backdrop.enabled = false;
                 frame.backdrop.bg_file = None;

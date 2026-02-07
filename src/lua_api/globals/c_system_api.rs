@@ -285,7 +285,7 @@ fn create_get_faction_info(lua: &Lua, race_id: i32) -> Result<Value> {
         // Horde races
         2 | 5 | 6 | 8 | 9 | 10 | 27 | 28 | 31 | 35 | 36 => ("Horde", "Horde"),
         // Neutral (Pandaren)
-        24 | 25 | 26 => ("Neutral", "Neutral"),
+        24..=26 => ("Neutral", "Neutral"),
         // Dracthyr - can be either, default to neutral
         52 | 70 => ("Neutral", "Neutral"),
         // Earthen - can be either, default to neutral

@@ -48,6 +48,7 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 }
 
 /// Parse the arguments to CreateFrame: (frameType, name, parent, template).
+#[allow(clippy::type_complexity)]
 fn parse_create_frame_args(
     lua: &Lua,
     args: &mlua::MultiValue,
@@ -125,20 +126,17 @@ fn register_new_frame(
 
     // If a frame with this name already exists, orphan it (WoW behavior: old frame
     // becomes unreachable via global, but still exists in the registry).
-    if let Some(ref n) = name {
-        if let Some(old_id) = state.widgets.get_id_by_name(n) {
-            if let Some(old_frame) = state.widgets.get(old_id) {
-                if let Some(old_parent_id) = old_frame.parent_id {
-                    if let Some(old_parent) = state.widgets.get_mut(old_parent_id) {
+    if let Some(ref n) = name
+        && let Some(old_id) = state.widgets.get_id_by_name(n) {
+            if let Some(old_frame) = state.widgets.get(old_id)
+                && let Some(old_parent_id) = old_frame.parent_id
+                    && let Some(old_parent) = state.widgets.get_mut(old_parent_id) {
                         old_parent.children.retain(|&c| c != old_id);
                     }
-                }
-            }
             if let Some(old_frame) = state.widgets.get_mut(old_id) {
                 old_frame.visible = false;
             }
         }
-    }
 
     state.widgets.register(frame);
 
@@ -147,12 +145,11 @@ fn register_new_frame(
 
         // Inherit strata and level from parent (like wowless does)
         let parent_props = state.widgets.get(pid).map(|p| (p.frame_strata, p.frame_level));
-        if let Some((parent_strata, parent_level)) = parent_props {
-            if let Some(f) = state.widgets.get_mut(frame_id) {
+        if let Some((parent_strata, parent_level)) = parent_props
+            && let Some(f) = state.widgets.get_mut(frame_id) {
                 f.frame_strata = parent_strata;
                 f.frame_level = parent_level + 1;
             }
-        }
     }
 
     frame_id

@@ -26,6 +26,7 @@ pub fn register_ui_frames(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
 }
 
 /// Helper to create a named frame, register it, and set it as a Lua global.
+#[allow(clippy::too_many_arguments)]
 fn create_and_register_frame(
     lua: &Lua,
     state: &Rc<RefCell<SimState>>,

@@ -225,8 +225,8 @@ impl WowLuaEnv {
             }
 
             // Check if this SLASH_ variable matches our command
-            if let Value::String(slash_str) = value {
-                if slash_str.to_str()?.to_lowercase() == cmd_lower {
+            if let Value::String(slash_str) = value
+                && slash_str.to_str()?.to_lowercase() == cmd_lower {
                     // Found a match! Look up the handler in SlashCmdList
                     let handler: Option<mlua::Function> = slash_cmd_list.get(name).ok();
                     if let Some(handler) = handler {
@@ -235,7 +235,6 @@ impl WowLuaEnv {
                         return Ok(true);
                     }
                 }
-            }
         }
 
         Ok(false)
@@ -265,12 +264,11 @@ impl WowLuaEnv {
         state.screen_width = width;
         state.screen_height = height;
         for name in &["UIParent", "WorldFrame"] {
-            if let Some(id) = state.widgets.get_id_by_name(name) {
-                if let Some(frame) = state.widgets.get_mut(id) {
+            if let Some(id) = state.widgets.get_id_by_name(name)
+                && let Some(frame) = state.widgets.get_mut(id) {
                     frame.width = width;
                     frame.height = height;
                 }
-            }
         }
     }
 
@@ -459,6 +457,7 @@ impl WowLuaEnv {
     pub fn has_pending_timers(&self) -> bool {
         !self.state.borrow().timers.is_empty()
     }
+
 
     /// Fire OnUpdate handlers for all frames that have them registered,
     /// then tick animation groups.

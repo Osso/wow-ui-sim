@@ -51,6 +51,7 @@ impl TextRenderer {
     }
 
     /// Draw text on a canvas frame with WoW-style justification.
+    #[allow(clippy::too_many_arguments)]
     pub fn draw_justified_text(
         frame: &mut Frame,
         text: &str,
@@ -126,14 +127,12 @@ pub fn strip_wow_markup(text: &str) -> String {
                     let end_marker = if next == 'T' { 't' } else { 'a' };
                     chars.next(); // consume T or A
                     while let Some(ch) = chars.next() {
-                        if ch == '|' {
-                            if let Some(&marker) = chars.peek() {
-                                if marker == end_marker {
+                        if ch == '|'
+                            && let Some(&marker) = chars.peek()
+                                && marker == end_marker {
                                     chars.next(); // consume the end marker
                                     break;
                                 }
-                            }
-                        }
                     }
                     continue;
                 }

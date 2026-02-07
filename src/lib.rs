@@ -15,6 +15,7 @@ pub mod manifest_interface_data;
 #[path = "../data/spells.rs"]
 pub mod spells;
 pub mod cvars;
+pub mod dump;
 pub mod error;
 pub mod event;
 pub mod extract_textures;

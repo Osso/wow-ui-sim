@@ -33,11 +33,10 @@ fn register_frame_global_with_visibility(
     let id = {
         let mut st = state.borrow_mut();
         if let Some(existing) = st.widgets.get_id_by_name(name) {
-            if !visible {
-                if let Some(frame) = st.widgets.get_mut(existing) {
+            if !visible
+                && let Some(frame) = st.widgets.get_mut(existing) {
                     frame.visible = false;
                 }
-            }
             existing
         } else {
             let mut frame = Frame::new(WidgetType::Frame, Some(name.to_string()), None);

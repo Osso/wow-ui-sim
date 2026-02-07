@@ -8,7 +8,7 @@
 //!
 //! Loading priority:
 //! 1. WTF directory (real WoW installation, if configured)
-//! 2. Simulator storage (~/.local/share/wow-ui-sim/SavedVariables/)
+//! 2. Simulator storage (~/.local/share/wow-sim/SavedVariables/)
 
 use mlua::{Lua, Result, Table, Value};
 use std::collections::HashMap;
@@ -93,7 +93,7 @@ impl SavedVariablesManager {
     pub fn new() -> Self {
         let storage_dir = dirs::data_local_dir()
             .unwrap_or_else(|| PathBuf::from("."))
-            .join("wow-ui-sim")
+            .join("wow-sim")
             .join("SavedVariables");
 
         Self {
@@ -191,7 +191,7 @@ impl SavedVariablesManager {
 
     /// Load a WTF Lua file, executing it to set global variables.
     fn load_wtf_lua_file(&self, lua: &Lua, path: &std::path::Path) -> Result<()> {
-        let content = fs::read_to_string(path).map_err(|e| mlua::Error::external(e))?;
+        let content = fs::read_to_string(path).map_err(mlua::Error::external)?;
         // Strip UTF-8 BOM if present
         let content = content.strip_prefix('\u{feff}').unwrap_or(&content);
 

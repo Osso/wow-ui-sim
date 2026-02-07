@@ -295,6 +295,7 @@ impl QuadBatch {
     }
 
     /// Push a horizontal 3-slice texture with custom blend mode.
+    #[allow(clippy::too_many_arguments)]
     pub fn push_three_slice_h_path_blend(
         &mut self,
         bounds: Rectangle,

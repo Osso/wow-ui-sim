@@ -243,7 +243,7 @@ fn register_global_access(lua: &Lua) -> Result<()> {
             let chunk_name = name.unwrap_or_else(|| "=(loadstring)".to_string());
             match lua.load(&code).set_name(&chunk_name).into_function() {
                 Ok(func) => Ok((Value::Function(func), Value::Nil)),
-                Err(e) => Ok((Value::Nil, Value::String(lua.create_string(&e.to_string())?))),
+                Err(e) => Ok((Value::Nil, Value::String(lua.create_string(e.to_string())?))),
             }
         })?,
     )?;
@@ -293,7 +293,7 @@ fn register_security_functions(lua: &Lua) -> Result<()> {
     globals.set(
         "SecureCmdOptionParse",
         lua.create_function(|lua, options: String| {
-            if let Some(last) = options.split(';').last() {
+            if let Some(last) = options.split(';').next_back() {
                 Ok(Value::String(lua.create_string(last.trim())?))
             } else {
                 Ok(Value::Nil)
@@ -356,17 +356,15 @@ fn register_secureexecuterange(lua: &Lua) -> Result<()> {
         "secureexecuterange",
         lua.create_function(
             |_, (tbl, func, args): (mlua::Table, mlua::Function, mlua::MultiValue)| {
-                for pair in tbl.pairs::<Value, Value>() {
-                    if let Ok((key, value)) = pair {
-                        let mut call_args = mlua::MultiValue::new();
-                        call_args.push_front(value);
-                        call_args.push_front(key);
-                        for arg in args.iter() {
-                            call_args.push_back(arg.clone());
-                        }
-                        if let Err(e) = func.call::<()>(call_args) {
-                            tracing::warn!("secureexecuterange callback error: {}", e);
-                        }
+                for (key, value) in tbl.pairs::<Value, Value>().flatten() {
+                    let mut call_args = mlua::MultiValue::new();
+                    call_args.push_front(value);
+                    call_args.push_front(key);
+                    for arg in args.iter() {
+                        call_args.push_back(arg.clone());
+                    }
+                    if let Err(e) = func.call::<()>(call_args) {
+                        tracing::warn!("secureexecuterange callback error: {}", e);
                     }
                 }
                 Ok(())

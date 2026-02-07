@@ -149,7 +149,7 @@ fn make_color_table(lua: &Lua, r: f64, g: f64, b: f64, a: f64) -> Result<mlua::T
         let b: f64 = this.get("b")?;
         let hex = format!("{:02x}{:02x}{:02x}",
             (r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8);
-        Ok(mlua::Value::String(lua.create_string(&format!("|cff{}{}|r", hex, text))?))
+        Ok(mlua::Value::String(lua.create_string(format!("|cff{}{}|r", hex, text))?))
     })?)?;
     Ok(t)
 }

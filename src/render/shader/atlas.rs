@@ -216,12 +216,7 @@ impl GpuTextureAtlas {
         }
         // If texture is larger than max tier or all appropriate tiers are full,
         // try to fit in the largest tier with scaling
-        for i in (0..NUM_TIERS).rev() {
-            if !self.tiers[i].is_full() {
-                return Some(i);
-            }
-        }
-        None
+        (0..NUM_TIERS).rev().find(|&i| !self.tiers[i].is_full())
     }
 
     /// Upload a texture to the atlas, returning its entry.

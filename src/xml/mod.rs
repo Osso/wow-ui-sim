@@ -3,6 +3,7 @@
 mod parse;
 mod template;
 mod types;
+mod types_elements;
 
 // Re-export all public types and functions
 pub use parse::{parse_xml, parse_xml_file, XmlLoadError};
@@ -11,12 +12,16 @@ pub use template::{
     register_template, register_texture_template, TemplateEntry, TemplateInfo,
 };
 pub use types::{
-    AbsDimensionXml, ActorXml, ActorsXml, AnchorXml, AnchorsXml, AnimationElement,
-    AnimationGroupXml, AnimationXml, AnimationsXml, BackdropXml, ColorXml, FontFamilyXml,
-    FontRefXml, FontStringXml, FontXml, FrameChildElement, FrameElement, FrameXml, FramesXml,
-    IncludeXml, InsetsXml, KeyValueXml, KeyValuesXml, LayerElement, LayerXml, LayersXml, OffsetXml,
-    ResizeBoundsXml, ScriptBodyXml, ScriptXml, ScriptsXml, ScrollChildXml, SizeXml, TextureXml,
+    AbsDimensionXml, AnchorXml, AnchorsXml, AnimationsXml, BackdropXml, ColorXml,
+    FontRefXml, FrameChildElement, FrameXml,
+    InsetsXml, KeyValueXml, KeyValuesXml, OffsetXml,
+    ResizeBoundsXml, ScriptBodyXml, ScriptsXml, ScrollChildXml, SizeXml,
     UiXml, XmlElement,
+};
+pub use types_elements::{
+    ActorXml, ActorsXml, AnimationElement, AnimationGroupXml, AnimationXml, FontFamilyXml,
+    FontStringXml, FontXml, FrameElement, FramesXml, IncludeXml, LayerElement, LayerXml,
+    LayersXml, ScriptXml, TextureXml,
 };
 
 #[cfg(test)]

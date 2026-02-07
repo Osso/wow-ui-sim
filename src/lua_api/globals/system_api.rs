@@ -131,13 +131,13 @@ fn register_xpcall(lua: &Lua) -> Result<()> {
                 Ok(ret)
             }
             Err(e) => {
-                let error_msg = lua.create_string(&e.to_string())?;
+                let error_msg = lua.create_string(e.to_string())?;
                 let handler_result = error_handler.call::<Value>(Value::String(error_msg));
                 let mut ret = mlua::MultiValue::new();
                 ret.push_back(Value::Boolean(false));
                 match handler_result {
                     Ok(v) => ret.push_back(v),
-                    Err(he) => ret.push_back(Value::String(lua.create_string(&he.to_string())?)),
+                    Err(he) => ret.push_back(Value::String(lua.create_string(he.to_string())?)),
                 }
                 Ok(ret)
             }
@@ -406,7 +406,7 @@ fn register_streaming_stubs(lua: &Lua) -> Result<()> {
 fn register_error_callstack_stubs(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     globals.set("GetCallstackHeight", lua.create_function(|_, ()| Ok(2i32))?)?;
-    globals.set("SetErrorCallstackHeight", lua.create_function(|_, _height: i32| Ok(()))?)?;
+    globals.set("SetErrorCallstackHeight", lua.create_function(|_, _height: Option<i32>| Ok(()))?)?;
     Ok(())
 }
 

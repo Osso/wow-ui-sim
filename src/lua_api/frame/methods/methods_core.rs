@@ -390,12 +390,11 @@ fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFrameStrata", |_, this, strata: String| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            if let Some(s) = crate::widget::FrameStrata::from_str(&strata) {
+        if let Some(frame) = state.widgets.get_mut(this.id)
+            && let Some(s) = crate::widget::FrameStrata::from_str(&strata) {
                 frame.frame_strata = s;
                 frame.has_fixed_frame_strata = true;
             }
-        }
         Ok(())
     });
 
