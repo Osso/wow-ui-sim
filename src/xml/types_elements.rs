@@ -26,7 +26,7 @@ impl LayerXml {
     /// Get all Texture elements in this layer.
     pub fn textures(&self) -> impl Iterator<Item = &TextureXml> {
         self.elements.iter().filter_map(|e| match e {
-            LayerElement::Texture(t) => Some(t),
+            LayerElement::Texture(t) | LayerElement::MaskTexture(t) => Some(t),
             _ => None,
         })
     }

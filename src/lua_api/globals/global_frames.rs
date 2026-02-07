@@ -149,6 +149,8 @@ fn register_chat_frame_util(lua: &Lua) -> Result<()> {
         "GetChatWindowName",
         lua.create_function(|_, frame_id: i32| Ok(format!("Chat Window {}", frame_id)))?,
     )?;
+    chat_frame_util.set("RegisterForStickyFocus", lua.create_function(|_, _frame: Value| Ok(()))?)?;
+    chat_frame_util.set("UnregisterForStickyFocus", lua.create_function(|_, _frame: Value| Ok(()))?)?;
     lua.globals().set("ChatFrameUtil", chat_frame_util)?;
     Ok(())
 }
@@ -260,7 +262,7 @@ fn setup_alert_frame(lua: &Lua) -> Result<()> {
 }
 
 /// Set up EditModeManagerFrame with AccountSettings child frame.
-fn setup_edit_mode_manager(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+fn setup_edit_mode_manager(_lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     // AccountSettings is a child frame with parentKey="AccountSettings"
     let emm_id = state.borrow().widgets.get_id_by_name("EditModeManagerFrame");
     if let Some(parent_id) = emm_id {
@@ -269,15 +271,12 @@ fn setup_edit_mode_manager(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
         let child_id = child.id;
         state.borrow_mut().widgets.register(child);
         state.borrow_mut().widgets.add_child(parent_id, child_id);
-
-        // Expose as EditModeManagerFrame.AccountSettings in Lua
-        let handle = FrameHandle {
-            id: child_id,
-            state: Rc::clone(state),
-        };
-        let ud = lua.create_userdata(handle)?;
-        let emm_ud: mlua::AnyUserData = lua.globals().get("EditModeManagerFrame")?;
-        emm_ud.set("AccountSettings", ud)?;
+        {
+            let mut st = state.borrow_mut();
+            if let Some(parent) = st.widgets.get_mut(parent_id) {
+                parent.children_keys.insert("AccountSettings".to_string(), child_id);
+            }
+        }
     }
     Ok(())
 }

@@ -211,8 +211,9 @@ fn add_get_point_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let state = this.state.borrow();
         if let Some(frame) = state.widgets.get(this.id)
             && let Some(anchor) = frame.anchors.get(idx as usize) {
-                let relative_to: Value = if let Some(rel_id) = anchor.relative_to_id {
-                    let frame_ref_key = format!("__frame_{}", rel_id);
+                let rel_id = anchor.relative_to_id.or(frame.parent_id.map(|p| p as usize));
+                let relative_to: Value = if let Some(id) = rel_id {
+                    let frame_ref_key = format!("__frame_{}", id);
                     lua.globals()
                         .get(frame_ref_key.as_str())
                         .unwrap_or(Value::Nil)

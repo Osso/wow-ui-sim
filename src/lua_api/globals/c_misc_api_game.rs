@@ -28,6 +28,8 @@ pub(super) fn register_all(lua: &Lua) -> Result<()> {
     register_c_crafting_orders(lua)?;
     register_expansion_landing_page(lua)?;
     register_minimap_globals(lua)?;
+    register_c_equipment_set(lua)?;
+    register_c_adventure_journal(lua)?;
     Ok(())
 }
 
@@ -131,6 +133,10 @@ fn register_c_artifact_and_azerite(lua: &Lua) -> Result<()> {
     az.set("IsAzeriteItemAtMaxLevel", lua.create_function(|_, ()| Ok(true))?)?;
     az.set("IsAzeriteItemEnabled", lua.create_function(|_, _i: Value| Ok(false))?)?;
     lua.globals().set("C_AzeriteItem", az)?;
+
+    let aze = lua.create_table()?;
+    aze.set("IsAzeriteEmpoweredItem", lua.create_function(|_, _loc: Value| Ok(false))?)?;
+    lua.globals().set("C_AzeriteEmpoweredItem", aze)?;
     Ok(())
 }
 
@@ -248,6 +254,9 @@ fn register_global_account_stubs(lua: &Lua) -> Result<()> {
     g.set("GetExpansionTrialInfo", lua.create_function(|_, ()| Ok((false, 0i32)))?)?;
     g.set("UnitTrialBankedLevels", lua.create_function(|_, _u: Option<String>| Ok(0i32))?)?;
     g.set("IsInGuild", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetGuildLogoInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    g.set("HasCompletedAnyAchievement", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("CanShowAchievementUI", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("SortQuestSortTypes", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("SortQuests", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("QuestMapUpdateAllQuests", lua.create_function(|_, ()| Ok(0i32))?)?;
@@ -311,5 +320,28 @@ fn register_minimap_globals(lua: &Lua) -> Result<()> {
     g.set("CovenantCalling_CheckCallings", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("ToggleMajorFactionRenown", lua.create_function(|_, _fid: Value| Ok(()))?)?;
     g.set("GetGameTime", lua.create_function(|_, ()| Ok((12i32, 0i32)))?)?;
+    Ok(())
+}
+
+fn register_c_equipment_set(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetEquipmentSetIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetNumEquipmentSets", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetEquipmentSetInfo", lua.create_function(|_, _id: Value| Ok(Value::Nil))?)?;
+    t.set("GetEquipmentSetID", lua.create_function(|_, _name: Value| Ok(Value::Nil))?)?;
+    t.set("GetIgnoredSlots", lua.create_function(|lua, _id: Value| lua.create_table())?)?;
+    t.set("GetEquipmentSetAssignedSpec", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
+    lua.globals().set("C_EquipmentSet", t)?;
+    Ok(())
+}
+
+fn register_c_adventure_journal(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("CanBeShown", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("UpdateSuggestions", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("GetNumAvailableSuggestions", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetPrimaryOffset", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("SetPrimaryOffset", lua.create_function(|_, _off: i32| Ok(()))?)?;
+    lua.globals().set("C_AdventureJournal", t)?;
     Ok(())
 }

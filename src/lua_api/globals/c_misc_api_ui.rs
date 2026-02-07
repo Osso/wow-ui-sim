@@ -236,6 +236,7 @@ fn register_c_housing(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("GetTrackedHouseGuid", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("IsInsideHouse", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsHousingServiceEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("C_Housing", t)?;
 
     let t = lua.create_table()?;

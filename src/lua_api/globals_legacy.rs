@@ -47,7 +47,23 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     register_create_frame(lua, Rc::clone(&state))?;
     register_submodule_apis(lua, &state)?;
     register_ui_strings_and_fonts(lua)?;
+    patch_string_format(lua)?;
     Ok(())
+}
+
+/// Patch string.format to support %F (uppercase float), which Lua 5.1 lacks.
+/// WoW's patched LuaJIT supports this; we convert %F→%f before calling the original.
+fn patch_string_format(lua: &Lua) -> Result<()> {
+    lua.load(r#"
+        local _format = string.format
+        string.format = function(fmt, ...)
+            if type(fmt) == "string" then
+                fmt = fmt:gsub("%%(%d*%.?%d*)F", "%%%1f")
+            end
+            return _format(fmt, ...)
+        end
+        format = string.format
+    "#).exec()
 }
 
 /// Override `print` to capture output to the console buffer.

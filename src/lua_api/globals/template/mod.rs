@@ -292,12 +292,21 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
 }
 
 /// Fire OnLoad on a created child frame.
+///
+/// Checks both `GetScript("OnLoad")` (set via SetScript in XML) and `frame.OnLoad`
+/// (set via mixin), matching the behavior of `fire_lifecycle_scripts` in xml_frame.rs.
 fn fire_on_load(lua: &Lua, frame_name: &str) {
     let code = format!(
         r#"
         local frame = {0}
         if frame then
-            if type(frame.OnLoad) == "function" then
+            local handler = frame:GetScript("OnLoad")
+            if handler then
+                local ok, err = pcall(handler, frame)
+                if not ok then
+                    print("[fire_on_load] {0} error: " .. tostring(err))
+                end
+            elseif type(frame.OnLoad) == "function" then
                 local ok, err = pcall(frame.OnLoad, frame)
                 if not ok then
                     print("[fire_on_load] {0} error: " .. tostring(err))
@@ -338,7 +347,12 @@ fn create_child_frame_from_template(
         .unwrap_or_else(|| format!("__frame_{}", rand_id()));
 
     let code = build_create_child_code(frame, widget_type, parent_name, &child_name);
-    let _ = lua.load(&code).exec();
+    if let Err(e) = lua.load(&code).exec() {
+        eprintln!(
+            "[template] Failed to create child '{}' (type={}) under '{}': {}",
+            child_name, widget_type, parent_name, e
+        );
+    }
 
     let nested_names = apply_inline_frame_content(lua, frame, &child_name);
 
@@ -585,11 +599,7 @@ fn escape_lua_string(s: &str) -> String {
         .replace('\r', "\\r")
 }
 
-/// Generate a simple random ID.
-fn rand_id() -> u32 {
-    use std::time::{SystemTime, UNIX_EPOCH};
-    SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .subsec_nanos()
+/// Generate a unique ID (delegates to shared atomic counter).
+fn rand_id() -> u64 {
+    crate::loader::helpers::rand_id()
 }

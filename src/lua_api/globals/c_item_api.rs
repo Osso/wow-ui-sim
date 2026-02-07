@@ -19,44 +19,18 @@ pub fn register_c_item_api(lua: &Lua) -> Result<()> {
 /// Register the C_Item namespace.
 fn register_c_item(lua: &Lua) -> Result<()> {
     let c_item = lua.create_table()?;
+    register_c_item_info_methods(lua, &c_item)?;
+    register_c_item_query_methods(lua, &c_item)?;
+    register_c_item_link_methods(lua, &c_item)?;
+    register_c_item_stub_methods(lua, &c_item)?;
+    lua.globals().set("C_Item", c_item)?;
+    Ok(())
+}
 
-    c_item.set(
-        "GetItemInfo",
-        lua.create_function(|lua, item_id: Value| {
-            let id = parse_item_id_from_value(&item_id);
-            if id == 0 {
-                return Ok(Value::Nil);
-            }
-            let Some(item) = crate::items::get_item(id as u32) else {
-                return Ok(Value::Nil);
-            };
-            let color = quality_color(item.quality);
-            let link = format!(
-                "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
-                color, id, item.name
-            );
-            let result = lua.create_table()?;
-            result.set("itemName", item.name)?;
-            result.set("itemLink", lua.create_string(&link)?)?;
-            result.set("itemQuality", item.quality as i32)?;
-            result.set("itemLevel", item.item_level as i32)?;
-            result.set("itemMinLevel", item.required_level as i32)?;
-            result.set("itemType", item_class_from_inv_type(item.inventory_type))?;
-            result.set("itemSubType", "")?;
-            result.set("itemStackCount", item.stackable as i32)?;
-            result.set("itemEquipLoc", inv_type_to_equip_loc(item.inventory_type))?;
-            result.set("itemTexture", 134400)?;
-            result.set("sellPrice", item.sell_price as i64)?;
-            result.set("classID", 15)?;
-            result.set("subclassID", 0)?;
-            result.set("bindType", item.bonding as i32)?;
-            result.set("expacID", item.expansion_id as i32)?;
-            result.set("isCraftingReagent", false)?;
-            Ok(Value::Table(result))
-        })?,
-    )?;
-
-    c_item.set(
+/// C_Item methods: GetItemInfo, GetItemInfoInstant, GetItemIDForItemInfo.
+fn register_c_item_info_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetItemInfo", make_c_item_get_item_info(lua)?)?;
+    t.set(
         "GetItemInfoInstant",
         lua.create_function(|lua, item_id: Value| {
             let id = parse_item_id_from_value(&item_id);
@@ -83,93 +57,98 @@ fn register_c_item(lua: &Lua) -> Result<()> {
             ]))
         })?,
     )?;
-
-    c_item.set(
+    t.set(
         "GetItemIDForItemInfo",
         lua.create_function(|_, item_id: Value| {
             let id = parse_item_id_from_value(&item_id);
-            if id == 0 {
-                Ok(Value::Nil)
-            } else {
-                Ok(Value::Integer(id as i64))
-            }
+            if id == 0 { Ok(Value::Nil) } else { Ok(Value::Integer(id as i64)) }
         })?,
     )?;
+    Ok(())
+}
 
-    c_item.set(
-        "GetItemIconByID",
-        lua.create_function(|_, _item_id: i32| Ok(134400i32))?,
-    )?;
+/// Build the C_Item.GetItemInfo closure (returns a table of item properties).
+fn make_c_item_get_item_info(lua: &Lua) -> Result<mlua::Function> {
+    lua.create_function(|lua, item_id: Value| {
+        let id = parse_item_id_from_value(&item_id);
+        if id == 0 {
+            return Ok(Value::Nil);
+        }
+        let Some(item) = crate::items::get_item(id as u32) else {
+            return Ok(Value::Nil);
+        };
+        let color = quality_color(item.quality);
+        let link = format!(
+            "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
+            color, id, item.name
+        );
+        let result = lua.create_table()?;
+        result.set("itemName", item.name)?;
+        result.set("itemLink", lua.create_string(&link)?)?;
+        result.set("itemQuality", item.quality as i32)?;
+        result.set("itemLevel", item.item_level as i32)?;
+        result.set("itemMinLevel", item.required_level as i32)?;
+        result.set("itemType", item_class_from_inv_type(item.inventory_type))?;
+        result.set("itemSubType", "")?;
+        result.set("itemStackCount", item.stackable as i32)?;
+        result.set("itemEquipLoc", inv_type_to_equip_loc(item.inventory_type))?;
+        result.set("itemTexture", 134400)?;
+        result.set("sellPrice", item.sell_price as i64)?;
+        result.set("classID", 15)?;
+        result.set("subclassID", 0)?;
+        result.set("bindType", item.bonding as i32)?;
+        result.set("expacID", item.expansion_id as i32)?;
+        result.set("isCraftingReagent", false)?;
+        Ok(Value::Table(result))
+    })
+}
 
-    c_item.set(
+/// C_Item query methods: icon, subclass, count, class, spec, name, level.
+fn register_c_item_query_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetItemIconByID", lua.create_function(|_, _id: i32| Ok(134400i32))?)?;
+    t.set(
         "GetItemSubClassInfo",
         lua.create_function(|lua, (class_id, subclass_id): (i32, i32)| {
-            let name = item_subclass_name(class_id, subclass_id);
-            Ok(Value::String(lua.create_string(name)?))
+            Ok(Value::String(lua.create_string(item_subclass_name(class_id, subclass_id))?))
         })?,
     )?;
-
-    c_item.set(
+    t.set(
         "GetItemCount",
         lua.create_function(
-            |_, (_id, _bank, _charges, _reagent): (Value, Option<bool>, Option<bool>, Option<bool>)| {
-                Ok(0)
-            },
+            |_, (_id, _b, _c, _r): (Value, Option<bool>, Option<bool>, Option<bool>)| Ok(0),
         )?,
     )?;
-
-    c_item.set(
+    t.set(
         "GetItemClassInfo",
         lua.create_function(|lua, class_id: i32| {
-            let name = item_class_name(class_id);
-            Ok(Value::String(lua.create_string(name)?))
+            Ok(Value::String(lua.create_string(item_class_name(class_id))?))
         })?,
     )?;
-
-    c_item.set(
-        "GetItemSpecInfo",
-        lua.create_function(|lua, _item_id: Value| lua.create_table())?,
-    )?;
-
-    c_item.set(
+    t.set("GetItemSpecInfo", lua.create_function(|lua, _id: Value| lua.create_table())?)?;
+    t.set(
         "GetItemNameByID",
         lua.create_function(|lua, item_id: i32| {
-            let name = crate::items::get_item(item_id as u32)
-                .map(|i| i.name)
-                .unwrap_or("Unknown");
+            let name = crate::items::get_item(item_id as u32).map(|i| i.name).unwrap_or("Unknown");
             Ok(Value::String(lua.create_string(name)?))
         })?,
     )?;
-
-    c_item.set(
+    t.set(
         "GetDetailedItemLevelInfo",
         lua.create_function(|_, item_link: Value| {
-            let level = match &item_link {
-                Value::Integer(id) => crate::items::get_item(*id as u32)
-                    .map(|i| i.item_level as i32)
-                    .unwrap_or(0),
-                Value::String(s) => {
-                    if let Ok(s) = s.to_str() {
-                        parse_item_id_from_link(&s)
-                            .and_then(|id| crate::items::get_item(id as u32))
-                            .map(|i| i.item_level as i32)
-                            .unwrap_or(0)
-                    } else {
-                        0
-                    }
-                }
-                _ => 0,
-            };
+            let id = parse_item_id_from_value(&item_link);
+            let level = crate::items::get_item(id as u32)
+                .map(|i| i.item_level as i32)
+                .unwrap_or(0);
             Ok((level, 0i32, level))
         })?,
     )?;
+    Ok(())
+}
 
-    c_item.set(
-        "IsItemBindToAccountUntilEquip",
-        lua.create_function(|_, _item_link: Value| Ok(false))?,
-    )?;
-
-    c_item.set(
+/// C_Item link and quality methods.
+fn register_c_item_link_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("IsItemBindToAccountUntilEquip", lua.create_function(|_, _v: Value| Ok(false))?)?;
+    t.set(
         "GetItemLink",
         lua.create_function(|lua, item_id: i32| {
             let (name, color) = if let Some(item) = crate::items::get_item(item_id as u32) {
@@ -177,35 +156,27 @@ fn register_c_item(lua: &Lua) -> Result<()> {
             } else {
                 ("Unknown", "ffffff")
             };
-            let link = format!(
-                "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
-                color, item_id, name
-            );
+            let link = format!("|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r", color, item_id, name);
             Ok(Value::String(lua.create_string(&link)?))
         })?,
     )?;
-
-    c_item.set(
+    t.set(
         "GetItemQualityByID",
         lua.create_function(|_, item_id: i32| {
-            let quality = crate::items::get_item(item_id as u32)
-                .map(|i| i.quality as i32)
-                .unwrap_or(1);
-            Ok(quality)
+            Ok(crate::items::get_item(item_id as u32).map(|i| i.quality as i32).unwrap_or(1))
         })?,
     )?;
+    Ok(())
+}
 
-    c_item.set(
-        "GetItemLearnTransmogSet",
-        lua.create_function(|_, _item_id: i32| Ok(Value::Nil))?,
-    )?;
-
-    c_item.set(
-        "RequestLoadItemDataByID",
-        lua.create_function(|_, _item_id: i32| Ok(()))?,
-    )?;
-
-    lua.globals().set("C_Item", c_item)?;
+/// C_Item stub methods (transmog, load, existence, sockets).
+fn register_c_item_stub_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
+    t.set("GetItemLearnTransmogSet", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    t.set("RequestLoadItemDataByID", lua.create_function(|_, _id: i32| Ok(()))?)?;
+    t.set("DoesItemExist", lua.create_function(|_, _loc: Value| Ok(false))?)?;
+    t.set("CanViewItemPowers", lua.create_function(|_, _loc: Value| Ok(false))?)?;
+    t.set("GetItemNumSockets", lua.create_function(|_, _loc: Value| Ok(0i32))?)?;
+    t.set("GetItemGemID", lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?)?;
     Ok(())
 }
 
@@ -266,87 +237,69 @@ fn register_c_encoding_util(lua: &Lua) -> Result<()> {
 /// Register legacy global item functions (GetItemInfo, GetItemID, etc.).
 fn register_legacy_item_globals(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-
-    globals.set(
-        "GetItemInfo",
-        lua.create_function(|lua, item_id: Value| {
-            let id = parse_item_id_from_value(&item_id);
-            if id == 0 {
-                return Ok(mlua::MultiValue::new());
-            }
-            let Some(item) = crate::items::get_item(id as u32) else {
-                return Ok(mlua::MultiValue::new());
-            };
-            let color = quality_color(item.quality);
-            let link = format!(
-                "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
-                color, id, item.name
-            );
-            // Returns: name, link, quality, iLevel, reqLevel, class, subclass,
-            //          maxStack, equipSlot, texture, sellPrice, classID, subclassID,
-            //          bindType, expacID, setID, isCraftingReagent
-            Ok(mlua::MultiValue::from_vec(vec![
-                Value::String(lua.create_string(item.name)?),
-                Value::String(lua.create_string(&link)?),
-                Value::Integer(item.quality as i64),
-                Value::Integer(item.item_level as i64),
-                Value::Integer(item.required_level as i64),
-                Value::String(lua.create_string(item_class_from_inv_type(item.inventory_type))?),
-                Value::String(lua.create_string("")?),
-                Value::Integer(item.stackable as i64),
-                Value::String(lua.create_string(inv_type_to_equip_loc(item.inventory_type))?),
-                Value::Integer(134400),
-                Value::Integer(item.sell_price as i64),
-                Value::Integer(15),
-                Value::Integer(0),
-                Value::Integer(item.bonding as i64),
-                Value::Integer(item.expansion_id as i64),
-                Value::Nil,
-                Value::Boolean(false),
-            ]))
-        })?,
-    )?;
-
+    globals.set("GetItemInfo", make_legacy_get_item_info(lua)?)?;
     globals.set(
         "GetItemID",
         lua.create_function(|_, item_link: Option<String>| {
             Ok(item_link.and_then(|link| parse_item_id_from_link(&link)))
         })?,
     )?;
+    globals.set("GetItemCount", lua.create_function(|_, _args: mlua::MultiValue| Ok(0))?)?;
+    register_legacy_item_stubs(lua)?;
+    Ok(())
+}
 
-    globals.set(
-        "GetItemCount",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(0))?,
-    )?;
-
+/// Legacy global stubs: GetItemClassInfo, GetItemSpecInfo, IsArtifactRelicItem, etc.
+fn register_legacy_item_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
     globals.set(
         "GetItemClassInfo",
         lua.create_function(|lua, class_id: i32| {
             let name = item_class_name_extended(class_id);
-            if name.is_empty() {
-                Ok(Value::Nil)
-            } else {
-                Ok(Value::String(lua.create_string(name)?))
-            }
+            if name.is_empty() { Ok(Value::Nil) } else { Ok(Value::String(lua.create_string(name)?)) }
         })?,
     )?;
-
-    globals.set(
-        "GetItemSpecInfo",
-        lua.create_function(|_, _item_id: i32| Ok(Value::Nil))?,
-    )?;
-
-    globals.set(
-        "IsArtifactRelicItem",
-        lua.create_function(|_, _item_id: i32| Ok(false))?,
-    )?;
-
-    globals.set(
-        "GetTradeSkillTexture",
-        lua.create_function(|_, _index: i32| Ok(Value::Nil))?,
-    )?;
-
+    globals.set("GetItemSpecInfo", lua.create_function(|_, _item_id: i32| Ok(Value::Nil))?)?;
+    globals.set("IsArtifactRelicItem", lua.create_function(|_, _item_id: i32| Ok(false))?)?;
+    globals.set("GetTradeSkillTexture", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
     Ok(())
+}
+
+/// Build the legacy global GetItemInfo closure (returns 17 positional values).
+fn make_legacy_get_item_info(lua: &Lua) -> Result<mlua::Function> {
+    lua.create_function(|lua, item_id: Value| {
+        let id = parse_item_id_from_value(&item_id);
+        if id == 0 {
+            return Ok(mlua::MultiValue::new());
+        }
+        let Some(item) = crate::items::get_item(id as u32) else {
+            return Ok(mlua::MultiValue::new());
+        };
+        let color = quality_color(item.quality);
+        let link = format!(
+            "|cff{}|Hitem:{}::::::::80:::::|h[{}]|h|r",
+            color, id, item.name
+        );
+        Ok(mlua::MultiValue::from_vec(vec![
+            Value::String(lua.create_string(item.name)?),
+            Value::String(lua.create_string(&link)?),
+            Value::Integer(item.quality as i64),
+            Value::Integer(item.item_level as i64),
+            Value::Integer(item.required_level as i64),
+            Value::String(lua.create_string(item_class_from_inv_type(item.inventory_type))?),
+            Value::String(lua.create_string("")?),
+            Value::Integer(item.stackable as i64),
+            Value::String(lua.create_string(inv_type_to_equip_loc(item.inventory_type))?),
+            Value::Integer(134400),
+            Value::Integer(item.sell_price as i64),
+            Value::Integer(15),
+            Value::Integer(0),
+            Value::Integer(item.bonding as i64),
+            Value::Integer(item.expansion_id as i64),
+            Value::Nil,
+            Value::Boolean(false),
+        ]))
+    })
 }
 
 /// Register spell-related global functions.

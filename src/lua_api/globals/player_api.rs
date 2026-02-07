@@ -233,6 +233,8 @@ fn register_action_bar_stubs(lua: &Lua) -> Result<()> {
     globals.set("GetOverrideBarIndex", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     globals.set("GetVehicleBarIndex", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     globals.set("GetTempShapeshiftBarIndex", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    globals.set("GetMultiCastBarIndex", lua.create_function(|_, ()| Ok(7i32))?)?;
+    globals.set("GetExtraBarIndex", lua.create_function(|_, ()| Ok(13i32))?)?;
     globals.set("IsPossessBarVisible", lua.create_function(|_, ()| Ok(false))?)?;
     globals.set("SetActionUIButton", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
     Ok(())

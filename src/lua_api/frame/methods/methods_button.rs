@@ -359,6 +359,10 @@ fn value_to_optional_path(value: Value) -> Result<Option<String>, mlua::Error> {
 }
 
 /// GetFontString / SetFontString - access the button's Text child.
+///
+/// Mixins (e.g. ScrollingFontMixin) can override GetFontString with a Lua function.
+/// Since mlua's add_method takes priority over __index, we check for Lua overrides
+/// in __frame_fields before using the default (same pattern as GetAtlas).
 fn add_font_string_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetFontString", |lua, this, ()| {
         let state = this.state.borrow();
@@ -371,6 +375,10 @@ fn add_font_string_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 };
                 return lua.create_userdata(handle).map(Value::UserData);
             }
+        drop(state);
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "GetFontString") {
+            return func.call::<Value>(ud).map(Ok)?;
+        }
         Ok(Value::Nil)
     });
 

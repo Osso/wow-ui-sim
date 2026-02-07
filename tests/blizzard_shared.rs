@@ -147,6 +147,8 @@ fn test_addon_list_enable_all_button_has_texture() {
         "EnableAllButton should have Left/Center/Right child textures"
     );
 
+    // Show the parent panel first (AddonList is hidden="true" in XML)
+    env.exec("AddonList:Show()").unwrap();
     env.exec("AddonList.EnableAllButton:Show()").unwrap();
 
     let left_atlas: String = env

@@ -119,6 +119,8 @@ pub struct FrameXml {
     pub text: Option<String>,
     #[serde(rename = "@parentArray")]
     pub parent_array: Option<String>,
+    #[serde(rename = "@id")]
+    pub xml_id: Option<i32>,
 
     // Child elements collected via $value to allow multiples
     #[serde(rename = "$value", default)]

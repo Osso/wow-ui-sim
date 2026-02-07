@@ -16,8 +16,8 @@ pub fn create_frame_from_xml(
     widget_type: &str,
     parent_override: Option<&str>,
 ) -> Result<Option<String>, LoadError> {
-    // Register virtual frames (templates) in the template registry
-    if frame.is_virtual == Some(true) {
+    // Register virtual/intrinsic frames (templates) in the template registry
+    if frame.is_virtual == Some(true) || frame.intrinsic == Some(true) {
         if let Some(ref name) = frame.name {
             crate::xml::register_template(name, widget_type, frame.clone());
         }
@@ -44,6 +44,7 @@ pub fn create_frame_from_xml(
     append_enable_mouse_code(&mut lua_code, frame, inherits);
     append_set_all_points_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
+    append_id_code(&mut lua_code, frame);
     append_scripts_code(&mut lua_code, frame);
 
     // Execute the creation code
@@ -63,6 +64,7 @@ pub fn create_frame_from_xml(
     apply_button_text(env, frame, &name, inherits)?;
 
     init_action_bar_tables(env, &name);
+
     fire_lifecycle_scripts(env, &name);
 
     Ok(Some(name))
@@ -325,8 +327,16 @@ fn format_key_value_lua(value: &str, value_type: Option<&str>) -> String {
     match value_type {
         Some("number") => value.to_string(),
         Some("boolean") => value.to_lowercase(),
-        Some("global") => value.to_string(),
+        Some("global") if !value.is_empty() => value.to_string(),
+        Some("global") => "nil".to_string(),
         _ => format!("\"{}\"", escape_lua_string(value)),
+    }
+}
+
+/// Append SetID call if the frame has an `id` XML attribute.
+fn append_id_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
+    if let Some(id) = frame.xml_id {
+        lua_code.push_str(&format!("\n        frame:SetID({})\n        ", id));
     }
 }
 

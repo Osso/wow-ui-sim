@@ -239,6 +239,8 @@ pub struct Frame {
     pub clips_children: bool,
     /// Whether mouse motion events are enabled.
     pub mouse_motion_enabled: bool,
+    /// User-set frame ID (from XML `id` attribute or SetID()).
+    pub user_id: i32,
 
     // --- Slider fields ---
     /// Current slider value.
@@ -399,6 +401,7 @@ macro_rules! frame_defaults {
             register_all_events: false,
             clips_children: false,
             mouse_motion_enabled: false,
+            user_id: 0,
 
             // Slider
             slider_value: 0.0,

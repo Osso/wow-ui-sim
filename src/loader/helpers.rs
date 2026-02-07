@@ -89,14 +89,11 @@ pub fn get_size_values(size: &crate::xml::SizeXml) -> (Option<f32>, Option<f32>)
     }
 }
 
-/// Generate a simple random ID for anonymous frames.
-pub fn rand_id() -> u32 {
-    use std::time::{SystemTime, UNIX_EPOCH};
-    
-    SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .subsec_nanos()
+/// Generate a unique ID for anonymous frames using an atomic counter.
+pub fn rand_id() -> u64 {
+    use std::sync::atomic::{AtomicU64, Ordering};
+    static COUNTER: AtomicU64 = AtomicU64::new(1);
+    COUNTER.fetch_add(1, Ordering::Relaxed)
 }
 
 /// Escape a string for use in Lua code.

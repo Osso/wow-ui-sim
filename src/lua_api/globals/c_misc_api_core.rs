@@ -143,6 +143,8 @@ fn register_c_lfg_info(lua: &Lua) -> Result<()> {
     t.set("CanPartyLFGBackfill", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetAllEntriesForCategory", lua.create_function(|lua, _cat: i32| lua.create_table())?)?;
     t.set("HideNameFromUI", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("CanPlayerUseLFD", lua.create_function(|_, ()| Ok((false, Value::Nil)))?)?;
+    t.set("CanPlayerUseGroupFinder", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_LFGInfo", t)?;
     Ok(())
 }
@@ -193,6 +195,8 @@ fn register_c_player_info_misc(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("IsTutorialsTabAvailable", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("CanPlayerUseEventScheduler", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsPlayerInRPE", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetDisplayID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetNativeDisplayID", lua.create_function(|_, ()| Ok(0i32))?)?;
     Ok(())
 }
 

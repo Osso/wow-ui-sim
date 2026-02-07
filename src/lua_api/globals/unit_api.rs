@@ -614,6 +614,7 @@ fn register_unit_combat_stat_functions_2(lua: &Lua) -> Result<()> {
     g.set("GetShapeshiftFormInfo", lua.create_function(|_, _idx: Value| {
         Ok((Value::Nil, false, false, 0i32))
     })?)?;
+    g.set("GetShapeshiftFormID", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("GetPetActionInfo", lua.create_function(|_, _idx: Value| {
         Ok((Value::Nil, Value::Nil, Value::Nil, false, false))
     })?)?;

@@ -297,17 +297,22 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    // IsVisible() / IsShown()
+    // IsVisible() - true only if this frame AND all ancestors are shown
     methods.add_method("IsVisible", |_, this, ()| {
         let state = this.state.borrow();
-        let visible = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.visible)
-            .unwrap_or(false);
-        Ok(visible)
+        let mut id = this.id;
+        loop {
+            match state.widgets.get(id) {
+                Some(f) if f.visible => match f.parent_id {
+                    Some(pid) => id = pid,
+                    None => return Ok(true),
+                },
+                _ => return Ok(false),
+            }
+        }
     });
 
+    // IsShown() - true if this frame's own visible flag is set (ignores parents)
     methods.add_method("IsShown", |_, this, ()| {
         let state = this.state.borrow();
         let visible = state
@@ -470,10 +475,15 @@ fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 /// Mouse and input methods
 fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetID(id) - Set frame ID (used for tab ordering, etc.)
-    methods.add_method("SetID", |_, _this, _id: i32| Ok(()));
+    methods.add_method("SetID", |_, this, id: i32| {
+        this.state.borrow_mut().widgets.get_mut(this.id).map(|f| f.user_id = id);
+        Ok(())
+    });
 
     // GetID() - Get frame ID
-    methods.add_method("GetID", |_, _this, ()| Ok(0));
+    methods.add_method("GetID", |_, this, ()| {
+        Ok(this.state.borrow().widgets.get(this.id).map(|f| f.user_id).unwrap_or(0))
+    });
 
     // GetMapID() / SetMapID() - Map canvas frame stubs
     methods.add_method("GetMapID", |_, _this, ()| Ok(0));
