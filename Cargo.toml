@@ -79,3 +79,4 @@ incremental = true
 [profile.dev]
 lto = false
 incremental = true
+debug = "line-tables-only"

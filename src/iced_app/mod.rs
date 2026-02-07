@@ -12,6 +12,7 @@
 mod app;
 mod button_vis;
 mod layout;
+mod nine_slice;
 mod render;
 mod state;
 mod styles;

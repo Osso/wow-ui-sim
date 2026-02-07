@@ -287,6 +287,7 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
             Err(e) => println!("{} failed: {}", name, e),
         }
     }
+
 }
 
 /// Scan, load, and register third-party addons; print summary.

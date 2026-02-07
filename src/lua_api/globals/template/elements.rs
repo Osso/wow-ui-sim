@@ -52,6 +52,10 @@ pub(super) fn create_texture_from_template(
         code.push_str(&format!("            _G[\"{}\"] = tex\n", child_name));
     }
 
+    if texture.hidden == Some(true) {
+        code.push_str("            tex:Hide()\n");
+    }
+
     code.push_str("        end\n");
     let _ = lua.load(&code).exec();
 
@@ -182,6 +186,10 @@ pub(super) fn create_fontstring_from_template(
 
     if fontstring.name.is_some() {
         code.push_str(&format!("            _G[\"{}\"] = fs\n", child_name));
+    }
+
+    if fontstring.hidden == Some(true) {
+        code.push_str("            fs:Hide()\n");
     }
 
     code.push_str("        end\n");

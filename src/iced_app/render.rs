@@ -216,6 +216,11 @@ fn emit_button_highlight(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::wi
 
 /// Build quads for a Texture widget.
 pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+    if let Some(ref ns) = f.nine_slice_atlas {
+        super::nine_slice::emit_nine_slice_atlas(batch, bounds, ns, f.alpha);
+        return;
+    }
+
     if let Some(color) = f.color_texture {
         batch.push_solid(bounds, [color.r, color.g, color.b, color.a * f.alpha]);
         return;
@@ -264,7 +269,7 @@ fn emit_tiled_texture(
 }
 
 /// Emit horizontally tiled texture quads.
-fn emit_horiz_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, alpha: f32) {
+pub(super) fn emit_horiz_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, alpha: f32) {
     let mut x = bounds.x;
     while x < bounds.x + bounds.width {
         let w = (bounds.x + bounds.width - x).min(tile_w);
@@ -277,7 +282,7 @@ fn emit_horiz_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, t
 }
 
 /// Emit vertically tiled texture quads.
-fn emit_vert_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_h: f32, alpha: f32) {
+pub(super) fn emit_vert_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_h: f32, alpha: f32) {
     let mut y = bounds.y;
     while y < bounds.y + bounds.height {
         let h = (bounds.y + bounds.height - y).min(tile_h);

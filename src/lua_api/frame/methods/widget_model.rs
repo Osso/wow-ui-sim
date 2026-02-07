@@ -1,7 +1,7 @@
 //! Model and ModelScene widget method stubs.
 
 use super::FrameHandle;
-use mlua::{Result, UserDataMethods, Value};
+use mlua::{IntoLuaMulti, Result, UserDataMethods, Value};
 
 pub fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetModel", |_, _this, _path: String| Ok(()));
@@ -11,8 +11,11 @@ pub fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetModelScale", |_, _this, _scale: f64| Ok(()));
     methods.add_method("GetModelScale", |_, _this, ()| Ok(1.0_f64));
     methods.add_method("SetPosition", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetPosition", |_, _this, ()| {
-        Ok((0.0_f64, 0.0_f64, 0.0_f64))
+    methods.add_method("GetPosition", |lua, this, ()| {
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "GetPosition") {
+            return func.call::<mlua::MultiValue>(ud);
+        }
+        (0.0_f64, 0.0_f64, 0.0_f64).into_lua_multi(lua)
     });
     methods.add_method("SetFacing", |_, _this, _radians: f64| Ok(()));
     methods.add_method("GetFacing", |_, _this, ()| Ok(0.0_f64));

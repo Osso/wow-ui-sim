@@ -281,6 +281,18 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
             post_init.push_str("f.actionButtons = f.actionButtons or {} ");
             post_init.push_str("f.shownButtonContainers = f.shownButtonContainers or {} ");
         }
+        if name == "EditModeSystemMixin" {
+            // Pre-initialize "Base" method aliases that OnSystemLoad normally sets up.
+            // Frames with inherit="prepend" OnLoad handlers (e.g. StanceBar) may call
+            // methods depending on these aliases before OnSystemLoad runs.
+            post_init.push_str("f.SetScaleBase = f.SetScale ");
+            post_init.push_str("f.SetPointBase = f.SetPoint ");
+            post_init.push_str("f.ClearAllPointsBase = f.ClearAllPoints ");
+            post_init.push_str("f.SetShownBase = f.SetShown ");
+            post_init.push_str("f.ShowBase = f.Show ");
+            post_init.push_str("f.HideBase = f.Hide ");
+            post_init.push_str("f.IsShownBase = f.IsShown ");
+        }
     }
     let code = format!(
         "do local f = {} if f then {} {} end end",

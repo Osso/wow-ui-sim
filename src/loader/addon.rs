@@ -100,10 +100,13 @@ pub fn load_addon_internal(
         };
         let ext = file.extension().and_then(|e| e.to_str()).unwrap_or("");
         match ext {
-            "lua" => match load_lua_file(env, &file, &ctx, &mut result.timing) {
-                Ok(()) => result.lua_files += 1,
-                Err(e) => result.warnings.push(format!("{}: {}", file.display(), e)),
-            },
+            "lua" => {
+                match load_lua_file(env, &file, &ctx, &mut result.timing) {
+                    Ok(()) => result.lua_files += 1,
+                    Err(e) => result.warnings.push(format!("{}: {}", file.display(), e)),
+                }
+                apply_cpp_mixin_stubs(env);
+            }
             "xml" => match load_xml_file(env, &file, &ctx, &mut result.timing) {
                 Ok(count) => {
                     result.xml_files += 1;
@@ -118,4 +121,24 @@ pub fn load_addon_internal(
     }
 
     Ok(result)
+}
+
+/// Patch Lua mixin tables with methods normally provided by the C++ engine.
+///
+/// WoW's C++ engine provides OnLoad for certain base control button mixins.
+/// The Lua side creates empty tables (e.g. `ModelSceneControlButtonMixin = {}`),
+/// and derived mixins call `BaseMixin.OnLoad(self)` expecting the C++ method.
+/// Runs after each .lua file so stubs are available before the next .xml file
+/// creates frames that depend on them.
+fn apply_cpp_mixin_stubs(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if ModelSceneControlButtonMixin and not ModelSceneControlButtonMixin.OnLoad then
+            ModelSceneControlButtonMixin.OnLoad = function() end
+        end
+        if PerksModelSceneControlButtonMixin and not PerksModelSceneControlButtonMixin.OnLoad then
+            PerksModelSceneControlButtonMixin.OnLoad = function() end
+        end
+        "#,
+    );
 }

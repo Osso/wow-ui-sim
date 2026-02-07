@@ -126,15 +126,30 @@ fn add_atlas_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .unwrap_or(false);
 
         if let Some(name) = atlas_name {
-            if let Some(lookup) = crate::atlas::get_atlas_info(&name) {
+            let lookup = crate::atlas::get_atlas_info(&name);
+            // When the only match is a -2x fallback, prefer a nine-slice kit
+            let prefer_nine_slice = lookup.as_ref().is_some_and(|l| l.is_2x_fallback);
+            let ns_info = if lookup.is_none() || prefer_nine_slice {
+                crate::atlas::get_nine_slice_atlas_info(&name)
+            } else {
+                None
+            };
+
+            if let Some(ns_info) = ns_info {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.nine_slice_atlas = Some(ns_info);
+                    frame.atlas = Some(name);
+                    frame.texture = None;
+                    frame.tex_coords = None;
+                }
+            } else if let Some(lookup) = lookup {
                 let atlas_info = lookup.info;
                 let mut state = this.state.borrow_mut();
-
                 let parent_info = find_parent_key(&state.widgets, this.id);
                 apply_atlas_to_frame(&mut state.widgets, this.id, atlas_info, &name, &lookup, use_atlas_size);
                 propagate_atlas_to_button(&mut state.widgets, parent_info, atlas_info);
             } else {
-                // Unknown atlas - just store the name
                 let mut state = this.state.borrow_mut();
                 if let Some(frame) = state.widgets.get_mut(this.id) {
                     frame.atlas = Some(name);
