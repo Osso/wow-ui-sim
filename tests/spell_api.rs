@@ -109,8 +109,8 @@ fn test_spell_get_school_string() {
 #[test]
 fn test_spell_get_spell_texture() {
     let env = env();
-    let tex: i32 = env.eval("return C_Spell.GetSpellTexture(100)").unwrap();
-    assert!(tex > 0);
+    let tex: String = env.eval("return C_Spell.GetSpellTexture(100)").unwrap();
+    assert!(!tex.is_empty(), "Spell texture path should be non-empty");
 }
 
 #[test]
