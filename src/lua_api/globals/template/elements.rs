@@ -56,6 +56,10 @@ pub(super) fn create_texture_from_template(
         code.push_str("            tex:Hide()\n");
     }
 
+    if let Some(ref mode) = texture.alpha_mode {
+        code.push_str(&format!("            tex:SetBlendMode(\"{}\")\n", mode));
+    }
+
     code.push_str("        end\n");
     let _ = lua.load(&code).exec();
 

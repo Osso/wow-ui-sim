@@ -94,13 +94,24 @@ fn add_tiling_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// SetBlendMode, GetBlendMode, SetDesaturated, IsDesaturated.
 fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetBlendMode", |_, _this, _mode: Option<String>| {
-        // Stub - blend mode is a rendering hint
+    methods.add_method("SetBlendMode", |_, this, mode: Option<String>| {
+        let blend = match mode.as_deref() {
+            Some("ADD") => crate::render::BlendMode::Additive,
+            _ => crate::render::BlendMode::Alpha,
+        };
+        let mut state = this.state.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(this.id) {
+            f.blend_mode = blend;
+        }
         Ok(())
     });
 
-    methods.add_method("GetBlendMode", |_, _this, ()| {
-        Ok("BLEND") // Default blend mode
+    methods.add_method("GetBlendMode", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(match state.widgets.get(this.id).map(|f| f.blend_mode) {
+            Some(crate::render::BlendMode::Additive) => "ADD",
+            _ => "BLEND",
+        })
     });
 
     methods.add_method("SetDesaturated", |_, _this, _desaturated: bool| {

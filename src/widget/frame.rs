@@ -2,6 +2,7 @@
 
 use super::{next_widget_id, Anchor, AnchorPoint, WidgetType};
 use crate::atlas::NineSliceAtlasInfo;
+use crate::render::BlendMode;
 use std::collections::{HashMap, HashSet};
 
 /// Attribute value stored on frames.
@@ -236,6 +237,8 @@ pub struct Frame {
     pub nine_slice_layout: Option<String>,
     /// Nine-slice atlas kit (detected from SetAtlas when name is a kit prefix).
     pub nine_slice_atlas: Option<NineSliceAtlasInfo>,
+    /// Blend mode for texture rendering (Alpha or Additive).
+    pub blend_mode: BlendMode,
     /// Whether this frame receives ALL events (set by RegisterAllEvents).
     pub register_all_events: bool,
     /// Whether this frame clips its children to its bounds.
@@ -402,6 +405,7 @@ macro_rules! frame_defaults {
             atlas: None,
             nine_slice_layout: None,
             nine_slice_atlas: None,
+            blend_mode: BlendMode::Alpha,
             register_all_events: false,
             clips_children: false,
             mouse_motion_enabled: false,

@@ -78,6 +78,8 @@ pub struct TextureXml {
     pub vert_tile: Option<bool>,
     #[serde(rename = "@hidden")]
     pub hidden: Option<bool>,
+    #[serde(rename = "@alphaMode")]
+    pub alpha_mode: Option<String>,
     #[serde(rename = "@setAllPoints")]
     pub set_all_points: Option<bool>,
     #[serde(rename = "@parentArray")]

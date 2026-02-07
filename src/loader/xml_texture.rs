@@ -158,6 +158,10 @@ pub fn create_texture_from_xml(
         lua_code.push_str("\n        tex:Hide()\n        ");
     }
 
+    if let Some(ref mode) = texture.alpha_mode {
+        lua_code.push_str(&format!("\n        tex:SetBlendMode(\"{}\")\n        ", mode));
+    }
+
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!(
             "Failed to create texture {} on {}: {}",

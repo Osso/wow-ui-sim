@@ -247,3 +247,15 @@ self.SetShownBase = self.SetShown
 Stores **nil** because `self.SetShown` goes through `__index`, which finds the Rust method in step 1 (mlua method table) — but mlua returns the method result only when it's called with arguments, not when accessed as a value.
 
 Workaround: The simulator pre-initializes these aliases explicitly during mixin application, using Lua wrappers or by storing method references from the Lua side.
+
+### `__frame_{id}` Global Namespace Collision (FIXED)
+
+Anonymous template children were named `__frame_{rand_id()}` where `rand_id()` is a sequential counter starting at 1. Frame widget IDs (`next_widget_id()`) also start at 1. This caused collisions:
+
+1. Frame with widget_id=974 is created → `_G["__frame_974"]` = FrameHandle(id=974)
+2. Template creates anonymous child named `__frame_974` → `CreateFrame("Frame", "__frame_974", ...)`
+3. `create_frame_userdata` sets `_G["__frame_974"]` = FrameHandle(id=8517) — **overwrites the original!**
+4. Event fires for widget_id=974 → `fire_event_with_args` looks up `_G["__frame_974"]` → gets wrong frame
+5. Handler calls `self:OnEvent(...)` → `__index` looks in `__frame_fields[8517]` → empty → nil error
+
+**Fix**: Changed anonymous template child prefix from `__frame_` to `__tpl_` in `template/mod.rs:359`. The `__frame_{id}` namespace is now reserved exclusively for event dispatch references.

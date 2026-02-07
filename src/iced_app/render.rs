@@ -234,10 +234,10 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
         if f.horiz_tile || f.vert_tile {
             emit_tiled_texture(batch, bounds, &uvs, tex_path, f);
         } else {
-            batch.push_textured_path_uv(bounds, uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+            batch.push_textured_path_uv(bounds, uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
         }
     } else {
-        batch.push_textured_path(bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], BlendMode::Alpha);
+        batch.push_textured_path(bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
     }
 }
 
@@ -260,42 +260,42 @@ fn emit_tiled_texture(
     let (tile_w, tile_h) = tile_dimensions(f, right - left, bottom - top);
 
     if f.horiz_tile && !f.vert_tile {
-        emit_horiz_tiles(batch, bounds, uvs, tex_path, tile_w, f.alpha);
+        emit_horiz_tiles(batch, bounds, uvs, tex_path, tile_w, f.alpha, f.blend_mode);
     } else if f.vert_tile && !f.horiz_tile {
-        emit_vert_tiles(batch, bounds, uvs, tex_path, tile_h, f.alpha);
+        emit_vert_tiles(batch, bounds, uvs, tex_path, tile_h, f.alpha, f.blend_mode);
     } else {
-        emit_grid_tiles(batch, bounds, uvs, tex_path, tile_w, tile_h, f.alpha);
+        emit_grid_tiles(batch, bounds, uvs, tex_path, tile_w, tile_h, f.alpha, f.blend_mode);
     }
 }
 
 /// Emit horizontally tiled texture quads.
-pub(super) fn emit_horiz_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, alpha: f32) {
+pub(super) fn emit_horiz_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, alpha: f32, blend: BlendMode) {
     let mut x = bounds.x;
     while x < bounds.x + bounds.width {
         let w = (bounds.x + bounds.width - x).min(tile_w);
         let tile_bounds = Rectangle::new(Point::new(x, bounds.y), Size::new(w, bounds.height));
         let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
         let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uvs.height));
-        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
+        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], blend);
         x += tile_w;
     }
 }
 
 /// Emit vertically tiled texture quads.
-pub(super) fn emit_vert_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_h: f32, alpha: f32) {
+pub(super) fn emit_vert_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_h: f32, alpha: f32, blend: BlendMode) {
     let mut y = bounds.y;
     while y < bounds.y + bounds.height {
         let h = (bounds.y + bounds.height - y).min(tile_h);
         let tile_bounds = Rectangle::new(Point::new(bounds.x, y), Size::new(bounds.width, h));
         let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
         let tile_uvs = Rectangle::new(uvs.position(), Size::new(uvs.width, uv_h));
-        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
+        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], blend);
         y += tile_h;
     }
 }
 
 /// Emit grid-tiled texture quads (both horizontal and vertical).
-fn emit_grid_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, tile_h: f32, alpha: f32) {
+fn emit_grid_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, tile_h: f32, alpha: f32, blend: BlendMode) {
     let mut y = bounds.y;
     while y < bounds.y + bounds.height {
         let h = (bounds.y + bounds.height - y).min(tile_h);
@@ -306,7 +306,7 @@ fn emit_grid_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, te
             let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
             let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
             let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uv_h));
-            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
+            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], blend);
             x += tile_w;
         }
         y += tile_h;
@@ -574,6 +574,19 @@ pub fn build_quad_batch_for_registry(
             Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
             Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
         );
+        // DEBUG: trace parent chain for the suspicious texture
+        if f.name.as_deref() == Some("__tex_8454") {
+            eprintln!("[DBG-RENDER] FOUND __tex_8454: y={:.0} h={:.0} w={:.0} x={:.0} tex={:?} parent_id={:?}",
+                rect.y, rect.height, rect.width, rect.x, f.texture, f.parent_id);
+            let mut pid = f.parent_id;
+            while let Some(p) = pid {
+                if let Some(pf) = registry.get(p) {
+                    eprintln!("  parent id={} name={:?} visible={} type={:?}",
+                        p, pf.name, pf.visible, pf.widget_type);
+                    pid = pf.parent_id;
+                } else { break; }
+            }
+        }
         emit_frame_quads(&mut batch, id, f, bounds, pressed_frame, hovered_frame, &mut text_ctx);
     }
 

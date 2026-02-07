@@ -356,7 +356,7 @@ fn create_child_frame_from_template(
         .name
         .as_ref()
         .map(|n| n.replace("$parent", parent_name))
-        .unwrap_or_else(|| format!("__frame_{}", rand_id()));
+        .unwrap_or_else(|| format!("__tpl_{}", rand_id()));
 
     let code = build_create_child_code(frame, widget_type, parent_name, &child_name);
     if let Err(e) = lua.load(&code).exec() {

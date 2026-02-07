@@ -160,6 +160,7 @@ fn add_index_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 return Ok(value);
             }
 
+
             // Check fallback methods (Clear, Lower, Raise)
             if let Some(func) = lookup_fallback_method(lua, &state_rc, frame_id, &key)? {
                 return Ok(func);

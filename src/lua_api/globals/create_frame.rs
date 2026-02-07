@@ -219,10 +219,11 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
         }
     }
 
-    // HighlightTexture is only visible on hover in WoW
+    // HighlightTexture is only visible on hover in WoW, uses additive blending
     if let Some(highlight) = state.widgets.get_mut(highlight_id) {
         highlight.draw_layer = crate::widget::DrawLayer::Highlight;
         highlight.visible = false;
+        highlight.blend_mode = crate::render::BlendMode::Additive;
     }
 
     // Text fontstring for button label

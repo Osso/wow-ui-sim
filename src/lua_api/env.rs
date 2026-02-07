@@ -136,23 +136,6 @@ impl WowLuaEnv {
                             .and_then(|f| f.name.as_deref())
                             .unwrap_or("(anonymous)");
                         eprintln!("[{}] {event} handler error on {name} (id={widget_id}): {e}", event);
-
-                        // DEBUG: dump __frame_fields for this widget
-                        drop(state);
-                        let debug_code = format!(
-                            r#"
-                            local fields = __frame_fields and __frame_fields[{}]
-                            if fields then
-                                local keys = {{}}
-                                for k, v in pairs(fields) do keys[#keys+1] = k .. "=" .. type(v) end
-                                print("[DEBUG] __frame_fields[{}] keys: " .. table.concat(keys, ", "))
-                            else
-                                print("[DEBUG] __frame_fields[{}] is nil/missing")
-                            end
-                            "#,
-                            widget_id, widget_id, widget_id
-                        );
-                        let _ = self.lua.load(&debug_code).exec();
                     }
                 }
             }
