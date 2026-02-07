@@ -152,6 +152,9 @@ fn register_action_bars(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> 
             lua, state, name, WidgetType::Frame,
             ui_parent_id, 500.0, 40.0, true,
         )?;
+        // ActionBar_OnLoad expects self.actionButtons to be iterable via pairs()
+        let code = format!("{}.actionButtons = {{}}", name);
+        let _ = lua.load(&code).exec();
     }
 
     Ok(())

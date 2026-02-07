@@ -259,6 +259,7 @@ fn register_ui_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
 // ============================================================================
 
 fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
+    seq_enum(lua, enum_table, "BankType", &["Character", "Account"])?;
     seq_enum(lua, enum_table, "AddOnEnableState", &["None", "Some", "All"])?;
 
     seq_enum(lua, enum_table, "AddOnProfilerMetric", &[
@@ -288,6 +289,11 @@ fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
         "AlternateQuest", "AlternateEncounter", "AlternateMount", "NumPowerTypes",
     ])?;
 
+    register_tooltip_enums(lua, enum_table)?;
+    Ok(())
+}
+
+fn register_tooltip_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
     seq_enum(lua, enum_table, "TooltipDataType", &[
         "Item", "Spell", "Unit", "Corpse", "Object", "Currency", "QuestLine",
         "QuestObjective", "QuestLink", "BattlePet", "CompanionPet", "Mount",

@@ -86,6 +86,9 @@ fn register_spec_basic_queries(lua: &Lua) -> Result<()> {
         ]))
     })?)?;
     globals.set("GetNumSpecializations", lua.create_function(|_, ()| Ok(4))?)?;
+    globals.set("GetSpecializationRole", lua.create_function(|lua, _spec_index: Option<i32>| {
+        Ok(Value::String(lua.create_string("DAMAGER")?))
+    })?)?;
     globals.set("GetSpecializationRoleByID", lua.create_function(|lua, _spec_id: i32| {
         Ok(Value::String(lua.create_string("DAMAGER")?))
     })?)?;

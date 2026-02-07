@@ -92,8 +92,10 @@ fn register_core_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     register_frame_global(lua, state, "Minimap")?;
     register_frame_global(lua, state, "EventToastManagerFrame")?;
     register_frame_global(lua, state, "EditModeManagerFrame")?;
+    setup_edit_mode_manager(lua, state)?;
     register_frame_global(lua, state, "RolePollPopup")?;
     register_frame_global(lua, state, "TimerTracker")?;
+    register_hidden_frame_global(lua, state, "StoreFrame")?;
     Ok(())
 }
 
@@ -254,6 +256,29 @@ fn setup_lfg_list_frame(lua: &Lua) -> Result<()> {
 fn setup_alert_frame(lua: &Lua) -> Result<()> {
     let alert_ud: mlua::AnyUserData = lua.globals().get("AlertFrame")?;
     alert_ud.set("alertFrameSubSystems", lua.create_table()?)?;
+    Ok(())
+}
+
+/// Set up EditModeManagerFrame with AccountSettings child frame.
+fn setup_edit_mode_manager(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    // AccountSettings is a child frame with parentKey="AccountSettings"
+    let emm_id = state.borrow().widgets.get_id_by_name("EditModeManagerFrame");
+    if let Some(parent_id) = emm_id {
+        let mut child = Frame::new(WidgetType::Frame, None, Some(parent_id));
+        child.visible = false;
+        let child_id = child.id;
+        state.borrow_mut().widgets.register(child);
+        state.borrow_mut().widgets.add_child(parent_id, child_id);
+
+        // Expose as EditModeManagerFrame.AccountSettings in Lua
+        let handle = FrameHandle {
+            id: child_id,
+            state: Rc::clone(state),
+        };
+        let ud = lua.create_userdata(handle)?;
+        let emm_ud: mlua::AnyUserData = lua.globals().get("EditModeManagerFrame")?;
+        emm_ud.set("AccountSettings", ud)?;
+    }
     Ok(())
 }
 
