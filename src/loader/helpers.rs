@@ -422,8 +422,14 @@ fn emit_chained_handler(
                 {target}:SetScript("{handler_name}", function(self, ...)
                     local __ok1, __err1 = pcall({first}, self, ...)
                     local __ok2, __err2 = pcall({second}, self, ...)
-                    if not __ok1 then error(__err1, 0) end
-                    if not __ok2 then error(__err2, 0) end
+                    if not __ok1 then
+                        local name = self.GetName and self:GetName() or "?"
+                        print("[script:{handler_name}] " .. name .. ": " .. tostring(__err1))
+                    end
+                    if not __ok2 then
+                        local name = self.GetName and self:GetName() or "?"
+                        print("[script:{handler_name}] " .. name .. ": " .. tostring(__err2))
+                    end
                 end)
             else
                 {target}:SetScript("{handler_name}", __new)

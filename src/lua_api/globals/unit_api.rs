@@ -55,6 +55,7 @@ pub fn register_unit_api(lua: &Lua) -> Result<()> {
     register_xp_functions(lua)?;
     register_pvp_vehicle_functions(lua)?;
     register_misc_unit_functions(lua)?;
+    register_unit_combat_stat_functions(lua)?;
     Ok(())
 }
 
@@ -565,11 +566,56 @@ fn register_misc_unit_functions(lua: &Lua) -> Result<()> {
     g.set("UnitIsWarModePhased", lua.create_function(|_, _unit: String| Ok(false))?)?;
     g.set("UnitIsWarModeDesired", lua.create_function(|_, _unit: String| Ok(false))?)?;
     g.set("UnitIsWarModeActive", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    g.set("UnitHasMana", lua.create_function(|_, _unit: Value| Ok(true))?)?;
+    g.set("UnitHasRelicSlot", lua.create_function(|_, _unit: Value| Ok(false))?)?;
     g.set("IsActiveBattlefieldArena", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetUnitPowerBarInfo", lua.create_function(|_, _unit: Value| Ok(Value::Nil))?)?;
     g.set("IsInGroup", lua.create_function(|_, _flags: Option<i32>| Ok(false))?)?;
     g.set("IsInRaid", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("UnitStagger", lua.create_function(|_, _unit: Value| Ok(0i32))?)?;
 
+    Ok(())
+}
+
+/// Unit combat stat functions for PaperDollFrame.
+fn register_unit_combat_stat_functions(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    // UnitArmor(unit) -> base, effectiveArmor, armor, posBuff, negBuff
+    g.set("UnitArmor", lua.create_function(|_, _unit: Value| {
+        Ok((0i32, 0i32, 0i32, 0i32, 0i32))
+    })?)?;
+    // UnitDamage(unit) -> minDmg, maxDmg, minOff, maxOff, posPhys, negPhys, pct
+    g.set("UnitDamage", lua.create_function(|_, _unit: Value| {
+        Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64, 100.0_f64))
+    })?)?;
+    // UnitAttackPower(unit) -> base, posBuff, negBuff
+    g.set("UnitAttackPower", lua.create_function(|_, _unit: Value| {
+        Ok((0i32, 0i32, 0i32))
+    })?)?;
+    // UnitRangedAttackPower(unit) -> base, posBuff, negBuff
+    g.set("UnitRangedAttackPower", lua.create_function(|_, _unit: Value| {
+        Ok((0i32, 0i32, 0i32))
+    })?)?;
+    register_unit_combat_stat_functions_2(lua)?;
+    Ok(())
+}
+
+/// Additional unit combat stat functions.
+fn register_unit_combat_stat_functions_2(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    // UnitAttackSpeed(unit) -> mainSpeed, offSpeed
+    g.set("UnitAttackSpeed", lua.create_function(|_, _unit: Value| {
+        Ok((2.0_f64, 2.0_f64))
+    })?)?;
+    // UnitRangedDamage(unit) -> speed, minDmg, maxDmg, posPhys, negPhys, pct
+    g.set("UnitRangedDamage", lua.create_function(|_, _unit: Value| {
+        Ok((2.0_f64, 0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64, 100.0_f64))
+    })?)?;
+    g.set("GetShapeshiftFormInfo", lua.create_function(|_, _idx: Value| {
+        Ok((Value::Nil, false, false, 0i32))
+    })?)?;
+    g.set("GetPetActionInfo", lua.create_function(|_, _idx: Value| {
+        Ok((Value::Nil, Value::Nil, Value::Nil, false, false))
+    })?)?;
     Ok(())
 }

@@ -19,6 +19,7 @@ pub fn register_player_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_economy_functions(lua)?;
     register_instance_functions(lua)?;
     register_character_functions(lua)?;
+    register_character_stat_functions(lua)?;
     register_cinematic_functions(lua)?;
     register_unit_functions(lua)?;
     Ok(())
@@ -284,12 +285,68 @@ fn register_character_functions(lua: &Lua) -> Result<()> {
     globals.set("IsInventoryItemLocked", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
     globals.set("GetRestrictedAccountData", lua.create_function(|_, ()| Ok((false, false, false)))?)?;
     globals.set("UnitStat", lua.create_function(|_, _args: mlua::MultiValue| Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64)))?)?;
+    globals.set("GetAttackPowerForStat", lua.create_function(|_, (_stat_idx, _stat): (Value, Value)| {
+        Ok(0.0_f64)
+    })?)?;
+    globals.set("GetRangedAttackPowerForStat", lua.create_function(|_, (_stat_idx, _stat): (Value, Value)| {
+        Ok(0.0_f64)
+    })?)?;
     globals.set("MerchantFrame_UpdateGuildBankRepair", lua.create_function(|_, ()| Ok(()))?)?;
     globals.set("MerchantFrame_UpdateCanRepairAll", lua.create_function(|_, ()| Ok(()))?)?;
     globals.set("SetItemButtonDesaturated", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
     globals.set("EquipmentFlyout_UpdateFlyout", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
     globals.set("EquipmentFlyout_SetTooltipAnchor", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
     globals.set("GameTooltip_SuppressAutomaticCompareItem", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    Ok(())
+}
+
+/// Character stat query stubs for PaperDollFrame.
+fn register_character_stat_functions(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("HasAPEffectsSpellPower", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("HasSPEffectsAttackPower", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetOverrideAPBySpellPower", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetOverrideSpellPowerByAP", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetBlockChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetParryChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetDodgeChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetCritChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetRangedCritChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetSpellCritChance", lua.create_function(|_, _school: Value| Ok(0.0_f64))?)?;
+    g.set("GetCombatRating", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
+    g.set("GetCombatRatingBonus", lua.create_function(|_, _id: Value| Ok(0.0_f64))?)?;
+    register_character_stat_functions_2(lua)?;
+    Ok(())
+}
+
+/// Additional character stat query stubs.
+fn register_character_stat_functions_2(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("GetCombatRatingBonusForCombatRatingValue", lua.create_function(|_, _args: mlua::MultiValue| Ok(0.0_f64))?)?;
+    g.set("GetMasteryEffect", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?)?;
+    g.set("GetHaste", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetMeleeHaste", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetVersatilityBonus", lua.create_function(|_, _id: Value| Ok(0.0_f64))?)?;
+    g.set("GetLifesteal", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetAvoidance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetSpeed", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetStaggerPercentage", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetBonusBarIndex", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("GetShieldBlock", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetSpellBonusDamage", lua.create_function(|_, _school: Value| Ok(0.0_f64))?)?;
+    g.set("GetSpellBonusHealing", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetManaRegen", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?)?;
+    g.set("GetPowerRegen", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?)?;
+    g.set("GetPetSpellBonusDamage", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetArmorEffectiveness", lua.create_function(|_, _args: mlua::MultiValue| Ok(0.0_f64))?)?;
+    g.set("GetDodgeChanceFromAttribute", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetParryChanceFromAttribute", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetCritChanceProvidesParryEffect", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetExpertise", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64, 0.0_f64)))?)?;
+    g.set("GetModResilienceDamageReduction", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set("GetPVPGearStatRules", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetUnitMaxHealthModifier", lua.create_function(|_, _unit: Value| Ok(1.0_f64))?)?;
+    g.set("UnitHPPerStamina", lua.create_function(|_, _unit: Value| Ok(20.0_f64))?)?;
     Ok(())
 }
 

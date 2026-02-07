@@ -273,10 +273,20 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
     if parts.is_empty() {
         return;
     }
+    // WoW's C++ engine pre-initializes certain fields that OnLoad methods
+    // expect to exist before they run. Simulate this for ActionBarMixin.
+    let mut post_init = String::new();
+    for name in mixin.split(',').map(str::trim) {
+        if name == "ActionBarMixin" {
+            post_init.push_str("f.actionButtons = f.actionButtons or {} ");
+            post_init.push_str("f.shownButtonContainers = f.shownButtonContainers or {} ");
+        }
+    }
     let code = format!(
-        "do local f = {} if f then {} end end",
+        "do local f = {} if f then {} {} end end",
         frame_name,
-        parts.join(" ")
+        parts.join(" "),
+        post_init,
     );
     let _ = lua.load(&code).exec();
 }

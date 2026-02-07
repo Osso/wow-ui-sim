@@ -1,11 +1,14 @@
 //! UI frame creation for standard WoW UI elements.
 //!
-//! This module creates standard WoW UI frames that addons expect to exist:
+//! This module creates standard WoW UI frames that addons expect to exist
+//! before XML addon loading:
 //! - MicroButtons (MainMenuMicroButton, CharacterMicroButton, etc.)
 //! - MerchantFrame and MerchantItem buttons
-//! - Action bars (MainActionBar, MultiBarBottomLeft, etc.)
 //! - Status tracking bars (StatusTrackingBarManager, etc.)
 //! - Raid frames (CompactRaidFrameContainer)
+//!
+//! Note: Action bars (MainActionBar, StanceBar, PetActionBar, etc.) are
+//! created from Blizzard XML during addon loading, not pre-registered here.
 
 use crate::lua_api::frame::FrameHandle;
 use crate::lua_api::SimState;
@@ -18,10 +21,8 @@ use std::rc::Rc;
 pub fn register_ui_frames(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     register_micro_buttons(lua, &state)?;
     register_merchant_frames(lua, &state)?;
-    register_action_bars(lua, &state)?;
     register_status_tracking_bars(lua, &state)?;
     register_raid_frames(lua, &state)?;
-    eprintln!("DEBUG: after CompactRaidFrameContainer");
     Ok(())
 }
 
@@ -122,39 +123,6 @@ fn register_merchant_frames(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<
         globals.set(item_name.as_str(), item_ud.clone())?;
         let frame_key = format!("__frame_{}", item_id);
         globals.set(frame_key.as_str(), item_ud)?;
-    }
-
-    Ok(())
-}
-
-/// Register action bar frames (MainActionBar, MultiBar*, etc.).
-fn register_action_bars(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
-    let ui_parent_id = state.borrow().widgets.get_id_by_name("UIParent");
-
-    let action_bars = [
-        "MainActionBar",
-        "MultiBarBottomLeft",
-        "MultiBarBottomRight",
-        "MultiBarRight",
-        "MultiBarLeft",
-        "MultiBar5",
-        "MultiBar6",
-        "MultiBar7",
-        "MultiBar8",
-        "StanceBar",
-        "PetActionBar",
-        "PossessBar",
-        "OverrideActionBar",
-    ];
-
-    for name in action_bars {
-        create_and_register_frame(
-            lua, state, name, WidgetType::Frame,
-            ui_parent_id, 500.0, 40.0, true,
-        )?;
-        // ActionBar_OnLoad expects self.actionButtons to be iterable via pairs()
-        let code = format!("{}.actionButtons = {{}}", name);
-        let _ = lua.load(&code).exec();
     }
 
     Ok(())

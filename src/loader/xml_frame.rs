@@ -62,6 +62,7 @@ pub fn create_frame_from_xml(
     apply_button_textures(env, frame, &name)?;
     apply_button_text(env, frame, &name, inherits)?;
 
+    init_action_bar_tables(env, &name);
     fire_lifecycle_scripts(env, &name);
 
     Ok(Some(name))
@@ -499,6 +500,19 @@ fn exec_animation_groups(env: &WowLuaEnv, anims: &crate::xml::AnimationsXml, nam
     if let Err(e) = env.exec(&anim_code) {
         eprintln!("[AnimSetup] error: {}", e);
     }
+}
+
+/// Initialize tables expected by action bar OnLoad handlers.
+/// Frames with `numButtons` KeyValue are action bars that need `actionButtons = {}`.
+fn init_action_bar_tables(env: &WowLuaEnv, name: &str) {
+    let code = format!(
+        r#"do local f = {}
+        if f and f.numButtons and not f.actionButtons then
+            f.actionButtons = {{}}
+        end end"#,
+        name
+    );
+    let _ = env.exec(&code);
 }
 
 /// Fire OnLoad and OnShow lifecycle scripts after the frame is fully configured.
