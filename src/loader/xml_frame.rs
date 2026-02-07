@@ -324,7 +324,7 @@ fn format_key_value_lua(value: &str, value_type: Option<&str>) -> String {
     match value_type {
         Some("number") => value.to_string(),
         Some("boolean") => value.to_lowercase(),
-        Some("global") => format!("_G[\"{}\"]", escape_lua_string(value)),
+        Some("global") => value.to_string(),
         _ => format!("\"{}\"", escape_lua_string(value)),
     }
 }
@@ -359,10 +359,10 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
     match child {
         FrameElement::Frame(f) => Some((f, "Frame")),
         FrameElement::Button(f)
-        | FrameElement::ItemButton(f)
         | FrameElement::DropdownButton(f)
         | FrameElement::DropDownToggleButton(f)
         | FrameElement::EventButton(f) => Some((f, "Button")),
+        FrameElement::ItemButton(f) => Some((f, "ItemButton")),
         FrameElement::CheckButton(f) => Some((f, "CheckButton")),
         FrameElement::EditBox(f)
         | FrameElement::EventEditBox(f) => Some((f, "EditBox")),
@@ -407,12 +407,33 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
 
 /// Recursively create child frames and assign parentKey references.
 fn create_child_frames(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
-    if let Some(frames) = frame.frames() {
-        create_frame_elements(env, &frames.elements, name)?;
+    // Use all_frame_elements() to handle multiple <Frames> sections in the XML
+    for child in frame.all_frame_elements() {
+        create_single_child_frame(env, child, name)?;
     }
     // ScrollChild children are parented to the ScrollFrame just like regular children
     if let Some(scroll_child) = frame.scroll_child() {
         create_frame_elements(env, &scroll_child.children, name)?;
+    }
+    Ok(())
+}
+
+/// Create a single child frame from a FrameElement and assign parentKey.
+fn create_single_child_frame(
+    env: &WowLuaEnv,
+    child: &crate::xml::FrameElement,
+    parent_name: &str,
+) -> Result<(), LoadError> {
+    let (child_frame, child_type) = match frame_element_to_type(child) {
+        Some(pair) => pair,
+        None => return Ok(()),
+    };
+    let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name))?;
+    if let (Some(actual_child_name), Some(parent_key)) =
+        (child_name, &child_frame.parent_key)
+    {
+        let lua_code = format!("{}.{} = {}", parent_name, parent_key, actual_child_name);
+        env.exec(&lua_code).ok();
     }
     Ok(())
 }

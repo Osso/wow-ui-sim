@@ -37,7 +37,8 @@ impl WowLuaEnv {
         // Create all built-in frames
         {
             let mut s = state.borrow_mut();
-            create_builtin_frames(&mut s.widgets);
+            let (w, h) = (s.screen_width, s.screen_height);
+            create_builtin_frames(&mut s.widgets, w, h);
         }
 
         // Register global functions
@@ -373,6 +374,21 @@ impl WowLuaEnv {
         self.lua.set_app_data(font_system);
     }
 
+    /// Update screen dimensions in SimState and resize UIParent/WorldFrame to match.
+    pub fn set_screen_size(&self, width: f32, height: f32) {
+        let mut state = self.state.borrow_mut();
+        state.screen_width = width;
+        state.screen_height = height;
+        for name in &["UIParent", "WorldFrame"] {
+            if let Some(id) = state.widgets.get_id_by_name(name) {
+                if let Some(frame) = state.widgets.get_mut(id) {
+                    frame.width = width;
+                    frame.height = height;
+                }
+            }
+        }
+    }
+
     /// Register an addon in the addon list.
     pub fn register_addon(&self, info: AddonInfo) {
         self.state.borrow_mut().addons.push(info);
@@ -655,8 +671,8 @@ impl WowLuaEnv {
     #[allow(clippy::format_push_string)]
     pub fn dump_frames(&self) -> String {
         let state = self.state.borrow();
-        let screen_width = 500.0_f32;
-        let screen_height = 375.0_f32;
+        let screen_width = state.screen_width;
+        let screen_height = state.screen_height;
 
         let mut output = format!("[WoW Frames: {}x{}]\n\n", screen_width, screen_height);
 

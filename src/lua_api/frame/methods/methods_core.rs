@@ -1,4 +1,4 @@
-//! Core frame methods: GetName, SetSize, Show/Hide, hierarchy, strata/level, mouse, scale, rect.
+//! Core frame methods: GetName, SetSize, Show/Hide, strata/level, mouse, scale, rect.
 
 use super::FrameHandle;
 use super::methods_helpers::{calculate_frame_height, calculate_frame_width};
@@ -8,9 +8,10 @@ use mlua::{Lua, UserDataMethods, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-/// Default screen dimensions (matches WoW default and the simulator window size).
-const DEFAULT_SCREEN_WIDTH: f32 = 1024.0;
-const DEFAULT_SCREEN_HEIGHT: f32 = 768.0;
+/// Read screen dimensions from SimState.
+fn screen_dims(state: &SimState) -> (f32, f32) {
+    (state.screen_width, state.screen_height)
+}
 
 /// Add core frame methods to FrameHandle UserData.
 pub fn add_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -18,25 +19,18 @@ pub fn add_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_size_methods(methods);
     add_rect_methods(methods);
     add_visibility_methods(methods);
-    add_hierarchy_methods(methods);
     add_strata_level_methods(methods);
     add_mouse_input_methods(methods);
     add_scale_methods(methods);
     add_region_query_methods(methods);
-    add_misc_methods(methods);
 }
 
 /// Identity methods: GetName, GetObjectType
 fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetName()
+    // GetName() — returns nil for unnamed frames (WoW behavior)
     methods.add_method("GetName", |_, this, ()| {
         let state = this.state.borrow();
-        let name = state
-            .widgets
-            .get(this.id)
-            .and_then(|f| f.name.clone())
-            .unwrap_or_default();
-        Ok(name)
+        Ok(state.widgets.get(this.id).and_then(|f| f.name.clone()))
     });
 
     // GetObjectType()
@@ -143,32 +137,35 @@ fn add_rect_full_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetRect() -> left, bottom, width, height (unscaled, bottom-left origin)
     methods.add_method("GetRect", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
-        let bottom = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height;
+        let bottom = screen_height - rect.y - rect.height;
         Ok((rect.x, bottom, rect.width, rect.height))
     });
 
     // GetScaledRect() -> left, bottom, width, height (scaled by effective scale)
     methods.add_method("GetScaledRect", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
         let scale = effective_scale(&state.widgets, this.id);
         let left = rect.x * scale;
-        let bottom = (DEFAULT_SCREEN_HEIGHT - rect.y - rect.height) * scale;
+        let bottom = (screen_height - rect.y - rect.height) * scale;
         Ok((left, bottom, rect.width * scale, rect.height * scale))
     });
 
     // GetBounds() -> left, bottom, width, height (same as GetRect in practice)
     methods.add_method("GetBounds", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
-        let bottom = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height;
+        let bottom = screen_height - rect.y - rect.height;
         Ok((rect.x, bottom, rect.width, rect.height))
     });
 }
@@ -177,43 +174,48 @@ fn add_rect_full_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_rect_edge_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetLeft", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
         Ok(rect.x)
     });
 
     methods.add_method("GetRight", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
         Ok(rect.x + rect.width)
     });
 
     methods.add_method("GetTop", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
-        Ok(DEFAULT_SCREEN_HEIGHT - rect.y)
+        Ok(screen_height - rect.y)
     });
 
     methods.add_method("GetBottom", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
-        Ok(DEFAULT_SCREEN_HEIGHT - rect.y - rect.height)
+        Ok(screen_height - rect.y - rect.height)
     });
 
     methods.add_method("GetCenter", |_, this, ()| {
         let state = this.state.borrow();
+        let (screen_width, screen_height) = screen_dims(&state);
         let rect = compute_frame_rect(
-            &state.widgets, this.id, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+            &state.widgets, this.id, screen_width, screen_height,
         );
         let cx = rect.x + rect.width / 2.0;
-        let cy = DEFAULT_SCREEN_HEIGHT - rect.y - rect.height / 2.0;
+        let cy = screen_height - rect.y - rect.height / 2.0;
         Ok((cx, cy))
     });
 }
@@ -323,169 +325,6 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             frame.visible = shown;
         }
         Ok(())
-    });
-}
-
-/// Hierarchy methods: GetParent, SetParent, GetNumChildren, GetChildren
-fn add_hierarchy_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_parent_methods(methods);
-    add_children_methods(methods);
-}
-
-/// Parent access: GetParent, SetParent
-fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetParent()
-    methods.add_method("GetParent", |lua, this, ()| {
-        let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some(parent_id) = frame.parent_id {
-                let handle = FrameHandle {
-                    id: parent_id,
-                    state: Rc::clone(&this.state),
-                };
-                return Ok(Value::UserData(lua.create_userdata(handle)?));
-            }
-        }
-        Ok(Value::Nil)
-    });
-
-    // SetParent(parent)
-    methods.add_method("SetParent", |_, this, parent: Value| {
-        let new_parent_id = match parent {
-            Value::Nil => None,
-            Value::UserData(ud) => ud.borrow::<FrameHandle>().ok().map(|h| h.id),
-            _ => None,
-        };
-        let mut state = this.state.borrow_mut();
-
-        // Remove from old parent's children list
-        let old_parent_id = state.widgets.get(this.id).and_then(|f| f.parent_id);
-        if let Some(old_pid) = old_parent_id {
-            if let Some(old_parent) = state.widgets.get_mut(old_pid) {
-                old_parent.children.retain(|&id| id != this.id);
-            }
-        }
-
-        // Get parent's strata and level for inheritance
-        let parent_props = new_parent_id.and_then(|pid| {
-            state
-                .widgets
-                .get(pid)
-                .map(|p| (p.frame_strata, p.frame_level))
-        });
-
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.parent_id = new_parent_id;
-
-            // Inherit strata and level from parent (like wowless does)
-            if let Some((parent_strata, parent_level)) = parent_props {
-                if !frame.has_fixed_frame_strata {
-                    frame.frame_strata = parent_strata;
-                }
-                if !frame.has_fixed_frame_level {
-                    frame.frame_level = parent_level + 1;
-                }
-            }
-        }
-
-        // Add to new parent's children list
-        if let Some(new_pid) = new_parent_id {
-            if let Some(new_parent) = state.widgets.get_mut(new_pid) {
-                if !new_parent.children.contains(&this.id) {
-                    new_parent.children.push(this.id);
-                }
-            }
-        }
-
-        Ok(())
-    });
-}
-
-/// Child query: GetNumChildren, GetChildren
-fn add_children_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_children_frame_methods(methods);
-    add_children_region_methods(methods);
-}
-
-/// GetNumChildren, GetChildren
-fn add_children_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetNumChildren", |_, this, ()| {
-        let state = this.state.borrow();
-        let count = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.children.len())
-            .unwrap_or(0);
-        Ok(count as i32)
-    });
-
-    methods.add_method("GetChildren", |lua, this, ()| {
-        let state = this.state.borrow();
-        let mut result = mlua::MultiValue::new();
-        if let Some(frame) = state.widgets.get(this.id) {
-            let children = frame.children.clone();
-            drop(state);
-
-            for child_id in children {
-                let handle = FrameHandle {
-                    id: child_id,
-                    state: Rc::clone(&this.state),
-                };
-                if let Ok(ud) = lua.create_userdata(handle) {
-                    result.push_back(Value::UserData(ud));
-                }
-            }
-        }
-        Ok(result)
-    });
-}
-
-/// GetNumRegions, GetRegions, GetAdditionalRegions
-fn add_children_region_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetNumRegions", |_, this, ()| {
-        use crate::widget::WidgetType;
-        let state = this.state.borrow();
-        let count = state.widgets.get(this.id).map(|f| {
-            f.children.iter().filter(|&&cid| {
-                state.widgets.get(cid).map(|c| {
-                    matches!(c.widget_type, WidgetType::Texture | WidgetType::FontString)
-                }).unwrap_or(false)
-            }).count()
-        }).unwrap_or(0);
-        Ok(count as i32)
-    });
-
-    methods.add_method("GetRegions", |lua, this, ()| {
-        use crate::widget::WidgetType;
-        let state = this.state.borrow();
-        let mut result = mlua::MultiValue::new();
-        if let Some(frame) = state.widgets.get(this.id) {
-            let children = frame.children.clone();
-            drop(state);
-
-            for child_id in children {
-                let is_region = {
-                    let state = this.state.borrow();
-                    state.widgets.get(child_id).map(|f| {
-                        matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString)
-                    }).unwrap_or(false)
-                };
-                if is_region {
-                    let handle = FrameHandle {
-                        id: child_id,
-                        state: Rc::clone(&this.state),
-                    };
-                    if let Ok(ud) = lua.create_userdata(handle) {
-                        result.push_back(Value::UserData(ud));
-                    }
-                }
-            }
-        }
-        Ok(result)
-    });
-
-    methods.add_method("GetAdditionalRegions", |_, _this, ()| {
-        Ok(mlua::MultiValue::new())
     });
 }
 
@@ -687,6 +526,9 @@ fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(enabled)
     });
 
+    // RegisterForMouse(button1, button2, ...) - register mouse buttons for click
+    methods.add_method("RegisterForMouse", |_, _this, _args: mlua::MultiValue| Ok(()));
+
     add_mouse_motion_methods(methods);
 }
 
@@ -819,110 +661,6 @@ fn add_region_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         "SetDrawLayerEnabled",
         |_, _this, (_layer, _enabled): (String, bool)| Ok(()),
     );
-}
-
-/// Miscellaneous frame-type-specific stubs
-fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_minimap_methods(methods);
-    add_scrolling_message_methods(methods);
-    add_alert_and_data_provider_methods(methods);
-    // DropdownButtonMixin stub
-    methods.add_method("IsMenuOpen", |_, _this, ()| Ok(false));
-}
-
-/// Minimap and WorldMap stubs.
-fn add_minimap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetZoom", |_, _this, ()| Ok(0));
-    methods.add_method("SetZoom", |_, _this, _zoom: i32| Ok(()));
-    methods.add_method("GetZoomLevels", |_, _this, ()| Ok(5));
-    methods.add_method("GetPingPosition", |_, _this, ()| Ok((0.0f64, 0.0f64)));
-    methods.add_method("PingLocation", |_, _this, (_x, _y): (f64, f64)| Ok(()));
-    methods.add_method("UpdateBlips", |_, _this, ()| Ok(()));
-    // Texture setters (no-op stubs)
-    methods.add_method("SetBlipTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetMaskTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetIconTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetPOIArrowTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetCorpsePOIArrowTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetStaticPOIArrowTexture", |_, _this, _asset: Value| Ok(()));
-    // Quest/Task/Arch blob setters (no-op stubs)
-    methods.add_method("SetQuestBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetQuestBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetQuestBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetQuestBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetQuestBlobRingTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetQuestBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
-    methods.add_method("SetQuestBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetTaskBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetTaskBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetTaskBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetTaskBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetTaskBlobRingTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetTaskBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
-    methods.add_method("SetTaskBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetArchBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetArchBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetArchBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetArchBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetArchBlobRingTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetArchBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
-    methods.add_method("SetArchBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
-    // GetCanvas() - for WorldMapFrame (returns self as the canvas)
-    methods.add_method("GetCanvas", |lua, this, ()| {
-        let handle = FrameHandle {
-            id: this.id,
-            state: Rc::clone(&this.state),
-        };
-        lua.create_userdata(handle)
-    });
-}
-
-/// ScrollingMessageFrame and EditBox stubs.
-fn add_scrolling_message_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetTextCopyable", |_, _this, _copyable: bool| Ok(()));
-    methods.add_method("SetInsertMode", |_, _this, _mode: String| Ok(()));
-    methods.add_method("SetFading", |_, _this, _fading: bool| Ok(()));
-    methods.add_method("SetFadeDuration", |_, _this, _duration: f32| Ok(()));
-    methods.add_method("SetTimeVisible", |_, _this, _time: f32| Ok(()));
-}
-
-/// Alert subsystem, data provider, and EditMode stubs.
-fn add_alert_and_data_provider_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // AddQueuedAlertFrameSubSystem(system) - for AlertFrame
-    methods.add_method(
-        "AddQueuedAlertFrameSubSystem",
-        |lua, _this, _args: mlua::MultiValue| {
-            let subsystem = lua.create_table()?;
-            subsystem.set(
-                "SetCanShowMoreConditionFunc",
-                lua.create_function(|_, (_self, _func): (Value, Value)| Ok(()))?,
-            )?;
-            subsystem.set(
-                "AddAlert",
-                lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-            )?;
-            subsystem.set(
-                "RemoveAlert",
-                lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-            )?;
-            subsystem.set(
-                "ClearAllAlerts",
-                lua.create_function(|_, _self: Value| Ok(()))?,
-            )?;
-            Ok(Value::Table(subsystem))
-        },
-    );
-
-    // AddDataProvider(provider) - for WorldMapFrame (used by HereBeDragons)
-    methods.add_method("AddDataProvider", |_, _this, _provider: mlua::Value| Ok(()));
-
-    // RemoveDataProvider(provider) - for WorldMapFrame
-    methods.add_method("RemoveDataProvider", |_, _this, _provider: mlua::Value| {
-        Ok(())
-    });
-
-    // UseRaidStylePartyFrames() -> bool (for EditModeManagerFrame)
-    methods.add_method("UseRaidStylePartyFrames", |_, _this, ()| Ok(false));
 }
 
 /// Check if a widget type is or inherits from the given type name.

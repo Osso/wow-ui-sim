@@ -12,6 +12,7 @@ pub fn register_c_quest_api(lua: &Lua) -> Result<()> {
     globals.set("C_QuestInfoSystem", register_c_quest_info_system(lua)?)?;
     globals.set("C_QuestLine", register_c_quest_line(lua)?)?;
     globals.set("C_QuestOffer", register_c_quest_offer(lua)?)?;
+    globals.set("C_QuestSession", register_c_quest_session(lua)?)?;
     Ok(())
 }
 
@@ -33,6 +34,7 @@ fn register_quest_log_queries(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("IsOnQuest", lua.create_function(|_, _id: i32| Ok(false))?)?;
     t.set("GetQuestObjectives", lua.create_function(|lua, _id: i32| lua.create_table())?)?;
     t.set("GetMaxNumQuestsCanAccept", lua.create_function(|_, ()| Ok(35i32))?)?;
+    t.set("GetMaxNumQuests", lua.create_function(|_, ()| Ok(35i32))?)?;
     t.set("ReadyForTurnIn", lua.create_function(|_, _id: i32| Ok(false))?)?;
     t.set("GetQuestAdditionalHighlights", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
     t.set("SetMapForQuestPOIs", lua.create_function(|_, _map_id: i32| Ok(()))?)?;
@@ -128,6 +130,17 @@ fn register_c_quest_line(lua: &Lua) -> Result<mlua::Table> {
         "RequestQuestLinesForMap",
         lua.create_function(|_, _map_id: i32| Ok(()))?,
     )?;
+    Ok(t)
+}
+
+/// C_QuestSession namespace - quest session/party sync system.
+fn register_c_quest_session(lua: &Lua) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    t.set("Exists", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("HasJoined", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetAvailableSessionCommand", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("HasPendingCommand", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetSessionBeginDetails", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     Ok(t)
 }
 

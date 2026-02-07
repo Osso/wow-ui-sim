@@ -1100,6 +1100,40 @@ pub const TRANSMOG_COLLECTION_TYPE_META: EnumDef = (
 );
 
 // ============================================================================
+// Map / Vignette / Housing enums
+// ============================================================================
+
+pub const MAP_CANVAS_POSITION: EnumDef = (
+    "MapCanvasPosition",
+    &[
+        ("None", 0),
+        ("BottomLeft", 1),
+        ("BottomRight", 2),
+        ("TopLeft", 3),
+        ("TopRight", 4),
+    ],
+);
+
+pub const VIGNETTE_OBJECTIVE_TYPE: EnumDef = (
+    "VignetteObjectiveType",
+    &[
+        ("None", 0),
+        ("Defeat", 1),
+        ("DefeatShowRemainingHealth", 2),
+    ],
+);
+
+pub const HOUSING_PLOT_OWNER_TYPE: EnumDef = (
+    "HousingPlotOwnerType",
+    &[
+        ("None", 0),
+        ("Stranger", 1),
+        ("Friend", 2),
+        ("Self", 3),
+    ],
+);
+
+// ============================================================================
 // All sequential enums (for batch registration)
 // ============================================================================
 
@@ -1237,4 +1271,7 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     AURA_FRAME_ICON_WRAP,
     BAGS_DIRECTION,
     CLUB_FINDER_REQUEST_TYPE,
+    MAP_CANVAS_POSITION,
+    VIGNETTE_OBJECTIVE_TYPE,
+    HOUSING_PLOT_OWNER_TYPE,
 ];

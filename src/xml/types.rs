@@ -163,12 +163,17 @@ impl FrameXml {
         })
     }
 
-    /// Get the Frames element if present.
-    pub fn frames(&self) -> Option<&FramesXml> {
-        self.children.iter().find_map(|c| match c {
-            FrameChildElement::Frames(f) => Some(f),
-            _ => None,
-        })
+    /// Get all child frame elements across all `<Frames>` sections.
+    /// WoW XML allows multiple `<Frames>` blocks in a single frame definition.
+    pub fn all_frame_elements(&self) -> Vec<&FrameElement> {
+        self.children
+            .iter()
+            .filter_map(|c| match c {
+                FrameChildElement::Frames(f) => Some(f.elements.iter()),
+                _ => None,
+            })
+            .flatten()
+            .collect()
     }
 
     /// Get the KeyValues element if present.
@@ -541,6 +546,8 @@ pub enum LayerElement {
 pub struct TextureXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
+    #[serde(rename = "@inherits")]
+    pub inherits: Option<String>,
     #[serde(rename = "@parentKey")]
     pub parent_key: Option<String>,
     #[serde(rename = "@file")]

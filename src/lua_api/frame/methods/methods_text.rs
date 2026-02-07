@@ -148,11 +148,8 @@ fn add_title_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(title)
     });
 
-    // SetTitleOffsets(x, y) - set title position offset
-    methods.add_method("SetTitleOffsets", |_, _this, (_x, _y): (f64, f64)| {
-        // Stub - title offsets are a rendering detail
-        Ok(())
-    });
+    // SetTitleOffsets(x, y) - set title position offset (args can be nil)
+    methods.add_method("SetTitleOffsets", |_, _this, _args: mlua::MultiValue| Ok(()));
 }
 
 /// SetBorder, SetBorderColor, SetBorderInsets.
@@ -224,7 +221,7 @@ fn add_portrait_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    methods.add_method("SetPortraitToAsset", |_, _this, _file_id: i32| Ok(()));
+    methods.add_method("SetPortraitToAsset", |_, _this, _asset: mlua::Value| Ok(()));
 
     methods.add_method("SetPortraitToUnit", |_, _this, _unit: String| Ok(()));
 
@@ -317,14 +314,30 @@ fn add_shadow_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 }
 
+/// Extract numeric RGBA values from a mixed argument list, skipping non-numbers.
+fn extract_rgba(args: &[Value]) -> (f32, f32, f32, f32) {
+    let values: Vec<f32> = args
+        .iter()
+        .filter_map(|v| match v {
+            Value::Number(n) => Some(*n as f32),
+            Value::Integer(n) => Some(*n as f32),
+            _ => None,
+        })
+        .collect();
+    (
+        values.first().copied().unwrap_or(0.0),
+        values.get(1).copied().unwrap_or(0.0),
+        values.get(2).copied().unwrap_or(0.0),
+        values.get(3).copied().unwrap_or(1.0),
+    )
+}
+
 /// SetShadowColor, GetShadowColor.
 fn add_shadow_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetShadowColor([textType,] r, g, b, a) - set shadow color
     methods.add_method("SetShadowColor", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
-        let is_html = is_simple_html(this);
 
-        if is_html {
+        if is_simple_html(this) {
             if let Some(Value::String(s)) = args_vec.first() {
                 let type_str = s.to_string_lossy().to_string();
                 if is_text_type(&type_str) {
@@ -342,18 +355,7 @@ fn add_shadow_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             }
         }
 
-        let values: Vec<f32> = args_vec
-            .iter()
-            .filter_map(|v| match v {
-                Value::Number(n) => Some(*n as f32),
-                Value::Integer(n) => Some(*n as f32),
-                _ => None,
-            })
-            .collect();
-        let r = values.first().copied().unwrap_or(0.0);
-        let g = values.get(1).copied().unwrap_or(0.0);
-        let b = values.get(2).copied().unwrap_or(0.0);
-        let a = values.get(3).copied().unwrap_or(1.0);
+        let (r, g, b, a) = extract_rgba(&args_vec);
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.shadow_color = crate::widget::Color::new(r, g, b, a);

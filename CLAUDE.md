@@ -149,11 +149,13 @@ wow-sim lua -l                 # List running servers
 Render the UI to an image file without starting the GUI (headless GPU, same shader pipeline as the live renderer). Text is not rendered — this is for debugging frame layout and textures.
 
 ```bash
-wow-sim screenshot                                          # Render to screenshot.png (1024x768)
-wow-sim screenshot -o frame.png --filter AddonList          # Render only AddonList subtree
+wow-sim screenshot                                          # Render to screenshot.webp (1024x768, lossy q15)
+wow-sim screenshot -o frame.png --filter AddonList          # Render only AddonList subtree (PNG)
 wow-sim screenshot --width 1920 --height 1080               # Custom resolution
 wow-sim screenshot --no-addons --no-saved-vars              # Fast: skip extras
 ```
+
+Default output is lossy WebP at quality 15 (small files). Use `-o file.png` or `-o file.jpg` for other formats.
 
 ### Dump Frame Tree (Standalone)
 

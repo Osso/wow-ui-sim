@@ -52,10 +52,10 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
     t.set(
         "GetSpellTexture",
         lua.create_function(|_, spell_id: i32| {
-            let icon = crate::spells::get_spell(spell_id as u32)
+            let file_id = crate::spells::get_spell(spell_id as u32)
                 .map(|s| s.icon_file_data_id)
                 .unwrap_or(136243);
-            Ok(icon)
+            Ok(crate::manifest_interface_data::get_texture_path(file_id).unwrap_or(""))
         })?,
     )?;
     t.set(

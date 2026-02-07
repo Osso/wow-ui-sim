@@ -78,6 +78,8 @@ pub struct SimState {
     /// Screen dimensions in UI coordinates.
     pub screen_width: f32,
     pub screen_height: f32,
+    /// Action bar slots: slot (1-120) → spell ID.
+    pub action_bars: HashMap<u32, u32>,
 }
 
 impl Default for SimState {
@@ -99,6 +101,26 @@ impl Default for SimState {
             next_anim_group_id: 1,
             screen_width: 1024.0,
             screen_height: 768.0,
+            action_bars: default_action_bars(),
         }
     }
+}
+
+/// Pre-populate main action bar (slots 1-12) with Protection Paladin spells.
+fn default_action_bars() -> HashMap<u32, u32> {
+    let prot_paladin_bar: &[(u32, u32)] = &[
+        (1, 31935),  // Avenger's Shield
+        (2, 53595),  // Hammer of the Righteous
+        (3, 275779), // Judgment
+        (4, 26573),  // Consecration
+        (5, 53600),  // Shield of the Righteous
+        (6, 85673),  // Word of Glory
+        (7, 62124),  // Hand of Reckoning (Taunt)
+        (8, 31850),  // Ardent Defender
+        (9, 86659),  // Guardian of Ancient Kings
+        (10, 642),   // Divine Shield
+        (11, 633),   // Lay on Hands
+        (12, 1022),  // Blessing of Protection
+    ];
+    prot_paladin_bar.iter().copied().collect()
 }

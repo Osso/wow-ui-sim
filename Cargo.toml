@@ -37,10 +37,11 @@ cosmic-text = "0.15"
 wgpu = "27.0"
 bytemuck = { version = "1.21", features = ["derive"] }
 pollster = "0.4"
+webp = "0.3.1"
 
 [[bin]]
 name = "wow-sim"
-path = "src/bin/wow_sim.rs"
+path = "src/bin/wow_sim/main.rs"
 
 [[bin]]
 name = "gen_atlas"
@@ -57,6 +58,10 @@ path = "tools/gen_spells.rs"
 [[bin]]
 name = "gen_items"
 path = "tools/gen_items.rs"
+
+[[bin]]
+name = "gen_manifest"
+path = "tools/gen_manifest.rs"
 
 [dev-dependencies]
 insta = "1.42"

@@ -52,7 +52,12 @@ thread_local! {
 /// Fire the standard WoW startup events.
 pub fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
     let env = env.borrow();
+    fire_login_events(&env);
+    fire_world_and_ui_events(&env);
+}
 
+/// ADDON_LOADED, VARIABLES_LOADED, PLAYER_LOGIN, TIME_PLAYED_MSG, PLAYER_ENTERING_WORLD.
+fn fire_login_events(env: &WowLuaEnv) {
     println!("[Startup] Firing ADDON_LOADED");
     if let Err(e) = env.fire_event_with_args(
         "ADDON_LOADED",
@@ -61,41 +66,43 @@ pub fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
         eprintln!("Error firing ADDON_LOADED: {}", e);
     }
 
-    println!("[Startup] Firing VARIABLES_LOADED");
-    if let Err(e) = env.fire_event("VARIABLES_LOADED") {
-        eprintln!("Error firing VARIABLES_LOADED: {}", e);
+    for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
+        println!("[Startup] Firing {event}");
+        if let Err(e) = env.fire_event(event) {
+            eprintln!("Error firing {event}: {}", e);
+        }
     }
 
-    println!("[Startup] Firing PLAYER_LOGIN");
-    if let Err(e) = env.fire_event("PLAYER_LOGIN") {
-        eprintln!("Error firing PLAYER_LOGIN: {}", e);
+    println!("[Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed");
+    if let Err(e) = env.lua().globals().get::<mlua::Function>("RequestTimePlayed")
+        .and_then(|f| f.call::<()>(()))
+    {
+        eprintln!("Error calling RequestTimePlayed: {}", e);
     }
 
     println!("[Startup] Firing PLAYER_ENTERING_WORLD");
     if let Err(e) = env.fire_event_with_args(
         "PLAYER_ENTERING_WORLD",
-        &[
-            mlua::Value::Boolean(true),  // isInitialLogin
-            mlua::Value::Boolean(false), // isReloadingUi
-        ],
+        &[mlua::Value::Boolean(true), mlua::Value::Boolean(false)],
     ) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
     }
+}
 
-    println!("[Startup] Firing UPDATE_BINDINGS");
-    if let Err(e) = env.fire_event("UPDATE_BINDINGS") {
-        eprintln!("Error firing UPDATE_BINDINGS: {}", e);
+/// UPDATE_BINDINGS, DISPLAY_SIZE_CHANGED, UI_SCALE_CHANGED, addon hooks.
+fn fire_world_and_ui_events(env: &WowLuaEnv) {
+    for event in ["UPDATE_BINDINGS", "DISPLAY_SIZE_CHANGED", "UI_SCALE_CHANGED"] {
+        println!("[Startup] Firing {event}");
+        if let Err(e) = env.fire_event(event) {
+            eprintln!("Error firing {event}: {}", e);
+        }
     }
 
-    println!("[Startup] Firing DISPLAY_SIZE_CHANGED");
-    if let Err(e) = env.fire_event("DISPLAY_SIZE_CHANGED") {
-        eprintln!("Error firing DISPLAY_SIZE_CHANGED: {}", e);
-    }
-
-    println!("[Startup] Firing UI_SCALE_CHANGED");
-    if let Err(e) = env.fire_event("UI_SCALE_CHANGED") {
-        eprintln!("Error firing UI_SCALE_CHANGED: {}", e);
-    }
+    let _ = env.lua().load(r#"
+        if SlashCmdList and SlashCmdList.ACCOUNTPLAYEDPOPUP then
+            SlashCmdList.ACCOUNTPLAYEDPOPUP()
+        end
+    "#).exec();
 }
 
 /// Application state.
@@ -169,6 +176,14 @@ impl App {
         let (env_rc, textures_path, saved_vars) = Self::take_init_params();
 
         fire_startup_events(&env_rc);
+
+        // Hide frames that WoW's C++ engine hides by default (no target, no group, etc.).
+        // Must run AFTER startup events since PLAYER_ENTERING_WORLD handlers may re-show frames.
+        {
+            let env_ref = env_rc.borrow();
+            let _ = crate::lua_api::hide_runtime_hidden_frames(env_ref.lua());
+        }
+
         let log_messages = Self::collect_startup_logs(&env_rc);
 
         let (texture_manager, font_system, glyph_atlas) =

@@ -57,6 +57,10 @@ fn register_c_map(lua: &Lua) -> Result<mlua::Table> {
         "GetMapWorldSize",
         lua.create_function(|_, _map_id: i32| Ok((1000.0f64, 1000.0f64)))?,
     )?;
+    t.set(
+        "RequestPreloadMap",
+        lua.create_function(|_, _map_id: i32| Ok(()))?,
+    )?;
 
     Ok(t)
 }

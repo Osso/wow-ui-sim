@@ -14,6 +14,7 @@ use mlua::{Lua, Result};
 pub fn register_constants_api(lua: &Lua) -> Result<()> {
     register_constants_table(lua)?;
     register_color_globals(lua)?;
+    register_raid_class_colors(lua)?;
     Ok(())
 }
 
@@ -94,6 +95,42 @@ fn register_color_globals(lua: &Lua) -> Result<()> {
         FACTION_ORANGE_COLOR = makeColor(0.93, 0.53, 0.13)
         FACTION_YELLOW_COLOR = makeColor(0.8, 0.73, 0.13)
         FACTION_GREEN_COLOR = makeColor(0.13, 0.8, 0.13)
+    "#,
+    )
+    .exec()
+}
+
+/// Register `RAID_CLASS_COLORS` - maps class file names to color objects.
+fn register_raid_class_colors(lua: &Lua) -> Result<()> {
+    lua.load(
+        r#"
+        local function makeClassColor(r, g, b)
+            local c = { r = r, g = g, b = b }
+            function c:GetRGB() return self.r, self.g, self.b end
+            function c:GetRGBA() return self.r, self.g, self.b, 1.0 end
+            function c:GenerateHexColor()
+                return string.format("%02x%02x%02x",
+                    math.floor(self.r * 255), math.floor(self.g * 255), math.floor(self.b * 255))
+            end
+            function c:WrapTextInColorCode(text) return "|cff" .. self:GenerateHexColor() .. text .. "|r" end
+            return c
+        end
+
+        RAID_CLASS_COLORS = {
+            WARRIOR     = makeClassColor(0.78, 0.61, 0.43),
+            PALADIN     = makeClassColor(0.96, 0.55, 0.73),
+            HUNTER      = makeClassColor(0.67, 0.83, 0.45),
+            ROGUE       = makeClassColor(1.00, 0.96, 0.41),
+            PRIEST      = makeClassColor(1.00, 1.00, 1.00),
+            DEATHKNIGHT = makeClassColor(0.77, 0.12, 0.23),
+            SHAMAN      = makeClassColor(0.00, 0.44, 0.87),
+            MAGE        = makeClassColor(0.25, 0.78, 0.92),
+            WARLOCK     = makeClassColor(0.53, 0.53, 0.93),
+            MONK        = makeClassColor(0.00, 1.00, 0.60),
+            DRUID       = makeClassColor(1.00, 0.49, 0.04),
+            DEMONHUNTER = makeClassColor(0.64, 0.19, 0.79),
+            EVOKER      = makeClassColor(0.20, 0.58, 0.50),
+        }
     "#,
     )
     .exec()

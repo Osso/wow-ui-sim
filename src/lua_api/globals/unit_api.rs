@@ -53,6 +53,8 @@ pub fn register_unit_api(lua: &Lua) -> Result<()> {
     register_aura_functions(lua)?;
     register_weapon_enchant_functions(lua)?;
     register_xp_functions(lua)?;
+    register_pvp_vehicle_functions(lua)?;
+    register_misc_unit_functions(lua)?;
     Ok(())
 }
 
@@ -235,9 +237,14 @@ fn register_name_functions(lua: &Lua) -> Result<()> {
 /// Register unit state boolean functions: alive/dead, AFK/DND, combat
 /// relations, visibility.
 fn register_state_functions(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
+    register_state_boolean_stubs(lua)?;
+    register_state_comparisons(lua)?;
+    register_state_relations(lua)
+}
 
-    // Single-unit functions that always return false
+/// Register single-unit boolean stubs (always false or always true).
+fn register_state_boolean_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
     let false_stubs: &[&str] = &[
         "UnitIsDeadOrGhost",
         "UnitIsDead",
@@ -245,22 +252,22 @@ fn register_state_functions(lua: &Lua) -> Result<()> {
         "UnitIsAFK",
         "UnitIsDND",
         "UnitIsTapDenied",
+        "UnitIsCorpse",
+        "UnitIsWildBattlePet",
+        "UnitIsBattlePetCompanion",
     ];
     for &name in false_stubs {
         globals.set(name, lua.create_function(|_, _unit: String| Ok(false))?)?;
     }
+    globals.set("UnitIsConnected", lua.create_function(|_, _unit: String| Ok(true))?)?;
+    globals.set("UnitIsVisible", lua.create_function(|_, _unit: String| Ok(true))?)?;
+    globals.set("UnitBattlePetLevel", lua.create_function(|_, _unit: String| Ok(0))?)?;
+    Ok(())
+}
 
-    // Single-unit functions that always return true
-    globals.set(
-        "UnitIsConnected",
-        lua.create_function(|_, _unit: String| Ok(true))?,
-    )?;
-    globals.set(
-        "UnitIsVisible",
-        lua.create_function(|_, _unit: String| Ok(true))?,
-    )?;
-
-    // Unit comparison: player-specific checks
+/// Register unit comparison functions (player checks, unit identity).
+fn register_state_comparisons(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
     globals.set(
         "UnitIsPlayer",
         lua.create_function(|_, unit: String| Ok(unit == "player"))?,
@@ -273,8 +280,12 @@ fn register_state_functions(lua: &Lua) -> Result<()> {
         "UnitIsUnit",
         lua.create_function(|_, (unit1, unit2): (String, String)| Ok(unit1 == unit2))?,
     )?;
+    Ok(())
+}
 
-    // Two-unit relation stubs
+/// Register two-unit relation stubs (enemy, friend, attack, assist, range).
+fn register_state_relations(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
     let two_unit_false: &[&str] = &["UnitIsEnemy", "UnitCanAttack"];
     for &name in two_unit_false {
         globals.set(
@@ -282,7 +293,6 @@ fn register_state_functions(lua: &Lua) -> Result<()> {
             lua.create_function(|_, (_u1, _u2): (String, String)| Ok(false))?,
         )?;
     }
-
     let two_unit_true: &[&str] = &["UnitIsFriend", "UnitCanAssist"];
     for &name in two_unit_true {
         globals.set(
@@ -290,12 +300,7 @@ fn register_state_functions(lua: &Lua) -> Result<()> {
             lua.create_function(|_, (_u1, _u2): (String, String)| Ok(true))?,
         )?;
     }
-
-    globals.set(
-        "UnitInRange",
-        lua.create_function(|_, _unit: String| Ok((true, true)))?,
-    )?;
-
+    globals.set("UnitInRange", lua.create_function(|_, _unit: String| Ok((true, true)))?)?;
     Ok(())
 }
 
@@ -330,23 +335,23 @@ fn register_health_power_functions(lua: &Lua) -> Result<()> {
 
     globals.set(
         "UnitHealth",
-        lua.create_function(|_, _unit: String| Ok(100_000i32))?,
+        lua.create_function(|_, _unit: Value| Ok(100_000i32))?,
     )?;
     globals.set(
         "UnitHealthMax",
-        lua.create_function(|_, _unit: String| Ok(100_000i32))?,
+        lua.create_function(|_, _unit: Value| Ok(100_000i32))?,
     )?;
     globals.set(
         "UnitPower",
-        lua.create_function(|_, (_unit, _power_type): (String, Option<i32>)| Ok(50_000i32))?,
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(50_000i32))?,
     )?;
     globals.set(
         "UnitPowerMax",
-        lua.create_function(|_, (_unit, _power_type): (String, Option<i32>)| Ok(100_000i32))?,
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(100_000i32))?,
     )?;
     globals.set(
         "UnitPowerType",
-        lua.create_function(|lua, _unit: String| {
+        lua.create_function(|lua, _unit: Value| {
             Ok((0i32, Value::String(lua.create_string("MANA")?)))
         })?,
     )?;
@@ -512,5 +517,59 @@ fn register_xp_functions(lua: &Lua) -> Result<()> {
     globals.set("UnitTrialXP", lua.create_function(|_, _unit: String| Ok(0i32))?)?;
     globals.set("GetXPExhaustion", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     globals.set("GetRestState", lua.create_function(|_, ()| Ok(1i32))?)?;
+    Ok(())
+}
+
+/// Register PvP and vehicle-related unit functions.
+fn register_pvp_vehicle_functions(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+
+    let false_unit_stubs: &[&str] = &[
+        "UnitIsPVP",
+        "UnitIsPVPFreeForAll",
+        "UnitIsMercenary",
+        "UnitInVehicle",
+        "UnitHasVehiclePlayerFrameUI",
+        "UnitInVehicleHidesPetFrame",
+        "UnitAffectingCombat",
+        "UnitInCombat",
+        "UnitInPartyIsAI",
+    ];
+    for &name in false_unit_stubs {
+        g.set(name, lua.create_function(|_, _unit: String| Ok(false))?)?;
+    }
+
+    g.set("UnitHonorLevel", lua.create_function(|_, _unit: String| Ok(0i32))?)?;
+    g.set("UnitPartialPower", lua.create_function(|_, (_unit, _pt): (String, Option<i32>)| Ok(0i32))?)?;
+
+    // UnitGroupRolesAssignedEnum -> nil
+    g.set("UnitGroupRolesAssignedEnum", lua.create_function(|_, _unit: String| Ok(Value::Nil))?)?;
+
+    // UnitRealmRelationship -> nil
+    g.set("UnitRealmRelationship", lua.create_function(|_, _unit: String| Ok(Value::Nil))?)?;
+
+    // UnitSelectionColor -> r, g, b, a
+    g.set("UnitSelectionColor", lua.create_function(|_, _unit: String| {
+        Ok((1.0f64, 1.0f64, 1.0f64, 1.0f64))
+    })?)?;
+
+    Ok(())
+}
+
+/// Register miscellaneous unit query functions.
+fn register_misc_unit_functions(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+
+    g.set("UnitPhaseReason", lua.create_function(|_, _unit: String| Ok(Value::Nil))?)?;
+    g.set("UnitIsOwnerOrControllerOfUnit", lua.create_function(|_, (_u1, _u2): (String, String)| Ok(false))?)?;
+    g.set("UnitIsWarModePhased", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    g.set("UnitIsWarModeDesired", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    g.set("UnitIsWarModeActive", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    g.set("IsActiveBattlefieldArena", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetUnitPowerBarInfo", lua.create_function(|_, _unit: Value| Ok(Value::Nil))?)?;
+    g.set("IsInGroup", lua.create_function(|_, _flags: Option<i32>| Ok(false))?)?;
+    g.set("IsInRaid", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("UnitStagger", lua.create_function(|_, _unit: Value| Ok(0i32))?)?;
+
     Ok(())
 }

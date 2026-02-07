@@ -193,7 +193,13 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
     ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
     ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
+    // UIPanels_Game must load before WorldMap (QuestMapFrame needed by AttachQuestLog)
     ("Blizzard_UIPanels_Game", "Blizzard_UIPanels_Game_Mainline.toc"),
+    // WorldMap dependency chain
+    ("Blizzard_MapCanvasSecureUtil", "Blizzard_MapCanvasSecureUtil.toc"),
+    ("Blizzard_MapCanvas", "Blizzard_MapCanvas.toc"),
+    ("Blizzard_SharedMapDataProviders", "Blizzard_SharedMapDataProviders_Mainline.toc"),
+    ("Blizzard_WorldMap", "Blizzard_WorldMap_Mainline.toc"),
     ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
     // Existing UI modules
     ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),

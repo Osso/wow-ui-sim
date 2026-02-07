@@ -5,7 +5,7 @@ mod builtin_frames;
 mod env;
 mod frame;
 mod frame_methods;
-mod globals;
+pub mod globals;
 mod globals_legacy;
 mod layout;
 pub mod message_frame;
@@ -22,6 +22,7 @@ pub use message_frame::MessageFrameData;
 pub use simple_html::SimpleHtmlData;
 pub use state::{AddonInfo, PendingTimer, SimState};
 pub use tooltip::TooltipData;
+pub use globals::global_frames::hide_runtime_hidden_frames;
 
 // Crate-internal re-exports
 pub(crate) use env::next_timer_id;

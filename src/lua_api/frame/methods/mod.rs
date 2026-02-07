@@ -26,7 +26,9 @@ mod methods_core;
 mod methods_create;
 mod methods_event;
 mod methods_helpers;
+mod methods_hierarchy;
 mod methods_meta;
+mod methods_misc;
 mod methods_script;
 mod methods_text;
 mod methods_texture;
@@ -41,8 +43,14 @@ impl UserData for FrameHandle {
         // Add metamethods (__index, __newindex, __len, __eq)
         methods_meta::add_metamethods(methods);
 
-        // Add core frame methods (GetName, SetSize, Show/Hide, hierarchy, etc.)
+        // Add core frame methods (GetName, SetSize, Show/Hide, strata/level, etc.)
         methods_core::add_core_methods(methods);
+
+        // Add hierarchy methods (GetParent, SetParent, GetChildren, GetRegions, etc.)
+        methods_hierarchy::add_hierarchy_methods(methods);
+
+        // Add miscellaneous stubs (Minimap, ScrollingMessage, Alerts, etc.)
+        methods_misc::add_misc_methods(methods);
 
         // Add anchor/point methods (SetPoint, ClearAllPoints, SetAllPoints, etc.)
         methods_anchor::add_anchor_methods(methods);

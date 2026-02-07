@@ -86,6 +86,7 @@ impl shader::Program<Message> for &App {
 
         let size = bounds.size();
         self.screen_size.set(size);
+        self.sync_screen_size_to_state(size);
         let quads = self.get_or_rebuild_quads(size);
         let textures = self.load_new_textures(&quads);
 
@@ -540,9 +541,27 @@ pub fn build_quad_batch_for_registry(
                 continue;
             }
         }
-        if !f.visible || hidden_ancestors.contains(&id) {
+
+        // Children of hidden frames never render, regardless of state.
+        if hidden_ancestors.contains(&id) {
             continue;
         }
+
+        // Button state textures (NormalTexture, PushedTexture, etc.) have
+        // state-driven visibility that overrides frame.visible.
+        let state_override = super::button_vis::resolve_visibility(
+            f, id, registry, pressed_frame, hovered_frame,
+        );
+        match state_override {
+            Some(false) => continue, // state says hidden
+            Some(true) => {}         // state says visible, skip normal check
+            None => {
+                if !f.visible {
+                    continue;
+                }
+            }
+        }
+
         // Skip frames with no dimensions, but allow FontStrings with width=0
         // (they auto-size to text content during rendering)
         let is_fontstring = matches!(f.widget_type, WidgetType::FontString);

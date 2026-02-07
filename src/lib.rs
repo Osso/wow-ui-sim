@@ -4,11 +4,14 @@
 //! Embeds Lua 5.1 and implements the WoW widget API.
 
 #[path = "../data/atlas.rs"]
+mod atlas_data;
 pub mod atlas;
 #[path = "../data/global_strings.rs"]
 pub mod global_strings;
 #[path = "../data/items.rs"]
 pub mod items;
+#[path = "../data/manifest_interface_data.rs"]
+pub mod manifest_interface_data;
 #[path = "../data/spells.rs"]
 pub mod spells;
 pub mod cvars;

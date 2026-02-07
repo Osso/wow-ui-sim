@@ -708,6 +708,24 @@ fn env_with_addon_list() -> WowLuaEnv {
     // Register user addons so C_AddOns.GetNumAddOns() returns >0
     env.scan_and_register_addons(std::path::Path::new(USER_ADDONS_PATH));
 
+    // Re-init the AddonList ScrollBox view. During XML loading, the OnLoad handler's
+    // SetView call doesn't persist due to a __newindex ordering issue in method chains.
+    // Re-running the init after all addons are loaded works correctly.
+    env.exec(r#"
+        if AddonList and AddonList.ScrollBox and not AddonList.ScrollBox:HasView() then
+            local view = CreateScrollBoxListTreeListView(20, 5, 5, 5, 5, 8)
+            view:SetElementFactory(function(factory, treeNode)
+                local elementData = treeNode:GetData()
+                if elementData.addonIndex then
+                    factory("AddonListEntryTemplate", AddonList_InitAddon)
+                elseif elementData.category then
+                    factory("AddonListCategoryTemplate", AddonList_InitCategory)
+                end
+            end)
+            ScrollUtil.InitScrollBoxListWithScrollBar(AddonList.ScrollBox, AddonList.ScrollBar, view)
+        end
+    "#).unwrap();
+
     env
 }
 

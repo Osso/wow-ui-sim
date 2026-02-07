@@ -113,22 +113,45 @@ fn register_binding_persistence(lua: &Lua, globals: &mlua::Table) -> Result<()> 
 /// Registers tooltip colors (requires Lua for table creation).
 pub fn register_tooltip_colors(lua: &Lua, globals: &mlua::Table) -> Result<()> {
     let (r, g, b, a) = TOOLTIP_DEFAULT_COLOR;
-    let tooltip_default_color = lua.create_table()?;
-    tooltip_default_color.set("r", r)?;
-    tooltip_default_color.set("g", g)?;
-    tooltip_default_color.set("b", b)?;
-    tooltip_default_color.set("a", a)?;
-    globals.set("TOOLTIP_DEFAULT_COLOR", tooltip_default_color)?;
+    globals.set("TOOLTIP_DEFAULT_COLOR", make_color_table(lua, r, g, b, a)?)?;
 
     let (r, g, b, a) = TOOLTIP_DEFAULT_BG_COLOR;
-    let tooltip_default_bg_color = lua.create_table()?;
-    tooltip_default_bg_color.set("r", r)?;
-    tooltip_default_bg_color.set("g", g)?;
-    tooltip_default_bg_color.set("b", b)?;
-    tooltip_default_bg_color.set("a", a)?;
-    globals.set("TOOLTIP_DEFAULT_BACKGROUND_COLOR", tooltip_default_bg_color)?;
+    globals.set("TOOLTIP_DEFAULT_BACKGROUND_COLOR", make_color_table(lua, r, g, b, a)?)?;
 
     Ok(())
+}
+
+/// Create a color table with r/g/b/a fields and GetRGB/GetRGBA/WrapTextInColorCode methods.
+fn make_color_table(lua: &Lua, r: f64, g: f64, b: f64, a: f64) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    t.set("r", r)?;
+    t.set("g", g)?;
+    t.set("b", b)?;
+    t.set("a", a)?;
+    t.set("GetRGB", lua.create_function(|_, this: mlua::Table| {
+        Ok((this.get::<f64>("r")?, this.get::<f64>("g")?, this.get::<f64>("b")?))
+    })?)?;
+    t.set("GetRGBA", lua.create_function(|_, this: mlua::Table| {
+        Ok((this.get::<f64>("r")?, this.get::<f64>("g")?,
+            this.get::<f64>("b")?, this.get::<f64>("a")?))
+    })?)?;
+    t.set("GenerateHexColor", lua.create_function(|lua, this: mlua::Table| {
+        let r: f64 = this.get("r")?;
+        let g: f64 = this.get("g")?;
+        let b: f64 = this.get("b")?;
+        let hex = format!("{:02x}{:02x}{:02x}",
+            (r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8);
+        Ok(mlua::Value::String(lua.create_string(&hex)?))
+    })?)?;
+    t.set("WrapTextInColorCode", lua.create_function(|lua, (this, text): (mlua::Table, String)| {
+        let r: f64 = this.get("r")?;
+        let g: f64 = this.get("g")?;
+        let b: f64 = this.get("b")?;
+        let hex = format!("{:02x}{:02x}{:02x}",
+            (r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8);
+        Ok(mlua::Value::String(lua.create_string(&format!("|cff{}{}|r", hex, text))?))
+    })?)?;
+    Ok(t)
 }
 
 /// Registers item quality colors table (requires Lua for table creation).

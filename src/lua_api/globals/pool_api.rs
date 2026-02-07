@@ -1,7 +1,7 @@
-//! Pool API - CreateTexturePool, CreateFramePool, CreateObjectPool
+//! Pool API - CreateTexturePool, CreateFramePool, CreateFrameFactory, CreateObjectPool
 
 use crate::lua_api::SimState;
-use mlua::{Lua, Result, Value};
+use mlua::{Lua, ObjectLike, Result, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -11,6 +11,7 @@ pub fn register_pool_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> 
 
     globals.set("CreateTexturePool", create_texture_pool_fn(lua, state)?)?;
     globals.set("CreateFramePool", create_frame_pool_fn(lua)?)?;
+    globals.set("CreateFrameFactory", create_frame_factory_fn(lua)?)?;
     globals.set("CreateObjectPool", create_object_pool_fn(lua)?)?;
 
     Ok(())
@@ -162,6 +163,129 @@ fn enumerate_active(lua: &Lua, this: mlua::Table) -> Result<(mlua::Function, mlu
         }
     })?;
     Ok((iter_fn, iter_state, Value::Nil))
+}
+
+/// Create the `CreateFrameFactory` function.
+///
+/// A FrameFactory is a multi-template frame pool used by ScrollBoxListView.
+/// It creates frames by template name and pools them for reuse.
+fn create_frame_factory_fn(lua: &Lua) -> Result<mlua::Function> {
+    lua.create_function(|lua, ()| {
+        let factory = lua.create_table()?;
+        // pools[template] = { active = {}, inactive = {} }
+        factory.set("__pools", lua.create_table()?)?;
+        // template_infos[template] = { width = N, height = N }
+        factory.set("__template_infos", lua.create_table()?)?;
+
+        factory.set("Create", lua.create_function(factory_create)?)?;
+        factory.set("Release", lua.create_function(factory_release)?)?;
+        factory.set("ReleaseAll", lua.create_function(factory_release_all)?)?;
+        factory.set("GetTemplateInfoCache", lua.create_function(factory_get_cache)?)?;
+        Ok(factory)
+    })
+}
+
+/// FrameFactory:Create(parent, templateOrType, resetter) → frame, isNew
+fn factory_create(lua: &Lua, args: mlua::MultiValue) -> Result<(Value, bool)> {
+    let args: Vec<Value> = args.into_iter().collect();
+    let this = match args.first() {
+        Some(Value::Table(t)) => t.clone(),
+        _ => return Ok((Value::Nil, false)),
+    };
+    let parent = args.get(1).cloned().unwrap_or(Value::Nil);
+    let template: String = args.get(2)
+        .and_then(|v| v.as_str())
+        .map(|s| s.to_string())
+        .unwrap_or_else(|| "Frame".to_string());
+
+    let pools: mlua::Table = this.get("__pools")?;
+    let pool: mlua::Table = match pools.get::<Option<mlua::Table>>(&*template)? {
+        Some(p) => p,
+        None => {
+            let p = lua.create_table()?;
+            p.set("active", lua.create_table()?)?;
+            p.set("inactive", lua.create_table()?)?;
+            pools.set(template.as_str(), p.clone())?;
+            p
+        }
+    };
+
+    let inactive: mlua::Table = pool.get("inactive")?;
+    let inactive_len = inactive.raw_len();
+    if inactive_len > 0 {
+        let frame: Value = inactive.get(inactive_len)?;
+        inactive.set(inactive_len, Value::Nil)?;
+        let active: mlua::Table = pool.get("active")?;
+        active.set(active.raw_len() + 1, frame.clone())?;
+        return Ok((frame, false));
+    }
+
+    let create_frame: mlua::Function = lua.globals().get("CreateFrame")?;
+    let frame = create_frame.call::<Value>(("Frame", Value::Nil, parent, template.clone()))?;
+
+    // Cache template size info from the created frame
+    let template_infos: mlua::Table = this.get("__template_infos")?;
+    if template_infos.get::<Option<mlua::Table>>(&*template)?.is_none() {
+        let info = lua.create_table()?;
+        if let Value::UserData(ud) = &frame {
+            let w: f64 = ud.call_method("GetWidth", ()).unwrap_or(0.0);
+            let h: f64 = ud.call_method("GetHeight", ()).unwrap_or(0.0);
+            info.set("width", w)?;
+            info.set("height", h)?;
+        } else {
+            info.set("width", 0.0)?;
+            info.set("height", 0.0)?;
+        }
+        template_infos.set(template.as_str(), info)?;
+    }
+
+    let active: mlua::Table = pool.get("active")?;
+    active.set(active.raw_len() + 1, frame.clone())?;
+    Ok((frame, true))
+}
+
+/// FrameFactory:Release(frame) — move from active to inactive.
+fn factory_release(_: &Lua, (_this, _frame): (mlua::Table, Value)) -> Result<()> {
+    // Simplified: just let Lua GC handle pooling for now
+    Ok(())
+}
+
+/// FrameFactory:ReleaseAll() — release all active frames.
+fn factory_release_all(_: &Lua, this: mlua::Table) -> Result<()> {
+    let pools: mlua::Table = this.get("__pools")?;
+    for pair in pools.pairs::<String, mlua::Table>() {
+        let (_, pool) = pair?;
+        let active: mlua::Table = pool.get("active")?;
+        let inactive: mlua::Table = pool.get("inactive")?;
+        for entry in active.pairs::<i64, Value>() {
+            let (_, frame) = entry?;
+            inactive.set(inactive.raw_len() + 1, frame)?;
+        }
+        for i in 1..=active.raw_len() {
+            active.set(i, Value::Nil)?;
+        }
+    }
+    Ok(())
+}
+
+/// FrameFactory:GetTemplateInfoCache() — returns the template info cache.
+fn factory_get_cache(lua: &Lua, this: mlua::Table) -> Result<mlua::Table> {
+    let cache = lua.create_table()?;
+    let template_infos: mlua::Table = this.get("__template_infos")?;
+    cache.set("__infos", template_infos)?;
+
+    cache.set("GetTemplateInfo", lua.create_function(|_, (this, template): (mlua::Table, String)| {
+        let infos: mlua::Table = this.get("__infos")?;
+        let info: Option<mlua::Table> = infos.get(&*template)?;
+        Ok(info.map(Value::Table).unwrap_or(Value::Nil))
+    })?)?;
+
+    cache.set("GetTemplateInfos", lua.create_function(|_, this: mlua::Table| {
+        let infos: mlua::Table = this.get("__infos")?;
+        Ok(infos)
+    })?)?;
+
+    Ok(cache)
 }
 
 /// Create the `CreateObjectPool` function.

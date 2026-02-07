@@ -25,6 +25,7 @@ pub fn add_widget_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_scrollbox_methods(methods);
     add_simplehtml_methods(methods);
     add_shared_value_methods(methods);
+    add_misc_widget_stubs(methods);
 }
 
 fn add_tooltip_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -1346,7 +1347,7 @@ fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetCamera", |_, _this, _camera_id: i32| Ok(()));
     methods.add_method("SetPortraitZoom", |_, _this, _zoom: f64| Ok(()));
     methods.add_method("SetDesaturation", |_, _this, _desat: f64| Ok(()));
-    methods.add_method("SetRotation", |_, _this, _radians: f64| Ok(()));
+    methods.add_method("SetRotation", |_, _this, _radians: Value| Ok(()));
     methods.add_method("SetLight", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("SetSequence", |_, _this, _sequence: i32| Ok(()));
     methods.add_method("SetSequenceTime", |_, _this, (_seq, _time): (i32, i32)| {
@@ -1619,6 +1620,9 @@ fn add_drag_resize_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetResizeBounds", |_, _this, ()| {
         Ok((0.0_f32, 0.0_f32, 0.0_f32, 0.0_f32))
     });
+    // Legacy resize bound methods (deprecated in favor of SetResizeBounds)
+    methods.add_method("SetMinResize", |_, _this, (_w, _h): (f32, f32)| Ok(()));
+    methods.add_method("SetMaxResize", |_, _this, (_w, _h): (f32, f32)| Ok(()));
     methods.add_method("StartSizing", |_, _this, _point: Option<String>| Ok(()));
     methods.add_method("RegisterForDrag", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("SetUserPlaced", |_, _this, _user_placed: bool| Ok(()));
@@ -1987,4 +1991,53 @@ fn get_or_create_child_texture(
     };
     let ud = lua.create_userdata(handle)?;
     Ok(Value::UserData(ud))
+}
+
+/// Miscellaneous widget method stubs referenced by Blizzard UI.
+fn add_misc_widget_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // SetupMenu(generator) - dropdown/context menu setup (used everywhere)
+    methods.add_method("SetupMenu", |_, _this, _args: mlua::MultiValue| Ok(()));
+
+    // SetAlertContainer(container) - alert frame system
+    methods.add_method("SetAlertContainer", |_, _this, _container: Value| Ok(()));
+
+    // SetColorFill(r, g, b, a) - StatusBar fill color
+    methods.add_method("SetColorFill", |_, _this, _args: mlua::MultiValue| Ok(()));
+
+    // SetTextToFit(text) - FontString method that auto-sizes
+    methods.add_method("SetTextToFit", |_, this, text: Option<String>| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.text = text;
+        }
+        Ok(())
+    });
+
+    // SetSelectionTranslator(func) - tab/dropdown selection
+    methods.add_method("SetSelectionTranslator", |_, _this, _func: Value| Ok(()));
+
+    // SetItemButtonScale(scale) - item button sizing
+    methods.add_method("SetItemButtonScale", |_, _this, _scale: Value| Ok(()));
+
+    // SetRotationIncrement(increment) - model scene rotation
+    methods.add_method("SetRotationIncrement", |_, _this, _inc: Value| Ok(()));
+
+    // Init() - DO NOT add a Rust stub here. ScrollBoxListMixin:Init (Lua) must
+    // be callable via __index. A Rust method takes priority and would shadow it.
+
+    // UpdateItemContextMatching() - item slot context matching (PaperDoll)
+    methods.add_method("UpdateItemContextMatching", |_, _this, _args: mlua::MultiValue| Ok(()));
+
+    // UpdateHeight() - recalculate height (UIWidget containers)
+    methods.add_method("UpdateHeight", |_, _this, ()| Ok(()));
+
+    // SetDefaultText(text) - dropdown default text
+    methods.add_method("SetDefaultText", |_, _this, _text: Value| Ok(()));
+
+    // SetVisuals(info) - UnitFrame spark/bar visual configuration
+    methods.add_method("SetVisuals", |_, _this, _args: mlua::MultiValue| Ok(()));
+
+    // Initialize(...) - TextStatusBar spark, FeedbackFrame, FullPowerFrame
+    methods.add_method("Initialize", |_, _this, _args: mlua::MultiValue| Ok(()));
+
 }

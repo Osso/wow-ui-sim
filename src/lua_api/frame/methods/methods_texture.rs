@@ -16,6 +16,7 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_tex_coord_methods(methods);
     add_mask_methods(methods);
     add_draw_layer_methods(methods);
+    add_visual_methods(methods);
 }
 
 /// SetTexture, GetTexture, SetColorTexture.
@@ -351,8 +352,21 @@ fn add_vertex_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetCenterColor", |_, _this, _args: mlua::MultiValue| Ok(()));
 }
 
-/// SetTexCoord - with atlas-relative coordinate remapping.
+/// GetTexCoord, SetTexCoord - with atlas-relative coordinate remapping.
 fn add_tex_coord_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // GetTexCoord() - returns UL.x, UL.y, LL.x, LL.y, UR.x, UR.y, LR.x, LR.y (8 values)
+    methods.add_method("GetTexCoord", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            if let Some((left, right, top, bottom)) = frame.tex_coords {
+                // Return 8 values: UL, LL, UR, LR corners
+                return Ok((left, top, left, bottom, right, top, right, bottom));
+            }
+        }
+        // Default: full texture
+        Ok((0.0_f32, 0.0_f32, 0.0_f32, 1.0_f32, 1.0_f32, 0.0_f32, 1.0_f32, 1.0_f32))
+    });
+
     methods.add_method("SetTexCoord", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
         if args_vec.len() >= 4 {
@@ -423,4 +437,9 @@ fn add_draw_layer_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetDrawLayer", |_, _this, ()| {
         Ok(("ARTWORK", 0i32))
     });
+}
+
+/// SetVisuals - used by StatusBar spark textures in UnitFrame.
+fn add_visual_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetVisuals", |_, _this, _info: Value| Ok(()));
 }

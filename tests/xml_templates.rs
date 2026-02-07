@@ -87,9 +87,9 @@ fn test_xml_template_with_children() {
 
     let template = get_template("PanelTemplate").unwrap();
 
-    let frames = template.frame.frames();
+    let frames = template.frame.all_frame_elements();
     assert!(
-        frames.is_some(),
+        !frames.is_empty(),
         "Template should have child frames defined"
     );
 }

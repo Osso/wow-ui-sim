@@ -11,7 +11,8 @@ use mlua::Lua;
 fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str)> {
     match element {
         FrameElement::Frame(f) => Some((f, "Frame")),
-        FrameElement::Button(f) | FrameElement::ItemButton(f) => Some((f, "Button")),
+        FrameElement::Button(f) => Some((f, "Button")),
+        FrameElement::ItemButton(f) => Some((f, "ItemButton")),
         FrameElement::CheckButton(f) => Some((f, "CheckButton")),
         FrameElement::EditBox(f) | FrameElement::EventEditBox(f) => Some((f, "EditBox")),
         FrameElement::ScrollFrame(f) => Some((f, "ScrollFrame")),
@@ -273,24 +274,23 @@ fn fire_on_load(lua: &Lua, frame_name: &str) {
         "#,
         frame_name
     );
-    let _ = lua.load(&code).exec();
+    if let Err(e) = lua.load(&code).exec() {
+        eprintln!("[fire_on_load] {} error: {}", frame_name, e);
+    }
 }
 
 /// Create child frames from a FrameXml's `<Frames>` section.
-/// Returns the names of created child frames (for deferred OnLoad).
+/// Returns the names of ALL created frames including nested descendants (for deferred OnLoad).
 fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str) -> Vec<String> {
-    let mut child_names = Vec::new();
-    let Some(frames) = frame.frames() else {
-        return child_names;
-    };
-    for child in &frames.elements {
+    let mut all_names = Vec::new();
+    for child in frame.all_frame_elements() {
         let Some((child_frame, child_type)) = frame_element_type(child) else {
             continue;
         };
-        let name = create_child_frame_from_template(lua, child_frame, child_type, parent_name);
-        child_names.push(name);
+        let names = create_child_frame_from_template(lua, child_frame, child_type, parent_name);
+        all_names.extend(names);
     }
-    child_names
+    all_names
 }
 
 /// Create a texture from template XML.
@@ -314,6 +314,15 @@ fn create_texture_from_template(
         "#,
         parent_name, child_name, draw_layer,
     );
+
+    // Apply mixins from inherited templates and direct mixin attribute
+    let mixins = crate::xml::collect_texture_mixins(texture);
+    for m in &mixins {
+        code.push_str(&format!(
+            "            if {} then Mixin(tex, {}) end\n",
+            m, m
+        ));
+    }
 
     append_texture_properties(&mut code, texture, "tex");
     append_anchors_and_parent_refs(&mut code, &texture.anchors, texture.set_all_points, &texture.parent_key, &texture.parent_array, "tex", "parent", parent_name);
@@ -532,12 +541,13 @@ fn append_fontstring_wrap_and_lines(code: &mut String, fs: &crate::xml::FontStri
 }
 
 /// Create a child frame from template XML.
+/// Returns names of this frame AND all nested descendants (for deferred OnLoad).
 fn create_child_frame_from_template(
     lua: &Lua,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     parent_name: &str,
-) -> String {
+) -> Vec<String> {
     let child_name = frame
         .name
         .as_ref()
@@ -549,14 +559,16 @@ fn create_child_frame_from_template(
 
     // Apply inline content from the child FrameXml (layers, key values, scripts, etc.)
     // This handles elements defined directly on the child XML, not via inherits.
-    apply_inline_frame_content(lua, frame, &child_name);
+    let nested_names = apply_inline_frame_content(lua, frame, &child_name);
 
     // NOTE: Do NOT fire OnLoad here. Child OnLoad is deferred until after ALL templates
     // in the chain are applied by apply_templates_from_registry. This is required because
     // child OnLoad handlers (e.g. ButtonControllerMixin:OnLoad -> InitButton) may depend on
     // KeyValues from later templates in the chain (e.g. atlasName from BigRedThreeSliceButtonTemplate).
 
-    child_name
+    let mut all_names = nested_names;
+    all_names.push(child_name);
+    all_names
 }
 
 /// Build Lua code to create a child frame with size, anchors, visibility, and parentKey.
@@ -629,7 +641,8 @@ fn build_create_child_code(
 /// This handles layers (textures, fontstrings), key values, scripts, child frames,
 /// button textures, and thumb textures that are defined directly in the XML element
 /// rather than through an inherited template.
-fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+/// Returns names of nested child frames created (for deferred OnLoad).
+fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) -> Vec<String> {
     // Apply mixin (must be before scripts)
     apply_mixin(lua, &frame.combined_mixin(), frame_name);
 
@@ -646,13 +659,15 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
     // Apply animation groups
     apply_animation_groups(lua, frame, frame_name);
 
-    // Create nested child frames
-    create_child_frames(lua, frame, frame_name);
+    // Create nested child frames, collecting all descendant names for deferred OnLoad
+    let nested_names = create_child_frames(lua, frame, frame_name);
 
     // Apply scripts (after children so OnLoad can reference them)
     if let Some(scripts) = frame.scripts() {
         apply_scripts_from_template(lua, scripts, frame_name);
     }
+
+    nested_names
 }
 
 /// Apply animation groups from a FrameXml to an already-created frame.

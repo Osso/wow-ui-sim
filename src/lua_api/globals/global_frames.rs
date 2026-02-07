@@ -16,12 +16,32 @@ use std::rc::Rc;
 /// reuse it. Otherwise create a new one on demand. This avoids hardcoding frames
 /// in builtin_frames.rs just so global_frames.rs can find them.
 fn register_frame_global(lua: &Lua, state: &Rc<RefCell<SimState>>, name: &str) -> Result<u64> {
+    register_frame_global_with_visibility(lua, state, name, true)
+}
+
+/// Register a frame global that starts hidden.
+fn register_hidden_frame_global(lua: &Lua, state: &Rc<RefCell<SimState>>, name: &str) -> Result<u64> {
+    register_frame_global_with_visibility(lua, state, name, false)
+}
+
+fn register_frame_global_with_visibility(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    name: &str,
+    visible: bool,
+) -> Result<u64> {
     let id = {
         let mut st = state.borrow_mut();
         if let Some(existing) = st.widgets.get_id_by_name(name) {
+            if !visible {
+                if let Some(frame) = st.widgets.get_mut(existing) {
+                    frame.visible = false;
+                }
+            }
             existing
         } else {
-            let frame = Frame::new(WidgetType::Frame, Some(name.to_string()), None);
+            let mut frame = Frame::new(WidgetType::Frame, Some(name.to_string()), None);
+            frame.visible = visible;
             st.widgets.register(frame)
         }
     };
@@ -72,11 +92,8 @@ fn register_core_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     register_frame_global(lua, state, "WorldFrame")?;
     register_frame_global(lua, state, "Minimap")?;
     register_frame_global(lua, state, "EventToastManagerFrame")?;
-    eprintln!("DEBUG: after EventToastManagerFrame");
     register_frame_global(lua, state, "EditModeManagerFrame")?;
-    eprintln!("DEBUG: after EditModeManagerFrame");
     register_frame_global(lua, state, "RolePollPopup")?;
-    eprintln!("DEBUG: after RolePollPopup");
     register_frame_global(lua, state, "TimerTracker")?;
     Ok(())
 }
@@ -86,9 +103,7 @@ fn register_chat_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()>
     register_frame_global(lua, state, "DEFAULT_CHAT_FRAME")?;
     register_frame_global(lua, state, "ChatFrame1")?;
     register_chat_type_group(lua)?;
-    eprintln!("DEBUG: after ChatTypeGroup");
     register_chat_frame_util(lua)?;
-    eprintln!("DEBUG: after ChatFrameUtil");
     Ok(())
 }
 
@@ -137,17 +152,11 @@ fn register_chat_frame_util(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Register UI panel globals: WorldMapFrame, SettingsPanel, ObjectiveTracker, etc.
+/// Register UI panel globals: SettingsPanel, ObjectiveTracker, etc.
+/// Note: WorldMapFrame is now loaded from Blizzard_WorldMap addon XML.
 fn register_ui_panel_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
-    let world_map_id = register_frame_global(lua, state, "WorldMapFrame")?;
-    eprintln!("DEBUG: after WorldMapFrame");
-    setup_world_map_frame_fields(lua, world_map_id)?;
-    eprintln!("DEBUG: after WorldMapFrame overlayFrames");
-
     register_frame_global(lua, state, "SettingsPanel")?;
-    eprintln!("DEBUG: after SettingsPanel");
     setup_settings_panel(lua)?;
-    eprintln!("DEBUG: after SettingsPanel.Container");
 
     register_frame_global(lua, state, "ObjectiveTrackerFrame")?;
     setup_objective_tracker(lua)?;
@@ -164,14 +173,6 @@ fn register_ui_panel_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result
     register_frame_global(lua, state, "AuctionHouseFrame")?;
     register_frame_global(lua, state, "SideDressUpFrame")?;
     register_frame_global(lua, state, "GossipFrame")?;
-    Ok(())
-}
-
-/// Set pinPools and overlayFrames on WorldMapFrame.
-fn setup_world_map_frame_fields(lua: &Lua, world_map_frame_id: u64) -> Result<()> {
-    let wm_fields = get_or_create_frame_fields(lua, world_map_frame_id)?;
-    wm_fields.set("pinPools", lua.create_table()?)?;
-    wm_fields.set("overlayFrames", lua.create_table()?)?;
     Ok(())
 }
 
@@ -200,7 +201,6 @@ fn setup_settings_panel(lua: &Lua) -> Result<()> {
 
 /// Set up ObjectiveTrackerFrame.Header and ObjectiveTrackerManager.
 fn setup_objective_tracker(lua: &Lua) -> Result<()> {
-    eprintln!("DEBUG: before ObjectiveTrackerFrame.Header lua.load");
     lua.load(
         r#"
         ObjectiveTrackerFrame.Header = CreateFrame("Frame", nil, ObjectiveTrackerFrame)
@@ -208,7 +208,6 @@ fn setup_objective_tracker(lua: &Lua) -> Result<()> {
     "#,
     )
     .exec()?;
-    eprintln!("DEBUG: after ObjectiveTrackerFrame.Header lua.load");
 
     lua.load(
         r#"
@@ -238,7 +237,6 @@ fn setup_objective_tracker(lua: &Lua) -> Result<()> {
     "#,
     )
     .exec()?;
-    eprintln!("DEBUG: after ObjectiveTrackerManager");
     Ok(())
 }
 
@@ -263,20 +261,28 @@ fn setup_alert_frame(lua: &Lua) -> Result<()> {
 /// Register unit frame globals: PlayerFrame, TargetFrame, FocusFrame, etc.
 fn register_unit_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     register_frame_global(lua, state, "PlayerFrame")?;
-    eprintln!("DEBUG: after PlayerFrame");
-    register_frame_global(lua, state, "TargetFrame")?;
-    register_frame_global(lua, state, "FocusFrame")?;
-    register_frame_global(lua, state, "FocusFrameSpellBar")?;
+
+    // Target/Focus frames hidden by default (no target selected)
+    register_hidden_frame_global(lua, state, "TargetFrame")?;
+    register_hidden_frame_global(lua, state, "FocusFrame")?;
+    register_hidden_frame_global(lua, state, "FocusFrameSpellBar")?;
+    register_hidden_frame_global(lua, state, "TargetFrameSpellBar")?;
 
     register_frame_global(lua, state, "BuffFrame")?;
     setup_buff_frame_aura_container(lua, state)?;
+    register_frame_global(lua, state, "DebuffFrame")?;
 
-    register_frame_global(lua, state, "TargetFrameSpellBar")?;
     register_frame_global(lua, state, "PlayerCastingBarFrame")?;
-    register_frame_global(lua, state, "PartyFrame")?;
-    register_frame_global(lua, state, "PetFrame")?;
-    register_frame_global(lua, state, "AlternatePowerBar")?;
-    register_frame_global(lua, state, "MonkStaggerBar")?;
+
+    // Party frame hidden by default (not in group)
+    register_hidden_frame_global(lua, state, "PartyFrame")?;
+
+    // Pet frame hidden by default (no pet)
+    register_hidden_frame_global(lua, state, "PetFrame")?;
+
+    // Class-specific bars hidden by default
+    register_hidden_frame_global(lua, state, "AlternatePowerBar")?;
+    register_hidden_frame_global(lua, state, "MonkStaggerBar")?;
     Ok(())
 }
 
@@ -302,20 +308,21 @@ fn register_misc_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     register_frame_global(lua, state, "NamePlateDriverFrame")?;
     register_frame_global(lua, state, "UIErrorsFrame")?;
 
-    register_frame_global(lua, state, "ContainerFrameContainer")?;
+    // Bag/loot frames hidden by default
+    register_hidden_frame_global(lua, state, "ContainerFrameContainer")?;
     setup_container_frame(lua)?;
 
-    register_frame_global(lua, state, "ContainerFrameCombinedBags")?;
-    register_frame_global(lua, state, "LootFrame")?;
+    register_hidden_frame_global(lua, state, "ContainerFrameCombinedBags")?;
+    register_hidden_frame_global(lua, state, "LootFrame")?;
 
     let addon_compartment_id = register_frame_global(lua, state, "AddonCompartmentFrame")?;
     setup_addon_compartment(lua, addon_compartment_id)?;
-    eprintln!("DEBUG: after AddonCompartmentFrame");
 
-    register_frame_global(lua, state, "ScenarioObjectiveTracker")?;
-    register_frame_global(lua, state, "RaidWarningFrame")?;
+    register_hidden_frame_global(lua, state, "ScenarioObjectiveTracker")?;
+    register_hidden_frame_global(lua, state, "RaidWarningFrame")?;
 
-    register_frame_global(lua, state, "FriendsFrame")?;
+    // FriendsFrame has hidden="true" in its XML but we create it as a stub
+    register_hidden_frame_global(lua, state, "FriendsFrame")?;
 
     setup_party_member_frame_pool(lua)?;
     Ok(())
@@ -368,5 +375,184 @@ fn register_table_globals(lua: &Lua) -> Result<()> {
         .set("UISpecialFrames", lua.create_table()?)?;
     lua.globals()
         .set("StaticPopupDialogs", lua.create_table()?)?;
+    Ok(())
+}
+
+/// Hide frames that WoW's C++ engine hides by default at startup.
+///
+/// Must be called AFTER addon XML loading, because `CreateFrame` in the XML
+/// loader creates new frames (orphaning any pre-registered hidden stubs).
+/// These frames have no `hidden="true"` in XML — WoW hides them at runtime
+/// based on game state (no target, no group, no encounter, etc.).
+pub fn hide_runtime_hidden_frames(lua: &Lua) -> Result<()> {
+    let frames_to_hide: &[&str] = &[
+        // Unit frames: no target/focus/group/pet by default
+        "TargetFrame",
+        "FocusFrame",
+        "TargetFrameSpellBar",
+        "FocusFrameSpellBar",
+        "PartyFrame",
+        "PetFrame",
+        // Boss frames: no encounter active
+        "BossTargetFrameContainer",
+        // Class-specific power bars
+        "AlternatePowerBar",
+        "MonkStaggerBar",
+        "InsanityBarFrame",
+        "EvokerEbonMightBar",
+        // Encounter bar: no encounter active
+        "EncounterBar",
+        // Casting bar: not casting
+        "PlayerCastingBarFrame",
+        // Bags/loot not open
+        "ContainerFrameContainer",
+        "ContainerFrameCombinedBags",
+        "LootFrame",
+        // Misc UI not shown at login
+        "RoleChangedFrame",
+        "QuestInfoRequiredMoneyFrame",
+        "SpellActivationOverlayFrame",
+        "ScenarioObjectiveTracker",
+        "RaidWarningFrame",
+        "FriendsFrame",
+    ];
+
+    for name in frames_to_hide {
+        let code = format!("if {} then {}:Hide() end", name, name);
+        if let Err(e) = lua.load(&code).exec() {
+            eprintln!("[hide_runtime] Failed to hide {}: {}", name, e);
+        }
+    }
+
+    hide_child_overlays(lua)?;
+    hide_orphaned_anonymous_frames(lua)?;
+    Ok(())
+}
+
+/// Lua helper function injected once for hiding child elements.
+const HIDE_HELPER: &str = r#"
+    if not __hide_child then
+        function __hide_child(parent, key)
+            if parent and parent[key] then parent[key]:Hide() end
+        end
+    end
+"#;
+
+/// Hide child textures/frames that are only shown contextually in WoW.
+fn hide_child_overlays(lua: &Lua) -> Result<()> {
+    let _ = lua.load(HIDE_HELPER).exec();
+    hide_action_bar_overlays(lua);
+    hide_player_frame_overlays(lua);
+    hide_micro_menu_flashes(lua);
+    hide_xp_bar_effects(lua);
+    hide_misc_overlays(lua);
+    Ok(())
+}
+
+fn hide_action_bar_overlays(lua: &Lua) {
+    let _ = lua.load(r#"
+        if MainActionBar then
+            local h = __hide_child
+            h(MainActionBar, "QuickKeybindGlowLarge")
+            h(MainActionBar, "QuickKeybindGlowSmall")
+            h(MainActionBar, "QuickKeybindBottomShadow")
+            h(MainActionBar, "QuickKeybindRightShadow")
+        end
+    "#).exec();
+}
+
+fn hide_player_frame_overlays(lua: &Lua) {
+    let _ = lua.load(r#"
+        if not PlayerFrame then return end
+        local h = __hide_child
+        -- Container-level textures (vehicle/alternate overlays)
+        local pfc = PlayerFrame.PlayerFrameContainer
+        if pfc then
+            h(pfc, "VehicleFrameTexture")
+            h(pfc, "AlternatePowerFrameTexture")
+        end
+        -- Content-level: main overlays + contextual icons
+        local content = PlayerFrame.PlayerFrameContent
+        if content then
+            local main = content.PlayerFrameContentMain
+            if main then h(main, "StatusTexture") end
+            local ctx = content.PlayerFrameContentContextual
+            if ctx then
+                h(ctx, "LeaderIcon")
+                h(ctx, "GuideIcon")
+                h(ctx, "RoleIcon")
+                h(ctx, "AttackIcon")
+                h(ctx, "PlayerPortraitCornerIcon")
+                h(ctx, "PrestigePortrait")
+                h(ctx, "PrestigeBadge")
+            end
+        end
+        -- Mana bar full-power glow
+        if PlayerFrame.manabar then h(PlayerFrame.manabar, "FullPowerFrame") end
+    "#).exec();
+}
+
+fn hide_micro_menu_flashes(lua: &Lua) {
+    let _ = lua.load(r#"
+        if MicroMenu then
+            for _, child in ipairs({ MicroMenu:GetChildren() }) do
+                __hide_child(child, "FlashContent")
+            end
+        end
+    "#).exec();
+}
+
+fn hide_xp_bar_effects(lua: &Lua) {
+    let _ = lua.load(r#"
+        if MainStatusTrackingBarContainer then
+            local h = __hide_child
+            for _, child in ipairs({ MainStatusTrackingBarContainer:GetChildren() }) do
+                if child.StatusBar then
+                    h(child.StatusBar, "GainFlareAnimationTexture")
+                    h(child.StatusBar, "LevelUpTexture")
+                end
+            end
+        end
+    "#).exec();
+}
+
+fn hide_misc_overlays(lua: &Lua) {
+    let _ = lua.load(r#"
+        if GameTimeCalendarEventAlarmTexture then
+            GameTimeCalendarEventAlarmTexture:Hide()
+        end
+        if ItemButton then ItemButton:Hide() end
+    "#).exec();
+}
+
+/// Hide anonymous frames orphaned to UIParent during addon loading.
+///
+/// Some Blizzard addons create child frames in OnLoad handlers that reference
+/// properties not yet initialized (e.g. `self.ScrollFrame.ScrollChild`).
+/// When the parent is nil, `CreateFrame` falls back to UIParent, making these
+/// frames visible at the top level. In real WoW they'd be inside hidden panels.
+fn hide_orphaned_anonymous_frames(lua: &Lua) -> Result<()> {
+    if let Err(e) = lua.load(
+        r#"
+        for _, child in ipairs({ UIParent:GetChildren() }) do
+            if not child:GetName() and child:IsShown() then
+                -- MapLegend categories (Quests, Activities, etc.)
+                local ok, tt = pcall(function() return child.TitleText end)
+                if ok and tt then child:Hide() end
+                -- CampaignTooltip (Story Progress panel)
+                local ok2, ns = pcall(function() return child.NineSlice end)
+                local ok3, it = pcall(function() return child.ItemTooltip end)
+                if ok2 and ns and ok3 and it then child:Hide() end
+                -- HelpTip frames (OkayButton + Arrow)
+                local ok4, ob = pcall(function() return child.OkayButton end)
+                local ok5, ar = pcall(function() return child.Arrow end)
+                if ok4 and ob and ok5 and ar then child:Hide() end
+            end
+        end
+        "#,
+    )
+    .exec() {
+        eprintln!("[hide_orphaned] Error: {}", e);
+    }
     Ok(())
 }

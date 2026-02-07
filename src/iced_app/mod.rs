@@ -10,6 +10,7 @@
 //! - `render`: Shader/canvas rendering implementations
 
 mod app;
+mod button_vis;
 mod layout;
 mod render;
 mod state;

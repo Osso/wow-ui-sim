@@ -413,6 +413,19 @@ impl App {
         }
     }
 
+    /// Sync the iced canvas size to SimState and UIParent/WorldFrame dimensions.
+    /// Called from the render path when the window is resized by the window manager.
+    pub(crate) fn sync_screen_size_to_state(&self, size: iced::Size) {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        if (state.screen_width - size.width).abs() > 0.5
+            || (state.screen_height - size.height).abs() > 0.5
+        {
+            drop(state);
+            env.set_screen_size(size.width, size.height);
+        }
+    }
+
     pub(crate) fn drain_console(&mut self) {
         let env = self.env.borrow();
         let mut state = env.state().borrow_mut();

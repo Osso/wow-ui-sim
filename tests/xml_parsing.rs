@@ -237,8 +237,8 @@ fn test_parse_new_frame_types_as_children() {
         XmlElement::Frame(f) => f,
         _ => panic!("Expected Frame"),
     };
-    let frames = frame.frames().expect("Expected Frames container");
-    assert_eq!(frames.elements.len(), 16);
+    let frames = frame.all_frame_elements();
+    assert_eq!(frames.len(), 16);
 }
 
 // --- Animation elements (#19-#29) ---

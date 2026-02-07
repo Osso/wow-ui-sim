@@ -35,6 +35,10 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_network_stubs(lua)?;
     register_input_state_stubs(lua)?;
     register_screen_size_functions(lua, &state)?;
+    register_request_time_played(lua, Rc::clone(&state))?;
+    register_cursor_position(lua)?;
+    register_localization_stubs(lua)?;
+    register_ui_object_stubs(lua)?;
     Ok(())
 }
 
@@ -447,5 +451,119 @@ fn register_screen_size_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> R
         let s = st.borrow();
         Ok((s.screen_width as i32, s.screen_height as i32))
     })?)?;
+    Ok(())
+}
+
+/// Register `RequestTimePlayed()` - fires TIME_PLAYED_MSG with simulated play data.
+///
+/// In WoW, `RequestTimePlayed()` is asynchronous and fires `TIME_PLAYED_MSG`
+/// with `(totalTimePlayed, timePlayedThisLevel)`. We fire it immediately with
+/// fake data for the current simulated character.
+fn register_request_time_played(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    let request_fn = lua.create_function(move |lua, ()| {
+        // Simulated: 15 days played total, 3 days at current level
+        let total_played = 15 * 24 * 3600; // 15 days in seconds
+        let level_played = 3 * 24 * 3600; // 3 days in seconds
+
+        let listeners = {
+            let s = state.borrow();
+            s.widgets.get_event_listeners("TIME_PLAYED_MSG")
+        };
+
+        for widget_id in listeners {
+            if let Ok(Some(table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
+                let frame_key = format!("{}_OnEvent", widget_id);
+                if let Ok(Some(handler)) =
+                    table.get::<Option<mlua::Function>>(frame_key.as_str())
+                {
+                    let frame_ref_key = format!("__frame_{}", widget_id);
+                    if let Ok(frame) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
+                        let args = vec![
+                            frame,
+                            Value::String(lua.create_string("TIME_PLAYED_MSG")?),
+                            Value::Integer(total_played),
+                            Value::Integer(level_played),
+                        ];
+                        let _ = handler.call::<()>(mlua::MultiValue::from_vec(args));
+                    }
+                }
+            }
+        }
+
+        Ok(())
+    })?;
+    lua.globals().set("RequestTimePlayed", request_fn)?;
+    Ok(())
+}
+
+/// Register `GetCursorPosition()` - returns cursor screen coordinates.
+///
+/// Returns simulated cursor at screen center. The MinimapButton addon uses this
+/// for drag positioning.
+fn register_cursor_position(lua: &Lua) -> Result<()> {
+    lua.globals().set(
+        "GetCursorPosition",
+        lua.create_function(|_, ()| Ok((512.0_f64, 384.0_f64)))?,
+    )?;
+    Ok(())
+}
+
+/// Localization stubs: GetText (string lookup), and other localization helpers.
+fn register_localization_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    // GetText(key) - localization lookup; just return the key as-is
+    globals.set("GetText", lua.create_function(|_, key: String| Ok(key))?)?;
+
+    Ok(())
+}
+
+/// Miscellaneous UI object stubs: AnimateCallout, WowStyle1DropdownMixin, etc.
+fn register_ui_object_stubs(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
+    // AnimateCallout global table (used by TutorialFrame)
+    let animate_callout = lua.create_table()?;
+    animate_callout.set("Start", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    animate_callout.set("Stop", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    globals.set("AnimateCallout", animate_callout)?;
+
+    // WowStyle1DropdownMixin - dropdown mixin (used by WardrobeOutfits)
+    let wow_style1 = lua.create_table()?;
+    wow_style1.set("OnLoad", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    globals.set("WowStyle1DropdownMixin", wow_style1)?;
+
+    // C_EventUtils - event scheduling and validation
+    let c_event_utils = lua.create_table()?;
+    c_event_utils.set("CanPlayerUseEventScheduler", lua.create_function(|_, ()| Ok(false))?)?;
+    c_event_utils.set("IsEventValid", lua.create_function(|_, _event: String| Ok(true))?)?;
+    globals.set("C_EventUtils", c_event_utils)?;
+
+    // AnimateMouse global table (used by TutorialFrame)
+    let animate_mouse = lua.create_table()?;
+    animate_mouse.set("Start", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    animate_mouse.set("Stop", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    globals.set("AnimateMouse", animate_mouse)?;
+
+    // Patch C_PlayerInfo (table created in c_misc_api.rs)
+    if let Ok(c_player_info) = globals.get::<mlua::Table>("C_PlayerInfo") {
+        c_player_info.set("IsPlayerInRPE", lua.create_function(|_, ()| Ok(false))?)?;
+        c_player_info.set("GetAlternateFormInfo", lua.create_function(|_, ()| Ok((false, false)))?)?;
+    }
+
+    // Patch C_UIWidgetManager (table created in c_misc_api.rs)
+    if let Ok(c_widget_mgr) = globals.get::<mlua::Table>("C_UIWidgetManager") {
+        c_widget_mgr.set("GetPowerBarWidgetSetID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    }
+
+    // Patch C_UnitAuras (table created in c_misc_api.rs)
+    // GetAuraSlots returns (continuationToken, slot1, slot2, ...).
+    // Returning nil means no auras and no more pages (stops the repeat..until loop).
+    if let Ok(c_unit_auras) = globals.get::<mlua::Table>("C_UnitAuras") {
+        c_unit_auras.set("GetAuraSlots", lua.create_function(|_, _args: mlua::MultiValue| {
+            Ok(Value::Nil)
+        })?)?;
+    }
+
     Ok(())
 }

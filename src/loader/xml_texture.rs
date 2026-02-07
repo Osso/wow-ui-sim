@@ -1,6 +1,7 @@
 //! Texture creation from XML definitions.
 
 use crate::lua_api::WowLuaEnv;
+use crate::xml::{collect_texture_mixins, register_texture_template};
 
 use super::error::LoadError;
 use super::helpers::{escape_lua_string, generate_animation_group_code, generate_set_point_code, get_size_values, resolve_child_name};
@@ -93,6 +94,22 @@ fn generate_texture_visual_code(texture: &crate::xml::TextureXml) -> String {
     code
 }
 
+/// Generate Lua Mixin() calls for texture mixins (from inherits and direct mixin attr).
+fn generate_mixin_code(texture: &crate::xml::TextureXml) -> String {
+    let mixins = collect_texture_mixins(texture);
+    if mixins.is_empty() {
+        return String::new();
+    }
+    let mut code = String::new();
+    for m in &mixins {
+        code.push_str(&format!(
+            "\n        if {} then Mixin(tex, {}) end\n        ",
+            m, m
+        ));
+    }
+    code
+}
+
 /// Create a texture from XML definition.
 pub fn create_texture_from_xml(
     env: &WowLuaEnv,
@@ -101,6 +118,10 @@ pub fn create_texture_from_xml(
     draw_layer: &str,
 ) -> Result<(), LoadError> {
     if texture.is_virtual == Some(true) {
+        // Register virtual textures as templates for mixin resolution
+        if let Some(ref name) = texture.name {
+            register_texture_template(name, texture.clone());
+        }
         return Ok(());
     }
 
@@ -113,6 +134,9 @@ pub fn create_texture_from_xml(
         "#,
         parent_name, tex_name, draw_layer
     );
+
+    // Apply mixins from inherited templates and direct mixin attribute
+    lua_code.push_str(&generate_mixin_code(texture));
 
     lua_code.push_str(&generate_texture_source_code(texture));
     lua_code.push_str(&generate_texture_visual_code(texture));

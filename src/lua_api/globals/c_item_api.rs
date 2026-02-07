@@ -351,6 +351,13 @@ fn register_legacy_item_globals(lua: &Lua) -> Result<()> {
 
 /// Register spell-related global functions.
 fn register_spell_globals(lua: &Lua) -> Result<()> {
+    register_spell_query_globals(lua)?;
+    register_spell_stub_globals(lua)?;
+    Ok(())
+}
+
+/// Spell query globals: link, icon, texture.
+fn register_spell_query_globals(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     globals.set(
@@ -377,12 +384,19 @@ fn register_spell_globals(lua: &Lua) -> Result<()> {
     globals.set(
         "GetSpellTexture",
         lua.create_function(|_, spell_id: i32| {
-            let icon = crate::spells::get_spell(spell_id as u32)
+            let file_id = crate::spells::get_spell(spell_id as u32)
                 .map(|s| s.icon_file_data_id)
                 .unwrap_or(136243);
-            Ok(icon)
+            Ok(crate::manifest_interface_data::get_texture_path(file_id).unwrap_or(""))
         })?,
     )?;
+
+    Ok(())
+}
+
+/// Spell stub globals: cooldown, known checks, chat.
+fn register_spell_stub_globals(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
 
     globals.set(
         "GetSpellCooldown",

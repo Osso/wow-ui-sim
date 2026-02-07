@@ -27,6 +27,8 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_c_stable_info(lua)?;
     register_c_tutorial(lua)?;
     register_c_action_bar(lua)?;
+    register_unit_frame_global_stubs(lua)?;
+    register_powerbar_prediction_colors(lua)?;
     Ok(())
 }
 
@@ -114,6 +116,83 @@ fn register_c_action_bar(lua: &Lua) -> Result<()> {
     t.set("FindSpellActionButtons", lua.create_function(|lua, _spell_id: i32| lua.create_table())?)?;
     t.set("GetCurrentActionBarByClass", lua.create_function(|_, ()| Ok(1i32))?)?;
     t.set("HasFlyoutActionButtons", lua.create_function(|_, _flyout_id: i32| Ok(false))?)?;
+    t.set("EnableActionRangeCheck", lua.create_function(|_, (_action, _enable): (Value, bool)| Ok(()))?)?;
+    t.set("IsAssistedCombatAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
     lua.globals().set("C_ActionBar", t)?;
+    Ok(())
+}
+
+/// Global function stubs needed by Blizzard_UnitFrame.
+fn register_unit_frame_global_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("IsResting", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("IsPVPTimerRunning", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetPVPTimer", lua.create_function(|_, ()| Ok(0.0f64))?)?;
+    g.set("GetReadyCheckStatus", lua.create_function(|_, _unit: String| Ok(Value::Nil))?)?;
+    g.set("HasLFGRestrictions", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("IsInRaid", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetNumGroupMembers", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("GetRaidRosterInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    g.set("PartialPlayTime", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("NoPlayTime", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetBillingTimeRested", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("SetPortraitToTexture", lua.create_function(|_, (_tex, _path): (Value, Value)| Ok(()))?)?;
+    g.set("GetUnitTotalModifiedMaxHealthPercent", lua.create_function(|_, _unit: String| Ok(0.0f64))?)?;
+    g.set("IsThreatWarningEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetThreatStatusColor", lua.create_function(|_, _status: i32| Ok((1.0f64, 1.0f64, 1.0f64)))?)?;
+    g.set("LE_REALM_RELATION_VIRTUAL", 3i32)?;
+    g.set("PlaySound", lua.create_function(|_, (_id, _ch): (Value, Option<String>)| Ok(()))?)?;
+    g.set("PlaySoundFile", lua.create_function(|_, (_path, _ch): (Value, Option<String>)| Ok(()))?)?;
+    g.set("StopSound", lua.create_function(|_, _handle: Value| Ok(()))?)?;
+    g.set("IsInGroup", lua.create_function(|_, _category: Option<i32>| Ok(false))?)?;
+    g.set("IsActiveBattlefieldArena", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetNumArenaOpponents", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("GetBattlefieldEstimatedWaitTime", lua.create_function(|_, _index: Value| Ok(0i32))?)?;
+    g.set("PetUsesPetFrame", lua.create_function(|_, ()| Ok(true))?)?;
+    g.set("UnitIsPossessed", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    Ok(())
+}
+
+/// POWERBAR_PREDICTION_COLOR_* globals used by PowerBarColorUtil.lua at parse time.
+fn register_powerbar_prediction_colors(lua: &Lua) -> Result<()> {
+    let get_rgba = lua.create_function(|_, this: mlua::Table| {
+        Ok((
+            this.get::<f64>("r")?,
+            this.get::<f64>("g")?,
+            this.get::<f64>("b")?,
+            this.get::<f64>("a")?,
+        ))
+    })?;
+    let get_rgb = lua.create_function(|_, this: mlua::Table| {
+        Ok((
+            this.get::<f64>("r")?,
+            this.get::<f64>("g")?,
+            this.get::<f64>("b")?,
+        ))
+    })?;
+
+    let g = lua.globals();
+    let colors: &[(&str, f64, f64, f64)] = &[
+        ("POWERBAR_PREDICTION_COLOR_MANA", 0.0, 0.0, 1.0),
+        ("POWERBAR_PREDICTION_COLOR_RAGE", 1.0, 0.0, 0.0),
+        ("POWERBAR_PREDICTION_COLOR_FOCUS", 1.0, 0.5, 0.25),
+        ("POWERBAR_PREDICTION_COLOR_ENERGY", 1.0, 1.0, 0.0),
+        ("POWERBAR_PREDICTION_COLOR_RUNIC_POWER", 0.0, 0.82, 1.0),
+        ("POWERBAR_PREDICTION_COLOR_LUNAR_POWER", 0.3, 0.52, 0.9),
+        ("POWERBAR_PREDICTION_COLOR_MAELSTROM", 0.0, 0.5, 1.0),
+        ("POWERBAR_PREDICTION_COLOR_INSANITY", 0.4, 0.0, 0.8),
+        ("POWERBAR_PREDICTION_COLOR_FURY", 0.788, 0.259, 0.992),
+        ("POWERBAR_PREDICTION_COLOR_PAIN", 1.0, 0.612, 0.0),
+    ];
+    for &(name, r, green, b) in colors {
+        let t = lua.create_table()?;
+        t.set("r", r)?;
+        t.set("g", green)?;
+        t.set("b", b)?;
+        t.set("a", 0.5f64)?;
+        t.set("GetRGBA", get_rgba.clone())?;
+        t.set("GetRGB", get_rgb.clone())?;
+        g.set(name, t)?;
+    }
     Ok(())
 }

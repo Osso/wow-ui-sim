@@ -492,6 +492,14 @@ fn register_c_player_info(lua: &Lua) -> Result<()> {
         "IsTutorialsTabAvailable",
         lua.create_function(|_, ()| Ok(false))?,
     )?;
+    c_player_info.set(
+        "CanPlayerUseEventScheduler",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    c_player_info.set(
+        "IsPlayerInRPE",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
 
     globals.set("C_PlayerInfo", c_player_info)?;
     Ok(())

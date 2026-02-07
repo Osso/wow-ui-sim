@@ -19,7 +19,22 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         // Create default children for widget types that always need them
         create_widget_type_defaults(&mut state_clone.borrow_mut(), frame_id, widget_type);
 
+        // ItemButton has intrinsic children (Count, icon, etc.) from WoW's intrinsic template
+        if frame_type == "ItemButton" {
+            create_item_button_intrinsics(&mut state_clone.borrow_mut(), frame_id);
+        }
+
         let ud = create_frame_userdata(lua, &state_clone, frame_id, name.as_deref())?;
+
+        // ItemButton intrinsic template defines mixin="ItemButtonMixin"
+        if frame_type == "ItemButton" {
+            let frame_key = format!("__frame_{}", frame_id);
+            let code = format!(
+                "do local f = {} if f and ItemButtonMixin then Mixin(f, ItemButtonMixin) end end",
+                frame_key
+            );
+            let _ = lua.load(&code).exec();
+        }
 
         // Apply templates from the registry (if template specified)
         if let Some(tmpl) = template {
@@ -289,4 +304,84 @@ fn create_child_widget(state: &mut SimState, widget_type: WidgetType, parent_id:
     state.widgets.register(child);
     state.widgets.add_child(parent_id, child_id);
     child_id
+}
+
+/// Create intrinsic children for ItemButton (from WoW's intrinsic="true" template).
+/// ItemButton defines: icon (Texture), Count (FontString), Stock (FontString),
+/// searchOverlay, ItemContextOverlay, IconBorder, IconOverlay, IconOverlay2 (Textures).
+fn create_item_button_intrinsics(state: &mut SimState, frame_id: u64) {
+    // icon texture (BORDER layer, fills parent)
+    let icon_id = create_child_widget(state, WidgetType::Texture, frame_id);
+    if let Some(tex) = state.widgets.get_mut(icon_id) {
+        tex.draw_layer = crate::widget::DrawLayer::Border;
+        add_fill_parent_anchors(tex, frame_id);
+    }
+
+    // Count fontstring (ARTWORK layer, hidden, anchored BOTTOMRIGHT)
+    let count_id = create_child_widget(state, WidgetType::FontString, frame_id);
+    if let Some(fs) = state.widgets.get_mut(count_id) {
+        fs.draw_layer = crate::widget::DrawLayer::Artwork;
+        fs.visible = false;
+        fs.justify_h = crate::widget::TextJustify::Right;
+        fs.anchors.push(crate::widget::Anchor {
+            point: crate::widget::AnchorPoint::BottomRight,
+            relative_to: None,
+            relative_to_id: Some(frame_id as usize),
+            relative_point: crate::widget::AnchorPoint::BottomRight,
+            x_offset: -5.0,
+            y_offset: -2.0,
+        });
+    }
+
+    // Stock fontstring (ARTWORK layer, hidden)
+    let stock_id = create_child_widget(state, WidgetType::FontString, frame_id);
+    if let Some(fs) = state.widgets.get_mut(stock_id) {
+        fs.draw_layer = crate::widget::DrawLayer::Artwork;
+        fs.visible = false;
+    }
+
+    // IconBorder, IconOverlay, IconOverlay2 (OVERLAY layer, hidden)
+    let icon_border_id = create_hidden_overlay(state, frame_id);
+    let icon_overlay_id = create_hidden_overlay(state, frame_id);
+    let icon_overlay2_id = create_hidden_overlay(state, frame_id);
+
+    // searchOverlay (OVERLAY layer, hidden, fills parent)
+    let search_overlay_id = create_child_widget(state, WidgetType::Texture, frame_id);
+    if let Some(tex) = state.widgets.get_mut(search_overlay_id) {
+        tex.draw_layer = crate::widget::DrawLayer::Overlay;
+        tex.visible = false;
+        add_fill_parent_anchors(tex, frame_id);
+    }
+
+    // ItemContextOverlay (OVERLAY layer, hidden)
+    let context_overlay_id = create_hidden_overlay(state, frame_id);
+
+    if let Some(btn) = state.widgets.get_mut(frame_id) {
+        btn.children_keys.insert("icon".to_string(), icon_id);
+        btn.children_keys.insert("Count".to_string(), count_id);
+        btn.children_keys.insert("Stock".to_string(), stock_id);
+        btn.children_keys.insert("IconBorder".to_string(), icon_border_id);
+        btn.children_keys.insert("IconOverlay".to_string(), icon_overlay_id);
+        btn.children_keys.insert("IconOverlay2".to_string(), icon_overlay2_id);
+        btn.children_keys.insert("searchOverlay".to_string(), search_overlay_id);
+        btn.children_keys.insert("ItemContextOverlay".to_string(), context_overlay_id);
+    }
+}
+
+/// Create a hidden overlay texture child (OVERLAY layer, hidden, centered on parent).
+fn create_hidden_overlay(state: &mut SimState, parent_id: u64) -> u64 {
+    let id = create_child_widget(state, WidgetType::Texture, parent_id);
+    if let Some(tex) = state.widgets.get_mut(id) {
+        tex.draw_layer = crate::widget::DrawLayer::Overlay;
+        tex.visible = false;
+        tex.anchors.push(crate::widget::Anchor {
+            point: crate::widget::AnchorPoint::Center,
+            relative_to: None,
+            relative_to_id: Some(parent_id as usize),
+            relative_point: crate::widget::AnchorPoint::Center,
+            x_offset: 0.0,
+            y_offset: 0.0,
+        });
+    }
+    id
 }

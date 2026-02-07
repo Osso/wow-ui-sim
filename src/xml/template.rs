@@ -133,3 +133,53 @@ pub fn clear_templates() {
     let mut registry = template_registry().write().unwrap();
     registry.clear();
 }
+
+// ---------------------------------------------------------------------------
+// Texture template registry (virtual textures with mixin/inherits)
+// ---------------------------------------------------------------------------
+
+use super::types::TextureXml;
+
+/// Global registry of virtual texture templates.
+fn texture_template_registry() -> &'static RwLock<HashMap<String, TextureXml>> {
+    static REGISTRY: OnceLock<RwLock<HashMap<String, TextureXml>>> = OnceLock::new();
+    REGISTRY.get_or_init(|| RwLock::new(HashMap::new()))
+}
+
+/// Register a virtual texture template.
+pub fn register_texture_template(name: &str, texture: TextureXml) {
+    let mut registry = texture_template_registry().write().unwrap();
+    registry.insert(name.to_string(), texture);
+}
+
+/// Collect all mixins for a texture by resolving its `inherits` chain.
+pub fn collect_texture_mixins(texture: &TextureXml) -> Vec<String> {
+    let mut mixins = Vec::new();
+
+    // Collect mixins from inherited templates
+    if let Some(ref inherits) = texture.inherits {
+        let registry = texture_template_registry().read().unwrap();
+        for parent_name in inherits.split(',').map(|s| s.trim()) {
+            if let Some(parent) = registry.get(parent_name) {
+                if let Some(ref m) = parent.mixin {
+                    for mixin in m.split(',').map(|s| s.trim()) {
+                        if !mixin.is_empty() && !mixins.contains(&mixin.to_string()) {
+                            mixins.push(mixin.to_string());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Collect direct mixins on the texture itself
+    if let Some(ref m) = texture.mixin {
+        for mixin in m.split(',').map(|s| s.trim()) {
+            if !mixin.is_empty() && !mixins.contains(&mixin.to_string()) {
+                mixins.push(mixin.to_string());
+            }
+        }
+    }
+
+    mixins
+}

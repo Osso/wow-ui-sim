@@ -7,8 +7,8 @@ mod types;
 // Re-export all public types and functions
 pub use parse::{parse_xml, parse_xml_file, XmlLoadError};
 pub use template::{
-    clear_templates, get_template, get_template_chain, get_template_info, register_template,
-    TemplateEntry, TemplateInfo,
+    clear_templates, collect_texture_mixins, get_template, get_template_chain, get_template_info,
+    register_template, register_texture_template, TemplateEntry, TemplateInfo,
 };
 pub use types::{
     AbsDimensionXml, ActorXml, ActorsXml, AnchorXml, AnchorsXml, AnimationElement,

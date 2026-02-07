@@ -234,13 +234,15 @@ const FRAME_BASE_METHODS: &[&str] = &[
     "EnableGamePadButton", "IsGamePadButtonEnabled", "EnableGamePadStick",
     "IsGamePadStickEnabled", "CanChangeProtectedState", "SetForbidden",
     "IsForbidden", "SetUserPlaced", "IsUserPlaced", "SetResizeBounds",
-    "GetResizeBounds", "SetDontSavePosition", "GetDontSavePosition",
+    "GetResizeBounds", "SetMinResize", "SetMaxResize",
+    "SetDontSavePosition", "GetDontSavePosition",
     "SetWindow", "GetWindow", "SetHyperlinksEnabled", "GetHyperlinksEnabled",
     "AdjustPointsOffset", "ClearPoint", "ClearPointsOffset",
     "RegisterAllEvents", "IsRectValid", "IsObjectLoaded",
     "IsMouseOver", "StopAnimating", "GetSourceLocation",
     "Intersects", "SetAlphaFromBoolean", "EnableMouseMotion",
     "ClearScripts", "IsDrawLayerEnabled",
+    "SetParentKey", "GetParentKey",
 ];
 
 const TEXTURE_METHODS: &[&str] = &[
@@ -259,6 +261,7 @@ const TEXTURE_METHODS: &[&str] = &[
     "IsBlockingLoadRequested", "GetNumRegionsByLayer", "GetRegionsByLayer",
     "GetNumChildren", "PlaySoundFile", "ClearNineSlice",
     "SetAutomaticFrameLevelEnabled", "IsAutomaticFrameLevelEnabled",
+    "SetVisuals",
 ];
 
 const BUTTON_METHODS: &[&str] = &[
@@ -362,7 +365,7 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     // Stateless APIs
     register_locale_api(lua)?;
     register_unit_api(lua)?;
-    register_player_api(lua)?;
+    register_player_api(lua, state.clone())?;
     register_enum_api(lua)?;
     register_constants_api(lua)?;
     register_c_map_api(lua)?;

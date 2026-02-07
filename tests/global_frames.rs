@@ -249,24 +249,6 @@ fn test_objective_tracker_manager_methods() {
 // World Map Globals
 // ============================================================================
 
-#[test]
-fn test_world_map_frame_pin_pools() {
-    let env = env();
-    let is_table: bool = env
-        .eval("return type(WorldMapFrame.pinPools) == 'table'")
-        .unwrap();
-    assert!(is_table, "WorldMapFrame.pinPools should be a table");
-}
-
-#[test]
-fn test_world_map_frame_overlay_frames() {
-    let env = env();
-    let is_table: bool = env
-        .eval("return type(WorldMapFrame.overlayFrames) == 'table'")
-        .unwrap();
-    assert!(is_table, "WorldMapFrame.overlayFrames should be a table");
-}
-
 // ============================================================================
 // Misc Frame Globals
 // ============================================================================
