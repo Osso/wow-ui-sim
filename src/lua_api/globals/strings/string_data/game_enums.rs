@@ -1,0 +1,297 @@
+//! Structured data and game enum constants: icon list, item quality,
+//! class names, game errors, action bar state, and frame tutorials.
+
+use super::{IntDef, StringDef};
+
+// ============================================================================
+// Icon List Data (for register_icon_list)
+// ============================================================================
+
+pub const ICON_LIST_DATA: &[(&str, i32)] = &[
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:", 1),
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:", 2),
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:", 3),
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:", 4),
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:", 5),
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:", 6),
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:", 7),
+    ("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:", 8),
+];
+
+// ============================================================================
+// Item Quality Colors Data (for register_item_quality_colors)
+// ============================================================================
+
+/// (quality_index, r, g, b, hex)
+pub const ITEM_QUALITY_COLORS_DATA: &[(i32, f64, f64, f64, &str)] = &[
+    (0, 0.62, 0.62, 0.62, "ff9d9d9d"), // Poor (gray)
+    (1, 1.00, 1.00, 1.00, "ffffffff"), // Common (white)
+    (2, 0.12, 1.00, 0.00, "ff1eff00"), // Uncommon (green)
+    (3, 0.00, 0.44, 0.87, "ff0070dd"), // Rare (blue)
+    (4, 0.64, 0.21, 0.93, "ffa335ee"), // Epic (purple)
+    (5, 1.00, 0.50, 0.00, "ffff8000"), // Legendary (orange)
+    (6, 0.90, 0.80, 0.50, "ffe6cc80"), // Artifact (light gold)
+    (7, 0.00, 0.80, 1.00, "ff00ccff"), // Heirloom (light blue)
+    (8, 0.00, 0.80, 1.00, "ff00ccff"), // WoW Token
+];
+
+// ============================================================================
+// Class Names Data (for register_class_name_tables)
+// ============================================================================
+
+pub const CLASS_NAMES_DATA: &[(&str, &str)] = &[
+    ("WARRIOR", "Warrior"),
+    ("PALADIN", "Paladin"),
+    ("HUNTER", "Hunter"),
+    ("ROGUE", "Rogue"),
+    ("PRIEST", "Priest"),
+    ("DEATHKNIGHT", "Death Knight"),
+    ("SHAMAN", "Shaman"),
+    ("MAGE", "Mage"),
+    ("WARLOCK", "Warlock"),
+    ("MONK", "Monk"),
+    ("DRUID", "Druid"),
+    ("DEMONHUNTER", "Demon Hunter"),
+    ("EVOKER", "Evoker"),
+];
+
+// ============================================================================
+// Tooltip Default Colors Data
+// ============================================================================
+
+/// (r, g, b, a)
+pub const TOOLTIP_DEFAULT_COLOR: (f64, f64, f64, f64) = (1.0, 1.0, 1.0, 1.0);
+pub const TOOLTIP_DEFAULT_BG_COLOR: (f64, f64, f64, f64) = (0.0, 0.0, 0.0, 1.0);
+
+// ============================================================================
+// Game Error String Constants (LE_GAME_ERR_*)
+// These are string constants used as table keys in UIErrorsFrame.lua
+// ============================================================================
+
+pub const GAME_ERROR_STRINGS: &[StringDef] = &[
+    ("LE_GAME_ERR_SPELL_FAILED_TOTEMS", "You don't have the required totem."),
+    ("LE_GAME_ERR_SPELL_FAILED_EQUIPPED_ITEM", "You need to equip the required item."),
+    ("LE_GAME_ERR_SPELL_ALREADY_KNOWN_S", "You already know %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_SHAPESHIFT_FORM_S", "Can't do that while %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_ALREADY_AT_FULL_MANA", "Already at full mana."),
+    ("LE_GAME_ERR_OUT_OF_MANA", "Not enough mana."),
+    ("LE_GAME_ERR_SPELL_OUT_OF_RANGE", "Out of range."),
+    ("LE_GAME_ERR_SPELL_FAILED_S", "%s failed."),
+    ("LE_GAME_ERR_SPELL_FAILED_REAGENTS", "Missing reagent."),
+    ("LE_GAME_ERR_SPELL_FAILED_REAGENTS_GENERIC", "Missing reagent."),
+    ("LE_GAME_ERR_SPELL_FAILED_NOTUNSHEATHED", "You need to unsheathe your weapon."),
+    ("LE_GAME_ERR_SPELL_UNLEARNED_S", "You have unlearned %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_EQUIPPED_SPECIFIC_ITEM", "You need to equip a specific item."),
+    ("LE_GAME_ERR_SPELL_FAILED_ALREADY_AT_FULL_POWER_S", "Already at full %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_EQUIPPED_ITEM_CLASS_S", "You need to equip a %s."),
+    ("LE_GAME_ERR_SPELL_FAILED_ALREADY_AT_FULL_HEALTH", "Already at full health."),
+    ("LE_GAME_ERR_SPELL_FAILED_CANT_FLY_HERE", "You can't fly here."),
+    ("LE_GAME_ERR_GENERIC_NO_VALID_TARGETS", "No valid targets."),
+    ("LE_GAME_ERR_ITEM_COOLDOWN", "Item is not ready yet."),
+    ("LE_GAME_ERR_CANT_USE_ITEM", "You can't use that item."),
+    ("LE_GAME_ERR_SPELL_FAILED_ANOTHER_IN_PROGRESS", "Another action is in progress."),
+    ("LE_GAME_ERR_ABILITY_COOLDOWN", "Ability is not ready yet."),
+    ("LE_GAME_ERR_SPELL_COOLDOWN", "Spell is not ready yet."),
+    ("LE_GAME_ERR_OUT_OF_HOLY_POWER", "Not enough Holy Power."),
+    ("LE_GAME_ERR_OUT_OF_POWER_DISPLAY", "Not enough power."),
+    ("LE_GAME_ERR_OUT_OF_SOUL_SHARDS", "Not enough Soul Shards."),
+    ("LE_GAME_ERR_OUT_OF_FOCUS", "Not enough Focus."),
+    ("LE_GAME_ERR_OUT_OF_COMBO_POINTS", "Not enough Combo Points."),
+    ("LE_GAME_ERR_OUT_OF_CHI", "Not enough Chi."),
+    ("LE_GAME_ERR_OUT_OF_PAIN", "Not enough Pain."),
+    ("LE_GAME_ERR_OUT_OF_HEALTH", "Not enough Health."),
+    ("LE_GAME_ERR_OUT_OF_RAGE", "Not enough Rage."),
+    ("LE_GAME_ERR_OUT_OF_ENERGY", "Not enough Energy."),
+    ("LE_GAME_ERR_OUT_OF_ARCANE_CHARGES", "Not enough Arcane Charges."),
+    ("LE_GAME_ERR_OUT_OF_RUNES", "Not enough Runes."),
+    ("LE_GAME_ERR_OUT_OF_RUNIC_POWER", "Not enough Runic Power."),
+    ("LE_GAME_ERR_OUT_OF_LUNAR_POWER", "Not enough Astral Power."),
+    ("LE_GAME_ERR_OUT_OF_INSANITY", "Not enough Insanity."),
+    ("LE_GAME_ERR_OUT_OF_MAELSTROM", "Not enough Maelstrom."),
+    ("LE_GAME_ERR_OUT_OF_FURY", "Not enough Fury."),
+    ("LE_GAME_ERR_OUT_OF_RANGE", "Out of range."),
+    ("LE_GAME_ERR_OUT_OF_ESSENCE", "Not enough Essence."),
+];
+
+// ============================================================================
+// Action Bar State Constants
+// ============================================================================
+
+pub const ACTIONBAR_STATE_CONSTANTS: &[IntDef] = &[
+    ("LE_ACTIONBAR_STATE_MAIN", 1),
+    ("LE_ACTIONBAR_STATE_OVERRIDE", 2),
+];
+
+// ============================================================================
+// Frame Tutorial Constants (LE_FRAME_TUTORIAL_*)
+// Bitfield flag indices for closedInfoFrames CVar.
+// Values sourced from wowless globals.yaml.
+// ============================================================================
+
+pub const FRAME_TUTORIAL_CONSTANTS: &[IntDef] = &[
+    ("LE_FRAME_TUTORIAL_TALENT", 1),
+    ("LE_FRAME_TUTORIAL_SPEC", 2),
+    ("LE_FRAME_TUTORIAL_GLYPH", 3),
+    ("LE_FRAME_TUTORIAL_SPELLBOOK", 4),
+    ("LE_FRAME_TUTORIAL_PROFESSIONS", 5),
+    ("LE_FRAME_TUTORIAL_CORE_ABILITITES", 6),
+    ("LE_FRAME_TUTORIAL_PET_JOURNAL", 7),
+    ("LE_FRAME_TUTORIAL_WHAT_HAS_CHANGED", 8),
+    ("LE_FRAME_TUTORIAL_GARRISON_BUILDING", 9),
+    ("LE_FRAME_TUTORIAL_GARRISON_MISSION_LIST", 10),
+    ("LE_FRAME_TUTORIAL_GARRISON_MISSION_PAGE", 11),
+    ("LE_FRAME_TUTORIAL_GARRISON_LANDING", 12),
+    ("LE_FRAME_TUTORIAL_GARRISON_ZONE_ABILITY", 13),
+    ("LE_FRAME_TUTORIAL_WORLD_MAP_FRAME", 14),
+    ("LE_FRAME_TUTORIAL_CLEAN_UP_BAGS", 15),
+    ("LE_FRAME_TUTORIAL_BAG_SETTINGS", 16),
+    ("LE_FRAME_TUTORIAL_REAGENT_BANK_UNLOCK", 17),
+    ("LE_FRAME_TUTORIAL_TOYBOX_FAVORITE", 18),
+    ("LE_FRAME_TUTORIAL_TOYBOX_MOUSEWHEEL_PAGING", 19),
+    ("LE_FRAME_TUTORIAL_LFG_LIST", 20),
+    ("LE_FRAME_TUTORIAL_TOYBOX", 21),
+    ("LE_FRAME_TUTORIAL_HEIRLOOM_JOURNAL", 22),
+    ("LE_FRAME_TUTORIAL_HEIRLOOM_JOURNAL_TAB", 23),
+    ("LE_FRAME_TUTORIAL_HEIRLOOM_JOURNAL_LEVEL", 24),
+    ("LE_FRAME_TUTORIAL_GAME_TIME_AUCTION_HOUSE", 25),
+    ("LE_FRAME_TUTORIAL_BOOSTED_SPELL_BOOK", 26),
+    ("LE_FRAME_TUTORIAL_ARTIFACT_KNOWLEDGE_LEVEL_LIMIT", 27),
+    ("LE_FRAME_TUTORIAL_WRAPPED_COLLECTION_ITEMS", 28),
+    ("LE_FRAME_TUTORIAL_VIEWABLE_ARTIFACT", 29),
+    ("LE_FRAME_TUTORIAL_ARTIFACT_APPEARANCE_TAB", 30),
+    ("LE_FRAME_TUTORIAL_ARTIFACT_RELIC_MATCH", 31),
+    ("LE_FRAME_TUTORIAL_BOUNTY_INTRO", 32),
+    ("LE_FRAME_TUTORIAL_BOUNTY_FINISHED", 33),
+    ("LE_FRAME_TUTORIAL_IGNORE_QUEST", 34),
+    ("LE_FRAME_TUTORIAL_TRANSMOG_JOURNAL_TAB", 35),
+    ("LE_FRAME_TUTORIAL_TRANSMOG_MODEL_CLICK", 36),
+    ("LE_FRAME_TUTORIAL_TRANSMOG_SPECS_BUTTON", 37),
+    ("LE_FRAME_TUTORIAL_TRANSMOG_CUSTOM_SET_DROPDOWN", 38),
+    ("LE_FRAME_TUTORIAL_HONOR_TALENT_FIRST_TALENT", 39),
+    ("LE_FRAME_TUTORIAL_HONOR_TALENT_HONOR_LEVELS", 40),
+    ("LE_FRAME_TUTORIAL_ARTIFACT_KNOWLEDGE", 41),
+    ("LE_FRAME_TUTORIAL_INVENTORY_FIXUP_EXPANSION_LEGION", 42),
+    ("LE_FRAME_TUTORIAL_INVENTORY_FIXUP_CHECK_EXPANSION_LEGION", 43),
+    ("LE_FRAME_TUTORIAL_BONUS_ROLL_ENCOUNTER_JOURNAL_LINK", 44),
+    ("LE_FRAME_TUTORIAL_FRIENDS_LIST_QUICK_JOIN", 45),
+    ("LE_FRAME_TUTORIAL_REPUTATION_EXALTED_PLUS", 46),
+    ("LE_FRAME_TUTORIAL_TRANSMOG_SETS_TAB", 47),
+    ("LE_FRAME_TUTORIAL_TRANSMOG_SETS_VENDOR_TAB", 48),
+    ("LE_FRAME_TUTORIAL_BRAWL", 49),
+    ("LE_FRAME_TUTORIAL_RELIC_FORGE_LEARN_TRAIT", 50),
+    ("LE_FRAME_TUTORIAL_RELIC_FORGE_SOCKETED_RELIC", 51),
+    ("LE_FRAME_TUTORIAL_RELIC_FORGE_PREVIEW_RELIC", 52),
+    ("LE_FRAME_TUTORIAL_BAG_SLOTS_AUTHENTICATOR", 53),
+    ("LE_FRAME_TUTORIAL_TRIAL_BANKED_XP", 54),
+    ("LE_FRAME_TUTORIAL_TRADESKILL_UNLEARNED_TAB", 55),
+    ("LE_FRAME_TUTORIAL_TRADESKILL_RANK_STAR", 56),
+    ("LE_FRAME_TUTORIAL_AZERITE_RESPEC", 57),
+    ("LE_FRAME_TUTORIAL_PVP_TALENTS_FIRST_UNLOCK", 58),
+    ("LE_FRAME_TUTORIAL_PVP_WARMODE_UNLOCK", 59),
+    ("LE_FRAME_TUTORIAL_WARFRONT_RESOURCES", 60),
+    ("LE_FRAME_TUTORIAL_WARFRONT_CONSTRUCTION", 61),
+    ("LE_FRAME_TUTORIAL_AZERITE_ITEM_IN_BAG", 62),
+    ("LE_FRAME_TUTORIAL_AZERITE_ITEM_IN_SLOT", 63),
+    ("LE_FRAME_TUTORIAL_AZERITE_FIRST_POWER_LOCKED_IN", 64),
+    ("LE_FRAME_TUTORIAL_CHAT_CHANNELS", 65),
+    ("LE_FRAME_TUTORIAL_ISLANDS_QUEUE_BUTTON", 66),
+    ("LE_FRAME_TUTORIAL_ISLANDS_QUEUE_INFO_FRAME", 67),
+    ("LE_FRAME_TUTORIAL_MOUNT_EQUIPMENT_SLOT_FRAME", 68),
+    ("LE_FRAME_TUTORIAL_QUEST_SESSION", 69),
+    ("LE_FRAME_TUTORIAL_CLUB_FINDER_NEW_GUILD_LEADER", 70),
+    ("LE_FRAME_TUTORIAL_CLUB_FINDER_NEW_COMMUNITY_LEADER", 71),
+    ("LE_FRAME_TUTORIAL_CLUB_FINDER_NEW_APPLICANTS_GUILD_LEADER", 72),
+    ("LE_FRAME_TUTORIAL_CLUB_FINDER_LINKING", 73),
+    ("LE_FRAME_TUTORIAL_PVP_SPECIAL_EVENT", 74),
+    ("LE_FRAME_TUTORIAL_WORLD_MAP_THREAT_ICON", 75),
+    ("LE_FRAME_TUTORIAL_CORRUPTION_CLEANSER", 76),
+    ("LE_FRAME_TUTORIAL_RUNECARVER_SCRAPPING", 77),
+    ("LE_FRAME_TUTORIAL_CLUB_FINDER_NEW_LANGUAGE_FILTER", 78),
+    ("LE_FRAME_TUTORIAL_OPTIONAL_REAGENT_CRAFTING", 79),
+    ("LE_FRAME_TUTORIAL_CAMPAIGN_LORE_TEXT", 80),
+    ("LE_FRAME_TUTORIAL_NEWCOMER_GRADUATION", 81),
+    ("LE_FRAME_TUTORIAL_NEWCOMER_GRADUATION_REMINDER", 82),
+    ("LE_FRAME_TUTORIAL_RUNEFORGE_LEGENDARY_CRAFT", 83),
+    ("LE_FRAME_TUTORIAL_ANIMA_DIVERSION_SPEND_ANIMA", 84),
+    ("LE_FRAME_TUTORIAL_ANIMA_DIVERSION_FILL_BAR", 85),
+    ("LE_FRAME_TUTORIAL_ANIMA_DIVERSION_ACTIVATE_LOCATION", 86),
+    ("LE_FRAME_TUTORIAL_ANIMA_DIVERSION_REINFORCE_LOCATION", 87),
+    ("LE_FRAME_TUTORIAL_9_0_GRRISON_LANDING_PAGE_BUTTON_CALLINGS", 88),
+    ("LE_FRAME_TUTORIAL_9_0_GRRISON_LANDING_PAGE_CALLINGS", 89),
+    ("LE_FRAME_TUTORIAL_9_0_JAILERS_TOWER_BUFFS", 90),
+    ("LE_FRAME_TUTORIAL_EMBER_COURT_MAP", 91),
+    ("LE_FRAME_TUTORIAL_EYE_OF_JAILER", 92),
+    ("LE_FRAME_TUTORIAL_SOULBIND_PATH_SELECT", 93),
+    ("LE_FRAME_TUTORIAL_SOULBIND_CONDUIT_INSTALL", 94),
+    ("LE_FRAME_TUTORIAL_SOULBIND_CONDUIT_LEARN", 95),
+    ("LE_FRAME_TUTORIAL_FIRST_RUNEFORGE_LEGENDARY_POWER", 96),
+    ("LE_FRAME_TUTORIAL_COVENANT_RENOWN_REWARDS", 97),
+    ("LE_FRAME_TUTORIAL_COVENANT_RENOWN_PROGRESS", 98),
+    ("LE_FRAME_TUTORIAL_COVENANT_RESERVOIR_DEPOSIT", 99),
+    ("LE_FRAME_TUTORIAL_COVENANT_RESERVOIR_FEATURES", 100),
+    ("LE_FRAME_TUTORIAL_TEXT_TO_SPEECH", 101),
+    ("LE_FRAME_TUTORIAL_SPEECH_TO_TEXT", 102),
+    ("LE_FRAME_TUTORIAL_SOULBIND_ENHANCED_CONDUIT", 103),
+    ("LE_FRAME_TUTORIAL_TORGHAST_REROLL", 104),
+    ("LE_FRAME_TUTORIAL_TORGHAST_EARN_TOWER_KNOWLEDGE", 105),
+    ("LE_FRAME_TUTORIAL_TORGHAST_SPEND_TOWER_KNOWLEDGE", 106),
+    ("LE_FRAME_TUTORIAL_TORGHAST_DOMINANCE_BAR", 107),
+    ("LE_FRAME_TUTORIAL_TORGHAST_DOMINANCE_BAR_CUTOFF", 108),
+    ("LE_FRAME_TUTORIAL_UPGRADEABLE_ITEM_IN_SLOT", 109),
+    ("LE_FRAME_TUTORIAL_LINK_TRANSMOG_CUSTOM_SET", 110),
+    ("LE_FRAME_TUTORIAL_GREAT_VAULT_CLASS_SETS", 111),
+    ("LE_FRAME_TUTORIAL_CROSS_FACTION_INVITE", 112),
+    ("LE_FRAME_TUTORIAL_CROSS_FACTION_GROUP_FINDER", 113),
+    ("LE_FRAME_TUTORIAL_CROSS_FACTION_COMMUNITY", 114),
+    ("LE_FRAME_TUTORIAL_MOUNT_COLLECTION_DRAGONRIDING", 115),
+    ("LE_FRAME_TUTORIAL_MAJOR_FACTION_RENOWN_PROGRESS", 116),
+    ("LE_FRAME_TUTORIAL_HUD_REVAMP_TRACKING_CHANGES", 117),
+    ("LE_FRAME_TUTORIAL_HUD_REVAMP_UNIT_FRAME_CHANGES", 118),
+    ("LE_FRAME_TUTORIAL_HUD_REVAMP_BAG_CHANGES", 119),
+    ("LE_FRAME_TUTORIAL_HUD_REVAMP_LFG_QUEUE_CHANGES", 120),
+    ("LE_FRAME_TUTORIAL_SPEC_CHANGES", 121),
+    ("LE_FRAME_TUTORIAL_TALENT_CHANGES", 122),
+    ("LE_FRAME_TUTORIAL_TALENT_STARTER_HELP", 123),
+    ("LE_FRAME_TUTORIAL_EQUIP_REAGENT_BAG", 124),
+    ("LE_FRAME_TUTORIAL_DRACTHYR_ESSENCE", 125),
+    ("LE_FRAME_TUTORIAL_DRACTHYR_EMPOWERED", 126),
+    ("LE_FRAME_TUTORIAL_DRACTHYR_LOW_HEALTH", 127),
+    ("LE_FRAME_TUTORIAL_DRAGON_RIDING_GLYPHS", 128),
+    ("LE_FRAME_TUTORIAL_SETTINGS_SEARCH", 129),
+    ("LE_FRAME_TUTORIAL_PROFESSIONS_SPEC_CHOICE", 130),
+    ("LE_FRAME_TUTORIAL_WORLD_MAP_ACTIVITY_TRACKER_LIST", 131),
+    ("LE_FRAME_TUTORIAL_PROFESSIONS_CO_QUALITY_REAGENTS", 132),
+    ("LE_FRAME_TUTORIAL_PROFESSIONS_CO_OPTIONAL_REAGENTS", 133),
+    ("LE_FRAME_TUTORIAL_PROFESSIONS_CO_ORDER_PLACED", 134),
+    ("LE_FRAME_TUTORIAL_PROFESSIONS_RECRAFT", 135),
+    ("LE_FRAME_TUTORIAL_FIRST_PROFESSION", 136),
+    ("LE_FRAME_TUTORIAL_PROFESSION_QUALITY_REAGENTS", 137),
+    ("LE_FRAME_TUTORIAL_PROFESSION_OPTIONAL_REAGENTS_NEW", 138),
+    ("LE_FRAME_TUTORIAL_PROFESSION_QUALITY_BAR", 139),
+    ("LE_FRAME_TUTORIAL_PROFESSION_FINISHING_REAGENTS", 140),
+    ("LE_FRAME_TUTORIAL_EDIT_MODE_MANAGER", 141),
+    ("LE_FRAME_TUTORIAL_DRAGON_RIDING_SKILLS", 142),
+    ("LE_FRAME_TUTORIAL_DRAGON_RIDING_ACTIONBAR", 143),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_FREEZE_ITEM", 144),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_OVERWRITE_FROZEN_ITEM", 145),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_HIDE_ARMOR", 146),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_NEW_COLLECTION_ITEM", 147),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_ACTIVITIES_OPEN", 148),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_ACTIVITIES_INTRO", 149),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_ACTIVITIES_MAX_INFLUENCE", 150),
+    ("LE_FRAME_TUTORIAL_PERKS_PROGRAM_ACTIVITIES_TRACKING", 151),
+    ("LE_FRAME_TUTORIAL_LOOT_HISTORY_ROLL", 152),
+    ("LE_FRAME_TUTORIAL_WARDROBE_TRACKING_INTERFACE", 153),
+    ("LE_FRAME_TUTORIAL_FOLLOWER_DUNGEON_SEEN", 154),
+    ("LE_FRAME_TUTORIAL_KEY_RANGE_GROUP_FINDER", 155),
+    ("LE_FRAME_TUTORIAL_HERO_TALENT_NONE_SPENT", 156),
+    ("LE_FRAME_TUTORIAL_PLAYER_SPELLS_MINIMIZE", 157),
+    ("LE_FRAME_TUTORIAL_HOW_TO_SUPERTRACK", 158),
+    ("LE_FRAME_TUTORIAL_DRIVE_TURBO_METER", 159),
+    ("LE_FRAME_TUTORIAL_DRIVE_START_JOB", 160),
+    ("LE_FRAME_TUTORIAL_ASSISTED_HIGHLIGHT_ENABLED_POPUP", 161),
+    ("LE_FRAME_TUTORIAL_LOREWALKING_QUESTS_HIDDEN", 162),
+    ("LE_FRAME_TUTORIAL_JOURNEYS_TAB", 163),
+    // Not in wowless — newer WoW patch constant
+    ("LE_FRAME_TUTORIAL_LINK_TRANSMOG_OUTFIT", 164),
+];

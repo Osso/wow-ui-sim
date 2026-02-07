@@ -516,6 +516,8 @@ fn init_action_bar_tables(env: &WowLuaEnv, name: &str) {
 }
 
 /// Fire OnLoad and OnShow lifecycle scripts after the frame is fully configured.
+/// Both handlers are wrapped in pcall to match WoW's C++ engine behavior where
+/// script errors are caught and displayed, not propagated.
 fn fire_lifecycle_scripts(env: &WowLuaEnv, name: &str) {
     // In WoW, OnLoad fires at the end of frame creation from XML.
     // Templates often use method="OnLoad" which calls self:OnLoad().
@@ -524,12 +526,18 @@ fn fire_lifecycle_scripts(env: &WowLuaEnv, name: &str) {
         local frame = {}
         local handler = frame:GetScript("OnLoad")
         if handler then
-            handler(frame)
+            local ok, err = pcall(handler, frame)
+            if not ok then
+                print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
+            end
         elseif type(frame.OnLoad) == "function" then
-            frame:OnLoad()
+            local ok, err = pcall(frame.OnLoad, frame)
+            if not ok then
+                print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
+            end
         end
         "#,
-        name
+        name, name = name
     );
     if let Err(e) = env.exec(&onload_code) {
         eprintln!("[OnLoad] {} error: {}", name, e);
@@ -542,13 +550,19 @@ fn fire_lifecycle_scripts(env: &WowLuaEnv, name: &str) {
         if frame:IsVisible() then
             local handler = frame:GetScript("OnShow")
             if handler then
-                handler(frame)
+                local ok, err = pcall(handler, frame)
+                if not ok then
+                    print("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
+                end
             elseif type(frame.OnShow) == "function" then
-                frame:OnShow()
+                local ok, err = pcall(frame.OnShow, frame)
+                if not ok then
+                    print("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
+                end
             end
         end
         "#,
-        name
+        name, name = name
     );
     if let Err(e) = env.exec(&onshow_code) {
         eprintln!("[OnShow] {} error: {}", name, e);

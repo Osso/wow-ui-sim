@@ -232,6 +232,8 @@ fn register_game_constants(globals: &mlua::Table) -> Result<()> {
     register_ints(globals, TOTEM_SLOT_CONSTANTS)?;
     register_ints(globals, LFG_CATEGORY_CONSTANTS)?;
     register_strings(globals, GAME_ERROR_STRINGS)?;
+    register_ints(globals, ACTIONBAR_STATE_CONSTANTS)?;
+    register_ints(globals, FRAME_TUTORIAL_CONSTANTS)?;
     Ok(())
 }
 
