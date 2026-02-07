@@ -369,6 +369,10 @@ fn register_c_paper_doll_info(lua: &Lua) -> Result<()> {
     t.set("OffhandHasShield", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("OffhandHasWeapon", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsRangedSlotShown", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetArmorEffectiveness", lua.create_function(|_, _args: mlua::MultiValue| Ok(0.0_f64))?)?;
+    t.set("GetArmorEffectivenessAgainstTarget", lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?)?;
+    t.set("GetStaggerPercentage", lua.create_function(|_, _unit: Value| Ok((0.0_f64, Value::Nil)))?)?;
+    t.set("CanCursorCanGoInSlot", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
     lua.globals().set("C_PaperDollInfo", t)?;
     Ok(())
 }
