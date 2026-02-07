@@ -4,6 +4,12 @@ use super::FrameHandle;
 use mlua::{IntoLuaMulti, Result, UserDataMethods, Value};
 
 pub fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    add_model_transform_methods(methods);
+    add_model_appearance_methods(methods);
+    add_model_scene_id_methods(methods);
+}
+
+fn add_model_transform_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetModel", |_, _this, _path: String| Ok(()));
     methods.add_method("GetModel", |_, _this, ()| -> Result<Option<String>> {
         Ok(None)
@@ -19,6 +25,16 @@ pub fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
     methods.add_method("SetFacing", |_, _this, _radians: f64| Ok(()));
     methods.add_method("GetFacing", |_, _this, ()| Ok(0.0_f64));
+    // Mixin override: ModelScenelRotateButtonMixin defines SetRotation(direction)
+    methods.add_method("SetRotation", |lua, this, radians: Value| {
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "SetRotation") {
+            return func.call::<()>((ud, radians));
+        }
+        Ok(())
+    });
+}
+
+fn add_model_appearance_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetUnit", |_, _this, _unit: Option<String>| Ok(()));
     methods.add_method("SetAutoDress", |_, _this, _auto_dress: bool| Ok(()));
     methods.add_method("SetDisplayInfo", |_, _this, _display_id: i32| Ok(()));
@@ -29,13 +45,17 @@ pub fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetCamera", |_, _this, _camera_id: i32| Ok(()));
     methods.add_method("SetPortraitZoom", |_, _this, _zoom: f64| Ok(()));
     methods.add_method("SetDesaturation", |_, _this, _desat: f64| Ok(()));
-    methods.add_method("SetRotation", |_, _this, _radians: Value| Ok(()));
     methods.add_method("SetLight", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("SetSequence", |_, _this, _sequence: i32| Ok(()));
     methods.add_method("SetSequenceTime", |_, _this, (_seq, _time): (i32, i32)| {
         Ok(())
     });
     methods.add_method("ClearModel", |_, _this, ()| Ok(()));
+    methods.add_method("RefreshUnit", |_, _this, ()| Ok(()));
+    methods.add_method("RefreshCamera", |_, _this, ()| Ok(()));
+}
+
+fn add_model_scene_id_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method(
         "TransitionToModelSceneID",
         |_, _this, _args: mlua::MultiValue| Ok(()),
@@ -49,8 +69,6 @@ pub fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetLowerEmblemTexture", |_, _this, ()| -> Result<Option<String>> {
         Ok(None)
     });
-    methods.add_method("RefreshUnit", |_, _this, ()| Ok(()));
-    methods.add_method("RefreshCamera", |_, _this, ()| Ok(()));
 }
 
 /// Native ModelScene methods (C++ side in WoW, stubs here).

@@ -574,19 +574,7 @@ pub fn build_quad_batch_for_registry(
             Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
             Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
         );
-        // DEBUG: trace parent chain for the suspicious texture
-        if f.name.as_deref() == Some("__tex_8454") {
-            eprintln!("[DBG-RENDER] FOUND __tex_8454: y={:.0} h={:.0} w={:.0} x={:.0} tex={:?} parent_id={:?}",
-                rect.y, rect.height, rect.width, rect.x, f.texture, f.parent_id);
-            let mut pid = f.parent_id;
-            while let Some(p) = pid {
-                if let Some(pf) = registry.get(p) {
-                    eprintln!("  parent id={} name={:?} visible={} type={:?}",
-                        p, pf.name, pf.visible, pf.widget_type);
-                    pid = pf.parent_id;
-                } else { break; }
-            }
-        }
+
         emit_frame_quads(&mut batch, id, f, bounds, pressed_frame, hovered_frame, &mut text_ctx);
     }
 

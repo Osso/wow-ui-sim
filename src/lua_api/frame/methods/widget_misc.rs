@@ -108,8 +108,13 @@ pub fn add_misc_widget_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetItemButtonScale(scale) - item button sizing
     methods.add_method("SetItemButtonScale", |_, _this, _scale: Value| Ok(()));
 
-    // SetRotationIncrement(increment) - model scene rotation
-    methods.add_method("SetRotationIncrement", |_, _this, _inc: Value| Ok(()));
+    // Mixin override: ModelScenelRotateButtonMixin defines SetRotationIncrement(increment)
+    methods.add_method("SetRotationIncrement", |lua, this, inc: Value| {
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "SetRotationIncrement") {
+            return func.call::<()>((ud, inc));
+        }
+        Ok(())
+    });
 
     // Init() - DO NOT add a Rust stub here. ScrollBoxListMixin:Init (Lua) must
     // be callable via __index. A Rust method takes priority and would shadow it.

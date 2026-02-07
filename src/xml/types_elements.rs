@@ -23,10 +23,11 @@ pub struct LayerXml {
 }
 
 impl LayerXml {
-    /// Get all Texture elements in this layer.
+    /// Get all Texture elements in this layer (excludes MaskTextures which are
+    /// not rendered directly — they control alpha masking for other textures).
     pub fn textures(&self) -> impl Iterator<Item = &TextureXml> {
         self.elements.iter().filter_map(|e| match e {
-            LayerElement::Texture(t) | LayerElement::MaskTexture(t) => Some(t),
+            LayerElement::Texture(t) => Some(t),
             _ => None,
         })
     }
