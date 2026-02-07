@@ -4,6 +4,7 @@ pub mod animation;
 mod builtin_frames;
 mod env;
 mod frame;
+mod key_dispatch;
 mod frame_methods;
 pub mod globals;
 mod globals_legacy;

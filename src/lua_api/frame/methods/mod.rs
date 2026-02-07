@@ -37,6 +37,7 @@ mod methods_widget;
 // Re-export helpers for use by other modules if needed
 #[allow(unused_imports)]
 pub use methods_helpers::{calculate_frame_height, calculate_frame_width};
+pub(crate) use methods_core::fire_on_show_recursive;
 
 impl UserData for FrameHandle {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {

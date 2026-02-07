@@ -221,7 +221,7 @@ fn add_rect_edge_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 /// Fire OnShow on a frame and recursively on its visible children.
-fn fire_on_show_recursive(
+pub(crate) fn fire_on_show_recursive(
     lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     id: u64,
