@@ -119,6 +119,7 @@ fn resolve_texture_string(name: &str) -> ResolvedTexture {
 }
 
 /// Apply a resolved texture (path + optional atlas UVs) to a button field and its child texture.
+#[allow(clippy::type_complexity)]
 fn apply_button_texture_setter(
     state: &mut crate::lua_api::SimState,
     button_id: u64,
@@ -243,6 +244,14 @@ fn apply_atlas_to_button<F>(
 ) where
     F: FnOnce(&mut crate::widget::Frame, String, (f32, f32, f32, f32)),
 {
+    // Skip if the child texture already has this atlas set
+    let already_set = state.widgets.get(tex_id)
+        .map(|t| t.atlas.as_deref() == Some(atlas_name))
+        .unwrap_or(false);
+    if already_set {
+        return;
+    }
+
     if let Some(lookup) = crate::atlas::get_atlas_info(atlas_name) {
         let tex_coords = (
             lookup.info.left_tex_coord,
@@ -270,11 +279,10 @@ fn add_checked_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
         let is_userdata = matches!(texture, Value::UserData(_));
         let mut state = this.state.borrow_mut();
 
-        if !is_userdata {
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+        if !is_userdata
+            && let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.checked_texture = path.clone();
             }
-        }
 
         let tex_id = get_or_create_button_texture(&mut state, this.id, "CheckedTexture");
         if let Some(tex) = state.widgets.get_mut(tex_id) {
@@ -293,11 +301,10 @@ fn add_checked_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             let is_userdata = matches!(texture, Value::UserData(_));
             let mut state = this.state.borrow_mut();
 
-            if !is_userdata {
-                if let Some(frame) = state.widgets.get_mut(this.id) {
+            if !is_userdata
+                && let Some(frame) = state.widgets.get_mut(this.id) {
                     frame.disabled_checked_texture = path.clone();
                 }
-            }
 
             let tex_id =
                 get_or_create_button_texture(&mut state, this.id, "DisabledCheckedTexture");
@@ -355,8 +362,8 @@ fn value_to_optional_path(value: Value) -> Result<Option<String>, mlua::Error> {
 fn add_font_string_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetFontString", |lua, this, ()| {
         let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some(&text_id) = frame.children_keys.get("Text") {
+        if let Some(frame) = state.widgets.get(this.id)
+            && let Some(&text_id) = frame.children_keys.get("Text") {
                 drop(state);
                 let handle = FrameHandle {
                     id: text_id,
@@ -364,7 +371,6 @@ fn add_font_string_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 };
                 return lua.create_userdata(handle).map(Value::UserData);
             }
-        }
         Ok(Value::Nil)
     });
 

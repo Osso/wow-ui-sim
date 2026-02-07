@@ -375,11 +375,11 @@ fn build_hidden_ancestors(
 }
 
 /// Collect all frames with computed rects, sorted by strata/level/draw-layer.
-fn collect_sorted_frames<'a>(
-    registry: &'a crate::widget::WidgetRegistry,
+fn collect_sorted_frames(
+    registry: &crate::widget::WidgetRegistry,
     screen_width: f32,
     screen_height: f32,
-) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect)> {
+) -> Vec<(u64, &crate::widget::Frame, crate::LayoutRect)> {
     let mut frames: Vec<_> = registry
         .all_ids()
         .into_iter()
@@ -413,6 +413,7 @@ fn collect_sorted_frames<'a>(
 }
 
 /// Emit text quads for a widget, extracting color/shadow from the frame.
+#[allow(clippy::too_many_arguments)]
 fn emit_widget_text_quads(
     batch: &mut QuadBatch,
     font_sys: &mut WowFontSystem,
@@ -462,36 +463,33 @@ fn emit_frame_quads(
         WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
         WidgetType::Button => {
             build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
-            if let Some((fs, ga)) = text_ctx {
-                if let Some(ref txt) = f.text {
+            if let Some((fs, ga)) = text_ctx
+                && let Some(ref txt) = f.text {
                     emit_widget_text_quads(batch, fs, ga, f, txt, bounds, TextJustify::Center, TextJustify::Center, false, 0);
                 }
-            }
         }
         WidgetType::Texture => build_texture_quads(batch, bounds, f),
         WidgetType::FontString => {
-            if let Some((fs, ga)) = text_ctx {
-                if let Some(ref txt) = f.text {
+            if let Some((fs, ga)) = text_ctx
+                && let Some(ref txt) = f.text {
                     emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, f.word_wrap, f.max_lines);
                 }
-            }
         }
         WidgetType::CheckButton => {
             build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
-            if let Some((fs, ga)) = text_ctx {
-                if let Some(ref txt) = f.text {
+            if let Some((fs, ga)) = text_ctx
+                && let Some(ref txt) = f.text {
                     let label_bounds = Rectangle::new(
                         Point::new(bounds.x + 20.0, bounds.y),
                         Size::new(bounds.width - 20.0, bounds.height),
                     );
                     emit_widget_text_quads(batch, fs, ga, f, txt, label_bounds, TextJustify::Left, TextJustify::Center, false, 0);
                 }
-            }
         }
         WidgetType::EditBox => {
             build_editbox_quads(batch, bounds, f);
-            if let Some((fs, ga)) = text_ctx {
-                if let Some(ref txt) = f.text {
+            if let Some((fs, ga)) = text_ctx
+                && let Some(ref txt) = f.text {
                     let padding = 4.0;
                     let text_bounds = Rectangle::new(
                         Point::new(bounds.x + padding, bounds.y),
@@ -499,7 +497,6 @@ fn emit_frame_quads(
                     );
                     emit_widget_text_quads(batch, fs, ga, f, txt, text_bounds, TextJustify::Left, TextJustify::Center, false, 0);
                 }
-            }
         }
         _ => {}
     }
@@ -536,11 +533,10 @@ pub fn build_quad_batch_for_registry(
     let frames = collect_sorted_frames(registry, screen_width, screen_height);
 
     for (id, f, rect) in frames {
-        if let Some(ref ids) = visible_ids {
-            if !ids.contains(&id) {
+        if let Some(ref ids) = visible_ids
+            && !ids.contains(&id) {
                 continue;
             }
-        }
 
         // Children of hidden frames never render, regardless of state.
         if hidden_ancestors.contains(&id) {

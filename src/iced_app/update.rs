@@ -205,16 +205,13 @@ impl App {
     }
 
     fn handle_key_press(&mut self, key: &str) {
-        let t = std::time::Instant::now();
         let env = self.env.borrow();
         if let Err(e) = env.send_key_press(key) {
             self.log_messages
                 .push(format!("KeyPress({}) error: {}", key, e));
         }
         drop(env);
-        let lua_ms = t.elapsed().as_secs_f64() * 1000.0;
         self.invalidate();
-        eprintln!("[perf] handle_key_press({}): lua={:.1}ms total={:.1}ms", key, lua_ms, t.elapsed().as_secs_f64() * 1000.0);
     }
 
     fn handle_reload_ui(&mut self) {
@@ -279,6 +276,7 @@ impl App {
 
     fn handle_process_timers(&mut self) -> Task<Message> {
         self.update_fps_counter();
+        self.run_pending_exec_lua();
         // Clear the dirty flag before running Lua so we detect new mutations.
         self.env.borrow().state().borrow().widgets.take_render_dirty();
         self.run_wow_timers();
@@ -318,6 +316,18 @@ impl App {
         let env = self.env.borrow();
         if let Err(e) = env.fire_on_update(elapsed.as_secs_f64()) {
             eprintln!("OnUpdate error: {}", e);
+        }
+    }
+
+    fn run_pending_exec_lua(&mut self) {
+        if let Some(code) = self.pending_exec_lua.take() {
+            eprintln!("[exec-lua] Running: {}", code);
+            let env = self.env.borrow();
+            if let Err(e) = env.exec(&code) {
+                eprintln!("[exec-lua] Error: {}", e);
+            }
+            drop(env);
+            self.invalidate();
         }
     }
 

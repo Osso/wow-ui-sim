@@ -23,11 +23,10 @@ impl WowLuaEnv {
     /// Escape priority: focused EditBox → CloseSpecialWindows → toggle GameMenuFrame.
     fn dispatch_escape(&self) -> Result<()> {
         let focused = self.state.borrow().focused_frame_id;
-        if let Some(fid) = focused {
-            if self.fire_handler_returns_truthy(fid, "OnEscapePressed")? {
+        if let Some(fid) = focused
+            && self.fire_handler_returns_truthy(fid, "OnEscapePressed")? {
                 return Ok(());
             }
-        }
         if self.close_special_windows()? {
             return Ok(());
         }
@@ -44,11 +43,10 @@ impl WowLuaEnv {
                 "SPACE" => Some("OnSpacePressed"),
                 _ => None,
             };
-            if let Some(handler) = special {
-                if self.fire_handler_returns_truthy(fid, handler)? {
+            if let Some(handler) = special
+                && self.fire_handler_returns_truthy(fid, handler)? {
                     return Ok(());
                 }
-            }
         }
         self.dispatch_on_key_down(key)
     }
@@ -138,11 +136,9 @@ impl WowLuaEnv {
                     .map(|f| f.visible)
                     .unwrap_or(false);
                 if is_visible {
-                    self.state
-                        .borrow_mut()
-                        .widgets
-                        .get_mut(id)
-                        .map(|f| f.visible = false);
+                    if let Some(f) = self.state.borrow_mut().widgets.get_mut(id) {
+                        f.visible = false;
+                    }
                     closed = true;
                 }
             }
@@ -164,17 +160,13 @@ impl WowLuaEnv {
             .map(|f| f.visible)
             .unwrap_or(false);
         if is_visible {
-            self.state
-                .borrow_mut()
-                .widgets
-                .get_mut(id)
-                .map(|f| f.visible = false);
+            if let Some(f) = self.state.borrow_mut().widgets.get_mut(id) {
+                f.visible = false;
+            }
         } else {
-            self.state
-                .borrow_mut()
-                .widgets
-                .get_mut(id)
-                .map(|f| f.visible = true);
+            if let Some(f) = self.state.borrow_mut().widgets.get_mut(id) {
+                f.visible = true;
+            }
             super::frame::fire_on_show_recursive(&self.lua, &self.state, id)?;
         }
         Ok(())

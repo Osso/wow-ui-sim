@@ -167,17 +167,15 @@ fn call_lua_override(
     this: &FrameHandle,
     method_name: &str,
 ) -> mlua::Result<Option<Value>> {
-    if let Ok(fields_table) = lua.globals().get::<mlua::Table>("__frame_fields") {
-        if let Ok(frame_fields) = fields_table.get::<mlua::Table>(this.id) {
-            if let Ok(Value::Function(f)) = frame_fields.get::<Value>(method_name) {
+    if let Ok(fields_table) = lua.globals().get::<mlua::Table>("__frame_fields")
+        && let Ok(frame_fields) = fields_table.get::<mlua::Table>(this.id)
+            && let Ok(Value::Function(f)) = frame_fields.get::<Value>(method_name) {
                 let ud = lua.create_userdata(FrameHandle {
                     id: this.id,
                     state: std::rc::Rc::clone(&this.state),
                 })?;
                 return Ok(Some(f.call::<Value>(ud)?));
             }
-        }
-    }
     Ok(None)
 }
 
@@ -329,10 +327,16 @@ fn add_vertex_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method(
         "SetVertexColor",
         |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.vertex_color =
-                    Some(crate::widget::Color::new(r, g, b, a.unwrap_or(1.0)));
+            let new_color = crate::widget::Color::new(r, g, b, a.unwrap_or(1.0));
+            let already_set = this.state.borrow().widgets.get(this.id)
+                .and_then(|f| f.vertex_color.as_ref())
+                .map(|c| c.r == new_color.r && c.g == new_color.g && c.b == new_color.b && c.a == new_color.a)
+                .unwrap_or(false);
+            if !already_set {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.vertex_color = Some(new_color);
+                }
             }
             Ok(())
         },
@@ -340,11 +344,10 @@ fn add_vertex_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("GetVertexColor", |_, this, ()| {
         let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some(color) = &frame.vertex_color {
+        if let Some(frame) = state.widgets.get(this.id)
+            && let Some(color) = &frame.vertex_color {
                 return Ok((color.r, color.g, color.b, color.a));
             }
-        }
         Ok((1.0f32, 1.0f32, 1.0f32, 1.0f32)) // Default white
     });
 
@@ -357,12 +360,11 @@ fn add_tex_coord_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // GetTexCoord() - returns UL.x, UL.y, LL.x, LL.y, UR.x, UR.y, LR.x, LR.y (8 values)
     methods.add_method("GetTexCoord", |_, this, ()| {
         let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some((left, right, top, bottom)) = frame.tex_coords {
+        if let Some(frame) = state.widgets.get(this.id)
+            && let Some((left, right, top, bottom)) = frame.tex_coords {
                 // Return 8 values: UL, LL, UR, LR corners
                 return Ok((left, top, left, bottom, right, top, right, bottom));
             }
-        }
         // Default: full texture
         Ok((0.0_f32, 0.0_f32, 0.0_f32, 1.0_f32, 1.0_f32, 0.0_f32, 1.0_f32, 1.0_f32))
     });

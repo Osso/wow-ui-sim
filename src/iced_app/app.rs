@@ -47,6 +47,7 @@ thread_local! {
     pub static INIT_TEXTURES: RefCell<Option<PathBuf>> = const { RefCell::new(None) };
     pub static INIT_DEBUG: RefCell<Option<DebugOptions>> = const { RefCell::new(None) };
     pub static INIT_SAVED_VARS: RefCell<Option<SavedVariablesManager>> = const { RefCell::new(None) };
+    pub static INIT_EXEC_LUA: RefCell<Option<String>> = const { RefCell::new(None) };
 }
 
 /// Fire the standard WoW startup events.
@@ -165,6 +166,8 @@ pub struct App {
     pub(crate) last_on_update_time: std::time::Instant,
     /// SavedVariables manager for persisting addon data on exit.
     pub(crate) saved_vars: Option<SavedVariablesManager>,
+    /// Lua code to execute after first frame (from --exec-lua).
+    pub(crate) pending_exec_lua: Option<String>,
 }
 
 impl App {
@@ -226,6 +229,7 @@ impl App {
             frames_panel_collapsed: true,
             last_on_update_time: std::time::Instant::now(),
             saved_vars,
+            pending_exec_lua: INIT_EXEC_LUA.with(|cell| cell.borrow_mut().take()),
         };
 
         (app, Task::none())
@@ -261,6 +265,7 @@ impl App {
     }
 
     /// Create texture manager, font system, and glyph atlas.
+    #[allow(clippy::type_complexity)]
     fn init_rendering(
         env_rc: &Rc<RefCell<WowLuaEnv>>,
         textures_path: PathBuf,
@@ -289,14 +294,14 @@ impl App {
     ) {
         let (cmd_rx, _guard) = debug_server::init();
         eprintln!(
-            "[wow-ui-sim] Debug server at {}",
+            "[wow-sim] Debug server at {}",
             debug_server::socket_path().display()
         );
         std::mem::forget(_guard);
 
         let lua_rx = lua_server::init();
         eprintln!(
-            "[wow-ui-sim] Lua server at {}",
+            "[wow-sim] Lua server at {}",
             lua_server::socket_path().display()
         );
         (cmd_rx, lua_rx)
@@ -311,7 +316,7 @@ impl App {
 
         if debug_borders || debug_anchors {
             eprintln!(
-                "[wow-ui-sim] Debug mode: borders={} anchors={}",
+                "[wow-sim] Debug mode: borders={} anchors={}",
                 debug_borders, debug_anchors
             );
         }
@@ -324,8 +329,8 @@ impl Drop for App {
         if let Some(ref saved_vars) = self.saved_vars {
             let env = self.env.borrow();
             match saved_vars.save_all(env.lua()) {
-                Ok(()) => eprintln!("[wow-ui-sim] SavedVariables saved"),
-                Err(e) => eprintln!("[wow-ui-sim] SavedVariables save error: {}", e),
+                Ok(()) => eprintln!("[wow-sim] SavedVariables saved"),
+                Err(e) => eprintln!("[wow-sim] SavedVariables save error: {}", e),
             }
         }
     }

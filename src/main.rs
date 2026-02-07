@@ -36,6 +36,10 @@ struct Args {
     #[arg(long, value_name = "MS")]
     delay: Option<u64>,
 
+    /// Execute Lua code after startup (GUI mode only, runs after first frame)
+    #[arg(long, value_name = "CODE")]
+    exec_lua: Option<String>,
+
     #[command(subcommand)]
     command: Option<Commands>,
 }
@@ -177,7 +181,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 borders: args.debug_borders || args.debug_elements,
                 anchors: args.debug_anchors || args.debug_elements,
             };
-            wow_ui_sim::run_iced_ui(env, debug, Some(saved_vars))?;
+            wow_ui_sim::run_iced_ui(env, debug, Some(saved_vars), args.exec_lua)?;
         }
     }
 

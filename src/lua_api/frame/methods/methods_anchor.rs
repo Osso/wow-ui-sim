@@ -22,11 +22,10 @@ fn get_number(v: &Value) -> Option<f32> {
 
 /// Helper to extract frame ID from Value.
 fn get_frame_id(v: &Value) -> Option<usize> {
-    if let Value::UserData(ud) = v {
-        if let Ok(frame_handle) = ud.borrow::<FrameHandle>() {
+    if let Value::UserData(ud) = v
+        && let Ok(frame_handle) = ud.borrow::<FrameHandle>() {
             return Some(frame_handle.id as usize);
         }
-    }
     None
 }
 
@@ -86,15 +85,29 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let point = crate::widget::AnchorPoint::from_str(&point_str).unwrap_or_default();
         let (relative_to, relative_point, x_ofs, y_ofs) = parse_set_point_args(&args, point);
 
-        let mut state = this.state.borrow_mut();
+        let state = this.state.borrow();
 
         // Check for anchor cycles before setting point
-        if let Some(rel_id) = relative_to {
-            if state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
+        if let Some(rel_id) = relative_to
+            && state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
                 return Ok(());
             }
-        }
 
+        // Skip get_mut if the anchor already matches
+        if let Some(frame) = state.widgets.get(this.id) {
+            if let Some(existing) = frame.anchors.iter().find(|a| a.point == point) {
+                if existing.relative_to_id == relative_to
+                    && existing.relative_point == relative_point
+                    && existing.x_offset == x_ofs
+                    && existing.y_offset == y_ofs
+                {
+                    return Ok(());
+                }
+            }
+        }
+        drop(state);
+
+        let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
@@ -105,9 +118,13 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 /// ClearAllPoints(), ClearPoint(point), ClearPointsOffset(), AdjustPointsOffset(x, y)
 fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("ClearAllPoints", |_, this, ()| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.clear_all_points();
+        let already_empty = this.state.borrow().widgets.get(this.id)
+            .map(|f| f.anchors.is_empty()).unwrap_or(true);
+        if !already_empty {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.clear_all_points();
+            }
         }
         Ok(())
     });
@@ -160,11 +177,10 @@ fn add_set_all_points_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if should_set {
             let mut state = this.state.borrow_mut();
 
-            if let Some(rel_id) = relative_to_id {
-                if state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
+            if let Some(rel_id) = relative_to_id
+                && state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
                     return Ok(());
                 }
-            }
 
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.clear_all_points();
@@ -193,8 +209,8 @@ fn add_get_point_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetPoint", |lua, this, index: Option<i32>| {
         let idx = index.unwrap_or(1) - 1;
         let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some(anchor) = frame.anchors.get(idx as usize) {
+        if let Some(frame) = state.widgets.get(this.id)
+            && let Some(anchor) = frame.anchors.get(idx as usize) {
                 let relative_to: Value = if let Some(rel_id) = anchor.relative_to_id {
                     let frame_ref_key = format!("__frame_{}", rel_id);
                     lua.globals()
@@ -211,7 +227,6 @@ fn add_get_point_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     Value::Number(anchor.y_offset as f64),
                 ]));
             }
-        }
         Ok(mlua::MultiValue::new())
     });
 

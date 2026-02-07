@@ -1,6 +1,7 @@
 //! Global widget registry for tracking all widgets.
 
 use super::Frame;
+use std::cell::Cell;
 use std::collections::{HashMap, HashSet, VecDeque};
 
 /// Registry of all widgets in the UI.
@@ -10,6 +11,8 @@ pub struct WidgetRegistry {
     widgets: HashMap<u64, Frame>,
     /// Widget IDs by name.
     names: HashMap<String, u64>,
+    /// Set to true when any widget is mutated; cleared by the render loop.
+    render_dirty: Cell<bool>,
 }
 
 impl WidgetRegistry {
@@ -21,12 +24,11 @@ impl WidgetRegistry {
     pub fn register(&mut self, widget: Frame) -> u64 {
         let id = widget.id;
         // Debug: check for re-registration that would lose children
-        if let Some(existing) = self.widgets.get(&id) {
-            if !existing.children.is_empty() {
+        if let Some(existing) = self.widgets.get(&id)
+            && !existing.children.is_empty() {
                 eprintln!("[WARN] Re-registering widget id={} name={:?} which has {} children!",
                     id, existing.name, existing.children.len());
             }
-        }
         if let Some(ref name) = widget.name {
             self.names.insert(name.clone(), id);
         }
@@ -39,9 +41,13 @@ impl WidgetRegistry {
         self.widgets.get(&id)
     }
 
-    /// Get a mutable widget by ID.
+    /// Get a mutable widget by ID. Marks the registry as render-dirty.
     pub fn get_mut(&mut self, id: u64) -> Option<&mut Frame> {
-        self.widgets.get_mut(&id)
+        let result = self.widgets.get_mut(&id);
+        if result.is_some() {
+            self.render_dirty.set(true);
+        }
+        result
     }
 
     /// Get a widget by name.
@@ -73,6 +79,11 @@ impl WidgetRegistry {
     /// Get all widget IDs.
     pub fn all_ids(&self) -> Vec<u64> {
         self.widgets.keys().copied().collect()
+    }
+
+    /// Check and clear the render-dirty flag. Returns true if any widget was mutated.
+    pub fn take_render_dirty(&self) -> bool {
+        self.render_dirty.replace(false)
     }
 
     /// Check if setting a point from `frame_id` to `relative_to_id` would create a cycle.

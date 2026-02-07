@@ -129,8 +129,9 @@ pub fn get_or_create_button_texture(
         .and_then(|frame| frame.children_keys.get(key).copied());
 
     if let Some(tex_id) = existing_tex_id {
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
-            if tex.anchors.is_empty() {
+        let needs_anchors = state.widgets.get(tex_id).map(|t| t.anchors.is_empty()).unwrap_or(false);
+        if needs_anchors {
+            if let Some(tex) = state.widgets.get_mut(tex_id) {
                 set_all_points_anchors(tex, button_id);
             }
         }
