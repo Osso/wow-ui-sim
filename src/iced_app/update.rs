@@ -71,16 +71,14 @@ impl App {
         let errors = {
             let env = self.env.borrow();
             let mut errs = Vec::new();
-            if let Some(old_id) = self.hovered_frame {
-                if let Err(e) = env.fire_script_handler(old_id, "OnLeave", vec![]) {
+            if let Some(old_id) = self.hovered_frame
+                && let Err(e) = env.fire_script_handler(old_id, "OnLeave", vec![]) {
                     errs.push(format_script_error(&env, old_id, "OnLeave", &e));
                 }
-            }
-            if let Some(new_id) = new_hovered {
-                if let Err(e) = env.fire_script_handler(new_id, "OnEnter", vec![]) {
+            if let Some(new_id) = new_hovered
+                && let Err(e) = env.fire_script_handler(new_id, "OnEnter", vec![]) {
                     errs.push(format_script_error(&env, new_id, "OnEnter", &e));
                 }
-            }
             errs
         };
         self.push_errors(errors);
@@ -207,13 +205,16 @@ impl App {
     }
 
     fn handle_key_press(&mut self, key: &str) {
+        let t = std::time::Instant::now();
         let env = self.env.borrow();
         if let Err(e) = env.send_key_press(key) {
             self.log_messages
                 .push(format!("KeyPress({}) error: {}", key, e));
         }
         drop(env);
+        let lua_ms = t.elapsed().as_secs_f64() * 1000.0;
         self.invalidate();
+        eprintln!("[perf] handle_key_press({}): lua={:.1}ms total={:.1}ms", key, lua_ms, t.elapsed().as_secs_f64() * 1000.0);
     }
 
     fn handle_reload_ui(&mut self) {
@@ -278,9 +279,16 @@ impl App {
 
     fn handle_process_timers(&mut self) -> Task<Message> {
         self.update_fps_counter();
+        // Clear the dirty flag before running Lua so we detect new mutations.
+        self.env.borrow().state().borrow().widgets.take_render_dirty();
         self.run_wow_timers();
         self.fire_on_update();
-        self.invalidate();
+        let widgets_changed = self.env.borrow().state().borrow().widgets.take_render_dirty();
+        if widgets_changed {
+            self.invalidate();
+        } else {
+            self.drain_console();
+        }
         self.process_debug_commands()
     }
 
@@ -404,13 +412,11 @@ impl App {
                 crate::widget::AttributeValue::Boolean(new_checked),
             );
         }
-        if let Some(frame) = state.widgets.get(frame_id) {
-            if let Some(&tex_id) = frame.children_keys.get("CheckedTexture") {
-                if let Some(tex) = state.widgets.get_mut(tex_id) {
+        if let Some(frame) = state.widgets.get(frame_id)
+            && let Some(&tex_id) = frame.children_keys.get("CheckedTexture")
+                && let Some(tex) = state.widgets.get_mut(tex_id) {
                     tex.visible = new_checked;
                 }
-            }
-        }
     }
 
     /// Sync the iced canvas size to SimState and UIParent/WorldFrame dimensions.
@@ -501,6 +507,16 @@ impl App {
                 } => {
                     let tree = self.build_frame_tree_dump(filter.as_deref(), visible_only);
                     let _ = respond.send(LuaResponse::Tree(tree));
+                }
+                LuaCommand::Screenshot {
+                    output,
+                    width,
+                    height,
+                    filter,
+                    respond,
+                } => {
+                    let result = self.render_screenshot(&output, width, height, filter.as_deref());
+                    let _ = respond.send(result);
                 }
             }
         }

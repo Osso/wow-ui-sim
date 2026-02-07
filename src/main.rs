@@ -1,7 +1,7 @@
 use std::cell::RefCell;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::rc::Rc;
-use clap::Parser;
+use clap::{Parser, Subcommand};
 use tracing_subscriber::EnvFilter;
 use wow_ui_sim::loader::{load_addon, load_addon_with_saved_vars, LoadResult, LoadTiming};
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
@@ -10,7 +10,7 @@ use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
 use wow_ui_sim::toc::TocFile;
 
 #[derive(Parser)]
-#[command(name = "wow-ui-sim", about = "WoW UI Simulator")]
+#[command(name = "wow-sim", about = "WoW UI Simulator")]
 struct Args {
     /// Skip loading WTF SavedVariables (faster startup)
     #[arg(long)]
@@ -31,6 +31,46 @@ struct Args {
     /// Show green anchor points on all elements
     #[arg(long)]
     debug_anchors: bool,
+
+    /// Delay in milliseconds after firing startup events (for dump-tree/screenshot)
+    #[arg(long, value_name = "MS")]
+    delay: Option<u64>,
+
+    #[command(subcommand)]
+    command: Option<Commands>,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    /// Load UI and dump frame tree (no GUI needed)
+    DumpTree {
+        /// Filter by frame name (substring match)
+        #[arg(short, long)]
+        filter: Option<String>,
+
+        /// Show only visible frames
+        #[arg(long)]
+        visible_only: bool,
+    },
+
+    /// Render UI to an image file (no GUI needed)
+    Screenshot {
+        /// Output file path (lossy WebP at quality 15 by default; png/jpg detected from extension)
+        #[arg(short, long, default_value = "screenshot.webp")]
+        output: PathBuf,
+
+        /// Image width in pixels
+        #[arg(long, default_value_t = 1024)]
+        width: u32,
+
+        /// Image height in pixels
+        #[arg(long, default_value_t = 768)]
+        height: u32,
+
+        /// Render only this frame subtree (name substring match)
+        #[arg(short, long)]
+        filter: Option<String>,
+    },
 }
 
 /// Apply resource limits to prevent runaway memory/CPU usage.
@@ -75,7 +115,7 @@ fn apply_resource_limits() {
 }
 
 /// Find the best .toc file for an addon directory (prefer _Mainline.toc for retail)
-fn find_toc_file(addon_dir: &PathBuf) -> Option<PathBuf> {
+fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
     wow_ui_sim::loader::find_toc_file(addon_dir)
 }
 
@@ -91,11 +131,10 @@ fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
                 // Skip hidden directories and special directories
                 let skip = name.starts_with('.')
                     || name == "BlizzardUI";
-                if !skip {
-                    if let Some(toc) = find_toc_file(&path) {
+                if !skip
+                    && let Some(toc) = find_toc_file(&path) {
                         addons.push((name, toc));
                     }
-                }
             }
         }
     }
@@ -122,11 +161,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     load_third_party_addons(&args, &env, &mut saved_vars);
     run_post_load_scripts(&env)?;
 
-    let debug = wow_ui_sim::DebugOptions {
-        borders: args.debug_borders || args.debug_elements,
-        anchors: args.debug_anchors || args.debug_elements,
-    };
-    wow_ui_sim::run_iced_ui(env, debug, Some(saved_vars))?;
+    match args.command {
+        Some(Commands::DumpTree { filter, visible_only }) => {
+            fire_startup_events(&env);
+            let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+            apply_delay(args.delay);
+            let state = env.state().borrow();
+            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), visible_only);
+        }
+        Some(Commands::Screenshot { output, width, height, filter }) => {
+            run_screenshot(&env, &font_system, output, width, height, filter, args.delay);
+        }
+        None => {
+            let debug = wow_ui_sim::DebugOptions {
+                borders: args.debug_borders || args.debug_elements,
+                anchors: args.debug_anchors || args.debug_elements,
+            };
+            wow_ui_sim::run_iced_ui(env, debug, Some(saved_vars))?;
+        }
+    }
 
     Ok(())
 }
@@ -154,7 +207,7 @@ fn configure_saved_vars(args: &Args) -> SavedVariablesManager {
         saved_vars.set_wtf_config(wtf_config);
     } else {
         println!("SavedVariables storage: {:?}", std::env::var("HOME")
-            .map(|h| format!("{}/.local/share/wow-ui-sim/SavedVariables", h)).unwrap_or_default());
+            .map(|h| format!("{}/.local/share/wow-sim/SavedVariables", h)).unwrap_or_default());
     }
 
     saved_vars
@@ -276,7 +329,7 @@ struct LoadStats {
 
 /// Load a single third-party addon and update stats.
 /// Parse TOC metadata for an addon.
-fn parse_addon_metadata(name: &str, toc_path: &PathBuf) -> (String, String, bool) {
+fn parse_addon_metadata(name: &str, toc_path: &Path) -> (String, String, bool) {
     let toc = TocFile::from_file(toc_path).ok();
     toc.as_ref().map(|t| {
         let title = t.metadata.get("Title").cloned().unwrap_or_else(|| name.to_string());
@@ -290,7 +343,7 @@ fn parse_addon_metadata(name: &str, toc_path: &PathBuf) -> (String, String, bool
 fn load_single_addon(
     env: &WowLuaEnv,
     name: &str,
-    toc_path: &PathBuf,
+    toc_path: &Path,
     saved_vars: &mut SavedVariablesManager,
     stats: &mut LoadStats,
 ) {
@@ -407,4 +460,135 @@ fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Erro
     }
 
     Ok(())
+}
+
+/// Sleep for the given number of milliseconds (if specified).
+fn apply_delay(delay: Option<u64>) {
+    if let Some(ms) = delay {
+        eprintln!("[Startup] Delaying {}ms", ms);
+        std::thread::sleep(std::time::Duration::from_millis(ms));
+    }
+}
+
+/// Fire startup events to simulate WoW login sequence.
+fn fire_startup_events(env: &WowLuaEnv) {
+    let fire = |name| {
+        eprintln!("[Startup] Firing {}", name);
+        if let Err(e) = env.fire_event(name) {
+            eprintln!("Error firing {}: {}", name, e);
+        }
+    };
+
+    eprintln!("[Startup] Firing ADDON_LOADED");
+    if let Err(e) = env.fire_event_with_args(
+        "ADDON_LOADED",
+        &[mlua::Value::String(env.lua().create_string("WoWUISim").unwrap())],
+    ) {
+        eprintln!("Error firing ADDON_LOADED: {}", e);
+    }
+
+    fire("VARIABLES_LOADED");
+    fire("PLAYER_LOGIN");
+
+    eprintln!("[Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed");
+    if let Err(e) = env.lua().globals().get::<mlua::Function>("RequestTimePlayed")
+        .and_then(|f| f.call::<()>(()))
+    {
+        eprintln!("Error calling RequestTimePlayed: {}", e);
+    }
+
+    eprintln!("[Startup] Firing PLAYER_ENTERING_WORLD");
+    if let Err(e) = env.fire_event_with_args(
+        "PLAYER_ENTERING_WORLD",
+        &[mlua::Value::Boolean(true), mlua::Value::Boolean(false)],
+    ) {
+        eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
+    }
+
+    fire("UPDATE_BINDINGS");
+    fire("DISPLAY_SIZE_CHANGED");
+    fire("UI_SCALE_CHANGED");
+    fire("PLAYER_LEAVING_WORLD");
+}
+
+/// Render a headless screenshot.
+fn run_screenshot(
+    env: &WowLuaEnv,
+    font_system: &Rc<RefCell<WowFontSystem>>,
+    output: PathBuf,
+    width: u32,
+    height: u32,
+    filter: Option<String>,
+    delay: Option<u64>,
+) {
+    use wow_ui_sim::iced_app::build_quad_batch_for_registry;
+    use wow_ui_sim::render::software::render_to_image;
+    use wow_ui_sim::render::GlyphAtlas;
+
+    env.set_screen_size(width as f32, height as f32);
+    fire_startup_events(env);
+    let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+    apply_delay(delay);
+
+    let mut glyph_atlas = GlyphAtlas::new();
+    let batch = {
+        let state = env.state().borrow();
+        let mut fs = font_system.borrow_mut();
+        build_quad_batch_for_registry(
+            &state.widgets,
+            (width as f32, height as f32),
+            filter.as_deref(), None, None,
+            Some((&mut fs, &mut glyph_atlas)),
+        )
+    };
+
+    eprintln!(
+        "QuadBatch: {} quads, {} texture requests",
+        batch.quad_count(), batch.texture_requests.len()
+    );
+
+    let mut tex_mgr = create_texture_manager();
+
+    let glyph_data = if glyph_atlas.is_dirty() {
+        let (data, size, _) = glyph_atlas.texture_data();
+        Some((data, size))
+    } else {
+        None
+    };
+
+    let img = render_to_image(&batch, &mut tex_mgr, width, height, glyph_data);
+    save_screenshot(&img, &output);
+    eprintln!("Saved {}x{} screenshot to {}", width, height, output.display());
+}
+
+/// Save screenshot image. Uses lossy WebP (quality 15) for .webp, delegates to image crate otherwise.
+fn save_screenshot(img: &image::RgbaImage, output: &std::path::Path) {
+    let ext = output.extension().and_then(|e| e.to_str()).unwrap_or("webp");
+    if ext.eq_ignore_ascii_case("webp") {
+        let encoder = webp::Encoder::from_rgba(img.as_raw(), img.width(), img.height());
+        let mem = encoder.encode(15.0);
+        if let Err(e) = std::fs::write(output, &*mem) {
+            eprintln!("Failed to save WebP: {}", e);
+            std::process::exit(1);
+        }
+    } else if let Err(e) = img.save(output) {
+        eprintln!("Failed to save image: {}", e);
+        std::process::exit(1);
+    }
+}
+
+/// Create a TextureManager with local and fallback texture paths.
+fn create_texture_manager() -> wow_ui_sim::texture::TextureManager {
+    use wow_ui_sim::texture::TextureManager;
+
+    let home = dirs::home_dir().unwrap_or_default();
+    let local_textures = PathBuf::from("./textures");
+    let textures_path = if local_textures.exists() {
+        local_textures
+    } else {
+        home.join("Repos/wow-ui-textures")
+    };
+    TextureManager::new(textures_path)
+        .with_interface_path(home.join("Projects/wow/Interface"))
+        .with_addons_path(PathBuf::from("./Interface/AddOns"))
 }

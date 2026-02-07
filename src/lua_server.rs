@@ -1,4 +1,4 @@
-//! Lua execution server for wow-ui-sim.
+//! Lua execution server for wow-sim.
 //!
 //! Provides a Unix socket server that accepts Lua code and returns results.
 
@@ -22,6 +22,17 @@ pub enum Request {
         filter: Option<String>,
         /// Only show visible frames
         visible_only: bool,
+    },
+    /// Render a screenshot to a file
+    Screenshot {
+        /// Output file path
+        output: String,
+        /// Image width in pixels
+        width: u32,
+        /// Image height in pixels
+        height: u32,
+        /// Render only this frame subtree (name substring match)
+        filter: Option<String>,
     },
 }
 
@@ -47,6 +58,13 @@ pub enum LuaCommand {
     DumpTree {
         filter: Option<String>,
         visible_only: bool,
+        respond: mpsc::Sender<Response>,
+    },
+    Screenshot {
+        output: String,
+        width: u32,
+        height: u32,
+        filter: Option<String>,
         respond: mpsc::Sender<Response>,
     },
 }
@@ -84,22 +102,18 @@ fn cleanup_stale_sockets() {
     if let Ok(entries) = glob::glob(pattern) {
         for entry in entries.flatten() {
             // Extract PID from filename: /tmp/wow-lua-{pid}.sock
-            if let Some(filename) = entry.file_name().and_then(|f| f.to_str()) {
-                if let Some(pid_str) = filename
+            if let Some(filename) = entry.file_name().and_then(|f| f.to_str())
+                && let Some(pid_str) = filename
                     .strip_prefix("wow-lua-")
                     .and_then(|s| s.strip_suffix(".sock"))
-                {
-                    if let Ok(pid) = pid_str.parse::<i32>() {
+                    && let Ok(pid) = pid_str.parse::<i32>() {
                         // Check if process is still alive using kill(pid, 0)
                         let exists = unsafe { libc::kill(pid, 0) } == 0;
-                        if !exists {
-                            if std::fs::remove_file(&entry).is_ok() {
+                        if !exists
+                            && std::fs::remove_file(&entry).is_ok() {
                                 eprintln!("[wow-lua] Cleaned up stale socket: {}", entry.display());
                             }
-                        }
                     }
-                }
-            }
         }
     }
 }
@@ -183,6 +197,9 @@ fn handle_connection(
             Request::DumpTree { filter, visible_only } => {
                 send_command(cmd_tx, |respond| LuaCommand::DumpTree { filter, visible_only, respond })
             }
+            Request::Screenshot { output, width, height, filter } => {
+                send_command(cmd_tx, |respond| LuaCommand::Screenshot { output, width, height, filter, respond })
+            }
         };
 
         writeln!(stream, "{}", serde_json::to_string(&response).unwrap())?;
@@ -256,6 +273,42 @@ pub mod client {
         glob::glob("/tmp/wow-lua-*.sock")
             .map(|paths| paths.filter_map(Result::ok).collect())
             .unwrap_or_default()
+    }
+
+    /// Take a screenshot (rendered by the server, saved to output path).
+    pub fn screenshot<P: AsRef<Path>>(
+        socket: P,
+        output: &str,
+        width: u32,
+        height: u32,
+        filter: Option<String>,
+    ) -> Result<String, String> {
+        let mut stream =
+            UnixStream::connect(socket).map_err(|e| format!("Connect failed: {}", e))?;
+
+        let request = Request::Screenshot {
+            output: output.to_string(),
+            width,
+            height,
+            filter,
+        };
+        writeln!(stream, "{}", serde_json::to_string(&request).unwrap())
+            .map_err(|e| format!("Write failed: {}", e))?;
+
+        let mut reader = BufReader::new(stream);
+        let mut line = String::new();
+        reader
+            .read_line(&mut line)
+            .map_err(|e| format!("Read failed: {}", e))?;
+
+        let response: Response =
+            serde_json::from_str(&line).map_err(|e| format!("Invalid response: {}", e))?;
+
+        match response {
+            Response::Output(s) => Ok(s),
+            Response::Error(e) => Err(e),
+            _ => Err("Unexpected response".into()),
+        }
     }
 
     /// Dump the frame tree.

@@ -16,6 +16,8 @@ mod render;
 mod state;
 mod styles;
 mod update;
+mod screenshot;
+mod tree_dump;
 mod view;
 
 use std::path::PathBuf;
