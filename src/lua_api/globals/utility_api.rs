@@ -262,7 +262,7 @@ fn register_global_access(lua: &Lua) -> Result<()> {
 fn register_security_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    globals.set("issecure", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set("issecure", lua.create_function(|_, ()| Ok(true))?)?;
 
     globals.set(
         "issecurevariable",

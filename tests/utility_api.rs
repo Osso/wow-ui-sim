@@ -454,10 +454,10 @@ fn test_secureexecuterange() {
 // ============================================================================
 
 #[test]
-fn test_issecure_returns_false() {
+fn test_issecure_returns_true() {
     let env = env();
     let val: bool = env.eval("return issecure()").unwrap();
-    assert!(!val);
+    assert!(val);
 }
 
 #[test]

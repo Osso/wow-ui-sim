@@ -514,6 +514,14 @@ fn fire_startup_events(env: &WowLuaEnv) {
     fire("DISPLAY_SIZE_CHANGED");
     fire("UI_SCALE_CHANGED");
     fire("PLAYER_LEAVING_WORLD");
+
+    // EditMode's EDIT_MODE_LAYOUTS_UPDATED event never fires (C_EditMode not implemented),
+    // so the "always show buttons" setting never propagates. Replicate it here.
+    let _ = env.lua().load(r#"
+        if MainActionBar and MainActionBar.SetShowGrid then
+            MainActionBar:SetShowGrid(true, ACTION_BUTTON_SHOW_GRID_REASON_CVAR or 1)
+        end
+    "#).exec();
 }
 
 /// Render a headless screenshot.

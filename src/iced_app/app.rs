@@ -104,6 +104,14 @@ fn fire_world_and_ui_events(env: &WowLuaEnv) {
             SlashCmdList.ACCOUNTPLAYEDPOPUP()
         end
     "#).exec();
+
+    // EditMode's EDIT_MODE_LAYOUTS_UPDATED event never fires (C_EditMode not implemented),
+    // so the "always show buttons" setting never propagates. Replicate it here.
+    let _ = env.lua().load(r#"
+        if MainActionBar and MainActionBar.SetShowGrid then
+            MainActionBar:SetShowGrid(true, ACTION_BUTTON_SHOW_GRID_REASON_CVAR or 1)
+        end
+    "#).exec();
 }
 
 /// Application state.
