@@ -178,6 +178,27 @@ impl TocFile {
             .unwrap_or(false)
     }
 
+    /// Check if addon is PTR/Beta-only (e.g. Blizzard_PTRFeedback).
+    /// These addons have `OnlyBetaAndPTR: 1` and should not load on live clients.
+    pub fn is_ptr_only(&self) -> bool {
+        self.metadata
+            .get("OnlyBetaAndPTR")
+            .map(|v| v == "1")
+            .unwrap_or(false)
+    }
+
+    /// Check if addon is restricted to a non-mainline game type (e.g. plunderstorm, classic).
+    /// These addons have `AllowLoadGameType: <type>` and should only load in that mode.
+    pub fn is_game_type_restricted(&self) -> bool {
+        self.metadata
+            .get("AllowLoadGameType")
+            .map(|v| {
+                !v.split(',')
+                    .any(|t| matches!(t.trim(), "mainline" | "standard"))
+            })
+            .unwrap_or(false)
+    }
+
     /// Get saved variables names (account-wide).
     pub fn saved_variables(&self) -> Vec<String> {
         self.metadata
@@ -456,5 +477,38 @@ Cata\Mode.lua [AllowLoadGameType wrath, cata, mists]
         assert!(!is_allowed_game_type(
             "File.lua [AllowLoadGameType wrath, cata, mists]"
         ));
+    }
+
+    #[test]
+    fn test_is_game_type_restricted() {
+        let plunderstorm = TocFile::parse(
+            Path::new("/addons/Test"),
+            "## AllowLoadGameType: plunderstorm\nCore.lua",
+        );
+        assert!(plunderstorm.is_game_type_restricted());
+
+        let mainline = TocFile::parse(
+            Path::new("/addons/Test"),
+            "## AllowLoadGameType: mainline\nCore.lua",
+        );
+        assert!(!mainline.is_game_type_restricted());
+
+        let standard = TocFile::parse(
+            Path::new("/addons/Test"),
+            "## AllowLoadGameType: standard\nCore.lua",
+        );
+        assert!(!standard.is_game_type_restricted());
+
+        let mixed = TocFile::parse(
+            Path::new("/addons/Test"),
+            "## AllowLoadGameType: plunderstorm, wowhack\nCore.lua",
+        );
+        assert!(mixed.is_game_type_restricted());
+
+        let no_restriction = TocFile::parse(
+            Path::new("/addons/Test"),
+            "## Title: TestAddon\nCore.lua",
+        );
+        assert!(!no_restriction.is_game_type_restricted());
     }
 }
