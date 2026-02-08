@@ -32,7 +32,7 @@ impl App {
             Message::InspectorApply => self.handle_inspector_apply(),
             Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
             Message::ToggleXpBar(visible) => self.handle_toggle_xp_bar(visible),
-            Message::KeyPress(ref key) => self.handle_key_press(key),
+            Message::KeyPress(ref key, ref text) => self.handle_key_press(key, text.as_deref()),
         }
 
         Task::none()
@@ -88,7 +88,12 @@ impl App {
     }
 
     fn handle_mouse_down(&mut self, pos: Point) {
-        let Some(frame_id) = self.hit_test(pos) else {
+        let hit_frame = self.hit_test(pos);
+
+        // Focus/unfocus EditBox on click
+        self.update_editbox_focus(hit_frame);
+
+        let Some(frame_id) = hit_frame else {
             return;
         };
 
@@ -184,9 +189,9 @@ impl App {
         false
     }
 
-    fn handle_key_press(&mut self, key: &str) {
+    fn handle_key_press(&mut self, key: &str, text: Option<&str>) {
         let env = self.env.borrow();
-        if let Err(e) = env.send_key_press(key) {
+        if let Err(e) = env.send_key_press(key, text) {
             self.log_messages
                 .push(format!("KeyPress({}) error: {}", key, e));
         }
@@ -387,6 +392,42 @@ impl App {
             .unwrap_or(true)
     }
 
+    /// Focus an EditBox on click, or clear focus when clicking elsewhere.
+    fn update_editbox_focus(&self, clicked_frame: Option<u64>) {
+        let env = self.env.borrow();
+        let is_editbox = clicked_frame.map_or(false, |fid| {
+            env.state()
+                .borrow()
+                .widgets
+                .get(fid)
+                .map(|f| f.widget_type == crate::widget::WidgetType::EditBox)
+                .unwrap_or(false)
+        });
+        let old_focus = env.state().borrow().focused_frame_id;
+
+        if is_editbox {
+            let fid = clicked_frame.unwrap();
+            if old_focus != Some(fid) {
+                // Focus the clicked EditBox via Lua SetFocus logic
+                {
+                    let mut state = env.state().borrow_mut();
+                    state.focused_frame_id = Some(fid);
+                }
+                if let Some(old_id) = old_focus {
+                    let _ = env.fire_script_handler(old_id, "OnEditFocusLost", vec![]);
+                }
+                let _ = env.fire_script_handler(fid, "OnEditFocusGained", vec![]);
+            }
+        } else if let Some(old_id) = old_focus {
+            // Clicked on non-EditBox: clear focus
+            {
+                let mut state = env.state().borrow_mut();
+                state.focused_frame_id = None;
+            }
+            let _ = env.fire_script_handler(old_id, "OnEditFocusLost", vec![]);
+        }
+    }
+
     /// Toggle CheckButton checked state before OnClick (WoW behavior).
     fn toggle_checkbutton_if_needed(&self, frame_id: u64, env: &WowLuaEnv) {
         let mut state = env.state().borrow_mut();
@@ -552,7 +593,7 @@ impl App {
                 None
             }
             DebugCommand::Key { key, respond } => {
-                self.handle_key_press(&key);
+                self.handle_key_press(&key, None);
                 let _ = respond.send(Ok(()));
                 None
             }
