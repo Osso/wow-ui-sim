@@ -45,6 +45,14 @@ fn add_get_set_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
         Ok(())
     });
 
+    methods.add_method(
+        "SetAttributeNoHandler",
+        |lua, this, (name, value): (String, Value)| {
+            set_attribute_value(lua, this, &name, &value)?;
+            Ok(())
+        },
+    );
+
     methods.add_method("ClearAttributes", |_, this, ()| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
@@ -61,7 +69,7 @@ fn set_attribute_value(
     name: &str,
     value: &Value,
 ) -> mlua::Result<()> {
-    if matches!(value, Value::Table(_)) {
+    if matches!(value, Value::Table(_) | Value::UserData(_) | Value::Function(_)) {
         let table_attrs: mlua::Table = lua
             .globals()
             .get("__frame_table_attributes")
@@ -120,7 +128,18 @@ fn fire_on_attribute_changed(
                 .get(frame_ref_key.as_str())
                 .unwrap_or(Value::Nil);
             let name_str = lua.create_string(name)?;
-            let _ = handler.call::<()>((frame_ud, name_str, value));
+            if let Err(e) = handler.call::<()>((frame_ud, name_str, value)) {
+                let state = this.state.borrow();
+                let fname = state
+                    .widgets
+                    .get(this.id)
+                    .and_then(|f| f.name.as_deref())
+                    .unwrap_or("(anonymous)");
+                eprintln!(
+                    "[OnAttributeChanged] {} (id={}) attr={}: {:?}",
+                    fname, this.id, name, e
+                );
+            }
         }
     }
     Ok(())

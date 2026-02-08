@@ -465,27 +465,28 @@ fn load_addon_runtime(
     }
 
     // Search addon_base_paths for the addon directory and its TOC file.
-    let toc_path = {
-        let s = state.borrow();
-        s.addon_base_paths
-            .iter()
-            .map(|base| base.join(addon_name))
-            .find_map(|dir| {
-                if dir.is_dir() {
-                    crate::loader::find_toc_file(&dir)
-                } else {
-                    None
-                }
-            })
-    };
+    let toc_path = find_addon_toc(state, addon_name);
 
     let toc_path = match toc_path {
         Some(p) => p,
         None => {
-            let reason = lua.create_string(format!("Addon '{}' not found", addon_name))?;
+            let reason = lua.create_string("MISSING")?;
             return Ok((false, Value::String(reason)));
         }
     };
+
+    // Parse TOC to check dependencies, then load them first.
+    if let Ok(toc) = crate::toc::TocFile::from_file(&toc_path) {
+        for dep in toc.dependencies() {
+            let already_loaded = {
+                let s = state.borrow();
+                s.addons.iter().any(|a| a.folder_name == dep && a.loaded)
+            };
+            if !already_loaded {
+                let _ = load_addon_runtime(lua, state, &dep);
+            }
+        }
+    }
 
     // Load the addon via the standard loader pipeline.
     let loader_env = crate::lua_api::LoaderEnv::new(lua, Rc::clone(state));
@@ -504,12 +505,26 @@ fn load_addon_runtime(
             Ok((true, Value::Nil))
         }
         Err(e) => {
-            let msg = format!("{}", e);
-            eprintln!("[LoadAddOn] {} failed: {}", addon_name, msg);
-            let reason = lua.create_string(&msg)?;
+            eprintln!("[LoadAddOn] {} failed: {}", addon_name, e);
+            let reason = lua.create_string("CORRUPT")?;
             Ok((false, Value::String(reason)))
         }
     }
+}
+
+/// Search addon_base_paths for an addon's TOC file.
+fn find_addon_toc(state: &Rc<RefCell<SimState>>, addon_name: &str) -> Option<std::path::PathBuf> {
+    let s = state.borrow();
+    s.addon_base_paths
+        .iter()
+        .map(|base| base.join(addon_name))
+        .find_map(|dir| {
+            if dir.is_dir() {
+                crate::loader::find_toc_file(&dir)
+            } else {
+                None
+            }
+        })
 }
 
 /// Register a newly loaded addon in SimState.

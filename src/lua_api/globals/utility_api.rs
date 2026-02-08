@@ -21,9 +21,16 @@ pub fn register_utility_api(lua: &Lua) -> Result<()> {
 /// Table manipulation: wipe, tinsert, tremove, tInvert, tContains, tIndexOf,
 /// tFilter, CopyTable, MergeTable.
 fn register_table_functions(lua: &Lua) -> Result<()> {
+    register_wipe_and_aliases(lua)?;
+    register_table_search(lua)?;
+    register_table_transform(lua)?;
+    Ok(())
+}
+
+/// wipe, tinsert, tremove - core table mutation functions.
+fn register_wipe_and_aliases(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    // wipe(table) - Clear a table in place
     let wipe = lua.create_function(|_, table: mlua::Table| {
         let keys: Vec<Value> = table
             .pairs::<Value, Value>()
@@ -38,7 +45,6 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
     let table_lib: mlua::Table = globals.get("table")?;
     table_lib.set("wipe", wipe)?;
 
-    // tinsert - alias for table.insert
     globals.set(
         "tinsert",
         lua.create_function(|lua, args: mlua::MultiValue| {
@@ -49,7 +55,6 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // tremove - alias for table.remove
     globals.set(
         "tremove",
         lua.create_function(|lua, args: mlua::MultiValue| {
@@ -59,7 +64,13 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // tInvert - invert table (swap keys and values)
+    Ok(())
+}
+
+/// tInvert, tContains, tIndexOf, tFilter - table search/filter functions.
+fn register_table_search(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
     globals.set(
         "tInvert",
         lua.create_function(|lua, tbl: mlua::Table| {
@@ -72,7 +83,6 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // tContains - check if table contains value
     globals.set(
         "tContains",
         lua.create_function(|_, (tbl, value): (mlua::Table, Value)| {
@@ -86,7 +96,6 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // tIndexOf - get index of value in array-like table
     globals.set(
         "tIndexOf",
         lua.create_function(|_, (tbl, value): (mlua::Table, Value)| {
@@ -100,7 +109,6 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // tFilter - filter table with predicate (in-place)
     globals.set(
         "tFilter",
         lua.create_function(
@@ -121,7 +129,13 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
         )?,
     )?;
 
-    // CopyTable - deep copy a table
+    Ok(())
+}
+
+/// CopyTable, MergeTable - table copy/merge functions.
+fn register_table_transform(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+
     globals.set(
         "CopyTable",
         lua.create_function(|lua, (tbl, seen): (mlua::Table, Option<mlua::Table>)| {
@@ -146,7 +160,6 @@ fn register_table_functions(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // MergeTable - merge source into dest
     globals.set(
         "MergeTable",
         lua.create_function(|_, (dest, source): (mlua::Table, mlua::Table)| {
@@ -256,6 +269,25 @@ fn register_global_access(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+/// securecall/securecallfunction implementation.
+/// Accepts a function or a string name (resolved from _G).
+fn securecall_impl(lua: &Lua, args: mlua::MultiValue) -> Result<mlua::MultiValue> {
+    let mut args_iter = args.into_iter();
+    let func_or_name = args_iter.next().unwrap_or(Value::Nil);
+    let remaining = mlua::MultiValue::from_vec(args_iter.collect());
+    match func_or_name {
+        Value::Function(f) => f.call::<mlua::MultiValue>(remaining),
+        Value::String(s) => {
+            let name = s.to_str()?;
+            match lua.globals().get::<Value>(name)? {
+                Value::Function(f) => f.call::<mlua::MultiValue>(remaining),
+                _ => Ok(mlua::MultiValue::new()),
+            }
+        }
+        _ => Ok(mlua::MultiValue::new()),
+    }
+}
+
 /// Security functions: issecure, issecurevariable, securecall, securecallfunction,
 /// secureexecuterange, forceinsecure, hooksecurefunc, SecureHandler stubs,
 /// state/attribute driver stubs, SecureCmdOptionParse.
@@ -269,19 +301,8 @@ fn register_security_functions(lua: &Lua) -> Result<()> {
         lua.create_function(|_, (_table, _var): (Option<Value>, String)| Ok((true, Value::Nil)))?,
     )?;
 
-    globals.set(
-        "securecall",
-        lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
-            func.call::<mlua::MultiValue>(args)
-        })?,
-    )?;
-
-    globals.set(
-        "securecallfunction",
-        lua.create_function(|_, (func, args): (mlua::Function, mlua::MultiValue)| {
-            func.call::<mlua::MultiValue>(args)
-        })?,
-    )?;
+    globals.set("securecall", lua.create_function(securecall_impl)?)?;
+    globals.set("securecallfunction", lua.create_function(securecall_impl)?)?;
 
     globals.set("forceinsecure", lua.create_function(|_, ()| Ok(()))?)?;
 
@@ -449,9 +470,17 @@ fn register_misc_stubs(lua: &Lua) -> Result<()> {
 
 /// Lua stdlib global aliases (string, math, table, bit) for WoW compatibility.
 fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
+    register_string_aliases(lua)?;
+    register_math_aliases(lua)?;
+    register_table_aliases(lua)?;
+    register_bit_library(lua)?;
+    Ok(())
+}
+
+/// String library global aliases.
+fn register_string_aliases(lua: &Lua) -> Result<()> {
     lua.load(
         r##"
-        -- String library aliases
         strlen = string.len
         strsub = string.sub
         strfind = string.find
@@ -468,7 +497,6 @@ fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
         string.join = strjoin
         format = string.format
 
-        -- Add string:split method (WoW extension)
         function string:split(delimiter)
             local result = {}
             local from = 1
@@ -483,8 +511,16 @@ fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
         end
         gsub = string.gsub
         gmatch = string.gmatch
+    "##,
+    )
+    .exec()?;
+    Ok(())
+}
 
-        -- Math library aliases
+/// Math library global aliases.
+fn register_math_aliases(lua: &Lua) -> Result<()> {
+    lua.load(
+        r##"
         abs = math.abs
         ceil = math.ceil
         floor = math.floor
@@ -509,20 +545,37 @@ fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
         frexp = math.frexp
         ldexp = math.ldexp
 
-        -- Table library aliases
         sort = table.sort
         getn = function(t) return #t end
         tconcat = table.concat
+    "##,
+    )
+    .exec()?;
+    Ok(())
+}
 
-        -- Bitwise operations (Lua 5.1 bit library compatibility)
+/// Table library global aliases.
+fn register_table_aliases(_lua: &Lua) -> Result<()> {
+    // Already registered in register_math_aliases (sort, getn, tconcat)
+    Ok(())
+}
+
+/// Bitwise operations (Lua 5.1 bit library compatibility).
+fn register_bit_library(lua: &Lua) -> Result<()> {
+    register_bit_logic_ops(lua)?;
+    register_bit_shift_ops(lua)?;
+    Ok(())
+}
+
+/// bit.band, bit.bor, bit.bxor - bitwise logic operations.
+fn register_bit_logic_ops(lua: &Lua) -> Result<()> {
+    lua.load(
+        r##"
         bit = bit or {}
         bit.band = function(a, b)
-            local result = 0
-            local bitval = 1
+            local result, bitval = 0, 1
             while a > 0 and b > 0 do
-                if a % 2 == 1 and b % 2 == 1 then
-                    result = result + bitval
-                end
+                if a % 2 == 1 and b % 2 == 1 then result = result + bitval end
                 bitval = bitval * 2
                 a = math.floor(a / 2)
                 b = math.floor(b / 2)
@@ -530,12 +583,9 @@ fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
             return result
         end
         bit.bor = function(a, b)
-            local result = 0
-            local bitval = 1
+            local result, bitval = 0, 1
             while a > 0 or b > 0 do
-                if a % 2 == 1 or b % 2 == 1 then
-                    result = result + bitval
-                end
+                if a % 2 == 1 or b % 2 == 1 then result = result + bitval end
                 bitval = bitval * 2
                 a = math.floor(a / 2)
                 b = math.floor(b / 2)
@@ -543,22 +593,26 @@ fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
             return result
         end
         bit.bxor = function(a, b)
-            local result = 0
-            local bitval = 1
+            local result, bitval = 0, 1
             while a > 0 or b > 0 do
-                if (a % 2 == 1) ~= (b % 2 == 1) then
-                    result = result + bitval
-                end
+                if (a % 2 == 1) ~= (b % 2 == 1) then result = result + bitval end
                 bitval = bitval * 2
                 a = math.floor(a / 2)
                 b = math.floor(b / 2)
             end
             return result
         end
-        bit.bnot = function(a)
-            -- 32-bit not
-            return 4294967295 - a
-        end
+    "##,
+    )
+    .exec()?;
+    Ok(())
+}
+
+/// bit.bnot, bit.lshift, bit.rshift - bitwise not and shift operations.
+fn register_bit_shift_ops(lua: &Lua) -> Result<()> {
+    lua.load(
+        r##"
+        bit.bnot = function(a) return 4294967295 - a end
         bit.lshift = function(a, n) return a * (2 ^ n) end
         bit.rshift = function(a, n) return math.floor(a / (2 ^ n)) end
     "##,

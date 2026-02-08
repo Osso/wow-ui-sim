@@ -51,12 +51,12 @@ fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str
         | FrameElement::UIThemeContainerFrame(f)
         | FrameElement::ContainedAlertFrame(f)
         | FrameElement::MapScene(f)
-        | FrameElement::ScopedModifier(f)
         | FrameElement::Line(f)
         | FrameElement::Browser(f)
         | FrameElement::Minimap(f)
         | FrameElement::MovieFrame(f)
         | FrameElement::WorldFrame(f) => Some((f, "Frame")),
+        FrameElement::ScopedModifier(_) => None,
     }
 }
 

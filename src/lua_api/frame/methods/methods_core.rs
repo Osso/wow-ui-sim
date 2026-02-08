@@ -650,8 +650,8 @@ fn add_region_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // IsObjectLoaded() - always true in the simulator
     methods.add_method("IsObjectLoaded", |_, _this, ()| Ok(true));
 
-    // IsMouseOver() - stub returning false
-    methods.add_method("IsMouseOver", |_, _this, _args: mlua::MultiValue| Ok(false));
+    // IsMouseOver() - stub returning true (in the simulator, click handlers assume mouse-over)
+    methods.add_method("IsMouseOver", |_, _this, _args: mlua::MultiValue| Ok(true));
 
     // StopAnimating() - stub
     methods.add_method("StopAnimating", |_, _this, ()| Ok(()));

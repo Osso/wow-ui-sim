@@ -29,6 +29,7 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_c_action_bar(lua)?;
     register_unit_frame_global_stubs(lua)?;
     register_powerbar_prediction_colors(lua)?;
+    register_achievement_stubs(lua)?;
     Ok(())
 }
 
@@ -125,6 +126,7 @@ fn register_c_action_bar(lua: &Lua) -> Result<()> {
 /// Global function stubs needed by Blizzard_UnitFrame.
 fn register_unit_frame_global_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
+    g.set("InCombatLockdown", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("IsResting", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("IsPVPTimerRunning", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetPVPTimer", lua.create_function(|_, ()| Ok(0.0f64))?)?;
@@ -150,6 +152,21 @@ fn register_unit_frame_global_stubs(lua: &Lua) -> Result<()> {
     g.set("GetBattlefieldEstimatedWaitTime", lua.create_function(|_, _index: Value| Ok(0i32))?)?;
     g.set("PetUsesPetFrame", lua.create_function(|_, ()| Ok(true))?)?;
     g.set("UnitIsPossessed", lua.create_function(|_, _unit: String| Ok(false))?)?;
+    g.set("GetReleaseTimeRemaining", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("FCF_OnUpdate", lua.create_function(|_, _elapsed: Option<f64>| Ok(()))?)?;
+    g.set("HelpOpenWebTicketButton_OnUpdate", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    g.set("GetLootSpecialization", lua.create_function(|_, ()| Ok(0i32))?)?;
+    // UIParent PLAYER_ENTERING_WORLD handler stubs
+    g.set("GetSpellConfirmationPromptsInfo", lua.create_function(|lua, ()| lua.create_table())?)?;
+    g.set("ResurrectGetOfferer", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    g.set("GetActiveLootRollIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
+    g.set("GetTutorialsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("BoostTutorial_AttemptLoad", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("ExpansionTrial_CheckLoadUI", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("SubscriptionInterstitial_LoadUI", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("ShowResurrectRequest", lua.create_function(|_, _offerer: String| Ok(()))?)?;
+    g.set("GroupLootContainer_AddRoll", lua.create_function(|_, (_id, _dur): (Value, Value)| Ok(()))?)?;
+    g.set("RemixArtifactTutorialUI_LoadUI", lua.create_function(|_, ()| Ok(()))?)?;
     Ok(())
 }
 
@@ -194,5 +211,60 @@ fn register_powerbar_prediction_colors(lua: &Lua) -> Result<()> {
         t.set("GetRGB", get_rgb.clone())?;
         g.set(name, t)?;
     }
+    Ok(())
+}
+
+/// Achievement category API stubs needed by Blizzard_AchievementUI at parse time.
+fn register_achievement_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("GetCategoryList", lua.create_function(|lua, ()| lua.create_table())?)?;
+    g.set("GetGuildCategoryList", lua.create_function(|lua, ()| lua.create_table())?)?;
+    g.set("GetStatisticsCategoryList", lua.create_function(|lua, ()| lua.create_table())?)?;
+    g.set(
+        "GetCategoryInfo",
+        lua.create_function(|_, _id: Value| Ok((Value::Nil, -1i32, -1i32)))?,
+    )?;
+    g.set(
+        "GetCategoryNumAchievements",
+        lua.create_function(|_, _id: Value| Ok((0i32, 0i32, 0i32)))?,
+    )?;
+    g.set(
+        "GetTotalAchievementPoints",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?,
+    )?;
+    g.set(
+        "GetLatestCompletedAchievements",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(mlua::MultiValue::new()))?,
+    )?;
+    g.set(
+        "GetAchievementInfo",
+        lua.create_function(|_, _id: Value| Ok(Value::Nil))?,
+    )?;
+    g.set(
+        "GetTrackedAchievements",
+        lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?,
+    )?;
+    g.set(
+        "GetNumCompletedAchievements",
+        lua.create_function(|_, _for_guild: Option<bool>| Ok((0i32, 0i32)))?,
+    )?;
+
+    // C_Loot namespace
+    let cl = lua.create_table()?;
+    cl.set("GetLootRollDuration", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
+    g.set("C_Loot", cl)?;
+
+    // C_ContentTracking namespace
+    let ct = lua.create_table()?;
+    ct.set("GetTrackedIDs", lua.create_function(|lua, _type: Value| lua.create_table())?)?;
+    ct.set("IsTracking", lua.create_function(|_, (_type, _id): (Value, Value)| Ok(false))?)?;
+    g.set("C_ContentTracking", ct)?;
+
+    // C_AchievementTelemetry namespace
+    let at = lua.create_table()?;
+    at.set("LinkAchievementInWhisper", lua.create_function(|_, _id: Value| Ok(()))?)?;
+    at.set("LinkAchievementInClub", lua.create_function(|_, _id: Value| Ok(()))?)?;
+    g.set("C_AchievementTelemetry", at)?;
+
     Ok(())
 }

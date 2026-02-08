@@ -30,6 +30,8 @@ pub(super) fn register_all(lua: &Lua) -> Result<()> {
     register_minimap_globals(lua)?;
     register_c_equipment_set(lua)?;
     register_c_adventure_journal(lua)?;
+    register_c_summon_info(lua)?;
+    register_c_ui(lua)?;
     Ok(())
 }
 
@@ -255,8 +257,9 @@ fn register_global_account_stubs(lua: &Lua) -> Result<()> {
     g.set("UnitTrialBankedLevels", lua.create_function(|_, _u: Option<String>| Ok(0i32))?)?;
     g.set("IsInGuild", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetGuildLogoInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    g.set("HasCompletedAnyAchievement", lua.create_function(|_, ()| Ok(false))?)?;
-    g.set("CanShowAchievementUI", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("HasCompletedAnyAchievement", lua.create_function(|_, ()| Ok(true))?)?;
+    g.set("CanShowAchievementUI", lua.create_function(|_, ()| Ok(true))?)?;
+    g.set("CanShowEncounterJournal", lua.create_function(|_, ()| Ok(true))?)?;
     g.set("SortQuestSortTypes", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("SortQuests", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("QuestMapUpdateAllQuests", lua.create_function(|_, ()| Ok(0i32))?)?;
@@ -337,11 +340,28 @@ fn register_c_equipment_set(lua: &Lua) -> Result<()> {
 
 fn register_c_adventure_journal(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
-    t.set("CanBeShown", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("CanBeShown", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("UpdateSuggestions", lua.create_function(|_, ()| Ok(()))?)?;
     t.set("GetNumAvailableSuggestions", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set("GetPrimaryOffset", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set("SetPrimaryOffset", lua.create_function(|_, _off: i32| Ok(()))?)?;
     lua.globals().set("C_AdventureJournal", t)?;
+    Ok(())
+}
+
+fn register_c_ui(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("ShouldUIParentAvoidNotch", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetTopLeftNotchSafeRegion", lua.create_function(|_, ()| Ok((0.0f64, 0.0f64, 0.0f64, 0.0f64)))?)?;
+    lua.globals().set("C_UI", t)?;
+    Ok(())
+}
+
+fn register_c_summon_info(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetSummonConfirmTimeLeft", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetSummonReason", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("IsSummonSkippingStartExperience", lua.create_function(|_, ()| Ok(false))?)?;
+    lua.globals().set("C_SummonInfo", t)?;
     Ok(())
 }

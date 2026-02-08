@@ -44,6 +44,7 @@ pub fn create_frame_from_xml(
     append_enable_mouse_code(&mut lua_code, frame, inherits);
     append_set_all_points_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
+    append_xml_attributes_code(&mut lua_code, frame);
     append_id_code(&mut lua_code, frame);
     append_scripts_code(&mut lua_code, frame);
 
@@ -98,11 +99,20 @@ fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits
     } else {
         format!("\"{}\"", inherits)
     };
+    // Engine-root frames (e.g. UIParent) are pre-created without a parent.
+    // When XML defines them, name == default parent, which would self-parent.
+    // Reuse the existing engine frame instead.
+    if name == parent {
+        return format!(
+            r#"
+        local frame = _G["{name}"]
+        "#,
+        );
+    }
     format!(
         r#"
-        local frame = CreateFrame("{}", "{}", {}, {})
+        local frame = CreateFrame("{widget_type}", "{name}", {parent}, {inherits_arg})
         "#,
-        widget_type, name, parent, inherits_arg
     )
 }
 
@@ -333,6 +343,28 @@ fn format_key_value_lua(value: &str, value_type: Option<&str>) -> String {
     }
 }
 
+/// Append SetAttribute calls for `<Attributes>` XML elements.
+fn append_xml_attributes_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
+    if let Some(attrs) = frame.xml_attributes() {
+        for attr in &attrs.entries {
+            let value = match attr.attr_type.as_deref() {
+                Some("number") => attr.value.as_deref().unwrap_or("0").to_string(),
+                Some("boolean") => attr.value.as_deref().unwrap_or("false").to_lowercase(),
+                Some("nil") => "nil".to_string(),
+                _ => format!(
+                    "\"{}\"",
+                    escape_lua_string(attr.value.as_deref().unwrap_or(""))
+                ),
+            };
+            lua_code.push_str(&format!(
+                "\n        frame:SetAttribute(\"{}\", {})",
+                escape_lua_string(&attr.name),
+                value
+            ));
+        }
+    }
+}
+
 /// Append SetID call if the frame has an `id` XML attribute.
 fn append_id_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
     if let Some(id) = frame.xml_id {
@@ -407,12 +439,12 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
         | FrameElement::UIThemeContainerFrame(f)
         | FrameElement::ContainedAlertFrame(f)
         | FrameElement::MapScene(f)
-        | FrameElement::ScopedModifier(f)
         | FrameElement::Line(f)
         | FrameElement::Browser(f)
         | FrameElement::Minimap(f)
         | FrameElement::MovieFrame(f)
         | FrameElement::WorldFrame(f) => Some((f, "Frame")),
+        FrameElement::ScopedModifier(_) => None,
     }
 }
 

@@ -48,7 +48,10 @@ fn register_frame_global_with_visibility(
         id,
         state: Rc::clone(state),
     })?;
-    lua.globals().set(name, ud)?;
+    lua.globals().set(name, ud.clone())?;
+    // Store internal reference used by event dispatch to pass `self` to handlers.
+    let frame_key = format!("__frame_{}", id);
+    lua.globals().set(frame_key.as_str(), ud)?;
     Ok(id)
 }
 

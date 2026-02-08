@@ -229,7 +229,7 @@ pub enum FrameElement {
     EventScrollFrame(FrameXml),
     ContainedAlertFrame(FrameXml),
     MapScene(FrameXml),
-    ScopedModifier(FrameXml),
+    ScopedModifier(super::types::ScopedModifierXml),
     Line(FrameXml),
 }
 

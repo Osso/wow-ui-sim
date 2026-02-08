@@ -58,6 +58,13 @@ fn process_element(
             create_font_family_object(env, font_family)?;
             Ok(0)
         }
+        XmlElement::ScopedModifier(scoped) => {
+            let mut count = 0;
+            for child in &scoped.elements {
+                count += process_element(env, child, xml_dir, ctx, timing)?;
+            }
+            Ok(count)
+        }
         _ => {
             process_frame_element(env, element)?;
             Ok(0)
@@ -148,7 +155,6 @@ fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static st
         | XmlElement::UIThemeContainerFrame(f)
         | XmlElement::ContainedAlertFrame(f)
         | XmlElement::MapScene(f)
-        | XmlElement::ScopedModifier(f)
         | XmlElement::Line(f)
         | XmlElement::Browser(f)
         | XmlElement::MovieFrame(f)

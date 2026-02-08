@@ -8,6 +8,7 @@ pub fn apply(env: &WowLuaEnv) {
     let _ = env.exec("UpdateMicroButtons = function() end");
     patch_map_canvas_scroll(env);
     patch_gradual_animated_status_bar(env);
+    patch_character_frame_subframes(env);
 }
 
 /// MapCanvasScrollControllerMixin:IsZoomingOut/In compare targetScale with
@@ -52,6 +53,24 @@ fn patch_gradual_animated_status_bar(env: &WowLuaEnv) {
                     or self.gainFinishedAnimation and self.gainFinishedAnimation:IsPlaying()
                     or self.LevelUpMaxAlphaAnimation and self.LevelUpMaxAlphaAnimation:IsPlaying()
                     or self.overrideLevelUpMaxAlphaAnimation and self.overrideLevelUpMaxAlphaAnimation:IsPlaying()
+            end
+        end
+    "#,
+    );
+}
+
+/// CHARACTERFRAME_SUBFRAMES lists PaperDollFrame, ReputationFrame, TokenFrame.
+/// TokenFrame is in Blizzard_TokenUI (not always loaded). Create stub frames
+/// for any missing subframes so ShowSubFrame doesn't crash.
+fn patch_character_frame_subframes(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if CHARACTERFRAME_SUBFRAMES then
+            for _, name in ipairs(CHARACTERFRAME_SUBFRAMES) do
+                if not _G[name] then
+                    _G[name] = CreateFrame("Frame", name, CharacterFrame)
+                    _G[name]:Hide()
+                end
             end
         end
     "#,

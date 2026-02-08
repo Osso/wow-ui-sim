@@ -12,8 +12,8 @@ pub use template::{
     register_template, register_texture_template, TemplateEntry, TemplateInfo,
 };
 pub use types::{
-    AbsDimensionXml, AnchorXml, AnchorsXml, AnimationsXml, BackdropXml, ColorXml,
-    FontRefXml, FrameChildElement, FrameXml,
+    AbsDimensionXml, AnchorXml, AnchorsXml, AnimationsXml, AttributeXml, AttributesXml,
+    BackdropXml, ColorXml, FontRefXml, FrameChildElement, FrameXml, ScopedModifierXml,
     InsetsXml, KeyValueXml, KeyValuesXml, OffsetXml,
     ResizeBoundsXml, ScriptBodyXml, ScriptsXml, ScrollChildXml, SizeXml,
     UiXml, XmlElement,

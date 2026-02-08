@@ -236,6 +236,7 @@ fn register_c_housing(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("GetTrackedHouseGuid", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("IsInsideHouse", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsInsideHouseOrPlot", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsHousingServiceEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("C_Housing", t)?;
 
@@ -253,6 +254,7 @@ fn register_c_game_rules(lua: &Lua) -> Result<()> {
     t.set("GetActiveGameMode", lua.create_function(|_, ()| Ok(0))?)?;
     t.set("GetGameRuleAsFloat", lua.create_function(|_, _r: Value| Ok(0.0f32))?)?;
     t.set("IsStandard", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set("IsWoWHack", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_GameRules", t)?;
     Ok(())
 }

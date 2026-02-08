@@ -15,6 +15,13 @@ pub struct UiXml {
     pub elements: Vec<XmlElement>,
 }
 
+/// ScopedModifier is a transparent container that wraps child elements.
+#[derive(Debug, Deserialize, Clone)]
+pub struct ScopedModifierXml {
+    #[serde(rename = "$value", default)]
+    pub elements: Vec<XmlElement>,
+}
+
 /// XML elements that can appear in a UI definition.
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "PascalCase")]
@@ -63,7 +70,7 @@ pub enum XmlElement {
     EventScrollFrame(FrameXml),
     ContainedAlertFrame(FrameXml),
     MapScene(FrameXml),
-    ScopedModifier(FrameXml),
+    ScopedModifier(ScopedModifierXml),
     Line(FrameXml),
     // Texture/Font regions
     Texture(TextureXml),
@@ -182,6 +189,14 @@ impl FrameXml {
             .collect()
     }
 
+    /// Get the Attributes element if present.
+    pub fn xml_attributes(&self) -> Option<&AttributesXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::Attributes(a) => Some(a),
+            _ => None,
+        })
+    }
+
     /// Get the KeyValues element if present.
     pub fn key_values(&self) -> Option<&KeyValuesXml> {
         self.children.iter().find_map(|c| match c {
@@ -296,6 +311,7 @@ pub enum FrameChildElement {
     Layers(LayersXml),
     Frames(FramesXml),
     KeyValues(KeyValuesXml),
+    Attributes(AttributesXml),
     Animations(AnimationsXml),
     // Button-specific
     NormalTexture(TextureXml),
@@ -508,6 +524,23 @@ pub struct ScriptBodyXml {
     pub inherit: Option<String>,
     #[serde(rename = "@intrinsicOrder")]
     pub intrinsic_order: Option<String>,
+}
+
+/// Attributes container for frame attributes set via XML.
+#[derive(Debug, Deserialize, Clone)]
+pub struct AttributesXml {
+    #[serde(rename = "Attribute", default)]
+    pub entries: Vec<AttributeXml>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct AttributeXml {
+    #[serde(rename = "@name")]
+    pub name: String,
+    #[serde(rename = "@type")]
+    pub attr_type: Option<String>,
+    #[serde(rename = "@value")]
+    pub value: Option<String>,
 }
 
 /// KeyValues container for custom properties.
