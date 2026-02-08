@@ -104,6 +104,14 @@ pub fn escape_lua_string(s: &str) -> String {
         .replace('\r', "\\r")
 }
 
+/// Return a Lua expression that references a frame by its global name.
+///
+/// Uses `_G["name"]` to safely handle frame names containing characters
+/// that aren't valid in Lua identifiers (e.g., `$TankMarkerCheckButton`).
+pub fn lua_global_ref(name: &str) -> String {
+    format!("_G[\"{}\"]", escape_lua_string(name))
+}
+
 /// Resolve a child widget name, replacing $parent with parent name.
 /// Returns the resolved name, or generates a random one with the given prefix.
 pub fn resolve_child_name(name: Option<&str>, parent_name: &str, prefix: &str) -> String {
@@ -125,6 +133,9 @@ pub fn resolve_anchor_offset(anchor: &crate::xml::AnchorXml) -> (f32, f32) {
 }
 
 /// Resolve a relativeKey expression like "$parent.$parent.ScrollFrame" into a Lua expression.
+///
+/// Handles `$parent` both as a complete segment (`$parent.Foo`) and as a prefix
+/// (`$parentPanelContainer`), matching WoW's substitution behavior.
 fn resolve_relative_key(key: &str, parent_expr: &str) -> String {
     if !key.contains("$parent") && !key.contains("$Parent") && !key.contains("$parentKey") {
         return key.to_string();
@@ -136,6 +147,16 @@ fn resolve_relative_key(key: &str, parent_expr: &str) -> String {
                 expr = parent_expr.to_string();
             } else {
                 expr = format!("{}:GetParent()", expr);
+            }
+        } else if let Some(suffix) = part.strip_prefix("$parent").or_else(|| part.strip_prefix("$Parent")) {
+            // Handle $parent as a prefix: "$parentPanelContainer" → parent["PanelContainer"]
+            if expr.is_empty() {
+                expr = parent_expr.to_string();
+            } else {
+                expr = format!("{}:GetParent()", expr);
+            }
+            if !suffix.is_empty() {
+                expr = format!("{}[\"{}\"]", expr, suffix);
             }
         } else if !part.is_empty() {
             expr = format!("{}[\"{}\"]", expr, part);
@@ -161,9 +182,9 @@ pub fn resolve_anchor_relative(
         match anchor.relative_to.as_deref() {
             Some("$parent") => parent_expr.to_string(),
             Some(r) if r.contains("$parent") || r.contains("$Parent") => {
-                r.replace("$parent", parent_name).replace("$Parent", parent_name)
+                lua_global_ref(&r.replace("$parent", parent_name).replace("$Parent", parent_name))
             }
-            Some(r) => r.to_string(),
+            Some(r) => lua_global_ref(r),
             None => default_relative.to_string(),
         }
     }
@@ -200,7 +221,8 @@ pub fn generate_set_point_code(
 
 /// Generate Lua code for setting anchors on a frame.
 pub fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str) -> String {
-    generate_set_point_code(anchors, "frame", parent_ref, parent_ref, "nil")
+    let safe_ref = lua_global_ref(parent_ref);
+    generate_set_point_code(anchors, "frame", &safe_ref, parent_ref, "nil")
 }
 
 /// Generate Lua code for creating an animation group and its child animations from XML.

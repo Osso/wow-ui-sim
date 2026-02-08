@@ -4,7 +4,7 @@ use crate::lua_api::LoaderEnv;
 use crate::xml::{collect_texture_mixins, register_texture_template};
 
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, generate_animation_group_code, generate_set_point_code, get_size_values, resolve_child_name};
+use super::helpers::{escape_lua_string, generate_animation_group_code, generate_set_point_code, get_size_values, lua_global_ref, resolve_child_name};
 
 /// Generate Lua code for texture source (file or atlas) and size.
 fn generate_texture_source_code(texture: &crate::xml::TextureXml) -> String {
@@ -133,7 +133,7 @@ pub fn create_texture_from_xml(
         local parent = {}
         local tex = parent:CreateTexture("{}", "{}")
         "#,
-        parent_name, tex_name, draw_layer
+        lua_global_ref(parent_name), tex_name, draw_layer
     );
 
     // Apply mixins from inherited templates and direct mixin attribute
@@ -183,7 +183,7 @@ pub fn create_texture_from_xml(
 
     // Process animation groups on the texture (e.g. AutoCastOverlayTemplate Shine rotation)
     if let Some(anims) = &texture.animations {
-        let mut anim_code = format!("local frame = {}\n", tex_name);
+        let mut anim_code = format!("local frame = {}\n", lua_global_ref(&tex_name));
         for anim_group_xml in &anims.animations {
             if anim_group_xml.is_virtual == Some(true) {
                 continue;

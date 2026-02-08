@@ -13,4 +13,5 @@ pub use atlas::{GpuTextureAtlas, TextureEntry, GLYPH_ATLAS_TEX_INDEX};
 pub use pipeline::WowUiPipeline;
 pub use primitive::{GpuTextureData, WowUiPrimitive};
 pub use program::WowUiProgram;
+pub use quad::FLAG_CIRCLE_CLIP;
 pub use quad::{BlendMode, NineSliceTextures, QuadBatch, QuadVertex, TextureRequest};

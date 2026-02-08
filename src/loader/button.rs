@@ -3,7 +3,7 @@
 use crate::lua_api::LoaderEnv;
 
 use super::error::LoadError;
-use super::helpers::escape_lua_string;
+use super::helpers::{escape_lua_string, lua_global_ref};
 
 /// Generate Lua code for a single button texture (atlas or file path).
 fn generate_button_texture_code(
@@ -20,14 +20,14 @@ fn generate_button_texture_code(
             if tex then tex:SetAtlas("{}") end
         end
         "#,
-            button_name, getter, escape_lua_string(atlas)
+            lua_global_ref(button_name), getter, escape_lua_string(atlas)
         )
     } else if let Some(file) = &texture.file {
         format!(
             r#"
         {}:{}("{}")
         "#,
-            button_name, method, escape_lua_string(file)
+            lua_global_ref(button_name), method, escape_lua_string(file)
         )
     } else {
         String::new()
@@ -101,7 +101,7 @@ pub fn apply_button_text(
                 end
             end
             "#,
-            button_name,
+            lua_global_ref(button_name),
             escape_lua_string(&text_key),
             escape_lua_string(&text_key)
         );

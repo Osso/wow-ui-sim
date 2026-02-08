@@ -293,10 +293,16 @@ fn apply_bar_fill_with_uvs(
 
 use super::tiling::emit_tiled_texture;
 
-/// Build quads for a Minimap widget - dark circular map area.
+/// Build quads for a Minimap widget - map texture clipped to a circle.
 pub fn build_minimap_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
-    // Dark background fill for the minimap area
-    batch.push_solid(bounds, [0.05, 0.08, 0.05, f.alpha]);
+    use crate::render::shader::FLAG_CIRCLE_CLIP;
+    batch.push_textured_path(
+        bounds,
+        r"Interface\Minimap\placeholder-map",
+        [1.0, 1.0, 1.0, f.alpha],
+        BlendMode::Alpha,
+    );
+    batch.set_extra_flags(4, FLAG_CIRCLE_CLIP);
 }
 
 /// Build quads for an EditBox widget.

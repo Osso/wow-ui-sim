@@ -3,7 +3,7 @@
 use crate::lua_api::LoaderEnv;
 
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, generate_set_point_code, get_size_values, resolve_child_name};
+use super::helpers::{escape_lua_string, generate_set_point_code, get_size_values, lua_global_ref, resolve_child_name};
 
 /// Resolve a text key through the global strings table.
 fn resolve_fontstring_text(text_key: Option<&str>) -> Option<String> {
@@ -107,7 +107,7 @@ pub fn create_fontstring_from_xml(
         local parent = {}
         local fs = parent:CreateFontString("{}", "{}", {})
         "#,
-        parent_name,
+        lua_global_ref(parent_name),
         fs_name,
         draw_layer,
         if inherits.is_empty() {

@@ -67,11 +67,34 @@ fn patch_gradual_animated_status_bar(env: &WowLuaEnv) {
 /// needs the full event dispatch chain. Call OnPlayerEnteringWorld directly,
 /// then fire quest data callbacks so async title population works.
 fn init_objective_tracker(env: &WowLuaEnv) {
+    hide_empty_managed_frames(env);
     setup_tracker_frame(env);
     patch_tracker_animations(env);
     start_objective_tracker(env);
     populate_quest_titles(env);
     update_managed_frame_containers(env);
+}
+
+/// Hide managed frames that have no content in the simulator.
+///
+/// BossTargetFrameContainer and DurabilityFrame show during startup events
+/// and add themselves to UIParentRightManagedFrameContainer via OnShow →
+/// AddManagedFrame. Their height (305px + 75px) pushes ObjectiveTrackerFrame
+/// out of the visible area. Hide them before OTF setup.
+fn hide_empty_managed_frames(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        local frames = { "BossTargetFrameContainer", "DurabilityFrame" }
+        for _, name in ipairs(frames) do
+            local f = _G[name]
+            if f and f.Hide then
+                f:Hide()
+                -- Prevent OnShow from re-showing during events
+                f.ignoreInLayout = true
+            end
+        end
+    "#,
+    );
 }
 
 /// Call UpdateManagedFrames on both containers to ensure all visible
@@ -179,20 +202,17 @@ fn setup_managed_frame_containers(env: &WowLuaEnv) {
     );
 }
 
-/// Set ObjectiveTrackerFrame height and ensure it has a layoutIndex.
+/// Add ObjectiveTrackerFrame to its managed frame container and set its height.
 ///
 /// The container system (UIParentRightManagedFrameContainer) handles positioning
 /// via UIParentManagedFrameMixin's OnShow → AddManagedFrame → Layout chain.
-/// We just need to set height (normally from EditMode) and layoutIndex.
+/// After layout places OTF with an anchor, we compute height from the container's
+/// height minus OTF's vertical offset within it.
 fn setup_tracker_frame(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
         local otf = ObjectiveTrackerFrame
         if not otf then return end
-        -- Set height (normally from EditMode, we compute it ourselves)
-        local h = UIParent:GetHeight() - 260
-        if h < 100 then h = 500 end
-        otf:SetHeight(h)
         -- Ensure layoutIndex is set (should come from XML KeyValue but may need fallback)
         if not otf.layoutIndex then otf.layoutIndex = 50 end
         -- AddManagedFrame checks IsInDefaultPosition() and skips frames not in
@@ -202,9 +222,19 @@ fn setup_tracker_frame(env: &WowLuaEnv) {
         otf:Show()
         -- Explicitly add to the managed frame container. The OnShow handler
         -- may not fire correctly, so call AddManagedFrame directly.
+        -- This reparents OTF into the container and calls Layout() to set anchors.
         local lp = otf.layoutParent
         if lp and lp.AddManagedFrame then
             pcall(lp.AddManagedFrame, lp, otf)
+        end
+        -- Compute height from container height minus OTF's vertical offset.
+        -- UpdateHeight() does parentHeight + offsetY, but calling it triggers
+        -- layout cycles. Compute it directly instead.
+        local _, _, _, _, offsetY = otf:GetPoint(1)
+        if offsetY and lp then
+            local h = lp:GetHeight() + offsetY
+            if h < 100 then h = 400 end
+            otf:SetHeight(h)
         end
     "#,
     );

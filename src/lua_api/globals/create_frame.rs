@@ -3,6 +3,7 @@
 use super::super::frame::FrameHandle;
 use super::super::SimState;
 use super::template::apply_templates_from_registry;
+use crate::loader::helpers::lua_global_ref;
 use crate::widget::{Frame, WidgetType};
 use mlua::{Lua, Result, Value};
 use std::cell::RefCell;
@@ -31,7 +32,7 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
             let frame_key = format!("__frame_{}", frame_id);
             let code = format!(
                 "do local f = {} if f and ItemButtonMixin then Mixin(f, ItemButtonMixin) end end",
-                frame_key
+                lua_global_ref(&frame_key)
             );
             let _ = lua.load(&code).exec();
         }

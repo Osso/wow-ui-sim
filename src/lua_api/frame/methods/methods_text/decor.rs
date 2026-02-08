@@ -2,6 +2,7 @@
 
 use super::super::FrameHandle;
 use super::{is_simple_html, is_text_type, val_to_f32, val_to_f64};
+use crate::loader::helpers::lua_global_ref;
 use crate::lua_api::simple_html::TextStyle;
 use mlua::{UserDataMethods, Value};
 
@@ -65,10 +66,11 @@ fn add_border_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 .unwrap_or_else(|| format!("__frame_{}", this.id));
             drop(state);
 
+            let frame_ref = lua_global_ref(&frame_name);
             let code = format!(
                 r#"
-                local frame = {0}
-                local layoutName = "{1}"
+                local frame = {frame_ref}
+                local layoutName = "{layout}"
                 if frame and frame.NineSlice then
                     if NineSliceUtil and NineSliceUtil.ApplyLayout and NineSliceUtil.GetLayout then
                         local layoutTable = NineSliceUtil.GetLayout(layoutName)
@@ -77,8 +79,7 @@ fn add_border_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                         end
                     end
                 end
-                "#,
-                frame_name, layout
+                "#
             );
             if let Err(e) = lua.load(&code).exec() {
                 eprintln!("SetBorder Lua error: {}", e);
@@ -121,7 +122,7 @@ fn add_portrait_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 end
             end
             "#,
-            frame_name,
+            lua_global_ref(&frame_name),
             if shown { "true" } else { "false" }
         );
         let _ = lua.load(&code).exec();

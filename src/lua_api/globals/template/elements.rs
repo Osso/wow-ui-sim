@@ -3,7 +3,7 @@
 use crate::loader::helpers::{generate_animation_group_code, generate_set_point_code};
 use mlua::Lua;
 
-use super::{escape_lua_string, get_size_values, rand_id};
+use super::{escape_lua_string, get_size_values, lua_global_ref, rand_id};
 
 /// Create a texture from template XML.
 pub(super) fn create_texture_from_template(
@@ -25,7 +25,7 @@ pub(super) fn create_texture_from_template(
         if parent then
             local tex = parent:CreateTexture("{}", "{}")
         "#,
-        parent_name, child_name, draw_layer,
+        lua_global_ref(parent_name), escape_lua_string(&child_name), draw_layer,
     );
 
     // Apply mixins from inherited templates and direct mixin attribute
@@ -50,7 +50,7 @@ pub(super) fn create_texture_from_template(
     }
 
     if texture.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = tex\n", child_name));
+        code.push_str(&format!("            _G[\"{}\"] = tex\n", escape_lua_string(&child_name)));
     }
 
     if texture.hidden == Some(true) {
@@ -88,7 +88,7 @@ fn mark_mask_texture(lua: &Lua, name: &str) {
 /// Process animation groups on a texture.
 fn apply_texture_animations(lua: &Lua, texture: &crate::xml::TextureXml, child_name: &str) {
     let Some(anims) = &texture.animations else { return };
-    let mut anim_code = format!("local frame = {}\n", child_name);
+    let mut anim_code = format!("local frame = {}\n", lua_global_ref(child_name));
     for group in &anims.animations {
         if group.is_virtual == Some(true) {
             continue;
@@ -182,8 +182,8 @@ pub(super) fn create_fontstring_from_template(
         if parent then
             local fs = parent:CreateFontString("{}", "{}", {})
         "#,
-        parent_name,
-        child_name,
+        lua_global_ref(parent_name),
+        escape_lua_string(&child_name),
         draw_layer,
         if inherits.is_empty() {
             "nil".to_string()
@@ -208,7 +208,7 @@ pub(super) fn create_fontstring_from_template(
     append_fontstring_wrap_and_lines(&mut code, fontstring);
 
     if fontstring.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = fs\n", child_name));
+        code.push_str(&format!("            _G[\"{}\"] = fs\n", escape_lua_string(&child_name)));
     }
 
     if fontstring.hidden == Some(true) {
@@ -306,7 +306,7 @@ pub(super) fn create_bar_texture_from_template(
         if parent and parent.SetStatusBarTexture then
             local bar = parent:CreateTexture("{}", "ARTWORK")
         "#,
-        parent_name, child_name,
+        lua_global_ref(parent_name), escape_lua_string(&child_name),
     );
 
     append_texture_properties(&mut code, bar, "bar");
@@ -315,7 +315,7 @@ pub(super) fn create_bar_texture_from_template(
     code.push_str(&format!("            parent.{} = bar\n", parent_key));
 
     if bar.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = bar\n", child_name));
+        code.push_str(&format!("            _G[\"{}\"] = bar\n", escape_lua_string(&child_name)));
     }
 
     code.push_str("        end\n");
@@ -340,7 +340,7 @@ pub(super) fn create_thumb_texture_from_template(
         if parent and parent.SetThumbTexture then
             local thumb = parent:CreateTexture("{}", "ARTWORK")
         "#,
-        parent_name, child_name,
+        lua_global_ref(parent_name), escape_lua_string(&child_name),
     );
 
     if let Some(size) = &thumb.size {
@@ -364,7 +364,7 @@ pub(super) fn create_thumb_texture_from_template(
     }
 
     if thumb.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = thumb\n", child_name));
+        code.push_str(&format!("            _G[\"{}\"] = thumb\n", escape_lua_string(&child_name)));
     }
 
     code.push_str("        end\n");
@@ -423,7 +423,7 @@ fn build_button_texture_code(
                 tex = parent:CreateTexture("{}", "ARTWORK")
             end
         "#,
-        parent_name, setter_method, actual_parent_key, tex_name,
+        lua_global_ref(parent_name), setter_method, actual_parent_key, escape_lua_string(tex_name),
     );
 
     if let Some(size) = &texture.size {
@@ -452,7 +452,7 @@ fn build_button_texture_code(
     }
 
     if is_named {
-        code.push_str(&format!("            _G[\"{}\"] = tex\n", tex_name));
+        code.push_str(&format!("            _G[\"{}\"] = tex\n", escape_lua_string(tex_name)));
     }
 
     code.push_str("        end\n");

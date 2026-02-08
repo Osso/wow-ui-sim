@@ -32,7 +32,6 @@ use super::globals::spell_api::register_spell_api;
 use super::globals::system_api::register_system_api;
 use super::globals::timer_api::register_timer_api;
 use super::globals::tooltip_api::register_tooltip_frames;
-use super::globals::ui_frames::register_ui_frames;
 use super::globals::unit_api::register_unit_api;
 use super::globals::utility_api::register_utility_api;
 use super::SimState;
@@ -410,7 +409,6 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_global_frames(lua, Rc::clone(state))?;
     register_tooltip_frames(lua, Rc::clone(state))?;
     register_quest_frames(lua, Rc::clone(state))?;
-    register_ui_frames(lua, Rc::clone(state))?;
 
     Ok(())
 }

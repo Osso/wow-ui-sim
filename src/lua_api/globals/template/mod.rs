@@ -148,7 +148,7 @@ fn apply_template_size(lua: &Lua, template: &FrameXml, frame_name: &str) {
     let (Some(w), Some(h)) = (width, height) else { return };
     let code = format!(
         "do local f = {} if f then f:SetSize({}, {}) end end",
-        frame_name, w, h
+        lua_global_ref(frame_name), w, h
     );
     let _ = lua.load(&code).exec();
 }
@@ -156,6 +156,7 @@ fn apply_template_size(lua: &Lua, template: &FrameXml, frame_name: &str) {
 /// Apply anchors from a template to a frame.
 fn apply_template_anchors(lua: &Lua, template: &FrameXml, frame_name: &str) {
     let Some(anchors) = template.anchors() else { return };
+    let frame_ref = lua_global_ref(frame_name);
     for anchor in &anchors.anchors {
         let (offset_x, offset_y) = anchor_offset(anchor);
         let relative_to = anchor_relative_to(anchor, frame_name);
@@ -163,7 +164,7 @@ fn apply_template_anchors(lua: &Lua, template: &FrameXml, frame_name: &str) {
         let relative_point = anchor.relative_point.as_deref().unwrap_or(point);
         let code = format!(
             "do local f = {} if f then f:SetPoint(\"{}\", {}, \"{}\", {}, {}) end end",
-            frame_name, point, relative_to, relative_point, offset_x, offset_y
+            frame_ref, point, relative_to, relative_point, offset_x, offset_y
         );
         let _ = lua.load(&code).exec();
     }
@@ -184,12 +185,13 @@ fn anchor_offset(anchor: &crate::xml::AnchorXml) -> (f32, f32) {
 
 /// Determine the relativeTo target for an anchor.
 fn anchor_relative_to(anchor: &crate::xml::AnchorXml, frame_name: &str) -> String {
+    let frame_ref = lua_global_ref(frame_name);
     match &anchor.relative_to {
         Some(rel) if rel == "$parent" => {
-            format!("({} and {}:GetParent())", frame_name, frame_name)
+            format!("({} and {}:GetParent())", frame_ref, frame_ref)
         }
-        Some(rel) => rel.clone(),
-        None => format!("({} and {}:GetParent())", frame_name, frame_name),
+        Some(rel) => lua_global_ref(rel),
+        None => format!("({} and {}:GetParent())", frame_ref, frame_ref),
     }
 }
 
@@ -200,7 +202,7 @@ fn apply_template_set_all_points(lua: &Lua, template: &FrameXml, frame_name: &st
     }
     let code = format!(
         "do local f = {} if f then f:SetAllPoints(true) end end",
-        frame_name
+        lua_global_ref(frame_name)
     );
     let _ = lua.load(&code).exec();
 }
@@ -211,11 +213,12 @@ fn apply_key_values(
     key_values: &crate::xml::KeyValuesXml,
     frame_name: &str,
 ) {
+    let frame_ref = lua_global_ref(frame_name);
     for kv in &key_values.values {
         let value = format_key_value(&kv.value, kv.value_type.as_deref());
         let code = format!(
             "do local f = {} if f then f.{} = {} end end",
-            frame_name, kv.key, value
+            frame_ref, kv.key, value
         );
         let _ = lua.load(&code).exec();
     }
@@ -296,7 +299,7 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
     }
     let code = format!(
         "do local f = {} if f then {} {} end end",
-        frame_name,
+        lua_global_ref(frame_name),
         parts.join(" "),
         post_init,
     );
@@ -308,25 +311,25 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
 /// Checks both `GetScript("OnLoad")` (set via SetScript in XML) and `frame.OnLoad`
 /// (set via mixin), matching the behavior of `fire_lifecycle_scripts` in xml_frame.rs.
 fn fire_on_load(lua: &Lua, frame_name: &str) {
+    let frame_ref = lua_global_ref(frame_name);
     let code = format!(
         r#"
-        local frame = {0}
+        local frame = {frame_ref}
         if frame then
             local handler = frame:GetScript("OnLoad")
             if handler then
                 local ok, err = pcall(handler, frame)
                 if not ok then
-                    print("[fire_on_load] {0} error: " .. tostring(err))
+                    print("[fire_on_load] {frame_name} error: " .. tostring(err))
                 end
             elseif type(frame.OnLoad) == "function" then
                 local ok, err = pcall(frame.OnLoad, frame)
                 if not ok then
-                    print("[fire_on_load] {0} error: " .. tostring(err))
+                    print("[fire_on_load] {frame_name} error: " .. tostring(err))
                 end
             end
         end
-        "#,
-        frame_name
+        "#
     );
     let _ = lua.load(&code).exec();
 }
@@ -388,9 +391,9 @@ fn build_create_child_code(
         if parent then
             local child = CreateFrame("{}", "{}", parent, {})
         "#,
-        parent_name,
+        lua_global_ref(parent_name),
         widget_type,
-        child_name,
+        escape_lua_string(child_name),
         if inherits.is_empty() {
             "nil".to_string()
         } else {
@@ -400,7 +403,7 @@ fn build_create_child_code(
 
     append_child_size_and_anchors(&mut code, frame, parent_name);
     append_child_parent_refs(&mut code, frame);
-    code.push_str(&format!("            _G[\"{}\"] = child\n", child_name));
+    code.push_str(&format!("            _G[\"{}\"] = child\n", escape_lua_string(child_name)));
     code.push_str("        end\n");
     code
 }
@@ -507,7 +510,7 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
 /// Apply animation groups from a FrameXml to an already-created frame.
 fn apply_animation_groups(lua: &Lua, frame: &FrameXml, frame_name: &str) {
     let Some(anims) = frame.animations() else { return };
-    let mut code = format!("local frame = {}\n", frame_name);
+    let mut code = format!("local frame = {}\n", lua_global_ref(frame_name));
     for group in &anims.animations {
         if group.is_virtual == Some(true) {
             continue;
@@ -520,11 +523,12 @@ fn apply_animation_groups(lua: &Lua, frame: &FrameXml, frame_name: &str) {
 /// Apply KeyValues from inline frame content.
 fn apply_inline_key_values(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
     let Some(key_values) = frame.key_values() else { return };
+    let frame_ref = lua_global_ref(frame_name);
     for kv in &key_values.values {
         let value = format_key_value(&kv.value, kv.value_type.as_deref());
         let code = format!(
             "do local f = {} if f then f.{} = {} end end",
-            frame_name, kv.key, value
+            frame_ref, kv.key, value
         );
         let _ = lua.load(&code).exec();
     }
@@ -559,7 +563,7 @@ fn apply_button_text(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) 
              local n = p:GetNumRegions() \
              if n > 0 then p.Text = select(n, p:GetRegions()) end \
              end end",
-            frame_name
+            lua_global_ref(frame_name)
         );
         let _ = lua.load(&code).exec();
     }
@@ -585,8 +589,9 @@ fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, fram
     ]);
 
     if !handlers_code.is_empty() {
+        let frame_ref = lua_global_ref(frame_name);
         let code = format!(
-            "\n        local frame = {frame_name}\n        if frame then\n        {handlers_code}\n        end\n"
+            "\n        local frame = {frame_ref}\n        if frame then\n        {handlers_code}\n        end\n"
         );
         let _ = lua.load(&code).exec();
     }
@@ -609,6 +614,14 @@ fn escape_lua_string(s: &str) -> String {
         .replace('"', "\\\"")
         .replace('\n', "\\n")
         .replace('\r', "\\r")
+}
+
+/// Return a Lua expression that references a frame by its global name.
+///
+/// Frame names like `$TankMarkerCheckButton` contain characters that aren't
+/// valid in Lua identifiers, so we always use `_G["name"]` instead of bare names.
+pub(super) fn lua_global_ref(name: &str) -> String {
+    format!("_G[\"{}\"]", escape_lua_string(name))
 }
 
 /// Generate a unique ID (delegates to shared atomic counter).

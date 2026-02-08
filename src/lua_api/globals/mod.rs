@@ -59,7 +59,6 @@ pub mod strings;
 pub mod template;
 pub mod timer_api;
 pub mod tooltip_api;
-pub mod ui_frames;
 pub mod unit_api;
 pub mod utility_api;
 

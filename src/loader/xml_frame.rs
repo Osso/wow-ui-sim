@@ -4,7 +4,7 @@ use crate::lua_api::LoaderEnv;
 
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, generate_anchors_code, generate_animation_group_code, generate_scripts_code, get_size_values, rand_id};
+use super::helpers::{escape_lua_string, generate_anchors_code, generate_animation_group_code, generate_scripts_code, get_size_values, lua_global_ref, rand_id};
 use super::xml_fontstring::create_fontstring_from_xml;
 use super::xml_texture::create_texture_from_xml;
 
@@ -110,9 +110,10 @@ fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits
         "#,
         );
     }
+    let parent_ref = lua_global_ref(parent);
     format!(
         r#"
-        local frame = CreateFrame("{widget_type}", "{name}", {parent}, {inherits_arg})
+        local frame = CreateFrame("{widget_type}", "{name}", {parent_ref}, {inherits_arg})
         "#,
     )
 }
@@ -120,11 +121,12 @@ fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits
 /// Append parentKey assignment so sibling frames can reference this frame.
 fn append_parent_key_code(lua_code: &mut String, frame: &crate::xml::FrameXml, parent: &str) {
     if let Some(parent_key) = &frame.parent_key {
+        let parent_ref = lua_global_ref(parent);
         lua_code.push_str(&format!(
             r#"
         {}.{} = frame
         "#,
-            parent, parent_key
+            parent_ref, parent_key
         ));
     }
     append_parent_array_code(lua_code, frame, parent);
@@ -132,11 +134,12 @@ fn append_parent_key_code(lua_code: &mut String, frame: &crate::xml::FrameXml, p
 
 /// Append parentArray insertion from the frame or its inherited templates.
 fn append_parent_array_code(lua_code: &mut String, frame: &crate::xml::FrameXml, parent: &str) {
+    let parent_ref = lua_global_ref(parent);
     // Check the frame itself first
     if let Some(parent_array) = &frame.parent_array {
         lua_code.push_str(&format!(
-            "\n        {parent}.{parent_array} = {parent}.{parent_array} or {{}}\n        \
-             table.insert({parent}.{parent_array}, frame)\n        ",
+            "\n        {parent_ref}.{parent_array} = {parent_ref}.{parent_array} or {{}}\n        \
+             table.insert({parent_ref}.{parent_array}, frame)\n        ",
         ));
         return;
     }
@@ -146,8 +149,8 @@ fn append_parent_array_code(lua_code: &mut String, frame: &crate::xml::FrameXml,
         for entry in &crate::xml::get_template_chain(inherits) {
             if let Some(parent_array) = &entry.frame.parent_array {
                 lua_code.push_str(&format!(
-                    "\n        {parent}.{parent_array} = {parent}.{parent_array} or {{}}\n        \
-                     table.insert({parent}.{parent_array}, frame)\n        ",
+                    "\n        {parent_ref}.{parent_array} = {parent_ref}.{parent_array} or {{}}\n        \
+                     table.insert({parent_ref}.{parent_array}, frame)\n        ",
                 ));
                 return;
             }
@@ -497,7 +500,7 @@ fn create_single_child_frame(
     if let (Some(actual_child_name), Some(parent_key)) =
         (child_name, &child_frame.parent_key)
     {
-        let lua_code = format!("{}.{} = {}", parent_name, parent_key, actual_child_name);
+        let lua_code = format!("{}.{} = {}", lua_global_ref(parent_name), parent_key, lua_global_ref(&actual_child_name));
         env.exec(&lua_code).ok();
     }
     Ok(())
@@ -523,7 +526,7 @@ fn create_frame_elements(
         {
             let lua_code = format!(
                 "\n                    {}.{} = {}\n                    ",
-                parent_name, parent_key, actual_child_name
+                lua_global_ref(parent_name), parent_key, lua_global_ref(&actual_child_name)
             );
             env.exec(&lua_code).ok();
         }
@@ -553,7 +556,7 @@ fn exec_animation_groups(env: &LoaderEnv<'_>, anims: &crate::xml::AnimationsXml,
         r#"
             local frame = {}
             "#,
-        name
+        lua_global_ref(name)
     );
     for anim_group_xml in &anims.animations {
         if anim_group_xml.is_virtual == Some(true) {
@@ -574,7 +577,7 @@ fn init_action_bar_tables(env: &LoaderEnv<'_>, name: &str) {
         if f and f.numButtons and not f.actionButtons then
             f.actionButtons = {{}}
         end end"#,
-        name
+        lua_global_ref(name)
     );
     let _ = env.exec(&code);
 }
@@ -583,11 +586,12 @@ fn init_action_bar_tables(env: &LoaderEnv<'_>, name: &str) {
 /// Both handlers are wrapped in pcall to match WoW's C++ engine behavior where
 /// script errors are caught and displayed, not propagated.
 fn fire_lifecycle_scripts(env: &LoaderEnv<'_>, name: &str) {
+    let frame_ref = lua_global_ref(name);
     // In WoW, OnLoad fires at the end of frame creation from XML.
     // Templates often use method="OnLoad" which calls self:OnLoad().
     let onload_code = format!(
         r#"
-        local frame = {}
+        local frame = {frame_ref}
         local handler = frame:GetScript("OnLoad")
         if handler then
             local ok, err = pcall(handler, frame)
@@ -600,8 +604,7 @@ fn fire_lifecycle_scripts(env: &LoaderEnv<'_>, name: &str) {
                 print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
             end
         end
-        "#,
-        name, name = name
+        "#
     );
     if let Err(e) = env.exec(&onload_code) {
         eprintln!("[OnLoad] {} error: {}", name, e);
@@ -610,7 +613,7 @@ fn fire_lifecycle_scripts(env: &LoaderEnv<'_>, name: &str) {
     // In WoW, OnShow fires when a frame becomes visible, including at creation if visible.
     let onshow_code = format!(
         r#"
-        local frame = {}
+        local frame = {frame_ref}
         if frame:IsVisible() then
             local handler = frame:GetScript("OnShow")
             if handler then
@@ -625,8 +628,7 @@ fn fire_lifecycle_scripts(env: &LoaderEnv<'_>, name: &str) {
                 end
             end
         end
-        "#,
-        name, name = name
+        "#
     );
     if let Err(e) = env.exec(&onshow_code) {
         eprintln!("[OnShow] {} error: {}", name, e);
