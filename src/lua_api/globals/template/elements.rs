@@ -67,7 +67,9 @@ pub(super) fn create_texture_from_template(
     }
 
     code.push_str("        end\n");
-    let _ = lua.load(&code).exec();
+    if let Err(e) = lua.load(&code).exec() {
+        eprintln!("[create_texture] failed for '{}' on '{}': {}", child_name, parent_name, e);
+    }
 
     apply_texture_animations(lua, texture, &child_name);
 }
@@ -138,12 +140,14 @@ fn append_anchors_and_parent_refs(
         code.push_str(&format!("            {}:SetAllPoints(true)\n", var));
     }
     if let Some(parent_key) = parent_key {
-        code.push_str(&format!("            {}.{} = {}\n", parent_var, parent_key, var));
+        let key_escaped = escape_lua_string(parent_key);
+        code.push_str(&format!("            {parent_var}[\"{key_escaped}\"] = {var}\n"));
     }
     if let Some(parent_array) = parent_array {
+        let arr_escaped = escape_lua_string(parent_array);
         code.push_str(&format!(
-            "            {parent_var}.{parent_array} = {parent_var}.{parent_array} or {{}}\n\
-             table.insert({parent_var}.{parent_array}, {var})\n"
+            "            {parent_var}[\"{arr_escaped}\"] = {parent_var}[\"{arr_escaped}\"] or {{}}\n\
+             table.insert({parent_var}[\"{arr_escaped}\"], {var})\n"
         ));
     }
 }
@@ -303,7 +307,7 @@ pub(super) fn create_bar_texture_from_template(
     append_texture_properties(&mut code, bar, "bar");
     code.push_str("            parent:SetStatusBarTexture(bar)\n");
     let parent_key = bar.parent_key.as_deref().unwrap_or("Bar");
-    code.push_str(&format!("            parent.{} = bar\n", parent_key));
+    code.push_str(&format!("            parent[\"{}\"] = bar\n", escape_lua_string(parent_key)));
 
     if bar.name.is_some() {
         code.push_str(&format!("            _G[\"{}\"] = bar\n", escape_lua_string(&child_name)));
@@ -349,9 +353,9 @@ pub(super) fn create_thumb_texture_from_template(
 
     code.push_str("            parent:SetThumbTexture(thumb)\n");
     if let Some(parent_key) = &thumb.parent_key {
-        code.push_str(&format!("            parent.{} = thumb\n", parent_key));
+        code.push_str(&format!("            parent[\"{}\"] = thumb\n", escape_lua_string(parent_key)));
     } else {
-        code.push_str("            parent.ThumbTexture = thumb\n");
+        code.push_str("            parent[\"ThumbTexture\"] = thumb\n");
     }
 
     if thumb.name.is_some() {
@@ -405,16 +409,17 @@ fn build_button_texture_code(
     tex_name: &str,
     is_named: bool,
 ) -> String {
+    let key_escaped = escape_lua_string(actual_parent_key);
     let mut code = format!(
         r#"
         local parent = {}
         if parent and parent.{} then
-            local tex = parent.{}
+            local tex = parent["{}"]
             if tex == nil then
                 tex = parent:CreateTexture("{}", "ARTWORK")
             end
         "#,
-        lua_global_ref(parent_name), setter_method, actual_parent_key, escape_lua_string(tex_name),
+        lua_global_ref(parent_name), setter_method, key_escaped, escape_lua_string(tex_name),
     );
 
     if let Some(size) = &texture.size {
@@ -424,7 +429,7 @@ fn build_button_texture_code(
         }
     }
 
-    code.push_str(&format!("            parent.{} = tex\n", actual_parent_key));
+    code.push_str(&format!("            parent[\"{key_escaped}\"] = tex\n"));
     code.push_str(&format!("            parent:{}(tex)\n", setter_method));
 
     if let Some(file) = &texture.file {
