@@ -132,9 +132,12 @@ impl TocFile {
     }
 
     /// Get required dependencies.
+    ///
+    /// WoW TOC files use three variant keys: `RequiredDep`, `RequiredDeps`, `Dependencies`.
     pub fn dependencies(&self) -> Vec<String> {
         self.metadata
-            .get("Dependencies")
+            .get("RequiredDep")
+            .or_else(|| self.metadata.get("Dependencies"))
             .or_else(|| self.metadata.get("RequiredDeps"))
             .map(|s| {
                 s.split(',')
@@ -163,6 +166,15 @@ impl TocFile {
         self.metadata
             .get("LoadOnDemand")
             .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
+            .unwrap_or(false)
+    }
+
+    /// Check if addon is glue-only (login/character-select screen).
+    /// These addons have `AllowLoad: Glue` and should not load in game mode.
+    pub fn is_glue_only(&self) -> bool {
+        self.metadata
+            .get("AllowLoad")
+            .map(|v| v.eq_ignore_ascii_case("glue"))
             .unwrap_or(false)
     }
 

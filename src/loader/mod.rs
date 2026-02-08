@@ -121,15 +121,16 @@ pub fn load_addon_from_toc_with_saved_vars(
 /// Discover all Blizzard addons in a BlizzardUI directory, topologically sorted by dependencies.
 ///
 /// Scans for `Blizzard_*` subdirectories, parses their TOC files, filters out `LoadOnDemand`
-/// addons, and returns them in dependency order. Returns `(dir_name, toc_path)` pairs.
+/// addons (unless required by a non-LOD addon), and returns them in dependency order.
 pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)> {
     let entries = match std::fs::read_dir(blizzard_ui_dir) {
         Ok(e) => e,
         Err(_) => return Vec::new(),
     };
 
-    // Parse all addon TOCs
+    // Parse all addon TOCs into two pools: normal and load-on-demand
     let mut addons: HashMap<String, (PathBuf, TocFile)> = HashMap::new();
+    let mut lod_pool: HashMap<String, (PathBuf, TocFile)> = HashMap::new();
     for entry in entries.flatten() {
         let path = entry.path();
         if !path.is_dir() {
@@ -145,13 +146,47 @@ pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)
         let Ok(toc) = TocFile::from_file(&toc_path) else {
             continue;
         };
-        if toc.is_load_on_demand() {
+        if toc.is_glue_only() {
             continue;
         }
-        addons.insert(dir_name.clone(), (toc_path, toc));
+        if toc.is_load_on_demand() {
+            lod_pool.insert(dir_name, (toc_path, toc));
+        } else {
+            addons.insert(dir_name, (toc_path, toc));
+        }
     }
 
+    // Pull LOD addons that are required by non-LOD addons
+    pull_required_lod_addons(&mut addons, &mut lod_pool);
+
     topological_sort_addons(addons)
+}
+
+/// Recursively pull LoadOnDemand addons into the main set when required by loaded addons.
+fn pull_required_lod_addons(
+    addons: &mut HashMap<String, (PathBuf, TocFile)>,
+    lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
+) {
+    let mut needed: Vec<String> = addons
+        .values()
+        .flat_map(|(_, toc)| toc.dependencies())
+        .filter(|dep| lod_pool.contains_key(dep))
+        .collect();
+
+    while let Some(name) = needed.pop() {
+        if addons.contains_key(&name) {
+            continue;
+        }
+        if let Some((toc_path, toc)) = lod_pool.remove(&name) {
+            // This LOD addon may itself depend on other LOD addons
+            for dep in toc.dependencies() {
+                if lod_pool.contains_key(&dep) {
+                    needed.push(dep);
+                }
+            }
+            addons.insert(name, (toc_path, toc));
+        }
+    }
 }
 
 /// Topologically sort addons by their declared dependencies (Kahn's algorithm).
@@ -226,11 +261,11 @@ const BASE_UI_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLGame",
     "Blizzard_FrameXML",
     "Blizzard_UIParent",
-    "Blizzard_GlueXML",
-    "Blizzard_GlueParent",
 ];
 
 /// Build a map of addon name -> list of available addon names it depends on.
+/// Includes both required and optional dependencies (WoW loads optional deps
+/// before the addon if they are present).
 fn build_dependency_graph<'a>(
     addons: &'a HashMap<String, (PathBuf, TocFile)>,
     available: &std::collections::HashSet<&'a str>,
@@ -238,12 +273,19 @@ fn build_dependency_graph<'a>(
     addons
         .iter()
         .map(|(name, (_, toc))| {
-            let required: Vec<&str> = toc
+            let mut deps: Vec<&str> = toc
                 .dependencies()
                 .iter()
                 .filter_map(|d| available.get(d.as_str()).copied())
                 .collect();
-            (name.as_str(), required)
+            for d in toc.optional_deps() {
+                if let Some(&dep) = available.get(d.as_str()) {
+                    if !deps.contains(&dep) {
+                        deps.push(dep);
+                    }
+                }
+            }
+            (name.as_str(), deps)
         })
         .collect()
 }
