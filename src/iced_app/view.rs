@@ -173,6 +173,11 @@ impl App {
                 .on_toggle(Message::ToggleXpBar)
                 .size(14)
                 .text_size(12),
+            checkbox(self.rot_damage_enabled)
+                .label("Rot Damage")
+                .on_toggle(Message::ToggleRotDamage)
+                .size(14)
+                .text_size(12),
         ]
         .spacing(6)
         .align_y(iced::Alignment::Center)
