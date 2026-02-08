@@ -111,7 +111,7 @@ fn cleanup_stale_sockets() {
                         let exists = unsafe { libc::kill(pid, 0) } == 0;
                         if !exists
                             && std::fs::remove_file(&entry).is_ok() {
-                                eprintln!("[wow-lua] Cleaned up stale socket: {}", entry.display());
+                                eprintln!("[wow-sim] Cleaned up stale socket: {}", entry.display());
                             }
                     }
         }
@@ -121,11 +121,11 @@ fn cleanup_stale_sockets() {
 fn run_server(cmd_tx: mpsc::Sender<LuaCommand>, path: PathBuf) {
     let listener = match UnixListener::bind(&path) {
         Ok(l) => {
-            eprintln!("[wow-lua] Listening on {}", path.display());
+            eprintln!("[wow-sim] Listening on {}", path.display());
             l
         }
         Err(e) => {
-            eprintln!("[wow-lua] Failed to bind: {}", e);
+            eprintln!("[wow-sim] Failed to bind: {}", e);
             return;
         }
     };
@@ -143,11 +143,11 @@ fn run_server(cmd_tx: mpsc::Sender<LuaCommand>, path: PathBuf) {
         match stream {
             Ok(stream) => {
                 if let Err(e) = handle_connection(stream, &cmd_tx) {
-                    eprintln!("[wow-lua] Connection error: {}", e);
+                    eprintln!("[wow-sim] Connection error: {}", e);
                 }
             }
             Err(e) => {
-                eprintln!("[wow-lua] Accept error: {}", e);
+                eprintln!("[wow-sim] Accept error: {}", e);
             }
         }
     }

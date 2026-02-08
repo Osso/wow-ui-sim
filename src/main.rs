@@ -272,6 +272,7 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
         return;
     }
 
+    println!("\nLoading Blizzard addons...");
     for (name, toc) in BLIZZARD_ADDONS {
         let toc_path = blizzard_ui_path.join(format!("{}/{}", name, toc));
         if !toc_path.exists() {
@@ -452,23 +453,7 @@ fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
 
 /// Run post-load Lua test scripts and debug hooks.
 fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Error>> {
-    // Override functions that Blizzard code defines but depend on unimplemented systems.
-    // These must run after addon loading since Blizzard code overwrites our Rust stubs.
-    let _ = env.exec("UpdateMicroButtons = function() end");
-
-    // Patch GradualAnimatedStatusBarMixin:IsAnimating to handle nil
-    // LevelUpMaxAlphaAnimation (animation group not created in simulator).
-    let _ = env.exec(r#"
-        if GradualAnimatedStatusBarMixin then
-            function GradualAnimatedStatusBarMixin:IsAnimating()
-                return self.targetValue and self:GetValue() < self.targetValue
-                    or self.gainFinishedAnimation and self.gainFinishedAnimation:IsPlaying()
-                    or self.LevelUpMaxAlphaAnimation and self.LevelUpMaxAlphaAnimation:IsPlaying()
-                    or self.overrideLevelUpMaxAlphaAnimation and self.overrideLevelUpMaxAlphaAnimation:IsPlaying()
-            end
-        end
-    "#);
-
+    env.apply_post_load_workarounds();
     override_action_bar_positioning(env);
 
     let debug_script = PathBuf::from("/tmp/debug-scrollbox-update.lua");

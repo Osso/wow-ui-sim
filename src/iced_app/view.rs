@@ -24,13 +24,16 @@ const HIT_TEST_EXCLUDED: &[&str] = &[
     "EventToastManagerFrame", "EditModeManagerFrame",
 ];
 
-/// Collect visible, mouse-enabled frames with strata/level info for hit testing.
-fn collect_hittable_frames(
+/// Build sorted hit-test list: (id, pre-scaled bounds), highest strata/level last.
+///
+/// The result is sorted low-to-high so callers can iterate in reverse for
+/// top-to-bottom hit testing.
+fn build_hittable_list(
     widgets: &crate::widget::WidgetRegistry,
     screen_width: f32,
     screen_height: f32,
-) -> Vec<(u64, FrameStrata, i32, LayoutRect)> {
-    widgets
+) -> Vec<(u64, iced::Rectangle)> {
+    let mut frames: Vec<(u64, FrameStrata, i32, iced::Rectangle)> = widgets
         .all_ids()
         .into_iter()
         .filter_map(|id| {
@@ -42,9 +45,21 @@ fn collect_hittable_frames(
                 return None;
             }
             let rect = compute_frame_rect(widgets, id, screen_width, screen_height);
-            Some((id, frame.frame_strata, frame.frame_level, rect))
+            let scaled = iced::Rectangle::new(
+                iced::Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
+                iced::Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
+            );
+            Some((id, frame.frame_strata, frame.frame_level, scaled))
         })
-        .collect()
+        .collect();
+
+    frames.sort_by(|a, b| {
+        a.1.cmp(&b.1)
+            .then_with(|| a.2.cmp(&b.2))
+            .then_with(|| a.0.cmp(&b.0))
+    });
+
+    frames.into_iter().map(|(id, _, _, r)| (id, r)).collect()
 }
 
 impl App {
@@ -493,38 +508,32 @@ impl App {
             .into()
     }
 
-    /// Hit test to find frame under cursor.
+    /// Hit test to find frame under cursor (uses cached rects).
     pub(crate) fn hit_test(&self, pos: iced::Point) -> Option<u64> {
-        let env = self.env.borrow();
-        let state = env.state().borrow();
-        let screen_width = self.screen_size.get().width;
-        let screen_height = self.screen_size.get().height;
-
-        let mut frames = collect_hittable_frames(&state.widgets, screen_width, screen_height);
-        frames.sort_by(|a, b| {
-            a.1.cmp(&b.1)
-                .then_with(|| a.2.cmp(&b.2))
-                .then_with(|| a.0.cmp(&b.0))
-        });
-
-        // Iterate top-to-bottom (highest strata/level first)
-        frames.iter().rev().find_map(|(id, _, _, rect)| {
-            let scaled = LayoutRect {
-                x: rect.x * UI_SCALE,
-                y: rect.y * UI_SCALE,
-                width: rect.width * UI_SCALE,
-                height: rect.height * UI_SCALE,
-            };
-            if pos.x >= scaled.x
-                && pos.x <= scaled.x + scaled.width
-                && pos.y >= scaled.y
-                && pos.y <= scaled.y + scaled.height
-            {
+        self.ensure_hittable_cache();
+        let cache = self.cached_hittable.borrow();
+        let list = cache.as_ref()?;
+        // Iterate top-to-bottom (highest strata/level = last in list)
+        list.iter().rev().find_map(|(id, rect)| {
+            if rect.contains(pos) {
                 Some(*id)
             } else {
                 None
             }
         })
+    }
+
+    /// Lazily rebuild the hit-test cache if it was invalidated.
+    fn ensure_hittable_cache(&self) {
+        if self.cached_hittable.borrow().is_some() {
+            return;
+        }
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        let screen_width = self.screen_size.get().width;
+        let screen_height = self.screen_size.get().height;
+        let list = build_hittable_list(&state.widgets, screen_width, screen_height);
+        *self.cached_hittable.borrow_mut() = Some(list);
     }
 
 }

@@ -13,6 +13,7 @@ pub mod message_frame;
 pub mod simple_html;
 mod state;
 pub mod tooltip;
+pub(crate) mod workarounds;
 
 // Re-export public types
 pub use env::WowLuaEnv;

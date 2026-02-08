@@ -284,6 +284,7 @@ fn register_c_pvp(lua: &Lua) -> Result<()> {
     t.set("IsRatedMap", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsInBrawl", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsActiveBattlefield", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetOutdoorPvPWaitTime", lua.create_function(|_, _map_id: Option<i32>| Ok(Value::Nil))?)?;
     lua.globals().set("C_PvP", t)?;
     Ok(())
 }

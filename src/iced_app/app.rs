@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use std::rc::Rc;
 
 use iced::widget::canvas::Cache;
-use iced::{Point, Size, Task};
+use iced::{Point, Rectangle, Size, Task};
 use tokio::sync::mpsc;
 use tokio::sync::oneshot;
 
@@ -144,6 +144,9 @@ pub struct App {
     pub(crate) gpu_uploaded_textures: RefCell<std::collections::HashSet<String>>,
     /// Cached quad batch for shader (avoids rebuilding every frame).
     pub(crate) cached_quads: RefCell<Option<(Size, crate::render::QuadBatch)>>,
+    /// Cached sorted hit-test rects (rebuilt when layout changes).
+    /// Pre-sorted top-to-bottom (highest strata first) with pre-scaled bounds.
+    pub(crate) cached_hittable: RefCell<Option<Vec<(u64, Rectangle)>>>,
     /// Flag to invalidate quad cache (set when content changes).
     pub(crate) quads_dirty: std::cell::Cell<bool>,
     /// FPS counter: frame count since last update (interior mutability for draw()).
@@ -224,6 +227,7 @@ impl App {
             debug_anchors,
             gpu_uploaded_textures: RefCell::new(std::collections::HashSet::new()),
             cached_quads: RefCell::new(None),
+            cached_hittable: RefCell::new(None),
             quads_dirty: std::cell::Cell::new(true),
             frame_count: std::cell::Cell::new(0),
             fps_last_time: std::time::Instant::now(),
@@ -304,17 +308,9 @@ impl App {
         std::sync::mpsc::Receiver<lua_server::LuaCommand>,
     ) {
         let (cmd_rx, _guard) = debug_server::init();
-        eprintln!(
-            "[wow-sim] Debug server at {}",
-            debug_server::socket_path().display()
-        );
         std::mem::forget(_guard);
 
         let lua_rx = lua_server::init();
-        eprintln!(
-            "[wow-sim] Lua server at {}",
-            lua_server::socket_path().display()
-        );
         (cmd_rx, lua_rx)
     }
 

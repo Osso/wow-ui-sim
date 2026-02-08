@@ -23,11 +23,11 @@ pub struct LayerXml {
 }
 
 impl LayerXml {
-    /// Get all Texture elements in this layer (excludes MaskTextures which are
-    /// not rendered directly — they control alpha masking for other textures).
+    /// Get all Texture elements in this layer (includes MaskTextures — they
+    /// need to exist as child widgets so Lua code can reference them via parentKey).
     pub fn textures(&self) -> impl Iterator<Item = &TextureXml> {
         self.elements.iter().filter_map(|e| match e {
-            LayerElement::Texture(t) => Some(t),
+            LayerElement::Texture(t) | LayerElement::MaskTexture(t) => Some(t),
             _ => None,
         })
     }

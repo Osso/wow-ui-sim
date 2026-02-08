@@ -101,6 +101,13 @@ impl WowLuaEnv {
         Ok(result)
     }
 
+    /// Apply post-load workarounds for Blizzard code that depends on
+    /// unimplemented engine features (AnimationGroups, EditMode, etc.).
+    /// Must be called after all addons are loaded and before firing events.
+    pub fn apply_post_load_workarounds(&self) {
+        super::workarounds::apply(self);
+    }
+
     /// Fire an event to all registered frames.
     pub fn fire_event(&self, event: &str) -> Result<()> {
         self.fire_event_with_args(event, &[])
@@ -142,6 +149,46 @@ impl WowLuaEnv {
         }
 
         Ok(())
+    }
+
+    /// Fire an event, collecting handler errors instead of printing them.
+    pub fn fire_event_collecting_errors(&self, event: &str, args: &[Value]) -> Vec<String> {
+        let listeners = {
+            let state = self.state.borrow();
+            state.widgets.get_event_listeners(event)
+        };
+
+        let mut errors = Vec::new();
+        for widget_id in listeners {
+            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
+
+            if let Some(table) = scripts_table {
+                let frame_key = format!("{}_OnEvent", widget_id);
+                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+
+                if let Some(handler) = handler {
+                    let frame_ref_key = format!("__frame_{}", widget_id);
+                    let Ok(frame) = self.lua.globals().get::<Value>(frame_ref_key.as_str()) else {
+                        continue;
+                    };
+
+                    let mut call_args =
+                        vec![frame, Value::String(self.lua.create_string(event).unwrap())];
+                    call_args.extend(args.iter().cloned());
+
+                    if let Err(e) = handler.call::<()>(MultiValue::from_vec(call_args)) {
+                        let state = self.state.borrow();
+                        let name = state
+                            .widgets
+                            .get(widget_id)
+                            .and_then(|f| f.name.as_deref())
+                            .unwrap_or("(anonymous)");
+                        errors.push(format!("[{event}] {name}: {e}"));
+                    }
+                }
+            }
+        }
+        errors
     }
 
     /// Fire a script handler for a specific widget.
@@ -530,6 +577,57 @@ impl WowLuaEnv {
         super::animation::tick_animation_groups(&self.state, &self.lua, elapsed)?;
 
         Ok(())
+    }
+
+    /// Fire one tick of OnUpdate handlers, collecting errors instead of printing.
+    pub fn fire_on_update_collecting_errors(&self, elapsed: f64) -> Vec<String> {
+        let mut errors = Vec::new();
+
+        let frame_ids: Vec<u64> = {
+            let state = self.state.borrow();
+            state
+                .on_update_frames
+                .iter()
+                .copied()
+                .filter(|&id| state.widgets.get(id).map(|f| f.visible).unwrap_or(false))
+                .collect()
+        };
+
+        if frame_ids.is_empty() {
+            return errors;
+        }
+
+        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
+        let Some(table) = scripts_table else {
+            return errors;
+        };
+
+        let elapsed_val = Value::Number(elapsed);
+        for widget_id in &frame_ids {
+            for suffix in &["OnUpdate", "OnPostUpdate"] {
+                let frame_key = format!("{}_{}", widget_id, suffix);
+                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+                if let Some(handler) = handler {
+                    let frame_ref_key = format!("__frame_{}", widget_id);
+                    let Ok(frame) = self.lua.globals().get::<Value>(frame_ref_key.as_str()) else {
+                        continue;
+                    };
+                    if let Err(e) =
+                        handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
+                    {
+                        let state = self.state.borrow();
+                        let name = state
+                            .widgets
+                            .get(*widget_id)
+                            .and_then(|f| f.name.as_deref())
+                            .unwrap_or("(anonymous)");
+                        errors.push(format!("[{suffix}] {name} (id={widget_id}): {e}"));
+                    }
+                }
+            }
+        }
+
+        errors
     }
 
     /// Get the time until the next timer fires, if any.

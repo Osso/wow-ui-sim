@@ -165,8 +165,7 @@ impl App {
             self.scroll_offset -= dy * scroll_speed;
             let max_scroll = 2600.0;
             self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
-            self.frame_cache.clear();
-            self.quads_dirty.set(true);
+            self.invalidate_layout();
         }
     }
 
@@ -256,8 +255,7 @@ impl App {
         }
         self.drain_console();
         self.log_messages.push("UI reloaded.".to_string());
-        self.frame_cache.clear();
-        self.quads_dirty.set(true);
+        self.invalidate_layout();
     }
 
     fn handle_execute_command(&mut self) {
@@ -270,8 +268,7 @@ impl App {
         self.execute_command_inner(&cmd);
         self.drain_console();
         self.command_input.clear();
-        self.frame_cache.clear();
-        self.quads_dirty.set(true);
+        self.invalidate_layout();
     }
 
     fn execute_command_inner(&mut self, cmd: &str) {
@@ -373,8 +370,7 @@ impl App {
     fn handle_inspector_apply(&mut self) {
         if let Some(frame_id) = self.inspected_frame {
             self.apply_inspector_changes(frame_id);
-            self.frame_cache.clear();
-            self.quads_dirty.set(true);
+            self.invalidate_layout();
         }
     }
 
@@ -383,8 +379,14 @@ impl App {
     /// Drain console, clear frame cache, and mark quads dirty.
     fn invalidate(&mut self) {
         self.drain_console();
+        self.invalidate_layout();
+    }
+
+    /// Clear caches that depend on widget layout (quads and hit-test rects).
+    fn invalidate_layout(&mut self) {
         self.frame_cache.clear();
         self.quads_dirty.set(true);
+        *self.cached_hittable.borrow_mut() = None;
     }
 
     /// Log errors to both stderr and the in-app log.
@@ -530,8 +532,7 @@ impl App {
                     let response = self.exec_lua_command(&code);
                     let _ = respond.send(response);
                     self.drain_console();
-                    self.frame_cache.clear();
-                    self.quads_dirty.set(true);
+                    self.invalidate_layout();
                 }
                 LuaCommand::DumpTree {
                     filter,

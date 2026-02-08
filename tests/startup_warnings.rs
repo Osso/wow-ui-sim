@@ -51,14 +51,20 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
 ];
 
-/// Load all Blizzard addons and fire startup events, collecting warnings.
-fn load_and_startup() -> Vec<(String, Vec<String>)> {
+/// Fire a single event, collecting handler errors.
+fn fire(env: &WowLuaEnv, event: &str, args: &[mlua::Value]) -> Vec<String> {
+    env.fire_event_collecting_errors(event, args)
+}
+
+/// Load all Blizzard addons and fire startup events, collecting all warnings.
+fn load_and_startup() -> Vec<String> {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
 
     let ui = blizzard_ui_dir();
-    let mut all_warnings = Vec::new();
+    let mut warnings = Vec::new();
 
+    // Load addons
     for (name, toc) in BLIZZARD_ADDONS {
         let toc_path = ui.join(name).join(toc);
         if !toc_path.exists() {
@@ -66,43 +72,56 @@ fn load_and_startup() -> Vec<(String, Vec<String>)> {
         }
         match load_addon(&env, &toc_path) {
             Ok(r) => {
-                if !r.warnings.is_empty() {
-                    all_warnings.push((name.to_string(), r.warnings));
+                for w in r.warnings {
+                    warnings.push(format!("[load {name}] {w}"));
                 }
             }
             Err(e) => {
-                all_warnings.push((name.to_string(), vec![format!("LOAD FAILED: {e}")]));
+                warnings.push(format!("[load {name}] FAILED: {e}"));
             }
         }
     }
 
+    // Apply workarounds (same as main.rs run_post_load_scripts)
+    env.apply_post_load_workarounds();
+
     // Fire startup events (same sequence as main.rs)
     let lua = env.lua();
 
-    let _ = env.fire_event_with_args(
+    warnings.extend(fire(
+        &env,
         "ADDON_LOADED",
         &[mlua::Value::String(lua.create_string("WoWUISim").unwrap())],
-    );
+    ));
     for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
-        let _ = env.fire_event(event);
+        warnings.extend(fire(&env, event, &[]));
     }
     if let Ok(f) = lua.globals().get::<mlua::Function>("RequestTimePlayed") {
         let _ = f.call::<()>(());
     }
-    let _ = env.fire_event_with_args(
+    warnings.extend(fire(
+        &env,
         "PLAYER_ENTERING_WORLD",
         &[mlua::Value::Boolean(true), mlua::Value::Boolean(false)],
-    );
+    ));
     for event in [
         "UPDATE_BINDINGS",
         "DISPLAY_SIZE_CHANGED",
         "UI_SCALE_CHANGED",
         "PLAYER_LEAVING_WORLD",
     ] {
-        let _ = env.fire_event(event);
+        warnings.extend(fire(&env, event, &[]));
     }
 
-    all_warnings
+    // Fire one OnUpdate tick to catch handler errors
+    warnings.extend(env.fire_on_update_collecting_errors(0.016));
+
+    // Keep only the most recent 500 warnings
+    if warnings.len() > 500 {
+        warnings.drain(..warnings.len() - 500);
+    }
+
+    warnings
 }
 
 #[test]
@@ -110,11 +129,9 @@ fn test_no_warnings_on_startup() {
     let warnings = load_and_startup();
 
     if !warnings.is_empty() {
-        let mut msg = String::from("Unexpected warnings during startup:\n");
-        for (addon, warns) in &warnings {
-            for w in warns {
-                msg.push_str(&format!("  [{addon}] {w}\n"));
-            }
+        let mut msg = format!("Unexpected warnings during startup ({}):\n", warnings.len());
+        for w in &warnings {
+            msg.push_str(&format!("  {w}\n"));
         }
         panic!("{msg}");
     }
