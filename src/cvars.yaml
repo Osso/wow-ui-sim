@@ -977,6 +977,8 @@ nameplateStyle: '0'
 nameplateTargetBehindMaxDistance: '0.100000'
 nameplateTargetRadialPosition: '0'
 nameplateThreatDisplay: "\x02"
+NamePlateVerticalScale: '1.000000'
+NamePlateHorizontalScale: '1.000000'
 nearclip: '0.2'
 newDelvesSeason: '1'
 newMythicPlusSeason: '1'
