@@ -52,10 +52,20 @@ fn parse_set_point_args(
             let x = args.get(1).and_then(get_number);
             let y = args.get(2).and_then(get_number);
             if let (Some(x), Some(y)) = (x, y) {
+                // SetPoint("point", x, y)
                 (None, point, x, y)
             } else {
                 let rel_to = args.get(1).and_then(get_frame_id);
-                (rel_to, point, 0.0, 0.0)
+                // Check if 3rd arg is a relativePoint string:
+                // SetPoint("point", relativeTo, "relativePoint")
+                let rel_point = args.get(2).and_then(|v| {
+                    if let Value::String(s) = v {
+                        crate::widget::AnchorPoint::from_str(&s.to_string_lossy())
+                    } else {
+                        None
+                    }
+                }).unwrap_or(point);
+                (rel_to, rel_point, 0.0, 0.0)
             }
         }
         _ => {
