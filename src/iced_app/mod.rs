@@ -80,8 +80,9 @@ pub enum Message {
     ToggleFramesPanel,
     /// Toggle XP bar visibility (simulate max level vs leveling).
     ToggleXpBar(bool),
-    /// Keyboard input dispatched to Lua (WoW key name, e.g. "ESCAPE", "ENTER", "A").
-    KeyPress(String),
+    /// Keyboard input dispatched to Lua (WoW key name, e.g. "ESCAPE", "ENTER", "A")
+    /// plus optional raw text for character input into focused EditBox.
+    KeyPress(String, Option<String>),
 }
 
 /// Run the iced UI with the given Lua environment.
