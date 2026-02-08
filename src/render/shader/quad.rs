@@ -601,6 +601,54 @@ impl QuadBatch {
         }
     }
 
+    /// Push a tiled textured quad by path (for deferred texture loading).
+    ///
+    /// Like `push_tiled()` but uses a texture path resolved during prepare().
+    pub fn push_tiled_path(
+        &mut self,
+        bounds: Rectangle,
+        tile_width: f32,
+        tile_height: f32,
+        path: &str,
+        color: [f32; 4],
+    ) {
+        let vertex_start = self.vertices.len() as u32;
+        let mut vertex_count = 0u32;
+
+        let mut y = bounds.y;
+        while y < bounds.y + bounds.height {
+            let h = (bounds.y + bounds.height - y).min(tile_height);
+            let v_ratio = h / tile_height;
+
+            let mut x = bounds.x;
+            while x < bounds.x + bounds.width {
+                let w = (bounds.x + bounds.width - x).min(tile_width);
+                let u_ratio = w / tile_width;
+
+                self.push_quad(
+                    Rectangle::new(iced::Point::new(x, y), iced::Size::new(w, h)),
+                    Rectangle::new(
+                        iced::Point::ORIGIN,
+                        iced::Size::new(u_ratio, v_ratio),
+                    ),
+                    color,
+                    -2,
+                    BlendMode::Alpha,
+                );
+                vertex_count += 4;
+
+                x += tile_width;
+            }
+            y += tile_height;
+        }
+
+        self.texture_requests.push(TextureRequest {
+            path: path.to_string(),
+            vertex_start,
+            vertex_count,
+        });
+    }
+
     /// Push a rectangle border (4 edge quads).
     ///
     /// # Arguments

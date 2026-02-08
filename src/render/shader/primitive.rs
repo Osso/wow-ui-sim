@@ -45,7 +45,7 @@ impl WowUiPrimitive {
         Self {
             quads,
             overlay: QuadBatch::new(),
-            clear_color: [0.05, 0.05, 0.08, 1.0], // Dark WoW-style background
+            clear_color: [0.10, 0.11, 0.14, 1.0], // Dark blue-grey background
             textures: Vec::new(),
             glyph_atlas_data: None,
             glyph_atlas_size: 0,
@@ -57,7 +57,7 @@ impl WowUiPrimitive {
         Self {
             quads,
             overlay: QuadBatch::new(),
-            clear_color: [0.05, 0.05, 0.08, 1.0],
+            clear_color: [0.10, 0.11, 0.14, 1.0],
             textures,
             glyph_atlas_data: None,
             glyph_atlas_size: 0,

@@ -15,7 +15,6 @@ use super::app::App;
 use super::layout::compute_frame_rect;
 use super::statusbar::{StatusBarFill, collect_statusbar_fills};
 use super::state::CanvasMessage;
-use super::styles::palette;
 use super::Message;
 
 /// Shader program implementation for GPU rendering of WoW frames.
@@ -236,12 +235,21 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
         return;
     }
 
-    // StatusBar fill color tint (from SetStatusBarColor)
+    // Base tint from vertex color (SetVertexColor), defaulting to white
+    let vc = f.vertex_color.as_ref();
+    let base_tint = [
+        vc.map_or(1.0, |c| c.r),
+        vc.map_or(1.0, |c| c.g),
+        vc.map_or(1.0, |c| c.b),
+        vc.map_or(1.0, |c| c.a) * f.alpha,
+    ];
+
+    // StatusBar fill color overrides vertex color tint
     let tint = if let Some(fill) = bar_fill
         && let Some(c) = &fill.color {
             [c.r, c.g, c.b, c.a * f.alpha]
         } else {
-            [1.0, 1.0, 1.0, f.alpha]
+            base_tint
         };
 
     if let Some(color) = f.color_texture {
@@ -549,10 +557,13 @@ pub fn build_quad_batch_for_registry(
     let (screen_width, screen_height) = screen_size;
     let size = Size::new(screen_width, screen_height);
 
-    // Add background quad
-    batch.push_solid(
+    // Tiled marble background
+    batch.push_tiled_path(
         Rectangle::new(Point::ORIGIN, size),
-        [palette::BG_DARK.r, palette::BG_DARK.g, palette::BG_DARK.b, 1.0],
+        256.0,
+        256.0,
+        "framegeneral/ui-background-marble",
+        [0.55, 0.55, 0.55, 1.0],
     );
 
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
