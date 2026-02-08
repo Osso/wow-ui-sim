@@ -180,6 +180,10 @@ pub struct App {
     pub(crate) pending_exec_lua: Option<String>,
     /// Whether the XP bar is currently visible (toggled by UI checkbox).
     pub(crate) xp_bar_visible: bool,
+    /// Last time party health was ticked (random walk every 2 seconds).
+    pub(crate) last_party_health_tick: std::time::Instant,
+    /// Whether rot damage is applied to party members every tick.
+    pub(crate) rot_damage_enabled: bool,
 }
 
 impl App {
@@ -237,6 +241,8 @@ impl App {
             saved_vars,
             pending_exec_lua: INIT_EXEC_LUA.with(|cell| cell.borrow_mut().take()),
             xp_bar_visible: true,
+            last_party_health_tick: std::time::Instant::now(),
+            rot_damage_enabled: false,
         };
 
         (app, Task::none())
