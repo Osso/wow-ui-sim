@@ -434,12 +434,47 @@ fn register_secure_handler_stubs(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+fn arg_to_i32(v: &Value) -> Option<i32> {
+    match v {
+        Value::Integer(n) => Some(*n as i32),
+        Value::Number(n) => Some(*n as i32),
+        _ => None,
+    }
+}
+
+/// debugstack(start, count1, count2) - returns a stack trace string.
+/// WoW's debugstack is used by error handlers and BugSack.
+fn register_debugstack(lua: &Lua) -> Result<()> {
+    lua.globals().set(
+        "debugstack",
+        lua.create_function(|lua, args: mlua::MultiValue| {
+            let start = args.get(0).and_then(arg_to_i32).unwrap_or(2);
+            let count1 = args.get(1).and_then(arg_to_i32).unwrap_or(12) as usize;
+            let count2 = args.get(2).and_then(arg_to_i32).unwrap_or(10) as usize;
+            let tb: mlua::Function =
+                lua.globals().get::<mlua::Table>("debug")?.get("traceback")?;
+            let trace: String = tb.call(("", start))?;
+            let lines: Vec<&str> = trace.lines().filter(|l| !l.is_empty()).collect();
+            let total = lines.len();
+            if total <= count1 + count2 {
+                Ok(lines.join("\n"))
+            } else {
+                let top = &lines[..count1];
+                let bottom = &lines[total - count2..];
+                Ok(format!("{}\n...\n{}", top.join("\n"), bottom.join("\n")))
+            }
+        })?,
+    )
+}
+
 /// Error handler functions: geterrorhandler, seterrorhandler.
 ///
 /// Stores the handler in the Lua registry under `__wow_error_handler`.
 /// Script dispatch errors are routed through this handler (see script_helpers).
 fn register_error_handlers(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
+
+    register_debugstack(lua)?;
 
     globals.set(
         "geterrorhandler",

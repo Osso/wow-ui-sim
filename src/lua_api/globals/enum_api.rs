@@ -251,6 +251,13 @@ fn register_ui_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
         "Vertical", "Horizontal", "HorizontalReverse", "VerticalReverse",
     ])?;
 
+    seq_enum(lua, enum_table, "UICursorType", &[
+        "Default", "Item", "Money", "Spell", "PetAction", "Merchant", "ActionBar",
+        "Macro", "AmmoObsolete", "Pet", "GuildBank", "GuildBankMoney", "EquipmentSet",
+        "Currency", "Flyout", "VoidItem", "BattlePet", "Mount", "Toy",
+        "ConduitCollectionItem", "PerksProgramVendorItem",
+    ])?;
+
     Ok(())
 }
 

@@ -124,7 +124,7 @@ fn fire_startup_events(env: &WowLuaEnv, warnings: &mut Vec<String>) {
 
 /// Known warning count from unimplemented APIs. Update this when adding stubs.
 /// Goal: drive this to zero over time by implementing missing APIs.
-const KNOWN_WARNING_COUNT: usize = 117;
+const KNOWN_WARNING_COUNT: usize = 116;
 
 #[test]
 fn test_no_warnings_on_startup() {

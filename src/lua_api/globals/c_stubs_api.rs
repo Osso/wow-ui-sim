@@ -35,6 +35,8 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_quest_global_functions(lua)?;
     register_chat_stubs(lua)?;
     register_c_macro(lua)?;
+    register_c_wowlabs_matchmaking(lua)?;
+    register_fading_frame_stubs(lua)?;
     Ok(())
 }
 
@@ -376,4 +378,38 @@ fn quest_leaderboard_entry(log_idx: i32, obj_idx: i32) -> (String, String, bool)
         (3, 2) => ("Deliver to Quartermaster".into(), "event".into(), false),
         _ => ("Unknown objective".into(), "event".into(), false),
     }
+}
+
+fn register_c_wowlabs_matchmaking(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetCurrentParty", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetPartyPlaylistEntry", lua.create_function(|_, ()| Ok(mlua::Value::Nil))?)?;
+    t.set("ClearFastLogin", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("SetAutoQueueOnLogout", lua.create_function(|_, _flag: bool| Ok(()))?)?;
+    lua.globals().set("C_WoWLabsMatchmaking", t)?;
+
+    // C_WowLabsDataManager (note: different casing from C_WoWLabsMatchmaking)
+    let dm = lua.create_table()?;
+    dm.set("IsInPrematch", lua.create_function(|_, ()| Ok(false))?)?;
+    lua.globals().set("C_WowLabsDataManager", dm)?;
+    Ok(())
+}
+
+/// FadingFrame_* global functions used by ZoneText.lua.
+fn register_fading_frame_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    // FadingFrame_OnLoad initializes fading state on the frame
+    g.set("FadingFrame_OnLoad", lua.create_function(|_, frame: mlua::Table| {
+        frame.set("fadeInTime", 0.0f64)?;
+        frame.set("fadeOutTime", 0.0f64)?;
+        frame.set("holdTime", 0.0f64)?;
+        Ok(())
+    })?)?;
+    g.set("FadingFrame_SetFadeInTime", lua.create_function(|_, (_frame, _t): (Value, f64)| Ok(()))?)?;
+    g.set("FadingFrame_SetHoldTime", lua.create_function(|_, (_frame, _t): (Value, f64)| Ok(()))?)?;
+    g.set("FadingFrame_SetFadeOutTime", lua.create_function(|_, (_frame, _t): (Value, f64)| Ok(()))?)?;
+    g.set("FadingFrame_Show", lua.create_function(|_, _frame: Value| Ok(()))?)?;
+    g.set("GetErrorCallstackHeight", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("SetChatWindowShown", lua.create_function(|_, (_id, _shown): (Value, Value)| Ok(()))?)?;
+    Ok(())
 }

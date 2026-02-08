@@ -12,6 +12,11 @@ pub const UNIT_SEX: EnumDef = ("UnitSex", &[("Male", 2), ("Female", 3)]);
 
 pub const GAME_MODE: SeqEnumDef = ("GameMode", &["Standard", "Plunderstorm", "WoWHack"]);
 
+pub const PARTY_PLAYLIST_ENTRY: EnumDef = (
+    "PartyPlaylistEntry",
+    &[("NormalGameMode", 0), ("TrainingGameMode", 1)],
+);
+
 pub const PROFESSION: EnumDef = (
     "Profession",
     &[
