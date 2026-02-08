@@ -113,6 +113,7 @@ fn register_c_trade_skill(lua: &Lua) -> Result<()> {
     t.set("IsNPCCrafting", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetAllRecipeIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("GetProfessionSkillLineID", lua.create_function(|_, _p: Value| Ok(0i32))?)?;
+    t.set("GetRecipesTracked", lua.create_function(|lua, _is_recraft: bool| lua.create_table())?)?;
 
     lua.globals().set("C_TradeSkillUI", t)?;
     Ok(())
