@@ -5,6 +5,7 @@ use crate::lua_api::LoaderEnv;
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
 use super::helpers::{escape_lua_string, generate_anchors_code, generate_animation_group_code, generate_scripts_code, get_size_values, lua_global_ref, rand_id};
+use super::xml_lifecycle::fire_lifecycle_scripts;
 use super::xml_fontstring::create_fontstring_from_xml;
 use super::xml_texture::create_texture_from_xml;
 
@@ -66,13 +67,26 @@ pub fn create_frame_from_xml(
     append_id_code(&mut lua_code, frame);
     append_scripts_code(&mut lua_code, frame);
 
+    // Suppress OnLoad inside CreateFrame — the XML loader fires it at the end
+    // via fire_lifecycle_scripts, after all inline content is applied.
+    env.exec("__suppress_create_frame_onload = true").ok();
+
     // Execute the creation code
     // NOTE: CreateFrame with an inherits parameter already calls apply_templates_from_registry
     // which creates template children (frames, textures, fontstrings, button textures).
     // Do NOT call instantiate_template_children here - that would duplicate everything.
-    env.exec(&lua_code).map_err(|e| {
+    let exec_result = env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
-    })?;
+    });
+    env.exec("__suppress_create_frame_onload = false").ok();
+    exec_result?;
+
+    // Set the `intrinsic` property on intrinsic frames (e.g. frame.intrinsic = "DropdownButton").
+    // WoW Lua code checks this property to validate intrinsic types.
+    if let Some(base) = intrinsic_base {
+        let code = format!("{}.intrinsic = \"{}\"", lua_global_ref(&name), base);
+        env.exec(&code).ok();
+    }
 
     // Child frames first: they may be referenced by layer children via relativeKey
     create_child_frames(env, frame, &name)?;
@@ -458,10 +472,10 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
     use crate::xml::FrameElement;
     match child {
         FrameElement::Frame(f) => Some((f, "Frame", None)),
-        FrameElement::Button(f)
-        | FrameElement::DropdownButton(f)
-        | FrameElement::DropDownToggleButton(f)
-        | FrameElement::EventButton(f) => Some((f, "Button", None)),
+        FrameElement::Button(f) => Some((f, "Button", None)),
+        FrameElement::DropdownButton(f) => Some((f, "Button", Some("DropdownButton"))),
+        FrameElement::DropDownToggleButton(f) => Some((f, "Button", Some("DropDownToggleButton"))),
+        FrameElement::EventButton(f) => Some((f, "Button", Some("EventButton"))),
         FrameElement::ContainedAlertFrame(f) => Some((f, "Button", Some("ContainedAlertFrame"))),
         FrameElement::ItemButton(f) => Some((f, "ItemButton", None)),
         FrameElement::CheckButton(f) => Some((f, "CheckButton", None)),
@@ -674,55 +688,3 @@ fn init_action_bar_tables(env: &LoaderEnv<'_>, name: &str) {
     let _ = env.exec(&code);
 }
 
-/// Fire OnLoad and OnShow lifecycle scripts after the frame is fully configured.
-/// Both handlers are wrapped in pcall to match WoW's C++ engine behavior where
-/// script errors are caught and displayed, not propagated.
-fn fire_lifecycle_scripts(env: &LoaderEnv<'_>, name: &str) {
-    let frame_ref = lua_global_ref(name);
-    // In WoW, OnLoad fires at the end of frame creation from XML.
-    // Templates often use method="OnLoad" which calls self:OnLoad().
-    let onload_code = format!(
-        r#"
-        local frame = {frame_ref}
-        local handler = frame:GetScript("OnLoad")
-        if handler then
-            local ok, err = pcall(handler, frame)
-            if not ok then
-                print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
-            end
-        elseif type(frame.OnLoad) == "function" then
-            local ok, err = pcall(frame.OnLoad, frame)
-            if not ok then
-                print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
-            end
-        end
-        "#
-    );
-    if let Err(e) = env.exec(&onload_code) {
-        eprintln!("[OnLoad] {} error: {}", name, e);
-    }
-
-    // In WoW, OnShow fires when a frame becomes visible, including at creation if visible.
-    let onshow_code = format!(
-        r#"
-        local frame = {frame_ref}
-        if frame:IsVisible() then
-            local handler = frame:GetScript("OnShow")
-            if handler then
-                local ok, err = pcall(handler, frame)
-                if not ok then
-                    print("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
-                end
-            elseif type(frame.OnShow) == "function" then
-                local ok, err = pcall(frame.OnShow, frame)
-                if not ok then
-                    print("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
-                end
-            end
-        end
-        "#
-    );
-    if let Err(e) = env.exec(&onshow_code) {
-        eprintln!("[OnShow] {} error: {}", name, e);
-    }
-}
