@@ -97,40 +97,9 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
         let state = this.state.borrow();
 
-        // TEMPORARY DEBUG: log TOP SetPoint calls on frames parented to ContentsFrame-like frames
-        if point == crate::widget::AnchorPoint::Top {
-            if let Some(frame) = state.widgets.get(this.id) {
-                let name = frame.name.as_deref().unwrap_or("(anon)");
-                let parent_name = frame.parent_id
-                    .and_then(|pid| state.widgets.get(pid))
-                    .and_then(|p| p.name.as_deref())
-                    .unwrap_or("?");
-                // Log TOP SetPoints on anonymous frames with objective-tracker-like parents
-                if name.starts_with("__anon_") || name == "(anon)" {
-                    let parent_children_keys: Vec<String> = frame.parent_id
-                        .and_then(|pid| state.widgets.get(pid))
-                        .map(|p| p.children_keys.keys().cloned().collect())
-                        .unwrap_or_default();
-                    let is_tracker_child = parent_children_keys.iter().any(|k| k == "ContentsFrame" || k == "HeaderText" || k == "lastRegion");
-                    if is_tracker_child {
-                        eprintln!("[SetPoint DEBUG] frame={} (id={}) SetPoint(TOP, rel={:?}, relPoint={:?}, x={}, y={}), parent={} pkeys={:?}",
-                            name, this.id, relative_to, relative_point, x_ofs, y_ofs, parent_name, parent_children_keys);
-                    }
-                }
-            }
-        }
-
         // Check for anchor cycles before setting point
         if let Some(rel_id) = relative_to
             && state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
-                let cycle_frame_name = state.widgets.get(this.id).and_then(|f| f.name.as_deref()).unwrap_or("?");
-                let cycle_rel_name = state.widgets.get(rel_id as u64).and_then(|f| f.name.as_deref()).unwrap_or("?");
-                let cycle_parent_name = state.widgets.get(this.id)
-                    .and_then(|f| f.parent_id)
-                    .and_then(|pid| state.widgets.get(pid))
-                    .and_then(|f| f.name.as_deref()).unwrap_or("?");
-                eprintln!("[SetPoint DEBUG] CYCLE DETECTED: frame={} (id={}) -> rel={} (id={}), parent={}",
-                    cycle_frame_name, this.id, cycle_rel_name, rel_id, cycle_parent_name);
                 return Ok(());
             }
 

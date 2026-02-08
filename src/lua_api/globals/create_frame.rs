@@ -37,9 +37,18 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
             let _ = lua.load(&code).exec();
         }
 
-        // Apply templates from the registry (if template specified)
+        // Apply intrinsic template if the frame type is registered as one.
+        // This handles types like ContainedAlertFrame, EventButton, etc. whose
+        // intrinsic XML definition (mixin, scripts, children) should be applied
+        // automatically when created via CreateFrame/CreateFramePool.
+        let is_intrinsic = crate::xml::get_template(&frame_type).is_some();
+        let ref_name = name.unwrap_or_else(|| format!("__frame_{}", frame_id));
+        if is_intrinsic {
+            apply_templates_from_registry(lua, &ref_name, &frame_type);
+        }
+
+        // Apply user-specified templates from the registry
         if let Some(tmpl) = template {
-            let ref_name = name.unwrap_or_else(|| format!("__frame_{}", frame_id));
             apply_templates_from_registry(lua, &ref_name, &tmpl);
         }
 

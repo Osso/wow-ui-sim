@@ -179,7 +179,9 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             let state_rc = Rc::clone(&handle.state);
             drop(handle);
 
-            // If assigning a FrameHandle value, update children_keys in the Rust widget registry
+            // Sync children_keys with FrameHandle assignments:
+            // - FrameHandle value → insert into children_keys
+            // - Non-FrameHandle value (nil, table, etc.) → remove stale children_keys entry
             if let Value::UserData(child_ud) = &value
                 && let Ok(child_handle) = child_ud.borrow::<FrameHandle>() {
                     let child_id = child_handle.id;
@@ -187,6 +189,13 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     let mut state = state_rc.borrow_mut();
                     if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
                         parent_frame.children_keys.insert(key.clone(), child_id);
+                    }
+                } else {
+                    // Value is not a FrameHandle — remove any stale children_keys entry
+                    // so __index won't return a stale frame reference.
+                    let mut state = state_rc.borrow_mut();
+                    if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
+                        parent_frame.children_keys.remove(&key);
                     }
                 }
 

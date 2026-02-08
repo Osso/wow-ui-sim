@@ -113,33 +113,34 @@ fn process_include(
     }
 }
 
-/// Extract the FrameXml data and widget type string from an XmlElement.
-fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static str)> {
+/// Extract the FrameXml data, widget type, and optional intrinsic name from an XmlElement.
+fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static str, Option<&'static str>)> {
     match element {
-        XmlElement::Frame(f) => Some((f, "Frame")),
+        XmlElement::Frame(f) => Some((f, "Frame", None)),
         XmlElement::Button(f)
         | XmlElement::ItemButton(f)
         | XmlElement::DropDownToggleButton(f)
         | XmlElement::DropdownButton(f)
-        | XmlElement::EventButton(f) => Some((f, "Button")),
-        XmlElement::CheckButton(f) => Some((f, "CheckButton")),
+        | XmlElement::EventButton(f) => Some((f, "Button", None)),
+        XmlElement::ContainedAlertFrame(f) => Some((f, "Button", Some("ContainedAlertFrame"))),
+        XmlElement::CheckButton(f) => Some((f, "CheckButton", None)),
         XmlElement::EditBox(f)
-        | XmlElement::EventEditBox(f) => Some((f, "EditBox")),
+        | XmlElement::EventEditBox(f) => Some((f, "EditBox", None)),
         XmlElement::ScrollFrame(f)
-        | XmlElement::EventScrollFrame(f) => Some((f, "ScrollFrame")),
-        XmlElement::Slider(f) => Some((f, "Slider")),
-        XmlElement::StatusBar(f) => Some((f, "StatusBar")),
-        XmlElement::Cooldown(f) => Some((f, "Cooldown")),
-        XmlElement::GameTooltip(f) => Some((f, "GameTooltip")),
-        XmlElement::ColorSelect(f) => Some((f, "ColorSelect")),
+        | XmlElement::EventScrollFrame(f) => Some((f, "ScrollFrame", None)),
+        XmlElement::Slider(f) => Some((f, "Slider", None)),
+        XmlElement::StatusBar(f) => Some((f, "StatusBar", None)),
+        XmlElement::Cooldown(f) => Some((f, "Cooldown", None)),
+        XmlElement::GameTooltip(f) => Some((f, "GameTooltip", None)),
+        XmlElement::ColorSelect(f) => Some((f, "ColorSelect", None)),
         XmlElement::Model(f)
-        | XmlElement::DressUpModel(f) => Some((f, "Model")),
-        XmlElement::ModelScene(f) => Some((f, "ModelScene")),
+        | XmlElement::DressUpModel(f) => Some((f, "Model", None)),
+        XmlElement::ModelScene(f) => Some((f, "ModelScene", None)),
         XmlElement::PlayerModel(f)
-        | XmlElement::CinematicModel(f) => Some((f, "PlayerModel")),
+        | XmlElement::CinematicModel(f) => Some((f, "PlayerModel", None)),
         XmlElement::MessageFrame(f)
-        | XmlElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame")),
-        XmlElement::SimpleHTML(f) => Some((f, "SimpleHTML")),
+        | XmlElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame", None)),
+        XmlElement::SimpleHTML(f) => Some((f, "SimpleHTML", None)),
         XmlElement::EventFrame(f)
         | XmlElement::TaxiRouteFrame(f)
         | XmlElement::ModelFFX(f)
@@ -153,21 +154,20 @@ fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static st
         | XmlElement::ArchaeologyDigSiteFrame(f)
         | XmlElement::ScenarioPOIFrame(f)
         | XmlElement::UIThemeContainerFrame(f)
-        | XmlElement::ContainedAlertFrame(f)
         | XmlElement::MapScene(f)
         | XmlElement::Line(f)
         | XmlElement::Browser(f)
         | XmlElement::MovieFrame(f)
-        | XmlElement::WorldFrame(f) => Some((f, "Frame")),
-        XmlElement::Minimap(f) => Some((f, "Minimap")),
+        | XmlElement::WorldFrame(f) => Some((f, "Frame", None)),
+        XmlElement::Minimap(f) => Some((f, "Minimap", None)),
         _ => None,
     }
 }
 
 /// Process a frame-type XML element by dispatching to create_frame_from_xml.
 fn process_frame_element(env: &LoaderEnv<'_>, element: &XmlElement) -> Result<(), LoadError> {
-    if let Some((frame_xml, widget_type)) = resolve_frame_element(element) {
-        create_frame_from_xml(env, frame_xml, widget_type, None)?;
+    if let Some((frame_xml, widget_type, intrinsic)) = resolve_frame_element(element) {
+        create_frame_from_xml(env, frame_xml, widget_type, None, intrinsic)?;
     }
     Ok(())
 }

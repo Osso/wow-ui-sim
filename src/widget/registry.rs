@@ -115,40 +115,15 @@ impl WidgetRegistry {
         queue.push_back(relative_to_id);
         seen.insert(relative_to_id);
 
-        // TEMPORARY: track parent map for BFS path reconstruction
-        let mut parent_map: HashMap<u64, u64> = HashMap::new();
         while let Some(check_id) = queue.pop_front() {
             if let Some(frame) = self.widgets.get(&check_id) {
                 for anchor in &frame.anchors {
                     if let Some(anchor_target) = anchor.relative_to_id {
                         let target_id = anchor_target as u64;
-                        // Found a cycle - the target depends on frame_id
                         if target_id == frame_id {
-                            // Reconstruct BFS path
-                            let mut path = vec![format!("{}({})", check_id, frame.name.as_deref().unwrap_or("?"))];
-                            let mut cur = check_id;
-                            while let Some(&prev) = parent_map.get(&cur) {
-                                let n = self.widgets.get(&prev).and_then(|f| f.name.as_deref()).unwrap_or("?");
-                                path.push(format!("{}({})", prev, n));
-                                cur = prev;
-                            }
-                            path.reverse();
-                            let frame_name = self.widgets.get(&frame_id).and_then(|f| f.name.as_deref()).unwrap_or("?");
-                            let rel_frame = self.widgets.get(&relative_to_id);
-                            let rel_name = rel_frame.and_then(|f| f.name.as_deref()).unwrap_or("?");
-                            let rel_keys: Vec<_> = rel_frame.map(|f| f.children_keys.keys().cloned().collect()).unwrap_or_default();
-                            let rel_anchors: Vec<String> = rel_frame.map(|f| f.anchors.iter().map(|a| {
-                                let tgt = a.relative_to_id.map(|id| format!("{}", id)).unwrap_or_else(|| "parent".to_string());
-                                format!("{:?}->{:?}@{}", a.point, a.relative_point, tgt)
-                            }).collect()).unwrap_or_default();
-                            eprintln!("[CYCLE BFS] frame={}({}) -> rel={}({}) keys={:?} anchors={:?}: path={:?} -> back via {:?}->{:?}",
-                                frame_id, frame_name, relative_to_id, rel_name, rel_keys, rel_anchors,
-                                path, anchor.point, anchor.relative_point);
                             return true;
                         }
-                        // Continue BFS
                         if seen.insert(target_id) {
-                            parent_map.insert(target_id, check_id);
                             queue.push_back(target_id);
                         }
                     }

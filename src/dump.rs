@@ -134,31 +134,6 @@ fn print_frame(
 
     if matches_filter {
         print_frame_line(frame, &display_name, depth, widgets);
-        // Temporary: print anchor details for ContentsFrame and quest blocks
-        let is_contents = frame.children_keys.keys().any(|k| k == "ContentsFrame" || k == "Header")
-            || frame.children_keys.keys().any(|k| k == "HeaderText" || k == "lastRegion");
-        let parent_key_name = if let Some(pid) = frame.parent_id {
-            if let Some(p) = widgets.get(pid) {
-                p.children_keys.iter().find(|(_k, cid)| **cid == id).map(|(k, _)| k.clone())
-            } else { None }
-        } else { None };
-        let is_interesting = parent_key_name.as_deref() == Some("ContentsFrame")
-            || parent_key_name.as_deref() == Some("Header")
-            || display_name.contains("QuestObjectiveTracker");
-        if is_interesting || is_contents {
-            let indent = "  ".repeat(depth);
-            eprintln!("{}  DEBUG anchors for {} (parent_key={:?}):", indent, display_name, parent_key_name);
-            for (i, anchor) in frame.anchors.iter().enumerate() {
-                let rel_name = if let Some(rel_id) = anchor.relative_to_id {
-                    widgets.get(rel_id as u64).and_then(|f| f.name.clone()).unwrap_or_else(|| format!("id:{}", rel_id))
-                } else {
-                    anchor.relative_to.clone().unwrap_or_else(|| "$parent".to_string())
-                };
-                eprintln!("{}    anchor[{}]: {:?} -> {}:{:?} offset=({}, {})",
-                    indent, i, anchor.point, rel_name, anchor.relative_point, anchor.x_offset, anchor.y_offset);
-            }
-            eprintln!("{}    stored size: {}x{}", indent, frame.width, frame.height);
-        }
     }
 
     for &child_id in &frame.children {

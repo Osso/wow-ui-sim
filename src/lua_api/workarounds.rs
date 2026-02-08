@@ -454,22 +454,22 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
                 r, g, b)
         end
         -- General (0s offset, light orange)
-        C_Timer.After(0, function() C_Timer.NewTicker(20, function()
+        C_Timer.After(0, function() C_Timer.NewTicker(40, function()
             post("general", "|Hchannel:General|h[1. General]|h ", 1.0, 0.75, 0.5)
         end) end)
         -- Trade (5s offset, light orange)
-        C_Timer.After(5, function() C_Timer.NewTicker(20, function()
+        C_Timer.After(5, function() C_Timer.NewTicker(40, function()
             post("trade", "|Hchannel:Trade|h[2. Trade]|h ", 1.0, 0.75, 0.5)
         end) end)
         -- Say (10s offset, white — uses "says:" format)
-        C_Timer.After(10, function() C_Timer.NewTicker(20, function()
+        C_Timer.After(10, function() C_Timer.NewTicker(40, function()
             local msg, name = fc:pick("say")
             ChatFrame1:AddMessage(
                 "|Hplayer:" .. name .. "|h[" .. name .. "]|h says: " .. msg,
                 1.0, 1.0, 1.0)
         end) end)
         -- Guild (15s offset, green)
-        C_Timer.After(15, function() C_Timer.NewTicker(20, function()
+        C_Timer.After(15, function() C_Timer.NewTicker(40, function()
             post("guild", "|Hchannel:Guild|h[Guild]|h ", 0.25, 1.0, 0.25)
         end) end)
     "#,

@@ -16,7 +16,8 @@ fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str
         FrameElement::Button(f)
         | FrameElement::DropdownButton(f)
         | FrameElement::DropDownToggleButton(f)
-        | FrameElement::EventButton(f) => Some((f, "Button")),
+        | FrameElement::EventButton(f)
+        | FrameElement::ContainedAlertFrame(f) => Some((f, "Button")),
         FrameElement::ItemButton(f) => Some((f, "ItemButton")),
         FrameElement::CheckButton(f) => Some((f, "CheckButton")),
         FrameElement::EditBox(f)
@@ -49,7 +50,6 @@ fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str
         | FrameElement::ArchaeologyDigSiteFrame(f)
         | FrameElement::ScenarioPOIFrame(f)
         | FrameElement::UIThemeContainerFrame(f)
-        | FrameElement::ContainedAlertFrame(f)
         | FrameElement::MapScene(f)
         | FrameElement::Line(f)
         | FrameElement::Browser(f)

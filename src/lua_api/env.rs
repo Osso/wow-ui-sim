@@ -153,13 +153,14 @@ impl WowLuaEnv {
     /// Fire a script handler for a specific widget.
     /// handler_name is like "OnClick", "OnEnter", etc.
     /// extra_args are passed after the frame (self) argument.
+    /// Lua errors are routed through `call_error_handler` (same as event dispatch).
     pub fn fire_script_handler(
         &self,
         widget_id: u64,
         handler_name: &str,
         extra_args: Vec<Value>,
     ) -> Result<()> {
-        use super::script_helpers::get_script;
+        use super::script_helpers::{call_error_handler, get_script};
 
         if let Some(handler) = get_script(&self.lua, widget_id, handler_name) {
             let frame_ref_key = format!("__frame_{}", widget_id);
@@ -168,7 +169,9 @@ impl WowLuaEnv {
             let mut call_args = vec![frame];
             call_args.extend(extra_args);
 
-            handler.call::<()>(MultiValue::from_vec(call_args))?;
+            if let Err(e) = handler.call::<()>(MultiValue::from_vec(call_args)) {
+                call_error_handler(&self.lua, &e.to_string());
+            }
         }
 
         Ok(())

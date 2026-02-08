@@ -73,20 +73,15 @@ impl App {
             return;
         }
 
-        let errors = {
+        {
             let env = self.env.borrow();
-            let mut errs = Vec::new();
-            if let Some(old_id) = self.hovered_frame
-                && let Err(e) = env.fire_script_handler(old_id, "OnLeave", vec![]) {
-                    errs.push(format_script_error(&env, old_id, "OnLeave", &e));
-                }
-            if let Some(new_id) = new_hovered
-                && let Err(e) = env.fire_script_handler(new_id, "OnEnter", vec![]) {
-                    errs.push(format_script_error(&env, new_id, "OnEnter", &e));
-                }
-            errs
-        };
-        self.push_errors(errors);
+            if let Some(old_id) = self.hovered_frame {
+                let _ = env.fire_script_handler(old_id, "OnLeave", vec![]);
+            }
+            if let Some(new_id) = new_hovered {
+                let _ = env.fire_script_handler(new_id, "OnEnter", vec![]);
+            }
+        }
         self.hovered_frame = new_hovered;
         // Hover highlights are appended dynamically in draw() — no quad rebuild needed.
         self.drain_console();
@@ -104,15 +99,10 @@ impl App {
         self.mouse_down_frame = Some(frame_id);
         self.pressed_frame = Some(frame_id);
 
-        let error = {
+        {
             let env = self.env.borrow();
             let button_val = mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
-            env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val])
-                .err()
-                .map(|e| format_script_error(&env, frame_id, "OnMouseDown", &e))
-        };
-        if let Some(msg) = error {
-            self.push_errors(vec![msg]);
+            let _ = env.fire_script_handler(frame_id, "OnMouseDown", vec![button_val]);
         }
         self.invalidate();
     }
@@ -120,9 +110,8 @@ impl App {
     fn handle_mouse_up(&mut self, pos: Point) {
         let released_on = self.hit_test(pos);
         if let Some(frame_id) = released_on {
-            let errors = {
+            {
                 let env = self.env.borrow();
-                let mut errs = Vec::new();
                 let button_val =
                     mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
 
@@ -130,23 +119,15 @@ impl App {
                     self.toggle_checkbutton_if_needed(frame_id, &env);
 
                     let down_val = mlua::Value::Boolean(false);
-                    if let Err(e) = env.fire_script_handler(
+                    let _ = env.fire_script_handler(
                         frame_id,
                         "OnClick",
                         vec![button_val.clone(), down_val],
-                    ) {
-                        errs.push(format_script_error(&env, frame_id, "OnClick", &e));
-                    }
+                    );
                 }
 
-                if let Err(e) =
-                    env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val])
-                {
-                    errs.push(format_script_error(&env, frame_id, "OnMouseUp", &e));
-                }
-                errs
-            };
-            self.push_errors(errors);
+                let _ = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val]);
+            }
             self.invalidate();
         }
         self.mouse_down_frame = None;
@@ -190,13 +171,7 @@ impl App {
         while let Some(frame_id) = current {
             if env.has_script_handler(frame_id, "OnMouseWheel") {
                 let delta_val = mlua::Value::Number(dy as f64);
-                if let Err(e) =
-                    env.fire_script_handler(frame_id, "OnMouseWheel", vec![delta_val])
-                {
-                    let msg = format_script_error(&env, frame_id, "OnMouseWheel", &e);
-                    eprintln!("{}", msg);
-                    self.log_messages.push(msg);
-                }
+                let _ = env.fire_script_handler(frame_id, "OnMouseWheel", vec![delta_val]);
                 return true;
             }
             current = env
@@ -392,14 +367,6 @@ impl App {
         self.frame_cache.clear();
         self.quads_dirty.set(true);
         *self.cached_hittable.borrow_mut() = None;
-    }
-
-    /// Log errors to both stderr and the in-app log.
-    fn push_errors(&mut self, errors: Vec<String>) {
-        for msg in errors {
-            eprintln!("{}", msg);
-            self.log_messages.push(msg);
-        }
     }
 
     /// Check whether a frame's `__enabled` attribute is true (default: true).
@@ -640,18 +607,3 @@ impl App {
     }
 }
 
-/// Format a script handler error with frame context.
-fn format_script_error(
-    env: &crate::lua_api::WowLuaEnv,
-    frame_id: u64,
-    handler: &str,
-    error: &crate::Error,
-) -> String {
-    let state = env.state().borrow();
-    let name = state
-        .widgets
-        .get(frame_id)
-        .and_then(|f| f.name.as_deref())
-        .unwrap_or("(anon)");
-    format!("[{}] {} error: {}", name, handler, error)
-}

@@ -10,11 +10,16 @@ use super::xml_texture::create_texture_from_xml;
 
 /// Create a frame from XML definition.
 /// Returns the name of the created frame (or None if skipped).
+///
+/// `intrinsic_base` is set when the XML element is an intrinsic type (e.g.
+/// `<ContainedAlertFrame>`) whose registered template should be implicitly
+/// inherited before any explicit `inherits` attribute.
 pub fn create_frame_from_xml(
     env: &LoaderEnv<'_>,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     parent_override: Option<&str>,
+    intrinsic_base: Option<&str>,
 ) -> Result<Option<String>, LoadError> {
     // Register virtual/intrinsic frames (templates) in the template registry
     if frame.is_virtual == Some(true) || frame.intrinsic == Some(true) {
@@ -32,7 +37,19 @@ pub fn create_frame_from_xml(
     let parent = parent_override
         .or(frame.parent.as_deref())
         .unwrap_or("UIParent");
-    let inherits = frame.inherits.as_deref().unwrap_or("");
+
+    // Prepend intrinsic base template to the inherits chain so the intrinsic
+    // type's mixin, scripts, and children are applied before user templates.
+    let explicit_inherits = frame.inherits.as_deref().unwrap_or("");
+    let inherits_buf;
+    let inherits = match intrinsic_base {
+        Some(base) if !explicit_inherits.is_empty() => {
+            inherits_buf = format!("{}, {}", base, explicit_inherits);
+            &inherits_buf
+        }
+        Some(base) => base,
+        None => explicit_inherits,
+    };
 
     let mut lua_code = build_create_frame_code(widget_type, &name, parent, inherits);
 
@@ -433,36 +450,39 @@ fn create_layer_children(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name
     Ok(())
 }
 
-/// Map a FrameElement variant to its (FrameXml, widget_type) pair.
+/// Map a FrameElement variant to its (FrameXml, widget_type, intrinsic_name) triple.
+/// `intrinsic_name` is Some when the XML element is an intrinsic type whose template
+/// should be implicitly inherited (e.g. `<ContainedAlertFrame>` inherits "ContainedAlertFrame").
 /// Returns None for unsupported element types.
-fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xml::FrameXml, &'static str)> {
+fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xml::FrameXml, &'static str, Option<&'static str>)> {
     use crate::xml::FrameElement;
     match child {
-        FrameElement::Frame(f) => Some((f, "Frame")),
+        FrameElement::Frame(f) => Some((f, "Frame", None)),
         FrameElement::Button(f)
         | FrameElement::DropdownButton(f)
         | FrameElement::DropDownToggleButton(f)
-        | FrameElement::EventButton(f) => Some((f, "Button")),
-        FrameElement::ItemButton(f) => Some((f, "ItemButton")),
-        FrameElement::CheckButton(f) => Some((f, "CheckButton")),
+        | FrameElement::EventButton(f) => Some((f, "Button", None)),
+        FrameElement::ContainedAlertFrame(f) => Some((f, "Button", Some("ContainedAlertFrame"))),
+        FrameElement::ItemButton(f) => Some((f, "ItemButton", None)),
+        FrameElement::CheckButton(f) => Some((f, "CheckButton", None)),
         FrameElement::EditBox(f)
-        | FrameElement::EventEditBox(f) => Some((f, "EditBox")),
+        | FrameElement::EventEditBox(f) => Some((f, "EditBox", None)),
         FrameElement::ScrollFrame(f)
-        | FrameElement::EventScrollFrame(f) => Some((f, "ScrollFrame")),
-        FrameElement::Slider(f) => Some((f, "Slider")),
-        FrameElement::StatusBar(f) => Some((f, "StatusBar")),
-        FrameElement::Cooldown(f) => Some((f, "Cooldown")),
-        FrameElement::GameTooltip(f) => Some((f, "GameTooltip")),
-        FrameElement::ColorSelect(f) => Some((f, "ColorSelect")),
+        | FrameElement::EventScrollFrame(f) => Some((f, "ScrollFrame", None)),
+        FrameElement::Slider(f) => Some((f, "Slider", None)),
+        FrameElement::StatusBar(f) => Some((f, "StatusBar", None)),
+        FrameElement::Cooldown(f) => Some((f, "Cooldown", None)),
+        FrameElement::GameTooltip(f) => Some((f, "GameTooltip", None)),
+        FrameElement::ColorSelect(f) => Some((f, "ColorSelect", None)),
         FrameElement::Model(f)
-        | FrameElement::DressUpModel(f) => Some((f, "Model")),
-        FrameElement::ModelScene(f) => Some((f, "ModelScene")),
+        | FrameElement::DressUpModel(f) => Some((f, "Model", None)),
+        FrameElement::ModelScene(f) => Some((f, "ModelScene", None)),
         FrameElement::PlayerModel(f)
-        | FrameElement::CinematicModel(f) => Some((f, "PlayerModel")),
+        | FrameElement::CinematicModel(f) => Some((f, "PlayerModel", None)),
         FrameElement::MessageFrame(f)
-        | FrameElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame")),
-        FrameElement::SimpleHTML(f) => Some((f, "SimpleHTML")),
-        FrameElement::Minimap(f) => Some((f, "Minimap")),
+        | FrameElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame", None)),
+        FrameElement::SimpleHTML(f) => Some((f, "SimpleHTML", None)),
+        FrameElement::Minimap(f) => Some((f, "Minimap", None)),
         FrameElement::EventFrame(f)
         | FrameElement::TaxiRouteFrame(f)
         | FrameElement::ModelFFX(f)
@@ -476,12 +496,11 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
         | FrameElement::ArchaeologyDigSiteFrame(f)
         | FrameElement::ScenarioPOIFrame(f)
         | FrameElement::UIThemeContainerFrame(f)
-        | FrameElement::ContainedAlertFrame(f)
         | FrameElement::MapScene(f)
         | FrameElement::Line(f)
         | FrameElement::Browser(f)
         | FrameElement::MovieFrame(f)
-        | FrameElement::WorldFrame(f) => Some((f, "Frame")),
+        | FrameElement::WorldFrame(f) => Some((f, "Frame", None)),
         FrameElement::ScopedModifier(_) => None,
     }
 }
@@ -505,11 +524,11 @@ fn create_single_child_frame(
     child: &crate::xml::FrameElement,
     parent_name: &str,
 ) -> Result<(), LoadError> {
-    let (child_frame, child_type) = match frame_element_to_type(child) {
-        Some(pair) => pair,
+    let (child_frame, child_type, intrinsic) = match frame_element_to_type(child) {
+        Some(triple) => triple,
         None => return Ok(()),
     };
-    let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name))?;
+    let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name), intrinsic)?;
     if let (Some(actual_child_name), Some(parent_key)) =
         (child_name, &child_frame.parent_key)
     {
@@ -526,11 +545,11 @@ fn create_frame_elements(
     parent_name: &str,
 ) -> Result<(), LoadError> {
     for child in elements {
-        let (child_frame, child_type) = match frame_element_to_type(child) {
-            Some(pair) => pair,
+        let (child_frame, child_type, intrinsic) = match frame_element_to_type(child) {
+            Some(triple) => triple,
             None => continue,
         };
-        let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name))?;
+        let child_name = create_frame_from_xml(env, child_frame, child_type, Some(parent_name), intrinsic)?;
 
         // Assign parentKey so the parent can reference the child.
         // The Lua assignment triggers __newindex which syncs to Rust children_keys.
