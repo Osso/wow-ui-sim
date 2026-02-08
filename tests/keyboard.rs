@@ -21,7 +21,7 @@ fn test_escape_shows_game_menu() {
     let shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(!shown, "GameMenuFrame should start hidden");
 
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(shown, "Escape should show GameMenuFrame");
@@ -42,7 +42,7 @@ fn test_escape_hides_game_menu_when_shown() {
     let shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(shown, "GameMenuFrame should start shown");
 
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(!shown, "Escape should hide GameMenuFrame");
@@ -60,11 +60,11 @@ fn test_escape_toggles_game_menu_twice() {
     )
     .unwrap();
 
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
     let shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(shown, "First Escape should show menu");
 
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
     let shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(!shown, "Second Escape should hide menu");
 }
@@ -74,7 +74,7 @@ fn test_escape_without_game_menu_frame() {
     let env = WowLuaEnv::new().unwrap();
 
     // Should not error when GameMenuFrame doesn't exist
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 }
 
 // --- OnKeyDown tests ---
@@ -96,7 +96,7 @@ fn test_set_script_on_key_down() {
     )
     .unwrap();
 
-    env.send_key_press("A").unwrap();
+    env.send_key_press("A", None).unwrap();
 
     let key: String = env.eval("return _G.key_pressed").unwrap();
     assert_eq!(key, "A");
@@ -119,14 +119,14 @@ fn test_enable_keyboard_gates_on_key_down() {
     )
     .unwrap();
 
-    env.send_key_press("A").unwrap();
+    env.send_key_press("A", None).unwrap();
 
     let fired: bool = env.eval("return _G.key_fired").unwrap();
     assert!(!fired, "OnKeyDown should not fire when keyboard is disabled");
 
     // Now enable keyboard and try again
     env.exec("KeyGateFrame:EnableKeyboard(true)").unwrap();
-    env.send_key_press("A").unwrap();
+    env.send_key_press("A", None).unwrap();
 
     let fired: bool = env.eval("return _G.key_fired").unwrap();
     assert!(fired, "OnKeyDown should fire after EnableKeyboard(true)");
@@ -161,7 +161,7 @@ fn test_propagate_keyboard_input() {
     )
     .unwrap();
 
-    env.send_key_press("X").unwrap();
+    env.send_key_press("X", None).unwrap();
 
     let child_key: String = env.eval("return _G.child_key").unwrap();
     assert_eq!(child_key, "X", "Child should receive OnKeyDown");
@@ -195,7 +195,7 @@ fn test_propagate_keyboard_input_stops_without_flag() {
     )
     .unwrap();
 
-    env.send_key_press("Y").unwrap();
+    env.send_key_press("Y", None).unwrap();
 
     let parent_key: mlua::Value = env.eval("return _G.parent_key").unwrap();
     assert!(
@@ -226,7 +226,7 @@ fn test_editbox_on_escape_pressed() {
     )
     .unwrap();
 
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let handled: bool = env.eval("return _G.escape_handled").unwrap();
     assert!(handled, "OnEscapePressed should fire on focused EditBox");
@@ -258,7 +258,7 @@ fn test_editbox_escape_not_consumed_falls_through() {
     )
     .unwrap();
 
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let fired: bool = env.eval("return _G.escape_fired").unwrap();
     assert!(fired, "OnEscapePressed should still fire");
@@ -286,7 +286,7 @@ fn test_key_press_enter() {
     )
     .unwrap();
 
-    env.send_key_press("ENTER").unwrap();
+    env.send_key_press("ENTER", None).unwrap();
 
     let pressed: bool = env.eval("return _G.enter_pressed").unwrap();
     assert!(pressed, "OnEnterPressed should fire on focused EditBox");
@@ -315,7 +315,7 @@ fn test_close_special_windows() {
     let visible: bool = env.eval("return SpecialTestFrame:IsShown()").unwrap();
     assert!(visible, "Special frame should start visible");
 
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let visible: bool = env.eval("return SpecialTestFrame:IsShown()").unwrap();
     assert!(!visible, "Special frame should be hidden by Escape");
@@ -356,7 +356,7 @@ fn test_escape_priority_chain() {
     .unwrap();
 
     // First Escape: EditBox consumes it
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let count: i32 = env.eval("return #_G.escape_order").unwrap();
     assert_eq!(count, 1, "One entry in escape_order after first Escape");
@@ -380,7 +380,7 @@ fn test_escape_priority_chain() {
     .unwrap();
 
     // Second Escape: special frame gets closed
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let sf_visible: bool = env
         .eval("return PrioritySpecialFrame:IsShown()")
@@ -391,7 +391,7 @@ fn test_escape_priority_chain() {
     assert!(!menu_shown, "GameMenuFrame still hidden (special frame consumed)");
 
     // Third Escape: nothing else to close, GameMenuFrame toggles
-    env.send_key_press("ESCAPE").unwrap();
+    env.send_key_press("ESCAPE", None).unwrap();
 
     let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(menu_shown, "Third Escape should toggle GameMenuFrame");
