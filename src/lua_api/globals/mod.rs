@@ -60,10 +60,13 @@ pub mod quest_frames;
 pub mod settings_api;
 pub mod system_api;
 pub mod strings;
+pub mod targeting_api;
 pub mod template;
 pub mod timer_api;
 pub mod tooltip_api;
 pub mod unit_api;
+pub mod unit_combat_api;
+pub mod unit_health_power_api;
 pub mod utility_api;
 
 // Re-export for backwards compatibility
