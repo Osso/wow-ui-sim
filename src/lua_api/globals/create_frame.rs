@@ -129,9 +129,6 @@ fn register_new_frame(
     // becomes unreachable via global, but still exists in the registry).
     if let Some(ref n) = name
         && let Some(old_id) = state.widgets.get_id_by_name(n) {
-            if n == "UIParent" {
-                eprintln!("[DEBUG-CREATE] CreateFrame replacing UIParent: old_id={old_id} new_id={frame_id}");
-            }
             if let Some(old_frame) = state.widgets.get(old_id)
                 && let Some(old_parent_id) = old_frame.parent_id
                     && let Some(old_parent) = state.widgets.get_mut(old_parent_id) {
