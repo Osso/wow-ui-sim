@@ -19,6 +19,7 @@ pub fn add_statusbar_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_statusbar_texture_methods(methods);
     add_statusbar_color_methods(methods);
     add_statusbar_fill_methods(methods);
+    add_statusbar_desaturate_methods(methods);
 }
 
 pub fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -201,6 +202,15 @@ fn add_statusbar_fill_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         }
         Ok(())
     });
+}
+
+fn add_statusbar_desaturate_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetStatusBarDesaturated", |_, _this, _desaturated: bool| Ok(()));
+    methods.add_method("GetStatusBarDesaturated", |_, _this, ()| Ok(false));
+    methods.add_method("SetStatusBarAtlas", |_, _this, _atlas: String| Ok(()));
+    methods.add_method("GetFillStyle", |_, _this, ()| Ok("STANDARD"));
+    methods.add_method("GetReverseFill", |_, _this, ()| Ok(false));
+    methods.add_method("GetRotatesTexture", |_, _this, ()| Ok(false));
 }
 
 // --- Shared value methods ---
