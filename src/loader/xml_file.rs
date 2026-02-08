@@ -65,6 +65,10 @@ fn process_element(
             }
             Ok(count)
         }
+        XmlElement::Texture(tex) => {
+            register_virtual_texture(tex);
+            Ok(0)
+        }
         _ => {
             process_frame_element(env, element)?;
             Ok(0)
@@ -120,8 +124,8 @@ fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static st
         XmlElement::Button(f)
         | XmlElement::ItemButton(f)
         | XmlElement::DropDownToggleButton(f)
-        | XmlElement::DropdownButton(f)
         | XmlElement::EventButton(f) => Some((f, "Button", None)),
+        XmlElement::DropdownButton(f) => Some((f, "Button", Some("DropdownButton"))),
         XmlElement::ContainedAlertFrame(f) => Some((f, "Button", Some("ContainedAlertFrame"))),
         XmlElement::CheckButton(f) => Some((f, "CheckButton", None)),
         XmlElement::EditBox(f)
@@ -161,6 +165,15 @@ fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static st
         | XmlElement::WorldFrame(f) => Some((f, "Frame", None)),
         XmlElement::Minimap(f) => Some((f, "Minimap", None)),
         _ => None,
+    }
+}
+
+/// Register a top-level virtual Texture template (e.g. TextStatusBarSparkTemplate).
+fn register_virtual_texture(texture: &crate::xml::TextureXml) {
+    if texture.is_virtual == Some(true) {
+        if let Some(ref name) = texture.name {
+            crate::xml::register_texture_template(name, texture.clone());
+        }
     }
 }
 
