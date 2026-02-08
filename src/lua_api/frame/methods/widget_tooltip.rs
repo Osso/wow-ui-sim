@@ -264,46 +264,7 @@ fn add_tooltip_padding_override_methods<M: UserDataMethods<FrameHandle>>(methods
 }
 
 fn add_tooltip_settext_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetText(text, r, g, b, wrap) - Clear and set first line (tooltip), or set frame text
-    // For SimpleHTML: strips HTML tags before storing plain text
-    methods.add_method_mut("SetText", |_, this, args: mlua::MultiValue| {
-        let mut args_iter = args.into_iter();
-        if let Some(Value::String(text)) = args_iter.next() {
-            let text_str = text.to_string_lossy().to_string();
-            let r = val_to_f32(args_iter.next(), 1.0);
-            let g = val_to_f32(args_iter.next(), 1.0);
-            let b = val_to_f32(args_iter.next(), 1.0);
-            // 5th arg can be alpha (number) or wrap (bool)
-            let wrap = match args_iter.next() {
-                Some(Value::Boolean(w)) => w,
-                _ => false,
-            };
-
-            let mut state = this.state.borrow_mut();
-            // If this is a tooltip, use tooltip data
-            if let Some(td) = state.tooltips.get_mut(&this.id) {
-                td.lines.clear();
-                td.lines.push(TooltipLine {
-                    left_text: text_str.clone(),
-                    left_color: (r, g, b),
-                    right_text: None,
-                    right_color: (1.0, 1.0, 1.0),
-                    wrap,
-                });
-            }
-            // For SimpleHTML, strip HTML tags before storing
-            let store_text = if state.simple_htmls.contains_key(&this.id) {
-                strip_html_tags(&text_str)
-            } else {
-                text_str
-            };
-            // Always set frame.text too
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.text = Some(store_text);
-            }
-        }
-        Ok(())
-    });
+    // SetText is registered in methods_text (handles tooltip, SimpleHTML, and button child propagation).
 
     // AppendText(text) - Append to last line's left_text
     methods.add_method("AppendText", |_, this, text: String| {

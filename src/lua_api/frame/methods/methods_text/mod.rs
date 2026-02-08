@@ -52,36 +52,8 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// SetText, GetText, SetFormattedText.
 fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetText(text) - for FontString and Button widgets
-    // Auto-sizes FontStrings to fit content; for Buttons, also sets Text child fontstring
-    methods.add_method("SetText", |_, this, text: Option<String>| {
-        let mut state = this.state.borrow_mut();
-
-        // Get the Text child ID if this is a Button
-        let text_child_id = state
-            .widgets
-            .get(this.id)
-            .and_then(|f| f.children_keys.get("Text").copied());
-
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            // Auto-size height if not set (for FontStrings).
-            // Width is NOT auto-sized here; the renderer measures text to get actual width.
-            // This avoids centering issues from rough estimates vs actual text measurement.
-            if text.is_some() && frame.height == 0.0 {
-                frame.height = frame.font_size.max(12.0);
-            }
-            frame.text = text.clone();
-        }
-
-        // For Buttons, also set text on the Text fontstring child
-        if let Some(text_id) = text_child_id
-            && let Some(text_fs) = state.widgets.get_mut(text_id) {
-                if text.is_some() && text_fs.height == 0.0 {
-                    text_fs.height = text_fs.font_size.max(12.0);
-                }
-                text_fs.text = text;
-            }
-        Ok(())
+    methods.add_method("SetText", |_, this, args: mlua::MultiValue| {
+        handle_set_text(this, args)
     });
 
     // GetText() - for FontString widgets
@@ -114,6 +86,86 @@ fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
+
+/// SetText(text [, r, g, b, wrap]) - universal handler for all widget types.
+/// Tooltip: clears lines and sets first line with optional color/wrap.
+/// SimpleHTML: strips HTML tags before storing.
+/// Button: propagates text to the child Text FontString.
+/// FontString: auto-sizes height to fit content.
+fn handle_set_text(this: &FrameHandle, args: mlua::MultiValue) -> mlua::Result<()> {
+    let mut args_iter = args.into_iter();
+    let text_str = match args_iter.next() {
+        Some(mlua::Value::String(s)) => Some(s.to_string_lossy().to_string()),
+        Some(mlua::Value::Integer(n)) => Some(n.to_string()),
+        Some(mlua::Value::Number(n)) => Some(n.to_string()),
+        _ => None,
+    };
+
+    let mut state = this.state.borrow_mut();
+
+    if let Some(ref text) = text_str {
+        update_tooltip_line(&mut state, this.id, text, &mut args_iter);
+    }
+
+    let text_child_id = state
+        .widgets
+        .get(this.id)
+        .and_then(|f| f.children_keys.get("Text").copied());
+
+    let store_text = text_str.map(|t| {
+        if state.simple_htmls.contains_key(&this.id) {
+            super::widget_tooltip::strip_html_tags(&t)
+        } else {
+            t
+        }
+    });
+
+    set_text_on_frame(&mut state, this.id, store_text.clone());
+
+    // For Buttons, also set text on the Text fontstring child
+    if let Some(text_id) = text_child_id {
+        set_text_on_frame(&mut state, text_id, store_text);
+    }
+
+    Ok(())
+}
+
+/// Update tooltip line data with optional r, g, b, wrap args.
+fn update_tooltip_line(
+    state: &mut std::cell::RefMut<'_, crate::lua_api::SimState>,
+    id: u64,
+    text: &str,
+    args_iter: &mut std::collections::vec_deque::IntoIter<mlua::Value>,
+) {
+    if let Some(td) = state.tooltips.get_mut(&id) {
+        let r = val_to_f32(args_iter.next().as_ref(), 1.0);
+        let g = val_to_f32(args_iter.next().as_ref(), 1.0);
+        let b = val_to_f32(args_iter.next().as_ref(), 1.0);
+        let wrap = matches!(args_iter.next(), Some(mlua::Value::Boolean(true)));
+        td.lines.clear();
+        td.lines.push(crate::lua_api::tooltip::TooltipLine {
+            left_text: text.to_string(),
+            left_color: (r, g, b),
+            right_text: None,
+            right_color: (1.0, 1.0, 1.0),
+            wrap,
+        });
+    }
+}
+
+/// Set text on a frame, auto-sizing height if needed.
+fn set_text_on_frame(
+    state: &mut std::cell::RefMut<'_, crate::lua_api::SimState>,
+    id: u64,
+    text: Option<String>,
+) {
+    if let Some(frame) = state.widgets.get_mut(id) {
+        if text.is_some() && frame.height == 0.0 {
+            frame.height = frame.font_size.max(12.0);
+        }
+        frame.text = text;
+    }
 }
 
 /// SetFont([textType,] font, size, flags).

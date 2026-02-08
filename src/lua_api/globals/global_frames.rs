@@ -296,7 +296,9 @@ fn register_unit_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
 
     register_frame_global(lua, state, "BuffFrame")?;
     setup_buff_frame_aura_container(lua, state)?;
+    setup_editmode_stub_methods(lua, "BuffFrame")?;
     register_frame_global(lua, state, "DebuffFrame")?;
+    setup_editmode_stub_methods(lua, "DebuffFrame")?;
 
     register_frame_global(lua, state, "PlayerCastingBarFrame")?;
 
@@ -310,6 +312,24 @@ fn register_unit_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     register_hidden_frame_global(lua, state, "AlternatePowerBar")?;
     register_hidden_frame_global(lua, state, "MonkStaggerBar")?;
     Ok(())
+}
+
+/// Add EditModeSystemMixin stub methods to a stub frame global.
+///
+/// Stub frames (e.g. BuffFrame, DebuffFrame) don't load the XML that applies
+/// EditModeSystemMixin, but Blizzard code calls `frame:IsInDefaultPosition()`
+/// without nil-guarding. Returns false (not initialized = not in default position).
+fn setup_editmode_stub_methods(lua: &Lua, frame_name: &str) -> Result<()> {
+    lua.load(format!(
+        r#"
+        local f = {frame_name}
+        if f then
+            function f:IsInDefaultPosition() return false end
+            function f:IsInitialized() return false end
+        end
+        "#
+    ))
+    .exec()
 }
 
 /// Set iconScale on BuffFrame.AuraContainer.
@@ -441,6 +461,8 @@ pub fn hide_runtime_hidden_frames(lua: &Lua) -> Result<()> {
         "ScenarioObjectiveTracker",
         "RaidWarningFrame",
         "FriendsFrame",
+        // Combat log quick buttons: combat log tab not active
+        "CombatLogQuickButtonFrame_Custom",
     ];
 
     for name in frames_to_hide {

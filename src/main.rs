@@ -546,6 +546,26 @@ fn debug_show_game_menu(env: &WowLuaEnv) {
     "#) {
         eprintln!("[debug_game_menu] click error: {e}");
     }
+    // Check what SetText resolves to for a game menu button
+    if let Err(e) = env.exec(r#"
+        if GameMenuFrame and GameMenuFrame.buttonPool then
+            for button in GameMenuFrame.buttonPool:EnumerateActive() do
+                local text = button:GetText() or "(nil)"
+                local st = button.SetText
+                io.stderr:write(string.format("[lua_debug] text=%q type(SetText)=%s\n",
+                    text, type(st)))
+                if type(st) == "function" then
+                    -- Try getting debug info
+                    local info = debug.getinfo(st, "S")
+                    io.stderr:write(string.format("[lua_debug] SetText source=%s\n",
+                        info and info.source or "unknown"))
+                end
+                break
+            end
+        end
+    "#) {
+        eprintln!("[debug_game_menu] lua debug error: {e}");
+    }
     dump_game_menu_buttons(env);
 }
 
