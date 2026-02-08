@@ -32,6 +32,7 @@ impl App {
             Message::InspectorApply => self.handle_inspector_apply(),
             Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
             Message::ToggleXpBar(visible) => self.handle_toggle_xp_bar(visible),
+            Message::ToggleRotDamage(enabled) => self.rot_damage_enabled = enabled,
             Message::KeyPress(ref key, ref text) => self.handle_key_press(key, text.as_deref()),
         }
 
@@ -73,16 +74,20 @@ impl App {
             return;
         }
 
+        // Update hovered_frame in both iced_app and SimState BEFORE firing events,
+        // so IsMouseMotionFocus() / GetMouseFocus() return correct values in OnEnter.
+        let old_hovered = self.hovered_frame;
+        self.hovered_frame = new_hovered;
         {
             let env = self.env.borrow();
-            if let Some(old_id) = self.hovered_frame {
+            env.state().borrow_mut().hovered_frame = new_hovered;
+            if let Some(old_id) = old_hovered {
                 let _ = env.fire_script_handler(old_id, "OnLeave", vec![]);
             }
             if let Some(new_id) = new_hovered {
                 let _ = env.fire_script_handler(new_id, "OnEnter", vec![]);
             }
         }
-        self.hovered_frame = new_hovered;
         // Hover highlights are appended dynamically in draw() — no quad rebuild needed.
         self.drain_console();
     }
@@ -286,6 +291,7 @@ impl App {
         self.env.borrow().state().borrow().widgets.take_render_dirty();
         self.run_wow_timers();
         self.fire_on_update();
+        self.tick_party_health();
         let widgets_changed = self.env.borrow().state().borrow().widgets.take_render_dirty();
         if widgets_changed {
             self.invalidate();
@@ -321,6 +327,29 @@ impl App {
         let env = self.env.borrow();
         if let Err(e) = env.fire_on_update(elapsed.as_secs_f64()) {
             eprintln!("OnUpdate error: {}", e);
+        }
+    }
+
+    fn tick_party_health(&mut self) {
+        if !self.rot_damage_enabled {
+            return;
+        }
+        let now = std::time::Instant::now();
+        if now.duration_since(self.last_party_health_tick) < std::time::Duration::from_secs(2) {
+            return;
+        }
+        self.last_party_health_tick = now;
+        let env = self.env.borrow();
+        let changed = {
+            let mut state = env.state().borrow_mut();
+            crate::lua_api::tick_party_health(&mut state.party_members)
+        };
+        for idx in changed {
+            let unit_id = format!("party{idx}");
+            let _ = env.fire_event_with_args(
+                "UNIT_HEALTH",
+                &[mlua::Value::String(env.lua().create_string(&unit_id).unwrap())],
+            );
         }
     }
 
