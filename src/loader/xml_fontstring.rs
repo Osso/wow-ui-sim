@@ -139,6 +139,9 @@ pub fn create_fontstring_from_xml(
         ));
     }
 
+    if let Some(a) = fontstring.alpha {
+        lua_code.push_str(&format!("\n        fs:SetAlpha({})\n        ", a));
+    }
     if fontstring.hidden == Some(true) {
         lua_code.push_str("\n        fs:Hide()\n        ");
     }
