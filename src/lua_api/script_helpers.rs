@@ -105,16 +105,14 @@ pub fn get_frame_ref(lua: &Lua, widget_id: u64) -> Option<Value> {
 
 // ── Error handler ────────────────────────────────────────────────────
 
-/// Call the WoW error handler (set via `seterrorhandler`), falling back to eprintln.
+/// Call the WoW error handler (set via `seterrorhandler`) and always log to stderr.
 pub fn call_error_handler(lua: &Lua, error_msg: &str) {
+    eprintln!("Lua error: {error_msg}");
     let handler: Option<mlua::Function> = lua.named_registry_value(ERROR_HANDLER_KEY).ok();
     if let Some(h) = handler {
         if let Err(e) = h.call::<()>(error_msg.to_string()) {
             eprintln!("Error in error handler: {e}");
-            eprintln!("Original error: {error_msg}");
         }
-    } else {
-        eprintln!("Lua error: {error_msg}");
     }
 }
 
