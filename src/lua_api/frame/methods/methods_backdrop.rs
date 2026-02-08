@@ -20,11 +20,14 @@ fn value_to_f32(v: &mlua::Value) -> f32 {
 
 /// SetBackdrop(backdropInfo) and ApplyBackdrop() - backdrop setup.
 fn add_set_backdrop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    // SetBackdrop is a legacy C API. In modern WoW (post-9.0), backdrop rendering
+    // is handled entirely by BackdropTemplateMixin in Lua, which creates child
+    // Texture widgets for nine-slice pieces. These Rust methods are fallbacks for
+    // frames without the mixin and should only store data, not enable rendering.
     methods.add_method("SetBackdrop", |_, this, backdrop: Option<mlua::Table>| {
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
             if let Some(info) = backdrop {
-                frame.backdrop.enabled = true;
                 if let Ok(bg_file) = info.get::<String>("bgFile") {
                     frame.backdrop.bg_file = Some(bg_file);
                 }
@@ -39,7 +42,6 @@ fn add_set_backdrop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                         frame.backdrop.insets = left;
                     }
             } else {
-                frame.backdrop.enabled = false;
                 frame.backdrop.bg_file = None;
                 frame.backdrop.edge_file = None;
             }
@@ -47,23 +49,10 @@ fn add_set_backdrop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(())
     });
 
-    methods.add_method("ApplyBackdrop", |_, this, args: mlua::MultiValue| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.backdrop.enabled = true;
-            let args_vec: Vec<mlua::Value> = args.into_iter().collect();
-            if args_vec.len() >= 3 {
-                let r = value_to_f32(&args_vec[0]);
-                let g = value_to_f32(&args_vec[1]);
-                let b = value_to_f32(&args_vec[2]);
-                let a = if args_vec.len() >= 4 {
-                    value_to_f32(&args_vec[3])
-                } else {
-                    1.0
-                };
-                frame.backdrop.bg_color = crate::widget::Color::new(r, g, b, a);
-            }
-        }
+    methods.add_method("ApplyBackdrop", |_, _this, _args: mlua::MultiValue| {
+        // No-op: real ApplyBackdrop is a Lua mixin function on BackdropTemplateMixin
+        // that sets up nine-slice child textures. This fallback fires only for frames
+        // without the mixin, where it should do nothing.
         Ok(())
     });
 }
@@ -75,7 +64,6 @@ fn add_backdrop_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.backdrop.enabled = true;
                 frame.backdrop.bg_color = crate::widget::Color::new(r, g, b, a.unwrap_or(1.0));
             }
             Ok(())
@@ -101,7 +89,6 @@ fn add_backdrop_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.backdrop.enabled = true;
                 frame.backdrop.border_color =
                     crate::widget::Color::new(r, g, b, a.unwrap_or(1.0));
             }
