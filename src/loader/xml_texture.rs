@@ -162,6 +162,9 @@ fn build_texture_lua(
     if texture.hidden == Some(true) {
         code.push_str("\n        tex:Hide()\n        ");
     }
+    if let Some(a) = texture.alpha {
+        code.push_str(&format!("\n        tex:SetAlpha({})\n        ", a));
+    }
     if let Some(ref mode) = texture.alpha_mode {
         code.push_str(&format!("\n        tex:SetBlendMode(\"{}\")\n        ", mode));
     }
