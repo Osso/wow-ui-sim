@@ -2,7 +2,7 @@
 
 use super::super::frame::FrameHandle;
 use super::super::SimState;
-use super::template::apply_templates_from_registry;
+use super::template::{apply_templates_from_registry, fire_on_load};
 use crate::loader::helpers::lua_global_ref;
 use crate::widget::{Frame, WidgetType};
 use mlua::{Lua, Result, Value};
@@ -51,6 +51,11 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         if let Some(tmpl) = template {
             apply_templates_from_registry(lua, &ref_name, &tmpl);
         }
+
+        // Fire OnLoad on the frame itself (WoW fires OnLoad before CreateFrame returns).
+        // fire_on_load also fires intrinsic methods (e.g. OnLoad_Intrinsic) before the
+        // regular OnLoad handler, matching WoW behavior.
+        fire_on_load(lua, &ref_name);
 
         Ok(ud)
     })?;

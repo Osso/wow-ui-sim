@@ -306,16 +306,24 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
     let _ = lua.load(&code).exec();
 }
 
-/// Fire OnLoad on a created child frame.
+/// Fire OnLoad on a frame.
 ///
 /// Checks both `GetScript("OnLoad")` (set via SetScript in XML) and `frame.OnLoad`
 /// (set via mixin), matching the behavior of `fire_lifecycle_scripts` in xml_frame.rs.
-fn fire_on_load(lua: &Lua, frame_name: &str) {
+pub(crate) fn fire_on_load(lua: &Lua, frame_name: &str) {
     let frame_ref = lua_global_ref(frame_name);
+    // Fire intrinsic OnLoad_Intrinsic first (e.g. EventFrameMixin) — in WoW,
+    // intrinsic scripts always fire regardless of what user templates set.
     let code = format!(
         r#"
         local frame = {frame_ref}
         if frame then
+            if type(frame.OnLoad_Intrinsic) == "function" then
+                local ok, err = pcall(frame.OnLoad_Intrinsic, frame)
+                if not ok then
+                    return tostring(err)
+                end
+            end
             local handler = frame:GetScript("OnLoad")
             if handler then
                 local ok, err = pcall(handler, frame)
