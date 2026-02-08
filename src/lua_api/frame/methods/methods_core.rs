@@ -249,7 +249,7 @@ pub(crate) fn fire_on_show_recursive(
     state: &Rc<RefCell<SimState>>,
     id: u64,
 ) -> mlua::Result<()> {
-    // Fire OnShow on this frame
+    // Fire OnShow on this frame (intrinsic postcall handlers fire through template scripts)
     if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, id, "OnShow") {
         if let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, id) {
             if let Err(e) = handler.call::<()>(frame_ud) {
@@ -671,6 +671,12 @@ fn add_region_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // IsMouseOver() - stub returning true (in the simulator, click handlers assume mouse-over)
     methods.add_method("IsMouseOver", |_, _this, _args: mlua::MultiValue| Ok(true));
+
+    // IsMouseMotionFocus() - whether this frame is the current mouse hover target
+    methods.add_method("IsMouseMotionFocus", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.hovered_frame == Some(this.id))
+    });
 
     // StopAnimating() - stub
     methods.add_method("StopAnimating", |_, _this, ()| Ok(()));
