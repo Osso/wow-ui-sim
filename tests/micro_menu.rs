@@ -52,6 +52,8 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
     ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
     ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
+    ("Blizzard_TimerunningUtil", "Blizzard_TimerunningUtil.toc"),
+    ("Blizzard_Communities", "Blizzard_Communities_Mainline.toc"),
 ];
 
 /// Create a fully loaded environment with Blizzard addons and startup events.
@@ -231,4 +233,60 @@ fn micro_menu_ej_button_loads_and_opens_panel() {
         frame_is_shown(&env, "EncounterJournal"),
         "EncounterJournal should be shown after clicking EJMicroButton"
     );
+}
+
+#[test]
+fn game_menu_buttons_display_text() {
+    let env = setup_env();
+    click_button(&env, "MainMenuMicroButton").expect("MainMenuMicroButton click failed");
+    assert!(
+        frame_is_shown(&env, "GameMenuFrame"),
+        "GameMenuFrame should be shown"
+    );
+
+    // Collect text from all active buttons in the game menu's button pool
+    let button_texts: Vec<String> = env
+        .eval(
+            r#"
+            local texts = {}
+            for button in GameMenuFrame.buttonPool:EnumerateActive() do
+                table.insert(texts, button:GetText() or "")
+            end
+            return texts
+            "#,
+        )
+        .expect("Failed to enumerate game menu buttons");
+
+    assert!(
+        !button_texts.is_empty(),
+        "GameMenuFrame should have at least one button"
+    );
+
+    // Every button must have non-empty text
+    for (i, text) in button_texts.iter().enumerate() {
+        assert!(
+            !text.is_empty(),
+            "Game menu button {} has empty text",
+            i + 1
+        );
+    }
+
+    // These buttons should always appear (not conditional on features)
+    let expected = [
+        "Options",
+        "AddOns",
+        "Support",
+        "Macros",
+        "Log Out",
+        "Exit Game",
+        "Return to Game",
+    ];
+    for label in &expected {
+        assert!(
+            button_texts.iter().any(|t| t == label),
+            "Expected game menu button '{}' not found. Got: {:?}",
+            label,
+            button_texts
+        );
+    }
 }

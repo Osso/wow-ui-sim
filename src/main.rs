@@ -272,6 +272,9 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
     ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
     ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
+    // Communities (Guild micro button)
+    ("Blizzard_TimerunningUtil", "Blizzard_TimerunningUtil.toc"),
+    ("Blizzard_Communities", "Blizzard_Communities_Mainline.toc"),
 ];
 
 /// Load Blizzard SharedXML and base UI addons.
