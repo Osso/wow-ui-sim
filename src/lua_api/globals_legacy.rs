@@ -378,7 +378,6 @@ fn register_create_frame(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> 
 fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     // Stateless APIs
     register_locale_api(lua)?;
-    register_unit_api(lua)?;
     register_player_api(lua, state.clone())?;
     register_enum_api(lua)?;
     register_constants_api(lua)?;
@@ -398,6 +397,7 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_font_api(lua)?;
 
     // Stateful APIs (need SimState)
+    register_unit_api(lua, Rc::clone(state))?;
     register_addon_api(lua, Rc::clone(state))?;
     register_pool_api(lua, Rc::clone(state))?;
     register_timer_api(lua, Rc::clone(state))?;
