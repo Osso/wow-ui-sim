@@ -74,6 +74,11 @@ fn fire_login_events(env: &WowLuaEnv) {
         }
     }
 
+    println!("[Startup] Firing EDIT_MODE_LAYOUTS_UPDATED");
+    for err in env.fire_edit_mode_layouts_updated() {
+        eprintln!("  {}", err);
+    }
+
     println!("[Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed");
     if let Err(e) = env.lua().globals().get::<mlua::Function>("RequestTimePlayed")
         .and_then(|f| f.call::<()>(()))
@@ -102,14 +107,6 @@ fn fire_world_and_ui_events(env: &WowLuaEnv) {
     let _ = env.lua().load(r#"
         if SlashCmdList and SlashCmdList.ACCOUNTPLAYEDPOPUP then
             SlashCmdList.ACCOUNTPLAYEDPOPUP()
-        end
-    "#).exec();
-
-    // EditMode's EDIT_MODE_LAYOUTS_UPDATED event never fires (C_EditMode not implemented),
-    // so the "always show buttons" setting never propagates. Replicate it here.
-    let _ = env.lua().load(r#"
-        if MainActionBar and MainActionBar.SetShowGrid then
-            MainActionBar:SetShowGrid(true, ACTION_BUTTON_SHOW_GRID_REASON_CVAR or 1)
         end
     "#).exec();
 }

@@ -90,17 +90,11 @@ fn fire_startup_events(env: &WowLuaEnv) {
         "PLAYER_ENTERING_WORLD",
         &[mlua::Value::Boolean(true), mlua::Value::Boolean(false)],
     );
+    env.fire_edit_mode_layouts_updated();
+
     for event in ["UPDATE_BINDINGS", "DISPLAY_SIZE_CHANGED", "UI_SCALE_CHANGED"] {
         let _ = env.fire_event(event);
     }
-
-    // EditMode's EDIT_MODE_LAYOUTS_UPDATED never fires (C_EditMode not implemented),
-    // so replicate the "always show buttons" default.
-    let _ = lua.load(r#"
-        if MainActionBar and MainActionBar.SetShowGrid then
-            MainActionBar:SetShowGrid(true, ACTION_BUTTON_SHOW_GRID_REASON_CVAR or 1)
-        end
-    "#).exec();
 }
 
 #[test]

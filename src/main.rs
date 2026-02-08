@@ -466,7 +466,6 @@ fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
 /// Run post-load Lua test scripts and debug hooks.
 fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Error>> {
     env.apply_post_load_workarounds();
-    override_action_bar_positioning(env);
 
     let debug_script = PathBuf::from("/tmp/debug-scrollbox-update.lua");
     if debug_script.exists() {
@@ -477,55 +476,6 @@ fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Erro
     }
 
     Ok(())
-}
-
-/// Override UIParent_ManageFramePositions to stack bottom action bars above
-/// the status tracking bars (XP bar, etc.).
-///
-/// Blizzard's implementation dispatches through EditModeManagerFrame which
-/// requires full EditMode initialisation (layoutInfo). Since the simulator
-/// doesn't run EditMode, we replace the function with a simplified version
-/// that stacks visible bottom bars starting at y=45 (the retail default
-/// MAIN_ACTION_BAR_DEFAULT_OFFSET_Y), matching real WoW's layout.
-fn override_action_bar_positioning(env: &WowLuaEnv) {
-    let result = env.exec(r#"
-        MAIN_ACTION_BAR_DEFAULT_OFFSET_Y = 45
-
-        UIParent_ManageFramePositions = function()
-            local bottomBars = {
-                MainActionBar,
-                MultiBarBottomLeft,
-                MultiBarBottomRight,
-                StanceBar,
-                PetActionBar,
-                PossessActionBar,
-                MainMenuBarVehicleLeaveButton,
-            }
-
-            local offsetY = MAIN_ACTION_BAR_DEFAULT_OFFSET_Y
-            local topMostBar = nil
-
-            for _, bar in ipairs(bottomBars) do
-                if bar and bar:IsShown() then
-                    bar:ClearAllPoints()
-
-                    local topBarHeight = topMostBar
-                        and topMostBar:GetHeight() + 5
-                        or 0
-                    offsetY = offsetY + topBarHeight
-
-                    local offsetX = -bar:GetWidth() / 2
-                    bar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM",
-                                 offsetX, offsetY)
-
-                    topMostBar = bar
-                end
-            end
-        end
-    "#);
-    if let Err(e) = result {
-        eprintln!("[PostLoad] Failed to override action bar positioning: {}", e);
-    }
 }
 
 /// Sleep for the given number of milliseconds (if specified).
@@ -556,6 +506,11 @@ fn fire_startup_events(env: &WowLuaEnv) {
     fire("VARIABLES_LOADED");
     fire("PLAYER_LOGIN");
 
+    eprintln!("[Startup] Firing EDIT_MODE_LAYOUTS_UPDATED");
+    for err in env.fire_edit_mode_layouts_updated() {
+        eprintln!("  {}", err);
+    }
+
     eprintln!("[Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed");
     if let Err(e) = env.lua().globals().get::<mlua::Function>("RequestTimePlayed")
         .and_then(|f| f.call::<()>(()))
@@ -575,14 +530,6 @@ fn fire_startup_events(env: &WowLuaEnv) {
     fire("DISPLAY_SIZE_CHANGED");
     fire("UI_SCALE_CHANGED");
     fire("PLAYER_LEAVING_WORLD");
-
-    // EditMode's EDIT_MODE_LAYOUTS_UPDATED event never fires (C_EditMode not implemented),
-    // so the "always show buttons" setting never propagates. Replicate it here.
-    let _ = env.lua().load(r#"
-        if MainActionBar and MainActionBar.SetShowGrid then
-            MainActionBar:SetShowGrid(true, ACTION_BUTTON_SHOW_GRID_REASON_CVAR or 1)
-        end
-    "#).exec();
 }
 
 /// Debug: open game menu via micro button click for screenshot testing.
@@ -590,26 +537,45 @@ fn debug_show_game_menu(env: &WowLuaEnv) {
     if std::env::var("WOW_SIM_SHOW_GAME_MENU").is_err() {
         return;
     }
-    let _ = env.exec(r#"
+    if let Err(e) = env.exec(r#"
         local btn = MainMenuMicroButton
         if btn then
             local onclick = btn:GetScript("OnClick")
             if onclick then onclick(btn, "LeftButton", false) end
         end
-        if GameMenuFrame and GameMenuFrame.buttonPool then
-            local count = 0
-            for button in GameMenuFrame.buttonPool:EnumerateActive() do
-                count = count + 1
-                local text = button:GetText() or "(nil)"
-                local w, h = button:GetWidth(), button:GetHeight()
-                print(string.format("  Button %d: %q %dx%d shown=%s",
-                    count, text, w, h, tostring(button:IsShown())))
-            end
-            print(string.format("GameMenuFrame: shown=%s buttons=%d size=%dx%d",
-                tostring(GameMenuFrame:IsShown()), count,
-                GameMenuFrame:GetWidth(), GameMenuFrame:GetHeight()))
-        end
-    "#);
+    "#) {
+        eprintln!("[debug_game_menu] click error: {e}");
+    }
+    dump_game_menu_buttons(env);
+}
+
+fn dump_game_menu_buttons(env: &WowLuaEnv) {
+    use wow_ui_sim::widget::WidgetType;
+    let state = env.state().borrow();
+    let gmf_id = state.widgets.get_id_by_name("GameMenuFrame");
+    eprintln!("[debug] GameMenuFrame id={gmf_id:?}");
+    let Some(gmf_id) = gmf_id else { return };
+    let Some(gmf) = state.widgets.get(gmf_id) else { return };
+    eprintln!("  vis={} strata={:?} lvl={} {}x{} children={}",
+        gmf.visible, gmf.frame_strata, gmf.frame_level, gmf.width, gmf.height, gmf.children.len());
+    // Show all children, not just buttons
+    for (i, &cid) in gmf.children.iter().enumerate() {
+        let Some(c) = state.widgets.get(cid) else { continue };
+        let nm = c.name.as_deref().unwrap_or("(anon)");
+        eprintln!("  [{i}] {cid} {nm} [{:?}] {}x{} strata={:?} lvl={} vis={} text={:?}",
+            c.widget_type, c.width, c.height, c.frame_strata, c.frame_level, c.visible, c.text);
+        if c.widget_type == WidgetType::Button {
+            eprintln!("      font={:?} fsz={} color={:?}",
+                c.font, c.font_size, c.text_color);
+            if let Some(&tid) = c.children_keys.get("Text") {
+                if let Some(tf) = state.widgets.get(tid) {
+                    eprintln!("      TextFS {tid}: text={:?} {}x{} vis={} strata={:?} lvl={} draw={:?} anch={}",
+                        tf.text, tf.width, tf.height, tf.visible, tf.frame_strata,
+                        tf.frame_level, tf.draw_layer, tf.anchors.len());
+                }
+            }
+        }
+    }
 }
 
 /// Render a headless screenshot.

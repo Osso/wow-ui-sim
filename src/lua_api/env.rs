@@ -635,6 +635,25 @@ impl WowLuaEnv {
         errors
     }
 
+    /// Fire `EDIT_MODE_LAYOUTS_UPDATED` with layout info from `C_EditMode.GetLayouts()`.
+    ///
+    /// Triggers `EditModeManagerFrame:UpdateLayoutInfo()` to initialize `layoutInfo`
+    /// and unblock action bar positioning. No-op if EditMode addon isn't loaded.
+    /// Returns handler errors for test collection.
+    pub fn fire_edit_mode_layouts_updated(&self) -> Vec<String> {
+        let Ok(true) = self.lua.load(
+            "return C_EditMode ~= nil and C_EditMode.GetLayouts ~= nil"
+        ).eval::<bool>() else { return Vec::new() };
+
+        let Ok(info) = self.lua.load("return C_EditMode.GetLayouts()").eval::<mlua::Table>()
+        else { return Vec::new() };
+
+        self.fire_event_collecting_errors(
+            "EDIT_MODE_LAYOUTS_UPDATED",
+            &[Value::Table(info), Value::Boolean(true)],
+        )
+    }
+
     /// Get the time until the next timer fires, if any.
     pub fn next_timer_delay(&self) -> Option<std::time::Duration> {
         let state = self.state.borrow();

@@ -111,6 +111,8 @@ pub struct FrameXml {
     pub secure_mixin: Option<String>,
     #[serde(rename = "@hidden")]
     pub hidden: Option<bool>,
+    #[serde(rename = "@alpha")]
+    pub alpha: Option<f32>,
     #[serde(rename = "@virtual")]
     pub is_virtual: Option<bool>,
     #[serde(rename = "@intrinsic")]

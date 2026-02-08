@@ -44,25 +44,28 @@ pub enum WidgetType {
 impl WidgetType {
     #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Option<Self> {
-        match s {
-            "Frame" => Some(Self::Frame),
-            "Button" | "ItemButton" => Some(Self::Button),
-            "FontString" => Some(Self::FontString),
-            "Texture" => Some(Self::Texture),
-            "EditBox" => Some(Self::EditBox),
-            "ScrollFrame" => Some(Self::ScrollFrame),
-            "Slider" => Some(Self::Slider),
-            "CheckButton" => Some(Self::CheckButton),
-            "StatusBar" => Some(Self::StatusBar),
-            "Cooldown" => Some(Self::Cooldown),
-            "Model" | "DressUpModel" => Some(Self::Model),
-            "ModelScene" | "MODELSCENE" => Some(Self::ModelScene),
-            "PlayerModel" | "CinematicModel" | "TabardModel" => Some(Self::PlayerModel),
-            "ColorSelect" => Some(Self::ColorSelect),
-            "MessageFrame" | "ScrollingMessageFrame" => Some(Self::MessageFrame),
-            "SimpleHTML" => Some(Self::SimpleHTML),
-            "GameTooltip" => Some(Self::GameTooltip),
-            "Minimap" => Some(Self::Minimap),
+        // WoW Lua uses both PascalCase ("Button") and ALLCAPS ("BUTTON")
+        // for frame type names, so match case-insensitively.
+        let lower = s.to_ascii_lowercase();
+        match lower.as_str() {
+            "frame" => Some(Self::Frame),
+            "button" | "itembutton" => Some(Self::Button),
+            "fontstring" => Some(Self::FontString),
+            "texture" => Some(Self::Texture),
+            "editbox" => Some(Self::EditBox),
+            "scrollframe" => Some(Self::ScrollFrame),
+            "slider" => Some(Self::Slider),
+            "checkbutton" => Some(Self::CheckButton),
+            "statusbar" => Some(Self::StatusBar),
+            "cooldown" => Some(Self::Cooldown),
+            "model" | "dressupmodel" => Some(Self::Model),
+            "modelscene" => Some(Self::ModelScene),
+            "playermodel" | "cinematicmodel" | "tabardmodel" => Some(Self::PlayerModel),
+            "colorselect" => Some(Self::ColorSelect),
+            "messageframe" | "scrollingmessageframe" => Some(Self::MessageFrame),
+            "simplehtml" => Some(Self::SimpleHTML),
+            "gametooltip" => Some(Self::GameTooltip),
+            "minimap" => Some(Self::Minimap),
             _ => None,
         }
     }

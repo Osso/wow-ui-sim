@@ -326,6 +326,9 @@ fn register_c_spec_info(lua: &Lua) -> Result<()> {
     })?)?;
     t.set("GetAllSelectedPvpTalentIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("GetPvpTalentSlotInfo", lua.create_function(|_, _s: i32| Ok(Value::Nil))?)?;
+    t.set("GetNumSpecializationsForClassID", lua.create_function(|_, (_class_id, _sex): (Option<i32>, Option<i32>)| {
+        Ok(_class_id.map_or(0, |_| 3i32))
+    })?)?;
     lua.globals().set("C_SpecializationInfo", t)?;
     Ok(())
 }

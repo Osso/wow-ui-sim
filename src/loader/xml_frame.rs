@@ -41,6 +41,7 @@ pub fn create_frame_from_xml(
     append_size_code(&mut lua_code, frame, inherits);
     append_anchors_code(&mut lua_code, frame, inherits, parent);
     append_hidden_code(&mut lua_code, frame, inherits);
+    append_alpha_code(&mut lua_code, frame, inherits);
     append_enable_mouse_code(&mut lua_code, frame, inherits);
     append_set_all_points_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
@@ -258,6 +259,27 @@ fn append_hidden_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inher
         frame:Hide()
         "#,
         );
+    }
+}
+
+/// Append `frame:SetAlpha(val)` if the frame has an alpha attribute (directly or via template).
+fn append_alpha_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
+    let mut alpha = frame.alpha;
+    if alpha.is_none() && !inherits.is_empty() {
+        for template_entry in &crate::xml::get_template_chain(inherits) {
+            if let Some(a) = template_entry.frame.alpha {
+                alpha = Some(a);
+                break;
+            }
+        }
+    }
+    if let Some(a) = alpha {
+        lua_code.push_str(&format!(
+            r#"
+        frame:SetAlpha({})
+        "#,
+            a
+        ));
     }
 }
 

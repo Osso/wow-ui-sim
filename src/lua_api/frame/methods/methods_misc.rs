@@ -119,4 +119,19 @@ fn add_alert_and_data_provider_methods<M: UserDataMethods<FrameHandle>>(methods:
 
     // UseRaidStylePartyFrames() -> bool (for EditModeManagerFrame)
     methods.add_method("UseRaidStylePartyFrames", |_, _this, ()| Ok(false));
+
+    // EditModeSystemMixin stubs - delegate to mixin if present, otherwise
+    // return safe defaults (in default position, not initialized).
+    methods.add_method("IsInDefaultPosition", |lua, this, ()| {
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "IsInDefaultPosition") {
+            return func.call::<bool>(ud);
+        }
+        Ok(true)
+    });
+    methods.add_method("IsInitialized", |lua, this, ()| {
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "IsInitialized") {
+            return func.call::<bool>(ud);
+        }
+        Ok(false)
+    });
 }

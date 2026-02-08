@@ -96,6 +96,9 @@ fn load_and_startup() -> Vec<String> {
     for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
         warnings.extend(fire(&env, event, &[]));
     }
+
+    warnings.extend(env.fire_edit_mode_layouts_updated());
+
     if let Ok(f) = lua.globals().get::<mlua::Function>("RequestTimePlayed") {
         let _ = f.call::<()>(());
     }
