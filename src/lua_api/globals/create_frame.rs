@@ -45,6 +45,13 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         let ref_name = name.unwrap_or_else(|| format!("__frame_{}", frame_id));
         if is_intrinsic {
             apply_templates_from_registry(lua, &ref_name, &frame_type);
+            // Set frame.intrinsic = "TypeName" (WoW Lua code checks this property)
+            let code = format!(
+                "{}.intrinsic = \"{}\"",
+                lua_global_ref(&ref_name),
+                frame_type
+            );
+            let _ = lua.load(&code).exec();
         }
 
         // Apply user-specified templates from the registry
@@ -53,9 +60,15 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         }
 
         // Fire OnLoad on the frame itself (WoW fires OnLoad before CreateFrame returns).
-        // fire_on_load also fires intrinsic methods (e.g. OnLoad_Intrinsic) before the
-        // regular OnLoad handler, matching WoW behavior.
-        fire_on_load(lua, &ref_name);
+        // Skip when the XML loader is in charge — it fires OnLoad via
+        // fire_lifecycle_scripts after all inline properties (KeyValues, scripts,
+        // layers) are applied.  Without this, OnLoad fires before inline content
+        // is set, causing nil-reference errors (e.g. ActionBar numButtons).
+        let suppress = lua.globals().get::<bool>("__suppress_create_frame_onload")
+            .unwrap_or(false);
+        if !suppress {
+            fire_on_load(lua, &ref_name);
+        }
 
         Ok(ud)
     })?;
@@ -211,6 +224,11 @@ fn create_widget_type_defaults(state: &mut SimState, frame_id: u64, widget_type:
         }
         WidgetType::Slider => {
             create_slider_defaults(state, frame_id);
+        }
+        WidgetType::EditBox => {
+            if let Some(frame) = state.widgets.get_mut(frame_id) {
+                frame.mouse_enabled = true;
+            }
         }
         _ => {}
     }
