@@ -16,6 +16,7 @@ mod nine_slice;
 mod render;
 mod statusbar;
 mod state;
+mod tiling;
 mod styles;
 mod update;
 mod screenshot;

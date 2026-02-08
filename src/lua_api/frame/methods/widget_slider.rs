@@ -138,34 +138,22 @@ fn add_statusbar_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
         };
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.statusbar_texture_path = path;
+            frame.statusbar_texture_path = path.clone();
             if let Some(id) = bar_id {
                 frame.statusbar_bar_id = Some(id);
             }
         }
+        // When called with a string, apply atlas/texture to the bar texture child.
+        if let Some(ref tex_str) = path {
+            let bar_child_id = find_bar_texture_child(&state.widgets, this.id);
+            if let Some(child_id) = bar_child_id {
+                apply_bar_texture(&mut state.widgets, child_id, tex_str);
+                anchor_bar_to_parent(&mut state.widgets, child_id, this.id);
+            }
+        }
         // The bar texture fills its parent; apply SetAllPoints anchors.
         if let Some(id) = bar_id {
-            use crate::widget::{Anchor, AnchorPoint};
-            if let Some(bar) = state.widgets.get_mut(id) {
-                bar.anchors = vec![
-                    Anchor {
-                        point: AnchorPoint::TopLeft,
-                        relative_to: None,
-                        relative_to_id: Some(this.id as usize),
-                        relative_point: AnchorPoint::TopLeft,
-                        x_offset: 0.0,
-                        y_offset: 0.0,
-                    },
-                    Anchor {
-                        point: AnchorPoint::BottomRight,
-                        relative_to: None,
-                        relative_to_id: Some(this.id as usize),
-                        relative_point: AnchorPoint::BottomRight,
-                        x_offset: 0.0,
-                        y_offset: 0.0,
-                    },
-                ];
-            }
+            anchor_bar_to_parent(&mut state.widgets, id, this.id);
         }
         Ok(())
     });
@@ -335,6 +323,63 @@ fn fire_value_changed(lua: &mlua::Lua, frame_id: u64, value: f64) -> mlua::Resul
         }
     }
     Ok(())
+}
+
+/// Find the bar texture child of a StatusBar by stored ID or children_keys.
+fn find_bar_texture_child(widgets: &crate::widget::WidgetRegistry, parent_id: u64) -> Option<u64> {
+    let frame = widgets.get(parent_id)?;
+    frame.statusbar_bar_id
+        .or_else(|| frame.children_keys.get("BarTexture").copied())
+        .or_else(|| frame.children_keys.get("StatusBarTexture").copied())
+        .or_else(|| frame.children_keys.get("Bar").copied())
+}
+
+/// Apply a texture path or atlas name to a bar texture child.
+fn apply_bar_texture(widgets: &mut crate::widget::WidgetRegistry, child_id: u64, tex_str: &str) {
+    // Try atlas lookup first
+    if let Some(lookup) = crate::atlas::get_atlas_info(tex_str) {
+        let info = lookup.info;
+        if let Some(frame) = widgets.get_mut(child_id) {
+            frame.texture = Some(info.file.to_string());
+            let uvs = (info.left_tex_coord, info.right_tex_coord, info.top_tex_coord, info.bottom_tex_coord);
+            frame.atlas_tex_coords = Some(uvs);
+            frame.tex_coords = Some(uvs);
+            frame.horiz_tile = info.tiles_horizontally;
+            frame.vert_tile = info.tiles_vertically;
+            frame.atlas = Some(tex_str.to_string());
+        }
+    } else if let Some(frame) = widgets.get_mut(child_id) {
+        // Treat as a file path
+        frame.texture = Some(tex_str.to_string());
+        frame.atlas = None;
+        frame.tex_coords = None;
+        frame.atlas_tex_coords = None;
+    }
+}
+
+/// Apply SetAllPoints-style anchors to make a bar texture fill its parent.
+fn anchor_bar_to_parent(widgets: &mut crate::widget::WidgetRegistry, bar_id: u64, parent_id: u64) {
+    use crate::widget::{Anchor, AnchorPoint};
+    if let Some(bar) = widgets.get_mut(bar_id) {
+        bar.anchors = vec![
+            Anchor {
+                point: AnchorPoint::TopLeft,
+                relative_to: None,
+                relative_to_id: Some(parent_id as usize),
+                relative_point: AnchorPoint::TopLeft,
+                x_offset: 0.0,
+                y_offset: 0.0,
+            },
+            Anchor {
+                point: AnchorPoint::BottomRight,
+                relative_to: None,
+                relative_to_id: Some(parent_id as usize),
+                relative_point: AnchorPoint::BottomRight,
+                x_offset: 0.0,
+                y_offset: 0.0,
+            },
+        ];
+    }
 }
 
 /// Look up or create a child texture by key and return it as a FrameHandle userdata.

@@ -222,13 +222,29 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
         return;
     }
 
+    // StatusBar fill color tint (from SetStatusBarColor)
+    let tint = if let Some(fill) = bar_fill
+        && let Some(c) = &fill.color {
+            [c.r, c.g, c.b, c.a * f.alpha]
+        } else {
+            [1.0, 1.0, 1.0, f.alpha]
+        };
+
     if let Some(color) = f.color_texture {
         let fill_bounds = apply_bar_fill(bounds, bar_fill);
-        batch.push_solid(fill_bounds, [color.r, color.g, color.b, color.a * f.alpha]);
+        batch.push_solid(fill_bounds, [color.r * tint[0], color.g * tint[1], color.b * tint[2], color.a * f.alpha]);
         return;
     }
 
-    let Some(tex_path) = &f.texture else { return };
+    let Some(tex_path) = &f.texture else {
+        // No texture — if there's a bar fill color, render as solid fill
+        if let Some(fill) = bar_fill
+            && let Some(c) = &fill.color {
+                let fill_bounds = apply_bar_fill(bounds, bar_fill);
+                batch.push_solid(fill_bounds, [c.r, c.g, c.b, c.a * f.alpha]);
+            }
+        return;
+    };
     let (fill_bounds, fill_uvs) = apply_bar_fill_with_uvs(bounds, f.tex_coords, bar_fill);
 
     if let Some((left, right, top, bottom)) = fill_uvs {
@@ -236,10 +252,10 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
         if f.horiz_tile || f.vert_tile {
             emit_tiled_texture(batch, fill_bounds, &uvs, tex_path, f);
         } else {
-            batch.push_textured_path_uv(fill_bounds, uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
+            batch.push_textured_path_uv(fill_bounds, uvs, tex_path, tint, f.blend_mode);
         }
     } else {
-        batch.push_textured_path(fill_bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
+        batch.push_textured_path(fill_bounds, tex_path, tint, f.blend_mode);
     }
 }
 
@@ -275,77 +291,7 @@ fn apply_bar_fill_with_uvs(
     (fill_bounds, Some(fill_uvs))
 }
 
-/// Compute tile dimensions from frame size or UV region as fallback.
-fn tile_dimensions(f: &crate::widget::Frame, uv_w: f32, uv_h: f32) -> (f32, f32) {
-    let tile_w = if f.width > 1.0 { f.width } else { (uv_w * 128.0).max(8.0) };
-    let tile_h = if f.height > 1.0 { f.height } else { (uv_h * 128.0).max(8.0) };
-    (tile_w, tile_h)
-}
-
-/// Emit tiled texture quads (horizontal, vertical, or both).
-fn emit_tiled_texture(
-    batch: &mut QuadBatch,
-    bounds: Rectangle,
-    uvs: &Rectangle,
-    tex_path: &str,
-    f: &crate::widget::Frame,
-) {
-    let (left, right, top, bottom) = (uvs.x, uvs.x + uvs.width, uvs.y, uvs.y + uvs.height);
-    let (tile_w, tile_h) = tile_dimensions(f, right - left, bottom - top);
-
-    if f.horiz_tile && !f.vert_tile {
-        emit_horiz_tiles(batch, bounds, uvs, tex_path, tile_w, f.alpha, f.blend_mode);
-    } else if f.vert_tile && !f.horiz_tile {
-        emit_vert_tiles(batch, bounds, uvs, tex_path, tile_h, f.alpha, f.blend_mode);
-    } else {
-        emit_grid_tiles(batch, bounds, uvs, tex_path, tile_w, tile_h, f.alpha, f.blend_mode);
-    }
-}
-
-/// Emit horizontally tiled texture quads.
-pub(super) fn emit_horiz_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, alpha: f32, blend: BlendMode) {
-    let mut x = bounds.x;
-    while x < bounds.x + bounds.width {
-        let w = (bounds.x + bounds.width - x).min(tile_w);
-        let tile_bounds = Rectangle::new(Point::new(x, bounds.y), Size::new(w, bounds.height));
-        let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
-        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uvs.height));
-        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], blend);
-        x += tile_w;
-    }
-}
-
-/// Emit vertically tiled texture quads.
-pub(super) fn emit_vert_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_h: f32, alpha: f32, blend: BlendMode) {
-    let mut y = bounds.y;
-    while y < bounds.y + bounds.height {
-        let h = (bounds.y + bounds.height - y).min(tile_h);
-        let tile_bounds = Rectangle::new(Point::new(bounds.x, y), Size::new(bounds.width, h));
-        let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
-        let tile_uvs = Rectangle::new(uvs.position(), Size::new(uvs.width, uv_h));
-        batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], blend);
-        y += tile_h;
-    }
-}
-
-/// Emit grid-tiled texture quads (both horizontal and vertical).
-fn emit_grid_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, tile_h: f32, alpha: f32, blend: BlendMode) {
-    let mut y = bounds.y;
-    while y < bounds.y + bounds.height {
-        let h = (bounds.y + bounds.height - y).min(tile_h);
-        let mut x = bounds.x;
-        while x < bounds.x + bounds.width {
-            let w = (bounds.x + bounds.width - x).min(tile_w);
-            let tile_bounds = Rectangle::new(Point::new(x, y), Size::new(w, h));
-            let uv_w = if w < tile_w { uvs.width * (w / tile_w) } else { uvs.width };
-            let uv_h = if h < tile_h { uvs.height * (h / tile_h) } else { uvs.height };
-            let tile_uvs = Rectangle::new(uvs.position(), Size::new(uv_w, uv_h));
-            batch.push_textured_path_uv(tile_bounds, tile_uvs, tex_path, [1.0, 1.0, 1.0, alpha], blend);
-            x += tile_w;
-        }
-        y += tile_h;
-    }
-}
+use super::tiling::emit_tiled_texture;
 
 /// Build quads for a Minimap widget - dark circular map area.
 pub fn build_minimap_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {

@@ -1,12 +1,13 @@
 //! StatusBar fill rendering — computes fill fraction for bar texture children.
 
 use std::collections::HashMap;
-use crate::widget::WidgetType;
+use crate::widget::{Color, WidgetType};
 
 /// StatusBar fill info for a bar texture child.
 pub(super) struct StatusBarFill {
     pub fraction: f32,
     pub reverse: bool,
+    pub color: Option<Color>,
 }
 
 /// Collect fill info for all StatusBar bar textures.
@@ -19,6 +20,7 @@ pub(super) fn collect_statusbar_fills(registry: &crate::widget::WidgetRegistry) 
             continue;
         }
         let bar_id = frame.statusbar_bar_id
+            .or_else(|| frame.children_keys.get("BarTexture").copied())
             .or_else(|| frame.children_keys.get("StatusBarTexture").copied())
             .or_else(|| frame.children_keys.get("Bar").copied());
         let Some(bar_id) = bar_id else { continue };
@@ -31,6 +33,7 @@ pub(super) fn collect_statusbar_fills(registry: &crate::widget::WidgetRegistry) 
         fills.insert(bar_id, StatusBarFill {
             fraction: fraction.clamp(0.0, 1.0),
             reverse: frame.statusbar_reverse_fill,
+            color: frame.statusbar_color,
         });
     }
     fills

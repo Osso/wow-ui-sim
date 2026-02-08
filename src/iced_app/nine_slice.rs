@@ -5,7 +5,7 @@ use iced::{Point, Rectangle, Size};
 use crate::atlas::{NineSliceAtlasInfo, NineSlicePiece};
 use crate::render::{BlendMode, QuadBatch};
 
-use super::render::{emit_horiz_tiles, emit_vert_tiles};
+use super::tiling::{emit_horiz_tiles, emit_vert_tiles};
 
 /// Emit a single nine-slice piece as a textured quad.
 fn emit_piece(batch: &mut QuadBatch, bounds: Rectangle, piece: &NineSlicePiece, alpha: f32) {

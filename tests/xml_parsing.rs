@@ -171,7 +171,6 @@ fn test_parse_new_frame_types_top_level() {
         "EventScrollFrame",
         "ContainedAlertFrame",
         "MapScene",
-        "ScopedModifier",
     ];
 
     for ft in &frame_types {
@@ -197,8 +196,7 @@ fn test_parse_new_frame_types_top_level() {
             | XmlElement::UIThemeContainerFrame(f)
             | XmlElement::EventScrollFrame(f)
             | XmlElement::ContainedAlertFrame(f)
-            | XmlElement::MapScene(f)
-            | XmlElement::ScopedModifier(f) => f,
+            | XmlElement::MapScene(f) => f,
             other => panic!("Expected {ft} variant, got {other:?}"),
         };
         assert_eq!(f.name.as_deref(), Some(&format!("Test{ft}")[..]));
