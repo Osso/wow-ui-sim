@@ -41,6 +41,7 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_fading_frame_stubs(lua)?;
     register_missing_globals(lua)?;
     register_missing_namespaces(lua)?;
+    register_c_perks_activities(lua)?;
     super::c_stubs_api_extra::register_extra_stubs(lua)?;
     Ok(())
 }
@@ -459,6 +460,44 @@ fn register_missing_globals(lua: &Lua) -> Result<()> {
     g.set("GetNumSubgroupMembers", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("HasBonusActionBar", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("HasTempShapeshiftActionBar", lua.create_function(|_, ()| Ok(false))?)?;
+
+    // ActionButtonUtil - enum tables needed by Blizzard_SpellSearch at load time
+    // (Blizzard_ActionBar will overwrite this with the full version when it loads)
+    let abu = lua.create_table()?;
+    let status = lua.create_table()?;
+    status.set("NotMissing", 1)?;
+    status.set("MissingFromAllBars", 2)?;
+    status.set("OnInactiveBonusBar", 3)?;
+    status.set("OnDisabledActionBar", 4)?;
+    abu.set("ActionBarActionStatus", status)?;
+    let bar_type = lua.create_table()?;
+    bar_type.set("MainActionBar", 1)?;
+    bar_type.set("MultiActionBar", 2)?;
+    bar_type.set("StanceBar", 3)?;
+    bar_type.set("PetBar", 4)?;
+    bar_type.set("PossessActionBar", 5)?;
+    bar_type.set("BonusBar", 6)?;
+    bar_type.set("VehicleBar", 16)?;
+    bar_type.set("TempShapeshiftBar", 17)?;
+    bar_type.set("OverrideBar", 18)?;
+    abu.set("ActionBarType", bar_type)?;
+    g.set("ActionButtonUtil", abu)?;
+
+    Ok(())
+}
+
+/// C_PerksActivities - Monthly activities / Trading Post tracking.
+fn register_c_perks_activities(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetTrackedPerksActivities", lua.create_function(|lua, ()| {
+        let result = lua.create_table()?;
+        result.set("trackedIDs", lua.create_table()?)?;
+        Ok(result)
+    })?)?;
+    t.set("GetPerksActivityInfo", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    t.set("GetPerksActivityChatLink", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    t.set("RemoveTrackedPerksActivity", lua.create_function(|_, _id: i32| Ok(()))?)?;
+    lua.globals().set("C_PerksActivities", t)?;
     Ok(())
 }
 
