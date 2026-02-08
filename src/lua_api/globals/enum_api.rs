@@ -305,6 +305,11 @@ fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
         "PlayActivitySoundWhenNotFocused", "AlternateSystemVoice", "NarrateMyMessages",
     ])?;
 
+    seq_enum(lua, enum_table, "PetbattleState", &[
+        "Created", "WaitingPreBattle", "RoundInProgress", "WaitingForFrontPets",
+        "GameOver", "Final",
+    ])?;
+
     register_tooltip_enums(lua, enum_table)?;
     Ok(())
 }
