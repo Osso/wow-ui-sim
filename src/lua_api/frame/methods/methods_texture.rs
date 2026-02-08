@@ -1,6 +1,7 @@
 //! Texture-related methods: SetTexture, SetAtlas, SetTexCoord, etc.
 
 use super::FrameHandle;
+use super::methods_helpers::resolve_file_data_id_or_path;
 use crate::widget::{Frame, WidgetType};
 use mlua::{UserDataMethods, Value};
 
@@ -21,7 +22,8 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// SetTexture, GetTexture, SetColorTexture.
 fn add_texture_path_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetTexture", |_, this, path: Option<String>| {
+    methods.add_method("SetTexture", |_, this, value: Value| {
+        let path = resolve_file_data_id_or_path(&value);
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.texture = path;
