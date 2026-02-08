@@ -53,7 +53,7 @@ fn register_battlenet_functions(lua: &Lua) -> Result<()> {
         "BNGetFriendInfo",
         lua.create_function(|_, _index: i32| Ok(Value::Nil))?,
     )?;
-    globals.set("BNGetNumFriends", lua.create_function(|_, ()| Ok((0, 0)))?)?; // online, total
+    globals.set("BNGetNumFriends", lua.create_function(|_, ()| Ok((0, 0, 0, 0)))?)?; // total, online, favorites, favoritesOnline
     globals.set(
         "BNGetInfo",
         lua.create_function(|lua, ()| {
@@ -468,6 +468,7 @@ fn register_character_functions(lua: &Lua) -> Result<()> {
         lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
     )?;
     globals.set("IsAccountSecured", lua.create_function(|_, ()| Ok(true))?)?;
+    globals.set("IsActivePlayerNewcomer", lua.create_function(|_, ()| Ok(false))?)?;
     Ok(())
 }
 
