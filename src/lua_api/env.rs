@@ -182,6 +182,46 @@ impl WowLuaEnv {
         super::script_helpers::get_script(&self.lua, widget_id, handler_name).is_some()
     }
 
+    /// Simulate a left-click on a frame by ID.
+    ///
+    /// Handles EditBox focus management (focus/unfocus), then fires
+    /// OnMouseDown, OnClick, and OnMouseUp in sequence.
+    pub fn send_click(&self, frame_id: u64) -> Result<()> {
+        use crate::widget::WidgetType;
+
+        let is_editbox = self
+            .state
+            .borrow()
+            .widgets
+            .get(frame_id)
+            .map(|f| f.widget_type == WidgetType::EditBox)
+            .unwrap_or(false);
+
+        let old_focus = self.state.borrow().focused_frame_id;
+
+        // EditBox focus management (mirrors iced_app::update::update_editbox_focus)
+        if is_editbox {
+            if old_focus != Some(frame_id) {
+                self.state.borrow_mut().focused_frame_id = Some(frame_id);
+                if let Some(old_id) = old_focus {
+                    self.fire_script_handler(old_id, "OnEditFocusLost", vec![])?;
+                }
+                self.fire_script_handler(frame_id, "OnEditFocusGained", vec![])?;
+            }
+        } else if let Some(old_id) = old_focus {
+            self.state.borrow_mut().focused_frame_id = None;
+            self.fire_script_handler(old_id, "OnEditFocusLost", vec![])?;
+        }
+
+        let button_val = Value::String(self.lua.create_string("LeftButton")?);
+        self.fire_script_handler(frame_id, "OnMouseDown", vec![button_val.clone()])?;
+        let down_val = Value::Boolean(false);
+        self.fire_script_handler(frame_id, "OnClick", vec![button_val.clone(), down_val])?;
+        self.fire_script_handler(frame_id, "OnMouseUp", vec![button_val])?;
+
+        Ok(())
+    }
+
     /// Dispatch a slash command (e.g., "/wa options").
     /// Returns Ok(true) if a handler was found and called, Ok(false) if no handler matched.
     pub fn dispatch_slash_command(&self, input: &str) -> Result<bool> {
