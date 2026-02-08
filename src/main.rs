@@ -190,7 +190,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 borders: args.debug_borders || args.debug_elements,
                 anchors: args.debug_anchors || args.debug_elements,
             };
-            wow_ui_sim::run_iced_ui(env, debug, Some(saved_vars), args.exec_lua)?;
+            wow_ui_sim::run_iced_ui(env, debug, saved_vars, args.exec_lua)?;
         }
     }
 
@@ -198,9 +198,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 /// Configure SavedVariables from WTF directory based on args/env.
-fn configure_saved_vars(args: &Args) -> SavedVariablesManager {
-    let mut saved_vars = SavedVariablesManager::new();
-
+fn configure_saved_vars(args: &Args) -> Option<SavedVariablesManager> {
     let skip = args.no_saved_vars
         || std::env::var("WOW_SIM_NO_SAVED_VARS")
             .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
@@ -208,8 +206,10 @@ fn configure_saved_vars(args: &Args) -> SavedVariablesManager {
 
     if skip {
         println!("SavedVariables loading disabled");
-        return saved_vars;
+        return None;
     }
+
+    let mut saved_vars = SavedVariablesManager::new();
 
     let wtf_path = PathBuf::from("/syncthing/Sync/Projects/wow/WTF");
     if wtf_path.exists() {
@@ -223,7 +223,7 @@ fn configure_saved_vars(args: &Args) -> SavedVariablesManager {
             .map(|h| format!("{}/.local/share/wow-sim/SavedVariables", h)).unwrap_or_default());
     }
 
-    saved_vars
+    Some(saved_vars)
 }
 
 /// Load Blizzard SharedXML and base UI addons (auto-discovered, dependency-sorted).
@@ -249,7 +249,7 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
 }
 
 /// Scan, load, and register third-party addons; print summary.
-fn load_third_party_addons(args: &Args, env: &WowLuaEnv, saved_vars: &mut SavedVariablesManager) {
+fn load_third_party_addons(args: &Args, env: &WowLuaEnv, saved_vars: &mut Option<SavedVariablesManager>) {
     let skip_addons = args.no_addons
         || std::env::var("WOW_SIM_NO_ADDONS")
             .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
@@ -307,12 +307,16 @@ fn load_single_addon(
     env: &WowLuaEnv,
     name: &str,
     toc_path: &Path,
-    saved_vars: &mut SavedVariablesManager,
+    saved_vars: &mut Option<SavedVariablesManager>,
     stats: &mut LoadStats,
 ) {
     let (title, notes, load_on_demand) = parse_addon_metadata(name, toc_path);
 
-    match load_addon_with_saved_vars(&env.loader_env(), toc_path, saved_vars) {
+    let result = match saved_vars.as_mut() {
+        Some(sv) => load_addon_with_saved_vars(&env.loader_env(), toc_path, sv),
+        None => load_addon(&env.loader_env(), toc_path),
+    };
+    match result {
         Ok(r) => {
             let load_time_secs = r.timing.total().as_secs_f64();
             env.register_addon(AddonInfo {
