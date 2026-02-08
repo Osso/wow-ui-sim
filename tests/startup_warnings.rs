@@ -1,55 +1,12 @@
 //! Test that loading Blizzard addons and firing startup events produces no warnings.
 
 use std::path::PathBuf;
-use wow_ui_sim::loader::load_addon;
+use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn blizzard_ui_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("Interface/BlizzardUI")
 }
-
-/// Blizzard addons in dependency order (mirrors BLIZZARD_ADDONS in main.rs).
-const BLIZZARD_ADDONS: &[(&str, &str)] = &[
-    ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-    ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
-    ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
-    ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
-    ("Blizzard_UIPanelTemplates", "Blizzard_UIPanelTemplates_Mainline.toc"),
-    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase_Mainline.toc"),
-    ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
-    ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
-    ("Blizzard_HelpPlate", "Blizzard_HelpPlate.toc"),
-    ("Blizzard_AccessibilityTemplates", "Blizzard_AccessibilityTemplates.toc"),
-    ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
-    ("Blizzard_UIParent", "Blizzard_UIParent_Mainline.toc"),
-    ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
-    ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
-    ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
-    ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
-    ("Blizzard_StoreUI", "Blizzard_StoreUI_Mainline.toc"),
-    ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
-    ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
-    ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
-    ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
-    ("Blizzard_UIParentPanelManager", "Blizzard_UIParentPanelManager_Mainline.toc"),
-    ("Blizzard_Settings_Shared", "Blizzard_Settings_Shared_Mainline.toc"),
-    ("Blizzard_SettingsDefinitions_Shared", "Blizzard_SettingsDefinitions_Shared.toc"),
-    ("Blizzard_SettingsDefinitions_Frame", "Blizzard_SettingsDefinitions_Frame_Mainline.toc"),
-    ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil_Mainline.toc"),
-    ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
-    ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
-    ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
-    ("Blizzard_UIPanels_Game", "Blizzard_UIPanels_Game_Mainline.toc"),
-    ("Blizzard_MapCanvasSecureUtil", "Blizzard_MapCanvasSecureUtil.toc"),
-    ("Blizzard_MapCanvas", "Blizzard_MapCanvas.toc"),
-    ("Blizzard_SharedMapDataProviders", "Blizzard_SharedMapDataProviders_Mainline.toc"),
-    ("Blizzard_WorldMap", "Blizzard_WorldMap_Mainline.toc"),
-    ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
-    ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
-    ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
-    ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
-    ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
-];
 
 /// Fire a single event, collecting handler errors.
 fn fire(env: &WowLuaEnv, event: &str, args: &[mlua::Value]) -> Vec<String> {
@@ -62,15 +19,12 @@ fn load_and_startup() -> Vec<String> {
     env.set_screen_size(1024.0, 768.0);
 
     let ui = blizzard_ui_dir();
+    let addons = discover_blizzard_addons(&ui);
     let mut warnings = Vec::new();
 
     // Load addons
-    for (name, toc) in BLIZZARD_ADDONS {
-        let toc_path = ui.join(name).join(toc);
-        if !toc_path.exists() {
-            continue;
-        }
-        match load_addon(&env.loader_env(), &toc_path) {
+    for (name, toc_path) in &addons {
+        match load_addon(&env.loader_env(), toc_path) {
             Ok(r) => {
                 for w in r.warnings {
                     warnings.push(format!("[load {name}] {w}"));
@@ -86,15 +40,26 @@ fn load_and_startup() -> Vec<String> {
     env.apply_post_load_workarounds();
 
     // Fire startup events (same sequence as main.rs)
+    fire_startup_events(&env, &mut warnings);
+
+    // Keep only the most recent 500 warnings
+    if warnings.len() > 500 {
+        warnings.drain(..warnings.len() - 500);
+    }
+
+    warnings
+}
+
+fn fire_startup_events(env: &WowLuaEnv, warnings: &mut Vec<String>) {
     let lua = env.lua();
 
     warnings.extend(fire(
-        &env,
+        env,
         "ADDON_LOADED",
         &[mlua::Value::String(lua.create_string("WoWUISim").unwrap())],
     ));
     for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
-        warnings.extend(fire(&env, event, &[]));
+        warnings.extend(fire(env, event, &[]));
     }
 
     warnings.extend(env.fire_edit_mode_layouts_updated());
@@ -103,7 +68,7 @@ fn load_and_startup() -> Vec<String> {
         let _ = f.call::<()>(());
     }
     warnings.extend(fire(
-        &env,
+        env,
         "PLAYER_ENTERING_WORLD",
         &[mlua::Value::Boolean(true), mlua::Value::Boolean(false)],
     ));
@@ -113,18 +78,11 @@ fn load_and_startup() -> Vec<String> {
         "UI_SCALE_CHANGED",
         "PLAYER_LEAVING_WORLD",
     ] {
-        warnings.extend(fire(&env, event, &[]));
+        warnings.extend(fire(env, event, &[]));
     }
 
     // Fire one OnUpdate tick to catch handler errors
     warnings.extend(env.fire_on_update_collecting_errors(0.016));
-
-    // Keep only the most recent 500 warnings
-    if warnings.len() > 500 {
-        warnings.drain(..warnings.len() - 500);
-    }
-
-    warnings
 }
 
 #[test]

@@ -13,6 +13,7 @@ mod xml_texture;
 use crate::lua_api::LoaderEnv;
 use crate::saved_variables::SavedVariablesManager;
 use crate::toc::TocFile;
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
@@ -115,6 +116,116 @@ pub fn load_addon_from_toc_with_saved_vars(
     saved_vars_mgr: &mut SavedVariablesManager,
 ) -> Result<LoadResult, LoadError> {
     addon::load_addon_internal(env, toc, Some(saved_vars_mgr))
+}
+
+/// Discover all Blizzard addons in a BlizzardUI directory, topologically sorted by dependencies.
+///
+/// Scans for `Blizzard_*` subdirectories, parses their TOC files, filters out `LoadOnDemand`
+/// addons, and returns them in dependency order. Returns `(dir_name, toc_path)` pairs.
+pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)> {
+    let entries = match std::fs::read_dir(blizzard_ui_dir) {
+        Ok(e) => e,
+        Err(_) => return Vec::new(),
+    };
+
+    // Parse all addon TOCs
+    let mut addons: HashMap<String, (PathBuf, TocFile)> = HashMap::new();
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if !path.is_dir() {
+            continue;
+        }
+        let dir_name = path.file_name().unwrap().to_str().unwrap().to_string();
+        if !dir_name.starts_with("Blizzard_") {
+            continue;
+        }
+        let Some(toc_path) = find_toc_file(&path) else {
+            continue;
+        };
+        let Ok(toc) = TocFile::from_file(&toc_path) else {
+            continue;
+        };
+        if toc.is_load_on_demand() {
+            continue;
+        }
+        addons.insert(dir_name.clone(), (toc_path, toc));
+    }
+
+    topological_sort_addons(addons)
+}
+
+/// Topologically sort addons by their declared dependencies (Kahn's algorithm).
+fn topological_sort_addons(
+    addons: HashMap<String, (PathBuf, TocFile)>,
+) -> Vec<(String, PathBuf)> {
+    let available: std::collections::HashSet<&str> =
+        addons.keys().map(|s| s.as_str()).collect();
+
+    let deps = build_dependency_graph(&addons, &available);
+    let sorted = kahns_sort(&deps, addons.len());
+
+    sorted
+        .into_iter()
+        .filter_map(|name| {
+            let (toc_path, _) = addons.get(name)?;
+            Some((name.to_string(), toc_path.clone()))
+        })
+        .collect()
+}
+
+/// Build a map of addon name -> list of available addon names it depends on.
+fn build_dependency_graph<'a>(
+    addons: &'a HashMap<String, (PathBuf, TocFile)>,
+    available: &std::collections::HashSet<&'a str>,
+) -> HashMap<&'a str, Vec<&'a str>> {
+    addons
+        .iter()
+        .map(|(name, (_, toc))| {
+            let required: Vec<&str> = toc
+                .dependencies()
+                .iter()
+                .filter_map(|d| available.get(d.as_str()).copied())
+                .collect();
+            (name.as_str(), required)
+        })
+        .collect()
+}
+
+/// Run Kahn's algorithm on a dependency graph. Returns names in topological order.
+/// Ties are broken alphabetically for deterministic output.
+fn kahns_sort<'a>(deps: &HashMap<&'a str, Vec<&'a str>>, count: usize) -> Vec<&'a str> {
+    let mut in_degree: HashMap<&str, usize> = deps.keys().map(|&n| (n, 0)).collect();
+    let mut dependents: HashMap<&str, Vec<&str>> = HashMap::new();
+    for (&node, reqs) in deps {
+        *in_degree.entry(node).or_default() = reqs.len();
+        for &r in reqs {
+            dependents.entry(r).or_default().push(node);
+        }
+    }
+
+    // Seed queue with zero-dependency addons, sorted descending (pop takes last = smallest)
+    let mut queue: Vec<&str> = in_degree
+        .iter()
+        .filter(|&(_, deg)| *deg == 0)
+        .map(|(&name, _)| name)
+        .collect();
+    queue.sort_by(|a, b| b.cmp(a));
+
+    let mut result = Vec::with_capacity(count);
+    while let Some(name) = queue.pop() {
+        result.push(name);
+        for &dep in dependents.get(name).unwrap_or(&Vec::new()) {
+            if let Some(deg) = in_degree.get_mut(dep) {
+                *deg -= 1;
+                if *deg == 0 {
+                    let pos = queue.partition_point(|&x| x > dep);
+                    queue.insert(pos, dep);
+                }
+            }
+        }
+    }
+
+    result
 }
 
 #[cfg(test)]
