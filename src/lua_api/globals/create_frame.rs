@@ -45,7 +45,8 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         let ref_name = name.unwrap_or_else(|| format!("__frame_{}", frame_id));
         if is_intrinsic {
             apply_templates_from_registry(lua, &ref_name, &frame_type);
-            // Set frame.intrinsic = "TypeName" (WoW Lua code checks this property)
+            // Set frame.intrinsic = "TypeName" BEFORE user templates, so OnLoad
+            // handlers (e.g. ValidateIsDropdownButtonIntrinsic) can see it.
             let code = format!(
                 "{}.intrinsic = \"{}\"",
                 lua_global_ref(&ref_name),
@@ -57,6 +58,26 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         // Apply user-specified templates from the registry
         if let Some(tmpl) = template {
             apply_templates_from_registry(lua, &ref_name, &tmpl);
+        }
+
+        // For non-intrinsic types, also check if the user template itself is
+        // an intrinsic type (e.g. CreateFrame("Button", nil, parent, "DropdownButton"))
+        // and set the intrinsic property accordingly.
+        if !is_intrinsic {
+            if let Some(ref tmpl) = template {
+                for t in tmpl.split(',') {
+                    let t = t.trim();
+                    if crate::xml::is_intrinsic_type(t) {
+                        let code = format!(
+                            "{}.intrinsic = \"{}\"",
+                            lua_global_ref(&ref_name),
+                            t
+                        );
+                        let _ = lua.load(&code).exec();
+                        break;
+                    }
+                }
+            }
         }
 
         // Fire OnLoad on the frame itself (WoW fires OnLoad before CreateFrame returns).
