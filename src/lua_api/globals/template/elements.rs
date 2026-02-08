@@ -49,7 +49,10 @@ pub(super) fn create_texture_from_template(
         code.push_str("            tex:SetAllPoints(true)\n");
     }
 
-    if texture.name.is_some() {
+    let has_name = texture.name.is_some();
+    // Set global reference for named textures, or temporarily for mask textures
+    // so mark_mask_texture can look them up
+    if has_name || is_mask {
         code.push_str(&format!("            _G[\"{}\"] = tex\n", escape_lua_string(&child_name)));
     }
 
@@ -67,6 +70,10 @@ pub(super) fn create_texture_from_template(
     // Mark MaskTextures so the renderer skips them
     if is_mask {
         mark_mask_texture(lua, &child_name);
+        // Remove temporary global for unnamed mask textures
+        if !has_name {
+            let _ = lua.globals().set(child_name.as_str(), mlua::Value::Nil);
+        }
     }
 
     apply_texture_animations(lua, texture, &child_name);
