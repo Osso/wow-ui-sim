@@ -1,5 +1,11 @@
 # WoW UI Simulator
 
+## Architecture Docs
+
+- `docs/frame-data-flow.md` - Mixin, events, metamethods, script dispatch
+- `docs/button-text-rendering.md` - Button text draw order, three-slice text-behind-background bug
+- `docs/glow-plan.md` - Glow/shine effect plan
+
 ## WoW Game Files
 
 - `~/Projects/wow/Interface` - code & art extract from WoW game files (2026-01-16)
