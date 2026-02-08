@@ -190,7 +190,7 @@ fn test_create_frame_from_xml_basic() {
 
     let ui = parse_xml(xml).unwrap();
     if let XmlElement::Frame(frame) = &ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let exists: bool = env.eval("return XmlTestFrame ~= nil").unwrap();
@@ -234,7 +234,7 @@ fn test_create_frame_from_xml_with_template() {
 
     let template_ui = parse_xml(template_xml).unwrap();
     if let XmlElement::Frame(frame) = &template_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     assert!(
@@ -254,7 +254,7 @@ fn test_create_frame_from_xml_with_template() {
 
     let frame_ui = parse_xml(frame_xml).unwrap();
     if let XmlElement::Frame(frame) = &frame_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let exists: bool = env.eval("return TestPanelUnique ~= nil").unwrap();
@@ -291,7 +291,7 @@ fn test_create_frame_from_xml_template_inheritance_chain() {
 
     let base_ui = parse_xml(base_xml).unwrap();
     if let XmlElement::Frame(frame) = &base_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let derived_xml = r#"
@@ -313,7 +313,7 @@ fn test_create_frame_from_xml_template_inheritance_chain() {
 
     let derived_ui = parse_xml(derived_xml).unwrap();
     if let XmlElement::Frame(frame) = &derived_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let frame_xml = r#"
@@ -328,7 +328,7 @@ fn test_create_frame_from_xml_template_inheritance_chain() {
 
     let frame_ui = parse_xml(frame_xml).unwrap();
     if let XmlElement::Frame(frame) = &frame_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let width: f32 = env.eval("return TestFinalFrameChain:GetWidth()").unwrap();
@@ -382,7 +382,7 @@ fn test_create_frame_from_xml_parent_key() {
 
     let ui = parse_xml(xml).unwrap();
     if let XmlElement::Frame(frame) = &ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let has_header: bool = env.eval("return ParentKeyTestFrame.Header ~= nil").unwrap();
@@ -430,7 +430,7 @@ fn test_create_button_from_xml() {
 
     let ui = parse_xml(xml).unwrap();
     if let XmlElement::Button(frame) = &ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Button", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Button", None).unwrap();
     }
 
     let exists: bool = env.eval("return XmlTestButton ~= nil").unwrap();
@@ -462,7 +462,7 @@ fn test_create_frame_from_xml_with_scripts() {
 
     let ui = parse_xml(xml).unwrap();
     if let XmlElement::Frame(frame) = &ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let loaded: bool = env
@@ -491,7 +491,7 @@ fn test_create_frame_from_xml_with_keyvalues() {
 
     let ui = parse_xml(xml).unwrap();
     if let XmlElement::Frame(frame) = &ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     let my_string: String = env.eval("return KeyValueTestFrame.myString").unwrap();
@@ -523,7 +523,7 @@ fn test_template_children_not_duplicated() {
     "#;
     let base_ui = parse_xml(base_xml).unwrap();
     if let XmlElement::Button(frame) = &base_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Button", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Button", None).unwrap();
     }
 
     // Register a CloseButton template with anchors (inherits the base)
@@ -538,7 +538,7 @@ fn test_template_children_not_duplicated() {
     "#;
     let anchored_ui = parse_xml(anchored_xml).unwrap();
     if let XmlElement::Button(frame) = &anchored_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Button", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Button", None).unwrap();
     }
 
     // Register a panel template whose child Button inherits anchors (no inline anchors)
@@ -556,7 +556,7 @@ fn test_template_children_not_duplicated() {
 
     let template_ui = parse_xml(template_xml).unwrap();
     if let XmlElement::Frame(frame) = &template_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     // Create a frame inheriting that template
@@ -572,7 +572,7 @@ fn test_template_children_not_duplicated() {
 
     let frame_ui = parse_xml(frame_xml).unwrap();
     if let XmlElement::Frame(frame) = &frame_ui.elements[0] {
-        create_frame_from_xml(&env, frame, "Frame", None).unwrap();
+        create_frame_from_xml(&env.loader_env(), frame, "Frame", None).unwrap();
     }
 
     // The CloseButton should exist

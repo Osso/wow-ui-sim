@@ -160,6 +160,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let font_system = Rc::new(RefCell::new(WowFontSystem::new(&PathBuf::from("./fonts"))));
     env.set_font_system(Rc::clone(&font_system));
 
+    // Set addon base paths for runtime on-demand loading (C_AddOns.LoadAddOn)
+    {
+        let mut state = env.state().borrow_mut();
+        state.addon_base_paths = vec![
+            PathBuf::from("./Interface/BlizzardUI"),
+            PathBuf::from("./Interface/AddOns"),
+        ];
+    }
+
     let mut saved_vars = configure_saved_vars(&args);
     load_blizzard_addons(&env);
     load_third_party_addons(&args, &env, &mut saved_vars);
@@ -278,7 +287,7 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
         if !toc_path.exists() {
             continue;
         }
-        match load_addon(env, &toc_path) {
+        match load_addon(&env.loader_env(), &toc_path) {
             Ok(r) => {
                 println!("{} loaded: {} Lua, {} XML, {} warnings", name, r.lua_files, r.xml_files, r.warnings.len());
                 for w in &r.warnings {
@@ -355,7 +364,7 @@ fn load_single_addon(
 ) {
     let (title, notes, load_on_demand) = parse_addon_metadata(name, toc_path);
 
-    match load_addon_with_saved_vars(env, toc_path, saved_vars) {
+    match load_addon_with_saved_vars(&env.loader_env(), toc_path, saved_vars) {
         Ok(r) => {
             let load_time_secs = r.timing.total().as_secs_f64();
             env.register_addon(AddonInfo {

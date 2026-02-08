@@ -13,6 +13,7 @@ use crate::widget::{TextJustify, WidgetType};
 
 use super::app::App;
 use super::layout::compute_frame_rect;
+use super::statusbar::{StatusBarFill, collect_statusbar_fills};
 use super::state::CanvasMessage;
 use super::styles::palette;
 use super::Message;
@@ -214,31 +215,64 @@ fn emit_button_highlight(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::wi
     }
 }
 
-/// Build quads for a Texture widget.
-pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+/// Build quads for a Texture widget, optionally clipped by a StatusBar fill.
+pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame, bar_fill: Option<&StatusBarFill>) {
     if let Some(ref ns) = f.nine_slice_atlas {
         super::nine_slice::emit_nine_slice_atlas(batch, bounds, ns, f.alpha);
         return;
     }
 
     if let Some(color) = f.color_texture {
-        batch.push_solid(bounds, [color.r, color.g, color.b, color.a * f.alpha]);
+        let fill_bounds = apply_bar_fill(bounds, bar_fill);
+        batch.push_solid(fill_bounds, [color.r, color.g, color.b, color.a * f.alpha]);
         return;
     }
 
     let Some(tex_path) = &f.texture else { return };
+    let (fill_bounds, fill_uvs) = apply_bar_fill_with_uvs(bounds, f.tex_coords, bar_fill);
 
-    if let Some((left, right, top, bottom)) = f.tex_coords {
+    if let Some((left, right, top, bottom)) = fill_uvs {
         let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
-
         if f.horiz_tile || f.vert_tile {
-            emit_tiled_texture(batch, bounds, &uvs, tex_path, f);
+            emit_tiled_texture(batch, fill_bounds, &uvs, tex_path, f);
         } else {
-            batch.push_textured_path_uv(bounds, uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
+            batch.push_textured_path_uv(fill_bounds, uvs, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
         }
     } else {
-        batch.push_textured_path(bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
+        batch.push_textured_path(fill_bounds, tex_path, [1.0, 1.0, 1.0, f.alpha], f.blend_mode);
     }
+}
+
+/// Apply StatusBar fill clipping to bounds.
+fn apply_bar_fill(bounds: Rectangle, bar_fill: Option<&StatusBarFill>) -> Rectangle {
+    let Some(fill) = bar_fill else { return bounds };
+    let fill_width = bounds.width * fill.fraction;
+    if fill.reverse {
+        Rectangle::new(
+            Point::new(bounds.x + bounds.width - fill_width, bounds.y),
+            Size::new(fill_width, bounds.height),
+        )
+    } else {
+        Rectangle::new(bounds.position(), Size::new(fill_width, bounds.height))
+    }
+}
+
+/// Apply StatusBar fill clipping to bounds and UV coordinates.
+fn apply_bar_fill_with_uvs(
+    bounds: Rectangle,
+    tex_coords: Option<(f32, f32, f32, f32)>,
+    bar_fill: Option<&StatusBarFill>,
+) -> (Rectangle, Option<(f32, f32, f32, f32)>) {
+    let Some(fill) = bar_fill else { return (bounds, tex_coords) };
+    let fill_bounds = apply_bar_fill(bounds, bar_fill);
+    let (uv_left, uv_right, uv_top, uv_bottom) = tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
+    let uv_range = uv_right - uv_left;
+    let fill_uvs = if fill.reverse {
+        (uv_left + uv_range * (1.0 - fill.fraction), uv_right, uv_top, uv_bottom)
+    } else {
+        (uv_left, uv_left + uv_range * fill.fraction, uv_top, uv_bottom)
+    };
+    (fill_bounds, Some(fill_uvs))
 }
 
 /// Compute tile dimensions from frame size or UV region as fallback.
@@ -471,12 +505,13 @@ fn emit_frame_quads(
     id: u64,
     f: &crate::widget::Frame,
     bounds: Rectangle,
+    bar_fill: Option<&StatusBarFill>,
     pressed_frame: Option<u64>,
     hovered_frame: Option<u64>,
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
 ) {
     match f.widget_type {
-        WidgetType::Frame => build_frame_quads(batch, bounds, f),
+        WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
         WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
         WidgetType::Button => {
             build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
@@ -485,7 +520,11 @@ fn emit_frame_quads(
                     emit_widget_text_quads(batch, fs, ga, f, txt, bounds, TextJustify::Center, TextJustify::Center, false, 0);
                 }
         }
-        WidgetType::Texture => build_texture_quads(batch, bounds, f),
+        WidgetType::Texture => {
+            if !f.is_mask {
+                build_texture_quads(batch, bounds, f, bar_fill);
+            }
+        }
         WidgetType::FontString => {
             if let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
@@ -549,6 +588,9 @@ pub fn build_quad_batch_for_registry(
     let ancestor_visible = collect_ancestor_visible_ids(registry);
     let frames = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible);
 
+    // Collect StatusBar fill info: bar_texture_id -> fill fraction
+    let statusbar_fills = collect_statusbar_fills(registry);
+
     for (id, f, rect) in frames {
         if let Some(ref ids) = visible_ids
             && !ids.contains(&id) {
@@ -582,11 +624,13 @@ pub fn build_quad_batch_for_registry(
             Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
         );
 
-        emit_frame_quads(&mut batch, id, f, bounds, pressed_frame, hovered_frame, &mut text_ctx);
+        let bar_fill = statusbar_fills.get(&id);
+        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx);
     }
 
     batch
 }
+
 
 impl App {
     /// Return cached quads or rebuild if dirty/resized.

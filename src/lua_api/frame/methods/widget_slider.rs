@@ -128,13 +128,44 @@ fn add_slider_drag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 fn add_statusbar_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetStatusBarTexture", |_, this, texture: Value| {
-        let path = match &texture {
-            Value::String(s) => Some(s.to_string_lossy().to_string()),
-            _ => None,
+        let (path, bar_id) = match &texture {
+            Value::String(s) => (Some(s.to_string_lossy().to_string()), None),
+            Value::UserData(ud) => {
+                let id = ud.borrow::<FrameHandle>().ok().map(|h| h.id);
+                (None, id)
+            }
+            _ => (None, None),
         };
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.statusbar_texture_path = path;
+            if let Some(id) = bar_id {
+                frame.statusbar_bar_id = Some(id);
+            }
+        }
+        // The bar texture fills its parent; apply SetAllPoints anchors.
+        if let Some(id) = bar_id {
+            use crate::widget::{Anchor, AnchorPoint};
+            if let Some(bar) = state.widgets.get_mut(id) {
+                bar.anchors = vec![
+                    Anchor {
+                        point: AnchorPoint::TopLeft,
+                        relative_to: None,
+                        relative_to_id: Some(this.id as usize),
+                        relative_point: AnchorPoint::TopLeft,
+                        x_offset: 0.0,
+                        y_offset: 0.0,
+                    },
+                    Anchor {
+                        point: AnchorPoint::BottomRight,
+                        relative_to: None,
+                        relative_to_id: Some(this.id as usize),
+                        relative_point: AnchorPoint::BottomRight,
+                        x_offset: 0.0,
+                        y_offset: 0.0,
+                    },
+                ];
+            }
         }
         Ok(())
     });

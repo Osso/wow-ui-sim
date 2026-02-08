@@ -243,6 +243,8 @@ pub struct Frame {
     pub register_all_events: bool,
     /// Whether this frame clips its children to its bounds.
     pub clips_children: bool,
+    /// Whether this texture is a MaskTexture (should not render).
+    pub is_mask: bool,
     /// Whether mouse motion events are enabled.
     pub mouse_motion_enabled: bool,
     /// User-set frame ID (from XML `id` attribute or SetID()).
@@ -275,6 +277,8 @@ pub struct Frame {
     pub statusbar_color: Option<Color>,
     /// StatusBar texture path.
     pub statusbar_texture_path: Option<String>,
+    /// StatusBar bar texture child ID (set by SetStatusBarTexture).
+    pub statusbar_bar_id: Option<u64>,
     /// StatusBar fill style ("STANDARD", "CENTER", etc.).
     pub statusbar_fill_style: String,
     /// Whether statusbar fills in reverse.
@@ -408,6 +412,7 @@ macro_rules! frame_defaults {
             blend_mode: BlendMode::Alpha,
             register_all_events: false,
             clips_children: false,
+            is_mask: false,
             mouse_motion_enabled: false,
             user_id: 0,
 
@@ -426,6 +431,7 @@ macro_rules! frame_defaults {
             statusbar_max: 1.0,
             statusbar_color: None,
             statusbar_texture_path: None,
+            statusbar_bar_id: None,
             statusbar_fill_style: "STANDARD".to_string(),
             statusbar_reverse_fill: false,
             statusbar_orientation: "HORIZONTAL".to_string(),

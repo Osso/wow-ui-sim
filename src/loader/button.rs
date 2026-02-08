@@ -1,6 +1,6 @@
 //! Button texture and text application from XML.
 
-use crate::lua_api::WowLuaEnv;
+use crate::lua_api::LoaderEnv;
 
 use super::error::LoadError;
 use super::helpers::escape_lua_string;
@@ -36,7 +36,7 @@ fn generate_button_texture_code(
 
 /// Apply button textures (NormalTexture, PushedTexture, etc.) from a FrameXml to a button.
 pub fn apply_button_textures(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     frame_xml: &crate::xml::FrameXml,
     button_name: &str,
 ) -> Result<(), LoadError> {
@@ -64,7 +64,7 @@ pub fn apply_button_textures(
 /// Apply button text from the text attribute on a button.
 /// The text attribute is a localization key that gets resolved to actual text.
 pub fn apply_button_text(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     frame_xml: &crate::xml::FrameXml,
     button_name: &str,
     inherits: &str,

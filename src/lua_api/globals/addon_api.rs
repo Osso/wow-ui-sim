@@ -12,7 +12,7 @@ pub fn register_addon_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
     register_enable_disable(lua, &c_addons, &state)?;
     register_query_functions(lua, &c_addons, &state)?;
     register_version_check(lua, &c_addons, &state)?;
-    register_stub_functions(lua, &c_addons)?;
+    register_stub_functions(lua, &c_addons, &state)?;
     lua.globals().set("C_AddOns", c_addons)?;
 
     register_global_constants(lua)?;
@@ -269,7 +269,11 @@ fn register_version_check(
 }
 
 /// Register stub functions that return empty values.
-fn register_stub_functions(lua: &Lua, c_addons: &mlua::Table) -> Result<()> {
+fn register_stub_functions(
+    lua: &Lua,
+    c_addons: &mlua::Table,
+    state: &Rc<RefCell<SimState>>,
+) -> Result<()> {
     c_addons.set(
         "GetAddOnOptionalDependencies",
         lua.create_function(|_, _addon: String| Ok(mlua::MultiValue::new()))?,
@@ -278,10 +282,8 @@ fn register_stub_functions(lua: &Lua, c_addons: &mlua::Table) -> Result<()> {
         "GetAddOnDependencies",
         lua.create_function(|_, _addon: String| Ok(mlua::MultiValue::new()))?,
     )?;
-    c_addons.set(
-        "LoadAddOn",
-        lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
-    )?;
+    let s = Rc::clone(state);
+    c_addons.set("LoadAddOn", create_load_addon_fn(lua, s)?)?;
     c_addons.set(
         "GetScriptsDisallowedForBeta",
         lua.create_function(|_, ()| Ok(false))?,
@@ -413,12 +415,10 @@ fn register_legacy_addon_query(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     Ok(())
 }
 
-fn register_legacy_addon_stubs(lua: &Lua, _state: &Rc<RefCell<SimState>>) -> Result<()> {
+fn register_legacy_addon_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
-    globals.set(
-        "LoadAddOn",
-        lua.create_function(|_, _addon: String| Ok((true, Value::Nil)))?,
-    )?;
+    let s = Rc::clone(state);
+    globals.set("LoadAddOn", create_load_addon_fn(lua, s)?)?;
     globals.set(
         "GetAddOnOptionalDependencies",
         lua.create_function(|_, _addon: String| Ok(mlua::MultiValue::new()))?,
@@ -432,6 +432,114 @@ fn register_legacy_addon_stubs(lua: &Lua, _state: &Rc<RefCell<SimState>>) -> Res
         lua.create_function(|_, (_addon, _character): (Value, Option<String>)| Ok(2i32))?,
     )?;
     Ok(())
+}
+
+// ---------------------------------------------------------------------------
+// Runtime addon loading
+// ---------------------------------------------------------------------------
+
+/// Create the `LoadAddOn(name)` function that actually loads on-demand addons.
+///
+/// Returns `(loaded: bool, reason: string|nil)`.
+fn create_load_addon_fn(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Function> {
+    lua.create_function(move |lua, addon_name: String| {
+        load_addon_runtime(lua, &state, &addon_name)
+    })
+}
+
+/// Runtime addon loading implementation.
+///
+/// Searches `addon_base_paths` for the addon directory, loads it via the
+/// standard loader pipeline, registers it, and fires `ADDON_LOADED`.
+fn load_addon_runtime(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    addon_name: &str,
+) -> Result<(bool, Value)> {
+    // Already loaded? Return early.
+    {
+        let s = state.borrow();
+        if s.addons.iter().any(|a| a.folder_name == addon_name && a.loaded) {
+            return Ok((true, Value::Nil));
+        }
+    }
+
+    // Search addon_base_paths for the addon directory and its TOC file.
+    let toc_path = {
+        let s = state.borrow();
+        s.addon_base_paths
+            .iter()
+            .map(|base| base.join(addon_name))
+            .find_map(|dir| {
+                if dir.is_dir() {
+                    crate::loader::find_toc_file(&dir)
+                } else {
+                    None
+                }
+            })
+    };
+
+    let toc_path = match toc_path {
+        Some(p) => p,
+        None => {
+            let reason = lua.create_string(format!("Addon '{}' not found", addon_name))?;
+            return Ok((false, Value::String(reason)));
+        }
+    };
+
+    // Load the addon via the standard loader pipeline.
+    let loader_env = crate::lua_api::LoaderEnv::new(lua, Rc::clone(state));
+    match crate::loader::load_addon(&loader_env, &toc_path) {
+        Ok(result) => {
+            let load_time_secs = result.timing.total().as_secs_f64();
+            eprintln!(
+                "[LoadAddOn] {} loaded: {} Lua, {} XML ({:.1?})",
+                addon_name,
+                result.lua_files,
+                result.xml_files,
+                result.timing.total()
+            );
+            register_loaded_addon(state, addon_name, load_time_secs);
+            fire_addon_loaded(&loader_env, addon_name);
+            Ok((true, Value::Nil))
+        }
+        Err(e) => {
+            let msg = format!("{}", e);
+            eprintln!("[LoadAddOn] {} failed: {}", addon_name, msg);
+            let reason = lua.create_string(&msg)?;
+            Ok((false, Value::String(reason)))
+        }
+    }
+}
+
+/// Register a newly loaded addon in SimState.
+fn register_loaded_addon(state: &Rc<RefCell<SimState>>, name: &str, load_time_secs: f64) {
+    let mut s = state.borrow_mut();
+    // Update existing entry or create new one.
+    if let Some(existing) = s.addons.iter_mut().find(|a| a.folder_name == name) {
+        existing.loaded = true;
+        existing.load_time_secs = load_time_secs;
+    } else {
+        s.addons.push(AddonInfo {
+            folder_name: name.to_string(),
+            title: name.to_string(),
+            notes: String::new(),
+            enabled: true,
+            loaded: true,
+            load_on_demand: true,
+            load_time_secs,
+        });
+    }
+}
+
+/// Fire the ADDON_LOADED event for a just-loaded addon.
+fn fire_addon_loaded(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
+    let arg = env.lua().create_string(addon_name).ok().map(Value::String);
+    if let Some(arg) = arg {
+        if let Err(e) = env.fire_event_with_args("ADDON_LOADED", &[arg]) {
+            eprintln!("[LoadAddOn] Error firing ADDON_LOADED for {}: {}", addon_name, e);
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------

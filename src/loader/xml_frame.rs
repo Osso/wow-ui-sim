@@ -1,6 +1,6 @@
 //! Frame creation from XML definitions.
 
-use crate::lua_api::WowLuaEnv;
+use crate::lua_api::LoaderEnv;
 
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
@@ -11,7 +11,7 @@ use super::xml_texture::create_texture_from_xml;
 /// Create a frame from XML definition.
 /// Returns the name of the created frame (or None if skipped).
 pub fn create_frame_from_xml(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     parent_override: Option<&str>,
@@ -348,12 +348,12 @@ fn append_scripts_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
 }
 
 /// Create textures and fontstrings from the frame's Layers.
-fn create_layer_children(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
+fn create_layer_children(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
     for layers in frame.layers() {
         for layer in &layers.layers {
             let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
-            for texture in layer.textures() {
-                create_texture_from_xml(env, texture, name, draw_layer)?;
+            for (texture, is_mask) in layer.textures() {
+                create_texture_from_xml(env, texture, name, draw_layer, is_mask)?;
             }
             for fontstring in layer.font_strings() {
                 create_fontstring_from_xml(env, fontstring, name, draw_layer)?;
@@ -417,7 +417,7 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
 }
 
 /// Recursively create child frames and assign parentKey references.
-fn create_child_frames(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
+fn create_child_frames(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
     // Use all_frame_elements() to handle multiple <Frames> sections in the XML
     for child in frame.all_frame_elements() {
         create_single_child_frame(env, child, name)?;
@@ -431,7 +431,7 @@ fn create_child_frames(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &str
 
 /// Create a single child frame from a FrameElement and assign parentKey.
 fn create_single_child_frame(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     child: &crate::xml::FrameElement,
     parent_name: &str,
 ) -> Result<(), LoadError> {
@@ -451,7 +451,7 @@ fn create_single_child_frame(
 
 /// Create frames from a list of FrameElement, assigning parentKey references.
 fn create_frame_elements(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     elements: &[crate::xml::FrameElement],
     parent_name: &str,
 ) -> Result<(), LoadError> {
@@ -478,7 +478,7 @@ fn create_frame_elements(
 }
 
 /// Apply animation groups from the frame and its inherited templates.
-fn apply_animation_groups(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &str, inherits: &str) -> Result<(), LoadError> {
+fn apply_animation_groups(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str, inherits: &str) -> Result<(), LoadError> {
     if let Some(anims) = frame.animations() {
         exec_animation_groups(env, anims, name);
     }
@@ -494,7 +494,7 @@ fn apply_animation_groups(env: &WowLuaEnv, frame: &crate::xml::FrameXml, name: &
 }
 
 /// Generate and execute Lua code for a set of animation groups on a frame.
-fn exec_animation_groups(env: &WowLuaEnv, anims: &crate::xml::AnimationsXml, name: &str) {
+fn exec_animation_groups(env: &LoaderEnv<'_>, anims: &crate::xml::AnimationsXml, name: &str) {
     let mut anim_code = format!(
         r#"
             local frame = {}
@@ -514,7 +514,7 @@ fn exec_animation_groups(env: &WowLuaEnv, anims: &crate::xml::AnimationsXml, nam
 
 /// Initialize tables expected by action bar OnLoad handlers.
 /// Frames with `numButtons` KeyValue are action bars that need `actionButtons = {}`.
-fn init_action_bar_tables(env: &WowLuaEnv, name: &str) {
+fn init_action_bar_tables(env: &LoaderEnv<'_>, name: &str) {
     let code = format!(
         r#"do local f = {}
         if f and f.numButtons and not f.actionButtons then
@@ -528,7 +528,7 @@ fn init_action_bar_tables(env: &WowLuaEnv, name: &str) {
 /// Fire OnLoad and OnShow lifecycle scripts after the frame is fully configured.
 /// Both handlers are wrapped in pcall to match WoW's C++ engine behavior where
 /// script errors are caught and displayed, not propagated.
-fn fire_lifecycle_scripts(env: &WowLuaEnv, name: &str) {
+fn fire_lifecycle_scripts(env: &LoaderEnv<'_>, name: &str) {
     // In WoW, OnLoad fires at the end of frame creation from XML.
     // Templates often use method="OnLoad" which calls self:OnLoad().
     let onload_code = format!(

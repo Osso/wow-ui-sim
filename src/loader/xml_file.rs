@@ -1,6 +1,6 @@
 //! XML file loading and element processing.
 
-use crate::lua_api::WowLuaEnv;
+use crate::lua_api::LoaderEnv;
 use crate::xml::{parse_xml_file, FrameXml, XmlElement};
 use std::path::Path;
 use std::time::Instant;
@@ -15,7 +15,7 @@ use super::LoadTiming;
 /// Load an XML file, processing its elements.
 /// Returns the number of Lua files loaded from Script elements.
 pub fn load_xml_file(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     path: &Path,
     ctx: &AddonContext,
     timing: &mut LoadTiming,
@@ -37,7 +37,7 @@ pub fn load_xml_file(
 /// Process a single top-level XML element.
 /// Returns the number of Lua files loaded (0 or 1, or recursive count for includes).
 fn process_element(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     element: &XmlElement,
     xml_dir: &Path,
     ctx: &AddonContext,
@@ -67,7 +67,7 @@ fn process_element(
 
 /// Process a Script element (file reference or inline code).
 fn process_script(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     s: &crate::xml::ScriptXml,
     xml_dir: &Path,
     ctx: &AddonContext,
@@ -91,7 +91,7 @@ fn process_script(
 
 /// Process an Include element (XML or Lua file).
 fn process_include(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     i: &crate::xml::IncludeXml,
     xml_dir: &Path,
     ctx: &AddonContext,
@@ -159,7 +159,7 @@ fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static st
 }
 
 /// Process a frame-type XML element by dispatching to create_frame_from_xml.
-fn process_frame_element(env: &WowLuaEnv, element: &XmlElement) -> Result<(), LoadError> {
+fn process_frame_element(env: &LoaderEnv<'_>, element: &XmlElement) -> Result<(), LoadError> {
     if let Some((frame_xml, widget_type)) = resolve_frame_element(element) {
         create_frame_from_xml(env, frame_xml, widget_type, None)?;
     }
@@ -168,7 +168,7 @@ fn process_frame_element(env: &WowLuaEnv, element: &XmlElement) -> Result<(), Lo
 
 /// Create a Font object in Lua from XML definition.
 fn create_font_object(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     font: &crate::xml::FontXml,
 ) -> Result<(), LoadError> {
     let Some(name) = &font.name else { return Ok(()) };
@@ -270,7 +270,7 @@ const FONT_FAMILY_LUA_TEMPLATE: &str = r#"
 "#;
 
 fn create_font_family_object(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     font_family: &crate::xml::FontFamilyXml,
 ) -> Result<(), LoadError> {
     let Some(name) = &font_family.name else {

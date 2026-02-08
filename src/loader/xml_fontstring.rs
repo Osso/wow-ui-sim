@@ -1,6 +1,6 @@
 //! FontString creation from XML definitions.
 
-use crate::lua_api::WowLuaEnv;
+use crate::lua_api::LoaderEnv;
 
 use super::error::LoadError;
 use super::helpers::{escape_lua_string, generate_set_point_code, get_size_values, resolve_child_name};
@@ -75,7 +75,7 @@ fn generate_fontstring_parent_code(fs: &crate::xml::FontStringXml) -> String {
 }
 
 /// Sync fontstring text and auto-size height directly in Rust widget state.
-fn sync_fontstring_text_to_rust(env: &WowLuaEnv, fs_name: &str, text: &str) {
+fn sync_fontstring_text_to_rust(env: &LoaderEnv<'_>, fs_name: &str, text: &str) {
     let state = env.state();
     let mut state_ref = state.borrow_mut();
     if let Some(frame_id) = state_ref.widgets.get_id_by_name(fs_name)
@@ -89,7 +89,7 @@ fn sync_fontstring_text_to_rust(env: &WowLuaEnv, fs_name: &str, text: &str) {
 
 /// Create a fontstring from XML definition.
 pub fn create_fontstring_from_xml(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     fontstring: &crate::xml::FontStringXml,
     parent_name: &str,
     draw_layer: &str,
@@ -174,13 +174,11 @@ mod tests {
             text: Some("ADDON_FORCE_LOAD".to_string()),
             ..Default::default()
         };
-        create_fontstring_from_xml(&env, &fs, "TestFSParent", "ARTWORK").unwrap();
+        create_fontstring_from_xml(&env.loader_env(), &fs, "TestFSParent", "ARTWORK").unwrap();
 
-        // Verify Lua-side text is resolved
         let text: String = env.eval("return TestFSResolved:GetText()").unwrap();
         assert_eq!(text, "Load out of date AddOns");
 
-        // Verify Rust-side text is resolved
         let state = env.state();
         let state_ref = state.borrow();
         let id = state_ref.widgets.get_id_by_name("TestFSResolved").unwrap();

@@ -1,6 +1,6 @@
 //! Addon loading internals.
 
-use crate::lua_api::WowLuaEnv;
+use crate::lua_api::LoaderEnv;
 use crate::saved_variables::SavedVariablesManager;
 use crate::toc::TocFile;
 use mlua::Table;
@@ -22,7 +22,7 @@ pub struct AddonContext<'a> {
 
 /// Initialize saved variables for an addon (WTF first, then JSON fallback).
 fn init_saved_variables(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     toc: &TocFile,
     folder_name: &str,
     mgr: &mut SavedVariablesManager,
@@ -57,7 +57,7 @@ fn init_saved_variables(
 
 /// Internal addon loading with optional saved variables.
 pub fn load_addon_internal(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     toc: &TocFile,
     saved_vars_mgr: Option<&mut SavedVariablesManager>,
 ) -> Result<LoadResult, LoadError> {
@@ -130,7 +130,7 @@ pub fn load_addon_internal(
 /// and derived mixins call `BaseMixin.OnLoad(self)` expecting the C++ method.
 /// Runs after each .lua file so stubs are available before the next .xml file
 /// creates frames that depend on them.
-fn apply_cpp_mixin_stubs(env: &WowLuaEnv) {
+fn apply_cpp_mixin_stubs(env: &LoaderEnv<'_>) {
     let _ = env.exec(
         r#"
         if ModelSceneControlButtonMixin and not ModelSceneControlButtonMixin.OnLoad then

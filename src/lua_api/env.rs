@@ -297,6 +297,11 @@ impl WowLuaEnv {
         &self.state
     }
 
+    /// Create a loader environment borrowing from this environment.
+    pub fn loader_env(&self) -> super::loader_env::LoaderEnv<'_> {
+        super::loader_env::LoaderEnv::new(&self.lua, Rc::clone(&self.state))
+    }
+
     /// Set the font system for text measurement from Lua API methods.
     ///
     /// This stores the font system as Lua app_data so that methods like

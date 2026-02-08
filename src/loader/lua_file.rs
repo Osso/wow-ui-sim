@@ -1,6 +1,6 @@
 //! Lua file loading functionality.
 
-use crate::lua_api::WowLuaEnv;
+use crate::lua_api::LoaderEnv;
 use std::path::Path;
 use std::time::Instant;
 
@@ -10,7 +10,7 @@ use super::LoadTiming;
 
 /// Load a Lua file into the environment with addon varargs.
 pub fn load_lua_file(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     path: &Path,
     ctx: &AddonContext,
     timing: &mut LoadTiming,

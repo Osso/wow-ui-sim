@@ -44,14 +44,14 @@ pub fn env_with_shared_xml() -> WowLuaEnv {
 
     let base_toc = ui.join("Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
     if base_toc.exists() {
-        if let Err(e) = load_addon(&env, &base_toc) {
+        if let Err(e) = load_addon(&env.loader_env(), &base_toc) {
             eprintln!("Warning: Failed to load SharedXMLBase: {}", e);
         }
     }
 
     let shared_toc = ui.join("Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
     if shared_toc.exists() {
-        if let Err(e) = load_addon(&env, &shared_toc) {
+        if let Err(e) = load_addon(&env.loader_env(), &shared_toc) {
             eprintln!("Warning: Failed to load SharedXML: {}", e);
         }
     }

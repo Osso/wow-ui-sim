@@ -9,6 +9,7 @@ use crate::lua_api::tooltip::TooltipData;
 use crate::widget::WidgetRegistry;
 use mlua::RegistryKey;
 use std::collections::{HashMap, HashSet, VecDeque};
+use std::path::PathBuf;
 use std::time::Instant;
 
 /// A pending timer callback.
@@ -80,6 +81,8 @@ pub struct SimState {
     pub screen_height: f32,
     /// Action bar slots: slot (1-120) → spell ID.
     pub action_bars: HashMap<u32, u32>,
+    /// Addon base paths for runtime on-demand loading (Blizzard UI + AddOns directories).
+    pub addon_base_paths: Vec<PathBuf>,
 }
 
 impl Default for SimState {
@@ -102,6 +105,7 @@ impl Default for SimState {
             screen_width: 1024.0,
             screen_height: 768.0,
             action_bars: default_action_bars(),
+            addon_base_paths: Vec::new(),
         }
     }
 }

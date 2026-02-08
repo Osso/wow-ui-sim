@@ -11,6 +11,7 @@ pub(super) fn create_texture_from_template(
     texture: &crate::xml::TextureXml,
     parent_name: &str,
     draw_layer: &str,
+    is_mask: bool,
 ) {
     let child_name = texture
         .name
@@ -63,7 +64,25 @@ pub(super) fn create_texture_from_template(
     code.push_str("        end\n");
     let _ = lua.load(&code).exec();
 
+    // Mark MaskTextures so the renderer skips them
+    if is_mask {
+        mark_mask_texture(lua, &child_name);
+    }
+
     apply_texture_animations(lua, texture, &child_name);
+}
+
+/// Mark a texture widget as a MaskTexture (not rendered).
+fn mark_mask_texture(lua: &Lua, name: &str) {
+    // Extract the widget ID from the Lua global, then get SimState from UIParent
+    let widget_id = lua.globals().get::<mlua::AnyUserData>(name).ok()
+        .and_then(|ud| ud.borrow::<crate::lua_api::frame::FrameHandle>().ok().map(|h| h.id));
+    let Some(id) = widget_id else { return };
+    let Ok(parent_ud) = lua.globals().get::<mlua::AnyUserData>("UIParent") else { return };
+    let Ok(handle) = parent_ud.borrow::<crate::lua_api::frame::FrameHandle>() else { return };
+    if let Some(frame) = handle.state.borrow_mut().widgets.get_mut(id) {
+        frame.is_mask = true;
+    }
 }
 
 /// Process animation groups on a texture.

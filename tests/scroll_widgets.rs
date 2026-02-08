@@ -700,7 +700,7 @@ fn env_with_addon_list() -> WowLuaEnv {
         let addon_dir = base.join(dir_name);
         let toc_path = find_toc_file(&addon_dir)
             .unwrap_or_else(|| panic!("No TOC found in {}", addon_dir.display()));
-        if let Err(e) = wow_ui_sim::loader::load_addon(&env, &toc_path) {
+        if let Err(e) = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc_path) {
             eprintln!("Warning: Failed to load {}: {}", dir_name, e);
         }
     }

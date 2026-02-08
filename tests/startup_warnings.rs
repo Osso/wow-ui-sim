@@ -70,7 +70,7 @@ fn load_and_startup() -> Vec<String> {
         if !toc_path.exists() {
             continue;
         }
-        match load_addon(&env, &toc_path) {
+        match load_addon(&env.loader_env(), &toc_path) {
             Ok(r) => {
                 for w in r.warnings {
                     warnings.push(format!("[load {name}] {w}"));

@@ -99,13 +99,14 @@ fn add_create_texture_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 }
 
-/// CreateMaskTexture(layer, inherits, subLevel) - create a mask texture (stub).
+/// CreateMaskTexture(layer, inherits, subLevel) - create a mask texture.
 fn add_create_mask_texture_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("CreateMaskTexture", |lua, this, args: mlua::MultiValue| {
         let args: Vec<Value> = args.into_iter().collect();
         let name_raw = extract_string_arg(&args, 0);
         let name = resolve_child_name(name_raw, this);
-        let texture = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
+        let mut texture = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
+        texture.is_mask = true;
         register_child_widget(lua, this, texture, &name)
     });
 }

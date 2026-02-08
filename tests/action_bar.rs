@@ -64,7 +64,7 @@ fn env_with_action_bar() -> WowLuaEnv {
         if !toc_path.exists() {
             continue;
         }
-        if let Err(e) = load_addon(&env, &toc_path) {
+        if let Err(e) = load_addon(&env.loader_env(), &toc_path) {
             eprintln!("{name} failed: {e}");
         }
     }

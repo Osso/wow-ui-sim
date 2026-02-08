@@ -3,12 +3,13 @@
 pub mod animation;
 mod builtin_frames;
 mod env;
-mod frame;
+pub(crate) mod frame;
 mod key_dispatch;
 mod frame_methods;
 pub mod globals;
 mod globals_legacy;
 mod layout;
+pub(crate) mod loader_env;
 pub mod message_frame;
 pub mod simple_html;
 mod state;
@@ -20,6 +21,7 @@ pub use env::WowLuaEnv;
 pub use layout::{
     anchor_position, compute_frame_rect, frame_position_from_anchor, get_parent_depth, LayoutRect,
 };
+pub use loader_env::LoaderEnv;
 pub use message_frame::MessageFrameData;
 pub use simple_html::SimpleHtmlData;
 pub use state::{AddonInfo, PendingTimer, SimState};

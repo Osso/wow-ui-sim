@@ -17,7 +17,7 @@ fn test_load_ace3() {
     }
 
     let env = WowLuaEnv::new().unwrap();
-    let result = load_addon(&env, &ace3_path());
+    let result = load_addon(&env.loader_env(), &ace3_path());
 
     match result {
         Ok(r) => {
@@ -142,7 +142,7 @@ fn test_load_details() {
     }
 
     let env = WowLuaEnv::new().unwrap();
-    let result = load_addon(&env, &details_path);
+    let result = load_addon(&env.loader_env(), &details_path);
 
     match result {
         Ok(r) => {
@@ -177,20 +177,20 @@ fn test_load_game_menu() {
 
     // First load Blizzard_SharedXML (already tested to work)
     let shared_xml_base_toc = blizzard_ui.join("Blizzard_SharedXMLBase/Blizzard_SharedXMLBase.toc");
-    match load_addon(&env, &shared_xml_base_toc) {
+    match load_addon(&env.loader_env(), &shared_xml_base_toc) {
         Ok(r) => println!("SharedXMLBase: {} Lua, {} XML", r.lua_files, r.xml_files),
         Err(e) => println!("SharedXMLBase failed: {}", e),
     }
 
     let shared_xml_toc = blizzard_ui.join("Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
-    match load_addon(&env, &shared_xml_toc) {
+    match load_addon(&env.loader_env(), &shared_xml_toc) {
         Ok(r) => println!("SharedXML: {} Lua, {} XML (warnings: {})", r.lua_files, r.xml_files, r.warnings.len()),
         Err(e) => println!("SharedXML failed: {}", e),
     }
 
     // Now try loading GameMenu
     let game_menu_toc = blizzard_ui.join("Blizzard_GameMenu/Blizzard_GameMenu_Mainline.toc");
-    let result = load_addon(&env, &game_menu_toc);
+    let result = load_addon(&env.loader_env(), &game_menu_toc);
 
     match result {
         Ok(r) => {
@@ -237,7 +237,7 @@ fn test_load_dbm_core() {
     }
 
     let env = WowLuaEnv::new().unwrap();
-    let result = load_addon(&env, &dbm_path);
+    let result = load_addon(&env.loader_env(), &dbm_path);
 
     match result {
         Ok(r) => {
@@ -338,7 +338,7 @@ fn test_load_weakauras_full() {
     }
 
     let env = WowLuaEnv::new().unwrap();
-    let result = load_addon(&env, &weakauras_toc);
+    let result = load_addon(&env.loader_env(), &weakauras_toc);
 
     match result {
         Ok(r) => {
@@ -390,7 +390,7 @@ fn test_load_plater() {
     }
 
     let env = WowLuaEnv::new().unwrap();
-    let result = load_addon(&env, &plater_path);
+    let result = load_addon(&env.loader_env(), &plater_path);
 
     match result {
         Ok(r) => {

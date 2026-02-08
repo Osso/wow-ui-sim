@@ -1,6 +1,6 @@
 //! Texture creation from XML definitions.
 
-use crate::lua_api::WowLuaEnv;
+use crate::lua_api::LoaderEnv;
 use crate::xml::{collect_texture_mixins, register_texture_template};
 
 use super::error::LoadError;
@@ -112,10 +112,11 @@ fn generate_mixin_code(texture: &crate::xml::TextureXml) -> String {
 
 /// Create a texture from XML definition.
 pub fn create_texture_from_xml(
-    env: &WowLuaEnv,
+    env: &LoaderEnv<'_>,
     texture: &crate::xml::TextureXml,
     parent_name: &str,
     draw_layer: &str,
+    is_mask: bool,
 ) -> Result<(), LoadError> {
     if texture.is_virtual == Some(true) {
         // Register virtual textures as templates for mixin resolution
@@ -168,6 +169,17 @@ pub fn create_texture_from_xml(
             tex_name, parent_name, e
         ))
     })?;
+
+    // Mark MaskTextures so the renderer skips them
+    if is_mask {
+        let widget_id = env.lua.globals().get::<mlua::AnyUserData>(&*tex_name).ok()
+            .and_then(|ud| ud.borrow::<crate::lua_api::frame::FrameHandle>().ok().map(|h| h.id));
+        if let Some(id) = widget_id {
+            if let Some(frame) = env.state.borrow_mut().widgets.get_mut(id) {
+                frame.is_mask = true;
+            }
+        }
+    }
 
     // Process animation groups on the texture (e.g. AutoCastOverlayTemplate Shine rotation)
     if let Some(anims) = &texture.animations {

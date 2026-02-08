@@ -14,6 +14,7 @@ mod button_vis;
 mod layout;
 mod nine_slice;
 mod render;
+mod statusbar;
 mod state;
 mod styles;
 mod update;
