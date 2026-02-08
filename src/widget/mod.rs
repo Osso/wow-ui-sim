@@ -49,7 +49,7 @@ impl WidgetType {
         let lower = s.to_ascii_lowercase();
         match lower.as_str() {
             "frame" => Some(Self::Frame),
-            "button" | "itembutton" | "containedalertframe" => Some(Self::Button),
+            "button" | "dropdownbutton" | "itembutton" | "containedalertframe" => Some(Self::Button),
             "fontstring" => Some(Self::FontString),
             "texture" => Some(Self::Texture),
             "editbox" => Some(Self::EditBox),
