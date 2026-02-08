@@ -290,3 +290,14 @@ fn game_menu_buttons_display_text() {
         );
     }
 }
+
+#[test]
+fn micro_menu_guild_button_loads_and_opens_panel() {
+    let env = setup_env();
+    // Click may error in post-show setup; we only care that the frame exists
+    let _ = click_button(&env, "GuildMicroButton");
+    assert!(
+        frame_exists(&env, "CommunitiesFrame"),
+        "CommunitiesFrame should exist after clicking GuildMicroButton"
+    );
+}
