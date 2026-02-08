@@ -112,3 +112,27 @@ pub fn emit_nine_slice_atlas(
         }
     }
 }
+
+/// Emit a nine-slice border (corners + edges) with a solid-color center fill.
+///
+/// Used for tooltips where `SetCenterColor` tints the center texture to a solid color.
+pub fn emit_nine_slice_with_center_color(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    ns: &NineSliceAtlasInfo,
+    alpha: f32,
+    center_color: [f32; 4],
+) {
+    // Solid center fill (drawn first, behind the border pieces)
+    let cx = bounds.x + ns.corner_tl.width as f32;
+    let cy = bounds.y + ns.corner_tl.height as f32;
+    let cw = bounds.width - ns.corner_tl.width as f32 - ns.corner_tr.width as f32;
+    let ch = bounds.height - ns.corner_tl.height as f32 - ns.corner_bl.height as f32;
+    if cw > 0.0 && ch > 0.0 {
+        batch.push_solid(Rectangle::new(Point::new(cx, cy), Size::new(cw, ch)), center_color);
+    }
+
+    emit_corners(batch, bounds, ns, alpha);
+    emit_horiz_edges(batch, bounds, ns, alpha);
+    emit_vert_edges(batch, bounds, ns, alpha);
+}
