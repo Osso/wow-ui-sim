@@ -124,6 +124,8 @@ fn register_quest_log_watch(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("AddQuestWatch", lua.create_function(|_, _id: i32| Ok(()))?)?;
     t.set("RemoveQuestWatch", lua.create_function(|_, _id: i32| Ok(()))?)?;
     t.set("SortQuestWatches", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("GetNumWorldQuestWatches", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetQuestIDForWorldQuestWatchIndex", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
     Ok(())
 }
 
