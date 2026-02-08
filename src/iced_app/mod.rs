@@ -13,7 +13,7 @@ mod app;
 mod button_vis;
 mod frame_collect;
 mod keybinds;
-mod layout;
+pub mod layout;
 mod message_frame_render;
 mod nine_slice;
 mod render;
@@ -80,6 +80,8 @@ pub enum Message {
     ToggleFramesPanel,
     /// Toggle XP bar visibility (simulate max level vs leveling).
     ToggleXpBar(bool),
+    /// Toggle periodic rot damage to all party members.
+    ToggleRotDamage(bool),
     /// Keyboard input dispatched to Lua (WoW key name, e.g. "ESCAPE", "ENTER", "A")
     /// plus optional raw text for character input into focused EditBox.
     KeyPress(String, Option<String>),
