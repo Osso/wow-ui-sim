@@ -30,17 +30,31 @@ impl WowLuaEnv {
         }
     }
 
-    /// Escape priority: focused EditBox → CloseSpecialWindows → toggle GameMenuFrame.
+    /// Escape priority: focused EditBox → clear target → CloseSpecialWindows → toggle GameMenuFrame.
     fn dispatch_escape(&self) -> Result<()> {
         let focused = self.state.borrow().focused_frame_id;
         if let Some(fid) = focused
             && self.fire_handler_returns_truthy(fid, "OnEscapePressed")? {
                 return Ok(());
             }
+        if self.clear_target_if_any()? {
+            return Ok(());
+        }
         if self.close_special_windows()? {
             return Ok(());
         }
         self.toggle_game_menu()
+    }
+
+    /// Clear current target if one exists, firing PLAYER_TARGET_CHANGED.
+    /// Returns true if a target was cleared.
+    fn clear_target_if_any(&self) -> Result<bool> {
+        let has_target = self.state.borrow().current_target.is_some();
+        if has_target {
+            self.lua.load("ClearTarget()").exec()?;
+            return Ok(true);
+        }
+        Ok(false)
     }
 
     /// General key dispatch: special EditBox handler → keybinding → OnKeyDown.
