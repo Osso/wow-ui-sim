@@ -226,16 +226,11 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
         highlight.blend_mode = crate::render::BlendMode::Additive;
     }
 
-    // Text fontstring for button label
+    // Text fontstring for button label — fill parent so it inherits the
+    // button's width and renders at Overlay layer (above child textures
+    // like three-slice Background-layer Left/Right/Center).
     let mut text_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
-    text_fs.anchors.push(crate::widget::Anchor {
-        point: crate::widget::AnchorPoint::Center,
-        relative_to: None,
-        relative_to_id: Some(frame_id as usize),
-        relative_point: crate::widget::AnchorPoint::Center,
-        x_offset: 0.0,
-        y_offset: 0.0,
-    });
+    add_fill_parent_anchors(&mut text_fs, frame_id);
     text_fs.draw_layer = crate::widget::DrawLayer::Overlay;
     let text_id = text_fs.id;
     state.widgets.register(text_fs);

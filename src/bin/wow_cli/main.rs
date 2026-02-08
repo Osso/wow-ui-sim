@@ -53,7 +53,7 @@ enum Commands {
 
     /// Render UI to an image file (requires running server)
     Screenshot {
-        /// Output file path (lossy WebP at quality 15 by default; png/jpg detected from extension)
+        /// Output file path (always lossy WebP at quality 15, extension forced to .webp)
         #[arg(short, long, default_value = "screenshot.webp")]
         output: PathBuf,
 

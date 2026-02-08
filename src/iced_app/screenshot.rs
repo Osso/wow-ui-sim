@@ -18,7 +18,7 @@ impl App {
         height: u32,
         filter: Option<&str>,
     ) -> LuaResponse {
-        let output_path = Path::new(output);
+        let output_path = Path::new(output).with_extension("webp");
 
         let mut glyph_atlas = GlyphAtlas::new();
         let batch = {
@@ -45,28 +45,21 @@ impl App {
         let mut tex_mgr = self.texture_manager.borrow_mut();
         let img = render_to_image(&batch, &mut tex_mgr, width, height, glyph_data);
 
-        if let Err(e) = save_screenshot(&img, output_path) {
+        if let Err(e) = save_screenshot(&img, &output_path) {
             return LuaResponse::Error(format!("Failed to save screenshot: {}", e));
         }
 
         LuaResponse::Output(format!(
             "Saved {}x{} screenshot to {}",
-            width, height, output
+            width, height, output_path.display()
         ))
     }
 }
 
-/// Save screenshot image. Uses lossy WebP (quality 15) for .webp, image crate otherwise.
+/// Save screenshot image as lossy WebP (quality 15). Extension is forced to .webp.
 fn save_screenshot(img: &image::RgbaImage, output: &Path) -> Result<(), String> {
-    let ext = output
-        .extension()
-        .and_then(|e| e.to_str())
-        .unwrap_or("webp");
-    if ext.eq_ignore_ascii_case("webp") {
-        let encoder = webp::Encoder::from_rgba(img.as_raw(), img.width(), img.height());
-        let mem = encoder.encode(15.0);
-        std::fs::write(output, &*mem).map_err(|e| e.to_string())
-    } else {
-        img.save(output).map_err(|e| e.to_string())
-    }
+    let output = output.with_extension("webp");
+    let encoder = webp::Encoder::from_rgba(img.as_raw(), img.width(), img.height());
+    let mem = encoder.encode(15.0);
+    std::fs::write(&output, &*mem).map_err(|e| e.to_string())
 }

@@ -59,7 +59,7 @@ enum Commands {
 
     /// Render UI to an image file (no GUI needed)
     Screenshot {
-        /// Output file path (lossy WebP at quality 15 by default; png/jpg detected from extension)
+        /// Output file path (always lossy WebP at quality 15, extension forced to .webp)
         #[arg(short, long, default_value = "screenshot.webp")]
         output: PathBuf,
 
@@ -585,6 +585,33 @@ fn fire_startup_events(env: &WowLuaEnv) {
     "#).exec();
 }
 
+/// Debug: open game menu via micro button click for screenshot testing.
+fn debug_show_game_menu(env: &WowLuaEnv) {
+    if std::env::var("WOW_SIM_SHOW_GAME_MENU").is_err() {
+        return;
+    }
+    let _ = env.exec(r#"
+        local btn = MainMenuMicroButton
+        if btn then
+            local onclick = btn:GetScript("OnClick")
+            if onclick then onclick(btn, "LeftButton", false) end
+        end
+        if GameMenuFrame and GameMenuFrame.buttonPool then
+            local count = 0
+            for button in GameMenuFrame.buttonPool:EnumerateActive() do
+                count = count + 1
+                local text = button:GetText() or "(nil)"
+                local w, h = button:GetWidth(), button:GetHeight()
+                print(string.format("  Button %d: %q %dx%d shown=%s",
+                    count, text, w, h, tostring(button:IsShown())))
+            end
+            print(string.format("GameMenuFrame: shown=%s buttons=%d size=%dx%d",
+                tostring(GameMenuFrame:IsShown()), count,
+                GameMenuFrame:GetWidth(), GameMenuFrame:GetHeight()))
+        end
+    "#);
+}
+
 /// Render a headless screenshot.
 fn run_screenshot(
     env: &WowLuaEnv,
@@ -602,6 +629,7 @@ fn run_screenshot(
     env.set_screen_size(width as f32, height as f32);
     fire_startup_events(env);
     let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+    debug_show_game_menu(env);
     apply_delay(delay);
 
     let mut glyph_atlas = GlyphAtlas::new();
@@ -631,22 +659,18 @@ fn run_screenshot(
     };
 
     let img = render_to_image(&batch, &mut tex_mgr, width, height, glyph_data);
+    let output = output.with_extension("webp");
     save_screenshot(&img, &output);
     eprintln!("Saved {}x{} screenshot to {}", width, height, output.display());
 }
 
-/// Save screenshot image. Uses lossy WebP (quality 15) for .webp, delegates to image crate otherwise.
+/// Save screenshot image as lossy WebP (quality 15). Extension is forced to .webp.
 fn save_screenshot(img: &image::RgbaImage, output: &std::path::Path) {
-    let ext = output.extension().and_then(|e| e.to_str()).unwrap_or("webp");
-    if ext.eq_ignore_ascii_case("webp") {
-        let encoder = webp::Encoder::from_rgba(img.as_raw(), img.width(), img.height());
-        let mem = encoder.encode(15.0);
-        if let Err(e) = std::fs::write(output, &*mem) {
-            eprintln!("Failed to save WebP: {}", e);
-            std::process::exit(1);
-        }
-    } else if let Err(e) = img.save(output) {
-        eprintln!("Failed to save image: {}", e);
+    let output = output.with_extension("webp");
+    let encoder = webp::Encoder::from_rgba(img.as_raw(), img.width(), img.height());
+    let mem = encoder.encode(15.0);
+    if let Err(e) = std::fs::write(&output, &*mem) {
+        eprintln!("Failed to save WebP: {}", e);
         std::process::exit(1);
     }
 }

@@ -338,12 +338,15 @@ fn collect_subtree_ids(
 /// Collect IDs of frames whose ancestor chain is fully visible.
 ///
 /// Walks the tree top-down from root frames, pruning entire subtrees when a
-/// frame is hidden. This avoids computing layout for invisible subtrees.
+/// frame is hidden. Returns a map from frame ID to effective alpha (the product
+/// of all ancestor alphas). This avoids computing layout for invisible subtrees
+/// and provides correct alpha propagation for rendering.
 fn collect_ancestor_visible_ids(
     registry: &crate::widget::WidgetRegistry,
-) -> std::collections::HashSet<u64> {
-    let mut visible = std::collections::HashSet::new();
-    let mut queue: Vec<u64> = registry
+) -> std::collections::HashMap<u64, f32> {
+    let mut visible = std::collections::HashMap::new();
+    // Queue entries: (frame_id, parent_effective_alpha)
+    let mut queue: Vec<(u64, f32)> = registry
         .all_ids()
         .into_iter()
         .filter(|&id| {
@@ -352,17 +355,21 @@ fn collect_ancestor_visible_ids(
                 .map(|f| f.parent_id.is_none())
                 .unwrap_or(false)
         })
+        .map(|id| (id, 1.0f32))
         .collect();
 
-    while let Some(id) = queue.pop() {
+    while let Some((id, parent_alpha)) = queue.pop() {
         let Some(f) = registry.get(id) else { continue };
+        let effective_alpha = parent_alpha * f.alpha;
         // Root frames are always eligible (their own visibility is checked later).
         // Children are only queued if the parent is visible, so reaching here
         // means all ancestors are visible.
-        visible.insert(id);
+        visible.insert(id, effective_alpha);
         // Only descend into children if this frame is visible.
         if f.visible {
-            queue.extend(f.children.iter().copied());
+            for &child_id in &f.children {
+                queue.push((child_id, effective_alpha));
+            }
         }
     }
     visible
@@ -371,19 +378,20 @@ fn collect_ancestor_visible_ids(
 /// Collect frames with computed rects, sorted by strata/level/draw-layer.
 ///
 /// Only frames in `ancestor_visible` are considered, skipping layout
-/// computation for frames hidden by an ancestor.
+/// computation for frames hidden by an ancestor. Each frame carries its
+/// effective alpha (product of all ancestor alphas).
 fn collect_sorted_frames<'a>(
     registry: &'a crate::widget::WidgetRegistry,
     screen_width: f32,
     screen_height: f32,
-    ancestor_visible: &std::collections::HashSet<u64>,
-) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect)> {
+    ancestor_visible: &std::collections::HashMap<u64, f32>,
+) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect, f32)> {
     let mut frames: Vec<_> = ancestor_visible
         .iter()
-        .filter_map(|&id| {
+        .filter_map(|(&id, &eff_alpha)| {
             let f = registry.get(id)?;
             let rect = compute_frame_rect(registry, id, screen_width, screen_height);
-            Some((id, f, rect))
+            Some((id, f, rect, eff_alpha))
         })
         .collect();
 
@@ -537,11 +545,16 @@ pub fn build_quad_batch_for_registry(
     // Collect StatusBar fill info: bar_texture_id -> fill fraction
     let statusbar_fills = collect_statusbar_fills(registry);
 
-    for (id, f, rect) in frames {
+    for (id, f, rect, eff_alpha) in frames {
         if let Some(ref ids) = visible_ids
             && !ids.contains(&id) {
                 continue;
             }
+
+        // Skip fully transparent frames (effective alpha from parent chain)
+        if eff_alpha <= 0.0 {
+            continue;
+        }
 
         // Button state textures (NormalTexture, PushedTexture, etc.) have
         // state-driven visibility that overrides frame.visible.

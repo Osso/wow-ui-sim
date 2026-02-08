@@ -301,3 +301,47 @@ fn micro_menu_guild_button_loads_and_opens_panel() {
         "CommunitiesFrame should exist after clicking GuildMicroButton"
     );
 }
+
+#[test]
+fn debug_communities_mixin_check() {
+    let env = setup_env();
+    let _ = click_button(&env, "GuildMicroButton");
+
+    let info: String = env.eval(r#"
+        local targets = {"__tpl_11854", "__tpl_11872", "__tpl_11867"}
+        local results = {}
+        local fields = __frame_fields or {}
+        for _, name in ipairs(targets) do
+            local ref = _G[name]
+            if not ref then
+                table.insert(results, name .. ": NOT FOUND")
+            else
+                -- Find frame_id by checking ALL __frame_fields entries
+                local found_id = nil
+                for fid, _ in pairs(fields) do
+                    local fref = _G["__frame_" .. fid]
+                    if fref and fref == ref then
+                        found_id = fid
+                        break
+                    end
+                end
+                local field_names = {}
+                if found_id and fields[found_id] then
+                    for k, _ in pairs(fields[found_id]) do
+                        table.insert(field_names, k)
+                    end
+                end
+                -- Also check direct field access
+                local has_onclick = ref.OnClick ~= nil
+                table.insert(results, string.format(
+                    "%s: id=%s, fields={%s}, ref.OnClick=%s",
+                    name, tostring(found_id),
+                    table.concat(field_names, ","),
+                    tostring(has_onclick)
+                ))
+            end
+        end
+        return table.concat(results, "\n")
+    "#).unwrap_or_default();
+    eprintln!("{}", info);
+}
