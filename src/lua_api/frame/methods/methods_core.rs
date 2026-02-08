@@ -33,6 +33,29 @@ fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(state.widgets.get(this.id).and_then(|f| f.name.clone()))
     });
 
+    // GetDebugName() — returns name, or parentKey path, or object type
+    methods.add_method("GetDebugName", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            if let Some(ref name) = frame.name {
+                return Ok(name.clone());
+            }
+            // Try parentKey from parent's children_keys
+            if let Some(pid) = frame.parent_id {
+                if let Some(parent) = state.widgets.get(pid) {
+                    for (key, &cid) in &parent.children_keys {
+                        if cid == this.id {
+                            let parent_name = parent.name.as_deref().unwrap_or("?");
+                            return Ok(format!("{}.{}", parent_name, key));
+                        }
+                    }
+                }
+            }
+            return Ok(format!("[{}]", frame.widget_type.as_str()));
+        }
+        Ok("[Unknown]".to_string())
+    });
+
     // GetObjectType()
     methods.add_method("GetObjectType", |_, this, ()| {
         let state = this.state.borrow();
