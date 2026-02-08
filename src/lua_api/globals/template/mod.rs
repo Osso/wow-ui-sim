@@ -9,34 +9,34 @@ use crate::loader::helpers::{generate_animation_group_code, generate_set_point_c
 use crate::xml::{get_template_chain, FrameElement, FrameXml, TemplateEntry};
 use mlua::Lua;
 
-/// Extract the FrameXml and widget type string from a FrameElement.
-fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str)> {
+/// Extract the FrameXml, widget type, and optional intrinsic name from a FrameElement.
+fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str, Option<&'static str>)> {
     match element {
-        FrameElement::Frame(f) => Some((f, "Frame")),
-        FrameElement::Button(f)
-        | FrameElement::DropdownButton(f)
-        | FrameElement::DropDownToggleButton(f)
-        | FrameElement::EventButton(f)
-        | FrameElement::ContainedAlertFrame(f) => Some((f, "Button")),
-        FrameElement::ItemButton(f) => Some((f, "ItemButton")),
-        FrameElement::CheckButton(f) => Some((f, "CheckButton")),
+        FrameElement::Frame(f) => Some((f, "Frame", None)),
+        FrameElement::Button(f) => Some((f, "Button", None)),
+        FrameElement::DropdownButton(f) => Some((f, "Button", Some("DropdownButton"))),
+        FrameElement::DropDownToggleButton(f) => Some((f, "Button", Some("DropDownToggleButton"))),
+        FrameElement::EventButton(f) => Some((f, "Button", Some("EventButton"))),
+        FrameElement::ContainedAlertFrame(f) => Some((f, "Button", Some("ContainedAlertFrame"))),
+        FrameElement::ItemButton(f) => Some((f, "ItemButton", None)),
+        FrameElement::CheckButton(f) => Some((f, "CheckButton", None)),
         FrameElement::EditBox(f)
-        | FrameElement::EventEditBox(f) => Some((f, "EditBox")),
+        | FrameElement::EventEditBox(f) => Some((f, "EditBox", None)),
         FrameElement::ScrollFrame(f)
-        | FrameElement::EventScrollFrame(f) => Some((f, "ScrollFrame")),
-        FrameElement::Slider(f) => Some((f, "Slider")),
-        FrameElement::StatusBar(f) => Some((f, "StatusBar")),
-        FrameElement::Cooldown(f) => Some((f, "Cooldown")),
-        FrameElement::GameTooltip(f) => Some((f, "GameTooltip")),
-        FrameElement::ColorSelect(f) => Some((f, "ColorSelect")),
+        | FrameElement::EventScrollFrame(f) => Some((f, "ScrollFrame", None)),
+        FrameElement::Slider(f) => Some((f, "Slider", None)),
+        FrameElement::StatusBar(f) => Some((f, "StatusBar", None)),
+        FrameElement::Cooldown(f) => Some((f, "Cooldown", None)),
+        FrameElement::GameTooltip(f) => Some((f, "GameTooltip", None)),
+        FrameElement::ColorSelect(f) => Some((f, "ColorSelect", None)),
         FrameElement::Model(f)
-        | FrameElement::DressUpModel(f) => Some((f, "Model")),
-        FrameElement::ModelScene(f) => Some((f, "ModelScene")),
+        | FrameElement::DressUpModel(f) => Some((f, "Model", None)),
+        FrameElement::ModelScene(f) => Some((f, "ModelScene", None)),
         FrameElement::PlayerModel(f)
-        | FrameElement::CinematicModel(f) => Some((f, "PlayerModel")),
+        | FrameElement::CinematicModel(f) => Some((f, "PlayerModel", None)),
         FrameElement::MessageFrame(f)
-        | FrameElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame")),
-        FrameElement::SimpleHTML(f) => Some((f, "SimpleHTML")),
+        | FrameElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame", None)),
+        FrameElement::SimpleHTML(f) => Some((f, "SimpleHTML", None)),
         FrameElement::EventFrame(f)
         | FrameElement::TaxiRouteFrame(f)
         | FrameElement::ModelFFX(f)
@@ -55,7 +55,7 @@ fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str
         | FrameElement::Browser(f)
         | FrameElement::Minimap(f)
         | FrameElement::MovieFrame(f)
-        | FrameElement::WorldFrame(f) => Some((f, "Frame")),
+        | FrameElement::WorldFrame(f) => Some((f, "Frame", None)),
         FrameElement::ScopedModifier(_) => None,
     }
 }
@@ -124,6 +124,7 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     // Apply ButtonText and EditBox FontString
     apply_button_text(lua, template, frame_name);
     apply_editbox_fontstring(lua, template, frame_name);
+    apply_animation_groups(lua, template, frame_name);
 
     // Create child frames defined in the template
     let mut child_names = create_child_frames(lua, template, frame_name);
@@ -296,6 +297,13 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
             post_init.push_str("f.HideBase = f.Hide ");
             post_init.push_str("f.IsShownBase = f.IsShown ");
         }
+        if name == "EventFrameMixin" || name == "CallbackRegistryMixin" {
+            // Initialize callbackTables immediately so TriggerEvent works even
+            // before OnLoad fires (Show() during creation can trigger OnShow).
+            post_init.push_str(
+                "if f.OnLoad_Intrinsic then pcall(f.OnLoad_Intrinsic, f) end ",
+            );
+        }
     }
     let code = format!(
         "do local f = {} if f then {} {} end end",
@@ -350,10 +358,10 @@ pub(crate) fn fire_on_load(lua: &Lua, frame_name: &str) {
 fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str) -> Vec<String> {
     let mut all_names = Vec::new();
     for child in frame.all_frame_elements() {
-        let Some((child_frame, child_type)) = frame_element_type(child) else {
+        let Some((child_frame, child_type, intrinsic)) = frame_element_type(child) else {
             continue;
         };
-        let names = create_child_frame_from_template(lua, child_frame, child_type, parent_name);
+        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name);
         all_names.extend(names);
     }
     all_names
@@ -365,6 +373,7 @@ fn create_child_frame_from_template(
     lua: &Lua,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
+    intrinsic: Option<&str>,
     parent_name: &str,
 ) -> Vec<String> {
     let child_name = frame
@@ -381,6 +390,27 @@ fn create_child_frame_from_template(
         );
     }
 
+    // Apply intrinsic template (e.g. DropdownButton) and set the intrinsic property.
+    if let Some(intrinsic_name) = intrinsic {
+        apply_templates_from_registry(lua, &child_name, intrinsic_name);
+        let code = format!(
+            "{}.intrinsic = \"{}\"",
+            lua_global_ref(&child_name),
+            intrinsic_name
+        );
+        let _ = lua.load(&code).exec();
+    }
+
+    // Apply inherited templates AFTER CreateFrame but BEFORE inline content.
+    // CreateFrame is called without the template arg so it doesn't fire OnLoad
+    // prematurely. Templates set up mixin/scripts, then inline content adds
+    // layers/children, and finally the deferred OnLoad fires with everything
+    // in place.
+    let inherits = frame.inherits.as_deref().unwrap_or("");
+    if !inherits.is_empty() {
+        apply_templates_from_registry(lua, &child_name, inherits);
+    }
+
     let nested_names = apply_inline_frame_content(lua, frame, &child_name);
 
     let mut all_names = nested_names;
@@ -389,28 +419,25 @@ fn create_child_frame_from_template(
 }
 
 /// Build Lua code to create a child frame with size, anchors, visibility, and parentKey.
+///
+/// The `inherits` template is NOT passed to CreateFrame here — it's applied
+/// separately in `create_child_frame_from_template` so that inline XML content
+/// (layers, children) is fully created before OnLoad fires.
 fn build_create_child_code(
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     parent_name: &str,
     child_name: &str,
 ) -> String {
-    let inherits = frame.inherits.as_deref().unwrap_or("");
-
     let mut code = format!(
         r#"
         local parent = {}
         if parent then
-            local child = CreateFrame("{}", "{}", parent, {})
+            local child = CreateFrame("{}", "{}", parent, nil)
         "#,
         lua_global_ref(parent_name),
         widget_type,
         escape_lua_string(child_name),
-        if inherits.is_empty() {
-            "nil".to_string()
-        } else {
-            format!("\"{}\"", inherits)
-        }
     );
 
     append_child_size_and_anchors(&mut code, frame, parent_name);
@@ -454,12 +481,14 @@ fn append_child_size_and_anchors(code: &mut String, frame: &FrameXml, parent_nam
 /// Append parentKey and parentArray assignment (with template chain resolution).
 fn append_child_parent_refs(code: &mut String, frame: &FrameXml) {
     if let Some(parent_key) = &resolve_inherited_field(frame, |f| f.parent_key.as_ref()) {
-        code.push_str(&format!("            parent.{} = child\n", parent_key));
+        let key = escape_lua_string(parent_key);
+        code.push_str(&format!("            parent[\"{key}\"] = child\n"));
     }
     if let Some(parent_array) = &resolve_inherited_field(frame, |f| f.parent_array.as_ref()) {
+        let arr = escape_lua_string(parent_array);
         code.push_str(&format!(
-            "            parent.{parent_array} = parent.{parent_array} or {{}}\n\
-             table.insert(parent.{parent_array}, child)\n"
+            "            parent[\"{arr}\"] = parent[\"{arr}\"] or {{}}\n\
+             table.insert(parent[\"{arr}\"], child)\n"
         ));
     }
 }
@@ -492,10 +521,10 @@ fn create_scroll_child_frames(
 ) -> Vec<String> {
     let mut all_names = Vec::new();
     for child in children {
-        let Some((child_frame, child_type)) = frame_element_type(child) else {
+        let Some((child_frame, child_type, intrinsic)) = frame_element_type(child) else {
             continue;
         };
-        let names = create_child_frame_from_template(lua, child_frame, child_type, parent_name);
+        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name);
         all_names.extend(names);
     }
     all_names
@@ -601,16 +630,9 @@ fn apply_editbox_fontstring(lua: &Lua, frame: &crate::xml::FrameXml, frame_name:
 
 /// Apply scripts from template.
 fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, frame_name: &str) {
-    use crate::loader::helpers::apply_script_handlers;
+    use crate::loader::helpers::generate_scripts_code;
 
-    let handlers_code = apply_script_handlers("frame", &[
-        ("OnLoad", scripts.on_load.last()),
-        ("OnEvent", scripts.on_event.last()),
-        ("OnUpdate", scripts.on_update.last()),
-        ("OnClick", scripts.on_click.last()),
-        ("OnShow", scripts.on_show.last()),
-        ("OnHide", scripts.on_hide.last()),
-    ]);
+    let handlers_code = generate_scripts_code(scripts);
 
     if !handlers_code.is_empty() {
         let frame_ref = lua_global_ref(frame_name);
