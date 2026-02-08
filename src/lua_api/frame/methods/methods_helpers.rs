@@ -148,3 +148,32 @@ pub fn get_or_create_button_texture(
 
     texture_id
 }
+
+/// Resolve a Lua value that can be a file path (string) or a file data ID (number).
+///
+/// WoW's SetTexture/SetNormalTexture/etc. accept either a string path like
+/// `"Interface\\Icons\\Spell_Holy_CrusaderStrike"` or a numeric file data ID like
+/// `135891`. This helper handles both cases, looking up numeric IDs in the manifest.
+pub fn resolve_file_data_id_or_path(value: &Value) -> Option<String> {
+    match value {
+        Value::String(s) => {
+            let s = s.to_str().ok()?;
+            // A string that parses as an integer is a file data ID passed as string
+            if let Ok(id) = s.parse::<u32>() {
+                let path = crate::manifest_interface_data::get_texture_path(id)?;
+                Some(format!("Interface\\{}", path.replace('/', "\\")))
+            } else {
+                Some(s.to_string())
+            }
+        }
+        Value::Integer(n) => {
+            let path = crate::manifest_interface_data::get_texture_path(*n as u32)?;
+            Some(format!("Interface\\{}", path.replace('/', "\\")))
+        }
+        Value::Number(n) => {
+            let path = crate::manifest_interface_data::get_texture_path(*n as u32)?;
+            Some(format!("Interface\\{}", path.replace('/', "\\")))
+        }
+        _ => None,
+    }
+}
