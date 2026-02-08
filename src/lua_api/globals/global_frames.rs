@@ -348,6 +348,7 @@ fn register_misc_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     register_hidden_frame_global(lua, state, "FriendsFrame")?;
 
     setup_party_member_frame_pool(lua)?;
+    setup_enemy_target_button(lua)?;
     Ok(())
 }
 
@@ -392,6 +393,18 @@ fn setup_party_member_frame_pool(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+/// Create a clickable button to target the simulated enemy NPC.
+fn setup_enemy_target_button(lua: &Lua) -> Result<()> {
+    lua.load(r#"
+        local btn = CreateFrame("Button", "SimEnemyTargetButton", UIParent)
+        btn:SetSize(120, 24)
+        btn:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -10, -10)
+        btn:SetText("Hogger (F6)")
+        btn:RegisterForClicks("LeftButtonUp")
+        btn:SetScript("OnClick", function() TargetUnit("enemy1") end)
+    "#).exec()
+}
+
 /// Register empty table globals.
 fn register_table_globals(lua: &Lua) -> Result<()> {
     lua.globals()
@@ -414,7 +427,6 @@ pub fn hide_runtime_hidden_frames(lua: &Lua) -> Result<()> {
         "FocusFrame",
         "TargetFrameSpellBar",
         "FocusFrameSpellBar",
-        "PartyFrame",
         "PetFrame",
         // Boss frames: no encounter active
         "BossTargetFrameContainer",
