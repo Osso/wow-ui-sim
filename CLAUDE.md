@@ -2,6 +2,12 @@
 
 ## Architecture Docs
 
+- `docs/layout-system.md` - Anchor/layout system: AnchorPoint, single vs multi-anchor resolution, cycle detection, coordinate systems
+- `docs/texture-atlas-system.md` - Texture loading, atlas lookup (~50K entries), nine-slice kits, tiling, UV remapping
+- `docs/addon-loading-pipeline.md` - TOC parsing, XML/Lua loading, template registry, SavedVariables, Blizzard addon load order
+- `docs/rendering-pipeline.md` - QuadBatch, WGSL shaders, tiered GPU atlas, glyph atlas, strata sorting, hit testing, alpha propagation
+- `docs/widget-system.md` - Frame struct (~140 fields), WidgetType enum (18 types), WidgetRegistry, default children, visibility
+- `docs/lua-api.md` - WowLuaEnv, FrameHandle, 200+ globals, 300+ frame methods, C_* namespaces, animations, implementation status
 - `docs/frame-data-flow.md` - Mixin, events, metamethods, script dispatch
 - `docs/button-text-rendering.md` - Button text draw order, three-slice text-behind-background bug
 - `docs/glow-plan.md` - Glow/shine effect plan
