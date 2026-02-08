@@ -119,6 +119,7 @@ fn add_create_font_string_method<M: UserDataMethods<FrameHandle>>(methods: &mut 
         let args: Vec<Value> = args.into_iter().collect();
         let name_raw = extract_string_arg(&args, 0);
         let layer = extract_string_arg(&args, 1);
+        let inherits = extract_string_arg(&args, 2);
         let name = resolve_child_name(name_raw, this);
 
         let mut fontstring = Frame::new(WidgetType::FontString, name.clone(), Some(this.id));
@@ -128,8 +129,20 @@ fn add_create_font_string_method<M: UserDataMethods<FrameHandle>>(methods: &mut 
                 fontstring.draw_layer = draw_layer;
             }
 
+        apply_font_inherit(lua, &mut fontstring, inherits.as_deref());
+
         register_child_widget(lua, this, fontstring, &name)
     });
+}
+
+/// Apply justifyH/justifyV from an inherited Font object to a fontstring widget.
+fn apply_font_inherit(lua: &mlua::Lua, frame: &mut Frame, inherits: Option<&str>) {
+    let Some(name) = inherits else { return };
+    let Ok(globals) = lua.globals().get::<Value>(name) else { return };
+    let Value::Table(tbl) = globals else { return };
+    if let Ok(h) = tbl.get::<String>("__justifyH") {
+        frame.justify_h = crate::widget::TextJustify::from_wow_str(&h);
+    }
 }
 
 /// CreateAnimationGroup(name, inherits)
