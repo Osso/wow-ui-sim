@@ -88,7 +88,25 @@ impl shader::Program<Message> for &App {
         let size = bounds.size();
         self.screen_size.set(size);
         self.sync_screen_size_to_state(size);
-        let quads = self.get_or_rebuild_quads(size);
+        let mut quads = self.get_or_rebuild_quads(size);
+
+        // Append cursor quad on top of everything
+        if let Some(pos) = self.mouse_position {
+            const CURSOR_SIZE: f32 = 32.0;
+            let cursor_bounds = Rectangle::new(
+                Point::new(pos.x, pos.y),
+                Size::new(CURSOR_SIZE, CURSOR_SIZE),
+            );
+            // Debug test: two solid quads to verify both render
+            quads.push_solid(cursor_bounds, [1.0, 0.0, 1.0, 0.8]);
+            // Smaller green quad on top - should be visible if second quad renders
+            let inner = Rectangle::new(
+                Point::new(pos.x + 4.0, pos.y + 4.0),
+                Size::new(CURSOR_SIZE - 8.0, CURSOR_SIZE - 8.0),
+            );
+            quads.push_solid(inner, [0.0, 1.0, 0.0, 1.0]);
+        }
+
         let textures = self.load_new_textures(&quads);
 
         // Update frame time with EMA (alpha = 0.33 for ~5 sample smoothing)
@@ -105,10 +123,14 @@ impl shader::Program<Message> for &App {
     fn mouse_interaction(
         &self,
         _state: &Self::State,
-        _bounds: Rectangle,
-        _cursor: mouse::Cursor,
+        bounds: Rectangle,
+        cursor: mouse::Cursor,
     ) -> mouse::Interaction {
-        mouse::Interaction::default()
+        if cursor.position_in(bounds).is_some() {
+            mouse::Interaction::Hidden
+        } else {
+            mouse::Interaction::default()
+        }
     }
 }
 
