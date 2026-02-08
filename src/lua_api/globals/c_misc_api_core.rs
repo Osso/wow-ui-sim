@@ -88,6 +88,7 @@ fn register_c_pet_battles(lua: &Lua) -> Result<()> {
     t.set("GetPower", lua.create_function(|_, (_o, _p): (i32, i32)| Ok(0i32))?)?;
     t.set("GetAllEffectNames", lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?)?;
     t.set("GetAllStates", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetBattleState", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
 
     globals.set("C_PetBattles", t)?;
     Ok(())
@@ -199,6 +200,7 @@ fn register_c_player_info_misc(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("GetDisplayID", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set("GetNativeDisplayID", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set("GetContentDifficultyQuestForPlayer", lua.create_function(|_, _id: i32| Ok(1i32))?)?;
+    t.set("IsExpansionLandingPageUnlockedForPlayer", lua.create_function(|_, ()| Ok(false))?)?;
     Ok(())
 }
 
@@ -221,6 +223,7 @@ fn register_c_party_info(lua: &Lua) -> Result<()> {
     t.set("GetMinLevel", lua.create_function(|_, _cat: Option<i32>| Ok(1i32))?)?;
     t.set("GetGatheringRequestInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("GetInstanceAbandonVoteTime", lua.create_function(|_, ()| Ok((0.0f64, 0.0f64)))?)?;
+    t.set("IsPartyWalkIn", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_PartyInfo", t)?;
     Ok(())
 }
