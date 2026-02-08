@@ -159,11 +159,23 @@ pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)
 fn topological_sort_addons(
     mut addons: HashMap<String, (PathBuf, TocFile)>,
 ) -> Vec<(String, PathBuf)> {
-    // Extract base UI addons first, in fixed order
+    // Extract base UI addons in fixed order, pulling their non-base dependencies first.
+    let base_set: std::collections::HashSet<&str> =
+        BASE_UI_ADDONS.iter().copied().collect();
     let mut result = Vec::with_capacity(addons.len());
+    let mut loaded: std::collections::HashSet<String> = std::collections::HashSet::new();
     for &base in BASE_UI_ADDONS {
+        // Pull non-base dependencies before this base addon
+        let deps = addons
+            .get(base)
+            .map(|(_, toc)| toc.dependencies())
+            .unwrap_or_default();
+        for dep in deps {
+            pull_base_deps(&dep, &mut addons, &mut result, &mut loaded, &base_set);
+        }
         if let Some((toc_path, _)) = addons.remove(base) {
             result.push((base.to_string(), toc_path));
+            loaded.insert(base.to_string());
         }
     }
 
@@ -179,6 +191,30 @@ fn topological_sort_addons(
     }));
 
     result
+}
+
+/// Recursively pull non-base dependencies from the addon pool into the result list.
+fn pull_base_deps(
+    name: &str,
+    addons: &mut HashMap<String, (PathBuf, TocFile)>,
+    result: &mut Vec<(String, PathBuf)>,
+    loaded: &mut std::collections::HashSet<String>,
+    base_set: &std::collections::HashSet<&str>,
+) {
+    if loaded.contains(name) || base_set.contains(name) {
+        return;
+    }
+    let deps = addons
+        .get(name)
+        .map(|(_, toc)| toc.dependencies())
+        .unwrap_or_default();
+    for dep in deps {
+        pull_base_deps(&dep, addons, result, loaded, base_set);
+    }
+    if let Some((toc_path, _)) = addons.remove(name) {
+        result.push((name.to_string(), toc_path));
+        loaded.insert(name.to_string());
+    }
 }
 
 /// Foundational addons that form the base UI layer.
