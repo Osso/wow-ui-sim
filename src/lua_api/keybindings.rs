@@ -42,6 +42,12 @@ const BINDING_ACTIONS: &[BindingAction] = &[
     BindingAction { action: "TOGGLESOCIAL", lua_code: "ToggleFriendsFrame()" },
     BindingAction { action: "TOGGLEGUILDTAB", lua_code: "ToggleGuildFrame()" },
     BindingAction { action: "TOGGLEQUESTLOG", lua_code: "ToggleQuestLog()" },
+    BindingAction { action: "TARGETSELF", lua_code: "TargetUnit('player')" },
+    BindingAction { action: "TARGETPARTYMEMBER1", lua_code: "TargetUnit('party1')" },
+    BindingAction { action: "TARGETPARTYMEMBER2", lua_code: "TargetUnit('party2')" },
+    BindingAction { action: "TARGETPARTYMEMBER3", lua_code: "TargetUnit('party3')" },
+    BindingAction { action: "TARGETPARTYMEMBER4", lua_code: "TargetUnit('party4')" },
+    BindingAction { action: "TARGETNEARESTENEMY", lua_code: "TargetUnit('enemy1')" },
 ];
 
 /// Default key→action assignments (WoW defaults + simulator overrides).
@@ -61,6 +67,13 @@ const DEFAULT_KEYS: &[DefaultKey] = &[
     DefaultKey { key: "O", action: "TOGGLESOCIAL" },
     DefaultKey { key: "J", action: "TOGGLEGUILDTAB" },
     DefaultKey { key: "M", action: "TOGGLEWORLDMAP" },
+    DefaultKey { key: "F1", action: "TARGETSELF" },
+    DefaultKey { key: "F2", action: "TARGETPARTYMEMBER1" },
+    DefaultKey { key: "F3", action: "TARGETPARTYMEMBER2" },
+    DefaultKey { key: "F4", action: "TARGETPARTYMEMBER3" },
+    DefaultKey { key: "F5", action: "TARGETPARTYMEMBER4" },
+    DefaultKey { key: "F6", action: "TARGETNEARESTENEMY" },
+    DefaultKey { key: "TAB", action: "TARGETNEARESTENEMY" },
 ];
 
 /// Initialize the binding tables in Lua and populate with defaults.
