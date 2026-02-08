@@ -146,7 +146,7 @@ pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)
         let Ok(toc) = TocFile::from_file(&toc_path) else {
             continue;
         };
-        if toc.is_glue_only() {
+        if toc.is_glue_only() || toc.is_ptr_only() || toc.is_game_type_restricted() {
             continue;
         }
         if toc.is_load_on_demand() {
