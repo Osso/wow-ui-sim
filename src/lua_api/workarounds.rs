@@ -9,7 +9,6 @@ use super::WowLuaEnv;
 /// (e.g. EDIT_MODE_LAYOUTS_UPDATED repositions managed frames).
 pub fn apply_post_event(env: &WowLuaEnv) {
     fix_bags_bar_anchor(env);
-    layout_bags_bar(env);
 }
 
 /// Apply all post-load workarounds. Called after addon loading, before events.
@@ -28,6 +27,14 @@ pub fn apply(env: &WowLuaEnv) {
     init_objective_tracker(env);
     show_chat_frame(env);
     init_bag_bar(env);
+    hide_super_tracked_frame(env);
+}
+
+/// SuperTrackedFrame shows a quest navigation arrow positioned by the engine's
+/// 3D-to-screen projection (C_SuperTrack). Without the 3D world, OnUpdate never
+/// repositions it, so the icon renders at default (0,0) in the top-left corner.
+fn hide_super_tracked_frame(env: &WowLuaEnv) {
+    let _ = env.exec("if SuperTrackedFrame then SuperTrackedFrame:Hide() end");
 }
 
 /// MapCanvasScrollControllerMixin:IsZoomingOut/In compare targetScale with
@@ -486,7 +493,6 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
 fn init_bag_bar(env: &WowLuaEnv) {
     fix_bags_bar_anchor(env);
     update_bag_button_textures(env);
-    layout_bags_bar(env);
 }
 
 /// Re-anchor BagsBar to MicroButtonAndBagsBar now that it exists.
@@ -496,21 +502,6 @@ fn fix_bags_bar_anchor(env: &WowLuaEnv) {
         if BagsBar and MicroButtonAndBagsBar then
             BagsBar:ClearAllPoints()
             BagsBar:SetPoint("TOPRIGHT", MicroButtonAndBagsBar, "TOPRIGHT", 0, 0)
-        end
-    "#,
-    );
-}
-
-/// Run BagsBar:Layout() to position bag buttons in a chain left of the backpack.
-///
-/// Layout() is normally called via EventUtil.ContinueOnVariablesLoaded during
-/// VARIABLES_LOADED, but may not fire reliably in the simulator. Call it
-/// explicitly to position BagBarExpandToggle and CharacterBagNSlot buttons.
-fn layout_bags_bar(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if BagsBar and BagsBar.Layout then
-            pcall(BagsBar.Layout, BagsBar)
         end
     "#,
     );
