@@ -172,6 +172,52 @@ fn process_frame_element(env: &LoaderEnv<'_>, element: &XmlElement) -> Result<()
     Ok(())
 }
 
+/// Lua template for Font objects. Placeholders: {name}, {font_path}, {font_height},
+/// {font_outline}, {justify_h}, {justify_v}.
+const FONT_LUA_TEMPLATE: &str = r#"
+{name} = {
+    __font = "{font_path}",
+    __height = {font_height},
+    __outline = "{font_outline}",
+    __r = 1.0, __g = 1.0, __b = 1.0,
+    __justifyH = "{justify_h}",
+    __justifyV = "{justify_v}",
+    SetTextColor = function(self, r, g, b)
+        self.__r = r; self.__g = g; self.__b = b
+    end,
+    GetFont = function(self)
+        return self.__font, self.__height, self.__outline
+    end,
+    SetFont = function(self, path, height, flags)
+        self.__font = path
+        if height then self.__height = height end
+        if flags then self.__outline = flags end
+    end,
+    SetJustifyH = function(self, justify)
+        self.__justifyH = justify
+    end,
+    GetJustifyH = function(self)
+        return self.__justifyH
+    end,
+    SetJustifyV = function(self, justify)
+        self.__justifyV = justify
+    end,
+    GetJustifyV = function(self)
+        return self.__justifyV
+    end,
+    CopyFontObject = function(self, source)
+        if source.__font then self.__font = source.__font end
+        if source.__height then self.__height = source.__height end
+        if source.__outline then self.__outline = source.__outline end
+        if source.__r then self.__r = source.__r end
+        if source.__g then self.__g = source.__g end
+        if source.__b then self.__b = source.__b end
+        if source.__justifyH then self.__justifyH = source.__justifyH end
+        if source.__justifyV then self.__justifyV = source.__justifyV end
+    end,
+}
+"#;
+
 /// Create a Font object in Lua from XML definition.
 fn create_font_object(
     env: &LoaderEnv<'_>,
@@ -182,47 +228,14 @@ fn create_font_object(
         return Ok(());
     }
 
-    let font_path = font
-        .font
-        .clone()
-        .unwrap_or_else(|| "Fonts/FRIZQT__.TTF".to_string());
-    let font_path_escaped = font_path.replace('\\', "/");
-    let font_height = font.height.unwrap_or(12.0);
-    let font_outline = font.outline.clone().unwrap_or_default();
-
-    let lua_code = format!(
-        r#"
-        {name} = {{
-            __font = "{font_path}",
-            __height = {font_height},
-            __outline = "{font_outline}",
-            __r = 1.0, __g = 1.0, __b = 1.0,
-            SetTextColor = function(self, r, g, b)
-                self.__r = r; self.__g = g; self.__b = b
-            end,
-            GetFont = function(self)
-                return self.__font, self.__height, self.__outline
-            end,
-            SetFont = function(self, path, height, flags)
-                self.__font = path
-                if height then self.__height = height end
-                if flags then self.__outline = flags end
-            end,
-            CopyFontObject = function(self, source)
-                if source.__font then self.__font = source.__font end
-                if source.__height then self.__height = source.__height end
-                if source.__outline then self.__outline = source.__outline end
-                if source.__r then self.__r = source.__r end
-                if source.__g then self.__g = source.__g end
-                if source.__b then self.__b = source.__b end
-            end,
-        }}
-        "#,
-        name = name,
-        font_path = font_path_escaped,
-        font_height = font_height,
-        font_outline = font_outline
-    );
+    let font_path = font.font.as_deref().unwrap_or("Fonts/FRIZQT__.TTF").replace('\\', "/");
+    let lua_code = FONT_LUA_TEMPLATE
+        .replace("{name}", name)
+        .replace("{font_path}", &font_path)
+        .replace("{font_height}", &font.height.unwrap_or(12.0).to_string())
+        .replace("{font_outline}", font.outline.as_deref().unwrap_or(""))
+        .replace("{justify_h}", font.justify_h.as_deref().unwrap_or("CENTER"))
+        .replace("{justify_v}", font.justify_v.as_deref().unwrap_or("MIDDLE"));
 
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!("Failed to create font {}: {}", name, e))
