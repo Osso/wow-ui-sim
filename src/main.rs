@@ -136,8 +136,12 @@ fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
                 let skip = name.starts_with('.')
                     || name == "BlizzardUI";
                 if !skip
-                    && let Some(toc) = find_toc_file(&path) {
-                        addons.push((name, toc));
+                    && let Some(toc_path) = find_toc_file(&path) {
+                        if let Ok(toc) = TocFile::from_file(&toc_path) {
+                            if !toc.is_glue_only() && !toc.is_ptr_only() && !toc.is_game_type_restricted() {
+                                addons.push((name, toc_path));
+                            }
+                        }
                     }
             }
         }
@@ -479,6 +483,7 @@ fn fire_startup_events(env: &WowLuaEnv) {
     fire("UPDATE_BINDINGS");
     fire("DISPLAY_SIZE_CHANGED");
     fire("UI_SCALE_CHANGED");
+    fire("UPDATE_CHAT_WINDOWS");
     fire("PLAYER_LEAVING_WORLD");
 }
 
