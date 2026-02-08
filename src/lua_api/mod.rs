@@ -26,7 +26,7 @@ pub use layout::{
 pub use loader_env::LoaderEnv;
 pub use message_frame::MessageFrameData;
 pub use simple_html::SimpleHtmlData;
-pub use state::{AddonInfo, PendingTimer, SimState};
+pub use state::{AddonInfo, PendingTimer, SimState, tick_party_health};
 pub use tooltip::TooltipData;
 pub use globals::global_frames::hide_runtime_hidden_frames;
 
