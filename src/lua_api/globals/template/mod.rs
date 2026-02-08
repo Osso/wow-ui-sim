@@ -422,7 +422,19 @@ fn append_child_size_and_anchors(code: &mut String, frame: &FrameXml, parent_nam
     if frame.set_all_points == Some(true) {
         code.push_str("            child:SetAllPoints(true)\n");
     }
-    if frame.hidden == Some(true) {
+    let hidden = frame.hidden.or_else(|| {
+        let inherits = frame.inherits.as_deref().unwrap_or("");
+        if inherits.is_empty() {
+            return None;
+        }
+        for entry in &get_template_chain(inherits) {
+            if entry.frame.hidden.is_some() {
+                return entry.frame.hidden;
+            }
+        }
+        None
+    });
+    if hidden == Some(true) {
         code.push_str("            child:Hide()\n");
     }
 }
