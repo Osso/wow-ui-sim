@@ -261,7 +261,7 @@ impl App {
         let keyboard = iced::event::listen_with(|event, status, _window| {
             use iced::keyboard;
             if let iced::Event::Keyboard(keyboard::Event::KeyPressed {
-                key, modifiers, ..
+                key, modifiers, text, ..
             }) = &event
             {
                 // Ctrl+R is a simulator-only shortcut
@@ -272,7 +272,14 @@ impl App {
                 // (i.e., when the command input is not focused)
                 if matches!(status, iced::event::Status::Ignored)
                     && let Some(wow_key) = super::keybinds::iced_key_to_wow(key) {
-                        return Some(Message::KeyPress(wow_key));
+                        // Include raw text for character input into focused EditBox.
+                        // Skip text when Ctrl/Alt modifiers are held (shortcuts, not typing).
+                        let raw_text = if modifiers.control() || modifiers.alt() {
+                            None
+                        } else {
+                            text.as_ref().map(|t| t.to_string())
+                        };
+                        return Some(Message::KeyPress(wow_key, raw_text));
                     }
             }
             None
