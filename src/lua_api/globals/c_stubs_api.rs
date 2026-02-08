@@ -36,6 +36,7 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_c_campaign_info(lua)?;
     register_quest_global_functions(lua)?;
     register_chat_stubs(lua)?;
+    register_chat_window_stubs(lua)?;
     register_c_macro(lua)?;
     register_c_wowlabs_matchmaking(lua)?;
     register_fading_frame_stubs(lua)?;
@@ -90,6 +91,7 @@ fn register_c_lfg_list(lua: &Lua) -> Result<()> {
     t.set("HasActiveEntryInfo", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetSearchResultInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
     t.set("CanCreateQuestGroup", lua.create_function(|_, _quest_id: i32| Ok(false))?)?;
+    t.set("GetAvailableRoles", lua.create_function(|_, ()| Ok((true, true, true)))?)?;
     lua.globals().set("C_LFGList", t)?;
     Ok(())
 }
@@ -349,6 +351,23 @@ fn register_quest_leaderboard_functions(lua: &Lua, g: &mlua::Table) -> Result<()
     Ok(())
 }
 
+/// Chat window management stubs needed by FloatingChatFrame.
+fn register_chat_window_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("SetChatWindowLocked", lua.create_function(|_, (_id, _locked): (i32, bool)| Ok(()))?)?;
+    g.set("SetChatWindowUninteractable", lua.create_function(|_, (_id, _flag): (i32, bool)| Ok(()))?)?;
+    g.set("GetChatWindowSavedDimensions", lua.create_function(|_, _id: i32| {
+        Ok((430.0f64, 120.0f64))
+    })?)?;
+    g.set("SetChatWindowColor", lua.create_function(|_, (_id, _r, _g, _b): (i32, f64, f64, f64)| Ok(()))?)?;
+    g.set("SetChatWindowAlpha", lua.create_function(|_, (_id, _a): (i32, f64)| Ok(()))?)?;
+    g.set("GetChatWindowSavedPosition", lua.create_function(|_, _id: i32| {
+        // Returns: point, yOffset, xOffset, relativePoint
+        Ok(("BOTTOMLEFT", 0.0f64, 0.0f64, "BOTTOMLEFT"))
+    })?)?;
+    Ok(())
+}
+
 /// Chat-related global function stubs needed by Blizzard_ChatFrame.
 fn register_chat_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
@@ -467,9 +486,34 @@ fn register_missing_globals(lua: &Lua) -> Result<()> {
     g.set("HasTempShapeshiftActionBar", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("PutItemInBackpack", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("PutItemInBag", lua.create_function(|_, _bag: i32| Ok(()))?)?;
+    register_lfg_and_guild_stubs(lua, &g)?;
+    register_action_button_util(lua, &g)?;
+    Ok(())
+}
 
-    // ActionButtonUtil - enum tables needed by Blizzard_SpellSearch at load time
-    // (Blizzard_ActionBar will overwrite this with the full version when it loads)
+/// LFG, dungeon finder, guild, and honor global stubs.
+fn register_lfg_and_guild_stubs(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    g.set("GetLFGProposal", lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?)?;
+    g.set("GetLFGQueuedList", lua.create_function(|_, _args: mlua::MultiValue| Ok(mlua::MultiValue::new()))?)?;
+    g.set("GetActionBarToggles", lua.create_function(|_, ()| Ok((1i32, 1i32, 1i32, 1i32)))?)?;
+    g.set("UnitPowerBarTimerInfo", lua.create_function(|_, _unit: Value| Ok(Value::Nil))?)?;
+    g.set("GetWebTicket", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    g.set("UnitGroupRolesAssigned", lua.create_function(|_, _unit: String| Ok("NONE"))?)?;
+    g.set("GuildControlGetNumRanks", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("RequestGuildChallengeInfo", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("GetGuildFactionGroup", lua.create_function(|_, ()| Ok(1i32))?)?;
+    g.set("UnitHonor", lua.create_function(|_, _unit: String| Ok(0i32))?)?;
+    g.set("UnitHonorMax", lua.create_function(|_, _unit: String| Ok(100i32))?)?;
+    g.set("UnitHonorLevel", lua.create_function(|_, _unit: String| Ok(1i32))?)?;
+    g.set("GetLFGInfoServer", lua.create_function(|_, (_cat, _id): (Value, Value)| {
+        Ok(mlua::MultiValue::new())
+    })?)?;
+    Ok(())
+}
+
+/// ActionButtonUtil enum tables needed by Blizzard_SpellSearch at load time.
+/// Blizzard_ActionBar will overwrite this with the full version when it loads.
+fn register_action_button_util(lua: &Lua, g: &mlua::Table) -> Result<()> {
     let abu = lua.create_table()?;
     let status = lua.create_table()?;
     status.set("NotMissing", 1)?;
@@ -489,7 +533,6 @@ fn register_missing_globals(lua: &Lua) -> Result<()> {
     bar_type.set("OverrideBar", 18)?;
     abu.set("ActionBarType", bar_type)?;
     g.set("ActionButtonUtil", abu)?;
-
     Ok(())
 }
 
