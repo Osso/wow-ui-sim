@@ -58,6 +58,10 @@ pub(super) fn create_texture_from_template(
         code.push_str("            tex:Hide()\n");
     }
 
+    if let Some(a) = texture.alpha {
+        code.push_str(&format!("            tex:SetAlpha({})\n", a));
+    }
+
     if let Some(ref mode) = texture.alpha_mode {
         code.push_str(&format!("            tex:SetBlendMode(\"{}\")\n", mode));
     }
@@ -196,6 +200,10 @@ pub(super) fn create_fontstring_from_template(
 
     if fontstring.hidden == Some(true) {
         code.push_str("            fs:Hide()\n");
+    }
+
+    if let Some(a) = fontstring.alpha {
+        code.push_str(&format!("            fs:SetAlpha({})\n", a));
     }
 
     code.push_str("        end\n");
