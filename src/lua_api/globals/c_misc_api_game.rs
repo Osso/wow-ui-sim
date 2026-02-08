@@ -255,7 +255,7 @@ fn register_global_account_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
     g.set("GetExpansionTrialInfo", lua.create_function(|_, ()| Ok((false, 0i32)))?)?;
     g.set("UnitTrialBankedLevels", lua.create_function(|_, _u: Option<String>| Ok(0i32))?)?;
-    g.set("IsInGuild", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("IsInGuild", lua.create_function(|_, ()| Ok(true))?)?;
     g.set("GetGuildLogoInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     g.set("HasCompletedAnyAchievement", lua.create_function(|_, ()| Ok(true))?)?;
     g.set("CanShowAchievementUI", lua.create_function(|_, ()| Ok(true))?)?;

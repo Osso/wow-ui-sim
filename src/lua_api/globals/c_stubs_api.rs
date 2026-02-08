@@ -58,9 +58,11 @@ fn register_c_class_talents(lua: &Lua) -> Result<()> {
 
 fn register_c_guild(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
-    t.set("GetNumMembers", lua.create_function(|_, ()| Ok(0i32))?)?;
-    t.set("IsInGuild", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("GetGuildInfo", lua.create_function(|_, _unit: Option<String>| Ok(Value::Nil))?)?;
+    t.set("GetNumMembers", lua.create_function(|_, ()| Ok(5i32))?)?;
+    t.set("IsInGuild", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set("GetGuildInfo", lua.create_function(|_, _unit: Option<String>| {
+        Ok(("Stormwind Guard".to_string(), "Officer".to_string(), 2i32, ""))
+    })?)?;
     t.set("GetMemberInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
     lua.globals().set("C_Guild", t)?;
     Ok(())

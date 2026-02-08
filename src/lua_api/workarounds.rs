@@ -290,6 +290,119 @@ fn show_chat_frame(env: &WowLuaEnv) {
         end
     "#,
     );
+    start_fake_chat(env);
+}
+
+/// Start periodic fake chat messages across four channels, staggered by 5s.
+///
+/// Uses C_Timer.NewTicker to add pre-formatted messages directly via
+/// AddMessage, bypassing the event system which needs many unimplemented
+/// helpers (GetPlayerLink, ReplaceIconAndGroupExpressions, etc.).
+fn start_fake_chat(env: &WowLuaEnv) {
+    register_fake_chat_data(env);
+    schedule_fake_chat_tickers(env);
+}
+
+/// Register message pools, name lists, and helper functions as globals
+/// so the chat tickers can reference them.
+fn register_fake_chat_data(env: &WowLuaEnv) {
+    register_fake_chat_messages(env);
+    register_fake_chat_names(env);
+}
+
+/// Populate `_FakeChat.msgs` with message pools for each channel.
+fn register_fake_chat_messages(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not ChatFrame1 then return end
+        _FakeChat = { msgs = {}, names = {}, idx = {} }
+        _FakeChat.msgs.general = {
+            "Anyone know where the portal trainer is?",
+            "LFM Deadmines, need healer",
+            "WTS [Copper Bar] x20, 5g each",
+            "How do I get to Ironforge from here?",
+            "Is the Darkmoon Faire up this week?",
+            "Just hit level 60!",
+            "What's the fastest way to level cooking?",
+            "Any good guilds recruiting?",
+        }
+        _FakeChat.msgs.trade = {
+            "WTS [Enchant Weapon - Crusader] your mats + 10g tip",
+            "WTB [Large Brilliant Shard] x5, paying 3g each",
+            "LF Blacksmith to craft [Arcanite Reaper], have mats",
+            "WTS [Flask of the Titans] 45g, cheap!",
+            "WTB [Righteous Orb] x2, PST with price",
+            "Selling port to Dalaran, 1g",
+        }
+        _FakeChat.msgs.say = {
+            "Anyone else lagging?", "Thanks for the group!",
+            "Where did that quest NPC go?",
+            "I think I took a wrong turn somewhere",
+            "Wow, this place is huge", "Can someone help with this elite?",
+        }
+        _FakeChat.msgs.guild = {
+            "Hey everyone!", "Anyone up for a dungeon run?",
+            "Grats on the new gear!", "Guild bank has some free enchanting mats",
+            "Raid signup is up on the calendar",
+            "I just finished the attunement quest chain",
+        }
+    "#,
+    );
+}
+
+/// Populate `_FakeChat.names`, index counters, and the `pick` helper.
+fn register_fake_chat_names(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not _FakeChat then return end
+        _FakeChat.names.general = {"Thunderfury", "Moonwhisper", "Stabbymcstab", "Healbot", "Tanklord"}
+        _FakeChat.names.trade = {"Goldmaker", "Craftypants", "Auctioneer", "Bankalt"}
+        _FakeChat.names.say = {"Legolas", "Arthasdklol", "Pwnstar", "Noobslayer"}
+        _FakeChat.names.guild = {"Valorheart", "Shieldmaiden", "Firestorm", "Arcanewing"}
+        _FakeChat.idx = {general = 1, trade = 1, say = 1, guild = 1}
+        function _FakeChat:pick(channel)
+            local list = self.msgs[channel]
+            local i = self.idx[channel]
+            self.idx[channel] = (i % #list) + 1
+            return list[i], self.names[channel][math.random(#self.names[channel])]
+        end
+    "#,
+    );
+}
+
+/// Schedule four staggered C_Timer tickers that post to ChatFrame1.
+fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not _FakeChat then return end
+        local fc = _FakeChat
+        local function post(channel, prefix, r, g, b)
+            local msg, name = fc:pick(channel)
+            ChatFrame1:AddMessage(prefix ..
+                "|Hplayer:" .. name .. "|h[" .. name .. "]|h: " .. msg,
+                r, g, b)
+        end
+        -- General (0s offset, light orange)
+        C_Timer.After(0, function() C_Timer.NewTicker(20, function()
+            post("general", "|Hchannel:General|h[1. General]|h ", 1.0, 0.75, 0.5)
+        end) end)
+        -- Trade (5s offset, light orange)
+        C_Timer.After(5, function() C_Timer.NewTicker(20, function()
+            post("trade", "|Hchannel:Trade|h[2. Trade]|h ", 1.0, 0.75, 0.5)
+        end) end)
+        -- Say (10s offset, white — uses "says:" format)
+        C_Timer.After(10, function() C_Timer.NewTicker(20, function()
+            local msg, name = fc:pick("say")
+            ChatFrame1:AddMessage(
+                "|Hplayer:" .. name .. "|h[" .. name .. "]|h says: " .. msg,
+                1.0, 1.0, 1.0)
+        end) end)
+        -- Guild (15s offset, green)
+        C_Timer.After(15, function() C_Timer.NewTicker(20, function()
+            post("guild", "|Hchannel:Guild|h[Guild]|h ", 0.25, 1.0, 0.25)
+        end) end)
+    "#,
+    );
 }
 
 /// CHARACTERFRAME_SUBFRAMES lists PaperDollFrame, ReputationFrame, TokenFrame.
