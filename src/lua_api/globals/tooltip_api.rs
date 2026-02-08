@@ -4,7 +4,7 @@ use crate::lua_api::frame::FrameHandle;
 use crate::lua_api::tooltip::TooltipData;
 use crate::lua_api::SimState;
 use crate::widget::{Frame, FrameStrata, WidgetType};
-use mlua::{Lua, Result};
+use mlua::{Lua, ObjectLike, Result};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -76,6 +76,10 @@ fn register_game_tooltips(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()
                 .insert("NineSlice".to_string(), nine_slice_id);
         }
     }
+    // Initialize updateTooltipTimer so GameTooltip_OnUpdate doesn't error
+    // on arithmetic with nil before GameTooltip_SetTooltipWaitingForData runs.
+    lua.globals().get::<mlua::AnyUserData>("GameTooltip")?
+        .set("updateTooltipTimer", 0.0f64)?;
 
     create_tooltip_frame(lua, state, "ItemRefTooltip")?;
     for i in 1..=2 {
