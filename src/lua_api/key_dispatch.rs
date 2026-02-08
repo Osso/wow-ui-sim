@@ -30,23 +30,6 @@ impl WowLuaEnv {
         }
     }
 
-    /// Insert character text into the focused EditBox, firing OnChar and OnTextChanged.
-    pub fn send_char_input(&self, text: &str) -> Result<()> {
-        let focused = self.state.borrow().focused_frame_id;
-        let Some(fid) = focused else { return Ok(()) };
-        let is_editbox = self
-            .state
-            .borrow()
-            .widgets
-            .get(fid)
-            .map(|f| f.widget_type == crate::widget::WidgetType::EditBox)
-            .unwrap_or(false);
-        if !is_editbox {
-            return Ok(());
-        }
-        self.editbox_insert_text(fid, text)
-    }
-
     /// Escape priority: focused EditBox → CloseSpecialWindows → toggle GameMenuFrame.
     fn dispatch_escape(&self) -> Result<()> {
         let focused = self.state.borrow().focused_frame_id;
@@ -101,10 +84,15 @@ impl WowLuaEnv {
                     "HOME" => self.editbox_cursor_home(fid)?,
                     "END" => self.editbox_cursor_end(fid)?,
                     _ => {
-                        if let Some(t) = text
-                            && !t.is_empty() {
-                                self.editbox_insert_text(fid, t)?;
+                        // Insert printable characters (skip control chars like \n, \t)
+                        if let Some(t) = text {
+                            let printable: String = t.chars()
+                                .filter(|c| !c.is_control())
+                                .collect();
+                            if !printable.is_empty() {
+                                self.editbox_insert_text(fid, &printable)?;
                             }
+                        }
                     }
                 }
             }
