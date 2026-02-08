@@ -17,6 +17,31 @@ pub const PARTY_PLAYLIST_ENTRY: EnumDef = (
     &[("NormalGameMode", 0), ("TrainingGameMode", 1)],
 );
 
+pub const CHAT_CHANNEL_TYPE: EnumDef = (
+    "ChatChannelType",
+    &[("None", 0), ("Custom", 1), ("PrivateParty", 2), ("PublicParty", 3), ("Communities", 4)],
+);
+
+pub const PVP_MATCH_STATE: EnumDef = (
+    "PvPMatchState",
+    &[("Inactive", 0), ("Waiting", 1), ("StartUp", 2), ("Engaged", 3), ("PostRound", 4), ("Complete", 5)],
+);
+
+pub const WORLD_ELAPSED_TIMER_TYPES: EnumDef = (
+    "WorldElapsedTimerTypes",
+    &[("ChallengeMode", 0), ("ProvingGround", 1)],
+);
+
+pub const PLAYER_MENTORSHIP_STATUS: SeqEnumDef = (
+    "PlayerMentorshipStatus",
+    &["None", "Mentor", "Newcomer"],
+);
+
+pub const RELATIVE_CONTENT_DIFFICULTY: SeqEnumDef = (
+    "RelativeContentDifficulty",
+    &["Trivial", "Easy", "Fair", "Difficult", "Impossible"],
+);
+
 pub const PROFESSION: EnumDef = (
     "Profession",
     &[

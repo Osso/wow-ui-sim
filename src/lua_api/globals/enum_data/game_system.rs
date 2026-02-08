@@ -358,6 +358,260 @@ pub const CLUB_MEMBER_PRESENCE: SeqEnumDef = (
 // Tutorial Enums
 // ============================================================================
 
+// ============================================================================
+// Club / Communities Enums (additional)
+// ============================================================================
+
+pub const CLUB_TYPE: SeqEnumDef = (
+    "ClubType",
+    &["BattleNet", "Character", "Guild", "Other"],
+);
+
+pub const CLUB_FINDER_SETTING_FLAGS: SeqEnumDef = (
+    "ClubFinderSettingFlags",
+    &[
+        "None", "Dungeons", "Raids", "PvP", "RP", "Social", "Small", "Medium", "Large",
+        "Tank", "Healer", "Damage", "EnableListing", "MaxLevelOnly", "AutoAccept",
+        "FactionHorde", "FactionAlliance", "FactionNeutral", "SortRelevance", "SortMemberCount",
+        "SortNewest", "LanguageReserved1", "LanguageReserved2", "LanguageReserved3",
+        "LanguageReserved4", "LanguageReserved5",
+    ],
+);
+
+pub const CLUB_ACTION_TYPE: SeqEnumDef = (
+    "ClubActionType",
+    &[
+        "ErrorClubActionSubscribe", "ErrorClubActionLeave", "ErrorClubActionGetClubInfo",
+        "ErrorClubActionGetMember", "ErrorClubActionInvite", "ErrorClubActionRevokeInvite",
+        "ErrorClubActionAcceptInvite", "ErrorClubActionDeclineInvite", "ErrorClubActionCreateTicket",
+        "ErrorClubActionDestroyTicket", "ErrorClubActionRedeemTicket", "ErrorClubActionGetTicket",
+        "ErrorClubActionGetTickets", "ErrorClubActionGetBans", "ErrorClubActionGetInvitations",
+        "ErrorClubActionKick", "ErrorClubActionAddBan", "ErrorClubActionRemoveBan",
+        "ErrorClubActionCreateStream", "ErrorClubActionEditStream", "ErrorClubActionDestroyStream",
+        "ErrorClubActionCreateMessage", "ErrorClubActionEditMessage", "ErrorClubActionDestroyMessage",
+        "ErrorClubActionSetFavorite", "ErrorClubActionSetDescription",
+        "ErrorClubActionDestroyMessageOld",
+    ],
+);
+
+// ============================================================================
+// Match / PvP Enums
+// ============================================================================
+
+pub const MATCH_DETAIL_TYPE: SeqEnumDef = (
+    "MatchDetailType",
+    &["Placement", "Kills", "PlunderAcquired"],
+);
+
+pub const PVP_UNIT_CLASSIFICATION: SeqEnumDef = (
+    "PvPUnitClassification",
+    &[
+        "FlagCarrierHorde", "FlagCarrierAlliance", "FlagCarrierNeutral",
+        "CartRunnerHorde", "CartRunnerAlliance",
+        "AssassinHorde", "AssassinAlliance",
+        "OrbCarrierBlue", "OrbCarrierGreen", "OrbCarrierOrange", "OrbCarrierPurple",
+    ],
+);
+
+// ============================================================================
+// Expansion / Feature Enums
+// ============================================================================
+
+pub const EXPANSION_LANDING_PAGE_TYPE: SeqEnumDef = (
+    "ExpansionLandingPageType",
+    &["None", "Dragonflight", "WarWithin"],
+);
+
+pub const ARROW_CALLOUT_DIRECTION: SeqEnumDef = (
+    "ArrowCalloutDirection",
+    &["Up", "Down", "Left", "Right"],
+);
+
+pub const NAVIGATION_STATE: SeqEnumDef = (
+    "NavigationState",
+    &["Invalid", "Occluded", "InRange", "Disabled"],
+);
+
+pub const UI_FRAME_TYPE: SeqEnumDef = (
+    "UIFrameType",
+    &["JailersTowerBuffs", "InterruptTutorial"],
+);
+
+pub const COOLDOWN_VIEWER_CATEGORY: SeqEnumDef = (
+    "CooldownViewerCategory",
+    &["Essential", "Utility", "TrackedBuff", "TrackedBar"],
+);
+
+pub const TTS_VOICE_TYPE: SeqEnumDef = (
+    "TtsVoiceType",
+    &["Standard", "Alternate"],
+);
+
+// ============================================================================
+// Guild / Social Enums
+// ============================================================================
+
+pub const GUILD_ERROR_TYPE: SeqEnumDef = (
+    "GuildErrorType",
+    &[
+        "Success", "GuildNotFound", "AlreadyInGuild", "AlreadyOnTeam",
+        "InvitedToGuild", "AlreadyInvitedToGuild", "NameInvalid", "NameExists",
+        "LeaderLeave", "Permissions", "PlayerNotInGuild", "PlayerNotFound",
+        "PlayerNotAllied", "RankTooHigh", "RankTooLow", "RanksLocked",
+        "RankInUse", "IgnoringYou", "Unknown", "Unknown2",
+        "WithdrawLimit", "NotEnoughMoney", "BankFull",
+        "ItemNotFound", "TooMuchMoney", "WrongTab", "RequiresAuthenticator",
+        "BankVouchersTooBig", "NotEnoughBankSlots", "Undeletable", "InternalError",
+        "RequiresLevel25", "ImpossibleMerge", "AchievementPointsCriteria",
+        "MultipleGuildMaster", "MasterLevelTooLow", "CannotUseGreenItems",
+        "PlayerNotFoundS", "NotAllied", "GenderDisagreement",
+        "PlayerAlreadyInGuildS", "InvitedToGuildS", "AlreadyInvitedToGuildS",
+        "InvalidNote", "UndeletableReason", "InviteToGuildCanceled",
+        "DisbandGuildCanceled", "CannotModifyCaptainDetailDuringRosterExport",
+        "ProvisionalMember", "ApplicationPending", "TrialAccount",
+        "UndeletableTrialGuild", "Throttled",
+    ],
+);
+
+pub const ROLODEX_TYPE: SeqEnumDef = (
+    "RolodexType",
+    &[
+        "None", "PartyMember", "RaidMember", "Trade", "Whisper",
+        "PublicOrderFilledByOther", "PublicOrderFilledByYou",
+        "PersonalOrderFilledByOther", "PersonalOrderFilledByYou",
+        "GuildOrderFilledByOther", "GuildOrderFilledByYou",
+        "CreatureKill", "CompleteDungeon", "KillRaidBoss", "KillLfrBoss",
+        "CompleteDelve", "CompleteArena", "CompleteBg", "Duel", "PetBattle", "PvPKill",
+    ],
+);
+
+pub const INVALID_PLOT_SCREENSHOT_REASON: SeqEnumDef = (
+    "InvalidPlotScreenshotReason",
+    &["None", "OutOfBounds", "Facing", "NoNeighborhoodFound", "NoActivePlayer"],
+);
+
+// ============================================================================
+// Housing Enums
+// ============================================================================
+
+pub const HOUSING_RESULT: SeqEnumDef = (
+    "HousingResult",
+    &[
+        "Success", "InvalidHouseID", "InvalidItemID", "InvalidPlotID",
+        "InvalidFixtureID", "InvalidRoomID", "InvalidDecorID",
+        "InvalidCustomizationID", "InvalidNeighborhoodID", "HouseNotFound",
+        "PlotNotFound", "ItemNotFound", "FixtureNotFound", "RoomNotFound",
+        "DecorNotFound", "CustomizationNotFound", "NeighborhoodNotFound",
+        "PlotNotOwned", "PlotAlreadyOwned", "ItemNotOwned", "FixtureNotOwned",
+        "RoomNotOwned", "DecorNotOwned", "CustomizationNotOwned",
+        "NotInHousing", "InvalidPosition", "InvalidRotation", "InvalidScale",
+        "CollisionDetected", "OutOfBounds", "MaxDecorPlaced", "MaxFixturePlaced",
+        "MaxRoomPlaced", "MaxCustomizationPlaced", "InternalError", "DatabaseError",
+        "PermissionDenied", "NotInNeighborhood", "AlreadyInNeighborhood",
+        "NeighborhoodFull", "NeighborhoodLocked", "NoAvailablePlots",
+        "InvalidOperation", "CooldownActive", "ItemOnCooldown", "NotEnoughCurrency",
+        "InvalidCurrency", "InventoryFull", "InvalidData", "FeatureDisabled",
+        "MaintenanceMode", "Throttled", "InvalidState", "AlreadyPlaced",
+        "NotPlaced", "CannotModify", "CannotRemove", "CannotPlace",
+        "InvalidSlot", "SlotOccupied", "SlotEmpty", "InvalidCategory",
+        "CategoryFull", "InvalidTemplate", "TemplateNotFound",
+        "UpgradeNotAvailable", "UpgradeAlreadyApplied", "DowngradeNotAllowed",
+        "InvalidLevel", "MaxLevelReached", "PrerequisiteNotMet",
+        "QuestNotComplete", "AchievementNotComplete", "ReputationTooLow",
+        "LevelTooLow", "ClassRestricted", "RaceRestricted", "FactionRestricted",
+        "SeasonRestricted", "TimeRestricted", "WeatherRestricted",
+        "EventNotActive", "InvalidEvent", "EventExpired", "AlreadyRegistered",
+        "NotRegistered", "RegistrationFull", "RegistrationClosed",
+        "InvalidRegistration", "BulletinBoardFull", "InvalidMessage",
+        "UnlockOperationFailed",
+    ],
+);
+
+// ============================================================================
+// Ping / Voice Enums
+// ============================================================================
+
+pub const PING_RESULT: SeqEnumDef = (
+    "PingResult",
+    &[
+        "Success", "FailedGeneric", "FailedSpamming", "FailedDisabledByLeader",
+        "FailedDisabledBySettings", "FailedOutOfPingArea", "FailedSquelched", "FailedUnspecified",
+    ],
+);
+
+pub const VOICE_CHAT_STATUS_CODE: SeqEnumDef = (
+    "VoiceChatStatusCode",
+    &[
+        "Success", "OperationPending", "TooManyRequests", "LoginProhibited",
+        "ClientNotInitialized", "ClientNotLoggedIn", "ClientAlreadyLoggedIn",
+        "ChannelNameTooShort", "ChannelNameTooLong", "ChannelAlreadyExists",
+        "AlreadyInChannel", "TargetNotFound", "Failure", "ServiceLost",
+        "UnableToLaunchProxy", "ProxyConnectionTimeOut", "ProxyConnectionUnableToConnect",
+        "ProxyConnectionUnexpectedDisconnect", "Disabled", "UnsupportedChatChannelType",
+        "InvalidCommunityStream", "PlayerSilenced", "PlayerVoiceChatParentalDisabled",
+        "InvalidInputDevice", "InvalidOutputDevice",
+    ],
+);
+
+// ============================================================================
+// Talent / Trait Enums
+// ============================================================================
+
+pub const TRAIT_NODE_ENTRY_TYPE: SeqEnumDef = (
+    "TraitNodeEntryType",
+    &[
+        "SpendHex", "SpendSquare", "SpendCircle", "SpendSmallCircle",
+        "DeprecatedSelect", "DragAndDrop", "SpendDiamond", "ProfPath",
+        "ProfPerk", "ProfPathUnlock", "RedButton", "ArmorSet",
+        "SpendInfinite", "SpendCapstoneCircle", "SpendCapstoneSquare",
+    ],
+);
+
+pub const TRAIT_DEFINITION_SUB_TYPE: SeqEnumDef = (
+    "TraitDefinitionSubType",
+    &["DragonflightRed", "DragonflightBlue", "DragonflightGreen", "DragonflightBronze", "DragonflightBlack"],
+);
+
+// ============================================================================
+// Currency / Token Enums
+// ============================================================================
+
+pub const ACCOUNT_CURRENCY_TRANSFER_RESULT: SeqEnumDef = (
+    "AccountCurrencyTransferResult",
+    &[
+        "Success", "InvalidCharacter", "CharacterLoggedIn", "InsufficientCurrency",
+        "MaxQuantity", "InvalidCurrency", "NoValidSourceCharacter", "ServerError",
+        "CannotUseCurrency", "TransactionInProgress", "CurrencyTransferDisabled",
+    ],
+);
+
+pub const CURRENCY_FILTER_TYPE: SeqEnumDef = (
+    "CurrencyFilterType",
+    &["None", "DiscoveredOnly", "DiscoveredAndAllAccountTransferable"],
+);
+
+// ============================================================================
+// Delves Enums
+// ============================================================================
+
+pub const CURIO_RARITY: EnumDef = (
+    "CurioRarity",
+    &[("Common", 1), ("Uncommon", 2), ("Rare", 3), ("Epic", 4)],
+);
+
+// ============================================================================
+// Report Enums (additional)
+// ============================================================================
+
+pub const INVALID_PLOT_SCREENSHOT_REASON_REPORT: SeqEnumDef = (
+    "ReportFrameInvalidPlotScreenshotReason",
+    &["None", "OutOfBounds", "Facing", "NoNeighborhoodFound", "NoActivePlayer"],
+);
+
+// ============================================================================
+// Tutorial Enums
+// ============================================================================
+
 pub const FRAME_TUTORIAL_ACCOUNT: EnumDef = (
     "FrameTutorialAccount",
     &[
