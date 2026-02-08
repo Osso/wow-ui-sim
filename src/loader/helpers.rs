@@ -410,7 +410,7 @@ pub fn append_script_handler(
     handler_name: &str,
     script: &crate::xml::ScriptBodyXml,
 ) {
-    let Some(new_handler) = build_handler_expr(script) else { return };
+    let Some(new_handler) = build_handler_expr(handler_name, script) else { return };
 
     match script.inherit.as_deref() {
         Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, true),
@@ -458,8 +458,23 @@ fn emit_chained_handler(
     ));
 }
 
+/// WoW implicit parameter names for inline XML script bodies.
+fn handler_params(handler_name: &str) -> &'static str {
+    match handler_name {
+        "OnUpdate" => "self, elapsed",
+        "OnEvent" => "self, event, ...",
+        "OnClick" => "self, button, down",
+        "OnEnter" | "OnLeave" => "self, motion",
+        "OnMouseDown" | "OnMouseUp" => "self, button",
+        "OnValueChanged" => "self, value",
+        "OnTextChanged" => "self, userInput",
+        "OnChar" => "self, text",
+        _ => "self, ...",
+    }
+}
+
 /// Build the Lua expression for a script handler (without setting it).
-fn build_handler_expr(script: &crate::xml::ScriptBodyXml) -> Option<String> {
+fn build_handler_expr(handler_name: &str, script: &crate::xml::ScriptBodyXml) -> Option<String> {
     if let Some(func) = &script.function {
         if func.is_empty() { return None; }
         Some(func.clone())
@@ -468,7 +483,8 @@ fn build_handler_expr(script: &crate::xml::ScriptBodyXml) -> Option<String> {
     } else {
         let body = script.body.as_deref()?.trim();
         if body.is_empty() { return None; }
-        Some(format!("function(self, ...)\n            {body}\n        end"))
+        let params = handler_params(handler_name);
+        Some(format!("function({params})\n            {body}\n        end"))
     }
 }
 
