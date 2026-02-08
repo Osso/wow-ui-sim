@@ -33,6 +33,8 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_c_log(lua)?;
     register_c_campaign_info(lua)?;
     register_quest_global_functions(lua)?;
+    register_chat_stubs(lua)?;
+    register_c_macro(lua)?;
     Ok(())
 }
 
@@ -328,6 +330,37 @@ fn register_quest_leaderboard_functions(lua: &Lua, g: &mlua::Table) -> Result<()
             Ok(quest_leaderboard_entry(log_idx, obj_idx))
         })?,
     )?;
+    Ok(())
+}
+
+/// Chat-related global function stubs needed by Blizzard_ChatFrame.
+fn register_chat_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    // GetChatTypeIndex: deterministic integer from chat type name
+    g.set("GetChatTypeIndex", lua.create_function(|_, name: String| {
+        let hash = name.bytes().fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
+        Ok((hash % 50 + 1) as i32)
+    })?)?;
+    // CreateSecureDelegate: no taint system, return the function as-is
+    g.set("CreateSecureDelegate", lua.create_function(|_, func: mlua::Function| Ok(func))?)?;
+    // GetChatWindowInfo: return defaults (only window 1 is shown)
+    g.set("GetChatWindowInfo", lua.create_function(|_, id: i32| {
+        let name = format!("ChatFrame{id}");
+        let shown = id == 1;
+        Ok((name, 14.0f64, 1.0f64, 1.0f64, 1.0f64, 1.0f64, shown, false, false, false))
+    })?)?;
+    g.set("GetDefaultLanguage", lua.create_function(|_, ()| Ok("Common"))?)?;
+    g.set("GetAlternativeDefaultLanguage", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    Ok(())
+}
+
+/// C_Macro namespace - macro management stubs.
+fn register_c_macro(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("SetMacroExecuteLineCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
+    t.set("GetMacroInfo", lua.create_function(|_, _id: Value| Ok(Value::Nil))?)?;
+    t.set("GetNumMacros", lua.create_function(|_, ()| Ok((0i32, 0i32)))?)?;
+    lua.globals().set("C_Macro", t)?;
     Ok(())
 }
 

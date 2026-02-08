@@ -289,6 +289,15 @@ fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
         "AlternateQuest", "AlternateEncounter", "AlternateMount", "NumPowerTypes",
     ])?;
 
+    seq_enum(lua, enum_table, "PingSubjectType", &[
+        "Attack", "Warning", "Assist", "OnMyWay", "AlertThreat", "AlertNotThreat",
+    ])?;
+
+    seq_enum(lua, enum_table, "TtsBoolSetting", &[
+        "PlaySoundSeparatingChatLineBreaks", "AddCharacterNameToSpeech",
+        "PlayActivitySoundWhenNotFocused", "AlternateSystemVoice", "NarrateMyMessages",
+    ])?;
+
     register_tooltip_enums(lua, enum_table)?;
     Ok(())
 }

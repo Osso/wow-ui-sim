@@ -465,7 +465,7 @@ fn emit_frame_quads(
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
 ) {
     match f.widget_type {
-        WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
+        WidgetType::Frame | WidgetType::StatusBar | WidgetType::MessageFrame => build_frame_quads(batch, bounds, f),
         WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
         WidgetType::Button => {
             build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));

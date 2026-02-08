@@ -50,6 +50,10 @@ fn register_constants_table(lua: &Lua) -> Result<()> {
         Constants.EditModeConsts.EditModeMaxGridSpacing = 300
         Constants.EditModeConsts.EditModeMaxLayoutsPerType = 5
         Constants.MajorFactionsConsts.PLUNDERSTORM_MAJOR_FACTION_ID = 0
+
+        Constants.ChatFrameConstants.MaxChatWindows = 10
+        Constants.ChatFrameConstants.MaxChatChannels = 20
+        Constants.ChatFrameConstants.MaxCharacterNameBytes = 100
     "#,
     )
     .exec()

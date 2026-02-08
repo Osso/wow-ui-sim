@@ -9,7 +9,9 @@ pub fn apply(env: &WowLuaEnv) {
     patch_map_canvas_scroll(env);
     patch_gradual_animated_status_bar(env);
     patch_character_frame_subframes(env);
+    setup_managed_frame_containers(env);
     init_objective_tracker(env);
+    show_chat_frame(env);
 }
 
 /// MapCanvasScrollControllerMixin:IsZoomingOut/In compare targetScale with
@@ -69,6 +71,24 @@ fn init_objective_tracker(env: &WowLuaEnv) {
     patch_tracker_animations(env);
     start_objective_tracker(env);
     populate_quest_titles(env);
+    update_managed_frame_containers(env);
+}
+
+/// Call UpdateManagedFrames on both containers to ensure all visible
+/// managed frames get laid out after ObjectiveTracker initialization.
+fn update_managed_frame_containers(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if UIParentRightManagedFrameContainer
+            and UIParentRightManagedFrameContainer.UpdateManagedFrames then
+            UIParentRightManagedFrameContainer:UpdateManagedFrames()
+        end
+        if UIParentBottomManagedFrameContainer
+            and UIParentBottomManagedFrameContainer.UpdateManagedFrames then
+            UIParentBottomManagedFrameContainer:UpdateManagedFrames()
+        end
+    "#,
+    );
 }
 
 /// Stub AnimationGroup methods on ObjectiveTracker line/block templates.
@@ -115,27 +135,77 @@ fn patch_tracker_animations(env: &WowLuaEnv) {
     );
 }
 
-/// Position ObjectiveTrackerFrame on the right side and set its height.
+/// Position UIParentRightManagedFrameContainer and UIParentBottomManagedFrameContainer.
 ///
-/// In WoW, UpdateHeight() calculates `UIParent:GetHeight() + offsetY` where
-/// offsetY comes from the frame's anchor. The EditMode system sets this up,
-/// but the simulator doesn't implement EditMode. Set height directly.
+/// In WoW, `UIParent_ManageFramePositions()` calls through FramePositionDelegate
+/// and EditModeUtil to position these containers. Since EditMode isn't implemented,
+/// we position them directly with the default offsets.
+fn setup_managed_frame_containers(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        -- Position UIParentRightManagedFrameContainer
+        -- Offsets match EditModeUtil:GetRightContainerAnchor() defaults:
+        -- TOPRIGHT, UIParent, TOPRIGHT, xOffset=-5, yOffset=-260
+        if UIParentRightManagedFrameContainer then
+            UIParentRightManagedFrameContainer:ClearAllPoints()
+            UIParentRightManagedFrameContainer:SetPoint(
+                "TOPRIGHT", UIParent, "TOPRIGHT", -5, -260
+            )
+            local minimapHeight = 0
+            if MinimapCluster and MinimapCluster.GetHeight then
+                minimapHeight = MinimapCluster:GetHeight()
+            end
+            UIParentRightManagedFrameContainer.fixedHeight =
+                UIParent:GetHeight() - minimapHeight - 100
+            UIParentRightManagedFrameContainer:Layout()
+            if UIParentRightManagedFrameContainer.BottomManagedLayoutContainer then
+                UIParentRightManagedFrameContainer.BottomManagedLayoutContainer:Layout()
+            end
+        end
+
+        -- Position UIParentBottomManagedFrameContainer
+        if UIParentBottomManagedFrameContainer then
+            UIParentBottomManagedFrameContainer.fixedWidth = 573
+            UIParentBottomManagedFrameContainer:ClearAllPoints()
+            UIParentBottomManagedFrameContainer:SetPoint(
+                "BOTTOM", UIParent, "BOTTOM", 0, 90
+            )
+            UIParentBottomManagedFrameContainer:Layout()
+            if UIParentBottomManagedFrameContainer.BottomManagedLayoutContainer then
+                UIParentBottomManagedFrameContainer.BottomManagedLayoutContainer:Layout()
+            end
+        end
+    "#,
+    );
+}
+
+/// Set ObjectiveTrackerFrame height and ensure it has a layoutIndex.
+///
+/// The container system (UIParentRightManagedFrameContainer) handles positioning
+/// via UIParentManagedFrameMixin's OnShow → AddManagedFrame → Layout chain.
+/// We just need to set height (normally from EditMode) and layoutIndex.
 fn setup_tracker_frame(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
         local otf = ObjectiveTrackerFrame
         if not otf then return end
-        -- Reparent to UIParent directly (normally managed by
-        -- UIParentRightManagedFrameContainer layout system)
-        otf:SetParent(UIParent)
-        -- Position on the right side, below the minimap
-        otf:ClearAllPoints()
-        otf:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -80, -200)
-        -- Set height to fill most of the right side (UIParent.height - offset)
-        local h = UIParent:GetHeight() - 200
+        -- Set height (normally from EditMode, we compute it ourselves)
+        local h = UIParent:GetHeight() - 260
         if h < 100 then h = 500 end
         otf:SetHeight(h)
+        -- Ensure layoutIndex is set (should come from XML KeyValue but may need fallback)
+        if not otf.layoutIndex then otf.layoutIndex = 50 end
+        -- AddManagedFrame checks IsInDefaultPosition() and skips frames not in
+        -- default position. Since EditMode isn't initialized, the mixin's
+        -- IsInDefaultPosition() returns false. Override so the container accepts it.
+        otf.IsInDefaultPosition = function() return true end
         otf:Show()
+        -- Explicitly add to the managed frame container. The OnShow handler
+        -- may not fire correctly, so call AddManagedFrame directly.
+        local lp = otf.layoutParent
+        if lp and lp.AddManagedFrame then
+            pcall(lp.AddManagedFrame, lp, otf)
+        end
     "#,
     );
 }
@@ -199,6 +269,24 @@ fn populate_quest_titles(env: &WowLuaEnv) {
                 qt:SetPoint("LEFT", c, "LEFT", qt.leftMargin or 0, 0)
                 qt:Show()
             end
+        end
+    "#,
+    );
+}
+
+/// Show ChatFrame1 and set DEFAULT_CHAT_FRAME after addon loading.
+///
+/// The chat addons create ChatFrame1 via XML but it starts hidden.
+/// Position it at bottom-left like in the real WoW client.
+fn show_chat_frame(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if ChatFrame1 then
+            ChatFrame1:Show()
+            DEFAULT_CHAT_FRAME = ChatFrame1
+            ChatFrame1:ClearAllPoints()
+            ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 32, 32)
+            ChatFrame1:SetSize(430, 120)
         end
     "#,
     );

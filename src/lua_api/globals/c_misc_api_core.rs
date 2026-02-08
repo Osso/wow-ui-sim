@@ -234,6 +234,10 @@ fn register_c_chat_info(lua: &Lua) -> Result<()> {
     t.set("SendChatMessage", lua.create_function(
         |_, (_m, _c, _l, _t): (String, Option<String>, Option<Value>, Option<String>)| Ok(()),
     )?)?;
+    t.set("GetNumReservedChatWindows", lua.create_function(|_, ()| Ok(1i32))?)?;
+    t.set("GetNumActiveChannels", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("IsChannelRegionalForChannelID", lua.create_function(|_, _id: Value| Ok(false))?)?;
+    t.set("GetChannelShortcutForChannelID", lua.create_function(|_, _id: Value| Ok(Value::Nil))?)?;
     lua.globals().set("C_ChatInfo", t)?;
     Ok(())
 }

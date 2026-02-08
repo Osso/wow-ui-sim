@@ -97,6 +97,9 @@ fn register_c_voice_chat(lua: &Lua) -> Result<mlua::Table> {
         "GetTtsVoices",
         lua.create_function(|lua, ()| lua.create_table())?,
     )?;
+    t.set("IsSpeakForMeActive", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsTranscriptionAllowed", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsTranscribing", lua.create_function(|_, ()| Ok(false))?)?;
 
     Ok(t)
 }

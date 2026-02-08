@@ -86,9 +86,8 @@ fn create_engine_frames(widgets: &mut WidgetRegistry, screen_width: f32, screen_
     // WorldFrame (3D world rendering area, same level as UIParent)
     register_frame(widgets, WidgetType::Frame, "WorldFrame", None, Some((screen_width, screen_height)));
 
-    // Chat frames (Blizzard_ChatFrameBase not loaded)
+    // DEFAULT_CHAT_FRAME fallback (overwritten by show_chat_frame workaround when chat addons load)
     register_frame(widgets, WidgetType::MessageFrame, "DEFAULT_CHAT_FRAME", Some(ui_parent_id), Some((430.0, 120.0)));
-    register_frame(widgets, WidgetType::MessageFrame, "ChatFrame1", Some(ui_parent_id), Some((430.0, 120.0)));
 
     ui_parent_id
 }

@@ -8,9 +8,41 @@ fn blizzard_ui_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("Interface/BlizzardUI")
 }
 
-/// Fire a single event, collecting handler errors.
+/// Install a Lua error handler that collects errors into `__test_errors`.
+fn install_test_error_handler(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        __test_errors = {}
+        seterrorhandler(function(msg)
+            table.insert(__test_errors, tostring(msg))
+        end)
+    "#,
+    )
+    .expect("Failed to install test error handler");
+}
+
+/// Read collected errors from `__test_errors` and clear it.
+fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
+    let lua = env.lua();
+    let table: mlua::Table = match lua.globals().get("__test_errors") {
+        Ok(t) => t,
+        Err(_) => return Vec::new(),
+    };
+    let mut errors = Vec::new();
+    for entry in table.sequence_values::<String>() {
+        if let Ok(msg) = entry {
+            errors.push(msg);
+        }
+    }
+    // Clear the table for next batch
+    let _ = lua.load("__test_errors = {}").exec();
+    errors
+}
+
+/// Fire a single event, collecting handler errors via the Lua error handler.
 fn fire(env: &WowLuaEnv, event: &str, args: &[mlua::Value]) -> Vec<String> {
-    env.fire_event_collecting_errors(event, args)
+    env.fire_event_with_args(event, args).ok();
+    drain_test_errors(env)
 }
 
 /// Load all Blizzard addons and fire startup events, collecting all warnings.
@@ -39,6 +71,9 @@ fn load_and_startup() -> Vec<String> {
     // Apply workarounds (same as main.rs run_post_load_scripts)
     env.apply_post_load_workarounds();
 
+    // Install error handler before firing events
+    install_test_error_handler(&env);
+
     // Fire startup events (same sequence as main.rs)
     fire_startup_events(&env, &mut warnings);
 
@@ -62,7 +97,8 @@ fn fire_startup_events(env: &WowLuaEnv, warnings: &mut Vec<String>) {
         warnings.extend(fire(env, event, &[]));
     }
 
-    warnings.extend(env.fire_edit_mode_layouts_updated());
+    env.fire_edit_mode_layouts_updated().ok();
+    warnings.extend(drain_test_errors(env));
 
     if let Ok(f) = lua.globals().get::<mlua::Function>("RequestTimePlayed") {
         let _ = f.call::<()>(());
@@ -82,12 +118,13 @@ fn fire_startup_events(env: &WowLuaEnv, warnings: &mut Vec<String>) {
     }
 
     // Fire one OnUpdate tick to catch handler errors
-    warnings.extend(env.fire_on_update_collecting_errors(0.016));
+    env.fire_on_update(0.016).ok();
+    warnings.extend(drain_test_errors(env));
 }
 
 /// Known warning count from unimplemented APIs. Update this when adding stubs.
 /// Goal: drive this to zero over time by implementing missing APIs.
-const KNOWN_WARNING_COUNT: usize = 131;
+const KNOWN_WARNING_COUNT: usize = 117;
 
 #[test]
 fn test_no_warnings_on_startup() {
