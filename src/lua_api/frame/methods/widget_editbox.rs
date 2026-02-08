@@ -24,10 +24,14 @@ fn add_editbox_focus_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             s.focused_frame_id = Some(this.id);
             old
         };
-        if let Some(old_id) = old_focus
-            && old_id != this.id {
-                fire_focus_handler(lua, old_id, "OnEditFocusLost")?;
-            }
+        // Already focused — nothing to do (prevents infinite recursion when
+        // OnEditFocusGained handlers call SetFocus again).
+        if old_focus == Some(this.id) {
+            return Ok(());
+        }
+        if let Some(old_id) = old_focus {
+            fire_focus_handler(lua, old_id, "OnEditFocusLost")?;
+        }
         fire_focus_handler(lua, this.id, "OnEditFocusGained")?;
         Ok(())
     });
