@@ -70,6 +70,12 @@ pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names
         return;
     }
 
+    if frame_name.contains("BackpackButton") || frame_name.contains("BagSlot") {
+        eprintln!("[tpl-debug] {} templates='{}' chain={:?}",
+            frame_name, template_names,
+            chain.iter().map(|e| e.name.as_str()).collect::<Vec<_>>());
+    }
+
     let mut all_child_names = Vec::new();
     for entry in &chain {
         let child_names = apply_single_template(lua, frame_name, entry);
@@ -236,10 +242,20 @@ fn format_key_value(value: &str, value_type: Option<&str>) -> String {
 
 /// Apply layers (textures and fontstrings) from a template.
 fn apply_layers(lua: &Lua, template: &FrameXml, frame_name: &str) {
-    for layers in template.layers() {
+    let layers_list: Vec<_> = template.layers().collect();
+    if frame_name.contains("BackpackButton") || frame_name.contains("BagSlot") {
+        eprintln!("[tpl-layers] {} has {} layer groups", frame_name, layers_list.len());
+    }
+    for layers in layers_list {
         for layer in &layers.layers {
             let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
-            for (texture, is_mask) in layer.textures() {
+            let textures: Vec<_> = layer.textures().collect();
+            if frame_name.contains("BackpackButton") || frame_name.contains("BagSlot") {
+                eprintln!("[tpl-layers]   layer={} textures={} (masks={})",
+                    draw_layer, textures.len(),
+                    textures.iter().filter(|(_, m)| *m).count());
+            }
+            for (texture, is_mask) in textures {
                 elements::create_texture_from_template(lua, texture, frame_name, draw_layer, is_mask);
             }
             for fontstring in layer.font_strings() {

@@ -119,7 +119,6 @@ pub fn create_texture_from_xml(
     is_mask: bool,
 ) -> Result<(), LoadError> {
     if texture.is_virtual == Some(true) {
-        // Register virtual textures as templates for mixin resolution
         if let Some(ref name) = texture.name {
             register_texture_template(name, texture.clone());
         }
@@ -127,41 +126,7 @@ pub fn create_texture_from_xml(
     }
 
     let tex_name = resolve_child_name(texture.name.as_deref(), parent_name, "__tex_");
-
-    let mut lua_code = format!(
-        r#"
-        local parent = {}
-        local tex = parent:CreateTexture("{}", "{}")
-        "#,
-        lua_global_ref(parent_name), tex_name, draw_layer
-    );
-
-    // Apply mixins from inherited templates and direct mixin attribute
-    lua_code.push_str(&generate_mixin_code(texture));
-
-    lua_code.push_str(&generate_texture_source_code(texture));
-    lua_code.push_str(&generate_texture_visual_code(texture));
-
-    if let Some(anchors) = &texture.anchors {
-        lua_code.push_str(&generate_set_point_code(
-            anchors,
-            "tex",
-            "parent",
-            parent_name,
-            "parent",
-        ));
-    } else if texture.set_all_points != Some(true) {
-        // WoW implicitly applies SetAllPoints to textures with no anchors
-        lua_code.push_str("\n        tex:SetAllPoints(true)\n        ");
-    }
-
-    if texture.hidden == Some(true) {
-        lua_code.push_str("\n        tex:Hide()\n        ");
-    }
-
-    if let Some(ref mode) = texture.alpha_mode {
-        lua_code.push_str(&format!("\n        tex:SetBlendMode(\"{}\")\n        ", mode));
-    }
+    let lua_code = build_texture_lua(&tex_name, texture, parent_name, draw_layer);
 
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!(
@@ -170,28 +135,72 @@ pub fn create_texture_from_xml(
         ))
     })?;
 
-    // Mark MaskTextures so the renderer skips them
     if is_mask {
-        let widget_id = env.lua.globals().get::<mlua::AnyUserData>(&*tex_name).ok()
-            .and_then(|ud| ud.borrow::<crate::lua_api::frame::FrameHandle>().ok().map(|h| h.id));
-        if let Some(id) = widget_id {
-            if let Some(frame) = env.state.borrow_mut().widgets.get_mut(id) {
-                frame.is_mask = true;
-            }
-        }
+        mark_xml_mask_texture(env, &tex_name, parent_name);
     }
-
-    // Process animation groups on the texture (e.g. AutoCastOverlayTemplate Shine rotation)
-    if let Some(anims) = &texture.animations {
-        let mut anim_code = format!("local frame = {}\n", lua_global_ref(&tex_name));
-        for anim_group_xml in &anims.animations {
-            if anim_group_xml.is_virtual == Some(true) {
-                continue;
-            }
-            anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
-        }
-        env.exec(&anim_code).ok();
-    }
-
+    apply_texture_animations_xml(env, texture, &tex_name);
     Ok(())
+}
+
+/// Build the Lua code string that creates and configures a texture.
+fn build_texture_lua(
+    tex_name: &str,
+    texture: &crate::xml::TextureXml,
+    parent_name: &str,
+    draw_layer: &str,
+) -> String {
+    let mut code = format!(
+        r#"
+        local parent = {}
+        local tex = parent:CreateTexture("{}", "{}")
+        "#,
+        lua_global_ref(parent_name), tex_name, draw_layer
+    );
+    code.push_str(&generate_mixin_code(texture));
+    code.push_str(&generate_texture_source_code(texture));
+    code.push_str(&generate_texture_visual_code(texture));
+    append_texture_anchors(&mut code, texture, parent_name);
+    if texture.hidden == Some(true) {
+        code.push_str("\n        tex:Hide()\n        ");
+    }
+    if let Some(ref mode) = texture.alpha_mode {
+        code.push_str(&format!("\n        tex:SetBlendMode(\"{}\")\n        ", mode));
+    }
+    code
+}
+
+/// Append anchor or SetAllPoints code for a texture.
+fn append_texture_anchors(code: &mut String, texture: &crate::xml::TextureXml, parent_name: &str) {
+    if let Some(anchors) = &texture.anchors {
+        code.push_str(&generate_set_point_code(anchors, "tex", "parent", parent_name, "parent"));
+    } else if texture.set_all_points != Some(true) {
+        code.push_str("\n        tex:SetAllPoints(true)\n        ");
+    }
+}
+
+/// Mark a texture as a MaskTexture via the XML loader path.
+fn mark_xml_mask_texture(env: &LoaderEnv<'_>, tex_name: &str, parent_name: &str) {
+    let widget_id = env.lua.globals().get::<mlua::AnyUserData>(tex_name).ok()
+        .and_then(|ud| ud.borrow::<crate::lua_api::frame::FrameHandle>().ok().map(|h| h.id));
+    if let Some(id) = widget_id {
+        eprintln!("[mask-xml] Marking mask texture: {} (id={}) parent={}", tex_name, id, parent_name);
+        if let Some(frame) = env.state.borrow_mut().widgets.get_mut(id) {
+            frame.is_mask = true;
+        }
+    } else {
+        eprintln!("[mask-xml] FAILED to find global for mask texture: {} parent={}", tex_name, parent_name);
+    }
+}
+
+/// Process animation groups on a texture created from XML.
+fn apply_texture_animations_xml(env: &LoaderEnv<'_>, texture: &crate::xml::TextureXml, tex_name: &str) {
+    let Some(anims) = &texture.animations else { return };
+    let mut anim_code = format!("local frame = {}\n", lua_global_ref(tex_name));
+    for anim_group_xml in &anims.animations {
+        if anim_group_xml.is_virtual == Some(true) {
+            continue;
+        }
+        anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
+    }
+    env.exec(&anim_code).ok();
 }

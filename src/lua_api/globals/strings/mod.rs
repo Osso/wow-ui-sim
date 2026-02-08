@@ -43,24 +43,88 @@ pub fn register_keybinding_functions(lua: &Lua, globals: &mlua::Table) -> Result
 
 /// Register keybinding query functions (Get*).
 fn register_binding_getters(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    register_binding_key_lookups(lua, globals)?;
+    register_binding_enumeration(lua, globals)?;
+    register_binding_text_helpers(lua, globals)?;
+    Ok(())
+}
+
+/// GetBindingKey, GetBindingKeyForAction, GetBindingAction — key↔action lookups.
+fn register_binding_key_lookups(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    use super::super::keybindings;
+
     globals.set(
         "GetBindingKey",
-        lua.create_function(|_, _action: String| Ok(Value::Nil))?,
-    )?;
-    globals.set(
-        "GetBinding",
-        lua.create_function(|_lua, index: i32| {
-            if index < 1 {
-                return Ok(mlua::MultiValue::new());
+        lua.create_function(|lua, action: String| {
+            let (k1, k2) = keybindings::get_binding_key(lua, &action)?;
+            let mut vals = Vec::new();
+            match k1 {
+                Some(k) => vals.push(Value::String(lua.create_string(&k)?)),
+                None => vals.push(Value::Nil),
             }
-            Ok(mlua::MultiValue::from_vec(vec![Value::Nil, Value::Nil, Value::Nil]))
+            if let Some(k) = k2 {
+                vals.push(Value::String(lua.create_string(&k)?));
+            }
+            Ok(mlua::MultiValue::from_vec(vals))
         })?,
     )?;
-    globals.set("GetNumBindings", lua.create_function(|_, ()| Ok(0))?)?;
+    globals.set(
+        "GetBindingKeyForAction",
+        lua.create_function(|lua, args: mlua::MultiValue| {
+            let action: Option<String> = args.into_iter().next().and_then(|v| {
+                if let Value::String(s) = v { s.to_str().ok().map(|s| s.to_string()) } else { None }
+            });
+            let Some(action) = action else { return Ok(Value::Nil) };
+            let (k1, _) = keybindings::get_binding_key(lua, &action)?;
+            match k1 {
+                Some(k) => Ok(Value::String(lua.create_string(&k)?)),
+                None => Ok(Value::Nil),
+            }
+        })?,
+    )?;
     globals.set(
         "GetBindingAction",
-        lua.create_function(|_, (_key, _check_override): (String, Option<bool>)| Ok(Value::Nil))?,
+        lua.create_function(|lua, (key, _check_override): (String, Option<bool>)| {
+            match keybindings::get_binding_action(lua, &key)? {
+                Some(a) => Ok(Value::String(lua.create_string(&a)?)),
+                None => Ok(Value::String(lua.create_string("")?)),
+            }
+        })?,
     )?;
+    Ok(())
+}
+
+/// GetBinding, GetNumBindings, GetCurrentBindingSet — enumerate all bindings.
+fn register_binding_enumeration(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    use super::super::keybindings;
+
+    globals.set(
+        "GetBinding",
+        lua.create_function(|lua, index: i32| {
+            let (action, _header, key1, key2) = keybindings::get_binding_at(lua, index)?;
+            let mut vals = vec![
+                match action { Some(a) => Value::String(lua.create_string(&a)?), None => Value::Nil },
+                Value::Nil, // header
+            ];
+            if let Some(k) = key1 {
+                vals.push(Value::String(lua.create_string(&k)?));
+            }
+            if let Some(k) = key2 {
+                vals.push(Value::String(lua.create_string(&k)?));
+            }
+            Ok(mlua::MultiValue::from_vec(vals))
+        })?,
+    )?;
+    globals.set(
+        "GetNumBindings",
+        lua.create_function(|lua, ()| keybindings::get_num_bindings(lua))?,
+    )?;
+    globals.set("GetCurrentBindingSet", lua.create_function(|_, ()| Ok(1))?)?;
+    Ok(())
+}
+
+/// GetBindingText — display-friendly key name.
+fn register_binding_text_helpers(lua: &Lua, globals: &mlua::Table) -> Result<()> {
     globals.set(
         "GetBindingText",
         lua.create_function(
@@ -77,9 +141,13 @@ fn register_binding_getters(lua: &Lua, globals: &mlua::Table) -> Result<()> {
 
 /// Register keybinding assignment functions (Set*).
 fn register_binding_setters(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    use super::super::keybindings;
+
     globals.set(
         "SetBinding",
-        lua.create_function(|_, (_key, _action): (String, Option<String>)| Ok(true))?,
+        lua.create_function(|lua, (key, action): (String, Option<String>)| {
+            keybindings::set_binding(lua, &key, action.as_deref())
+        })?,
     )?;
     globals.set(
         "SetBindingClick",

@@ -4,6 +4,7 @@ pub mod animation;
 mod builtin_frames;
 mod env;
 pub(crate) mod frame;
+pub(crate) mod keybindings;
 mod key_dispatch;
 mod frame_methods;
 pub mod globals;

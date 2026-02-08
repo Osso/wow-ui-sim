@@ -3,10 +3,12 @@
 //! This module contains only DATA - static arrays of enum values.
 //! The registration logic is in enum_api.rs.
 
+mod addon_system;
 mod edit_mode;
 mod game_system;
 mod widget;
 
+pub use addon_system::*;
 pub use edit_mode::*;
 pub use game_system::*;
 pub use widget::*;
@@ -157,6 +159,7 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     SUPER_TRACKING_TYPE,
     SUPER_TRACKING_MAP_PIN_TYPE,
     TRAIT_EDGE_VISUAL_STYLE,
+    NEIGHBORHOOD_OWNER_TYPE,
 ];
 
 // All explicit value enums (for batch registration)
@@ -193,4 +196,6 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     CURIO_RARITY,
     CLUB_ROLE_IDENTIFIER,
     CLUB_ERROR_TYPE,
+    CLUB_REMOVED_REASON,
+    HOUSE_SETTING_FLAGS,
 ];

@@ -1,17 +1,16 @@
-//! CVar and key binding WoW API functions.
+//! CVar WoW API functions.
 //!
-//! Provides access to configuration variables (CVars) and key binding management.
+//! Provides access to configuration variables (CVars).
 
 use super::super::SimState;
 use mlua::{Lua, Result, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-/// Register CVar and key binding global functions.
+/// Register CVar global functions.
 pub fn register_cvar_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     register_cvar_functions(lua, &state)?;
     register_c_cvar_namespace(lua, &state)?;
-    register_key_binding_functions(lua)?;
     Ok(())
 }
 
@@ -92,99 +91,3 @@ fn register_cvar_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     Ok(())
 }
 
-/// Register key binding query and mutation functions.
-fn register_key_binding_functions(lua: &Lua) -> Result<()> {
-    register_binding_queries(lua)?;
-    register_binding_mutations(lua)?;
-    Ok(())
-}
-
-/// Binding query functions: GetBindingKey, GetBinding, GetNumBindings, etc.
-fn register_binding_queries(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-
-    globals.set(
-        "GetBindingKey",
-        lua.create_function(|_, _action: String| Ok(Value::Nil))?,
-    )?;
-    globals.set(
-        "GetBindingKeyForAction",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?,
-    )?;
-    globals.set(
-        "GetBinding",
-        lua.create_function(|_lua, index: i32| {
-            if index < 1 {
-                return Ok(mlua::MultiValue::new());
-            }
-            Ok(mlua::MultiValue::from_vec(vec![
-                Value::Nil,
-                Value::Nil,
-                Value::Nil,
-            ]))
-        })?,
-    )?;
-    globals.set(
-        "GetNumBindings",
-        lua.create_function(|_, ()| Ok(0))?,
-    )?;
-    globals.set(
-        "GetCurrentBindingSet",
-        lua.create_function(|_, ()| Ok(1))?,
-    )?;
-    globals.set(
-        "GetBindingAction",
-        lua.create_function(|_, (_key, _check_override): (String, Option<bool>)| Ok(Value::Nil))?,
-    )?;
-    globals.set(
-        "GetBindingText",
-        lua.create_function(
-            |lua, (key, _prefix, _abbrev): (Option<String>, Option<String>, Option<bool>)| {
-                match key {
-                    Some(k) => Ok(Value::String(lua.create_string(&k)?)),
-                    None => Ok(Value::String(lua.create_string("")?)),
-                }
-            },
-        )?,
-    )?;
-
-    Ok(())
-}
-
-/// Binding mutation functions: SetBinding, SetBindingClick, SaveBindings, etc.
-fn register_binding_mutations(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-
-    globals.set(
-        "SetBinding",
-        lua.create_function(|_, (_key, _action): (String, Option<String>)| Ok(true))?,
-    )?;
-    globals.set(
-        "SetBindingClick",
-        lua.create_function(
-            |_, (_key, _button, _mouse_button): (String, String, Option<String>)| Ok(true),
-        )?,
-    )?;
-    globals.set(
-        "SetBindingSpell",
-        lua.create_function(|_, (_key, _spell): (String, String)| Ok(true))?,
-    )?;
-    globals.set(
-        "SetBindingItem",
-        lua.create_function(|_, (_key, _item): (String, String)| Ok(true))?,
-    )?;
-    globals.set(
-        "SetBindingMacro",
-        lua.create_function(|_, (_key, _macro): (String, String)| Ok(true))?,
-    )?;
-    globals.set(
-        "SaveBindings",
-        lua.create_function(|_, _which: i32| Ok(()))?,
-    )?;
-    globals.set(
-        "LoadBindings",
-        lua.create_function(|_, _which: i32| Ok(()))?,
-    )?;
-
-    Ok(())
-}

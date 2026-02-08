@@ -84,7 +84,11 @@ fn mark_mask_texture(lua: &Lua, name: &str) {
     // Extract the widget ID from the Lua global, then get SimState from UIParent
     let widget_id = lua.globals().get::<mlua::AnyUserData>(name).ok()
         .and_then(|ud| ud.borrow::<crate::lua_api::frame::FrameHandle>().ok().map(|h| h.id));
-    let Some(id) = widget_id else { return };
+    let Some(id) = widget_id else {
+        eprintln!("[mask] FAILED to find global for mask texture: {}", name);
+        return;
+    };
+    eprintln!("[mask] Marking mask texture: {} (id={})", name, id);
     let Ok(parent_ud) = lua.globals().get::<mlua::AnyUserData>("UIParent") else { return };
     let Ok(handle) = parent_ud.borrow::<crate::lua_api::frame::FrameHandle>() else { return };
     if let Some(frame) = handle.state.borrow_mut().widgets.get_mut(id) {

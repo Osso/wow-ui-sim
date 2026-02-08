@@ -33,7 +33,7 @@ impl WowLuaEnv {
         self.toggle_game_menu()
     }
 
-    /// General key dispatch: special EditBox handler → OnKeyDown with propagation.
+    /// General key dispatch: special EditBox handler → keybinding → OnKeyDown.
     fn dispatch_key(&self, key: &str) -> Result<()> {
         let focused = self.state.borrow().focused_frame_id;
         if let Some(fid) = focused {
@@ -48,6 +48,19 @@ impl WowLuaEnv {
                     return Ok(());
                 }
         }
+
+        // Check keybindings (skip if an EditBox has focus — keys go to the EditBox).
+        let is_editbox = focused.map_or(false, |fid| {
+            self.state.borrow().widgets.get(fid)
+                .map(|f| f.widget_type == crate::widget::WidgetType::EditBox)
+                .unwrap_or(false)
+        });
+        if !is_editbox {
+            if super::keybindings::dispatch_key_binding(&self.lua, key)? {
+                return Ok(());
+            }
+        }
+
         self.dispatch_on_key_down(key)
     }
 

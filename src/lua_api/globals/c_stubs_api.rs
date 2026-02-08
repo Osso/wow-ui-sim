@@ -289,6 +289,10 @@ fn register_c_log(lua: &Lua) -> Result<()> {
         "LogMessage",
         lua.create_function(|_, _msg: Value| Ok(()))?,
     )?;
+    t.set(
+        "LogErrorMessage",
+        lua.create_function(|_, _msg: Value| Ok(()))?,
+    )?;
     lua.globals().set("C_Log", t)?;
     Ok(())
 }
@@ -426,6 +430,9 @@ fn register_fading_frame_stubs(lua: &Lua) -> Result<()> {
     g.set("FadingFrame_Show", lua.create_function(|_, _frame: Value| Ok(()))?)?;
     g.set("GetErrorCallstackHeight", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("SetChatWindowShown", lua.create_function(|_, (_id, _shown): (Value, Value)| Ok(()))?)?;
+    // Native WoW error display function — called by Blizzard_ScriptErrors error handler.
+    // Without this stub, the error handler itself crashes, causing recursive error spam.
+    g.set("addframetext", lua.create_function(|_, _msg: String| Ok(()))?)?;
     Ok(())
 }
 
@@ -530,6 +537,9 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     // C_UnitAurasPrivate
     let uap = lua.create_table()?;
     uap.set("GetAuraDataBySlot", lua.create_function(|_, (_unit, _slot): (Value, Value)| Ok(Value::Nil))?)?;
+    uap.set("SetPrivateAuraAnchorAddedCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
+    uap.set("SetPrivateAuraAnchorRemovedCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
+    uap.set("GetPrivateAuraAnchors", lua.create_function(|lua, _unit: Value| lua.create_table())?)?;
     g.set("C_UnitAurasPrivate", uap)?;
 
     // C_Sound

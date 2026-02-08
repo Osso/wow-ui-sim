@@ -44,6 +44,9 @@ impl WowLuaEnv {
         // Register global functions
         super::globals::register_globals(&lua, Rc::clone(&state))?;
 
+        // Initialize keybinding tables with defaults
+        super::keybindings::init_keybindings(&lua)?;
+
         Ok(Self {
             lua,
             state,
