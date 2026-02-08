@@ -81,6 +81,8 @@ pub struct TextureXml {
     pub vert_tile: Option<bool>,
     #[serde(rename = "@hidden")]
     pub hidden: Option<bool>,
+    #[serde(rename = "@alpha")]
+    pub alpha: Option<f32>,
     #[serde(rename = "@alphaMode")]
     pub alpha_mode: Option<String>,
     #[serde(rename = "@setAllPoints")]
@@ -113,6 +115,8 @@ pub struct FontStringXml {
     pub is_virtual: Option<bool>,
     #[serde(rename = "@hidden")]
     pub hidden: Option<bool>,
+    #[serde(rename = "@alpha")]
+    pub alpha: Option<f32>,
     #[serde(rename = "@text")]
     pub text: Option<String>,
     #[serde(rename = "@justifyH")]
@@ -395,6 +399,10 @@ pub struct FontXml {
     pub height: Option<f32>,
     #[serde(rename = "@outline")]
     pub outline: Option<String>,
+    #[serde(rename = "@justifyH")]
+    pub justify_h: Option<String>,
+    #[serde(rename = "@justifyV")]
+    pub justify_v: Option<String>,
 }
 
 /// FontFamily definition - collection of fonts for different alphabets.
