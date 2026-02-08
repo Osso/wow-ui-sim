@@ -33,7 +33,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_streaming_stubs(lua)?;
     register_error_callstack_stubs(lua)?;
     register_network_stubs(lua)?;
-    register_input_state_stubs(lua)?;
+    register_input_state_stubs(lua, &state)?;
     register_screen_size_functions(lua, &state)?;
     register_request_time_played(lua, Rc::clone(&state))?;
     register_cursor_position(lua)?;
@@ -279,7 +279,7 @@ fn register_battlenet_stubs(lua: &Lua) -> Result<()> {
     globals.set("BNFeaturesEnabledAndConnected", lua.create_function(|_, ()| Ok(false))?)?;
     globals.set("BNConnected", lua.create_function(|_, ()| Ok(false))?)?;
     globals.set("BNGetFriendInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
-    globals.set("BNGetNumFriends", lua.create_function(|_, ()| Ok((0, 0)))?)?;
+    globals.set("BNGetNumFriends", lua.create_function(|_, ()| Ok((0, 0, 0, 0)))?)?; // total, online, favorites, favoritesOnline
     globals.set("BNGetInfo", lua.create_function(|lua, ()| {
         Ok((
             Value::Integer(0),
@@ -415,7 +415,7 @@ fn register_network_stubs(lua: &Lua) -> Result<()> {
 }
 
 /// Keyboard/mouse modifier state stubs (simulator has no real input state).
-fn register_input_state_stubs(lua: &Lua) -> Result<()> {
+fn register_input_state_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
     globals.set("IsShiftKeyDown", lua.create_function(|_, ()| Ok(false))?)?;
     globals.set("IsControlKeyDown", lua.create_function(|_, ()| Ok(false))?)?;
@@ -423,7 +423,23 @@ fn register_input_state_stubs(lua: &Lua) -> Result<()> {
     globals.set("IsModifierKeyDown", lua.create_function(|_, ()| Ok(false))?)?;
     globals.set("IsModifiedClick", lua.create_function(|_, _action: Option<String>| Ok(false))?)?;
     globals.set("IsMouseButtonDown", lua.create_function(|_, _btn: Option<Value>| Ok(false))?)?;
-    globals.set("GetMouseFocus", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    let st = Rc::clone(state);
+    globals.set(
+        "GetMouseFocus",
+        lua.create_function(move |lua, ()| {
+            let hovered = st.borrow().hovered_frame;
+            match hovered {
+                Some(id) => {
+                    let handle = FrameHandle {
+                        id,
+                        state: Rc::clone(&st),
+                    };
+                    lua.create_userdata(handle).map(Value::UserData)
+                }
+                None => Ok(Value::Nil),
+            }
+        })?,
+    )?;
     globals.set("GetMouseButtonClicked", lua.create_function(|_, ()| Ok(""))?)?;
     Ok(())
 }
