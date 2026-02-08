@@ -313,6 +313,29 @@ fn emit_glyphs_for_runs(
     }
 }
 
+/// Measure the height of text after word-wrapping within the given width.
+///
+/// Returns the total pixel height the text would occupy when rendered with
+/// the specified font, size, and wrapping constraints.
+pub fn measure_text_height(
+    font_system: &mut WowFontSystem,
+    text: &str,
+    font_path: Option<&str>,
+    font_size: f32,
+    bounds_width: f32,
+    word_wrap: bool,
+) -> f32 {
+    let stripped = crate::render::text::strip_wow_markup(text);
+    if stripped.is_empty() {
+        return 0.0;
+    }
+    let (_, total_height) = shape_text_to_runs(
+        font_system, &stripped, font_path, font_size,
+        bounds_width, 10000.0, word_wrap, 0,
+    );
+    total_height
+}
+
 /// Emit text quads into a QuadBatch.
 ///
 /// Shapes the text, rasterizes glyphs into the atlas, and pushes textured quads.

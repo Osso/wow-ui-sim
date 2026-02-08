@@ -286,6 +286,8 @@ fn layer4_quad_batch_has_quads_for_scroll_widgets() {
         None,
         None,
         None,
+        None,
+        None,
     );
 
     // Should have at least the background quad + some widget quads
@@ -370,6 +372,8 @@ fn layer4_quad_batch_vertex_positions_match_layout() {
         registry,
         (screen_w, screen_h),
         Some("TestSFLayout"),
+        None,
+        None,
         None,
         None,
         None,
@@ -780,6 +784,8 @@ fn minimal_checkbox_quad_batch() {
         None,
         None,
         None,
+        None,
+        None,
     );
 
     // Should have texture requests referencing the checkbox atlas path
@@ -971,6 +977,8 @@ fn nine_slice_textures_produce_quads() {
         &state.widgets,
         (1024.0, 768.0),
         Some("TestNS9Quads"),
+        None,
+        None,
         None,
         None,
         None,
