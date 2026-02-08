@@ -30,6 +30,9 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_unit_frame_global_stubs(lua)?;
     register_powerbar_prediction_colors(lua)?;
     register_achievement_stubs(lua)?;
+    register_c_log(lua)?;
+    register_c_campaign_info(lua)?;
+    register_quest_global_functions(lua)?;
     Ok(())
 }
 
@@ -74,6 +77,7 @@ fn register_c_lfg_list(lua: &Lua) -> Result<()> {
     t.set("GetActiveEntryInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("HasActiveEntryInfo", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetSearchResultInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    t.set("CanCreateQuestGroup", lua.create_function(|_, _quest_id: i32| Ok(false))?)?;
     lua.globals().set("C_LFGList", t)?;
     Ok(())
 }
@@ -267,4 +271,74 @@ fn register_achievement_stubs(lua: &Lua) -> Result<()> {
     g.set("C_AchievementTelemetry", at)?;
 
     Ok(())
+}
+
+fn register_c_log(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set(
+        "LogMessage",
+        lua.create_function(|_, _msg: Value| Ok(()))?,
+    )?;
+    lua.globals().set("C_Log", t)?;
+    Ok(())
+}
+
+/// C_CampaignInfo namespace - campaign/war campaign data.
+fn register_c_campaign_info(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetCampaignID", lua.create_function(|_, _quest_id: i32| Ok(0i32))?)?;
+    t.set("GetCampaignInfo", lua.create_function(|_, _campaign_id: i32| Ok(Value::Nil))?)?;
+    lua.globals().set("C_CampaignInfo", t)?;
+    Ok(())
+}
+
+/// Quest-related global functions used by ObjectiveTracker.
+fn register_quest_global_functions(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("IsInInstance", lua.create_function(|_, ()| Ok((false, "none")))?)?;
+    g.set("IsQuestSequenced", lua.create_function(|_, _quest_id: i32| Ok(false))?)?;
+    g.set("GetQuestLogCompletionText", lua.create_function(|_, _log_idx: i32| Ok(Value::Nil))?)?;
+    g.set("GetQuestProgressBarPercent", lua.create_function(|_, _quest_id: i32| Ok(0.0f64))?)?;
+    g.set("QuestMapFrame_GetFocusedQuestID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("IsModifiedClick", lua.create_function(|_, _action: String| Ok(false))?)?;
+    g.set("IsInJailersTower", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetNumAutoQuestPopUps", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("GetAutoQuestPopUp", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    g.set("GetQuestLogSpecialItemInfo", lua.create_function(|_, _log_idx: i32| Ok(Value::Nil))?)?;
+    register_quest_leaderboard_functions(lua, &g)?;
+    Ok(())
+}
+
+/// GetNumQuestLeaderBoards / GetQuestLogLeaderBoard - quest objective data.
+fn register_quest_leaderboard_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    g.set(
+        "GetNumQuestLeaderBoards",
+        lua.create_function(|_, log_idx: i32| {
+            Ok(match log_idx {
+                1 => 2,
+                2 => 1,
+                3 => 2,
+                _ => 0,
+            })
+        })?,
+    )?;
+    g.set(
+        "GetQuestLogLeaderBoard",
+        lua.create_function(|_, (obj_idx, log_idx, _suppress): (i32, i32, Option<bool>)| {
+            Ok(quest_leaderboard_entry(log_idx, obj_idx))
+        })?,
+    )?;
+    Ok(())
+}
+
+/// Return (text, objectiveType, finished) for a mock quest objective.
+fn quest_leaderboard_entry(log_idx: i32, obj_idx: i32) -> (String, String, bool) {
+    match (log_idx, obj_idx) {
+        (1, 1) => ("Ironforge Relics collected: 3/5".into(), "item".into(), false),
+        (1, 2) => ("Explore the Old Quarry".into(), "event".into(), false),
+        (2, 1) => ("Stormwind Guards defended: 7/10".into(), "monster".into(), false),
+        (3, 1) => ("Supplies gathered: 5/5".into(), "item".into(), true),
+        (3, 2) => ("Deliver to Quartermaster".into(), "event".into(), false),
+        _ => ("Unknown objective".into(), "event".into(), false),
+    }
 }

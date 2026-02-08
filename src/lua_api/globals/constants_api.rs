@@ -95,6 +95,7 @@ fn register_color_globals(lua: &Lua) -> Result<()> {
         FACTION_ORANGE_COLOR = makeColor(0.93, 0.53, 0.13)
         FACTION_YELLOW_COLOR = makeColor(0.8, 0.73, 0.13)
         FACTION_GREEN_COLOR = makeColor(0.13, 0.8, 0.13)
+        OBJECTIVE_TRACKER_BLOCK_HEADER_COLOR = makeColor(1.0, 0.82, 0.0)
     "#,
     )
     .exec()

@@ -155,23 +155,44 @@ pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)
 }
 
 /// Topologically sort addons by their declared dependencies (Kahn's algorithm).
+/// Base UI addons are placed first in a fixed order, then remaining addons are sorted.
 fn topological_sort_addons(
-    addons: HashMap<String, (PathBuf, TocFile)>,
+    mut addons: HashMap<String, (PathBuf, TocFile)>,
 ) -> Vec<(String, PathBuf)> {
+    // Extract base UI addons first, in fixed order
+    let mut result = Vec::with_capacity(addons.len());
+    for &base in BASE_UI_ADDONS {
+        if let Some((toc_path, _)) = addons.remove(base) {
+            result.push((base.to_string(), toc_path));
+        }
+    }
+
+    // Sort remaining addons by declared dependencies
     let available: std::collections::HashSet<&str> =
         addons.keys().map(|s| s.as_str()).collect();
-
     let deps = build_dependency_graph(&addons, &available);
     let sorted = kahns_sort(&deps, addons.len());
 
-    sorted
-        .into_iter()
-        .filter_map(|name| {
-            let (toc_path, _) = addons.get(name)?;
-            Some((name.to_string(), toc_path.clone()))
-        })
-        .collect()
+    result.extend(sorted.into_iter().filter_map(|name| {
+        let (toc_path, _) = addons.get(name)?;
+        Some((name.to_string(), toc_path.clone()))
+    }));
+
+    result
 }
+
+/// Foundational addons that form the base UI layer.
+/// In WoW these are loaded before all other addons as part of FrameXML.
+/// They have circular declared dependencies, so we load them in this fixed order.
+const BASE_UI_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_SharedXML",
+    "Blizzard_SharedXMLGame",
+    "Blizzard_FrameXML",
+    "Blizzard_UIParent",
+    "Blizzard_GlueXML",
+    "Blizzard_GlueParent",
+];
 
 /// Build a map of addon name -> list of available addon names it depends on.
 fn build_dependency_graph<'a>(

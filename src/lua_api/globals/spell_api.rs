@@ -85,6 +85,8 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
         })?,
     )?;
 
+    t.set("RequestLoadSpellData", lua.create_function(|_, _spell_id: i32| Ok(()))?)?;
+
     Ok(t)
 }
 

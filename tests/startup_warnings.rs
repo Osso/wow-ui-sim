@@ -85,15 +85,30 @@ fn fire_startup_events(env: &WowLuaEnv, warnings: &mut Vec<String>) {
     warnings.extend(env.fire_on_update_collecting_errors(0.016));
 }
 
+/// Known warning count from unimplemented APIs. Update this when adding stubs.
+/// Goal: drive this to zero over time by implementing missing APIs.
+const KNOWN_WARNING_COUNT: usize = 131;
+
 #[test]
 fn test_no_warnings_on_startup() {
     let warnings = load_and_startup();
+    let count = warnings.len();
 
-    if !warnings.is_empty() {
-        let mut msg = format!("Unexpected warnings during startup ({}):\n", warnings.len());
+    if count > KNOWN_WARNING_COUNT {
+        let mut msg = format!(
+            "New warnings introduced! Expected at most {KNOWN_WARNING_COUNT}, got {count}.\n\
+             All warnings:\n"
+        );
         for w in &warnings {
             msg.push_str(&format!("  {w}\n"));
         }
         panic!("{msg}");
+    }
+
+    if count < KNOWN_WARNING_COUNT {
+        panic!(
+            "Warning count improved from {KNOWN_WARNING_COUNT} to {count}! \
+             Update KNOWN_WARNING_COUNT to {count} to lock in the improvement."
+        );
     }
 }

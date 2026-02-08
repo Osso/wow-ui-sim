@@ -205,41 +205,13 @@ fn setup_settings_panel(lua: &Lua) -> Result<()> {
     .exec()
 }
 
-/// Set up ObjectiveTrackerFrame.Header and ObjectiveTrackerManager.
+/// Set up ObjectiveTrackerFrame.Header.
+/// ObjectiveTrackerManager is defined by Blizzard_ObjectiveTrackerManager.lua.
 fn setup_objective_tracker(lua: &Lua) -> Result<()> {
     lua.load(
         r#"
         ObjectiveTrackerFrame.Header = CreateFrame("Frame", nil, ObjectiveTrackerFrame)
         ObjectiveTrackerFrame.Header.MinimizeButton = CreateFrame("Button", nil, ObjectiveTrackerFrame.Header)
-    "#,
-    )
-    .exec()?;
-
-    lua.load(
-        r#"
-        ObjectiveTrackerManager = {
-            modules = {},
-            containers = {},
-            AssignModulesOrder = function(self, modules) end,
-            AddContainer = function(self, container) end,
-            HasAnyModules = function(self) return false end,
-            UpdateAll = function(self) end,
-            UpdateModule = function(self, module) end,
-            GetContainerForModule = function(self, module) return nil end,
-            SetModuleContainer = function(self, module, container) end,
-            AcquireFrame = function(self, parent, template) return nil end,
-            ReleaseFrame = function(self, frame) end,
-            SetOpacity = function(self, opacity) end,
-            SetTextSize = function(self, textSize) end,
-            ShowRewardsToast = function(self, rewards, module, block, headerText, callback) end,
-            HideRewardsToast = function(self, rewardsToast) end,
-            HasRewardsToastForBlock = function(self, block) return false end,
-            UpdatePOIEnabled = function(self, enabled) end,
-            OnVariablesLoaded = function(self) end,
-            OnCVarChanged = function(self, cvar, value) end,
-            CanShowPOIs = function(self, module) return false end,
-            EnumerateActiveBlocksByTag = function(self, tag, callback) end,
-        }
     "#,
     )
     .exec()?;

@@ -228,22 +228,8 @@ fn test_objective_tracker_frame_header() {
     );
 }
 
-#[test]
-fn test_objective_tracker_manager_methods() {
-    let env = env();
-    // Verify key methods exist and are callable
-    env.exec("ObjectiveTrackerManager:AssignModulesOrder({})")
-        .unwrap();
-    let has_modules: bool = env
-        .eval("return ObjectiveTrackerManager:HasAnyModules()")
-        .unwrap();
-    assert!(!has_modules);
-    env.exec("ObjectiveTrackerManager:UpdateAll()").unwrap();
-    let container = env
-        .eval::<mlua::Value>("return ObjectiveTrackerManager:GetContainerForModule(nil)")
-        .unwrap();
-    assert!(matches!(container, mlua::Value::Nil));
-}
+// ObjectiveTrackerManager is defined by Blizzard_ObjectiveTrackerManager.lua
+// (loaded as an addon), not as a Rust-side global.
 
 // ============================================================================
 // World Map Globals
