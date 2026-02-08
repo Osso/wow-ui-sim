@@ -11,6 +11,8 @@ pub fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_alert_and_data_provider_methods(methods);
     // DropdownButtonMixin stub
     methods.add_method("IsMenuOpen", |_, _this, ()| Ok(false));
+    // StaticPopupElementMixin stub (dialog ownership tracking)
+    methods.add_method("SetOwningDialog", |_, _this, _dialog: Value| Ok(()));
 }
 
 /// Minimap and WorldMap stubs.
