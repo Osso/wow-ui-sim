@@ -2,6 +2,9 @@
 
 use iced::Rectangle;
 
+/// Flag bit: clip to a circle using UV coordinates (for minimap).
+pub const FLAG_CIRCLE_CLIP: u32 = 0x100;
+
 /// Blend mode for quad rendering.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 #[repr(u32)]
@@ -22,7 +25,7 @@ pub enum BlendMode {
 pub struct QuadVertex {
     /// Position in screen coordinates (pixels from top-left).
     pub position: [f32; 2],
-    /// Texture coordinates (0.0-1.0 UV space).
+    /// Texture coordinates (0.0-1.0 UV space, remapped to atlas during prepare).
     pub tex_coords: [f32; 2],
     /// Vertex color (RGBA, premultiplied alpha).
     pub color: [f32; 4],
@@ -30,6 +33,9 @@ pub struct QuadVertex {
     pub tex_index: i32,
     /// Blend mode and flags.
     pub flags: u32,
+    /// Quad-local UV coordinates (0-1, preserved across atlas remapping).
+    /// Used by effects like circle clip that need quad-relative position.
+    pub local_uv: [f32; 2],
 }
 
 impl QuadVertex {
@@ -69,6 +75,13 @@ impl QuadVertex {
                         as wgpu::BufferAddress,
                     shader_location: 4,
                     format: wgpu::VertexFormat::Uint32,
+                },
+                // local_uv
+                wgpu::VertexAttribute {
+                    offset: (std::mem::size_of::<[f32; 8]>() + std::mem::size_of::<i32>() + std::mem::size_of::<u32>())
+                        as wgpu::BufferAddress,
+                    shader_location: 5,
+                    format: wgpu::VertexFormat::Float32x2,
                 },
             ],
         }
@@ -168,6 +181,7 @@ impl QuadBatch {
                 color,
                 tex_index,
                 flags,
+                local_uv: tex_coords[i],
             });
         }
 
@@ -629,6 +643,14 @@ impl QuadBatch {
             ),
             color,
         );
+    }
+
+    /// OR extra flag bits into the last `count` vertices.
+    pub fn set_extra_flags(&mut self, count: usize, extra: u32) {
+        let start = self.vertices.len() - count;
+        for v in &mut self.vertices[start..] {
+            v.flags |= extra;
+        }
     }
 }
 

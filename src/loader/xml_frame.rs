@@ -449,6 +449,7 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
         FrameElement::MessageFrame(f)
         | FrameElement::ScrollingMessageFrame(f) => Some((f, "MessageFrame")),
         FrameElement::SimpleHTML(f) => Some((f, "SimpleHTML")),
+        FrameElement::Minimap(f) => Some((f, "Minimap")),
         FrameElement::EventFrame(f)
         | FrameElement::TaxiRouteFrame(f)
         | FrameElement::ModelFFX(f)
@@ -466,7 +467,6 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
         | FrameElement::MapScene(f)
         | FrameElement::Line(f)
         | FrameElement::Browser(f)
-        | FrameElement::Minimap(f)
         | FrameElement::MovieFrame(f)
         | FrameElement::WorldFrame(f) => Some((f, "Frame")),
         FrameElement::ScopedModifier(_) => None,

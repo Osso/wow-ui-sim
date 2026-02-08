@@ -42,6 +42,7 @@ struct VertexInput {
     @location(2) color: vec4<f32>,
     @location(3) tex_index: i32,
     @location(4) flags: u32,
+    @location(5) local_uv: vec2<f32>,
 }
 
 // Vertex output / Fragment input
@@ -52,6 +53,7 @@ struct VertexOutput {
     @location(1) @interpolate(linear) color: vec4<f32>,
     @location(2) @interpolate(flat) tex_index: i32,
     @location(3) @interpolate(flat) flags: u32,
+    @location(4) @interpolate(linear) local_uv: vec2<f32>,
 }
 
 @vertex
@@ -66,6 +68,7 @@ fn vs_main(in: VertexInput) -> VertexOutput {
     out.color = in.color;
     out.tex_index = in.tex_index;
     out.flags = in.flags;
+    out.local_uv = in.local_uv;
 
     return out;
 }
@@ -125,6 +128,14 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         // The pipeline should be set to additive blend for these quads
         // For now, just boost the alpha slightly for visibility
         color.a = min(color.a * 1.5, 1.0);
+    }
+
+    // Circle clip (for minimap) — uses local_uv which is preserved across atlas remapping
+    const FLAG_CIRCLE_CLIP: u32 = 0x100u;
+    if (in.flags & FLAG_CIRCLE_CLIP) != 0u {
+        let centered = in.local_uv * 2.0 - 1.0;
+        let dist = length(centered);
+        color.a *= 1.0 - smoothstep(0.96, 1.0, dist);
     }
 
     return color;
