@@ -11,6 +11,7 @@ use std::rc::Rc;
 /// Add measurement, word wrap, text scale, and spacing methods.
 pub fn add_measure_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_text_measurement_methods(methods);
+    add_text_height_methods(methods);
     add_word_wrap_methods(methods);
     add_text_scale_methods(methods);
     add_spacing_methods(methods);
@@ -126,6 +127,25 @@ fn add_word_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 return Ok(frame.max_lines as i32);
             }
         Ok(0i32)
+    });
+}
+
+/// SetTextHeight - sets the font height (effectively font size) for a FontString.
+fn add_text_height_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetTextHeight", |_, this, height: f64| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.font_size = height as f32;
+        }
+        Ok(())
+    });
+
+    methods.add_method("GetTextHeight", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            return Ok(frame.font_size as f64);
+        }
+        Ok(12.0_f64)
     });
 }
 
