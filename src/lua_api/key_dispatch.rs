@@ -5,19 +5,46 @@ use mlua::{MultiValue, Value};
 
 use super::env::WowLuaEnv;
 
+use std::ops::Range;
+
 /// Check whether a Lua value is truthy (not nil and not false).
 fn is_truthy(val: &Value) -> bool {
     !matches!(val, Value::Nil | Value::Boolean(false))
 }
 
+/// Get the byte range for the character at the given char index.
+fn char_byte_range(s: &str, char_index: usize) -> Range<usize> {
+    let mut chars = s.char_indices();
+    let (start, ch) = chars.nth(char_index).unwrap();
+    start..start + ch.len_utf8()
+}
+
 impl WowLuaEnv {
     /// Simulate a key press with WoW's full dispatch chain.
-    pub fn send_key_press(&self, key: &str) -> Result<()> {
+    /// `text` is the raw unicode character for typing into focused EditBoxes.
+    pub fn send_key_press(&self, key: &str, text: Option<&str>) -> Result<()> {
         if key == "ESCAPE" {
             self.dispatch_escape()
         } else {
-            self.dispatch_key(key)
+            self.dispatch_key(key, text)
         }
+    }
+
+    /// Insert character text into the focused EditBox, firing OnChar and OnTextChanged.
+    pub fn send_char_input(&self, text: &str) -> Result<()> {
+        let focused = self.state.borrow().focused_frame_id;
+        let Some(fid) = focused else { return Ok(()) };
+        let is_editbox = self
+            .state
+            .borrow()
+            .widgets
+            .get(fid)
+            .map(|f| f.widget_type == crate::widget::WidgetType::EditBox)
+            .unwrap_or(false);
+        if !is_editbox {
+            return Ok(());
+        }
+        self.editbox_insert_text(fid, text)
     }
 
     /// Escape priority: focused EditBox → CloseSpecialWindows → toggle GameMenuFrame.
@@ -34,7 +61,7 @@ impl WowLuaEnv {
     }
 
     /// General key dispatch: special EditBox handler → keybinding → OnKeyDown.
-    fn dispatch_key(&self, key: &str) -> Result<()> {
+    fn dispatch_key(&self, key: &str, text: Option<&str>) -> Result<()> {
         let focused = self.state.borrow().focused_frame_id;
         if let Some(fid) = focused {
             let special = match key {
@@ -61,7 +88,28 @@ impl WowLuaEnv {
             }
         }
 
-        self.dispatch_on_key_down(key)
+        self.dispatch_on_key_down(key)?;
+
+        // EditBox text editing: handle backspace/delete/arrow keys and character input.
+        if let Some(fid) = focused
+            && is_editbox {
+                match key {
+                    "BACKSPACE" => self.editbox_backspace(fid)?,
+                    "DELETE" => self.editbox_delete(fid)?,
+                    "LEFT" => self.editbox_move_cursor(fid, -1)?,
+                    "RIGHT" => self.editbox_move_cursor(fid, 1)?,
+                    "HOME" => self.editbox_cursor_home(fid)?,
+                    "END" => self.editbox_cursor_end(fid)?,
+                    _ => {
+                        if let Some(t) = text
+                            && !t.is_empty() {
+                                self.editbox_insert_text(fid, t)?;
+                            }
+                    }
+                }
+            }
+
+        Ok(())
     }
 
     /// Fire OnKeyDown on focused or keyboard-enabled frames, propagating up parents.
@@ -153,6 +201,130 @@ impl WowLuaEnv {
             }
         }
         Ok(closed)
+    }
+
+    // ── EditBox text editing helpers ─────────────────────────────────────
+
+    /// Insert text at cursor position, fire OnChar and OnTextChanged.
+    fn editbox_insert_text(&self, fid: u64, text: &str) -> Result<()> {
+        // Check numeric restriction
+        let numeric = self.state.borrow().widgets.get(fid)
+            .map(|f| f.editbox_numeric).unwrap_or(false);
+        if numeric && !text.chars().all(|c| c.is_ascii_digit() || c == '.' || c == '-') {
+            return Ok(());
+        }
+
+        {
+            let mut state = self.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(fid) {
+                let current = frame.text.get_or_insert_with(String::new);
+                let char_pos = frame.editbox_cursor_pos as usize;
+                // Convert char position to byte position
+                let byte_pos = current.char_indices()
+                    .nth(char_pos)
+                    .map(|(i, _)| i)
+                    .unwrap_or(current.len());
+                current.insert_str(byte_pos, text);
+                frame.editbox_cursor_pos += text.chars().count() as i32;
+            }
+        }
+
+        // Fire OnChar with each character
+        for ch in text.chars() {
+            let char_val = Value::String(self.lua.create_string(&ch.to_string())?);
+            self.fire_script_handler(fid, "OnChar", vec![char_val])?;
+        }
+
+        // Fire OnTextChanged with userInput=true
+        let user_input = Value::Boolean(true);
+        self.fire_script_handler(fid, "OnTextChanged", vec![user_input])?;
+        Ok(())
+    }
+
+    /// Delete the character before the cursor (Backspace).
+    fn editbox_backspace(&self, fid: u64) -> Result<()> {
+        let changed = {
+            let mut state = self.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(fid) {
+                let current = frame.text.get_or_insert_with(String::new);
+                let char_pos = frame.editbox_cursor_pos as usize;
+                if char_pos > 0 {
+                    let byte_range = char_byte_range(current, char_pos - 1);
+                    current.drain(byte_range);
+                    frame.editbox_cursor_pos -= 1;
+                    true
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        };
+        if changed {
+            let user_input = Value::Boolean(true);
+            self.fire_script_handler(fid, "OnTextChanged", vec![user_input])?;
+        }
+        Ok(())
+    }
+
+    /// Delete the character after the cursor (Delete key).
+    fn editbox_delete(&self, fid: u64) -> Result<()> {
+        let changed = {
+            let mut state = self.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(fid) {
+                let current = frame.text.get_or_insert_with(String::new);
+                let char_pos = frame.editbox_cursor_pos as usize;
+                let char_count = current.chars().count();
+                if char_pos < char_count {
+                    let byte_range = char_byte_range(current, char_pos);
+                    current.drain(byte_range);
+                    true
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        };
+        if changed {
+            let user_input = Value::Boolean(true);
+            self.fire_script_handler(fid, "OnTextChanged", vec![user_input])?;
+        }
+        Ok(())
+    }
+
+    /// Move cursor by `delta` characters (negative = left, positive = right).
+    fn editbox_move_cursor(&self, fid: u64, delta: i32) -> Result<()> {
+        let mut state = self.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(fid) {
+            let char_count = frame.text.as_ref()
+                .map(|t| t.chars().count() as i32)
+                .unwrap_or(0);
+            let new_pos = (frame.editbox_cursor_pos + delta).clamp(0, char_count);
+            frame.editbox_cursor_pos = new_pos;
+        }
+        Ok(())
+    }
+
+    /// Move cursor to the beginning of text (Home key).
+    fn editbox_cursor_home(&self, fid: u64) -> Result<()> {
+        let mut state = self.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(fid) {
+            frame.editbox_cursor_pos = 0;
+        }
+        Ok(())
+    }
+
+    /// Move cursor to the end of text (End key).
+    fn editbox_cursor_end(&self, fid: u64) -> Result<()> {
+        let mut state = self.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(fid) {
+            let char_count = frame.text.as_ref()
+                .map(|t| t.chars().count() as i32)
+                .unwrap_or(0);
+            frame.editbox_cursor_pos = char_count;
+        }
+        Ok(())
     }
 
     /// Toggle GameMenuFrame visibility.
