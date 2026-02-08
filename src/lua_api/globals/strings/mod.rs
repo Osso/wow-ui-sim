@@ -128,7 +128,7 @@ fn register_binding_text_helpers(lua: &Lua, globals: &mlua::Table) -> Result<()>
     globals.set(
         "GetBindingText",
         lua.create_function(
-            |lua, (key, _prefix, _abbrev): (Option<String>, Option<String>, Option<bool>)| {
+            |lua, (key, _prefix, _abbrev): (Option<String>, Option<Value>, Option<Value>)| {
                 match key {
                     Some(k) => Ok(Value::String(lua.create_string(&k)?)),
                     None => Ok(Value::String(lua.create_string("")?)),
