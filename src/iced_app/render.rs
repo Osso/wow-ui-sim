@@ -380,16 +380,13 @@ fn collect_ancestor_visible_ids(
 
     while let Some((id, parent_alpha)) = queue.pop() {
         let Some(f) = registry.get(id) else { continue };
+        if !f.visible {
+            continue;
+        }
         let effective_alpha = parent_alpha * f.alpha;
-        // Root frames are always eligible (their own visibility is checked later).
-        // Children are only queued if the parent is visible, so reaching here
-        // means all ancestors are visible.
         visible.insert(id, effective_alpha);
-        // Only descend into children if this frame is visible.
-        if f.visible {
-            for &child_id in &f.children {
-                queue.push((child_id, effective_alpha));
-            }
+        for &child_id in &f.children {
+            queue.push((child_id, effective_alpha));
         }
     }
     visible

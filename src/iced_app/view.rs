@@ -24,6 +24,20 @@ const HIT_TEST_EXCLUDED: &[&str] = &[
     "EventToastManagerFrame", "EditModeManagerFrame",
 ];
 
+/// Check if a frame and all its ancestors are visible (IsVisible semantics).
+fn is_ancestor_visible(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {
+    let mut current = id;
+    loop {
+        match widgets.get(current) {
+            Some(f) if f.visible => match f.parent_id {
+                Some(pid) => current = pid,
+                None => return true,
+            },
+            _ => return false,
+        }
+    }
+}
+
 /// Build sorted hit-test list: (id, pre-scaled bounds), highest strata/level last.
 ///
 /// The result is sorted low-to-high so callers can iterate in reverse for
@@ -39,6 +53,10 @@ fn build_hittable_list(
         .filter_map(|id| {
             let frame = widgets.get(id)?;
             if !frame.visible || !frame.mouse_enabled {
+                return None;
+            }
+            // Check parent-chain visibility (IsVisible semantics)
+            if !is_ancestor_visible(widgets, id) {
                 return None;
             }
             if frame.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n)) {
@@ -71,21 +89,9 @@ impl App {
         };
         let screen = self.screen_size.get();
         let screen_str = format!(" | screen:{}x{}", screen.width as i32, screen.height as i32);
-        let hover_str = if let Some(hovered_id) = self.hovered_frame {
-            let env = self.env.borrow();
-            let state = env.state().borrow();
-            if let Some(f) = state.widgets.get(hovered_id) {
-                let name = f.name.as_deref().unwrap_or("(anonymous)");
-                format!(" | hover: {} [{:?}] ({}x{})", name, f.widget_type, f.width as i32, f.height as i32)
-            } else {
-                String::new()
-            }
-        } else {
-            String::new()
-        };
         let title_text = format!(
-            "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}{}{}]",
-            self.fps, self.frame_time_display, screen_str, mouse_str, hover_str
+            "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}{}]",
+            self.fps, self.frame_time_display, screen_str, mouse_str
         );
         text(title_text).size(20).color(palette::GOLD).into()
     }
