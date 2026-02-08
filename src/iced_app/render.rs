@@ -408,9 +408,12 @@ fn emit_frame_quads(
         WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
         WidgetType::Button => {
             build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
-            if let Some((fs, ga)) = text_ctx
+            // Only render text on the button itself when there's no "Text" child
+            // FontString to handle it (the child renders at its own anchored position).
+            if !f.children_keys.contains_key("Text")
+                && let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
-                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, TextJustify::Center, TextJustify::Center, false, 0);
+                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, false, 0);
                 }
         }
         WidgetType::Texture => {
