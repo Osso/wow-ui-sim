@@ -526,12 +526,13 @@ fn register_misc_stubs(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Lua stdlib global aliases (string, math, table, bit) for WoW compatibility.
+/// Lua stdlib global aliases (string, math, table, bit, os) for WoW compatibility.
 fn register_lua_stdlib_aliases(lua: &Lua) -> Result<()> {
     register_string_aliases(lua)?;
     register_math_aliases(lua)?;
     register_table_aliases(lua)?;
     register_bit_library(lua)?;
+    register_os_aliases(lua)?;
     Ok(())
 }
 
@@ -615,6 +616,20 @@ fn register_math_aliases(lua: &Lua) -> Result<()> {
 /// Table library global aliases.
 fn register_table_aliases(_lua: &Lua) -> Result<()> {
     // Already registered in register_math_aliases (sort, getn, tconcat)
+    Ok(())
+}
+
+/// OS library global aliases: date, time, difftime, clock.
+fn register_os_aliases(lua: &Lua) -> Result<()> {
+    lua.load(
+        r##"
+        date = os.date
+        time = os.time
+        difftime = os.difftime
+        clock = os.clock
+    "##,
+    )
+    .exec()?;
     Ok(())
 }
 
