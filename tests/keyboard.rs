@@ -396,3 +396,204 @@ fn test_escape_priority_chain() {
     let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
     assert!(menu_shown, "Third Escape should toggle GameMenuFrame");
 }
+
+// --- EditBox click-to-type integration test ---
+
+#[test]
+fn test_click_editbox_type_message_and_submit() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        _G.received_message = nil
+
+        local eb = CreateFrame("EditBox", "ChatEditBox", UIParent)
+        eb:SetSize(200, 30)
+        eb:SetScript("OnEnterPressed", function(self)
+            _G.received_message = self:GetText()
+            self:SetText("")
+        end)
+    "#,
+    )
+    .unwrap();
+
+    // EditBox should not have focus yet
+    let has_focus: bool = env.eval("return ChatEditBox:HasFocus()").unwrap();
+    assert!(!has_focus, "EditBox should not have focus before click");
+
+    // Click the EditBox to give it focus
+    let frame_id = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("ChatEditBox")
+        .expect("ChatEditBox should exist");
+    env.send_click(frame_id).unwrap();
+
+    let has_focus: bool = env.eval("return ChatEditBox:HasFocus()").unwrap();
+    assert!(has_focus, "EditBox should have focus after click");
+
+    // Type "hello" character by character
+    for ch in "hello".chars() {
+        let s = ch.to_string();
+        env.send_key_press(&s.to_uppercase(), Some(&s)).unwrap();
+    }
+
+    let text: String = env.eval("return ChatEditBox:GetText()").unwrap();
+    assert_eq!(text, "hello", "EditBox should contain typed text");
+
+    // Press Enter to submit
+    env.send_key_press("ENTER", None).unwrap();
+
+    let received: String = env.eval("return _G.received_message").unwrap();
+    assert_eq!(received, "hello", "OnEnterPressed should receive the message");
+
+    // EditBox should be cleared after submit
+    let text_after: String = env
+        .eval("return ChatEditBox:GetText() or ''")
+        .unwrap();
+    assert_eq!(text_after, "", "EditBox should be cleared after submit");
+}
+
+// --- Targeting system tests ---
+
+#[test]
+fn test_f1_targets_player() {
+    let env = WowLuaEnv::new().unwrap();
+
+    let exists_before: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(!exists_before, "No target should exist initially");
+
+    env.send_key_press("F1", None).unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after F1");
+
+    let name: String = env.eval("return UnitName('target')").unwrap();
+    assert_eq!(name, "SimPlayer", "F1 should target player");
+}
+
+#[test]
+fn test_f2_targets_party1() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.send_key_press("F2", None).unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after F2");
+
+    let name: String = env.eval("return UnitName('target')").unwrap();
+    assert_eq!(name, "Thrynn", "F2 should target party member 1");
+
+    let is_player: bool = env.eval("return UnitIsPlayer('target')").unwrap();
+    assert!(is_player, "Party target should be a player");
+}
+
+#[test]
+fn test_f6_targets_enemy() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.send_key_press("F6", None).unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after F6");
+
+    let name: String = env.eval("return UnitName('target')").unwrap();
+    assert_eq!(name, "Hogger", "F6 should target enemy NPC");
+
+    let is_enemy: bool = env.eval("return UnitIsEnemy('player', 'target')").unwrap();
+    assert!(is_enemy, "Enemy target should be an enemy");
+
+    let is_player: bool = env.eval("return UnitIsPlayer('target')").unwrap();
+    assert!(!is_player, "Enemy NPC should not be a player");
+}
+
+#[test]
+fn test_tab_targets_enemy() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.send_key_press("TAB", None).unwrap();
+
+    let name: String = env.eval("return UnitName('target')").unwrap();
+    assert_eq!(name, "Hogger", "Tab should target nearest enemy");
+}
+
+#[test]
+fn test_escape_clears_target() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(r#"
+        GameMenuFrame = CreateFrame("Frame", "GameMenuFrame", UIParent)
+        GameMenuFrame:Hide()
+    "#).unwrap();
+
+    // Set a target first
+    env.send_key_press("F1", None).unwrap();
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after F1");
+
+    // Escape should clear target, not open game menu
+    env.send_key_press("ESCAPE", None).unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(!exists, "Escape should clear target");
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(!menu_shown, "GameMenuFrame should NOT open when clearing target");
+}
+
+#[test]
+fn test_escape_no_target_opens_game_menu() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(r#"
+        GameMenuFrame = CreateFrame("Frame", "GameMenuFrame", UIParent)
+        GameMenuFrame:Hide()
+    "#).unwrap();
+
+    // No target set, escape should toggle game menu
+    env.send_key_press("ESCAPE", None).unwrap();
+
+    let menu_shown: bool = env.eval("return GameMenuFrame:IsShown()").unwrap();
+    assert!(menu_shown, "Escape without target should toggle game menu");
+}
+
+#[test]
+fn test_target_fires_player_target_changed() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(r#"
+        _G.target_changed_count = 0
+        local f = CreateFrame("Frame", "TargetEventFrame", UIParent)
+        f:RegisterEvent("PLAYER_TARGET_CHANGED")
+        f:SetScript("OnEvent", function(self, event)
+            if event == "PLAYER_TARGET_CHANGED" then
+                _G.target_changed_count = _G.target_changed_count + 1
+            end
+        end)
+    "#).unwrap();
+
+    env.send_key_press("F1", None).unwrap();
+    let count: i32 = env.eval("return _G.target_changed_count").unwrap();
+    assert_eq!(count, 1, "Setting target should fire PLAYER_TARGET_CHANGED");
+
+    env.send_key_press("ESCAPE", None).unwrap();
+    let count: i32 = env.eval("return _G.target_changed_count").unwrap();
+    assert_eq!(count, 2, "Clearing target should fire PLAYER_TARGET_CHANGED");
+}
+
+#[test]
+fn test_unit_exists_target_follows_state() {
+    let env = WowLuaEnv::new().unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(!exists, "UnitExists('target') should be false with no target");
+
+    env.exec("TargetUnit('player')").unwrap();
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "UnitExists('target') should be true after targeting");
+
+    env.exec("ClearTarget()").unwrap();
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(!exists, "UnitExists('target') should be false after clearing");
+}
