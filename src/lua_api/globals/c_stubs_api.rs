@@ -360,11 +360,16 @@ fn register_chat_stubs(lua: &Lua) -> Result<()> {
     // CreateSecureDelegate: no taint system, return the function as-is
     g.set("CreateSecureDelegate", lua.create_function(|_, func: mlua::Function| Ok(func))?)?;
     // GetChatWindowInfo: return defaults (only window 1 is shown)
+    // Returns: name, fontSize, r, g, b, alpha, shown, locked, docked, uninteractable
+    // Default color is black (0,0,0) at 25% alpha, matching DEFAULT_CHATFRAME_COLOR/ALPHA
     g.set("GetChatWindowInfo", lua.create_function(|_, id: i32| {
         let name = format!("ChatFrame{id}");
         let shown = id == 1;
-        Ok((name, 14.0f64, 1.0f64, 1.0f64, 1.0f64, 1.0f64, shown, false, false, false))
+        Ok((name, 14.0f64, 0.0f64, 0.0f64, 0.0f64, 0.25f64, shown, false, false, false))
     })?)?;
+    // GetChatWindowMessages/GetChatWindowChannels: return no message types or channels
+    g.set("GetChatWindowMessages", lua.create_function(|_, _id: i32| Ok(mlua::MultiValue::new()))?)?;
+    g.set("GetChatWindowChannels", lua.create_function(|_, _id: i32| Ok(mlua::MultiValue::new()))?)?;
     g.set("GetDefaultLanguage", lua.create_function(|_, ()| Ok("Common"))?)?;
     g.set("GetAlternativeDefaultLanguage", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     Ok(())
@@ -460,6 +465,8 @@ fn register_missing_globals(lua: &Lua) -> Result<()> {
     g.set("GetNumSubgroupMembers", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("HasBonusActionBar", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("HasTempShapeshiftActionBar", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("PutItemInBackpack", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("PutItemInBag", lua.create_function(|_, _bag: i32| Ok(()))?)?;
 
     // ActionButtonUtil - enum tables needed by Blizzard_SpellSearch at load time
     // (Blizzard_ActionBar will overwrite this with the full version when it loads)
