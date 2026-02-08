@@ -134,8 +134,15 @@ impl App {
             button(text("PLAYER_ENTERING_WORLD").size(12))
                 .on_press(Message::FireEvent("PLAYER_ENTERING_WORLD".to_string()))
                 .style(event_button_style),
+            space::horizontal(),
+            checkbox(self.xp_bar_visible)
+                .label("XP Bar")
+                .on_toggle(Message::ToggleXpBar)
+                .size(14)
+                .text_size(12),
         ]
         .spacing(6)
+        .align_y(iced::Alignment::Center)
         .into()
     }
 

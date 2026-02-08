@@ -513,8 +513,15 @@ fn register_weapon_enchant_functions(lua: &Lua) -> Result<()> {
 /// Register UnitXP, UnitXPMax, UnitTrialXP, GetXPExhaustion, GetRestState.
 fn register_xp_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-    globals.set("UnitXP", lua.create_function(|_, _unit: String| Ok(5000i32))?)?;
-    globals.set("UnitXPMax", lua.create_function(|_, _unit: String| Ok(10000i32))?)?;
+    // Random XP so the bar displays something visible at startup.
+    let xp_max = 89_750i32;
+    let nanos = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .subsec_nanos();
+    let xp_current = (nanos % xp_max as u32) as i32;
+    globals.set("UnitXP", lua.create_function(move |_, _unit: String| Ok(xp_current))?)?;
+    globals.set("UnitXPMax", lua.create_function(move |_, _unit: String| Ok(xp_max))?)?;
     globals.set("UnitTrialXP", lua.create_function(|_, _unit: String| Ok(0i32))?)?;
     globals.set("GetXPExhaustion", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     globals.set("GetRestState", lua.create_function(|_, ()| Ok(1i32))?)?;
@@ -618,5 +625,7 @@ fn register_unit_combat_stat_functions_2(lua: &Lua) -> Result<()> {
     g.set("GetPetActionInfo", lua.create_function(|_, _idx: Value| {
         Ok((Value::Nil, Value::Nil, Value::Nil, false, false))
     })?)?;
+    g.set("PetHasActionBar", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("IsPetAttackAction", lua.create_function(|_, _idx: Value| Ok(false))?)?;
     Ok(())
 }

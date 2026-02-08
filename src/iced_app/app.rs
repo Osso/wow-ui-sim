@@ -176,6 +176,8 @@ pub struct App {
     pub(crate) saved_vars: Option<SavedVariablesManager>,
     /// Lua code to execute after first frame (from --exec-lua).
     pub(crate) pending_exec_lua: Option<String>,
+    /// Whether the XP bar is currently visible (toggled by UI checkbox).
+    pub(crate) xp_bar_visible: bool,
 }
 
 impl App {
@@ -238,6 +240,7 @@ impl App {
             last_on_update_time: std::time::Instant::now(),
             saved_vars,
             pending_exec_lua: INIT_EXEC_LUA.with(|cell| cell.borrow_mut().take()),
+            xp_bar_visible: true,
         };
 
         (app, Task::none())

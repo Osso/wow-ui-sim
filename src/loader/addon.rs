@@ -139,6 +139,14 @@ fn apply_cpp_mixin_stubs(env: &WowLuaEnv) {
         if PerksModelSceneControlButtonMixin and not PerksModelSceneControlButtonMixin.OnLoad then
             PerksModelSceneControlButtonMixin.OnLoad = function() end
         end
+        if PetActionBarMixin and PetActionBarMixin.Update and not PetActionBarMixin._update_guarded then
+            PetActionBarMixin._update_guarded = true
+            local origUpdate = PetActionBarMixin.Update
+            PetActionBarMixin.Update = function(self)
+                if not self.actionButtons or #self.actionButtons == 0 then return end
+                return origUpdate(self)
+            end
+        end
         "#,
     );
 }

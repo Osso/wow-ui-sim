@@ -31,6 +31,7 @@ impl App {
             Message::InspectorMouseEnabledToggled(val) => self.inspector_state.mouse_enabled = val,
             Message::InspectorApply => self.handle_inspector_apply(),
             Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
+            Message::ToggleXpBar(visible) => self.handle_toggle_xp_bar(visible),
             Message::KeyPress(ref key) => self.handle_key_press(key),
         }
 
@@ -211,6 +212,28 @@ impl App {
                 .push(format!("KeyPress({}) error: {}", key, e));
         }
         drop(env);
+        self.invalidate();
+    }
+
+    fn handle_toggle_xp_bar(&mut self, visible: bool) {
+        self.xp_bar_visible = visible;
+        let at_max = if visible { "false" } else { "true" };
+        let event = if visible { "ENABLE_XP_GAIN" } else { "DISABLE_XP_GAIN" };
+        {
+            let env = self.env.borrow();
+            // Override IsPlayerAtEffectiveMaxLevel to control XP bar visibility
+            let lua_code = format!(
+                "IsPlayerAtEffectiveMaxLevel = function() return {} end",
+                at_max
+            );
+            if let Err(e) = env.exec(&lua_code) {
+                self.log_messages.push(format!("XP toggle error: {}", e));
+            }
+            // Fire the event so the status tracking manager re-evaluates
+            if let Err(e) = env.fire_event(event) {
+                self.log_messages.push(format!("XP event error: {}", e));
+            }
+        }
         self.invalidate();
     }
 

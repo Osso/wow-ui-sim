@@ -456,6 +456,21 @@ fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Erro
     // These must run after addon loading since Blizzard code overwrites our Rust stubs.
     let _ = env.exec("UpdateMicroButtons = function() end");
 
+    // Patch GradualAnimatedStatusBarMixin:IsAnimating to handle nil
+    // LevelUpMaxAlphaAnimation (animation group not created in simulator).
+    let _ = env.exec(r#"
+        if GradualAnimatedStatusBarMixin then
+            function GradualAnimatedStatusBarMixin:IsAnimating()
+                return self.targetValue and self:GetValue() < self.targetValue
+                    or self.gainFinishedAnimation and self.gainFinishedAnimation:IsPlaying()
+                    or self.LevelUpMaxAlphaAnimation and self.LevelUpMaxAlphaAnimation:IsPlaying()
+                    or self.overrideLevelUpMaxAlphaAnimation and self.overrideLevelUpMaxAlphaAnimation:IsPlaying()
+            end
+        end
+    "#);
+
+    override_action_bar_positioning(env);
+
     let debug_script = PathBuf::from("/tmp/debug-scrollbox-update.lua");
     if debug_script.exists() {
         let script = std::fs::read_to_string(&debug_script)?;
@@ -465,6 +480,55 @@ fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Erro
     }
 
     Ok(())
+}
+
+/// Override UIParent_ManageFramePositions to stack bottom action bars above
+/// the status tracking bars (XP bar, etc.).
+///
+/// Blizzard's implementation dispatches through EditModeManagerFrame which
+/// requires full EditMode initialisation (layoutInfo). Since the simulator
+/// doesn't run EditMode, we replace the function with a simplified version
+/// that stacks visible bottom bars starting at y=45 (the retail default
+/// MAIN_ACTION_BAR_DEFAULT_OFFSET_Y), matching real WoW's layout.
+fn override_action_bar_positioning(env: &WowLuaEnv) {
+    let result = env.exec(r#"
+        MAIN_ACTION_BAR_DEFAULT_OFFSET_Y = 45
+
+        UIParent_ManageFramePositions = function()
+            local bottomBars = {
+                MainActionBar,
+                MultiBarBottomLeft,
+                MultiBarBottomRight,
+                StanceBar,
+                PetActionBar,
+                PossessActionBar,
+                MainMenuBarVehicleLeaveButton,
+            }
+
+            local offsetY = MAIN_ACTION_BAR_DEFAULT_OFFSET_Y
+            local topMostBar = nil
+
+            for _, bar in ipairs(bottomBars) do
+                if bar and bar:IsShown() then
+                    bar:ClearAllPoints()
+
+                    local topBarHeight = topMostBar
+                        and topMostBar:GetHeight() + 5
+                        or 0
+                    offsetY = offsetY + topBarHeight
+
+                    local offsetX = -bar:GetWidth() / 2
+                    bar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM",
+                                 offsetX, offsetY)
+
+                    topMostBar = bar
+                end
+            end
+        end
+    "#);
+    if let Err(e) = result {
+        eprintln!("[PostLoad] Failed to override action bar positioning: {}", e);
+    }
 }
 
 /// Sleep for the given number of milliseconds (if specified).

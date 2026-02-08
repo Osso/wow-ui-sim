@@ -72,6 +72,8 @@ pub enum Message {
     InspectorApply,
     /// Toggle frames panel collapsed state.
     ToggleFramesPanel,
+    /// Toggle XP bar visibility (simulate max level vs leveling).
+    ToggleXpBar(bool),
     /// Keyboard input dispatched to Lua (WoW key name, e.g. "ESCAPE", "ENTER", "A").
     KeyPress(String),
 }
