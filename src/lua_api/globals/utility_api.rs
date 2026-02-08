@@ -435,23 +435,36 @@ fn register_secure_handler_stubs(lua: &Lua) -> Result<()> {
 }
 
 /// Error handler functions: geterrorhandler, seterrorhandler.
+///
+/// Stores the handler in the Lua registry under `__wow_error_handler`.
+/// Script dispatch errors are routed through this handler (see script_helpers).
 fn register_error_handlers(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     globals.set(
         "geterrorhandler",
         lua.create_function(|lua, ()| {
-            let handler = lua.create_function(|_, msg: String| {
-                println!("Lua error: {}", msg);
-                Ok(())
-            })?;
-            Ok(handler)
+            let handler: Value =
+                lua.named_registry_value("__wow_error_handler").unwrap_or(Value::Nil);
+            if let Value::Function(f) = handler {
+                Ok(Value::Function(f))
+            } else {
+                // Return default handler that prints to stderr
+                let default = lua.create_function(|_, msg: String| {
+                    eprintln!("Lua error: {}", msg);
+                    Ok(())
+                })?;
+                Ok(Value::Function(default))
+            }
         })?,
     )?;
 
     globals.set(
         "seterrorhandler",
-        lua.create_function(|_, _handler: mlua::Function| Ok(()))?,
+        lua.create_function(|lua, handler: mlua::Function| {
+            lua.set_named_registry_value("__wow_error_handler", handler)?;
+            Ok(())
+        })?,
     )?;
 
     Ok(())

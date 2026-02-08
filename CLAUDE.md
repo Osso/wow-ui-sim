@@ -8,6 +8,8 @@
 - `docs/rendering-pipeline.md` - QuadBatch, WGSL shaders, tiered GPU atlas, glyph atlas, strata sorting, hit testing, alpha propagation
 - `docs/widget-system.md` - Frame struct (~140 fields), WidgetType enum (18 types), WidgetRegistry, default children, visibility
 - `docs/lua-api.md` - WowLuaEnv, FrameHandle, 200+ globals, 300+ frame methods, C_* namespaces, animations, implementation status
+- `docs/event-system.md` - Event queue, script handler types (36 handlers), __scripts table, dispatch flow, OnUpdate tick, startup sequence
+- `docs/xml-template-system.md` - XML parsing, template registry, inheritance chains, XML-to-widget conversion, inline scripts
 - `docs/frame-data-flow.md` - Mixin, events, metamethods, script dispatch
 - `docs/button-text-rendering.md` - Button text draw order, three-slice text-behind-background bug
 - `docs/glow-plan.md` - Glow/shine effect plan

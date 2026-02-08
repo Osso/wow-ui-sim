@@ -54,19 +54,16 @@ fn lookup_child_by_key(
     Ok(None)
 }
 
-/// Look up a value from the __frame_fields Lua table.
+/// Look up a value from the __frame_fields Lua table (stored in registry).
 fn lookup_custom_field(lua: &Lua, frame_id: u64, key: &str) -> Option<Value> {
-    let fields_table: Option<mlua::Table> = lua.globals().get("__frame_fields").ok();
-    if let Some(table) = fields_table {
-        let frame_fields: Option<mlua::Table> = table.get::<mlua::Table>(frame_id).ok();
-        if let Some(fields) = frame_fields {
-            let value: Value = fields.get::<Value>(key).unwrap_or(Value::Nil);
-            if value != Value::Nil {
-                return Some(value);
-            }
-        }
+    let fields_table = crate::lua_api::script_helpers::get_frame_fields_table(lua)?;
+    let frame_fields: mlua::Table = fields_table.get::<mlua::Table>(frame_id).ok()?;
+    let value: Value = frame_fields.get::<Value>(key).unwrap_or(Value::Nil);
+    if value != Value::Nil {
+        Some(value)
+    } else {
+        None
     }
-    None
 }
 
 /// Handle special fallback methods (Clear for Cooldown, Lower, Raise).
@@ -193,25 +190,9 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     }
                 }
 
-            // Get or create the fields table
-            let fields_table: mlua::Table =
-                lua.globals()
-                    .get::<mlua::Table>("__frame_fields")
-                    .unwrap_or_else(|_| {
-                        let t = lua.create_table().unwrap();
-                        lua.globals().set("__frame_fields", t.clone()).unwrap();
-                        t
-                    });
-
-            // Get or create the frame's field table
-            let frame_fields: mlua::Table =
-                fields_table
-                    .get::<mlua::Table>(frame_id)
-                    .unwrap_or_else(|_| {
-                        let t = lua.create_table().unwrap();
-                        fields_table.set(frame_id, t.clone()).unwrap();
-                        t
-                    });
+            // Get or create the frame's field table (stored in registry)
+            let frame_fields =
+                crate::lua_api::script_helpers::get_or_create_frame_fields(lua, frame_id);
 
             frame_fields.set(key, value)?;
             Ok(())

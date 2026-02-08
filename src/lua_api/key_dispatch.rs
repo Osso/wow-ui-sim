@@ -102,13 +102,9 @@ impl WowLuaEnv {
 
     /// Fire a script handler and return whether it returned a truthy value.
     fn fire_handler_returns_truthy(&self, widget_id: u64, handler_name: &str) -> Result<bool> {
-        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-        let Some(table) = scripts_table else {
-            return Ok(false);
-        };
-        let frame_key = format!("{}_{}", widget_id, handler_name);
-        let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-        let Some(handler) = handler else {
+        use super::script_helpers::get_script;
+
+        let Some(handler) = get_script(&self.lua, widget_id, handler_name) else {
             return Ok(false);
         };
         let frame_ref_key = format!("__frame_{}", widget_id);

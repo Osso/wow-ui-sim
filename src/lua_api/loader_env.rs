@@ -67,36 +67,21 @@ impl<'a> LoaderEnv<'a> {
 
     /// Fire an event with arguments to all registered frames.
     pub fn fire_event_with_args(&self, event: &str, args: &[mlua::Value]) -> Result<()> {
+        use super::script_helpers::{call_error_handler, get_frame_ref, get_script};
+
         let listeners = {
             let state = self.state.borrow();
             state.widgets.get_event_listeners(event)
         };
 
         for widget_id in listeners {
-            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-            if let Some(table) = scripts_table {
-                let frame_key = format!("{}_OnEvent", widget_id);
-                if let Ok(Some(handler)) = table.get::<Option<mlua::Function>>(frame_key.as_str())
-                {
-                    let frame_ref_key = format!("__frame_{}", widget_id);
-                    if let Ok(frame) = self.lua.globals().get::<mlua::Value>(frame_ref_key.as_str())
-                    {
-                        let mut call_args =
-                            vec![frame, mlua::Value::String(self.lua.create_string(event)?)];
-                        call_args.extend(args.iter().cloned());
-                        if let Err(e) =
-                            handler.call::<()>(mlua::MultiValue::from_vec(call_args))
-                        {
-                            let state = self.state.borrow();
-                            let name = state
-                                .widgets
-                                .get(widget_id)
-                                .and_then(|f| f.name.as_deref())
-                                .unwrap_or("(anonymous)");
-                            eprintln!(
-                                "[{event}] handler error on {name} (id={widget_id}): {e}"
-                            );
-                        }
+            if let Some(handler) = get_script(self.lua, widget_id, "OnEvent") {
+                if let Some(frame) = get_frame_ref(self.lua, widget_id) {
+                    let mut call_args =
+                        vec![frame, mlua::Value::String(self.lua.create_string(event)?)];
+                    call_args.extend(args.iter().cloned());
+                    if let Err(e) = handler.call::<()>(mlua::MultiValue::from_vec(call_args)) {
+                        call_error_handler(self.lua, &e.to_string());
                     }
                 }
             }

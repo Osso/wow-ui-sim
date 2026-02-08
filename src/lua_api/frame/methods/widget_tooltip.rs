@@ -337,12 +337,10 @@ fn add_tooltip_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Fire a script handler on a frame (e.g. OnTooltipCleared).
 pub(super) fn fire_tooltip_script(lua: &mlua::Lua, frame_id: u64, handler: &str) -> mlua::Result<()> {
-    if let Ok(Some(scripts_table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
-        let key = format!("{}_{}", frame_id, handler);
-        if let Ok(Some(func)) = scripts_table.get::<Option<mlua::Function>>(key.as_str()) {
-            let frame_key = format!("__frame_{}", frame_id);
-            if let Ok(frame_ud) = lua.globals().get::<Value>(frame_key.as_str()) {
-                let _ = func.call::<()>(frame_ud);
+    if let Some(func) = crate::lua_api::script_helpers::get_script(lua, frame_id, handler) {
+        if let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, frame_id) {
+            if let Err(e) = func.call::<()>(frame_ud) {
+                crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
             }
         }
     }

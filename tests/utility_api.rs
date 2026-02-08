@@ -726,6 +726,7 @@ fn test_seterrorhandler_accepts_function() {
     env.eval::<()>("seterrorhandler(function() end)").unwrap();
 }
 
+
 // ============================================================================
 // SecureHandler stubs
 // ============================================================================

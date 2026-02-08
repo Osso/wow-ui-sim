@@ -432,16 +432,11 @@ fn set_enabled_attribute(state: &mut crate::lua_api::SimState, id: u64, enabled:
 /// Click, RegisterForClicks - click simulation and registration.
 fn add_click_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("Click", |lua, this, ()| {
-        let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
-        if let Some(table) = scripts_table {
-            let key = format!("{}_OnClick", this.id);
-            let handler: Option<mlua::Function> = table.get(key.as_str()).ok();
-            if let Some(handler) = handler {
-                let frame_key = format!("__frame_{}", this.id);
-                let frame: Value = lua.globals().get(frame_key.as_str())?;
-                let button = lua.create_string("LeftButton")?;
-                handler.call::<()>((frame, button, false))?;
-            }
+        if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, this.id, "OnClick") {
+            let frame_key = format!("__frame_{}", this.id);
+            let frame: Value = lua.globals().get(frame_key.as_str())?;
+            let button = lua.create_string("LeftButton")?;
+            handler.call::<()>((frame, button, false))?;
         }
         Ok(())
     });

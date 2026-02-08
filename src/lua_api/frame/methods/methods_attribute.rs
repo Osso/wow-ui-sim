@@ -117,29 +117,17 @@ fn fire_on_attribute_changed(
     name: &str,
     value: Value,
 ) -> mlua::Result<()> {
-    let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
-    if let Some(table) = scripts_table {
-        let frame_key = format!("{}_OnAttributeChanged", this.id);
-        let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-        if let Some(handler) = handler {
-            let frame_ref_key = format!("__frame_{}", this.id);
-            let frame_ud: Value = lua
-                .globals()
-                .get(frame_ref_key.as_str())
-                .unwrap_or(Value::Nil);
-            let name_str = lua.create_string(name)?;
-            if let Err(e) = handler.call::<()>((frame_ud, name_str, value)) {
-                let state = this.state.borrow();
-                let fname = state
-                    .widgets
-                    .get(this.id)
-                    .and_then(|f| f.name.as_deref())
-                    .unwrap_or("(anonymous)");
-                eprintln!(
-                    "[OnAttributeChanged] {} (id={}) attr={}: {:?}",
-                    fname, this.id, name, e
-                );
-            }
+    use crate::lua_api::script_helpers::{call_error_handler, get_script};
+
+    if let Some(handler) = get_script(lua, this.id, "OnAttributeChanged") {
+        let frame_ref_key = format!("__frame_{}", this.id);
+        let frame_ud: Value = lua
+            .globals()
+            .get(frame_ref_key.as_str())
+            .unwrap_or(Value::Nil);
+        let name_str = lua.create_string(name)?;
+        if let Err(e) = handler.call::<()>((frame_ud, name_str, value)) {
+            call_error_handler(lua, &e.to_string());
         }
     }
     Ok(())

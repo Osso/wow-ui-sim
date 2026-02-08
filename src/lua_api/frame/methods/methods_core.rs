@@ -227,14 +227,10 @@ pub(crate) fn fire_on_show_recursive(
     id: u64,
 ) -> mlua::Result<()> {
     // Fire OnShow on this frame
-    if let Ok(Some(scripts_table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
-        let frame_key = format!("{}_OnShow", id);
-        if let Ok(Some(handler)) =
-            scripts_table.get::<Option<mlua::Function>>(frame_key.as_str())
-        {
-            let frame_ref_key = format!("__frame_{}", id);
-            if let Ok(frame_ud) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
-                let _ = handler.call::<()>(frame_ud);
+    if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, id, "OnShow") {
+        if let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, id) {
+            if let Err(e) = handler.call::<()>(frame_ud) {
+                crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
             }
         }
     }

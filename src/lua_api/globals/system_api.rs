@@ -170,20 +170,15 @@ fn register_fire_event(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
         };
 
         for widget_id in listeners {
-            let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
+            if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent") {
+                let frame_ref_key = format!("__frame_{}", widget_id);
+                let frame: Value = lua.globals().get(frame_ref_key.as_str()).unwrap_or(Value::Nil);
 
-            if let Some(table) = scripts_table {
-                let frame_key = format!("{}_OnEvent", widget_id);
-                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+                let mut call_args = vec![frame, Value::String(lua.create_string(&event_name)?)];
+                call_args.extend(event_args.iter().cloned());
 
-                if let Some(handler) = handler {
-                    let frame_ref_key = format!("__frame_{}", widget_id);
-                    let frame: Value = lua.globals().get(frame_ref_key.as_str()).unwrap_or(Value::Nil);
-
-                    let mut call_args = vec![frame, Value::String(lua.create_string(&event_name)?)];
-                    call_args.extend(event_args.iter().cloned());
-
-                    handler.call::<()>(mlua::MultiValue::from_vec(call_args)).ok();
+                if let Err(e) = handler.call::<()>(mlua::MultiValue::from_vec(call_args)) {
+                    crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
                 }
             }
         }
@@ -255,14 +250,12 @@ where
         state.widgets.get_event_listeners(event_name)
     };
     for widget_id in listeners {
-        if let Ok(Some(table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
-            let frame_key = format!("{}_OnEvent", widget_id);
-            if let Ok(Some(handler)) = table.get::<Option<mlua::Function>>(frame_key.as_str()) {
-                let frame_ref_key = format!("__frame_{}", widget_id);
-                if let Ok(frame) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
-                    let mut call_args = vec![frame];
-                    call_args.extend(build_extra_args(lua)?);
-                    let _ = handler.call::<()>(mlua::MultiValue::from_vec(call_args));
+        if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent") {
+            if let Some(frame) = crate::lua_api::script_helpers::get_frame_ref(lua, widget_id) {
+                let mut call_args = vec![frame];
+                call_args.extend(build_extra_args(lua)?);
+                if let Err(e) = handler.call::<()>(mlua::MultiValue::from_vec(call_args)) {
+                    crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
                 }
             }
         }
@@ -471,20 +464,16 @@ fn register_request_time_played(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
         };
 
         for widget_id in listeners {
-            if let Ok(Some(table)) = lua.globals().get::<Option<mlua::Table>>("__scripts") {
-                let frame_key = format!("{}_OnEvent", widget_id);
-                if let Ok(Some(handler)) =
-                    table.get::<Option<mlua::Function>>(frame_key.as_str())
-                {
-                    let frame_ref_key = format!("__frame_{}", widget_id);
-                    if let Ok(frame) = lua.globals().get::<Value>(frame_ref_key.as_str()) {
-                        let args = vec![
-                            frame,
-                            Value::String(lua.create_string("TIME_PLAYED_MSG")?),
-                            Value::Integer(total_played),
-                            Value::Integer(level_played),
-                        ];
-                        let _ = handler.call::<()>(mlua::MultiValue::from_vec(args));
+            if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent") {
+                if let Some(frame) = crate::lua_api::script_helpers::get_frame_ref(lua, widget_id) {
+                    let args = vec![
+                        frame,
+                        Value::String(lua.create_string("TIME_PLAYED_MSG")?),
+                        Value::Integer(total_played),
+                        Value::Integer(level_played),
+                    ];
+                    if let Err(e) = handler.call::<()>(mlua::MultiValue::from_vec(args)) {
+                        crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
                     }
                 }
             }

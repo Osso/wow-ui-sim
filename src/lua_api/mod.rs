@@ -11,6 +11,7 @@ mod globals_legacy;
 mod layout;
 pub(crate) mod loader_env;
 pub mod message_frame;
+pub(crate) mod script_helpers;
 pub mod simple_html;
 mod state;
 pub mod tooltip;

@@ -16,10 +16,7 @@ pub fn get_mixin_override(
     frame_id: u64,
     method_name: &str,
 ) -> Option<(mlua::Function, Value)> {
-    let fields_table = lua
-        .globals()
-        .get::<mlua::Table>("__frame_fields")
-        .ok()?;
+    let fields_table = crate::lua_api::script_helpers::get_frame_fields_table(lua)?;
     let frame_fields = fields_table.get::<mlua::Table>(frame_id).ok()?;
     let func = match frame_fields.get::<Value>(method_name) {
         Ok(Value::Function(f)) => f,

@@ -115,80 +115,28 @@ impl WowLuaEnv {
 
     /// Fire an event with arguments to all registered frames.
     pub fn fire_event_with_args(&self, event: &str, args: &[Value]) -> Result<()> {
+        use super::script_helpers::{call_error_handler, get_frame_ref, get_script};
+
         let listeners = {
             let state = self.state.borrow();
             state.widgets.get_event_listeners(event)
         };
 
         for widget_id in listeners {
-            // Get the handler function from our scripts table
-            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-
-            if let Some(table) = scripts_table {
-                let frame_key = format!("{}_OnEvent", widget_id);
-                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-
-                if let Some(handler) = handler {
-                    // Get the frame userdata
-                    let frame_ref_key = format!("__frame_{}", widget_id);
-                    let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
-
-                    // Build arguments: (self, event, ...args)
-                    let mut call_args = vec![frame, Value::String(self.lua.create_string(event)?)];
+            if let Some(handler) = get_script(&self.lua, widget_id, "OnEvent") {
+                if let Some(frame) = get_frame_ref(&self.lua, widget_id) {
+                    let mut call_args =
+                        vec![frame, Value::String(self.lua.create_string(event)?)];
                     call_args.extend(args.iter().cloned());
 
                     if let Err(e) = handler.call::<()>(MultiValue::from_vec(call_args)) {
-                        let state = self.state.borrow();
-                        let name = state.widgets.get(widget_id)
-                            .and_then(|f| f.name.as_deref())
-                            .unwrap_or("(anonymous)");
-                        eprintln!("[{}] {event} handler error on {name} (id={widget_id}): {e}", event);
+                        call_error_handler(&self.lua, &e.to_string());
                     }
                 }
             }
         }
 
         Ok(())
-    }
-
-    /// Fire an event, collecting handler errors instead of printing them.
-    pub fn fire_event_collecting_errors(&self, event: &str, args: &[Value]) -> Vec<String> {
-        let listeners = {
-            let state = self.state.borrow();
-            state.widgets.get_event_listeners(event)
-        };
-
-        let mut errors = Vec::new();
-        for widget_id in listeners {
-            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-
-            if let Some(table) = scripts_table {
-                let frame_key = format!("{}_OnEvent", widget_id);
-                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-
-                if let Some(handler) = handler {
-                    let frame_ref_key = format!("__frame_{}", widget_id);
-                    let Ok(frame) = self.lua.globals().get::<Value>(frame_ref_key.as_str()) else {
-                        continue;
-                    };
-
-                    let mut call_args =
-                        vec![frame, Value::String(self.lua.create_string(event).unwrap())];
-                    call_args.extend(args.iter().cloned());
-
-                    if let Err(e) = handler.call::<()>(MultiValue::from_vec(call_args)) {
-                        let state = self.state.borrow();
-                        let name = state
-                            .widgets
-                            .get(widget_id)
-                            .and_then(|f| f.name.as_deref())
-                            .unwrap_or("(anonymous)");
-                        errors.push(format!("[{event}] {name}: {e}"));
-                    }
-                }
-            }
-        }
-        errors
     }
 
     /// Fire a script handler for a specific widget.
@@ -200,23 +148,16 @@ impl WowLuaEnv {
         handler_name: &str,
         extra_args: Vec<Value>,
     ) -> Result<()> {
-        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
+        use super::script_helpers::get_script;
 
-        if let Some(table) = scripts_table {
-            let frame_key = format!("{}_{}", widget_id, handler_name);
-            let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
+        if let Some(handler) = get_script(&self.lua, widget_id, handler_name) {
+            let frame_ref_key = format!("__frame_{}", widget_id);
+            let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
 
-            if let Some(handler) = handler {
-                // Get the frame userdata
-                let frame_ref_key = format!("__frame_{}", widget_id);
-                let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
+            let mut call_args = vec![frame];
+            call_args.extend(extra_args);
 
-                // Build arguments: (self, ...extra_args)
-                let mut call_args = vec![frame];
-                call_args.extend(extra_args);
-
-                handler.call::<()>(MultiValue::from_vec(call_args))?;
-            }
+            handler.call::<()>(MultiValue::from_vec(call_args))?;
         }
 
         Ok(())
@@ -224,16 +165,7 @@ impl WowLuaEnv {
 
     /// Check if a script handler is registered for a widget.
     pub fn has_script_handler(&self, widget_id: u64, handler_name: &str) -> bool {
-        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-        if let Some(table) = scripts_table {
-            let frame_key = format!("{}_{}", widget_id, handler_name);
-            matches!(
-                table.get::<Value>(frame_key.as_str()),
-                Ok(Value::Function(_))
-            )
-        } else {
-            false
-        }
+        super::script_helpers::get_script(&self.lua, widget_id, handler_name).is_some()
     }
 
     /// Dispatch a slash command (e.g., "/wa options").
@@ -515,6 +447,8 @@ impl WowLuaEnv {
     /// then tick animation groups.
     /// `elapsed` is the time in seconds since the last frame.
     pub fn fire_on_update(&self, elapsed: f64) -> Result<()> {
+        use super::script_helpers::{call_error_handler, get_frame_ref, get_script};
+
         // Fire frame OnUpdate handlers
         let frame_ids: Vec<u64> = {
             let state = self.state.borrow();
@@ -527,26 +461,19 @@ impl WowLuaEnv {
         };
 
         if !frame_ids.is_empty() {
-            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-            if let Some(table) = scripts_table {
-                let elapsed_val = Value::Number(elapsed);
-                let mut errored_ids = self.on_update_errors.borrow_mut();
+            let elapsed_val = Value::Number(elapsed);
+            let mut errored_ids = self.on_update_errors.borrow_mut();
 
-                for widget_id in &frame_ids {
-                    if errored_ids.contains(widget_id) {
-                        continue;
-                    }
-                    let frame_key = format!("{}_OnUpdate", widget_id);
-                    let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-
-                    if let Some(handler) = handler {
-                        let frame_ref_key = format!("__frame_{}", widget_id);
-                        let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
-
-                        if let Err(e) =
-                            handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
+            for widget_id in &frame_ids {
+                if errored_ids.contains(widget_id) {
+                    continue;
+                }
+                if let Some(handler) = get_script(&self.lua, *widget_id, "OnUpdate") {
+                    if let Some(frame) = get_frame_ref(&self.lua, *widget_id) {
+                        if let Err(e) = handler
+                            .call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
                         {
-                            eprintln!("OnUpdate error (frame {}): {}", widget_id, e);
+                            call_error_handler(&self.lua, &e.to_string());
                             errored_ids.insert(*widget_id);
                         }
                     }
@@ -556,22 +483,15 @@ impl WowLuaEnv {
 
         // Fire OnPostUpdate handlers
         if !frame_ids.is_empty() {
-            let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-            if let Some(table) = scripts_table {
-                let elapsed_val = Value::Number(elapsed);
+            let elapsed_val = Value::Number(elapsed);
 
-                for widget_id in &frame_ids {
-                    let frame_key = format!("{}_OnPostUpdate", widget_id);
-                    let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-
-                    if let Some(handler) = handler {
-                        let frame_ref_key = format!("__frame_{}", widget_id);
-                        let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
-
-                        if let Err(e) =
-                            handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
+            for widget_id in &frame_ids {
+                if let Some(handler) = get_script(&self.lua, *widget_id, "OnPostUpdate") {
+                    if let Some(frame) = get_frame_ref(&self.lua, *widget_id) {
+                        if let Err(e) = handler
+                            .call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
                         {
-                            eprintln!("OnPostUpdate error (frame {}): {}", widget_id, e);
+                            call_error_handler(&self.lua, &e.to_string());
                         }
                     }
                 }
@@ -584,71 +504,19 @@ impl WowLuaEnv {
         Ok(())
     }
 
-    /// Fire one tick of OnUpdate handlers, collecting errors instead of printing.
-    pub fn fire_on_update_collecting_errors(&self, elapsed: f64) -> Vec<String> {
-        let mut errors = Vec::new();
-
-        let frame_ids: Vec<u64> = {
-            let state = self.state.borrow();
-            state
-                .on_update_frames
-                .iter()
-                .copied()
-                .filter(|&id| state.widgets.get(id).map(|f| f.visible).unwrap_or(false))
-                .collect()
-        };
-
-        if frame_ids.is_empty() {
-            return errors;
-        }
-
-        let scripts_table: Option<mlua::Table> = self.lua.globals().get("__scripts").ok();
-        let Some(table) = scripts_table else {
-            return errors;
-        };
-
-        let elapsed_val = Value::Number(elapsed);
-        for widget_id in &frame_ids {
-            for suffix in &["OnUpdate", "OnPostUpdate"] {
-                let frame_key = format!("{}_{}", widget_id, suffix);
-                let handler: Option<mlua::Function> = table.get(frame_key.as_str()).ok();
-                if let Some(handler) = handler {
-                    let frame_ref_key = format!("__frame_{}", widget_id);
-                    let Ok(frame) = self.lua.globals().get::<Value>(frame_ref_key.as_str()) else {
-                        continue;
-                    };
-                    if let Err(e) =
-                        handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
-                    {
-                        let state = self.state.borrow();
-                        let name = state
-                            .widgets
-                            .get(*widget_id)
-                            .and_then(|f| f.name.as_deref())
-                            .unwrap_or("(anonymous)");
-                        errors.push(format!("[{suffix}] {name} (id={widget_id}): {e}"));
-                    }
-                }
-            }
-        }
-
-        errors
-    }
-
     /// Fire `EDIT_MODE_LAYOUTS_UPDATED` with layout info from `C_EditMode.GetLayouts()`.
     ///
     /// Triggers `EditModeManagerFrame:UpdateLayoutInfo()` to initialize `layoutInfo`
     /// and unblock action bar positioning. No-op if EditMode addon isn't loaded.
-    /// Returns handler errors for test collection.
-    pub fn fire_edit_mode_layouts_updated(&self) -> Vec<String> {
+    pub fn fire_edit_mode_layouts_updated(&self) -> Result<()> {
         let Ok(true) = self.lua.load(
             "return C_EditMode ~= nil and C_EditMode.GetLayouts ~= nil"
-        ).eval::<bool>() else { return Vec::new() };
+        ).eval::<bool>() else { return Ok(()) };
 
         let Ok(info) = self.lua.load("return C_EditMode.GetLayouts()").eval::<mlua::Table>()
-        else { return Vec::new() };
+        else { return Ok(()) };
 
-        self.fire_event_collecting_errors(
+        self.fire_event_with_args(
             "EDIT_MODE_LAYOUTS_UPDATED",
             &[Value::Table(info), Value::Boolean(true)],
         )

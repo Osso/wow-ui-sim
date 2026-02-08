@@ -193,7 +193,7 @@ fn call_lua_override(
     this: &FrameHandle,
     method_name: &str,
 ) -> mlua::Result<Option<Value>> {
-    if let Ok(fields_table) = lua.globals().get::<mlua::Table>("__frame_fields")
+    if let Some(fields_table) = crate::lua_api::script_helpers::get_frame_fields_table(lua)
         && let Ok(frame_fields) = fields_table.get::<mlua::Table>(this.id)
             && let Ok(Value::Function(f)) = frame_fields.get::<Value>(method_name) {
                 let ud = lua.create_userdata(FrameHandle {

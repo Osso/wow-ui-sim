@@ -24,11 +24,30 @@ fn register_hidden_frame_global(lua: &Lua, state: &Rc<RefCell<SimState>>, name: 
     register_frame_global_with_visibility(lua, state, name, false)
 }
 
+fn register_typed_frame_global(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    name: &str,
+    widget_type: WidgetType,
+) -> Result<u64> {
+    register_frame_global_impl(lua, state, name, true, widget_type)
+}
+
 fn register_frame_global_with_visibility(
     lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     name: &str,
     visible: bool,
+) -> Result<u64> {
+    register_frame_global_impl(lua, state, name, visible, WidgetType::Frame)
+}
+
+fn register_frame_global_impl(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    name: &str,
+    visible: bool,
+    widget_type: WidgetType,
 ) -> Result<u64> {
     let id = {
         let mut st = state.borrow_mut();
@@ -39,7 +58,7 @@ fn register_frame_global_with_visibility(
                 }
             existing
         } else {
-            let mut frame = Frame::new(WidgetType::Frame, Some(name.to_string()), None);
+            let mut frame = Frame::new(widget_type, Some(name.to_string()), None);
             frame.visible = visible;
             st.widgets.register(frame)
         }
@@ -57,22 +76,7 @@ fn register_frame_global_with_visibility(
 
 /// Get or create the `__frame_fields` table for a given frame ID.
 fn get_or_create_frame_fields(lua: &Lua, frame_id: u64) -> Result<mlua::Table> {
-    let fields_table: mlua::Table = lua
-        .globals()
-        .get::<mlua::Table>("__frame_fields")
-        .unwrap_or_else(|_| {
-            let t = lua.create_table().unwrap();
-            lua.globals().set("__frame_fields", t.clone()).unwrap();
-            t
-        });
-    let frame_fields = fields_table
-        .get::<mlua::Table>(frame_id)
-        .unwrap_or_else(|_| {
-            let t = lua.create_table().unwrap();
-            fields_table.set(frame_id, t.clone()).unwrap();
-            t
-        });
-    Ok(frame_fields)
+    Ok(crate::lua_api::script_helpers::get_or_create_frame_fields(lua, frame_id))
 }
 
 /// Register all global frame objects.
@@ -104,8 +108,8 @@ fn register_core_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
 
 /// Register chat-related globals: DEFAULT_CHAT_FRAME, ChatTypeGroup, ChatFrameUtil.
 fn register_chat_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
-    register_frame_global(lua, state, "DEFAULT_CHAT_FRAME")?;
-    register_frame_global(lua, state, "ChatFrame1")?;
+    register_typed_frame_global(lua, state, "DEFAULT_CHAT_FRAME", WidgetType::MessageFrame)?;
+    register_typed_frame_global(lua, state, "ChatFrame1", WidgetType::MessageFrame)?;
     register_chat_type_group(lua)?;
     register_chat_frame_util(lua)?;
     Ok(())

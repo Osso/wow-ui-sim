@@ -452,8 +452,8 @@ fn fire_startup_events(env: &WowLuaEnv) {
     fire("PLAYER_LOGIN");
 
     eprintln!("[Startup] Firing EDIT_MODE_LAYOUTS_UPDATED");
-    for err in env.fire_edit_mode_layouts_updated() {
-        eprintln!("  {}", err);
+    if let Err(e) = env.fire_edit_mode_layouts_updated() {
+        eprintln!("  {}", e);
     }
 
     eprintln!("[Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed");

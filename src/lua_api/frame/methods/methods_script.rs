@@ -1,6 +1,9 @@
 //! Script handler methods: SetScript, GetScript, HookScript, HasScript, etc.
 
 use super::FrameHandle;
+use crate::lua_api::script_helpers::{
+    get_or_create_hooks_table, get_scripts_table, remove_script, set_script,
+};
 use mlua::{UserDataMethods, Value};
 
 /// Add script handler methods to FrameHandle UserData.
@@ -12,15 +15,6 @@ pub fn add_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_has_script_method(methods);
 }
 
-/// Get or create the __scripts Lua table for storing script handlers.
-fn get_or_create_scripts_table(lua: &mlua::Lua) -> mlua::Table {
-    lua.globals().get("__scripts").unwrap_or_else(|_| {
-        let t = lua.create_table().unwrap();
-        lua.globals().set("__scripts", t.clone()).unwrap();
-        t
-    })
-}
-
 /// SetScript(handler, func) and SetOnClickHandler(func)
 fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetScript", |lua, this, (handler, func): (String, Value)| {
@@ -28,9 +22,7 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
         if let Some(h) = handler_type {
             if let Value::Function(f) = func {
-                let scripts_table = get_or_create_scripts_table(lua);
-                let frame_key = format!("{}_{}", this.id, handler);
-                scripts_table.set(frame_key.as_str(), f)?;
+                set_script(lua, this.id, &handler, f);
 
                 let mut state = this.state.borrow_mut();
                 state.scripts.set(this.id, h, 1);
@@ -40,11 +32,7 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 }
             } else {
                 // nil func: remove the handler
-                let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
-                if let Some(table) = scripts_table {
-                    let frame_key = format!("{}_{}", this.id, handler);
-                    table.set(frame_key.as_str(), mlua::Value::Nil)?;
-                }
+                remove_script(lua, this.id, &handler);
 
                 let mut state = this.state.borrow_mut();
                 state.scripts.remove(this.id, h);
@@ -60,9 +48,7 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetOnClickHandler(func) - WoW 10.0+ convenience for setting OnClick
     methods.add_method("SetOnClickHandler", |lua, this, func: Value| {
         if let Value::Function(f) = func {
-            let scripts_table = get_or_create_scripts_table(lua);
-            let frame_key = format!("{}_OnClick", this.id);
-            scripts_table.set(frame_key.as_str(), f)?;
+            set_script(lua, this.id, "OnClick", f);
 
             let mut state = this.state.borrow_mut();
             state
@@ -76,14 +62,9 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 /// GetScript(handler) - retrieve a stored script handler function.
 fn add_get_script_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("GetScript", |lua, this, handler: String| {
-        let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
-
-        if let Some(table) = scripts_table {
-            let frame_key = format!("{}_{}", this.id, handler);
-            let func: Value = table.get(frame_key.as_str()).unwrap_or(Value::Nil);
-            Ok(func)
-        } else {
-            Ok(Value::Nil)
+        match crate::lua_api::script_helpers::get_script(lua, this.id, &handler) {
+            Some(f) => Ok(Value::Function(f)),
+            None => Ok(Value::Nil),
         }
     });
 }
@@ -92,14 +73,7 @@ fn add_get_script_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_hook_and_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("HookScript", |lua, this, (handler, func): (String, Value)| {
         if let Value::Function(f) = func {
-            let hooks_table: mlua::Table =
-                lua.globals()
-                    .get("__script_hooks")
-                    .unwrap_or_else(|_| {
-                        let t = lua.create_table().unwrap();
-                        lua.globals().set("__script_hooks", t.clone()).unwrap();
-                        t
-                    });
+            let hooks_table = get_or_create_hooks_table(lua);
 
             let frame_key = format!("{}_{}", this.id, handler);
             let hooks_array: mlua::Table = hooks_table
@@ -131,8 +105,7 @@ fn add_hook_and_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 /// ClearScripts() - remove all script handlers for this frame.
 fn add_clear_scripts_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("ClearScripts", |lua, this, ()| {
-        let scripts_table: Option<mlua::Table> = lua.globals().get("__scripts").ok();
-        if let Some(table) = scripts_table {
+        if let Some(table) = get_scripts_table(lua) {
             // Iterate all keys and remove those starting with "{id}_"
             let prefix = format!("{}_", this.id);
             let keys: Vec<String> = table
@@ -151,7 +124,8 @@ fn add_clear_scripts_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
 
         // Also clear from hooks table
-        let hooks_table: Option<mlua::Table> = lua.globals().get("__script_hooks").ok();
+        let hooks_table: Option<mlua::Table> =
+            lua.named_registry_value("__script_hooks").ok();
         if let Some(table) = hooks_table {
             let prefix = format!("{}_", this.id);
             let keys: Vec<String> = table
