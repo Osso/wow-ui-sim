@@ -440,6 +440,12 @@ pub fn hide_runtime_hidden_frames(lua: &Lua) -> Result<()> {
         "FriendsFrame",
         // Combat log quick buttons: combat log tab not active
         "CombatLogQuickButtonFrame_Custom",
+        // Positioned by game systems, not during login
+        "QuickJoinToastButton",
+        "TextToSpeechButtonFrame",
+        // Nameplate bars: only shown on active nameplates
+        "ClassNameplateEbonMightBarFrame",
+        "ClassNameplateBrewmasterBarFrame",
     ];
 
     for name in frames_to_hide {
