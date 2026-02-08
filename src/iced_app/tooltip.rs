@@ -1,15 +1,23 @@
 //! Tooltip visual rendering — sizing, data collection, and quad emission.
 
 use std::collections::HashMap;
+use std::sync::OnceLock;
 
 use iced::{Point, Rectangle, Size};
 
+use crate::atlas::{get_nine_slice_atlas_info, NineSliceAtlasInfo};
 use crate::lua_api::SimState;
 use crate::render::font::WowFontSystem;
 use crate::render::glyph::{emit_text_quads, GlyphAtlas};
 use crate::render::shader::GLYPH_ATLAS_TEX_INDEX;
 use crate::render::QuadBatch;
 use crate::widget::{TextJustify, TextOutline};
+
+/// Cached nine-slice atlas info for the default tooltip border.
+fn tooltip_nine_slice() -> Option<&'static NineSliceAtlasInfo> {
+    static CACHE: OnceLock<Option<NineSliceAtlasInfo>> = OnceLock::new();
+    CACHE.get_or_init(|| get_nine_slice_atlas_info("Tooltip")).as_ref()
+}
 
 const TOOLTIP_PADDING_H: f32 = 12.0;
 const TOOLTIP_PADDING_V: f32 = 12.0;
@@ -140,11 +148,16 @@ pub fn build_tooltip_quads(
 
     let alpha = f.alpha;
 
-    // Dark background
-    batch.push_solid(bounds, [0.05, 0.05, 0.1, 0.9 * alpha]);
-
-    // Gold border
-    batch.push_border(bounds, 1.0, [0.6, 0.5, 0.15, alpha]);
+    // Tooltip border and background via nine-slice atlas (rounded corners).
+    // WoW calls SetCenterColor(0, 0, 0, 1) — TOOLTIP_DEFAULT_BACKGROUND_COLOR is black.
+    if let Some(ns) = tooltip_nine_slice() {
+        let center = [0.0, 0.0, 0.0, alpha];
+        super::nine_slice::emit_nine_slice_with_center_color(batch, bounds, ns, alpha, center);
+    } else {
+        // Fallback if atlas entries are missing
+        batch.push_solid(bounds, [0.0, 0.0, 0.0, alpha]);
+        batch.push_border(bounds, 1.0, [0.6, 0.5, 0.15, alpha]);
+    }
 
     let Some((font_sys, glyph_atlas)) = text_ctx else { return };
 
