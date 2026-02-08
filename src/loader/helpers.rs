@@ -425,8 +425,8 @@ pub fn append_script_handler(
     let Some(new_handler) = build_handler_expr(handler_name, script) else { return };
 
     match script.inherit.as_deref() {
-        Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, true),
-        Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, false),
+        Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, false),
+        Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, true),
         _ => {
             code.push_str(&format!(
                 "\n        {target}:SetScript(\"{handler_name}\", {new_handler})\n        "
@@ -435,7 +435,7 @@ pub fn append_script_handler(
     }
 }
 
-/// Emit a chained handler that wraps the existing handler (prepend=new first, else old first).
+/// Emit a chained handler that wraps the existing handler (new_first=true → new runs first).
 fn emit_chained_handler(
     code: &mut String,
     target: &str,
@@ -537,6 +537,38 @@ pub fn generate_scripts_code(scripts: &crate::xml::ScriptsXml) -> String {
         ("OnClick", scripts.on_click.last()),
         ("OnShow", scripts.on_show.last()),
         ("OnHide", scripts.on_hide.last()),
+        // Mouse
+        ("OnEnter", scripts.on_enter.last()),
+        ("OnLeave", scripts.on_leave.last()),
+        ("OnMouseDown", scripts.on_mouse_down.last()),
+        ("OnMouseUp", scripts.on_mouse_up.last()),
+        ("OnMouseWheel", scripts.on_mouse_wheel.last()),
+        ("OnDragStart", scripts.on_drag_start.last()),
+        ("OnDragStop", scripts.on_drag_stop.last()),
+        ("OnReceiveDrag", scripts.on_receive_drag.last()),
+        // EditBox
+        ("OnEnterPressed", scripts.on_enter_pressed.last()),
+        ("OnEscapePressed", scripts.on_escape_pressed.last()),
+        ("OnTabPressed", scripts.on_tab_pressed.last()),
+        ("OnSpacePressed", scripts.on_space_pressed.last()),
+        ("OnTextChanged", scripts.on_text_changed.last()),
+        ("OnTextSet", scripts.on_text_set.last()),
+        ("OnChar", scripts.on_char.last()),
+        ("OnEditFocusGained", scripts.on_edit_focus_gained.last()),
+        ("OnEditFocusLost", scripts.on_edit_focus_lost.last()),
+        ("OnInputLanguageChanged", scripts.on_input_language_changed.last()),
+        // Keyboard
+        ("OnKeyDown", scripts.on_key_down.last()),
+        ("OnKeyUp", scripts.on_key_up.last()),
+        // Other
+        ("OnValueChanged", scripts.on_value_changed.last()),
+        ("OnEnable", scripts.on_enable.last()),
+        ("OnDisable", scripts.on_disable.last()),
+        ("OnSizeChanged", scripts.on_size_changed.last()),
+        ("OnAttributeChanged", scripts.on_attribute_changed.last()),
+        ("OnHyperlinkClick", scripts.on_hyperlink_click.last()),
+        ("OnHyperlinkEnter", scripts.on_hyperlink_enter.last()),
+        ("OnHyperlinkLeave", scripts.on_hyperlink_leave.last()),
     ])
 }
 
