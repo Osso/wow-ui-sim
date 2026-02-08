@@ -355,40 +355,52 @@ fn collect_subtree_ids(
     ids
 }
 
-/// Build set of frame IDs that have a hidden ancestor.
+/// Collect IDs of frames whose ancestor chain is fully visible.
 ///
-/// In WoW, children of hidden frames are not rendered even if their own visible flag is true.
-fn build_hidden_ancestors(
+/// Walks the tree top-down from root frames, pruning entire subtrees when a
+/// frame is hidden. This avoids computing layout for invisible subtrees.
+fn collect_ancestor_visible_ids(
     registry: &crate::widget::WidgetRegistry,
 ) -> std::collections::HashSet<u64> {
-    let mut hidden = std::collections::HashSet::new();
-    for &id in &registry.all_ids() {
-        let mut current = registry.get(id).and_then(|f| f.parent_id);
-        while let Some(pid) = current {
-            if let Some(parent) = registry.get(pid) {
-                if !parent.visible {
-                    hidden.insert(id);
-                    break;
-                }
-                current = parent.parent_id;
-            } else {
-                break;
-            }
-        }
-    }
-    hidden
-}
-
-/// Collect all frames with computed rects, sorted by strata/level/draw-layer.
-fn collect_sorted_frames(
-    registry: &crate::widget::WidgetRegistry,
-    screen_width: f32,
-    screen_height: f32,
-) -> Vec<(u64, &crate::widget::Frame, crate::LayoutRect)> {
-    let mut frames: Vec<_> = registry
+    let mut visible = std::collections::HashSet::new();
+    let mut queue: Vec<u64> = registry
         .all_ids()
         .into_iter()
-        .filter_map(|id| {
+        .filter(|&id| {
+            registry
+                .get(id)
+                .map(|f| f.parent_id.is_none())
+                .unwrap_or(false)
+        })
+        .collect();
+
+    while let Some(id) = queue.pop() {
+        let Some(f) = registry.get(id) else { continue };
+        // Root frames are always eligible (their own visibility is checked later).
+        // Children are only queued if the parent is visible, so reaching here
+        // means all ancestors are visible.
+        visible.insert(id);
+        // Only descend into children if this frame is visible.
+        if f.visible {
+            queue.extend(f.children.iter().copied());
+        }
+    }
+    visible
+}
+
+/// Collect frames with computed rects, sorted by strata/level/draw-layer.
+///
+/// Only frames in `ancestor_visible` are considered, skipping layout
+/// computation for frames hidden by an ancestor.
+fn collect_sorted_frames<'a>(
+    registry: &'a crate::widget::WidgetRegistry,
+    screen_width: f32,
+    screen_height: f32,
+    ancestor_visible: &std::collections::HashSet<u64>,
+) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect)> {
+    let mut frames: Vec<_> = ancestor_visible
+        .iter()
+        .filter_map(|&id| {
             let f = registry.get(id)?;
             let rect = compute_frame_rect(registry, id, screen_width, screen_height);
             Some((id, f, rect))
@@ -534,19 +546,14 @@ pub fn build_quad_batch_for_registry(
     );
 
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
-    let hidden_ancestors = build_hidden_ancestors(registry);
-    let frames = collect_sorted_frames(registry, screen_width, screen_height);
+    let ancestor_visible = collect_ancestor_visible_ids(registry);
+    let frames = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible);
 
     for (id, f, rect) in frames {
         if let Some(ref ids) = visible_ids
             && !ids.contains(&id) {
                 continue;
             }
-
-        // Children of hidden frames never render, regardless of state.
-        if hidden_ancestors.contains(&id) {
-            continue;
-        }
 
         // Button state textures (NormalTexture, PushedTexture, etc.) have
         // state-driven visibility that overrides frame.visible.
