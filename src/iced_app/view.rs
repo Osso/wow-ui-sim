@@ -363,12 +363,15 @@ impl App {
             .on_press(Message::InspectorApply)
             .padding(Padding::from([4, 12]));
 
+        let parent_chain = Self::inspector_parent_chain(&state.widgets, frame_id);
+
         let content = column![
             title,
             id_row,
             size_row,
             alpha_level_row,
             checkbox_row,
+            parent_chain,
             text("Anchors:").size(11).color(palette::TEXT_SECONDARY),
             anchors_display,
             apply_btn,
@@ -497,6 +500,32 @@ impl App {
             _ => "No anchors".to_string(),
         };
         text(anchors_text).size(10).color(palette::TEXT_MUTED).into()
+    }
+
+    /// Build parent chain display for the inspector.
+    fn inspector_parent_chain<'a>(
+        widgets: &crate::widget::WidgetRegistry,
+        frame_id: u64,
+    ) -> Element<'a, Message> {
+        let mut ancestors = Vec::new();
+        let mut current = widgets.get(frame_id).and_then(|f| f.parent_id);
+        while let Some(pid) = current {
+            let Some(parent) = widgets.get(pid) else { break };
+            let name = parent.name.as_deref().unwrap_or("(anon)");
+            ancestors.push(name.to_string());
+            if ancestors.len() >= 6 {
+                ancestors.push("...".to_string());
+                break;
+            }
+            current = parent.parent_id;
+        }
+        ancestors.reverse();
+        let self_name = widgets.get(frame_id)
+            .and_then(|f| f.name.as_deref())
+            .unwrap_or("(anon)");
+        ancestors.push(self_name.to_string());
+        let chain_text = ancestors.join(" > ");
+        text(chain_text).size(10).color(palette::TEXT_MUTED).into()
     }
 
     /// Wrap inspector content in a positioned panel container.
