@@ -13,6 +13,7 @@ pub fn parse_xml(xml: &str) -> Result<UiXml, quick_xml::DeError> {
 pub fn parse_xml_file(path: &std::path::Path) -> Result<UiXml, XmlLoadError> {
     let contents = std::fs::read_to_string(path)?;
     let fixed = strip_duplicate_size_elements(&contents);
+    let fixed = strip_duplicate_script_handlers(&fixed);
     Ok(parse_xml(&fixed)?)
 }
 
@@ -59,6 +60,85 @@ fn strip_duplicate_size_elements(xml: &str) -> String {
                 out.push('\n');
             }
             out.push_str(lines[*idx]);
+        }
+    }
+    out
+}
+
+/// Remove duplicate script handler elements within `<Scripts>` blocks.
+///
+/// Blizzard's XML occasionally has two handlers with the same tag name in one
+/// `<Scripts>` block (e.g. two `<OnEnter>` in LFGList.xml). quick-xml's serde
+/// can't collect non-contiguous duplicate elements into a Vec. We keep only
+/// the last occurrence of each handler (matching WoW's behavior).
+fn strip_duplicate_script_handlers(xml: &str) -> String {
+    use std::collections::HashMap;
+
+    let lines: Vec<&str> = xml.lines().collect();
+    let mut remove: Vec<bool> = vec![false; lines.len()];
+
+    let mut in_scripts = false;
+    // handler tag name -> (start_line, end_line) of most recent occurrence
+    let mut handlers: HashMap<String, (usize, usize)> = HashMap::new();
+
+    let mut i = 0;
+    while i < lines.len() {
+        let trimmed = lines[i].trim();
+
+        if !in_scripts {
+            if trimmed.starts_with("<Scripts") && trimmed.ends_with('>') && !trimmed.ends_with("/>")
+            {
+                in_scripts = true;
+                handlers.clear();
+            }
+        } else if trimmed == "</Scripts>" {
+            in_scripts = false;
+            handlers.clear();
+        } else if trimmed.starts_with('<') && !trimmed.starts_with("</") {
+            // Extract tag name (e.g. "OnEnter" from "<OnEnter ...>")
+            let after_lt = &trimmed[1..];
+            let tag_end = after_lt
+                .find(|c: char| c == ' ' || c == '>' || c == '/')
+                .unwrap_or(after_lt.len());
+            let tag_name = &after_lt[..tag_end];
+
+            let start = i;
+            let end = if trimmed.ends_with("/>") {
+                i
+            } else {
+                // Find closing tag
+                let closing = format!("</{tag_name}>");
+                let mut j = i + 1;
+                while j < lines.len() {
+                    if lines[j].trim().starts_with(&closing) {
+                        break;
+                    }
+                    j += 1;
+                }
+                j
+            };
+
+            if let Some((prev_start, prev_end)) =
+                handlers.insert(tag_name.to_string(), (start, end))
+            {
+                for idx in prev_start..=prev_end {
+                    remove[idx] = true;
+                }
+            }
+
+            i = end;
+        }
+
+        i += 1;
+    }
+
+    let mut out = String::with_capacity(xml.len());
+    for (idx, line) in lines.iter().enumerate() {
+        if !remove[idx] {
+            if !out.is_empty() {
+                out.push('\n');
+            }
+            out.push_str(line);
         }
     }
     out
@@ -121,6 +201,60 @@ mod tests {
 </FontString>"#;
         let result = strip_duplicate_size_elements(xml);
         assert!(result.contains(r#"<Size x="10" y="20"/>"#));
+    }
+
+    #[test]
+    fn test_strip_duplicate_script_handler_keeps_last() {
+        let xml = r#"<Scripts>
+    <OnEnter>
+        old_handler();
+    </OnEnter>
+    <OnLeave function="GameTooltip_Hide"/>
+    <OnLoad>
+        self:RegisterForClicks("RightButtonUp");
+    </OnLoad>
+    <OnEnter function="NewHandler"/>
+    <OnLeave function="NewLeaveHandler"/>
+</Scripts>"#;
+        let result = strip_duplicate_script_handlers(xml);
+        // First OnEnter (multiline) should be removed
+        assert!(!result.contains("old_handler()"));
+        // Last OnEnter (self-closing) should remain
+        assert!(result.contains(r#"<OnEnter function="NewHandler"/>"#));
+        // First OnLeave removed, last kept
+        assert!(!result.contains("GameTooltip_Hide"));
+        assert!(result.contains("NewLeaveHandler"));
+        // OnLoad untouched
+        assert!(result.contains("RegisterForClicks"));
+    }
+
+    #[test]
+    fn test_strip_duplicate_script_handler_no_change() {
+        let xml = r#"<Scripts>
+    <OnEnter function="Handler"/>
+    <OnLeave function="Leave"/>
+</Scripts>"#;
+        let result = strip_duplicate_script_handlers(xml);
+        assert!(result.contains(r#"<OnEnter function="Handler"/>"#));
+        assert!(result.contains(r#"<OnLeave function="Leave"/>"#));
+    }
+
+    #[test]
+    fn test_strip_duplicate_script_handler_separate_blocks() {
+        // OnEnter in different Scripts blocks should NOT be considered duplicates
+        let xml = r#"<Frame>
+    <Scripts>
+        <OnEnter function="Handler1"/>
+    </Scripts>
+</Frame>
+<Frame>
+    <Scripts>
+        <OnEnter function="Handler2"/>
+    </Scripts>
+</Frame>"#;
+        let result = strip_duplicate_script_handlers(xml);
+        assert!(result.contains("Handler1"));
+        assert!(result.contains("Handler2"));
     }
 
     #[test]
