@@ -238,6 +238,7 @@ fn register_c_housing(lua: &Lua) -> Result<()> {
     t.set("IsInsideHouse", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsInsideHouseOrPlot", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsHousingServiceEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetPlayerOwnedHouses", lua.create_function(|lua, ()| lua.create_table())?)?;
     g.set("C_Housing", t)?;
 
     let t = lua.create_table()?;

@@ -381,16 +381,18 @@ pub const CLUB_FINDER_SETTING_FLAGS: SeqEnumDef = (
 pub const CLUB_ACTION_TYPE: SeqEnumDef = (
     "ClubActionType",
     &[
-        "ErrorClubActionSubscribe", "ErrorClubActionLeave", "ErrorClubActionGetClubInfo",
-        "ErrorClubActionGetMember", "ErrorClubActionInvite", "ErrorClubActionRevokeInvite",
-        "ErrorClubActionAcceptInvite", "ErrorClubActionDeclineInvite", "ErrorClubActionCreateTicket",
+        "ErrorClubActionSubscribe", "ErrorClubActionCreate", "ErrorClubActionEdit",
+        "ErrorClubActionDestroy", "ErrorClubActionLeave", "ErrorClubActionCreateTicket",
         "ErrorClubActionDestroyTicket", "ErrorClubActionRedeemTicket", "ErrorClubActionGetTicket",
         "ErrorClubActionGetTickets", "ErrorClubActionGetBans", "ErrorClubActionGetInvitations",
-        "ErrorClubActionKick", "ErrorClubActionAddBan", "ErrorClubActionRemoveBan",
-        "ErrorClubActionCreateStream", "ErrorClubActionEditStream", "ErrorClubActionDestroyStream",
-        "ErrorClubActionCreateMessage", "ErrorClubActionEditMessage", "ErrorClubActionDestroyMessage",
-        "ErrorClubActionSetFavorite", "ErrorClubActionSetDescription",
-        "ErrorClubActionDestroyMessageOld",
+        "ErrorClubActionRevokeInvitation", "ErrorClubActionAcceptInvitation",
+        "ErrorClubActionDeclineInvitation", "ErrorClubActionCreateStream",
+        "ErrorClubActionEditStream", "ErrorClubActionDestroyStream",
+        "ErrorClubActionInviteMember", "ErrorClubActionEditMember",
+        "ErrorClubActionEditMemberNote", "ErrorClubActionKickMember",
+        "ErrorClubActionAddBan", "ErrorClubActionRemoveBan",
+        "ErrorClubActionCreateMessage", "ErrorClubActionEditMessage",
+        "ErrorClubActionDestroyMessage",
     ],
 );
 
@@ -454,22 +456,20 @@ pub const TTS_VOICE_TYPE: SeqEnumDef = (
 pub const GUILD_ERROR_TYPE: SeqEnumDef = (
     "GuildErrorType",
     &[
-        "Success", "GuildNotFound", "AlreadyInGuild", "AlreadyOnTeam",
-        "InvitedToGuild", "AlreadyInvitedToGuild", "NameInvalid", "NameExists",
-        "LeaderLeave", "Permissions", "PlayerNotInGuild", "PlayerNotFound",
-        "PlayerNotAllied", "RankTooHigh", "RankTooLow", "RanksLocked",
-        "RankInUse", "IgnoringYou", "Unknown", "Unknown2",
-        "WithdrawLimit", "NotEnoughMoney", "BankFull",
-        "ItemNotFound", "TooMuchMoney", "WrongTab", "RequiresAuthenticator",
-        "BankVouchersTooBig", "NotEnoughBankSlots", "Undeletable", "InternalError",
-        "RequiresLevel25", "ImpossibleMerge", "AchievementPointsCriteria",
-        "MultipleGuildMaster", "MasterLevelTooLow", "CannotUseGreenItems",
-        "PlayerNotFoundS", "NotAllied", "GenderDisagreement",
-        "PlayerAlreadyInGuildS", "InvitedToGuildS", "AlreadyInvitedToGuildS",
-        "InvalidNote", "UndeletableReason", "InviteToGuildCanceled",
-        "DisbandGuildCanceled", "CannotModifyCaptainDetailDuringRosterExport",
-        "ProvisionalMember", "ApplicationPending", "TrialAccount",
-        "UndeletableTrialGuild", "Throttled",
+        "Success", "UnknownError", "AlreadyInGuild", "TargetAlreadyInGuild",
+        "InvitedToGuild", "TargetInvitedToGuild", "NameInvalid", "NameAlreadyExists",
+        "NoPermisson", "NotInGuild", "TargetNotInGuild", "PlayerNotFound",
+        "WrongFaction", "TargetTooHigh", "TargetTooLow", "TooManyRanks",
+        "TooFewRanks", "RanksLocked", "RankInUse", "Ignored", "Busy",
+        "TargetLevelTooLow", "TargetLevelTooHigh", "TooManyMembers",
+        "InvalidBankTab", "WithdrawLimit", "NotEnoughMoney", "TeamNotFound",
+        "BankTabFull", "BadItem", "TeamsLocked", "TooMuchMoney", "WrongBankTab",
+        "TooManyCreate", "RankRequiresAuthenticator", "BankTabLocked",
+        "TrialAccount", "VeteranAccount", "UndeletableDueToLevel", "LockedForMove",
+        "GuildRepTooLow", "CantInviteSelf", "HasRestriction", "BankNotFound",
+        "NewLeaderWrongFaction", "GuildBankNotAvailable", "NewLeaderWrongRealm",
+        "DeleteNoAppropriateLeader", "RealmMismatch", "InCooldown",
+        "ReservationExpired", "HousingEvictError", "Throttled",
     ],
 );
 
@@ -497,33 +497,37 @@ pub const INVALID_PLOT_SCREENSHOT_REASON: SeqEnumDef = (
 pub const HOUSING_RESULT: SeqEnumDef = (
     "HousingResult",
     &[
-        "Success", "InvalidHouseID", "InvalidItemID", "InvalidPlotID",
-        "InvalidFixtureID", "InvalidRoomID", "InvalidDecorID",
-        "InvalidCustomizationID", "InvalidNeighborhoodID", "HouseNotFound",
-        "PlotNotFound", "ItemNotFound", "FixtureNotFound", "RoomNotFound",
-        "DecorNotFound", "CustomizationNotFound", "NeighborhoodNotFound",
-        "PlotNotOwned", "PlotAlreadyOwned", "ItemNotOwned", "FixtureNotOwned",
-        "RoomNotOwned", "DecorNotOwned", "CustomizationNotOwned",
-        "NotInHousing", "InvalidPosition", "InvalidRotation", "InvalidScale",
-        "CollisionDetected", "OutOfBounds", "MaxDecorPlaced", "MaxFixturePlaced",
-        "MaxRoomPlaced", "MaxCustomizationPlaced", "InternalError", "DatabaseError",
-        "PermissionDenied", "NotInNeighborhood", "AlreadyInNeighborhood",
-        "NeighborhoodFull", "NeighborhoodLocked", "NoAvailablePlots",
-        "InvalidOperation", "CooldownActive", "ItemOnCooldown", "NotEnoughCurrency",
-        "InvalidCurrency", "InventoryFull", "InvalidData", "FeatureDisabled",
-        "MaintenanceMode", "Throttled", "InvalidState", "AlreadyPlaced",
-        "NotPlaced", "CannotModify", "CannotRemove", "CannotPlace",
-        "InvalidSlot", "SlotOccupied", "SlotEmpty", "InvalidCategory",
-        "CategoryFull", "InvalidTemplate", "TemplateNotFound",
-        "UpgradeNotAvailable", "UpgradeAlreadyApplied", "DowngradeNotAllowed",
-        "InvalidLevel", "MaxLevelReached", "PrerequisiteNotMet",
-        "QuestNotComplete", "AchievementNotComplete", "ReputationTooLow",
-        "LevelTooLow", "ClassRestricted", "RaceRestricted", "FactionRestricted",
-        "SeasonRestricted", "TimeRestricted", "WeatherRestricted",
-        "EventNotActive", "InvalidEvent", "EventExpired", "AlreadyRegistered",
-        "NotRegistered", "RegistrationFull", "RegistrationClosed",
-        "InvalidRegistration", "BulletinBoardFull", "InvalidMessage",
-        "UnlockOperationFailed",
+        "Success", "ActionLockedByCombat", "BoundsFailureChildren",
+        "BoundsFailurePlot", "BoundsFailureRoom", "CannotAfford",
+        "CharterComplete", "CollisionInvalid", "DbError",
+        "DecorCannotBeRedeemed", "DecorItemNotDestroyable", "DecorNotFound",
+        "DecorNotFoundInStorage", "DuplicateCharterSignature", "FilterRejected",
+        "FixtureCantDeleteDoor", "FixtureHookEmpty", "FixtureHookOccupied",
+        "FixtureHouseTypeMismatch", "FixtureNotFound", "FixtureNotOwned", "FixtureSizeMismatch",
+        "FixtureTypeMismatch", "GenericFailure", "GuildMoreAccountsNeeded",
+        "GuildMoreActivePlayersNeeded", "GuildNotLoaded", "HouseEditLockFailed",
+        "HouseExteriorAlreadyThatSize", "HouseExteriorAlreadyThatType",
+        "HouseExteriorRootNotFound", "HouseExteriorTypeNeighborhoodMismatch",
+        "HouseExteriorTypeNotFound", "HouseExteriorTypeSizeMismatch",
+        "HouseExteriorSizeNotAvailable", "HookNotChildOfFixture", "HouseNotFound",
+        "IncorrectFaction", "InvalidDecorItem", "InvalidDistance", "InvalidGuild",
+        "InvalidHouse", "InvalidInstance", "InvalidInteraction", "InvalidMap",
+        "InvalidNeighborhoodName", "InvalidRoomLayout", "LockedByOtherPlayer",
+        "LockOperationFailed", "MaxDecorReached", "MaxPreviewDecorReached",
+        "MissingCoreFixture", "MissingDye", "MissingExpansionAccess",
+        "MissingFactionMap", "MissingPrivateNeighborhoodInvite", "MoreHouseSlotsNeeded",
+        "MoreSignaturesNeeded", "NeighborhoodNotFound",
+        "NoNeighborhoodOwnershipRequests", "NotInDecorEditMode",
+        "NotInFixtureEditMode", "NotInLayoutEditMode", "NotInsideHouse",
+        "NotOnOwnedPlot", "OperationAborted", "OwnerNotInGuild",
+        "PermissionDenied", "PlacementTargetInvalid", "PlayerNotFound",
+        "PlayerNotInInstance", "PlotNotFound", "PlotNotVacant",
+        "PlotReservationCooldown", "PlotReserved", "RoomNotFound",
+        "RoomUpdateFailed", "RpcFailure", "ServiceNotAvailable",
+        "StaticDataNotFound", "TimeoutLimit", "TimerunningNotAllowed",
+        "TokenRequired", "TooManyRequests", "TransactionFailure",
+        "UncollectedExteriorFixture", "UncollectedHouseType", "UncollectedRoom",
+        "UncollectedRoomMaterial", "UncollectedRoomTheme", "UnlockOperationFailed",
     ],
 );
 
@@ -606,6 +610,78 @@ pub const CURIO_RARITY: EnumDef = (
 pub const INVALID_PLOT_SCREENSHOT_REASON_REPORT: SeqEnumDef = (
     "ReportFrameInvalidPlotScreenshotReason",
     &["None", "OutOfBounds", "Facing", "NoNeighborhoodFound", "NoActivePlayer"],
+);
+
+// ============================================================================
+// Additional Club Enums
+// ============================================================================
+
+pub const CLUB_ERROR_TYPE: EnumDef = (
+    "ClubErrorType",
+    &[
+        ("ErrorCommunitiesUnknown", 0), ("ErrorCommunitiesOther", 1),
+        ("ErrorCommunitiesNeutralFaction", 2), ("ErrorCommunitiesUnknownRealm", 3),
+        ("ErrorCommunitiesBadTarget", 4), ("ErrorCommunitiesWrongFaction", 5),
+        ("ErrorCommunitiesRestricted", 6), ("ErrorCommunitiesIgnored", 7),
+        ("ErrorCommunitiesGuild", 8), ("ErrorCommunitiesWrongRegion", 9),
+        ("ErrorCommunitiesUnknownTicket", 10), ("ErrorCommunitiesMissingShortName", 11),
+        ("ErrorCommunitiesProfanity", 12), ("ErrorCommunitiesTrial", 13),
+        ("ErrorCommunitiesVeteranTrial", 14), ("ErrorClubFull", 15),
+        ("ErrorClubNoClub", 16), ("ErrorClubNotMember", 17),
+        ("ErrorClubAlreadyMember", 18), ("ErrorClubNoSuchMember", 19),
+        ("ErrorClubNoSuchInvitation", 20), ("ErrorClubInvitationAlreadyExists", 21),
+        ("ErrorClubInvalidRoleID", 22), ("ErrorClubInsufficientPrivileges", 23),
+        ("ErrorClubTooManyClubsJoined", 24), ("ErrorClubTooManyCreatedClubsJoined", 25),
+        ("ErrorClubVoiceFull", 26), ("ErrorClubStreamNoStream", 27),
+        ("ErrorClubStreamInvalidName", 28), ("ErrorClubStreamCountAtMax", 29),
+        ("ErrorClubMemberHasRequiredRole", 30), ("ErrorClubSentInvitationCountAtMax", 31),
+        ("ErrorClubReceivedInvitationCountAtMax", 32),
+        ("ErrorClubTicketCountAtMax", 33), ("ErrorClubTicketNoSuchTicket", 34),
+        ("ErrorClubTicketHasConsumedAllowedRedeemCount", 35),
+        ("ErrorClubBanAlreadyExists", 36), ("ErrorClubBanCountAtMax", 37),
+        ("ErrorClubNoSuchBan", 38), ("ErrorClubUnavailable", 39),
+        ("ErrorClubNotOwner", 40), ("ErrorClubTargetIsBanned", 41),
+        ("ErrorClubStreamCountAtMin", 42), ("ErrorCommunitiesChatMute", 43),
+        ("ErrorClubDoesntAllowCrossFaction", 44),
+        ("ErrorClubEditHasCrossFactionMembers", 45),
+    ],
+);
+
+pub const CLUB_ROLE_IDENTIFIER: EnumDef = (
+    "ClubRoleIdentifier",
+    &[("Owner", 1), ("Leader", 2), ("Moderator", 3), ("Member", 4)],
+);
+
+// ============================================================================
+// Additional Match Enums
+// ============================================================================
+
+pub const END_OF_MATCH_TYPE: SeqEnumDef = (
+    "EndOfMatchType",
+    &["None", "Plunderstorm"],
+);
+
+// ============================================================================
+// Additional Navigation/Quest Enums
+// ============================================================================
+
+pub const SUPER_TRACKING_TYPE: SeqEnumDef = (
+    "SuperTrackingType",
+    &["Quest", "UserWaypoint", "Corpse", "Scenario", "Content", "PartyMember", "MapPin", "Vignette"],
+);
+
+pub const SUPER_TRACKING_MAP_PIN_TYPE: SeqEnumDef = (
+    "SuperTrackingMapPinType",
+    &["AreaPOI", "QuestOffer", "TaxiNode", "DigSite", "HousingPlot"],
+);
+
+// ============================================================================
+// Additional Talent Enums
+// ============================================================================
+
+pub const TRAIT_EDGE_VISUAL_STYLE: SeqEnumDef = (
+    "TraitEdgeVisualStyle",
+    &["None", "Straight"],
 );
 
 // ============================================================================

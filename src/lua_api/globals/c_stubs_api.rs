@@ -271,6 +271,7 @@ fn register_achievement_stubs(lua: &Lua) -> Result<()> {
     let ct = lua.create_table()?;
     ct.set("GetTrackedIDs", lua.create_function(|lua, _type: Value| lua.create_table())?)?;
     ct.set("IsTracking", lua.create_function(|_, (_type, _id): (Value, Value)| Ok(false))?)?;
+    ct.set("GetCollectableSourceTrackingEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("C_ContentTracking", ct)?;
 
     // C_AchievementTelemetry namespace
@@ -526,6 +527,11 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     pi.set("IsPetActionPassive", lua.create_function(|_, _action: Value| Ok(false))?)?;
     g.set("C_PetInfo", pi)?;
 
+    // C_UnitAurasPrivate
+    let uap = lua.create_table()?;
+    uap.set("GetAuraDataBySlot", lua.create_function(|_, (_unit, _slot): (Value, Value)| Ok(Value::Nil))?)?;
+    g.set("C_UnitAurasPrivate", uap)?;
+
     // C_Sound
     let snd = lua.create_table()?;
     snd.set("GetSoundScaledVolume", lua.create_function(|_, _id: Value| Ok(1.0f64))?)?;
@@ -563,6 +569,10 @@ fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
     g.set("AUTOCOMPLETE_LABEL_GUILD", "Guild")?;
     g.set("AUTOCOMPLETE_LABEL_FRIEND", "Friend")?;
 
+    // LE_PARTY_CATEGORY_* used by VoiceUtils.lua
+    g.set("LE_PARTY_CATEGORY_HOME", 1i32)?;
+    g.set("LE_PARTY_CATEGORY_INSTANCE", 2i32)?;
+
     Ok(())
 }
 
@@ -580,7 +590,18 @@ fn register_missing_constants(lua: &Lua, g: &mlua::Table) -> Result<()> {
     cfc.set("MaxCharacterNameBytes", 305i32)?;
     cfc.set("MaxChatChannels", 20i32)?;
     cfc.set("MaxChatWindows", 10i32)?;
+    cfc.set("ScrollToBottomFlashInterval", 0.5f64)?;
+    cfc.set("WhisperSoundAlertCooldown", 3.0f64)?;
+    cfc.set("TruncatedCommunityNameLength", 20i32)?;
+    cfc.set("TruncatedCommunityNameWithoutChannelLength", 15i32)?;
+    cfc.set("MaxRememberedWhisperTargets", 10i32)?;
     g.set("ChatFrameConstants", cfc)?;
+
+    // MessageFrameScrollButtonConstants
+    let mfsb = lua.create_table()?;
+    mfsb.set("InitialScrollDelay", 0.4f64)?;
+    mfsb.set("HeldScrollDelay", 0.04f64)?;
+    g.set("MessageFrameScrollButtonConstants", mfsb)?;
 
     // Constants.PetConsts_PostCata.STABLED_PETS_FIRST_SLOT_INDEX
     let constants: mlua::Table = match g.get("Constants")? {
@@ -593,6 +614,7 @@ fn register_missing_constants(lua: &Lua, g: &mlua::Table) -> Result<()> {
     };
     let pet_consts = lua.create_table()?;
     pet_consts.set("STABLED_PETS_FIRST_SLOT_INDEX", 5i32)?;
+    pet_consts.set("EXTRA_PET_STABLE_SLOT", 5i32)?;
     pet_consts.set("NUM_PET_SLOTS_THAT_NEED_LEARNED_SPELL", 5i32)?;
     constants.set("PetConsts_PostCata", pet_consts)?;
 
@@ -607,47 +629,87 @@ fn register_missing_constants(lua: &Lua, g: &mlua::Table) -> Result<()> {
 
 /// Global Lua tables that are referenced by addon code.
 fn register_missing_global_tables(lua: &Lua, g: &mlua::Table) -> Result<()> {
-    // QuestUtil - utility table populated by QuestUtils.lua
     if g.get::<Value>("QuestUtil")?.is_nil() {
-        let qu = lua.create_table()?;
-        g.set("QuestUtil", qu)?;
+        g.set("QuestUtil", lua.create_table()?)?;
     }
-
-    // TalentButtonUtil - utility table for talent button rendering
+    if g.get::<Value>("ChatFrameMixin")?.is_nil() {
+        g.set("ChatFrameMixin", lua.create_table()?)?;
+    }
+    if g.get::<Value>("ChatFrameEditBoxMixin")?.is_nil() {
+        g.set("ChatFrameEditBoxMixin", lua.create_table()?)?;
+    }
     if g.get::<Value>("TalentButtonUtil")?.is_nil() {
-        let tbu = lua.create_table()?;
-        tbu.set("CircleEdgeDiameterOffset", 1.2f64)?;
-        tbu.set("SquareEdgeMinDiameterOffset", 1.2f64)?;
-        tbu.set("SquareEdgeMaxDiameterOffset", 1.5f64)?;
-        tbu.set("ChoiceEdgeMinDiameterOffset", 1.2f64)?;
-        tbu.set("ChoiceEdgeMaxDiameterOffset", 1.5f64)?;
-        let bvs = lua.create_table()?;
-        bvs.set("Normal", 1i32)?;
-        bvs.set("Gated", 2i32)?;
-        bvs.set("Disabled", 3i32)?;
-        bvs.set("Locked", 4i32)?;
-        bvs.set("Selectable", 5i32)?;
-        bvs.set("Maxed", 6i32)?;
-        bvs.set("Invisible", 7i32)?;
-        bvs.set("RefundInvalid", 8i32)?;
-        bvs.set("DisplayError", 9i32)?;
-        tbu.set("BaseVisualState", bvs)?;
-        g.set("TalentButtonUtil", tbu)?;
+        g.set("TalentButtonUtil", build_talent_button_util(lua)?)?;
     }
-
-    // Dispatcher - event dispatch system used by tutorial manager
+    if g.get::<Value>("SpellSearchUtil")?.is_nil() {
+        g.set("SpellSearchUtil", build_spell_search_util(lua)?)?;
+    }
     if g.get::<Value>("Dispatcher")?.is_nil() {
-        let d = lua.create_table()?;
-        d.set("Events", lua.create_table()?)?;
-        d.set("Functions", lua.create_table()?)?;
-        d.set("Scripts", lua.create_table()?)?;
-        d.set("NextEventID", 1i32)?;
-        d.set("NextFunctionID", 1i32)?;
-        d.set("NextScriptID", 1i32)?;
-        d.set("Initialize", lua.create_function(|_, _self: Value| Ok(()))?)?;
-        d.set("OnEvent", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-        g.set("Dispatcher", d)?;
+        g.set("Dispatcher", build_dispatcher_stub(lua)?)?;
     }
-
     Ok(())
+}
+
+/// TalentButtonUtil - utility table for talent button rendering.
+fn build_talent_button_util(lua: &Lua) -> Result<mlua::Table> {
+    let tbu = lua.create_table()?;
+    tbu.set("CircleEdgeDiameterOffset", 1.2f64)?;
+    tbu.set("SquareEdgeMinDiameterOffset", 1.2f64)?;
+    tbu.set("SquareEdgeMaxDiameterOffset", 1.5f64)?;
+    tbu.set("ChoiceEdgeMinDiameterOffset", 1.2f64)?;
+    tbu.set("ChoiceEdgeMaxDiameterOffset", 1.5f64)?;
+    let bvs = lua.create_table()?;
+    for (i, name) in ["Normal", "Gated", "Disabled", "Locked", "Selectable",
+                       "Maxed", "Invisible", "RefundInvalid", "DisplayError"]
+        .iter().enumerate()
+    {
+        bvs.set(*name, (i + 1) as i32)?;
+    }
+    tbu.set("BaseVisualState", bvs)?;
+    Ok(tbu)
+}
+
+/// SpellSearchUtil - spell search utility tables.
+fn build_spell_search_util(lua: &Lua) -> Result<mlua::Table> {
+    let ssu = lua.create_table()?;
+    let mt = lua.create_table()?;
+    for (i, name) in ["DescriptionMatch", "NameMatch", "RelatedMatch", "ExactMatch",
+                       "NotOnActionBar", "OnInactiveBonusBar", "OnDisabledActionBar",
+                       "AssistedCombat"].iter().enumerate()
+    {
+        mt.set(*name, (i + 1) as i32)?;
+    }
+    ssu.set("MatchType", mt)?;
+    let st = lua.create_table()?;
+    for (i, name) in ["Trait", "PvPTalent", "SpellBookItem"].iter().enumerate() {
+        st.set(*name, (i + 1) as i32)?;
+    }
+    ssu.set("SourceType", st)?;
+    let ft = lua.create_table()?;
+    for (i, name) in ["Text", "ActionBar", "Name", "AssistedCombat"].iter().enumerate() {
+        ft.set(*name, (i + 1) as i32)?;
+    }
+    ssu.set("FilterType", ft)?;
+    ssu.set("ActionBarStatusTooltips", lua.create_table()?)?;
+    Ok(ssu)
+}
+
+/// Dispatcher - event dispatch system (real impl: Blizzard_Dispatcher addon).
+fn build_dispatcher_stub(lua: &Lua) -> Result<mlua::Table> {
+    let d = lua.create_table()?;
+    d.set("Events", lua.create_table()?)?;
+    d.set("Functions", lua.create_table()?)?;
+    d.set("Scripts", lua.create_table()?)?;
+    d.set("NextEventID", 1i32)?;
+    d.set("NextFunctionID", 1i32)?;
+    d.set("NextScriptID", 1i32)?;
+    let noop = lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?;
+    for name in ["Initialize", "OnEvent", "RegisterEvent", "UnregisterEvent",
+                  "UnregisterAllEvents", "UnregisterAll", "RegisterFunction",
+                  "UnregisterFunction", "UnregisterAllFunctions",
+                  "RegisterScript", "UnregisterScript", "UnregisterAllScripts"]
+    {
+        d.set(name, noop.clone())?;
+    }
+    Ok(d)
 }
