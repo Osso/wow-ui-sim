@@ -84,7 +84,8 @@ impl App {
         };
         self.push_errors(errors);
         self.hovered_frame = new_hovered;
-        self.invalidate();
+        // Hover highlights are appended dynamically in draw() — no quad rebuild needed.
+        self.drain_console();
     }
 
     fn handle_mouse_down(&mut self, pos: Point) {

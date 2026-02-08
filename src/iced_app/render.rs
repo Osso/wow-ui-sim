@@ -88,26 +88,24 @@ impl shader::Program<Message> for &App {
         let size = bounds.size();
         self.screen_size.set(size);
         self.sync_screen_size_to_state(size);
-        let mut quads = self.get_or_rebuild_quads(size);
+        let quads = self.get_or_rebuild_quads(size);
 
-        // Append cursor quad on top of everything
+        // Build overlay (hover highlight + cursor) as a separate small batch.
+        // This avoids cloning the entire world quad batch every frame.
+        let mut overlay = QuadBatch::new();
+        self.append_hover_highlight(&mut overlay, size);
         if let Some(pos) = self.mouse_position {
             const CURSOR_SIZE: f32 = 32.0;
-            let cursor_bounds = Rectangle::new(
-                Point::new(pos.x, pos.y),
-                Size::new(CURSOR_SIZE, CURSOR_SIZE),
+            overlay.push_textured_path(
+                Rectangle::new(Point::new(pos.x, pos.y), Size::new(CURSOR_SIZE, CURSOR_SIZE)),
+                r"Interface\Cursor\Point",
+                [1.0, 1.0, 1.0, 1.0],
+                BlendMode::Alpha,
             );
-            // Debug test: two solid quads to verify both render
-            quads.push_solid(cursor_bounds, [1.0, 0.0, 1.0, 0.8]);
-            // Smaller green quad on top - should be visible if second quad renders
-            let inner = Rectangle::new(
-                Point::new(pos.x + 4.0, pos.y + 4.0),
-                Size::new(CURSOR_SIZE - 8.0, CURSOR_SIZE - 8.0),
-            );
-            quads.push_solid(inner, [0.0, 1.0, 0.0, 1.0]);
         }
 
-        let textures = self.load_new_textures(&quads);
+        let mut textures = self.load_new_textures(&quads);
+        textures.extend(self.load_new_textures(&overlay));
 
         // Update frame time with EMA (alpha = 0.33 for ~5 sample smoothing)
         let elapsed_ms = start.elapsed().as_secs_f32() * 1000.0;
@@ -116,6 +114,7 @@ impl shader::Program<Message> for &App {
         self.frame_time_avg.set(0.33 * elapsed_ms + 0.67 * avg);
 
         let mut primitive = WowUiPrimitive::with_textures(quads, textures);
+        primitive.overlay = overlay;
         self.attach_dirty_glyph_atlas(&mut primitive);
         primitive
     }
@@ -227,13 +226,6 @@ fn emit_button_highlight(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::wi
                 [1.0, 1.0, 1.0, 0.5 * f.alpha], BlendMode::Additive,
             );
         }
-    } else {
-        batch.push_quad(
-            bounds,
-            Rectangle::new(Point::ORIGIN, Size::new(1.0, 1.0)),
-            [1.0, 0.9, 0.6, 0.15 * f.alpha],
-            -1, BlendMode::Additive,
-        );
     }
 }
 
@@ -621,12 +613,22 @@ pub fn build_quad_batch_for_registry(
 
 impl App {
     /// Return cached quads or rebuild if dirty/resized.
+    ///
+    /// Rebuilds are throttled to at most once per `REBUILD_INTERVAL` so that
+    /// the cursor overlay (appended separately) stays responsive at 60 fps
+    /// even when the world quad batch is expensive to rebuild.
     fn get_or_rebuild_quads(&self, size: Size) -> QuadBatch {
+        const REBUILD_INTERVAL: std::time::Duration = std::time::Duration::from_millis(100);
+
         let mut cache = self.cached_quads.borrow_mut();
-        if self.quads_dirty.get() || cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true) {
+        let size_changed = cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true);
+        let time_ok = self.last_quad_rebuild.get().elapsed() >= REBUILD_INTERVAL;
+
+        if size_changed || (self.quads_dirty.get() && time_ok) {
             let new_quads = self.build_quad_batch(size);
             *cache = Some((size, new_quads.clone()));
             self.quads_dirty.set(false);
+            self.last_quad_rebuild.set(std::time::Instant::now());
             new_quads
         } else {
             cache.as_ref().unwrap().1.clone()
@@ -670,6 +672,9 @@ impl App {
     }
 
     /// Build a QuadBatch for GPU shader rendering.
+    ///
+    /// Hover highlights are NOT baked in — they're appended dynamically in
+    /// `draw()` so that hover changes don't force a full quad rebuild.
     pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
         let env = self.env.borrow();
         let state = env.state().borrow();
@@ -680,55 +685,54 @@ impl App {
             (size.width, size.height),
             None,
             self.pressed_frame,
-            self.hovered_frame,
+            None, // hover highlights appended in draw()
             Some((&mut font_sys, &mut glyph_atlas)),
         )
     }
 
-}
+    /// Append hover highlight quads for the currently hovered button.
+    fn append_hover_highlight(&self, quads: &mut QuadBatch, screen_size: Size) {
+        let Some(hovered_id) = self.hovered_frame else { return };
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        let registry = &state.widgets;
+        let Some(f) = registry.get(hovered_id) else { return };
 
-/// Convert an iced keyboard key to a WoW key name string.
-pub(super) fn iced_key_to_wow(key: &iced::keyboard::Key) -> Option<String> {
-    use iced::keyboard::Key;
-    match key {
-        Key::Named(named) => iced_named_key_to_wow(named),
-        Key::Character(c) => Some(c.to_uppercase()),
-        _ => None,
+        // Only buttons/checkbuttons have hover highlights
+        if !matches!(f.widget_type, WidgetType::Button | WidgetType::CheckButton) {
+            return;
+        }
+
+        let rect = compute_frame_rect(registry, hovered_id, screen_size.width, screen_size.height);
+        if rect.width <= 0.0 || rect.height <= 0.0 {
+            return;
+        }
+        let bounds = Rectangle::new(
+            Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
+            Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
+        );
+
+        // Emit the button's own highlight (from build_button_quads hover path)
+        let has_highlight_child = f.children_keys.contains_key("HighlightTexture");
+        let is_pressed = self.pressed_frame == Some(hovered_id);
+        if !is_pressed && !has_highlight_child {
+            emit_button_highlight(quads, bounds, f);
+        }
+
+        // Emit HighlightTexture child if it exists
+        if let Some(&ht_id) = f.children_keys.get("HighlightTexture") {
+            if let Some(ht) = registry.get(ht_id) {
+                let ht_rect = compute_frame_rect(registry, ht_id, screen_size.width, screen_size.height);
+                if ht_rect.width > 0.0 && ht_rect.height > 0.0 {
+                    let ht_bounds = Rectangle::new(
+                        Point::new(ht_rect.x * UI_SCALE, ht_rect.y * UI_SCALE),
+                        Size::new(ht_rect.width * UI_SCALE, ht_rect.height * UI_SCALE),
+                    );
+                    build_texture_quads(quads, ht_bounds, ht, None);
+                }
+            }
+        }
     }
+
 }
 
-/// Convert an iced named key to a WoW key name.
-fn iced_named_key_to_wow(named: &iced::keyboard::key::Named) -> Option<String> {
-    use iced::keyboard::key::Named;
-    let s = match named {
-        Named::Escape => "ESCAPE",
-        Named::Enter => "ENTER",
-        Named::Tab => "TAB",
-        Named::Space => "SPACE",
-        Named::Backspace => "BACKSPACE",
-        Named::Delete => "DELETE",
-        Named::ArrowUp => "UP",
-        Named::ArrowDown => "DOWN",
-        Named::ArrowLeft => "LEFT",
-        Named::ArrowRight => "RIGHT",
-        Named::Home => "HOME",
-        Named::End => "END",
-        Named::PageUp => "PAGEUP",
-        Named::PageDown => "PAGEDOWN",
-        Named::Insert => "INSERT",
-        Named::F1 => "F1",
-        Named::F2 => "F2",
-        Named::F3 => "F3",
-        Named::F4 => "F4",
-        Named::F5 => "F5",
-        Named::F6 => "F6",
-        Named::F7 => "F7",
-        Named::F8 => "F8",
-        Named::F9 => "F9",
-        Named::F10 => "F10",
-        Named::F11 => "F11",
-        Named::F12 => "F12",
-        _ => return None,
-    };
-    Some(s.to_string())
-}

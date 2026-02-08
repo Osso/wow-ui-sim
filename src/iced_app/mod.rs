@@ -11,6 +11,7 @@
 
 mod app;
 mod button_vis;
+mod keybinds;
 mod layout;
 mod nine_slice;
 mod render;

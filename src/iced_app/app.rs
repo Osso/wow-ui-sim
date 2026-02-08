@@ -146,6 +146,8 @@ pub struct App {
     pub(crate) cached_hittable: RefCell<Option<Vec<(u64, Rectangle)>>>,
     /// Flag to invalidate quad cache (set when content changes).
     pub(crate) quads_dirty: std::cell::Cell<bool>,
+    /// Last quad rebuild timestamp (throttles rebuilds so cursor stays responsive).
+    pub(crate) last_quad_rebuild: std::cell::Cell<std::time::Instant>,
     /// FPS counter: frame count since last update (interior mutability for draw()).
     pub(crate) frame_count: std::cell::Cell<u32>,
     /// FPS counter: last FPS calculation time.
@@ -226,6 +228,7 @@ impl App {
             cached_quads: RefCell::new(None),
             cached_hittable: RefCell::new(None),
             quads_dirty: std::cell::Cell::new(true),
+            last_quad_rebuild: std::cell::Cell::new(std::time::Instant::now()),
             frame_count: std::cell::Cell::new(0),
             fps_last_time: std::time::Instant::now(),
             fps: 0.0,

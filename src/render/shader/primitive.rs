@@ -25,6 +25,9 @@ pub struct GpuTextureData {
 pub struct WowUiPrimitive {
     /// Batched quads to render.
     pub quads: QuadBatch,
+    /// Small overlay batch (cursor, hover highlight) appended after world quads.
+    /// Kept separate so the world batch can be cached without cloning.
+    pub overlay: QuadBatch,
     /// Background clear color.
     pub clear_color: [f32; 4],
     /// Texture data to upload (path -> image data).
@@ -41,6 +44,7 @@ impl WowUiPrimitive {
     pub fn new(quads: QuadBatch) -> Self {
         Self {
             quads,
+            overlay: QuadBatch::new(),
             clear_color: [0.05, 0.05, 0.08, 1.0], // Dark WoW-style background
             textures: Vec::new(),
             glyph_atlas_data: None,
@@ -52,6 +56,7 @@ impl WowUiPrimitive {
     pub fn with_textures(quads: QuadBatch, textures: Vec<GpuTextureData>) -> Self {
         Self {
             quads,
+            overlay: QuadBatch::new(),
             clear_color: [0.05, 0.05, 0.08, 1.0],
             textures,
             glyph_atlas_data: None,
@@ -145,7 +150,11 @@ impl shader::Primitive for WowUiPrimitive {
 
         upload_pending_textures(pipeline, queue, &self.textures, &self.glyph_atlas_data, self.glyph_atlas_size);
 
-        let resolved_quads = resolve_and_scale_quads(pipeline, &self.quads, scale);
+        let mut resolved_quads = resolve_and_scale_quads(pipeline, &self.quads, scale);
+        if !self.overlay.vertices.is_empty() {
+            let resolved_overlay = resolve_and_scale_quads(pipeline, &self.overlay, scale);
+            resolved_quads.append(&resolved_overlay);
+        }
         pipeline.prepare(device, queue, &physical_bounds, &resolved_quads);
     }
 

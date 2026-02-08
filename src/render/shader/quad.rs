@@ -645,6 +645,20 @@ impl QuadBatch {
         );
     }
 
+    /// Append all quads from another batch, adjusting indices.
+    pub fn append(&mut self, other: &QuadBatch) {
+        let base = self.vertices.len() as u32;
+        self.vertices.extend_from_slice(&other.vertices);
+        self.indices.extend(other.indices.iter().map(|i| i + base));
+        for req in &other.texture_requests {
+            self.texture_requests.push(TextureRequest {
+                path: req.path.clone(),
+                vertex_start: req.vertex_start + base,
+                vertex_count: req.vertex_count,
+            });
+        }
+    }
+
     /// OR extra flag bits into the last `count` vertices.
     pub fn set_extra_flags(&mut self, count: usize, extra: u32) {
         let start = self.vertices.len() - count;

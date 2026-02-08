@@ -50,6 +50,19 @@ impl WidgetRegistry {
         result
     }
 
+    /// Get a mutable widget by ID without marking render-dirty.
+    ///
+    /// Use for mutations that don't affect rendering (script tables, internal
+    /// bookkeeping, event registration, etc.).
+    pub fn get_mut_silent(&mut self, id: u64) -> Option<&mut Frame> {
+        self.widgets.get_mut(&id)
+    }
+
+    /// Explicitly mark the registry as render-dirty.
+    pub fn mark_render_dirty(&self) {
+        self.render_dirty.set(true);
+    }
+
     /// Get a widget by name.
     pub fn get_by_name(&self, name: &str) -> Option<&Frame> {
         self.names.get(name).and_then(|id| self.widgets.get(id))

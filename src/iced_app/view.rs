@@ -71,9 +71,21 @@ impl App {
         };
         let screen = self.screen_size.get();
         let screen_str = format!(" | screen:{}x{}", screen.width as i32, screen.height as i32);
+        let hover_str = if let Some(hovered_id) = self.hovered_frame {
+            let env = self.env.borrow();
+            let state = env.state().borrow();
+            if let Some(f) = state.widgets.get(hovered_id) {
+                let name = f.name.as_deref().unwrap_or("(anonymous)");
+                format!(" | hover: {} [{:?}] ({}x{})", name, f.widget_type, f.width as i32, f.height as i32)
+            } else {
+                String::new()
+            }
+        } else {
+            String::new()
+        };
         let title_text = format!(
-            "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}{}]",
-            self.fps, self.frame_time_display, screen_str, mouse_str
+            "WoW UI Simulator  [{:.1} FPS | {:.2}ms{}{}{}]",
+            self.fps, self.frame_time_display, screen_str, mouse_str, hover_str
         );
         text(title_text).size(20).color(palette::GOLD).into()
     }
@@ -253,7 +265,7 @@ impl App {
                 // Only dispatch to Lua when no iced widget captured the event
                 // (i.e., when the command input is not focused)
                 if matches!(status, iced::event::Status::Ignored)
-                    && let Some(wow_key) = super::render::iced_key_to_wow(key) {
+                    && let Some(wow_key) = super::keybinds::iced_key_to_wow(key) {
                         return Some(Message::KeyPress(wow_key));
                     }
             }

@@ -242,6 +242,25 @@ fn normalize_wow_path(path: &str) -> String {
     normalized
 }
 
+/// Fix 1-bit alpha decoded by image-blp as literal 0/1 byte values.
+///
+/// BLP files with `alphaDepth=1` store alpha as a single bit per pixel.
+/// The image-blp crate decodes this as byte values 0 or 1 instead of 0 or
+/// 255, making textures nearly invisible. This remaps: 0 stays 0, any
+/// non-zero alpha becomes 255.
+fn fix_1bit_alpha(pixels: &mut [u8]) {
+    // Check if alpha looks like 1-bit (max alpha value <= 1)
+    let max_alpha = pixels.iter().skip(3).step_by(4).copied().max().unwrap_or(0);
+    if max_alpha > 1 {
+        return; // Normal 8-bit alpha, no fix needed
+    }
+    for alpha in pixels.iter_mut().skip(3).step_by(4) {
+        if *alpha > 0 {
+            *alpha = 255;
+        }
+    }
+}
+
 /// Load texture data from a file.
 fn load_texture_file(path: &Path) -> Result<TextureData, Box<dyn std::error::Error + Send + Sync>> {
     // Check if it's a BLP file
@@ -256,10 +275,14 @@ fn load_texture_file(path: &Path) -> Result<TextureData, Box<dyn std::error::Err
         let rgba = blp_img.to_rgba8();
         let width = rgba.width();
         let height = rgba.height();
+        let mut pixels = rgba.into_raw();
+        // Fix 1-bit alpha: image-blp decodes 1-bit alpha as literal 0/1 byte values
+        // instead of 0/255. Remap any alpha > 0 to 255 for correct rendering.
+        fix_1bit_alpha(&mut pixels);
         Ok(TextureData {
             width,
             height,
-            pixels: rgba.into_raw(),
+            pixels,
         })
     } else {
         // Use standard image crate for other formats
