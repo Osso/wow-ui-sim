@@ -124,7 +124,7 @@ fn fire_startup_events(env: &WowLuaEnv, warnings: &mut Vec<String>) {
 
 /// Known warning count from unimplemented APIs. Update this when adding stubs.
 /// Goal: drive this to zero over time by implementing missing APIs.
-const KNOWN_WARNING_COUNT: usize = 36;
+const KNOWN_WARNING_COUNT: usize = 25;
 
 #[test]
 fn test_no_warnings_on_startup() {
@@ -148,4 +148,73 @@ fn test_no_warnings_on_startup() {
              Update KNOWN_WARNING_COUNT to {count} to lock in the improvement."
         );
     }
+}
+
+/// Load all Blizzard addons and apply workarounds (no startup events).
+fn load_all_addons() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+
+    let ui = blizzard_ui_dir();
+    let addons = discover_blizzard_addons(&ui);
+    for (name, toc_path) in &addons {
+        if let Err(e) = load_addon(&env.loader_env(), toc_path) {
+            eprintln!("[load {name}] FAILED: {e}");
+        }
+    }
+    env.apply_post_load_workarounds();
+    env
+}
+
+/// Assert that a Lua expression evaluates to true.
+fn assert_lua(env: &WowLuaEnv, code: &str, msg: &str) {
+    assert!(env.eval::<bool>(code).unwrap_or(false), "{msg}");
+}
+
+/// Fire startup events and process timers.
+fn fire_events_and_timers(env: &WowLuaEnv) {
+    let lua = env.lua();
+    let _ = env.fire_event_with_args(
+        "ADDON_LOADED",
+        &[mlua::Value::String(lua.create_string("WoWUISim").unwrap())],
+    );
+    for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
+        let _ = env.fire_event(event);
+    }
+    let _ = env.fire_event_with_args(
+        "PLAYER_ENTERING_WORLD",
+        &[mlua::Value::Boolean(true), mlua::Value::Boolean(false)],
+    );
+    let _ = env.process_timers();
+    let _ = env.fire_on_update(0.016);
+    let _ = env.process_timers();
+}
+
+/// Verify that template mixin inheritance is properly applied.
+///
+/// ObjectiveTrackerUIWidgetContainer inherits UIWidgetContainerTemplate,
+/// which inherits UIWidgetContainerNoResizeTemplate (mixin UIWidgetContainerMixin).
+/// GetNumWidgetsShowing must be available on the frame.
+#[test]
+fn test_widget_container_mixin_applied() {
+    let env = load_all_addons();
+
+    assert_lua(&env, "return type(UIWidgetContainerMixin) == 'table'",
+        "UIWidgetContainerMixin should exist as a Lua table");
+    assert_lua(&env, "return type(UIWidgetContainerMixin.GetNumWidgetsShowing) == 'function'",
+        "UIWidgetContainerMixin should have GetNumWidgetsShowing");
+    assert_lua(&env, "return ObjectiveTrackerUIWidgetContainer ~= nil",
+        "ObjectiveTrackerUIWidgetContainer should exist");
+    assert_lua(&env, "return type(ObjectiveTrackerUIWidgetContainer.GetNumWidgetsShowing) == 'function'",
+        "ObjectiveTrackerUIWidgetContainer should have GetNumWidgetsShowing from UIWidgetContainerMixin");
+
+    let result: i64 = env
+        .eval("return ObjectiveTrackerUIWidgetContainer:GetNumWidgetsShowing()")
+        .expect("GetNumWidgetsShowing() should not error");
+    assert_eq!(result, 0, "No widgets should be showing initially");
+
+    // Verify the method survives startup events and timer processing
+    fire_events_and_timers(&env);
+    assert_lua(&env, "return type(ObjectiveTrackerUIWidgetContainer.GetNumWidgetsShowing) == 'function'",
+        "GetNumWidgetsShowing should still be available after startup events and timer processing");
 }
