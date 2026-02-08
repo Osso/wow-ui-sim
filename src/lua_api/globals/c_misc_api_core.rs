@@ -68,6 +68,20 @@ fn register_c_tooltip_info(lua: &Lua) -> Result<()> {
             Ok(info)
         })?)?;
     }
+    // Catch-all for any C_TooltipInfo getter not explicitly stubbed above.
+    // TooltipDataHandler maps ~50 Set* methods to Get* getters on this table;
+    // return a stub that produces an empty tooltip data table.
+    let mt = lua.create_table()?;
+    mt.set("__index", lua.create_function(|lua, (_table, _key): (Value, String)| {
+        let func = lua.create_function(move |lua, _args: mlua::MultiValue| {
+            let info = lua.create_table()?;
+            info.set("type", 0)?;
+            info.set("lines", lua.create_table()?)?;
+            Ok(info)
+        })?;
+        Ok(Value::Function(func))
+    })?)?;
+    t.set_metatable(Some(mt));
     lua.globals().set("C_TooltipInfo", t)?;
     Ok(())
 }
@@ -89,6 +103,7 @@ fn register_c_pet_battles(lua: &Lua) -> Result<()> {
     t.set("GetAllEffectNames", lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?)?;
     t.set("GetAllStates", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("GetBattleState", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("GetPVPMatchmakingInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
 
     globals.set("C_PetBattles", t)?;
     Ok(())
@@ -164,6 +179,7 @@ fn register_c_nameplate(lua: &Lua) -> Result<()> {
     t.set("SetNamePlateSelfClickThrough", lua.create_function(|_, _c: bool| Ok(()))?)?;
     t.set("SetNamePlateEnemyClickThrough", lua.create_function(|_, _c: bool| Ok(()))?)?;
     t.set("SetNamePlateFriendlyClickThrough", lua.create_function(|_, _c: bool| Ok(()))?)?;
+    t.set("SetTargetClampingInsets", lua.create_function(|_, (_top, _bottom): (f64, f64)| Ok(()))?)?;
     lua.globals().set("C_NamePlate", t)?;
     Ok(())
 }
@@ -224,6 +240,7 @@ fn register_c_party_info(lua: &Lua) -> Result<()> {
     t.set("GetGatheringRequestInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("GetInstanceAbandonVoteTime", lua.create_function(|_, ()| Ok((0.0f64, 0.0f64)))?)?;
     t.set("IsPartyWalkIn", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsCrossFactionParty", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_PartyInfo", t)?;
     Ok(())
 }
@@ -297,6 +314,10 @@ fn register_c_pvp(lua: &Lua) -> Result<()> {
     t.set("IsMatchActive", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsMatchComplete", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetActiveMatchState", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetArenaCrowdControlInfo", lua.create_function(|_, _unit: Value| {
+        Ok((Value::Nil, Value::Nil, Value::Nil))
+    })?)?;
+    t.set("IsMatchConsideredArena", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_PvP", t)?;
     Ok(())
 }
