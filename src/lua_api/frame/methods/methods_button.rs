@@ -82,12 +82,12 @@ fn add_texture_getter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
     }
 }
 
-/// Extract texture path from a Lua Value (String -> Some(path), other -> None).
+/// Extract texture path from a Lua Value.
+///
+/// Handles string paths, numeric file data IDs (integer or number), and string
+/// representations of numeric IDs. Returns None for userdata (texture objects).
 fn extract_texture_path(texture: &Value) -> Result<Option<String>, mlua::Error> {
-    match texture {
-        Value::String(s) => Ok(Some(s.to_str()?.to_string())),
-        _ => Ok(None),
-    }
+    Ok(super::methods_helpers::resolve_file_data_id_or_path(texture))
 }
 
 /// Resolved texture info: file path and optional UV coords (from atlas lookup).
@@ -187,51 +187,67 @@ fn add_atlas_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_normal_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetNormalAtlas", |_, this, atlas_name: String| {
-        let mut state = this.state.borrow_mut();
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
-        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
-            f.normal_texture = Some(file);
-            f.normal_tex_coords = Some(coords);
-        });
+    methods.add_method("SetNormalAtlas", |_, this, args: mlua::MultiValue| {
+        if let Some(atlas_name) = extract_string_arg(&args) {
+            let mut state = this.state.borrow_mut();
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
+            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+                f.normal_texture = Some(file);
+                f.normal_tex_coords = Some(coords);
+            });
+        }
         Ok(())
     });
 }
 
 fn add_pushed_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetPushedAtlas", |_, this, atlas_name: String| {
-        let mut state = this.state.borrow_mut();
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
-        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
-            f.pushed_texture = Some(file);
-            f.pushed_tex_coords = Some(coords);
-        });
+    methods.add_method("SetPushedAtlas", |_, this, args: mlua::MultiValue| {
+        if let Some(atlas_name) = extract_string_arg(&args) {
+            let mut state = this.state.borrow_mut();
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
+            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+                f.pushed_texture = Some(file);
+                f.pushed_tex_coords = Some(coords);
+            });
+        }
         Ok(())
     });
 }
 
 fn add_disabled_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetDisabledAtlas", |_, this, atlas_name: String| {
-        let mut state = this.state.borrow_mut();
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
-        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
-            f.disabled_texture = Some(file);
-            f.disabled_tex_coords = Some(coords);
-        });
+    methods.add_method("SetDisabledAtlas", |_, this, args: mlua::MultiValue| {
+        if let Some(atlas_name) = extract_string_arg(&args) {
+            let mut state = this.state.borrow_mut();
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
+            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+                f.disabled_texture = Some(file);
+                f.disabled_tex_coords = Some(coords);
+            });
+        }
         Ok(())
     });
 }
 
 fn add_highlight_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetHighlightAtlas", |_, this, atlas_name: String| {
-        let mut state = this.state.borrow_mut();
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
-        apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
-            f.highlight_texture = Some(file);
-            f.highlight_tex_coords = Some(coords);
-        });
+    methods.add_method("SetHighlightAtlas", |_, this, args: mlua::MultiValue| {
+        if let Some(atlas_name) = extract_string_arg(&args) {
+            let mut state = this.state.borrow_mut();
+            let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
+            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+                f.highlight_texture = Some(file);
+                f.highlight_tex_coords = Some(coords);
+            });
+        }
         Ok(())
     });
+}
+
+/// Extract a string from the first argument of a MultiValue, ignoring non-strings.
+fn extract_string_arg(args: &mlua::MultiValue) -> Option<String> {
+    args.iter().next().and_then(|v| match v {
+        Value::String(s) => Some(s.to_string_lossy().to_string()),
+        _ => None,
+    })
 }
 
 /// Apply atlas info to both the child texture widget and the parent button field.
