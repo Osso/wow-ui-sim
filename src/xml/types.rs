@@ -501,6 +501,66 @@ pub struct ScriptsXml {
     pub on_show: Vec<ScriptBodyXml>,
     #[serde(rename = "OnHide", default)]
     pub on_hide: Vec<ScriptBodyXml>,
+    // Mouse handlers
+    #[serde(rename = "OnEnter", default)]
+    pub on_enter: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnLeave", default)]
+    pub on_leave: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnMouseDown", default)]
+    pub on_mouse_down: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnMouseUp", default)]
+    pub on_mouse_up: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnMouseWheel", default)]
+    pub on_mouse_wheel: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnDragStart", default)]
+    pub on_drag_start: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnDragStop", default)]
+    pub on_drag_stop: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnReceiveDrag", default)]
+    pub on_receive_drag: Vec<ScriptBodyXml>,
+    // EditBox handlers
+    #[serde(rename = "OnEnterPressed", default)]
+    pub on_enter_pressed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnEscapePressed", default)]
+    pub on_escape_pressed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTabPressed", default)]
+    pub on_tab_pressed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnSpacePressed", default)]
+    pub on_space_pressed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTextChanged", default)]
+    pub on_text_changed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTextSet", default)]
+    pub on_text_set: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnChar", default)]
+    pub on_char: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnEditFocusGained", default)]
+    pub on_edit_focus_gained: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnEditFocusLost", default)]
+    pub on_edit_focus_lost: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnInputLanguageChanged", default)]
+    pub on_input_language_changed: Vec<ScriptBodyXml>,
+    // Keyboard handlers
+    #[serde(rename = "OnKeyDown", default)]
+    pub on_key_down: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnKeyUp", default)]
+    pub on_key_up: Vec<ScriptBodyXml>,
+    // Other frame handlers
+    #[serde(rename = "OnValueChanged", default)]
+    pub on_value_changed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnEnable", default)]
+    pub on_enable: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnDisable", default)]
+    pub on_disable: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnSizeChanged", default)]
+    pub on_size_changed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnAttributeChanged", default)]
+    pub on_attribute_changed: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnHyperlinkClick", default)]
+    pub on_hyperlink_click: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnHyperlinkEnter", default)]
+    pub on_hyperlink_enter: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnHyperlinkLeave", default)]
+    pub on_hyperlink_leave: Vec<ScriptBodyXml>,
     // Animation group scripts
     #[serde(rename = "OnPlay", default)]
     pub on_play: Vec<ScriptBodyXml>,
