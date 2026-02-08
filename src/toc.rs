@@ -199,17 +199,19 @@ impl TocFile {
             .unwrap_or(false)
     }
 
-    /// Get saved variables names (account-wide).
+    /// Get saved variables names (account-wide + machine-specific).
     pub fn saved_variables(&self) -> Vec<String> {
-        self.metadata
-            .get("SavedVariables")
-            .map(|s| {
-                s.split(',')
-                    .map(|v| v.trim().to_string())
-                    .filter(|v| !v.is_empty())
-                    .collect()
-            })
-            .unwrap_or_default()
+        let mut vars: Vec<String> = Vec::new();
+        for key in ["SavedVariables", "SavedVariablesMachine"] {
+            if let Some(s) = self.metadata.get(key) {
+                vars.extend(
+                    s.split(',')
+                        .map(|v| v.trim().to_string())
+                        .filter(|v| !v.is_empty()),
+                );
+            }
+        }
+        vars
     }
 
     /// Get saved variables per character names.
