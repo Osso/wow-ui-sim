@@ -135,7 +135,7 @@ fn frame_exists(env: &WowLuaEnv, frame_name: &str) -> bool {
 #[test]
 fn keybind_b_opens_bags() {
     let env = setup_env();
-    env.send_key_press("B").expect("B keybind failed");
+    env.send_key_press("B", None).expect("B keybind failed");
     assert!(
         frame_is_shown(&env, "ContainerFrameCombinedBags")
             || frame_is_shown(&env, "ContainerFrame1"),
@@ -148,7 +148,7 @@ fn keybind_b_opens_bags() {
 #[test]
 fn keybind_backspace_opens_backpack() {
     let env = setup_env();
-    env.send_key_press("BACKSPACE").expect("BACKSPACE keybind failed");
+    env.send_key_press("BACKSPACE", None).expect("BACKSPACE keybind failed");
     assert!(
         frame_is_shown(&env, "ContainerFrameCombinedBags")
             || frame_is_shown(&env, "ContainerFrame1"),
@@ -161,7 +161,7 @@ fn keybind_backspace_opens_backpack() {
 #[test]
 fn keybind_f8_opens_bag4() {
     let env = setup_env();
-    env.send_key_press("F8").expect("F8 keybind failed");
+    env.send_key_press("F8", None).expect("F8 keybind failed");
     assert!(
         frame_is_shown(&env, "ContainerFrameCombinedBags"),
         "ContainerFrameCombinedBags should be shown after pressing F8"
@@ -173,7 +173,7 @@ fn keybind_f8_opens_bag4() {
 #[test]
 fn keybind_c_opens_character() {
     let env = setup_env();
-    env.send_key_press("C").expect("C keybind failed");
+    env.send_key_press("C", None).expect("C keybind failed");
     assert!(
         frame_is_shown(&env, "CharacterFrame"),
         "CharacterFrame should be shown after pressing C"
@@ -185,7 +185,7 @@ fn keybind_c_opens_character() {
 #[test]
 fn keybind_u_opens_reputation() {
     let env = setup_env();
-    env.send_key_press("U").expect("U keybind failed");
+    env.send_key_press("U", None).expect("U keybind failed");
     assert!(
         frame_is_shown(&env, "CharacterFrame"),
         "CharacterFrame should be shown after pressing U (reputation tab)"
@@ -197,7 +197,7 @@ fn keybind_u_opens_reputation() {
 #[test]
 fn keybind_s_opens_spellbook() {
     let env = setup_env();
-    env.send_key_press("S").expect("S keybind failed");
+    env.send_key_press("S", None).expect("S keybind failed");
     assert!(
         frame_is_shown(&env, "PlayerSpellsFrame"),
         "PlayerSpellsFrame should be shown after pressing S"
@@ -209,7 +209,7 @@ fn keybind_s_opens_spellbook() {
 #[test]
 fn keybind_n_opens_talents() {
     let env = setup_env();
-    env.send_key_press("N").expect("N keybind failed");
+    env.send_key_press("N", None).expect("N keybind failed");
     assert!(
         frame_is_shown(&env, "PlayerSpellsFrame"),
         "PlayerSpellsFrame should be shown after pressing N (talents tab)"
@@ -221,7 +221,7 @@ fn keybind_n_opens_talents() {
 #[test]
 fn keybind_a_opens_achievements() {
     let env = setup_env();
-    env.send_key_press("A").expect("A keybind failed");
+    env.send_key_press("A", None).expect("A keybind failed");
     assert!(
         frame_is_shown(&env, "AchievementFrame"),
         "AchievementFrame should be shown after pressing A"
@@ -233,7 +233,7 @@ fn keybind_a_opens_achievements() {
 #[test]
 fn keybind_l_opens_group_finder() {
     let env = setup_env();
-    env.send_key_press("L").expect("L keybind failed");
+    env.send_key_press("L", None).expect("L keybind failed");
     assert!(
         frame_is_shown(&env, "PVEFrame"),
         "PVEFrame should be shown after pressing L"
@@ -245,7 +245,7 @@ fn keybind_l_opens_group_finder() {
 #[test]
 fn keybind_o_opens_social() {
     let env = setup_env();
-    env.send_key_press("O").expect("O keybind failed");
+    env.send_key_press("O", None).expect("O keybind failed");
     assert!(
         frame_is_shown(&env, "FriendsFrame"),
         "FriendsFrame should be shown after pressing O"
@@ -257,7 +257,7 @@ fn keybind_o_opens_social() {
 #[test]
 fn keybind_j_opens_guild() {
     let env = setup_env();
-    env.send_key_press("J").expect("J keybind failed");
+    env.send_key_press("J", None).expect("J keybind failed");
     assert!(
         frame_is_shown(&env, "CommunitiesFrame"),
         "CommunitiesFrame should be shown after pressing J"
@@ -269,7 +269,7 @@ fn keybind_j_opens_guild() {
 #[test]
 fn keybind_m_opens_world_map() {
     let env = setup_env();
-    env.send_key_press("M").expect("M keybind failed");
+    env.send_key_press("M", None).expect("M keybind failed");
     assert!(
         frame_is_shown(&env, "WorldMapFrame"),
         "WorldMapFrame should be shown after pressing M"
@@ -281,7 +281,7 @@ fn keybind_m_opens_world_map() {
 #[test]
 fn keybind_escape_opens_game_menu() {
     let env = setup_env();
-    env.send_key_press("ESCAPE").expect("ESCAPE keybind failed");
+    env.send_key_press("ESCAPE", None).expect("ESCAPE keybind failed");
     assert!(
         frame_is_shown(&env, "GameMenuFrame"),
         "GameMenuFrame should be shown after pressing ESCAPE"
@@ -291,9 +291,9 @@ fn keybind_escape_opens_game_menu() {
 #[test]
 fn keybind_escape_closes_game_menu() {
     let env = setup_env();
-    env.send_key_press("ESCAPE").expect("first ESCAPE failed");
+    env.send_key_press("ESCAPE", None).expect("first ESCAPE failed");
     assert!(frame_is_shown(&env, "GameMenuFrame"));
-    env.send_key_press("ESCAPE").expect("second ESCAPE failed");
+    env.send_key_press("ESCAPE", None).expect("second ESCAPE failed");
     assert!(
         !frame_is_shown(&env, "GameMenuFrame"),
         "GameMenuFrame should be hidden after second ESCAPE"
