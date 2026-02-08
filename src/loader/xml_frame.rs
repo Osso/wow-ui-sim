@@ -64,6 +64,7 @@ pub fn create_frame_from_xml(
 
     apply_button_textures(env, frame, &name)?;
     apply_button_text(env, frame, &name, inherits)?;
+    apply_bar_texture(env, frame, &name)?;
 
     init_action_bar_tables(env, &name);
 
@@ -579,6 +580,66 @@ fn exec_animation_groups(env: &LoaderEnv<'_>, anims: &crate::xml::AnimationsXml,
     if let Err(e) = env.exec(&anim_code) {
         eprintln!("[AnimSetup] error: {}", e);
     }
+}
+
+/// Create the bar texture for a StatusBar from its inline `<BarTexture>` XML element.
+fn apply_bar_texture(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
+    let Some(bar) = frame.bar_texture() else { return Ok(()) };
+
+    let bar_name = bar
+        .name
+        .as_ref()
+        .map(|n| n.replace("$parent", name))
+        .unwrap_or_else(|| format!("__bar_{}", rand_id()));
+
+    let parent_ref = lua_global_ref(name);
+    let mut code = format!(
+        r#"
+        local parent = {parent_ref}
+        if parent and parent.SetStatusBarTexture then
+            local bar = parent:CreateTexture("{}", "ARTWORK")
+        "#,
+        escape_lua_string(&bar_name),
+    );
+
+    if let Some(file) = &bar.file {
+        code.push_str(&format!(
+            "            bar:SetTexture(\"{}\")\n",
+            escape_lua_string(file)
+        ));
+    }
+    if let Some(atlas) = &bar.atlas {
+        code.push_str(&format!(
+            "            bar:SetAtlas(\"{}\")\n",
+            escape_lua_string(atlas)
+        ));
+    }
+    if let Some(color) = &bar.color {
+        code.push_str(&format!(
+            "            bar:SetColorTexture({}, {}, {}, {})\n",
+            color.r.unwrap_or(1.0),
+            color.g.unwrap_or(1.0),
+            color.b.unwrap_or(1.0),
+            color.a.unwrap_or(1.0)
+        ));
+    }
+
+    code.push_str("            parent:SetStatusBarTexture(bar)\n");
+    let parent_key = bar.parent_key.as_deref().unwrap_or("Bar");
+    code.push_str(&format!("            parent.{} = bar\n", parent_key));
+
+    if bar.name.is_some() {
+        code.push_str(&format!(
+            "            _G[\"{}\"] = bar\n",
+            escape_lua_string(&bar_name)
+        ));
+    }
+
+    code.push_str("        end\n");
+    env.exec(&code).map_err(|e| {
+        LoadError::Lua(format!("Failed to create bar texture on {}: {}", name, e))
+    })?;
+    Ok(())
 }
 
 /// Initialize tables expected by action bar OnLoad handlers.
