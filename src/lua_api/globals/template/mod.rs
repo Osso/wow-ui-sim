@@ -320,18 +320,22 @@ fn fire_on_load(lua: &Lua, frame_name: &str) {
             if handler then
                 local ok, err = pcall(handler, frame)
                 if not ok then
-                    print("[fire_on_load] {frame_name} error: " .. tostring(err))
+                    return tostring(err)
                 end
             elseif type(frame.OnLoad) == "function" then
                 local ok, err = pcall(frame.OnLoad, frame)
                 if not ok then
-                    print("[fire_on_load] {frame_name} error: " .. tostring(err))
+                    return tostring(err)
                 end
             end
         end
         "#
     );
-    let _ = lua.load(&code).exec();
+    match lua.load(&code).eval::<Option<String>>() {
+        Ok(Some(err)) => eprintln!("[fire_on_load] {} error: {}", frame_name, err),
+        Err(e) => eprintln!("[fire_on_load] {} eval error: {}", frame_name, e),
+        _ => {}
+    }
 }
 
 /// Create child frames from template XML.
