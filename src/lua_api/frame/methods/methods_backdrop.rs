@@ -9,15 +9,6 @@ pub fn add_backdrop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_backdrop_color_methods(methods);
 }
 
-/// Extract a float from a Lua Value (Number or Integer).
-fn value_to_f32(v: &mlua::Value) -> f32 {
-    match v {
-        mlua::Value::Number(n) => *n as f32,
-        mlua::Value::Integer(n) => *n as f32,
-        _ => 0.0,
-    }
-}
-
 /// SetBackdrop(backdropInfo) and ApplyBackdrop() - backdrop setup.
 fn add_set_backdrop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetBackdrop is a legacy C API. In modern WoW (post-9.0), backdrop rendering
