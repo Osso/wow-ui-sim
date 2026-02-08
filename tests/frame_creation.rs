@@ -67,6 +67,15 @@ fn test_create_frame_types() {
 }
 
 #[test]
+fn test_editbox_mouse_enabled_by_default() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"local eb = CreateFrame("EditBox", "TestEBMouse", UIParent)"#)
+        .unwrap();
+    let enabled: bool = env.eval("return TestEBMouse:IsMouseEnabled()").unwrap();
+    assert!(enabled, "EditBox should have mouse enabled by default");
+}
+
+#[test]
 fn test_create_frame_anonymous() {
     let env = WowLuaEnv::new().unwrap();
 
