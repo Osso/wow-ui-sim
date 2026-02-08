@@ -64,6 +64,10 @@ impl App {
 
     fn handle_mouse_move(&mut self, pos: Point) {
         self.mouse_position = Some(pos);
+        {
+            let env = self.env.borrow();
+            env.state().borrow_mut().mouse_position = Some((pos.x, pos.y));
+        }
         let new_hovered = self.hit_test(pos);
         if new_hovered == self.hovered_frame {
             return;

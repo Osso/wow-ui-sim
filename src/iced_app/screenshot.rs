@@ -23,8 +23,14 @@ impl App {
         let mut glyph_atlas = GlyphAtlas::new();
         let batch = {
             let env = self.env.borrow();
-            let state = env.state().borrow();
             let mut fs = self.font_system.borrow_mut();
+            // Update tooltip sizes before rendering
+            {
+                let mut state = env.state().borrow_mut();
+                super::tooltip::update_tooltip_sizes(&mut state, &mut fs);
+            }
+            let state = env.state().borrow();
+            let tooltip_data = super::tooltip::collect_tooltip_data(&state);
             build_quad_batch_for_registry(
                 &state.widgets,
                 (width as f32, height as f32),
@@ -32,6 +38,8 @@ impl App {
                 self.pressed_frame,
                 self.hovered_frame,
                 Some((&mut fs, &mut glyph_atlas)),
+                Some(&state.message_frames),
+                Some(&tooltip_data),
             )
         };
 

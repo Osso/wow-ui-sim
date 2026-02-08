@@ -576,13 +576,21 @@ fn run_screenshot(
 
     let mut glyph_atlas = GlyphAtlas::new();
     let batch = {
-        let state = env.state().borrow();
         let mut fs = font_system.borrow_mut();
+        // Update tooltip sizes before rendering
+        {
+            let mut state = env.state().borrow_mut();
+            wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut fs);
+        }
+        let state = env.state().borrow();
+        let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
         build_quad_batch_for_registry(
             &state.widgets,
             (width as f32, height as f32),
             filter.as_deref(), None, None,
             Some((&mut fs, &mut glyph_atlas)),
+            Some(&state.message_frames),
+            Some(&tooltip_data),
         )
     };
 

@@ -3,6 +3,7 @@
 use super::methods_helpers::get_mixin_override;
 use super::FrameHandle;
 use crate::lua_api::tooltip::TooltipLine;
+use crate::widget::{Anchor, AnchorPoint};
 use mlua::{Result, UserDataMethods, Value};
 
 pub fn add_tooltip_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
@@ -47,11 +48,12 @@ fn add_tooltip_owner_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             if let Some(td) = state.tooltips.get_mut(&this.id) {
                 td.lines.clear();
                 td.owner_id = owner_id;
-                td.anchor_type = anchor;
+                td.anchor_type = anchor.clone();
             }
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.visible = true;
             }
+            position_tooltip(&mut state, this.id, owner_id, &anchor);
         }
 
         // Fire OnTooltipCleared
@@ -331,6 +333,69 @@ fn add_tooltip_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         Ok(())
     });
+}
+
+// --- Positioning ---
+
+/// Set anchors on the tooltip frame based on anchor_type from SetOwner.
+fn position_tooltip(
+    state: &mut crate::lua_api::state::SimState,
+    tooltip_id: u64,
+    owner_id: Option<u64>,
+    anchor_type: &str,
+) {
+    let frame = match state.widgets.get_mut(tooltip_id) {
+        Some(f) => f,
+        None => return,
+    };
+    frame.anchors.clear();
+
+    match anchor_type {
+        "ANCHOR_CURSOR" => {
+            // Position at mouse cursor + 20px Y offset
+            let (mx, my) = state.mouse_position.unwrap_or((0.0, 0.0));
+            frame.anchors.push(Anchor {
+                point: AnchorPoint::TopLeft,
+                relative_to: None,
+                relative_to_id: None,
+                relative_point: AnchorPoint::TopLeft,
+                x_offset: mx,
+                y_offset: my + 20.0,
+            });
+        }
+        "ANCHOR_NONE" => {
+            // Addon will call SetPoint manually — don't set anchors
+        }
+        _ => {
+            let owner = match owner_id {
+                Some(id) => id,
+                None => return,
+            };
+            let (tp, rp) = anchor_points_for_type(anchor_type);
+            frame.anchors.push(Anchor {
+                point: tp,
+                relative_to: None,
+                relative_to_id: Some(owner as usize),
+                relative_point: rp,
+                x_offset: 0.0,
+                y_offset: 0.0,
+            });
+        }
+    }
+}
+
+/// Map anchor_type string to (tooltip_point, owner_point).
+fn anchor_points_for_type(anchor_type: &str) -> (AnchorPoint, AnchorPoint) {
+    match anchor_type {
+        "ANCHOR_RIGHT" => (AnchorPoint::TopLeft, AnchorPoint::TopRight),
+        "ANCHOR_LEFT" => (AnchorPoint::TopRight, AnchorPoint::TopLeft),
+        "ANCHOR_TOPLEFT" => (AnchorPoint::BottomLeft, AnchorPoint::TopLeft),
+        "ANCHOR_TOPRIGHT" => (AnchorPoint::BottomLeft, AnchorPoint::TopRight),
+        "ANCHOR_BOTTOMLEFT" => (AnchorPoint::TopLeft, AnchorPoint::BottomLeft),
+        "ANCHOR_BOTTOMRIGHT" => (AnchorPoint::TopLeft, AnchorPoint::BottomRight),
+        // Default to ANCHOR_RIGHT behavior
+        _ => (AnchorPoint::TopLeft, AnchorPoint::TopRight),
+    }
 }
 
 // --- Shared helpers ---

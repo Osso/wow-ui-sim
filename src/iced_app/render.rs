@@ -12,9 +12,12 @@ use crate::render::{BlendMode, GpuTextureData, QuadBatch, WowUiPrimitive};
 use crate::widget::{TextJustify, WidgetType};
 
 use super::app::App;
+use super::frame_collect::{collect_subtree_ids, collect_ancestor_visible_ids, collect_sorted_frames};
 use super::layout::compute_frame_rect;
+use super::message_frame_render::emit_message_frame_text;
 use super::statusbar::{StatusBarFill, collect_statusbar_fills};
 use super::state::CanvasMessage;
+use super::tooltip::TooltipRenderData;
 use super::Message;
 
 /// Shader program implementation for GPU rendering of WoW frames.
@@ -339,109 +342,6 @@ pub fn build_editbox_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, f.alpha]);
 }
 
-/// Collect all frame IDs in the subtree rooted at the named frame.
-fn collect_subtree_ids(
-    registry: &crate::widget::WidgetRegistry,
-    root_name: &str,
-) -> std::collections::HashSet<u64> {
-    let mut ids = std::collections::HashSet::new();
-    let root_id = registry.all_ids().into_iter().find(|&id| {
-        registry
-            .get(id)
-            .map(|f| f.name.as_deref() == Some(root_name))
-            .unwrap_or(false)
-    });
-    if let Some(root_id) = root_id {
-        let mut queue = vec![root_id];
-        while let Some(id) = queue.pop() {
-            ids.insert(id);
-            if let Some(f) = registry.get(id) {
-                queue.extend(f.children.iter().copied());
-            }
-        }
-    }
-    ids
-}
-
-/// Collect IDs of frames whose ancestor chain is fully visible.
-///
-/// Walks the tree top-down from root frames, pruning entire subtrees when a
-/// frame is hidden. Returns a map from frame ID to effective alpha (the product
-/// of all ancestor alphas). This avoids computing layout for invisible subtrees
-/// and provides correct alpha propagation for rendering.
-fn collect_ancestor_visible_ids(
-    registry: &crate::widget::WidgetRegistry,
-) -> std::collections::HashMap<u64, f32> {
-    let mut visible = std::collections::HashMap::new();
-    // Queue entries: (frame_id, parent_effective_alpha)
-    let mut queue: Vec<(u64, f32)> = registry
-        .all_ids()
-        .into_iter()
-        .filter(|&id| {
-            registry
-                .get(id)
-                .map(|f| f.parent_id.is_none())
-                .unwrap_or(false)
-        })
-        .map(|id| (id, 1.0f32))
-        .collect();
-
-    while let Some((id, parent_alpha)) = queue.pop() {
-        let Some(f) = registry.get(id) else { continue };
-        if !f.visible {
-            continue;
-        }
-        let effective_alpha = parent_alpha * f.alpha;
-        visible.insert(id, effective_alpha);
-        for &child_id in &f.children {
-            queue.push((child_id, effective_alpha));
-        }
-    }
-    visible
-}
-
-/// Collect frames with computed rects, sorted by strata/level/draw-layer.
-///
-/// Only frames in `ancestor_visible` are considered, skipping layout
-/// computation for frames hidden by an ancestor. Each frame carries its
-/// effective alpha (product of all ancestor alphas).
-fn collect_sorted_frames<'a>(
-    registry: &'a crate::widget::WidgetRegistry,
-    screen_width: f32,
-    screen_height: f32,
-    ancestor_visible: &std::collections::HashMap<u64, f32>,
-) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect, f32)> {
-    let mut frames: Vec<_> = ancestor_visible
-        .iter()
-        .filter_map(|(&id, &eff_alpha)| {
-            let f = registry.get(id)?;
-            let rect = compute_frame_rect(registry, id, screen_width, screen_height);
-            Some((id, f, rect, eff_alpha))
-        })
-        .collect();
-
-    frames.sort_by(|a, b| {
-        a.1.frame_strata
-            .cmp(&b.1.frame_strata)
-            .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
-            .then_with(|| {
-                let is_region = |t: &WidgetType| {
-                    matches!(t, WidgetType::Texture | WidgetType::FontString)
-                };
-                match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
-                    (true, true) => a.1.draw_layer.cmp(&b.1.draw_layer)
-                        .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer)),
-                    (false, true) => std::cmp::Ordering::Less,
-                    (true, false) => std::cmp::Ordering::Greater,
-                    (false, false) => std::cmp::Ordering::Equal,
-                }
-            })
-            .then_with(|| a.0.cmp(&b.0))
-    });
-
-    frames
-}
-
 /// Emit text quads for a widget, extracting color/shadow from the frame.
 #[allow(clippy::too_many_arguments)]
 fn emit_widget_text_quads(
@@ -479,6 +379,7 @@ fn emit_widget_text_quads(
 }
 
 /// Emit quads for a single visible frame based on its widget type.
+#[allow(clippy::too_many_arguments)]
 fn emit_frame_quads(
     batch: &mut QuadBatch,
     id: u64,
@@ -488,9 +389,22 @@ fn emit_frame_quads(
     pressed_frame: Option<u64>,
     hovered_frame: Option<u64>,
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+    message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
+    tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
 ) {
     match f.widget_type {
-        WidgetType::Frame | WidgetType::StatusBar | WidgetType::MessageFrame => build_frame_quads(batch, bounds, f),
+        WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
+        WidgetType::MessageFrame => {
+            build_frame_quads(batch, bounds, f);
+            if let Some((fs, ga)) = text_ctx {
+                if let Some(mf_map) = message_frames {
+                    emit_message_frame_text(batch, fs, ga, f, id, bounds, mf_map);
+                }
+            }
+        }
+        WidgetType::GameTooltip => {
+            super::tooltip::build_tooltip_quads(batch, bounds, f, tooltip_data, id, text_ctx);
+        }
         WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
         WidgetType::Button => {
             build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
@@ -552,6 +466,8 @@ pub fn build_quad_batch_for_registry(
     pressed_frame: Option<u64>,
     hovered_frame: Option<u64>,
     mut text_ctx: Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+    message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
+    tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
 ) -> QuadBatch {
     let mut batch = QuadBatch::with_capacity(1000);
     let (screen_width, screen_height) = screen_size;
@@ -612,7 +528,7 @@ pub fn build_quad_batch_for_registry(
         );
 
         let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx);
+        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx, message_frames, tooltip_data);
     }
 
     batch
@@ -685,8 +601,17 @@ impl App {
     /// `draw()` so that hover changes don't force a full quad rebuild.
     pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
         let env = self.env.borrow();
-        let state = env.state().borrow();
         let mut font_sys = self.font_system.borrow_mut();
+
+        // Update tooltip sizes (needs mutable state + font system)
+        {
+            let mut state = env.state().borrow_mut();
+            super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        }
+
+        // Collect render data and build quads (immutable state)
+        let state = env.state().borrow();
+        let tooltip_data = super::tooltip::collect_tooltip_data(&state);
         let mut glyph_atlas = self.glyph_atlas.borrow_mut();
         build_quad_batch_for_registry(
             &state.widgets,
@@ -695,6 +620,8 @@ impl App {
             self.pressed_frame,
             None, // hover highlights appended in draw()
             Some((&mut font_sys, &mut glyph_atlas)),
+            Some(&state.message_frames),
+            Some(&tooltip_data),
         )
     }
 

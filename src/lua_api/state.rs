@@ -83,6 +83,8 @@ pub struct SimState {
     pub action_bars: HashMap<u32, u32>,
     /// Addon base paths for runtime on-demand loading (Blizzard UI + AddOns directories).
     pub addon_base_paths: Vec<PathBuf>,
+    /// Current mouse position in UI coordinates (for ANCHOR_CURSOR tooltip positioning).
+    pub mouse_position: Option<(f32, f32)>,
 }
 
 impl Default for SimState {
@@ -106,6 +108,7 @@ impl Default for SimState {
             screen_height: 768.0,
             action_bars: default_action_bars(),
             addon_base_paths: Vec::new(),
+            mouse_position: None,
         }
     }
 }

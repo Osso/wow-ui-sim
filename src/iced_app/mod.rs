@@ -11,13 +11,16 @@
 
 mod app;
 mod button_vis;
+mod frame_collect;
 mod keybinds;
 mod layout;
+mod message_frame_render;
 mod nine_slice;
 mod render;
 mod statusbar;
 mod state;
 mod tiling;
+pub mod tooltip;
 mod styles;
 mod update;
 mod screenshot;

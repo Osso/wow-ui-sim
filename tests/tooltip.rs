@@ -1,6 +1,7 @@
 //! Tests for GameTooltip implementation.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::widget::AnchorPoint;
 
 #[test]
 fn test_gametooltip_exists_and_has_correct_type() {
@@ -361,4 +362,77 @@ fn test_other_tooltip_frames_exist() {
         .eval("return ItemRefTooltip:GetObjectType()")
         .unwrap();
     assert_eq!(item_type, "GameTooltip");
+}
+
+#[test]
+fn test_tooltip_anchor_right_sets_anchors() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", "AnchorRightOwner", UIParent)
+        owner:SetSize(100, 30)
+        owner:SetPoint("CENTER")
+        GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+    "#,
+    )
+    .unwrap();
+
+    let state = env.state().borrow();
+    let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    let frame = state.widgets.get(gt_id).unwrap();
+
+    assert_eq!(frame.anchors.len(), 1, "ANCHOR_RIGHT should set one anchor");
+    let anchor = &frame.anchors[0];
+    assert_eq!(anchor.point, AnchorPoint::TopLeft, "tooltip point should be TopLeft");
+    assert_eq!(anchor.relative_point, AnchorPoint::TopRight, "owner point should be TopRight");
+
+    let owner_id = state.widgets.get_id_by_name("AnchorRightOwner").unwrap();
+    assert_eq!(anchor.relative_to_id, Some(owner_id as usize));
+}
+
+#[test]
+fn test_tooltip_anchor_none_no_anchors() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", "AnchorNoneOwner", UIParent)
+        GameTooltip:SetOwner(owner, "ANCHOR_NONE")
+    "#,
+    )
+    .unwrap();
+
+    let state = env.state().borrow();
+    let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    let frame = state.widgets.get(gt_id).unwrap();
+
+    assert!(frame.anchors.is_empty(), "ANCHOR_NONE should not set anchors");
+}
+
+#[test]
+fn test_tooltip_anchor_cursor_uses_absolute_position() {
+    let env = WowLuaEnv::new().unwrap();
+
+    // Set mouse position before SetOwner
+    env.state().borrow_mut().mouse_position = Some((200.0, 300.0));
+
+    env.exec(
+        r#"
+        local owner = CreateFrame("Frame", "AnchorCursorOwner", UIParent)
+        GameTooltip:SetOwner(owner, "ANCHOR_CURSOR")
+    "#,
+    )
+    .unwrap();
+
+    let state = env.state().borrow();
+    let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    let frame = state.widgets.get(gt_id).unwrap();
+
+    assert_eq!(frame.anchors.len(), 1, "ANCHOR_CURSOR should set one anchor");
+    let anchor = &frame.anchors[0];
+    assert_eq!(anchor.point, AnchorPoint::TopLeft);
+    assert!(anchor.relative_to_id.is_none(), "ANCHOR_CURSOR should not reference owner");
+    assert!((anchor.x_offset - 200.0).abs() < 0.1, "x_offset should be mouse x");
+    assert!((anchor.y_offset - 320.0).abs() < 0.1, "y_offset should be mouse y + 20");
 }
