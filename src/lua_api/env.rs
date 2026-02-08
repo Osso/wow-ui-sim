@@ -111,6 +111,14 @@ impl WowLuaEnv {
         super::workarounds::apply(self);
     }
 
+    /// Apply workarounds that must run after startup events.
+    ///
+    /// Some fixes (like BagsBar anchoring) get undone by event handlers
+    /// (e.g. EDIT_MODE_LAYOUTS_UPDATED repositions managed frames).
+    pub fn apply_post_event_workarounds(&self) {
+        super::workarounds::apply_post_event(self);
+    }
+
     /// Fire an event to all registered frames.
     pub fn fire_event(&self, event: &str) -> Result<()> {
         self.fire_event_with_args(event, &[])

@@ -360,9 +360,55 @@ fn register_c_unit_auras(lua: &Lua) -> Result<()> {
 }
 
 fn register_c_currency_info(lua: &Lua) -> Result<()> {
+    use super::currency_data;
     let t = lua.create_table()?;
-    t.set("GetCurrencyInfo", lua.create_function(|lua, cid: i32| {
+    t.set("GetCurrencyInfo", lua.create_function(currency_info_by_id)?)?;
+    t.set("GetBasicCurrencyInfo", lua.create_function(|lua, (cid, _qty): (i32, Option<i32>)| {
         let info = lua.create_table()?;
+        if let Some(c) = currency_data::get_currency_by_id(cid) {
+            info.set("name", c.name)?;
+            info.set("currencyID", c.currency_id)?;
+            info.set("quantity", c.quantity)?;
+            info.set("iconFileID", c.icon_file_id as i64)?;
+            info.set("displayAmount", c.quantity)?;
+        } else {
+            info.set("name", format!("Currency {}", cid))?;
+            info.set("currencyID", cid)?;
+            info.set("quantity", 0)?;
+            info.set("iconFileID", 0)?;
+            info.set("displayAmount", 0)?;
+        }
+        Ok(Value::Table(info))
+    })?)?;
+    t.set("GetCurrencyInfoFromLink", lua.create_function(|_, _l: String| Ok(Value::Nil))?)?;
+    t.set("GetCurrencyListSize", lua.create_function(|_, ()| Ok(currency_data::currency_list_size()))?)?;
+    t.set("GetCurrencyListInfo", lua.create_function(currency_list_info)?)?;
+    t.set("GetBackpackCurrencyInfo", lua.create_function(backpack_currency_info)?)?;
+    t.set("ExpandCurrencyList", lua.create_function(|_, (_i, _e): (i32, bool)| Ok(()))?)?;
+    t.set("GetCurrencyFilter", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("SetCurrencyFilter", lua.create_function(|_, _f: i32| Ok(()))?)?;
+    t.set("SetCurrencyBackpack", lua.create_function(|_, (_i, _w): (i32, bool)| Ok(()))?)?;
+    t.set("SetCurrencyUnused", lua.create_function(|_, (_i, _u): (i32, bool)| Ok(()))?)?;
+    t.set("DoesCurrentFilterRequireAccountCurrencyData", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsAccountCharacterCurrencyDataReady", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set("GetWarResourcesCurrencyID", lua.create_function(|_, ()| Ok(1560))?)?;
+    t.set("GetAzeriteCurrencyID", lua.create_function(|_, ()| Ok(1553))?)?;
+    lua.globals().set("C_CurrencyInfo", t)?;
+    Ok(())
+}
+
+fn currency_info_by_id(lua: &Lua, cid: i32) -> Result<Value> {
+    use super::currency_data;
+    let info = lua.create_table()?;
+    if let Some(c) = currency_data::get_currency_by_id(cid) {
+        info.set("name", c.name)?;
+        info.set("currencyID", c.currency_id)?;
+        info.set("quantity", c.quantity)?;
+        info.set("maxQuantity", c.max_quantity)?;
+        info.set("quality", c.quality)?;
+        info.set("iconFileID", c.icon_file_id as i64)?;
+        info.set("discovered", c.is_discovered)?;
+    } else {
         info.set("name", format!("Currency {}", cid))?;
         info.set("currencyID", cid)?;
         info.set("quantity", 0)?;
@@ -370,25 +416,47 @@ fn register_c_currency_info(lua: &Lua) -> Result<()> {
         info.set("quality", 1)?;
         info.set("iconFileID", 0)?;
         info.set("discovered", false)?;
-        info.set("isAccountWide", false)?;
-        info.set("isAccountTransferable", false)?;
-        info.set("transferPercentage", 0)?;
-        Ok(Value::Table(info))
-    })?)?;
-    t.set("GetBasicCurrencyInfo", lua.create_function(|lua, (cid, _qty): (i32, Option<i32>)| {
-        let info = lua.create_table()?;
-        info.set("name", format!("Currency {}", cid))?;
-        info.set("currencyID", cid)?;
-        info.set("quantity", 0)?;
-        info.set("iconFileID", 0)?;
-        info.set("displayAmount", 0)?;
-        Ok(Value::Table(info))
-    })?)?;
-    t.set("GetCurrencyInfoFromLink", lua.create_function(|_, _l: String| Ok(Value::Nil))?)?;
-    t.set("GetCurrencyListSize", lua.create_function(|_, ()| Ok(0))?)?;
-    t.set("GetCurrencyListInfo", lua.create_function(|_, _i: i32| Ok(Value::Nil))?)?;
-    t.set("GetWarResourcesCurrencyID", lua.create_function(|_, ()| Ok(1560))?)?;
-    t.set("GetAzeriteCurrencyID", lua.create_function(|_, ()| Ok(1553))?)?;
-    lua.globals().set("C_CurrencyInfo", t)?;
-    Ok(())
+    }
+    info.set("isAccountWide", false)?;
+    info.set("isAccountTransferable", false)?;
+    info.set("transferPercentage", 0)?;
+    Ok(Value::Table(info))
+}
+
+fn currency_list_info(lua: &Lua, index: i32) -> Result<Value> {
+    use super::currency_data;
+    let Some(c) = currency_data::get_currency_list_entry(index) else {
+        return Ok(Value::Nil);
+    };
+    let info = lua.create_table()?;
+    info.set("name", c.name)?;
+    info.set("currencyID", c.currency_id)?;
+    info.set("quantity", c.quantity)?;
+    info.set("maxQuantity", c.max_quantity)?;
+    info.set("quality", c.quality)?;
+    info.set("iconFileID", c.icon_file_id as i64)?;
+    info.set("discovered", c.is_discovered)?;
+    info.set("isHeader", c.is_header)?;
+    info.set("isHeaderExpanded", c.is_header_expanded)?;
+    info.set("currencyListDepth", c.depth)?;
+    info.set("isTypeUnused", false)?;
+    info.set("isShowInBackpack", c.is_show_in_backpack)?;
+    info.set("isAccountWide", false)?;
+    info.set("isAccountTransferable", false)?;
+    info.set("transferPercentage", 0)?;
+    Ok(Value::Table(info))
+}
+
+fn backpack_currency_info(lua: &Lua, index: i32) -> Result<Value> {
+    use super::currency_data;
+    let watched: Vec<_> = currency_data::backpack_currencies().collect();
+    let Some(c) = watched.get((index - 1) as usize) else {
+        return Ok(Value::Nil);
+    };
+    let info = lua.create_table()?;
+    info.set("name", c.name)?;
+    info.set("quantity", c.quantity)?;
+    info.set("iconFileID", c.icon_file_id as i64)?;
+    info.set("currencyTypesID", c.currency_id)?;
+    Ok(Value::Table(info))
 }

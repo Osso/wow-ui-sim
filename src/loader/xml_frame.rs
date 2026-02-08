@@ -113,21 +113,33 @@ fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits
     let parent_ref = lua_global_ref(parent);
     format!(
         r#"
-        local frame = CreateFrame("{widget_type}", "{name}", {parent_ref}, {inherits_arg})
+        local frame = CreateFrame("{widget_type}", "{name}", {parent_ref} or UIParent, {inherits_arg})
         "#,
     )
 }
 
 /// Append parentKey assignment so sibling frames can reference this frame.
+///
+/// Handles `$parent` prefix in parentKey (e.g. `$parent.CloseButton`)
+/// which navigates up from the direct parent before setting the key.
 fn append_parent_key_code(lua_code: &mut String, frame: &crate::xml::FrameXml, parent: &str) {
     if let Some(parent_key) = &frame.parent_key {
         let parent_ref = lua_global_ref(parent);
-        lua_code.push_str(&format!(
-            r#"
+        if let Some(key) = parent_key.strip_prefix("$parent.") {
+            lua_code.push_str(&format!(
+                r#"
+        do local __pk = {}:GetParent(); if __pk then __pk.{} = frame end end
+        "#,
+                parent_ref, key
+            ));
+        } else {
+            lua_code.push_str(&format!(
+                r#"
         {}.{} = frame
         "#,
-            parent_ref, parent_key
-        ));
+                parent_ref, parent_key
+            ));
+        }
     }
     append_parent_array_code(lua_code, frame, parent);
 }

@@ -226,7 +226,28 @@ pub const HOUSE_SETTING_FLAGS: EnumDef = (
     &[
         ("HouseAccessAnyone", 1), ("HouseAccessNeighbors", 2),
         ("HouseAccessGuild", 4), ("HouseAccessFriends", 8), ("HouseAccessParty", 16),
+        ("PlotAccessNeighbors", 32), ("PlotAccessGuild", 64),
+        ("PlotAccessFriends", 128), ("PlotAccessParty", 256),
     ],
+);
+
+pub const HOUSE_OWNER_ERROR: EnumDef = (
+    "HouseOwnerError",
+    &[("Faction", 0), ("Guild", 1), ("GenericPermission", 2)],
+);
+
+pub const HOUSING_LAYOUT_RESTRICTION: SeqEnumDef = (
+    "HousingLayoutRestriction",
+    &[
+        "None", "RoomNotFound", "NotInsideHouse", "NotHouseOwner",
+        "IsBaseRoom", "RoomNotLeaf", "StairwellConnection", "LastRoom",
+        "UnreachableRoom", "SingleDoor",
+    ],
+);
+
+pub const HOUSING_EXPERT_SUBMODE_RESTRICTION: SeqEnumDef = (
+    "HousingExpertSubmodeRestriction",
+    &["None", "NotInExpertMode", "NoHouseExteriorScale", "NoWMOScale"],
 );
 
 pub const NEIGHBORHOOD_OWNER_TYPE: SeqEnumDef = (
@@ -323,4 +344,23 @@ pub const SUPER_TRACKING_TYPE: SeqEnumDef = (
 pub const SUPER_TRACKING_MAP_PIN_TYPE: SeqEnumDef = (
     "SuperTrackingMapPinType",
     &["AreaPOI", "QuestOffer", "TaxiNode", "DigSite", "HousingPlot"],
+);
+
+// ============================================================================
+// SpellBook Enums
+// ============================================================================
+
+pub const SPELL_BOOK_SPELL_BANK: SeqEnumDef = (
+    "SpellBookSpellBank",
+    &["Player", "Pet"],
+);
+
+pub const SPELL_BOOK_ITEM_TYPE: SeqEnumDef = (
+    "SpellBookItemType",
+    &["None", "Spell", "FutureSpell", "PetAction", "Flyout"],
+);
+
+pub const SPELL_BOOK_SKILL_LINE_INDEX: EnumDef = (
+    "SpellBookSkillLineIndex",
+    &[("General", 1), ("Class", 2), ("MainSpec", 3), ("OffSpecStart", 4)],
 );

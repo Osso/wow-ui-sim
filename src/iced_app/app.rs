@@ -53,6 +53,43 @@ thread_local! {
 /// Fire the standard WoW startup events.
 pub fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
     let env = env.borrow();
+    // Debug: check UIParent attributes before any events
+    {
+        use std::io::Write;
+        let state = env.state().borrow();
+        let uid = state.widgets.get_id_by_name("UIParent");
+        if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open("/tmp/claude/wow-uiparent-debug.txt") {
+            let _ = writeln!(f, "[DEBUG-PRE] UIParent name lookup => {uid:?}");
+            if let Some(uid) = uid {
+                if let Some(frame) = state.widgets.get(uid) {
+                    let lo = frame.attributes.get("LEFT_OFFSET");
+                    let _ = writeln!(f, "[DEBUG-PRE] UIParent id={uid} LEFT_OFFSET={lo:?} total_attrs={}", frame.attributes.len());
+                    for (k, v) in &frame.attributes {
+                        let _ = writeln!(f, "[DEBUG-PRE]   attr '{k}' = {v:?}");
+                    }
+                }
+            }
+            // Check what Lua global UIParent points to
+            drop(state);
+            use crate::lua_api::frame::FrameHandle;
+            if let Ok(ud) = env.lua().globals().get::<mlua::AnyUserData>("UIParent") {
+                if let Ok(handle) = ud.borrow::<FrameHandle>() {
+                    let lua_id = handle.id;
+                    let _ = writeln!(f, "[DEBUG-PRE] Lua global UIParent => id={lua_id}");
+                    let state = env.state().borrow();
+                    if let Some(frame) = state.widgets.get(lua_id) {
+                        let lo = frame.attributes.get("LEFT_OFFSET");
+                        let _ = writeln!(f, "[DEBUG-PRE] Lua UIParent frame: LEFT_OFFSET={lo:?} total_attrs={}", frame.attributes.len());
+                        for (k, v) in &frame.attributes {
+                            let _ = writeln!(f, "[DEBUG-PRE]   lua attr '{k}' = {v:?}");
+                        }
+                    }
+                }
+            } else {
+                let _ = writeln!(f, "[DEBUG-PRE] Lua global UIParent is NOT a userdata!");
+            }
+        }
+    }
     fire_login_events(&env);
     fire_world_and_ui_events(&env);
 }
@@ -190,15 +227,7 @@ impl App {
     pub fn boot() -> (Self, Task<Message>) {
         let (env_rc, textures_path, saved_vars) = Self::take_init_params();
 
-        fire_startup_events(&env_rc);
-
-        // Hide frames that WoW's C++ engine hides by default (no target, no group, etc.).
-        // Must run AFTER startup events since PLAYER_ENTERING_WORLD handlers may re-show frames.
-        {
-            let env_ref = env_rc.borrow();
-            let _ = crate::lua_api::hide_runtime_hidden_frames(env_ref.lua());
-        }
-
+        Self::run_startup_sequence(&env_rc);
         let log_messages = Self::collect_startup_logs(&env_rc);
 
         let (texture_manager, font_system, glyph_atlas) =
@@ -251,6 +280,14 @@ impl App {
     }
 
     /// Extract init params from thread-local storage.
+    /// Fire startup events, apply post-event workarounds, and hide default-hidden frames.
+    fn run_startup_sequence(env_rc: &Rc<RefCell<WowLuaEnv>>) {
+        fire_startup_events(env_rc);
+        let env_ref = env_rc.borrow();
+        env_ref.apply_post_event_workarounds();
+        let _ = crate::lua_api::hide_runtime_hidden_frames(env_ref.lua());
+    }
+
     fn take_init_params() -> (
         Rc<RefCell<WowLuaEnv>>,
         PathBuf,

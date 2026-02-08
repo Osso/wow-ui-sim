@@ -5,7 +5,7 @@
 //! Frames from loaded addons are created by the XML loader and should NOT
 //! be duplicated here — doing so creates orphan ghosts in the widget registry.
 
-use crate::widget::{Frame, WidgetRegistry, WidgetType};
+use crate::widget::{AttributeValue, Frame, WidgetRegistry, WidgetType};
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -82,6 +82,20 @@ fn create_engine_frames(widgets: &mut WidgetRegistry, screen_width: f32, screen_
         None,
         Some((screen_width, screen_height)),
     );
+
+    // Set UIParent panel attributes (from UIParent.xml <Attributes>).
+    // Must be present before UIParentPanelManager loads, which reads
+    // them via GetAttribute during SetAttribute callbacks.
+    if let Some(frame) = widgets.get_mut(ui_parent_id) {
+        let attrs = &mut frame.attributes;
+        attrs.insert("DEFAULT_FRAME_WIDTH".into(), AttributeValue::Number(384.0));
+        attrs.insert("TOP_OFFSET".into(), AttributeValue::Number(-116.0));
+        attrs.insert("LEFT_OFFSET".into(), AttributeValue::Number(16.0));
+        attrs.insert("CENTER_OFFSET".into(), AttributeValue::Number(384.0));
+        attrs.insert("RIGHT_OFFSET".into(), AttributeValue::Number(768.0));
+        attrs.insert("RIGHT_OFFSET_BUFFER".into(), AttributeValue::Number(80.0));
+        attrs.insert("PANEl_SPACING_X".into(), AttributeValue::Number(32.0));
+    }
 
     // WorldFrame (3D world rendering area, same level as UIParent)
     register_frame(widgets, WidgetType::Frame, "WorldFrame", None, Some((screen_width, screen_height)));

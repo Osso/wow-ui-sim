@@ -126,7 +126,7 @@ pub fn create_texture_from_xml(
     }
 
     let tex_name = resolve_child_name(texture.name.as_deref(), parent_name, "__tex_");
-    let lua_code = build_texture_lua(&tex_name, texture, parent_name, draw_layer);
+    let lua_code = build_texture_lua(&tex_name, texture, parent_name, draw_layer, is_mask);
 
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!(
@@ -135,9 +135,6 @@ pub fn create_texture_from_xml(
         ))
     })?;
 
-    if is_mask {
-        mark_xml_mask_texture(env, &tex_name, parent_name);
-    }
     apply_texture_animations_xml(env, texture, &tex_name);
     Ok(())
 }
@@ -148,13 +145,15 @@ fn build_texture_lua(
     texture: &crate::xml::TextureXml,
     parent_name: &str,
     draw_layer: &str,
+    is_mask: bool,
 ) -> String {
+    let create_method = if is_mask { "CreateMaskTexture" } else { "CreateTexture" };
     let mut code = format!(
         r#"
         local parent = {}
-        local tex = parent:CreateTexture("{}", "{}")
+        local tex = parent:{}("{}", "{}")
         "#,
-        lua_global_ref(parent_name), tex_name, draw_layer
+        lua_global_ref(parent_name), create_method, tex_name, draw_layer
     );
     code.push_str(&generate_mixin_code(texture));
     code.push_str(&generate_texture_source_code(texture));
@@ -175,20 +174,6 @@ fn append_texture_anchors(code: &mut String, texture: &crate::xml::TextureXml, p
         code.push_str(&generate_set_point_code(anchors, "tex", "parent", parent_name, "parent"));
     } else if texture.set_all_points != Some(true) {
         code.push_str("\n        tex:SetAllPoints(true)\n        ");
-    }
-}
-
-/// Mark a texture as a MaskTexture via the XML loader path.
-fn mark_xml_mask_texture(env: &LoaderEnv<'_>, tex_name: &str, parent_name: &str) {
-    let widget_id = env.lua.globals().get::<mlua::AnyUserData>(tex_name).ok()
-        .and_then(|ud| ud.borrow::<crate::lua_api::frame::FrameHandle>().ok().map(|h| h.id));
-    if let Some(id) = widget_id {
-        eprintln!("[mask-xml] Marking mask texture: {} (id={}) parent={}", tex_name, id, parent_name);
-        if let Some(frame) = env.state.borrow_mut().widgets.get_mut(id) {
-            frame.is_mask = true;
-        }
-    } else {
-        eprintln!("[mask-xml] FAILED to find global for mask texture: {} parent={}", tex_name, parent_name);
     }
 }
 

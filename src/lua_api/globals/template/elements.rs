@@ -19,13 +19,14 @@ pub(super) fn create_texture_from_template(
         .map(|n| n.replace("$parent", parent_name))
         .unwrap_or_else(|| format!("__tex_{}", rand_id()));
 
+    let create_method = if is_mask { "CreateMaskTexture" } else { "CreateTexture" };
     let mut code = format!(
         r#"
         local parent = {}
         if parent then
-            local tex = parent:CreateTexture("{}", "{}")
+            local tex = parent:{}("{}", "{}")
         "#,
-        lua_global_ref(parent_name), escape_lua_string(&child_name), draw_layer,
+        lua_global_ref(parent_name), create_method, escape_lua_string(&child_name), draw_layer,
     );
 
     // Apply mixins from inherited templates and direct mixin attribute
@@ -49,10 +50,7 @@ pub(super) fn create_texture_from_template(
         code.push_str("            tex:SetAllPoints(true)\n");
     }
 
-    let has_name = texture.name.is_some();
-    // Set global reference for named textures, or temporarily for mask textures
-    // so mark_mask_texture can look them up
-    if has_name || is_mask {
+    if texture.name.is_some() {
         code.push_str(&format!("            _G[\"{}\"] = tex\n", escape_lua_string(&child_name)));
     }
 
@@ -67,33 +65,7 @@ pub(super) fn create_texture_from_template(
     code.push_str("        end\n");
     let _ = lua.load(&code).exec();
 
-    // Mark MaskTextures so the renderer skips them
-    if is_mask {
-        mark_mask_texture(lua, &child_name);
-        // Remove temporary global for unnamed mask textures
-        if !has_name {
-            let _ = lua.globals().set(child_name.as_str(), mlua::Value::Nil);
-        }
-    }
-
     apply_texture_animations(lua, texture, &child_name);
-}
-
-/// Mark a texture widget as a MaskTexture (not rendered).
-fn mark_mask_texture(lua: &Lua, name: &str) {
-    // Extract the widget ID from the Lua global, then get SimState from UIParent
-    let widget_id = lua.globals().get::<mlua::AnyUserData>(name).ok()
-        .and_then(|ud| ud.borrow::<crate::lua_api::frame::FrameHandle>().ok().map(|h| h.id));
-    let Some(id) = widget_id else {
-        eprintln!("[mask] FAILED to find global for mask texture: {}", name);
-        return;
-    };
-    eprintln!("[mask] Marking mask texture: {} (id={})", name, id);
-    let Ok(parent_ud) = lua.globals().get::<mlua::AnyUserData>("UIParent") else { return };
-    let Ok(handle) = parent_ud.borrow::<crate::lua_api::frame::FrameHandle>() else { return };
-    if let Some(frame) = handle.state.borrow_mut().widgets.get_mut(id) {
-        frame.is_mask = true;
-    }
 }
 
 /// Process animation groups on a texture.

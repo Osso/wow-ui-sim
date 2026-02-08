@@ -358,17 +358,26 @@ fn register_spell_stub_globals(lua: &Lua) -> Result<()> {
 
     globals.set(
         "IsSpellKnown",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?,
+        lua.create_function(|_, args: mlua::MultiValue| {
+            let spell_id = args.iter().next()
+                .and_then(|v| match v { mlua::Value::Integer(n) => Some(*n as u32), _ => None })
+                .unwrap_or(0);
+            Ok(super::spellbook_data::is_spell_known(spell_id))
+        })?,
     )?;
 
     globals.set(
         "IsPlayerSpell",
-        lua.create_function(|_, _spell_id: i32| Ok(false))?,
+        lua.create_function(|_, spell_id: i32| {
+            Ok(super::spellbook_data::is_spell_known(spell_id as u32))
+        })?,
     )?;
 
     globals.set(
         "IsSpellKnownOrOverridesKnown",
-        lua.create_function(|_, _spell_id: i32| Ok(false))?,
+        lua.create_function(|_, spell_id: i32| {
+            Ok(super::spellbook_data::find_spell_slot(spell_id as u32).is_some())
+        })?,
     )?;
 
     globals.set(

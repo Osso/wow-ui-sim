@@ -113,7 +113,7 @@ impl Default for SimState {
 /// Pre-populate main action bar (slots 1-12) with Protection Paladin spells.
 fn default_action_bars() -> HashMap<u32, u32> {
     let prot_paladin_bar: &[(u32, u32)] = &[
-        (1, 31935),  // Avenger's Shield
+        (1, 19750),  // Flash of Light (1.5s cast)
         (2, 53595),  // Hammer of the Righteous
         (3, 275779), // Judgment
         (4, 26573),  // Consecration

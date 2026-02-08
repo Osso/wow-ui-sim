@@ -3,6 +3,15 @@
 
 use super::WowLuaEnv;
 
+/// Apply workarounds that must run after startup events.
+///
+/// Some workarounds (like BagsBar anchoring) get undone by event handlers
+/// (e.g. EDIT_MODE_LAYOUTS_UPDATED repositions managed frames).
+pub fn apply_post_event(env: &WowLuaEnv) {
+    fix_bags_bar_anchor(env);
+    layout_bags_bar(env);
+}
+
 /// Apply all post-load workarounds. Called after addon loading, before events.
 pub fn apply(env: &WowLuaEnv) {
     let _ = env.exec("UpdateMicroButtons = function() end");
@@ -13,6 +22,7 @@ pub fn apply(env: &WowLuaEnv) {
     );
     patch_map_canvas_scroll(env);
     patch_gradual_animated_status_bar(env);
+    patch_spell_alert_animations(env);
     patch_character_frame_subframes(env);
     setup_managed_frame_containers(env);
     init_objective_tracker(env);
@@ -63,6 +73,24 @@ fn patch_gradual_animated_status_bar(env: &WowLuaEnv) {
                     or self.LevelUpMaxAlphaAnimation and self.LevelUpMaxAlphaAnimation:IsPlaying()
                     or self.overrideLevelUpMaxAlphaAnimation and self.overrideLevelUpMaxAlphaAnimation:IsPlaying()
             end
+        end
+    "#,
+    );
+}
+
+/// Stub AnimationGroup methods on ActionButtonSpellAlert frames.
+///
+/// ActionButtonSpellAlertManager uses local functions (ShowAlert/HideAlert)
+/// that access alertFrame.ProcStartAnim, an AnimationGroup defined in XML
+/// with parentKey. The simulator doesn't create AnimationGroups from templates,
+/// so these are nil. Replace the manager methods with no-ops since spell alert
+/// animations aren't needed in the simulator.
+fn patch_spell_alert_animations(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if ActionButtonSpellAlertManager then
+            function ActionButtonSpellAlertManager:ShowAlert() end
+            function ActionButtonSpellAlertManager:HideAlert() end
         end
     "#,
     );
@@ -458,6 +486,7 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
 fn init_bag_bar(env: &WowLuaEnv) {
     fix_bags_bar_anchor(env);
     update_bag_button_textures(env);
+    layout_bags_bar(env);
 }
 
 /// Re-anchor BagsBar to MicroButtonAndBagsBar now that it exists.
@@ -467,6 +496,21 @@ fn fix_bags_bar_anchor(env: &WowLuaEnv) {
         if BagsBar and MicroButtonAndBagsBar then
             BagsBar:ClearAllPoints()
             BagsBar:SetPoint("TOPRIGHT", MicroButtonAndBagsBar, "TOPRIGHT", 0, 0)
+        end
+    "#,
+    );
+}
+
+/// Run BagsBar:Layout() to position bag buttons in a chain left of the backpack.
+///
+/// Layout() is normally called via EventUtil.ContinueOnVariablesLoaded during
+/// VARIABLES_LOADED, but may not fire reliably in the simulator. Call it
+/// explicitly to position BagBarExpandToggle and CharacterBagNSlot buttons.
+fn layout_bags_bar(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if BagsBar and BagsBar.Layout then
+            pcall(BagsBar.Layout, BagsBar)
         end
     "#,
     );

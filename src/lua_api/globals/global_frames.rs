@@ -179,6 +179,7 @@ fn register_ui_panel_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result
     register_frame_global(lua, state, "AlertFrame")?;
     setup_alert_frame(lua)?;
 
+    register_hidden_frame_global(lua, state, "CharacterFrame")?;
     register_frame_global(lua, state, "InterfaceOptionsFrame")?;
     register_frame_global(lua, state, "AuctionHouseFrame")?;
     register_frame_global(lua, state, "SideDressUpFrame")?;

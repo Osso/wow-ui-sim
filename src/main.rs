@@ -177,6 +177,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     match args.command {
         Some(Commands::DumpTree { filter, visible_only }) => {
             fire_startup_events(&env);
+            env.apply_post_event_workarounds();
             let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
             apply_delay(args.delay);
             let state = env.state().borrow();
@@ -563,6 +564,7 @@ fn run_screenshot(
 
     env.set_screen_size(width as f32, height as f32);
     fire_startup_events(env);
+    env.apply_post_event_workarounds();
     let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
     debug_show_game_menu(env);
     apply_delay(delay);

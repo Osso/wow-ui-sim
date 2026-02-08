@@ -27,8 +27,14 @@ pub fn register_player_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
 
 fn register_timerunning_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-    globals.set("PlayerIsTimerunning", lua.create_function(|_, ()| Ok(false))?)?;
-    globals.set("IsPlayerAtEffectiveMaxLevel", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set(
+        "PlayerIsTimerunning",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    globals.set(
+        "IsPlayerAtEffectiveMaxLevel",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
     globals.set("IsXPUserDisabled", lua.create_function(|_, ()| Ok(false))?)?;
     Ok(())
 }
@@ -38,22 +44,31 @@ fn register_battlenet_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     globals.set("BNFeaturesEnabled", lua.create_function(|_, ()| Ok(false))?)?;
-    globals.set("BNFeaturesEnabledAndConnected", lua.create_function(|_, ()| Ok(false))?)?;
+    globals.set(
+        "BNFeaturesEnabledAndConnected",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
     globals.set("BNConnected", lua.create_function(|_, ()| Ok(false))?)?;
-    globals.set("BNGetFriendInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    globals.set(
+        "BNGetFriendInfo",
+        lua.create_function(|_, _index: i32| Ok(Value::Nil))?,
+    )?;
     globals.set("BNGetNumFriends", lua.create_function(|_, ()| Ok((0, 0)))?)?; // online, total
-    globals.set("BNGetInfo", lua.create_function(|lua, ()| {
-        // Return: presenceID, battleTag, toonID, currentBroadcast, bnetAFK, bnetDND, isRIDEnabled
-        Ok((
-            Value::Integer(0),
-            Value::String(lua.create_string("SimPlayer#0000")?),
-            Value::Nil,
-            Value::String(lua.create_string("")?),
-            Value::Boolean(false),
-            Value::Boolean(false),
-            Value::Boolean(false),
-        ))
-    })?)?;
+    globals.set(
+        "BNGetInfo",
+        lua.create_function(|lua, ()| {
+            // Return: presenceID, battleTag, toonID, currentBroadcast, bnetAFK, bnetDND, isRIDEnabled
+            Ok((
+                Value::Integer(0),
+                Value::String(lua.create_string("SimPlayer#0000")?),
+                Value::Nil,
+                Value::String(lua.create_string("")?),
+                Value::Boolean(false),
+                Value::Boolean(false),
+                Value::Boolean(false),
+            ))
+        })?,
+    )?;
 
     Ok(())
 }
@@ -65,34 +80,58 @@ fn register_specialization_functions(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+/// Paladin specialization data: (spec_id, name, icon_file_data_id, role).
+const PALADIN_SPECS: &[(i64, &str, i64, &str)] = &[
+    (65, "Holy", 135920, "HEALER"),
+    (66, "Protection", 236264, "TANK"),
+    (70, "Retribution", 135873, "DAMAGER"),
+];
+
+/// Active spec index (1-based): 2 = Protection.
+const ACTIVE_SPEC_INDEX: i32 = 2;
+
 /// Basic spec queries: GetSpecialization, GetSpecializationInfo, GetNumSpecializations.
 fn register_spec_basic_queries(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    globals.set("GetSpecialization", lua.create_function(|_, ()| Ok(1))?)?;
-    globals.set("GetSpecializationInfo", lua.create_function(|lua, spec_index: i32| {
-        let (id, name, role) = match spec_index {
-            1 => (62, "Arcane", "DAMAGER"),
-            2 => (63, "Fire", "DAMAGER"),
-            3 => (64, "Frost", "DAMAGER"),
-            _ => (62, "Arcane", "DAMAGER"),
-        };
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::Integer(id),
-            Value::String(lua.create_string(name)?),
-            Value::String(lua.create_string("Spec description")?),
-            Value::Integer(136116),
-            Value::String(lua.create_string(role)?),
-            Value::Integer(4),
-        ]))
-    })?)?;
-    globals.set("GetNumSpecializations", lua.create_function(|_, ()| Ok(4))?)?;
-    globals.set("GetSpecializationRole", lua.create_function(|lua, _spec_index: Option<i32>| {
-        Ok(Value::String(lua.create_string("DAMAGER")?))
-    })?)?;
-    globals.set("GetSpecializationRoleByID", lua.create_function(|lua, _spec_id: i32| {
-        Ok(Value::String(lua.create_string("DAMAGER")?))
-    })?)?;
+    globals.set(
+        "GetSpecialization",
+        lua.create_function(|_, ()| Ok(ACTIVE_SPEC_INDEX))?,
+    )?;
+    globals.set(
+        "GetSpecializationInfo",
+        lua.create_function(|lua, spec_index: i32| {
+            let idx = (spec_index - 1).clamp(0, 2) as usize;
+            let (id, name, icon, role) = PALADIN_SPECS[idx];
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::Integer(id),
+                Value::String(lua.create_string(name)?),
+                Value::String(lua.create_string("Spec description")?),
+                Value::Integer(icon),
+                Value::String(lua.create_string(role)?),
+                Value::Integer(2), // classID = Paladin
+            ]))
+        })?,
+    )?;
+    globals.set("GetNumSpecializations", lua.create_function(|_, ()| Ok(3))?)?;
+    globals.set(
+        "GetSpecializationRole",
+        lua.create_function(|lua, spec_index: Option<i32>| {
+            let idx = (spec_index.unwrap_or(ACTIVE_SPEC_INDEX) - 1).clamp(0, 2) as usize;
+            Ok(Value::String(lua.create_string(PALADIN_SPECS[idx].3)?))
+        })?,
+    )?;
+    globals.set(
+        "GetSpecializationRoleByID",
+        lua.create_function(|lua, spec_id: i32| {
+            let role = PALADIN_SPECS
+                .iter()
+                .find(|(id, ..)| *id == spec_id as i64)
+                .map(|(.., r)| *r)
+                .unwrap_or("DAMAGER");
+            Ok(Value::String(lua.create_string(role)?))
+        })?,
+    )?;
     globals.set(
         "GetNumSpecializationsForClassID",
         lua.create_function(|_, (_class_id, _sex): (Option<i32>, Option<i32>)| {
@@ -107,42 +146,50 @@ fn register_spec_basic_queries(lua: &Lua) -> Result<()> {
 fn register_spec_info_lookups(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    globals.set("GetSpecializationInfoByID", lua.create_function(|lua, _spec_id: i32| {
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::Integer(62),
-            Value::String(lua.create_string("Arcane")?),
-            Value::String(lua.create_string("Spec description")?),
-            Value::Integer(136116),
-            Value::String(lua.create_string("DAMAGER")?),
-            Value::String(lua.create_string("MAGE")?),
-        ]))
-    })?)?;
-    globals.set("GetSpecializationInfoForSpecID", lua.create_function(|lua, _spec_id: i32| {
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::Integer(62),
-            Value::String(lua.create_string("Arcane")?),
-            Value::String(lua.create_string("Spec description")?),
-            Value::Integer(136116),
-            Value::String(lua.create_string("DAMAGER")?),
-            Value::String(lua.create_string("MAGE")?),
-        ]))
-    })?)?;
-    globals.set("GetSpecializationInfoForClassID", lua.create_function(|lua, (_class_id, spec_index): (i32, i32)| {
-        if !(1..=4).contains(&spec_index) {
-            return Ok(mlua::MultiValue::new());
-        }
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::Integer(62i64 + spec_index as i64 - 1),
-            Value::String(lua.create_string("Spec")?),
-            Value::String(lua.create_string("Description")?),
-            Value::Integer(136116),
-            Value::String(lua.create_string("DAMAGER")?),
-            Value::Boolean(false),
-            Value::Boolean(true),
-        ]))
-    })?)?;
+    globals.set(
+        "GetSpecializationInfoByID",
+        lua.create_function(spec_info_by_id)?,
+    )?;
+    globals.set(
+        "GetSpecializationInfoForSpecID",
+        lua.create_function(spec_info_by_id)?,
+    )?;
+    globals.set(
+        "GetSpecializationInfoForClassID",
+        lua.create_function(|lua, (_class_id, spec_index): (i32, i32)| {
+            if !(1..=3).contains(&spec_index) {
+                return Ok(mlua::MultiValue::new());
+            }
+            let (id, name, icon, role) = PALADIN_SPECS[(spec_index - 1) as usize];
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::Integer(id),
+                Value::String(lua.create_string(name)?),
+                Value::String(lua.create_string("Description")?),
+                Value::Integer(icon),
+                Value::String(lua.create_string(role)?),
+                Value::Boolean(false),
+                Value::Boolean(spec_index == ACTIVE_SPEC_INDEX),
+            ]))
+        })?,
+    )?;
 
     Ok(())
+}
+
+fn spec_info_by_id(lua: &Lua, spec_id: i32) -> Result<mlua::MultiValue> {
+    let spec = PALADIN_SPECS
+        .iter()
+        .find(|(id, ..)| *id == spec_id as i64)
+        .unwrap_or(&PALADIN_SPECS[1]); // Default to Protection
+    let (id, name, icon, role) = *spec;
+    Ok(mlua::MultiValue::from_vec(vec![
+        Value::Integer(id),
+        Value::String(lua.create_string(name)?),
+        Value::String(lua.create_string("Spec description")?),
+        Value::Integer(icon),
+        Value::String(lua.create_string(role)?),
+        Value::String(lua.create_string("PALADIN")?),
+    ]))
 }
 
 /// Extract a slot number from a Lua Value (integer or number).
@@ -174,39 +221,57 @@ fn register_action_bar_stateful(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
     let globals = lua.globals();
 
     let st = Rc::clone(&state);
-    globals.set("HasAction", lua.create_function(move |_, slot: Value| {
-        let s = st.borrow();
-        Ok(slot_from_value(&slot).is_some_and(|n| s.action_bars.contains_key(&n)))
-    })?)?;
+    globals.set(
+        "HasAction",
+        lua.create_function(move |_, slot: Value| {
+            let s = st.borrow();
+            Ok(slot_from_value(&slot).is_some_and(|n| s.action_bars.contains_key(&n)))
+        })?,
+    )?;
 
     let st = Rc::clone(&state);
-    globals.set("GetActionInfo", lua.create_function(move |lua, slot: Value| {
-        let s = st.borrow();
-        let Some(n) = slot_from_value(&slot) else { return Ok(mlua::MultiValue::new()) };
-        let Some(&spell_id) = s.action_bars.get(&n) else { return Ok(mlua::MultiValue::new()) };
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::String(lua.create_string("spell")?),
-            Value::Integer(spell_id as i64),
-            Value::String(lua.create_string("spell")?),
-        ]))
-    })?)?;
+    globals.set(
+        "GetActionInfo",
+        lua.create_function(move |lua, slot: Value| {
+            let s = st.borrow();
+            let Some(n) = slot_from_value(&slot) else {
+                return Ok(mlua::MultiValue::new());
+            };
+            let Some(&spell_id) = s.action_bars.get(&n) else {
+                return Ok(mlua::MultiValue::new());
+            };
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::String(lua.create_string("spell")?),
+                Value::Integer(spell_id as i64),
+                Value::String(lua.create_string("spell")?),
+            ]))
+        })?,
+    )?;
 
     let st = Rc::clone(&state);
-    globals.set("GetActionTexture", lua.create_function(move |lua, slot: Value| {
-        let s = st.borrow();
-        let Some(n) = slot_from_value(&slot) else { return Ok(Value::Nil) };
-        match action_texture_path(&s, n) {
-            Some(path) => Ok(Value::String(lua.create_string(&path)?)),
-            None => Ok(Value::Nil),
-        }
-    })?)?;
+    globals.set(
+        "GetActionTexture",
+        lua.create_function(move |lua, slot: Value| {
+            let s = st.borrow();
+            let Some(n) = slot_from_value(&slot) else {
+                return Ok(Value::Nil);
+            };
+            match action_texture_path(&s, n) {
+                Some(path) => Ok(Value::String(lua.create_string(&path)?)),
+                None => Ok(Value::Nil),
+            }
+        })?,
+    )?;
 
     let st = Rc::clone(&state);
-    globals.set("IsUsableAction", lua.create_function(move |_, slot: Value| {
-        let s = st.borrow();
-        let has = slot_from_value(&slot).is_some_and(|n| s.action_bars.contains_key(&n));
-        Ok((has, false))
-    })?)?;
+    globals.set(
+        "IsUsableAction",
+        lua.create_function(move |_, slot: Value| {
+            let s = st.borrow();
+            let has = slot_from_value(&slot).is_some_and(|n| s.action_bars.contains_key(&n));
+            Ok((has, false))
+        })?,
+    )?;
 
     Ok(())
 }
@@ -214,29 +279,73 @@ fn register_action_bar_stateful(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
 /// Stateless action bar stub functions.
 fn register_action_bar_stubs(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-    globals.set("GetActionText", lua.create_function(|_, _slot: Value| Ok(Value::Nil))?)?;
-    globals.set("GetActionCount", lua.create_function(|_, _slot: Value| Ok(0))?)?;
-    globals.set("GetActionCooldown", lua.create_function(|_, _slot: Value| {
-        Ok((0.0_f64, 0.0_f64, 1, 1.0_f64))
-    })?)?;
-    globals.set("IsConsumableAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
-    globals.set("IsStackableAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
-    globals.set("IsAttackAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
-    globals.set("IsAutoRepeatAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
-    globals.set("IsCurrentAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
-    globals.set("GetActionCharges", lua.create_function(|_, _slot: Value| {
-        Ok((0, 0, 0.0_f64, 0.0_f64, 1.0_f64))
-    })?)?;
-    globals.set("GetPossessInfo", lua.create_function(|_, _index: Value| Ok(Value::Nil))?)?;
+    globals.set(
+        "GetActionText",
+        lua.create_function(|_, _slot: Value| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetActionCount",
+        lua.create_function(|_, _slot: Value| Ok(0))?,
+    )?;
+    globals.set(
+        "GetActionCooldown",
+        lua.create_function(|_, _slot: Value| Ok((0.0_f64, 0.0_f64, 1, 1.0_f64)))?,
+    )?;
+    globals.set(
+        "IsConsumableAction",
+        lua.create_function(|_, _slot: Value| Ok(false))?,
+    )?;
+    globals.set(
+        "IsStackableAction",
+        lua.create_function(|_, _slot: Value| Ok(false))?,
+    )?;
+    globals.set(
+        "IsAttackAction",
+        lua.create_function(|_, _slot: Value| Ok(false))?,
+    )?;
+    globals.set(
+        "IsAutoRepeatAction",
+        lua.create_function(|_, _slot: Value| Ok(false))?,
+    )?;
+    globals.set(
+        "IsCurrentAction",
+        lua.create_function(|_, _slot: Value| Ok(false))?,
+    )?;
+    globals.set(
+        "GetActionCharges",
+        lua.create_function(|_, _slot: Value| Ok((0, 0, 0.0_f64, 0.0_f64, 1.0_f64)))?,
+    )?;
+    globals.set(
+        "GetPossessInfo",
+        lua.create_function(|_, _index: Value| Ok(Value::Nil))?,
+    )?;
     globals.set("GetActionBarPage", lua.create_function(|_, ()| Ok(1))?)?;
     globals.set("GetBonusBarOffset", lua.create_function(|_, ()| Ok(0))?)?;
-    globals.set("GetOverrideBarIndex", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    globals.set("GetVehicleBarIndex", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    globals.set("GetTempShapeshiftBarIndex", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    globals.set("GetMultiCastBarIndex", lua.create_function(|_, ()| Ok(7i32))?)?;
+    globals.set(
+        "GetOverrideBarIndex",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetVehicleBarIndex",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetTempShapeshiftBarIndex",
+        lua.create_function(|_, ()| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetMultiCastBarIndex",
+        lua.create_function(|_, ()| Ok(7i32))?,
+    )?;
     globals.set("GetExtraBarIndex", lua.create_function(|_, ()| Ok(13i32))?)?;
-    globals.set("IsPossessBarVisible", lua.create_function(|_, ()| Ok(false))?)?;
-    globals.set("SetActionUIButton", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    globals.set(
+        "IsPossessBarVisible",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    globals.set(
+        "SetActionUIButton",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
     Ok(())
 }
 
@@ -244,7 +353,10 @@ fn register_action_bar_stubs(lua: &Lua) -> Result<()> {
 fn register_economy_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     globals.set("GetMoney", lua.create_function(|_, ()| Ok(0i64))?)?;
-    globals.set("GetTargetTradeMoney", lua.create_function(|_, ()| Ok(0i64))?)?;
+    globals.set(
+        "GetTargetTradeMoney",
+        lua.create_function(|_, ()| Ok(0i64))?,
+    )?;
     globals.set("GetNumBuybackItems", lua.create_function(|_, ()| Ok(0i32))?)?;
     Ok(())
 }
@@ -254,20 +366,23 @@ fn register_instance_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     // GetInstanceInfo() -> name, instanceType, difficultyID, difficultyName,
     //   maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID
-    globals.set("GetInstanceInfo", lua.create_function(|lua, ()| {
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::String(lua.create_string("")?),     // name
-            Value::String(lua.create_string("none")?),  // instanceType
-            Value::Integer(0),                          // difficultyID
-            Value::String(lua.create_string("")?),      // difficultyName
-            Value::Integer(0),                          // maxPlayers
-            Value::Integer(0),                          // dynamicDifficulty
-            Value::Boolean(false),                      // isDynamic
-            Value::Integer(0),                          // instanceID
-            Value::Integer(0),                          // instanceGroupSize
-            Value::Integer(0),                          // LfgDungeonID
-        ]))
-    })?)?;
+    globals.set(
+        "GetInstanceInfo",
+        lua.create_function(|lua, ()| {
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::String(lua.create_string("")?),     // name
+                Value::String(lua.create_string("none")?), // instanceType
+                Value::Integer(0),                         // difficultyID
+                Value::String(lua.create_string("")?),     // difficultyName
+                Value::Integer(0),                         // maxPlayers
+                Value::Integer(0),                         // dynamicDifficulty
+                Value::Boolean(false),                     // isDynamic
+                Value::Integer(0),                         // instanceID
+                Value::Integer(0),                         // instanceGroupSize
+                Value::Integer(0),                         // LfgDungeonID
+            ]))
+        })?,
+    )?;
     Ok(())
 }
 
@@ -275,30 +390,83 @@ fn register_instance_functions(lua: &Lua) -> Result<()> {
 fn register_character_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     globals.set("GetCurrentTitle", lua.create_function(|_, ()| Ok(0i32))?)?;
-    globals.set("GetAverageItemLevel", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64, 0.0_f64)))?)?;
+    globals.set(
+        "GetAverageItemLevel",
+        lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64, 0.0_f64)))?,
+    )?;
     globals.set("IsPlayerInRPE", lua.create_function(|_, ()| Ok(false))?)?;
-    globals.set("GetInventoryItemQuality", lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?)?;
-    globals.set("GetInventoryItemTexture", lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?)?;
-    globals.set("GetInventoryItemID", lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?)?;
-    globals.set("GetInventoryItemLink", lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?)?;
-    globals.set("GetInventoryItemCount", lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?)?;
-    globals.set("GetSpecializationRoleEnum", lua.create_function(|_, ()| Ok(0i32))?)?;
-    globals.set("GetPlayerTradeMoney", lua.create_function(|_, ()| Ok(0i64))?)?;
-    globals.set("IsInventoryItemLocked", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
-    globals.set("GetRestrictedAccountData", lua.create_function(|_, ()| Ok((false, false, false)))?)?;
-    globals.set("UnitStat", lua.create_function(|_, _args: mlua::MultiValue| Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64)))?)?;
-    globals.set("GetAttackPowerForStat", lua.create_function(|_, (_stat_idx, _stat): (Value, Value)| {
-        Ok(0.0_f64)
-    })?)?;
-    globals.set("GetRangedAttackPowerForStat", lua.create_function(|_, (_stat_idx, _stat): (Value, Value)| {
-        Ok(0.0_f64)
-    })?)?;
-    globals.set("MerchantFrame_UpdateGuildBankRepair", lua.create_function(|_, ()| Ok(()))?)?;
-    globals.set("MerchantFrame_UpdateCanRepairAll", lua.create_function(|_, ()| Ok(()))?)?;
-    globals.set("SetItemButtonDesaturated", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-    globals.set("EquipmentFlyout_UpdateFlyout", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-    globals.set("EquipmentFlyout_SetTooltipAnchor", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
-    globals.set("GameTooltip_SuppressAutomaticCompareItem", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    globals.set(
+        "GetInventoryItemQuality",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetInventoryItemTexture",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetInventoryItemID",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetInventoryItemLink",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(Value::Nil))?,
+    )?;
+    globals.set(
+        "GetInventoryItemCount",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?,
+    )?;
+    globals.set(
+        "GetSpecializationRoleEnum",
+        lua.create_function(|_, ()| Ok(0i32))?,
+    )?;
+    globals.set(
+        "GetPlayerTradeMoney",
+        lua.create_function(|_, ()| Ok(0i64))?,
+    )?;
+    globals.set(
+        "IsInventoryItemLocked",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?,
+    )?;
+    globals.set(
+        "GetRestrictedAccountData",
+        lua.create_function(|_, ()| Ok((false, false, false)))?,
+    )?;
+    globals.set(
+        "UnitStat",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64)))?,
+    )?;
+    globals.set(
+        "GetAttackPowerForStat",
+        lua.create_function(|_, (_stat_idx, _stat): (Value, Value)| Ok(0.0_f64))?,
+    )?;
+    globals.set(
+        "GetRangedAttackPowerForStat",
+        lua.create_function(|_, (_stat_idx, _stat): (Value, Value)| Ok(0.0_f64))?,
+    )?;
+    globals.set(
+        "MerchantFrame_UpdateGuildBankRepair",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+    globals.set(
+        "MerchantFrame_UpdateCanRepairAll",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+    globals.set(
+        "SetItemButtonDesaturated",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
+    globals.set(
+        "EquipmentFlyout_UpdateFlyout",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
+    globals.set(
+        "EquipmentFlyout_SetTooltipAnchor",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?,
+    )?;
+    globals.set(
+        "GameTooltip_SuppressAutomaticCompareItem",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+    )?;
     globals.set("IsAccountSecured", lua.create_function(|_, ()| Ok(true))?)?;
     Ok(())
 }
@@ -306,18 +474,42 @@ fn register_character_functions(lua: &Lua) -> Result<()> {
 /// Character stat query stubs for PaperDollFrame.
 fn register_character_stat_functions(lua: &Lua) -> Result<()> {
     let g = lua.globals();
-    g.set("HasAPEffectsSpellPower", lua.create_function(|_, ()| Ok(false))?)?;
-    g.set("HasSPEffectsAttackPower", lua.create_function(|_, ()| Ok(false))?)?;
-    g.set("GetOverrideAPBySpellPower", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetOverrideSpellPowerByAP", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set(
+        "HasAPEffectsSpellPower",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    g.set(
+        "HasSPEffectsAttackPower",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    g.set(
+        "GetOverrideAPBySpellPower",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetOverrideSpellPowerByAP",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
     g.set("GetBlockChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
     g.set("GetParryChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
     g.set("GetDodgeChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
     g.set("GetCritChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetRangedCritChance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetSpellCritChance", lua.create_function(|_, _school: Value| Ok(0.0_f64))?)?;
-    g.set("GetCombatRating", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
-    g.set("GetCombatRatingBonus", lua.create_function(|_, _id: Value| Ok(0.0_f64))?)?;
+    g.set(
+        "GetRangedCritChance",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetSpellCritChance",
+        lua.create_function(|_, _school: Value| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetCombatRating",
+        lua.create_function(|_, _id: Value| Ok(0i32))?,
+    )?;
+    g.set(
+        "GetCombatRatingBonus",
+        lua.create_function(|_, _id: Value| Ok(0.0_f64))?,
+    )?;
     register_character_stat_functions_2(lua)?;
     Ok(())
 }
@@ -325,64 +517,131 @@ fn register_character_stat_functions(lua: &Lua) -> Result<()> {
 /// Additional character stat query stubs.
 fn register_character_stat_functions_2(lua: &Lua) -> Result<()> {
     let g = lua.globals();
-    g.set("GetCombatRatingBonusForCombatRatingValue", lua.create_function(|_, _args: mlua::MultiValue| Ok(0.0_f64))?)?;
-    g.set("GetMasteryEffect", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?)?;
+    g.set(
+        "GetCombatRatingBonusForCombatRatingValue",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetMasteryEffect",
+        lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?,
+    )?;
     g.set("GetHaste", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
     g.set("GetMeleeHaste", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetVersatilityBonus", lua.create_function(|_, _id: Value| Ok(0.0_f64))?)?;
+    g.set(
+        "GetVersatilityBonus",
+        lua.create_function(|_, _id: Value| Ok(0.0_f64))?,
+    )?;
     g.set("GetLifesteal", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
     g.set("GetAvoidance", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
     g.set("GetSpeed", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetStaggerPercentage", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
+    g.set(
+        "GetStaggerPercentage",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
     g.set("GetBonusBarIndex", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("GetShieldBlock", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetSpellBonusDamage", lua.create_function(|_, _school: Value| Ok(0.0_f64))?)?;
-    g.set("GetSpellBonusHealing", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetManaRegen", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?)?;
-    g.set("GetPowerRegen", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?)?;
-    g.set("GetPetSpellBonusDamage", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetArmorEffectiveness", lua.create_function(|_, _args: mlua::MultiValue| Ok(0.0_f64))?)?;
-    g.set("GetDodgeChanceFromAttribute", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetParryChanceFromAttribute", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetCritChanceProvidesParryEffect", lua.create_function(|_, ()| Ok(false))?)?;
-    g.set("GetExpertise", lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64, 0.0_f64)))?)?;
-    g.set("GetModResilienceDamageReduction", lua.create_function(|_, ()| Ok(0.0_f64))?)?;
-    g.set("GetPVPGearStatRules", lua.create_function(|_, ()| Ok(false))?)?;
-    g.set("GetUnitMaxHealthModifier", lua.create_function(|_, _unit: Value| Ok(1.0_f64))?)?;
-    g.set("UnitHPPerStamina", lua.create_function(|_, _unit: Value| Ok(20.0_f64))?)?;
+    g.set(
+        "GetSpellBonusDamage",
+        lua.create_function(|_, _school: Value| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetSpellBonusHealing",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetManaRegen",
+        lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?,
+    )?;
+    g.set(
+        "GetPowerRegen",
+        lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64)))?,
+    )?;
+    g.set(
+        "GetPetSpellBonusDamage",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetArmorEffectiveness",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetDodgeChanceFromAttribute",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetParryChanceFromAttribute",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetCritChanceProvidesParryEffect",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    g.set(
+        "GetExpertise",
+        lua.create_function(|_, ()| Ok((0.0_f64, 0.0_f64, 0.0_f64)))?,
+    )?;
+    g.set(
+        "GetModResilienceDamageReduction",
+        lua.create_function(|_, ()| Ok(0.0_f64))?,
+    )?;
+    g.set(
+        "GetPVPGearStatRules",
+        lua.create_function(|_, ()| Ok(false))?,
+    )?;
+    g.set(
+        "GetUnitMaxHealthModifier",
+        lua.create_function(|_, _unit: Value| Ok(1.0_f64))?,
+    )?;
+    g.set(
+        "UnitHPPerStamina",
+        lua.create_function(|_, _unit: Value| Ok(20.0_f64))?,
+    )?;
     Ok(())
 }
 
 /// Cinematic/cutscene control stubs.
 fn register_cinematic_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
-    globals.set("MouseOverrideCinematicDisable", lua.create_function(|_, ()| Ok(()))?)?;
-    globals.set("MouseOverrideCinematicEnable", lua.create_function(|_, ()| Ok(()))?)?;
+    globals.set(
+        "MouseOverrideCinematicDisable",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
+    globals.set(
+        "MouseOverrideCinematicEnable",
+        lua.create_function(|_, ()| Ok(()))?,
+    )?;
     globals.set("GetCursorMoney", lua.create_function(|_, ()| Ok(0i64))?)?;
     globals.set("GetNumTitles", lua.create_function(|_, ()| Ok(0i32))?)?;
     // GetItemLevelColor(itemLevel) -> r, g, b
-    globals.set("GetItemLevelColor", lua.create_function(|_, _ilvl: Value| {
-        Ok((1.0_f64, 1.0_f64, 1.0_f64))
-    })?)?;
+    globals.set(
+        "GetItemLevelColor",
+        lua.create_function(|_, _ilvl: Value| Ok((1.0_f64, 1.0_f64, 1.0_f64)))?,
+    )?;
     // GetDifficultyInfo(id) -> name, groupType, isHeroic, isChallengeMode, toggleDifficultyID
-    globals.set("GetDifficultyInfo", lua.create_function(|lua, _id: Value| {
-        Ok(mlua::MultiValue::from_vec(vec![
-            Value::String(lua.create_string("")?),
-            Value::String(lua.create_string("")?),
-            Value::Boolean(false),
-            Value::Boolean(false),
-            Value::Integer(0),
-        ]))
-    })?)?;
+    globals.set(
+        "GetDifficultyInfo",
+        lua.create_function(|lua, _id: Value| {
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::String(lua.create_string("")?),
+                Value::String(lua.create_string("")?),
+                Value::Boolean(false),
+                Value::Boolean(false),
+                Value::Integer(0),
+            ]))
+        })?,
+    )?;
     // BreakUpLargeNumbers(amount) -> formatted string
-    globals.set("BreakUpLargeNumbers", lua.create_function(|_, amount: Value| {
-        let s = match amount {
-            Value::Integer(n) => n.to_string(),
-            Value::Number(n) => format!("{:.0}", n),
-            _ => "0".to_string(),
-        };
-        Ok(s)
-    })?)?;
+    globals.set(
+        "BreakUpLargeNumbers",
+        lua.create_function(|_, amount: Value| {
+            let s = match amount {
+                Value::Integer(n) => n.to_string(),
+                Value::Number(n) => format!("{:.0}", n),
+                _ => "0".to_string(),
+            };
+            Ok(s)
+        })?,
+    )?;
     Ok(())
 }
 
@@ -390,7 +649,13 @@ fn register_cinematic_functions(lua: &Lua) -> Result<()> {
 fn register_unit_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     globals.set("PetUsesPetFrame", lua.create_function(|_, ()| Ok(false))?)?;
-    globals.set("UnitIsPossessed", lua.create_function(|_, _unit: Value| Ok(false))?)?;
-    globals.set("GetNumShapeshiftForms", lua.create_function(|_, ()| Ok(0i32))?)?;
+    globals.set(
+        "UnitIsPossessed",
+        lua.create_function(|_, _unit: Value| Ok(false))?,
+    )?;
+    globals.set(
+        "GetNumShapeshiftForms",
+        lua.create_function(|_, ()| Ok(0i32))?,
+    )?;
     Ok(())
 }

@@ -127,15 +127,85 @@ fn register_c_tts_settings(lua: &Lua) -> Result<mlua::Table> {
 fn register_c_reputation(lua: &Lua) -> Result<mlua::Table> {
     let t = lua.create_table()?;
 
-    t.set("GetFactionDataByID", lua.create_function(|_, _faction_id: i32| Ok(Value::Nil))?)?;
-    t.set("IsFactionParagon", lua.create_function(|_, _faction_id: i32| Ok(false))?)?;
-    t.set("GetFactionParagonInfo", lua.create_function(|_, _faction_id: i32| Ok(Value::Nil))?)?;
-    t.set("GetNumFactions", lua.create_function(|_, ()| Ok(0))?)?;
-    t.set("GetFactionInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
-    t.set("GetWatchedFactionData", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    t.set("SetWatchedFactionByID", lua.create_function(|_, _faction_id: i32| Ok(()))?)?;
+    t.set("GetFactionDataByID", lua.create_function(faction_data_by_id)?)?;
+    t.set("GetFactionDataByIndex", lua.create_function(faction_data_by_index)?)?;
+    t.set("GetNumFactions", lua.create_function(|_, ()| {
+        Ok(super::reputation_data::num_factions())
+    })?)?;
+    t.set("GetFactionInfo", lua.create_function(faction_data_by_index)?)?;
+    t.set("GetWatchedFactionData", lua.create_function(watched_faction_data)?)?;
+    register_c_reputation_stubs(&t, lua)?;
 
     Ok(t)
+}
+
+/// Reputation stubs that don't need data.
+fn register_c_reputation_stubs(t: &mlua::Table, lua: &Lua) -> Result<()> {
+    t.set("IsFactionParagon", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("GetFactionParagonInfo", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    t.set("SetWatchedFactionByID", lua.create_function(|_, _id: i32| Ok(()))?)?;
+    t.set("ExpandFactionHeader", lua.create_function(|_, _i: i32| Ok(()))?)?;
+    t.set("CollapseFactionHeader", lua.create_function(|_, _i: i32| Ok(()))?)?;
+    t.set("ExpandAllFactionHeaders", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("CollapseAllFactionHeaders", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("GetReputationSortType", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("SetReputationSortType", lua.create_function(|_, _t: i32| Ok(()))?)?;
+    t.set("AreLegacyReputationsShown", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set("SetLegacyReputationsShown", lua.create_function(|_, _s: bool| Ok(()))?)?;
+    t.set("GetSelectedFaction", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("SetSelectedFaction", lua.create_function(|_, _i: i32| Ok(()))?)?;
+    t.set("IsAccountWideReputation", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("IsMajorFaction", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("IsFactionActive", lua.create_function(|_, _i: i32| Ok(true))?)?;
+    t.set("SetFactionActive", lua.create_function(|_, (_i, _a): (i32, bool)| Ok(()))?)?;
+    t.set("RequestFactionParagonPreloadRewardData", lua.create_function(|_, _id: i32| Ok(()))?)?;
+    Ok(())
+}
+
+/// Build a FactionData table from a FactionEntry.
+fn build_faction_table(lua: &Lua, f: &super::reputation_data::FactionEntry, index: i32) -> Result<Value> {
+    let info = lua.create_table()?;
+    info.set("factionID", f.faction_id)?;
+    info.set("name", f.name)?;
+    info.set("description", f.description)?;
+    info.set("reaction", f.reaction)?;
+    info.set("currentStanding", f.standing)?;
+    info.set("currentReactionThreshold", 0)?;
+    info.set("nextReactionThreshold", f.top_value)?;
+    info.set("isHeader", f.is_header)?;
+    info.set("isCollapsed", f.is_collapsed)?;
+    info.set("isChild", f.is_child)?;
+    info.set("isAccountWide", f.is_account_wide)?;
+    info.set("factionIndex", index)?;
+    info.set("hasBonusRepGain", false)?;
+    info.set("canToggleAtWar", false)?;
+    info.set("isAtWar", false)?;
+    info.set("isWatched", false)?;
+    Ok(Value::Table(info))
+}
+
+fn faction_data_by_id(lua: &Lua, faction_id: i32) -> Result<Value> {
+    use super::reputation_data;
+    match reputation_data::get_faction_by_id(faction_id) {
+        Some(f) => build_faction_table(lua, f, 0),
+        None => Ok(Value::Nil),
+    }
+}
+
+fn faction_data_by_index(lua: &Lua, index: i32) -> Result<Value> {
+    use super::reputation_data;
+    match reputation_data::get_faction_by_index(index) {
+        Some(f) => build_faction_table(lua, f, index),
+        None => Ok(Value::Nil),
+    }
+}
+
+fn watched_faction_data(lua: &Lua, _: ()) -> Result<Value> {
+    use super::reputation_data;
+    match reputation_data::watched_faction() {
+        Some(f) => build_faction_table(lua, f, 0),
+        None => Ok(Value::Nil),
+    }
 }
 
 /// C_Texture namespace - texture handling.

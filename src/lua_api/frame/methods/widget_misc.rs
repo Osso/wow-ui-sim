@@ -133,6 +133,12 @@ pub fn add_misc_widget_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // Initialize(...) - TextStatusBar spark, FeedbackFrame, FullPowerFrame
     methods.add_method("Initialize", |_, _this, _args: mlua::MultiValue| Ok(()));
+
+    // RegisterForWidgetSet(widgetSetID, layoutFunc, initFunc, attachedUnitInfo) - UIWidget container
+    methods.add_method("RegisterForWidgetSet", |_, _this, _args: mlua::MultiValue| Ok(()));
+
+    // UnregisterForWidgetSet() - UIWidget container unregister
+    methods.add_method("UnregisterForWidgetSet", |_, _this, _args: mlua::MultiValue| Ok(()));
 }
 
 // --- ColorSelect ---
