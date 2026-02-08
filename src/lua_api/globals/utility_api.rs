@@ -442,6 +442,15 @@ fn arg_to_i32(v: &Value) -> Option<i32> {
     }
 }
 
+/// debuglocals(level, skipFunctionsAndUserdata) - returns a string of local variables.
+/// Stub: returns empty string. Only used by Blizzard_ScriptErrors for error display.
+fn register_debuglocals(lua: &Lua) -> Result<()> {
+    lua.globals().set(
+        "debuglocals",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(String::new()))?,
+    )
+}
+
 /// debugstack(start, count1, count2) - returns a stack trace string.
 /// WoW's debugstack is used by error handlers and BugSack.
 fn register_debugstack(lua: &Lua) -> Result<()> {
@@ -475,6 +484,7 @@ fn register_error_handlers(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     register_debugstack(lua)?;
+    register_debuglocals(lua)?;
 
     globals.set(
         "geterrorhandler",
