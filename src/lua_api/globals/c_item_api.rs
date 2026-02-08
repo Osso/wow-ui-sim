@@ -201,6 +201,8 @@ fn register_c_container(lua: &Lua) -> Result<()> {
         lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
     )?;
 
+    c_container.set("IsContainerFiltered", lua.create_function(|_, _bag: i32| Ok(false))?)?;
+
     lua.globals().set("C_Container", c_container)?;
     Ok(())
 }
