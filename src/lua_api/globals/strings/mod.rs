@@ -225,6 +225,7 @@ fn register_game_constants(globals: &mlua::Table) -> Result<()> {
     register_ints(globals, GAME_INT_CONSTANTS)?;
     register_strings(globals, GAME_STRING_CONSTANTS)?;
     register_ints(globals, EXPANSION_CONSTANTS)?;
+    register_ints(globals, AUTOCOMPLETE_CONSTANTS)?;
     register_ints(globals, INVENTORY_SLOT_CONSTANTS)?;
     register_strings(globals, RAID_TARGET_STRINGS)?;
     register_floats(globals, TAXI_FLOAT_CONSTANTS)?;

@@ -299,6 +299,7 @@ fn register_character_functions(lua: &Lua) -> Result<()> {
     globals.set("EquipmentFlyout_UpdateFlyout", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
     globals.set("EquipmentFlyout_SetTooltipAnchor", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
     globals.set("GameTooltip_SuppressAutomaticCompareItem", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    globals.set("IsAccountSecured", lua.create_function(|_, ()| Ok(true))?)?;
     Ok(())
 }
 

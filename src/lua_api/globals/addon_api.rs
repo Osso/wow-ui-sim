@@ -343,9 +343,22 @@ fn register_profiler(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
         })?,
     )?;
 
+    c_profiler.set(
+        "CheckForPerformanceMessage",
+        lua.create_function(|_, ()| Ok(mlua::Value::Nil))?,
+    )?;
+
+    c_profiler.set(
+        "AddPerformanceMessageShown",
+        lua.create_function(|_, _msg: Value| Ok(()))?,
+    )?;
+
     lua.globals().set("C_AddOnProfiler", c_profiler)?;
 
-    // Legacy globals: UpdateAddOnMemoryUsage() and GetAddOnMemoryUsage(addon)
+    register_legacy_memory_globals(lua, state)
+}
+
+fn register_legacy_memory_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     lua.globals().set(
         "UpdateAddOnMemoryUsage",
         lua.create_function(|_, ()| Ok(()))?,
@@ -356,7 +369,6 @@ fn register_profiler(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
         "GetAddOnMemoryUsage",
         lua.create_function(move |_, addon: Value| {
             let state = s.borrow();
-            // Return simulated KB based on load time (rough heuristic: 1s load ≈ 500KB)
             let kb = find_addon_by_value(&state.addons, &addon)
                 .map(|a| a.load_time_secs * 500.0)
                 .unwrap_or(0.0);

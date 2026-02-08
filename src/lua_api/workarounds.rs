@@ -6,12 +6,18 @@ use super::WowLuaEnv;
 /// Apply all post-load workarounds. Called after addon loading, before events.
 pub fn apply(env: &WowLuaEnv) {
     let _ = env.exec("UpdateMicroButtons = function() end");
+    // CompactUnitFrame helpers may not be defined if CompactUnitFrame.lua fails to load fully
+    let _ = env.exec(
+        "if not CompactUnitFrame_GetOptionDisplayOnlyDispellableDebuffs then \
+         CompactUnitFrame_GetOptionDisplayOnlyDispellableDebuffs = function() return false end end",
+    );
     patch_map_canvas_scroll(env);
     patch_gradual_animated_status_bar(env);
     patch_character_frame_subframes(env);
     setup_managed_frame_containers(env);
     init_objective_tracker(env);
     show_chat_frame(env);
+    init_bag_bar(env);
 }
 
 /// MapCanvasScrollControllerMixin:IsZoomingOut/In compare targetScale with
@@ -431,6 +437,56 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
         C_Timer.After(15, function() C_Timer.NewTicker(20, function()
             post("guild", "|Hchannel:Guild|h[Guild]|h ", 0.25, 1.0, 0.25)
         end) end)
+    "#,
+    );
+}
+
+/// Re-run bag button initialization that failed during OnLoad.
+///
+/// Blizzard_MainMenuBarBagButtons loads before both Blizzard_MicroMenu and
+/// Blizzard_UIPanels_Game. This causes two problems:
+///
+/// 1. BagsBar's anchor `relativeTo="MicroButtonAndBagsBar"` resolves to nil
+///    because MicroButtonAndBagsBar doesn't exist yet, placing BagsBar at
+///    UIParent's TOPRIGHT (top of screen instead of bottom-right).
+///
+/// 2. `ContainerFrame_GetContainerNumSlots` and `PaperDollItemSlotButton_OnLoad`
+///    don't exist when bag button OnLoad fires, so `UpdateTextures()` fails.
+///
+/// Fix both by re-anchoring BagsBar and re-calling UpdateTextures after all
+/// addons are loaded.
+fn init_bag_bar(env: &WowLuaEnv) {
+    fix_bags_bar_anchor(env);
+    update_bag_button_textures(env);
+}
+
+/// Re-anchor BagsBar to MicroButtonAndBagsBar now that it exists.
+fn fix_bags_bar_anchor(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if BagsBar and MicroButtonAndBagsBar then
+            BagsBar:ClearAllPoints()
+            BagsBar:SetPoint("TOPRIGHT", MicroButtonAndBagsBar, "TOPRIGHT", 0, 0)
+        end
+    "#,
+    );
+}
+
+/// Call UpdateTextures on each bag button now that ContainerFrame functions exist.
+fn update_bag_button_textures(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not MainMenuBarBagManager or not MainMenuBarBagManager.allBagButtons then
+            return
+        end
+        for _, btn in ipairs(MainMenuBarBagManager.allBagButtons) do
+            if btn.UpdateTextures then
+                pcall(btn.UpdateTextures, btn)
+            end
+        end
+        if MainMenuBarBackpackButton and MainMenuBarBackpackButton.OnLoadInternal then
+            pcall(MainMenuBarBackpackButton.OnLoadInternal, MainMenuBarBackpackButton)
+        end
     "#,
     );
 }

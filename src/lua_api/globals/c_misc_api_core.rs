@@ -197,6 +197,7 @@ fn register_c_player_info_misc(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("IsPlayerInRPE", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetDisplayID", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set("GetNativeDisplayID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetContentDifficultyQuestForPlayer", lua.create_function(|_, _id: i32| Ok(1i32))?)?;
     Ok(())
 }
 
@@ -289,6 +290,9 @@ fn register_c_pvp(lua: &Lua) -> Result<()> {
     t.set("IsInBrawl", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsActiveBattlefield", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetOutdoorPvPWaitTime", lua.create_function(|_, _map_id: Option<i32>| Ok(Value::Nil))?)?;
+    t.set("IsMatchActive", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsMatchComplete", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetActiveMatchState", lua.create_function(|_, ()| Ok(0i32))?)?;
     lua.globals().set("C_PvP", t)?;
     Ok(())
 }

@@ -13,7 +13,7 @@
 //! - C_Tutorial - Tutorial flags
 //! - C_ActionBar - Action bar queries
 
-use mlua::{Lua, Result, Value};
+use mlua::{Lua, ObjectLike, Result, Value};
 
 /// Register all additional C_* namespace stubs.
 pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
@@ -37,6 +37,9 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_c_macro(lua)?;
     register_c_wowlabs_matchmaking(lua)?;
     register_fading_frame_stubs(lua)?;
+    register_missing_globals(lua)?;
+    register_missing_namespaces(lua)?;
+    register_additional_stubs(lua)?;
     Ok(())
 }
 
@@ -398,11 +401,22 @@ fn register_c_wowlabs_matchmaking(lua: &Lua) -> Result<()> {
 /// FadingFrame_* global functions used by ZoneText.lua.
 fn register_fading_frame_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
-    // FadingFrame_OnLoad initializes fading state on the frame
-    g.set("FadingFrame_OnLoad", lua.create_function(|_, frame: mlua::Table| {
-        frame.set("fadeInTime", 0.0f64)?;
-        frame.set("fadeOutTime", 0.0f64)?;
-        frame.set("holdTime", 0.0f64)?;
+    // FadingFrame_OnLoad initializes fading state on the frame.
+    // Frames may be UserData or Table depending on context.
+    g.set("FadingFrame_OnLoad", lua.create_function(|_, frame: Value| {
+        match frame {
+            Value::UserData(ud) => {
+                ud.set("fadeInTime", 0.0f64)?;
+                ud.set("fadeOutTime", 0.0f64)?;
+                ud.set("holdTime", 0.0f64)?;
+            }
+            Value::Table(t) => {
+                t.set("fadeInTime", 0.0f64)?;
+                t.set("fadeOutTime", 0.0f64)?;
+                t.set("holdTime", 0.0f64)?;
+            }
+            _ => {}
+        }
         Ok(())
     })?)?;
     g.set("FadingFrame_SetFadeInTime", lua.create_function(|_, (_frame, _t): (Value, f64)| Ok(()))?)?;
@@ -411,5 +425,229 @@ fn register_fading_frame_stubs(lua: &Lua) -> Result<()> {
     g.set("FadingFrame_Show", lua.create_function(|_, _frame: Value| Ok(()))?)?;
     g.set("GetErrorCallstackHeight", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("SetChatWindowShown", lua.create_function(|_, (_id, _shown): (Value, Value)| Ok(()))?)?;
+    Ok(())
+}
+
+/// Missing global functions referenced during startup events.
+fn register_missing_globals(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    g.set("GetDefaultScale", lua.create_function(|_, ()| Ok(1.0f64))?)?;
+    g.set("HasVehicleActionBar", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("HasOverrideActionBar", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetMaxBattlefieldID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("RequestRaidInfo", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("GetQuestTimers", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    g.set("GetMirrorTimerInfo", lua.create_function(|_, _timer: Value| {
+        Ok(("UNKNOWN", 0i32, 0i32, -1i32, false, ""))
+    })?)?;
+    g.set("GetInventoryAlertStatus", lua.create_function(|_, _slot: i32| Ok(0i32))?)?;
+    g.set("GetWorldElapsedTimers", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("GetWorldElapsedTime", lua.create_function(|_, _id: i32| {
+        Ok((0i32, 0i32, 0i32))
+    })?)?;
+    g.set("GetNumSubgroupMembers", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("HasBonusActionBar", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("HasTempShapeshiftActionBar", lua.create_function(|_, ()| Ok(false))?)?;
+    Ok(())
+}
+
+/// Missing C_* namespaces and globals referenced during startup events.
+fn register_missing_namespaces(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+
+    let spectating = lua.create_table()?;
+    spectating.set("IsSpectating", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("C_SpectatingUI", spectating)?;
+
+    let social = lua.create_table()?;
+    social.set("IsMuted", lua.create_function(|_, ()| Ok(false))?)?;
+    social.set("IsSilenced", lua.create_function(|_, ()| Ok(false))?)?;
+    social.set("IsChatDisabled", lua.create_function(|_, ()| Ok(false))?)?;
+    social.set("CanReceiveChat", lua.create_function(|_, ()| Ok(true))?)?;
+    g.set("C_SocialRestrictions", social)?;
+
+    let lobby = lua.create_table()?;
+    lobby.set("IsParticipating", lua.create_function(|_, ()| Ok(false))?)?;
+    lobby.set("IsInQueue", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("C_LobbyMatchmakerInfo", lobby)?;
+
+    let mentorship = lua.create_table()?;
+    mentorship.set("GetMentorshipStatus", lua.create_function(|_, _unit: Value| Ok(0i32))?)?;
+    mentorship.set("IsActivePlayerConsideredNewcomer", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("C_PlayerMentorship", mentorship)?;
+
+    let cinematic = lua.create_table()?;
+    cinematic.set(
+        "GetUICinematicList",
+        lua.create_function(|lua, ()| lua.create_table())?,
+    )?;
+    g.set("C_CinematicList", cinematic)?;
+
+    let login = lua.create_table()?;
+    login.set("GetState", lua.create_function(|_, ()| Ok(0i32))?)?;
+    login.set("ClearLastError", lua.create_function(|_, ()| Ok(()))?)?;
+    login.set("GetLastError", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    g.set("C_Login", login)?;
+
+    // Nameplate option tables used by Blizzard_NamePlates
+    g.set("DefaultCompactNamePlateEnemyFrameOptions", lua.create_table()?)?;
+    g.set("DefaultCompactNamePlateFriendlyFrameOptions", lua.create_table()?)?;
+    g.set("DefaultCompactNamePlatePlayerFrameSetUpOptions", lua.create_table()?)?;
+
+    Ok(())
+}
+
+/// Additional stubs for globals, namespaces, and constants that fix load warnings.
+fn register_additional_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+
+    register_missing_c_namespaces(lua, &g)?;
+    register_missing_global_functions(lua, &g)?;
+    register_missing_constants(lua, &g)?;
+    register_missing_global_tables(lua, &g)?;
+
+    Ok(())
+}
+
+/// C_* namespace stubs that are referenced during addon loading.
+fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    // C_ItemSocketInfo
+    let isi = lua.create_table()?;
+    isi.set("GetCurrUIType", lua.create_function(|_, ()| Ok(0i32))?)?;
+    isi.set("GetExistingSocketInfo", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
+    isi.set("AcceptSockets", lua.create_function(|_, ()| Ok(()))?)?;
+    isi.set("CloseSocketInfo", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("C_ItemSocketInfo", isi)?;
+
+    // C_PetInfo
+    let pi = lua.create_table()?;
+    pi.set("GetPetTamersForMap", lua.create_function(|lua, _map_id: Value| lua.create_table())?)?;
+    pi.set("GetSpellForPetAction", lua.create_function(|_, _action: Value| Ok(Value::Nil))?)?;
+    pi.set("IsPetActionPassive", lua.create_function(|_, _action: Value| Ok(false))?)?;
+    g.set("C_PetInfo", pi)?;
+
+    // C_Sound
+    let snd = lua.create_table()?;
+    snd.set("GetSoundScaledVolume", lua.create_function(|_, _id: Value| Ok(1.0f64))?)?;
+    snd.set("IsPlaying", lua.create_function(|_, _handle: Value| Ok(false))?)?;
+    snd.set("PlayItemSound", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    snd.set("PlayVocalErrorSound", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    g.set("C_Sound", snd)?;
+
+    Ok(())
+}
+
+/// Global functions referenced during addon loading.
+fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    // RegisterUIPanel - registers a frame for panel layout management
+    g.set("RegisterUIPanel", lua.create_function(|_, (_frame, _attrs): (Value, Option<Value>)| Ok(()))?)?;
+
+    // GetScenariosChoiceOrder - returns table of scenario ordering
+    g.set("GetScenariosChoiceOrder", lua.create_function(|lua, ()| lua.create_table())?)?;
+
+    // NUM_LE_LFG_CATEGORYS - number of LFG categories
+    g.set("NUM_LE_LFG_CATEGORYS", 7i32)?;
+
+    // LE_AUTOCOMPLETE_PRIORITY_* constants
+    g.set("LE_AUTOCOMPLETE_PRIORITY_OTHER", 1i32)?;
+    g.set("LE_AUTOCOMPLETE_PRIORITY_INTERACTED", 2i32)?;
+    g.set("LE_AUTOCOMPLETE_PRIORITY_IN_GROUP", 3i32)?;
+    g.set("LE_AUTOCOMPLETE_PRIORITY_GUILD", 4i32)?;
+    g.set("LE_AUTOCOMPLETE_PRIORITY_FRIEND", 5i32)?;
+    g.set("LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER", 6i32)?;
+    g.set("LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER_SAME_REALM", 7i32)?;
+
+    // AUTOCOMPLETE_LABEL_* strings used alongside priority constants
+    g.set("AUTOCOMPLETE_LABEL_INTERACTED", "Interacted")?;
+    g.set("AUTOCOMPLETE_LABEL_GROUP", "Group")?;
+    g.set("AUTOCOMPLETE_LABEL_GUILD", "Guild")?;
+    g.set("AUTOCOMPLETE_LABEL_FRIEND", "Friend")?;
+
+    Ok(())
+}
+
+/// Constants tables referenced during addon loading.
+fn register_missing_constants(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    // BACKPACK_CONTAINER = Enum.BagIndex.Backpack = 0
+    g.set("BACKPACK_CONTAINER", 0i32)?;
+    // NUM_BAG_SLOTS + NUM_REAGENTBAG_SLOTS
+    g.set("NUM_BAG_SLOTS", 4i32)?;
+    g.set("NUM_REAGENTBAG_SLOTS", 1i32)?;
+    g.set("NUM_TOTAL_EQUIPPED_BAG_SLOTS", 5i32)?;
+
+    // ChatFrameConstants
+    let cfc = lua.create_table()?;
+    cfc.set("MaxCharacterNameBytes", 305i32)?;
+    cfc.set("MaxChatChannels", 20i32)?;
+    cfc.set("MaxChatWindows", 10i32)?;
+    g.set("ChatFrameConstants", cfc)?;
+
+    // Constants.PetConsts_PostCata.STABLED_PETS_FIRST_SLOT_INDEX
+    let constants: mlua::Table = match g.get("Constants")? {
+        Value::Table(t) => t,
+        _ => {
+            let t = lua.create_table()?;
+            g.set("Constants", t.clone())?;
+            t
+        }
+    };
+    let pet_consts = lua.create_table()?;
+    pet_consts.set("STABLED_PETS_FIRST_SLOT_INDEX", 5i32)?;
+    pet_consts.set("NUM_PET_SLOTS_THAT_NEED_LEARNED_SPELL", 5i32)?;
+    constants.set("PetConsts_PostCata", pet_consts)?;
+
+    // Constants.InventoryConstants
+    let inv = lua.create_table()?;
+    inv.set("NumBagSlots", 4i32)?;
+    inv.set("NumReagentBagSlots", 1i32)?;
+    constants.set("InventoryConstants", inv)?;
+
+    Ok(())
+}
+
+/// Global Lua tables that are referenced by addon code.
+fn register_missing_global_tables(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    // QuestUtil - utility table populated by QuestUtils.lua
+    if g.get::<Value>("QuestUtil")?.is_nil() {
+        let qu = lua.create_table()?;
+        g.set("QuestUtil", qu)?;
+    }
+
+    // TalentButtonUtil - utility table for talent button rendering
+    if g.get::<Value>("TalentButtonUtil")?.is_nil() {
+        let tbu = lua.create_table()?;
+        tbu.set("CircleEdgeDiameterOffset", 1.2f64)?;
+        tbu.set("SquareEdgeMinDiameterOffset", 1.2f64)?;
+        tbu.set("SquareEdgeMaxDiameterOffset", 1.5f64)?;
+        tbu.set("ChoiceEdgeMinDiameterOffset", 1.2f64)?;
+        tbu.set("ChoiceEdgeMaxDiameterOffset", 1.5f64)?;
+        let bvs = lua.create_table()?;
+        bvs.set("Normal", 1i32)?;
+        bvs.set("Gated", 2i32)?;
+        bvs.set("Disabled", 3i32)?;
+        bvs.set("Locked", 4i32)?;
+        bvs.set("Selectable", 5i32)?;
+        bvs.set("Maxed", 6i32)?;
+        bvs.set("Invisible", 7i32)?;
+        bvs.set("RefundInvalid", 8i32)?;
+        bvs.set("DisplayError", 9i32)?;
+        tbu.set("BaseVisualState", bvs)?;
+        g.set("TalentButtonUtil", tbu)?;
+    }
+
+    // Dispatcher - event dispatch system used by tutorial manager
+    if g.get::<Value>("Dispatcher")?.is_nil() {
+        let d = lua.create_table()?;
+        d.set("Events", lua.create_table()?)?;
+        d.set("Functions", lua.create_table()?)?;
+        d.set("Scripts", lua.create_table()?)?;
+        d.set("NextEventID", 1i32)?;
+        d.set("NextFunctionID", 1i32)?;
+        d.set("NextScriptID", 1i32)?;
+        d.set("Initialize", lua.create_function(|_, _self: Value| Ok(()))?)?;
+        d.set("OnEvent", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+        g.set("Dispatcher", d)?;
+    }
+
     Ok(())
 }

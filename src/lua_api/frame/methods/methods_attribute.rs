@@ -55,7 +55,7 @@ fn add_get_set_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
 
     methods.add_method("ClearAttributes", |_, this, ()| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             frame.attributes.clear();
         }
         Ok(())
@@ -82,7 +82,7 @@ fn set_attribute_value(
         table_attrs.set(key, value.clone())?;
     } else {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             let attr = match value {
                 Value::Nil => AttributeValue::Nil,
                 Value::Boolean(b) => AttributeValue::Boolean(*b),

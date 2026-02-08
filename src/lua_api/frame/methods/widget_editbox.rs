@@ -12,6 +12,8 @@ pub fn add_editbox_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_editbox_flag_methods(methods);
     add_editbox_history_methods(methods);
     add_editbox_inset_methods(methods);
+    // GetInputLanguage returns the current input language for the editbox
+    methods.add_method("GetInputLanguage", |_, _this, ()| Ok("ROMAN"));
 }
 
 fn add_editbox_focus_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {

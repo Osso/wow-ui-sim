@@ -27,6 +27,8 @@ pub const GAME_INT_CONSTANTS: &[IntDef] = &[
     ("NUM_PET_ACTION_SLOTS", 10),
     ("NUM_ACTIONBAR_BUTTONS", 12),
     ("NUM_BAG_SLOTS", 5),
+    ("NUM_TOTAL_EQUIPPED_BAG_SLOTS", 5),
+    ("BACKPACK_CONTAINER", 0),
     ("MAX_SKILLLINE_TABS", 8),
     ("MAX_PLAYER_LEVEL", 80),
     ("MAX_NUM_TALENTS", 20),
@@ -58,6 +60,20 @@ pub const EXPANSION_CONSTANTS: &[IntDef] = &[
     ("LE_EXPANSION_DRAGONFLIGHT", 9),
     ("LE_EXPANSION_WAR_WITHIN", 10),
     ("LE_EXPANSION_LEVEL_CURRENT", 10),
+];
+
+// ============================================================================
+// Autocomplete Priority Constants (LE_AUTOCOMPLETE_PRIORITY_*)
+// ============================================================================
+
+pub const AUTOCOMPLETE_CONSTANTS: &[IntDef] = &[
+    ("LE_AUTOCOMPLETE_PRIORITY_OTHER", 0),
+    ("LE_AUTOCOMPLETE_PRIORITY_INTERACTED", 1),
+    ("LE_AUTOCOMPLETE_PRIORITY_IN_GROUP", 2),
+    ("LE_AUTOCOMPLETE_PRIORITY_GUILD", 3),
+    ("LE_AUTOCOMPLETE_PRIORITY_FRIEND", 4),
+    ("LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER", 5),
+    ("LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER_SAME_REALM", 6),
 ];
 
 // ============================================================================

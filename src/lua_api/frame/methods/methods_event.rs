@@ -13,7 +13,7 @@ pub fn add_event_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("RegisterEvent", |_, this, event: String| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             frame.register_event(&event);
         }
         Ok(())
@@ -24,7 +24,7 @@ fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         "RegisterUnitEvent",
         |_, this, (event, _args): (String, mlua::Variadic<Value>)| {
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_silent(this.id) {
                 frame.register_event(&event);
             }
             Ok(())
@@ -33,7 +33,7 @@ fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
 
     methods.add_method("UnregisterEvent", |_, this, event: String| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             frame.unregister_event(&event);
         }
         Ok(())
@@ -41,7 +41,7 @@ fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
 
     methods.add_method("UnregisterAllEvents", |_, this, ()| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             frame.registered_events.clear();
         }
         Ok(())
@@ -58,7 +58,7 @@ fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
     // RegisterAllEvents() - register for all events
     methods.add_method("RegisterAllEvents", |_, this, ()| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             frame.register_all_events = true;
         }
         Ok(())
@@ -71,7 +71,7 @@ fn add_keyboard_propagation_methods<M: UserDataMethods<FrameHandle>>(methods: &m
         "SetPropagateKeyboardInput",
         |_, this, propagate: bool| {
             let mut state = this.state.borrow_mut();
-            if let Some(f) = state.widgets.get_mut(this.id) {
+            if let Some(f) = state.widgets.get_mut_silent(this.id) {
                 f.propagate_keyboard_input = propagate;
             }
             Ok(())

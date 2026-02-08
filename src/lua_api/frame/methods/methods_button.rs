@@ -453,4 +453,6 @@ fn add_button_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         |_, _this, (_state, _locked): (String, Option<bool>)| Ok(()),
     );
     methods.add_method("GetButtonState", |_, _this, ()| Ok("NORMAL".to_string()));
+    methods.add_method("LockHighlight", |_, _this, ()| Ok(()));
+    methods.add_method("UnlockHighlight", |_, _this, ()| Ok(()));
 }

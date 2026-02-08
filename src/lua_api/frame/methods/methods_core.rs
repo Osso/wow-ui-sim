@@ -472,7 +472,7 @@ fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetID(id) - Set frame ID (used for tab ordering, etc.)
     methods.add_method("SetID", |_, this, id: i32| {
-        this.state.borrow_mut().widgets.get_mut(this.id).map(|f| f.user_id = id);
+        this.state.borrow_mut().widgets.get_mut_silent(this.id).map(|f| f.user_id = id);
         Ok(())
     });
 
@@ -488,7 +488,7 @@ fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // EnableMouse(enable)
     methods.add_method("EnableMouse", |_, this, enable: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             frame.mouse_enabled = enable;
         }
         Ok(())
@@ -567,7 +567,7 @@ fn add_mouse_motion_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("SetMouseClickEnabled", |_, this, enable: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_silent(this.id) {
             frame.mouse_enabled = enable;
         }
         Ok(())

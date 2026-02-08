@@ -100,6 +100,8 @@ fn register_c_voice_chat(lua: &Lua) -> Result<mlua::Table> {
     t.set("IsSpeakForMeActive", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsTranscriptionAllowed", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsTranscribing", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetActiveChannelType", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("IsMuted", lua.create_function(|_, ()| Ok(false))?)?;
 
     Ok(t)
 }
