@@ -318,6 +318,7 @@ fn register_c_pvp(lua: &Lua) -> Result<()> {
         Ok((Value::Nil, Value::Nil, Value::Nil))
     })?)?;
     t.set("IsMatchConsideredArena", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("RequestCrowdControlSpell", lua.create_function(|_, _unit: Value| Ok(()))?)?;
     lua.globals().set("C_PvP", t)?;
     Ok(())
 }
