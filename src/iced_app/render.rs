@@ -272,6 +272,7 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     };
     let (fill_bounds, fill_uvs) = apply_bar_fill_with_uvs(bounds, f.tex_coords, bar_fill);
 
+    let vert_before = batch.vertices.len();
     if let Some((left, right, top, bottom)) = fill_uvs {
         let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
         if f.horiz_tile || f.vert_tile {
@@ -281,6 +282,10 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
         }
     } else {
         batch.push_textured_path(fill_bounds, tex_path, tint, f.blend_mode);
+    }
+
+    if f.rotation != 0.0 {
+        apply_uv_rotation(batch, vert_before, f.rotation);
     }
 }
 
@@ -336,6 +341,32 @@ fn apply_mask_circle_clip(batch: &mut QuadBatch, vert_before: usize) {
         for (j, v) in batch.vertices[i..end].iter_mut().enumerate() {
             v.flags |= FLAG_CIRCLE_CLIP;
             v.local_uv = local_uvs[j];
+        }
+    }
+}
+
+/// Rotate texture UV coordinates around their center for vertices added after `vert_before`.
+///
+/// WoW's Texture:SetRotation(radians) rotates the texture image within the quad bounds
+/// by rotating UV coordinates around the center of the UV region.
+/// Rotation is applied per-quad (4 vertices) to handle tiled textures correctly.
+fn apply_uv_rotation(batch: &mut QuadBatch, vert_before: usize, radians: f32) {
+    let verts = &mut batch.vertices[vert_before..];
+    if verts.len() < 4 {
+        return;
+    }
+    let (sin_r, cos_r) = radians.sin_cos();
+    // Process each quad (4 vertices) independently
+    for chunk in verts.chunks_exact_mut(4) {
+        let cx = (chunk[0].tex_coords[0] + chunk[1].tex_coords[0]
+            + chunk[2].tex_coords[0] + chunk[3].tex_coords[0]) * 0.25;
+        let cy = (chunk[0].tex_coords[1] + chunk[1].tex_coords[1]
+            + chunk[2].tex_coords[1] + chunk[3].tex_coords[1]) * 0.25;
+        for v in chunk.iter_mut() {
+            let du = v.tex_coords[0] - cx;
+            let dv = v.tex_coords[1] - cy;
+            v.tex_coords[0] = cx + du * cos_r - dv * sin_r;
+            v.tex_coords[1] = cy + du * sin_r + dv * cos_r;
         }
     }
 }

@@ -16,6 +16,7 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_vertex_color_methods(methods);
     add_tex_coord_methods(methods);
     add_mask_methods(methods);
+    add_rotation_methods(methods);
     add_draw_layer_methods(methods);
     add_visual_methods(methods);
 }
@@ -483,6 +484,26 @@ fn add_mask_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 
     methods.add_method("GetMaskTexture", |_, _this, _index: i32| Ok(Value::Nil));
+}
+
+/// SetRotation, GetRotation — rotate texture UVs around center.
+fn add_rotation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetRotation", |_, this, radians: f64| {
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.rotation = radians as f32;
+        }
+        Ok(())
+    });
+
+    methods.add_method("GetRotation", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state
+            .widgets
+            .get(this.id)
+            .map(|f| f.rotation as f64)
+            .unwrap_or(0.0))
+    });
 }
 
 /// SetGradient, SetDrawLayer, GetDrawLayer.
