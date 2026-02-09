@@ -28,6 +28,12 @@ pub fn apply(env: &WowLuaEnv) {
     show_chat_frame(env);
     init_bag_bar(env);
     hide_super_tracked_frame(env);
+    patch_edit_mode_manager(env);
+    patch_compact_raid_container_pools(env);
+    stub_arena_globals(env);
+    patch_lfg_backfill(env);
+    init_console_saved_vars(env);
+    init_lfg_events_in_background(env);
 }
 
 /// SuperTrackedFrame shows a quest navigation arrow positioned by the engine's
@@ -539,6 +545,200 @@ fn patch_character_frame_subframes(env: &WowLuaEnv) {
                     _G[name]:Hide()
                 end
             end
+        end
+    "#,
+    );
+}
+
+/// Patch EditModeManagerFrame after addon loading.
+///
+/// Before EDIT_MODE_LAYOUTS_UPDATED fires, layoutInfo is nil. Guard
+/// GetActiveLayoutInfo with a fallback. Replace InitSystemAnchors with a
+/// custom implementation that reads the active preset layout and applies
+/// anchorInfo to all 43 registered system frames. Stub UpdateSystems as
+/// a no-op since our InitSystemAnchors already handles positioning and
+/// the full UpdateSystem chain has too many dependencies.
+fn patch_edit_mode_manager(env: &WowLuaEnv) {
+    patch_edit_mode_get_active_layout(env);
+    patch_edit_mode_init_anchors(env);
+    patch_edit_mode_update_systems(env);
+    patch_edit_mode_default_anchor(env);
+}
+
+/// Guard GetActiveLayoutInfo against nil layoutInfo (pre-event calls).
+fn patch_edit_mode_get_active_layout(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not EditModeManagerFrame then return end
+        local emm = EditModeManagerFrame
+        local origGetActiveLayoutInfo = emm.GetActiveLayoutInfo
+        function emm:GetActiveLayoutInfo()
+            if not self.layoutInfo then
+                return { layoutType = 0, layoutIndex = 1, systems = {} }
+            end
+            return origGetActiveLayoutInfo(self)
+        end
+    "#,
+    );
+}
+
+/// Custom InitSystemAnchors: apply preset layout anchors directly.
+///
+/// Builds a lookup from (system, systemIndex) → sysInfo, then iterates
+/// registeredSystemFrames and calls ClearAllPoints + SetPoint for each.
+/// Sets systemInfo on each frame so IsInitialized() returns true.
+fn patch_edit_mode_init_anchors(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not EditModeManagerFrame then return end
+        local emm = EditModeManagerFrame
+        function emm:InitSystemAnchors()
+            local activeLayout = self:GetActiveLayoutInfo()
+            if not activeLayout or not activeLayout.systems then return end
+
+            -- Build lookup: "system:systemIndex" -> sysInfo
+            local lookup = {}
+            for _, sysInfo in ipairs(activeLayout.systems) do
+                local idx = sysInfo.systemIndex or 0
+                local key = tostring(sysInfo.system) .. ":" .. tostring(idx)
+                lookup[key] = sysInfo
+            end
+
+            -- Apply anchors to all registered frames
+            for _, frame in ipairs(self.registeredSystemFrames) do
+                local idx = frame.systemIndex or 0
+                local key = tostring(frame.system) .. ":" .. tostring(idx)
+                local sysInfo = lookup[key]
+                if sysInfo and sysInfo.anchorInfo then
+                    frame:ClearAllPoints()
+                    local a = sysInfo.anchorInfo
+                    local rel = a.relativeTo
+                    if type(rel) == "string" then
+                        rel = _G[rel] or rel
+                    end
+                    frame:SetPoint(
+                        a.point, rel, a.relativePoint,
+                        a.offsetX, a.offsetY
+                    )
+                    -- Set systemInfo so IsInitialized() returns true
+                    frame.systemInfo = sysInfo
+                end
+            end
+        end
+    "#,
+    );
+}
+
+/// Stub UpdateSystems — InitSystemAnchors handles positioning and the
+/// full UpdateSystem chain (settings, dialogs, etc.) isn't needed.
+fn patch_edit_mode_update_systems(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not EditModeManagerFrame then return end
+        function EditModeManagerFrame:UpdateSystems() end
+    "#,
+    );
+}
+
+/// Provide a fallback GetDefaultAnchor for frames that query it.
+fn patch_edit_mode_default_anchor(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not EditModeManagerFrame then return end
+        function EditModeManagerFrame:GetDefaultAnchor(frame)
+            return {
+                point = "TOPRIGHT",
+                relativeTo = UIParent,
+                relativePoint = "TOPRIGHT",
+                offsetX = -205,
+                offsetY = -13,
+            }
+        end
+    "#,
+    );
+}
+
+/// CompactRaidFrameContainer.dividerVerticalPool/dividerHorizontalPool are
+/// initialized in CompactRaidFrameManager_OnLoad, which may fail before
+/// reaching the pool creation code. Create stub pools so event handlers
+/// that call ReleaseAll() don't error.
+fn patch_compact_raid_container_pools(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if CompactRaidFrameContainer then
+            local c = CompactRaidFrameContainer
+            local stubPool = { ReleaseAll = function() end, Acquire = function() end }
+            if not c.dividerVerticalPool then
+                c.dividerVerticalPool = stubPool
+            end
+            if not c.dividerHorizontalPool then
+                c.dividerHorizontalPool = stubPool
+            end
+        end
+    "#,
+    );
+}
+
+/// GetArenaOpponentSpec is a C function in WoW that returns spec info for
+/// arena opponents. Stub it so CompactArenaFrame OnLoad doesn't crash.
+fn stub_arena_globals(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not GetArenaOpponentSpec then
+            GetArenaOpponentSpec = function() return 0 end
+        end
+    "#,
+    );
+}
+
+/// LFGBackfillCover_Update is called with LFDQueueFrame.PartyBackfill which
+/// is nil when the template child isn't created. Wrap the function to
+/// silently ignore nil self.
+fn patch_lfg_backfill(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if LFGBackfillCover_Update then
+            local orig = LFGBackfillCover_Update
+            LFGBackfillCover_Update = function(self, ...)
+                if not self then return end
+                return orig(self, ...)
+            end
+        end
+    "#,
+    );
+}
+
+/// Blizzard_Console_SavedVars is normally loaded from WTF/SavedVariables.
+/// Without it, DeveloperConsoleMixin:OnLoad sets self.savedVars = nil, and
+/// ShouldEditBoxTakeFocus (called via OnUpdate) crashes accessing .isShown.
+/// Initialize the global and patch the existing frame since OnLoad already ran.
+fn init_console_saved_vars(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not Blizzard_Console_SavedVars then
+            Blizzard_Console_SavedVars = {
+                isShown = false,
+                commandHistory = {},
+                messageHistory = {},
+                height = 300,
+                fontHeight = 14,
+            }
+        end
+        if DeveloperConsole and not DeveloperConsole.savedVars then
+            DeveloperConsole.savedVars = Blizzard_Console_SavedVars
+        end
+    "#,
+    );
+}
+
+/// LFGListFrame_OnLoad initializes EventsInBackground after registering
+/// events. If OnLoad fails partway through (e.g. missing API), events fire
+/// with EventsInBackground still nil. Initialize it as an empty table.
+fn init_lfg_events_in_background(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if LFGListFrame and not LFGListFrame.EventsInBackground then
+            LFGListFrame.EventsInBackground = {}
         end
     "#,
     );
