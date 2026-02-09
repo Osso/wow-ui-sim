@@ -323,13 +323,11 @@ fn set_statusbar_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua:
 
 /// Fire OnValueChanged script with the new value as argument.
 fn fire_value_changed(lua: &mlua::Lua, frame_id: u64, value: f64) -> mlua::Result<()> {
-    if let Some(func) = crate::lua_api::script_helpers::get_script(lua, frame_id, "OnValueChanged") {
-        if let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, frame_id) {
-            if let Err(e) = func.call::<()>((frame_ud, value)) {
+    if let Some(func) = crate::lua_api::script_helpers::get_script(lua, frame_id, "OnValueChanged")
+        && let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, frame_id)
+            && let Err(e) = func.call::<()>((frame_ud, value)) {
                 crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
             }
-        }
-    }
     Ok(())
 }
 
