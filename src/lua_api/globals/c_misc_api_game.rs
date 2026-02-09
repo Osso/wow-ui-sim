@@ -231,15 +231,14 @@ fn register_global_action_stubs(lua: &Lua) -> Result<()> {
     g.set("IsItemAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     g.set("IsCurrentAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     g.set("IsAutoRepeatAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
-    g.set("IsUsableAction", lua.create_function(|_, _s: Option<i32>| Ok((false, false)))?)?;
     g.set("IsAttackAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
-    g.set("HasAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    // HasAction, GetActionInfo, GetActionTexture, IsUsableAction have stateful
+    // implementations in player_api.rs — don't overwrite them with stubs here.
     g.set("GetActionText", lua.create_function(|_, _s: Option<i32>| Ok(Value::Nil))?)?;
     g.set("GetActionCount", lua.create_function(|_, _s: Option<i32>| Ok(0i32))?)?;
-    g.set("GetActionTexture", lua.create_function(|_, _s: Option<i32>| Ok(Value::Nil))?)?;
-    g.set("GetActionInfo", lua.create_function(|_, _s: Option<i32>| Ok((Value::Nil, Value::Nil, Value::Nil)))?)?;
     g.set("GetActionCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64, false)))?)?;
     g.set("GetActionCharges", lua.create_function(|_, _s: Option<i32>| Ok((0i32, 0i32, 0.0f64, 0.0f64)))?)?;
+    g.set("GetActionLossOfControlCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64)))?)?;
     Ok(())
 }
 
@@ -314,7 +313,12 @@ fn register_minimap_globals(lua: &Lua) -> Result<()> {
     g.set("ToggleExpansionLandingPage", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("CovenantCalling_CheckCallings", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("ToggleMajorFactionRenown", lua.create_function(|_, _fid: Value| Ok(()))?)?;
-    g.set("GetGameTime", lua.create_function(|_, ()| Ok((12i32, 0i32)))?)?;
+    g.set("GetGameTime", lua.create_function(|lua, ()| {
+        // Return local (hour, minute) via Lua's os.date to match the system clock.
+        let hour: i32 = lua.load("tonumber(os.date('%H'))").eval()?;
+        let min: i32 = lua.load("tonumber(os.date('%M'))").eval()?;
+        Ok((hour, min))
+    })?)?;
     Ok(())
 }
 
