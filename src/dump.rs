@@ -227,7 +227,7 @@ fn resolve_display_text(widgets: &WidgetRegistry, frame: &Frame) -> Option<Strin
 }
 
 /// Strip WoW escape sequences (|T...|t texture, |c...|r color) for cleaner display.
-fn strip_wow_escapes(s: &str) -> String {
+pub fn strip_wow_escapes(s: &str) -> String {
     let mut result = String::with_capacity(s.len());
     let mut chars = s.chars().peekable();
     while let Some(c) = chars.next() {
@@ -243,6 +243,21 @@ fn strip_wow_escapes(s: &str) -> String {
 /// Skip a single WoW escape sequence starting after the '|' character.
 fn skip_wow_escape(chars: &mut std::iter::Peekable<std::str::Chars>) {
     match chars.peek() {
+        // |Htype:data|h — hyperlink open tag, skip to closing |h
+        Some('H') => {
+            chars.next();
+            while let Some(ch) = chars.next() {
+                if ch == '|' && chars.peek() == Some(&'h') {
+                    chars.next();
+                    break;
+                }
+            }
+        }
+        // |h — hyperlink close tag
+        Some('h') => {
+            chars.next();
+        }
+        // |T...|t — texture
         Some('T') => {
             chars.next();
             while let Some(&ch) = chars.peek() {
@@ -256,12 +271,14 @@ fn skip_wow_escape(chars: &mut std::iter::Peekable<std::str::Chars>) {
         Some('t') => {
             chars.next();
         }
+        // |cXXXXXXXX — color
         Some('c') => {
             chars.next();
             for _ in 0..8 {
                 chars.next();
             }
         }
+        // |r — color reset
         Some('r') => {
             chars.next();
         }

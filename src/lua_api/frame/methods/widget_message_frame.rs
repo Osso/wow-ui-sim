@@ -320,7 +320,8 @@ fn add_message_impl(this: &FrameHandle, args: mlua::MultiValue) {
         let name = state.widgets.get(this.id)
             .and_then(|w| w.name.as_deref())
             .unwrap_or("?");
-        eprintln!("[{name}] {text}");
+        let clean = crate::dump::strip_wow_escapes(&text);
+        eprintln!("[{name}] {clean}");
     }
     let mut state = this.state.borrow_mut();
     let timestamp = state.start_time.elapsed().as_secs_f64();
