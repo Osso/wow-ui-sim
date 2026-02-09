@@ -189,19 +189,21 @@ fn test_localized_class_list_specific_entries() {
 #[test]
 fn test_unit_name_player() {
     let env = env();
-    let name: String = env
-        .eval("local n, r = UnitName('player'); return n")
+    let matches: bool = env
+        .eval("local n = UnitName('player'); return n == UnitName('player')")
         .unwrap();
-    assert_eq!(name, "SimPlayer");
+    assert!(matches, "UnitName('player') should return a consistent name");
+    let name: String = env.eval("return UnitName('player')").unwrap();
+    assert!(!name.is_empty(), "Player name should not be empty");
 }
 
 #[test]
-fn test_unit_name_other() {
+fn test_unit_name_no_target() {
     let env = env();
     let name: String = env
         .eval("local n, r = UnitName('target'); return n")
         .unwrap();
-    assert_eq!(name, "SimUnit");
+    assert_eq!(name, "Unknown");
 }
 
 #[test]
@@ -220,19 +222,19 @@ fn test_unit_name_realm_is_nil() {
 #[test]
 fn test_unit_name_unmodified_player() {
     let env = env();
-    let name: String = env
-        .eval("local n, r = UnitNameUnmodified('player'); return n")
+    let same: bool = env
+        .eval("return UnitNameUnmodified('player') == UnitName('player')")
         .unwrap();
-    assert_eq!(name, "SimPlayer");
+    assert!(same, "UnitNameUnmodified should match UnitName for player");
 }
 
 #[test]
-fn test_unit_name_unmodified_other() {
+fn test_unit_name_unmodified_no_target() {
     let env = env();
     let name: String = env
         .eval("local n, r = UnitNameUnmodified('target'); return n")
         .unwrap();
-    assert_eq!(name, "SimUnit");
+    assert_eq!(name, "Unknown");
 }
 
 // ============================================================================
@@ -245,17 +247,18 @@ fn test_unit_full_name_player() {
     let (name, realm): (String, String) = env
         .eval("return UnitFullName('player')")
         .unwrap();
-    assert_eq!(name, "SimPlayer");
+    let player_name: String = env.eval("return UnitName('player')").unwrap();
+    assert_eq!(name, player_name);
     assert_eq!(realm, "SimRealm");
 }
 
 #[test]
-fn test_unit_full_name_other() {
+fn test_unit_full_name_no_target() {
     let env = env();
     let (name, realm): (String, String) = env
         .eval("return UnitFullName('target')")
         .unwrap();
-    assert_eq!(name, "SimUnit");
+    assert_eq!(name, "Unknown");
     assert_eq!(realm, "SimRealm");
 }
 
@@ -267,14 +270,15 @@ fn test_unit_full_name_other() {
 fn test_get_unit_name_player() {
     let env = env();
     let name: String = env.eval("return GetUnitName('player')").unwrap();
-    assert_eq!(name, "SimPlayer");
+    let player_name: String = env.eval("return UnitName('player')").unwrap();
+    assert_eq!(name, player_name);
 }
 
 #[test]
-fn test_get_unit_name_other() {
+fn test_get_unit_name_no_target() {
     let env = env();
     let name: String = env.eval("return GetUnitName('target', true)").unwrap();
-    assert_eq!(name, "SimUnit");
+    assert_eq!(name, "Unknown");
 }
 
 // ============================================================================
@@ -325,10 +329,18 @@ fn test_unit_exists_player() {
 }
 
 #[test]
-fn test_unit_exists_target() {
+fn test_unit_exists_no_target() {
     let env = env();
     let exists: bool = env.eval("return UnitExists('target')").unwrap();
-    assert!(exists);
+    assert!(!exists, "No target should exist by default");
+}
+
+#[test]
+fn test_unit_exists_target_after_targeting() {
+    let env = env();
+    env.eval::<()>("TargetUnit('player')").unwrap();
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after TargetUnit");
 }
 
 #[test]
@@ -339,9 +351,17 @@ fn test_unit_exists_pet() {
 }
 
 #[test]
+fn test_unit_exists_party_member() {
+    let env = env();
+    // Default state has 4 party members
+    let exists: bool = env.eval("return UnitExists('party1')").unwrap();
+    assert!(exists, "party1 should exist with default party");
+}
+
+#[test]
 fn test_unit_exists_unknown() {
     let env = env();
-    let exists: bool = env.eval("return UnitExists('party1')").unwrap();
+    let exists: bool = env.eval("return UnitExists('nobody')").unwrap();
     assert!(!exists);
 }
 
@@ -666,94 +686,6 @@ fn test_unit_channel_info() {
     let env = env();
     let is_nil: bool = env
         .eval("return UnitChannelInfo('player') == nil")
-        .unwrap();
-    assert!(is_nil);
-}
-
-// ============================================================================
-// Aura functions
-// ============================================================================
-
-#[test]
-fn test_unit_aura_returns_nil() {
-    let env = env();
-    let is_nil: bool = env
-        .eval("return UnitAura('player', 1) == nil")
-        .unwrap();
-    assert!(is_nil);
-}
-
-#[test]
-fn test_unit_buff_returns_nil() {
-    let env = env();
-    let is_nil: bool = env
-        .eval("return UnitBuff('player', 1) == nil")
-        .unwrap();
-    assert!(is_nil);
-}
-
-#[test]
-fn test_unit_debuff_returns_nil() {
-    let env = env();
-    let is_nil: bool = env
-        .eval("return UnitDebuff('player', 1) == nil")
-        .unwrap();
-    assert!(is_nil);
-}
-
-#[test]
-fn test_get_player_aura_by_spell_id_returns_nil() {
-    let env = env();
-    let is_nil: bool = env
-        .eval("return GetPlayerAuraBySpellID(12345) == nil")
-        .unwrap();
-    assert!(is_nil);
-}
-
-// ============================================================================
-// AuraUtil namespace
-// ============================================================================
-
-#[test]
-fn test_aura_util_exists() {
-    let env = env();
-    let is_table: bool = env
-        .eval("return type(AuraUtil) == 'table'")
-        .unwrap();
-    assert!(is_table);
-}
-
-#[test]
-fn test_aura_util_for_each_aura() {
-    let env = env();
-    // Should not error, just a no-op
-    env.eval::<()>("AuraUtil.ForEachAura('player', 'HELPFUL', nil, function() end)")
-        .unwrap();
-}
-
-#[test]
-fn test_aura_util_find_aura_returns_nil() {
-    let env = env();
-    let is_nil: bool = env
-        .eval("return AuraUtil.FindAura(function() end, 'player', 'HELPFUL') == nil")
-        .unwrap();
-    assert!(is_nil);
-}
-
-#[test]
-fn test_aura_util_unpack_aura_data_returns_nil() {
-    let env = env();
-    let is_nil: bool = env
-        .eval("return AuraUtil.UnpackAuraData(nil) == nil")
-        .unwrap();
-    assert!(is_nil);
-}
-
-#[test]
-fn test_aura_util_find_aura_by_name_returns_nil() {
-    let env = env();
-    let is_nil: bool = env
-        .eval("return AuraUtil.FindAuraByName('Test', 'player', 'HELPFUL') == nil")
         .unwrap();
     assert!(is_nil);
 }

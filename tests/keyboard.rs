@@ -470,7 +470,8 @@ fn test_f1_targets_player() {
     assert!(exists, "Target should exist after F1");
 
     let name: String = env.eval("return UnitName('target')").unwrap();
-    assert_eq!(name, "SimPlayer", "F1 should target player");
+    let player_name: String = env.eval("return UnitName('player')").unwrap();
+    assert_eq!(name, player_name, "F1 should target player");
 }
 
 #[test]
@@ -487,6 +488,45 @@ fn test_f2_targets_party1() {
 
     let is_player: bool = env.eval("return UnitIsPlayer('target')").unwrap();
     assert!(is_player, "Party target should be a player");
+}
+
+#[test]
+fn test_f3_targets_party2() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.send_key_press("F3", None).unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after F3");
+
+    let name: String = env.eval("return UnitName('target')").unwrap();
+    assert_eq!(name, "Kazzara", "F3 should target party member 2");
+}
+
+#[test]
+fn test_f4_targets_party3() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.send_key_press("F4", None).unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after F4");
+
+    let name: String = env.eval("return UnitName('target')").unwrap();
+    assert_eq!(name, "Sylvanas", "F4 should target party member 3");
+}
+
+#[test]
+fn test_f5_targets_party4() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.send_key_press("F5", None).unwrap();
+
+    let exists: bool = env.eval("return UnitExists('target')").unwrap();
+    assert!(exists, "Target should exist after F5");
+
+    let name: String = env.eval("return UnitName('target')").unwrap();
+    assert_eq!(name, "Jaina", "F5 should target party member 4");
 }
 
 #[test]

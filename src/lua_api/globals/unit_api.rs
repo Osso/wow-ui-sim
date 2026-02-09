@@ -71,7 +71,7 @@ pub fn register_unit_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> 
     register_threat_functions(lua)?;
     register_classification_functions(lua)?;
     register_casting_functions(lua)?;
-    register_aura_functions(lua)?;
+    register_aura_functions(lua, state.clone())?;
     register_weapon_enchant_functions(lua)?;
     register_xp_functions(lua)?;
     register_pvp_vehicle_functions(lua, state.clone())?;
@@ -84,19 +84,25 @@ pub fn register_unit_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> 
 /// Register UnitRace, UnitSex, UnitGUID, UnitLevel, UnitEffectiveLevel,
 /// UnitExists, UnitFactionGroup.
 fn register_identity_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
-    register_identity_stubs(lua)?;
+    register_identity_stubs(lua, state.clone())?;
     register_identity_party_aware(lua, state)
 }
 
-/// Register identity functions that don't need party state.
-fn register_identity_stubs(lua: &Lua) -> Result<()> {
+/// Register identity functions that read player race/faction from state.
+fn register_identity_stubs(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
+    let st = state.clone();
     globals.set(
         "UnitRace",
-        lua.create_function(|lua, _unit: Option<String>| {
+        lua.create_function(move |lua, _unit: Option<String>| {
+            let s = st.borrow();
+            let (name, file, _) = crate::lua_api::state::RACE_DATA
+                .get(s.player_race_index)
+                .copied()
+                .unwrap_or(("Human", "Human", "Alliance"));
             Ok(MultiValue::from_vec(vec![
-                Value::String(lua.create_string("Human")?),
-                Value::String(lua.create_string("Human")?),
+                Value::String(lua.create_string(name)?),
+                Value::String(lua.create_string(file)?),
             ]))
         })?,
     )?;
@@ -104,10 +110,15 @@ fn register_identity_stubs(lua: &Lua) -> Result<()> {
     globals.set("UnitEffectiveLevel", lua.create_function(|_, _unit: Option<String>| Ok(70))?)?;
     globals.set(
         "UnitFactionGroup",
-        lua.create_function(|lua, _unit: Option<String>| {
+        lua.create_function(move |lua, _unit: Option<String>| {
+            let s = state.borrow();
+            let (_, _, faction) = crate::lua_api::state::RACE_DATA
+                .get(s.player_race_index)
+                .copied()
+                .unwrap_or(("Human", "Human", "Alliance"));
             Ok(MultiValue::from_vec(vec![
-                Value::String(lua.create_string("Alliance")?),
-                Value::String(lua.create_string("Alliance")?),
+                Value::String(lua.create_string(faction)?),
+                Value::String(lua.create_string(faction)?),
             ]))
         })?,
     )?;
@@ -189,8 +200,8 @@ fn register_unit_level_exists(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result
 /// Register UnitClass, UnitClassBase, GetNumClasses, GetClassInfo,
 /// LocalizedClassList.
 fn register_class_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
-    register_unit_class(lua, state)?;
-    register_class_lookup_functions(lua)
+    register_unit_class(lua, state.clone())?;
+    register_class_lookup_functions(lua, state)
 }
 
 /// Register UnitClass with party member awareness.
@@ -217,7 +228,10 @@ fn register_unit_class(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                     ("Warrior", "WARRIOR", 1)
                 }
             } else {
-                ("Warrior", "WARRIOR", 1)
+                // Player
+                let s = state.borrow();
+                let (n, f) = class_info_by_index(s.player_class_index);
+                (n, f, s.player_class_index)
             };
             Ok(MultiValue::from_vec(vec![
                 Value::String(lua.create_string(name)?),
@@ -229,14 +243,16 @@ fn register_unit_class(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     Ok(())
 }
 
-/// Register stateless class lookup functions.
-fn register_class_lookup_functions(lua: &Lua) -> Result<()> {
+/// Register class lookup functions (some need state for player class).
+fn register_class_lookup_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
 
     globals.set(
         "UnitClassBase",
-        lua.create_function(|lua, _unit: Option<String>| {
-            Ok(Value::String(lua.create_string("WARRIOR")?))
+        lua.create_function(move |lua, _unit: Option<String>| {
+            let s = state.borrow();
+            let (_, file) = class_info_by_index(s.player_class_index);
+            Ok(Value::String(lua.create_string(file)?))
         })?,
     )?;
 
@@ -329,7 +345,7 @@ fn register_name_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
 /// Register unit state boolean functions: alive/dead, AFK/DND, combat
 /// relations, visibility.
 fn register_state_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
-    register_state_boolean_stubs(lua)?;
+    register_state_boolean_stubs(lua, state.clone())?;
     register_death_functions(lua, state.clone())?;
     register_state_comparisons(lua, state.clone())?;
     register_state_relations(lua, state)
@@ -362,23 +378,26 @@ fn register_death_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<(
 }
 
 /// Register single-unit boolean stubs (always false or always true).
-fn register_state_boolean_stubs(lua: &Lua) -> Result<()> {
+fn register_state_boolean_stubs(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
-    let false_stubs: &[&str] = &[
-        "UnitIsGhost",
-        "UnitIsAFK",
-        "UnitIsDND",
-        "UnitIsTapDenied",
-        "UnitIsCorpse",
-        "UnitIsWildBattlePet",
-        "UnitIsBattlePetCompanion",
-    ];
-    for &name in false_stubs {
+    for &name in &["UnitIsGhost", "UnitIsAFK", "UnitIsDND", "UnitIsTapDenied",
+                    "UnitIsCorpse", "UnitIsWildBattlePet", "UnitIsBattlePetCompanion",
+                    "UnitIsBossMob", "UnitIsQuestBoss", "UnitLeadsAnyGroup",
+                    "UnitIsUnconscious", "UnitIsBattlePet",
+                    "UnitIsOtherPlayersBattlePet", "UnitIsOtherPlayersPet"] {
         globals.set(name, lua.create_function(|_, _unit: Option<String>| Ok(false))?)?;
     }
     globals.set("UnitIsConnected", lua.create_function(|_, _unit: Option<String>| Ok(true))?)?;
-    globals.set("UnitIsVisible", lua.create_function(|_, _unit: Option<String>| Ok(true))?)?;
+    globals.set("UnitIsVisible", lua.create_function(move |_, unit: Option<String>| {
+        Ok(match unit.as_deref() {
+            Some("player" | "pet") => true,
+            Some("target") => state.borrow().current_target.is_some(),
+            _ => false,
+        })
+    })?)?;
     globals.set("UnitBattlePetLevel", lua.create_function(|_, _unit: Option<String>| Ok(0))?)?;
+    globals.set("UnitBattlePetType", lua.create_function(|_, _unit: Option<String>| Ok(0i32))?)?;
+    globals.set("UnitCanCooperate", lua.create_function(|_, (_u1, _u2): (String, String)| Ok(false))?)?;
     Ok(())
 }
 
@@ -512,7 +531,7 @@ fn register_threat_functions(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Register UnitClassification, UnitCreatureType, UnitCreatureFamily.
+/// Register UnitClassification, UnitCreatureType, UnitCreatureFamily, UnitReaction.
 fn register_classification_functions(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
@@ -531,6 +550,11 @@ fn register_classification_functions(lua: &Lua) -> Result<()> {
     globals.set(
         "UnitCreatureFamily",
         lua.create_function(|_, _unit: Option<String>| Ok(Value::Nil))?,
+    )?;
+    // Reaction 1-8: 1=Exceptionally Hostile .. 4=Neutral .. 5=Friendly .. 8=Exalted
+    globals.set(
+        "UnitReaction",
+        lua.create_function(|_, (_unit1, _unit2): (String, String)| Ok(5i32))?,
     )?;
 
     Ok(())
@@ -553,69 +577,9 @@ fn register_casting_functions(lua: &Lua) -> Result<()> {
 }
 
 /// Register UnitAura, UnitBuff, UnitDebuff, GetPlayerAuraBySpellID,
-/// and the AuraUtil namespace.
-fn register_aura_functions(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-
-    let aura_stubs: &[&str] = &["UnitAura", "UnitBuff", "UnitDebuff"];
-    for &name in aura_stubs {
-        globals.set(
-            name,
-            lua.create_function(
-                |_, (_unit, _index, _filter): (String, i32, Option<String>)| Ok(Value::Nil),
-            )?,
-        )?;
-    }
-
-    globals.set(
-        "GetPlayerAuraBySpellID",
-        lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?,
-    )?;
-
-    globals.set("AuraUtil", register_aura_util(lua)?)?;
-    Ok(())
-}
-
-/// AuraUtil namespace stubs.
-fn register_aura_util(lua: &Lua) -> Result<mlua::Table> {
-    let aura_util = lua.create_table()?;
-    aura_util.set(
-        "ForEachAura",
-        lua.create_function(
-            |_,
-             (_unit, _filter, _max, _cb, _packed): (
-                String,
-                String,
-                Option<i32>,
-                mlua::Function,
-                Option<bool>,
-            )| { Ok(()) },
-        )?,
-    )?;
-    aura_util.set(
-        "FindAura",
-        lua.create_function(
-            |_,
-             (_pred, _unit, _filter, _spell, _caster): (
-                mlua::Function,
-                String,
-                String,
-                Option<i32>,
-                Option<String>,
-            )| Ok(Value::Nil),
-        )?,
-    )?;
-    aura_util.set(
-        "UnpackAuraData",
-        lua.create_function(|_, _aura_data: Value| Ok(Value::Nil))?,
-    )?;
-    aura_util.set(
-        "FindAuraByName",
-        lua.create_function(|_, (_name, _unit, _filter): (String, String, String)| {
-            Ok(Value::Nil)
-        })?,
-    )?;
-    Ok(aura_util)
+/// and the AuraUtil namespace. Delegated to aura_api module.
+fn register_aura_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    super::aura_api::register_aura_api(lua, state)
 }
 
 /// Register GetWeaponEnchantInfo.
