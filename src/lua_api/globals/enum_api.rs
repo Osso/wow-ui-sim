@@ -278,8 +278,8 @@ fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
     ])?;
 
     val_enum(lua, enum_table, "Damageclass", &[
-        ("MaskPhysical", 1), ("MaskHoly", 2), ("MaskFire", 4), ("MaskNature", 8),
-        ("MaskFrost", 16), ("MaskShadow", 32), ("MaskArcane", 64),
+        ("MaskNone", 0), ("MaskPhysical", 1), ("MaskHoly", 2), ("MaskFire", 4),
+        ("MaskNature", 8), ("MaskFrost", 16), ("MaskShadow", 32), ("MaskArcane", 64),
     ])?;
 
     seq_enum(lua, enum_table, "AuctionHouseFilter", &[
