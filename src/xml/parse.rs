@@ -54,13 +54,11 @@ fn strip_duplicate_size_elements(xml: &str) -> String {
     }
 
     let mut out = String::with_capacity(xml.len());
-    for entry in &result {
-        if let Some(idx) = entry {
-            if !out.is_empty() {
-                out.push('\n');
-            }
-            out.push_str(lines[*idx]);
+    for idx in result.iter().flatten() {
+        if !out.is_empty() {
+            out.push('\n');
         }
+        out.push_str(lines[*idx]);
     }
     out
 }
@@ -98,7 +96,7 @@ fn strip_duplicate_script_handlers(xml: &str) -> String {
             // Extract tag name (e.g. "OnEnter" from "<OnEnter ...>")
             let after_lt = &trimmed[1..];
             let tag_end = after_lt
-                .find(|c: char| c == ' ' || c == '>' || c == '/')
+                .find([' ', '>', '/'])
                 .unwrap_or(after_lt.len());
             let tag_name = &after_lt[..tag_end];
 
@@ -121,8 +119,8 @@ fn strip_duplicate_script_handlers(xml: &str) -> String {
             if let Some((prev_start, prev_end)) =
                 handlers.insert(tag_name.to_string(), (start, end))
             {
-                for idx in prev_start..=prev_end {
-                    remove[idx] = true;
+                for flag in &mut remove[prev_start..=prev_end] {
+                    *flag = true;
                 }
             }
 
