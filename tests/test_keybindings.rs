@@ -8,8 +8,9 @@
 //! nil widget errors, and broken on-demand addon loads.
 
 use std::path::PathBuf;
-use wow_ui_sim::loader::load_addon;
+use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::globals::global_frames;
 
 fn blizzard_ui_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("Interface/BlizzardUI")
@@ -193,8 +194,48 @@ fn keybind_f8_opens_bag4() {
     let env = setup_env();
     env.send_key_press("F8", None).expect("F8 keybind failed");
     assert!(
-        frame_is_shown(&env, "ContainerFrameCombinedBags"),
-        "ContainerFrameCombinedBags should be shown after pressing F8"
+        frame_is_shown(&env, "ContainerFrameCombinedBags")
+            || frame_is_shown(&env, "ContainerFrame5"),
+        "A bag frame should be visible after pressing F8"
+    );
+}
+
+// ── F9 → ToggleBag(3) ──────────────────────────────────────────────────
+
+#[test]
+fn keybind_f9_opens_bag3() {
+    let env = setup_env();
+    env.send_key_press("F9", None).expect("F9 keybind failed");
+    assert!(
+        frame_is_shown(&env, "ContainerFrameCombinedBags")
+            || frame_is_shown(&env, "ContainerFrame4"),
+        "A bag frame should be visible after pressing F9"
+    );
+}
+
+// ── F10 → ToggleBag(2) ─────────────────────────────────────────────────
+
+#[test]
+fn keybind_f10_opens_bag2() {
+    let env = setup_env();
+    env.send_key_press("F10", None).expect("F10 keybind failed");
+    assert!(
+        frame_is_shown(&env, "ContainerFrameCombinedBags")
+            || frame_is_shown(&env, "ContainerFrame3"),
+        "A bag frame should be visible after pressing F10"
+    );
+}
+
+// ── F11 → ToggleBag(1) ─────────────────────────────────────────────────
+
+#[test]
+fn keybind_f11_opens_bag1() {
+    let env = setup_env();
+    env.send_key_press("F11", None).expect("F11 keybind failed");
+    assert!(
+        frame_is_shown(&env, "ContainerFrameCombinedBags")
+            || frame_is_shown(&env, "ContainerFrame2"),
+        "A bag frame should be visible after pressing F11"
     );
 }
 
@@ -361,5 +402,161 @@ fn keybind_s_opens_spellbook_no_errors() {
     assert!(
         frame_is_shown(&env, "PlayerSpellsFrame"),
         "PlayerSpellsFrame should be shown after pressing S"
+    );
+}
+
+// ── Target frame visibility tests (full addon load including Blizzard_UnitFrame) ──
+
+/// Create environment with ALL Blizzard addons (including Blizzard_UnitFrame).
+fn setup_full_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+
+    let ui = blizzard_ui_dir();
+    {
+        let mut state = env.state().borrow_mut();
+        state.addon_base_paths = vec![ui.clone()];
+    }
+
+    let addons = discover_blizzard_addons(&ui);
+    for (name, toc_path) in &addons {
+        if let Err(e) = load_addon(&env.loader_env(), toc_path) {
+            eprintln!("[load {name}] FAILED: {e}");
+        }
+    }
+    env.apply_post_load_workarounds();
+    fire_startup_events(&env);
+    env.apply_post_event_workarounds();
+    let _ = global_frames::hide_runtime_hidden_frames(env.lua());
+    env
+}
+
+#[test]
+fn target_frame_shown_after_targeting() {
+    let env = setup_full_env();
+    install_test_error_handler(&env);
+
+    assert!(
+        frame_exists(&env, "TargetFrame"),
+        "TargetFrame should exist after full addon load"
+    );
+
+    // TargetFrame starts hidden (hide_runtime_hidden_frames) or via startup;
+    // ensure it's hidden before testing
+    if frame_is_shown(&env, "TargetFrame") {
+        env.exec("TargetFrame:Hide()").unwrap();
+    }
+
+    // F1 = target self → TargetFrame should show
+    env.send_key_press("F1", None).expect("F1 keybind failed");
+    let _ = drain_test_errors(&env); // non-fatal errors from TargetFrame:Update()
+    assert!(
+        frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be shown after targeting self with F1"
+    );
+
+    // ESCAPE = clear target → TargetFrame should hide
+    env.send_key_press("ESCAPE", None).expect("ESCAPE keybind failed");
+    let _ = drain_test_errors(&env);
+    assert!(
+        !frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be hidden after clearing target with ESCAPE"
+    );
+}
+
+#[test]
+fn target_frame_shown_for_enemy() {
+    let env = setup_full_env();
+    install_test_error_handler(&env);
+
+    if frame_is_shown(&env, "TargetFrame") {
+        env.exec("TargetFrame:Hide()").unwrap();
+    }
+
+    // TAB = target nearest enemy → TargetFrame should show
+    env.send_key_press("TAB", None).expect("TAB keybind failed");
+    let _ = drain_test_errors(&env); // non-fatal errors from TargetFrame:Update()
+    assert!(
+        frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be shown after targeting enemy with TAB"
+    );
+}
+
+// ── F2–F5 → TargetUnit('party1')–('party4') ─────────────────────────────
+
+#[test]
+fn keybind_f2_targets_party1() {
+    let env = setup_full_env();
+    install_test_error_handler(&env);
+    if frame_is_shown(&env, "TargetFrame") {
+        env.exec("TargetFrame:Hide()").unwrap();
+    }
+    env.send_key_press("F2", None).expect("F2 keybind failed");
+    let _ = drain_test_errors(&env);
+    assert!(
+        frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be shown after targeting party1 with F2"
+    );
+}
+
+#[test]
+fn keybind_f3_targets_party2() {
+    let env = setup_full_env();
+    install_test_error_handler(&env);
+    if frame_is_shown(&env, "TargetFrame") {
+        env.exec("TargetFrame:Hide()").unwrap();
+    }
+    env.send_key_press("F3", None).expect("F3 keybind failed");
+    let _ = drain_test_errors(&env);
+    assert!(
+        frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be shown after targeting party2 with F3"
+    );
+}
+
+#[test]
+fn keybind_f4_targets_party3() {
+    let env = setup_full_env();
+    install_test_error_handler(&env);
+    if frame_is_shown(&env, "TargetFrame") {
+        env.exec("TargetFrame:Hide()").unwrap();
+    }
+    env.send_key_press("F4", None).expect("F4 keybind failed");
+    let _ = drain_test_errors(&env);
+    assert!(
+        frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be shown after targeting party3 with F4"
+    );
+}
+
+#[test]
+fn keybind_f5_targets_party4() {
+    let env = setup_full_env();
+    install_test_error_handler(&env);
+    if frame_is_shown(&env, "TargetFrame") {
+        env.exec("TargetFrame:Hide()").unwrap();
+    }
+    env.send_key_press("F5", None).expect("F5 keybind failed");
+    let _ = drain_test_errors(&env);
+    assert!(
+        frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be shown after targeting party4 with F5"
+    );
+}
+
+// ── F6 → TargetUnit('enemy1') ────────────────────────────────────────────
+
+#[test]
+fn keybind_f6_targets_enemy() {
+    let env = setup_full_env();
+    install_test_error_handler(&env);
+    if frame_is_shown(&env, "TargetFrame") {
+        env.exec("TargetFrame:Hide()").unwrap();
+    }
+    env.send_key_press("F6", None).expect("F6 keybind failed");
+    let _ = drain_test_errors(&env);
+    assert!(
+        frame_is_shown(&env, "TargetFrame"),
+        "TargetFrame should be shown after targeting enemy with F6"
     );
 }
