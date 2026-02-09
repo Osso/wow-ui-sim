@@ -156,6 +156,7 @@ pub fn get_num_bindings(_lua: &Lua) -> Result<i32> {
 }
 
 /// Get binding at index (1-based). Returns (action, header, key1, key2).
+#[allow(clippy::type_complexity)]
 pub fn get_binding_at(lua: &Lua, index: i32) -> Result<(Option<String>, Option<String>, Option<String>, Option<String>)> {
     if index < 1 || index as usize > BINDING_ACTIONS.len() {
         return Ok((None, None, None, None));
