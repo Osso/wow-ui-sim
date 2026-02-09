@@ -1,7 +1,7 @@
 //! Hierarchy methods: GetParent, SetParent, GetNumChildren, GetChildren, GetRegions.
 
 use super::FrameHandle;
-use crate::widget::WidgetRegistry;
+use crate::widget::{FrameStrata, WidgetRegistry};
 use mlua::{UserDataMethods, Value};
 use std::rc::Rc;
 
@@ -68,6 +68,10 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
             }
         }
     }
+
+    // Recursively propagate strata/level to all descendants (pool-acquired
+    // frames keep stale levels from their original parent otherwise).
+    propagate_strata_level(widgets, child_id);
 
     // Add to new parent's children list
     if let Some(new_pid) = new_parent_id
@@ -184,4 +188,39 @@ fn add_children_region_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     methods.add_method("GetAdditionalRegions", |_, _this, ()| {
         Ok(mlua::MultiValue::new())
     });
+}
+
+/// Public wrapper for propagation, used by SetFrameLevel in methods_core.
+pub fn propagate_strata_level_pub(widgets: &mut WidgetRegistry, root_id: u64) {
+    propagate_strata_level(widgets, root_id);
+}
+
+/// BFS propagation of frame_strata and frame_level to all descendants.
+/// Each child inherits parent_strata (unless has_fixed_frame_strata) and
+/// parent_level + 1 (unless has_fixed_frame_level).
+fn propagate_strata_level(widgets: &mut WidgetRegistry, root_id: u64) {
+    let Some(root) = widgets.get(root_id) else { return };
+    let root_strata = root.frame_strata;
+    let root_level = root.frame_level;
+    let mut queue: Vec<(u64, FrameStrata, i32)> = root
+        .children
+        .iter()
+        .map(|&id| (id, root_strata, root_level))
+        .collect();
+
+    while let Some((child_id, parent_strata, parent_level)) = queue.pop() {
+        let Some(child) = widgets.get_mut(child_id) else { continue };
+        if !child.has_fixed_frame_strata {
+            child.frame_strata = parent_strata;
+        }
+        if !child.has_fixed_frame_level {
+            child.frame_level = parent_level + 1;
+        }
+        let child_strata = child.frame_strata;
+        let child_level = child.frame_level;
+        let children = child.children.clone();
+        for &grandchild_id in &children {
+            queue.push((grandchild_id, child_strata, child_level));
+        }
+    }
 }

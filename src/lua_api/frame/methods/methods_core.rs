@@ -467,6 +467,11 @@ fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             frame.frame_level = level;
             frame.has_fixed_frame_level = true;
         }
+        // Propagate to descendants (children inherit parent_level + 1)
+        super::methods_hierarchy::propagate_strata_level_pub(
+            &mut state.widgets,
+            this.id,
+        );
         Ok(())
     });
 
