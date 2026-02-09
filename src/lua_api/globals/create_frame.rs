@@ -27,6 +27,14 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 
         let ud = create_frame_userdata(lua, &state_clone, frame_id, name.as_deref())?;
 
+        // WoW registers named button's default texture children as globals:
+        // ButtonNameNormalTexture, ButtonNamePushedTexture, etc.
+        if matches!(widget_type, WidgetType::Button | WidgetType::CheckButton) {
+            if let Some(ref btn_name) = name {
+                register_button_child_globals(lua, &state_clone, frame_id, btn_name)?;
+            }
+        }
+
         // ItemButton intrinsic template defines mixin="ItemButtonMixin"
         if frame_type == "ItemButton" {
             let frame_key = format!("__frame_{}", frame_id);
@@ -56,38 +64,27 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         }
 
         // Apply user-specified templates from the registry
-        if let Some(tmpl) = template {
-            apply_templates_from_registry(lua, &ref_name, &tmpl);
-        }
+        if let Some(ref tmpl) = template {
+            apply_templates_from_registry(lua, &ref_name, tmpl);
 
-        // For non-intrinsic types, also check if the user template itself is
-        // an intrinsic type (e.g. CreateFrame("Button", nil, parent, "DropdownButton"))
-        // and set the intrinsic property accordingly.
-        if !is_intrinsic {
-            if let Some(ref tmpl) = template {
-                for t in tmpl.split(',') {
-                    let t = t.trim();
-                    if crate::xml::is_intrinsic_type(t) {
-                        let code = format!(
-                            "{}.intrinsic = \"{}\"",
-                            lua_global_ref(&ref_name),
-                            t
-                        );
-                        let _ = lua.load(&code).exec();
-                        break;
-                    }
-                }
+            // If any template in the chain defines parentArray, insert this frame
+            // into its parent's array.  This handles dynamic CreateFrame calls like
+            // CreateFrame("Frame", nil, self, "PreMatchArenaUnitFrameTemplate")
+            // where PreMatchArenaUnitFrameTemplate has parentArray="preMatchUnitFrames".
+            if parent_id.is_some() {
+                apply_parent_array_from_template(lua, tmpl, frame_id, &ref_name);
             }
         }
+
 
         // Fire OnLoad on the frame itself (WoW fires OnLoad before CreateFrame returns).
         // Skip when the XML loader is in charge — it fires OnLoad via
         // fire_lifecycle_scripts after all inline properties (KeyValues, scripts,
         // layers) are applied.  Without this, OnLoad fires before inline content
         // is set, causing nil-reference errors (e.g. ActionBar numButtons).
-        let suppress = lua.globals().get::<bool>("__suppress_create_frame_onload")
-            .unwrap_or(false);
-        if !suppress {
+        let suppress_depth: i32 = lua.globals().get("__suppress_create_frame_onload")
+            .unwrap_or(0);
+        if suppress_depth <= 0 {
             fire_on_load(lua, &ref_name);
         }
 
@@ -225,6 +222,34 @@ fn create_frame_userdata(
     lua.globals().set(frame_key.as_str(), ud.clone())?;
 
     Ok(ud)
+}
+
+/// Register button's default texture children as Lua globals.
+/// In WoW, named buttons get globals like `ButtonNameNormalTexture`, etc.
+fn register_button_child_globals(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    button_name: &str,
+) -> Result<()> {
+    let keys: Vec<(String, u64)> = {
+        let st = state.borrow();
+        let Some(btn) = st.widgets.get(frame_id) else { return Ok(()) };
+        ["NormalTexture", "PushedTexture", "HighlightTexture", "DisabledTexture", "Text"]
+            .iter()
+            .filter_map(|key| {
+                btn.children_keys.get(*key).map(|&id| (key.to_string(), id))
+            })
+            .collect()
+    };
+    let globals = lua.globals();
+    for (key, child_id) in keys {
+        let global_name = format!("{}{}", button_name, key);
+        let handle = FrameHandle { id: child_id, state: Rc::clone(state) };
+        let ud = lua.create_userdata(handle)?;
+        globals.set(global_name.as_str(), ud)?;
+    }
+    Ok(())
 }
 
 /// Create default children for widget types that fundamentally need them.
@@ -412,6 +437,29 @@ fn create_item_button_intrinsics(state: &mut SimState, frame_id: u64) {
         btn.children_keys.insert("IconOverlay2".to_string(), icon_overlay2_id);
         btn.children_keys.insert("searchOverlay".to_string(), search_overlay_id);
         btn.children_keys.insert("ItemContextOverlay".to_string(), context_overlay_id);
+    }
+}
+
+/// Check the template chain for a `parentArray` attribute and insert the frame
+/// into its parent's Lua array if found.
+fn apply_parent_array_from_template(lua: &Lua, template_names: &str, _frame_id: u64, ref_name: &str) {
+    let chain = crate::xml::get_template_chain(template_names);
+    for entry in &chain {
+        if let Some(parent_array) = &entry.frame.parent_array {
+            let frame_ref = lua_global_ref(ref_name);
+            let code = format!(
+                "do local child = {frame_ref}\n\
+                 if child then\n\
+                     local parent = child:GetParent()\n\
+                     if parent then\n\
+                         parent[\"{parent_array}\"] = parent[\"{parent_array}\"] or {{}}\n\
+                         table.insert(parent[\"{parent_array}\"], child)\n\
+                     end\n\
+                 end\nend",
+            );
+            let _ = lua.load(&code).exec();
+            break;
+        }
     }
 }
 
