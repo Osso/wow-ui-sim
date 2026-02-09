@@ -130,6 +130,36 @@ fn frame_exists(env: &WowLuaEnv, frame_name: &str) -> bool {
     env.eval::<bool>(&code).unwrap_or(false)
 }
 
+/// Install a Lua error handler that collects errors into `__test_errors`.
+fn install_test_error_handler(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        __test_errors = {}
+        seterrorhandler(function(msg)
+            table.insert(__test_errors, tostring(msg))
+        end)
+    "#,
+    )
+    .expect("Failed to install test error handler");
+}
+
+/// Read collected errors from `__test_errors` and clear it.
+fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
+    let lua = env.lua();
+    let table: mlua::Table = match lua.globals().get("__test_errors") {
+        Ok(t) => t,
+        Err(_) => return Vec::new(),
+    };
+    let mut errors = Vec::new();
+    for entry in table.sequence_values::<String>() {
+        if let Ok(msg) = entry {
+            errors.push(msg);
+        }
+    }
+    let _ = lua.load("__test_errors = {}").exec();
+    errors
+}
+
 // ── B → ToggleAllBags() ─────────────────────────────────────────────────
 
 #[test]
@@ -297,5 +327,27 @@ fn keybind_escape_closes_game_menu() {
     assert!(
         !frame_is_shown(&env, "GameMenuFrame"),
         "GameMenuFrame should be hidden after second ESCAPE"
+    );
+}
+
+// ── S → Spellbook panel opens without errors ─────────────────────────────
+
+#[test]
+fn keybind_s_opens_spellbook_no_errors() {
+    let env = setup_env();
+    install_test_error_handler(&env);
+
+    env.send_key_press("S", None).expect("S keybind dispatch failed");
+
+    let errors = drain_test_errors(&env);
+    assert!(
+        errors.is_empty(),
+        "Opening spellbook produced {} Lua error(s):\n{}",
+        errors.len(),
+        errors.join("\n"),
+    );
+    assert!(
+        frame_is_shown(&env, "PlayerSpellsFrame"),
+        "PlayerSpellsFrame should be shown after pressing S"
     );
 }
