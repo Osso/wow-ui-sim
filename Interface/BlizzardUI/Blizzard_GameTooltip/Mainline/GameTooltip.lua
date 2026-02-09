@@ -414,7 +414,7 @@ function GameTooltip_SetTooltipWaitingForData(self, waitingForData)
 end
 
 function GameTooltip_IsUpdateNeeded(self, elapsed)
-	self.updateTooltipTimer = self.updateTooltipTimer - elapsed;
+	self.updateTooltipTimer = (self.updateTooltipTimer or TOOLTIP_UPDATE_TIME) - elapsed;
 	if self.updateTooltipTimer > 0 then
 		return false;
 	end
