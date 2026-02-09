@@ -28,6 +28,7 @@
 
 pub mod addon_api;
 pub mod c_collection_api;
+pub mod c_container_api;
 pub mod c_editmode_api;
 pub mod constants_api;
 pub mod c_item_api;
