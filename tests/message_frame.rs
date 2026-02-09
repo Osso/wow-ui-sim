@@ -344,6 +344,35 @@ fn test_has_message_by_id() {
 }
 
 #[test]
+fn test_add_message_stores_timestamp() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local f = CreateFrame("ScrollingMessageFrame", "TestMFTimestamp", UIParent)
+        _G.__before = GetTime()
+        f:AddMessage("Timed message", 1, 1, 1)
+        _G.__after = GetTime()
+    "#,
+    )
+    .unwrap();
+
+    // GetMessageInfo returns (text, r, g, b, a, timestamp) — timestamp is the 6th value
+    let (before, after, ts): (f64, f64, f64) = env
+        .eval(
+            r#"
+        local _, _, _, _, _, timestamp = TestMFTimestamp:GetMessageInfo(1)
+        return _G.__before, _G.__after, timestamp
+    "#,
+        )
+        .unwrap();
+
+    assert!(ts >= before, "timestamp {ts} should be >= before {before}");
+    assert!(ts <= after, "timestamp {ts} should be <= after {after}");
+    assert!(ts > 0.0, "timestamp should be positive (GetTime-based)");
+}
+
+#[test]
 fn test_max_lines_truncates_existing() {
     let env = WowLuaEnv::new().unwrap();
 

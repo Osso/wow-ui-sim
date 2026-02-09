@@ -38,10 +38,11 @@ fn add_message_frame_add_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
         let b = val_to_f32_ref(args_vec.get(3), 1.0);
         let a = val_to_f32_ref(args_vec.get(4), 1.0);
         let mut state = this.state.borrow_mut();
+        let timestamp = state.start_time.elapsed().as_secs_f64();
         let data = state.message_frames.entry(this.id)
             .or_insert_with(crate::lua_api::message_frame::MessageFrameData::default);
         data.messages.insert(0, crate::lua_api::message_frame::Message {
-            text, r, g, b, a, message_id: None,
+            text, r, g, b, a, message_id: None, timestamp,
         });
         if data.messages.len() > data.max_lines {
             data.messages.pop();
@@ -263,16 +264,16 @@ fn add_message_frame_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut
         Ok(has)
     });
 
-    // GetMessageInfo(index) - 1-based
+    // GetMessageInfo(index) - 1-based, returns (text, r, g, b, a, timestamp)
     methods.add_method("GetMessageInfo", |_, this, index: i32| {
         let state = this.state.borrow();
         if let Some(data) = state.message_frames.get(&this.id) {
             let idx = (index - 1) as usize;
             if let Some(msg) = data.messages.get(idx) {
-                return Ok((msg.text.clone(), msg.r as f64, msg.g as f64, msg.b as f64, msg.a as f64));
+                return Ok((msg.text.clone(), msg.r as f64, msg.g as f64, msg.b as f64, msg.a as f64, msg.timestamp));
             }
         }
-        Ok((String::new(), 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64))
+        Ok((String::new(), 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 0.0_f64))
     });
 }
 
@@ -313,16 +314,25 @@ fn add_message_impl(this: &FrameHandle, args: mlua::MultiValue) {
         Some(Value::Number(n)) => Some(*n as i64),
         _ => None,
     };
+    // Log to terminal so chat messages are visible in logs
+    {
+        let state = this.state.borrow();
+        let name = state.widgets.get(this.id)
+            .and_then(|w| w.name.as_deref())
+            .unwrap_or("?");
+        eprintln!("[{name}] {text}");
+    }
     let mut state = this.state.borrow_mut();
+    let timestamp = state.start_time.elapsed().as_secs_f64();
     let data = state.message_frames.entry(this.id)
         .or_default();
     if data.insert_mode == "TOP" {
         data.messages.insert(0, crate::lua_api::message_frame::Message {
-            text, r, g, b, a, message_id,
+            text, r, g, b, a, message_id, timestamp,
         });
     } else {
         data.messages.push(crate::lua_api::message_frame::Message {
-            text, r, g, b, a, message_id,
+            text, r, g, b, a, message_id, timestamp,
         });
     }
     if data.messages.len() > data.max_lines {

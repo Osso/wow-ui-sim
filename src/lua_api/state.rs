@@ -201,6 +201,8 @@ pub struct SimState {
     pub player_buffs: Vec<AuraInfo>,
     /// Current framerate (FPS), updated by the app's FPS counter.
     pub fps: f32,
+    /// Instant at which the UI started (used by GetTime and message timestamps).
+    pub start_time: Instant,
 }
 
 impl Default for SimState {
@@ -238,6 +240,7 @@ impl Default for SimState {
             rot_damage_level: 0,    // Light
             player_buffs: default_player_buffs(),
             fps: 0.0,
+            start_time: Instant::now(),
         }
     }
 }

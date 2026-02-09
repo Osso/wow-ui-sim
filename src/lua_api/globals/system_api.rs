@@ -17,7 +17,6 @@ use crate::lua_api::SimState;
 use mlua::{Lua, MultiValue, Result, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
-use std::time::Instant;
 
 /// Register system utility functions in the Lua global namespace.
 pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
@@ -29,7 +28,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_build_type_checks(lua)?;
     register_battlenet_stubs(lua)?;
     register_secure_stubs(lua)?;
-    register_time_functions(lua)?;
+    register_time_functions(lua, &state)?;
     register_streaming_stubs(lua)?;
     register_error_callstack_stubs(lua)?;
     register_network_stubs(lua, &state)?;
@@ -377,10 +376,10 @@ fn register_c_widget(lua: &Lua) -> Result<mlua::Table> {
 }
 
 /// Register `GetTime()` - returns seconds since UI load.
-fn register_time_functions(lua: &Lua) -> Result<()> {
-    let start = Instant::now();
+fn register_time_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let st = Rc::clone(state);
     let get_time = lua.create_function(move |_, ()| {
-        Ok(start.elapsed().as_secs_f64())
+        Ok(st.borrow().start_time.elapsed().as_secs_f64())
     })?;
     lua.globals().set("GetTime", get_time)?;
     Ok(())
