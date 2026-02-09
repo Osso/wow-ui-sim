@@ -271,8 +271,13 @@ fn register_c_chat_info(lua: &Lua) -> Result<()> {
                 if ChatFrame1 and ChatFrame1.AddMessage then
                     local name = UnitName("player") or "Player"
                     local msg = ...
+                    local prefix = ""
+                    local fmt = GetCVar and GetCVar("showTimestamps")
+                    if fmt and fmt ~= "" and fmt ~= "none" then
+                        prefix = date(fmt, time())
+                    end
                     ChatFrame1:AddMessage(
-                        "|Hplayer:" .. name .. "|h[" .. name .. "]|h says: " .. msg,
+                        prefix .. "|Hplayer:" .. name .. "|h[" .. name .. "]|h says: " .. msg,
                         {r}, {g}, {b})
                 end
                 "#

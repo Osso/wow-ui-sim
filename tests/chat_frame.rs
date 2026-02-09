@@ -179,6 +179,39 @@ fn test_chat_editbox_click_type_and_submit() {
 }
 
 #[test]
+fn test_chat_message_contains_timestamp() {
+    let env = setup_env();
+
+    // Send a chat message — C_ChatInfo.SendChatMessage adds it to ChatFrame1
+    env.exec(r#"C_ChatInfo.SendChatMessage("Test timestamp", "SAY")"#)
+        .unwrap();
+
+    // Get the last message text from ChatFrame1
+    let msg: String = env
+        .eval(
+            r#"
+        local n = ChatFrame1:GetNumMessages()
+        local text = ChatFrame1:GetMessageInfo(n)
+        return text
+    "#,
+        )
+        .unwrap();
+
+    // Message should start with a time like "14:32 " (HH:MM followed by space)
+    let has_time = msg.len() >= 6
+        && msg.as_bytes()[2] == b':'
+        && msg.as_bytes()[0].is_ascii_digit()
+        && msg.as_bytes()[1].is_ascii_digit()
+        && msg.as_bytes()[3].is_ascii_digit()
+        && msg.as_bytes()[4].is_ascii_digit()
+        && msg.as_bytes()[5] == b' ';
+    assert!(
+        has_time,
+        "Chat message should start with HH:MM timestamp, got: {msg:.40}"
+    );
+}
+
+#[test]
 fn test_chat_editbox_text_color_after_activation() {
     let env = setup_env();
 
