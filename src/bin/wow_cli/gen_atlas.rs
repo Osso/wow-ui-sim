@@ -185,8 +185,8 @@ fn normalize_atlas_path(file_path: &str) -> String {
         .trim_end_matches(".blp")
         .trim_end_matches(".BLP")
         .replace('/', "\\");
-    if wow_path.starts_with("interface") {
-        format!("Interface{}", &wow_path[9..])
+    if let Some(rest) = wow_path.strip_prefix("interface") {
+        format!("Interface{rest}")
     } else {
         wow_path
     }
@@ -225,11 +225,10 @@ fn load_listfile(path: &Path) -> Result<HashMap<u32, String>, Box<dyn std::error
 
     for line in reader.lines() {
         let line = line?;
-        if let Some((id_str, path)) = line.split_once(';') {
-            if let Ok(id) = id_str.parse::<u32>() {
+        if let Some((id_str, path)) = line.split_once(';')
+            && let Ok(id) = id_str.parse::<u32>() {
                 map.insert(id, path.to_string());
             }
-        }
     }
     Ok(map)
 }
