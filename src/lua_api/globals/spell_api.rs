@@ -218,6 +218,8 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
     t.set("RequestLoadSpellData", lua.create_function(|_, _spell_id: i32| Ok(()))?)?;
     t.set("IsAutoAttackSpell", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
     t.set("IsRangedAutoAttackSpell", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
+    t.set("IsPressHoldReleaseSpell", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
+    t.set("GetSpellLossOfControlCooldown", lua.create_function(|_, _spell_id: i32| Ok((0.0f64, 0.0f64)))?)?;
 
     Ok(t)
 }
