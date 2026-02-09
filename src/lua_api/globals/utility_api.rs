@@ -457,7 +457,7 @@ fn register_debugstack(lua: &Lua) -> Result<()> {
     lua.globals().set(
         "debugstack",
         lua.create_function(|lua, args: mlua::MultiValue| {
-            let start = args.get(0).and_then(arg_to_i32).unwrap_or(2);
+            let start = args.front().and_then(arg_to_i32).unwrap_or(2);
             let count1 = args.get(1).and_then(arg_to_i32).unwrap_or(12) as usize;
             let count2 = args.get(2).and_then(arg_to_i32).unwrap_or(10) as usize;
             let tb: mlua::Function =
