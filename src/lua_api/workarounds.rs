@@ -29,6 +29,7 @@ pub fn apply(env: &WowLuaEnv) {
     init_objective_tracker(env);
     show_chat_frame(env);
     init_bag_bar(env);
+    init_bag_token_tracker(env);
     hide_super_tracked_frame(env);
     workarounds_editmode::patch_edit_mode_manager(env);
     patch_compact_raid_container_pools(env);
@@ -501,6 +502,24 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
 fn init_bag_bar(env: &WowLuaEnv) {
     fix_bags_bar_anchor(env);
     update_bag_button_textures(env);
+}
+
+/// `Blizzard_TokenUI` is an on-demand addon that creates `BackpackTokenFrame`.
+/// `ContainerFrameSettingsManager:SetTokenTrackerOwner()` crashes if
+/// `self.TokenTracker` is nil.  Create a stub frame to avoid the nil index.
+fn init_bag_token_tracker(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if ContainerFrameSettingsManager and not ContainerFrameSettingsManager.TokenTracker then
+            local f = CreateFrame("Frame", "BackpackTokenFrame", UIParent)
+            f.ShouldShow = function() return false end
+            f.MarkDirty = function() end
+            f.CleanDirty = function() end
+            f.SetIsCombinedInventory = function() end
+            ContainerFrameSettingsManager.TokenTracker = f
+        end
+    "#,
+    );
 }
 
 /// Re-anchor BagsBar to MicroButtonAndBagsBar now that it exists.
