@@ -1,4 +1,4 @@
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use wow_ui_sim::xml::{parse_xml, parse_xml_file, AnimationElement, FrameChildElement, XmlElement};
 
 fn blizzard_dir() -> PathBuf {
