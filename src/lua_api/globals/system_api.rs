@@ -14,7 +14,7 @@
 
 use crate::lua_api::frame::FrameHandle;
 use crate::lua_api::SimState;
-use mlua::{Lua, Result, Value};
+use mlua::{Lua, MultiValue, Result, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
 use std::time::Instant;
@@ -38,7 +38,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_request_time_played(lua, Rc::clone(&state))?;
     register_cursor_position(lua)?;
     register_localization_stubs(lua)?;
-    register_ui_object_stubs(lua)?;
+    register_ui_object_stubs(lua, state)?;
     Ok(())
 }
 
@@ -522,7 +522,7 @@ fn register_localization_stubs(lua: &Lua) -> Result<()> {
 }
 
 /// Miscellaneous UI object stubs: AnimateCallout, WowStyle1DropdownMixin, etc.
-fn register_ui_object_stubs(lua: &Lua) -> Result<()> {
+fn register_ui_object_stubs(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
 
     // AnimateCallout global table (used by TutorialFrame)
@@ -559,14 +559,141 @@ fn register_ui_object_stubs(lua: &Lua) -> Result<()> {
         c_widget_mgr.set("GetPowerBarWidgetSetID", lua.create_function(|_, ()| Ok(0i32))?)?;
     }
 
-    // Patch C_UnitAuras (table created in c_misc_api.rs)
-    // GetAuraSlots returns (continuationToken, slot1, slot2, ...).
-    // Returning nil means no auras and no more pages (stops the repeat..until loop).
+    // Patch C_UnitAuras with real buff data from state (table created in c_misc_api.rs).
     if let Ok(c_unit_auras) = globals.get::<mlua::Table>("C_UnitAuras") {
-        c_unit_auras.set("GetAuraSlots", lua.create_function(|_, _args: mlua::MultiValue| {
-            Ok(Value::Nil)
-        })?)?;
+        patch_c_unit_auras(lua, &c_unit_auras, state)?;
     }
 
     Ok(())
+}
+
+/// Patch C_UnitAuras with state-backed implementations.
+fn patch_c_unit_auras(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    patch_get_aura_slots(lua, t, state.clone())?;
+    patch_get_aura_data_by_slot(lua, t, state.clone())?;
+    patch_get_aura_data_by_index(lua, t, state.clone())?;
+    patch_get_buff_data_by_index(lua, t, state.clone())?;
+    patch_get_player_aura_by_spell_id(lua, t, state.clone())?;
+    patch_get_aura_data_by_spell_name(lua, t, state)?;
+    Ok(())
+}
+
+/// GetAuraSlots(unit, filter, maxSlots, token) -> (token, slot1, slot2, ...).
+fn patch_get_aura_slots(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    t.set("GetAuraSlots", lua.create_function(
+        move |_, (unit, filter, _max, token): (Option<String>, Option<String>, Option<i32>, Option<i32>)| {
+            if token.is_some() || unit.as_deref() != Some("player") {
+                return Ok(MultiValue::from_vec(vec![Value::Nil]));
+            }
+            let is_harmful = filter.as_ref().map_or(false, |f| f.contains("HARMFUL"));
+            if is_harmful {
+                return Ok(MultiValue::from_vec(vec![Value::Nil]));
+            }
+            let s = state.borrow();
+            let mut vals = vec![Value::Nil]; // nil continuation = all in one batch
+            for aura in &s.player_buffs {
+                vals.push(Value::Integer(aura.aura_instance_id as i64));
+            }
+            Ok(MultiValue::from_vec(vals))
+        },
+    )?)
+}
+
+/// GetAuraDataBySlot(unit, slot) -> AuraData table or nil.
+fn patch_get_aura_data_by_slot(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    t.set("GetAuraDataBySlot", lua.create_function(
+        move |lua, (unit, slot): (String, i32)| {
+            if unit != "player" { return Ok(Value::Nil); }
+            let s = state.borrow();
+            match s.player_buffs.iter().find(|a| a.aura_instance_id == slot) {
+                Some(a) => Ok(Value::Table(super::aura_api::build_aura_data_table(lua, a)?)),
+                None => Ok(Value::Nil),
+            }
+        },
+    )?)
+}
+
+/// GetAuraDataByIndex(unit, index, filter) -> AuraData table or nil.
+fn patch_get_aura_data_by_index(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    t.set("GetAuraDataByIndex", lua.create_function(
+        move |lua, (unit, index, filter): (String, i32, Option<String>)| {
+            if unit != "player" || index < 1 { return Ok(Value::Nil); }
+            let is_harmful = filter.as_ref().map_or(false, |f| f.contains("HARMFUL"));
+            if is_harmful { return Ok(Value::Nil); }
+            let s = state.borrow();
+            match s.player_buffs.get((index - 1) as usize) {
+                Some(a) => Ok(Value::Table(super::aura_api::build_aura_data_table(lua, a)?)),
+                None => Ok(Value::Nil),
+            }
+        },
+    )?)
+}
+
+/// GetBuffDataByIndex(unit, index, filter) -> AuraData table or nil.
+fn patch_get_buff_data_by_index(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    t.set("GetBuffDataByIndex", lua.create_function(
+        move |lua, (unit, index, _filter): (String, i32, Option<String>)| {
+            if unit != "player" || index < 1 { return Ok(Value::Nil); }
+            let s = state.borrow();
+            match s.player_buffs.get((index - 1) as usize) {
+                Some(a) => Ok(Value::Table(super::aura_api::build_aura_data_table(lua, a)?)),
+                None => Ok(Value::Nil),
+            }
+        },
+    )?)
+}
+
+/// GetPlayerAuraBySpellID(spellID) -> AuraData table or nil.
+fn patch_get_player_aura_by_spell_id(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    t.set("GetPlayerAuraBySpellID", lua.create_function(
+        move |lua, spell_id: i32| {
+            let s = state.borrow();
+            match s.player_buffs.iter().find(|a| a.spell_id == spell_id) {
+                Some(a) => Ok(Value::Table(super::aura_api::build_aura_data_table(lua, a)?)),
+                None => Ok(Value::Nil),
+            }
+        },
+    )?)
+}
+
+/// GetAuraDataBySpellName(unit, name, filter) -> AuraData table or nil.
+fn patch_get_aura_data_by_spell_name(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    t.set("GetAuraDataBySpellName", lua.create_function(
+        move |lua, (unit, name, _filter): (String, String, Option<String>)| {
+            if unit != "player" { return Ok(Value::Nil); }
+            let s = state.borrow();
+            match s.player_buffs.iter().find(|a| a.name == name) {
+                Some(a) => Ok(Value::Table(super::aura_api::build_aura_data_table(lua, a)?)),
+                None => Ok(Value::Nil),
+            }
+        },
+    )?)
 }
