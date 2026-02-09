@@ -63,6 +63,11 @@ fn register_c_class_talents(lua: &Lua) -> Result<()> {
     t.set("GetConfigIDsBySpecID", lua.create_function(|lua, _spec_id: Option<i32>| lua.create_table())?)?;
     t.set("GetStarterBuildActive", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetHasStarterBuild", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetHeroTalentSpecsForClassSpec", lua.create_function(|lua, (_cfg, _spec): (Option<i32>, Option<i32>)| {
+        Ok((Value::Table(lua.create_table()?), Value::Integer(71)))
+    })?)?;
+    t.set("HasUnspentTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("HasUnspentHeroTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_ClassTalents", t)?;
     Ok(())
 }
@@ -168,9 +173,6 @@ fn register_unit_frame_global_stubs(lua: &Lua) -> Result<()> {
     g.set("IsThreatWarningEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetThreatStatusColor", lua.create_function(|_, _status: i32| Ok((1.0f64, 1.0f64, 1.0f64)))?)?;
     g.set("LE_REALM_RELATION_VIRTUAL", 3i32)?;
-    g.set("PlaySound", lua.create_function(|_, (_id, _ch): (Value, Option<String>)| Ok(()))?)?;
-    g.set("PlaySoundFile", lua.create_function(|_, (_path, _ch): (Value, Option<String>)| Ok(()))?)?;
-    g.set("StopSound", lua.create_function(|_, _handle: Value| Ok(()))?)?;
     g.set("IsActiveBattlefieldArena", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetNumArenaOpponents", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("GetBattlefieldEstimatedWaitTime", lua.create_function(|_, _index: Value| Ok(0i32))?)?;
@@ -639,6 +641,7 @@ fn register_game_state_stubs(lua: &Lua) -> Result<()> {
     g.set("GetLFGReadyCheckUpdate", lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?)?;
     g.set("CanPartyLFGBackfill", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetNumArenaOpponentSpecs", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("GetArenaOpponentSpec", lua.create_function(|_, _index: Value| Ok((0i32, 0i32)))?)?;
     g.set("UnitTreatAsPlayerForDisplay", lua.create_function(|_, _unit: Value| Ok(false))?)?;
     g.set("GetLFGDeserterExpiration", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     g.set("UnitHasLFGDeserter", lua.create_function(|_, _unit: Value| Ok(false))?)?;
@@ -646,6 +649,9 @@ fn register_game_state_stubs(lua: &Lua) -> Result<()> {
         Ok(("none", 0i32, 0i32, 0i32))
     })?)?;
     g.set("CanHearthAndResurrectFromArea", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetChannelList", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    g.set("CanBeRaidTarget", lua.create_function(|_, _unit: Value| Ok(false))?)?;
+    g.set("GetRaidTargetIndex", lua.create_function(|_, _unit: Value| Ok(Value::Nil))?)?;
     Ok(())
 }
 
