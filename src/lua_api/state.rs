@@ -431,13 +431,19 @@ fn default_player_buffs() -> Vec<AuraInfo> {
 }
 
 /// Build AuraInfo vec from selected pool indices.
+///
+/// `expiration_time` is the absolute GetTime() value when the buff expires.
+/// Since GetTime() starts near 0 at startup, this equals the duration itself.
+/// Permanent buffs (duration == 0) have expiration_time == 0.
 fn build_auras_from_indices(indices: &[usize]) -> Vec<AuraInfo> {
+    // GetTime() ≈ 0 at init, so expiration = 0 + duration = duration.
+    let get_time = 0.0_f64;
     indices
         .iter()
         .enumerate()
         .map(|(i, &pool_idx)| {
             let (name, spell_id, icon, duration, source, can_apply) = BUFF_POOL[pool_idx];
-            let expiration_time = if duration > 0.0 { duration } else { 0.0 };
+            let expiration_time = if duration > 0.0 { get_time + duration } else { 0.0 };
             AuraInfo {
                 name,
                 spell_id,

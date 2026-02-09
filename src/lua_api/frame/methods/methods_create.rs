@@ -135,11 +135,20 @@ fn add_create_font_string_method<M: UserDataMethods<FrameHandle>>(methods: &mut 
     });
 }
 
-/// Apply justifyH/justifyV from an inherited Font object to a fontstring widget.
+/// Apply font properties from an inherited Font object to a fontstring widget.
 fn apply_font_inherit(lua: &mlua::Lua, frame: &mut Frame, inherits: Option<&str>) {
     let Some(name) = inherits else { return };
     let Ok(globals) = lua.globals().get::<Value>(name) else { return };
     let Value::Table(tbl) = globals else { return };
+    if let Ok(path) = tbl.get::<String>("__font") {
+        frame.font = Some(path);
+    }
+    if let Ok(height) = tbl.get::<f64>("__height") {
+        frame.font_size = height as f32;
+    }
+    if let Ok(outline) = tbl.get::<String>("__outline") {
+        frame.font_outline = crate::widget::TextOutline::from_wow_str(&outline);
+    }
     if let Ok(h) = tbl.get::<String>("__justifyH") {
         frame.justify_h = crate::widget::TextJustify::from_wow_str(&h);
     }

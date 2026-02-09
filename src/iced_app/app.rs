@@ -93,6 +93,28 @@ fn fire_login_events(env: &WowLuaEnv) {
     ) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
     }
+
+    fire_unit_aura_event(env);
+}
+
+/// Fire UNIT_AURA("player", {isFullUpdate=true}) to trigger buff frame population.
+fn fire_unit_aura_event(env: &WowLuaEnv) {
+    println!("[Startup] Firing UNIT_AURA");
+    let lua = env.lua();
+    let update_info = match lua.create_table() {
+        Ok(t) => {
+            let _ = t.set("isFullUpdate", true);
+            mlua::Value::Table(t)
+        }
+        Err(_) => return,
+    };
+    let unit = match lua.create_string("player") {
+        Ok(s) => mlua::Value::String(s),
+        Err(_) => return,
+    };
+    if let Err(e) = env.fire_event_with_args("UNIT_AURA", &[unit, update_info]) {
+        eprintln!("Error firing UNIT_AURA: {}", e);
+    }
 }
 
 /// UPDATE_BINDINGS, DISPLAY_SIZE_CHANGED, UI_SCALE_CHANGED, addon hooks.

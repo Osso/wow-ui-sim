@@ -423,18 +423,22 @@ fn resolve_font_table(lua: &mlua::Lua, font_object: &Value) -> Option<mlua::Tabl
 }
 
 /// Apply font properties from a Lua font table to the Rust frame.
+///
+/// Supports two naming conventions:
+/// - XML Font objects: `__font`, `__height`, `__outline`
+/// - Lua-created font objects: `__fontPath`, `__fontHeight`, `__fontFlags`
 fn apply_font_table_to_frame(this: &FrameHandle, font_table: Option<&mlua::Table>) {
     let Some(src) = font_table else { return };
     let mut state = this.state.borrow_mut();
     let Some(frame) = state.widgets.get_mut(this.id) else { return };
 
-    if let Ok(path) = src.get::<String>("__fontPath") {
+    if let Ok(path) = src.get::<String>("__fontPath").or_else(|_| src.get::<String>("__font")) {
         frame.font = Some(path);
     }
-    if let Ok(height) = src.get::<f64>("__fontHeight") {
+    if let Ok(height) = src.get::<f64>("__fontHeight").or_else(|_| src.get::<f64>("__height")) {
         frame.font_size = height as f32;
     }
-    if let Ok(flags) = src.get::<String>("__fontFlags") {
+    if let Ok(flags) = src.get::<String>("__fontFlags").or_else(|_| src.get::<String>("__outline")) {
         frame.font_outline = crate::widget::TextOutline::from_wow_str(&flags);
     }
     apply_font_table_colors(src, frame);

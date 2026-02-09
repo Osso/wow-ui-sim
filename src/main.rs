@@ -183,6 +183,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Some(Commands::DumpTree { filter, visible_only }) => {
             fire_startup_events(&env);
             env.apply_post_event_workarounds();
+            process_pending_timers(&env);
+            fire_one_on_update_tick(&env);
             let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
             if let Some(code) = &args.exec_lua
                 && let Err(e) = env.exec(code) {
@@ -460,98 +462,13 @@ fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Erro
     Ok(())
 }
 
-/// Sleep for the given number of milliseconds (if specified).
-fn apply_delay(delay: Option<u64>) {
-    if let Some(ms) = delay {
-        eprintln!("[Startup] Delaying {}ms", ms);
-        std::thread::sleep(std::time::Duration::from_millis(ms));
-    }
-}
-
-/// Fire startup events to simulate WoW login sequence.
-fn fire_startup_events(env: &WowLuaEnv) {
-    let fire = |name| {
-        eprintln!("[Startup] Firing {}", name);
-        if let Err(e) = env.fire_event(name) {
-            eprintln!("Error firing {}: {}", name, e);
-        }
-    };
-
-    eprintln!("[Startup] Firing ADDON_LOADED");
-    if let Err(e) = env.fire_event_with_args(
-        "ADDON_LOADED",
-        &[mlua::Value::String(env.lua().create_string("WoWUISim").unwrap())],
-    ) {
-        eprintln!("Error firing ADDON_LOADED: {}", e);
-    }
-
-    fire("VARIABLES_LOADED");
-    fire("PLAYER_LOGIN");
-
-    eprintln!("[Startup] Firing EDIT_MODE_LAYOUTS_UPDATED");
-    if let Err(e) = env.fire_edit_mode_layouts_updated() {
-        eprintln!("  {}", e);
-    }
-
-    eprintln!("[Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed");
-    if let Err(e) = env.lua().globals().get::<mlua::Function>("RequestTimePlayed")
-        .and_then(|f| f.call::<()>(()))
-    {
-        eprintln!("Error calling RequestTimePlayed: {}", e);
-    }
-
-    eprintln!("[Startup] Firing PLAYER_ENTERING_WORLD");
-    if let Err(e) = env.fire_event_with_args(
-        "PLAYER_ENTERING_WORLD",
-        &[mlua::Value::Boolean(true), mlua::Value::Boolean(false)],
-    ) {
-        eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
-    }
-
-    fire("BAG_UPDATE_DELAYED");
-    fire("GROUP_ROSTER_UPDATE");
-    force_show_party_member_frames(env);
-    fire("UPDATE_BINDINGS");
-    fire("DISPLAY_SIZE_CHANGED");
-    fire("UI_SCALE_CHANGED");
-    fire("UPDATE_CHAT_WINDOWS");
-    fire("PLAYER_LEAVING_WORLD");
-}
-
-/// Force-show party member frames after GROUP_ROSTER_UPDATE.
+/// Process pending timers (deferred template wiring, addon callbacks, etc.).
 ///
-/// UpdateRaidAndPartyFrames() hides all party frames first, then calls
-/// CompactRaidFrameManager_UpdateShown() which errors on missing dividerVerticalPool,
-/// preventing PartyFrame:UpdatePartyFrames() from re-showing them.
-/// This safety net shows each member frame individually with pcall wrappers.
-fn force_show_party_member_frames(env: &WowLuaEnv) {
-    if let Err(e) = env.exec(r#"
-        if not PartyFrame or not PartyFrame.PartyMemberFramePool then return end
-        local pool = PartyFrame.PartyMemberFramePool
-        local i = 0
-        for mf in pool:EnumerateActive() do
-            i = i + 1
-            if not mf.layoutIndex then mf.layoutIndex = i end
-            if not mf.unitToken then
-                mf.unitToken = "party" .. mf.layoutIndex
-            end
-            pcall(function() mf:Setup() end)
-        end
-        for mf in pool:EnumerateActive() do
-            if PartyFrame:ShouldShow() and UnitExists(mf.unitToken) then
-                mf:Show()
-                pcall(function() UnitFrame_Update(mf, true) end)
-                pcall(function() mf:UpdatePet() end)
-                pcall(function() mf:UpdateAuras() end)
-                pcall(function() mf:UpdateOnlineStatus() end)
-                pcall(function() mf:UpdateArt() end)
-            end
-        end
-        PartyFrame:Layout()
-    "#) {
-        eprintln!("[startup] party frame safety-net error: {e}");
-    }
-}
+/// In GUI mode timers fire every frame, but headless paths (screenshot, dump-tree)
+/// must explicitly drain them. Loops until no more timers fire (handles chaining).
+use wow_ui_sim::startup::{
+    apply_delay, fire_one_on_update_tick, fire_startup_events, process_pending_timers,
+};
 
 /// Debug: open game menu via micro button click for screenshot testing.
 fn debug_show_game_menu(env: &WowLuaEnv) {
@@ -637,6 +554,8 @@ fn run_screenshot(
     env.set_screen_size(width as f32, height as f32);
     fire_startup_events(env);
     env.apply_post_event_workarounds();
+    process_pending_timers(env);
+    fire_one_on_update_tick(env);
     let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
     debug_show_game_menu(env);
     if let Some(code) = exec_lua

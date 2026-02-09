@@ -29,6 +29,7 @@ pub mod lua_server;
 pub mod render;
 pub mod saved_variables;
 pub mod sound;
+pub mod startup;
 pub mod texture;
 pub mod toc;
 pub mod widget;
