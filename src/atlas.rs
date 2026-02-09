@@ -41,9 +41,7 @@ pub struct NineSliceAtlasInfo {
 pub fn get_nine_slice_atlas_info(name: &str) -> Option<NineSliceAtlasInfo> {
     let kit = name.to_lowercase();
     let probe = format!("{kit}-nineslice-cornertopleft");
-    if ATLAS_DB.get(&probe as &str).is_none() {
-        return None;
-    }
+    ATLAS_DB.get(&probe as &str)?;
 
     let piece = |key: &str| -> Option<NineSlicePiece> {
         ATLAS_DB.get(key).map(|info| NineSlicePiece {
