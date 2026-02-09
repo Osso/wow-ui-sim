@@ -23,6 +23,7 @@ mod tiling;
 pub mod tooltip;
 mod styles;
 mod update;
+mod update_servers;
 mod screenshot;
 mod tree_dump;
 mod view;
@@ -85,6 +86,12 @@ pub enum Message {
     /// Keyboard input dispatched to Lua (WoW key name, e.g. "ESCAPE", "ENTER", "A")
     /// plus optional raw text for character input into focused EditBox.
     KeyPress(String, Option<String>),
+    /// Player class changed via dropdown.
+    PlayerClassChanged(String),
+    /// Player race changed via dropdown.
+    PlayerRaceChanged(String),
+    /// Rot damage level changed via dropdown.
+    RotDamageLevelChanged(String),
 }
 
 /// Run the iced UI with the given Lua environment.

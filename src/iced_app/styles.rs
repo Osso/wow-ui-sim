@@ -1,6 +1,6 @@
 //! UI style functions for iced widgets.
 
-use iced::widget::{button, text_input};
+use iced::widget::{button, pick_list, text_input};
 use iced::{Border, Color, Theme};
 
 // WoW-inspired color palette
@@ -82,5 +82,22 @@ pub fn input_style(_theme: &Theme, status: text_input::Status) -> text_input::St
         placeholder: palette::TEXT_MUTED,
         value: palette::TEXT_PRIMARY,
         selection: palette::GOLD_DIM,
+    }
+}
+
+/// Style for pick_list dropdowns (class/race selectors).
+pub fn pick_list_style(_theme: &Theme, status: pick_list::Status) -> pick_list::Style {
+    let border_color = match status {
+        pick_list::Status::Active => palette::BORDER,
+        pick_list::Status::Hovered => palette::BORDER_HIGHLIGHT,
+        pick_list::Status::Opened { .. } => palette::GOLD_DIM,
+    };
+
+    pick_list::Style {
+        text_color: palette::TEXT_PRIMARY,
+        placeholder_color: palette::TEXT_MUTED,
+        handle_color: palette::TEXT_SECONDARY,
+        background: iced::Background::Color(palette::BG_INPUT),
+        border: Border { color: border_color, width: 1.0, radius: 3.0.into() },
     }
 }

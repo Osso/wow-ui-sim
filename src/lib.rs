@@ -16,6 +16,7 @@ pub mod manifest_interface_data;
 pub mod spells;
 #[path = "../data/traits.rs"]
 pub mod traits;
+pub mod config;
 pub mod cvars;
 pub mod dump;
 pub mod error;

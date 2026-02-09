@@ -2,8 +2,8 @@
 
 use iced::widget::shader::Shader;
 use iced::widget::{
-    button, checkbox, column, container, row, scrollable, space, stack, text, text_input, Column,
-    Container,
+    button, checkbox, column, container, pick_list, row, scrollable, space, stack, text,
+    text_input, Column, Container,
 };
 use iced::{Border, Color, Element, Font, Length, Padding, Subscription};
 
@@ -14,7 +14,7 @@ use crate::widget::FrameStrata;
 
 use super::app::App;
 use super::layout::compute_frame_rect;
-use super::styles::{event_button_style, input_style, palette, run_button_style};
+use super::styles::{event_button_style, input_style, palette, pick_list_style, run_button_style};
 use super::Message;
 
 /// Frame names excluded from hit testing (full-screen or non-interactive overlays).
@@ -155,6 +155,34 @@ impl App {
         }
     }
 
+    /// Build the player configuration row (class, race, damage level dropdowns).
+    fn build_player_config_row(&self) -> Element<'_, Message> {
+        use crate::lua_api::state::{CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS};
+
+        let class_options: Vec<String> = CLASS_LABELS.iter().map(|s| s.to_string()).collect();
+        let race_options: Vec<String> = RACE_DATA.iter().map(|(n, _, _)| n.to_string()).collect();
+        let rot_options: Vec<String> = ROT_DAMAGE_LEVELS.iter().map(|(l, _)| l.to_string()).collect();
+
+        row![
+            text("Class:").size(12).color(palette::TEXT_SECONDARY),
+            pick_list(class_options, Some(self.selected_class.clone()), Message::PlayerClassChanged)
+                .text_size(12).width(130).style(pick_list_style),
+            text("Race:").size(12).color(palette::TEXT_SECONDARY),
+            pick_list(race_options, Some(self.selected_race.clone()), Message::PlayerRaceChanged)
+                .text_size(12).width(130).style(pick_list_style),
+            space::horizontal(),
+            checkbox(self.xp_bar_visible)
+                .label("XP Bar").on_toggle(Message::ToggleXpBar).size(14).text_size(12),
+            checkbox(self.rot_damage_enabled)
+                .label("Rot Damage").on_toggle(Message::ToggleRotDamage).size(14).text_size(12),
+            pick_list(rot_options, Some(self.selected_rot_level.clone()), Message::RotDamageLevelChanged)
+                .text_size(12).width(120).style(pick_list_style),
+        ]
+        .spacing(6)
+        .align_y(iced::Alignment::Center)
+        .into()
+    }
+
     /// Build the event trigger buttons row.
     fn build_event_buttons(&self) -> Element<'_, Message> {
         row![
@@ -167,17 +195,6 @@ impl App {
             button(text("PLAYER_ENTERING_WORLD").size(12))
                 .on_press(Message::FireEvent("PLAYER_ENTERING_WORLD".to_string()))
                 .style(event_button_style),
-            space::horizontal(),
-            checkbox(self.xp_bar_visible)
-                .label("XP Bar")
-                .on_toggle(Message::ToggleXpBar)
-                .size(14)
-                .text_size(12),
-            checkbox(self.rot_damage_enabled)
-                .label("Rot Damage")
-                .on_toggle(Message::ToggleRotDamage)
-                .size(14)
-                .text_size(12),
         ]
         .spacing(6)
         .align_y(iced::Alignment::Center)
@@ -242,6 +259,7 @@ impl App {
         let main_column = column![
             title,
             content_row,
+            self.build_player_config_row(),
             self.build_event_buttons(),
             self.build_command_row(),
             self.build_console(),

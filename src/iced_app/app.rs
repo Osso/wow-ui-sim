@@ -184,6 +184,12 @@ pub struct App {
     pub(crate) last_party_health_tick: std::time::Instant,
     /// Whether rot damage is applied to party members every tick.
     pub(crate) rot_damage_enabled: bool,
+    /// Currently selected player class name (for picker display).
+    pub(crate) selected_class: String,
+    /// Currently selected player race name (for picker display).
+    pub(crate) selected_race: String,
+    /// Currently selected rot damage level label.
+    pub(crate) selected_rot_level: String,
 }
 
 impl App {
@@ -193,6 +199,8 @@ impl App {
 
     pub fn boot() -> (Self, Task<Message>) {
         let (env_rc, textures_path, saved_vars) = Self::take_init_params();
+        let config = crate::config::SimConfig::load();
+        Self::apply_config_to_state(&env_rc, &config);
 
         Self::run_startup_sequence(&env_rc);
         let log_messages = Self::collect_startup_logs(&env_rc);
@@ -202,8 +210,32 @@ impl App {
         let (cmd_rx, lua_rx) = Self::init_servers();
         let (debug_borders, debug_anchors) = Self::resolve_debug_flags();
 
-        let app = App {
-            env: env_rc,
+        let app = Self::build_app(
+            env_rc, log_messages, texture_manager, font_system, glyph_atlas,
+            cmd_rx, lua_rx, debug_borders, debug_anchors, saved_vars, config,
+        );
+
+        (app, Task::none())
+    }
+
+    /// Construct the App struct from initialized components.
+    #[allow(clippy::too_many_arguments)]
+    fn build_app(
+        env: Rc<RefCell<WowLuaEnv>>,
+        log_messages: Vec<String>,
+        texture_manager: Rc<RefCell<TextureManager>>,
+        font_system: Rc<RefCell<WowFontSystem>>,
+        glyph_atlas: Rc<RefCell<GlyphAtlas>>,
+        cmd_rx: mpsc::Receiver<debug_server::Command>,
+        lua_rx: std::sync::mpsc::Receiver<lua_server::LuaCommand>,
+        debug_borders: bool,
+        debug_anchors: bool,
+        saved_vars: Option<SavedVariablesManager>,
+        config: crate::config::SimConfig,
+    ) -> Self {
+        let now = std::time::Instant::now();
+        App {
+            env,
             log_messages,
             command_input: String::new(),
             texture_manager,
@@ -224,9 +256,9 @@ impl App {
             cached_quads: RefCell::new(None),
             cached_hittable: RefCell::new(None),
             quads_dirty: std::cell::Cell::new(true),
-            last_quad_rebuild: std::cell::Cell::new(std::time::Instant::now()),
+            last_quad_rebuild: std::cell::Cell::new(now),
             frame_count: std::cell::Cell::new(0),
-            fps_last_time: std::time::Instant::now(),
+            fps_last_time: now,
             fps: 0.0,
             frame_time_ms: std::cell::Cell::new(0.0),
             frame_time_avg: std::cell::Cell::new(0.0),
@@ -237,15 +269,33 @@ impl App {
             inspector_position: Point::new(100.0, 100.0),
             inspector_state: InspectorState::default(),
             frames_panel_collapsed: true,
-            last_on_update_time: std::time::Instant::now(),
+            last_on_update_time: now,
             saved_vars,
             pending_exec_lua: INIT_EXEC_LUA.with(|cell| cell.borrow_mut().take()),
-            xp_bar_visible: true,
-            last_party_health_tick: std::time::Instant::now(),
-            rot_damage_enabled: false,
-        };
+            xp_bar_visible: config.xp_bar_visible,
+            last_party_health_tick: now,
+            rot_damage_enabled: config.rot_damage_enabled,
+            selected_class: config.player_class,
+            selected_race: config.player_race,
+            selected_rot_level: config.rot_damage_level,
+        }
+    }
 
-        (app, Task::none())
+    /// Apply saved config to SimState before startup events fire.
+    fn apply_config_to_state(env_rc: &Rc<RefCell<WowLuaEnv>>, config: &crate::config::SimConfig) {
+        use crate::lua_api::state::{CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS};
+        let env = env_rc.borrow();
+        let mut state = env.state().borrow_mut();
+        state.player_class_index = CLASS_LABELS.iter()
+            .position(|&n| n == config.player_class)
+            .map(|i| (i + 1) as i32)
+            .unwrap_or(1);
+        state.player_race_index = RACE_DATA.iter()
+            .position(|(n, _, _)| *n == config.player_race)
+            .unwrap_or(0);
+        state.rot_damage_level = ROT_DAMAGE_LEVELS.iter()
+            .position(|(l, _)| *l == config.rot_damage_level)
+            .unwrap_or(0);
     }
 
     /// Extract init params from thread-local storage.

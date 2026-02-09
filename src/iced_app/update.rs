@@ -1,13 +1,12 @@
 //! App::update() method and related logic.
 
-use iced::{window, Point, Task};
-use iced_layout_inspector::server::{Command as DebugCommand, ScreenshotData};
+use iced::{Point, Task};
+use iced_layout_inspector::server::ScreenshotData;
 
 use crate::lua_api::WowLuaEnv;
-use crate::lua_server::{LuaCommand, Response as LuaResponse};
 
 use super::app::App;
-use super::state::{CanvasMessage, InspectorState};
+use super::state::CanvasMessage;
 use super::Message;
 
 impl App {
@@ -32,8 +31,14 @@ impl App {
             Message::InspectorApply => self.handle_inspector_apply(),
             Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
             Message::ToggleXpBar(visible) => self.handle_toggle_xp_bar(visible),
-            Message::ToggleRotDamage(enabled) => self.rot_damage_enabled = enabled,
+            Message::ToggleRotDamage(enabled) => {
+                self.rot_damage_enabled = enabled;
+                self.save_config();
+            }
             Message::KeyPress(ref key, ref text) => self.handle_key_press(key, text.as_deref()),
+            Message::PlayerClassChanged(ref name) => self.handle_player_class_changed(name),
+            Message::PlayerRaceChanged(ref name) => self.handle_player_race_changed(name),
+            Message::RotDamageLevelChanged(ref label) => self.handle_rot_damage_level_changed(label),
         }
 
         Task::none()
@@ -194,7 +199,7 @@ impl App {
         false
     }
 
-    fn handle_key_press(&mut self, key: &str, text: Option<&str>) {
+    pub(super) fn handle_key_press(&mut self, key: &str, text: Option<&str>) {
         let env = self.env.borrow();
         if let Err(e) = env.send_key_press(key, text) {
             self.log_messages
@@ -210,7 +215,6 @@ impl App {
         let event = if visible { "ENABLE_XP_GAIN" } else { "DISABLE_XP_GAIN" };
         {
             let env = self.env.borrow();
-            // Override IsPlayerAtEffectiveMaxLevel to control XP bar visibility
             let lua_code = format!(
                 "IsPlayerAtEffectiveMaxLevel = function() return {} end",
                 at_max
@@ -218,12 +222,62 @@ impl App {
             if let Err(e) = env.exec(&lua_code) {
                 self.log_messages.push(format!("XP toggle error: {}", e));
             }
-            // Fire the event so the status tracking manager re-evaluates
             if let Err(e) = env.fire_event(event) {
                 self.log_messages.push(format!("XP event error: {}", e));
             }
         }
+        self.save_config();
         self.invalidate();
+    }
+
+    fn handle_player_class_changed(&mut self, class_name: &str) {
+        use crate::lua_api::state::CLASS_LABELS;
+        let index = CLASS_LABELS.iter().position(|&n| n == class_name)
+            .map(|i| (i + 1) as i32)
+            .unwrap_or(1);
+        self.selected_class = class_name.to_string();
+        {
+            let env = self.env.borrow();
+            env.state().borrow_mut().player_class_index = index;
+            self.fire_portrait_update(&env);
+        }
+        self.save_config();
+        self.invalidate();
+    }
+
+    fn handle_player_race_changed(&mut self, race_name: &str) {
+        use crate::lua_api::state::RACE_DATA;
+        let index = RACE_DATA.iter().position(|(name, _, _)| *name == race_name)
+            .unwrap_or(0);
+        self.selected_race = race_name.to_string();
+        {
+            let env = self.env.borrow();
+            env.state().borrow_mut().player_race_index = index;
+            self.fire_portrait_update(&env);
+        }
+        self.save_config();
+        self.invalidate();
+    }
+
+    fn handle_rot_damage_level_changed(&mut self, label: &str) {
+        use crate::lua_api::state::ROT_DAMAGE_LEVELS;
+        let index = ROT_DAMAGE_LEVELS.iter().position(|(l, _)| *l == label)
+            .unwrap_or(0);
+        self.selected_rot_level = label.to_string();
+        self.env.borrow().state().borrow_mut().rot_damage_level = index;
+        self.save_config();
+    }
+
+    /// Fire UNIT_PORTRAIT_UPDATE + PLAYER_ENTERING_WORLD to refresh unit frames.
+    fn fire_portrait_update(&self, env: &WowLuaEnv) {
+        let _ = env.fire_event_with_args(
+            "UNIT_PORTRAIT_UPDATE",
+            &[mlua::Value::String(env.lua().create_string("player").unwrap())],
+        );
+        let _ = env.fire_event_with_args(
+            "PLAYER_ENTERING_WORLD",
+            &[mlua::Value::Boolean(false), mlua::Value::Boolean(false)],
+        );
     }
 
     fn handle_reload_ui(&mut self) {
@@ -342,7 +396,11 @@ impl App {
         let env = self.env.borrow();
         let changed = {
             let mut state = env.state().borrow_mut();
-            crate::lua_api::tick_party_health(&mut state.party_members)
+            let (_, pct) = crate::lua_api::state::ROT_DAMAGE_LEVELS
+                .get(state.rot_damage_level)
+                .copied()
+                .unwrap_or(("Light (1%)", 0.01));
+            crate::lua_api::tick_party_health(&mut state.party_members, pct)
         };
         for idx in changed {
             let unit_id = format!("party{idx}");
@@ -390,6 +448,17 @@ impl App {
 
     // ── Helpers ──────────────────────────────────────────────────────────
 
+    /// Save current UI settings to config file.
+    fn save_config(&self) {
+        let mut config = crate::config::SimConfig::load();
+        config.player_class = self.selected_class.clone();
+        config.player_race = self.selected_race.clone();
+        config.rot_damage_level = self.selected_rot_level.clone();
+        config.rot_damage_enabled = self.rot_damage_enabled;
+        config.xp_bar_visible = self.xp_bar_visible;
+        config.save();
+    }
+
     /// Drain console, clear frame cache, and mark quads dirty.
     fn invalidate(&mut self) {
         self.drain_console();
@@ -397,7 +466,7 @@ impl App {
     }
 
     /// Clear caches that depend on widget layout (quads and hit-test rects).
-    fn invalidate_layout(&mut self) {
+    pub(super) fn invalidate_layout(&mut self) {
         self.frame_cache.clear();
         self.quads_dirty.set(true);
         *self.cached_hittable.borrow_mut() = None;
@@ -515,165 +584,5 @@ impl App {
         self.log_messages.append(&mut state.console_output);
     }
 
-    pub(crate) fn process_debug_commands(&mut self) -> Task<Message> {
-        // Collect debug commands first to avoid borrow issues
-        let commands: Vec<_> = if let Some(ref mut rx) = self.debug_rx {
-            let mut cmds = Vec::new();
-            while let Ok(cmd) = rx.try_recv() {
-                cmds.push(cmd);
-            }
-            cmds
-        } else {
-            Vec::new()
-        };
-
-        // Then handle them, collecting any tasks
-        let mut tasks = Vec::new();
-        for cmd in commands {
-            if let Some(task) = self.handle_debug_command(cmd) {
-                tasks.push(task);
-            }
-        }
-
-        // Process Lua commands
-        self.process_lua_commands();
-
-        if tasks.is_empty() {
-            Task::none()
-        } else {
-            Task::batch(tasks)
-        }
-    }
-
-    /// Execute Lua code from the REPL server and return the response.
-    fn exec_lua_command(&self, code: &str) -> LuaResponse {
-        let env = self.env.borrow();
-        env.state().borrow_mut().console_output.clear();
-        let result = env.exec(code);
-        match result {
-            Ok(()) => {
-                let mut state = env.state().borrow_mut();
-                let output = state.console_output.join("\n");
-                state.console_output.clear();
-                LuaResponse::Output(output)
-            }
-            Err(e) => LuaResponse::Error(e.to_string()),
-        }
-    }
-
-    pub(crate) fn process_lua_commands(&mut self) {
-        let commands: Vec<_> = self
-            .lua_rx
-            .as_ref()
-            .map(|rx| std::iter::from_fn(|| rx.try_recv().ok()).collect())
-            .unwrap_or_default();
-
-        for cmd in commands {
-            match cmd {
-                LuaCommand::Exec { code, respond } => {
-                    let response = self.exec_lua_command(&code);
-                    let _ = respond.send(response);
-                    self.drain_console();
-                    self.invalidate_layout();
-                }
-                LuaCommand::DumpTree {
-                    filter,
-                    visible_only,
-                    respond,
-                } => {
-                    let tree = self.build_frame_tree_dump(filter.as_deref(), visible_only);
-                    let _ = respond.send(LuaResponse::Tree(tree));
-                }
-                LuaCommand::Screenshot {
-                    output,
-                    width,
-                    height,
-                    filter,
-                    respond,
-                } => {
-                    let result = self.render_screenshot(&output, width, height, filter.as_deref());
-                    let _ = respond.send(result);
-                }
-            }
-        }
-    }
-
-    pub(crate) fn handle_debug_command(&mut self, cmd: DebugCommand) -> Option<Task<Message>> {
-        match cmd {
-            DebugCommand::Dump { respond } => {
-                let dump = self.dump_wow_frames();
-                let _ = respond.send(dump);
-                None
-            }
-            DebugCommand::Click { label, respond } => {
-                let _ = respond.send(Err(format!("Click not implemented for '{}'", label)));
-                None
-            }
-            DebugCommand::Input {
-                field,
-                value: _,
-                respond,
-            } => {
-                let _ = respond.send(Err(format!("Input not implemented for '{}'", field)));
-                None
-            }
-            DebugCommand::Submit { respond } => {
-                let _ = respond.send(Err("Submit not implemented".to_string()));
-                None
-            }
-            DebugCommand::Key { key, respond } => {
-                self.handle_key_press(&key, None);
-                let _ = respond.send(Ok(()));
-                None
-            }
-            DebugCommand::Screenshot { respond } => {
-                // Store the responder and initiate screenshot
-                self.pending_screenshot = Some(respond);
-                Some(
-                    window::latest()
-                        .and_then(window::screenshot)
-                        .map(Message::ScreenshotTaken),
-                )
-            }
-        }
-    }
-
-    /// Populate inspector state from a frame's properties.
-    pub(crate) fn populate_inspector(&mut self, frame_id: u64) {
-        let env = self.env.borrow();
-        let state = env.state().borrow();
-        if let Some(frame) = state.widgets.get(frame_id) {
-            self.inspector_state = InspectorState {
-                width: format!("{:.0}", frame.width),
-                height: format!("{:.0}", frame.height),
-                alpha: format!("{:.2}", frame.alpha),
-                frame_level: format!("{}", frame.frame_level),
-                visible: frame.visible,
-                mouse_enabled: frame.mouse_enabled,
-            };
-        }
-    }
-
-    /// Apply inspector changes to the frame.
-    pub(crate) fn apply_inspector_changes(&mut self, frame_id: u64) {
-        let env = self.env.borrow();
-        let mut state = env.state().borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(frame_id) {
-            if let Ok(w) = self.inspector_state.width.parse::<f32>() {
-                frame.width = w;
-            }
-            if let Ok(h) = self.inspector_state.height.parse::<f32>() {
-                frame.height = h;
-            }
-            if let Ok(a) = self.inspector_state.alpha.parse::<f32>() {
-                frame.alpha = a.clamp(0.0, 1.0);
-            }
-            if let Ok(l) = self.inspector_state.frame_level.parse::<i32>() {
-                frame.frame_level = l;
-            }
-            frame.visible = self.inspector_state.visible;
-            frame.mouse_enabled = self.inspector_state.mouse_enabled;
-        }
-    }
 }
 

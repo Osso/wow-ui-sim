@@ -318,6 +318,28 @@ fn apply_bar_fill_with_uvs(
 
 use super::tiling::emit_tiled_texture;
 
+/// Apply circle-clip masking to recently emitted texture quads.
+///
+/// When a texture has mask textures (e.g. `TempPortraitAlphaMask`), we clip it
+/// to a circle using the shader's circle-clip flag. The local_uv is reset to
+/// 0-1 across each quad so the circle math works regardless of atlas UV mapping.
+fn apply_mask_circle_clip(batch: &mut QuadBatch, vert_before: usize) {
+    use crate::render::shader::FLAG_CIRCLE_CLIP;
+    let count = batch.vertices.len() - vert_before;
+    if count == 0 {
+        return;
+    }
+    // Process each quad (4 vertices): set flag and fix local_uv to 0-1.
+    let local_uvs = [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]];
+    for i in (vert_before..batch.vertices.len()).step_by(4) {
+        let end = (i + 4).min(batch.vertices.len());
+        for (j, v) in batch.vertices[i..end].iter_mut().enumerate() {
+            v.flags |= FLAG_CIRCLE_CLIP;
+            v.local_uv = local_uvs[j];
+        }
+    }
+}
+
 /// Build quads for a Minimap widget - map texture clipped to a circle.
 pub fn build_minimap_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
     use crate::render::shader::FLAG_CIRCLE_CLIP;
@@ -417,7 +439,11 @@ fn emit_frame_quads(
         }
         WidgetType::Texture => {
             if !f.is_mask {
+                let vert_before = batch.vertices.len();
                 build_texture_quads(batch, bounds, f, bar_fill);
+                if !f.mask_textures.is_empty() {
+                    apply_mask_circle_clip(batch, vert_before);
+                }
             }
         }
         WidgetType::FontString => {
