@@ -24,6 +24,7 @@ regex = "1"
 walkdir = "2"
 phf = { version = "0.11", features = ["macros"] }
 phf_codegen = "0.11"
+rodio = "0.21"
 
 # Iced GUI
 iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio", "wgpu"] }
@@ -46,26 +47,6 @@ path = "src/main.rs"
 [[bin]]
 name = "wow-cli"
 path = "src/bin/wow_cli/main.rs"
-
-[[bin]]
-name = "gen_atlas"
-path = "tools/gen_atlas.rs"
-
-[[bin]]
-name = "gen_global_strings"
-path = "tools/gen_global_strings.rs"
-
-[[bin]]
-name = "gen_spells"
-path = "tools/gen_spells.rs"
-
-[[bin]]
-name = "gen_items"
-path = "tools/gen_items.rs"
-
-[[bin]]
-name = "gen_manifest"
-path = "tools/gen_manifest.rs"
 
 [dev-dependencies]
 insta = "1.42"
