@@ -69,6 +69,8 @@ fn register_c_class_talents(lua: &Lua) -> Result<()> {
     })?)?;
     t.set("HasUnspentTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("HasUnspentHeroTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetLastSelectedSavedConfigID", lua.create_function(|_, _spec_id: Option<i32>| Ok(Value::Nil))?)?;
+    t.set("CanChangeTalents", lua.create_function(|_, ()| Ok((true, false)))?)?;
     lua.globals().set("C_ClassTalents", t)?;
     Ok(())
 }

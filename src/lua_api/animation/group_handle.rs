@@ -125,6 +125,16 @@ impl AnimGroupHandle {
         methods.add_method("PlaySynced", |_, _this, _args: MultiValue| {
             Ok(())
         });
+
+        methods.add_method("SetPlaying", |_, this, playing: bool| {
+            let mut state = this.state.borrow_mut();
+            if playing {
+                start_group_playback(&mut state, this.group_id, false);
+            } else {
+                stop_group(&mut state, this.group_id);
+            }
+            Ok(())
+        });
     }
 
     /// Register Stop, Pause, Finish methods.
