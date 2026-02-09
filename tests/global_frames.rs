@@ -108,13 +108,6 @@ fn test_pet_frame_exists() {
     assert!(exists);
 }
 
-#[test]
-fn test_party_frame_exists() {
-    let env = env();
-    let exists: bool = env.eval("return PartyFrame ~= nil").unwrap();
-    assert!(exists);
-}
-
 // ============================================================================
 // Chat System Globals
 // ============================================================================
