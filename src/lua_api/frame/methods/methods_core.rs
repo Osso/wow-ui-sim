@@ -41,8 +41,8 @@ fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 return Ok(name.clone());
             }
             // Try parentKey from parent's children_keys
-            if let Some(pid) = frame.parent_id {
-                if let Some(parent) = state.widgets.get(pid) {
+            if let Some(pid) = frame.parent_id
+                && let Some(parent) = state.widgets.get(pid) {
                     for (key, &cid) in &parent.children_keys {
                         if cid == this.id {
                             let parent_name = parent.name.as_deref().unwrap_or("?");
@@ -50,7 +50,6 @@ fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                         }
                     }
                 }
-            }
             return Ok(format!("[{}]", frame.widget_type.as_str()));
         }
         Ok("[Unknown]".to_string())
@@ -250,13 +249,11 @@ pub(crate) fn fire_on_show_recursive(
     id: u64,
 ) -> mlua::Result<()> {
     // Fire OnShow on this frame (intrinsic postcall handlers fire through template scripts)
-    if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, id, "OnShow") {
-        if let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, id) {
-            if let Err(e) = handler.call::<()>(frame_ud) {
+    if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, id, "OnShow")
+        && let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, id)
+            && let Err(e) = handler.call::<()>(frame_ud) {
                 crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
             }
-        }
-    }
 
     // Collect visible children (borrow scoped)
     let children: Vec<u64> = {
@@ -495,7 +492,9 @@ fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetID(id) - Set frame ID (used for tab ordering, etc.)
     methods.add_method("SetID", |_, this, id: i32| {
-        this.state.borrow_mut().widgets.get_mut_silent(this.id).map(|f| f.user_id = id);
+        if let Some(f) = this.state.borrow_mut().widgets.get_mut_silent(this.id) {
+            f.user_id = id;
+        }
         Ok(())
     });
 
