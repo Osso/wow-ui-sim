@@ -53,6 +53,11 @@ pub fn collect_ancestor_visible_ids(
     while let Some((id, parent_alpha)) = queue.pop() {
         let Some(f) = registry.get(id) else { continue };
         if !f.visible {
+            // Button state textures (HighlightTexture etc.) start with visible=false
+            // but their visibility is resolved later by button_vis::resolve_visibility.
+            if is_button_state_texture(f, id, registry) {
+                visible.insert(id, parent_alpha * f.alpha);
+            }
             continue;
         }
         let effective_alpha = parent_alpha * f.alpha;
@@ -62,6 +67,28 @@ pub fn collect_ancestor_visible_ids(
         }
     }
     visible
+}
+
+/// Check if a frame is a button state texture child (NormalTexture, PushedTexture, etc.).
+///
+/// These textures have state-driven visibility that overrides `frame.visible`,
+/// so they must not be pruned by ancestor-visibility checks.
+fn is_button_state_texture(
+    f: &crate::widget::Frame,
+    id: u64,
+    registry: &crate::widget::WidgetRegistry,
+) -> bool {
+    if !matches!(f.widget_type, WidgetType::Texture) {
+        return false;
+    }
+    let Some(parent_id) = f.parent_id else { return false };
+    let Some(parent) = registry.get(parent_id) else { return false };
+    if !matches!(parent.widget_type, WidgetType::Button | WidgetType::CheckButton) {
+        return false;
+    }
+    ["NormalTexture", "PushedTexture", "HighlightTexture", "DisabledTexture"]
+        .iter()
+        .any(|key| parent.children_keys.get(*key) == Some(&id))
 }
 
 /// Collect frames with computed rects, sorted by strata/level/draw-layer.
