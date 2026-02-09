@@ -289,7 +289,7 @@ pub enum AnimationElement {
     FlipBook(AnimationXml),
     VertexColor(AnimationXml),
     TextureCoordTranslation(AnimationXml),
-    Scripts(ScriptsXml),
+    Scripts(Box<ScriptsXml>),
     KeyValues(KeyValuesXml),
     #[serde(other)]
     Unknown,
