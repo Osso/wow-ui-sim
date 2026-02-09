@@ -5,14 +5,25 @@ use crate::lua_api::LoaderEnv;
 use super::error::LoadError;
 use super::helpers::{escape_lua_string, lua_global_ref};
 
-/// Generate Lua code for a single button texture (atlas or file path).
+/// Generate Lua code for a single button texture (atlas or file path),
+/// and register the texture as a global if it has a `$parent`-prefixed name.
 fn generate_button_texture_code(
     button_name: &str,
     method: &str,
     texture: &crate::xml::TextureXml,
 ) -> String {
-    if let Some(atlas) = &texture.atlas {
-        let getter = method.replace("Set", "Get");
+    let getter = method.replace("Set", "Get");
+    let register_global = texture.name.as_ref().map(|n| {
+        let resolved = n.replace("$parent", button_name);
+        format!(
+            "do local t = {}:{}() if t then _G[\"{}\"] = t end end\n",
+            lua_global_ref(button_name),
+            getter,
+            escape_lua_string(&resolved),
+        )
+    });
+
+    let mut code = if let Some(atlas) = &texture.atlas {
         format!(
             r#"
         do
@@ -31,7 +42,12 @@ fn generate_button_texture_code(
         )
     } else {
         String::new()
+    };
+
+    if let Some(reg) = register_global {
+        code.push_str(&reg);
     }
+    code
 }
 
 /// Apply button textures (NormalTexture, PushedTexture, etc.) from a FrameXml to a button.
