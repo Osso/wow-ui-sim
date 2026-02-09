@@ -131,8 +131,10 @@ pub fn add_misc_widget_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetVisuals(info) - UnitFrame spark/bar visual configuration
     methods.add_method("SetVisuals", |_, _this, _args: mlua::MultiValue| Ok(()));
 
-    // Initialize(...) - TextStatusBar spark, FeedbackFrame, FullPowerFrame
-    methods.add_method("Initialize", |_, _this, _args: mlua::MultiValue| Ok(()));
+    // NOTE: Initialize is intentionally NOT defined here as a no-op.
+    // It must be dispatched via Lua mixin methods (e.g. AlternatePowerBarBaseMixin,
+    // EvokerEbonMightBarMixin) through the __index custom fields lookup.
+    // A Rust add_method shadows __index, breaking mixin dispatch.
 
     // RegisterForWidgetSet(widgetSetID, layoutFunc, initFunc, attachedUnitInfo) - UIWidget container
     methods.add_method("RegisterForWidgetSet", |_, _this, _args: mlua::MultiValue| Ok(()));
