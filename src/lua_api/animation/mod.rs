@@ -154,6 +154,10 @@ pub struct AnimState {
     pub to_scale_y: f64,
     // Rotation
     pub degrees: f64,
+    // FlipBook
+    pub flip_book_rows: u32,
+    pub flip_book_columns: u32,
+    pub flip_book_frames: u32,
     // Runtime
     pub elapsed: f64,
     /// Script handlers (OnPlay, OnFinished, OnStop, etc.)
@@ -182,6 +186,9 @@ impl AnimState {
             to_scale_x: 1.0,
             to_scale_y: 1.0,
             degrees: 0.0,
+            flip_book_rows: 1,
+            flip_book_columns: 1,
+            flip_book_frames: 1,
             elapsed: 0.0,
             scripts: HashMap::new(),
         }

@@ -34,6 +34,8 @@ struct TargetEffects {
     alpha: Option<f32>,
     offset_x: f32,
     offset_y: f32,
+    /// FlipBook: (rows, columns, frames, progress) to compute UV sub-region.
+    flipbook: Option<(u32, u32, u32, f64)>,
 }
 
 /// Advance a single animation group: update elapsed times, compute effects, handle finish.
@@ -136,6 +138,14 @@ fn apply_anim_to_entry(anim: &super::AnimState, progress: f64, entry: &mut Targe
             entry.offset_x = (anim.offset_x * progress) as f32;
             entry.offset_y = (anim.offset_y * progress) as f32;
         }
+        AnimationType::FlipBook => {
+            entry.flipbook = Some((
+                anim.flip_book_rows,
+                anim.flip_book_columns,
+                anim.flip_book_frames,
+                progress,
+            ));
+        }
         _ => {} // Scale, Rotation, etc. not yet implemented
     }
 }
@@ -159,6 +169,70 @@ fn apply_effects(
         }
         frame.anim_offset_x = fx.offset_x;
         frame.anim_offset_y = fx.offset_y;
+        if let Some((rows, cols, frames, progress)) = fx.flipbook {
+            apply_flipbook_uv(frame, rows, cols, frames, progress);
+        }
+    }
+}
+
+/// Compute and set UV sub-region for the current flipbook frame.
+fn apply_flipbook_uv(
+    frame: &mut crate::widget::Frame,
+    rows: u32,
+    cols: u32,
+    frames: u32,
+    progress: f64,
+) {
+    if rows == 0 || cols == 0 || frames == 0 {
+        return;
+    }
+    let idx = ((progress * frames as f64).floor() as u32).min(frames - 1);
+    let row = idx / cols;
+    let col = idx % cols;
+
+    // Use atlas_tex_coords as the full spritesheet region, fall back to tex_coords
+    let (left, right, top, bottom) = frame.atlas_tex_coords
+        .or(frame.tex_coords)
+        .unwrap_or((0.0, 1.0, 0.0, 1.0));
+
+    let frame_u = (right - left) / cols as f32;
+    let frame_v = (bottom - top) / rows as f32;
+
+    let new_left = left + col as f32 * frame_u;
+    let new_top = top + row as f32 * frame_v;
+
+    frame.tex_coords = Some((new_left, new_left + frame_u, new_top, new_top + frame_v));
+}
+
+/// Apply flipbook UV effects for a group (used when pausing to show current frame).
+pub(super) fn apply_flipbook_for_group(state: &mut SimState, group_id: u64) {
+    let flipbook_data: Vec<(Option<String>, u32, u32, u32, f64)> = {
+        let Some(group) = state.animation_groups.get(&group_id) else { return };
+        group.animations.iter()
+            .filter(|a| a.anim_type == AnimationType::FlipBook)
+            .map(|a| {
+                let progress = a.smooth_progress();
+                (a.child_key.clone(), a.flip_book_rows, a.flip_book_columns, a.flip_book_frames, progress)
+            })
+            .collect()
+    };
+
+    let owner_id = {
+        let Some(group) = state.animation_groups.get(&group_id) else { return };
+        group.owner_frame_id
+    };
+
+    for (child_key, rows, cols, frames, progress) in flipbook_data {
+        let target_id = match &child_key {
+            Some(key) => state.widgets.get(owner_id)
+                .and_then(|owner| owner.children_keys.get(key.as_str()).copied()),
+            None => Some(owner_id),
+        };
+        if let Some(id) = target_id {
+            if let Some(frame) = state.widgets.get_mut(id) {
+                apply_flipbook_uv(frame, rows, cols, frames, progress);
+            }
+        }
     }
 }
 

@@ -195,6 +195,17 @@ fn generate_animation_code(
     emit_str_call(&mut code, "__anim", "SetTargetName", anim.target.as_deref());
     emit_str_call(&mut code, "__anim", "SetTargetKey", anim.target_key.as_deref());
 
+    // FlipBook properties
+    if let Some(rows) = anim.flip_book_rows {
+        code.push_str(&format!("\n        __anim:SetFlipBookRows({rows})\n        "));
+    }
+    if let Some(cols) = anim.flip_book_columns {
+        code.push_str(&format!("\n        __anim:SetFlipBookColumns({cols})\n        "));
+    }
+    if let Some(frames) = anim.flip_book_frames {
+        code.push_str(&format!("\n        __anim:SetFlipBookFrames({frames})\n        "));
+    }
+
     code
 }
 

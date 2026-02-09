@@ -93,6 +93,7 @@ impl AnimHandle {
         Self::add_translation_methods(methods);
         Self::add_scale_methods(methods);
         Self::add_rotation_methods(methods);
+        Self::add_flipbook_methods(methods);
     }
 
     /// Register smoothing methods: SetSmoothing, GetSmoothing.
@@ -233,6 +234,57 @@ impl AnimHandle {
 
         methods.add_method("SetOrigin", |_, _this, _args: MultiValue| {
             Ok(()) // Store only, no visual effect
+        });
+    }
+
+    /// Register flipbook property methods.
+    fn add_flipbook_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        methods.add_method("SetFlipBookRows", |_, this, rows: u32| {
+            let mut state = this.state.borrow_mut();
+            if let Some(group) = state.animation_groups.get_mut(&this.group_id)
+                && let Some(anim) = group.animations.get_mut(this.anim_index) {
+                    anim.flip_book_rows = rows;
+                }
+            Ok(())
+        });
+
+        methods.add_method("GetFlipBookRows", |_, this, ()| {
+            let state = this.state.borrow();
+            Ok(state.animation_groups.get(&this.group_id)
+                .and_then(|g| g.animations.get(this.anim_index))
+                .map_or(1_u32, |a| a.flip_book_rows))
+        });
+
+        methods.add_method("SetFlipBookColumns", |_, this, cols: u32| {
+            let mut state = this.state.borrow_mut();
+            if let Some(group) = state.animation_groups.get_mut(&this.group_id)
+                && let Some(anim) = group.animations.get_mut(this.anim_index) {
+                    anim.flip_book_columns = cols;
+                }
+            Ok(())
+        });
+
+        methods.add_method("GetFlipBookColumns", |_, this, ()| {
+            let state = this.state.borrow();
+            Ok(state.animation_groups.get(&this.group_id)
+                .and_then(|g| g.animations.get(this.anim_index))
+                .map_or(1_u32, |a| a.flip_book_columns))
+        });
+
+        methods.add_method("SetFlipBookFrames", |_, this, frames: u32| {
+            let mut state = this.state.borrow_mut();
+            if let Some(group) = state.animation_groups.get_mut(&this.group_id)
+                && let Some(anim) = group.animations.get_mut(this.anim_index) {
+                    anim.flip_book_frames = frames;
+                }
+            Ok(())
+        });
+
+        methods.add_method("GetFlipBookFrames", |_, this, ()| {
+            let state = this.state.borrow();
+            Ok(state.animation_groups.get(&this.group_id)
+                .and_then(|g| g.animations.get(this.anim_index))
+                .map_or(1_u32, |a| a.flip_book_frames))
         });
     }
 

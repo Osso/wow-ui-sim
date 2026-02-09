@@ -6,6 +6,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use super::{AnimHandle, AnimState, AnimationType, LoopType};
+use super::tick::apply_flipbook_for_group;
 
 /// Resolve a child_key to a frame ID via the owner's children_keys.
 fn resolve_child(state: &SimState, owner_id: u64, child_key: &Option<String>) -> Option<u64> {
@@ -141,6 +142,8 @@ impl AnimGroupHandle {
                     group.paused = true;
                     group.playing = false;
                 }
+            // Apply flipbook UV at current progress so paused-at-frame-0 shows correctly
+            apply_flipbook_for_group(&mut state, this.group_id);
             Ok(())
         });
 
