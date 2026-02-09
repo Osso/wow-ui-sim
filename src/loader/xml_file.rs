@@ -174,20 +174,18 @@ fn resolve_frame_element(element: &XmlElement) -> Option<(&FrameXml, &'static st
 
 /// Register a top-level virtual Texture template (e.g. TextStatusBarSparkTemplate).
 fn register_virtual_texture(texture: &crate::xml::TextureXml) {
-    if texture.is_virtual == Some(true) {
-        if let Some(ref name) = texture.name {
+    if texture.is_virtual == Some(true)
+        && let Some(ref name) = texture.name {
             crate::xml::register_texture_template(name, texture.clone());
         }
-    }
 }
 
 /// Register a top-level virtual AnimationGroup template.
 fn register_virtual_anim_group(anim_group: &crate::xml::AnimationGroupXml) {
-    if anim_group.is_virtual == Some(true) {
-        if let Some(ref name) = anim_group.name {
+    if anim_group.is_virtual == Some(true)
+        && let Some(ref name) = anim_group.name {
             crate::xml::register_anim_group_template(name, anim_group.clone());
         }
-    }
 }
 
 /// Process a frame-type XML element by dispatching to create_frame_from_xml.
