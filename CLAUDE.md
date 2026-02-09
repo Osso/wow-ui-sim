@@ -148,8 +148,8 @@ Three-part horizontally-stretched button used for most Blizzard UI action button
 
 ### Dump Limitations
 
-- `--filter` matches frame **names** only, not parentKey names
-- Anonymous frames (parentKey-only) show as `(anonymous)` and won't match filters
+- `--filter` matches frame **display names** (global name or `.parentKey`) per-frame, printing only matching frames
+- `--filter-key` matches display names and prints the **full subtree** of matching frames — use this to explore a frame's children
 - Debug script hook: `src/main.rs` loads `/tmp/debug-scrollbox-update.lua` before GUI starts (not available in dump command)
 
 ## CLI Tools
@@ -178,6 +178,7 @@ Load UI and dump the frame tree without starting the GUI (for debugging):
 ```bash
 wow-sim --no-addons --no-saved-vars dump-tree                # Fast: skip addons and saved vars
 wow-sim dump-tree --filter ScrollBar                         # Filter by name substring
+wow-sim dump-tree --filter-key SpellBookFrame                # Filter by name, print full subtree
 wow-sim dump-tree --visible-only                             # Show only visible frames
 wow-sim dump-tree                                            # Full load with all addons
 ```

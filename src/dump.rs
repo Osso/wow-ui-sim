@@ -3,7 +3,7 @@
 use crate::widget::{Frame, WidgetRegistry, WidgetType};
 
 /// Dump the frame tree to stdout.
-pub fn print_frame_tree(widgets: &WidgetRegistry, filter: Option<&str>, visible_only: bool) {
+pub fn print_frame_tree(widgets: &WidgetRegistry, filter: Option<&str>, filter_key: Option<&str>, visible_only: bool) {
     let mut roots = collect_root_frames(widgets);
     roots.sort_by(|a, b| {
         let name_a = a.1.as_deref().unwrap_or("");
@@ -14,8 +14,12 @@ pub fn print_frame_tree(widgets: &WidgetRegistry, filter: Option<&str>, visible_
     print_anchor_diagnostic(widgets);
     eprintln!("\n=== Frame Tree ===\n");
 
-    for (id, _) in &roots {
-        print_frame(widgets, *id, 0, filter, visible_only);
+    if let Some(key_filter) = filter_key {
+        print_subtrees_matching_key(widgets, &roots, key_filter, visible_only);
+    } else {
+        for (id, _) in &roots {
+            print_frame(widgets, *id, 0, filter, visible_only);
+        }
     }
 }
 
@@ -111,6 +115,68 @@ fn find_parent_key(widgets: &WidgetRegistry, w: &Frame, id: u64) -> Option<Strin
         .iter()
         .find(|(_, cid)| **cid == id)
         .map(|(k, _)| k.clone())
+}
+
+/// Find frames whose parentKey matches the filter and print their full subtrees.
+fn print_subtrees_matching_key(
+    widgets: &WidgetRegistry,
+    roots: &[(u64, Option<String>)],
+    key_filter: &str,
+    visible_only: bool,
+) {
+    let key_lower = key_filter.to_lowercase();
+    let matching_ids = collect_key_matches(widgets, roots, &key_lower);
+    for id in matching_ids {
+        print_frame_subtree(widgets, id, 0, visible_only);
+    }
+}
+
+/// Recursively collect frame IDs whose parentKey or name matches the filter.
+fn collect_key_matches(
+    widgets: &WidgetRegistry,
+    roots: &[(u64, Option<String>)],
+    key_lower: &str,
+) -> Vec<u64> {
+    let mut result = Vec::new();
+    for &(id, _) in roots {
+        collect_key_matches_recursive(widgets, id, key_lower, &mut result);
+    }
+    result
+}
+
+fn collect_key_matches_recursive(
+    widgets: &WidgetRegistry,
+    id: u64,
+    key_lower: &str,
+    result: &mut Vec<u64>,
+) {
+    let Some(frame) = widgets.get(id) else { return };
+    let display = resolve_display_name(widgets, frame, id);
+    if display.to_lowercase().contains(key_lower) {
+        result.push(id);
+        return; // Don't recurse into children - they'll be printed as subtree
+    }
+    for &child_id in &frame.children {
+        collect_key_matches_recursive(widgets, child_id, key_lower, result);
+    }
+}
+
+/// Print a frame and its entire subtree unconditionally (no name filter).
+fn print_frame_subtree(
+    widgets: &WidgetRegistry,
+    id: u64,
+    depth: usize,
+    visible_only: bool,
+) {
+    let Some(frame) = widgets.get(id) else { return };
+    if visible_only && !frame.visible {
+        return;
+    }
+    let display_name = resolve_display_name(widgets, frame, id);
+    print_frame_line(frame, &display_name, depth, widgets);
+    for &child_id in &frame.children {
+        print_frame_subtree(widgets, child_id, depth + 1, visible_only);
+    }
 }
 
 /// Recursively print a frame and its children.
