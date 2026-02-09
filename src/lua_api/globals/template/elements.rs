@@ -1,22 +1,28 @@
 //! Template element creation: textures, fontstrings, thumb/button textures.
 
-use crate::loader::helpers::{generate_animation_group_code, generate_set_point_code};
+use crate::loader::helpers::generate_set_point_code;
+use crate::loader::helpers_anim::generate_animation_group_code;
 use mlua::Lua;
 
 use super::{escape_lua_string, get_size_values, lua_global_ref, rand_id};
 
 /// Create a texture from template XML.
+///
+/// `parent_name` is the actual Lua frame name (for parent reference).
+/// `subst_parent` is the name used for `$parent` substitution in child names
+/// (propagated through anonymous frames to the nearest named ancestor).
 pub(super) fn create_texture_from_template(
     lua: &Lua,
     texture: &crate::xml::TextureXml,
     parent_name: &str,
+    subst_parent: &str,
     draw_layer: &str,
     is_mask: bool,
 ) {
     let child_name = texture
         .name
         .as_ref()
-        .map(|n| n.replace("$parent", parent_name))
+        .map(|n| n.replace("$parent", subst_parent))
         .unwrap_or_else(|| format!("__tex_{}", rand_id()));
 
     let create_method = if is_mask { "CreateMaskTexture" } else { "CreateTexture" };
@@ -153,16 +159,20 @@ fn append_anchors_and_parent_refs(
 }
 
 /// Create a fontstring from template XML.
+///
+/// `subst_parent` is the name used for `$parent` substitution (propagated
+/// through anonymous frames).
 pub(super) fn create_fontstring_from_template(
     lua: &Lua,
     fontstring: &crate::xml::FontStringXml,
     parent_name: &str,
+    subst_parent: &str,
     draw_layer: &str,
 ) {
     let child_name = fontstring
         .name
         .as_ref()
-        .map(|n| n.replace("$parent", parent_name))
+        .map(|n| n.replace("$parent", subst_parent))
         .unwrap_or_else(|| format!("__fs_{}", rand_id()));
 
     let inherits = fontstring.inherits.as_deref().unwrap_or("");
@@ -288,11 +298,12 @@ pub(super) fn create_bar_texture_from_template(
     lua: &Lua,
     bar: &crate::xml::TextureXml,
     parent_name: &str,
+    subst_parent: &str,
 ) {
     let child_name = bar
         .name
         .as_ref()
-        .map(|n| n.replace("$parent", parent_name))
+        .map(|n| n.replace("$parent", subst_parent))
         .unwrap_or_else(|| format!("__bar_{}", rand_id()));
 
     let mut code = format!(
@@ -322,11 +333,12 @@ pub(super) fn create_thumb_texture_from_template(
     lua: &Lua,
     thumb: &crate::xml::TextureXml,
     parent_name: &str,
+    subst_parent: &str,
 ) {
     let child_name = thumb
         .name
         .as_ref()
-        .map(|n| n.replace("$parent", parent_name))
+        .map(|n| n.replace("$parent", subst_parent))
         .unwrap_or_else(|| format!("__thumb_{}", rand_id()));
 
     let mut code = format!(
@@ -371,6 +383,7 @@ pub(super) fn create_button_texture_from_template(
     lua: &Lua,
     texture: &crate::xml::TextureXml,
     parent_name: &str,
+    subst_parent: &str,
     parent_key: &str,
     setter_method: &str,
 ) {
@@ -383,7 +396,7 @@ pub(super) fn create_button_texture_from_template(
     let child_name = texture
         .name
         .as_ref()
-        .map(|n| n.replace("$parent", parent_name));
+        .map(|n| n.replace("$parent", subst_parent));
 
     let tex_name = child_name
         .clone()

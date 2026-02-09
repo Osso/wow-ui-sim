@@ -5,7 +5,8 @@
 
 mod elements;
 
-use crate::loader::helpers::{generate_animation_group_code, generate_set_point_code};
+use crate::loader::helpers::generate_set_point_code;
+use crate::loader::helpers_anim::generate_animation_group_code;
 use crate::xml::{get_template_chain, FrameElement, FrameXml, TemplateEntry};
 use mlua::Lua;
 
@@ -76,11 +77,49 @@ pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names
         all_child_names.extend(child_names);
     }
 
-    // Fire OnLoad for all child frames created during template application.
-    // This is deferred until after ALL templates in the chain are applied,
-    // because child OnLoad handlers may depend on KeyValues from later templates.
-    for child_name in &all_child_names {
-        fire_on_load(lua, child_name);
+    // When __suppress_create_frame_onload is set (XML loading mode), defer child
+    // OnLoad firing so the XML loader can apply instance-level KeyValues first.
+    // Child OnLoad handlers may reference parent properties set via KeyValues
+    // (e.g. ArenaEnemyPetFrame accesses parent.layoutIndex).
+    let suppress_depth: i32 = lua
+        .globals()
+        .get("__suppress_create_frame_onload")
+        .unwrap_or(0);
+
+    if suppress_depth > 0 {
+        // Store names for the XML loader to fire after KeyValues are applied
+        let deferred: mlua::Table = lua
+            .globals()
+            .get("__deferred_child_onloads")
+            .unwrap_or_else(|_| lua.create_table().unwrap());
+        for child_name in &all_child_names {
+            let len = deferred.raw_len();
+            let _ = deferred.raw_set(len + 1, child_name.as_str());
+        }
+        let _ = lua.globals().set("__deferred_child_onloads", deferred);
+    } else {
+        // Fire OnLoad for all child frames created during template application.
+        // This is deferred until after ALL templates in the chain are applied,
+        // because child OnLoad handlers may depend on KeyValues from later templates.
+        for child_name in &all_child_names {
+            fire_on_load(lua, child_name);
+        }
+    }
+}
+
+/// Fire all deferred child OnLoad scripts that were queued during template
+/// application while `__suppress_create_frame_onload` was active.
+pub fn fire_deferred_child_onloads(lua: &Lua) {
+    let Ok(deferred) = lua.globals().get::<mlua::Table>("__deferred_child_onloads") else {
+        return;
+    };
+    let names: Vec<String> = deferred
+        .sequence_values::<String>()
+        .filter_map(|r| r.ok())
+        .collect();
+    let _ = lua.globals().set("__deferred_child_onloads", mlua::Value::Nil);
+    for name in &names {
+        fire_on_load(lua, name);
     }
 }
 
@@ -106,32 +145,33 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     }
 
     // Apply layers (textures and fontstrings)
-    apply_layers(lua, template, frame_name);
+    // subst_parent = frame_name at the template root level
+    apply_layers(lua, template, frame_name, frame_name);
 
     // Apply button textures (NormalTexture, PushedTexture, etc.)
-    apply_button_textures(lua, template, frame_name);
+    apply_button_textures(lua, template, frame_name, frame_name);
 
     // Apply StatusBar BarTexture
     if let Some(bar) = template.bar_texture() {
-        elements::create_bar_texture_from_template(lua, bar, frame_name);
+        elements::create_bar_texture_from_template(lua, bar, frame_name, frame_name);
     }
 
     // Apply Slider ThumbTexture
     if let Some(thumb) = template.thumb_texture() {
-        elements::create_thumb_texture_from_template(lua, thumb, frame_name);
+        elements::create_thumb_texture_from_template(lua, thumb, frame_name, frame_name);
     }
 
     // Apply ButtonText and EditBox FontString
-    apply_button_text(lua, template, frame_name);
-    apply_editbox_fontstring(lua, template, frame_name);
+    apply_button_text(lua, template, frame_name, frame_name);
+    apply_editbox_fontstring(lua, template, frame_name, frame_name);
     apply_animation_groups(lua, template, frame_name);
 
     // Create child frames defined in the template
-    let mut child_names = create_child_frames(lua, template, frame_name);
+    let mut child_names = create_child_frames(lua, template, frame_name, frame_name);
 
     // Create ScrollChild children
     if let Some(scroll_child) = template.scroll_child() {
-        child_names.extend(create_scroll_child_frames(lua, &scroll_child.children, frame_name));
+        child_names.extend(create_scroll_child_frames(lua, &scroll_child.children, frame_name, frame_name));
     }
 
     // Apply scripts from template (after children, so OnLoad can reference them)
@@ -236,22 +276,25 @@ fn format_key_value(value: &str, value_type: Option<&str>) -> String {
 }
 
 /// Apply layers (textures and fontstrings) from a template.
-fn apply_layers(lua: &Lua, template: &FrameXml, frame_name: &str) {
+///
+/// `subst_parent` is the name used for `$parent` substitution in child names.
+/// For anonymous frames, this propagates from the nearest named ancestor.
+fn apply_layers(lua: &Lua, template: &FrameXml, frame_name: &str, subst_parent: &str) {
     for layers in template.layers() {
         for layer in &layers.layers {
             let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
             for (texture, is_mask) in layer.textures() {
-                elements::create_texture_from_template(lua, texture, frame_name, draw_layer, is_mask);
+                elements::create_texture_from_template(lua, texture, frame_name, subst_parent, draw_layer, is_mask);
             }
             for fontstring in layer.font_strings() {
-                elements::create_fontstring_from_template(lua, fontstring, frame_name, draw_layer);
+                elements::create_fontstring_from_template(lua, fontstring, frame_name, subst_parent, draw_layer);
             }
         }
     }
 }
 
 /// Apply button textures (NormalTexture, PushedTexture, etc.) from a template.
-fn apply_button_textures(lua: &Lua, template: &FrameXml, frame_name: &str) {
+fn apply_button_textures(lua: &Lua, template: &FrameXml, frame_name: &str, subst_parent: &str) {
     let texture_specs: &[(&str, &str, Option<&crate::xml::TextureXml>)] = &[
         ("Normal", "SetNormalTexture", template.normal_texture()),
         ("Pushed", "SetPushedTexture", template.pushed_texture()),
@@ -262,7 +305,7 @@ fn apply_button_textures(lua: &Lua, template: &FrameXml, frame_name: &str) {
     ];
     for &(parent_key, setter, tex_opt) in texture_specs {
         if let Some(tex) = tex_opt {
-            elements::create_button_texture_from_template(lua, tex, frame_name, parent_key, setter);
+            elements::create_button_texture_from_template(lua, tex, frame_name, subst_parent, parent_key, setter);
         }
     }
 }
@@ -316,8 +359,12 @@ fn apply_mixin(lua: &Lua, mixin: &Option<String>, frame_name: &str) {
 
 /// Fire OnLoad on a frame.
 ///
-/// Checks both `GetScript("OnLoad")` (set via SetScript in XML) and `frame.OnLoad`
-/// (set via mixin), matching the behavior of `fire_lifecycle_scripts` in xml_frame.rs.
+/// Only fires handlers registered via `SetScript` (from `<Scripts>` XML tags)
+/// and `OnLoad_Intrinsic` (from intrinsic mixins like EventFrameMixin).
+/// Does NOT call `frame.OnLoad` as a fallback — in WoW, the C++ engine only
+/// calls registered script handlers, not mixin table fields. Mixin OnLoad
+/// methods are invoked via `<Scripts><OnLoad method="OnLoad"/></Scripts>` which
+/// generates a `SetScript("OnLoad", function(self) self:OnLoad() end)` call.
 pub(crate) fn fire_on_load(lua: &Lua, frame_name: &str) {
     let frame_ref = lua_global_ref(frame_name);
     // Fire intrinsic OnLoad_Intrinsic first (e.g. EventFrameMixin) — in WoW,
@@ -338,11 +385,6 @@ pub(crate) fn fire_on_load(lua: &Lua, frame_name: &str) {
                 if not ok then
                     return tostring(err)
                 end
-            elseif type(frame.OnLoad) == "function" then
-                local ok, err = pcall(frame.OnLoad, frame)
-                if not ok then
-                    return tostring(err)
-                end
             end
         end
         "#
@@ -355,13 +397,14 @@ pub(crate) fn fire_on_load(lua: &Lua, frame_name: &str) {
 }
 
 /// Create child frames from template XML.
-fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str) -> Vec<String> {
+fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str, subst_parent: &str) -> Vec<String> {
     let mut all_names = Vec::new();
-    for child in frame.all_frame_elements() {
+    let elements = frame.all_frame_elements();
+    for child in &elements {
         let Some((child_frame, child_type, intrinsic)) = frame_element_type(child) else {
             continue;
         };
-        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name);
+        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name, subst_parent);
         all_names.extend(names);
     }
     all_names
@@ -369,18 +412,28 @@ fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str) -> Vec<St
 
 /// Create a child frame from template XML.
 /// Returns names of this frame AND all nested descendants (for deferred OnLoad).
+///
+/// `subst_parent` is the name used for `$parent` substitution. For anonymous
+/// frames (no name attribute), `$parent` propagates from the nearest named
+/// ancestor rather than using the auto-generated frame name.
 fn create_child_frame_from_template(
     lua: &Lua,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     intrinsic: Option<&str>,
     parent_name: &str,
+    subst_parent: &str,
 ) -> Vec<String> {
+    let is_named = frame.name.is_some();
     let child_name = frame
         .name
         .as_ref()
-        .map(|n| n.replace("$parent", parent_name))
+        .map(|n| n.replace("$parent", subst_parent))
         .unwrap_or_else(|| format!("__tpl_{}", rand_id()));
+
+    // For named children, their name becomes the new $parent for descendants.
+    // For anonymous children, propagate the current subst_parent.
+    let child_subst = if is_named { &child_name } else { subst_parent };
 
     let code = build_create_child_code(frame, widget_type, parent_name, &child_name);
     if let Err(e) = lua.load(&code).exec() {
@@ -411,7 +464,7 @@ fn create_child_frame_from_template(
         apply_templates_from_registry(lua, &child_name, inherits);
     }
 
-    let nested_names = apply_inline_frame_content(lua, frame, &child_name);
+    let nested_names = apply_inline_frame_content(lua, frame, &child_name, child_subst);
 
     let mut all_names = nested_names;
     all_names.push(child_name);
@@ -518,39 +571,42 @@ fn create_scroll_child_frames(
     lua: &Lua,
     children: &[FrameElement],
     parent_name: &str,
+    subst_parent: &str,
 ) -> Vec<String> {
     let mut all_names = Vec::new();
     for child in children {
         let Some((child_frame, child_type, intrinsic)) = frame_element_type(child) else {
             continue;
         };
-        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name);
+        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name, subst_parent);
         all_names.extend(names);
     }
     all_names
 }
 
 /// Apply inline content from a FrameXml to an already-created frame.
-fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) -> Vec<String> {
+///
+/// `subst_parent` is the name used for `$parent` substitution in child names.
+fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) -> Vec<String> {
     apply_mixin(lua, &frame.combined_mixin(), frame_name);
     apply_inline_key_values(lua, frame, frame_name);
-    apply_layers(lua, frame, frame_name);
+    apply_layers(lua, frame, frame_name, subst_parent);
 
     if let Some(thumb) = frame.thumb_texture() {
-        elements::create_thumb_texture_from_template(lua, thumb, frame_name);
+        elements::create_thumb_texture_from_template(lua, thumb, frame_name, subst_parent);
     }
     if let Some(bar) = frame.bar_texture() {
-        elements::create_bar_texture_from_template(lua, bar, frame_name);
+        elements::create_bar_texture_from_template(lua, bar, frame_name, subst_parent);
     }
 
-    apply_inline_button_textures(lua, frame, frame_name);
-    apply_button_text(lua, frame, frame_name);
-    apply_editbox_fontstring(lua, frame, frame_name);
+    apply_inline_button_textures(lua, frame, frame_name, subst_parent);
+    apply_button_text(lua, frame, frame_name, subst_parent);
+    apply_editbox_fontstring(lua, frame, frame_name, subst_parent);
     apply_animation_groups(lua, frame, frame_name);
 
-    let mut nested_names = create_child_frames(lua, frame, frame_name);
+    let mut nested_names = create_child_frames(lua, frame, frame_name, subst_parent);
     if let Some(scroll_child) = frame.scroll_child() {
-        nested_names.extend(create_scroll_child_frames(lua, &scroll_child.children, frame_name));
+        nested_names.extend(create_scroll_child_frames(lua, &scroll_child.children, frame_name, subst_parent));
     }
 
     if let Some(scripts) = frame.scripts() {
@@ -588,7 +644,7 @@ fn apply_inline_key_values(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: 
 }
 
 /// Apply button textures from inline frame content.
-fn apply_inline_button_textures(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+fn apply_inline_button_textures(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) {
     let texture_specs: &[(&str, &str, Option<&crate::xml::TextureXml>)] = &[
         ("Normal", "SetNormalTexture", frame.normal_texture()),
         ("Pushed", "SetPushedTexture", frame.pushed_texture()),
@@ -599,15 +655,15 @@ fn apply_inline_button_textures(lua: &Lua, frame: &crate::xml::FrameXml, frame_n
     ];
     for &(parent_key, setter, tex_opt) in texture_specs {
         if let Some(tex) = tex_opt {
-            elements::create_button_texture_from_template(lua, tex, frame_name, parent_key, setter);
+            elements::create_button_texture_from_template(lua, tex, frame_name, subst_parent, parent_key, setter);
         }
     }
 }
 
 /// Create ButtonText fontstring from template.
-fn apply_button_text(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+fn apply_button_text(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) {
     let Some(fs) = frame.button_text() else { return };
-    elements::create_fontstring_from_template(lua, fs, frame_name, "OVERLAY");
+    elements::create_fontstring_from_template(lua, fs, frame_name, subst_parent, "OVERLAY");
     // Assign to parent key (fontstring creation already does this if parentKey is set,
     // but ButtonText defaults to "Text" when no parentKey is specified)
     if fs.parent_key.is_none() {
@@ -623,9 +679,9 @@ fn apply_button_text(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) 
 }
 
 /// Create EditBox FontString child from template.
-fn apply_editbox_fontstring(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+fn apply_editbox_fontstring(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) {
     let Some(fs) = frame.font_string_child() else { return };
-    elements::create_fontstring_from_template(lua, fs, frame_name, "OVERLAY");
+    elements::create_fontstring_from_template(lua, fs, frame_name, subst_parent, "OVERLAY");
 }
 
 /// Apply scripts from template.
