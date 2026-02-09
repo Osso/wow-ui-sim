@@ -330,16 +330,41 @@ fn register_name_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
 /// relations, visibility.
 fn register_state_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     register_state_boolean_stubs(lua)?;
+    register_death_functions(lua, state.clone())?;
     register_state_comparisons(lua, state.clone())?;
     register_state_relations(lua, state)
+}
+
+/// Register UnitIsDead, UnitIsDeadOrGhost with player health awareness.
+fn register_death_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    let globals = lua.globals();
+
+    let st = state.clone();
+    globals.set(
+        "UnitIsDead",
+        lua.create_function(move |_, unit: Option<String>| {
+            if unit.as_deref() == Some("player") {
+                return Ok(st.borrow().player_health <= 0);
+            }
+            Ok(false)
+        })?,
+    )?;
+    globals.set(
+        "UnitIsDeadOrGhost",
+        lua.create_function(move |_, unit: Option<String>| {
+            if unit.as_deref() == Some("player") {
+                return Ok(state.borrow().player_health <= 0);
+            }
+            Ok(false)
+        })?,
+    )?;
+    Ok(())
 }
 
 /// Register single-unit boolean stubs (always false or always true).
 fn register_state_boolean_stubs(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     let false_stubs: &[&str] = &[
-        "UnitIsDeadOrGhost",
-        "UnitIsDead",
         "UnitIsGhost",
         "UnitIsAFK",
         "UnitIsDND",

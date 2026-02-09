@@ -24,6 +24,9 @@ fn register_health_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         lua.create_function(move |_, unit: Value| {
             if let Value::String(s) = &unit {
                 let u = s.to_string_lossy();
+                if u == "player" {
+                    return Ok(st.borrow().player_health);
+                }
                 if u == "target" {
                     let st = st.borrow();
                     return Ok(st.current_target.as_ref().map(|t| t.health).unwrap_or(0));
@@ -43,6 +46,9 @@ fn register_health_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         lua.create_function(move |_, unit: Value| {
             if let Value::String(s) = &unit {
                 let u = s.to_string_lossy();
+                if u == "player" {
+                    return Ok(state.borrow().player_health_max);
+                }
                 if u == "target" {
                     let st = state.borrow();
                     return Ok(st.current_target.as_ref().map(|t| t.health_max).unwrap_or(0));

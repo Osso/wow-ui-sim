@@ -130,6 +130,10 @@ pub struct SimState {
     pub sound_manager: Option<SoundManager>,
     /// Player character name (randomly chosen on startup).
     pub player_name: String,
+    /// Player current health.
+    pub player_health: i32,
+    /// Player maximum health.
+    pub player_health_max: i32,
 }
 
 impl Default for SimState {
@@ -159,6 +163,8 @@ impl Default for SimState {
             current_target: None,
             sound_manager: None,
             player_name: random_player_name(),
+            player_health: 100_000,
+            player_health_max: 100_000,
         }
     }
 }
