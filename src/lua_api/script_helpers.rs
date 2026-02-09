@@ -109,10 +109,9 @@ pub fn get_frame_ref(lua: &Lua, widget_id: u64) -> Option<Value> {
 pub fn call_error_handler(lua: &Lua, error_msg: &str) {
     eprintln!("Lua error: {error_msg}");
     let handler: Option<mlua::Function> = lua.named_registry_value(ERROR_HANDLER_KEY).ok();
-    if let Some(h) = handler {
-        if let Err(e) = h.call::<()>(error_msg.to_string()) {
+    if let Some(h) = handler
+        && let Err(e) = h.call::<()>(error_msg.to_string()) {
             eprintln!("Error in error handler: {e}");
         }
-    }
 }
 
