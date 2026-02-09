@@ -138,11 +138,10 @@ fn load_spell_names(path: &Path) -> Result<HashMap<u32, String>, Box<dyn std::er
             continue;
         }
         let fields = parse_csv_line(&line);
-        if fields.len() >= 2 {
-            if let Ok(id) = fields[0].parse::<u32>() {
+        if fields.len() >= 2
+            && let Ok(id) = fields[0].parse::<u32>() {
                 map.insert(id, fields[1].clone());
             }
-        }
     }
     Ok(map)
 }
@@ -158,14 +157,13 @@ fn load_spell_subtexts(path: &Path) -> Result<HashMap<u32, String>, Box<dyn std:
             continue;
         }
         let fields = parse_csv_line(&line);
-        if fields.len() >= 2 {
-            if let Ok(id) = fields[0].parse::<u32>() {
+        if fields.len() >= 2
+            && let Ok(id) = fields[0].parse::<u32>() {
                 let subtext = &fields[1];
                 if !subtext.is_empty() {
                     map.insert(id, subtext.clone());
                 }
             }
-        }
     }
     Ok(map)
 }
