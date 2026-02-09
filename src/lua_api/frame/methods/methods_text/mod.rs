@@ -82,9 +82,12 @@ fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 }
                 frame.text = Some(text);
             }
-            // Auto-size FontString width
+            // Auto-size FontString width when no explicit width constraint is set.
+            // word_wrap defaults to true in WoW, but FontStrings without a width
+            // constraint (width == 0) should still auto-size to their text content.
             let measure_info = state.widgets.get(this.id).and_then(|f| {
-                if f.widget_type != WidgetType::FontString || f.word_wrap { return None; }
+                if f.widget_type != WidgetType::FontString { return None; }
+                if f.word_wrap && f.width > 0.0 { return None; }
                 let text = f.text.as_ref()?.clone();
                 Some((text, f.font.clone(), f.font_size))
             });
@@ -144,13 +147,16 @@ fn handle_set_text(lua: &mlua::Lua, this: &FrameHandle, args: mlua::MultiValue) 
         set_text_on_frame(&mut state, text_id, store_text);
     }
 
-    // Auto-size FontString width to match text content (for anchor centering)
+    // Auto-size FontString width to match text content (for anchor centering).
+    // word_wrap defaults to true in WoW, but FontStrings without a width
+    // constraint (width == 0) should still auto-size to their text content.
     let ids_to_measure: Vec<(u64, String, Option<String>, f32)> = [Some(this.id), text_child_id]
         .into_iter()
         .flatten()
         .filter_map(|id| {
             let f = state.widgets.get(id)?;
-            if f.widget_type != WidgetType::FontString || f.word_wrap { return None; }
+            if f.widget_type != WidgetType::FontString { return None; }
+            if f.word_wrap && f.width > 0.0 { return None; }
             let text = f.text.as_ref()?.clone();
             Some((id, text, f.font.clone(), f.font_size))
         })

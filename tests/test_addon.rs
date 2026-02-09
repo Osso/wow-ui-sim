@@ -1,7 +1,12 @@
 //! Tests using the purpose-built TestAddon.
 
+use std::cell::RefCell;
+use std::path::PathBuf;
+use std::rc::Rc;
+
 use std::fs;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::render::WowFontSystem;
 
 fn load_test_addon(env: &WowLuaEnv) -> Result<(), String> {
     let addon_path = concat!(env!("CARGO_MANIFEST_DIR"), "/test_addons/TestAddon/TestAddon.lua");
@@ -420,5 +425,74 @@ fn test_lua_property_syncs_to_rust_children_keys() {
         child_frame.children_keys.get("TitleText"),
         Some(&fontstring_id),
         "Child's children_keys should have TitleText pointing to fontstring"
+    );
+}
+
+#[test]
+fn test_buff_duration_text_centered_under_icon() {
+    // Reproduce the buff icon layout: a 30x40 button with a 30x30 Icon at TOP
+    // and a Duration FontString anchored TOP to Icon's BOTTOM.
+    // After SetFormattedText, the Duration should have non-zero width so the
+    // TOP anchor centers it horizontally under the Icon.
+    let env = WowLuaEnv::new().unwrap();
+    let font_system = Rc::new(RefCell::new(WowFontSystem::new(&PathBuf::from("./fonts"))));
+    env.set_font_system(font_system);
+
+    env.exec(r#"
+        local parent = CreateFrame("Frame", "TestBuffButton", UIParent)
+        parent:SetSize(30, 40)
+        parent:SetPoint("CENTER")
+
+        local icon = parent:CreateTexture("TestBuffIcon")
+        icon:SetSize(30, 30)
+        icon:SetPoint("TOP")
+
+        local duration = parent:CreateFontString("TestBuffDuration")
+        duration:SetFont("Fonts\\FRIZQT__.TTF", 12)
+        duration:SetPoint("TOP", icon, "BOTTOM")
+        duration:SetFormattedText("%dm", 60)
+    "#).unwrap();
+
+    // Verify the Duration FontString has auto-sized width
+    let state = env.state().borrow();
+    let duration_id = state.widgets.get_id_by_name("TestBuffDuration")
+        .expect("Duration FontString should exist");
+    let duration = state.widgets.get(duration_id)
+        .expect("Duration frame should exist");
+
+    // word_wrap defaults to true (matching WoW), but auto-sizing should still
+    // work when no explicit width constraint is set (width == 0).
+    assert!(
+        duration.word_wrap,
+        "word_wrap should default to true (matching WoW behavior)"
+    );
+    assert!(
+        duration.width > 0.0,
+        "Duration FontString width should be auto-sized after SetFormattedText, got {}. \
+         word_wrap=true FontStrings without explicit width should still auto-size.",
+        duration.width
+    );
+
+    // Verify horizontal centering: Duration's center X should equal Icon's center X.
+    // Icon is 30px wide anchored at TOP of 30px parent → Icon center X = parent_x + 15
+    // Duration with TOP anchor to Icon's BOTTOM: center X = icon_center_x = parent_x + 15
+    // So Duration's left edge should be at: parent_x + 15 - duration.width/2
+    let icon_id = state.widgets.get_id_by_name("TestBuffIcon")
+        .expect("Icon should exist");
+    let icon_rect = wow_ui_sim::lua_api::compute_frame_rect(
+        &state.widgets, icon_id, 1024.0, 768.0,
+    );
+    let dur_rect = wow_ui_sim::lua_api::compute_frame_rect(
+        &state.widgets, duration_id, 1024.0, 768.0,
+    );
+
+    let icon_center_x = icon_rect.x + icon_rect.width / 2.0;
+    let dur_center_x = dur_rect.x + dur_rect.width / 2.0;
+
+    assert!(
+        (icon_center_x - dur_center_x).abs() < 1.0,
+        "Duration text should be horizontally centered under Icon. \
+         Icon center X={}, Duration center X={} (x={}, w={})",
+        icon_center_x, dur_center_x, dur_rect.x, dur_rect.width
     );
 }
