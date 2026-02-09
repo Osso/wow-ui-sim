@@ -36,7 +36,7 @@ struct Args {
     #[arg(long, value_name = "MS")]
     delay: Option<u64>,
 
-    /// Execute Lua code after startup (GUI mode only, runs after first frame)
+    /// Execute Lua code after startup (runs after first frame in GUI, after events in screenshot/dump-tree)
     #[arg(long, value_name = "CODE")]
     exec_lua: Option<String>,
 
@@ -164,6 +164,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let font_system = Rc::new(RefCell::new(WowFontSystem::new(&PathBuf::from("./fonts"))));
     env.set_font_system(Rc::clone(&font_system));
 
+    // Initialize sound manager (skip with WOW_SIM_NO_SOUND=1)
+    init_sound(&env);
+
     // Set addon base paths for runtime on-demand loading (C_AddOns.LoadAddOn)
     {
         let mut state = env.state().borrow_mut();
@@ -183,12 +186,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             fire_startup_events(&env);
             env.apply_post_event_workarounds();
             let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+            if let Some(code) = &args.exec_lua {
+                if let Err(e) = env.exec(code) {
+                    eprintln!("[exec-lua] error: {e}");
+                }
+            }
             apply_delay(args.delay);
             let state = env.state().borrow();
             wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), visible_only);
         }
         Some(Commands::Screenshot { output, width, height, filter }) => {
-            run_screenshot(&env, &font_system, output, width, height, filter, args.delay);
+            run_screenshot(&env, &font_system, output, width, height, filter, args.delay, args.exec_lua.as_deref());
         }
         None => {
             let debug = wow_ui_sim::DebugOptions {
@@ -229,6 +237,29 @@ fn configure_saved_vars(args: &Args) -> Option<SavedVariablesManager> {
     }
 
     Some(saved_vars)
+}
+
+/// Initialize sound manager unless WOW_SIM_NO_SOUND=1 or --no-sound.
+fn init_sound(env: &WowLuaEnv) {
+    let skip = std::env::var("WOW_SIM_NO_SOUND")
+        .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
+        .unwrap_or(false);
+
+    if skip {
+        println!("Sound disabled");
+        return;
+    }
+
+    let sound_dir = PathBuf::from("./sounds");
+    match wow_ui_sim::sound::SoundManager::new(sound_dir) {
+        Some(mgr) => {
+            println!("Sound initialized");
+            env.state().borrow_mut().sound_manager = Some(mgr);
+        }
+        None => {
+            println!("Sound: no audio device available");
+        }
+    }
 }
 
 /// Load Blizzard SharedXML and base UI addons (auto-discovered, dependency-sorted).
@@ -599,6 +630,7 @@ fn run_screenshot(
     height: u32,
     filter: Option<String>,
     delay: Option<u64>,
+    exec_lua: Option<&str>,
 ) {
     use wow_ui_sim::iced_app::build_quad_batch_for_registry;
     use wow_ui_sim::render::software::render_to_image;
@@ -609,6 +641,11 @@ fn run_screenshot(
     env.apply_post_event_workarounds();
     let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
     debug_show_game_menu(env);
+    if let Some(code) = exec_lua {
+        if let Err(e) = env.exec(code) {
+            eprintln!("[exec-lua] error: {e}");
+        }
+    }
     apply_delay(delay);
 
     let mut glyph_atlas = GlyphAtlas::new();
