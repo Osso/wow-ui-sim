@@ -52,6 +52,10 @@ enum Commands {
         #[arg(short, long)]
         filter: Option<String>,
 
+        /// Filter by parentKey name (prints full subtree of matching frames)
+        #[arg(long)]
+        filter_key: Option<String>,
+
         /// Show only visible frames
         #[arg(long)]
         visible_only: bool,
@@ -174,13 +178,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ];
     }
 
+    // Register synthetic templates for C++ intrinsic frame types (WoWScrollBoxList, etc.)
+    // before any addons that reference them are loaded.
+    wow_ui_sim::xml::register_intrinsic_templates();
+
     let mut saved_vars = configure_saved_vars(&args);
     load_blizzard_addons(&env);
     load_third_party_addons(&args, &env, &mut saved_vars);
     run_post_load_scripts(&env)?;
 
     match args.command {
-        Some(Commands::DumpTree { filter, visible_only }) => {
+        Some(Commands::DumpTree { filter, filter_key, visible_only }) => {
             fire_startup_events(&env);
             env.apply_post_event_workarounds();
             process_pending_timers(&env);
@@ -192,7 +200,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             apply_delay(args.delay);
             let state = env.state().borrow();
-            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), visible_only);
+            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only);
         }
         Some(Commands::Screenshot { output, width, height, filter }) => {
             run_screenshot(&env, &font_system, output, width, height, filter, args.delay, args.exec_lua.as_deref());
@@ -279,6 +287,12 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
                 }
             }
             Err(e) => println!("{} failed: {}", name, e),
+        }
+        // Blizzard_EnvironmentCleanup nils secure C_* namespaces that are normally
+        // provided by the C++ engine in a separate secure environment. Re-register
+        // the stubs our sim needs after that addon runs.
+        if name == "Blizzard_EnvironmentCleanup" {
+            wow_ui_sim::lua_api::globals::restore_secure_stubs(env);
         }
     }
 }

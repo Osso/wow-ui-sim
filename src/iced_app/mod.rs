@@ -11,7 +11,7 @@
 
 mod app;
 mod button_vis;
-mod frame_collect;
+pub mod frame_collect;
 mod keybinds;
 pub mod layout;
 mod message_frame_render;
