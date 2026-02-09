@@ -279,9 +279,6 @@ fn register_unit_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
 
     register_frame_global(lua, state, "PlayerCastingBarFrame")?;
 
-    // Party frame hidden by default (not in group)
-    register_hidden_frame_global(lua, state, "PartyFrame")?;
-
     // Pet frame hidden by default (no pet)
     register_hidden_frame_global(lua, state, "PetFrame")?;
 
