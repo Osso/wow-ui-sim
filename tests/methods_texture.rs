@@ -594,20 +594,41 @@ fn test_clear_texture_slice_no_error() {
 // ============================================================================
 
 #[test]
-fn test_mask_texture_stubs() {
+fn test_add_and_remove_mask_texture() {
     let env = env();
-    let count: i32 = env
+    let (added, removed): (i32, i32) = env
         .eval(
             r#"
             local frame = CreateFrame("Frame", "MaskFrame", UIParent)
             local tex = frame:CreateTexture("MaskTex", "BACKGROUND")
-            tex:AddMaskTexture(tex)
-            tex:RemoveMaskTexture(tex)
+            local mask = frame:CreateMaskTexture("MaskMask", "BACKGROUND")
+            tex:AddMaskTexture(mask)
+            local added = tex:GetNumMaskTextures()
+            tex:RemoveMaskTexture(mask)
+            return added, tex:GetNumMaskTextures()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(added, 1);
+    assert_eq!(removed, 0);
+}
+
+#[test]
+fn test_add_mask_texture_no_duplicates() {
+    let env = env();
+    let count: i32 = env
+        .eval(
+            r#"
+            local frame = CreateFrame("Frame", "MaskNoDupFrame", UIParent)
+            local tex = frame:CreateTexture("MaskNoDupTex", "BACKGROUND")
+            local mask = frame:CreateMaskTexture("MaskNoDupMask", "BACKGROUND")
+            tex:AddMaskTexture(mask)
+            tex:AddMaskTexture(mask)
             return tex:GetNumMaskTextures()
             "#,
         )
         .unwrap();
-    assert_eq!(count, 0);
+    assert_eq!(count, 1);
 }
 
 #[test]

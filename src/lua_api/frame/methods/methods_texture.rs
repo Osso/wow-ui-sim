@@ -449,11 +449,38 @@ fn remap_tex_coords(
 
 /// AddMaskTexture, RemoveMaskTexture, GetNumMaskTextures, GetMaskTexture.
 fn add_mask_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("AddMaskTexture", |_, _this, _mask: Value| Ok(()));
+    methods.add_method("AddMaskTexture", |_, this, mask: Value| {
+        if let Value::UserData(ud) = mask {
+            if let Ok(mask_handle) = ud.borrow::<FrameHandle>() {
+                let mask_id = mask_handle.id;
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    if !frame.mask_textures.contains(&mask_id) {
+                        frame.mask_textures.push(mask_id);
+                    }
+                }
+            }
+        }
+        Ok(())
+    });
 
-    methods.add_method("RemoveMaskTexture", |_, _this, _mask: Value| Ok(()));
+    methods.add_method("RemoveMaskTexture", |_, this, mask: Value| {
+        if let Value::UserData(ud) = mask {
+            if let Ok(mask_handle) = ud.borrow::<FrameHandle>() {
+                let mask_id = mask_handle.id;
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.mask_textures.retain(|&id| id != mask_id);
+                }
+            }
+        }
+        Ok(())
+    });
 
-    methods.add_method("GetNumMaskTextures", |_, _this, ()| Ok(0));
+    methods.add_method("GetNumMaskTextures", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map_or(0, |f| f.mask_textures.len()))
+    });
 
     methods.add_method("GetMaskTexture", |_, _this, _index: i32| Ok(Value::Nil));
 }

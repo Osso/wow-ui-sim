@@ -72,6 +72,19 @@ pub(super) fn create_texture_from_template(
         code.push_str(&format!("            tex:SetBlendMode(\"{}\")\n", mode));
     }
 
+    // Wire up MaskedTextures: call AddMaskTexture on each referenced sibling.
+    if is_mask {
+        if let Some(ref masked) = texture.masked_textures {
+            for entry in &masked.entries {
+                if let Some(ref key) = entry.child_key {
+                    code.push_str(&format!(
+                        "            if parent.{key} then parent.{key}:AddMaskTexture(tex) end\n",
+                    ));
+                }
+            }
+        }
+    }
+
     code.push_str("        end\n");
     if let Err(e) = lua.load(&code).exec() {
         eprintln!("[create_texture] failed for '{}' on '{}': {}", child_name, parent_name, e);

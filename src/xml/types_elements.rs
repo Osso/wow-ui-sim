@@ -99,6 +99,23 @@ pub struct TextureXml {
     pub animations: Option<AnimationsXml>,
     #[serde(rename = "Scripts")]
     pub scripts: Option<ScriptsXml>,
+    /// MaskedTextures — declares which sibling textures this mask applies to.
+    #[serde(rename = "MaskedTextures")]
+    pub masked_textures: Option<MaskedTexturesXml>,
+}
+
+/// Container for MaskedTexture entries inside a MaskTexture element.
+#[derive(Debug, Deserialize, Default, Clone)]
+pub struct MaskedTexturesXml {
+    #[serde(rename = "MaskedTexture", default)]
+    pub entries: Vec<MaskedTextureEntryXml>,
+}
+
+/// A single MaskedTexture entry referencing a sibling texture by childKey.
+#[derive(Debug, Deserialize, Default, Clone)]
+pub struct MaskedTextureEntryXml {
+    #[serde(rename = "@childKey")]
+    pub child_key: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Default, Clone)]

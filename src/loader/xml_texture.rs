@@ -173,6 +173,20 @@ fn build_texture_lua(
     if let Some(ref mode) = texture.alpha_mode {
         code.push_str(&format!("\n        tex:SetBlendMode(\"{}\")\n        ", mode));
     }
+    // Wire up MaskedTextures: call AddMaskTexture on each referenced sibling.
+    if is_mask {
+        if let Some(ref masked) = texture.masked_textures {
+            for entry in &masked.entries {
+                if let Some(ref key) = entry.child_key {
+                    code.push_str(&format!(
+                        r#"
+        if parent.{key} then parent.{key}:AddMaskTexture(tex) end
+        "#,
+                    ));
+                }
+            }
+        }
+    }
     code
 }
 

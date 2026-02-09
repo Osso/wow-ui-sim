@@ -249,6 +249,8 @@ pub struct Frame {
     pub clips_children: bool,
     /// Whether this texture is a MaskTexture (should not render).
     pub is_mask: bool,
+    /// Mask texture IDs applied to this texture (for circular clipping etc.).
+    pub mask_textures: Vec<u64>,
     /// Whether mouse motion events are enabled.
     pub mouse_motion_enabled: bool,
     /// User-set frame ID (from XML `id` attribute or SetID()).
@@ -419,6 +421,7 @@ macro_rules! frame_defaults {
             register_all_events: false,
             clips_children: false,
             is_mask: false,
+            mask_textures: Vec::new(),
             mouse_motion_enabled: false,
             user_id: 0,
 
