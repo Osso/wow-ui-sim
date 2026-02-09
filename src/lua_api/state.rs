@@ -84,6 +84,61 @@ pub struct AddonInfo {
     pub load_time_secs: f64,
 }
 
+/// Class display names (index 0 = class_index 1, etc.).
+pub const CLASS_LABELS: &[&str] = &[
+    "Warrior", "Paladin", "Hunter", "Rogue", "Priest",
+    "Death Knight", "Shaman", "Mage", "Warlock", "Monk",
+    "Druid", "Demon Hunter", "Evoker",
+];
+
+/// Race data: (display_name, file_name, faction).
+pub const RACE_DATA: &[(&str, &str, &str)] = &[
+    ("Human", "Human", "Alliance"),
+    ("Orc", "Orc", "Horde"),
+    ("Dwarf", "Dwarf", "Alliance"),
+    ("Night Elf", "NightElf", "Alliance"),
+    ("Undead", "Scourge", "Horde"),
+    ("Tauren", "Tauren", "Horde"),
+    ("Gnome", "Gnome", "Alliance"),
+    ("Troll", "Troll", "Horde"),
+    ("Blood Elf", "BloodElf", "Horde"),
+    ("Draenei", "Draenei", "Alliance"),
+    ("Worgen", "Worgen", "Alliance"),
+    ("Goblin", "Goblin", "Horde"),
+    ("Pandaren", "Pandaren", "Neutral"),
+    ("Dracthyr", "Dracthyr", "Neutral"),
+    ("Earthen", "Earthen", "Neutral"),
+];
+
+/// A simulated aura (buff or debuff).
+#[derive(Clone)]
+pub struct AuraInfo {
+    pub name: &'static str,
+    pub spell_id: i32,
+    pub icon: i32,
+    /// Total duration in seconds (0 = permanent/no duration).
+    pub duration: f64,
+    /// Absolute GetTime() value at which this aura expires (0 = permanent).
+    pub expiration_time: f64,
+    /// Stack count.
+    pub applications: i32,
+    pub source_unit: &'static str,
+    pub is_helpful: bool,
+    pub is_stealable: bool,
+    pub can_apply_aura: bool,
+    pub is_from_player_or_player_pet: bool,
+    /// Unique instance ID for this aura.
+    pub aura_instance_id: i32,
+}
+
+/// Rot damage intensity levels: (label, percentage of max HP per tick).
+pub const ROT_DAMAGE_LEVELS: &[(&str, f64)] = &[
+    ("Light (1%)", 0.01),
+    ("Medium (3%)", 0.03),
+    ("Heavy (5%)", 0.05),
+    ("Brutal (10%)", 0.10),
+];
+
 /// Shared simulator state accessible from Lua.
 pub struct SimState {
     pub widgets: WidgetRegistry,
@@ -134,6 +189,14 @@ pub struct SimState {
     pub player_health: i32,
     /// Player maximum health.
     pub player_health_max: i32,
+    /// Player class (1-based index matching CLASS_DATA in unit_api).
+    pub player_class_index: i32,
+    /// Player race (0-based index into RACE_DATA).
+    pub player_race_index: usize,
+    /// Rot damage intensity (index into ROT_DAMAGE_LEVELS).
+    pub rot_damage_level: usize,
+    /// Player buffs/debuffs (disabled by WOW_SIM_NO_BUFFS=1).
+    pub player_buffs: Vec<AuraInfo>,
 }
 
 impl Default for SimState {
@@ -165,6 +228,10 @@ impl Default for SimState {
             player_name: random_player_name(),
             player_health: 100_000,
             player_health_max: 100_000,
+            player_class_index: 1,  // Warrior
+            player_race_index: 0,   // Human
+            rot_damage_level: 0,    // Light
+            player_buffs: default_player_buffs(),
         }
     }
 }
@@ -223,21 +290,21 @@ const ENEMY_NPC: (&str, i32, i32, i32, i32, i32, i32, &str) =
 /// Build a TargetInfo from a unit ID string.
 pub fn build_target_info(unit_id: &str, state: &SimState) -> Option<TargetInfo> {
     match unit_id {
-        "player" => Some(build_player_target()),
+        "player" => Some(build_player_target(state)),
         u if u.starts_with("party") => build_party_target(u, state),
         "enemy1" => Some(build_enemy_target()),
         _ => None,
     }
 }
 
-fn build_player_target() -> TargetInfo {
+fn build_player_target(state: &SimState) -> TargetInfo {
     TargetInfo {
         unit_id: "player".into(),
-        name: "SimPlayer".into(),
-        class_index: 2, // Paladin (matches existing player defaults)
+        name: state.player_name.clone(),
+        class_index: state.player_class_index,
         level: 70,
-        health: 100_000,
-        health_max: 100_000,
+        health: state.player_health,
+        health_max: state.player_health_max,
         power: 50_000,
         power_max: 100_000,
         power_type: 0,
@@ -291,14 +358,14 @@ fn build_enemy_target() -> TargetInfo {
     }
 }
 
-/// Randomly adjust party member health by ±5%, clamped to [1, max].
+/// Randomly adjust party member health, clamped to [1, max].
 ///
+/// `damage_pct` controls the intensity (fraction of max HP per tick).
 /// Returns the 1-based indices of members whose health changed (for firing UNIT_HEALTH).
-pub fn tick_party_health(members: &mut [PartyMember]) -> Vec<usize> {
+pub fn tick_party_health(members: &mut [PartyMember], damage_pct: f64) -> Vec<usize> {
     use std::collections::hash_map::DefaultHasher;
     use std::hash::{Hash, Hasher};
 
-    // Simple deterministic-ish RNG seeded from current time nanos.
     let nanos = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap_or_default()
@@ -309,17 +376,75 @@ pub fn tick_party_health(members: &mut [PartyMember]) -> Vec<usize> {
         let mut hasher = DefaultHasher::new();
         (nanos, i).hash(&mut hasher);
         let hash = hasher.finish();
-        // Map hash to [-5%, +5%] of max health.
-        let max5 = (m.health_max as f64 * 0.05) as i64;
-        if max5 == 0 { continue; }
-        let delta = (hash % (max5 as u64 * 2 + 1)) as i64 - max5;
+        let max_delta = (m.health_max as f64 * damage_pct) as i64;
+        if max_delta == 0 { continue; }
+        let delta = (hash % (max_delta as u64 * 2 + 1)) as i64 - max_delta;
         let new_hp = (m.health as i64 + delta).clamp(1, m.health_max as i64) as i32;
         if new_hp != m.health {
             m.health = new_hp;
-            changed.push(i + 1); // 1-based party index
+            changed.push(i + 1);
         }
     }
     changed
+}
+
+/// Buff pool: (name, spell_id, icon_file_id, duration_secs, source_unit, can_apply_aura).
+const BUFF_POOL: &[(&str, i32, i32, f64, &str, bool)] = &[
+    ("Power Word: Fortitude", 21562, 135987, 3600.0, "player", true),
+    ("Arcane Intellect", 1459, 135932, 3600.0, "party2", true),
+    ("Mark of the Wild", 1126, 136078, 3600.0, "party3", true),
+    ("Battle Shout", 6673, 132333, 3600.0, "party1", true),
+    ("Retribution Aura", 183435, 135889, 0.0, "player", false),
+    ("Devotion Aura", 465, 135893, 0.0, "player", false),
+    ("Blessing of the Bronze", 381748, 4622449, 3600.0, "party4", true),
+    ("Well Fed", 104280, 136000, 3600.0, "player", false),
+];
+
+/// Pick random buffs from the pool (disabled by WOW_SIM_NO_BUFFS=1).
+fn default_player_buffs() -> Vec<AuraInfo> {
+    if std::env::var("WOW_SIM_NO_BUFFS").is_ok() {
+        return Vec::new();
+    }
+    let nanos = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.subsec_nanos() as usize)
+        .unwrap_or(0);
+    let count = 4 + (nanos % 3); // 4, 5, or 6 buffs
+    let mut indices: Vec<usize> = (0..BUFF_POOL.len()).collect();
+    // Simple shuffle using nanos
+    for i in (1..indices.len()).rev() {
+        let j = (nanos.wrapping_mul(i + 7)) % (i + 1);
+        indices.swap(i, j);
+    }
+    indices.truncate(count);
+    indices.sort();
+    build_auras_from_indices(&indices)
+}
+
+/// Build AuraInfo vec from selected pool indices.
+fn build_auras_from_indices(indices: &[usize]) -> Vec<AuraInfo> {
+    indices
+        .iter()
+        .enumerate()
+        .map(|(i, &pool_idx)| {
+            let (name, spell_id, icon, duration, source, can_apply) = BUFF_POOL[pool_idx];
+            let expiration_time = if duration > 0.0 { duration } else { 0.0 };
+            AuraInfo {
+                name,
+                spell_id,
+                icon,
+                duration,
+                expiration_time,
+                applications: 0,
+                source_unit: source,
+                is_helpful: true,
+                is_stealable: false,
+                can_apply_aura: can_apply,
+                is_from_player_or_player_pet: source == "player",
+                aura_instance_id: (i + 1) as i32,
+            }
+        })
+        .collect()
 }
 
 /// Pre-populate main action bar (slots 1-12) with Protection Paladin spells.

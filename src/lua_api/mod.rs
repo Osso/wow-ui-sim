@@ -14,7 +14,7 @@ pub(crate) mod loader_env;
 pub mod message_frame;
 pub(crate) mod script_helpers;
 pub mod simple_html;
-mod state;
+pub(crate) mod state;
 pub mod tooltip;
 pub(crate) mod workarounds;
 pub(crate) mod workarounds_editmode;
