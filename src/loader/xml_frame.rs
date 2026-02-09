@@ -4,7 +4,8 @@ use crate::lua_api::LoaderEnv;
 
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, generate_anchors_code, generate_animation_group_code, generate_scripts_code, get_size_values, lua_global_ref, rand_id};
+use super::helpers::{escape_lua_string, generate_anchors_code, generate_scripts_code, get_size_values, lua_global_ref, rand_id};
+use super::helpers_anim::generate_animation_group_code;
 use super::xml_lifecycle::fire_lifecycle_scripts;
 use super::xml_fontstring::create_fontstring_from_xml;
 use super::xml_texture::create_texture_from_xml;
@@ -67,19 +68,7 @@ pub fn create_frame_from_xml(
     append_id_code(&mut lua_code, frame);
     append_scripts_code(&mut lua_code, frame);
 
-    // Suppress OnLoad inside CreateFrame — the XML loader fires it at the end
-    // via fire_lifecycle_scripts, after all inline content is applied.
-    env.exec("__suppress_create_frame_onload = true").ok();
-
-    // Execute the creation code
-    // NOTE: CreateFrame with an inherits parameter already calls apply_templates_from_registry
-    // which creates template children (frames, textures, fontstrings, button textures).
-    // Do NOT call instantiate_template_children here - that would duplicate everything.
-    let exec_result = env.exec(&lua_code).map_err(|e| {
-        LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
-    });
-    env.exec("__suppress_create_frame_onload = false").ok();
-    exec_result?;
+    exec_create_frame_code(env, &lua_code, &name)?;
 
     // Set the `intrinsic` property on intrinsic frames (e.g. frame.intrinsic = "DropdownButton").
     // WoW Lua code checks this property to validate intrinsic types.
@@ -102,6 +91,23 @@ pub fn create_frame_from_xml(
     fire_lifecycle_scripts(env, &name);
 
     Ok(Some(name))
+}
+
+/// Execute the CreateFrame Lua code with OnLoad suppression.
+///
+/// Suppresses OnLoad during CreateFrame so the XML loader controls when it fires.
+/// Template children created during CreateFrame have their OnLoad deferred until
+/// instance-level KeyValues (e.g. layoutIndex) are applied in the Lua chunk.
+/// Uses a depth counter to handle recursive create_frame_from_xml calls correctly.
+fn exec_create_frame_code(env: &LoaderEnv<'_>, lua_code: &str, name: &str) -> Result<(), LoadError> {
+    env.exec("__suppress_create_frame_onload = (__suppress_create_frame_onload or 0) + 1").ok();
+    let exec_result = env.exec(lua_code).map_err(|e| {
+        LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
+    });
+    env.exec("__suppress_create_frame_onload = __suppress_create_frame_onload - 1").ok();
+    exec_result?;
+    crate::lua_api::globals::template::fire_deferred_child_onloads(env.lua());
+    Ok(())
 }
 
 /// Resolve the frame name, applying `$parent` substitution and generating anonymous names.
@@ -522,7 +528,9 @@ fn frame_element_to_type(child: &crate::xml::FrameElement) -> Option<(&crate::xm
 /// Recursively create child frames and assign parentKey references.
 fn create_child_frames(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
     // Use all_frame_elements() to handle multiple <Frames> sections in the XML
-    for child in frame.all_frame_elements() {
+    // and standalone frame-type children outside <Frames> wrappers
+    let elements = frame.all_frame_elements();
+    for child in &elements {
         create_single_child_frame(env, child, name)?;
     }
     // ScrollChild children are parented to the ScrollFrame just like regular children
@@ -606,6 +614,9 @@ fn exec_animation_groups(env: &LoaderEnv<'_>, anims: &crate::xml::AnimationsXml,
     );
     for anim_group_xml in &anims.animations {
         if anim_group_xml.is_virtual == Some(true) {
+            if let Some(ref name) = anim_group_xml.name {
+                crate::xml::register_anim_group_template(name, anim_group_xml.clone());
+            }
             continue;
         }
         anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
