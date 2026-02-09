@@ -134,8 +134,8 @@ impl WowLuaEnv {
         };
 
         for widget_id in listeners {
-            if let Some(handler) = get_script(&self.lua, widget_id, "OnEvent") {
-                if let Some(frame) = get_frame_ref(&self.lua, widget_id) {
+            if let Some(handler) = get_script(&self.lua, widget_id, "OnEvent")
+                && let Some(frame) = get_frame_ref(&self.lua, widget_id) {
                     let mut call_args =
                         vec![frame, Value::String(self.lua.create_string(event)?)];
                     call_args.extend(args.iter().cloned());
@@ -144,7 +144,6 @@ impl WowLuaEnv {
                         call_error_handler(&self.lua, &e.to_string());
                     }
                 }
-            }
         }
 
         Ok(())
@@ -522,16 +521,14 @@ impl WowLuaEnv {
                 if errored_ids.contains(widget_id) {
                     continue;
                 }
-                if let Some(handler) = get_script(&self.lua, *widget_id, "OnUpdate") {
-                    if let Some(frame) = get_frame_ref(&self.lua, *widget_id) {
-                        if let Err(e) = handler
+                if let Some(handler) = get_script(&self.lua, *widget_id, "OnUpdate")
+                    && let Some(frame) = get_frame_ref(&self.lua, *widget_id)
+                        && let Err(e) = handler
                             .call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
                         {
                             call_error_handler(&self.lua, &e.to_string());
                             errored_ids.insert(*widget_id);
                         }
-                    }
-                }
             }
         }
 
@@ -540,15 +537,13 @@ impl WowLuaEnv {
             let elapsed_val = Value::Number(elapsed);
 
             for widget_id in &frame_ids {
-                if let Some(handler) = get_script(&self.lua, *widget_id, "OnPostUpdate") {
-                    if let Some(frame) = get_frame_ref(&self.lua, *widget_id) {
-                        if let Err(e) = handler
+                if let Some(handler) = get_script(&self.lua, *widget_id, "OnPostUpdate")
+                    && let Some(frame) = get_frame_ref(&self.lua, *widget_id)
+                        && let Err(e) = handler
                             .call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
                         {
                             call_error_handler(&self.lua, &e.to_string());
                         }
-                    }
-                }
             }
         }
 
