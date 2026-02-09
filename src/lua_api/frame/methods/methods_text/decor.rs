@@ -100,6 +100,7 @@ fn add_portrait_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     );
     methods.add_method("SetPortraitTextureRaw", |_, _this, _tex: Option<String>| Ok(()));
     methods.add_method("SetPortraitToAsset", |_, _this, _asset: mlua::Value| Ok(()));
+    methods.add_method("SetPortraitToBag", |_, _this, _bag_id: i32| Ok(()));
     methods.add_method("SetPortraitToUnit", |_, _this, _unit: String| Ok(()));
 
     methods.add_method("SetPortraitShown", |lua, this, shown: bool| {
