@@ -250,15 +250,14 @@ where
         state.widgets.get_event_listeners(event_name)
     };
     for widget_id in listeners {
-        if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent") {
-            if let Some(frame) = crate::lua_api::script_helpers::get_frame_ref(lua, widget_id) {
+        if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent")
+            && let Some(frame) = crate::lua_api::script_helpers::get_frame_ref(lua, widget_id) {
                 let mut call_args = vec![frame];
                 call_args.extend(build_extra_args(lua)?);
                 if let Err(e) = handler.call::<()>(mlua::MultiValue::from_vec(call_args)) {
                     crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
                 }
             }
-        }
     }
     Ok(())
 }
@@ -480,8 +479,8 @@ fn register_request_time_played(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
         };
 
         for widget_id in listeners {
-            if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent") {
-                if let Some(frame) = crate::lua_api::script_helpers::get_frame_ref(lua, widget_id) {
+            if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent")
+                && let Some(frame) = crate::lua_api::script_helpers::get_frame_ref(lua, widget_id) {
                     let args = vec![
                         frame,
                         Value::String(lua.create_string("TIME_PLAYED_MSG")?),
@@ -492,7 +491,6 @@ fn register_request_time_played(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
                         crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
                     }
                 }
-            }
         }
 
         Ok(())
