@@ -27,11 +27,6 @@ fn fire_lifecycle_onload(env: &LoaderEnv<'_>, name: &str) {
             if not ok then
                 print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
             end
-        elseif type(frame.OnLoad) == "function" then
-            local ok, err = pcall(frame.OnLoad, frame)
-            if not ok then
-                print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
-            end
         end
         "#
     );
@@ -49,11 +44,6 @@ fn fire_lifecycle_onshow(env: &LoaderEnv<'_>, name: &str) {
             local handler = frame:GetScript("OnShow")
             if handler then
                 local ok, err = pcall(handler, frame)
-                if not ok then
-                    print("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
-                end
-            elseif type(frame.OnShow) == "function" then
-                local ok, err = pcall(frame.OnShow, frame)
                 if not ok then
                     print("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
                 end
