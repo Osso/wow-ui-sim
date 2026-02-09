@@ -145,6 +145,10 @@ fn register_c_action_bar(lua: &Lua) -> Result<()> {
     t.set("HasFlyoutActionButtons", lua.create_function(|_, _flyout_id: i32| Ok(false))?)?;
     t.set("EnableActionRangeCheck", lua.create_function(|_, (_action, _enable): (Value, bool)| Ok(()))?)?;
     t.set("IsAssistedCombatAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
+    t.set("GetItemActionOnEquipSpellID", lua.create_function(|_, _action: Value| Ok(Value::Nil))?)?;
+    t.set("IsAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
+    t.set("IsEnabledAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
+    t.set("ToggleAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(()))?)?;
     lua.globals().set("C_ActionBar", t)?;
     Ok(())
 }
@@ -623,6 +627,10 @@ fn register_missing_namespaces(lua: &Lua) -> Result<()> {
     char_svc.set("HasRequiredBoostForClassTrial", lua.create_function(|_, ()| Ok(false))?)?;
     char_svc.set("GetCharacterServiceDisplayData", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     g.set("C_CharacterServices", char_svc)?;
+
+    let spell_overlay = lua.create_table()?;
+    spell_overlay.set("IsSpellOverlayed", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
+    g.set("C_SpellActivationOverlay", spell_overlay)?;
 
     Ok(())
 }
