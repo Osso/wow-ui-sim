@@ -74,16 +74,15 @@ impl WowLuaEnv {
         }
 
         // Check keybindings (skip if an EditBox has focus — keys go to the EditBox).
-        let is_editbox = focused.map_or(false, |fid| {
+        let is_editbox = focused.is_some_and(|fid| {
             self.state.borrow().widgets.get(fid)
                 .map(|f| f.widget_type == crate::widget::WidgetType::EditBox)
                 .unwrap_or(false)
         });
-        if !is_editbox {
-            if super::keybindings::dispatch_key_binding(&self.lua, key)? {
+        if !is_editbox
+            && super::keybindings::dispatch_key_binding(&self.lua, key)? {
                 return Ok(());
             }
-        }
 
         self.dispatch_on_key_down(key)?;
 
@@ -233,7 +232,7 @@ impl WowLuaEnv {
 
         // Fire OnChar with each character
         for ch in text.chars() {
-            let char_val = Value::String(self.lua.create_string(&ch.to_string())?);
+            let char_val = Value::String(self.lua.create_string(ch.to_string())?);
             self.fire_script_handler(fid, "OnChar", vec![char_val])?;
         }
 
