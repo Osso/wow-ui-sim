@@ -312,6 +312,7 @@ fn register_c_spec_info(lua: &Lua) -> Result<()> {
     t.set("GetSpellsDisplay", lua.create_function(|lua, _id: i32| lua.create_table())?)?;
     t.set("GetInspectSelectedSpecialization", lua.create_function(|_, _u: Option<String>| Ok(0))?)?;
     t.set("CanPlayerUseTalentSpecUI", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set("CanPlayerUseTalentUI", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("IsInitialized", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("GetSpecialization", lua.create_function(|_, ()| Ok(1i32))?)?;
     t.set("GetSpecializationInfo", lua.create_function(|lua, idx: i32| {
