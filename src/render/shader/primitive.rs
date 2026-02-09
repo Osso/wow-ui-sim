@@ -122,6 +122,22 @@ fn resolve_and_scale_quads(
         }
     }
 
+    // Resolve mask texture indices for pending mask vertices
+    for request in &quads.mask_texture_requests {
+        if let Some(entry) = atlas.get(&request.path) {
+            let start = request.vertex_start as usize;
+            let end = start + request.vertex_count as usize;
+            let tex_idx = entry.tex_index();
+            for vertex in resolved.vertices[start..end].iter_mut() {
+                if vertex.mask_tex_index == -2 {
+                    vertex.mask_tex_index = tex_idx;
+                    vertex.mask_tex_coords[0] = entry.uv_x + vertex.mask_tex_coords[0] * entry.uv_width;
+                    vertex.mask_tex_coords[1] = entry.uv_y + vertex.mask_tex_coords[1] * entry.uv_height;
+                }
+            }
+        }
+    }
+
     // Scale vertex positions to physical pixels
     for vertex in resolved.vertices.iter_mut() {
         vertex.position[0] *= scale;

@@ -36,53 +36,31 @@ pub struct QuadVertex {
     /// Quad-local UV coordinates (0-1, preserved across atlas remapping).
     /// Used by effects like circle clip that need quad-relative position.
     pub local_uv: [f32; 2],
+    /// Mask texture index (-1 = no mask, -2 = pending resolution, >=0 = atlas tier).
+    pub mask_tex_index: i32,
+    /// Mask texture UV coordinates (remapped to atlas during prepare).
+    pub mask_tex_coords: [f32; 2],
 }
 
 impl QuadVertex {
     /// Vertex buffer layout for wgpu.
     pub fn desc() -> wgpu::VertexBufferLayout<'static> {
+        // Field offsets in bytes (all f32=4 bytes, i32=4, u32=4):
+        // position(8) tex_coords(8) color(16) tex_index(4) flags(4)
+        // local_uv(8) mask_tex_index(4) mask_tex_coords(8)
+        const F: wgpu::VertexFormat = wgpu::VertexFormat::Float32x2;
         wgpu::VertexBufferLayout {
             array_stride: std::mem::size_of::<QuadVertex>() as wgpu::BufferAddress,
             step_mode: wgpu::VertexStepMode::Vertex,
             attributes: &[
-                // position
-                wgpu::VertexAttribute {
-                    offset: 0,
-                    shader_location: 0,
-                    format: wgpu::VertexFormat::Float32x2,
-                },
-                // tex_coords
-                wgpu::VertexAttribute {
-                    offset: std::mem::size_of::<[f32; 2]>() as wgpu::BufferAddress,
-                    shader_location: 1,
-                    format: wgpu::VertexFormat::Float32x2,
-                },
-                // color
-                wgpu::VertexAttribute {
-                    offset: std::mem::size_of::<[f32; 4]>() as wgpu::BufferAddress,
-                    shader_location: 2,
-                    format: wgpu::VertexFormat::Float32x4,
-                },
-                // tex_index
-                wgpu::VertexAttribute {
-                    offset: std::mem::size_of::<[f32; 8]>() as wgpu::BufferAddress,
-                    shader_location: 3,
-                    format: wgpu::VertexFormat::Sint32,
-                },
-                // flags
-                wgpu::VertexAttribute {
-                    offset: (std::mem::size_of::<[f32; 8]>() + std::mem::size_of::<i32>())
-                        as wgpu::BufferAddress,
-                    shader_location: 4,
-                    format: wgpu::VertexFormat::Uint32,
-                },
-                // local_uv
-                wgpu::VertexAttribute {
-                    offset: (std::mem::size_of::<[f32; 8]>() + std::mem::size_of::<i32>() + std::mem::size_of::<u32>())
-                        as wgpu::BufferAddress,
-                    shader_location: 5,
-                    format: wgpu::VertexFormat::Float32x2,
-                },
+                wgpu::VertexAttribute { offset: 0, shader_location: 0, format: F },                     // position
+                wgpu::VertexAttribute { offset: 8, shader_location: 1, format: F },                     // tex_coords
+                wgpu::VertexAttribute { offset: 16, shader_location: 2, format: wgpu::VertexFormat::Float32x4 }, // color
+                wgpu::VertexAttribute { offset: 32, shader_location: 3, format: wgpu::VertexFormat::Sint32 },    // tex_index
+                wgpu::VertexAttribute { offset: 36, shader_location: 4, format: wgpu::VertexFormat::Uint32 },    // flags
+                wgpu::VertexAttribute { offset: 40, shader_location: 5, format: F },                    // local_uv
+                wgpu::VertexAttribute { offset: 48, shader_location: 6, format: wgpu::VertexFormat::Sint32 },    // mask_tex_index
+                wgpu::VertexAttribute { offset: 52, shader_location: 7, format: F },                    // mask_tex_coords
             ],
         }
     }
@@ -110,6 +88,8 @@ pub struct QuadBatch {
     pub indices: Vec<u32>,
     /// Texture requests for deferred loading (path -> vertices to update).
     pub texture_requests: Vec<TextureRequest>,
+    /// Mask texture requests — resolved into mask_tex_index/mask_tex_coords during prepare.
+    pub mask_texture_requests: Vec<TextureRequest>,
 }
 
 impl QuadBatch {
@@ -124,6 +104,7 @@ impl QuadBatch {
             vertices: Vec::with_capacity(quad_count * 4),
             indices: Vec::with_capacity(quad_count * 6),
             texture_requests: Vec::new(),
+            mask_texture_requests: Vec::new(),
         }
     }
 
@@ -132,6 +113,7 @@ impl QuadBatch {
         self.vertices.clear();
         self.indices.clear();
         self.texture_requests.clear();
+        self.mask_texture_requests.clear();
     }
 
     /// Number of quads in the batch.
@@ -182,6 +164,8 @@ impl QuadBatch {
                 tex_index,
                 flags,
                 local_uv: tex_coords[i],
+                mask_tex_index: -1,
+                mask_tex_coords: [0.0, 0.0],
             });
         }
 
@@ -700,6 +684,13 @@ impl QuadBatch {
         self.indices.extend(other.indices.iter().map(|i| i + base));
         for req in &other.texture_requests {
             self.texture_requests.push(TextureRequest {
+                path: req.path.clone(),
+                vertex_start: req.vertex_start + base,
+                vertex_count: req.vertex_count,
+            });
+        }
+        for req in &other.mask_texture_requests {
+            self.mask_texture_requests.push(TextureRequest {
                 path: req.path.clone(),
                 vertex_start: req.vertex_start + base,
                 vertex_count: req.vertex_count,

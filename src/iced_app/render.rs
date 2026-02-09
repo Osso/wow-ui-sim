@@ -8,7 +8,7 @@ use crate::render::font::WowFontSystem;
 use crate::render::glyph::{emit_text_quads, GlyphAtlas};
 use crate::render::shader::GLYPH_ATLAS_TEX_INDEX;
 use crate::render::texture::UI_SCALE;
-use crate::render::{BlendMode, GpuTextureData, QuadBatch, WowUiPrimitive};
+use crate::render::{BlendMode, GpuTextureData, QuadBatch, TextureRequest, WowUiPrimitive};
 use crate::widget::{TextJustify, WidgetType};
 
 use super::app::App;
@@ -323,26 +323,41 @@ fn apply_bar_fill_with_uvs(
 
 use super::tiling::emit_tiled_texture;
 
-/// Apply circle-clip masking to recently emitted texture quads.
+/// Apply mask texture to recently emitted quads by setting mask_tex_index/mask_tex_coords
+/// for GPU alpha sampling (resolved to atlas coords during prepare).
 ///
-/// When a texture has mask textures (e.g. `TempPortraitAlphaMask`), we clip it
-/// to a circle using the shader's circle-clip flag. The local_uv is reset to
-/// 0-1 across each quad so the circle math works regardless of atlas UV mapping.
-fn apply_mask_circle_clip(batch: &mut QuadBatch, vert_before: usize) {
-    use crate::render::shader::FLAG_CIRCLE_CLIP;
+/// The mask frame is typically larger than the icon (e.g. 64x64 mask centered on a 45x45
+/// icon). We compute mask UVs based on where the icon falls within the mask's area.
+fn apply_mask_texture(
+    batch: &mut QuadBatch, vert_before: usize, icon_bounds: Rectangle,
+    mask_textures: &[u64], registry: &crate::widget::WidgetRegistry,
+) {
     let count = batch.vertices.len() - vert_before;
-    if count == 0 {
-        return;
-    }
-    // Process each quad (4 vertices): set flag and fix local_uv to 0-1.
-    let local_uvs = [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]];
+    if count == 0 || mask_textures.is_empty() { return; }
+    let Some(mask_frame) = registry.get(mask_textures[0]) else { return };
+    let Some(ref mask_path) = mask_frame.texture else { return };
+    let (tl, tr, tt, tb) = mask_frame.tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
+    // Compute icon-to-mask UV ratio using atlas dimensions.
+    let mask_uvs = mask_frame.atlas.as_ref()
+        .and_then(|name| crate::atlas::get_atlas_info(name))
+        .map(|lookup| {
+            let (mw, mh) = (lookup.width() as f32 * UI_SCALE, lookup.height() as f32 * UI_SCALE);
+            let (rw, rh) = ((icon_bounds.width / mw).min(1.0), (icon_bounds.height / mh).min(1.0));
+            let (ul, ur) = (tl + (0.5 - rw / 2.0) * (tr - tl), tl + (0.5 + rw / 2.0) * (tr - tl));
+            let (ut, ub) = (tt + (0.5 - rh / 2.0) * (tb - tt), tt + (0.5 + rh / 2.0) * (tb - tt));
+            [[ul, ut], [ur, ut], [ur, ub], [ul, ub]]
+        })
+        .unwrap_or([[tl, tt], [tr, tt], [tr, tb], [tl, tb]]);
     for i in (vert_before..batch.vertices.len()).step_by(4) {
         let end = (i + 4).min(batch.vertices.len());
         for (j, v) in batch.vertices[i..end].iter_mut().enumerate() {
-            v.flags |= FLAG_CIRCLE_CLIP;
-            v.local_uv = local_uvs[j];
+            v.mask_tex_index = -2;
+            v.mask_tex_coords = mask_uvs[j];
         }
     }
+    batch.mask_texture_requests.push(TextureRequest {
+        path: mask_path.clone(), vertex_start: vert_before as u32, vertex_count: count as u32,
+    });
 }
 
 /// Rotate texture UV coordinates around their center for vertices added after `vert_before`.
@@ -444,6 +459,7 @@ fn emit_frame_quads(
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
+    registry: &crate::widget::WidgetRegistry,
 ) {
     match f.widget_type {
         WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
@@ -473,7 +489,7 @@ fn emit_frame_quads(
                 let vert_before = batch.vertices.len();
                 build_texture_quads(batch, bounds, f, bar_fill);
                 if !f.mask_textures.is_empty() {
-                    apply_mask_circle_clip(batch, vert_before);
+                    apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry);
                 }
             }
         }
@@ -521,6 +537,34 @@ fn emit_frame_quads(
 /// rendered as glyph quads interleaved with texture quads (correct draw order).
 /// When `None`, text is skipped (legacy behavior for callers without fonts).
 #[allow(clippy::too_many_arguments)]
+/// Check if a frame should be skipped during rendering (visibility, alpha, subtree filter).
+fn should_skip_frame(
+    f: &crate::widget::Frame,
+    id: u64,
+    eff_alpha: f32,
+    visible_ids: &Option<std::collections::HashSet<u64>>,
+    registry: &crate::widget::WidgetRegistry,
+    pressed_frame: Option<u64>,
+    hovered_frame: Option<u64>,
+) -> bool {
+    if let Some(ids) = visible_ids {
+        if !ids.contains(&id) {
+            return true;
+        }
+    }
+    if eff_alpha <= 0.0 {
+        return true;
+    }
+    let state_override = super::button_vis::resolve_visibility(
+        f, id, registry, pressed_frame, hovered_frame,
+    );
+    match state_override {
+        Some(false) => true,
+        Some(true) => false,
+        None => !f.visible,
+    }
+}
+
 pub fn build_quad_batch_for_registry(
     registry: &crate::widget::WidgetRegistry,
     screen_size: (f32, f32),
@@ -552,47 +596,17 @@ pub fn build_quad_batch_for_registry(
     let statusbar_fills = collect_statusbar_fills(registry);
 
     for (id, f, rect, eff_alpha) in frames {
-        if let Some(ref ids) = visible_ids
-            && !ids.contains(&id) {
-                continue;
-            }
-
-        // Skip fully transparent frames (effective alpha from parent chain)
-        if eff_alpha <= 0.0 {
+        if should_skip_frame(f, id, eff_alpha, &visible_ids, registry, pressed_frame, hovered_frame) {
             continue;
         }
-
-        // Button state textures (NormalTexture, PushedTexture, etc.) have
-        // state-driven visibility that overrides frame.visible.
-        let state_override = super::button_vis::resolve_visibility(
-            f, id, registry, pressed_frame, hovered_frame,
-        );
-        match state_override {
-            Some(false) => continue, // state says hidden
-            Some(true) => {}         // state says visible, skip normal check
-            None => {
-                if !f.visible {
-                    continue;
-                }
-            }
-        }
-
-        // Skip frames with no dimensions, but allow FontStrings with width=0
-        // (they auto-size to text content during rendering)
         let is_fontstring = matches!(f.widget_type, WidgetType::FontString);
         if rect.height <= 0.0 || (rect.width <= 0.0 && !is_fontstring) {
             continue;
         }
-
-        let bounds = Rectangle::new(
-            Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
-            Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
-        );
-
+        let bounds = Rectangle::new(Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE), Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE));
         let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx, message_frames, tooltip_data);
+        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx, message_frames, tooltip_data, registry);
     }
-
     batch
 }
 
@@ -626,7 +640,8 @@ impl App {
         let mut textures = Vec::new();
         let mut uploaded = self.gpu_uploaded_textures.borrow_mut();
         let mut tex_mgr = self.texture_manager.borrow_mut();
-        for request in &quads.texture_requests {
+        let all_requests = quads.texture_requests.iter().chain(&quads.mask_texture_requests);
+        for request in all_requests {
             if uploaded.contains(&request.path) {
                 continue;
             }

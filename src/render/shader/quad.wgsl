@@ -43,6 +43,8 @@ struct VertexInput {
     @location(3) tex_index: i32,
     @location(4) flags: u32,
     @location(5) local_uv: vec2<f32>,
+    @location(6) mask_tex_index: i32,
+    @location(7) mask_tex_coords: vec2<f32>,
 }
 
 // Vertex output / Fragment input
@@ -54,6 +56,8 @@ struct VertexOutput {
     @location(2) @interpolate(flat) tex_index: i32,
     @location(3) @interpolate(flat) flags: u32,
     @location(4) @interpolate(linear) local_uv: vec2<f32>,
+    @location(5) @interpolate(flat) mask_tex_index: i32,
+    @location(6) @interpolate(linear) mask_tex_coords: vec2<f32>,
 }
 
 @vertex
@@ -69,6 +73,8 @@ fn vs_main(in: VertexInput) -> VertexOutput {
     out.tex_index = in.tex_index;
     out.flags = in.flags;
     out.local_uv = in.local_uv;
+    out.mask_tex_index = in.mask_tex_index;
+    out.mask_tex_coords = in.mask_tex_coords;
 
     return out;
 }
@@ -136,6 +142,12 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         let centered = in.local_uv * 2.0 - 1.0;
         let dist = length(centered);
         color.a *= 1.0 - smoothstep(0.96, 1.0, dist);
+    }
+
+    // Mask texture sampling — multiply alpha by the mask texture's alpha channel
+    if in.mask_tex_index >= 0 {
+        let mask_color = sample_tiered_texture(in.mask_tex_index, in.mask_tex_coords);
+        color.a *= mask_color.a;
     }
 
     return color;
