@@ -476,6 +476,21 @@ pub const TIME_STRINGS: &[StringDef] = &[
     ("HOURS", "Hours"),
     ("MINUTES", "Minutes"),
     ("SECONDS", "Seconds"),
+    // Time manager format strings (used by GameTime_GetFormattedTime / BetterDate)
+    ("TIMEMANAGER_TICKER_24HOUR", "%d:%02d"),
+    ("TIMEMANAGER_TICKER_12HOUR", "%d:%02d"),
+    ("TIME_TWELVEHOURAM", "%d:%02d AM"),
+    ("TIME_TWELVEHOURPM", "%d:%02d PM"),
+    ("TIMEMANAGER_AM", "AM"),
+    ("TIMEMANAGER_PM", "PM"),
+    // Chat timestamp format strings
+    ("TIMESTAMP_FORMAT_HHMM", "%I:%M "),
+    ("TIMESTAMP_FORMAT_HHMMSS", "%I:%M:%S "),
+    ("TIMESTAMP_FORMAT_HHMM_AMPM", "%I:%M %p "),
+    ("TIMESTAMP_FORMAT_HHMMSS_AMPM", "%I:%M:%S %p "),
+    ("TIMESTAMP_FORMAT_HHMM_24HR", "%H:%M "),
+    ("TIMESTAMP_FORMAT_HHMMSS_24HR", "%H:%M:%S "),
+    ("TIMESTAMP_FORMAT_NONE", "none"),
 ];
 
 // ============================================================================
