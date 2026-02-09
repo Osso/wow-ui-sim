@@ -34,28 +34,22 @@ fn class_info_by_index(index: i32) -> (&'static str, &'static str) {
         .unwrap_or(("Unknown", "UNKNOWN"))
 }
 
-/// Resolve a unit name from a unit ID string.
-fn resolve_unit_name(unit: &str) -> &'static str {
-    match unit {
-        "player" => "SimPlayer",
-        _ => "SimUnit",
-    }
-}
-
-/// Resolve a unit name, checking target and party members. Returns owned String
-/// to avoid borrow lifetime issues in closures.
+/// Resolve a unit name, checking target, party members, and player name.
+/// Returns owned String to avoid borrow lifetime issues in closures.
 fn resolve_unit_name_with_party(unit: &str, state: &SimState) -> String {
+    if unit == "player" {
+        return state.player_name.clone();
+    }
     if unit == "target" {
         return state.current_target.as_ref()
             .map(|t| t.name.clone())
             .unwrap_or_else(|| "Unknown".to_string());
     }
-    if let Some(idx) = parse_party_index(unit) {
-        if let Some(m) = state.party_members.get(idx) {
+    if let Some(idx) = parse_party_index(unit)
+        && let Some(m) = state.party_members.get(idx) {
             return m.name.to_string();
         }
-    }
-    resolve_unit_name(unit).to_string()
+    "SimUnit".to_string()
 }
 
 /// Parse a "partyN" unit ID and return the 0-based index if valid.
@@ -141,12 +135,11 @@ fn register_unit_guid(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
                     .unwrap_or_else(|| "Creature-0000-00000000".into());
                 return Ok(Value::String(lua.create_string(&guid)?));
             }
-            if let Some(idx) = parse_party_index(&unit) {
-                if idx < state.borrow().party_members.len() {
+            if let Some(idx) = parse_party_index(&unit)
+                && idx < state.borrow().party_members.len() {
                     let guid = format!("Player-0000-0000000{}", idx + 2);
                     return Ok(Value::String(lua.create_string(&guid)?));
                 }
-            }
             Ok(Value::String(lua.create_string("Creature-0000-00000000")?))
         })?,
     )
