@@ -7,11 +7,10 @@ use mlua::{Lua, Result, Value};
 /// Register item-related C_* namespaces and global functions.
 pub fn register_c_item_api(lua: &Lua) -> Result<()> {
     register_c_item(lua)?;
-    register_c_container(lua)?;
+    super::c_container_api::register_c_container_api(lua)?;
     register_c_encoding_util(lua)?;
     register_legacy_item_globals(lua)?;
     register_spell_globals(lua)?;
-    register_container_globals(lua)?;
     register_inventory_globals(lua)?;
     Ok(())
 }
@@ -177,33 +176,6 @@ fn register_c_item_stub_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("CanViewItemPowers", lua.create_function(|_, _loc: Value| Ok(false))?)?;
     t.set("GetItemNumSockets", lua.create_function(|_, _loc: Value| Ok(0i32))?)?;
     t.set("GetItemGemID", lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?)?;
-    Ok(())
-}
-
-/// Register the C_Container namespace.
-fn register_c_container(lua: &Lua) -> Result<()> {
-    let c_container = lua.create_table()?;
-
-    c_container.set(
-        "GetContainerNumSlots",
-        lua.create_function(|_, bag: i32| Ok(if bag == 0 { 16 } else { 0 }))?,
-    )?;
-    c_container.set(
-        "GetContainerItemID",
-        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
-    )?;
-    c_container.set(
-        "GetContainerItemLink",
-        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
-    )?;
-    c_container.set(
-        "GetContainerItemInfo",
-        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
-    )?;
-
-    c_container.set("IsContainerFiltered", lua.create_function(|_, _bag: i32| Ok(false))?)?;
-
-    lua.globals().set("C_Container", c_container)?;
     Ok(())
 }
 
@@ -399,26 +371,6 @@ fn register_spell_stub_globals(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Register legacy global container functions.
-fn register_container_globals(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-
-    globals.set(
-        "GetContainerNumSlots",
-        lua.create_function(|_, bag: i32| Ok(if bag == 0 { 16 } else { 0 }))?,
-    )?;
-    globals.set(
-        "GetContainerItemID",
-        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
-    )?;
-    globals.set(
-        "GetContainerItemLink",
-        lua.create_function(|_, (_bag, _slot): (i32, i32)| Ok(Value::Nil))?,
-    )?;
-
-    Ok(())
-}
-
 /// Register inventory slot functions.
 fn register_inventory_globals(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
@@ -560,7 +512,7 @@ fn item_subclass_name(class_id: i32, subclass_id: i32) -> &'static str {
 }
 
 /// Quality ID to color hex string.
-fn quality_color(quality: u8) -> &'static str {
+pub(super) fn quality_color(quality: u8) -> &'static str {
     match quality {
         0 => "9d9d9d",
         1 => "ffffff",
