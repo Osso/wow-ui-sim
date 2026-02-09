@@ -255,7 +255,8 @@ fn shape_text_to_runs(
     let total_height = if runs.len() <= 1 {
         line_height
     } else {
-        runs.last().map(|run| run.line_y + line_height).unwrap_or(line_height)
+        let first_y = runs.first().map(|r| r.line_y).unwrap_or(0.0);
+        runs.last().map(|run| run.line_y - first_y + line_height).unwrap_or(line_height)
     };
 
     // We only need total_height; the buffer is returned for glyph iteration.
