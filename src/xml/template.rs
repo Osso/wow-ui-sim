@@ -138,7 +138,7 @@ pub fn clear_templates() {
 // Texture template registry (virtual textures with mixin/inherits)
 // ---------------------------------------------------------------------------
 
-use super::types_elements::TextureXml;
+use super::types_elements::{AnimationGroupXml, TextureXml};
 
 /// Global registry of virtual texture templates.
 fn texture_template_registry() -> &'static RwLock<HashMap<String, TextureXml>> {
@@ -174,6 +174,60 @@ pub fn collect_texture_mixins(texture: &TextureXml) -> Vec<String> {
 
     // Collect direct mixins on the texture itself
     if let Some(ref m) = texture.mixin {
+        for mixin in m.split(',').map(|s| s.trim()) {
+            if !mixin.is_empty() && !mixins.contains(&mixin.to_string()) {
+                mixins.push(mixin.to_string());
+            }
+        }
+    }
+
+    mixins
+}
+
+// ---------------------------------------------------------------------------
+// AnimationGroup template registry (virtual animation groups with mixin)
+// ---------------------------------------------------------------------------
+
+/// Global registry of virtual AnimationGroup templates.
+fn anim_group_template_registry() -> &'static RwLock<HashMap<String, AnimationGroupXml>> {
+    static REGISTRY: OnceLock<RwLock<HashMap<String, AnimationGroupXml>>> = OnceLock::new();
+    REGISTRY.get_or_init(|| RwLock::new(HashMap::new()))
+}
+
+/// Register a virtual AnimationGroup template.
+pub fn register_anim_group_template(name: &str, anim_group: AnimationGroupXml) {
+    let mut registry = anim_group_template_registry().write().unwrap();
+    registry.insert(name.to_string(), anim_group);
+}
+
+/// Read-lock the AnimationGroup template registry for lookups.
+pub fn anim_group_template_registry_read(
+) -> std::sync::RwLockReadGuard<'static, HashMap<String, AnimationGroupXml>> {
+    anim_group_template_registry().read().unwrap()
+}
+
+/// Collect all mixins for an AnimationGroup by resolving its `inherits` chain.
+pub fn collect_anim_group_mixins(anim_group: &AnimationGroupXml) -> Vec<String> {
+    let mut mixins = Vec::new();
+
+    // Collect mixins from inherited templates
+    if let Some(ref inherits) = anim_group.inherits {
+        let registry = anim_group_template_registry().read().unwrap();
+        for parent_name in inherits.split(',').map(|s| s.trim()) {
+            if let Some(parent) = registry.get(parent_name) {
+                if let Some(ref m) = parent.mixin {
+                    for mixin in m.split(',').map(|s| s.trim()) {
+                        if !mixin.is_empty() && !mixins.contains(&mixin.to_string()) {
+                            mixins.push(mixin.to_string());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Collect direct mixins on the animation group itself
+    if let Some(ref m) = anim_group.mixin {
         for mixin in m.split(',').map(|s| s.trim()) {
             if !mixin.is_empty() && !mixins.contains(&mixin.to_string()) {
                 mixins.push(mixin.to_string());

@@ -8,8 +8,10 @@ mod types_elements;
 // Re-export all public types and functions
 pub use parse::{parse_xml, parse_xml_file, XmlLoadError};
 pub use template::{
-    clear_templates, collect_texture_mixins, get_template, get_template_chain, get_template_info,
-    register_template, register_texture_template, TemplateEntry, TemplateInfo,
+    anim_group_template_registry_read, clear_templates, collect_anim_group_mixins,
+    collect_texture_mixins, get_template, get_template_chain, get_template_info,
+    register_anim_group_template, register_template, register_texture_template, TemplateEntry,
+    TemplateInfo,
 };
 pub use types::{
     AbsDimensionXml, AnchorXml, AnchorsXml, AnimationsXml, AttributeXml, AttributesXml,

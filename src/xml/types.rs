@@ -179,16 +179,37 @@ impl FrameXml {
         })
     }
 
-    /// Get all child frame elements across all `<Frames>` sections.
-    pub fn all_frame_elements(&self) -> Vec<&FrameElement> {
-        self.children
-            .iter()
-            .filter_map(|c| match c {
-                FrameChildElement::Frames(f) => Some(f.elements.iter()),
-                _ => None,
-            })
-            .flatten()
-            .collect()
+    /// Get all child frame elements across all `<Frames>` sections and
+    /// standalone frame-type children (WoW XML allows frame elements outside
+    /// `<Frames>` wrappers).
+    pub fn all_frame_elements(&self) -> Vec<FrameElement> {
+        use super::types_elements::FrameElement as FE;
+        let mut result = Vec::new();
+        for c in &self.children {
+            match c {
+                FrameChildElement::Frames(f) => result.extend(f.elements.iter().cloned()),
+                FrameChildElement::Frame(f) => result.push(FE::Frame(f.clone())),
+                FrameChildElement::Button(f) => result.push(FE::Button(f.clone())),
+                FrameChildElement::StatusBar(f) => result.push(FE::StatusBar(f.clone())),
+                FrameChildElement::CheckButton(f) => result.push(FE::CheckButton(f.clone())),
+                FrameChildElement::EditBox(f) => result.push(FE::EditBox(f.clone())),
+                FrameChildElement::ScrollFrame(f) => result.push(FE::ScrollFrame(f.clone())),
+                FrameChildElement::Slider(f) => result.push(FE::Slider(f.clone())),
+                FrameChildElement::Cooldown(f) => result.push(FE::Cooldown(f.clone())),
+                FrameChildElement::GameTooltip(f) => result.push(FE::GameTooltip(f.clone())),
+                FrameChildElement::Model(f) => result.push(FE::Model(f.clone())),
+                FrameChildElement::ModelScene(f) => result.push(FE::ModelScene(f.clone())),
+                FrameChildElement::PlayerModel(f) => result.push(FE::PlayerModel(f.clone())),
+                FrameChildElement::MessageFrame(f) => result.push(FE::MessageFrame(f.clone())),
+                FrameChildElement::ScrollingMessageFrame(f) => result.push(FE::ScrollingMessageFrame(f.clone())),
+                FrameChildElement::SimpleHTML(f) => result.push(FE::SimpleHTML(f.clone())),
+                FrameChildElement::ColorSelect(f) => result.push(FE::ColorSelect(f.clone())),
+                FrameChildElement::ItemButton(f) => result.push(FE::ItemButton(f.clone())),
+                FrameChildElement::EventFrame(f) => result.push(FE::EventFrame(f.clone())),
+                _ => {}
+            }
+        }
+        result
     }
 
     /// Get the Attributes element if present.
@@ -369,6 +390,25 @@ pub enum FrameChildElement {
     // Model/MapScene elements
     FogColor(ColorXml),
     ViewInsets(InsetsXml),
+    // Standalone frame-type children (WoW XML allows these outside <Frames> wrappers)
+    Frame(FrameXml),
+    Button(FrameXml),
+    StatusBar(FrameXml),
+    CheckButton(FrameXml),
+    EditBox(FrameXml),
+    ScrollFrame(FrameXml),
+    Slider(FrameXml),
+    Cooldown(FrameXml),
+    GameTooltip(FrameXml),
+    Model(FrameXml),
+    ModelScene(FrameXml),
+    PlayerModel(FrameXml),
+    MessageFrame(FrameXml),
+    ScrollingMessageFrame(FrameXml),
+    SimpleHTML(FrameXml),
+    ColorSelect(FrameXml),
+    ItemButton(FrameXml),
+    EventFrame(FrameXml),
     // Additional elements we may encounter
     #[serde(other)]
     Unknown,
