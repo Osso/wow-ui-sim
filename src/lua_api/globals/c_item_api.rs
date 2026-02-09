@@ -383,6 +383,15 @@ fn register_spell_stub_globals(lua: &Lua) -> Result<()> {
     )?;
 
     globals.set(
+        "SpellCanTargetItem",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?,
+    )?;
+    globals.set(
+        "SpellCanTargetItemID",
+        lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?,
+    )?;
+
+    globals.set(
         "SendChatMessage",
         lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
     )?;
