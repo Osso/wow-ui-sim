@@ -281,11 +281,10 @@ fn build_dependency_graph<'a>(
                 .filter_map(|d| available.get(d.as_str()).copied())
                 .collect();
             for d in toc.optional_deps() {
-                if let Some(&dep) = available.get(d.as_str()) {
-                    if !deps.contains(&dep) {
+                if let Some(&dep) = available.get(d.as_str())
+                    && !deps.contains(&dep) {
                         deps.push(dep);
                     }
-                }
             }
             (name.as_str(), deps)
         })
