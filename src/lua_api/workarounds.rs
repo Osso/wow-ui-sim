@@ -534,7 +534,12 @@ fn fix_bags_bar_anchor(env: &WowLuaEnv) {
     );
 }
 
-/// Call UpdateTextures on each bag button now that ContainerFrame functions exist.
+/// Re-run bag button initialization now that PaperDollItemSlotButton_OnLoad exists.
+///
+/// During initial OnLoad, `PaperDollItemSlotButton_OnLoad` was a no-op stub
+/// (Blizzard_UIPanels_Game hadn't loaded yet). Re-run it on each bag button
+/// to set the correct slot ID, backgroundTextureName, etc., then update
+/// textures via `PaperDollItemSlotButton_Update` and `UpdateTextures`.
 fn update_bag_button_textures(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
@@ -542,12 +547,23 @@ fn update_bag_button_textures(env: &WowLuaEnv) {
             return
         end
         for _, btn in ipairs(MainMenuBarBagManager.allBagButtons) do
+            if PaperDollItemSlotButton_OnLoad then
+                pcall(PaperDollItemSlotButton_OnLoad, btn)
+            end
+            if PaperDollItemSlotButton_Update then
+                pcall(PaperDollItemSlotButton_Update, btn)
+            end
             if btn.UpdateTextures then
                 pcall(btn.UpdateTextures, btn)
             end
         end
-        if MainMenuBarBackpackButton and MainMenuBarBackpackButton.OnLoadInternal then
-            pcall(MainMenuBarBackpackButton.OnLoadInternal, MainMenuBarBackpackButton)
+        if MainMenuBarBackpackButton then
+            if PaperDollItemSlotButton_OnLoad then
+                pcall(PaperDollItemSlotButton_OnLoad, MainMenuBarBackpackButton)
+            end
+            if PaperDollItemSlotButton_Update then
+                pcall(PaperDollItemSlotButton_Update, MainMenuBarBackpackButton)
+            end
         end
     "#,
     );

@@ -381,9 +381,12 @@ fn register_spell_stub_globals(lua: &Lua) -> Result<()> {
 fn register_inventory_globals(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
+    // Returns (slotID, textureName, checkRelic) — callers destructure all three.
     globals.set(
         "GetInventorySlotInfo",
-        lua.create_function(|_, slot_name: String| Ok(inventory_slot_id(&slot_name)))?,
+        lua.create_function(|_, slot_name: String| {
+            Ok((inventory_slot_id(&slot_name), Value::Nil, false))
+        })?,
     )?;
     globals.set(
         "GetInventoryItemLink",
@@ -395,11 +398,32 @@ fn register_inventory_globals(lua: &Lua) -> Result<()> {
     )?;
     globals.set(
         "GetInventoryItemTexture",
-        lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(Value::Nil))?,
+        lua.create_function(|lua, (_unit, slot): (String, i32)| {
+            // Slots 20-23 are bag slots; simulate 4 equipped bags.
+            if (20..=24).contains(&slot) {
+                Ok(Value::String(
+                    lua.create_string("Interface\\Icons\\INV_Misc_Bag_08")?,
+                ))
+            } else {
+                Ok(Value::Nil)
+            }
+        })?,
     )?;
     globals.set(
         "GetInventoryItemCount",
         lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(0))?,
+    )?;
+    globals.set(
+        "GetInventoryItemBroken",
+        lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(false))?,
+    )?;
+    globals.set(
+        "GetInventoryItemEquippedUnusable",
+        lua.create_function(|_, (_unit, _slot): (String, i32)| Ok(false))?,
+    )?;
+    globals.set(
+        "GetInventoryItemCooldown",
+        lua.create_function(|_, (_unit, _slot): (String, i32)| Ok((0.0_f64, 0.0_f64, 1i32)))?,
     )?;
 
     Ok(())
@@ -615,6 +639,11 @@ fn inventory_slot_id(slot_name: &str) -> i32 {
         "SecondaryHandSlot" => 17,
         "RangedSlot" => 18,
         "AmmoSlot" => 0,
+        "Bag0Slot" => 20,
+        "Bag1Slot" => 21,
+        "Bag2Slot" => 22,
+        "Bag3Slot" => 23,
+        "ReagentBag0Slot" => 24,
         _ => 0,
     }
 }

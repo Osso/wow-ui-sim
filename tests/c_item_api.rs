@@ -359,12 +359,65 @@ fn test_get_inventory_slot_info_mainhand() {
 }
 
 #[test]
+fn test_get_inventory_slot_info_bag_slots() {
+    let env = env();
+    let slot: i32 = env.eval(r#"return GetInventorySlotInfo("Bag0Slot")"#).unwrap();
+    assert_eq!(slot, 20);
+    let slot: i32 = env.eval(r#"return GetInventorySlotInfo("Bag1Slot")"#).unwrap();
+    assert_eq!(slot, 21);
+    let slot: i32 = env.eval(r#"return GetInventorySlotInfo("Bag2Slot")"#).unwrap();
+    assert_eq!(slot, 22);
+    let slot: i32 = env.eval(r#"return GetInventorySlotInfo("Bag3Slot")"#).unwrap();
+    assert_eq!(slot, 23);
+}
+
+#[test]
+fn test_get_inventory_slot_info_returns_three_values() {
+    let env = env();
+    let count: i32 = env
+        .eval(r#"return select('#', GetInventorySlotInfo("HeadSlot"))"#)
+        .unwrap();
+    assert_eq!(count, 3);
+}
+
+#[test]
+fn test_get_inventory_item_texture_bag_slots() {
+    let env = env();
+    let tex: String = env
+        .eval(r#"return GetInventoryItemTexture("player", 20)"#)
+        .unwrap();
+    assert!(tex.contains("INV_Misc_Bag_08"));
+    let is_nil: bool = env
+        .eval(r#"return GetInventoryItemTexture("player", 1) == nil"#)
+        .unwrap();
+    assert!(is_nil, "Non-bag slot should return nil");
+}
+
+#[test]
 fn test_get_inventory_item_link_nil() {
     let env = env();
     let is_nil: bool = env
         .eval(r#"return GetInventoryItemLink("player", 1) == nil"#)
         .unwrap();
     assert!(is_nil);
+}
+
+#[test]
+fn test_get_inventory_item_broken() {
+    let env = env();
+    let broken: bool = env
+        .eval(r#"return GetInventoryItemBroken("player", 20)"#)
+        .unwrap();
+    assert!(!broken);
+}
+
+#[test]
+fn test_get_inventory_item_cooldown() {
+    let env = env();
+    let (start, dur, enabled): (f64, f64, i32) = env
+        .eval(r#"return GetInventoryItemCooldown("player", 20)"#)
+        .unwrap();
+    assert_eq!((start, dur, enabled), (0.0, 0.0, 1));
 }
 
 // ============================================================================
