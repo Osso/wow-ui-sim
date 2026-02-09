@@ -4,6 +4,7 @@ mod addon;
 mod button;
 mod error;
 pub(crate) mod helpers;
+pub(crate) mod helpers_anim;
 mod lua_file;
 mod xml_file;
 mod xml_fontstring;
