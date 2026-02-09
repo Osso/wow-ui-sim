@@ -402,13 +402,11 @@ fn anchor_points_for_type(anchor_type: &str) -> (AnchorPoint, AnchorPoint) {
 
 /// Fire a script handler on a frame (e.g. OnTooltipCleared).
 pub(super) fn fire_tooltip_script(lua: &mlua::Lua, frame_id: u64, handler: &str) -> mlua::Result<()> {
-    if let Some(func) = crate::lua_api::script_helpers::get_script(lua, frame_id, handler) {
-        if let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, frame_id) {
-            if let Err(e) = func.call::<()>(frame_ud) {
+    if let Some(func) = crate::lua_api::script_helpers::get_script(lua, frame_id, handler)
+        && let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, frame_id)
+            && let Err(e) = func.call::<()>(frame_ud) {
                 crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
             }
-        }
-    }
     Ok(())
 }
 
