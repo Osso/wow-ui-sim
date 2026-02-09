@@ -128,6 +128,8 @@ pub struct SimState {
     pub current_target: Option<TargetInfo>,
     /// Audio playback manager (None when no audio device or WOW_SIM_NO_SOUND=1).
     pub sound_manager: Option<SoundManager>,
+    /// Player character name (randomly chosen on startup).
+    pub player_name: String,
 }
 
 impl Default for SimState {
@@ -156,8 +158,24 @@ impl Default for SimState {
             party_members: default_party(),
             current_target: None,
             sound_manager: None,
+            player_name: random_player_name(),
         }
     }
+}
+
+/// Pick a random WoW-style player name using the current time as a seed.
+fn random_player_name() -> String {
+    const NAMES: &[&str] = &[
+        "Arthas", "Jaina", "Thrall", "Varian", "Anduin",
+        "Garrosh", "Tyrande", "Malfurion", "Illidan", "Khadgar",
+        "Genn", "Baine", "Rokhan", "Thalyssra", "Alleria",
+        "Turalyon", "Calia", "Lothraxion", "Velen", "Yrel",
+    ];
+    let nanos = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.subsec_nanos() as usize)
+        .unwrap_or(0);
+    NAMES[nanos % NAMES.len()].to_string()
 }
 
 /// Default party member definitions: (name, class_index, health_max, power, power_max, power_type, power_type_name).
