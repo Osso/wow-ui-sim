@@ -75,8 +75,8 @@ impl<'a> LoaderEnv<'a> {
         };
 
         for widget_id in listeners {
-            if let Some(handler) = get_script(self.lua, widget_id, "OnEvent") {
-                if let Some(frame) = get_frame_ref(self.lua, widget_id) {
+            if let Some(handler) = get_script(self.lua, widget_id, "OnEvent")
+                && let Some(frame) = get_frame_ref(self.lua, widget_id) {
                     let mut call_args =
                         vec![frame, mlua::Value::String(self.lua.create_string(event)?)];
                     call_args.extend(args.iter().cloned());
@@ -84,7 +84,6 @@ impl<'a> LoaderEnv<'a> {
                         call_error_handler(self.lua, &e.to_string());
                     }
                 }
-            }
         }
 
         Ok(())
