@@ -403,3 +403,13 @@ pub const FRAME_TUTORIAL_ACCOUNT: EnumDef = (
         ("HousingCleanupMode", 40),
     ],
 );
+
+pub const ACCOUNT_STORE_CATEGORY_TYPE: EnumDef = (
+    "AccountStoreCategoryType",
+    &[
+        ("Creature", 1),
+        ("TransmogSet", 2),
+        ("Mount", 3),
+        ("Icon", 4),
+    ],
+);
