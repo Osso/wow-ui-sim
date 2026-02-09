@@ -19,6 +19,7 @@ fn resolve_multi_anchor_edges(
     registry: &WidgetRegistry,
     frame: &crate::widget::Frame,
     parent_rect: LayoutRect,
+    eff_scale: f32,
     screen_width: f32,
     screen_height: f32,
 ) -> AnchorEdges {
@@ -40,8 +41,8 @@ fn resolve_multi_anchor_edges(
             relative_rect.x, relative_rect.y,
             relative_rect.width, relative_rect.height,
         );
-        let target_x = anchor_x + anchor.x_offset;
-        let target_y = anchor_y - anchor.y_offset;
+        let target_x = anchor_x + anchor.x_offset * eff_scale;
+        let target_y = anchor_y - anchor.y_offset * eff_scale;
 
         match anchor.point {
             AnchorPoint::TopLeft     => { edges.left_x = Some(target_x); edges.top_y = Some(target_y); }
@@ -120,13 +121,13 @@ fn resolve_single_anchor(
     registry: &WidgetRegistry,
     frame: &crate::widget::Frame,
     parent_rect: LayoutRect,
+    eff_scale: f32,
     screen_width: f32,
     screen_height: f32,
 ) -> LayoutRect {
     let anchor = &frame.anchors[0];
-    let scale = frame.scale;
-    let width = frame.width * scale;
-    let height = frame.height * scale;
+    let width = frame.width * eff_scale;
+    let height = frame.height * eff_scale;
 
     let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
         compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
@@ -140,13 +141,32 @@ fn resolve_single_anchor(
         relative_rect.width, relative_rect.height,
     );
 
-    let target_x = anchor_x + anchor.x_offset;
-    let target_y = anchor_y - anchor.y_offset;
+    let target_x = anchor_x + anchor.x_offset * eff_scale;
+    let target_y = anchor_y - anchor.y_offset * eff_scale;
 
     let (frame_x, frame_y) =
         frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
 
     LayoutRect { x: frame_x, y: frame_y, width, height }
+}
+
+/// Compute effective scale: product of all ancestor scales including this frame.
+///
+/// In WoW, `GetEffectiveScale()` returns the product of the frame's own scale
+/// and all ancestor scales. The layout engine uses this to convert local-space
+/// dimensions and anchor offsets to screen-space pixels.
+fn effective_scale(registry: &WidgetRegistry, id: u64) -> f32 {
+    let mut scale = 1.0;
+    let mut current = Some(id);
+    while let Some(cid) = current {
+        if let Some(f) = registry.get(cid) {
+            scale *= f.scale;
+            current = f.parent_id;
+        } else {
+            break;
+        }
+    }
+    scale
 }
 
 /// Compute frame rect with anchor resolution.
@@ -172,25 +192,29 @@ pub fn compute_frame_rect(
         LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height }
     };
 
-    let scale = frame.scale;
+    let scale = effective_scale(registry, id);
 
-    if frame.anchors.is_empty() {
+    let mut rect = if frame.anchors.is_empty() {
         let w = frame.width * scale;
         let h = frame.height * scale;
-        return LayoutRect {
+        LayoutRect {
             x: parent_rect.x,
             y: parent_rect.y,
             width: w,
             height: h,
-        };
-    }
+        }
+    } else if frame.anchors.len() >= 2 {
+        let edges = resolve_multi_anchor_edges(registry, frame, parent_rect, scale, screen_width, screen_height);
+        compute_rect_from_edges(edges, frame, parent_rect, scale)
+    } else {
+        resolve_single_anchor(registry, frame, parent_rect, scale, screen_width, screen_height)
+    };
 
-    if frame.anchors.len() >= 2 {
-        let edges = resolve_multi_anchor_edges(registry, frame, parent_rect, screen_width, screen_height);
-        return compute_rect_from_edges(edges, frame, parent_rect, scale);
-    }
+    // Apply animation translation offsets
+    rect.x += frame.anim_offset_x;
+    rect.y += frame.anim_offset_y;
 
-    resolve_single_anchor(registry, frame, parent_rect, screen_width, screen_height)
+    rect
 }
 
 /// Get the position of an anchor point on a rectangle.

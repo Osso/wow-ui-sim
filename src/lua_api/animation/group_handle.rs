@@ -7,6 +7,88 @@ use std::rc::Rc;
 
 use super::{AnimHandle, AnimState, AnimationType, LoopType};
 
+/// Resolve a child_key to a frame ID via the owner's children_keys.
+fn resolve_child(state: &SimState, owner_id: u64, child_key: &Option<String>) -> Option<u64> {
+    match child_key {
+        Some(key) => state.widgets.get(owner_id)
+            .and_then(|owner| owner.children_keys.get(key.as_str()).copied()),
+        None => Some(owner_id),
+    }
+}
+
+/// Start (or restart) playback: reset elapsed, save pre-animation alphas.
+fn start_group_playback(state: &mut SimState, group_id: u64, reverse: bool) {
+    // Collect alpha targets to save before mutating the group.
+    let targets: Vec<(u64, f32)> = state.animation_groups.get(&group_id)
+        .map(|group| {
+            let owner_id = group.owner_frame_id;
+            group.animations.iter()
+                .filter(|a| a.anim_type == AnimationType::Alpha)
+                .filter_map(|a| resolve_child(state, owner_id, &a.child_key))
+                .collect::<std::collections::HashSet<_>>()
+                .into_iter()
+                .filter_map(|id| state.widgets.get(id).map(|f| (id, f.alpha)))
+                .collect()
+        })
+        .unwrap_or_default();
+
+    if let Some(group) = state.animation_groups.get_mut(&group_id) {
+        group.playing = true;
+        group.paused = false;
+        group.finished = false;
+        group.reverse = reverse;
+        group.elapsed = 0.0;
+        group.saved_alphas.clear();
+        for (id, alpha) in targets {
+            group.saved_alphas.insert(id, alpha);
+        }
+        for anim in &mut group.animations {
+            anim.elapsed = 0.0;
+        }
+    }
+}
+
+/// Stop a group: restore pre-animation alphas (unless setToFinalAlpha),
+/// clear translation offsets, mark finished.
+pub(super) fn stop_group(state: &mut SimState, group_id: u64) {
+    // Collect restoration data before mutating.
+    let restore: Option<(bool, Vec<(u64, f32)>, Vec<u64>)> =
+        state.animation_groups.get(&group_id).map(|group| {
+            let keep_alpha = group.set_to_final_alpha;
+            let saved = group.saved_alphas.iter().map(|(&id, &a)| (id, a)).collect();
+            let owner_id = group.owner_frame_id;
+            let translation_targets: Vec<u64> = group.animations.iter()
+                .filter(|a| a.anim_type == AnimationType::Translation)
+                .filter_map(|a| resolve_child(state, owner_id, &a.child_key))
+                .collect();
+            (keep_alpha, saved, translation_targets)
+        });
+
+    if let Some((keep_alpha, saved_alphas, translation_targets)) = restore {
+        // Restore alphas if not keeping final values
+        if !keep_alpha {
+            for (id, alpha) in &saved_alphas {
+                if let Some(frame) = state.widgets.get_mut(*id) {
+                    frame.alpha = *alpha;
+                }
+            }
+        }
+        // Always clear translation offsets (they don't persist)
+        for id in &translation_targets {
+            if let Some(frame) = state.widgets.get_mut(*id) {
+                frame.anim_offset_x = 0.0;
+                frame.anim_offset_y = 0.0;
+            }
+        }
+    }
+
+    if let Some(group) = state.animation_groups.get_mut(&group_id) {
+        group.playing = false;
+        group.paused = false;
+        group.finished = true;
+    }
+}
+
 /// Userdata handle for an AnimationGroup.
 #[derive(Clone)]
 pub struct AnimGroupHandle {
@@ -24,16 +106,7 @@ impl AnimGroupHandle {
             }).unwrap_or(false);
 
             let mut state = this.state.borrow_mut();
-            if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
-                group.playing = true;
-                group.paused = false;
-                group.finished = false;
-                group.reverse = reverse;
-                group.elapsed = 0.0;
-                for anim in &mut group.animations {
-                    anim.elapsed = 0.0;
-                }
-            }
+            start_group_playback(&mut state, this.group_id, reverse);
             Ok(())
         });
 
@@ -44,16 +117,7 @@ impl AnimGroupHandle {
             }).unwrap_or(false);
 
             let mut state = this.state.borrow_mut();
-            if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
-                group.playing = true;
-                group.paused = false;
-                group.finished = false;
-                group.reverse = reverse;
-                group.elapsed = 0.0;
-                for anim in &mut group.animations {
-                    anim.elapsed = 0.0;
-                }
-            }
+            start_group_playback(&mut state, this.group_id, reverse);
             Ok(())
         });
 
@@ -66,11 +130,7 @@ impl AnimGroupHandle {
     fn add_stop_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         methods.add_method("Stop", |_, this, ()| {
             let mut state = this.state.borrow_mut();
-            if let Some(group) = state.animation_groups.get_mut(&this.group_id) {
-                group.playing = false;
-                group.paused = false;
-                group.finished = true;
-            }
+            stop_group(&mut state, this.group_id);
             Ok(())
         });
 

@@ -50,5 +50,8 @@ fn register_ranged_and_form_stats(lua: &Lua) -> Result<()> {
     })?)?;
     g.set("PetHasActionBar", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("IsPetAttackAction", lua.create_function(|_, _idx: Value| Ok(false))?)?;
+    g.set("GetPetActionCooldown", lua.create_function(|_, _idx: Value| {
+        Ok((0.0_f64, 0.0_f64, true))
+    })?)?;
     Ok(())
 }

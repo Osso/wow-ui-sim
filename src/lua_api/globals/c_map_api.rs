@@ -201,6 +201,7 @@ fn register_c_minimap(lua: &Lua) -> Result<mlua::Table> {
     )?;
     t.set("ShouldUseHybridMinimap", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetUiMapID", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("IsFilteredOut", lua.create_function(|_, _filter: Value| Ok(false))?)?;
 
     Ok(t)
 }

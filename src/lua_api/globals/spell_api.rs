@@ -20,27 +20,21 @@ pub fn register_spell_api(lua: &Lua) -> Result<()> {
 /// C_SpellBook namespace - spell book functions backed by paladin spellbook data.
 fn register_c_spell_book(lua: &Lua) -> Result<mlua::Table> {
     let t = lua.create_table()?;
+    register_c_spell_book_item_methods(&t, lua)?;
+    register_c_spell_book_queries(&t, lua)?;
+    Ok(t)
+}
 
+/// Item-level C_SpellBook methods (info, name, type, texture, cooldown, etc.).
+fn register_c_spell_book_item_methods(t: &mlua::Table, lua: &Lua) -> Result<()> {
     t.set(
         "GetNumSpellBookSkillLines",
         lua.create_function(|_, ()| Ok(spellbook_data::num_skill_lines()))?,
     )?;
-    t.set(
-        "GetSpellBookSkillLineInfo",
-        lua.create_function(create_skill_line_info)?,
-    )?;
-    t.set(
-        "GetSpellBookItemInfo",
-        lua.create_function(create_spell_book_item_info)?,
-    )?;
-    t.set(
-        "GetSpellBookItemName",
-        lua.create_function(create_spell_book_item_name)?,
-    )?;
-    t.set(
-        "GetSpellBookItemType",
-        lua.create_function(create_spell_book_item_type)?,
-    )?;
+    t.set("GetSpellBookSkillLineInfo", lua.create_function(create_skill_line_info)?)?;
+    t.set("GetSpellBookItemInfo", lua.create_function(create_spell_book_item_info)?)?;
+    t.set("GetSpellBookItemName", lua.create_function(create_spell_book_item_name)?)?;
+    t.set("GetSpellBookItemType", lua.create_function(create_spell_book_item_type)?)?;
     t.set(
         "GetSpellBookItemLevelLearned",
         lua.create_function(|_, (_slot, _bank): (i32, Option<i32>)| {
@@ -54,19 +48,26 @@ fn register_c_spell_book(lua: &Lua) -> Result<mlua::Table> {
                 .is_some_and(|(_, entry, _)| entry.is_passive))
         })?,
     )?;
-    t.set(
-        "GetSpellBookItemCooldown",
-        lua.create_function(create_spell_book_item_cooldown)?,
-    )?;
+    t.set("GetSpellBookItemCooldown", lua.create_function(create_spell_book_item_cooldown)?)?;
     t.set(
         "GetSpellBookItemAutoCast",
         lua.create_function(|_, (_slot, _bank): (i32, Option<i32>)| {
             Ok((false, false)) // autoCastAllowed, autoCastEnabled
         })?,
     )?;
-
-    register_c_spell_book_queries(&t, lua)?;
-    Ok(t)
+    t.set(
+        "GetSpellBookItemTexture",
+        lua.create_function(|_, (slot, _bank): (i32, Option<i32>)| {
+            let Some((_, entry, _)) = spellbook_data::get_spell_at_slot(slot) else {
+                return Ok(Value::Nil);
+            };
+            let file_id = crate::spells::get_spell(entry.spell_id)
+                .map(|s| s.icon_file_data_id)
+                .unwrap_or(136243);
+            Ok(Value::Integer(file_id as i64))
+        })?,
+    )?;
+    Ok(())
 }
 
 /// Spell knowledge and lookup queries for C_SpellBook.

@@ -48,6 +48,7 @@ fn register_c_store_public(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsDisabledByParentalControls", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("EventStoreUISetShown", lua.create_function(|_, _shown: bool| Ok(()))?)?;
     lua.globals().set("C_StorePublic", t)?;
     Ok(())
 }
@@ -86,7 +87,18 @@ fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
     g.set("UpdateMicroButtons", nop.clone())?;
     g.set("CanAutoSetGamePadCursorControl", lua.create_function(|_, _e: bool| Ok(false))?)?;
     g.set("SetGamePadCursorControl", nop.clone())?;
-    g.set("SetPortraitTexture", nop.clone())?;
+    g.set("SetPortraitTexture", lua.create_function(|_, (tex, _unit): (Value, Value)| {
+        use crate::lua_api::frame::FrameHandle;
+        if let Value::UserData(ud) = &tex {
+            if let Ok(handle) = ud.borrow::<FrameHandle>() {
+                let mut state = handle.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(handle.id) {
+                    frame.texture = Some("Interface\\CharacterFrame\\TempPortrait".to_string());
+                }
+            }
+        }
+        Ok(())
+    })?)?;
     g.set("ChangeActionBarPage", nop.clone())?;
     g.set("StaticPopup_UpdateAll", nop.clone())?;
     g.set("StaticPopup_Show", nop.clone())?;
@@ -165,6 +177,7 @@ fn register_c_club(lua: &Lua) -> Result<()> {
     t.set("UnfocusMembers", lua.create_function(|_, _id: i64| Ok(()))?)?;
     t.set("SetClubPresenceSubscription", lua.create_function(|_, _id: i64| Ok(()))?)?;
     t.set("ClearClubPresenceSubscription", lua.create_function(|_, ()| Ok(()))?)?;
+    t.set("GetInvitationsForSelf", lua.create_function(|lua, ()| lua.create_table())?)?;
     lua.globals().set("C_Club", t)?;
     Ok(())
 }
@@ -175,6 +188,7 @@ fn register_c_club_finder(lua: &Lua) -> Result<()> {
     t.set("IsListingEnabledFromFlags", lua.create_function(|_, _f: Option<i32>| Ok(false))?)?;
     t.set("PlayerGetClubInvitationList", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("PlayerRequestPendingClubsList", lua.create_function(|_, _t: Option<i32>| Ok(()))?)?;
+    t.set("GetPlayerApplicantLocaleFlags", lua.create_function(|_, ()| Ok(0i32))?)?;
     lua.globals().set("C_ClubFinder", t)?;
     Ok(())
 }
@@ -206,7 +220,14 @@ fn register_unit_stat_constants(lua: &Lua) -> Result<()> {
 
 /// StoreFrame_IsShown function stub (used by MicroButtons).
 fn register_store_frame_functions(lua: &Lua) -> Result<()> {
-    lua.globals().set("StoreFrame_IsShown", lua.create_function(|_, ()| Ok(false))?)?;
+    let g = lua.globals();
+    g.set("StoreFrame_IsShown", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetRepairAllCost", lua.create_function(|_, ()| Ok((0i64, false)))?)?;
+    g.set("GetGuildRenameRequired", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("GetNumGuildPerks", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("RequestGuildRewards", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("AchievementFrame_ToggleAchievementFrame", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("ToggleAchievementFrame", lua.create_function(|_, ()| Ok(()))?)?;
     Ok(())
 }
 
@@ -239,6 +260,7 @@ fn register_global_action_stubs(lua: &Lua) -> Result<()> {
     g.set("GetActionCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64, false)))?)?;
     g.set("GetActionCharges", lua.create_function(|_, _s: Option<i32>| Ok((0i32, 0i32, 0.0f64, 0.0f64)))?)?;
     g.set("GetActionLossOfControlCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64)))?)?;
+    g.set("GetCursorInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     Ok(())
 }
 

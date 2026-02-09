@@ -137,6 +137,8 @@ pub struct AnimState {
     pub start_delay: f64,
     pub end_delay: f64,
     pub smoothing: Smoothing,
+    /// childKey: target a child region by parentKey instead of the owner frame.
+    pub child_key: Option<String>,
     // Alpha
     pub from_alpha: f64,
     pub to_alpha: f64,
@@ -168,6 +170,7 @@ impl AnimState {
             start_delay: 0.0,
             end_delay: 0.0,
             smoothing: Smoothing::None,
+            child_key: None,
             from_alpha: 0.0,
             to_alpha: 1.0,
             offset_x: 0.0,
@@ -203,6 +206,11 @@ impl AnimState {
         compute_smoothed_progress(self.raw_progress(), self.smoothing)
     }
 
+    /// Whether this animation is past its start delay and actively animating.
+    pub(crate) fn is_active(&self) -> bool {
+        self.elapsed >= self.start_delay
+    }
+
     /// Whether this animation has finished its total time.
     #[allow(dead_code)]
     pub(crate) fn is_finished(&self) -> bool {
@@ -225,6 +233,9 @@ pub struct AnimGroupState {
     pub animations: Vec<AnimState>,
     /// Script handlers (OnPlay, OnFinished, OnStop, OnLoop, OnUpdate)
     pub scripts: HashMap<String, RegistryKey>,
+    /// Pre-animation alpha saved on Play(), keyed by resolved frame ID.
+    /// Restored on Stop/Finish when `set_to_final_alpha` is false.
+    pub saved_alphas: HashMap<u64, f32>,
 }
 
 impl AnimGroupState {
@@ -242,6 +253,7 @@ impl AnimGroupState {
             set_to_final_alpha: false,
             animations: Vec::new(),
             scripts: HashMap::new(),
+            saved_alphas: HashMap::new(),
         }
     }
 

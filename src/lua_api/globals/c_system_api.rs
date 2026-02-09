@@ -137,6 +137,7 @@ fn register_c_reputation(lua: &Lua) -> Result<mlua::Table> {
     t.set("GetFactionInfo", lua.create_function(faction_data_by_index)?)?;
     t.set("GetWatchedFactionData", lua.create_function(watched_faction_data)?)?;
     register_c_reputation_stubs(&t, lua)?;
+    t.set("GetGuildFactionData", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
 
     Ok(t)
 }

@@ -411,11 +411,22 @@ fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFrameStrata", |_, this, strata: String| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id)
-            && let Some(s) = crate::widget::FrameStrata::from_str(&strata) {
-                frame.frame_strata = s;
-                frame.has_fixed_frame_strata = true;
-            }
+        let Some(s) = crate::widget::FrameStrata::from_str(&strata) else {
+            return Ok(());
+        };
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.frame_strata = s;
+            frame.has_fixed_frame_strata = true;
+        }
+        // Propagate to descendants that don't have fixed strata
+        let mut queue: Vec<u64> = state.widgets.get(this.id)
+            .map(|f| f.children.clone()).unwrap_or_default();
+        while let Some(child_id) = queue.pop() {
+            let Some(child) = state.widgets.get_mut(child_id) else { continue };
+            if child.has_fixed_frame_strata { continue; }
+            child.frame_strata = s;
+            queue.extend(child.children.iter().copied());
+        }
         Ok(())
     });
 

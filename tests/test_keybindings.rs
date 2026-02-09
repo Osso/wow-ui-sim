@@ -232,6 +232,18 @@ fn keybind_s_opens_spellbook() {
         frame_is_shown(&env, "PlayerSpellsFrame"),
         "PlayerSpellsFrame should be shown after pressing S"
     );
+    // ShowUIPanel should scale-to-fit and raise strata
+    let scale: f64 = env
+        .eval("return PlayerSpellsFrame:GetScale()")
+        .expect("GetScale failed");
+    assert!(
+        scale < 1.0,
+        "1618px-wide frame at 1024px screen should be scaled down, got {scale}"
+    );
+    let strata: String = env
+        .eval("return PlayerSpellsFrame:GetFrameStrata()")
+        .expect("GetFrameStrata failed");
+    assert_eq!(strata, "HIGH", "ShowUIPanel should raise strata to HIGH");
 }
 
 // ── N → PlayerSpellsUtil.ToggleClassTalentFrame() ───────────────────────

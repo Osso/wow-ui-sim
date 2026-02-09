@@ -35,8 +35,17 @@ fn generate_fontstring_visual_code(fs: &crate::xml::FontStringXml) -> String {
 
     if let Some(size) = fs.size.last() {
         let (x, y) = get_size_values(size);
-        if let (Some(x), Some(y)) = (x, y) {
-            code.push_str(&format!("\n        fs:SetSize({}, {})\n        ", x, y));
+        match (x, y) {
+            (Some(x), Some(y)) => {
+                code.push_str(&format!("\n        fs:SetSize({}, {})\n        ", x, y));
+            }
+            (Some(x), None) => {
+                code.push_str(&format!("\n        fs:SetWidth({})\n        ", x));
+            }
+            (None, Some(y)) => {
+                code.push_str(&format!("\n        fs:SetHeight({})\n        ", y));
+            }
+            _ => {}
         }
     }
 

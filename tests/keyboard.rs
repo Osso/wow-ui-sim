@@ -96,10 +96,10 @@ fn test_set_script_on_key_down() {
     )
     .unwrap();
 
-    env.send_key_press("A", None).unwrap();
+    env.send_key_press("X", None).unwrap();
 
     let key: String = env.eval("return _G.key_pressed").unwrap();
-    assert_eq!(key, "A");
+    assert_eq!(key, "X");
 }
 
 #[test]
@@ -119,14 +119,14 @@ fn test_enable_keyboard_gates_on_key_down() {
     )
     .unwrap();
 
-    env.send_key_press("A", None).unwrap();
+    env.send_key_press("X", None).unwrap();
 
     let fired: bool = env.eval("return _G.key_fired").unwrap();
     assert!(!fired, "OnKeyDown should not fire when keyboard is disabled");
 
     // Now enable keyboard and try again
     env.exec("KeyGateFrame:EnableKeyboard(true)").unwrap();
-    env.send_key_press("A", None).unwrap();
+    env.send_key_press("X", None).unwrap();
 
     let fired: bool = env.eval("return _G.key_fired").unwrap();
     assert!(fired, "OnKeyDown should fire after EnableKeyboard(true)");

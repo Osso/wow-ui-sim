@@ -320,7 +320,14 @@ impl AnimHandle {
 
         methods.add_method("GetTarget", |_, _this, ()| Ok(Value::Nil));
         methods.add_method("SetTarget", |_, _this, _target: Value| Ok(()));
-        methods.add_method("SetChildKey", |_, _this, _key: String| Ok(()));
+        methods.add_method("SetChildKey", |_, this, key: String| {
+            let mut state = this.state.borrow_mut();
+            if let Some(group) = state.animation_groups.get_mut(&this.group_id)
+                && let Some(anim) = group.animations.get_mut(this.anim_index) {
+                    anim.child_key = Some(key);
+                }
+            Ok(())
+        });
         methods.add_method("SetTargetKey", |_, _this, _key: String| Ok(()));
         methods.add_method("SetTargetName", |_, _this, _name: String| Ok(()));
         methods.add_method("SetTargetParent", |_, _this, ()| Ok(()));

@@ -32,6 +32,9 @@ fn register_c_quest_log(lua: &Lua) -> Result<mlua::Table> {
     register_quest_log_requests(lua, &t)?;
     register_quest_log_watch(lua, &t)?;
     register_quest_log_status(lua, &t)?;
+    t.set("HasActiveThreats", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetBountySetInfoForMapID", lua.create_function(|_, _map_id: i32| Ok(Value::Nil))?)?;
+    t.set("IsUnitOnQuest", lua.create_function(|_, (_unit, _quest_id): (String, i32)| Ok(false))?)?;
     Ok(t)
 }
 
@@ -188,6 +191,7 @@ fn register_c_quest_session(lua: &Lua) -> Result<mlua::Table> {
     t.set("HasJoined", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetAvailableSessionCommand", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set("HasPendingCommand", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetPendingCommand", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("GetSessionBeginDetails", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     Ok(t)
 }

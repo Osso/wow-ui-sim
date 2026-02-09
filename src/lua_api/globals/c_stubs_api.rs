@@ -153,6 +153,42 @@ fn register_c_action_bar(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+/// Resolve a texture path or file data ID to a WoW interface path.
+fn resolve_texture_path(value: &Value) -> Option<String> {
+    match value {
+        Value::String(s) => s.to_str().ok().and_then(|s| {
+            if let Ok(id) = s.parse::<u32>() {
+                let p = crate::manifest_interface_data::get_texture_path(id)?;
+                Some(format!("Interface\\{}", p.replace('/', "\\")))
+            } else {
+                Some(s.to_string())
+            }
+        }),
+        Value::Integer(n) => {
+            crate::manifest_interface_data::get_texture_path(*n as u32)
+                .map(|p| format!("Interface\\{}", p.replace('/', "\\")))
+        }
+        Value::Number(n) => {
+            crate::manifest_interface_data::get_texture_path(*n as u32)
+                .map(|p| format!("Interface\\{}", p.replace('/', "\\")))
+        }
+        _ => None,
+    }
+}
+
+/// Set texture path on a FrameHandle userdata widget.
+fn set_texture_on_handle(tex: &Value, path: Option<String>) {
+    use crate::lua_api::frame::FrameHandle;
+    if let Value::UserData(ud) = tex {
+        if let Ok(handle) = ud.borrow::<FrameHandle>() {
+            let mut state = handle.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(handle.id) {
+                frame.texture = path;
+            }
+        }
+    }
+}
+
 /// Global function stubs needed by Blizzard_UnitFrame.
 fn register_unit_frame_global_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
@@ -172,7 +208,17 @@ fn register_unit_frame_global_stubs(lua: &Lua) -> Result<()> {
     g.set("PartialPlayTime", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("NoPlayTime", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetBillingTimeRested", lua.create_function(|_, ()| Ok(0i32))?)?;
-    g.set("SetPortraitToTexture", lua.create_function(|_, (_tex, _path): (Value, Value)| Ok(()))?)?;
+    g.set("SetPortraitToTexture", lua.create_function(|_, (tex, path): (Value, Value)| {
+        set_texture_on_handle(&tex, resolve_texture_path(&path));
+        Ok(())
+    })?)?;
+    register_unit_frame_global_stubs_2(lua)?;
+    Ok(())
+}
+
+/// Continuation of unit-frame global stubs (combat, arena, UIParent handlers).
+fn register_unit_frame_global_stubs_2(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
     g.set("GetUnitTotalModifiedMaxHealthPercent", lua.create_function(|_, _unit: Option<String>| Ok(0.0f64))?)?;
     g.set("IsThreatWarningEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetThreatStatusColor", lua.create_function(|_, _status: i32| Ok((1.0f64, 1.0f64, 1.0f64)))?)?;
@@ -575,6 +621,13 @@ fn register_c_perks_activities(lua: &Lua) -> Result<()> {
 
 /// Missing C_* namespaces and globals referenced during startup events.
 fn register_missing_namespaces(lua: &Lua) -> Result<()> {
+    register_social_namespaces(lua)?;
+    register_system_namespaces(lua)?;
+    Ok(())
+}
+
+/// Social, friends, and matchmaking namespace stubs.
+fn register_social_namespaces(lua: &Lua) -> Result<()> {
     let g = lua.globals();
 
     let spectating = lua.create_table()?;
@@ -597,6 +650,21 @@ fn register_missing_namespaces(lua: &Lua) -> Result<()> {
     mentorship.set("GetMentorshipStatus", lua.create_function(|_, _unit: Value| Ok(0i32))?)?;
     mentorship.set("IsActivePlayerConsideredNewcomer", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("C_PlayerMentorship", mentorship)?;
+
+    let recent_allies = lua.create_table()?;
+    recent_allies.set("IsSystemEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("C_RecentAllies", recent_allies)?;
+
+    let social_queue = lua.create_table()?;
+    social_queue.set("GetAllGroups", lua.create_function(|lua, _local_only: Option<bool>| lua.create_table())?)?;
+    g.set("C_SocialQueue", social_queue)?;
+
+    Ok(())
+}
+
+/// System, service, and utility namespace stubs.
+fn register_system_namespaces(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
 
     let cinematic = lua.create_table()?;
     cinematic.set(

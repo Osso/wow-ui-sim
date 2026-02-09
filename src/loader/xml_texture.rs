@@ -33,13 +33,17 @@ fn generate_texture_source_code(texture: &crate::xml::TextureXml) -> String {
 
     if let Some(size) = &texture.size {
         let (x, y) = get_size_values(size);
-        if let (Some(x), Some(y)) = (x, y) {
-            code.push_str(&format!(
-                r#"
-        tex:SetSize({}, {})
-        "#,
-                x, y
-            ));
+        match (x, y) {
+            (Some(x), Some(y)) => {
+                code.push_str(&format!("\n        tex:SetSize({}, {})\n        ", x, y));
+            }
+            (Some(x), None) => {
+                code.push_str(&format!("\n        tex:SetWidth({})\n        ", x));
+            }
+            (None, Some(y)) => {
+                code.push_str(&format!("\n        tex:SetHeight({})\n        ", y));
+            }
+            _ => {}
         }
     }
 

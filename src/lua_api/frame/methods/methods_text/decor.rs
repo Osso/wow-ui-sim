@@ -92,44 +92,12 @@ fn add_border_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetBorderInsets", |_, _this, _args: mlua::MultiValue| Ok(()));
 }
 
-/// Portrait-related stubs.
-fn add_portrait_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method(
-        "SetPortraitTextureSizeAndOffset",
-        |_, _this, _args: mlua::MultiValue| Ok(()),
-    );
-    methods.add_method("SetPortraitTextureRaw", |_, _this, _tex: Option<String>| Ok(()));
-    methods.add_method("SetPortraitToAsset", |_, _this, _asset: mlua::Value| Ok(()));
-    methods.add_method("SetPortraitToBag", |_, _this, _bag_id: i32| Ok(()));
-    methods.add_method("SetPortraitToUnit", |_, _this, _unit: String| Ok(()));
-
-    methods.add_method("SetPortraitShown", |lua, this, shown: bool| {
-        let state = this.state.borrow();
-        let frame_name = state
-            .widgets
-            .get(this.id)
-            .and_then(|f| f.name.clone())
-            .unwrap_or_else(|| format!("__frame_{}", this.id));
-        drop(state);
-
-        let code = format!(
-            r#"
-            local frame = {}
-            if frame and frame.PortraitContainer then
-                if {} then
-                    frame.PortraitContainer:Show()
-                else
-                    frame.PortraitContainer:Hide()
-                end
-            end
-            "#,
-            lua_global_ref(&frame_name),
-            if shown { "true" } else { "false" }
-        );
-        let _ = lua.load(&code).exec();
-        Ok(())
-    });
-}
+/// Portrait-related methods — intentionally empty.
+///
+/// All portrait methods (SetPortraitToAsset, SetPortraitToUnit, etc.) are
+/// implemented in Blizzard's PortraitFrameMixin (Lua). Having Rust stubs here
+/// would shadow them because userdata methods take precedence over __index.
+fn add_portrait_methods<M: UserDataMethods<FrameHandle>>(_methods: &mut M) {}
 
 /// Extract numeric RGBA values from a mixed argument list, skipping non-numbers.
 fn extract_rgba(args: &[Value]) -> (f32, f32, f32, f32) {

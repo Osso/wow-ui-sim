@@ -134,6 +134,10 @@ pub struct Frame {
     pub has_fixed_frame_strata: bool,
     /// Alpha transparency (0.0 - 1.0).
     pub alpha: f32,
+    /// Additive animation translation offset (from Animation Translation, not anchors).
+    pub anim_offset_x: f32,
+    /// Additive animation translation offset (from Animation Translation, not anchors).
+    pub anim_offset_y: f32,
     /// Scale factor (affects visible size; default 1.0).
     pub scale: f32,
     /// Whether mouse is enabled.
@@ -358,6 +362,8 @@ macro_rules! frame_defaults {
             frame_strata: FrameStrata::Medium,
             has_fixed_frame_strata: false,
             alpha: 1.0,
+            anim_offset_x: 0.0,
+            anim_offset_y: 0.0,
             scale: 1.0,
             mouse_enabled: false,
             keyboard_enabled: false,
