@@ -404,6 +404,61 @@ pub const FRAME_TUTORIAL_ACCOUNT: EnumDef = (
     ],
 );
 
+// ============================================================================
+// LFG / Group Finder Enums
+// ============================================================================
+
+/// LFGListFilter - bitmask flags for LFG list filtering.
+pub const LFG_LIST_FILTER: EnumDef = (
+    "LFGListFilter",
+    &[
+        ("PvE", 1),
+        ("PvP", 2),
+        ("Recommended", 4),
+        ("NotRecommended", 8),
+        ("CurrentSeason", 16),
+        ("NotCurrentSeason", 32),
+        ("CurrentExpansion", 64),
+        ("Timerunning", 128),
+    ],
+);
+
+// ============================================================================
+// Pet Battle Enums
+// ============================================================================
+
+/// BattlePetAction - pet battle action types.
+pub const BATTLE_PET_ACTION: SeqEnumDef = (
+    "BattlePetAction",
+    &["None", "Ability", "SwitchPet", "Trap", "Skip"],
+);
+
+/// BattlePetOwner - pet battle owner sides.
+pub const BATTLE_PET_OWNER: SeqEnumDef = (
+    "BattlePetOwner",
+    &["Ally", "Enemy", "Weather"],
+);
+
+// ============================================================================
+// Delves Companion Enums
+// ============================================================================
+
+/// CompanionConfigSlotTypes - Delves companion configuration slot types.
+pub const COMPANION_CONFIG_SLOT_TYPES: SeqEnumDef = (
+    "CompanionConfigSlotTypes",
+    &["Role", "Utility", "Combat"],
+);
+
+/// CurioType - Delves curio types.
+pub const CURIO_TYPE: SeqEnumDef = (
+    "CurioType",
+    &["Utility", "Combat"],
+);
+
+// ============================================================================
+// Store Enums
+// ============================================================================
+
 pub const ACCOUNT_STORE_CATEGORY_TYPE: EnumDef = (
     "AccountStoreCategoryType",
     &[
