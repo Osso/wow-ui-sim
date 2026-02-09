@@ -353,6 +353,7 @@ fn register_c_super_track(lua: &Lua) -> Result<()> {
 fn register_c_player_interaction_manager(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("IsInteractingWithNpcOfType", lua.create_function(|_, _n: i32| Ok(false))?)?;
+    t.set("IsReplacingUnit", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("ClearInteraction", lua.create_function(|_, _i: Option<i32>| Ok(()))?)?;
     t.set("GetCurrentInteraction", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     lua.globals().set("C_PlayerInteractionManager", t)?;

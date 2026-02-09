@@ -508,6 +508,7 @@ fn fire_startup_events(env: &WowLuaEnv) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
     }
 
+    fire("BAG_UPDATE_DELAYED");
     fire("GROUP_ROSTER_UPDATE");
     force_show_party_member_frames(env);
     fire("UPDATE_BINDINGS");

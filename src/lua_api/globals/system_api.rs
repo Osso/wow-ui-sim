@@ -32,7 +32,7 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     register_time_functions(lua)?;
     register_streaming_stubs(lua)?;
     register_error_callstack_stubs(lua)?;
-    register_network_stubs(lua)?;
+    register_network_stubs(lua, &state)?;
     register_input_state_stubs(lua, &state)?;
     register_screen_size_functions(lua, &state)?;
     register_request_time_played(lua, Rc::clone(&state))?;
@@ -402,13 +402,19 @@ fn register_error_callstack_stubs(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Network stats stubs (simulator has no real network).
-fn register_network_stubs(lua: &Lua) -> Result<()> {
+/// Network and performance stats stubs (simulator has no real network).
+fn register_network_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
     // GetNetStats() -> bandwidthIn, bandwidthOut, latencyHome, latencyWorld
     globals.set(
         "GetNetStats",
         lua.create_function(|_, ()| Ok((0.0f64, 0.0f64, 0.0f64, 0.0f64)))?,
+    )?;
+    // GetFramerate() -> framerate (fps)
+    let st = Rc::clone(state);
+    globals.set(
+        "GetFramerate",
+        lua.create_function(move |_, ()| Ok(st.borrow().fps as f64))?,
     )?;
     Ok(())
 }

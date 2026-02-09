@@ -98,6 +98,9 @@ fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
     g.set("LE_PARTY_CATEGORY_HOME", 1i32)?;
     g.set("LE_PARTY_CATEGORY_INSTANCE", 2i32)?;
 
+    // SpellIsSelfBuff - returns whether a spell is a self-buff (used by AuraUtil)
+    g.set("SpellIsSelfBuff", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
+
     // CombatLog C++ API functions used by Blizzard_CombatLog
     g.set("CombatLogResetFilter", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("CombatLogAddFilter", lua.create_function(|_, (_event_list, _source_flags, _dest_flags): (Value, Value, Value)| Ok(()))?)?;

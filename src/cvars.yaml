@@ -1236,7 +1236,7 @@ showTamersWQ: '1'
 showTargetCastbar: '1'
 showTargetOfTarget: '0'
 showTempMaxHealthLoss: '1'
-showTimestamps: none
+showTimestamps: '%H:%M '
 showToastBroadcast: '0'
 showToastClubInvitation: '1'
 showToastConversation: '1'

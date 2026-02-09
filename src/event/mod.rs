@@ -20,6 +20,7 @@ pub mod events {
     pub const CHAT_MSG_SAY: &str = "CHAT_MSG_SAY";
     pub const CHAT_MSG_WHISPER: &str = "CHAT_MSG_WHISPER";
     pub const BAG_UPDATE: &str = "BAG_UPDATE";
+    pub const BAG_UPDATE_DELAYED: &str = "BAG_UPDATE_DELAYED";
     pub const UPDATE_MOUSEOVER_UNIT: &str = "UPDATE_MOUSEOVER_UNIT";
 }
 

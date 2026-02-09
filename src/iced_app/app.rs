@@ -97,7 +97,7 @@ fn fire_login_events(env: &WowLuaEnv) {
 
 /// UPDATE_BINDINGS, DISPLAY_SIZE_CHANGED, UI_SCALE_CHANGED, addon hooks.
 fn fire_world_and_ui_events(env: &WowLuaEnv) {
-    for event in ["UPDATE_BINDINGS", "DISPLAY_SIZE_CHANGED", "UI_SCALE_CHANGED", "UPDATE_CHAT_WINDOWS"] {
+    for event in ["BAG_UPDATE_DELAYED", "UPDATE_BINDINGS", "DISPLAY_SIZE_CHANGED", "UI_SCALE_CHANGED", "UPDATE_CHAT_WINDOWS"] {
         println!("[Startup] Firing {event}");
         if let Err(e) = env.fire_event(event) {
             eprintln!("Error firing {event}: {}", e);

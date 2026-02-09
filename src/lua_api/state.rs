@@ -181,6 +181,8 @@ pub struct SimState {
     pub party_members: Vec<PartyMember>,
     /// Current target (None = no target).
     pub current_target: Option<TargetInfo>,
+    /// Current focus target (None = no focus).
+    pub current_focus: Option<TargetInfo>,
     /// Audio playback manager (None when no audio device or WOW_SIM_NO_SOUND=1).
     pub sound_manager: Option<SoundManager>,
     /// Player character name (randomly chosen on startup).
@@ -197,6 +199,8 @@ pub struct SimState {
     pub rot_damage_level: usize,
     /// Player buffs/debuffs (disabled by WOW_SIM_NO_BUFFS=1).
     pub player_buffs: Vec<AuraInfo>,
+    /// Current framerate (FPS), updated by the app's FPS counter.
+    pub fps: f32,
 }
 
 impl Default for SimState {
@@ -224,6 +228,7 @@ impl Default for SimState {
             hovered_frame: None,
             party_members: default_party(),
             current_target: None,
+            current_focus: None,
             sound_manager: None,
             player_name: random_player_name(),
             player_health: 100_000,
@@ -232,6 +237,7 @@ impl Default for SimState {
             player_race_index: 0,   // Human
             rot_damage_level: 0,    // Light
             player_buffs: default_player_buffs(),
+            fps: 0.0,
         }
     }
 }

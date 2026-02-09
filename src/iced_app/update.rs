@@ -364,6 +364,8 @@ impl App {
             self.frame_time_display = self.frame_time_avg.get();
             self.frame_count.set(0);
             self.fps_last_time = now;
+            let env = self.env.borrow();
+            env.state().borrow_mut().fps = self.fps;
         }
     }
 
