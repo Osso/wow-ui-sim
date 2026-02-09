@@ -424,7 +424,7 @@ impl App {
     /// Focus an EditBox on click, or clear focus when clicking elsewhere.
     fn update_editbox_focus(&self, clicked_frame: Option<u64>) {
         let env = self.env.borrow();
-        let is_editbox = clicked_frame.map_or(false, |fid| {
+        let is_editbox = clicked_frame.is_some_and(|fid| {
             env.state()
                 .borrow()
                 .widgets
