@@ -10,8 +10,8 @@ pub use parse::{parse_xml, parse_xml_file, XmlLoadError};
 pub use template::{
     anim_group_template_registry_read, clear_templates, collect_anim_group_mixins,
     collect_texture_mixins, get_template, get_template_chain, get_template_info,
-    register_anim_group_template, register_template, register_texture_template, TemplateEntry,
-    TemplateInfo,
+    register_anim_group_template, register_intrinsic_templates, register_template,
+    register_texture_template, TemplateEntry, TemplateInfo,
 };
 pub use types::{
     AbsDimensionXml, AnchorXml, AnchorsXml, AnimationsXml, AttributeXml, AttributesXml,

@@ -31,10 +31,22 @@ pub fn register_template(name: &str, widget_type: &str, frame: FrameXml) {
     );
 }
 
-/// Get a template by name from the registry.
+/// Get a template by name from the registry (case-insensitive).
+///
+/// WoW's CreateFrame passes type names in various cases (e.g. "DROPDOWNBUTTON"
+/// from Lua vs "DropdownButton" from XML). The registry stores the canonical
+/// PascalCase name from the XML definition.
 pub fn get_template(name: &str) -> Option<TemplateEntry> {
     let registry = template_registry().read().unwrap();
-    registry.get(name).cloned()
+    if let Some(entry) = registry.get(name) {
+        return Some(entry.clone());
+    }
+    // Case-insensitive fallback
+    let lower = name.to_ascii_lowercase();
+    registry
+        .values()
+        .find(|e| e.name.to_ascii_lowercase() == lower)
+        .cloned()
 }
 
 /// Template info for C_XMLUtil.GetTemplateInfo.
@@ -124,6 +136,31 @@ fn collect_template_chain(name: &str, chain: &mut Vec<TemplateEntry>, visited: &
         }
         // Then add this template
         chain.push(entry);
+    }
+}
+
+/// Register synthetic templates for C++ intrinsic frame types.
+///
+/// WoW has several frame types built into the C++ engine that don't have XML
+/// definitions in the extracted Interface files. They behave as templates that
+/// inherit from a base template and apply a mixin. Register them so the
+/// template chain resolution and CreateFrame can find them.
+pub fn register_intrinsic_templates() {
+    let intrinsics: &[(&str, &str, &str, &str)] = &[
+        // (name, widget_type, inherits, mixin)
+        ("WoWScrollBoxList", "Frame", "ScrollBoxBaseTemplate", "ScrollBoxListMixin"),
+        ("WoWScrollBox", "Frame", "ScrollBoxBaseTemplate", "ScrollBoxBaseMixin"),
+        ("WoWTrimScrollBar", "EventFrame", "WowTrimScrollBarTemplate", ""),
+    ];
+
+    for &(name, wtype, inherits, mixin) in intrinsics {
+        let frame = FrameXml {
+            inherits: Some(inherits.to_string()),
+            mixin: if mixin.is_empty() { None } else { Some(mixin.to_string()) },
+            is_virtual: Some(true),
+            ..Default::default()
+        };
+        register_template(name, wtype, frame);
     }
 }
 

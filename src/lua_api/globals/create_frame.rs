@@ -48,16 +48,19 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
         // This handles types like ContainedAlertFrame, EventButton, etc. whose
         // intrinsic XML definition (mixin, scripts, children) should be applied
         // automatically when created via CreateFrame/CreateFramePool.
-        let is_intrinsic = crate::xml::get_template(&frame_type).is_some();
+        let intrinsic_entry = crate::xml::get_template(&frame_type);
         let ref_name = name.unwrap_or_else(|| format!("__frame_{}", frame_id));
-        if is_intrinsic {
-            apply_templates_from_registry(lua, &ref_name, &frame_type);
+        if let Some(entry) = &intrinsic_entry {
+            // Use the canonical template name (PascalCase from XML definition),
+            // not the raw Lua input which may be all-caps (e.g. "DROPDOWNBUTTON").
+            let canonical = &entry.name;
+            apply_templates_from_registry(lua, &ref_name, canonical);
             // Set frame.intrinsic = "TypeName" BEFORE user templates, so OnLoad
             // handlers (e.g. ValidateIsDropdownButtonIntrinsic) can see it.
             let code = format!(
                 "{}.intrinsic = \"{}\"",
                 lua_global_ref(&ref_name),
-                frame_type
+                canonical
             );
             let _ = lua.load(&code).exec();
         }
@@ -294,6 +297,14 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
     for tex_id in [normal_id, pushed_id, highlight_id, disabled_id] {
         if let Some(tex) = state.widgets.get_mut(tex_id) {
             add_fill_parent_anchors(tex, frame_id);
+        }
+    }
+
+    // Button state textures render below child regions (icon, etc.) in WoW.
+    // Set to Background layer so they don't occlude Border/Artwork children.
+    for tex_id in [normal_id, pushed_id, disabled_id] {
+        if let Some(tex) = state.widgets.get_mut(tex_id) {
+            tex.draw_layer = crate::widget::DrawLayer::Background;
         }
     }
 
