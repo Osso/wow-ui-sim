@@ -52,8 +52,8 @@ pub fn add_text_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// SetText, GetText, SetFormattedText.
 fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetText", |_, this, args: mlua::MultiValue| {
-        handle_set_text(this, args)
+    methods.add_method("SetText", |lua, this, args: mlua::MultiValue| {
+        handle_set_text(lua, this, args)
     });
 
     // GetText() - for FontString widgets
@@ -77,11 +77,27 @@ fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             let text = result.to_string_lossy().to_string();
             let mut state = this.state.borrow_mut();
             if let Some(frame) = state.widgets.get_mut(this.id) {
-                // Auto-size height; width is measured by renderer
                 if frame.height == 0.0 {
                     frame.height = frame.font_size.max(12.0);
                 }
                 frame.text = Some(text);
+            }
+            // Auto-size FontString width
+            let measure_info = state.widgets.get(this.id).and_then(|f| {
+                if f.widget_type != WidgetType::FontString || f.word_wrap { return None; }
+                let text = f.text.as_ref()?.clone();
+                Some((text, f.font.clone(), f.font_size))
+            });
+            drop(state);
+            if let Some((text, font, font_size)) = measure_info {
+                if let Some(fs_rc) = lua.app_data_ref::<std::rc::Rc<std::cell::RefCell<crate::render::font::WowFontSystem>>>() {
+                    let mut fs = fs_rc.borrow_mut();
+                    let width = fs.measure_text_width(&text, font.as_deref(), font_size);
+                    let mut state = this.state.borrow_mut();
+                    if let Some(frame) = state.widgets.get_mut(this.id) {
+                        frame.width = width;
+                    }
+                }
             }
         }
         Ok(())
@@ -92,8 +108,8 @@ fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 /// Tooltip: clears lines and sets first line with optional color/wrap.
 /// SimpleHTML: strips HTML tags before storing.
 /// Button: propagates text to the child Text FontString.
-/// FontString: auto-sizes height to fit content.
-fn handle_set_text(this: &FrameHandle, args: mlua::MultiValue) -> mlua::Result<()> {
+/// FontString: auto-sizes height and width to fit content.
+fn handle_set_text(lua: &mlua::Lua, this: &FrameHandle, args: mlua::MultiValue) -> mlua::Result<()> {
     let mut args_iter = args.into_iter();
     let text_str = match args_iter.next() {
         Some(mlua::Value::String(s)) => Some(s.to_string_lossy().to_string()),
@@ -126,6 +142,30 @@ fn handle_set_text(this: &FrameHandle, args: mlua::MultiValue) -> mlua::Result<(
     // For Buttons, also set text on the Text fontstring child
     if let Some(text_id) = text_child_id {
         set_text_on_frame(&mut state, text_id, store_text);
+    }
+
+    // Auto-size FontString width to match text content (for anchor centering)
+    let ids_to_measure: Vec<(u64, String, Option<String>, f32)> = [Some(this.id), text_child_id]
+        .into_iter()
+        .flatten()
+        .filter_map(|id| {
+            let f = state.widgets.get(id)?;
+            if f.widget_type != WidgetType::FontString || f.word_wrap { return None; }
+            let text = f.text.as_ref()?.clone();
+            Some((id, text, f.font.clone(), f.font_size))
+        })
+        .collect();
+    drop(state);
+
+    if let Some(fs_rc) = lua.app_data_ref::<std::rc::Rc<std::cell::RefCell<crate::render::font::WowFontSystem>>>() {
+        let mut fs = fs_rc.borrow_mut();
+        let mut state = this.state.borrow_mut();
+        for (id, text, font, font_size) in ids_to_measure {
+            let width = fs.measure_text_width(&text, font.as_deref(), font_size);
+            if let Some(frame) = state.widgets.get_mut(id) {
+                frame.width = width;
+            }
+        }
     }
 
     Ok(())
