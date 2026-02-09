@@ -23,12 +23,18 @@ pub fn create_frame_from_xml(
     parent_override: Option<&str>,
     intrinsic_base: Option<&str>,
 ) -> Result<Option<String>, LoadError> {
-    // Register virtual/intrinsic frames (templates) in the template registry
+    // Register virtual/intrinsic frames (templates) in the template registry.
+    // Top-level virtual frames are templates only (not instantiated).
+    // Child virtual frames (with parent_override) are still created — WoW's
+    // engine creates them as children and optionally registers them as templates
+    // when they have a name.
     if frame.is_virtual == Some(true) || frame.intrinsic == Some(true) {
         if let Some(ref name) = frame.name {
             crate::xml::register_template(name, widget_type, frame.clone());
         }
-        return Ok(None);
+        if parent_override.is_none() {
+            return Ok(None);
+        }
     }
 
     let name = match resolve_frame_name(frame, parent_override) {
@@ -36,9 +42,12 @@ pub fn create_frame_from_xml(
         None => return Ok(None),
     };
 
-    let parent = parent_override
-        .or(frame.parent.as_deref())
-        .unwrap_or("UIParent");
+    // Explicit parent from XML child context or `parent` attribute.
+    // Top-level frames without a parent attribute are created with nil parent
+    // (matching WoW behavior), but UIParent is used as fallback for anchor
+    // resolution and parentKey assignment.
+    let explicit_parent = parent_override.or(frame.parent.as_deref());
+    let parent = explicit_parent.unwrap_or("UIParent");
 
     // Prepend intrinsic base template to the inherits chain so the intrinsic
     // type's mixin, scripts, and children are applied before user templates.
@@ -53,7 +62,7 @@ pub fn create_frame_from_xml(
         None => explicit_inherits,
     };
 
-    let mut lua_code = build_create_frame_code(widget_type, &name, parent, inherits);
+    let mut lua_code = build_create_frame_code(widget_type, &name, explicit_parent, inherits);
 
     append_parent_key_code(&mut lua_code, frame, parent);
     append_mixins_code(&mut lua_code, frame, inherits);
@@ -132,7 +141,7 @@ fn resolve_frame_name(frame: &crate::xml::FrameXml, parent_override: Option<&str
 }
 
 /// Build the initial `CreateFrame(...)` Lua code.
-fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits: &str) -> String {
+fn build_create_frame_code(widget_type: &str, name: &str, parent: Option<&str>, inherits: &str) -> String {
     let inherits_arg = if inherits.is_empty() {
         "nil".to_string()
     } else {
@@ -141,17 +150,32 @@ fn build_create_frame_code(widget_type: &str, name: &str, parent: &str, inherits
     // Engine-root frames (e.g. UIParent) are pre-created without a parent.
     // When XML defines them, name == default parent, which would self-parent.
     // Reuse the existing engine frame instead.
-    if name == parent {
-        return format!(
-            r#"
+    if let Some(p) = parent {
+        if name == p {
+            return format!(
+                r#"
         local frame = _G["{name}"]
         "#,
-        );
+            );
+        }
     }
-    let parent_ref = lua_global_ref(parent);
+    let parent_arg = match parent {
+        Some(p) => format!("{} or UIParent", lua_global_ref(p)),
+        // Lua CreateFrame defaults nil parent to UIParent, so pass UIParent
+        // here and orphan the frame with SetParent(nil) afterwards.
+        None => "UIParent".to_string(),
+    };
+    let orphan_code = if parent.is_none() {
+        // In WoW, top-level XML frames without a parent attribute are created
+        // as orphans (no parent). Our Lua CreateFrame always defaults to
+        // UIParent, so we create with UIParent then immediately orphan.
+        "\n        frame:SetParent(nil)"
+    } else {
+        ""
+    };
     format!(
         r#"
-        local frame = CreateFrame("{widget_type}", "{name}", {parent_ref} or UIParent, {inherits_arg})
+        local frame = CreateFrame("{widget_type}", "{name}", {parent_arg}, {inherits_arg}){orphan_code}
         "#,
     )
 }
