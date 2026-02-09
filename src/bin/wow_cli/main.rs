@@ -1,6 +1,7 @@
 //! WoW UI Simulator CLI - thin client for a running wow-sim server.
 //!
-//! All commands except extract-textures and convert-texture require a running wow-sim instance.
+//! All commands except extract-textures, convert-texture, and generate require a running wow-sim
+//! instance.
 //!
 //! Usage:
 //!   wow-cli lua                      # Interactive Lua REPL
@@ -9,6 +10,17 @@
 //!   wow-cli screenshot -o out.webp   # Render screenshot via running server
 //!   wow-cli extract-textures         # Extract textures to WebP (standalone)
 //!   wow-cli convert-texture foo.BLP  # Convert single BLP to WebP (standalone)
+//!   wow-cli generate spells          # Regenerate data/spells.rs from CSVs
+
+mod csv_util;
+mod gen_atlas;
+mod gen_global_strings;
+mod gen_items;
+mod gen_manifest;
+mod gen_spells;
+mod gen_traits;
+mod gen_traits_emit;
+mod gen_traits_load;
 
 use clap::{Parser, Subcommand};
 use std::io::{self, BufRead, Write};
@@ -94,6 +106,28 @@ enum Commands {
         #[arg(short, long)]
         output: Option<PathBuf>,
     },
+
+    /// Generate static data files from WoW CSV exports (standalone)
+    Generate {
+        #[command(subcommand)]
+        what: GenerateTarget,
+    },
+}
+
+#[derive(Subcommand)]
+enum GenerateTarget {
+    /// Generate data/spells.rs from SpellName/Spell/SpellMisc CSVs
+    Spells,
+    /// Generate data/items.rs from ItemSparse CSV
+    Items,
+    /// Generate data/atlas.rs from UiTextureAtlas CSVs
+    Atlas,
+    /// Generate data/global_strings.rs from GlobalStrings CSV
+    GlobalStrings,
+    /// Generate data/manifest_interface_data.rs from ManifestInterfaceData CSV
+    Manifest,
+    /// Generate data/traits.rs from Trait* CSVs
+    Traits,
 }
 
 fn default_addons_path() -> PathBuf {
@@ -135,6 +169,24 @@ fn main() {
         Commands::ConvertTexture { input, output } => {
             convert_texture(&input, output.as_ref());
         }
+        Commands::Generate { what } => {
+            run_generator(what);
+        }
+    }
+}
+
+fn run_generator(target: GenerateTarget) {
+    let result = match target {
+        GenerateTarget::Spells => gen_spells::run(),
+        GenerateTarget::Items => gen_items::run(),
+        GenerateTarget::Atlas => gen_atlas::run(),
+        GenerateTarget::GlobalStrings => gen_global_strings::run(),
+        GenerateTarget::Manifest => gen_manifest::run(),
+        GenerateTarget::Traits => gen_traits::run(),
+    };
+    if let Err(e) = result {
+        eprintln!("Error: {}", e);
+        std::process::exit(1);
     }
 }
 
