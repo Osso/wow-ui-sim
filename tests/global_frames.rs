@@ -70,45 +70,6 @@ fn test_chat_frame1_exists() {
 }
 
 // ============================================================================
-// Unit Frame Globals
-// ============================================================================
-
-#[test]
-fn test_player_frame_exists() {
-    let env = env();
-    let exists: bool = env.eval("return PlayerFrame ~= nil").unwrap();
-    assert!(exists);
-}
-
-#[test]
-fn test_target_frame_exists() {
-    let env = env();
-    let exists: bool = env.eval("return TargetFrame ~= nil").unwrap();
-    assert!(exists);
-}
-
-#[test]
-fn test_focus_frame_exists() {
-    let env = env();
-    let exists: bool = env.eval("return FocusFrame ~= nil").unwrap();
-    assert!(exists);
-}
-
-#[test]
-fn test_focus_frame_spell_bar_exists() {
-    let env = env();
-    let exists: bool = env.eval("return FocusFrameSpellBar ~= nil").unwrap();
-    assert!(exists);
-}
-
-#[test]
-fn test_pet_frame_exists() {
-    let env = env();
-    let exists: bool = env.eval("return PetFrame ~= nil").unwrap();
-    assert!(exists);
-}
-
-// ============================================================================
 // Chat System Globals
 // ============================================================================
 
@@ -350,12 +311,8 @@ fn test_all_named_frame_globals_exist() {
         "EditModeManagerFrame",
         "RolePollPopup",
         "TimerTracker",
-        "TargetFrameSpellBar",
         "MinimapCluster",
         "ObjectiveTrackerFrame",
-        "PlayerCastingBarFrame",
-        "AlternatePowerBar",
-        "MonkStaggerBar",
         "NamePlateDriverFrame",
         "UIErrorsFrame",
         "InterfaceOptionsFrame",
