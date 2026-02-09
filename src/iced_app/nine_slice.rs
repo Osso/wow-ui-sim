@@ -116,18 +116,23 @@ pub fn emit_nine_slice_atlas(
 /// Emit a nine-slice border (corners + edges) with a solid-color center fill.
 ///
 /// Used for tooltips where `SetCenterColor` tints the center texture to a solid color.
+/// `center_overlap` extends the center fill into the corners by the given number of pixels
+/// (WoW's TooltipDefaultLayout uses 4px via anchor offsets `x=-4, y=4, x1=4, y1=-4`).
 pub fn emit_nine_slice_with_center_color(
     batch: &mut QuadBatch,
     bounds: Rectangle,
     ns: &NineSliceAtlasInfo,
     alpha: f32,
     center_color: [f32; 4],
+    center_overlap: f32,
 ) {
-    // Solid center fill (drawn first, behind the border pieces)
-    let cx = bounds.x + ns.corner_tl.width as f32;
-    let cy = bounds.y + ns.corner_tl.height as f32;
-    let cw = bounds.width - ns.corner_tl.width as f32 - ns.corner_tr.width as f32;
-    let ch = bounds.height - ns.corner_tl.height as f32 - ns.corner_bl.height as f32;
+    // Solid center fill (drawn first, behind the border pieces).
+    // WoW anchors the center from TopLeftCorner.BOTTOMRIGHT to BottomRightCorner.TOPLEFT
+    // with negative insets, so the fill extends under the corners to plug transparent areas.
+    let cx = bounds.x + ns.corner_tl.width as f32 - center_overlap;
+    let cy = bounds.y + ns.corner_tl.height as f32 - center_overlap;
+    let cw = bounds.width - ns.corner_tl.width as f32 - ns.corner_tr.width as f32 + center_overlap * 2.0;
+    let ch = bounds.height - ns.corner_tl.height as f32 - ns.corner_bl.height as f32 + center_overlap * 2.0;
     if cw > 0.0 && ch > 0.0 {
         batch.push_solid(Rectangle::new(Point::new(cx, cy), Size::new(cw, ch)), center_color);
     }

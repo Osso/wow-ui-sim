@@ -152,7 +152,9 @@ pub fn build_tooltip_quads(
     // WoW calls SetCenterColor(0, 0, 0, 1) — TOOLTIP_DEFAULT_BACKGROUND_COLOR is black.
     if let Some(ns) = tooltip_nine_slice() {
         let center = [0.0, 0.0, 0.0, alpha];
-        super::nine_slice::emit_nine_slice_with_center_color(batch, bounds, ns, alpha, center);
+        // WoW's TooltipDefaultLayout anchors center with (-4,4,4,-4) offsets,
+        // extending the fill 4px into each corner to cover transparent inner areas.
+        super::nine_slice::emit_nine_slice_with_center_color(batch, bounds, ns, alpha, center, 4.0);
     } else {
         // Fallback if atlas entries are missing
         batch.push_solid(bounds, [0.0, 0.0, 0.0, alpha]);
