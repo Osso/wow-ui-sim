@@ -4,7 +4,8 @@ use crate::lua_api::LoaderEnv;
 use crate::xml::{collect_texture_mixins, register_texture_template};
 
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, generate_animation_group_code, generate_set_point_code, get_size_values, lua_global_ref, resolve_child_name};
+use super::helpers::{escape_lua_string, generate_set_point_code, get_size_values, lua_global_ref, resolve_child_name};
+use super::helpers_anim::generate_animation_group_code;
 
 /// Generate Lua code for texture source (file or atlas) and size.
 fn generate_texture_source_code(texture: &crate::xml::TextureXml) -> String {
@@ -186,6 +187,9 @@ fn apply_texture_animations_xml(env: &LoaderEnv<'_>, texture: &crate::xml::Textu
     let mut anim_code = format!("local frame = {}\n", lua_global_ref(tex_name));
     for anim_group_xml in &anims.animations {
         if anim_group_xml.is_virtual == Some(true) {
+            if let Some(ref name) = anim_group_xml.name {
+                crate::xml::register_anim_group_template(name, anim_group_xml.clone());
+            }
             continue;
         }
         anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
