@@ -515,14 +515,11 @@ fn register_error_handlers(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Misc stubs: nop, sound functions.
+/// Misc stubs: nop function.
 fn register_misc_stubs(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     let nop = lua.create_function(|_, _: mlua::MultiValue| Ok(()))?;
-    globals.set("nop", nop.clone())?;
-    globals.set("PlaySound", nop.clone())?;
-    globals.set("StopSound", nop.clone())?;
-    globals.set("PlaySoundFile", nop)?;
+    globals.set("nop", nop)?;
     Ok(())
 }
 
