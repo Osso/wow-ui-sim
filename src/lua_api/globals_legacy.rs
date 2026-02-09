@@ -28,6 +28,7 @@ use super::globals::pool_api::register_pool_api;
 use super::globals::quest_frames::register_quest_frames;
 use super::globals::register_all_ui_strings;
 use super::globals::settings_api::register_settings_api;
+use super::globals::sound_api::register_sound_api;
 use super::globals::spell_api::register_spell_api;
 use super::globals::system_api::register_system_api;
 use super::globals::timer_api::register_timer_api;
@@ -51,16 +52,53 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     Ok(())
 }
 
-/// Patch string.format to support %F (uppercase float), which Lua 5.1 lacks.
-/// WoW's patched LuaJIT supports this; we convert %F→%f before calling the original.
+/// Patch string.format to support:
+/// - %F (uppercase float) which Lua 5.1 lacks; converted to %f
+/// - Positional arguments (%1$s, %2$d, %11$s) which WoW's patched LuaJIT supports
+///   but standard Lua 5.1 does not; converted by reordering arguments
 fn patch_string_format(lua: &Lua) -> Result<()> {
     lua.load(r#"
         local _format = string.format
         string.format = function(fmt, ...)
-            if type(fmt) == "string" then
-                fmt = fmt:gsub("%%(%d*%.?%d*)F", "%%%1f")
+            if type(fmt) ~= "string" then return _format(fmt, ...) end
+            fmt = fmt:gsub("%%(%d*%.?%d*)F", "%%%1f")
+            if not fmt:find("%%%d+%$") then return _format(fmt, ...) end
+            local args = {...}
+            local out, new_args, seq = {}, {}, 0
+            local i, len = 1, #fmt
+            while i <= len do
+                if fmt:sub(i,i) ~= "%" then
+                    out[#out+1] = fmt:sub(i,i); i = i + 1
+                elseif fmt:sub(i+1,i+1) == "%" then
+                    out[#out+1] = "%%"; i = i + 2
+                else
+                    local n, a = fmt:match("^%%(%d+)%$()", i)
+                    if n then
+                        new_args[#new_args+1] = args[tonumber(n)]
+                        out[#out+1] = "%"; i = a
+                    else
+                        seq = seq + 1
+                        new_args[#new_args+1] = args[seq]
+                        out[#out+1] = "%"; i = i + 1
+                    end
+                    while i <= len and fmt:sub(i,i):find("[%-+ #0]") do
+                        out[#out+1] = fmt:sub(i,i); i = i + 1
+                    end
+                    while i <= len and fmt:sub(i,i):find("%d") do
+                        out[#out+1] = fmt:sub(i,i); i = i + 1
+                    end
+                    if i <= len and fmt:sub(i,i) == "." then
+                        out[#out+1] = "."; i = i + 1
+                        while i <= len and fmt:sub(i,i):find("%d") do
+                            out[#out+1] = fmt:sub(i,i); i = i + 1
+                        end
+                    end
+                    if i <= len and fmt:sub(i,i):find("[diouxXeEfgGaAcspqn]") then
+                        out[#out+1] = fmt:sub(i,i); i = i + 1
+                    end
+                end
             end
-            return _format(fmt, ...)
+            return _format(table.concat(out), unpack(new_args))
         end
         format = string.format
     "#).exec()
@@ -397,6 +435,7 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_font_api(lua)?;
 
     // Stateful APIs (need SimState)
+    register_sound_api(lua, Rc::clone(state))?;
     register_unit_api(lua, Rc::clone(state))?;
     register_addon_api(lua, Rc::clone(state))?;
     register_pool_api(lua, Rc::clone(state))?;
