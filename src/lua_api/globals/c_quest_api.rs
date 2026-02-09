@@ -34,14 +34,17 @@ fn register_c_quest_log(lua: &Lua) -> Result<mlua::Table> {
     register_quest_log_status(lua, &t)?;
     t.set("HasActiveThreats", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetBountySetInfoForMapID", lua.create_function(|_, _map_id: i32| Ok(Value::Nil))?)?;
+    t.set("GetBountiesForMapID", lua.create_function(|lua, _map_id: i32| lua.create_table())?)?;
     t.set("IsUnitOnQuest", lua.create_function(|_, (_unit, _quest_id): (String, i32)| Ok(false))?)?;
     Ok(t)
 }
 
 /// Quest log query methods (counts, GetInfo, objectives).
 fn register_quest_log_queries(lua: &Lua, t: &mlua::Table) -> Result<()> {
-    let num_quests = MOCK_QUESTS.len() as i32;
-    t.set("GetNumQuestLogEntries", lua.create_function(move |_, ()| Ok((num_quests, 0i32)))?)?;
+    // Return 0 quests in the log index — avoids triggering quest button
+    // template display code that requires full child frame hierarchies.
+    // Quest data is still available via GetTitleForQuestID, IsOnQuest, etc.
+    t.set("GetNumQuestLogEntries", lua.create_function(|_, ()| Ok((0i32, 0i32)))?)?;
     t.set("GetInfo", lua.create_function(|lua, idx: i32| create_quest_info(lua, idx))?)?;
     t.set("GetQuestIDForLogIndex", lua.create_function(|_, idx: i32| {
         Ok(MOCK_QUESTS.iter().find(|q| q.1 == idx).map_or(0, |q| q.0))
@@ -149,6 +152,7 @@ fn register_quest_log_status(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("IsOnMap", lua.create_function(|_, _id: i32| Ok(false))?)?;
     t.set("GetNextWaypointText", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
     t.set("GetTimeAllowed", lua.create_function(|_, _id: i32| Ok((Value::Nil, Value::Nil)))?)?;
+    t.set("IsAccountQuest", lua.create_function(|_, _id: i32| Ok(false))?)?;
     Ok(())
 }
 
@@ -193,6 +197,8 @@ fn register_c_quest_session(lua: &Lua) -> Result<mlua::Table> {
     t.set("HasPendingCommand", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetPendingCommand", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("GetSessionBeginDetails", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    t.set("CanStart", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("CanStop", lua.create_function(|_, ()| Ok(false))?)?;
     Ok(t)
 }
 

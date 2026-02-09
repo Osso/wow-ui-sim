@@ -22,6 +22,15 @@ fn register_c_new_items(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+/// Slot count per bag index (0=backpack, 1–4=equipped bags, 5=reagent bag).
+fn bag_slot_count(bag: i32) -> i32 {
+    match bag {
+        0 => 16,     // backpack
+        1..=4 => 16, // equipped bags
+        _ => 0,      // reagent bag and others not equipped
+    }
+}
+
 /// Mock inventory: (bag, slot) → (item_id, stack_count).
 fn mock_bag_item(bag: i32, slot: i32) -> Option<(u32, i32)> {
     match (bag, slot) {
@@ -150,6 +159,10 @@ fn register_c_container_stubs(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("PickupContainerItem", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
     t.set("SplitContainerItem", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
     t.set("IsBattlePayItem", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
+    t.set("SetBagPortraitTexture", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    t.set("GetContainerNumFreeSlots", lua.create_function(|_, bag: i32| {
+        Ok((bag_slot_count(bag), 0i32))
+    })?)?;
     Ok(())
 }
 
@@ -159,7 +172,7 @@ fn register_c_container(lua: &Lua) -> Result<()> {
 
     c_container.set(
         "GetContainerNumSlots",
-        lua.create_function(|_, bag: i32| Ok(if bag == 0 { 16 } else { 0 }))?,
+        lua.create_function(|_, bag: i32| Ok(bag_slot_count(bag)))?,
     )?;
     register_c_container_item_methods(lua, &c_container)?;
     register_c_container_stubs(lua, &c_container)?;
@@ -174,7 +187,11 @@ fn register_container_globals(lua: &Lua) -> Result<()> {
 
     globals.set(
         "GetContainerNumSlots",
-        lua.create_function(|_, bag: i32| Ok(if bag == 0 { 16 } else { 0 }))?,
+        lua.create_function(|_, bag: i32| Ok(bag_slot_count(bag)))?,
+    )?;
+    globals.set(
+        "IsInventoryItemProfessionBag",
+        lua.create_function(|_, (_unit, _slot): (Value, Value)| Ok(false))?,
     )?;
     globals.set(
         "GetContainerItemID",

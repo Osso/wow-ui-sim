@@ -368,6 +368,12 @@ fn register_spell_stub_globals(lua: &Lua) -> Result<()> {
         lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
     )?;
 
+    // SpellGetVisibilityInfo(spellId, context) -> hasCustom, alwaysShowMine, showForMySpec
+    globals.set(
+        "SpellGetVisibilityInfo",
+        lua.create_function(|_, (_spell_id, _ctx): (i32, String)| Ok((false, false, false)))?,
+    )?;
+
     Ok(())
 }
 

@@ -87,13 +87,14 @@ fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
     g.set("UpdateMicroButtons", nop.clone())?;
     g.set("CanAutoSetGamePadCursorControl", lua.create_function(|_, _e: bool| Ok(false))?)?;
     g.set("SetGamePadCursorControl", nop.clone())?;
-    g.set("SetPortraitTexture", lua.create_function(|_, (tex, _unit): (Value, Value)| {
+    g.set("SetPortraitTexture", lua.create_function(|lua, (tex, unit): (Value, Value)| {
         use crate::lua_api::frame::FrameHandle;
+        let texture_path = class_icon_path_for_unit(lua, &unit);
         if let Value::UserData(ud) = &tex {
             if let Ok(handle) = ud.borrow::<FrameHandle>() {
                 let mut state = handle.state.borrow_mut();
                 if let Some(frame) = state.widgets.get_mut(handle.id) {
-                    frame.texture = Some("Interface\\CharacterFrame\\TempPortrait".to_string());
+                    frame.texture = Some(texture_path);
                 }
             }
         }
@@ -132,6 +133,9 @@ fn register_c_artifact_and_azerite(lua: &Lua) -> Result<()> {
     art.set("IsEquippedArtifactMaxed", lua.create_function(|_, ()| Ok(true))?)?;
     art.set("IsEquippedArtifactDisabled", lua.create_function(|_, ()| Ok(false))?)?;
     art.set("GetEquippedArtifactInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    art.set("GetArtifactItemID", lua.create_function(|_, ()| Ok(0i32))?)?;
+    art.set("GetArtifactTier", lua.create_function(|_, ()| Ok(0i32))?)?;
+    art.set("IsAtForge", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_ArtifactUI", art)?;
 
     let az = lua.create_table()?;
@@ -178,6 +182,7 @@ fn register_c_club(lua: &Lua) -> Result<()> {
     t.set("SetClubPresenceSubscription", lua.create_function(|_, _id: i64| Ok(()))?)?;
     t.set("ClearClubPresenceSubscription", lua.create_function(|_, ()| Ok(()))?)?;
     t.set("GetInvitationsForSelf", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("IsRestricted", lua.create_function(|_, ()| Ok(0i32))?)?;
     lua.globals().set("C_Club", t)?;
     Ok(())
 }
@@ -185,6 +190,7 @@ fn register_c_club(lua: &Lua) -> Result<()> {
 fn register_c_club_finder(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsCommunityFinderEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("IsListingEnabledFromFlags", lua.create_function(|_, _f: Option<i32>| Ok(false))?)?;
     t.set("PlayerGetClubInvitationList", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("PlayerRequestPendingClubsList", lua.create_function(|_, _t: Option<i32>| Ok(()))?)?;
@@ -200,7 +206,40 @@ fn register_global_game_stubs(lua: &Lua) -> Result<()> {
     register_actionbar_hotkey_color(lua)?;
     register_unit_stat_constants(lua)?;
     register_store_frame_functions(lua)?;
+    register_communities_dialog_stubs(lua)?;
     Ok(())
+}
+
+/// Stub dialog frames checked by CommunitiesAddDialogInsecure.lua.
+fn register_communities_dialog_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+    for name in ["CommunitiesAddDialog", "CommunitiesCreateDialog"] {
+        if g.get::<Value>(name)?.is_nil() {
+            let stub = lua.create_table()?;
+            let attrs = lua.create_table()?;
+            stub.set("__attrs", attrs)?;
+            stub.set("IsShown", lua.create_function(|_, ()| Ok(false))?)?;
+            stub.set("Hide", lua.create_function(|_, ()| Ok(()))?)?;
+            stub.set("GetAttribute", lua.create_function(get_attr)?)?;
+            stub.set("SetAttribute", lua.create_function(set_attr)?)?;
+            g.set(name, stub)?;
+        }
+    }
+    g.set("CommunitiesAvatarPicker_IsShown",
+        lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("CommunitiesAvatarPicker_CloseDialog",
+        lua.create_function(|_, ()| Ok(()))?)?;
+    Ok(())
+}
+
+fn get_attr(_: &Lua, (this, key): (mlua::Table, String)) -> Result<Value> {
+    let attrs: mlua::Table = this.get("__attrs")?;
+    attrs.get::<Value>(key.as_str())
+}
+
+fn set_attr(_: &Lua, (this, key, val): (mlua::Table, String, Value)) -> Result<()> {
+    let attrs: mlua::Table = this.get("__attrs")?;
+    attrs.set(key.as_str(), val)
 }
 
 /// LE_UNIT_STAT_* constants and SPELL_STAT*_NAME strings for PaperDollFrame.
@@ -228,6 +267,7 @@ fn register_store_frame_functions(lua: &Lua) -> Result<()> {
     g.set("RequestGuildRewards", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("AchievementFrame_ToggleAchievementFrame", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("ToggleAchievementFrame", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("SwitchAchievementSearchTab", lua.create_function(|_, _tab: Value| Ok(()))?)?;
     Ok(())
 }
 
@@ -382,4 +422,32 @@ fn register_c_summon_info(lua: &Lua) -> Result<()> {
     t.set("IsSummonSkippingStartExperience", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_SummonInfo", t)?;
     Ok(())
+}
+
+/// Look up the unit's class via `UnitClass` and return the class icon texture path.
+fn class_icon_path_for_unit(lua: &Lua, unit: &Value) -> String {
+    let class_file = lua.globals().get::<mlua::Function>("UnitClass").ok()
+        .and_then(|f| f.call::<mlua::MultiValue>(unit.clone()).ok())
+        .and_then(|mv| mv.into_iter().nth(1))
+        .and_then(|v| match v {
+            Value::String(s) => s.to_str().ok().map(|s| s.to_owned()),
+            _ => None,
+        });
+    match class_file.as_deref() {
+        Some("WARRIOR") => r"Interface\Icons\ClassIcon_Warrior",
+        Some("PALADIN") => r"Interface\Icons\ClassIcon_Paladin",
+        Some("HUNTER") => r"Interface\Icons\ClassIcon_Hunter",
+        Some("ROGUE") => r"Interface\Icons\ClassIcon_Rogue",
+        Some("PRIEST") => r"Interface\Icons\ClassIcon_Priest",
+        Some("DEATHKNIGHT") => r"Interface\Icons\ClassIcon_DeathKnight",
+        Some("SHAMAN") => r"Interface\Icons\ClassIcon_Shaman",
+        Some("MAGE") => r"Interface\Icons\ClassIcon_Mage",
+        Some("WARLOCK") => r"Interface\Icons\ClassIcon_Warlock",
+        Some("MONK") => r"Interface\Icons\ClassIcon_Monk",
+        Some("DRUID") => r"Interface\Icons\ClassIcon_Druid",
+        Some("DEMONHUNTER") => r"Interface\Icons\ClassIcon_DemonHunter",
+        Some("EVOKER") => r"Interface\Icons\ClassIcon_Evoker",
+        _ => r"Interface\CharacterFrame\TempPortrait",
+    }
+    .to_string()
 }

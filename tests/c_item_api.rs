@@ -233,8 +233,14 @@ fn test_c_container_get_num_slots_backpack() {
 #[test]
 fn test_c_container_get_num_slots_other_bag() {
     let env = env();
+    // Bags 1-4 have 16 slots each (standard bag size)
     let slots: i32 = env
         .eval("return C_Container.GetContainerNumSlots(1)")
+        .unwrap();
+    assert_eq!(slots, 16);
+    // Bag 5+ has 0 slots (doesn't exist)
+    let slots: i32 = env
+        .eval("return C_Container.GetContainerNumSlots(5)")
         .unwrap();
     assert_eq!(slots, 0);
 }

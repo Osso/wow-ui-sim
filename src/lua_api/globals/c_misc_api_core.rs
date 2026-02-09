@@ -160,8 +160,10 @@ fn register_c_lfg_info(lua: &Lua) -> Result<()> {
     t.set("CanPartyLFGBackfill", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetAllEntriesForCategory", lua.create_function(|lua, _cat: i32| lua.create_table())?)?;
     t.set("HideNameFromUI", lua.create_function(|_, _id: i32| Ok(false))?)?;
-    t.set("CanPlayerUseLFD", lua.create_function(|_, ()| Ok((false, Value::Nil)))?)?;
-    t.set("CanPlayerUseGroupFinder", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("CanPlayerUseLFD", lua.create_function(|_, ()| Ok((true, Value::Nil)))?)?;
+    t.set("CanPlayerUseLFR", lua.create_function(|_, ()| Ok((true, Value::Nil)))?)?;
+    t.set("CanPlayerUsePremadeGroup", lua.create_function(|_, ()| Ok(true))?)?;
+    t.set("CanPlayerUseGroupFinder", lua.create_function(|_, ()| Ok(true))?)?;
     lua.globals().set("C_LFGInfo", t)?;
     Ok(())
 }

@@ -5,7 +5,7 @@
 //! - C_UIWidgetManager, C_GossipInfo, C_Calendar, C_CovenantCallings
 //! - C_WeeklyRewards, C_ContributionCollector, C_Scenario, C_Housing
 //! - C_GameRules, C_ScriptedAnimations, C_Glue, C_UIColor, C_ClassColor
-//! - C_SpecializationInfo, C_ArtifactUI, C_SuperTrack
+//! - C_SpecializationInfo, C_SuperTrack
 //! - C_PlayerInteractionManager, C_PaperDollInfo, C_PerksProgram
 
 use mlua::{Lua, Result, Value};
@@ -29,7 +29,6 @@ pub(super) fn register_all(lua: &Lua) -> Result<()> {
     register_c_ui_color(lua)?;
     register_c_class_color(lua)?;
     register_c_spec_info(lua)?;
-    register_c_artifact_ui(lua)?;
     register_c_super_track(lua)?;
     register_c_player_interaction_manager(lua)?;
     register_c_paper_doll_info(lua)?;
@@ -332,16 +331,6 @@ fn register_c_spec_info(lua: &Lua) -> Result<()> {
         Ok(_class_id.map_or(0, |_| 3i32))
     })?)?;
     lua.globals().set("C_SpecializationInfo", t)?;
-    Ok(())
-}
-
-fn register_c_artifact_ui(lua: &Lua) -> Result<()> {
-    let t = lua.create_table()?;
-    t.set("GetArtifactItemID", lua.create_function(|_, ()| Ok(0i32))?)?;
-    t.set("GetArtifactTier", lua.create_function(|_, ()| Ok(0i32))?)?;
-    t.set("IsAtForge", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("GetEquippedArtifactInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    lua.globals().set("C_ArtifactUI", t)?;
     Ok(())
 }
 

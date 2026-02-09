@@ -31,7 +31,8 @@ pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
     register_c_action_bar(lua)?;
     register_unit_frame_global_stubs(lua)?;
     register_powerbar_prediction_colors(lua)?;
-    register_achievement_stubs(lua)?;
+    super::c_stubs_api_extra::register_achievement_stubs(lua)?;
+    super::c_stubs_api_extra::register_tracking_stubs(lua)?;
     register_c_log(lua)?;
     register_c_campaign_info(lua)?;
     register_quest_global_functions(lua)?;
@@ -290,89 +291,6 @@ fn register_powerbar_prediction_colors(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Achievement category API stubs needed by Blizzard_AchievementUI at parse time.
-fn register_achievement_stubs(lua: &Lua) -> Result<()> {
-    let g = lua.globals();
-    g.set("GetCategoryList", lua.create_function(|lua, ()| lua.create_table())?)?;
-    g.set("GetGuildCategoryList", lua.create_function(|lua, ()| lua.create_table())?)?;
-    g.set("GetStatisticsCategoryList", lua.create_function(|lua, ()| lua.create_table())?)?;
-    g.set(
-        "GetCategoryInfo",
-        lua.create_function(|_, _id: Value| Ok((Value::Nil, -1i32, -1i32)))?,
-    )?;
-    g.set(
-        "GetCategoryNumAchievements",
-        lua.create_function(|_, _id: Value| Ok((0i32, 0i32, 0i32)))?,
-    )?;
-    g.set(
-        "GetTotalAchievementPoints",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?,
-    )?;
-    g.set(
-        "GetLatestCompletedAchievements",
-        lua.create_function(|_, _args: mlua::MultiValue| Ok(mlua::MultiValue::new()))?,
-    )?;
-    g.set("GetAchievementInfo", lua.create_function(stub_get_achievement_info)?)?;
-    g.set(
-        "GetTrackedAchievements",
-        lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?,
-    )?;
-    g.set(
-        "GetNumCompletedAchievements",
-        lua.create_function(|_, _for_guild: Option<bool>| Ok((0i32, 0i32)))?,
-    )?;
-    Ok(())
-}
-
-/// Stub for GetAchievementInfo — returns 14 values matching WoW's signature.
-fn stub_get_achievement_info(lua: &Lua, id: Value) -> Result<mlua::MultiValue> {
-    let aid = match &id {
-        Value::Integer(n) => *n,
-        Value::Number(n) => *n as i64,
-        _ => return Ok(mlua::MultiValue::from_vec(vec![Value::Nil])),
-    };
-    // id, name, points, completed, month, day, year, description,
-    // flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy
-    Ok(mlua::MultiValue::from_vec(vec![
-        Value::Integer(aid),
-        Value::String(lua.create_string("Achievement")?),
-        Value::Integer(10),
-        Value::Boolean(false),
-        Value::Integer(1),
-        Value::Integer(1),
-        Value::Integer(2025),
-        Value::String(lua.create_string("Achievement description")?),
-        Value::Integer(0),
-        Value::Integer(136243),
-        Value::String(lua.create_string("")?),
-        Value::Boolean(false),
-        Value::Boolean(false),
-        Value::Nil,
-    ]))
-}
-
-/// Loot, content-tracking, and achievement telemetry namespace stubs.
-fn register_tracking_stubs(lua: &Lua) -> Result<()> {
-    let g = lua.globals();
-
-    let cl = lua.create_table()?;
-    cl.set("GetLootRollDuration", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
-    g.set("C_Loot", cl)?;
-
-    let ct = lua.create_table()?;
-    ct.set("GetTrackedIDs", lua.create_function(|lua, _type: Value| lua.create_table())?)?;
-    ct.set("IsTracking", lua.create_function(|_, (_type, _id): (Value, Value)| Ok(false))?)?;
-    ct.set("GetCollectableSourceTrackingEnabled", lua.create_function(|_, ()| Ok(false))?)?;
-    g.set("C_ContentTracking", ct)?;
-
-    let at = lua.create_table()?;
-    at.set("LinkAchievementInWhisper", lua.create_function(|_, _id: Value| Ok(()))?)?;
-    at.set("LinkAchievementInClub", lua.create_function(|_, _id: Value| Ok(()))?)?;
-    g.set("C_AchievementTelemetry", at)?;
-
-    Ok(())
-}
-
 fn register_c_log(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set(
@@ -406,6 +324,7 @@ fn register_quest_global_functions(lua: &Lua) -> Result<()> {
     g.set("QuestMapFrame_GetFocusedQuestID", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("IsModifiedClick", lua.create_function(|_, _action: String| Ok(false))?)?;
     g.set("IsInJailersTower", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("IsOnGroundFloorInJailersTower", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetNumAutoQuestPopUps", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("GetAutoQuestPopUp", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
     g.set("GetQuestLogSpecialItemInfo", lua.create_function(|_, _log_idx: i32| Ok(Value::Nil))?)?;
@@ -557,6 +476,8 @@ fn register_missing_globals(lua: &Lua) -> Result<()> {
     g.set("HasOverrideActionBar", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetMaxBattlefieldID", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("RequestRaidInfo", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("RequestLFDPlayerLockInfo", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("RequestLFDPartyLockInfo", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("GetQuestTimers", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     g.set("GetMirrorTimerInfo", lua.create_function(|_, _timer: Value| {
         Ok(("UNKNOWN", 0i32, 0i32, -1i32, false, ""))
