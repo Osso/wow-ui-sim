@@ -58,6 +58,7 @@ pub mod spell_api;
 pub mod spellbook_data;
 pub mod quest_frames;
 pub mod settings_api;
+pub mod sound_api;
 pub mod system_api;
 pub mod strings;
 pub mod targeting_api;

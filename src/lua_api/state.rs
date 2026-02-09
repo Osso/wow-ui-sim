@@ -6,6 +6,7 @@ use crate::lua_api::animation::AnimGroupState;
 use crate::lua_api::message_frame::MessageFrameData;
 use crate::lua_api::simple_html::SimpleHtmlData;
 use crate::lua_api::tooltip::TooltipData;
+use crate::sound::SoundManager;
 use crate::widget::WidgetRegistry;
 use mlua::RegistryKey;
 use std::collections::{HashMap, HashSet, VecDeque};
@@ -125,6 +126,8 @@ pub struct SimState {
     pub party_members: Vec<PartyMember>,
     /// Current target (None = no target).
     pub current_target: Option<TargetInfo>,
+    /// Audio playback manager (None when no audio device or WOW_SIM_NO_SOUND=1).
+    pub sound_manager: Option<SoundManager>,
 }
 
 impl Default for SimState {
@@ -152,6 +155,7 @@ impl Default for SimState {
             hovered_frame: None,
             party_members: default_party(),
             current_target: None,
+            sound_manager: None,
         }
     }
 }

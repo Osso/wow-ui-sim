@@ -14,6 +14,8 @@ pub mod items;
 pub mod manifest_interface_data;
 #[path = "../data/spells.rs"]
 pub mod spells;
+#[path = "../data/traits.rs"]
+pub mod traits;
 pub mod cvars;
 pub mod dump;
 pub mod error;
@@ -25,6 +27,7 @@ pub mod lua_api;
 pub mod lua_server;
 pub mod render;
 pub mod saved_variables;
+pub mod sound;
 pub mod texture;
 pub mod toc;
 pub mod widget;
