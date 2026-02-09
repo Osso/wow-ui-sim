@@ -93,14 +93,6 @@ fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
     g.set("StaticPopup_Hide", nop.clone())?;
     g.set("IsTutorialFlagged", lua.create_function(|_, _f: i32| Ok(false))?)?;
 
-    let soundkit = lua.create_table()?;
-    soundkit.set("IG_MAINMENU_OPTION", 851)?;
-    soundkit.set("IG_MAINMENU_LOGOUT", 852)?;
-    soundkit.set("IG_MAINMENU_QUIT", 854)?;
-    soundkit.set("IG_MAINMENU_OPEN", 850)?;
-    soundkit.set("IG_MAINMENU_CLOSE", 851)?;
-    g.set("SOUNDKIT", soundkit)?;
-
     register_c_splash_screen(lua)?;
     Ok(())
 }
