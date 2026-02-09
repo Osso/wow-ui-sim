@@ -57,6 +57,7 @@ pub(super) fn emit_vert_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Re
 }
 
 /// Emit grid-tiled texture quads (both horizontal and vertical).
+#[allow(clippy::too_many_arguments)]
 fn emit_grid_tiles(batch: &mut QuadBatch, bounds: Rectangle, uvs: &Rectangle, tex_path: &str, tile_w: f32, tile_h: f32, alpha: f32, blend: BlendMode) {
     let mut y = bounds.y;
     while y < bounds.y + bounds.height {
