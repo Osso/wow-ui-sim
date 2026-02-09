@@ -254,7 +254,29 @@ fn register_c_chat_info(lua: &Lua) -> Result<()> {
     )?)?;
     t.set("GetRegisteredAddonMessagePrefixes", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("SendChatMessage", lua.create_function(
-        |_, (_m, _c, _l, _t): (String, Option<String>, Option<Value>, Option<String>)| Ok(()),
+        |lua, (msg, chat_type, _lang, _target): (String, Option<String>, Option<Value>, Option<String>)| {
+            let chat_type = chat_type.unwrap_or_else(|| "SAY".to_string());
+            let (r, g, b) = match chat_type.as_str() {
+                "EMOTE" => ("1.0", "0.5", "0.25"),
+                "YELL" => ("1.0", "0.25", "0.25"),
+                "PARTY" => ("0.67", "0.67", "1.0"),
+                "GUILD" => ("0.25", "1.0", "0.25"),
+                "WHISPER" => ("1.0", "0.5", "1.0"),
+                _ => ("1.0", "1.0", "1.0"),
+            };
+            lua.load(format!(
+                r#"
+                if ChatFrame1 and ChatFrame1.AddMessage then
+                    local name = UnitName("player") or "Player"
+                    local msg = ...
+                    ChatFrame1:AddMessage(
+                        "|Hplayer:" .. name .. "|h[" .. name .. "]|h says: " .. msg,
+                        {r}, {g}, {b})
+                end
+                "#
+            )).call::<()>(msg)?;
+            Ok(())
+        },
     )?)?;
     t.set("GetNumReservedChatWindows", lua.create_function(|_, ()| Ok(1i32))?)?;
     t.set("GetNumActiveChannels", lua.create_function(|_, ()| Ok(0i32))?)?;
