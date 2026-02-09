@@ -312,10 +312,7 @@ fn register_achievement_stubs(lua: &Lua) -> Result<()> {
         "GetLatestCompletedAchievements",
         lua.create_function(|_, _args: mlua::MultiValue| Ok(mlua::MultiValue::new()))?,
     )?;
-    g.set(
-        "GetAchievementInfo",
-        lua.create_function(|_, _id: Value| Ok(Value::Nil))?,
-    )?;
+    g.set("GetAchievementInfo", lua.create_function(stub_get_achievement_info)?)?;
     g.set(
         "GetTrackedAchievements",
         lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?,
@@ -324,20 +321,50 @@ fn register_achievement_stubs(lua: &Lua) -> Result<()> {
         "GetNumCompletedAchievements",
         lua.create_function(|_, _for_guild: Option<bool>| Ok((0i32, 0i32)))?,
     )?;
+    Ok(())
+}
 
-    // C_Loot namespace
+/// Stub for GetAchievementInfo — returns 14 values matching WoW's signature.
+fn stub_get_achievement_info(lua: &Lua, id: Value) -> Result<mlua::MultiValue> {
+    let aid = match &id {
+        Value::Integer(n) => *n,
+        Value::Number(n) => *n as i64,
+        _ => return Ok(mlua::MultiValue::from_vec(vec![Value::Nil])),
+    };
+    // id, name, points, completed, month, day, year, description,
+    // flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy
+    Ok(mlua::MultiValue::from_vec(vec![
+        Value::Integer(aid),
+        Value::String(lua.create_string("Achievement")?),
+        Value::Integer(10),
+        Value::Boolean(false),
+        Value::Integer(1),
+        Value::Integer(1),
+        Value::Integer(2025),
+        Value::String(lua.create_string("Achievement description")?),
+        Value::Integer(0),
+        Value::Integer(136243),
+        Value::String(lua.create_string("")?),
+        Value::Boolean(false),
+        Value::Boolean(false),
+        Value::Nil,
+    ]))
+}
+
+/// Loot, content-tracking, and achievement telemetry namespace stubs.
+fn register_tracking_stubs(lua: &Lua) -> Result<()> {
+    let g = lua.globals();
+
     let cl = lua.create_table()?;
     cl.set("GetLootRollDuration", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
     g.set("C_Loot", cl)?;
 
-    // C_ContentTracking namespace
     let ct = lua.create_table()?;
     ct.set("GetTrackedIDs", lua.create_function(|lua, _type: Value| lua.create_table())?)?;
     ct.set("IsTracking", lua.create_function(|_, (_type, _id): (Value, Value)| Ok(false))?)?;
     ct.set("GetCollectableSourceTrackingEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("C_ContentTracking", ct)?;
 
-    // C_AchievementTelemetry namespace
     let at = lua.create_table()?;
     at.set("LinkAchievementInWhisper", lua.create_function(|_, _id: Value| Ok(()))?)?;
     at.set("LinkAchievementInClub", lua.create_function(|_, _id: Value| Ok(()))?)?;
