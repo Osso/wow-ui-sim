@@ -104,17 +104,15 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             }
 
         // Skip get_mut if the anchor already matches
-        if let Some(frame) = state.widgets.get(this.id) {
-            if let Some(existing) = frame.anchors.iter().find(|a| a.point == point) {
-                if existing.relative_to_id == relative_to
+        if let Some(frame) = state.widgets.get(this.id)
+            && let Some(existing) = frame.anchors.iter().find(|a| a.point == point)
+                && existing.relative_to_id == relative_to
                     && existing.relative_point == relative_point
                     && existing.x_offset == x_ofs
                     && existing.y_offset == y_ofs
                 {
                     return Ok(());
                 }
-            }
-        }
         drop(state);
 
         let mut state = this.state.borrow_mut();
