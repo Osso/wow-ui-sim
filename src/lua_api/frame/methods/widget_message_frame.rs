@@ -287,6 +287,12 @@ fn add_message_frame_callback_stubs<M: UserDataMethods<FrameHandle>>(methods: &m
     methods.add_method("AdjustMessageColors", |_, _this, _func: Value| Ok(()));
     methods.add_method("GetFontStringByID", |_, _this, _id: i64| Ok(Value::Nil));
     methods.add_method("ResetMessageFadeByID", |_, _this, _id: i64| Ok(()));
+
+    // ResetAllFadeTimes() - resets fade timestamps so all messages appear fully visible
+    methods.add_method("ResetAllFadeTimes", |_, _this, ()| Ok(()));
+
+    // MarkDisplayDirty() - marks the display as needing a refresh
+    methods.add_method("MarkDisplayDirty", |_, _this, ()| Ok(()));
 }
 
 // --- Helper functions ---
