@@ -29,11 +29,10 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 
         // WoW registers named button's default texture children as globals:
         // ButtonNameNormalTexture, ButtonNamePushedTexture, etc.
-        if matches!(widget_type, WidgetType::Button | WidgetType::CheckButton) {
-            if let Some(ref btn_name) = name {
+        if matches!(widget_type, WidgetType::Button | WidgetType::CheckButton)
+            && let Some(ref btn_name) = name {
                 register_button_child_globals(lua, &state_clone, frame_id, btn_name)?;
             }
-        }
 
         // ItemButton intrinsic template defines mixin="ItemButtonMixin"
         if frame_type == "ItemButton" {
