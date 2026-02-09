@@ -396,11 +396,10 @@ fn emit_frame_quads(
         WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
         WidgetType::MessageFrame => {
             build_frame_quads(batch, bounds, f);
-            if let Some((fs, ga)) = text_ctx {
-                if let Some(mf_map) = message_frames {
+            if let Some((fs, ga)) = text_ctx
+                && let Some(mf_map) = message_frames {
                     emit_message_frame_text(batch, fs, ga, f, id, bounds, mf_map);
                 }
-            }
         }
         WidgetType::GameTooltip => {
             super::tooltip::build_tooltip_quads(batch, bounds, f, tooltip_data, id, text_ctx);
@@ -442,10 +441,12 @@ fn emit_frame_quads(
             build_editbox_quads(batch, bounds, f);
             if let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
-                    let padding = 4.0;
+                    let (left_inset, right_inset, top_inset, bottom_inset) = f.editbox_text_insets;
+                    let left_pad = if left_inset > 0.0 { left_inset } else { 4.0 };
+                    let right_pad = if right_inset > 0.0 { right_inset } else { 4.0 };
                     let text_bounds = Rectangle::new(
-                        Point::new(bounds.x + padding, bounds.y),
-                        Size::new(bounds.width - padding * 2.0, bounds.height),
+                        Point::new(bounds.x + left_pad, bounds.y + top_inset),
+                        Size::new((bounds.width - left_pad - right_pad).max(0.0), (bounds.height - top_inset - bottom_inset).max(0.0)),
                     );
                     emit_widget_text_quads(batch, fs, ga, f, txt, text_bounds, TextJustify::Left, TextJustify::Center, false, 0);
                 }
@@ -462,6 +463,7 @@ fn emit_frame_quads(
 /// When `text_ctx` is provided, FontString and button/editbox/checkbox text is
 /// rendered as glyph quads interleaved with texture quads (correct draw order).
 /// When `None`, text is skipped (legacy behavior for callers without fonts).
+#[allow(clippy::too_many_arguments)]
 pub fn build_quad_batch_for_registry(
     registry: &crate::widget::WidgetRegistry,
     screen_size: (f32, f32),
@@ -658,8 +660,8 @@ impl App {
         }
 
         // Emit HighlightTexture child if it exists
-        if let Some(&ht_id) = f.children_keys.get("HighlightTexture") {
-            if let Some(ht) = registry.get(ht_id) {
+        if let Some(&ht_id) = f.children_keys.get("HighlightTexture")
+            && let Some(ht) = registry.get(ht_id) {
                 let ht_rect = compute_frame_rect(registry, ht_id, screen_size.width, screen_size.height);
                 if ht_rect.width > 0.0 && ht_rect.height > 0.0 {
                     let ht_bounds = Rectangle::new(
@@ -669,7 +671,6 @@ impl App {
                     build_texture_quads(quads, ht_bounds, ht, None);
                 }
             }
-        }
     }
 
 }
