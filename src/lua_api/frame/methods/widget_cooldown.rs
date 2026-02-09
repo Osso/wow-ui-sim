@@ -114,6 +114,32 @@ fn add_cooldown_display_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
         }
         Ok(())
     });
+    add_cooldown_texture_methods(methods);
+}
+
+fn add_cooldown_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("SetEdgeTexture", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetSwipeTexture", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetBlingTexture", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetEdgeScale", |_, _this, _scale: Value| Ok(()));
+    methods.add_method("SetUseCircularEdge", |_, _this, _use_circular: bool| Ok(()));
+    methods.add_method("GetReverse", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.cooldown_reverse).unwrap_or(false))
+    });
+    methods.add_method("SetCooldownDuration", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let duration = match it.next() {
+            Some(Value::Number(n)) => n,
+            Some(Value::Integer(n)) => n as f64,
+            _ => 0.0,
+        };
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.cooldown_duration = duration;
+        }
+        Ok(())
+    });
     // Note: Clear() for Cooldown frames is handled in __index to avoid conflicts
     // with addons that use frame.Clear as a field
 }
