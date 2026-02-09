@@ -562,11 +562,10 @@ fn register_loaded_addon(state: &Rc<RefCell<SimState>>, name: &str, load_time_se
 /// Fire the ADDON_LOADED event for a just-loaded addon.
 fn fire_addon_loaded(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
     let arg = env.lua().create_string(addon_name).ok().map(Value::String);
-    if let Some(arg) = arg {
-        if let Err(e) = env.fire_event_with_args("ADDON_LOADED", &[arg]) {
+    if let Some(arg) = arg
+        && let Err(e) = env.fire_event_with_args("ADDON_LOADED", &[arg]) {
             eprintln!("[LoadAddOn] Error firing ADDON_LOADED for {}: {}", addon_name, e);
         }
-    }
 }
 
 // ---------------------------------------------------------------------------
