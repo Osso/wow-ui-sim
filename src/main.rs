@@ -136,13 +136,11 @@ fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
                 let skip = name.starts_with('.')
                     || name == "BlizzardUI";
                 if !skip
-                    && let Some(toc_path) = find_toc_file(&path) {
-                        if let Ok(toc) = TocFile::from_file(&toc_path) {
-                            if !toc.is_glue_only() && !toc.is_ptr_only() && !toc.is_game_type_restricted() {
+                    && let Some(toc_path) = find_toc_file(&path)
+                        && let Ok(toc) = TocFile::from_file(&toc_path)
+                            && !toc.is_glue_only() && !toc.is_ptr_only() && !toc.is_game_type_restricted() {
                                 addons.push((name, toc_path));
                             }
-                        }
-                    }
             }
         }
     }
@@ -186,11 +184,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             fire_startup_events(&env);
             env.apply_post_event_workarounds();
             let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
-            if let Some(code) = &args.exec_lua {
-                if let Err(e) = env.exec(code) {
+            if let Some(code) = &args.exec_lua
+                && let Err(e) = env.exec(code) {
                     eprintln!("[exec-lua] error: {e}");
                 }
-            }
             apply_delay(args.delay);
             let state = env.state().borrow();
             wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), visible_only);
@@ -610,18 +607,18 @@ fn dump_game_menu_buttons(env: &WowLuaEnv) {
         if c.widget_type == WidgetType::Button {
             eprintln!("      font={:?} fsz={} color={:?}",
                 c.font, c.font_size, c.text_color);
-            if let Some(&tid) = c.children_keys.get("Text") {
-                if let Some(tf) = state.widgets.get(tid) {
+            if let Some(&tid) = c.children_keys.get("Text")
+                && let Some(tf) = state.widgets.get(tid) {
                     eprintln!("      TextFS {tid}: text={:?} {}x{} vis={} strata={:?} lvl={} draw={:?} anch={}",
                         tf.text, tf.width, tf.height, tf.visible, tf.frame_strata,
                         tf.frame_level, tf.draw_layer, tf.anchors.len());
                 }
-            }
         }
     }
 }
 
 /// Render a headless screenshot.
+#[allow(clippy::too_many_arguments)]
 fn run_screenshot(
     env: &WowLuaEnv,
     font_system: &Rc<RefCell<WowFontSystem>>,
@@ -641,11 +638,10 @@ fn run_screenshot(
     env.apply_post_event_workarounds();
     let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
     debug_show_game_menu(env);
-    if let Some(code) = exec_lua {
-        if let Err(e) = env.exec(code) {
+    if let Some(code) = exec_lua
+        && let Err(e) = env.exec(code) {
             eprintln!("[exec-lua] error: {e}");
         }
-    }
     apply_delay(delay);
 
     let mut glyph_atlas = GlyphAtlas::new();
