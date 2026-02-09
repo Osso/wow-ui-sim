@@ -240,12 +240,21 @@ fn test_c_container_get_num_slots_other_bag() {
 }
 
 #[test]
-fn test_c_container_get_item_id_nil() {
+fn test_c_container_get_item_id_populated_slot() {
+    let env = env();
+    let id: i64 = env
+        .eval("return C_Container.GetContainerItemID(0, 1)")
+        .unwrap();
+    assert_eq!(id, 6948, "Slot 1 should contain Hearthstone");
+}
+
+#[test]
+fn test_c_container_get_item_id_empty_slot() {
     let env = env();
     let is_nil: bool = env
-        .eval("return C_Container.GetContainerItemID(0, 1) == nil")
+        .eval("return C_Container.GetContainerItemID(0, 2) == nil")
         .unwrap();
-    assert!(is_nil);
+    assert!(is_nil, "Slot 2 should be empty");
 }
 
 // ============================================================================
