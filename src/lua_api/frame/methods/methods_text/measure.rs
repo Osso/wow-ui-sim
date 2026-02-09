@@ -54,6 +54,13 @@ fn add_text_measurement_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             Ok((font_size * 1.2).ceil() as f64)
         }
     });
+
+    // GetLineHeight - height of a single line at the current font size.
+    methods.add_method("GetLineHeight", |_, this, ()| {
+        let state = this.state.borrow();
+        let font_size = state.widgets.get(this.id).map_or(12.0_f32, |f| f.font_size);
+        Ok((font_size * 1.2).ceil() as f64)
+    });
 }
 
 /// Shared implementation for GetStringWidth / GetTextWidth / GetUnboundedStringWidth.

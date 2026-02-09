@@ -155,14 +155,20 @@ fn update_tooltip_line(
 }
 
 /// Set text on a frame, auto-sizing height if needed.
+///
+/// FontStrings auto-size their height to fit text content, matching WoW
+/// behavior where GetHeight() returns the rendered text height regardless
+/// of any XML Size element.
 fn set_text_on_frame(
     state: &mut std::cell::RefMut<'_, crate::lua_api::SimState>,
     id: u64,
     text: Option<String>,
 ) {
     if let Some(frame) = state.widgets.get_mut(id) {
-        if text.is_some() && frame.height == 0.0 {
-            frame.height = frame.font_size.max(12.0);
+        let min_height = frame.font_size.max(12.0);
+        let is_fontstring = frame.widget_type == crate::widget::WidgetType::FontString;
+        if text.is_some() && is_fontstring && frame.height < min_height {
+            frame.height = min_height;
         }
         frame.text = text;
     }
