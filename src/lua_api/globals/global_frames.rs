@@ -261,30 +261,18 @@ fn setup_edit_mode_manager(_lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<
     Ok(())
 }
 
-/// Register unit frame globals: PlayerFrame, TargetFrame, FocusFrame, etc.
+/// Register unit frame globals: BuffFrame, DebuffFrame.
+///
+/// Most unit frames (PlayerFrame, TargetFrame, FocusFrame, PetFrame, etc.)
+/// are created by Blizzard_UnitFrame XML loading. Registering stubs here
+/// would create orphan 0x0 frames that linger in the widget registry after
+/// the XML loader creates the real frames with different IDs.
 fn register_unit_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
-    register_frame_global(lua, state, "PlayerFrame")?;
-
-    // Target/Focus frames hidden by default (no target selected)
-    register_hidden_frame_global(lua, state, "TargetFrame")?;
-    register_hidden_frame_global(lua, state, "FocusFrame")?;
-    register_hidden_frame_global(lua, state, "FocusFrameSpellBar")?;
-    register_hidden_frame_global(lua, state, "TargetFrameSpellBar")?;
-
     register_frame_global(lua, state, "BuffFrame")?;
     setup_buff_frame_aura_container(lua, state)?;
     setup_editmode_stub_methods(lua, "BuffFrame")?;
     register_frame_global(lua, state, "DebuffFrame")?;
     setup_editmode_stub_methods(lua, "DebuffFrame")?;
-
-    register_frame_global(lua, state, "PlayerCastingBarFrame")?;
-
-    // Pet frame hidden by default (no pet)
-    register_hidden_frame_global(lua, state, "PetFrame")?;
-
-    // Class-specific bars hidden by default
-    register_hidden_frame_global(lua, state, "AlternatePowerBar")?;
-    register_hidden_frame_global(lua, state, "MonkStaggerBar")?;
     Ok(())
 }
 
@@ -321,9 +309,6 @@ fn setup_buff_frame_aura_container(lua: &Lua, state: &Rc<RefCell<SimState>>) -> 
 
 /// Register miscellaneous frame globals.
 fn register_misc_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
-    // Minimap (re-registered, same as in core — keeps existing behavior)
-    register_frame_global(lua, state, "Minimap")?;
-
     register_frame_global(lua, state, "LFGEventFrame")?;
     register_frame_global(lua, state, "NamePlateDriverFrame")?;
     register_frame_global(lua, state, "UIErrorsFrame")?;
