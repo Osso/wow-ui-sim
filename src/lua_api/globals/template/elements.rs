@@ -109,10 +109,12 @@ fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml
         ));
     }
     if let Some(atlas) = &texture.atlas {
+        let use_atlas_size = texture.use_atlas_size.unwrap_or(false);
         code.push_str(&format!(
-            "            {}:SetAtlas(\"{}\")\n",
+            "            {}:SetAtlas(\"{}\", {})\n",
             var,
-            escape_lua_string(atlas)
+            escape_lua_string(atlas),
+            use_atlas_size
         ));
     }
     if let Some(color) = &texture.color {
