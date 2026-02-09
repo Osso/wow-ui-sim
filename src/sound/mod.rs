@@ -74,7 +74,7 @@ impl SoundManager {
     fn play_file(&mut self, path: &Path) -> Option<u32> {
         let file = File::open(path).ok()?;
         let source = Decoder::new(BufReader::new(file)).ok()?;
-        let sink = Sink::connect_new(&self.stream.mixer());
+        let sink = Sink::connect_new(self.stream.mixer());
         sink.append(source);
         let handle = NEXT_HANDLE.fetch_add(1, Ordering::Relaxed);
         self.active_sounds.insert(handle, sink);
@@ -95,5 +95,8 @@ fn build_soundkit_map() -> HashMap<u32, &'static str> {
         (856, "igmainmenuoption.ogg"),
         (857, "igmainmenuoptioncheckboxon.ogg"),
         (858, "igmainmenuoptioncheckboxoff.ogg"),
+        // UI_CLASS_TALENT_OPEN/CLOSE_WINDOW — fallback to classic spellbook sounds
+        (207757, "igspellbookopen.ogg"),
+        (207758, "igspellbookclose.ogg"),
     ])
 }
