@@ -329,6 +329,10 @@ fn register_misc_frame_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
     // FriendsFrame has hidden="true" in its XML but we create it as a stub
     register_hidden_frame_global(lua, state, "FriendsFrame")?;
 
+    // ChatAlertFrame - used by Blizzard_Channels and Blizzard_DelvesToast
+    register_hidden_frame_global(lua, state, "ChatAlertFrame")?;
+    setup_chat_alert_frame(lua)?;
+
     setup_party_member_frame_pool(lua)?;
     setup_enemy_target_button(lua)?;
     Ok(())
@@ -354,6 +358,18 @@ fn setup_addon_compartment(lua: &Lua, addon_compartment_id: u64) -> Result<()> {
     )?;
     frame_fields.set("registeredAddons", lua.create_table()?)?;
     Ok(())
+}
+
+/// Set up ChatAlertFrame with stub methods used by Blizzard_Channels and Blizzard_DelvesToast.
+fn setup_chat_alert_frame(lua: &Lua) -> Result<()> {
+    lua.load(r#"
+        if ChatAlertFrame then
+            function ChatAlertFrame:AddAutoAnchoredSubSystem() end
+            function ChatAlertFrame:SetChatButtonSide() end
+            function ChatAlertFrame:SetSubSystemAnchorPriority() end
+            function ChatAlertFrame:UpdateAnchors() end
+        end
+    "#).exec()
 }
 
 /// Register PartyMemberFramePool with empty iterator.

@@ -101,6 +101,10 @@ fn register_c_lfg_list(lua: &Lua) -> Result<()> {
     t.set("CanCreateQuestGroup", lua.create_function(|_, _quest_id: i32| Ok(false))?)?;
     t.set("GetAvailableRoles", lua.create_function(|_, ()| Ok((true, true, true)))?)?;
     t.set("GetApplications", lua.create_function(|lua, ()| lua.create_table())?)?;
+    t.set("GetNumApplications", lua.create_function(|_, ()| Ok((0i32, 0i32)))?)?;
+    t.set("IsSquelched", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetAvailableCategories", lua.create_function(|lua, _args: mlua::MultiValue| lua.create_table())?)?;
+    t.set("HasActivityList", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_LFGList", t)?;
     Ok(())
 }
@@ -150,6 +154,7 @@ fn register_c_action_bar(lua: &Lua) -> Result<()> {
     t.set("IsAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
     t.set("IsEnabledAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
     t.set("ToggleAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(()))?)?;
+    t.set("HasAssistedCombatActionButtons", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_ActionBar", t)?;
     Ok(())
 }
@@ -464,7 +469,11 @@ fn register_fading_frame_stubs(lua: &Lua) -> Result<()> {
     g.set("SetChatWindowShown", lua.create_function(|_, (_id, _shown): (Value, Value)| Ok(()))?)?;
     // Native WoW error display function — called by Blizzard_ScriptErrors error handler.
     // Without this stub, the error handler itself crashes, causing recursive error spam.
-    g.set("addframetext", lua.create_function(|_, _msg: String| Ok(()))?)?;
+    // Log the message to stderr so script errors are visible in terminal output.
+    g.set("addframetext", lua.create_function(|_, msg: String| {
+        eprintln!("[addframetext] {msg}");
+        Ok(())
+    })?)?;
     Ok(())
 }
 
@@ -503,6 +512,21 @@ fn register_missing_globals(lua: &Lua) -> Result<()> {
         Ok((false, 0i32, 0i32, 0i32, 0i32, false))
     })?)?;
     g.set("PaperDollItemSlotButton_OnLoad", lua.create_function(|_, _frame: Value| Ok(()))?)?;
+    g.set("PaperDollItemSlotButton_OnShow", lua.create_function(|_, _frame: Value| Ok(()))?)?;
+    g.set("ContainerFrame_GetContainerNumSlots", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
+    g.set("GetGroupMemberCounts", lua.create_function(|lua, ()| {
+        let t = lua.create_table()?;
+        t.set("TANK", 0i32)?;
+        t.set("HEALER", 0i32)?;
+        t.set("DAMAGER", 0i32)?;
+        t.set("NOROLE", 0i32)?;
+        t.set("ASSIGNEDROLE", 0i32)?;
+        Ok(t)
+    })?)?;
+    g.set("GetDungeonDifficultyID", lua.create_function(|_, ()| Ok(1i32))?)?;
+    g.set("GetSendMailPrice", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("GuildControlSetRank", lua.create_function(|_, _rank: Value| Ok(()))?)?;
+    g.set("StoreSecureReference", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
     g.set("ResetCursor", lua.create_function(|_, ()| Ok(()))?)?;
     Ok(())
 }
@@ -585,6 +609,7 @@ fn register_social_namespaces(lua: &Lua) -> Result<()> {
     let social = lua.create_table()?;
     social.set("IsMuted", lua.create_function(|_, ()| Ok(false))?)?;
     social.set("IsSilenced", lua.create_function(|_, ()| Ok(false))?)?;
+    social.set("IsSquelched", lua.create_function(|_, ()| Ok(false))?)?;
     social.set("IsChatDisabled", lua.create_function(|_, ()| Ok(false))?)?;
     social.set("CanReceiveChat", lua.create_function(|_, ()| Ok(true))?)?;
     g.set("C_SocialRestrictions", social)?;
@@ -605,6 +630,12 @@ fn register_social_namespaces(lua: &Lua) -> Result<()> {
 
     let social_queue = lua.create_table()?;
     social_queue.set("GetAllGroups", lua.create_function(|lua, _local_only: Option<bool>| lua.create_table())?)?;
+    social_queue.set("GetConfig", lua.create_function(|lua, ()| {
+        let config = lua.create_table()?;
+        config.set("toastDuration", 60.0f64)?;
+        config.set("enableToasts", false)?;
+        Ok(config)
+    })?)?;
     g.set("C_SocialQueue", social_queue)?;
 
     Ok(())
@@ -641,7 +672,14 @@ fn register_system_namespaces(lua: &Lua) -> Result<()> {
     let char_svc = lua.create_table()?;
     char_svc.set("HasRequiredBoostForUnrevoke", lua.create_function(|_, ()| Ok(false))?)?;
     char_svc.set("HasRequiredBoostForClassTrial", lua.create_function(|_, ()| Ok(false))?)?;
-    char_svc.set("GetCharacterServiceDisplayData", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    char_svc.set("GetCharacterServiceDisplayData", lua.create_function(|lua, _boost_type: Value| {
+        let popup_info = lua.create_table()?;
+        popup_info.set("textureKit", "")?;
+        let t = lua.create_table()?;
+        t.set("popupInfo", popup_info)?;
+        t.set("flowTitle", "")?;
+        Ok(Value::Table(t))
+    })?)?;
     g.set("C_CharacterServices", char_svc)?;
 
     let spell_overlay = lua.create_table()?;

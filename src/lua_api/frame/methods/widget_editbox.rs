@@ -12,6 +12,9 @@ pub fn add_editbox_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_editbox_flag_methods(methods);
     add_editbox_history_methods(methods);
     add_editbox_inset_methods(methods);
+    // Taint system stub: WoW's secure environment prevents addons from calling
+    // SetText on protected EditBoxes. No taint system in the simulator.
+    methods.add_method("SetSecurityDisableSetText", |_, _this, ()| Ok(()));
     // GetInputLanguage returns the current input language for the editbox
     methods.add_method("GetInputLanguage", |_, _this, ()| Ok("ROMAN"));
 }

@@ -639,8 +639,10 @@ fn patch_get_aura_data_by_index(
     t.set("GetAuraDataByIndex", lua.create_function(
         move |lua, (unit, index, filter): (String, i32, Option<String>)| {
             if unit != "player" || index < 1 { return Ok(Value::Nil); }
-            let is_harmful = filter.as_ref().map_or(false, |f| f.contains("HARMFUL"));
-            if is_harmful { return Ok(Value::Nil); }
+            let dominated = filter.as_ref().map_or(false, |f| {
+                f.contains("HARMFUL") || f.contains("MAW")
+            });
+            if dominated { return Ok(Value::Nil); }
             let s = state.borrow();
             match s.player_buffs.get((index - 1) as usize) {
                 Some(a) => Ok(Value::Table(super::aura_api::build_aura_data_table(lua, a)?)),

@@ -221,6 +221,7 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
     t.set("IsRangedAutoAttackSpell", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
     t.set("IsPressHoldReleaseSpell", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
     t.set("GetSpellLossOfControlCooldown", lua.create_function(|_, _spell_id: i32| Ok((0.0f64, 0.0f64)))?)?;
+    t.set("GetMawPowerBorderAtlasBySpellID", lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?)?;
 
     Ok(t)
 }
@@ -410,10 +411,15 @@ fn create_tree_currency_info(lua: &Lua, (_config_id, tree_id): (i32, i32)) -> Re
     Ok(Value::Table(arr))
 }
 
-fn create_node_info(lua: &Lua, (_config_id, node_id): (i32, i32)) -> Result<Value> {
+fn create_node_info(lua: &Lua, (_config_id, node_id): (Value, Value)) -> Result<Value> {
     use crate::traits::TRAIT_NODE_DB;
+    let node_id = match &node_id {
+        Value::Integer(n) => *n as i32,
+        Value::Number(n) => *n as i32,
+        _ => return build_empty_node_info(lua, 0),
+    };
     let Some(node) = TRAIT_NODE_DB.get(&(node_id as u32)) else {
-        return Ok(Value::Nil);
+        return build_empty_node_info(lua, node_id);
     };
     let info = lua.create_table()?;
     info.set("ID", node_id)?;
@@ -439,6 +445,33 @@ fn create_node_info(lua: &Lua, (_config_id, node_id): (i32, i32)) -> Result<Valu
     info.set("canPurchaseRank", false)?;
     info.set("canRefundRank", false)?;
     info.set("meetsEdgeRequirements", true)?;
+    info.set("isCascadeRepurchasable", false)?;
+    Ok(Value::Table(info))
+}
+
+/// Build a minimal nodeInfo for nodes not in the trait DB (e.g. Delves companion nodes).
+/// WoW always returns a struct, so callers don't guard against nil.
+fn build_empty_node_info(lua: &Lua, node_id: i32) -> Result<Value> {
+    let info = lua.create_table()?;
+    info.set("ID", node_id)?;
+    info.set("posX", 0)?;
+    info.set("posY", 0)?;
+    info.set("type", 0)?;
+    info.set("flags", 0)?;
+    info.set("subTreeID", 0i64)?;
+    info.set("entryIDs", lua.create_table()?)?;
+    info.set("visibleEdges", lua.create_table()?)?;
+    info.set("conditionIDs", lua.create_table()?)?;
+    info.set("groupIDs", lua.create_table()?)?;
+    info.set("currentRank", 0)?;
+    info.set("activeRank", 0)?;
+    info.set("ranksPurchased", 0)?;
+    info.set("maxRanks", 0)?;
+    info.set("activeEntry", 0i64)?;
+    info.set("isAvailable", false)?;
+    info.set("canPurchaseRank", false)?;
+    info.set("canRefundRank", false)?;
+    info.set("meetsEdgeRequirements", false)?;
     info.set("isCascadeRepurchasable", false)?;
     Ok(Value::Table(info))
 }

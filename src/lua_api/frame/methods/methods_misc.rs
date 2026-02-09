@@ -13,6 +13,10 @@ pub fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("IsMenuOpen", |_, _this, ()| Ok(false));
     // StaticPopupElementMixin stub (dialog ownership tracking)
     methods.add_method("SetOwningDialog", |_, _this, _dialog: Value| Ok(()));
+    // GuildRenameFrameMixin / layout tracking methods (no-op in simulator)
+    methods.add_method("RegisterFontStrings", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("RegisterFrames", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("RegisterBackgroundTexture", |_, _this, _args: mlua::MultiValue| Ok(()));
 }
 
 /// Minimap and WorldMap stubs.

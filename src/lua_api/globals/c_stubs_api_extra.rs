@@ -12,6 +12,7 @@ use mlua::{Lua, Result, Value};
 pub fn register_extra_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
     register_missing_c_namespaces(lua, &g)?;
+    register_secure_namespaces(lua, &g)?;
     register_missing_global_functions(lua, &g)?;
     register_missing_constants(lua, &g)?;
     register_missing_global_tables(lua, &g)?;
@@ -44,6 +45,7 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     uap.set("SetPrivateAuraAnchorRemovedCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
     uap.set("GetPrivateAuraAnchors", lua.create_function(|lua, _unit: Value| lua.create_table())?)?;
     uap.set("SetPrivateWarningTextFrame", lua.create_function(|_, _frame: Value| Ok(()))?)?;
+    uap.set("SetPrivateRaidBossMessageCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
     g.set("C_UnitAurasPrivate", uap)?;
 
     // C_LevelLink - level-gated spell/action locking (nothing locked in simulator)
@@ -117,6 +119,9 @@ fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
     g.set("CombatLog_Object_IsA", lua.create_function(|_, (unit_flags, mask): (i64, i64)| {
         Ok(unit_flags & mask != 0)
     })?)?;
+
+    // GetExpansionDisplayInfo - returns expansion logo data (nil = no data)
+    g.set("GetExpansionDisplayInfo", lua.create_function(|_, _expansion_level: Value| Ok(Value::Nil))?)?;
 
     Ok(())
 }
@@ -203,6 +208,33 @@ fn register_missing_global_tables(lua: &Lua, g: &mlua::Table) -> Result<()> {
     if g.get::<Value>("Dispatcher")?.is_nil() {
         g.set("Dispatcher", build_dispatcher_stub(lua)?)?;
     }
+    if g.get::<Value>("UIFrameManager_ManagedFrameMixin")?.is_nil() {
+        // Stub with OnLoad/UpdateFrameState — Blizzard_UIFrameManager loads after
+        // Blizzard_Tutorials (alphabetical order), so RPETutorialInterruptMixin:OnLoad
+        // calls UIFrameManager_ManagedFrameMixin.OnLoad(self) before the real definition.
+        // The real OnLoad registers frames with UIFrameManager; our stub is a no-op.
+        lua.load(r#"
+            UIFrameManager_ManagedFrameMixin = {}
+            function UIFrameManager_ManagedFrameMixin:OnLoad()
+                if UIFrameManager and UIFrameManager.RegisterFrameForFrameType then
+                    UIFrameManager:RegisterFrameForFrameType(self, self.frameType)
+                end
+            end
+            function UIFrameManager_ManagedFrameMixin:UpdateFrameState(show)
+                self:SetShown(show)
+            end
+        "#).exec()?;
+    }
+    // ActionButtonSpellAlertManager - referenced by PetBattleUI OnLoad
+    // before ActionBar workarounds run. Provide stub with ShowAlert/HideAlert.
+    if g.get::<Value>("ActionButtonSpellAlertManager")?.is_nil() {
+        lua.load(r#"
+            ActionButtonSpellAlertManager = {
+                ShowAlert = function() end,
+                HideAlert = function() end,
+            }
+        "#).exec()?;
+    }
     Ok(())
 }
 
@@ -270,14 +302,146 @@ fn build_dispatcher_stub(lua: &Lua) -> Result<mlua::Table> {
     Ok(d)
 }
 
+/// Secure/premium/niche C_* namespaces referenced during addon loading.
+fn register_secure_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    register_auth_ping_store(lua, g)?;
+    register_trial_raf_token(lua, g)?;
+    register_shop_who_auras(lua, g)?;
+    register_guild_bank_pet_battles(lua, g)?;
+    Ok(())
+}
+
+/// C_AuthChallenge, C_PingSecure, C_StoreSecure stubs.
+fn register_auth_ping_store(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    let auth_challenge = lua.create_table()?;
+    auth_challenge.set("SetFrame", lua.create_function(|_, _frame: Value| Ok(()))?)?;
+    g.set("C_AuthChallenge", auth_challenge)?;
+
+    // C_PingSecure - uses noop metatable for all callback setters
+    lua.load(r#"
+        C_PingSecure = setmetatable({}, {
+            __index = function() return function() end end,
+        })
+    "#).exec()?;
+
+    // C_WowTokenSecure - secure token operations (noop metatable)
+    lua.load(r#"
+        C_WowTokenSecure = setmetatable({}, {
+            __index = function() return function() end end,
+        })
+    "#).exec()?;
+
+    // C_Ping - ping system (non-secure side)
+    let ping = lua.create_table()?;
+    ping.set("GetDefaultPingOptions", lua.create_function(|lua, ()| lua.create_table())?)?;
+    ping.set("GetTextureKitForType", lua.create_function(|_, _ping_type: Value| Ok(Value::Nil))?)?;
+    g.set("C_Ping", ping)?;
+
+    // C_StoreSecure - uses noop metatable for ~40 methods
+    lua.load(r#"
+        C_StoreSecure = setmetatable({
+            IsStoreAvailable = function() return false end,
+            IsAvailable = function() return false end,
+            HasPurchaseInProgress = function() return false end,
+            HasPurchaseList = function() return false end,
+            HasProductList = function() return false end,
+        }, { __index = function() return function() end end })
+    "#).exec()?;
+    Ok(())
+}
+
+/// C_ClassTrial, C_RecruitAFriend, C_WowTokenPublic, C_FriendList stubs.
+fn register_trial_raf_token(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    let class_trial = lua.create_table()?;
+    class_trial.set("IsClassTrialCharacter", lua.create_function(|_, ()| Ok(false))?)?;
+    class_trial.set("GetClassTrialLogoutTimeSeconds", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("C_ClassTrial", class_trial)?;
+
+    let raf = lua.create_table()?;
+    raf.set("GetRecruitInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    raf.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    raf.set("IsRecruitingEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    // GetRAFInfo returns nil when there's no active RAF relationship
+    raf.set("GetRAFInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    // GetRAFSystemInfo returns a table with RAF system configuration
+    raf.set("GetRAFSystemInfo", lua.create_function(|lua, ()| {
+        let info = lua.create_table()?;
+        info.set("maxRecruits", 0i32)?;
+        info.set("maxRecruitMonths", 0i32)?;
+        info.set("maxRewardMonths", 0i32)?;
+        info.set("daysInCycle", 30i32)?;
+        Ok(info)
+    })?)?;
+    g.set("C_RecruitAFriend", raf)?;
+
+    let wow_token = lua.create_table()?;
+    wow_token.set("GetCurrentMarketPrice", lua.create_function(|_, ()| Ok(0i32))?)?;
+    wow_token.set("GetGuaranteedPrice", lua.create_function(|_, ()| Ok(0i32))?)?;
+    wow_token.set("UpdateTokenCount", lua.create_function(|_, ()| Ok(()))?)?;
+    // GetCommerceSystemStatus returns (purchaseAvailable, listAvailable, balanceEnabled)
+    wow_token.set("GetCommerceSystemStatus", lua.create_function(|_, ()| {
+        Ok((false, false, false))
+    })?)?;
+    g.set("C_WowTokenPublic", wow_token)?;
+
+    // C_FriendList - friend list / who system
+    let friend_list = lua.create_table()?;
+    friend_list.set("SetWhoToUi", lua.create_function(|_, _flag: bool| Ok(()))?)?;
+    friend_list.set("SendWho", lua.create_function(|_, _msg: String| Ok(()))?)?;
+    friend_list.set("GetNumWhoResults", lua.create_function(|_, ()| Ok(0i32))?)?;
+    friend_list.set("GetNumFriends", lua.create_function(|_, ()| Ok(0i32))?)?;
+    friend_list.set("GetNumOnlineFriends", lua.create_function(|_, ()| Ok(0i32))?)?;
+    friend_list.set("GetFriendInfoByIndex", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
+    g.set("C_FriendList", friend_list)?;
+
+    Ok(())
+}
+
+/// C_CatalogShop, C_Who, C_PrivateAuras stubs.
+fn register_shop_who_auras(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    let catalog_shop = lua.create_table()?;
+    catalog_shop.set("GetAvailableCategoryIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
+    catalog_shop.set("IsShop2Enabled", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("C_CatalogShop", catalog_shop)?;
+
+    let who = lua.create_table()?;
+    who.set("SetWhoToUi", lua.create_function(|_, _flag: bool| Ok(()))?)?;
+    who.set("SendWho", lua.create_function(|_, _msg: String| Ok(()))?)?;
+    who.set("GetWhoInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    g.set("C_Who", who)?;
+
+    let private_auras = lua.create_table()?;
+    private_auras.set("SetPrivateRaidBossMessageCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
+    g.set("C_PrivateAuras", private_auras)?;
+    Ok(())
+}
+
+/// C_GuildBank, C_PetBattles stubs.
+fn register_guild_bank_pet_battles(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    let guild_bank = lua.create_table()?;
+    guild_bank.set("IsGuildBankEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    guild_bank.set("GetCurrentBankTab", lua.create_function(|_, ()| Ok(1i32))?)?;
+    guild_bank.set("FetchNumTabs", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("C_GuildBank", guild_bank)?;
+
+    // C_PetBattles - methods return 0 by default (many are numeric: GetHealth, GetLevel, etc.)
+    // Returning nil would cause "attempt to compare nil with number" in PetBattle Lua code.
+    lua.load(r#"
+        C_PetBattles = setmetatable({
+            IsInBattle = function() return false end,
+        }, { __index = function() return function() return 0 end end })
+    "#).exec()?;
+    Ok(())
+}
+
 /// C_DelvesUI namespace - Delves companion data.
 fn register_c_delves_ui(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("GetTraitTreeForCompanion", lua.create_function(|_, ()| Ok(0i32))?)?;
-    t.set("GetRoleNodeForCompanion", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetRoleNodeForCompanion", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("GetRoleSubtreeForCompanion", lua.create_function(|_, _role_type: Value| Ok(0i32))?)?;
     t.set("GetCreatureDisplayInfoForCompanion", lua.create_function(|_, ()| Ok(0i32))?)?;
-    t.set("GetCurioNodeForCompanion", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("GetCurioNodeForCompanion", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("GetCurrentDelvesSeasonNumber", lua.create_function(|_, ()| Ok(1i32))?)?;
     t.set("GetDelvesMinRequiredLevel", lua.create_function(|_, ()| Ok(80i32))?)?;
     t.set("GetFactionForCompanion", lua.create_function(|_, ()| Ok(0i32))?)?;

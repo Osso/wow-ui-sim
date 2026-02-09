@@ -76,3 +76,31 @@ pub mod utility_api;
 pub use strings::register_all_ui_strings;
 
 pub use super::globals_legacy::register_globals;
+
+/// Re-register secure C_* stubs that Blizzard_EnvironmentCleanup nils out.
+///
+/// In real WoW, secure APIs live in a separate Lua environment that addons
+/// cannot access directly.  EnvironmentCleanup removes the non-secure proxies
+/// so addons can't call them.  Our simulator doesn't have that split, so we
+/// simply re-create the stubs after EnvironmentCleanup runs.
+pub fn restore_secure_stubs(env: &super::WowLuaEnv) {
+    let lua = env.lua();
+    lua.load(r#"
+        local noop_mt = { __index = function() return function() end end }
+        C_WowTokenSecure = C_WowTokenSecure or setmetatable({}, noop_mt)
+        C_PingSecure = C_PingSecure or setmetatable({}, noop_mt)
+        C_StoreSecure = C_StoreSecure or setmetatable({
+            IsStoreAvailable = function() return false end,
+            IsAvailable = function() return false end,
+            HasPurchaseInProgress = function() return false end,
+            HasPurchaseList = function() return false end,
+            HasProductList = function() return false end,
+        }, noop_mt)
+        if not C_AuthChallenge then
+            C_AuthChallenge = { SetFrame = function() end }
+        end
+        if not C_SecureTransfer then
+            C_SecureTransfer = setmetatable({}, noop_mt)
+        end
+    "#).exec().ok();
+}
