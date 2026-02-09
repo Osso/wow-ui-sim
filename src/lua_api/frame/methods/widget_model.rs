@@ -26,9 +26,20 @@ fn add_model_transform_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     methods.add_method("SetFacing", |_, _this, _radians: f64| Ok(()));
     methods.add_method("GetFacing", |_, _this, ()| Ok(0.0_f64));
     // Mixin override: ModelScenelRotateButtonMixin defines SetRotation(direction)
+    // Falls through to Texture:SetRotation(radians) when no mixin override exists.
     methods.add_method("SetRotation", |lua, this, radians: Value| {
         if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "SetRotation") {
             return func.call::<()>((ud, radians));
+        }
+        // Default: treat as texture UV rotation
+        let rad_f64 = match radians {
+            Value::Number(n) => n,
+            Value::Integer(n) => n as f64,
+            _ => 0.0,
+        };
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.rotation = rad_f64 as f32;
         }
         Ok(())
     });
