@@ -46,19 +46,30 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     uap.set("SetPrivateWarningTextFrame", lua.create_function(|_, _frame: Value| Ok(()))?)?;
     g.set("C_UnitAurasPrivate", uap)?;
 
-    // C_Sound
-    let snd = lua.create_table()?;
-    snd.set("GetSoundScaledVolume", lua.create_function(|_, _id: Value| Ok(1.0f64))?)?;
-    snd.set("IsPlaying", lua.create_function(|_, _handle: Value| Ok(false))?)?;
-    snd.set("PlayItemSound", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-    snd.set("PlayVocalErrorSound", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
-    g.set("C_Sound", snd)?;
+    // C_LevelLink - level-gated spell/action locking (nothing locked in simulator)
+    let ll = lua.create_table()?;
+    ll.set("IsActionLocked", lua.create_function(|_, _action_id: Value| Ok(false))?)?;
+    ll.set("IsSpellLocked", lua.create_function(|_, _spell_id: Value| Ok(false))?)?;
+    g.set("C_LevelLink", ll)?;
 
     Ok(())
 }
 
 /// Global functions referenced during addon loading.
 fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    // IsPlayerInWorld - always true in the simulator
+    g.set("IsPlayerInWorld", lua.create_function(|_, ()| Ok(true))?)?;
+
+    // ActionBarController_GetCurrentActionBarState - returns LE_ACTIONBAR_STATE_MAIN (1)
+    g.set("ActionBarController_GetCurrentActionBarState", lua.create_function(|_, ()| Ok(1i32))?)?;
+
+    // GetMaxLevelForLatestExpansion - max player level for current expansion (The War Within = 80)
+    g.set("GetMaxLevelForLatestExpansion", lua.create_function(|_, ()| Ok(80i32))?)?;
+
+    // Glyph functions
+    g.set("HasAttachedGlyph", lua.create_function(|_, _spell_id: Value| Ok(false))?)?;
+    g.set("IsSpellValidForPendingGlyph", lua.create_function(|_, _spell_id: Value| Ok(false))?)?;
+
     // RegisterUIPanel - registers a frame for panel layout management
     g.set("RegisterUIPanel", lua.create_function(|_, (_frame, _attrs): (Value, Option<Value>)| Ok(()))?)?;
 
@@ -86,6 +97,23 @@ fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
     // LE_PARTY_CATEGORY_* used by VoiceUtils.lua
     g.set("LE_PARTY_CATEGORY_HOME", 1i32)?;
     g.set("LE_PARTY_CATEGORY_INSTANCE", 2i32)?;
+
+    // CombatLog C++ API functions used by Blizzard_CombatLog
+    g.set("CombatLogResetFilter", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("CombatLogAddFilter", lua.create_function(|_, (_event_list, _source_flags, _dest_flags): (Value, Value, Value)| Ok(()))?)?;
+    g.set("CombatLogSetCurrentEntry", lua.create_function(|_, _index: Value| Ok(()))?)?;
+    g.set("CombatLogGetCurrentEntry", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("CombatLogGetNumEntries", lua.create_function(|_, ()| Ok(0i32))?)?;
+    g.set("CombatLogShowCurrentEntry", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("CombatLogAdvanceEntry", lua.create_function(|_, _delta: Value| Ok(false))?)?;
+    g.set("CombatLogClearEntries", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("CombatLogGetCurrentEventInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    g.set("CombatLogGetRetentionTime", lua.create_function(|_, ()| Ok(300.0f64))?)?;
+    g.set("CombatLogSetRetentionTime", lua.create_function(|_, _time: Value| Ok(()))?)?;
+    // CombatLog_Object_IsA: checks if unitFlags match a filter mask (bitwise AND)
+    g.set("CombatLog_Object_IsA", lua.create_function(|_, (unit_flags, mask): (i64, i64)| {
+        Ok(unit_flags & mask != 0)
+    })?)?;
 
     Ok(())
 }
