@@ -112,41 +112,57 @@ pub fn wow_font_to_iced(font_path: Option<&str>) -> Font {
     }
 }
 
-/// Strip WoW texture/atlas markup from text (e.g., "|TInterface\ICONS\...:20:20:0:0|t")
-/// Preserves plain text content while removing inline texture tags.
+/// Strip WoW markup from text: textures (`|T...|t`), atlases (`|A...|a`),
+/// colors (`|cXXXXXXXX`/`|r`), and hyperlinks (`|H...|h`/`|h`).
+/// Preserves plain text content visible to the player.
 pub fn strip_wow_markup(text: &str) -> String {
     let mut result = String::with_capacity(text.len());
     let mut chars = text.chars().peekable();
 
     while let Some(c) = chars.next() {
         if c == '|' {
-            // Check for texture/atlas markup: |T...|t or |A...|a
             if let Some(&next) = chars.peek() {
+                // |T...|t or |A...|a — inline texture/atlas
                 if next == 'T' || next == 'A' {
-                    // Skip until we find |t or |a
                     let end_marker = if next == 'T' { 't' } else { 'a' };
-                    chars.next(); // consume T or A
+                    chars.next();
                     while let Some(ch) = chars.next() {
                         if ch == '|'
                             && let Some(&marker) = chars.peek()
                                 && marker == end_marker {
-                                    chars.next(); // consume the end marker
+                                    chars.next();
                                     break;
                                 }
                     }
                     continue;
                 }
-                // Handle color markup: |c...|r - strip the |c...| and |r but keep content
+                // |H...|h — hyperlink open tag (skip tag, keep linked text)
+                if next == 'H' {
+                    chars.next();
+                    while let Some(ch) = chars.next() {
+                        if ch == '|' && chars.peek() == Some(&'h') {
+                            chars.next();
+                            break;
+                        }
+                    }
+                    continue;
+                }
+                // |h — hyperlink close tag
+                if next == 'h' {
+                    chars.next();
+                    continue;
+                }
+                // |cXXXXXXXX — color start
                 if next == 'c' {
-                    // |cXXXXXXXX - skip 9 characters after |c
-                    chars.next(); // consume 'c'
+                    chars.next();
                     for _ in 0..8 {
                         chars.next();
                     }
                     continue;
                 }
+                // |r — color reset
                 if next == 'r' {
-                    chars.next(); // consume 'r'
+                    chars.next();
                     continue;
                 }
             }
