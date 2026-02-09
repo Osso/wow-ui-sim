@@ -258,6 +258,16 @@ wow-cli convert-texture ~/Projects/wow/Interface/FrameGeneral/UIFrameMetal2x.BLP
 
 Naming convention: lowercase directory and filename, no hyphens where the original BLP name has none (e.g. `UIFrameMetal2x.BLP` → `uiframemetal2x.webp`).
 
+### Stale BLP Files
+
+The `~/Projects/wow/Interface` extract can go stale between WoW patches. When atlas UV coordinates produce wrong results (e.g. sampling opaque pixels where transparent expected, icons covered by wrong texture regions), check if the BLP dimensions match what `UiTextureAtlas.csv` expects:
+
+1. Find the fileDataID in `~/Projects/wow/data/listfile.csv`
+2. Look up the atlas entry in `UiTextureAtlas.csv` (columns: `ID,FileDataID,AtlasWidth,AtlasHeight`)
+3. Compare with actual BLP dimensions (`python3 -c` with struct to read BLP header)
+4. Verify current dimensions on [wago.tools](https://wago.tools/db2/UiTextureAtlas)
+5. Download fresh BLP: `curl -sL "https://wago.tools/api/casc/{fileDataID}" -o file.blp`
+
 ### Texture Path Resolution
 
 WoW paths like `Interface\\Buttons\\UI-Panel-Button-Up` are resolved by:
