@@ -56,7 +56,7 @@ pub fn register_c_editmode_api(lua: &Lua) -> Result<()> {
     )?;
     t.set(
         "ConvertLayoutInfoToString",
-        lua.create_function(|lua, _info: Value| Ok(lua.create_string("")?))?,
+        lua.create_function(|lua, _info: Value| lua.create_string(""))?,
     )?;
     t.set(
         "ConvertStringToLayoutInfo",
@@ -64,7 +64,7 @@ pub fn register_c_editmode_api(lua: &Lua) -> Result<()> {
     )?;
     t.set(
         "ConvertLayoutInfoToHyperlink",
-        lua.create_function(|lua, _info: Value| Ok(lua.create_string("")?))?,
+        lua.create_function(|lua, _info: Value| lua.create_string(""))?,
     )?;
 
     lua.globals().set("C_EditMode", t)?;
