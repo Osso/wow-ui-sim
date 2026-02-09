@@ -96,6 +96,54 @@ pub fn rand_id() -> u64 {
     COUNTER.fetch_add(1, Ordering::Relaxed)
 }
 
+/// Resolve Lua string escape sequences stored as literal text.
+///
+/// Global strings from WoW CSV contain Lua escape sequences like `\32` (space)
+/// that are stored as literal backslash + digits in our Rust data. This function
+/// interprets them the same way Lua would when parsing a string literal.
+pub fn resolve_lua_escapes(s: &str) -> String {
+    let bytes = s.as_bytes();
+    let mut result = String::with_capacity(s.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'\\' && i + 1 < bytes.len() {
+            match bytes[i + 1] {
+                b'a' => { result.push('\x07'); i += 2; }
+                b'b' => { result.push('\x08'); i += 2; }
+                b'f' => { result.push('\x0C'); i += 2; }
+                b'n' => { result.push('\n'); i += 2; }
+                b'r' => { result.push('\r'); i += 2; }
+                b't' => { result.push('\t'); i += 2; }
+                b'v' => { result.push('\x0B'); i += 2; }
+                b'\\' => { result.push('\\'); i += 2; }
+                b'"' => { result.push('"'); i += 2; }
+                b'\'' => { result.push('\''); i += 2; }
+                d if d.is_ascii_digit() => {
+                    let mut val: u32 = 0;
+                    let mut j = i + 1;
+                    let end = (i + 4).min(bytes.len());
+                    while j < end && bytes[j].is_ascii_digit() {
+                        val = val * 10 + (bytes[j] - b'0') as u32;
+                        j += 1;
+                    }
+                    if val <= 255 {
+                        result.push(val as u8 as char);
+                    }
+                    i = j;
+                }
+                _ => {
+                    result.push('\\');
+                    i += 1;
+                }
+            }
+        } else {
+            result.push(bytes[i] as char);
+            i += 1;
+        }
+    }
+    result
+}
+
 /// Escape a string for use in Lua code.
 pub fn escape_lua_string(s: &str) -> String {
     s.replace('\\', "\\\\")
@@ -397,6 +445,32 @@ mod tests {
     #[test]
     fn test_normalize_path_empty() {
         assert_eq!(normalize_path(""), "");
+    }
+
+    #[test]
+    fn test_resolve_lua_escapes_decimal() {
+        // \32 = space (ASCII 32)
+        assert_eq!(resolve_lua_escapes(r":\32"), ": ");
+        assert_eq!(resolve_lua_escapes(r"Say:\32"), "Say: ");
+    }
+
+    #[test]
+    fn test_resolve_lua_escapes_named() {
+        assert_eq!(resolve_lua_escapes(r"\n"), "\n");
+        assert_eq!(resolve_lua_escapes(r"\t"), "\t");
+        assert_eq!(resolve_lua_escapes(r"\\"), "\\");
+    }
+
+    #[test]
+    fn test_resolve_lua_escapes_no_escapes() {
+        assert_eq!(resolve_lua_escapes("hello"), "hello");
+        assert_eq!(resolve_lua_escapes(""), "");
+    }
+
+    #[test]
+    fn test_resolve_lua_escapes_combined() {
+        // \37 = '%', \32 = space
+        assert_eq!(resolve_lua_escapes(r"%s\32"), "%s ");
     }
 
     #[test]

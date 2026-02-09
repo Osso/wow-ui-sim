@@ -1,6 +1,6 @@
 //! Template element creation: textures, fontstrings, thumb/button textures.
 
-use crate::loader::helpers::generate_set_point_code;
+use crate::loader::helpers::{generate_set_point_code, resolve_lua_escapes};
 use crate::loader::helpers_anim::generate_animation_group_code;
 use mlua::Lua;
 
@@ -283,11 +283,12 @@ fn append_fontstring_size_and_text(code: &mut String, fs: &crate::xml::FontStrin
         }
     }
     if let Some(text_key) = &fs.text {
-        let resolved = crate::global_strings::get_global_string(text_key)
+        let raw = crate::global_strings::get_global_string(text_key)
             .unwrap_or(text_key.as_str());
+        let resolved = resolve_lua_escapes(raw);
         code.push_str(&format!(
             "            fs:SetText(\"{}\")\n",
-            escape_lua_string(resolved)
+            escape_lua_string(&resolved)
         ));
     }
 }

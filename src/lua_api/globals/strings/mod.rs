@@ -6,6 +6,7 @@
 
 pub mod string_data;
 
+use crate::loader::helpers::resolve_lua_escapes;
 use mlua::{Lua, Result, Value};
 use string_data::*;
 
@@ -280,9 +281,13 @@ pub fn register_all_ui_strings(lua: &Lua, globals: &mlua::Table) -> Result<()> {
 }
 
 /// Register generated global strings (20k+ from WoW CSV exports).
+///
+/// Values are stored with raw Lua escape sequences (e.g. `\32` for space).
+/// We resolve these before setting them as Lua globals, matching how WoW
+/// loads them by executing Lua string literals.
 fn register_generated_global_strings(globals: &mlua::Table) -> Result<()> {
     for (name, value) in &crate::global_strings::GLOBAL_STRINGS {
-        globals.set(*name, *value)?;
+        globals.set(*name, resolve_lua_escapes(value))?;
     }
     register_strings(globals, ERROR_STRINGS)?;
     Ok(())
