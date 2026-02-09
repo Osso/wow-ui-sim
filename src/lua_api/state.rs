@@ -45,6 +45,8 @@ pub struct PartyMember {
     pub power_type: i32,
     pub power_type_name: &'static str,
     pub is_leader: bool,
+    /// When the member died (for auto-rez after 30s).
+    pub dead_since: Option<std::time::Instant>,
 }
 
 /// A pending timer callback.
@@ -287,6 +289,7 @@ fn default_party() -> Vec<PartyMember> {
                 power_type,
                 power_type_name,
                 is_leader: false,
+                dead_since: None,
             }
         })
         .collect()
@@ -367,7 +370,7 @@ fn build_enemy_target() -> TargetInfo {
     }
 }
 
-/// Randomly adjust party member health, clamped to [1, max].
+/// Randomly damage party members, auto-resurrect after 30s dead.
 ///
 /// `damage_pct` controls the intensity (fraction of max HP per tick).
 /// Returns the 1-based indices of members whose health changed (for firing UNIT_HEALTH).
@@ -375,6 +378,7 @@ pub fn tick_party_health(members: &mut [PartyMember], damage_pct: f64) -> Vec<us
     use std::collections::hash_map::DefaultHasher;
     use std::hash::{Hash, Hasher};
 
+    let now = std::time::Instant::now();
     let nanos = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap_or_default()
@@ -382,15 +386,28 @@ pub fn tick_party_health(members: &mut [PartyMember], damage_pct: f64) -> Vec<us
 
     let mut changed = Vec::new();
     for (i, m) in members.iter_mut().enumerate() {
+        // Auto-rez after 30s dead.
+        if let Some(died_at) = m.dead_since {
+            if now.duration_since(died_at).as_secs() >= 30 {
+                m.health = m.health_max;
+                m.dead_since = None;
+                changed.push(i + 1);
+            }
+            continue;
+        }
+
         let mut hasher = DefaultHasher::new();
         (nanos, i).hash(&mut hasher);
         let hash = hasher.finish();
         let max_delta = (m.health_max as f64 * damage_pct) as i64;
         if max_delta == 0 { continue; }
-        let delta = (hash % (max_delta as u64 * 2 + 1)) as i64 - max_delta;
-        let new_hp = (m.health as i64 + delta).clamp(1, m.health_max as i64) as i32;
+        let delta = -((hash % (max_delta as u64 + 1)) as i64);
+        let new_hp = (m.health as i64 + delta).clamp(0, m.health_max as i64) as i32;
         if new_hp != m.health {
             m.health = new_hp;
+            if new_hp == 0 {
+                m.dead_since = Some(now);
+            }
             changed.push(i + 1);
         }
     }
