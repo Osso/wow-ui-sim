@@ -2,6 +2,7 @@
 //! unimplemented engine features (AnimationGroups, EditMode, etc.).
 
 use super::WowLuaEnv;
+use super::workarounds_editmode;
 
 /// Apply workarounds that must run after startup events.
 ///
@@ -9,6 +10,7 @@ use super::WowLuaEnv;
 /// (e.g. EDIT_MODE_LAYOUTS_UPDATED repositions managed frames).
 pub fn apply_post_event(env: &WowLuaEnv) {
     fix_bags_bar_anchor(env);
+    workarounds_editmode::init_edit_mode_layout(env);
 }
 
 /// Apply all post-load workarounds. Called after addon loading, before events.
@@ -28,7 +30,7 @@ pub fn apply(env: &WowLuaEnv) {
     show_chat_frame(env);
     init_bag_bar(env);
     hide_super_tracked_frame(env);
-    patch_edit_mode_manager(env);
+    workarounds_editmode::patch_edit_mode_manager(env);
     patch_compact_raid_container_pools(env);
     stub_arena_globals(env);
     patch_lfg_backfill(env);
@@ -545,114 +547,6 @@ fn patch_character_frame_subframes(env: &WowLuaEnv) {
                     _G[name]:Hide()
                 end
             end
-        end
-    "#,
-    );
-}
-
-/// Patch EditModeManagerFrame after addon loading.
-///
-/// Before EDIT_MODE_LAYOUTS_UPDATED fires, layoutInfo is nil. Guard
-/// GetActiveLayoutInfo with a fallback. Replace InitSystemAnchors with a
-/// custom implementation that reads the active preset layout and applies
-/// anchorInfo to all 43 registered system frames. Stub UpdateSystems as
-/// a no-op since our InitSystemAnchors already handles positioning and
-/// the full UpdateSystem chain has too many dependencies.
-fn patch_edit_mode_manager(env: &WowLuaEnv) {
-    patch_edit_mode_get_active_layout(env);
-    patch_edit_mode_init_anchors(env);
-    patch_edit_mode_update_systems(env);
-    patch_edit_mode_default_anchor(env);
-}
-
-/// Guard GetActiveLayoutInfo against nil layoutInfo (pre-event calls).
-fn patch_edit_mode_get_active_layout(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if not EditModeManagerFrame then return end
-        local emm = EditModeManagerFrame
-        local origGetActiveLayoutInfo = emm.GetActiveLayoutInfo
-        function emm:GetActiveLayoutInfo()
-            if not self.layoutInfo then
-                return { layoutType = 0, layoutIndex = 1, systems = {} }
-            end
-            return origGetActiveLayoutInfo(self)
-        end
-    "#,
-    );
-}
-
-/// Custom InitSystemAnchors: apply preset layout anchors directly.
-///
-/// Builds a lookup from (system, systemIndex) → sysInfo, then iterates
-/// registeredSystemFrames and calls ClearAllPoints + SetPoint for each.
-/// Sets systemInfo on each frame so IsInitialized() returns true.
-fn patch_edit_mode_init_anchors(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if not EditModeManagerFrame then return end
-        local emm = EditModeManagerFrame
-        function emm:InitSystemAnchors()
-            local activeLayout = self:GetActiveLayoutInfo()
-            if not activeLayout or not activeLayout.systems then return end
-
-            -- Build lookup: "system:systemIndex" -> sysInfo
-            local lookup = {}
-            for _, sysInfo in ipairs(activeLayout.systems) do
-                local idx = sysInfo.systemIndex or 0
-                local key = tostring(sysInfo.system) .. ":" .. tostring(idx)
-                lookup[key] = sysInfo
-            end
-
-            -- Apply anchors to all registered frames
-            for _, frame in ipairs(self.registeredSystemFrames) do
-                local idx = frame.systemIndex or 0
-                local key = tostring(frame.system) .. ":" .. tostring(idx)
-                local sysInfo = lookup[key]
-                if sysInfo and sysInfo.anchorInfo then
-                    frame:ClearAllPoints()
-                    local a = sysInfo.anchorInfo
-                    local rel = a.relativeTo
-                    if type(rel) == "string" then
-                        rel = _G[rel] or rel
-                    end
-                    frame:SetPoint(
-                        a.point, rel, a.relativePoint,
-                        a.offsetX, a.offsetY
-                    )
-                    -- Set systemInfo so IsInitialized() returns true
-                    frame.systemInfo = sysInfo
-                end
-            end
-        end
-    "#,
-    );
-}
-
-/// Stub UpdateSystems — InitSystemAnchors handles positioning and the
-/// full UpdateSystem chain (settings, dialogs, etc.) isn't needed.
-fn patch_edit_mode_update_systems(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if not EditModeManagerFrame then return end
-        function EditModeManagerFrame:UpdateSystems() end
-    "#,
-    );
-}
-
-/// Provide a fallback GetDefaultAnchor for frames that query it.
-fn patch_edit_mode_default_anchor(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if not EditModeManagerFrame then return end
-        function EditModeManagerFrame:GetDefaultAnchor(frame)
-            return {
-                point = "TOPRIGHT",
-                relativeTo = UIParent,
-                relativePoint = "TOPRIGHT",
-                offsetX = -205,
-                offsetY = -13,
-            }
         end
     "#,
     );

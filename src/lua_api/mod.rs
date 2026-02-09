@@ -17,6 +17,7 @@ pub mod simple_html;
 mod state;
 pub mod tooltip;
 pub(crate) mod workarounds;
+pub(crate) mod workarounds_editmode;
 
 // Re-export public types
 pub use env::WowLuaEnv;
