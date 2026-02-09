@@ -72,18 +72,7 @@ pub(super) fn create_texture_from_template(
         code.push_str(&format!("            tex:SetBlendMode(\"{}\")\n", mode));
     }
 
-    // Wire up MaskedTextures: call AddMaskTexture on each referenced sibling.
-    if is_mask {
-        if let Some(ref masked) = texture.masked_textures {
-            for entry in &masked.entries {
-                if let Some(ref key) = entry.child_key {
-                    code.push_str(&format!(
-                        "            if parent.{key} then parent.{key}:AddMaskTexture(tex) end\n",
-                    ));
-                }
-            }
-        }
-    }
+    append_deferred_mask_wiring(&mut code, is_mask, texture);
 
     code.push_str("        end\n");
     if let Err(e) = lua.load(&code).exec() {
@@ -104,6 +93,52 @@ fn apply_texture_animations(lua: &Lua, texture: &crate::xml::TextureXml, child_n
         anim_code.push_str(&generate_animation_group_code(group, "frame"));
     }
     let _ = lua.load(&anim_code).exec();
+}
+
+/// Append deferred MaskedTextures wiring to Lua code.
+///
+/// Uses `C_Timer.After(0, ...)` because layers are processed before child frames —
+/// referenced siblings (e.g. `HealthBar.MyHealPredictionBar.Fill`) may not exist yet.
+/// Dotted paths get multi-level nil guards to avoid "attempt to index nil" errors.
+fn append_deferred_mask_wiring(code: &mut String, is_mask: bool, texture: &crate::xml::TextureXml) {
+    if !is_mask {
+        return;
+    }
+    let Some(ref masked) = texture.masked_textures else { return };
+    let mut mask_lines = Vec::new();
+    for entry in &masked.entries {
+        if let Some(ref key) = entry.child_key {
+            mask_lines.push(safe_add_mask_texture_code("parent", key));
+        }
+    }
+    if mask_lines.is_empty() {
+        return;
+    }
+    code.push_str("            C_Timer.After(0, function()\n");
+    for line in &mask_lines {
+        code.push_str(&format!("                {line}\n"));
+    }
+    code.push_str("            end)\n");
+}
+
+/// Generate Lua code that safely navigates a dotted childKey path and calls AddMaskTexture.
+///
+/// For `root="parent"` and `key="HealthBar.MyHealPredictionBar.Fill"`, produces:
+/// `if parent.HealthBar and parent.HealthBar.MyHealPredictionBar and parent.HealthBar.MyHealPredictionBar.Fill then parent.HealthBar.MyHealPredictionBar.Fill:AddMaskTexture(tex) end`
+fn safe_add_mask_texture_code(root: &str, key: &str) -> String {
+    let parts: Vec<&str> = key.split('.').collect();
+    let full_path = format!("{root}.{key}");
+    if parts.len() <= 1 {
+        return format!("if {full_path} then {full_path}:AddMaskTexture(tex) end");
+    }
+    let mut guards = Vec::new();
+    let mut path = root.to_string();
+    for part in &parts {
+        path = format!("{path}.{part}");
+        guards.push(path.clone());
+    }
+    let guard_str = guards.join(" and ");
+    format!("if {guard_str} then {full_path}:AddMaskTexture(tex) end")
 }
 
 /// Append texture-specific property setters (size, file, atlas, color) to Lua code.
