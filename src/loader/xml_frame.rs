@@ -183,24 +183,29 @@ fn append_parent_key_code(lua_code: &mut String, frame: &crate::xml::FrameXml, p
 }
 
 /// Append parentArray insertion from the frame or its inherited templates.
+///
+/// When `parentArray` is inherited from a template that also defines `parent`,
+/// the template's parent is used as the target (not the frame's resolved parent).
 fn append_parent_array_code(lua_code: &mut String, frame: &crate::xml::FrameXml, parent: &str) {
-    let parent_ref = lua_global_ref(parent);
     // Check the frame itself first
     if let Some(parent_array) = &frame.parent_array {
+        let parent_ref = lua_global_ref(parent);
         lua_code.push_str(&format!(
             "\n        {parent_ref}.{parent_array} = {parent_ref}.{parent_array} or {{}}\n        \
              table.insert({parent_ref}.{parent_array}, frame)\n        ",
         ));
         return;
     }
-    // Check inherited templates
+    // Check inherited templates — use the template's own parent if defined
     let inherits = frame.inherits.as_deref().unwrap_or("");
     if !inherits.is_empty() {
         for entry in &crate::xml::get_template_chain(inherits) {
             if let Some(parent_array) = &entry.frame.parent_array {
+                let target = entry.frame.parent.as_deref().unwrap_or(parent);
+                let target_ref = lua_global_ref(target);
                 lua_code.push_str(&format!(
-                    "\n        {parent_ref}.{parent_array} = {parent_ref}.{parent_array} or {{}}\n        \
-                     table.insert({parent_ref}.{parent_array}, frame)\n        ",
+                    "\n        {target_ref}.{parent_array} = {target_ref}.{parent_array} or {{}}\n        \
+                     table.insert({target_ref}.{parent_array}, frame)\n        ",
                 ));
                 return;
             }
