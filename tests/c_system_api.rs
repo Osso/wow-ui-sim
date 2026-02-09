@@ -206,30 +206,39 @@ fn test_c_reputation_get_faction_paragon_info_nil() {
 }
 
 #[test]
-fn test_c_reputation_get_num_factions_zero() {
+fn test_c_reputation_get_num_factions() {
     let env = env();
     let count: i32 = env
         .eval("return C_Reputation.GetNumFactions()")
         .unwrap();
-    assert_eq!(count, 0);
+    assert!(count > 0, "expected faction list to have entries");
 }
 
 #[test]
-fn test_c_reputation_get_faction_info_nil() {
+fn test_c_reputation_get_faction_info() {
+    let env = env();
+    let name: String = env
+        .eval("return C_Reputation.GetFactionInfo(1).name")
+        .unwrap();
+    assert!(!name.is_empty(), "expected first faction to have a name");
+}
+
+#[test]
+fn test_c_reputation_get_faction_info_out_of_range_nil() {
     let env = env();
     let is_nil: bool = env
-        .eval("return C_Reputation.GetFactionInfo(1) == nil")
+        .eval("return C_Reputation.GetFactionInfo(9999) == nil")
         .unwrap();
     assert!(is_nil);
 }
 
 #[test]
-fn test_c_reputation_get_watched_faction_data_nil() {
+fn test_c_reputation_get_watched_faction_data() {
     let env = env();
-    let is_nil: bool = env
-        .eval("return C_Reputation.GetWatchedFactionData() == nil")
+    let name: String = env
+        .eval("return C_Reputation.GetWatchedFactionData().name")
         .unwrap();
-    assert!(is_nil);
+    assert!(!name.is_empty(), "expected watched faction to have a name");
 }
 
 #[test]
