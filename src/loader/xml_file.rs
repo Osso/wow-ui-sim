@@ -69,6 +69,10 @@ fn process_element(
             register_virtual_texture(tex);
             Ok(0)
         }
+        XmlElement::AnimationGroup(ag) => {
+            register_virtual_anim_group(ag);
+            Ok(0)
+        }
         _ => {
             process_frame_element(env, element)?;
             Ok(0)
@@ -173,6 +177,15 @@ fn register_virtual_texture(texture: &crate::xml::TextureXml) {
     if texture.is_virtual == Some(true) {
         if let Some(ref name) = texture.name {
             crate::xml::register_texture_template(name, texture.clone());
+        }
+    }
+}
+
+/// Register a top-level virtual AnimationGroup template.
+fn register_virtual_anim_group(anim_group: &crate::xml::AnimationGroupXml) {
+    if anim_group.is_virtual == Some(true) {
+        if let Some(ref name) = anim_group.name {
+            crate::xml::register_anim_group_template(name, anim_group.clone());
         }
     }
 }
