@@ -76,9 +76,14 @@ pub(super) fn stop_group(state: &mut SimState, group_id: u64) {
         }
         // Always clear translation offsets (they don't persist)
         for id in &translation_targets {
+            let had_offset = state.widgets.get(*id)
+                .is_some_and(|f| f.anim_offset_x != 0.0 || f.anim_offset_y != 0.0);
             if let Some(frame) = state.widgets.get_mut(*id) {
                 frame.anim_offset_x = 0.0;
                 frame.anim_offset_y = 0.0;
+            }
+            if had_offset {
+                state.invalidate_layout(*id);
             }
         }
     }

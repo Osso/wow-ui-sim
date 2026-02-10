@@ -113,11 +113,32 @@ fn is_button_state_texture(
         .any(|key| parent.children_keys.get(*key) == Some(&id))
 }
 
+/// Sort key within a strata bucket: level, draw-layer type, draw-layer, sub-layer, id.
+fn intra_strata_cmp(
+    a: &(u64, &crate::widget::Frame, crate::LayoutRect, f32),
+    b: &(u64, &crate::widget::Frame, crate::LayoutRect, f32),
+) -> std::cmp::Ordering {
+    a.1.frame_level.cmp(&b.1.frame_level)
+        .then_with(|| {
+            let is_region = |t: &WidgetType| {
+                matches!(t, WidgetType::Texture | WidgetType::FontString)
+            };
+            match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
+                (true, true) => a.1.draw_layer.cmp(&b.1.draw_layer)
+                    .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer)),
+                (false, true) => std::cmp::Ordering::Less,
+                (true, false) => std::cmp::Ordering::Greater,
+                (false, false) => std::cmp::Ordering::Equal,
+            }
+        })
+        .then_with(|| a.0.cmp(&b.0))
+}
+
 /// Collect frames with computed rects, sorted by strata/level/draw-layer.
 ///
-/// Only frames in `ancestor_visible` are considered, skipping layout
-/// computation for frames hidden by an ancestor. Each frame carries its
-/// effective alpha (product of all ancestor alphas).
+/// When `strata_buckets` is provided (pre-built per-strata ID lists), iterates
+/// buckets in strata order and sorts only within each bucket. Otherwise falls
+/// back to scanning the full `ancestor_visible` map and doing a global sort.
 ///
 /// Also builds a hit-test list as a side output: visible, mouse-enabled
 /// frames sorted by strata/level/id, excluding non-interactive overlays.
@@ -126,41 +147,46 @@ pub fn collect_sorted_frames<'a>(
     screen_width: f32,
     screen_height: f32,
     ancestor_visible: &std::collections::HashMap<u64, f32>,
+    strata_buckets: Option<&Vec<Vec<u64>>>,
     cache: &mut LayoutCache,
 ) -> CollectedFrames<'a> {
     let mut frames: Vec<(u64, &crate::widget::Frame, crate::LayoutRect, f32)> = Vec::new();
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();
 
-    for (&id, &eff_alpha) in ancestor_visible {
-        let Some(f) = registry.get(id) else { continue };
-        let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
-        frames.push((id, f, rect, eff_alpha));
-
-        if f.visible && f.mouse_enabled
-            && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
-        {
-            hittable.push((id, f.frame_strata, f.frame_level, rect));
-        }
-    }
-
-    frames.sort_by(|a, b| {
-        a.1.frame_strata
-            .cmp(&b.1.frame_strata)
-            .then_with(|| a.1.frame_level.cmp(&b.1.frame_level))
-            .then_with(|| {
-                let is_region = |t: &WidgetType| {
-                    matches!(t, WidgetType::Texture | WidgetType::FontString)
-                };
-                match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
-                    (true, true) => a.1.draw_layer.cmp(&b.1.draw_layer)
-                        .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer)),
-                    (false, true) => std::cmp::Ordering::Less,
-                    (true, false) => std::cmp::Ordering::Greater,
-                    (false, false) => std::cmp::Ordering::Equal,
+    if let Some(buckets) = strata_buckets {
+        // Iterate buckets in strata order — output is strata-sorted by construction.
+        for bucket in buckets {
+            let start = frames.len();
+            for &id in bucket {
+                let Some(&eff_alpha) = ancestor_visible.get(&id) else { continue };
+                let Some(f) = registry.get(id) else { continue };
+                let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
+                frames.push((id, f, rect, eff_alpha));
+                if f.visible && f.mouse_enabled
+                    && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
+                {
+                    hittable.push((id, f.frame_strata, f.frame_level, rect));
                 }
-            })
-            .then_with(|| a.0.cmp(&b.0))
-    });
+            }
+            // Sort only within this strata bucket (level/draw_layer/id).
+            frames[start..].sort_by(intra_strata_cmp);
+        }
+    } else {
+        // Fallback: scan all ancestor_visible and do global sort.
+        for (&id, &eff_alpha) in ancestor_visible {
+            let Some(f) = registry.get(id) else { continue };
+            let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
+            frames.push((id, f, rect, eff_alpha));
+            if f.visible && f.mouse_enabled
+                && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
+            {
+                hittable.push((id, f.frame_strata, f.frame_level, rect));
+            }
+        }
+        frames.sort_by(|a, b| {
+            a.1.frame_strata.cmp(&b.1.frame_strata).then_with(|| intra_strata_cmp(a, b))
+        });
+    }
 
     hittable.sort_by(|a, b| {
         a.1.cmp(&b.1)

@@ -175,10 +175,15 @@ fn apply_effects(
         if let Some(alpha) = fx.alpha {
             frame.alpha = alpha;
         }
+        let offset_changed = frame.anim_offset_x != fx.offset_x
+            || frame.anim_offset_y != fx.offset_y;
         frame.anim_offset_x = fx.offset_x;
         frame.anim_offset_y = fx.offset_y;
         if let Some((rows, cols, frames, progress)) = fx.flipbook {
             apply_flipbook_uv(frame, rows, cols, frames, progress);
+        }
+        if offset_changed {
+            state.invalidate_layout(id);
         }
     }
 }

@@ -119,6 +119,7 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
+        state.invalidate_layout(this.id);
         Ok(())
     });
 }
@@ -133,6 +134,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.clear_all_points();
             }
+            state.invalidate_layout(this.id);
         }
         Ok(())
     });
@@ -145,6 +147,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.anchors.retain(|a| a.point != point);
             }
+            state.invalidate_layout(this.id);
         }
         Ok(())
     });
@@ -162,6 +165,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
                     anchor.y_offset += y_offset;
                 }
             }
+            state.invalidate_layout(this.id);
             Ok(())
         },
     );
@@ -207,6 +211,7 @@ fn add_set_all_points_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     0.0,
                 );
             }
+            state.invalidate_layout(this.id);
         }
         Ok(())
     });

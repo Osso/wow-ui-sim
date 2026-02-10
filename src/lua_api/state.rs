@@ -179,6 +179,16 @@ pub struct SimState {
     /// Cached subset of `on_update_frames` whose ancestors are all visible.
     /// Invalidated when `WidgetRegistry::visibility_dirty` is set.
     pub visible_on_update_cache: Option<Vec<u64>>,
+    /// Cached ancestor-visible IDs with effective alpha. Built lazily on first
+    /// `draw()`, then updated eagerly by `set_frame_visible`.
+    pub ancestor_visible_cache: Option<HashMap<u64, f32>>,
+    /// Per-strata buckets of visible frame IDs. Index = FrameStrata as usize.
+    /// Built alongside ancestor_visible_cache, updated eagerly by `set_frame_visible`.
+    pub strata_buckets: Option<Vec<Vec<u64>>>,
+    /// Persistent layout rect cache. Built lazily on first `draw()`, entries
+    /// invalidated eagerly when layout-affecting properties change (anchors,
+    /// size, scale, parent). Frames not in cache are recomputed on next rebuild.
+    pub layout_rect_cache: Option<crate::iced_app::layout::LayoutCache>,
     /// Animation groups keyed by unique group ID.
     pub animation_groups: HashMap<u64, AnimGroupState>,
     /// Counter for generating unique animation group IDs.
@@ -242,6 +252,9 @@ impl Default for SimState {
             message_frames: HashMap::new(),
             on_update_frames: HashSet::new(),
             visible_on_update_cache: None,
+            ancestor_visible_cache: None,
+            strata_buckets: None,
+            layout_rect_cache: None,
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
             screen_width: 1024.0,
@@ -270,18 +283,83 @@ impl Default for SimState {
 }
 
 impl SimState {
-    /// Set a frame's visibility and eagerly update `visible_on_update_cache`.
+    /// Return the cached ancestor-visible map, building it on first call.
+    /// Also builds strata_buckets as a side effect.
+    pub fn get_ancestor_visible(&mut self) -> &HashMap<u64, f32> {
+        if self.ancestor_visible_cache.is_none() {
+            let visible = crate::iced_app::frame_collect::collect_ancestor_visible_ids(&self.widgets);
+            let buckets = self.build_strata_buckets(&visible);
+            self.strata_buckets = Some(buckets);
+            self.ancestor_visible_cache = Some(visible);
+        }
+        self.ancestor_visible_cache.as_ref().unwrap()
+    }
+
+    /// Return the per-strata buckets (requires ancestor_visible to have been built).
+    pub fn get_strata_buckets(&self) -> Option<&Vec<Vec<u64>>> {
+        self.strata_buckets.as_ref()
+    }
+
+    /// Build per-strata ID buckets from the ancestor-visible map.
+    fn build_strata_buckets(&self, visible: &HashMap<u64, f32>) -> Vec<Vec<u64>> {
+        use crate::widget::FrameStrata;
+        let mut buckets = vec![Vec::new(); FrameStrata::COUNT];
+        for &id in visible.keys() {
+            if let Some(f) = self.widgets.get(id) {
+                buckets[f.frame_strata.as_index()].push(id);
+            }
+        }
+        buckets
+    }
+
+    /// Take the persistent layout cache for use during quad rebuild.
+    /// Returns the existing cache (or empty) for the caller to populate.
+    /// Caller must return it via `set_layout_cache` after the rebuild.
+    pub fn take_layout_cache(&mut self) -> crate::iced_app::layout::LayoutCache {
+        self.layout_rect_cache.take().unwrap_or_default()
+    }
+
+    /// Store the layout cache back after a quad rebuild.
+    pub fn set_layout_cache(&mut self, cache: crate::iced_app::layout::LayoutCache) {
+        self.layout_rect_cache = Some(cache);
+    }
+
+    /// Invalidate cached layout for a frame and all its descendants.
+    /// Called when layout-affecting properties change (anchors, size, scale, parent).
+    pub fn invalidate_layout(&mut self, id: u64) {
+        let Some(cache) = self.layout_rect_cache.as_mut() else { return };
+        Self::remove_layout_subtree(&self.widgets, id, cache);
+    }
+
+    fn remove_layout_subtree(
+        widgets: &crate::widget::WidgetRegistry,
+        id: u64,
+        cache: &mut crate::iced_app::layout::LayoutCache,
+    ) {
+        cache.remove(&id);
+        let children: Vec<u64> = widgets.get(id)
+            .map(|f| f.children.clone()).unwrap_or_default();
+        for child_id in children {
+            Self::remove_layout_subtree(widgets, child_id, cache);
+        }
+    }
+
+    /// Set a frame's visibility and eagerly update both caches.
     ///
-    /// When hiding: remove the frame and all descendants from the cache.
-    /// When showing: add the frame and any descendants that have OnUpdate
-    /// and are now ancestor-visible.
+    /// When hiding: remove the frame and all descendants from both caches.
+    /// When showing: add the frame and any descendants that are now
+    /// ancestor-visible.
     pub fn set_frame_visible(&mut self, id: u64, visible: bool) {
         let was_visible = self.widgets.get(id).map(|f| f.visible).unwrap_or(false);
         self.widgets.set_visible(id, visible);
         if was_visible == visible {
             return;
         }
-        // Take cache out to avoid borrow conflict with self.widgets
+        self.update_on_update_cache(id, visible);
+        self.update_ancestor_visible_cache(id, visible);
+    }
+
+    fn update_on_update_cache(&mut self, id: u64, visible: bool) {
         let Some(mut cache) = self.visible_on_update_cache.take() else {
             return;
         };
@@ -291,6 +369,20 @@ impl SimState {
             self.remove_on_update_descendants(id, &mut cache);
         }
         self.visible_on_update_cache = Some(cache);
+    }
+
+    fn update_ancestor_visible_cache(&mut self, id: u64, visible: bool) {
+        let Some(mut cache) = self.ancestor_visible_cache.take() else {
+            return;
+        };
+        let mut buckets = self.strata_buckets.take();
+        if visible {
+            self.add_visible_descendants(id, &mut cache, &mut buckets);
+        } else {
+            self.remove_visible_descendants(id, &mut cache, &mut buckets);
+        }
+        self.ancestor_visible_cache = Some(cache);
+        self.strata_buckets = buckets;
     }
 
     /// Add `id` and its descendants to cache if they have OnUpdate and are ancestor-visible.
@@ -318,6 +410,80 @@ impl SimState {
             self.remove_on_update_descendants(child_id, cache);
         }
     }
+
+    /// Add `id` and visible descendants to the ancestor-visible cache with alpha.
+    fn add_visible_descendants(
+        &self, id: u64, cache: &mut HashMap<u64, f32>,
+        buckets: &mut Option<Vec<Vec<u64>>>,
+    ) {
+        let Some(f) = self.widgets.get(id) else { return };
+        let parent_alpha = f.parent_id
+            .and_then(|pid| cache.get(&pid).copied())
+            .unwrap_or(1.0);
+        if !f.visible {
+            if is_button_state_texture(f, id, &self.widgets) {
+                cache.insert(id, parent_alpha * f.alpha);
+                if let Some(b) = buckets.as_mut() {
+                    b[f.frame_strata.as_index()].push(id);
+                }
+            }
+            return;
+        }
+        let eff = parent_alpha * f.alpha;
+        cache.insert(id, eff);
+        if let Some(b) = buckets.as_mut() {
+            b[f.frame_strata.as_index()].push(id);
+        }
+        if f.widget_type == crate::widget::WidgetType::GameTooltip {
+            return;
+        }
+        let children: Vec<u64> = f.children.clone();
+        for child_id in children {
+            self.add_visible_descendants(child_id, cache, buckets);
+        }
+    }
+
+    /// Remove `id` and all descendants from ancestor-visible cache.
+    fn remove_visible_descendants(
+        &self, id: u64, cache: &mut HashMap<u64, f32>,
+        buckets: &mut Option<Vec<Vec<u64>>>,
+    ) {
+        if cache.remove(&id).is_some() {
+            if let Some(b) = buckets.as_mut() {
+                if let Some(f) = self.widgets.get(id) {
+                    let bucket = &mut b[f.frame_strata.as_index()];
+                    if let Some(pos) = bucket.iter().position(|&x| x == id) {
+                        bucket.swap_remove(pos);
+                    }
+                }
+            }
+        }
+        let children: Vec<u64> = self.widgets.get(id)
+            .map(|f| f.children.clone()).unwrap_or_default();
+        for child_id in children {
+            self.remove_visible_descendants(child_id, cache, buckets);
+        }
+    }
+}
+
+/// Check if a frame is a button state texture (NormalTexture, PushedTexture, etc.).
+fn is_button_state_texture(
+    f: &crate::widget::Frame,
+    id: u64,
+    registry: &crate::widget::WidgetRegistry,
+) -> bool {
+    use crate::widget::WidgetType;
+    if !matches!(f.widget_type, WidgetType::Texture) {
+        return false;
+    }
+    let Some(parent_id) = f.parent_id else { return false };
+    let Some(parent) = registry.get(parent_id) else { return false };
+    if !matches!(parent.widget_type, WidgetType::Button | WidgetType::CheckButton) {
+        return false;
+    }
+    ["NormalTexture", "PushedTexture", "HighlightTexture", "DisabledTexture"]
+        .iter()
+        .any(|key| parent.children_keys.get(*key) == Some(&id))
 }
 
 /// Pick a random WoW-style player name using the current time as a seed.
@@ -354,7 +520,7 @@ fn default_party() -> Vec<PartyMember> {
             PartyMember {
                 name,
                 class_index,
-                level: 70,
+                level: 80,
                 health: health_max,
                 health_max,
                 power,
@@ -387,7 +553,7 @@ fn build_player_target(state: &SimState) -> TargetInfo {
         unit_id: "player".into(),
         name: state.player_name.clone(),
         class_index: state.player_class_index,
-        level: 70,
+        level: 80,
         health: state.player_health,
         health_max: state.player_health_max,
         power: 50_000,

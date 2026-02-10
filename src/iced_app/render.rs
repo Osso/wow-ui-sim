@@ -90,7 +90,7 @@ impl shader::Program<Message> for &App {
         let size = bounds.size();
         self.screen_size.set(size);
         self.sync_screen_size_to_state(size);
-        let quads = self.get_or_rebuild_quads(size);
+        let (quads, rebuilt) = self.get_or_rebuild_quads(size);
 
         // Build overlay (hover highlight + cursor) as a separate small batch.
         // This avoids cloning the entire world quad batch every frame.
@@ -109,11 +109,14 @@ impl shader::Program<Message> for &App {
         let mut textures = self.load_new_textures(&quads);
         textures.extend(self.load_new_textures(&overlay));
 
-        // Update frame time with EMA (alpha = 0.33 for ~5 sample smoothing)
-        let elapsed_ms = start.elapsed().as_secs_f32() * 1000.0;
-        self.frame_time_ms.set(elapsed_ms);
-        let avg = self.frame_time_avg.get();
-        self.frame_time_avg.set(0.33 * elapsed_ms + 0.67 * avg);
+        // Only update frame time when quads were actually rebuilt.
+        // Cache-hit draws are trivial (~0.1ms) and would drown out real rebuild costs.
+        if rebuilt {
+            let elapsed_ms = start.elapsed().as_secs_f32() * 1000.0;
+            self.frame_time_ms.set(elapsed_ms);
+            let avg = self.frame_time_avg.get();
+            self.frame_time_avg.set(0.33 * elapsed_ms + 0.67 * avg);
+        }
 
         let mut primitive = WowUiPrimitive::with_textures(quads, textures);
         primitive.overlay = overlay;
@@ -518,9 +521,11 @@ pub fn build_quad_batch_for_registry(
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
 ) -> QuadBatch {
     let mut cache = LayoutCache::new();
+    let ancestor_visible = collect_ancestor_visible_ids(registry);
     let (batch, _hittable) = build_quad_batch_with_cache(
         registry, screen_size, root_name, pressed_frame, hovered_frame,
         &mut text_ctx, message_frames, tooltip_data, &mut cache,
+        &ancestor_visible, None,
     );
     batch
 }
@@ -540,7 +545,10 @@ pub fn build_quad_batch_with_cache(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     cache: &mut LayoutCache,
+    ancestor_visible: &std::collections::HashMap<u64, f32>,
+    strata_buckets: Option<&Vec<Vec<u64>>>,
 ) -> (QuadBatch, Vec<(u64, crate::LayoutRect)>) {
+    let t0 = std::time::Instant::now();
     let mut batch = QuadBatch::with_capacity(1000);
     let (screen_width, screen_height) = screen_size;
     let size = Size::new(screen_width, screen_height);
@@ -555,8 +563,9 @@ pub fn build_quad_batch_with_cache(
     );
 
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
-    let ancestor_visible = collect_ancestor_visible_ids(registry);
-    let collected = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible, cache);
+    let t1 = std::time::Instant::now();
+    let collected = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible, strata_buckets, cache);
+    let t2 = std::time::Instant::now();
 
     // Collect StatusBar fill info: bar_texture_id -> fill fraction
     let statusbar_fills = collect_statusbar_fills(registry);
@@ -573,13 +582,19 @@ pub fn build_quad_batch_with_cache(
         let bar_fill = statusbar_fills.get(id);
         emit_frame_quads(&mut batch, *id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache);
     }
+    let t3 = std::time::Instant::now();
+    eprintln!(
+        "[quads] visible={:.0}µs layout={:.0}µs emit({})={:.0}µs total={:.0}µs",
+        (t1 - t0).as_micros(), (t2 - t1).as_micros(),
+        collected.render.len(), (t3 - t2).as_micros(), (t3 - t0).as_micros(),
+    );
     (batch, collected.hittable)
 }
 
 
 impl App {
-    /// Return cached quads or rebuild if dirty/resized.
-    fn get_or_rebuild_quads(&self, size: Size) -> std::sync::Arc<QuadBatch> {
+    /// Return cached quads or rebuild if dirty/resized. Returns (quads, rebuilt).
+    fn get_or_rebuild_quads(&self, size: Size) -> (std::sync::Arc<QuadBatch>, bool) {
         let mut cache = self.cached_quads.borrow_mut();
         let size_changed = cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true);
 
@@ -587,9 +602,9 @@ impl App {
             let new_quads = std::sync::Arc::new(self.build_quad_batch(size));
             *cache = Some((size, std::sync::Arc::clone(&new_quads)));
             self.quads_dirty.set(false);
-            new_quads
+            (new_quads, true)
         } else {
-            std::sync::Arc::clone(&cache.as_ref().unwrap().1)
+            (std::sync::Arc::clone(&cache.as_ref().unwrap().1), false)
         }
     }
 
@@ -637,32 +652,28 @@ impl App {
     pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
         let env = self.env.borrow();
         let mut font_sys = self.font_system.borrow_mut();
-
-        // Update tooltip sizes (needs mutable state + font system)
-        {
+        // Mutable phase: update tooltips + build/get caches.
+        let (ancestor_visible, strata_buckets, mut cache) = {
             let mut state = env.state().borrow_mut();
             super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
-        }
-
-        // Collect render data and build quads (immutable state)
+            let vis = state.get_ancestor_visible().clone();
+            let buckets = state.get_strata_buckets().cloned();
+            let layout = state.take_layout_cache();
+            (vis, buckets, layout)
+        };
         let state = env.state().borrow();
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
         let mut glyph_atlas = self.glyph_atlas.borrow_mut();
-        let mut cache = LayoutCache::new();
         let (batch, hittable) = build_quad_batch_with_cache(
-            &state.widgets,
-            (size.width, size.height),
-            None,
-            self.pressed_frame,
-            None, // hover highlights appended in draw()
+            &state.widgets, (size.width, size.height), None,
+            self.pressed_frame, None,
             &mut Some((&mut font_sys, &mut glyph_atlas)),
-            Some(&state.message_frames),
-            Some(&tooltip_data),
-            &mut cache,
+            Some(&state.message_frames), Some(&tooltip_data),
+            &mut cache, &ancestor_visible, strata_buckets.as_ref(),
         );
-        // Store layout cache for hit testing and hover highlights
-        *self.cached_layout_rects.borrow_mut() = Some(cache);
-        // Store hittable list (scale rects to screen coordinates)
+        *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
+        drop(state);
+        env.state().borrow_mut().set_layout_cache(cache);
         *self.cached_hittable.borrow_mut() = Some(
             hittable.into_iter().map(|(id, r)| {
                 (id, Rectangle::new(

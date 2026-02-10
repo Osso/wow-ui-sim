@@ -585,6 +585,14 @@ pub enum FrameStrata {
 }
 
 impl FrameStrata {
+    /// Number of strata variants (for fixed-size arrays/vecs).
+    pub const COUNT: usize = 9;
+
+    /// Convert to index (0..COUNT) for array indexing.
+    pub fn as_index(self) -> usize {
+        self as usize
+    }
+
     #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Option<Self> {
         match s.to_uppercase().as_str() {

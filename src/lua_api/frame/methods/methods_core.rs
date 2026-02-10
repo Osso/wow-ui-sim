@@ -107,6 +107,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.set_size(width, height);
         }
+        state.invalidate_layout(this.id);
         Ok(())
     });
 
@@ -116,6 +117,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.width = width;
         }
+        state.invalidate_layout(this.id);
         Ok(())
     });
 
@@ -125,6 +127,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.height = height;
         }
+        state.invalidate_layout(this.id);
         Ok(())
     });
 }
@@ -333,10 +336,7 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // SetShown(shown) - show/hide based on boolean
     methods.add_method("SetShown", |_, this, shown: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.visible = shown;
-        }
+        this.state.borrow_mut().set_frame_visible(this.id, shown);
         Ok(())
     });
 }
@@ -360,9 +360,15 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 /// Alpha transparency methods.
 fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetAlpha", |_, this, alpha: f32| {
+        let clamped = alpha.clamp(0.0, 1.0);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.alpha = alpha.clamp(0.0, 1.0);
+        let changed = state.widgets.get(this.id)
+            .map(|f| f.alpha != clamped)
+            .unwrap_or(false);
+        if changed {
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.alpha = clamped;
+            }
         }
         Ok(())
     });
@@ -628,6 +634,7 @@ fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(f) = state.widgets.get_mut(this.id) {
             f.scale = scale;
         }
+        state.invalidate_layout(this.id);
         Ok(())
     });
 

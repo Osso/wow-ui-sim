@@ -37,6 +37,7 @@ fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let mut state = this.state.borrow_mut();
         reparent_widget(&mut state.widgets, this.id, new_parent_id);
         state.visible_on_update_cache = None;
+        state.invalidate_layout(this.id);
         Ok(())
     });
 }
