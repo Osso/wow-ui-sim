@@ -24,7 +24,7 @@ regex = "1"
 walkdir = "2"
 phf = { version = "0.11", features = ["macros"] }
 phf_codegen = "0.11"
-rodio = "0.21"
+rodio = { version = "0.21", optional = true }
 
 # Iced GUI
 iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio", "wgpu"] }
@@ -52,6 +52,10 @@ path = "src/bin/wow_cli/main.rs"
 insta = "1.42"
 pollster = "0.4"
 tempfile = "3"
+
+[features]
+default = ["sound"]
+sound = ["rodio"]
 
 [profile.release]
 lto = false
