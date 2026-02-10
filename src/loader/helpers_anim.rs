@@ -28,6 +28,13 @@ pub fn generate_animation_group_code(
     emit_anim_group_children(&mut code, anim_group, frame_ref);
     emit_anim_group_mixin(&mut code, anim_group);
 
+    // Fire OnLoad after the animation group is fully configured (mixin + scripts).
+    // TargetsVisibleWhilePlayingAnimGroupTemplate uses OnLoad to Hide() animation targets.
+    code.push_str(r#"
+        do local __onLoad = __ag:GetScript("OnLoad")
+        if __onLoad then __onLoad(__ag) end end
+        "#);
+
     code.push_str("\n        end\n        ");
     code
 }
@@ -215,6 +222,7 @@ fn generate_anim_group_scripts_code(
     group_ref: &str,
 ) -> String {
     apply_script_handlers(group_ref, &[
+        ("OnLoad", scripts.on_load.last()),
         ("OnPlay", scripts.on_play.last()),
         ("OnFinished", scripts.on_finished.last()),
         ("OnStop", scripts.on_stop.last()),

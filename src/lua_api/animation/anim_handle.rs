@@ -370,7 +370,27 @@ impl AnimHandle {
                 .and_then(|a| a.name.clone()))
         });
 
-        methods.add_method("GetTarget", |_, _this, ()| Ok(Value::Nil));
+        methods.add_method("GetTarget", |lua, this, ()| {
+            let state = this.state.borrow();
+            let Some(group) = state.animation_groups.get(&this.group_id) else {
+                return Ok(Value::Nil);
+            };
+            let owner_id = group.owner_frame_id;
+            let child_key = group.animations.get(this.anim_index)
+                .and_then(|a| a.child_key.clone());
+            let target_id = match &child_key {
+                Some(key) => state.widgets.get(owner_id)
+                    .and_then(|owner| owner.children_keys.get(key.as_str()).copied()),
+                None => Some(owner_id),
+            };
+            let Some(id) = target_id else { return Ok(Value::Nil) };
+            drop(state);
+            let handle = crate::lua_api::frame::FrameHandle {
+                id,
+                state: Rc::clone(&this.state),
+            };
+            Ok(Value::UserData(lua.create_userdata(handle)?))
+        });
         methods.add_method("SetTarget", |_, _this, _target: Value| Ok(()));
         methods.add_method("SetChildKey", |_, this, key: String| {
             let mut state = this.state.borrow_mut();
