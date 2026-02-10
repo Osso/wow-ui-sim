@@ -1,6 +1,7 @@
 //! Addon loader - loads addons from TOC files.
 
 mod addon;
+pub(crate) mod bytecode_cache;
 mod button;
 mod error;
 pub(crate) mod helpers;
@@ -78,10 +79,14 @@ pub struct LoadTiming {
     pub io_time: Duration,
     /// Time parsing XML
     pub xml_parse_time: Duration,
-    /// Time executing Lua
+    /// Time executing Lua (compile + call; on cache hit, compile is near-zero)
     pub lua_exec_time: Duration,
     /// Time loading SavedVariables
     pub saved_vars_time: Duration,
+    /// Number of Lua files loaded from bytecode cache
+    pub cache_hits: u32,
+    /// Number of Lua files compiled from source (cache miss)
+    pub cache_misses: u32,
 }
 
 impl LoadTiming {

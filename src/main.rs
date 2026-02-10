@@ -278,6 +278,8 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
 
     let addons = discover_blizzard_addons(&blizzard_ui_path);
     println!("\nLoading {} Blizzard addons...", addons.len());
+    let blizzard_start = std::time::Instant::now();
+    let mut total_timing = LoadTiming::default();
     for (name, toc_path) in &addons {
         match load_addon(&env.loader_env(), toc_path) {
             Ok(r) => {
@@ -285,6 +287,11 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
                 for w in &r.warnings {
                     println!("  [!] {}", w);
                 }
+                total_timing.io_time += r.timing.io_time;
+                total_timing.xml_parse_time += r.timing.xml_parse_time;
+                total_timing.lua_exec_time += r.timing.lua_exec_time;
+                total_timing.cache_hits += r.timing.cache_hits;
+                total_timing.cache_misses += r.timing.cache_misses;
             }
             Err(e) => println!("{} failed: {}", name, e),
         }
@@ -295,6 +302,17 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
             wow_ui_sim::lua_api::globals::restore_secure_stubs(env);
         }
     }
+    let elapsed = blizzard_start.elapsed();
+    let cache_total = total_timing.cache_hits + total_timing.cache_misses;
+    let cache_info = if cache_total > 0 {
+        format!(", bytecode cache: {}/{} hits", total_timing.cache_hits, cache_total)
+    } else {
+        String::new()
+    };
+    println!(
+        "Blizzard addons loaded in {elapsed:.2?} (io={:.2?} xml={:.2?} lua={:.2?}{cache_info})",
+        total_timing.io_time, total_timing.xml_parse_time, total_timing.lua_exec_time
+    );
 }
 
 /// Scan, load, and register third-party addons; print summary.
@@ -337,6 +355,8 @@ struct LoadStats {
     success_count: usize,
     fail_count: usize,
     addon_times: Vec<(String, std::time::Duration)>,
+    cache_hits: u32,
+    cache_misses: u32,
 }
 
 /// Load a single third-party addon and update stats.
@@ -403,6 +423,8 @@ fn record_addon_success(name: &str, r: &LoadResult, stats: &mut LoadStats) {
     stats.total_timing.xml_parse_time += r.timing.xml_parse_time;
     stats.total_timing.lua_exec_time += r.timing.lua_exec_time;
     stats.total_timing.saved_vars_time += r.timing.saved_vars_time;
+    stats.cache_hits += r.timing.cache_hits;
+    stats.cache_misses += r.timing.cache_misses;
     stats.success_count += 1;
 }
 
@@ -451,6 +473,12 @@ fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
         println!("  XML parse:  {:.2?} ({:.1}%)", stats.total_timing.xml_parse_time, pct(stats.total_timing.xml_parse_time));
         println!("  Lua exec:   {:.2?} ({:.1}%)", stats.total_timing.lua_exec_time, pct(stats.total_timing.lua_exec_time));
         println!("  SavedVars:  {:.2?} ({:.1}%)", stats.total_timing.saved_vars_time, pct(stats.total_timing.saved_vars_time));
+    }
+
+    if stats.cache_hits > 0 || stats.cache_misses > 0 {
+        let total = stats.cache_hits + stats.cache_misses;
+        let pct = 100.0 * stats.cache_hits as f64 / total as f64;
+        println!("Bytecode cache: {}/{} hits ({:.0}%)", stats.cache_hits, total, pct);
     }
 
     let mut sorted_times = stats.addon_times.clone();
