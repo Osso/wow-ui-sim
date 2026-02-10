@@ -13,6 +13,7 @@
 - `docs/frame-data-flow.md` - Mixin, events, metamethods, script dispatch
 - `docs/button-text-rendering.md` - Button text draw order, three-slice text-behind-background bug
 - `docs/glow-plan.md` - Glow/shine effect plan
+- `docs/anchor-resolution.md` - Anchor resolution walkthrough: data structures, core functions, single/multi-anchor, SetPoint API, coordinate inversion
 
 ## WoW Game Files
 
