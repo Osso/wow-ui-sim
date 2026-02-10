@@ -269,13 +269,28 @@ Naming convention: lowercase directory and filename, no hyphens where the origin
 
 ### Stale BLP Files
 
-The `~/Projects/wow/Interface` extract can go stale between WoW patches. When atlas UV coordinates produce wrong results (e.g. sampling opaque pixels where transparent expected, icons covered by wrong texture regions), check if the BLP dimensions match what `UiTextureAtlas.csv` expects:
+The `~/Projects/wow/Interface` extract can go stale between WoW patches. Staleness has two forms:
 
-1. Find the fileDataID in `~/Projects/wow/data/listfile.csv`
-2. Look up the atlas entry in `UiTextureAtlas.csv` (columns: `ID,FileDataID,AtlasWidth,AtlasHeight`)
-3. Compare with actual BLP dimensions (`python3 -c` with struct to read BLP header)
-4. Verify current dimensions on [wago.tools](https://wago.tools/db2/UiTextureAtlas)
-5. Download fresh BLP: `curl -sL "https://wago.tools/api/casc/{fileDataID}" -o file.blp`
+**Dimension mismatch**: The BLP dimensions don't match what `UiTextureAtlas.csv` expects. Easy to detect.
+
+**Content mismatch (same dimensions)**: The BLP has the right dimensions but atlas sub-regions contain wrong/empty pixels. This happens when Blizzard rearranges atlas content between patches without changing the texture size. Symptoms: textures render as black squares, transparent where opaque expected, or show wrong content. The `talents.blp` atlas hit this — local BLP was 2048x1024 (correct) but the shadow/border regions were empty because the atlas layout had changed.
+
+To detect content mismatches, extract the atlas sub-region and check if it has meaningful pixel data:
+```bash
+# Extract atlas sub-region (coords from atlas.rs tex_coords * texture dimensions)
+magick textures/foo/bar.webp -crop WxH+X+Y +repage /tmp/claude/region.png
+identify -verbose /tmp/claude/region.png  # Check Alpha min/max — all zeros = empty
+```
+
+**Fix procedure** (works for both types):
+
+1. Find the fileDataID: `grep -i 'filename.blp' ~/Projects/wow/data/listfile.csv`
+2. Optionally verify atlas dimensions: look up fileDataID in `UiTextureAtlas.csv` (columns: `ID,FileDataID,AtlasWidth,AtlasHeight`)
+3. Download fresh BLP: `curl -sL "https://wago.tools/api/casc/{fileDataID}" -o /tmp/claude/fresh.blp`
+4. Verify dimensions: `python3 -c "import struct; f=open('/tmp/claude/fresh.blp','rb'); f.read(12); w,h=struct.unpack('<II',f.read(8)); print(f'{w}x{h}')"`
+5. Convert and replace: `wow-cli convert-texture /tmp/claude/fresh.blp -o ./textures/subdir/name.webp`
+
+**Known stale textures fixed**: `talents.blp` (FileDataID 4556093), `talentsanimations4.blp` (FileDataID 4741460)
 
 ### Texture Path Resolution
 
