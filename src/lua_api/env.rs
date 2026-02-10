@@ -302,6 +302,7 @@ impl WowLuaEnv {
         // Screen resize invalidates all cached layout rects and the render list.
         state.layout_rect_cache = None;
         state.cached_render_list = None;
+        state.widgets.clear_all_layout_rects();
         for name in &["UIParent", "WorldFrame"] {
             if let Some(id) = state.widgets.get_id_by_name(name)
                 && let Some(frame) = state.widgets.get_mut(id) {

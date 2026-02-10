@@ -168,8 +168,19 @@ fn build_tree_recursive(
     let connector = "+- ";
     let size_info = tree_size_mismatch_info(frame, &rect);
     let vis_str = if frame.visible { "" } else { " [hidden]" };
+    let stale_info = match frame.layout_rect {
+        Some(lr) if (lr.x - rect.x).abs() > 0.5
+            || (lr.y - rect.y).abs() > 0.5
+            || (lr.width - rect.width).abs() > 0.5
+            || (lr.height - rect.height).abs() > 0.5 =>
+        {
+            format!(" [layout_rect=({:.0},{:.0}) {:.0}x{:.0}]", lr.x, lr.y, lr.width, lr.height)
+        }
+        None => " [layout_rect=None]".to_string(),
+        _ => String::new(),
+    };
     lines.push(format!(
-        "{prefix}{connector}{name} ({}) @ ({:.0},{:.0}) {:.0}x{:.0}{size_info}{vis_str}",
+        "{prefix}{connector}{name} ({}) @ ({:.0},{:.0}) {:.0}x{:.0}{size_info}{stale_info}{vis_str}",
         frame.widget_type.as_str(),
         rect.x, rect.y, rect.width, rect.height,
     ));

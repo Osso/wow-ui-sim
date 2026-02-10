@@ -133,7 +133,6 @@ pub fn run_iced_ui_with_textures(
     iced::application(App::boot, App::update, App::view)
         .title(App::title)
         .subscription(App::subscription)
-        .window_size((1024.0, 768.0))
         .run()?;
 
     Ok(())
