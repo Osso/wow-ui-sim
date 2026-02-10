@@ -32,6 +32,14 @@ pub(super) fn register_all(lua: &Lua) -> Result<()> {
     register_c_adventure_journal(lua)?;
     register_c_summon_info(lua)?;
     register_c_ui(lua)?;
+    register_c_item_upgrade(lua)?;
+    Ok(())
+}
+
+fn register_c_item_upgrade(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("CanUpgradeItem", lua.create_function(|_, _loc: Value| Ok(false))?)?;
+    lua.globals().set("C_ItemUpgrade", t)?;
     Ok(())
 }
 
@@ -146,6 +154,7 @@ fn register_c_artifact_and_azerite(lua: &Lua) -> Result<()> {
 
     let aze = lua.create_table()?;
     aze.set("IsAzeriteEmpoweredItem", lua.create_function(|_, _loc: Value| Ok(false))?)?;
+    aze.set("IsAzeriteEmpoweredItemByID", lua.create_function(|_, _id: Value| Ok(false))?)?;
     lua.globals().set("C_AzeriteEmpoweredItem", aze)?;
     Ok(())
 }

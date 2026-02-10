@@ -29,6 +29,7 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     isi.set("GetExistingSocketInfo", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
     isi.set("AcceptSockets", lua.create_function(|_, ()| Ok(()))?)?;
     isi.set("CloseSocketInfo", lua.create_function(|_, ()| Ok(()))?)?;
+    isi.set("IsArtifactRelicItem", lua.create_function(|_, _item: Value| Ok(false))?)?;
     g.set("C_ItemSocketInfo", isi)?;
 
     // C_PetInfo

@@ -205,10 +205,11 @@ fn test_traits_get_config_info() {
 }
 
 #[test]
-fn test_traits_get_node_info_nil() {
+fn test_traits_get_node_info_unknown() {
     let env = env();
-    let is_nil: bool = env.eval("return C_Traits.GetNodeInfo(1, 1) == nil").unwrap();
-    assert!(is_nil);
+    // Unknown node returns an empty info table (ID=1, all zeroed fields)
+    let id: i32 = env.eval("return C_Traits.GetNodeInfo(1, 1).ID").unwrap();
+    assert_eq!(id, 1);
 }
 
 #[test]

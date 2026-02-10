@@ -26,6 +26,14 @@ pub fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     methods.add_method("SetChecked", |_, this, checked: bool| {
         {
             let mut state = this.state.borrow_mut();
+            // Skip if already the same value
+            let already = state.widgets.get(this.id)
+                .and_then(|f| f.attributes.get("__checked"))
+                .map(|v| matches!(v, AttributeValue::Boolean(b) if *b == checked))
+                .unwrap_or(false);
+            if already {
+                return Ok(());
+            }
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame
                     .attributes
@@ -258,6 +266,17 @@ fn add_shared_set_min_max<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             _ => 1.0,
         };
         let mut state = this.state.borrow_mut();
+        // Check if values actually changed before marking dirty
+        let changed = state.widgets.get(this.id).map(|frame| match frame.widget_type {
+            WidgetType::Slider => {
+                frame.slider_min != min || frame.slider_max != max
+            }
+            WidgetType::StatusBar => {
+                frame.statusbar_min != min || frame.statusbar_max != max
+            }
+            _ => false,
+        }).unwrap_or(false);
+        if !changed { return Ok(()); }
         if let Some(frame) = state.widgets.get_mut(this.id) {
             match frame.widget_type {
                 WidgetType::Slider => {
@@ -296,13 +315,14 @@ fn add_shared_get_min_max<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn set_slider_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua::Result<()> {
     let clamped = {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            let clamped = value.clamp(frame.slider_min, frame.slider_max);
-            frame.slider_value = clamped;
-            clamped
-        } else {
+        let Some(frame) = state.widgets.get(this.id) else { return Ok(()) };
+        let clamped = value.clamp(frame.slider_min, frame.slider_max);
+        if clamped == frame.slider_value {
             return Ok(());
         }
+        let frame = state.widgets.get_mut(this.id).unwrap();
+        frame.slider_value = clamped;
+        clamped
     };
     fire_value_changed(lua, this.id, clamped)
 }
@@ -310,13 +330,14 @@ fn set_slider_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua::Re
 fn set_statusbar_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua::Result<()> {
     let clamped = {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            let clamped = value.clamp(frame.statusbar_min, frame.statusbar_max);
-            frame.statusbar_value = clamped;
-            clamped
-        } else {
+        let Some(frame) = state.widgets.get(this.id) else { return Ok(()) };
+        let clamped = value.clamp(frame.statusbar_min, frame.statusbar_max);
+        if clamped == frame.statusbar_value {
             return Ok(());
         }
+        let frame = state.widgets.get_mut(this.id).unwrap();
+        frame.statusbar_value = clamped;
+        clamped
     };
     fire_value_changed(lua, this.id, clamped)
 }

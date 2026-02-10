@@ -76,15 +76,8 @@ fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Ok(Value::String(result)) = format_func.call::<Value>(args) {
             let text = result.to_string_lossy().to_string();
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                if frame.height == 0.0 {
-                    frame.height = frame.font_size.max(12.0);
-                }
-                frame.text = Some(text);
-            }
+            set_text_on_frame(&mut state, this.id, Some(text));
             // Auto-size FontString width when no explicit width constraint is set.
-            // word_wrap defaults to true in WoW, but FontStrings without a width
-            // constraint (width == 0) should still auto-size to their text content.
             let measure_info = state.widgets.get(this.id).and_then(|f| {
                 if f.widget_type != WidgetType::FontString { return None; }
                 if f.word_wrap && f.width > 0.0 { return None; }
@@ -97,8 +90,11 @@ fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     let mut fs = fs_rc.borrow_mut();
                     let width = fs.measure_text_width(&text, font.as_deref(), font_size);
                     let mut state = this.state.borrow_mut();
-                    if let Some(frame) = state.widgets.get_mut(this.id) {
-                        frame.width = width;
+                    let changed = state.widgets.get(this.id).map(|f| f.width != width).unwrap_or(false);
+                    if changed {
+                        if let Some(frame) = state.widgets.get_mut(this.id) {
+                            frame.width = width;
+                        }
                     }
                 }
             }
@@ -168,8 +164,11 @@ fn handle_set_text(lua: &mlua::Lua, this: &FrameHandle, args: mlua::MultiValue) 
         let mut state = this.state.borrow_mut();
         for (id, text, font, font_size) in ids_to_measure {
             let width = fs.measure_text_width(&text, font.as_deref(), font_size);
-            if let Some(frame) = state.widgets.get_mut(id) {
-                frame.width = width;
+            let changed = state.widgets.get(id).map(|f| f.width != width).unwrap_or(false);
+            if changed {
+                if let Some(frame) = state.widgets.get_mut(id) {
+                    frame.width = width;
+                }
             }
         }
     }
@@ -210,6 +209,15 @@ fn set_text_on_frame(
     id: u64,
     text: Option<String>,
 ) {
+    // Skip get_mut() (and render_dirty) when text is unchanged
+    if let Some(frame) = state.widgets.get(id) {
+        let needs_height = text.is_some()
+            && frame.widget_type == crate::widget::WidgetType::FontString
+            && frame.height < frame.font_size.max(12.0);
+        if frame.text == text && !needs_height {
+            return;
+        }
+    }
     if let Some(frame) = state.widgets.get_mut(id) {
         let min_height = frame.font_size.max(12.0);
         let is_fontstring = frame.widget_type == crate::widget::WidgetType::FontString;

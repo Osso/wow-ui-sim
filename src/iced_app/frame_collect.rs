@@ -113,25 +113,24 @@ fn is_button_state_texture(
         .any(|key| parent.children_keys.get(*key) == Some(&id))
 }
 
+/// Intra-strata sort key: (level, region_flag, draw_layer, sub_layer, id).
+///
+/// Non-regions get flag=0, regions get flag=1, so non-regions sort first
+/// at the same level. Within regions, draw_layer and sub_layer apply.
+pub fn intra_strata_sort_key(f: &crate::widget::Frame, id: u64) -> (i32, u8, i32, i32, u64) {
+    if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+        (f.frame_level, 1, f.draw_layer as i32, f.draw_sub_layer, id)
+    } else {
+        (f.frame_level, 0, 0, 0, id)
+    }
+}
+
 /// Sort key within a strata bucket: level, draw-layer type, draw-layer, sub-layer, id.
 fn intra_strata_cmp(
     a: &(u64, &crate::widget::Frame, crate::LayoutRect, f32),
     b: &(u64, &crate::widget::Frame, crate::LayoutRect, f32),
 ) -> std::cmp::Ordering {
-    a.1.frame_level.cmp(&b.1.frame_level)
-        .then_with(|| {
-            let is_region = |t: &WidgetType| {
-                matches!(t, WidgetType::Texture | WidgetType::FontString)
-            };
-            match (is_region(&a.1.widget_type), is_region(&b.1.widget_type)) {
-                (true, true) => a.1.draw_layer.cmp(&b.1.draw_layer)
-                    .then_with(|| a.1.draw_sub_layer.cmp(&b.1.draw_sub_layer)),
-                (false, true) => std::cmp::Ordering::Less,
-                (true, false) => std::cmp::Ordering::Greater,
-                (false, false) => std::cmp::Ordering::Equal,
-            }
-        })
-        .then_with(|| a.0.cmp(&b.0))
+    intra_strata_sort_key(a.1, a.0).cmp(&intra_strata_sort_key(b.1, b.0))
 }
 
 /// Collect frames with computed rects, sorted by strata/level/draw-layer.
@@ -154,9 +153,8 @@ pub fn collect_sorted_frames<'a>(
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();
 
     if let Some(buckets) = strata_buckets {
-        // Iterate buckets in strata order — output is strata-sorted by construction.
+        // Buckets are maintained in sorted order — no sort needed.
         for bucket in buckets {
-            let start = frames.len();
             for &id in bucket {
                 let Some(&eff_alpha) = ancestor_visible.get(&id) else { continue };
                 let Some(f) = registry.get(id) else { continue };
@@ -168,8 +166,6 @@ pub fn collect_sorted_frames<'a>(
                     hittable.push((id, f.frame_strata, f.frame_level, rect));
                 }
             }
-            // Sort only within this strata bucket (level/draw_layer/id).
-            frames[start..].sort_by(intra_strata_cmp);
         }
     } else {
         // Fallback: scan all ancestor_visible and do global sort.

@@ -15,6 +15,8 @@ pub fn apply_post_event(env: &WowLuaEnv) {
 
 /// Apply all post-load workarounds. Called after addon loading, before events.
 pub fn apply(env: &WowLuaEnv) {
+    // Blizzard_EnvironmentCleanup clears secure globals; restore them.
+    super::globals::restore_secure_stubs(env);
     let _ = env.exec("UpdateMicroButtons = function() end");
     // CompactUnitFrame helpers may not be defined if CompactUnitFrame.lua fails to load fully
     let _ = env.exec(
@@ -34,6 +36,7 @@ pub fn apply(env: &WowLuaEnv) {
     workarounds_editmode::patch_edit_mode_manager(env);
     patch_compact_raid_container_pools(env);
     stub_arena_globals(env);
+    stub_glow_and_lfg(env);
     patch_lfg_backfill(env);
     init_console_saved_vars(env);
     init_lfg_events_in_background(env);
@@ -622,6 +625,24 @@ fn stub_arena_globals(env: &WowLuaEnv) {
         r#"
         if not GetArenaOpponentSpec then
             GetArenaOpponentSpec = function() return 0 end
+        end
+    "#,
+    );
+}
+
+/// Stub globals used by spellbook/talents but defined in load-order-dependent addons.
+fn stub_glow_and_lfg(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not GlowEmitterFactory then
+            GlowEmitterFactory = {
+                Show = function() end,
+                Hide = function() end,
+                SetShown = function() end,
+            }
+        end
+        if not GetLFGStringFromEnum then
+            GetLFGStringFromEnum = function() return "" end
         end
     "#,
     );

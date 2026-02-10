@@ -444,6 +444,10 @@ fn register_c_soulbinds(lua: &Lua) -> Result<mlua::Table> {
         "IsConduitInstalled",
         lua.create_function(|_, (_soulbind_id, _conduit_id): (i32, i32)| Ok(false))?,
     )?;
+    t.set(
+        "IsItemConduitByItemInfo",
+        lua.create_function(|_, _item: Value| Ok(false))?,
+    )?;
 
     Ok(t)
 }

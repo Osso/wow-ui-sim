@@ -130,6 +130,8 @@ fn register_c_trade_skill(lua: &Lua) -> Result<()> {
     t.set("GetAllRecipeIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("GetProfessionSkillLineID", lua.create_function(|_, _p: Value| Ok(0i32))?)?;
     t.set("GetRecipesTracked", lua.create_function(|lua, _is_recraft: bool| lua.create_table())?)?;
+    t.set("GetItemReagentQualityByItemInfo", lua.create_function(|_, _item: Value| Ok(Value::Nil))?)?;
+    t.set("GetItemCraftedQualityByItemInfo", lua.create_function(|_, _item: Value| Ok(Value::Nil))?)?;
 
     lua.globals().set("C_TradeSkillUI", t)?;
     Ok(())

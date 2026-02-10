@@ -357,21 +357,19 @@ impl App {
         self.run_wow_timers();
         let timers_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
 
-        // Discard render_dirty from OnUpdate handlers — they call get_mut() on
-        // every tick (e.g. SetText to the same value) which sets dirty without
-        // actually changing visual state.
         self.fire_on_update();
-        self.env.borrow().state().borrow().widgets.take_render_dirty();
+        let on_update_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
 
         self.tick_party_health();
         self.tick_casting();
 
         let health_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
-        if timers_dirty || health_dirty {
+        if timers_dirty || on_update_dirty || health_dirty {
             self.invalidate();
         } else {
             self.drain_console();
         }
+
         Task::none()
     }
 
@@ -590,11 +588,11 @@ impl App {
                 crate::widget::AttributeValue::Boolean(new_checked),
             );
         }
-        if let Some(frame) = state.widgets.get(frame_id)
-            && let Some(&tex_id) = frame.children_keys.get("CheckedTexture")
-                && let Some(tex) = state.widgets.get_mut(tex_id) {
-                    tex.visible = new_checked;
-                }
+        let tex_id = state.widgets.get(frame_id)
+            .and_then(|f| f.children_keys.get("CheckedTexture").copied());
+        if let Some(tex_id) = tex_id {
+            state.set_frame_visible(tex_id, new_checked);
+        }
     }
 
     /// Sync the iced canvas size to SimState and UIParent/WorldFrame dimensions.

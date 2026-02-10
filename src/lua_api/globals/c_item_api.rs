@@ -176,6 +176,12 @@ fn register_c_item_stub_methods(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("CanViewItemPowers", lua.create_function(|_, _loc: Value| Ok(false))?)?;
     t.set("GetItemNumSockets", lua.create_function(|_, _loc: Value| Ok(0i32))?)?;
     t.set("GetItemGemID", lua.create_function(|_, _args: mlua::MultiValue| Ok(0i32))?)?;
+    t.set("IsCorruptedItem", lua.create_function(|_, _id: Value| Ok(false))?)?;
+    t.set("IsCosmeticItem", lua.create_function(|_, _id: Value| Ok(false))?)?;
+    t.set("IsCurioItem", lua.create_function(|_, _id: Value| Ok(false))?)?;
+    t.set("IsRelicItem", lua.create_function(|_, _id: Value| Ok(false))?)?;
+    t.set("IsDecorItem", lua.create_function(|_, _id: Value| Ok(false))?)?;
+    t.set("IsBoundToAccountUntilEquip", lua.create_function(|_, _loc: Value| Ok(false))?)?;
     Ok(())
 }
 

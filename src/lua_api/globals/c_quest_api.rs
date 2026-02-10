@@ -74,8 +74,8 @@ fn create_quest_info(lua: &Lua, idx: i32) -> Result<Value> {
     info.set("questLogIndex", idx)?;
     info.set("questID", quest_id)?;
     info.set("campaignID", 0)?;
-    info.set("level", 70)?;
-    info.set("difficultyLevel", 70)?;
+    info.set("level", 80)?;
+    info.set("difficultyLevel", 80)?;
     info.set("suggestedGroup", 0)?;
     info.set("isHeader", false)?;
     info.set("isCollapsed", false)?;

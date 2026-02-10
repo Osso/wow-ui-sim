@@ -695,9 +695,8 @@ fn test_set_and_get_button_state() {
     )
     .unwrap();
 
-    // GetButtonState is a stub returning "NORMAL"
     let state: String = env.eval("return TestBtnState:GetButtonState()").unwrap();
-    assert_eq!(state, "NORMAL");
+    assert_eq!(state, "PUSHED");
 }
 
 // ============================================================================

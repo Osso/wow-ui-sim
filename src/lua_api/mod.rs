@@ -2,8 +2,10 @@
 
 pub mod animation;
 mod builtin_frames;
+mod diagnostics;
 mod env;
 pub(crate) mod frame;
+pub(crate) mod game_data;
 pub(crate) mod keybindings;
 mod key_dispatch;
 mod frame_methods;

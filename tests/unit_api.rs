@@ -41,9 +41,9 @@ fn test_unit_class_returns_three_values() {
     let (name, file, id): (String, String, i32) = env
         .eval("return UnitClass('player')")
         .unwrap();
-    assert_eq!(name, "Warrior");
-    assert_eq!(file, "WARRIOR");
-    assert_eq!(id, 1);
+    assert_eq!(name, "Paladin");
+    assert_eq!(file, "PALADIN");
+    assert_eq!(id, 2);
 }
 
 // ============================================================================
@@ -54,7 +54,7 @@ fn test_unit_class_returns_three_values() {
 fn test_unit_class_base_returns_file_name() {
     let env = env();
     let file: String = env.eval("return UnitClassBase('player')").unwrap();
-    assert_eq!(file, "WARRIOR");
+    assert_eq!(file, "PALADIN");
 }
 
 // ============================================================================
@@ -307,14 +307,14 @@ fn test_unit_guid_other() {
 fn test_unit_level() {
     let env = env();
     let level: i32 = env.eval("return UnitLevel('player')").unwrap();
-    assert_eq!(level, 70);
+    assert_eq!(level, 80);
 }
 
 #[test]
 fn test_unit_effective_level() {
     let env = env();
     let level: i32 = env.eval("return UnitEffectiveLevel('player')").unwrap();
-    assert_eq!(level, 70);
+    assert_eq!(level, 80);
 }
 
 // ============================================================================

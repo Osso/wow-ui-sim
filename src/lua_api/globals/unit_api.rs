@@ -108,7 +108,7 @@ fn register_identity_stubs(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
         })?,
     )?;
     globals.set("UnitSex", lua.create_function(|_, _unit: Option<String>| Ok(2))?)?;
-    globals.set("UnitEffectiveLevel", lua.create_function(|_, _unit: Option<String>| Ok(70))?)?;
+    globals.set("UnitEffectiveLevel", lua.create_function(|_, _unit: Option<String>| Ok(80))?)?;
     globals.set(
         "UnitFactionGroup",
         lua.create_function(move |lua, _unit: Option<String>| {
@@ -176,7 +176,7 @@ fn register_unit_level_exists(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result
                     return Ok(m.level);
                 }
             }
-            Ok(70)
+            Ok(80)
         })?,
     )?;
 
