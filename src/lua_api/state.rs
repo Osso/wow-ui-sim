@@ -141,6 +141,18 @@ pub const ROT_DAMAGE_LEVELS: &[(&str, f64)] = &[
     ("Brutal (10%)", 0.10),
 ];
 
+/// Active spell cast state (for cast bar display).
+pub struct CastingState {
+    pub spell_id: u32,
+    pub spell_name: String,
+    pub icon_path: String,
+    /// GetTime() at cast start (seconds).
+    pub start_time: f64,
+    /// GetTime() at cast end (seconds).
+    pub end_time: f64,
+    pub cast_id: u32,
+}
+
 /// Shared simulator state accessible from Lua.
 pub struct SimState {
     pub widgets: WidgetRegistry,
@@ -205,6 +217,10 @@ pub struct SimState {
     pub fps: f32,
     /// Instant at which the UI started (used by GetTime and message timestamps).
     pub start_time: Instant,
+    /// Active spell cast (None = not casting).
+    pub casting: Option<CastingState>,
+    /// Counter for generating unique cast IDs.
+    pub next_cast_id: u32,
 }
 
 impl Default for SimState {
@@ -237,12 +253,14 @@ impl Default for SimState {
             player_name: random_player_name(),
             player_health: 100_000,
             player_health_max: 100_000,
-            player_class_index: 1,  // Warrior
+            player_class_index: 2,  // Paladin
             player_race_index: 0,   // Human
             rot_damage_level: 0,    // Light
             player_buffs: default_player_buffs(),
             fps: 0.0,
             start_time: Instant::now(),
+            casting: None,
+            next_cast_id: 1,
         }
     }
 }
@@ -482,18 +500,18 @@ fn build_auras_from_indices(indices: &[usize]) -> Vec<AuraInfo> {
 /// Pre-populate main action bar (slots 1-12) with Protection Paladin spells.
 fn default_action_bars() -> HashMap<u32, u32> {
     let prot_paladin_bar: &[(u32, u32)] = &[
-        (1, 19750),  // Flash of Light (1.5s cast)
-        (2, 53595),  // Hammer of the Righteous
-        (3, 275779), // Judgment
-        (4, 26573),  // Consecration
-        (5, 53600),  // Shield of the Righteous
-        (6, 85673),  // Word of Glory
+        (1, 19750),  // Flash of Light (heal)
+        (2, 31935),  // Avenger's Shield (pull/interrupt)
+        (3, 275779), // Judgment (core rotational)
+        (4, 26573),  // Consecration (ground AoE)
+        (5, 53600),  // Shield of the Righteous (active mitigation)
+        (6, 85673),  // Word of Glory (self-heal)
         (7, 62124),  // Hand of Reckoning (Taunt)
-        (8, 31850),  // Ardent Defender
-        (9, 86659),  // Guardian of Ancient Kings
-        (10, 642),   // Divine Shield
-        (11, 633),   // Lay on Hands
-        (12, 1022),  // Blessing of Protection
+        (8, 853),    // Hammer of Justice (stun)
+        (9, 375576), // Divine Toll (AoE ability)
+        (10, 31850), // Ardent Defender (defensive CD)
+        (11, 86659), // Guardian of Ancient Kings (defensive CD)
+        (12, 642),   // Divine Shield (oh-shit button)
     ];
     prot_paladin_bar.iter().copied().collect()
 }

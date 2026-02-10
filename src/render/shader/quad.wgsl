@@ -125,29 +125,29 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         color = tex_color * in.color;
     }
 
-    // Apply blend mode adjustments
-    // Note: Actual blending is handled by the pipeline blend state,
-    // but we can adjust the output color for additive effects
+    // Premultiplied alpha blending: pipeline uses src + dst * (1 - src.a).
+    // Normal: output (rgb * a, a) → src.rgb*a + dst * (1-a) = correct alpha blend.
+    // Additive: output (rgb * a, 0) → src.rgb*a + dst * 1 = correct additive.
     let blend_mode = in.flags & 0xFFu;
     if blend_mode == BLEND_ADDITIVE {
-        // For additive blending, we want the color to add to the background
-        // The pipeline should be set to additive blend for these quads
-        // For now, just boost the alpha slightly for visibility
-        color.a = min(color.a * 1.5, 1.0);
+        color = vec4f(color.rgb * color.a, 0.0);
+    } else {
+        color = vec4f(color.rgb * color.a, color.a);
     }
 
     // Circle clip (for minimap) — uses local_uv which is preserved across atlas remapping
+    // Scale both premultiplied RGB and alpha together.
     const FLAG_CIRCLE_CLIP: u32 = 0x100u;
     if (in.flags & FLAG_CIRCLE_CLIP) != 0u {
         let centered = in.local_uv * 2.0 - 1.0;
         let dist = length(centered);
-        color.a *= 1.0 - smoothstep(0.96, 1.0, dist);
+        color *= 1.0 - smoothstep(0.96, 1.0, dist);
     }
 
-    // Mask texture sampling — multiply alpha by the mask texture's alpha channel
+    // Mask texture sampling — scale premultiplied output by mask alpha
     if in.mask_tex_index >= 0 {
         let mask_color = sample_tiered_texture(in.mask_tex_index, in.mask_tex_coords);
-        color.a *= mask_color.a;
+        color *= mask_color.a;
     }
 
     return color;

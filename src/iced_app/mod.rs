@@ -16,6 +16,7 @@ mod keybinds;
 pub mod layout;
 mod message_frame_render;
 mod nine_slice;
+mod masking;
 mod render;
 mod statusbar;
 mod state;

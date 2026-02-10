@@ -390,6 +390,10 @@ fn register_streaming_stubs(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     globals.set("GetFileStreamingStatus", lua.create_function(|_, ()| Ok(0i32))?)?;
     globals.set("GetBackgroundLoadingStatus", lua.create_function(|_, ()| Ok(0i32))?)?;
+    globals.set(
+        "GetMovieDownloadProgress",
+        lua.create_function(|_, _movie_id: i32| Ok((false, 0i32, 0i32)))?,
+    )?;
     Ok(())
 }
 
@@ -408,6 +412,16 @@ fn register_network_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()
     globals.set(
         "GetNetStats",
         lua.create_function(|_, ()| Ok((0.0f64, 0.0f64, 0.0f64, 0.0f64)))?,
+    )?;
+    // GetAvailableBandwidth() -> bandwidth (number)
+    globals.set(
+        "GetAvailableBandwidth",
+        lua.create_function(|_, ()| Ok(0.0f64))?,
+    )?;
+    // GetDownloadedPercentage() -> fraction (0.0-1.0)
+    globals.set(
+        "GetDownloadedPercentage",
+        lua.create_function(|_, ()| Ok(1.0f64))?,
     )?;
     // GetFramerate() -> framerate (fps)
     let st = Rc::clone(state);
@@ -442,6 +456,24 @@ fn register_input_state_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resul
                 }
                 None => Ok(Value::Nil),
             }
+        })?,
+    )?;
+    // GetMouseFoci() - returns a table of frames under the cursor (WoW 10.x+).
+    // Simplified: returns a single-element table with the hovered frame.
+    let st2 = Rc::clone(state);
+    globals.set(
+        "GetMouseFoci",
+        lua.create_function(move |lua, ()| {
+            let tbl = lua.create_table()?;
+            let hovered = st2.borrow().hovered_frame;
+            if let Some(id) = hovered {
+                let handle = FrameHandle {
+                    id,
+                    state: Rc::clone(&st2),
+                };
+                tbl.raw_set(1, lua.create_userdata(handle)?)?;
+            }
+            Ok(tbl)
         })?,
     )?;
     globals.set("GetMouseButtonClicked", lua.create_function(|_, ()| Ok(""))?)?;

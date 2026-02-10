@@ -512,6 +512,18 @@ fn register_error_handlers(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
+    // Internal error reporter used by generated Lua code (chained handlers,
+    // lifecycle scripts).  Unlike `print()`, this always logs to stderr and
+    // invokes the Lua error handler regardless of whether Blizzard_PrintHandler
+    // has overridden `print`.
+    globals.set(
+        "__report_script_error",
+        lua.create_function(|lua, msg: String| {
+            super::super::script_helpers::call_error_handler(lua, &msg);
+            Ok(())
+        })?,
+    )?;
+
     Ok(())
 }
 

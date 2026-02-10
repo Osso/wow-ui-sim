@@ -164,6 +164,7 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     // Apply ButtonText and EditBox FontString
     apply_button_text(lua, template, frame_name, frame_name);
     apply_editbox_fontstring(lua, template, frame_name, frame_name);
+    apply_button_fonts(lua, template, frame_name);
     apply_animation_groups(lua, template, frame_name);
 
     // Create child frames defined in the template
@@ -673,6 +674,20 @@ fn apply_button_text(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, 
              if n > 0 then p.Text = select(n, p:GetRegions()) end \
              end end",
             lua_global_ref(frame_name)
+        );
+        let _ = lua.load(&code).exec();
+    }
+}
+
+/// Apply NormalFont/HighlightFont/DisabledFont from template XML.
+fn apply_button_fonts(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
+    let frame_ref = lua_global_ref(frame_name);
+    for (setter, font_ref) in frame.button_fonts() {
+        let Some(font_ref) = font_ref else { continue };
+        let Some(style) = font_ref.style.as_deref().or(font_ref.inherits.as_deref()) else { continue };
+        let code = format!(
+            "do local f={frame_ref} local fo={style} if f and fo then f:{setter}(fo) \
+             if f.Text and f.Text.SetFontObject then f.Text:SetFontObject(fo) end end end"
         );
         let _ = lua.load(&code).exec();
     }

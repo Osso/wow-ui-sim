@@ -123,6 +123,8 @@ pub struct FrameXml {
     pub set_all_points: Option<bool>,
     #[serde(rename = "@enableMouse")]
     pub enable_mouse: Option<bool>,
+    #[serde(rename = "@clampedToScreen")]
+    pub clamped_to_screen: Option<bool>,
     /// Button text attribute (localization key or literal text).
     #[serde(rename = "@text")]
     pub text: Option<String>,
@@ -321,6 +323,27 @@ impl FrameXml {
             FrameChildElement::FontString(f) => Some(f),
             _ => None,
         })
+    }
+
+    /// Get font references for button state fonts (NormalFont, HighlightFont, DisabledFont).
+    pub fn button_fonts(&self) -> [(&str, Option<&FontRefXml>); 3] {
+        let normal = self.children.iter().find_map(|c| match c {
+            FrameChildElement::NormalFont(f) => Some(f),
+            _ => None,
+        });
+        let highlight = self.children.iter().find_map(|c| match c {
+            FrameChildElement::HighlightFont(f) => Some(f),
+            _ => None,
+        });
+        let disabled = self.children.iter().find_map(|c| match c {
+            FrameChildElement::DisabledFont(f) => Some(f),
+            _ => None,
+        });
+        [
+            ("SetNormalFontObject", normal),
+            ("SetHighlightFontObject", highlight),
+            ("SetDisabledFontObject", disabled),
+        ]
     }
 }
 

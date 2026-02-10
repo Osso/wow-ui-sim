@@ -72,7 +72,7 @@ pub(super) fn create_texture_from_template(
         code.push_str(&format!("            tex:SetBlendMode(\"{}\")\n", mode));
     }
 
-    append_deferred_mask_wiring(&mut code, is_mask, texture);
+    append_mask_wiring(&mut code, is_mask, texture);
 
     code.push_str("        end\n");
     if let Err(e) = lua.load(&code).exec() {
@@ -95,30 +95,27 @@ fn apply_texture_animations(lua: &Lua, texture: &crate::xml::TextureXml, child_n
     let _ = lua.load(&anim_code).exec();
 }
 
-/// Append deferred MaskedTextures wiring to Lua code.
+/// Wire MaskedTextures: call AddMaskTexture on each referenced sibling.
 ///
-/// Uses `C_Timer.After(0, ...)` because layers are processed before child frames —
-/// referenced siblings (e.g. `HealthBar.MyHealPredictionBar.Fill`) may not exist yet.
-/// Dotted paths get multi-level nil guards to avoid "attempt to index nil" errors.
-fn append_deferred_mask_wiring(code: &mut String, is_mask: bool, texture: &crate::xml::TextureXml) {
+/// Tries synchronous wiring first (matching the XML loader). For dotted
+/// paths (e.g. `HealthBar.MyHealPredictionBar.Fill`) where the target may
+/// not exist yet, defers via `C_Timer.After(0, ...)` as a fallback.
+fn append_mask_wiring(code: &mut String, is_mask: bool, texture: &crate::xml::TextureXml) {
     if !is_mask {
         return;
     }
     let Some(ref masked) = texture.masked_textures else { return };
-    let mut mask_lines = Vec::new();
     for entry in &masked.entries {
-        if let Some(ref key) = entry.child_key {
-            mask_lines.push(safe_add_mask_texture_code("parent", key));
+        let Some(ref key) = entry.child_key else { continue };
+        let line = safe_add_mask_texture_code("parent", key);
+        // Simple keys (same-layer siblings) — wire synchronously.
+        // Dotted keys (nested children) — defer in case the target isn't created yet.
+        if key.contains('.') {
+            code.push_str(&format!("            C_Timer.After(0, function() {line} end)\n"));
+        } else {
+            code.push_str(&format!("            {line}\n"));
         }
     }
-    if mask_lines.is_empty() {
-        return;
-    }
-    code.push_str("            C_Timer.After(0, function()\n");
-    for line in &mask_lines {
-        code.push_str(&format!("                {line}\n"));
-    }
-    code.push_str("            end)\n");
 }
 
 /// Generate Lua code that safely navigates a dotted childKey path and calls AddMaskTexture.
@@ -145,8 +142,17 @@ fn safe_add_mask_texture_code(root: &str, key: &str) -> String {
 fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml, var: &str) {
     if let Some(size) = &texture.size {
         let (width, height) = get_size_values(size);
-        if let (Some(w), Some(h)) = (width, height) {
-            code.push_str(&format!("            {}:SetSize({}, {})\n", var, w, h));
+        match (width, height) {
+            (Some(w), Some(h)) => {
+                code.push_str(&format!("            {}:SetSize({}, {})\n", var, w, h));
+            }
+            (Some(w), None) => {
+                code.push_str(&format!("            {}:SetWidth({})\n", var, w));
+            }
+            (None, Some(h)) => {
+                code.push_str(&format!("            {}:SetHeight({})\n", var, h));
+            }
+            _ => {}
         }
     }
     if let Some(file) = &texture.file {
@@ -278,8 +284,17 @@ pub(super) fn create_fontstring_from_template(
 fn append_fontstring_size_and_text(code: &mut String, fs: &crate::xml::FontStringXml) {
     if let Some(size) = fs.size.last() {
         let (width, height) = get_size_values(size);
-        if let (Some(w), Some(h)) = (width, height) {
-            code.push_str(&format!("            fs:SetSize({}, {})\n", w, h));
+        match (width, height) {
+            (Some(w), Some(h)) => {
+                code.push_str(&format!("            fs:SetSize({}, {})\n", w, h));
+            }
+            (Some(w), None) => {
+                code.push_str(&format!("            fs:SetWidth({})\n", w));
+            }
+            (None, Some(h)) => {
+                code.push_str(&format!("            fs:SetHeight({})\n", h));
+            }
+            _ => {}
         }
     }
     if let Some(text_key) = &fs.text {
@@ -403,8 +418,17 @@ pub(super) fn create_thumb_texture_from_template(
 
     if let Some(size) = &thumb.size {
         let (width, height) = get_size_values(size);
-        if let (Some(w), Some(h)) = (width, height) {
-            code.push_str(&format!("            thumb:SetSize({}, {})\n", w, h));
+        match (width, height) {
+            (Some(w), Some(h)) => {
+                code.push_str(&format!("            thumb:SetSize({}, {})\n", w, h));
+            }
+            (Some(w), None) => {
+                code.push_str(&format!("            thumb:SetWidth({})\n", w));
+            }
+            (None, Some(h)) => {
+                code.push_str(&format!("            thumb:SetHeight({})\n", h));
+            }
+            _ => {}
         }
     }
     if let Some(file) = &thumb.file {
@@ -488,8 +512,17 @@ fn build_button_texture_code(
 
     if let Some(size) = &texture.size {
         let (width, height) = get_size_values(size);
-        if let (Some(w), Some(h)) = (width, height) {
-            code.push_str(&format!("            tex:SetSize({}, {})\n", w, h));
+        match (width, height) {
+            (Some(w), Some(h)) => {
+                code.push_str(&format!("            tex:SetSize({}, {})\n", w, h));
+            }
+            (Some(w), None) => {
+                code.push_str(&format!("            tex:SetWidth({})\n", w));
+            }
+            (None, Some(h)) => {
+                code.push_str(&format!("            tex:SetHeight({})\n", h));
+            }
+            _ => {}
         }
     }
 

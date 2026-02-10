@@ -116,6 +116,14 @@ Each addon shows timing: `(total: io=X xml=X lua=X sv=X)`
 
 - `BetterWardrobe/ColorFilter.lua` has very large constant tables (works in WoW's patched LuaJIT)
 
+### Frame Re-creation and Orphaned Children
+
+Several frames are pre-created in Rust before XML addons load (UIParent, WorldFrame, GameTooltip, etc.). When a Blizzard XML addon later defines a frame with the same name, `CreateFrame` creates a NEW frame with a new ID, orphaning the old one. Any children that were parented to the old frame become invisible because `collect_ancestor_visible_ids` can't reach them — the old frame is hidden and disconnected from the tree.
+
+This is load-order dependent: if addon A creates a child of UIParent, and addon B (loaded later) re-creates UIParent via XML, the child is stranded on the old UIParent. Example: Blizzard_GameTooltip loads before Blizzard_UIParent, so GameTooltip ends up parented to the old UIParent.
+
+**Fix**: `register_new_frame` in `create_frame.rs` calls `migrate_children_to_new_frame()` which reparents all children (updating both `parent_id` and the new parent's `children` Vec / `children_keys` HashMap). When debugging invisible frames, check for duplicate IDs via name lookup — if a frame's parent points to an orphaned/hidden frame, this migration didn't cover it.
+
 ### Button Texture Rendering
 
 WoW buttons are **transparent by default** — `build_button_quads` renders nothing when `normal_texture` is None. Visuals come from:

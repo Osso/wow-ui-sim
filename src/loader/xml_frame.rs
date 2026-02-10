@@ -42,11 +42,10 @@ pub fn create_frame_from_xml(
         None => return Ok(None),
     };
 
-    // Explicit parent from XML child context or `parent` attribute.
-    // Top-level frames without a parent attribute are created with nil parent
-    // (matching WoW behavior), but UIParent is used as fallback for anchor
-    // resolution and parentKey assignment.
-    let explicit_parent = parent_override.or(frame.parent.as_deref());
+    let inherited_parent_buf = resolve_parent(frame, parent_override);
+    let explicit_parent = parent_override
+        .or(frame.parent.as_deref())
+        .or(inherited_parent_buf.as_deref());
     let parent = explicit_parent.unwrap_or("UIParent");
 
     // Prepend intrinsic base template to the inherits chain so the intrinsic
@@ -71,6 +70,7 @@ pub fn create_frame_from_xml(
     append_hidden_code(&mut lua_code, frame, inherits);
     append_alpha_code(&mut lua_code, frame, inherits);
     append_enable_mouse_code(&mut lua_code, frame, inherits);
+    append_clamped_to_screen_code(&mut lua_code, frame, inherits);
     append_set_all_points_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
     append_xml_attributes_code(&mut lua_code, frame);
@@ -140,6 +140,24 @@ fn resolve_frame_name(frame: &crate::xml::FrameXml, parent_override: Option<&str
     }
 }
 
+/// Resolve the parent for a frame, checking inherited templates when the frame
+/// itself has no explicit `parent` attribute (e.g. ClassPowerBarFrame defines
+/// `parent="PlayerFrame"` which propagates to PaladinPowerBarFrame).
+///
+/// Returns `Some(parent_name)` from the template chain, or `None` if no
+/// template provides a parent.  The caller should prefer `parent_override`
+/// and `frame.parent` first.
+fn resolve_parent(frame: &crate::xml::FrameXml, parent_override: Option<&str>) -> Option<String> {
+    if parent_override.is_some() || frame.parent.is_some() {
+        return None; // Already have an explicit parent, no need to search templates.
+    }
+    frame.inherits.as_deref().and_then(|inherits| {
+        crate::xml::get_template_chain(inherits)
+            .iter()
+            .find_map(|entry| entry.frame.parent.clone())
+    })
+}
+
 /// Build the initial `CreateFrame(...)` Lua code.
 fn build_create_frame_code(widget_type: &str, name: &str, parent: Option<&str>, inherits: &str) -> String {
     let inherits_arg = if inherits.is_empty() {
@@ -206,34 +224,17 @@ fn append_parent_key_code(lua_code: &mut String, frame: &crate::xml::FrameXml, p
     append_parent_array_code(lua_code, frame, parent);
 }
 
-/// Append parentArray insertion from the frame or its inherited templates.
+/// Append parentArray insertion when the attribute is directly on this frame.
 ///
-/// When `parentArray` is inherited from a template that also defines `parent`,
-/// the template's parent is used as the target (not the frame's resolved parent).
+/// Template-inherited parentArray is handled by `apply_parent_array_from_template`
+/// inside `CreateFrame`, so we only handle the direct-attribute case here.
 fn append_parent_array_code(lua_code: &mut String, frame: &crate::xml::FrameXml, parent: &str) {
-    // Check the frame itself first
     if let Some(parent_array) = &frame.parent_array {
         let parent_ref = lua_global_ref(parent);
         lua_code.push_str(&format!(
             "\n        {parent_ref}.{parent_array} = {parent_ref}.{parent_array} or {{}}\n        \
              table.insert({parent_ref}.{parent_array}, frame)\n        ",
         ));
-        return;
-    }
-    // Check inherited templates — use the template's own parent if defined
-    let inherits = frame.inherits.as_deref().unwrap_or("");
-    if !inherits.is_empty() {
-        for entry in &crate::xml::get_template_chain(inherits) {
-            if let Some(parent_array) = &entry.frame.parent_array {
-                let target = entry.frame.parent.as_deref().unwrap_or(parent);
-                let target_ref = lua_global_ref(target);
-                lua_code.push_str(&format!(
-                    "\n        {target_ref}.{parent_array} = {target_ref}.{parent_array} or {{}}\n        \
-                     table.insert({target_ref}.{parent_array}, frame)\n        ",
-                ));
-                return;
-            }
-        }
     }
 }
 
@@ -381,6 +382,24 @@ fn append_enable_mouse_code(lua_code: &mut String, frame: &crate::xml::FrameXml,
         frame:EnableMouse({})
         "#,
             if enabled { "true" } else { "false" }
+        ));
+    }
+}
+
+/// Resolve clampedToScreen from the frame and templates, then call SetClampedToScreen.
+fn append_clamped_to_screen_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
+    let mut clamped = frame.clamped_to_screen;
+    if clamped.is_none() && !inherits.is_empty() {
+        for entry in &crate::xml::get_template_chain(inherits) {
+            if let Some(c) = entry.frame.clamped_to_screen {
+                clamped = Some(c);
+            }
+        }
+    }
+    if let Some(c) = clamped {
+        lua_code.push_str(&format!(
+            "\n        frame:SetClampedToScreen({})\n        ",
+            if c { "true" } else { "false" }
         ));
     }
 }

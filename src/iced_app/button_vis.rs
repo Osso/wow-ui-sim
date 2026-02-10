@@ -1,15 +1,50 @@
-//! Button state-dependent texture visibility.
+//! Frame visibility resolution for rendering.
 //!
-//! WoW buttons have child Texture widgets (NormalTexture, PushedTexture,
-//! HighlightTexture, DisabledTexture) whose visibility depends on button state.
+//! Handles button state-dependent texture visibility (NormalTexture, PushedTexture,
+//! HighlightTexture, DisabledTexture) and WoW HIGHLIGHT draw layer semantics
+//! (regions only visible when parent is hovered).
 
-use crate::widget::{WidgetRegistry, WidgetType};
+use crate::widget::{DrawLayer, WidgetRegistry, WidgetType};
 
-/// Check if a frame is a button state texture and return its state-driven visibility.
+/// Decide whether a frame should be skipped during rendering.
 ///
-/// Returns `Some(true/false)` for state textures (overrides frame.visible),
-/// or `None` for all other frames (use normal visibility rules).
-pub fn resolve_visibility(
+/// Checks: subtree filter, zero alpha, HIGHLIGHT draw layer hover rules,
+/// and button state texture visibility.
+pub fn should_skip_frame(
+    f: &crate::widget::Frame,
+    id: u64,
+    eff_alpha: f32,
+    visible_ids: &Option<std::collections::HashSet<u64>>,
+    registry: &WidgetRegistry,
+    pressed_frame: Option<u64>,
+    hovered_frame: Option<u64>,
+) -> bool {
+    if let Some(ids) = visible_ids {
+        if !ids.contains(&id) {
+            return true;
+        }
+    }
+    if eff_alpha <= 0.0 {
+        return true;
+    }
+    // WoW HIGHLIGHT draw layer: regions only visible when parent is hovered.
+    // This is separate from the HighlightTexture button child (handled below).
+    if f.draw_layer == DrawLayer::Highlight {
+        let parent_hovered = f.parent_id.is_some() && hovered_frame == f.parent_id;
+        if !parent_hovered {
+            return true;
+        }
+    }
+
+    let state_override = resolve_button_visibility(f, id, registry, pressed_frame, hovered_frame);
+    match state_override {
+        Some(false) => true,
+        Some(true) => false,
+        None => !f.visible,
+    }
+}
+
+fn resolve_button_visibility(
     f: &crate::widget::Frame,
     id: u64,
     registry: &WidgetRegistry,
@@ -46,7 +81,7 @@ fn texture_visibility(
         return None;
     }
     let is_disabled = !is_enabled(parent);
-    let is_pressed = !is_disabled && pressed_frame == Some(parent_id);
+    let is_pressed = !is_disabled && (pressed_frame == Some(parent_id) || parent.button_state == 1);
     let is_hovered = !is_disabled && hovered_frame == Some(parent_id);
 
     if parent.children_keys.get("DisabledTexture") == Some(&texture_id) {

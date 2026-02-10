@@ -170,12 +170,17 @@ fn format_atlas_entry(
         return None;
     }
 
+    // Use OverrideWidth/OverrideHeight for display size when non-zero,
+    // otherwise fall back to the raw atlas pixel dimensions.
+    let display_w = if member.override_width > 0 { member.override_width } else { member.width };
+    let display_h = if member.override_height > 0 { member.override_height } else { member.height };
+
     Some(format!(
         "\"{}\" => AtlasInfo {{ file: r\"{}\", width: {}, height: {}, \
          left_tex_coord: {:.6}, right_tex_coord: {:.6}, \
          top_tex_coord: {:.6}, bottom_tex_coord: {:.6}, \
          tiles_horizontally: {}, tiles_vertically: {} }},",
-        name_lower, wow_path, member.width, member.height,
+        name_lower, wow_path, display_w, display_h,
         left, right, top, bottom, tiles_h, tiles_v
     ))
 }
@@ -215,6 +220,8 @@ struct MemberEntry {
     right: u32,
     top: u32,
     bottom: u32,
+    override_width: u32,
+    override_height: u32,
     flags: u32,
 }
 
@@ -293,6 +300,8 @@ fn load_members(path: &Path) -> Result<Vec<MemberEntry>, Box<dyn std::error::Err
                 right: fields[6].parse()?,
                 top: fields[7].parse()?,
                 bottom: fields[8].parse()?,
+                override_width: fields[10].parse().unwrap_or(0),
+                override_height: fields[11].parse().unwrap_or(0),
                 flags: fields[12].parse().unwrap_or(0),
             });
         }

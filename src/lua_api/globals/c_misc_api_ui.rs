@@ -313,16 +313,22 @@ fn register_c_spec_info(lua: &Lua) -> Result<()> {
     t.set("CanPlayerUseTalentSpecUI", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("CanPlayerUseTalentUI", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("IsInitialized", lua.create_function(|_, ()| Ok(true))?)?;
-    t.set("GetSpecialization", lua.create_function(|_, ()| Ok(1i32))?)?;
+    t.set("GetSpecialization", lua.create_function(|_, ()| Ok(2i32))?)?;
     t.set("GetSpecializationInfo", lua.create_function(|lua, idx: i32| {
-        let spec_id = match idx { 1 => 71, 2 => 72, 3 => 73, _ => 71 };
+        // Paladin specs: 1=Holy, 2=Protection, 3=Retribution
+        let (spec_id, name, icon, role) = match idx {
+            1 => (65, "Holy", 135920i64, "HEALER"),
+            2 => (66, "Protection", 236264i64, "TANK"),
+            3 => (70, "Retribution", 135873i64, "DAMAGER"),
+            _ => (65, "Holy", 135920i64, "HEALER"),
+        };
         Ok(mlua::MultiValue::from_vec(vec![
             Value::Integer(spec_id),
-            Value::String(lua.create_string("Arms")?),
-            Value::String(lua.create_string("A battle-hardened master of weapons.")?),
-            Value::Integer(132355),
-            Value::String(lua.create_string("DAMAGER")?),
-            Value::Integer(1),
+            Value::String(lua.create_string(name)?),
+            Value::String(lua.create_string("Paladin specialization.")?),
+            Value::Integer(icon),
+            Value::String(lua.create_string(role)?),
+            Value::Integer(2), // classID = Paladin
         ]))
     })?)?;
     t.set("GetAllSelectedPvpTalentIDs", lua.create_function(|lua, ()| lua.create_table())?)?;

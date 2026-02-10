@@ -60,8 +60,13 @@ fn register_c_achievement_info(lua: &Lua) -> Result<()> {
 
 fn register_c_class_talents(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
-    t.set("GetActiveConfigID", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    t.set("GetConfigIDsBySpecID", lua.create_function(|lua, _spec_id: Option<i32>| lua.create_table())?)?;
+    t.set("GetActiveConfigID", lua.create_function(|_, ()| Ok(1i32))?)?;
+    t.set("GetConfigIDsBySpecID", lua.create_function(|lua, _spec_id: Option<i32>| {
+        let t = lua.create_table()?;
+        t.set(1, 1i32)?;
+        Ok(t)
+    })?)?;
+    t.set("CanEditTalents", lua.create_function(|_, ()| Ok((true, Value::Nil)))?)?;
     t.set("GetStarterBuildActive", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetHasStarterBuild", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetHeroTalentSpecsForClassSpec", lua.create_function(|lua, (_cfg, _spec): (Option<i32>, Option<i32>)| {

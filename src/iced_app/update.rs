@@ -93,8 +93,13 @@ impl App {
                 let _ = env.fire_script_handler(new_id, "OnEnter", vec![]);
             }
         }
-        // Hover highlights are appended dynamically in draw() — no quad rebuild needed.
-        self.drain_console();
+        // OnEnter/OnLeave scripts may show/hide tooltips or change widget state.
+        // Check if Lua mutated any widget and invalidate the quad cache if so.
+        if self.env.borrow().state().borrow().widgets.take_render_dirty() {
+            self.invalidate();
+        } else {
+            self.drain_console();
+        }
     }
 
     fn handle_mouse_down(&mut self, pos: Point) {
@@ -346,6 +351,7 @@ impl App {
         self.run_wow_timers();
         self.fire_on_update();
         self.tick_party_health();
+        self.tick_casting();
         let widgets_changed = self.env.borrow().state().borrow().widgets.take_render_dirty();
         if widgets_changed {
             self.invalidate();
@@ -410,6 +416,15 @@ impl App {
                 "UNIT_HEALTH",
                 &[mlua::Value::String(env.lua().create_string(&unit_id).unwrap())],
             );
+        }
+    }
+
+    fn tick_casting(&mut self) {
+        let env = self.env.borrow();
+        let completed = extract_completed_cast(env.state());
+        if let Some((cast_id, spell_id)) = completed {
+            fire_cast_complete_events(&env, cast_id, spell_id);
+            apply_heal_effect(env.state(), &env, spell_id);
         }
     }
 
@@ -586,5 +601,77 @@ impl App {
         self.log_messages.append(&mut state.console_output);
     }
 
+}
+
+/// Check if a cast has completed and extract its info, clearing state.
+fn extract_completed_cast(
+    state: &std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>,
+) -> Option<(u32, u32)> {
+    let mut s = state.borrow_mut();
+    let c = s.casting.as_ref()?;
+    let now = s.start_time.elapsed().as_secs_f64();
+    if now < c.end_time {
+        return None;
+    }
+    let cast_id = c.cast_id;
+    let spell_id = c.spell_id;
+    s.casting = None;
+    Some((cast_id, spell_id))
+}
+
+/// Fire UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED events.
+fn fire_cast_complete_events(
+    env: &crate::lua_api::WowLuaEnv,
+    cast_id: u32,
+    spell_id: u32,
+) {
+    let lua = env.lua();
+    let Ok(player) = lua.create_string("player") else { return };
+    let args = &[
+        mlua::Value::String(player.clone()),
+        mlua::Value::Integer(cast_id as i64),
+        mlua::Value::Integer(spell_id as i64),
+    ];
+    let _ = env.fire_event_with_args("UNIT_SPELLCAST_STOP", args);
+    let _ = env.fire_event_with_args("UNIT_SPELLCAST_SUCCEEDED", args);
+}
+
+/// Apply healing from a completed cast spell to the target or self.
+fn apply_heal_effect(
+    state: &std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>,
+    env: &crate::lua_api::WowLuaEnv,
+    spell_id: u32,
+) {
+    const HEAL_AMOUNT: i32 = 20_000;
+    // Only healing spells apply an effect
+    let is_heal = matches!(spell_id, 19750 | 82326 | 85673);
+    if !is_heal {
+        return;
+    }
+    let unit_event = {
+        let mut s = state.borrow_mut();
+        if let Some(ref mut t) = s.current_target {
+            if !t.is_enemy {
+                t.health = (t.health + HEAL_AMOUNT).min(t.health_max);
+                Some(t.unit_id.clone())
+            } else {
+                // Heal self when targeting enemy
+                s.player_health = (s.player_health + HEAL_AMOUNT).min(s.player_health_max);
+                Some("player".to_string())
+            }
+        } else {
+            s.player_health = (s.player_health + HEAL_AMOUNT).min(s.player_health_max);
+            Some("player".to_string())
+        }
+    };
+    if let Some(unit) = unit_event {
+        let lua = env.lua();
+        if let Ok(unit_str) = lua.create_string(&unit) {
+            let _ = env.fire_event_with_args(
+                "UNIT_HEALTH",
+                &[mlua::Value::String(unit_str)],
+            );
+        }
+    }
 }
 

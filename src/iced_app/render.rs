@@ -8,7 +8,7 @@ use crate::render::font::WowFontSystem;
 use crate::render::glyph::{emit_text_quads, GlyphAtlas};
 use crate::render::shader::GLYPH_ATLAS_TEX_INDEX;
 use crate::render::texture::UI_SCALE;
-use crate::render::{BlendMode, GpuTextureData, QuadBatch, TextureRequest, WowUiPrimitive};
+use crate::render::{BlendMode, GpuTextureData, QuadBatch, WowUiPrimitive};
 use crate::widget::{TextJustify, WidgetType};
 
 use super::app::App;
@@ -322,43 +322,7 @@ fn apply_bar_fill_with_uvs(
 }
 
 use super::tiling::emit_tiled_texture;
-
-/// Apply mask texture to recently emitted quads by setting mask_tex_index/mask_tex_coords
-/// for GPU alpha sampling (resolved to atlas coords during prepare).
-///
-/// The mask frame is typically larger than the icon (e.g. 64x64 mask centered on a 45x45
-/// icon). We compute mask UVs based on where the icon falls within the mask's area.
-fn apply_mask_texture(
-    batch: &mut QuadBatch, vert_before: usize, icon_bounds: Rectangle,
-    mask_textures: &[u64], registry: &crate::widget::WidgetRegistry,
-) {
-    let count = batch.vertices.len() - vert_before;
-    if count == 0 || mask_textures.is_empty() { return; }
-    let Some(mask_frame) = registry.get(mask_textures[0]) else { return };
-    let Some(ref mask_path) = mask_frame.texture else { return };
-    let (tl, tr, tt, tb) = mask_frame.tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
-    // Compute icon-to-mask UV ratio using atlas dimensions.
-    let mask_uvs = mask_frame.atlas.as_ref()
-        .and_then(|name| crate::atlas::get_atlas_info(name))
-        .map(|lookup| {
-            let (mw, mh) = (lookup.width() as f32 * UI_SCALE, lookup.height() as f32 * UI_SCALE);
-            let (rw, rh) = ((icon_bounds.width / mw).min(1.0), (icon_bounds.height / mh).min(1.0));
-            let (ul, ur) = (tl + (0.5 - rw / 2.0) * (tr - tl), tl + (0.5 + rw / 2.0) * (tr - tl));
-            let (ut, ub) = (tt + (0.5 - rh / 2.0) * (tb - tt), tt + (0.5 + rh / 2.0) * (tb - tt));
-            [[ul, ut], [ur, ut], [ur, ub], [ul, ub]]
-        })
-        .unwrap_or([[tl, tt], [tr, tt], [tr, tb], [tl, tb]]);
-    for i in (vert_before..batch.vertices.len()).step_by(4) {
-        let end = (i + 4).min(batch.vertices.len());
-        for (j, v) in batch.vertices[i..end].iter_mut().enumerate() {
-            v.mask_tex_index = -2;
-            v.mask_tex_coords = mask_uvs[j];
-        }
-    }
-    batch.mask_texture_requests.push(TextureRequest {
-        path: mask_path.clone(), vertex_start: vert_before as u32, vertex_count: count as u32,
-    });
-}
+use super::masking::apply_mask_texture;
 
 /// Rotate texture UV coordinates around their center for vertices added after `vert_before`.
 ///
@@ -448,6 +412,11 @@ fn emit_widget_text_quads(
 
 /// Emit quads for a single visible frame based on its widget type.
 #[allow(clippy::too_many_arguments)]
+/// Check if a button is visually pressed (mouse or Lua SetButtonState).
+fn is_button_pressed(f: &crate::widget::Frame, id: u64, pressed_frame: Option<u64>) -> bool {
+    pressed_frame == Some(id) || f.button_state == 1
+}
+
 fn emit_frame_quads(
     batch: &mut QuadBatch,
     id: u64,
@@ -460,6 +429,7 @@ fn emit_frame_quads(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     registry: &crate::widget::WidgetRegistry,
+    screen_size: (f32, f32),
 ) {
     match f.widget_type {
         WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
@@ -475,9 +445,7 @@ fn emit_frame_quads(
         }
         WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
         WidgetType::Button => {
-            build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
-            // Only render text on the button itself when there's no "Text" child
-            // FontString to handle it (the child renders at its own anchored position).
+            build_button_quads(batch, bounds, f, is_button_pressed(f, id, pressed_frame), hovered_frame == Some(id));
             if !f.children_keys.contains_key("Text")
                 && let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
@@ -489,7 +457,7 @@ fn emit_frame_quads(
                 let vert_before = batch.vertices.len();
                 build_texture_quads(batch, bounds, f, bar_fill);
                 if !f.mask_textures.is_empty() {
-                    apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry);
+                    apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry, screen_size);
                 }
             }
         }
@@ -500,7 +468,7 @@ fn emit_frame_quads(
                 }
         }
         WidgetType::CheckButton => {
-            build_button_quads(batch, bounds, f, pressed_frame == Some(id), hovered_frame == Some(id));
+            build_button_quads(batch, bounds, f, is_button_pressed(f, id, pressed_frame), hovered_frame == Some(id));
             if let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
                     let label_bounds = Rectangle::new(
@@ -538,33 +506,6 @@ fn emit_frame_quads(
 /// When `None`, text is skipped (legacy behavior for callers without fonts).
 #[allow(clippy::too_many_arguments)]
 /// Check if a frame should be skipped during rendering (visibility, alpha, subtree filter).
-fn should_skip_frame(
-    f: &crate::widget::Frame,
-    id: u64,
-    eff_alpha: f32,
-    visible_ids: &Option<std::collections::HashSet<u64>>,
-    registry: &crate::widget::WidgetRegistry,
-    pressed_frame: Option<u64>,
-    hovered_frame: Option<u64>,
-) -> bool {
-    if let Some(ids) = visible_ids {
-        if !ids.contains(&id) {
-            return true;
-        }
-    }
-    if eff_alpha <= 0.0 {
-        return true;
-    }
-    let state_override = super::button_vis::resolve_visibility(
-        f, id, registry, pressed_frame, hovered_frame,
-    );
-    match state_override {
-        Some(false) => true,
-        Some(true) => false,
-        None => !f.visible,
-    }
-}
-
 pub fn build_quad_batch_for_registry(
     registry: &crate::widget::WidgetRegistry,
     screen_size: (f32, f32),
@@ -596,7 +537,7 @@ pub fn build_quad_batch_for_registry(
     let statusbar_fills = collect_statusbar_fills(registry);
 
     for (id, f, rect, eff_alpha) in frames {
-        if should_skip_frame(f, id, eff_alpha, &visible_ids, registry, pressed_frame, hovered_frame) {
+        if super::button_vis::should_skip_frame(f, id, eff_alpha, &visible_ids, registry, pressed_frame, hovered_frame) {
             continue;
         }
         let is_fontstring = matches!(f.widget_type, WidgetType::FontString);
@@ -605,7 +546,7 @@ pub fn build_quad_batch_for_registry(
         }
         let bounds = Rectangle::new(Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE), Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE));
         let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx, message_frames, tooltip_data, registry);
+        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx, message_frames, tooltip_data, registry, screen_size);
     }
     batch
 }
@@ -726,7 +667,7 @@ impl App {
 
         // Emit the button's own highlight (from build_button_quads hover path)
         let has_highlight_child = f.children_keys.contains_key("HighlightTexture");
-        let is_pressed = self.pressed_frame == Some(hovered_id);
+        let is_pressed = is_button_pressed(f, hovered_id, self.pressed_frame);
         if !is_pressed && !has_highlight_child {
             emit_button_highlight(quads, bounds, f);
         }

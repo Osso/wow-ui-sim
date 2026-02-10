@@ -71,6 +71,7 @@ pub fn register_unit_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> 
     register_threat_functions(lua)?;
     register_classification_functions(lua)?;
     register_casting_functions(lua)?;
+    register_unit_casting_info(lua, state.clone())?;
     register_aura_functions(lua, state.clone())?;
     register_weapon_enchant_functions(lua)?;
     register_xp_functions(lua)?;
@@ -562,18 +563,38 @@ fn register_classification_functions(lua: &Lua) -> Result<()> {
 
 /// Register UnitCastingInfo, UnitChannelInfo.
 fn register_casting_functions(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-
-    globals.set(
-        "UnitCastingInfo",
-        lua.create_function(|_, _unit: Option<String>| Ok(Value::Nil))?,
-    )?;
-    globals.set(
+    // UnitCastingInfo needs state — registered in register_unit_api instead.
+    lua.globals().set(
         "UnitChannelInfo",
         lua.create_function(|_, _unit: Option<String>| Ok(Value::Nil))?,
-    )?;
+    )
+}
 
-    Ok(())
+/// Register UnitCastingInfo with state access for active cast tracking.
+fn register_unit_casting_info(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    lua.globals().set(
+        "UnitCastingInfo",
+        lua.create_function(move |lua, unit: Option<String>| {
+            if unit.as_deref() != Some("player") {
+                return Ok(mlua::MultiValue::new());
+            }
+            let s = state.borrow();
+            let Some(c) = &s.casting else {
+                return Ok(mlua::MultiValue::new());
+            };
+            Ok(mlua::MultiValue::from_vec(vec![
+                Value::String(lua.create_string(&c.spell_name)?),
+                Value::String(lua.create_string(&c.spell_name)?),
+                Value::String(lua.create_string(&c.icon_path)?),
+                Value::Number(c.start_time * 1000.0),
+                Value::Number(c.end_time * 1000.0),
+                Value::Boolean(false), // isTradeSkill
+                Value::Integer(c.cast_id as i64),
+                Value::Boolean(false), // notInterruptible
+                Value::Integer(c.spell_id as i64),
+            ]))
+        })?,
+    )
 }
 
 /// Register UnitAura, UnitBuff, UnitDebuff, GetPlayerAuraBySpellID,

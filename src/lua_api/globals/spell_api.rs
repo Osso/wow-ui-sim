@@ -49,6 +49,12 @@ fn register_c_spell_book_item_methods(t: &mlua::Table, lua: &Lua) -> Result<()> 
         })?,
     )?;
     t.set("GetSpellBookItemCooldown", lua.create_function(create_spell_book_item_cooldown)?)?;
+    t.set("GetSpellBookItemPowerCost", lua.create_function(|lua, (slot, _bank): (i32, Option<i32>)| {
+        let Some((_, entry, _)) = spellbook_data::get_spell_at_slot(slot) else {
+            return Ok(Value::Nil);
+        };
+        create_spell_power_cost(lua, entry.spell_id as i32)
+    })?)?;
     t.set(
         "GetSpellBookItemAutoCast",
         lua.create_function(|_, (_slot, _bank): (i32, Option<i32>)| {
@@ -222,15 +228,41 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
     t.set("IsPressHoldReleaseSpell", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
     t.set("GetSpellLossOfControlCooldown", lua.create_function(|_, _spell_id: i32| Ok((0.0f64, 0.0f64)))?)?;
     t.set("GetMawPowerBorderAtlasBySpellID", lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?)?;
+    t.set("GetSpellPowerCost", lua.create_function(create_spell_power_cost)?)?;
 
     Ok(t)
 }
 
-fn create_spell_texture(_: &Lua, spell_id: i32) -> Result<&'static str> {
+/// Return mana cost info for a spell. WoW returns an array of SpellPowerCostInfo
+/// tables with fields: type, name, cost, minCost, costPercent, costPerSec,
+/// requiredAuraID, hasRequiredAura. Returns nil for unknown spells.
+fn create_spell_power_cost(lua: &Lua, spell_id: i32) -> Result<Value> {
+    let (power_type, power_name, cost) = match spell_id {
+        19750 => (0, "MANA", 2600),  // Flash of Light
+        82326 => (0, "MANA", 3800),  // Holy Light
+        85673 => (0, "MANA", 1800),  // Word of Glory (actually Holy Power but simplify)
+        7328 => (0, "MANA", 6400),   // Redemption
+        _ => return Ok(Value::Nil),
+    };
+    let entry = lua.create_table()?;
+    entry.set("type", power_type)?;
+    entry.set("name", power_name)?;
+    entry.set("cost", cost)?;
+    entry.set("minCost", cost)?;
+    entry.set("costPercent", 0)?;
+    entry.set("costPerSec", 0)?;
+    entry.set("requiredAuraID", 0)?;
+    entry.set("hasRequiredAura", false)?;
+    let result = lua.create_table()?;
+    result.set(1, entry)?;
+    Ok(Value::Table(result))
+}
+
+fn create_spell_texture(_: &Lua, spell_id: i32) -> Result<(i32, i32)> {
     let file_id = crate::spells::get_spell(spell_id as u32)
         .map(|s| s.icon_file_data_id)
         .unwrap_or(136243);
-    Ok(crate::manifest_interface_data::get_texture_path(file_id).unwrap_or(""))
+    Ok((file_id as i32, file_id as i32))
 }
 
 fn create_spell_link(lua: &Lua, spell_id: i32) -> Result<Value> {
@@ -249,7 +281,7 @@ fn create_spell_name(lua: &Lua, spell_id: i32) -> Result<Value> {
 }
 
 /// Cast time in milliseconds for spells that have one (WoW API returns ms).
-fn spell_cast_time(spell_id: i32) -> i32 {
+pub fn spell_cast_time(spell_id: i32) -> i32 {
     match spell_id {
         19750 => 1500,  // Flash of Light
         82326 => 2500,  // Holy Light
@@ -325,6 +357,23 @@ fn register_c_traits_config(t: &mlua::Table, lua: &Lua) -> Result<()> {
     t.set("GetConfigInfo", lua.create_function(create_config_info)?)?;
     t.set("CanPurchaseRank", lua.create_function(|_, (_a, _b, _c): (i32, i32, i32)| Ok(false))?)?;
     t.set("GetLoadoutSerializationVersion", lua.create_function(|_, ()| Ok(2i32))?)?;
+    t.set("ConfigHasStagedChanges", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("CommitConfig", lua.create_function(|_, _id: i32| Ok(true))?)?;
+    t.set("RollbackConfig", lua.create_function(|_, _id: i32| Ok(true))?)?;
+    t.set("GetStagedChanges", lua.create_function(|lua, _id: i32| {
+        Ok((lua.create_table()?, lua.create_table()?, lua.create_table()?))
+    })?)?;
+    t.set("GetStagedChangesCost", lua.create_function(|lua, _id: i32| lua.create_table())?)?;
+    t.set("PurchaseRank", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
+    t.set("RefundRank", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
+    t.set("RefundAllRanks", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
+    t.set("SetSelection", lua.create_function(|_, (_a, _b, _c): (i32, i32, i32)| Ok(false))?)?;
+    t.set("CascadeRepurchaseRanks", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
+    t.set("ClearCascadeRepurchaseHistory", lua.create_function(|_, _id: i32| Ok(()))?)?;
+    t.set("ResetTree", lua.create_function(|_, _id: i32| Ok(true))?)?;
+    t.set("ResetTreeByCurrency", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(true))?)?;
+    t.set("GenerateInspectImportString", lua.create_function(|_, _unit: String| Ok("".to_string()))?)?;
+    t.set("GetTreeHash", lua.create_function(|_, _id: i32| Ok("0".to_string()))?)?;
     Ok(())
 }
 
@@ -346,6 +395,7 @@ fn register_c_traits_node(t: &mlua::Table, lua: &Lua) -> Result<()> {
     t.set("GetDefinitionInfo", lua.create_function(create_definition_info)?)?;
     t.set("GetConditionInfo", lua.create_function(create_condition_info)?)?;
     t.set("GetSubTreeInfo", lua.create_function(create_sub_tree_info)?)?;
+    t.set("GetNodeCost", lua.create_function(|lua, (_cfg, _node): (i32, i32)| lua.create_table())?)?;
     Ok(())
 }
 
@@ -371,8 +421,8 @@ fn create_tree_info(lua: &Lua, (config_id, tree_id): (i32, i32)) -> Result<Value
     info.set("gates", lua.create_table()?)?;
     info.set("hideSinglePurchaseNodes", false)?;
     info.set("configID", config_id)?;
-    info.set("minZoom", 1.0)?;
-    info.set("maxZoom", 1.0)?;
+    info.set("minZoom", 0.75)?;
+    info.set("maxZoom", 1.2)?;
     info.set("buttonSize", 40)?;
     info.set("isLinkedToActiveConfigID", true)?;
     Ok(Value::Table(info))
@@ -427,7 +477,10 @@ fn create_node_info(lua: &Lua, (_config_id, node_id): (Value, Value)) -> Result<
     info.set("posY", node.pos_y)?;
     info.set("type", node.node_type as i32)?;
     info.set("flags", node.flags as i32)?;
-    info.set("subTreeID", node.sub_tree_id as i64)?;
+    // subTreeID must be nil (not 0) when absent — Lua treats 0 as truthy
+    if node.sub_tree_id != 0 {
+        info.set("subTreeID", node.sub_tree_id as i64)?;
+    }
 
     build_node_entry_ids(lua, &info, node)?;
     build_node_edges(lua, &info, node)?;
@@ -440,7 +493,11 @@ fn create_node_info(lua: &Lua, (_config_id, node_id): (Value, Value)) -> Result<
     info.set("activeRank", max_ranks)?;
     info.set("ranksPurchased", max_ranks)?;
     info.set("maxRanks", max_ranks)?;
-    info.set("activeEntry", node.entry_ids.first().copied().unwrap_or(0) as i64)?;
+    let active_entry = lua.create_table()?;
+    active_entry.set("entryID", node.entry_ids.first().copied().unwrap_or(0) as i64)?;
+    active_entry.set("rank", max_ranks)?;
+    info.set("activeEntry", active_entry)?;
+    info.set("isVisible", true)?;
     info.set("isAvailable", true)?;
     info.set("canPurchaseRank", false)?;
     info.set("canRefundRank", false)?;
@@ -458,7 +515,7 @@ fn build_empty_node_info(lua: &Lua, node_id: i32) -> Result<Value> {
     info.set("posY", 0)?;
     info.set("type", 0)?;
     info.set("flags", 0)?;
-    info.set("subTreeID", 0i64)?;
+    // subTreeID omitted (nil) — Lua treats 0 as truthy
     info.set("entryIDs", lua.create_table()?)?;
     info.set("visibleEdges", lua.create_table()?)?;
     info.set("conditionIDs", lua.create_table()?)?;
@@ -467,7 +524,11 @@ fn build_empty_node_info(lua: &Lua, node_id: i32) -> Result<Value> {
     info.set("activeRank", 0)?;
     info.set("ranksPurchased", 0)?;
     info.set("maxRanks", 0)?;
-    info.set("activeEntry", 0i64)?;
+    let active_entry = lua.create_table()?;
+    active_entry.set("entryID", 0i64)?;
+    active_entry.set("rank", 0)?;
+    info.set("activeEntry", active_entry)?;
+    info.set("isVisible", false)?;
     info.set("isAvailable", false)?;
     info.set("canPurchaseRank", false)?;
     info.set("canRefundRank", false)?;
@@ -479,10 +540,7 @@ fn build_empty_node_info(lua: &Lua, node_id: i32) -> Result<Value> {
 fn build_node_entry_ids(lua: &Lua, info: &mlua::Table, node: &crate::traits::TraitNodeInfo) -> Result<()> {
     let entry_ids = lua.create_table()?;
     for (i, &eid) in node.entry_ids.iter().enumerate() {
-        let e = lua.create_table()?;
-        e.set("entryID", eid as i64)?;
-        e.set("rank", 0)?;
-        entry_ids.set(i as i64 + 1, e)?;
+        entry_ids.set(i as i64 + 1, eid as i64)?;
     }
     info.set("entryIDs", entry_ids)?;
     Ok(())
@@ -539,7 +597,9 @@ fn create_entry_info(lua: &Lua, (_config_id, entry_id): (i32, i32)) -> Result<Va
     info.set("definitionID", entry.definition_id as i64)?;
     info.set("type", entry.entry_type as i32)?;
     info.set("maxRanks", entry.max_ranks as i32)?;
-    info.set("subTreeID", entry.sub_tree_id as i64)?;
+    if entry.sub_tree_id != 0 {
+        info.set("subTreeID", entry.sub_tree_id as i64)?;
+    }
     info.set("isAvailable", true)?;
     info.set("conditionIDs", lua.create_table()?)?;
     Ok(Value::Table(info))
@@ -551,10 +611,10 @@ fn create_definition_info(lua: &Lua, def_id: i32) -> Result<Value> {
         return Ok(Value::Nil);
     };
     let info = lua.create_table()?;
-    info.set("spellID", def.spell_id as i64)?;
-    info.set("overriddenSpellID", def.overrides_spell_id as i64)?;
-    info.set("overrideIcon", def.override_icon as i64)?;
-    info.set("visibleSpellID", def.visible_spell_id as i64)?;
+    info.set("spellID", if def.spell_id != 0 { Value::Integer(def.spell_id as i64) } else { Value::Nil })?;
+    info.set("overriddenSpellID", if def.overrides_spell_id != 0 { Value::Integer(def.overrides_spell_id as i64) } else { Value::Nil })?;
+    info.set("overrideIcon", if def.override_icon != 0 { Value::Integer(def.override_icon as i64) } else { Value::Nil })?;
+    info.set("visibleSpellID", if def.visible_spell_id != 0 { Value::Integer(def.visible_spell_id as i64) } else { Value::Nil })?;
     info.set("overrideName", def.override_name)?;
     info.set("overrideSubtext", def.override_subtext)?;
     info.set("overrideDescription", def.override_description)?;
@@ -595,5 +655,7 @@ fn create_sub_tree_info(lua: &Lua, (_config_id, sub_tree_id): (i32, i32)) -> Res
     info.set("traitTreeID", st.tree_id as i64)?;
     info.set("iconElementID", st.atlas_element_id as i64)?;
     info.set("isActive", true)?;
+    info.set("posX", 0)?;
+    info.set("posY", 0)?;
     Ok(Value::Table(info))
 }

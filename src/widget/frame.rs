@@ -257,6 +257,8 @@ pub struct Frame {
     pub mouse_motion_enabled: bool,
     /// User-set frame ID (from XML `id` attribute or SetID()).
     pub user_id: i32,
+    /// Button state: 0=NORMAL, 1=PUSHED (set by SetButtonState from Lua).
+    pub button_state: u8,
 
     // --- Slider fields ---
     /// Current slider value.
@@ -427,6 +429,7 @@ macro_rules! frame_defaults {
             rotation: 0.0,
             mouse_motion_enabled: false,
             user_id: 0,
+            button_state: 0,
 
             // Slider
             slider_value: 0.0,

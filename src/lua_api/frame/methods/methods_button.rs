@@ -462,13 +462,24 @@ fn add_click_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
 }
 
-/// SetButtonState / GetButtonState stubs.
+/// SetButtonState / GetButtonState - control button visual state from Lua.
 fn add_button_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method(
         "SetButtonState",
-        |_, _this, (_state, _locked): (String, Option<bool>)| Ok(()),
+        |_, this, (state_str, _locked): (String, Option<bool>)| {
+            let val = if state_str.eq_ignore_ascii_case("PUSHED") { 1 } else { 0 };
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.button_state = val;
+            }
+            Ok(())
+        },
     );
-    methods.add_method("GetButtonState", |_, _this, ()| Ok("NORMAL".to_string()));
+    methods.add_method("GetButtonState", |_, this, ()| {
+        let state = this.state.borrow();
+        let val = state.widgets.get(this.id).map(|f| f.button_state).unwrap_or(0);
+        Ok(if val == 1 { "PUSHED".to_string() } else { "NORMAL".to_string() })
+    });
     methods.add_method("LockHighlight", |_, _this, ()| Ok(()));
     methods.add_method("UnlockHighlight", |_, _this, ()| Ok(()));
 }

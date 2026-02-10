@@ -214,7 +214,28 @@ pub fn compute_frame_rect(
     rect.x += frame.anim_offset_x;
     rect.y += frame.anim_offset_y;
 
+    // Clamp to screen bounds when clampedToScreen is set (e.g. tooltips)
+    if frame.clamped_to_screen && rect.width > 0.0 && rect.height > 0.0 {
+        clamp_rect_to_screen(&mut rect, screen_width, screen_height);
+    }
+
     rect
+}
+
+/// Shift a rect so it stays within screen bounds (WoW `clampedToScreen` behavior).
+fn clamp_rect_to_screen(rect: &mut LayoutRect, screen_w: f32, screen_h: f32) {
+    if rect.x + rect.width > screen_w {
+        rect.x = screen_w - rect.width;
+    }
+    if rect.x < 0.0 {
+        rect.x = 0.0;
+    }
+    if rect.y + rect.height > screen_h {
+        rect.y = screen_h - rect.height;
+    }
+    if rect.y < 0.0 {
+        rect.y = 0.0;
+    }
 }
 
 /// Get the position of an anchor point on a rectangle.

@@ -1,6 +1,6 @@
 //! Texture loading and caching for WoW UI textures.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use image_blp::convert::blp_to_image;
@@ -19,6 +19,8 @@ pub struct TextureManager {
     cache: HashMap<String, TextureData>,
     /// Cache of sub-region textures (path#region -> RGBA pixels).
     sub_cache: HashMap<String, TextureData>,
+    /// Paths that failed to load (logged once, then silenced).
+    not_found: HashSet<String>,
 }
 
 /// Loaded texture data.
@@ -38,6 +40,7 @@ impl TextureManager {
             addons_path: None,
             cache: HashMap::new(),
             sub_cache: HashMap::new(),
+            not_found: HashSet::new(),
         }
     }
 
@@ -62,6 +65,9 @@ impl TextureManager {
         if self.cache.contains_key(&normalized) {
             return self.cache.get(&normalized);
         }
+        if self.not_found.contains(&normalized) {
+            return None;
+        }
 
         // Try to load from disk
         if let Some(file_path) = self.resolve_path(&normalized) {
@@ -76,6 +82,7 @@ impl TextureManager {
             }
         } else {
             eprintln!("[TexMgr] Not found: {}", wow_path);
+            self.not_found.insert(normalized);
         }
 
         None

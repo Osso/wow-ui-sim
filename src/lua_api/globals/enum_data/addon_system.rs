@@ -285,6 +285,25 @@ pub const VOICE_CHAT_STATUS_CODE: SeqEnumDef = (
 // Talent / Trait Enums
 // ============================================================================
 
+pub const TRAIT_NODE_TYPE: SeqEnumDef = (
+    "TraitNodeType",
+    &["Single", "Tiered", "Selection", "SubTreeSelection"],
+);
+
+pub const TRAIT_NODE_FLAG: EnumDef = (
+    "TraitNodeFlag",
+    &[
+        ("ShowMultipleIcons", 1),
+        ("NeverPurchasable", 2),
+        ("TestPositionLocked", 4),
+        ("TestGridPositioned", 8),
+        ("ActiveAtFirstRank", 16),
+        ("ShowExpandedSelection", 32),
+        ("HideMaxRank", 64),
+        ("HighestChosenRank", 128),
+    ],
+);
+
 pub const TRAIT_NODE_ENTRY_TYPE: SeqEnumDef = (
     "TraitNodeEntryType",
     &[

@@ -46,7 +46,16 @@ fn add_model_transform_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
 }
 
 fn add_model_appearance_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetUnit", |_, _this, _unit: Option<String>| Ok(()));
+    methods.add_method("SetUnit", |lua, this, args: mlua::MultiValue| {
+        // Mixin override: CastingBarMixin.SetUnit stores unit on the frame.
+        // Without this, the Rust no-op shadows the Lua mixin method.
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "SetUnit") {
+            let mut call_args = vec![ud];
+            call_args.extend(args);
+            return func.call::<()>(mlua::MultiValue::from_iter(call_args));
+        }
+        Ok(())
+    });
     methods.add_method("SetAutoDress", |_, _this, _auto_dress: bool| Ok(()));
     methods.add_method("SetDisplayInfo", |_, _this, _display_id: i32| Ok(()));
     methods.add_method("SetCreature", |_, _this, _creature_id: i32| Ok(()));

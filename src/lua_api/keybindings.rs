@@ -48,6 +48,18 @@ const BINDING_ACTIONS: &[BindingAction] = &[
     BindingAction { action: "TARGETPARTYMEMBER3", lua_code: "TargetUnit('party3')" },
     BindingAction { action: "TARGETPARTYMEMBER4", lua_code: "TargetUnit('party4')" },
     BindingAction { action: "TARGETNEARESTENEMY", lua_code: "TargetUnit('enemy1')" },
+    BindingAction { action: "ACTIONBUTTON1", lua_code: "ActionButtonDown(1) UseAction(1) ActionButtonUp(1)" },
+    BindingAction { action: "ACTIONBUTTON2", lua_code: "ActionButtonDown(2) UseAction(2) ActionButtonUp(2)" },
+    BindingAction { action: "ACTIONBUTTON3", lua_code: "ActionButtonDown(3) UseAction(3) ActionButtonUp(3)" },
+    BindingAction { action: "ACTIONBUTTON4", lua_code: "ActionButtonDown(4) UseAction(4) ActionButtonUp(4)" },
+    BindingAction { action: "ACTIONBUTTON5", lua_code: "ActionButtonDown(5) UseAction(5) ActionButtonUp(5)" },
+    BindingAction { action: "ACTIONBUTTON6", lua_code: "ActionButtonDown(6) UseAction(6) ActionButtonUp(6)" },
+    BindingAction { action: "ACTIONBUTTON7", lua_code: "ActionButtonDown(7) UseAction(7) ActionButtonUp(7)" },
+    BindingAction { action: "ACTIONBUTTON8", lua_code: "ActionButtonDown(8) UseAction(8) ActionButtonUp(8)" },
+    BindingAction { action: "ACTIONBUTTON9", lua_code: "ActionButtonDown(9) UseAction(9) ActionButtonUp(9)" },
+    BindingAction { action: "ACTIONBUTTON10", lua_code: "ActionButtonDown(10) UseAction(10) ActionButtonUp(10)" },
+    BindingAction { action: "ACTIONBUTTON11", lua_code: "ActionButtonDown(11) UseAction(11) ActionButtonUp(11)" },
+    BindingAction { action: "ACTIONBUTTON12", lua_code: "ActionButtonDown(12) UseAction(12) ActionButtonUp(12)" },
 ];
 
 /// Default key→action assignments (WoW defaults + simulator overrides).
@@ -74,6 +86,18 @@ const DEFAULT_KEYS: &[DefaultKey] = &[
     DefaultKey { key: "F5", action: "TARGETPARTYMEMBER4" },
     DefaultKey { key: "F6", action: "TARGETNEARESTENEMY" },
     DefaultKey { key: "TAB", action: "TARGETNEARESTENEMY" },
+    DefaultKey { key: "1", action: "ACTIONBUTTON1" },
+    DefaultKey { key: "2", action: "ACTIONBUTTON2" },
+    DefaultKey { key: "3", action: "ACTIONBUTTON3" },
+    DefaultKey { key: "4", action: "ACTIONBUTTON4" },
+    DefaultKey { key: "5", action: "ACTIONBUTTON5" },
+    DefaultKey { key: "6", action: "ACTIONBUTTON6" },
+    DefaultKey { key: "7", action: "ACTIONBUTTON7" },
+    DefaultKey { key: "8", action: "ACTIONBUTTON8" },
+    DefaultKey { key: "9", action: "ACTIONBUTTON9" },
+    DefaultKey { key: "0", action: "ACTIONBUTTON10" },
+    DefaultKey { key: "-", action: "ACTIONBUTTON11" },
+    DefaultKey { key: "=", action: "ACTIONBUTTON12" },
 ];
 
 /// Initialize the binding tables in Lua and populate with defaults.

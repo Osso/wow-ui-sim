@@ -67,13 +67,24 @@ fn register_health_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 }
 
 /// Register UnitPower, UnitPowerMax with party and target awareness.
+///
+/// The optional second argument is the power type (Enum.PowerType).
+/// When absent or matching the unit's primary power type (Mana=0), returns
+/// the primary power values.  For secondary resource types (HolyPower,
+/// ComboPoints, etc.) returns 0 / small-cap values.
 fn register_power_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
     let st = state.clone();
     globals.set(
         "UnitPower",
         lua.create_function(move |_, args: mlua::MultiValue| {
-            if let Some(Value::String(s)) = args.into_vec().first() {
+            let args = args.into_vec();
+            let power_type = args.get(1).and_then(|v| match v {
+                Value::Integer(i) => Some(*i),
+                Value::Number(n) => Some(*n as i64),
+                _ => None,
+            });
+            if let Some(Value::String(s)) = args.first() {
                 let u = s.to_string_lossy();
                 if u == "target" {
                     let st = st.borrow();
@@ -86,13 +97,23 @@ fn register_power_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<(
                     }
                 }
             }
+            // Secondary resource types return 0 current power.
+            if is_secondary_power_type(power_type) {
+                return Ok(0i32);
+            }
             Ok(50_000i32)
         })?,
     )?;
     globals.set(
         "UnitPowerMax",
         lua.create_function(move |_, args: mlua::MultiValue| {
-            if let Some(Value::String(s)) = args.into_vec().first() {
+            let args = args.into_vec();
+            let power_type = args.get(1).and_then(|v| match v {
+                Value::Integer(i) => Some(*i),
+                Value::Number(n) => Some(*n as i64),
+                _ => None,
+            });
+            if let Some(Value::String(s)) = args.first() {
                 let u = s.to_string_lossy();
                 if u == "target" {
                     let st = state.borrow();
@@ -105,10 +126,31 @@ fn register_power_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<(
                     }
                 }
             }
+            // Secondary resource types have small caps (holy power, combo points, etc.)
+            if is_secondary_power_type(power_type) {
+                return Ok(secondary_power_max(power_type.unwrap_or(0)));
+            }
             Ok(100_000i32)
         })?,
     )?;
     Ok(())
+}
+
+/// Returns true when the power type is a secondary resource (not the primary
+/// mana pool).  None / 0 (Mana) is considered the primary type.
+fn is_secondary_power_type(power_type: Option<i64>) -> bool {
+    matches!(power_type, Some(pt) if pt != 0)
+}
+
+/// Default max for secondary power types.
+fn secondary_power_max(power_type: i64) -> i32 {
+    match power_type {
+        4 => 7,   // ComboPoints (5-7 depending on talents)
+        5 => 6,   // Runes
+        9 => 5,   // HolyPower
+        16 => 4,  // ArcaneCharges
+        _ => 5,   // Reasonable default for other secondary resources
+    }
 }
 
 /// Register UnitPowerType with party and target awareness.

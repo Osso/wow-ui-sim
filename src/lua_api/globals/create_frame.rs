@@ -13,9 +13,16 @@ use std::rc::Rc;
 pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Function> {
     let state_clone = Rc::clone(&state);
     let create_frame = lua.create_function(move |lua, args: mlua::MultiValue| {
-        let (frame_type, name, parent_id, template) = parse_create_frame_args(lua, &args, &state_clone)?;
+        let (frame_type, name, parent_id, template, id) = parse_create_frame_args(lua, &args, &state_clone)?;
         let widget_type = WidgetType::from_str(&frame_type).unwrap_or(WidgetType::Frame);
         let frame_id = register_new_frame(&state_clone, widget_type, name.clone(), parent_id);
+
+        // Apply the 5th argument (frame ID) if provided
+        if let Some(frame_lua_id) = id {
+            if let Some(frame) = state_clone.borrow_mut().widgets.get_mut(frame_id) {
+                frame.user_id = frame_lua_id;
+            }
+        }
 
         // Create default children for widget types that always need them
         create_widget_type_defaults(&mut state_clone.borrow_mut(), frame_id, widget_type);
@@ -95,13 +102,13 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
     Ok(create_frame)
 }
 
-/// Parse the arguments to CreateFrame: (frameType, name, parent, template).
+/// Parse the arguments to CreateFrame: (frameType, name, parent, template, id).
 #[allow(clippy::type_complexity)]
 fn parse_create_frame_args(
     lua: &Lua,
     args: &mlua::MultiValue,
     state: &Rc<RefCell<SimState>>,
-) -> Result<(String, Option<String>, Option<u64>, Option<String>)> {
+) -> Result<(String, Option<String>, Option<u64>, Option<String>, Option<i32>)> {
     let mut args_iter = args.iter();
 
     let frame_type: String = args_iter
@@ -129,6 +136,13 @@ fn parse_create_frame_args(
         .and_then(|v| lua.coerce_string(v.clone()).ok().flatten())
         .map(|s| s.to_string_lossy().to_string());
 
+    // 5th arg: numeric frame ID
+    let id: Option<i32> = args_iter.next().and_then(|v| match v {
+        Value::Integer(n) => Some(*n as i32),
+        Value::Number(n) => Some(*n as i32),
+        _ => None,
+    });
+
     // Default to UIParent if no parent specified
     if parent_id.is_none() {
         parent_id = state.borrow().widgets.get_id_by_name("UIParent");
@@ -137,7 +151,7 @@ fn parse_create_frame_args(
     // Handle $parent/$Parent name substitution
     let name = name_raw.map(|n| substitute_parent_name(n, parent_id, state));
 
-    Ok((frame_type, name, parent_id, template))
+    Ok((frame_type, name, parent_id, template, id))
 }
 
 /// Replace $parent/$Parent placeholders in a frame name with the actual parent name.
@@ -174,19 +188,18 @@ fn register_new_frame(
 
     // If a frame with this name already exists, orphan it (WoW behavior: old frame
     // becomes unreachable via global, but still exists in the registry).
-    if let Some(ref n) = name
-        && let Some(old_id) = state.widgets.get_id_by_name(n) {
-            if let Some(old_frame) = state.widgets.get(old_id)
-                && let Some(old_parent_id) = old_frame.parent_id
-                    && let Some(old_parent) = state.widgets.get_mut(old_parent_id) {
-                        old_parent.children.retain(|&c| c != old_id);
-                    }
-            if let Some(old_frame) = state.widgets.get_mut(old_id) {
-                old_frame.visible = false;
-            }
-        }
+    let old_same_name = name.as_ref()
+        .and_then(|n| state.widgets.get_id_by_name(n));
+    if let Some(old_id) = old_same_name {
+        orphan_old_frame(&mut state.widgets, old_id);
+    }
 
     state.widgets.register(frame);
+
+    // Migrate children AFTER register so the new frame exists in the registry.
+    if let Some(old_id) = old_same_name {
+        migrate_children_to_new_frame(&mut state.widgets, old_id, frame_id);
+    }
 
     if let Some(pid) = parent_id {
         state.widgets.add_child(pid, frame_id);
@@ -377,6 +390,52 @@ fn add_fill_parent_anchors(frame: &mut Frame, parent_id: u64) {
         x_offset: 0.0,
         y_offset: 0.0,
     });
+}
+
+/// Remove old frame from its parent's children and hide it.
+fn orphan_old_frame(widgets: &mut crate::widget::WidgetRegistry, old_id: u64) {
+    if let Some(old_frame) = widgets.get(old_id)
+        && let Some(old_parent_id) = old_frame.parent_id
+            && let Some(old_parent) = widgets.get_mut(old_parent_id) {
+                old_parent.children.retain(|&c| c != old_id);
+            }
+    if let Some(old_frame) = widgets.get_mut(old_id) {
+        old_frame.visible = false;
+    }
+}
+
+/// Move all children from an old frame to a new replacement frame.
+///
+/// When a named frame is re-created (e.g. UIParent defined in XML replaces the
+/// pre-built one), frames that were parented to the old version need to be
+/// reparented to the new one so they remain in the live visibility tree.
+fn migrate_children_to_new_frame(
+    widgets: &mut crate::widget::WidgetRegistry,
+    old_id: u64,
+    new_id: u64,
+) {
+    let children: Vec<u64> = widgets.get(old_id)
+        .map(|f| f.children.clone())
+        .unwrap_or_default();
+    for &child_id in &children {
+        if let Some(child) = widgets.get_mut(child_id) {
+            child.parent_id = Some(new_id);
+        }
+    }
+    // Move children_keys too (e.g. NineSlice for tooltips)
+    let keys: std::collections::HashMap<String, u64> = widgets.get(old_id)
+        .map(|f| f.children_keys.clone())
+        .unwrap_or_default();
+    if let Some(new_frame) = widgets.get_mut(new_id) {
+        new_frame.children.extend(&children);
+        for (k, v) in keys {
+            new_frame.children_keys.entry(k).or_insert(v);
+        }
+    }
+    if let Some(old_frame) = widgets.get_mut(old_id) {
+        old_frame.children.clear();
+        old_frame.children_keys.clear();
+    }
 }
 
 /// Create a child widget of the given type, register it, and add it as a child. Returns the ID.

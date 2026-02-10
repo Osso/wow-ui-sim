@@ -54,7 +54,7 @@ pub fn collect_ancestor_visible_ids(
         let Some(f) = registry.get(id) else { continue };
         if !f.visible {
             // Button state textures (HighlightTexture etc.) start with visible=false
-            // but their visibility is resolved later by button_vis::resolve_visibility.
+            // but their visibility is resolved later by button_vis::should_skip_frame.
             if is_button_state_texture(f, id, registry) {
                 visible.insert(id, parent_alpha * f.alpha);
             }

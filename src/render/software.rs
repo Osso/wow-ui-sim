@@ -16,7 +16,7 @@ fn load_batch_textures(
 ) -> Vec<GpuTextureData> {
     let mut textures = Vec::new();
     let mut seen = std::collections::HashSet::new();
-    for request in &batch.texture_requests {
+    for request in batch.texture_requests.iter().chain(&batch.mask_texture_requests) {
         if seen.contains(&request.path) {
             continue;
         }

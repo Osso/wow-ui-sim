@@ -218,9 +218,15 @@ fn register_action_bar_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Res
 
 /// Stateful action bar functions that query SimState.
 fn register_action_bar_stateful(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    register_action_bar_queries(lua, &state)?;
+    register_use_action(lua, &state)
+}
+
+/// HasAction, GetActionInfo, GetActionTexture, IsUsableAction.
+fn register_action_bar_queries(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
 
-    let st = Rc::clone(&state);
+    let st = Rc::clone(state);
     globals.set(
         "HasAction",
         lua.create_function(move |_, slot: Value| {
@@ -229,7 +235,7 @@ fn register_action_bar_stateful(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
         })?,
     )?;
 
-    let st = Rc::clone(&state);
+    let st = Rc::clone(state);
     globals.set(
         "GetActionInfo",
         lua.create_function(move |lua, slot: Value| {
@@ -248,7 +254,7 @@ fn register_action_bar_stateful(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
         })?,
     )?;
 
-    let st = Rc::clone(&state);
+    let st = Rc::clone(state);
     globals.set(
         "GetActionTexture",
         lua.create_function(move |lua, slot: Value| {
@@ -263,7 +269,7 @@ fn register_action_bar_stateful(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
         })?,
     )?;
 
-    let st = Rc::clone(&state);
+    let st = Rc::clone(state);
     globals.set(
         "IsUsableAction",
         lua.create_function(move |_, slot: Value| {
@@ -276,10 +282,133 @@ fn register_action_bar_stateful(lua: &Lua, state: Rc<RefCell<SimState>>) -> Resu
     Ok(())
 }
 
+/// UseAction(slot) — look up spell, start cast or apply instant effect.
+fn register_use_action(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let st = Rc::clone(state);
+    lua.globals().set(
+        "UseAction",
+        lua.create_function(move |lua, (slot, _unit, _button): (i32, Value, Value)| {
+            let spell_id = {
+                let s = st.borrow();
+                s.action_bars.get(&(slot as u32)).copied()
+            };
+            let Some(spell_id) = spell_id else {
+                return Ok(());
+            };
+            // Block new casts while already casting
+            if st.borrow().casting.is_some() {
+                return Ok(());
+            }
+            let cast_time_ms = super::spell_api::spell_cast_time(spell_id as i32);
+            if cast_time_ms > 0 {
+                start_cast(&st, lua, spell_id, cast_time_ms)?;
+            } else {
+                apply_instant_spell(&st, lua, spell_id)?;
+            }
+            Ok(())
+        })?,
+    )
+}
+
+/// Start a cast-time spell: store CastingState, fire UNIT_SPELLCAST_START.
+fn start_cast(
+    state: &Rc<RefCell<SimState>>,
+    lua: &Lua,
+    spell_id: u32,
+    cast_time_ms: i32,
+) -> Result<()> {
+    use crate::lua_api::state::CastingState;
+
+    let spell = crate::spells::get_spell(spell_id);
+    let spell_name = spell.map(|s| s.name).unwrap_or("Unknown").to_string();
+    let icon_id = spell.map(|s| s.icon_file_data_id).unwrap_or(136243);
+    let icon_path = crate::manifest_interface_data::get_texture_path(icon_id)
+        .map(|p| format!("Interface\\{}", p.replace('/', "\\")))
+        .unwrap_or_default();
+
+    let cast_id = {
+        let mut s = state.borrow_mut();
+        let cast_id = s.next_cast_id;
+        s.next_cast_id += 1;
+        let now = s.start_time.elapsed().as_secs_f64();
+        s.casting = Some(CastingState {
+            spell_id,
+            spell_name: spell_name.clone(),
+            icon_path,
+            start_time: now,
+            end_time: now + cast_time_ms as f64 / 1000.0,
+            cast_id,
+        });
+        cast_id
+    };
+
+    eprintln!("[cast] Starting {} (id={}, {:.1}s)", spell_name, cast_id, cast_time_ms as f64 / 1000.0);
+    let fire: mlua::Function = lua.globals().get("FireEvent")?;
+    fire.call::<()>((
+        lua.create_string("UNIT_SPELLCAST_START")?,
+        lua.create_string("player")?,
+        cast_id as i64,
+        spell_id as i64,
+    ))
+}
+
+/// Apply an instant spell effect and fire UNIT_SPELLCAST_SUCCEEDED.
+fn apply_instant_spell(
+    state: &Rc<RefCell<SimState>>,
+    lua: &Lua,
+    spell_id: u32,
+) -> Result<()> {
+    let cast_id = {
+        let mut s = state.borrow_mut();
+        let id = s.next_cast_id;
+        s.next_cast_id += 1;
+        id
+    };
+
+    let spell_name = crate::spells::get_spell(spell_id)
+        .map(|s| s.name).unwrap_or("Unknown");
+    eprintln!("[cast] Instant {} (id={})", spell_name, cast_id);
+
+    let fire: mlua::Function = lua.globals().get("FireEvent")?;
+    fire.call::<()>((
+        lua.create_string("UNIT_SPELLCAST_SUCCEEDED")?,
+        lua.create_string("player")?,
+        cast_id as i64,
+        spell_id as i64,
+    ))
+}
+
 /// Stateless action bar stub functions.
 fn register_action_bar_stubs(lua: &Lua) -> Result<()> {
     register_action_slot_queries(lua)?;
     register_action_bar_indices(lua)?;
+    register_action_use_functions(lua)?;
+    Ok(())
+}
+
+/// UseAction, ReleaseAction, and action highlight functions.
+fn register_action_use_functions(lua: &Lua) -> Result<()> {
+    // UseAction needs state — registered in register_action_bar_stateful instead.
+    register_release_and_highlight_functions(lua)
+}
+
+fn register_release_and_highlight_functions(lua: &Lua) -> Result<()> {
+    let globals = lua.globals();
+    globals.set(
+        "ReleaseAction",
+        lua.create_function(|_, (slot, _unit, _button): (i32, Value, Value)| {
+            eprintln!("[action] ReleaseAction({})", slot);
+            Ok(())
+        })?,
+    )?;
+    globals.set(
+        "GetNewActionHighlightMark",
+        lua.create_function(|_, _slot: Value| Ok(false))?,
+    )?;
+    globals.set(
+        "ClearNewActionHighlight",
+        lua.create_function(|_, _slot: Value| Ok(()))?,
+    )?;
     Ok(())
 }
 

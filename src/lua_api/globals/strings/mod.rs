@@ -137,6 +137,10 @@ fn register_binding_text_helpers(lua: &Lua, globals: &mlua::Table) -> Result<()>
             },
         )?,
     )?;
+    globals.set(
+        "IsBindingForGamePad",
+        lua.create_function(|_, _key: Value| Ok(false))?,
+    )?;
     Ok(())
 }
 

@@ -123,6 +123,10 @@ fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: 
     });
 
     methods.add_method("IsDesaturated", |_, _this, ()| Ok(false));
+
+    methods.add_method("GetDesaturation", |_, _this, ()| Ok(0.0_f64));
+
+    methods.add_method("SetDesaturation", |_, _this, _desat: f64| Ok(()));
 }
 
 /// SetAtlas, GetAtlas.

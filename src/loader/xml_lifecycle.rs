@@ -18,14 +18,14 @@ fn fire_lifecycle_onload(env: &LoaderEnv<'_>, name: &str) {
         if type(frame.OnLoad_Intrinsic) == "function" then
             local ok, err = pcall(frame.OnLoad_Intrinsic, frame)
             if not ok then
-                print("[OnLoad_Intrinsic] " .. tostring(err))
+                __report_script_error("[OnLoad_Intrinsic] " .. tostring(err))
             end
         end
         local handler = frame:GetScript("OnLoad")
         if handler then
             local ok, err = pcall(handler, frame)
             if not ok then
-                print("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
+                __report_script_error("[OnLoad] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
             end
         end
         "#
@@ -45,13 +45,13 @@ fn fire_lifecycle_onshow(env: &LoaderEnv<'_>, name: &str) {
             if handler then
                 local ok, err = pcall(handler, frame)
                 if not ok then
-                    print("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
+                    __report_script_error("[OnShow] " .. (frame.GetName and frame:GetName() or "{name}") .. ": " .. tostring(err))
                 end
             end
             if type(frame.OnShow_Intrinsic) == "function" then
                 local ok, err = pcall(frame.OnShow_Intrinsic, frame)
                 if not ok then
-                    print("[OnShow_Intrinsic] " .. tostring(err))
+                    __report_script_error("[OnShow_Intrinsic] " .. tostring(err))
                 end
             end
         end
