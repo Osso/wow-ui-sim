@@ -5,23 +5,28 @@
 //! - `C_Traits` - Talent/loadout system (Dragonflight+)
 
 use super::spellbook_data;
+use crate::lua_api::SimState;
 use mlua::{Lua, Result, Value};
+use std::cell::RefCell;
+use std::rc::Rc;
 
-pub fn register_spell_api(lua: &Lua) -> Result<()> {
+pub fn register_spell_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
 
-    globals.set("C_SpellBook", register_c_spell_book(lua)?)?;
-    globals.set("C_Spell", register_c_spell(lua)?)?;
+    globals.set("C_SpellBook", register_c_spell_book(lua, Rc::clone(&state))?)?;
+    globals.set("C_Spell", register_c_spell(lua, Rc::clone(&state))?)?;
     globals.set("C_Traits", register_c_traits(lua)?)?;
+    register_cast_globals(lua, state)?;
 
     Ok(())
 }
 
 /// C_SpellBook namespace - spell book functions backed by paladin spellbook data.
-fn register_c_spell_book(lua: &Lua) -> Result<mlua::Table> {
+fn register_c_spell_book(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Table> {
     let t = lua.create_table()?;
     register_c_spell_book_item_methods(&t, lua)?;
     register_c_spell_book_queries(&t, lua)?;
+    register_c_spell_book_actions(&t, lua, state)?;
     Ok(t)
 }
 
@@ -109,6 +114,79 @@ fn register_c_spell_book_queries(t: &mlua::Table, lua: &Lua) -> Result<()> {
             }
         })?,
     )?;
+    Ok(())
+}
+
+/// CastSpellBookItem, PickupSpellBookItem, ToggleSpellBookItemAutoCast.
+fn register_c_spell_book_actions(
+    t: &mlua::Table,
+    lua: &Lua,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    let st = Rc::clone(&state);
+    t.set(
+        "CastSpellBookItem",
+        lua.create_function(move |lua, (slot, _bank, _self_cast): (i32, Option<i32>, Option<bool>)| {
+            let spell_id = spellbook_data::get_spell_at_slot(slot)
+                .map(|(_, entry, _)| entry.spell_id);
+            let Some(spell_id) = spell_id else { return Ok(()) };
+            if st.borrow().casting.is_some() { return Ok(()) }
+            cast_spell_by_id(&st, lua, spell_id)
+        })?,
+    )?;
+    t.set(
+        "PickupSpellBookItem",
+        lua.create_function(|_, (_slot, _bank): (i32, Option<i32>)| Ok(()))?,
+    )?;
+    t.set(
+        "ToggleSpellBookItemAutoCast",
+        lua.create_function(|_, (_slot, _bank): (i32, Option<i32>)| Ok(()))?,
+    )?;
+    Ok(())
+}
+
+/// Shared cast logic: resolve cast time, start cast or apply instant.
+fn cast_spell_by_id(
+    state: &Rc<RefCell<SimState>>,
+    lua: &Lua,
+    spell_id: u32,
+) -> mlua::Result<()> {
+    use super::action_bar_api::{apply_instant_spell, start_cast, start_cooldowns};
+
+    let cast_time_ms = spell_cast_time(spell_id as i32);
+    if cast_time_ms > 0 {
+        start_cast(state, lua, spell_id, cast_time_ms)?;
+    } else {
+        apply_instant_spell(state, lua, spell_id)?;
+    }
+    start_cooldowns(state, lua, spell_id)?;
+    Ok(())
+}
+
+/// CastSpellByID / CastSpellByName globals (used by SecureTemplates SECURE_ACTIONS["spell"]).
+fn register_cast_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    let g = lua.globals();
+
+    let st = Rc::clone(&state);
+    g.set(
+        "CastSpellByID",
+        lua.create_function(move |lua, (spell_id, _unit): (i32, Option<String>)| {
+            if spell_id <= 0 { return Ok(()) }
+            if st.borrow().casting.is_some() { return Ok(()) }
+            cast_spell_by_id(&st, lua, spell_id as u32)
+        })?,
+    )?;
+
+    g.set(
+        "CastSpellByName",
+        lua.create_function(move |lua, (name, _unit): (String, Option<String>)| {
+            let spell_id = spellbook_data::find_spell_by_name(&name);
+            let Some(spell_id) = spell_id else { return Ok(()) };
+            if state.borrow().casting.is_some() { return Ok(()) }
+            cast_spell_by_id(&state, lua, spell_id)
+        })?,
+    )?;
+
     Ok(())
 }
 
@@ -203,7 +281,7 @@ fn create_spell_book_item_info(lua: &Lua, (slot, _bank): (i32, Option<i32>)) -> 
 }
 
 /// C_Spell namespace - spell information.
-fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
+fn register_c_spell(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Table> {
     let t = lua.create_table()?;
 
     t.set("GetSpellInfo", lua.create_function(create_spell_info)?)?;
@@ -218,7 +296,20 @@ fn register_c_spell(lua: &Lua) -> Result<mlua::Table> {
     t.set("GetSpellTexture", lua.create_function(create_spell_texture)?)?;
     t.set("GetSpellLink", lua.create_function(create_spell_link)?)?;
     t.set("GetSpellName", lua.create_function(create_spell_name)?)?;
-    t.set("GetSpellCooldown", lua.create_function(create_spell_cooldown)?)?;
+    let st = Rc::clone(&state);
+    t.set("GetSpellCooldown", lua.create_function(move |lua, spell_id: i32| {
+        let s = st.borrow();
+        let now = s.start_time.elapsed().as_secs_f64();
+        let (start, duration) = super::action_bar_api::spell_cooldown_times(
+            &s, spell_id as u32, now,
+        );
+        let info = lua.create_table()?;
+        info.set("startTime", start)?;
+        info.set("duration", duration)?;
+        info.set("isEnabled", true)?;
+        info.set("modRate", 1.0)?;
+        Ok(info)
+    })?)?;
     t.set("DoesSpellExist", lua.create_function(|_, spell_id: i32| {
         Ok(spell_id > 0 && crate::spells::get_spell(spell_id as u32).is_some())
     })?)?;
@@ -328,15 +419,6 @@ fn create_school_string(lua: &Lua, school_mask: i32) -> Result<Value> {
         _ => "Unknown",
     };
     Ok(Value::String(lua.create_string(name)?))
-}
-
-fn create_spell_cooldown(lua: &Lua, _spell_id: i32) -> Result<mlua::Table> {
-    let info = lua.create_table()?;
-    info.set("startTime", 0.0)?;
-    info.set("duration", 0.0)?;
-    info.set("isEnabled", true)?;
-    info.set("modRate", 1.0)?;
-    Ok(info)
 }
 
 /// C_Traits namespace - talent/loadout system (Dragonflight+).

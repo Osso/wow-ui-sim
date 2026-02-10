@@ -19,6 +19,7 @@ pub use super::game_data::{
     CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS,
     build_target_info, tick_party_health,
 };
+pub use super::game_data::SpellCooldownState;
 use super::game_data::{
     default_action_bars, default_party, default_player_buffs, random_player_name,
 };
@@ -144,6 +145,10 @@ pub struct SimState {
     pub casting: Option<CastingState>,
     /// Counter for generating unique cast IDs.
     pub next_cast_id: u32,
+    /// Global Cooldown: (start_time, duration) in GetTime() seconds.
+    pub gcd: Option<(f64, f64)>,
+    /// Per-spell cooldowns: spell_id → SpellCooldownState.
+    pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
 }
 
 impl Default for SimState {
@@ -189,6 +194,8 @@ impl Default for SimState {
             start_time: Instant::now(),
             casting: None,
             next_cast_id: 1,
+            gcd: None,
+            spell_cooldowns: HashMap::new(),
         }
     }
 }

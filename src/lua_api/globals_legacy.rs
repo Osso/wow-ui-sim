@@ -432,7 +432,7 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_mixin_api(lua)?;
     register_utility_api(lua)?;
     register_settings_api(lua)?;
-    register_spell_api(lua)?;
+    register_spell_api(lua, Rc::clone(state))?;
     register_item_api(lua)?;
     register_font_api(lua)?;
 

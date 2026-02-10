@@ -74,6 +74,44 @@ pub struct CastingState {
     pub cast_id: u32,
 }
 
+/// Per-spell cooldown tracking.
+#[derive(Clone)]
+pub struct SpellCooldownState {
+    /// GetTime() at cooldown start.
+    pub start: f64,
+    /// Cooldown duration in seconds.
+    pub duration: f64,
+}
+
+/// Standard GCD duration in seconds (1.5s for most spells).
+pub const GCD_DURATION: f64 = 1.5;
+
+/// Per-spell cooldown durations in seconds. Spells not listed here have no
+/// individual cooldown beyond the GCD.
+pub fn spell_cooldown_duration(spell_id: u32) -> f64 {
+    match spell_id {
+        31935 => 15.0,  // Avenger's Shield
+        26573 => 9.0,   // Consecration
+        53600 => 0.0,   // Shield of the Righteous (charges, no CD for now)
+        62124 => 8.0,   // Hand of Reckoning (Taunt)
+        853 => 60.0,    // Hammer of Justice
+        375576 => 60.0, // Divine Toll
+        31850 => 120.0, // Ardent Defender
+        86659 => 300.0, // Guardian of Ancient Kings
+        642 => 300.0,   // Divine Shield
+        _ => 0.0,
+    }
+}
+
+/// Whether a spell triggers the GCD (most do, but some defensives/off-GCD
+/// abilities don't).
+pub fn spell_triggers_gcd(spell_id: u32) -> bool {
+    match spell_id {
+        31850 | 86659 | 642 => false, // Ardent Defender, GoAK, Divine Shield are off-GCD
+        _ => true,
+    }
+}
+
 /// Class display names (index 0 = class_index 1, etc.).
 pub const CLASS_LABELS: &[&str] = &[
     "Warrior", "Paladin", "Hunter", "Rogue", "Priest",

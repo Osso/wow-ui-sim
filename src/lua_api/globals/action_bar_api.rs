@@ -178,7 +178,7 @@ fn register_use_action(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
 }
 
 /// Start GCD and per-spell cooldown after using an action.
-fn start_cooldowns(
+pub fn start_cooldowns(
     state: &Rc<RefCell<SimState>>,
     lua: &Lua,
     spell_id: u32,
@@ -210,7 +210,7 @@ fn start_cooldowns(
 }
 
 /// Start a cast-time spell: store CastingState, fire UNIT_SPELLCAST_START.
-fn start_cast(
+pub fn start_cast(
     state: &Rc<RefCell<SimState>>,
     lua: &Lua,
     spell_id: u32,
@@ -252,7 +252,7 @@ fn start_cast(
 }
 
 /// Apply an instant spell effect and fire UNIT_SPELLCAST_SUCCEEDED.
-fn apply_instant_spell(
+pub fn apply_instant_spell(
     state: &Rc<RefCell<SimState>>,
     lua: &Lua,
     spell_id: u32,

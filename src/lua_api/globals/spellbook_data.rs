@@ -222,6 +222,20 @@ pub fn is_spell_known(spell_id: u32) -> bool {
     false
 }
 
+/// Find a spell ID by name (case-insensitive).
+pub fn find_spell_by_name(name: &str) -> Option<u32> {
+    for skill_line in SKILL_LINES {
+        for entry in skill_line.spells {
+            if let Some(spell) = crate::spells::get_spell(entry.spell_id) {
+                if spell.name.eq_ignore_ascii_case(name) {
+                    return Some(entry.spell_id);
+                }
+            }
+        }
+    }
+    None
+}
+
 /// Find the spellbook slot for a given spell ID.
 /// Returns (slot_index, spell_bank) where spell_bank is 0 for player.
 pub fn find_spell_slot(spell_id: u32) -> Option<(i32, i32)> {

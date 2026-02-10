@@ -223,7 +223,6 @@ pub fn build_quad_batch_with_cache(
     strata_buckets: Option<&Vec<Vec<u64>>>,
     cached_render_list: Option<CollectedFrames>,
 ) -> (QuadBatch, CollectedFrames) {
-    let t0 = std::time::Instant::now();
     let mut batch = QuadBatch::with_capacity(1000);
     let (screen_width, screen_height) = screen_size;
     let size = Size::new(screen_width, screen_height);
@@ -238,25 +237,16 @@ pub fn build_quad_batch_with_cache(
     );
 
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
-    let t1 = std::time::Instant::now();
-    let (collected, cache_hit) = if let Some(c) = cached_render_list {
-        (c, true)
+    let collected = if let Some(c) = cached_render_list {
+        c
     } else {
-        (collect_sorted_frames(registry, screen_width, screen_height, ancestor_visible, strata_buckets, cache), false)
+        collect_sorted_frames(registry, screen_width, screen_height, ancestor_visible, strata_buckets, cache)
     };
-    let t2 = std::time::Instant::now();
 
     emit_all_frames(
         &mut batch, &collected.render, registry, screen_size,
         &visible_ids, pressed_frame, hovered_frame,
         text_ctx, message_frames, tooltip_data, cache,
-    );
-    let t3 = std::time::Instant::now();
-    eprintln!(
-        "[quads] visible={:.0}µs layout={:.0}µs{} emit({})={:.0}µs total={:.0}µs",
-        (t1 - t0).as_micros(), (t2 - t1).as_micros(),
-        if cache_hit { "(cached)" } else { "" },
-        collected.render.len(), (t3 - t2).as_micros(), (t3 - t0).as_micros(),
     );
     (batch, collected)
 }
