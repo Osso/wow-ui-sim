@@ -1,7 +1,7 @@
 //! Frame collection and sorting helpers for rendering.
 
 use crate::widget::{FrameStrata, WidgetType};
-use super::layout::{LayoutCache, compute_frame_rect_cached};
+use super::layout::LayoutCache;
 
 /// Frame names excluded from hit testing (full-screen or non-interactive overlays).
 const HIT_TEST_EXCLUDED: &[&str] = &[
@@ -139,11 +139,11 @@ pub fn intra_strata_sort_key(f: &crate::widget::Frame, id: u64) -> (i32, u8, i32
 /// frames sorted by strata/level/id, excluding non-interactive overlays.
 pub fn collect_sorted_frames(
     registry: &crate::widget::WidgetRegistry,
-    screen_width: f32,
-    screen_height: f32,
+    _screen_width: f32,
+    _screen_height: f32,
     ancestor_visible: &std::collections::HashMap<u64, f32>,
     strata_buckets: Option<&Vec<Vec<u64>>>,
-    cache: &mut LayoutCache,
+    _cache: &mut LayoutCache,
 ) -> CollectedFrames {
     let mut frames: Vec<(u64, crate::LayoutRect, f32)> = Vec::new();
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();
@@ -154,7 +154,7 @@ pub fn collect_sorted_frames(
             for &id in bucket {
                 let Some(&eff_alpha) = ancestor_visible.get(&id) else { continue };
                 let Some(f) = registry.get(id) else { continue };
-                let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
+                let Some(rect) = f.layout_rect else { continue };
                 frames.push((id, rect, eff_alpha));
                 if f.visible && f.mouse_enabled
                     && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
@@ -167,7 +167,7 @@ pub fn collect_sorted_frames(
         // Fallback: scan all ancestor_visible and do global sort.
         for (&id, &eff_alpha) in ancestor_visible {
             let Some(f) = registry.get(id) else { continue };
-            let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
+            let Some(rect) = f.layout_rect else { continue };
             frames.push((id, rect, eff_alpha));
             if f.visible && f.mouse_enabled
                 && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))

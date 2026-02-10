@@ -116,16 +116,10 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         drop(state);
 
         let mut state = this.state.borrow_mut();
-        // Debug: log SetPoint calls with LEFT relative point (Spark repositioning)
-        if relative_point == crate::widget::AnchorPoint::Left && x_ofs > 0.0 {
-            let name = state.widgets.get(this.id)
-                .and_then(|f| f.name.clone())
-                .unwrap_or_else(|| format!("id:{}", this.id));
-            eprintln!("[SetPoint] {name} point={point:?} rel_point=LEFT x_ofs={x_ofs:.1} y_ofs={y_ofs:.1}");
-        }
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
+        state.widgets.mark_rect_dirty_subtree(this.id);
         state.invalidate_layout(this.id);
         Ok(())
     });
@@ -141,6 +135,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.clear_all_points();
             }
+            state.widgets.mark_rect_dirty_subtree(this.id);
             state.invalidate_layout(this.id);
         }
         Ok(())
@@ -154,6 +149,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.anchors.retain(|a| a.point != point);
             }
+            state.widgets.mark_rect_dirty_subtree(this.id);
             state.invalidate_layout(this.id);
         }
         Ok(())
@@ -172,6 +168,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
                     anchor.y_offset += y_offset;
                 }
             }
+            state.widgets.mark_rect_dirty_subtree(this.id);
             state.invalidate_layout(this.id);
             Ok(())
         },
@@ -218,6 +215,7 @@ fn add_set_all_points_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     0.0,
                 );
             }
+            state.widgets.mark_rect_dirty_subtree(this.id);
             state.invalidate_layout(this.id);
         }
         Ok(())

@@ -94,6 +94,14 @@ impl WidgetRegistry {
         self.widgets.keys().copied()
     }
 
+    /// Clear all cached layout rects (e.g. after screen resize).
+    pub fn clear_all_layout_rects(&mut self) {
+        for frame in self.widgets.values_mut() {
+            frame.layout_rect = None;
+        }
+        self.render_dirty.set(true);
+    }
+
     /// Check and clear the render-dirty flag. Returns true if any widget was mutated.
     pub fn take_render_dirty(&self) -> bool {
         self.render_dirty.replace(false)
@@ -125,6 +133,24 @@ impl WidgetRegistry {
                 },
                 _ => return false,
             }
+        }
+    }
+
+    /// Mark a frame and all its descendants as rect-dirty (for `IsRectValid()`).
+    pub fn mark_rect_dirty_subtree(&mut self, id: u64) {
+        if let Some(f) = self.widgets.get_mut(&id) {
+            f.rect_dirty = true;
+            let children = f.children.clone();
+            for child_id in children {
+                self.mark_rect_dirty_subtree(child_id);
+            }
+        }
+    }
+
+    /// Clear rect-dirty on a single frame (after layout resolution).
+    pub fn clear_rect_dirty(&mut self, id: u64) {
+        if let Some(f) = self.widgets.get_mut(&id) {
+            f.rect_dirty = false;
         }
     }
 

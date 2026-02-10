@@ -259,6 +259,11 @@ pub struct Frame {
     pub user_id: i32,
     /// Button state: 0=NORMAL, 1=PUSHED (set by SetButtonState from Lua).
     pub button_state: u8,
+    /// Eagerly computed layout rect (updated on SetPoint, SetSize, etc.).
+    pub layout_rect: Option<crate::LayoutRect>,
+    /// Layout-dirty flag for `IsRectValid()`. Set when anchors/size change;
+    /// cleared by the render pass or by layout-forcing methods (GetSize, etc.).
+    pub rect_dirty: bool,
 
     // --- Slider fields ---
     /// Current slider value.
@@ -434,6 +439,8 @@ macro_rules! frame_defaults {
             mouse_motion_enabled: false,
             user_id: 0,
             button_state: 0,
+            layout_rect: None,
+            rect_dirty: true,
 
             // Slider
             slider_value: 0.0,

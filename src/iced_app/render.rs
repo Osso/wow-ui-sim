@@ -160,13 +160,42 @@ fn emit_all_frames(
 
     for &(id, rect, eff_alpha) in render_list {
         let Some(f) = registry.get(id) else { continue };
+
+        // [DEBUG] Trace CheckedTexture of ActionButton5
+        let is_ct_debug = f.parent_id
+            .and_then(|pid| registry.get(pid))
+            .is_some_and(|p| p.children_keys.get("CheckedTexture") == Some(&id)
+                && p.name.as_deref() == Some("ActionButton5"));
+
         if super::button_vis::should_skip_frame(f, id, eff_alpha, visible_ids, registry, pressed_frame, hovered_frame) {
+            if is_ct_debug {
+                eprintln!("[DBG-CT-EMIT] SKIPPED by should_skip_frame: id={id} vis={} draw_layer={:?}", f.visible, f.draw_layer);
+            }
             continue;
         }
         let is_fontstring = matches!(f.widget_type, WidgetType::FontString);
         if rect.height <= 0.0 || (rect.width <= 0.0 && !is_fontstring) {
+            if is_ct_debug {
+                eprintln!("[DBG-CT-EMIT] SKIPPED by zero-size: w={} h={}", rect.width, rect.height);
+            }
             continue;
         }
+        if is_ct_debug {
+            let quads_before = batch.quad_count();
+            let bounds = Rectangle::new(
+                Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
+                Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
+            );
+            let bar_fill = statusbar_fills.get(&id);
+            emit_frame_quads(batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache, elapsed_secs);
+            let quads_after = batch.quad_count();
+            eprintln!("[DBG-CT-EMIT] RENDERED: id={id} rect=({:.0},{:.0} {:.0}x{:.0}) alpha={eff_alpha} quads_emitted={} texture={:?} tex_coords={:?} is_mask={} nine_slice={} color_tex={:?} wtype={:?}",
+                rect.x, rect.y, rect.width, rect.height,
+                quads_after - quads_before,
+                f.texture, f.tex_coords, f.is_mask, f.nine_slice_atlas.is_some(), f.color_texture, f.widget_type);
+            continue;
+        }
+
         let bounds = Rectangle::new(
             Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
             Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
@@ -194,6 +223,35 @@ pub fn build_quad_batch_for_registry(
 ) -> QuadBatch {
     let mut cache = LayoutCache::new();
     let ancestor_visible = collect_ancestor_visible_ids(registry);
+
+    // [DEBUG] Trace CheckedTexture frames
+    for (&id, &alpha) in &ancestor_visible {
+        if let Some(f) = registry.get(id) {
+            if let Some(pid) = f.parent_id
+                && let Some(p) = registry.get(pid)
+                && p.children_keys.get("CheckedTexture") == Some(&id)
+            {
+                let pname = p.name.as_deref().unwrap_or("anon");
+                eprintln!("[DBG-CT] id={id} parent={pname} vis={} alpha={alpha} layout_rect={:?} texture={:?} tex_coords={:?}",
+                    f.visible, f.layout_rect, f.texture, f.tex_coords);
+            }
+        }
+    }
+    // Also check frames NOT in ancestor_visible
+    for id in registry.iter_ids() {
+        if ancestor_visible.contains_key(&id) { continue; }
+        if let Some(f) = registry.get(id) {
+            if let Some(pid) = f.parent_id
+                && let Some(p) = registry.get(pid)
+                && p.children_keys.get("CheckedTexture") == Some(&id)
+            {
+                let pname = p.name.as_deref().unwrap_or("anon");
+                eprintln!("[DBG-CT-HIDDEN] id={id} parent={pname} vis={} layout_rect={:?}",
+                    f.visible, f.layout_rect);
+            }
+        }
+    }
+
     let (batch, _collected) = build_quad_batch_with_cache(
         registry, screen_size, root_name, pressed_frame, hovered_frame,
         &mut text_ctx, message_frames, tooltip_data, &mut cache,
@@ -317,6 +375,7 @@ impl App {
         // Mutable phase: update tooltips + build/get caches.
         let (ancestor_visible, strata_buckets, mut cache, cached_render) = {
             let mut state = env.state().borrow_mut();
+            state.ensure_layout_rects();
             super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
             let vis = state.get_ancestor_visible().clone();
             let buckets = state.get_strata_buckets().cloned();

@@ -81,21 +81,27 @@ fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Size methods: GetWidth, GetHeight, GetSize, SetWidth, SetHeight, SetSize
 fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetWidth() - returns explicit width or calculates from anchors
+    // GetWidth() - returns explicit width or calculates from anchors.
+    // Forces layout resolution (clears rect_dirty) per WoW behavior.
     methods.add_method("GetWidth", |_, this, ()| {
-        let state = this.state.borrow();
+        let mut state = this.state.borrow_mut();
+        state.resolve_rect_if_dirty(this.id);
         Ok(calculate_frame_width(&state.widgets, this.id))
     });
 
-    // GetHeight() - returns explicit height or calculates from anchors
+    // GetHeight() - returns explicit height or calculates from anchors.
+    // Forces layout resolution (clears rect_dirty) per WoW behavior.
     methods.add_method("GetHeight", |_, this, ()| {
-        let state = this.state.borrow();
+        let mut state = this.state.borrow_mut();
+        state.resolve_rect_if_dirty(this.id);
         Ok(calculate_frame_height(&state.widgets, this.id))
     });
 
-    // GetSize() -> width, height (with anchor calculation)
-    methods.add_method("GetSize", |_, this, ()| {
-        let state = this.state.borrow();
+    // GetSize() -> width, height (with anchor calculation).
+    // Forces layout resolution (clears rect_dirty) per WoW behavior.
+    methods.add_method("GetSize", |_, this, _explicit: Option<bool>| {
+        let mut state = this.state.borrow_mut();
+        state.resolve_rect_if_dirty(this.id);
         let width = calculate_frame_width(&state.widgets, this.id);
         let height = calculate_frame_height(&state.widgets, this.id);
         Ok((width, height))
@@ -107,6 +113,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.set_size(width, height);
         }
+        state.widgets.mark_rect_dirty_subtree(this.id);
         state.invalidate_layout(this.id);
         Ok(())
     });
@@ -117,6 +124,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.width = width;
         }
+        state.widgets.mark_rect_dirty_subtree(this.id);
         state.invalidate_layout(this.id);
         Ok(())
     });
@@ -127,6 +135,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.height = height;
         }
+        state.widgets.mark_rect_dirty_subtree(this.id);
         state.invalidate_layout(this.id);
         Ok(())
     });
@@ -286,16 +295,9 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("Show", |lua, this, ()| {
         let was_hidden = {
             let state = this.state.borrow();
-            state
-                .widgets
-                .get(this.id)
-                .map(|f| !f.visible)
-                .unwrap_or(false)
+            state.widgets.get(this.id).map(|f| !f.visible).unwrap_or(false)
         };
-
         this.state.borrow_mut().set_frame_visible(this.id, true);
-
-        // Fire OnShow if transitioning from hidden to visible
         if was_hidden {
             fire_on_show_recursive(lua, &this.state, this.id)?;
         }
@@ -669,13 +671,15 @@ fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Region/frame query methods: IsRectValid, IsObjectLoaded, IsMouseOver, etc.
 fn add_region_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // IsRectValid() - true if the frame has at least one anchor
+    // IsRectValid() - true if the frame has anchors and layout has been resolved.
+    // Returns false after anchor/size changes until the next render pass or
+    // a layout-forcing call (GetSize, GetWidth, GetHeight).
     methods.add_method("IsRectValid", |_, this, ()| {
         let state = this.state.borrow();
         let valid = state
             .widgets
             .get(this.id)
-            .map(|f| !f.anchors.is_empty())
+            .map(|f| !f.anchors.is_empty() && !f.rect_dirty)
             .unwrap_or(false);
         Ok(valid)
     });
