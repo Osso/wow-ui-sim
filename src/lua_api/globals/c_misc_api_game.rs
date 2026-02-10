@@ -74,6 +74,7 @@ fn register_game_rules_util(lua: &Lua) -> Result<()> {
     t.set("ShouldShowAddOns", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("ShouldShowSplashScreen", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("ShouldShowExpansionLandingPageButton", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("ShouldShowPlayerCastBar", lua.create_function(|_, ()| Ok(true))?)?;
     lua.globals().set("GameRulesUtil", t)?;
     Ok(())
 }

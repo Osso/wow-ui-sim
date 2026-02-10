@@ -113,6 +113,20 @@ fn cast_bar_cast_time_string_exists() {
     "#).unwrap();
 }
 
+/// GameRulesUtil.ShouldShowPlayerCastBar must exist for UpdateShownState to work.
+#[test]
+fn game_rules_util_should_show_player_cast_bar() {
+    let env = setup();
+    env.exec(r#"
+        assert(GameRulesUtil ~= nil,
+            "GameRulesUtil global table must be defined")
+        assert(GameRulesUtil.ShouldShowPlayerCastBar ~= nil,
+            "GameRulesUtil.ShouldShowPlayerCastBar must be defined")
+        assert(GameRulesUtil.ShouldShowPlayerCastBar() == true,
+            "ShouldShowPlayerCastBar should return true")
+    "#).unwrap();
+}
+
 /// GetTarget resolves childKey to the correct child texture.
 #[test]
 fn get_target_resolves_child_key() {
