@@ -96,6 +96,9 @@ pub struct SimState {
     /// invalidated eagerly when layout-affecting properties change (anchors,
     /// size, scale, parent). Frames not in cache are recomputed on next rebuild.
     pub layout_rect_cache: Option<crate::iced_app::layout::LayoutCache>,
+    /// Cached render and hit-test lists from `collect_sorted_frames`.
+    /// Skips the per-frame collection pass when only content (not layout/visibility) changes.
+    pub cached_render_list: Option<crate::iced_app::frame_collect::CollectedFrames>,
     /// Animation groups keyed by unique group ID.
     pub animation_groups: HashMap<u64, AnimGroupState>,
     /// Counter for generating unique animation group IDs.
@@ -162,6 +165,7 @@ impl Default for SimState {
             ancestor_visible_cache: None,
             strata_buckets: None,
             layout_rect_cache: None,
+            cached_render_list: None,
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
             screen_width: 1024.0,
@@ -198,6 +202,7 @@ impl SimState {
             let buckets = self.build_strata_buckets(&visible);
             self.strata_buckets = Some(buckets);
             self.ancestor_visible_cache = Some(visible);
+            self.cached_render_list = None;
         }
         self.ancestor_visible_cache.as_ref().unwrap()
     }
@@ -242,6 +247,7 @@ impl SimState {
     /// Invalidate cached layout for a frame and all its descendants.
     /// Called when layout-affecting properties change (anchors, size, scale, parent).
     pub fn invalidate_layout(&mut self, id: u64) {
+        self.cached_render_list = None;
         let Some(cache) = self.layout_rect_cache.as_mut() else { return };
         Self::remove_layout_subtree(&self.widgets, id, cache);
     }
@@ -287,6 +293,7 @@ impl SimState {
     }
 
     fn update_ancestor_visible_cache(&mut self, id: u64, visible: bool) {
+        self.cached_render_list = None;
         let Some(mut cache) = self.ancestor_visible_cache.take() else {
             return;
         };

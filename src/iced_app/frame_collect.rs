@@ -11,9 +11,13 @@ const HIT_TEST_EXCLUDED: &[&str] = &[
 ];
 
 /// Result of collecting frames for rendering and hit testing.
-pub struct CollectedFrames<'a> {
+///
+/// Render list stores `(id, rect, effective_alpha)` — frame data is looked up
+/// from the registry during emit. This allows the render list to be cached
+/// across rebuilds (no borrowed references).
+pub struct CollectedFrames {
     /// Frames sorted by strata/level/draw-layer for rendering.
-    pub render: Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect, f32)>,
+    pub render: Vec<(u64, crate::LayoutRect, f32)>,
     /// Frames eligible for hit testing, sorted by strata/level/id (low to high).
     /// Rects are in unscaled WoW coordinates (caller applies UI_SCALE).
     pub hittable: Vec<(u64, crate::LayoutRect)>,
@@ -125,31 +129,23 @@ pub fn intra_strata_sort_key(f: &crate::widget::Frame, id: u64) -> (i32, u8, i32
     }
 }
 
-/// Sort key within a strata bucket: level, draw-layer type, draw-layer, sub-layer, id.
-fn intra_strata_cmp(
-    a: &(u64, &crate::widget::Frame, crate::LayoutRect, f32),
-    b: &(u64, &crate::widget::Frame, crate::LayoutRect, f32),
-) -> std::cmp::Ordering {
-    intra_strata_sort_key(a.1, a.0).cmp(&intra_strata_sort_key(b.1, b.0))
-}
-
 /// Collect frames with computed rects, sorted by strata/level/draw-layer.
 ///
 /// When `strata_buckets` is provided (pre-built per-strata ID lists), iterates
-/// buckets in strata order and sorts only within each bucket. Otherwise falls
-/// back to scanning the full `ancestor_visible` map and doing a global sort.
+/// buckets in strata order (already sorted). Otherwise falls back to scanning
+/// the full `ancestor_visible` map and doing a global sort.
 ///
 /// Also builds a hit-test list as a side output: visible, mouse-enabled
 /// frames sorted by strata/level/id, excluding non-interactive overlays.
-pub fn collect_sorted_frames<'a>(
-    registry: &'a crate::widget::WidgetRegistry,
+pub fn collect_sorted_frames(
+    registry: &crate::widget::WidgetRegistry,
     screen_width: f32,
     screen_height: f32,
     ancestor_visible: &std::collections::HashMap<u64, f32>,
     strata_buckets: Option<&Vec<Vec<u64>>>,
     cache: &mut LayoutCache,
-) -> CollectedFrames<'a> {
-    let mut frames: Vec<(u64, &crate::widget::Frame, crate::LayoutRect, f32)> = Vec::new();
+) -> CollectedFrames {
+    let mut frames: Vec<(u64, crate::LayoutRect, f32)> = Vec::new();
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();
 
     if let Some(buckets) = strata_buckets {
@@ -159,7 +155,7 @@ pub fn collect_sorted_frames<'a>(
                 let Some(&eff_alpha) = ancestor_visible.get(&id) else { continue };
                 let Some(f) = registry.get(id) else { continue };
                 let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
-                frames.push((id, f, rect, eff_alpha));
+                frames.push((id, rect, eff_alpha));
                 if f.visible && f.mouse_enabled
                     && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
                 {
@@ -172,15 +168,19 @@ pub fn collect_sorted_frames<'a>(
         for (&id, &eff_alpha) in ancestor_visible {
             let Some(f) = registry.get(id) else { continue };
             let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
-            frames.push((id, f, rect, eff_alpha));
+            frames.push((id, rect, eff_alpha));
             if f.visible && f.mouse_enabled
                 && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
             {
                 hittable.push((id, f.frame_strata, f.frame_level, rect));
             }
         }
-        frames.sort_by(|a, b| {
-            a.1.frame_strata.cmp(&b.1.frame_strata).then_with(|| intra_strata_cmp(a, b))
+        frames.sort_by(|&(id_a, _, _), &(id_b, _, _)| {
+            match (registry.get(id_a), registry.get(id_b)) {
+                (Some(fa), Some(fb)) => fa.frame_strata.cmp(&fb.frame_strata)
+                    .then_with(|| intra_strata_sort_key(fa, id_a).cmp(&intra_strata_sort_key(fb, id_b))),
+                _ => id_a.cmp(&id_b),
+            }
         });
     }
 
