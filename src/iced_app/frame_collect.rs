@@ -62,6 +62,13 @@ pub fn collect_ancestor_visible_ids(
         }
         let effective_alpha = parent_alpha * f.alpha;
         visible.insert(id, effective_alpha);
+        // Don't recurse into GameTooltip children — build_tooltip_quads handles
+        // the complete tooltip rendering (background, border, text lines).
+        // The NineSlice child + its corner/edge/center textures would otherwise
+        // render on top, producing a grey overlay.
+        if f.widget_type == WidgetType::GameTooltip {
+            continue;
+        }
         for &child_id in &f.children {
             queue.push((child_id, effective_alpha));
         }
