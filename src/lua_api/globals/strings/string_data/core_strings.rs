@@ -300,6 +300,7 @@ pub const MISC_UI_STRINGS: &[StringDef] = &[
     ("WORLD_QUEST_REWARD_FILTERS_EQUIPMENT", "Equipment"),
     ("WORLD_QUEST_REWARD_FILTERS_GOLD", "Gold"),
     ("WORLD_QUEST_REWARD_FILTERS_RESOURCES", "Resources"),
+    ("CAST_BAR_CAST_TIME", "%.1f sec"),
 ];
 
 // ============================================================================

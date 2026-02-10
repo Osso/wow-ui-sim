@@ -69,6 +69,22 @@ fn onload_hides_animation_targets() {
     "#).unwrap();
 }
 
+/// Verify texture alpha=0 from XML template is preserved after creation.
+#[test]
+fn texture_alpha_zero_preserved_from_template() {
+    let env = setup();
+    env.exec(r#"
+        local f = CreateFrame("Frame", "TestAlphaFrame", UIParent)
+        local tex = f:CreateTexture("AlphaTex", "ARTWORK")
+        tex:SetAlpha(0)
+        f.AlphaTex = tex
+        assert(tex:GetAlpha() == 0,
+            "Texture alpha should be 0 after SetAlpha(0), got " .. tex:GetAlpha())
+        assert(tex:IsShown() == true,
+            "Texture should still be shown (visible) even with alpha=0")
+    "#).unwrap();
+}
+
 /// GetTarget returns the owner frame when no childKey is set.
 #[test]
 fn get_target_returns_owner_when_no_child_key() {
@@ -81,6 +97,19 @@ fn get_target_returns_owner_when_no_child_key() {
         assert(target ~= nil, "GetTarget should return owner frame")
         assert(target:GetName() == "TestTargetOwner",
             "Target should be owner frame, got " .. tostring(target:GetName()))
+    "#).unwrap();
+}
+
+/// CAST_BAR_CAST_TIME global string must exist for OnUpdate to work.
+#[test]
+fn cast_bar_cast_time_string_exists() {
+    let env = setup();
+    env.exec(r#"
+        assert(CAST_BAR_CAST_TIME ~= nil,
+            "CAST_BAR_CAST_TIME global string must be defined")
+        local text = string.format(CAST_BAR_CAST_TIME, 1.5)
+        assert(type(text) == "string",
+            "string.format(CAST_BAR_CAST_TIME, 1.5) should produce a string, got " .. type(text))
     "#).unwrap();
 }
 
