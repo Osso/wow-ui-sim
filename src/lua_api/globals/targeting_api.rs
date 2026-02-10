@@ -6,12 +6,14 @@ use mlua::{Lua, Result};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-/// Register TargetUnit(unitId), ClearTarget(), FocusUnit(unitId), and ClearFocus() globals.
+/// Register targeting globals: TargetUnit, ClearTarget, FocusUnit, ClearFocus,
+/// SpellIsTargeting, SpellStopTargeting, SpellTargetUnit, CursorHasItem.
 pub fn register_targeting_functions(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let g = lua.globals();
 
     register_target_globals(&g, lua, state.clone())?;
     register_focus_globals(&g, lua, state)?;
+    register_spell_targeting_stubs(&g, lua)?;
 
     Ok(())
 }
@@ -65,6 +67,15 @@ fn register_focus_globals(g: &mlua::Table, lua: &Lua, state: Rc<RefCell<SimState
         Ok(())
     })?)?;
 
+    Ok(())
+}
+
+/// Spell-targeting and cursor stubs needed by SecureTemplates.lua SECURE_ACTIONS.
+fn register_spell_targeting_stubs(g: &mlua::Table, lua: &Lua) -> Result<()> {
+    g.set("SpellIsTargeting", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("SpellStopTargeting", lua.create_function(|_, ()| Ok(()))?)?;
+    g.set("SpellTargetUnit", lua.create_function(|_, _unit: String| Ok(()))?)?;
+    g.set("CursorHasItem", lua.create_function(|_, ()| Ok(false))?)?;
     Ok(())
 }
 

@@ -536,3 +536,73 @@ const MULTI_FILE_ADDON_LUA: &str = r#"
     local button = addon:CreateExtraButton("test")
     addon.testButton = button
 "#;
+
+/// Test that GetAttribute supports multi-argument form (prefix, name, suffix)
+/// and wildcard `*` prefix fallback, as required by SecureTemplates.lua.
+#[test]
+fn test_get_attribute_multi_arg_and_wildcard() {
+    let t = load_test_xml(
+        "test-getattr-multi",
+        r#"<Ui>
+            <Button name="TestSecureBtn" parent="UIParent">
+                <Size x="100" y="30"/>
+                <Anchors><Anchor point="CENTER"/></Anchors>
+            </Button>
+        </Ui>"#,
+    );
+
+    // Set attributes like SecureTemplates does
+    t.env.eval::<()>(r#"
+        TestSecureBtn:SetAttribute("*type1", "target")
+        TestSecureBtn:SetAttribute("unit", "party1")
+        TestSecureBtn:SetAttribute("type2", "menu")
+    "#).unwrap();
+
+    // Single-arg GetAttribute still works
+    t.assert_lua_str(
+        r#"return TestSecureBtn:GetAttribute("unit")"#,
+        "party1",
+    );
+    t.assert_lua_str(
+        r#"return TestSecureBtn:GetAttribute("type2")"#,
+        "menu",
+    );
+
+    // Multi-arg form: GetAttribute(prefix, name, suffix) → concatenates
+    t.assert_lua_str(
+        r#"return TestSecureBtn:GetAttribute("", "type", "2")"#,
+        "menu",
+    );
+
+    // Multi-arg with wildcard fallback: "type1" not found → falls back to "*type1"
+    t.assert_lua_str(
+        r#"return TestSecureBtn:GetAttribute("", "type", "1")"#,
+        "target",
+    );
+
+    // Multi-arg with modifier prefix: "shift-type1" not found → "*type1"
+    t.assert_lua_str(
+        r#"return TestSecureBtn:GetAttribute("shift-", "type", "1")"#,
+        "target",
+    );
+
+    // Unit attribute via multi-arg: bare name fallback (key 5)
+    // SetAttribute("unit", "party1") found via GetAttribute("", "unit", "1") → tries
+    // "unit1", "*unit1", "unit*", "*unit*", then "unit" (bare name) → found
+    t.assert_lua_str(
+        r#"return TestSecureBtn:GetAttribute("", "unit", "1")"#,
+        "party1",
+    );
+
+    // Also works with empty suffix
+    t.assert_lua_str(
+        r#"return TestSecureBtn:GetAttribute("", "unit", "")"#,
+        "party1",
+    );
+
+    // Non-existent attribute returns nil
+    t.assert_lua_true(
+        r#"return TestSecureBtn:GetAttribute("", "nosuch", "1") == nil"#,
+        "non-existent multi-arg attribute should be nil",
+    );
+}

@@ -13,30 +13,13 @@ pub fn add_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// GetAttribute, SetAttribute, ClearAttributes - core attribute CRUD.
 fn add_get_set_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetAttribute", |lua, this, name: String| {
-        // First check for table attributes stored in Lua
-        let table_attrs: Option<mlua::Table> =
-            lua.globals().get("__frame_table_attributes").ok();
-        if let Some(attrs) = table_attrs {
-            let key = format!("{}_{}", this.id, name);
-            let table_val: Value = attrs.get(key.as_str()).unwrap_or(Value::Nil);
-            if !matches!(table_val, Value::Nil) {
-                return Ok(table_val);
-            }
-        }
-
-        // Fall back to non-table attributes stored in Rust
-        let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id)
-            && let Some(attr) = frame.attributes.get(&name) {
-                return match attr {
-                    AttributeValue::String(s) => Ok(Value::String(lua.create_string(s)?)),
-                    AttributeValue::Number(n) => Ok(Value::Number(*n)),
-                    AttributeValue::Boolean(b) => Ok(Value::Boolean(*b)),
-                    AttributeValue::Nil => Ok(Value::Nil),
-                };
-            }
-        Ok(Value::Nil)
+    // GetAttribute supports WoW's multi-argument form: GetAttribute(prefix, name, suffix)
+    // which concatenates to look up prefix..name..suffix. Also supports wildcard `*`
+    // prefix fallback: if "prefix..name..suffix" not found, tries "*name..suffix".
+    // This is required by SecureTemplates.lua (SecureButton_GetModifiedAttribute).
+    methods.add_method("GetAttribute", |lua, this, args: mlua::MultiValue| {
+        let keys = build_attribute_keys(&args);
+        get_attribute_value(lua, this, &keys)
     });
 
     methods.add_method("SetAttribute", |lua, this, (name, value): (String, Value)| {
@@ -60,6 +43,86 @@ fn add_get_set_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
         }
         Ok(())
     });
+}
+
+/// Build the list of attribute keys to try, in WoW's fallback order.
+///
+/// WoW's GetAttribute accepts 1 or 3 string arguments:
+/// - 1 arg: `GetAttribute("name")` → tries just `["name"]`
+/// - 3 args: `GetAttribute(prefix, name, suffix)` → tries in order:
+///   1. `prefix..name..suffix` (exact)
+///   2. `"*"..name..suffix`   (wildcard prefix)
+///   3. `prefix..name.."*"`   (wildcard suffix)
+///   4. `"*"..name.."*"`      (wildcard both)
+///   5. `name`                (bare name, no prefix/suffix)
+///
+/// Ref: wowless data/uiobjects/Frame/GetAttribute.lua
+fn build_attribute_keys(args: &mlua::MultiValue) -> Vec<String> {
+    let strings: Vec<String> = args
+        .iter()
+        .filter_map(|v| match v {
+            Value::String(s) => s.to_str().ok().map(|s| s.to_string()),
+            _ => None,
+        })
+        .collect();
+
+    match strings.len() {
+        0 => vec![String::new()],
+        1 => vec![strings[0].clone()],
+        _ => {
+            // 3-arg form: prefix, name, suffix
+            let prefix = &strings[0];
+            let name = &strings[1];
+            let suffix = if strings.len() > 2 { strings[2].as_str() } else { "" };
+            vec![
+                format!("{}{}{}", prefix, name, suffix),
+                format!("*{}{}", name, suffix),
+                format!("{}{}*", prefix, name),
+                format!("*{}*", name),
+                name.clone(),
+            ]
+        }
+    }
+}
+
+/// Look up an attribute, trying each key in order until one is found.
+fn get_attribute_value(
+    lua: &mlua::Lua,
+    this: &FrameHandle,
+    keys: &[String],
+) -> mlua::Result<Value> {
+    let table_attrs: Option<mlua::Table> =
+        lua.globals().get("__frame_table_attributes").ok();
+    let state = this.state.borrow();
+    let frame = state.widgets.get(this.id);
+
+    for key in keys {
+        // Check table attributes stored in Lua
+        if let Some(attrs) = &table_attrs {
+            let lua_key = format!("{}_{}", this.id, key);
+            let table_val: Value = attrs.get(lua_key.as_str()).unwrap_or(Value::Nil);
+            if !matches!(table_val, Value::Nil) {
+                return Ok(table_val);
+            }
+        }
+        // Check non-table attributes stored in Rust
+        if let Some(f) = frame {
+            if let Some(attr) = f.attributes.get(key.as_str()) {
+                return attribute_to_value(lua, attr);
+            }
+        }
+    }
+    Ok(Value::Nil)
+}
+
+/// Convert an AttributeValue to a Lua Value.
+fn attribute_to_value(lua: &mlua::Lua, attr: &AttributeValue) -> mlua::Result<Value> {
+    match attr {
+        AttributeValue::String(s) => Ok(Value::String(lua.create_string(s)?)),
+        AttributeValue::Number(n) => Ok(Value::Number(*n)),
+        AttributeValue::Boolean(b) => Ok(Value::Boolean(*b)),
+        AttributeValue::Nil => Ok(Value::Nil),
+    }
 }
 
 /// Store the attribute value in Lua (tables) or Rust (simple types).
