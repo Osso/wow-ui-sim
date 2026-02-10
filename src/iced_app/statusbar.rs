@@ -10,11 +10,15 @@ pub(super) struct StatusBarFill {
     pub color: Option<Color>,
 }
 
-/// Collect fill info for all StatusBar bar textures.
-/// Returns a map from bar texture widget ID to its fill info.
-pub(super) fn collect_statusbar_fills(registry: &crate::widget::WidgetRegistry) -> HashMap<u64, StatusBarFill> {
+/// Collect fill info for StatusBar bar textures visible in the render list.
+///
+/// Only scans the render list (visible frames), not the entire registry.
+pub(super) fn collect_statusbar_fills(
+    render_list: &[(u64, crate::LayoutRect, f32)],
+    registry: &crate::widget::WidgetRegistry,
+) -> HashMap<u64, StatusBarFill> {
     let mut fills = HashMap::new();
-    for id in registry.iter_ids() {
+    for &(id, _, _) in render_list {
         let Some(frame) = registry.get(id) else { continue };
         if frame.widget_type != WidgetType::StatusBar {
             continue;

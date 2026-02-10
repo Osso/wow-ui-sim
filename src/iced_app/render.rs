@@ -155,7 +155,7 @@ fn emit_all_frames(
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     cache: &mut LayoutCache,
 ) {
-    let statusbar_fills = collect_statusbar_fills(registry);
+    let statusbar_fills = collect_statusbar_fills(render_list, registry);
 
     for &(id, rect, eff_alpha) in render_list {
         let Some(f) = registry.get(id) else { continue };
