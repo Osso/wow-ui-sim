@@ -147,6 +147,14 @@ impl App {
                     let _ = env.fire_script_handler(
                         frame_id,
                         "OnClick",
+                        vec![button_val.clone(), down_val.clone()],
+                    );
+
+                    // PostClick fires after OnClick (WoW secure button sequence).
+                    // ActionBar buttons use PostClick to call UpdateState().
+                    let _ = env.fire_script_handler(
+                        frame_id,
+                        "PostClick",
                         vec![button_val.clone(), down_val],
                     );
                 }
@@ -560,6 +568,7 @@ impl App {
     }
 
     /// Toggle CheckButton checked state before OnClick (WoW behavior).
+    /// Skip action bar buttons — they manage checked state via UpdateState().
     fn toggle_checkbutton_if_needed(&self, frame_id: u64, env: &WowLuaEnv) {
         let mut state = env.state().borrow_mut();
         let is_checkbutton = state
@@ -568,6 +577,12 @@ impl App {
             .map(|f| f.widget_type == crate::widget::WidgetType::CheckButton)
             .unwrap_or(false);
         if !is_checkbutton {
+            return;
+        }
+        // Action bar buttons registered via SetActionUIButton manage their own
+        // checked state through UpdateState() — don't auto-toggle them.
+        let is_action_button = state.action_ui_buttons.iter().any(|(id, _)| *id == frame_id);
+        if is_action_button {
             return;
         }
 
@@ -650,8 +665,10 @@ fn fire_cast_complete_events(
     ];
     let _ = env.fire_event_with_args("UNIT_SPELLCAST_STOP", args);
     let _ = env.fire_event_with_args("UNIT_SPELLCAST_SUCCEEDED", args);
-    // Tell action buttons to re-check IsCurrentAction() (casting is now None).
-    let _ = env.fire_event("ACTIONBAR_UPDATE_STATE");
+    // Push state update to registered action buttons (casting is now None).
+    let _ = crate::lua_api::globals::action_bar_api::push_action_button_state_update(
+        &env.state(), env.lua(),
+    );
 }
 
 /// Apply healing from a completed cast spell to the target or self.

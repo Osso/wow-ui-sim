@@ -149,6 +149,9 @@ pub struct SimState {
     pub gcd: Option<(f64, f64)>,
     /// Per-spell cooldowns: spell_id → SpellCooldownState.
     pub spell_cooldowns: HashMap<u32, SpellCooldownState>,
+    /// Buttons registered via SetActionUIButton(button, action, cooldownFrame).
+    /// Stores (frame_id, action_slot) pairs for engine-pushed state updates.
+    pub action_ui_buttons: Vec<(u64, u32)>,
 }
 
 impl Default for SimState {
@@ -196,6 +199,7 @@ impl Default for SimState {
             next_cast_id: 1,
             gcd: None,
             spell_cooldowns: HashMap::new(),
+            action_ui_buttons: Vec::new(),
         }
     }
 }

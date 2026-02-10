@@ -249,8 +249,8 @@ pub fn start_cast(
         cast_id as i64,
         spell_id as i64,
     ))?;
-    // Tell action buttons to re-check IsCurrentAction() for checked state.
-    fire.call::<()>(lua.create_string("ACTIONBAR_UPDATE_STATE")?)?;
+    // Push state update to registered action UI buttons (replaces ACTIONBAR_UPDATE_STATE).
+    push_action_button_state_update(state, lua)?;
     Ok(())
 }
 
@@ -277,7 +277,10 @@ pub fn apply_instant_spell(
         lua.create_string("player")?,
         cast_id as i64,
         spell_id as i64,
-    ))
+    ))?;
+    // Push state update to registered action buttons (instant spells don't cast).
+    push_action_button_state_update(state, lua)?;
+    Ok(())
 }
 
 /// Action bar stub functions (mostly stateless, some need state).
@@ -332,7 +335,25 @@ fn register_action_slot_query_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) ->
         lua.create_function(|_, _slot: Value| Ok((0, 0, 0.0_f64, 0.0_f64, 1.0_f64)))?,
     )?;
     globals.set("GetPossessInfo", lua.create_function(|_, _index: Value| Ok(Value::Nil))?)?;
-    globals.set("SetActionUIButton", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    let st = Rc::clone(state);
+    globals.set("SetActionUIButton", lua.create_function(move |_, args: mlua::MultiValue| {
+        let mut iter = args.iter();
+        let frame_id = iter.next().and_then(|v| {
+            if let Value::UserData(ud) = v {
+                ud.borrow::<super::super::frame::FrameHandle>().ok().map(|h| h.id)
+            } else {
+                None
+            }
+        });
+        let action = iter.next().and_then(|v| slot_from_value(v));
+        if let (Some(fid), Some(slot)) = (frame_id, action) {
+            let mut s = st.borrow_mut();
+            // Remove any previous registration for this frame.
+            s.action_ui_buttons.retain(|(id, _)| *id != fid);
+            s.action_ui_buttons.push((fid, slot));
+        }
+        Ok(())
+    })?)?;
     Ok(())
 }
 
@@ -347,5 +368,27 @@ fn register_action_bar_indices(lua: &Lua) -> Result<()> {
     globals.set("GetMultiCastBarIndex", lua.create_function(|_, ()| Ok(7i32))?)?;
     globals.set("GetExtraBarIndex", lua.create_function(|_, ()| Ok(13i32))?)?;
     globals.set("IsPossessBarVisible", lua.create_function(|_, ()| Ok(false))?)?;
+    Ok(())
+}
+
+/// Push state updates to all buttons registered via SetActionUIButton.
+/// This replaces the ACTIONBAR_UPDATE_STATE event which WoW's C++ engine
+/// pushes directly to registered buttons (the event is commented out in Lua).
+pub fn push_action_button_state_update(
+    state: &Rc<RefCell<SimState>>,
+    lua: &Lua,
+) -> Result<()> {
+    let buttons: Vec<u64> = state.borrow().action_ui_buttons
+        .iter().map(|(id, _)| *id).collect();
+    for frame_id in buttons {
+        // Use Lua code so __index resolves mixin methods correctly.
+        let code = format!(
+            "do local f = __frame_{} if f and f.UpdateState then f:UpdateState() end end",
+            frame_id
+        );
+        if let Err(e) = lua.load(&code).exec() {
+            eprintln!("[action] UpdateState error for frame {}: {}", frame_id, e);
+        }
+    }
     Ok(())
 }
