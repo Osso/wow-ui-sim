@@ -202,11 +202,6 @@ fn register_reload_ui(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
             Ok(vec![Value::String(event_str)])
         })?;
 
-        fire_event_to_listeners(lua, &state, "PLAYER_LOGIN", |lua| {
-            let event_str = lua.create_string("PLAYER_LOGIN")?;
-            Ok(vec![Value::String(event_str)])
-        })?;
-
         fire_event_to_listeners(lua, &state, "PLAYER_ENTERING_WORLD", |lua| {
             let event_str = lua.create_string("PLAYER_ENTERING_WORLD")?;
             Ok(vec![Value::String(event_str), Value::Boolean(false), Value::Boolean(true)])
