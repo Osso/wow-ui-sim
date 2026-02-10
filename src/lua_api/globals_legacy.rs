@@ -268,7 +268,7 @@ const FRAME_BASE_METHODS: &[&str] = &[
     "ApplyBackdrop", "SetBackdropColor", "SetBackdropBorderColor", "GetBackdrop",
     "GetBackdropColor", "GetBackdropBorderColor", "CreateTexture",
     "CreateMaskTexture", "CreateFontString", "CreateAnimationGroup",
-    "GetAnimationGroups", "CreateLine", "GetNumRegions", "SetText", "GetText", "SetTitle", "GetTitle",
+    "GetAnimationGroups", "GetNumRegions", "SetText", "GetText", "SetTitle", "GetTitle",
     "SetTextColor", "GetTextColor", "SetFontObject", "GetFontObject", "SetFont",
     "GetFont", "SetJustifyH", "GetJustifyH", "SetJustifyV", "GetJustifyV",
     "SetWordWrap", "GetWordWrap", "CanChangeAttribute", "SetToplevel",
@@ -314,6 +314,8 @@ const TEXTURE_METHODS: &[&str] = &[
     "GetNumChildren", "PlaySoundFile", "ClearNineSlice",
     "SetAutomaticFrameLevelEnabled", "IsAutomaticFrameLevelEnabled",
     "SetVisuals",
+    // Line methods (Line is a Texture subtype with start/end point anchoring)
+    "SetStartPoint", "SetEndPoint", "SetThickness",
 ];
 
 const BUTTON_METHODS: &[&str] = &[

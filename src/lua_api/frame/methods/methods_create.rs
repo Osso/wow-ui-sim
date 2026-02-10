@@ -74,6 +74,7 @@ fn register_child_widget(
 pub fn add_create_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_create_texture_method(methods);
     add_create_mask_texture_method(methods);
+    add_create_line_method(methods);
     add_create_font_string_method(methods);
     add_create_animation_group_method(methods);
 }
@@ -108,6 +109,27 @@ fn add_create_mask_texture_method<M: UserDataMethods<FrameHandle>>(methods: &mut
         let mut texture = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
         texture.is_mask = true;
         register_child_widget(lua, this, texture, &name)
+    });
+}
+
+/// CreateLine(name, layer, inherits, subLevel) - create a Line (texture with start/end points).
+fn add_create_line_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method("CreateLine", |lua, this, args: mlua::MultiValue| {
+        use crate::widget::DrawLayer;
+
+        let args: Vec<Value> = args.into_iter().collect();
+        let name_raw = extract_string_arg(&args, 0);
+        let layer = extract_string_arg(&args, 1);
+        let name = resolve_child_name(name_raw, this);
+
+        let mut line = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
+
+        if let Some(layer_str) = layer
+            && let Some(draw_layer) = DrawLayer::from_str(&layer_str) {
+                line.draw_layer = draw_layer;
+            }
+
+        register_child_widget(lua, this, line, &name)
     });
 }
 
