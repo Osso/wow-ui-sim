@@ -429,9 +429,16 @@ fn register_guild_bank_pet_battles(lua: &Lua, g: &mlua::Table) -> Result<()> {
 
     // C_PetBattles - methods return 0 by default (many are numeric: GetHealth, GetLevel, etc.)
     // Returning nil would cause "attempt to compare nil with number" in PetBattle Lua code.
+    // Methods that return non-numeric types must be listed explicitly.
     lua.load(r#"
         C_PetBattles = setmetatable({
             IsInBattle = function() return false end,
+            IsWildBattle = function() return false end,
+            IsPlayerNPC = function() return false end,
+            GetAllEffectNames = function() end,
+            GetAllStates = function() return {} end,
+            GetBattleState = function() return nil end,
+            GetPVPMatchmakingInfo = function() return nil end,
         }, { __index = function() return function() return 0 end end })
     "#).exec()?;
     Ok(())

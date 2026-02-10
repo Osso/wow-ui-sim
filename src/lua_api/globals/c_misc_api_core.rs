@@ -1,7 +1,7 @@
 //! Core C_* namespace API stubs.
 //!
 //! Contains C_ namespaces for game systems:
-//! - C_ScenarioInfo, C_TooltipInfo, C_PetBattles, C_TradeSkillUI
+//! - C_ScenarioInfo, C_TooltipInfo, C_TradeSkillUI
 //! - C_MythicPlus, C_LFGInfo, C_NamePlate, C_PlayerInfo
 //! - C_PartyInfo, C_ChatInfo, C_EventUtils, C_AzeriteEssence
 //! - C_PvP, C_FriendList, C_AuctionHouse, C_Bank
@@ -12,7 +12,6 @@ use mlua::{Lua, Result, Value};
 pub(super) fn register_all(lua: &Lua) -> Result<()> {
     register_c_scenario_info(lua)?;
     register_c_tooltip_info(lua)?;
-    register_c_pet_battles(lua)?;
     register_c_trade_skill(lua)?;
     register_c_mythic_plus(lua)?;
     register_c_lfg_info(lua)?;
@@ -83,29 +82,6 @@ fn register_c_tooltip_info(lua: &Lua) -> Result<()> {
     })?)?;
     t.set_metatable(Some(mt));
     lua.globals().set("C_TooltipInfo", t)?;
-    Ok(())
-}
-
-fn register_c_pet_battles(lua: &Lua) -> Result<()> {
-    let globals = lua.globals();
-    let t = lua.create_table()?;
-
-    t.set("IsInBattle", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("IsWildBattle", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("IsPlayerNPC", lua.create_function(|_, _owner_index: i32| Ok(false))?)?;
-    t.set("GetNumAuras", lua.create_function(|_, (_owner, _pet): (i32, i32)| Ok(0i32))?)?;
-    t.set("GetActivePet", lua.create_function(|_, _owner: i32| Ok(1i32))?)?;
-    t.set("GetNumPets", lua.create_function(|_, _owner: i32| Ok(0i32))?)?;
-    t.set("GetHealth", lua.create_function(|_, (_o, _p): (i32, i32)| Ok(0i32))?)?;
-    t.set("GetMaxHealth", lua.create_function(|_, (_o, _p): (i32, i32)| Ok(100i32))?)?;
-    t.set("GetSpeed", lua.create_function(|_, (_o, _p): (i32, i32)| Ok(0i32))?)?;
-    t.set("GetPower", lua.create_function(|_, (_o, _p): (i32, i32)| Ok(0i32))?)?;
-    t.set("GetAllEffectNames", lua.create_function(|_, ()| Ok(mlua::MultiValue::new()))?)?;
-    t.set("GetAllStates", lua.create_function(|lua, ()| lua.create_table())?)?;
-    t.set("GetBattleState", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    t.set("GetPVPMatchmakingInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-
-    globals.set("C_PetBattles", t)?;
     Ok(())
 }
 
