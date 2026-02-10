@@ -44,7 +44,7 @@ pub(super) fn create_texture_from_template(
         ));
     }
 
-    append_texture_properties(&mut code, texture, "tex");
+    append_texture_properties(&mut code, texture, "tex", is_mask);
     append_anchors_and_parent_refs(
         &mut code, &texture.anchors, texture.set_all_points,
         &texture.parent_key, &texture.parent_array,
@@ -139,7 +139,10 @@ fn safe_add_mask_texture_code(root: &str, key: &str) -> String {
 }
 
 /// Append texture-specific property setters (size, file, atlas, color) to Lua code.
-fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml, var: &str) {
+///
+/// `is_mask`: MaskTextures default to `useAtlasSize=true` when not explicit,
+/// matching WoW behavior where masks auto-size from their atlas.
+fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml, var: &str, is_mask: bool) {
     if let Some(size) = &texture.size {
         let (width, height) = get_size_values(size);
         match (width, height) {
@@ -163,7 +166,8 @@ fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml
         ));
     }
     if let Some(atlas) = &texture.atlas {
-        let use_atlas_size = texture.use_atlas_size.unwrap_or(false);
+        let default_use_atlas_size = is_mask;
+        let use_atlas_size = texture.use_atlas_size.unwrap_or(default_use_atlas_size);
         code.push_str(&format!(
             "            {}:SetAtlas(\"{}\", {})\n",
             var,
@@ -381,7 +385,7 @@ pub(super) fn create_bar_texture_from_template(
         lua_global_ref(parent_name), escape_lua_string(&child_name),
     );
 
-    append_texture_properties(&mut code, bar, "bar");
+    append_texture_properties(&mut code, bar, "bar", false);
     code.push_str("            parent:SetStatusBarTexture(bar)\n");
     let parent_key = bar.parent_key.as_deref().unwrap_or("Bar");
     code.push_str(&format!("            parent[\"{}\"] = bar\n", escape_lua_string(parent_key)));

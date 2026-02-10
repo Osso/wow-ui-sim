@@ -8,7 +8,12 @@ use super::helpers::{escape_lua_string, generate_set_point_code, get_size_values
 use super::helpers_anim::generate_animation_group_code;
 
 /// Generate Lua code for texture source (file or atlas) and size.
-fn generate_texture_source_code(texture: &crate::xml::TextureXml) -> String {
+///
+/// `is_mask`: MaskTextures default to `useAtlasSize=true` when not explicit,
+/// matching WoW behavior where masks auto-size from their atlas.  This matters
+/// because the mask frame must be larger than the icon so the icon samples only
+/// the opaque center of the mask texture.
+fn generate_texture_source_code(texture: &crate::xml::TextureXml, is_mask: bool) -> String {
     let mut code = String::new();
 
     if let Some(file) = &texture.file {
@@ -21,7 +26,8 @@ fn generate_texture_source_code(texture: &crate::xml::TextureXml) -> String {
     }
 
     if let Some(atlas) = &texture.atlas {
-        let use_atlas_size = texture.use_atlas_size.unwrap_or(false);
+        let default_use_atlas_size = is_mask;
+        let use_atlas_size = texture.use_atlas_size.unwrap_or(default_use_atlas_size);
         code.push_str(&format!(
             r#"
         tex:SetAtlas("{}", {})
@@ -161,7 +167,7 @@ fn build_texture_lua(
         lua_global_ref(parent_name), create_method, tex_name, draw_layer
     );
     code.push_str(&generate_mixin_code(texture));
-    code.push_str(&generate_texture_source_code(texture));
+    code.push_str(&generate_texture_source_code(texture, is_mask));
     code.push_str(&generate_texture_visual_code(texture));
     append_texture_anchors(&mut code, texture, parent_name);
     if texture.hidden == Some(true) {
