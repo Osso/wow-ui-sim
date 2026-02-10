@@ -19,6 +19,14 @@ fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let state = this.state.borrow();
         if let Some(frame) = state.widgets.get(this.id)
             && let Some(parent_id) = frame.parent_id {
+                // Return the canonical userdata stored in globals so that
+                // `frame:GetParent() == SomeGlobal` equality works in Lua 5.1.
+                let key = format!("__frame_{}", parent_id);
+                let val: Value = lua.globals().get(key)?;
+                if !val.is_nil() {
+                    return Ok(val);
+                }
+                // Fallback: create a new handle if not in globals
                 let handle = FrameHandle {
                     id: parent_id,
                     state: Rc::clone(&this.state),
