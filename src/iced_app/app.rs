@@ -166,6 +166,8 @@ pub struct App {
     /// Cached sorted hit-test rects (rebuilt when layout changes).
     /// Pre-sorted top-to-bottom (highest strata first) with pre-scaled bounds.
     pub(crate) cached_hittable: RefCell<Option<Vec<(u64, Rectangle)>>>,
+    /// Cached layout rects from the last quad build, shared with hit testing.
+    pub(crate) cached_layout_rects: RefCell<Option<super::layout::LayoutCache>>,
     /// Flag to invalidate quad cache (set when content changes).
     pub(crate) quads_dirty: std::cell::Cell<bool>,
     /// Last quad rebuild timestamp (throttles rebuilds so cursor stays responsive).
@@ -277,6 +279,7 @@ impl App {
             gpu_uploaded_textures: RefCell::new(std::collections::HashSet::new()),
             cached_quads: RefCell::new(None),
             cached_hittable: RefCell::new(None),
+            cached_layout_rects: RefCell::new(None),
             quads_dirty: std::cell::Cell::new(true),
             last_quad_rebuild: std::cell::Cell::new(now),
             frame_count: std::cell::Cell::new(0),

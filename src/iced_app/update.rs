@@ -487,6 +487,7 @@ impl App {
         self.frame_cache.clear();
         self.quads_dirty.set(true);
         *self.cached_hittable.borrow_mut() = None;
+        *self.cached_layout_rects.borrow_mut() = None;
     }
 
     /// Check whether a frame's `__enabled` attribute is true (default: true).

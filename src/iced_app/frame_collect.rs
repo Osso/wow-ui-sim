@@ -1,7 +1,7 @@
 //! Frame collection and sorting helpers for rendering.
 
 use crate::widget::WidgetType;
-use super::layout::compute_frame_rect;
+use super::layout::{LayoutCache, compute_frame_rect_cached};
 
 /// Collect all frame IDs in the subtree rooted at the named frame.
 pub fn collect_subtree_ids(
@@ -108,12 +108,13 @@ pub fn collect_sorted_frames<'a>(
     screen_width: f32,
     screen_height: f32,
     ancestor_visible: &std::collections::HashMap<u64, f32>,
+    cache: &mut LayoutCache,
 ) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect, f32)> {
     let mut frames: Vec<_> = ancestor_visible
         .iter()
         .filter_map(|(&id, &eff_alpha)| {
             let f = registry.get(id)?;
-            let rect = compute_frame_rect(registry, id, screen_width, screen_height);
+            let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
             Some((id, f, rect, eff_alpha))
         })
         .collect();

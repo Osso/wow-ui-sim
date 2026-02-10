@@ -13,7 +13,7 @@ use crate::widget::{TextJustify, WidgetType};
 
 use super::app::App;
 use super::frame_collect::{collect_subtree_ids, collect_ancestor_visible_ids, collect_sorted_frames};
-use super::layout::compute_frame_rect;
+use super::layout::LayoutCache;
 use super::message_frame_render::emit_message_frame_text;
 use super::statusbar::{StatusBarFill, collect_statusbar_fills};
 use super::state::CanvasMessage;
@@ -430,6 +430,7 @@ fn emit_frame_quads(
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     registry: &crate::widget::WidgetRegistry,
     screen_size: (f32, f32),
+    cache: &mut LayoutCache,
 ) {
     match f.widget_type {
         WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
@@ -457,7 +458,7 @@ fn emit_frame_quads(
                 let vert_before = batch.vertices.len();
                 build_texture_quads(batch, bounds, f, bar_fill);
                 if !f.mask_textures.is_empty() {
-                    apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry, screen_size);
+                    apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry, screen_size, cache);
                 }
             }
         }
@@ -516,6 +517,26 @@ pub fn build_quad_batch_for_registry(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
 ) -> QuadBatch {
+    let mut cache = LayoutCache::new();
+    build_quad_batch_with_cache(
+        registry, screen_size, root_name, pressed_frame, hovered_frame,
+        &mut text_ctx, message_frames, tooltip_data, &mut cache,
+    )
+}
+
+/// Build a QuadBatch, populating the shared layout cache for reuse by hit testing.
+#[allow(clippy::too_many_arguments)]
+pub fn build_quad_batch_with_cache(
+    registry: &crate::widget::WidgetRegistry,
+    screen_size: (f32, f32),
+    root_name: Option<&str>,
+    pressed_frame: Option<u64>,
+    hovered_frame: Option<u64>,
+    text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+    message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
+    tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
+    cache: &mut LayoutCache,
+) -> QuadBatch {
     let mut batch = QuadBatch::with_capacity(1000);
     let (screen_width, screen_height) = screen_size;
     let size = Size::new(screen_width, screen_height);
@@ -531,7 +552,7 @@ pub fn build_quad_batch_for_registry(
 
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
     let ancestor_visible = collect_ancestor_visible_ids(registry);
-    let frames = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible);
+    let frames = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible, cache);
 
     // Collect StatusBar fill info: bar_texture_id -> fill fraction
     let statusbar_fills = collect_statusbar_fills(registry);
@@ -546,7 +567,7 @@ pub fn build_quad_batch_for_registry(
         }
         let bounds = Rectangle::new(Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE), Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE));
         let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, &mut text_ctx, message_frames, tooltip_data, registry, screen_size);
+        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache);
     }
     batch
 }
@@ -631,16 +652,21 @@ impl App {
         let state = env.state().borrow();
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
         let mut glyph_atlas = self.glyph_atlas.borrow_mut();
-        build_quad_batch_for_registry(
+        let mut cache = LayoutCache::new();
+        let batch = build_quad_batch_with_cache(
             &state.widgets,
             (size.width, size.height),
             None,
             self.pressed_frame,
             None, // hover highlights appended in draw()
-            Some((&mut font_sys, &mut glyph_atlas)),
+            &mut Some((&mut font_sys, &mut glyph_atlas)),
             Some(&state.message_frames),
             Some(&tooltip_data),
-        )
+            &mut cache,
+        );
+        // Store layout cache for hit testing and hover highlights
+        *self.cached_layout_rects.borrow_mut() = Some(cache);
+        batch
     }
 
     /// Append hover highlight quads for the currently hovered button.
@@ -656,7 +682,16 @@ impl App {
             return;
         }
 
-        let rect = compute_frame_rect(registry, hovered_id, screen_size.width, screen_size.height);
+        let rect = {
+            let layout_cache = self.cached_layout_rects.borrow();
+            if let Some(cache) = layout_cache.as_ref()
+                && let Some(cached) = cache.get(&hovered_id) {
+                    cached.rect
+                } else {
+                    drop(layout_cache);
+                    super::layout::compute_frame_rect(registry, hovered_id, screen_size.width, screen_size.height)
+                }
+        };
         if rect.width <= 0.0 || rect.height <= 0.0 {
             return;
         }
@@ -675,7 +710,16 @@ impl App {
         // Emit HighlightTexture child if it exists
         if let Some(&ht_id) = f.children_keys.get("HighlightTexture")
             && let Some(ht) = registry.get(ht_id) {
-                let ht_rect = compute_frame_rect(registry, ht_id, screen_size.width, screen_size.height);
+                let ht_rect = {
+                    let layout_cache = self.cached_layout_rects.borrow();
+                    if let Some(cache) = layout_cache.as_ref()
+                        && let Some(cached) = cache.get(&ht_id) {
+                            cached.rect
+                        } else {
+                            drop(layout_cache);
+                            super::layout::compute_frame_rect(registry, ht_id, screen_size.width, screen_size.height)
+                        }
+                };
                 if ht_rect.width > 0.0 && ht_rect.height > 0.0 {
                     let ht_bounds = Rectangle::new(
                         Point::new(ht_rect.x * UI_SCALE, ht_rect.y * UI_SCALE),

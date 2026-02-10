@@ -1,7 +1,22 @@
 //! Layout computation helpers for WoW frame positioning.
 
+use std::collections::HashMap;
+
 use crate::widget::{AnchorPoint, WidgetRegistry};
 use crate::LayoutRect;
+
+/// Cached layout result: computed rect + effective scale.
+#[derive(Clone, Copy)]
+pub struct CachedFrameLayout {
+    pub rect: LayoutRect,
+    pub eff_scale: f32,
+}
+
+/// Memoization cache for frame layout computation.
+///
+/// Each frame is computed at most once per cache lifetime; siblings share
+/// the cached parent result instead of redundantly walking the parent chain.
+pub type LayoutCache = HashMap<u64, CachedFrameLayout>;
 
 /// Resolved edge constraints from multiple anchors.
 struct AnchorEdges {
@@ -22,6 +37,7 @@ fn resolve_multi_anchor_edges(
     eff_scale: f32,
     screen_width: f32,
     screen_height: f32,
+    cache: &mut LayoutCache,
 ) -> AnchorEdges {
     let mut edges = AnchorEdges {
         left_x: None, right_x: None,
@@ -31,7 +47,7 @@ fn resolve_multi_anchor_edges(
 
     for anchor in &frame.anchors {
         let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
-            compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
+            compute_frame_rect_cached(registry, rel_id as u64, screen_width, screen_height, cache).rect
         } else {
             parent_rect
         };
@@ -124,13 +140,14 @@ fn resolve_single_anchor(
     eff_scale: f32,
     screen_width: f32,
     screen_height: f32,
+    cache: &mut LayoutCache,
 ) -> LayoutRect {
     let anchor = &frame.anchors[0];
     let width = frame.width * eff_scale;
     let height = frame.height * eff_scale;
 
     let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
-        compute_frame_rect(registry, rel_id as u64, screen_width, screen_height)
+        compute_frame_rect_cached(registry, rel_id as u64, screen_width, screen_height, cache).rect
     } else {
         parent_rect
     };
@@ -150,76 +167,88 @@ fn resolve_single_anchor(
     LayoutRect { x: frame_x, y: frame_y, width, height }
 }
 
-/// Compute effective scale: product of all ancestor scales including this frame.
-///
-/// In WoW, `GetEffectiveScale()` returns the product of the frame's own scale
-/// and all ancestor scales. The layout engine uses this to convert local-space
-/// dimensions and anchor offsets to screen-space pixels.
-fn effective_scale(registry: &WidgetRegistry, id: u64) -> f32 {
-    let mut scale = 1.0;
-    let mut current = Some(id);
-    while let Some(cid) = current {
-        if let Some(f) = registry.get(cid) {
-            scale *= f.scale;
-            current = f.parent_id;
-        } else {
-            break;
-        }
+/// Compute frame rect with memoization. Each frame is computed at most once
+/// per cache lifetime; parent results are reused by siblings.
+pub fn compute_frame_rect_cached(
+    registry: &WidgetRegistry,
+    id: u64,
+    screen_width: f32,
+    screen_height: f32,
+    cache: &mut LayoutCache,
+) -> CachedFrameLayout {
+    if let Some(&cached) = cache.get(&id) {
+        return cached;
     }
-    scale
+
+    let frame = match registry.get(id) {
+        Some(f) => f,
+        None => {
+            let result = CachedFrameLayout { rect: LayoutRect::default(), eff_scale: 1.0 };
+            cache.insert(id, result);
+            return result;
+        }
+    };
+
+    // Special case: UIParent (id=1) fills the entire screen
+    if frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1) {
+        let result = CachedFrameLayout {
+            rect: LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height },
+            eff_scale: frame.scale,
+        };
+        cache.insert(id, result);
+        return result;
+    }
+
+    // Compute parent layout (cache hit for siblings)
+    let (parent_rect, parent_eff_scale) = if let Some(parent_id) = frame.parent_id {
+        let parent = compute_frame_rect_cached(registry, parent_id, screen_width, screen_height, cache);
+        (parent.rect, parent.eff_scale)
+    } else {
+        (LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height }, 1.0)
+    };
+
+    // Effective scale computed incrementally from parent (avoids separate walk)
+    let scale = parent_eff_scale * frame.scale;
+
+    let mut rect = if frame.anchors.is_empty() {
+        let w = frame.width * scale;
+        let h = frame.height * scale;
+        LayoutRect { x: parent_rect.x, y: parent_rect.y, width: w, height: h }
+    } else if frame.anchors.len() >= 2 {
+        let edges = resolve_multi_anchor_edges(
+            registry, frame, parent_rect, scale, screen_width, screen_height, cache,
+        );
+        compute_rect_from_edges(edges, frame, parent_rect, scale)
+    } else {
+        resolve_single_anchor(
+            registry, frame, parent_rect, scale, screen_width, screen_height, cache,
+        )
+    };
+
+    rect.x += frame.anim_offset_x;
+    rect.y += frame.anim_offset_y;
+
+    if frame.clamped_to_screen && rect.width > 0.0 && rect.height > 0.0 {
+        clamp_rect_to_screen(&mut rect, screen_width, screen_height);
+    }
+
+    let result = CachedFrameLayout { rect, eff_scale: scale };
+    cache.insert(id, result);
+    result
 }
 
-/// Compute frame rect with anchor resolution.
+/// Compute frame rect with anchor resolution (uncached).
+///
+/// Thin wrapper that creates a temporary cache. Used by callers that compute
+/// a single frame rect (inspector panel, tree dump, one-off test assertions).
 pub fn compute_frame_rect(
     registry: &WidgetRegistry,
     id: u64,
     screen_width: f32,
     screen_height: f32,
 ) -> LayoutRect {
-    let frame = match registry.get(id) {
-        Some(f) => f,
-        None => return LayoutRect::default(),
-    };
-
-    // Special case: UIParent (id=1) fills the entire screen
-    if frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1) {
-        return LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height };
-    }
-
-    let parent_rect = if let Some(parent_id) = frame.parent_id {
-        compute_frame_rect(registry, parent_id, screen_width, screen_height)
-    } else {
-        LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height }
-    };
-
-    let scale = effective_scale(registry, id);
-
-    let mut rect = if frame.anchors.is_empty() {
-        let w = frame.width * scale;
-        let h = frame.height * scale;
-        LayoutRect {
-            x: parent_rect.x,
-            y: parent_rect.y,
-            width: w,
-            height: h,
-        }
-    } else if frame.anchors.len() >= 2 {
-        let edges = resolve_multi_anchor_edges(registry, frame, parent_rect, scale, screen_width, screen_height);
-        compute_rect_from_edges(edges, frame, parent_rect, scale)
-    } else {
-        resolve_single_anchor(registry, frame, parent_rect, scale, screen_width, screen_height)
-    };
-
-    // Apply animation translation offsets
-    rect.x += frame.anim_offset_x;
-    rect.y += frame.anim_offset_y;
-
-    // Clamp to screen bounds when clampedToScreen is set (e.g. tooltips)
-    if frame.clamped_to_screen && rect.width > 0.0 && rect.height > 0.0 {
-        clamp_rect_to_screen(&mut rect, screen_width, screen_height);
-    }
-
-    rect
+    let mut cache = LayoutCache::new();
+    compute_frame_rect_cached(registry, id, screen_width, screen_height, &mut cache).rect
 }
 
 /// Shift a rect so it stays within screen bounds (WoW `clampedToScreen` behavior).

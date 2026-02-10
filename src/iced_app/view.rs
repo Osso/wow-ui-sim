@@ -13,7 +13,7 @@ use crate::LayoutRect;
 use crate::widget::FrameStrata;
 
 use super::app::App;
-use super::layout::compute_frame_rect;
+use super::layout::{LayoutCache, compute_frame_rect};
 use super::styles::{event_button_style, input_style, palette, pick_list_style, run_button_style};
 use super::Message;
 
@@ -42,10 +42,15 @@ fn is_ancestor_visible(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool
 ///
 /// The result is sorted low-to-high so callers can iterate in reverse for
 /// top-to-bottom hit testing.
+///
+/// When a layout cache is available (from quad building), rects are looked up
+/// from it instead of recomputing. Frames present in the cache were ancestor-
+/// visible during rendering, so we skip the `is_ancestor_visible` walk for them.
 fn build_hittable_list(
     widgets: &crate::widget::WidgetRegistry,
     screen_width: f32,
     screen_height: f32,
+    layout_cache: Option<&LayoutCache>,
 ) -> Vec<(u64, iced::Rectangle)> {
     let mut frames: Vec<(u64, FrameStrata, i32, iced::Rectangle)> = widgets
         .all_ids()
@@ -55,14 +60,20 @@ fn build_hittable_list(
             if !frame.visible || !frame.mouse_enabled {
                 return None;
             }
-            // Check parent-chain visibility (IsVisible semantics)
-            if !is_ancestor_visible(widgets, id) {
-                return None;
-            }
             if frame.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n)) {
                 return None;
             }
-            let rect = compute_frame_rect(widgets, id, screen_width, screen_height);
+            let rect = if let Some(cache) = layout_cache
+                && let Some(cached) = cache.get(&id) {
+                    // Frame was in the render cache — already ancestor-visible
+                    cached.rect
+                } else {
+                    // Fallback: check ancestor visibility and compute rect
+                    if !is_ancestor_visible(widgets, id) {
+                        return None;
+                    }
+                    compute_frame_rect(widgets, id, screen_width, screen_height)
+                };
             let scaled = iced::Rectangle::new(
                 iced::Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
                 iced::Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
@@ -609,7 +620,12 @@ impl App {
         let state = env.state().borrow();
         let screen_width = self.screen_size.get().width;
         let screen_height = self.screen_size.get().height;
-        let list = build_hittable_list(&state.widgets, screen_width, screen_height);
+        let layout_cache = self.cached_layout_rects.borrow();
+        let list = build_hittable_list(
+            &state.widgets, screen_width, screen_height,
+            layout_cache.as_ref(),
+        );
+        drop(layout_cache);
         *self.cached_hittable.borrow_mut() = Some(list);
     }
 
