@@ -518,13 +518,17 @@ pub fn build_quad_batch_for_registry(
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
 ) -> QuadBatch {
     let mut cache = LayoutCache::new();
-    build_quad_batch_with_cache(
+    let (batch, _hittable) = build_quad_batch_with_cache(
         registry, screen_size, root_name, pressed_frame, hovered_frame,
         &mut text_ctx, message_frames, tooltip_data, &mut cache,
-    )
+    );
+    batch
 }
 
 /// Build a QuadBatch, populating the shared layout cache for reuse by hit testing.
+///
+/// Returns the quad batch and a hittable frame list (unscaled rects sorted by
+/// strata/level/id) as a side output of the same collection pass.
 #[allow(clippy::too_many_arguments)]
 pub fn build_quad_batch_with_cache(
     registry: &crate::widget::WidgetRegistry,
@@ -536,7 +540,7 @@ pub fn build_quad_batch_with_cache(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     cache: &mut LayoutCache,
-) -> QuadBatch {
+) -> (QuadBatch, Vec<(u64, crate::LayoutRect)>) {
     let mut batch = QuadBatch::with_capacity(1000);
     let (screen_width, screen_height) = screen_size;
     let size = Size::new(screen_width, screen_height);
@@ -552,13 +556,13 @@ pub fn build_quad_batch_with_cache(
 
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
     let ancestor_visible = collect_ancestor_visible_ids(registry);
-    let frames = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible, cache);
+    let collected = collect_sorted_frames(registry, screen_width, screen_height, &ancestor_visible, cache);
 
     // Collect StatusBar fill info: bar_texture_id -> fill fraction
     let statusbar_fills = collect_statusbar_fills(registry);
 
-    for (id, f, rect, eff_alpha) in frames {
-        if super::button_vis::should_skip_frame(f, id, eff_alpha, &visible_ids, registry, pressed_frame, hovered_frame) {
+    for (id, f, rect, eff_alpha) in &collected.render {
+        if super::button_vis::should_skip_frame(f, *id, *eff_alpha, &visible_ids, registry, pressed_frame, hovered_frame) {
             continue;
         }
         let is_fontstring = matches!(f.widget_type, WidgetType::FontString);
@@ -566,10 +570,10 @@ pub fn build_quad_batch_with_cache(
             continue;
         }
         let bounds = Rectangle::new(Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE), Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE));
-        let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(&mut batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache);
+        let bar_fill = statusbar_fills.get(id);
+        emit_frame_quads(&mut batch, *id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache);
     }
-    batch
+    (batch, collected.hittable)
 }
 
 
@@ -577,23 +581,24 @@ impl App {
     /// Return cached quads or rebuild if dirty/resized.
     ///
     /// Rebuilds are throttled to at most once per `REBUILD_INTERVAL` so that
-    /// the cursor overlay (appended separately) stays responsive at 60 fps
-    /// even when the world quad batch is expensive to rebuild.
-    fn get_or_rebuild_quads(&self, size: Size) -> QuadBatch {
-        const REBUILD_INTERVAL: std::time::Duration = std::time::Duration::from_millis(100);
+    /// the cursor overlay (appended separately) stays responsive even when
+    /// the world quad batch is expensive to rebuild. Animations continuously
+    /// mark render_dirty, so without throttling every 16ms tick would rebuild.
+    fn get_or_rebuild_quads(&self, size: Size) -> std::sync::Arc<QuadBatch> {
+        const REBUILD_INTERVAL: std::time::Duration = std::time::Duration::from_millis(33);
 
         let mut cache = self.cached_quads.borrow_mut();
         let size_changed = cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true);
         let time_ok = self.last_quad_rebuild.get().elapsed() >= REBUILD_INTERVAL;
 
         if size_changed || (self.quads_dirty.get() && time_ok) {
-            let new_quads = self.build_quad_batch(size);
-            *cache = Some((size, new_quads.clone()));
+            let new_quads = std::sync::Arc::new(self.build_quad_batch(size));
+            *cache = Some((size, std::sync::Arc::clone(&new_quads)));
             self.quads_dirty.set(false);
             self.last_quad_rebuild.set(std::time::Instant::now());
             new_quads
         } else {
-            cache.as_ref().unwrap().1.clone()
+            std::sync::Arc::clone(&cache.as_ref().unwrap().1)
         }
     }
 
@@ -653,7 +658,7 @@ impl App {
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
         let mut glyph_atlas = self.glyph_atlas.borrow_mut();
         let mut cache = LayoutCache::new();
-        let batch = build_quad_batch_with_cache(
+        let (batch, hittable) = build_quad_batch_with_cache(
             &state.widgets,
             (size.width, size.height),
             None,
@@ -666,6 +671,15 @@ impl App {
         );
         // Store layout cache for hit testing and hover highlights
         *self.cached_layout_rects.borrow_mut() = Some(cache);
+        // Store hittable list (scale rects to screen coordinates)
+        *self.cached_hittable.borrow_mut() = Some(
+            hittable.into_iter().map(|(id, r)| {
+                (id, Rectangle::new(
+                    Point::new(r.x * UI_SCALE, r.y * UI_SCALE),
+                    Size::new(r.width * UI_SCALE, r.height * UI_SCALE),
+                ))
+            }).collect(),
+        );
         batch
     }
 

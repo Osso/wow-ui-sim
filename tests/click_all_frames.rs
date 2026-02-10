@@ -124,8 +124,7 @@ fn find_clickable_by_prefix(env: &WowLuaEnv, prefix: &str) -> Vec<(u64, String)>
         let state = env.state().borrow();
         state
             .widgets
-            .all_ids()
-            .into_iter()
+            .iter_ids()
             .filter_map(|id| {
                 let frame = state.widgets.get(id)?;
                 let name = frame.name.as_ref()?;

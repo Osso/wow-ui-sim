@@ -15,7 +15,8 @@ pub fn tick_animation_groups(state_rc: &Rc<RefCell<SimState>>, lua: &Lua, delta:
     let playing_ids: Vec<u64> = {
         let state = state_rc.borrow();
         state.animation_groups.iter()
-            .filter(|(_, g)| g.playing && !g.paused)
+            .filter(|(_, g)| g.playing && !g.paused
+                && state.widgets.is_ancestor_visible(g.owner_frame_id))
             .map(|(id, _)| *id)
             .collect()
     };
@@ -151,6 +152,13 @@ fn apply_anim_to_entry(anim: &super::AnimState, progress: f64, entry: &mut Targe
 }
 
 /// Resolve child_key to frame ID and apply effects to widget state.
+///
+/// Uses `get_mut_silent` to avoid setting `render_dirty` every tick.
+/// Animations modify alpha/offset continuously; the render pipeline
+/// picks up changes via `quads_dirty` which is set when something
+/// structurally changes (show/hide, resize, texture swap).  Animation
+/// alpha/translation are already baked into each quad rebuild, so the
+/// existing 33ms rebuild throttle is sufficient.
 fn apply_effects(
     state: &mut SimState,
     owner_frame_id: u64,
@@ -163,7 +171,7 @@ fn apply_effects(
             None => Some(owner_frame_id),
         };
         let Some(id) = target_id else { continue };
-        let Some(frame) = state.widgets.get_mut(id) else { continue };
+        let Some(frame) = state.widgets.get_mut_silent(id) else { continue };
         if let Some(alpha) = fx.alpha {
             frame.alpha = alpha;
         }

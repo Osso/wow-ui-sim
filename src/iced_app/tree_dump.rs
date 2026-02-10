@@ -21,8 +21,7 @@ impl App {
         // Find root frames (no parent or parent is UIParent)
         let mut root_ids: Vec<u64> = state
             .widgets
-            .all_ids()
-            .into_iter()
+            .iter_ids()
             .filter(|&id| {
                 state
                     .widgets
@@ -51,8 +50,7 @@ impl App {
 
         let mut root_ids: Vec<u64> = state
             .widgets
-            .all_ids()
-            .into_iter()
+            .iter_ids()
             .filter(|&id| {
                 state
                     .widgets

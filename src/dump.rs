@@ -26,9 +26,8 @@ pub fn print_frame_tree(widgets: &WidgetRegistry, filter: Option<&str>, filter_k
 /// Collect root frames (no parent).
 fn collect_root_frames(widgets: &WidgetRegistry) -> Vec<(u64, Option<String>)> {
     widgets
-        .all_ids()
-        .iter()
-        .filter_map(|&id| {
+        .iter_ids()
+        .filter_map(|id| {
             let w = widgets.get(id)?;
             if w.parent_id.is_none() {
                 Some((id, w.name.clone()))
@@ -45,7 +44,7 @@ fn print_anchor_diagnostic(widgets: &WidgetRegistry) {
     let mut unanchored = 0;
     let mut unanchored_keys: std::collections::HashMap<String, Vec<String>> =
         std::collections::HashMap::new();
-    for id in widgets.all_ids() {
+    for id in widgets.iter_ids() {
         let Some(w) = widgets.get(id) else { continue };
         if !w.anchors.is_empty() {
             anchored += 1;

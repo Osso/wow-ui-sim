@@ -7,89 +7,12 @@ use iced::widget::{
 };
 use iced::{Border, Color, Element, Font, Length, Padding, Subscription};
 
-use crate::render::texture::UI_SCALE;
 use crate::LayoutRect;
 
-use crate::widget::FrameStrata;
-
 use super::app::App;
-use super::layout::{LayoutCache, compute_frame_rect};
+use super::layout::compute_frame_rect;
 use super::styles::{event_button_style, input_style, palette, pick_list_style, run_button_style};
 use super::Message;
-
-/// Frame names excluded from hit testing (full-screen or non-interactive overlays).
-const HIT_TEST_EXCLUDED: &[&str] = &[
-    "UIParent", "Minimap", "WorldFrame",
-    "DEFAULT_CHAT_FRAME", "ChatFrame1",
-    "EventToastManagerFrame", "EditModeManagerFrame",
-];
-
-/// Check if a frame and all its ancestors are visible (IsVisible semantics).
-fn is_ancestor_visible(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {
-    let mut current = id;
-    loop {
-        match widgets.get(current) {
-            Some(f) if f.visible => match f.parent_id {
-                Some(pid) => current = pid,
-                None => return true,
-            },
-            _ => return false,
-        }
-    }
-}
-
-/// Build sorted hit-test list: (id, pre-scaled bounds), highest strata/level last.
-///
-/// The result is sorted low-to-high so callers can iterate in reverse for
-/// top-to-bottom hit testing.
-///
-/// When a layout cache is available (from quad building), rects are looked up
-/// from it instead of recomputing. Frames present in the cache were ancestor-
-/// visible during rendering, so we skip the `is_ancestor_visible` walk for them.
-fn build_hittable_list(
-    widgets: &crate::widget::WidgetRegistry,
-    screen_width: f32,
-    screen_height: f32,
-    layout_cache: Option<&LayoutCache>,
-) -> Vec<(u64, iced::Rectangle)> {
-    let mut frames: Vec<(u64, FrameStrata, i32, iced::Rectangle)> = widgets
-        .all_ids()
-        .into_iter()
-        .filter_map(|id| {
-            let frame = widgets.get(id)?;
-            if !frame.visible || !frame.mouse_enabled {
-                return None;
-            }
-            if frame.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n)) {
-                return None;
-            }
-            let rect = if let Some(cache) = layout_cache
-                && let Some(cached) = cache.get(&id) {
-                    // Frame was in the render cache — already ancestor-visible
-                    cached.rect
-                } else {
-                    // Fallback: check ancestor visibility and compute rect
-                    if !is_ancestor_visible(widgets, id) {
-                        return None;
-                    }
-                    compute_frame_rect(widgets, id, screen_width, screen_height)
-                };
-            let scaled = iced::Rectangle::new(
-                iced::Point::new(rect.x * UI_SCALE, rect.y * UI_SCALE),
-                iced::Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
-            );
-            Some((id, frame.frame_strata, frame.frame_level, scaled))
-        })
-        .collect();
-
-    frames.sort_by(|a, b| {
-        a.1.cmp(&b.1)
-            .then_with(|| a.2.cmp(&b.2))
-            .then_with(|| a.0.cmp(&b.0))
-    });
-
-    frames.into_iter().map(|(id, _, _, r)| (id, r)).collect()
-}
 
 impl App {
     /// Build the title bar with FPS counter, frame time, canvas size, and mouse coords.
@@ -289,9 +212,6 @@ impl App {
     }
 
     pub fn subscription(&self) -> Subscription<Message> {
-        let timer =
-            iced::time::every(std::time::Duration::from_millis(16)).map(|_| Message::ProcessTimers);
-
         let keyboard = iced::event::listen_with(|event, status, _window| {
             use iced::keyboard;
             if let iced::Event::Keyboard(keyboard::Event::KeyPressed {
@@ -319,7 +239,12 @@ impl App {
             None
         });
 
-        Subscription::batch([timer, keyboard])
+        if let Some(interval) = self.compute_tick_interval() {
+            let timer = iced::time::every(interval).map(|_| Message::ProcessTimers);
+            Subscription::batch([timer, keyboard])
+        } else {
+            keyboard
+        }
     }
 
     pub(crate) fn build_frames_sidebar(&self) -> Column<'_, Message> {
@@ -329,7 +254,7 @@ impl App {
         let state = env.state().borrow();
 
         let mut count = 0;
-        for id in state.widgets.all_ids() {
+        for id in state.widgets.iter_ids() {
             if let Some(frame) = state.widgets.get(id) {
                 let name = match &frame.name {
                     Some(n) => n.as_str(),
@@ -596,9 +521,8 @@ impl App {
             .into()
     }
 
-    /// Hit test to find frame under cursor (uses cached rects).
+    /// Hit test to find frame under cursor (uses cached rects from render pass).
     pub(crate) fn hit_test(&self, pos: iced::Point) -> Option<u64> {
-        self.ensure_hittable_cache();
         let cache = self.cached_hittable.borrow();
         let list = cache.as_ref()?;
         // Iterate top-to-bottom (highest strata/level = last in list)
@@ -609,24 +533,6 @@ impl App {
                 None
             }
         })
-    }
-
-    /// Lazily rebuild the hit-test cache if it was invalidated.
-    fn ensure_hittable_cache(&self) {
-        if self.cached_hittable.borrow().is_some() {
-            return;
-        }
-        let env = self.env.borrow();
-        let state = env.state().borrow();
-        let screen_width = self.screen_size.get().width;
-        let screen_height = self.screen_size.get().height;
-        let layout_cache = self.cached_layout_rects.borrow();
-        let list = build_hittable_list(
-            &state.widgets, screen_width, screen_height,
-            layout_cache.as_ref(),
-        );
-        drop(layout_cache);
-        *self.cached_hittable.borrow_mut() = Some(list);
     }
 
 }

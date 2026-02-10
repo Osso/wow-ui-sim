@@ -10,7 +10,8 @@ use super::state::InspectorState;
 use super::Message;
 
 impl App {
-    pub(crate) fn process_debug_commands(&mut self) -> Task<Message> {
+    /// Drain both IPC channels (debug inspector + Lua REPL).
+    pub(crate) fn process_ipc(&mut self) -> Task<Message> {
         let commands: Vec<_> = if let Some(ref mut rx) = self.debug_rx {
             let mut cmds = Vec::new();
             while let Ok(cmd) = rx.try_recv() {

@@ -509,7 +509,7 @@ impl WowLuaEnv {
                 .on_update_frames
                 .iter()
                 .copied()
-                .filter(|&id| state.widgets.get(id).map(|f| f.visible).unwrap_or(false))
+                .filter(|&id| state.widgets.is_ancestor_visible(id))
                 .collect()
         };
 
@@ -599,7 +599,7 @@ impl WowLuaEnv {
 
         let mut output = format!("[WoW Frames: {}x{}]\n\n", screen_width, screen_height);
 
-        let mut frames: Vec<_> = state.widgets.all_ids().into_iter().collect();
+        let mut frames: Vec<_> = state.widgets.iter_ids().collect();
         frames.sort_by(|&a, &b| {
             let fa = state.widgets.get(a);
             let fb = state.widgets.get(b);

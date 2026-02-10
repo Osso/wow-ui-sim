@@ -11,37 +11,42 @@ use super::Message;
 
 impl App {
     pub fn update(&mut self, message: Message) -> Task<Message> {
-        match message {
-            Message::FireEvent(event) => self.handle_fire_event(&event),
-            Message::CanvasEvent(canvas_msg) => return self.handle_canvas_event(canvas_msg),
-            Message::Scroll(dx, dy) => self.handle_scroll(dx, dy),
-            Message::ReloadUI => self.handle_reload_ui(),
-            Message::CommandInputChanged(input) => self.command_input = input,
-            Message::ExecuteCommand => self.handle_execute_command(),
-            Message::ProcessTimers => return self.handle_process_timers(),
-            Message::ScreenshotTaken(screenshot) => self.handle_screenshot_taken(screenshot),
-            Message::FpsTick => {}
-            Message::InspectorClose => self.handle_inspector_close(),
-            Message::InspectorWidthChanged(val) => self.inspector_state.width = val,
-            Message::InspectorHeightChanged(val) => self.inspector_state.height = val,
-            Message::InspectorAlphaChanged(val) => self.inspector_state.alpha = val,
-            Message::InspectorLevelChanged(val) => self.inspector_state.frame_level = val,
-            Message::InspectorVisibleToggled(val) => self.inspector_state.visible = val,
-            Message::InspectorMouseEnabledToggled(val) => self.inspector_state.mouse_enabled = val,
-            Message::InspectorApply => self.handle_inspector_apply(),
-            Message::ToggleFramesPanel => self.frames_panel_collapsed = !self.frames_panel_collapsed,
-            Message::ToggleXpBar(visible) => self.handle_toggle_xp_bar(visible),
+        // Always drain IPC so commands from the inspector/REPL are processed
+        // even when idle (no timer subscription active).
+        let ipc_task = self.process_ipc();
+
+        let task = match message {
+            Message::FireEvent(event) => { self.handle_fire_event(&event); Task::none() }
+            Message::CanvasEvent(canvas_msg) => self.handle_canvas_event(canvas_msg),
+            Message::Scroll(dx, dy) => { self.handle_scroll(dx, dy); Task::none() }
+            Message::ReloadUI => { self.handle_reload_ui(); Task::none() }
+            Message::CommandInputChanged(input) => { self.command_input = input; Task::none() }
+            Message::ExecuteCommand => { self.handle_execute_command(); Task::none() }
+            Message::ProcessTimers => self.handle_process_timers(),
+            Message::ScreenshotTaken(screenshot) => { self.handle_screenshot_taken(screenshot); Task::none() }
+            Message::FpsTick => Task::none(),
+            Message::InspectorClose => { self.handle_inspector_close(); Task::none() }
+            Message::InspectorWidthChanged(val) => { self.inspector_state.width = val; Task::none() }
+            Message::InspectorHeightChanged(val) => { self.inspector_state.height = val; Task::none() }
+            Message::InspectorAlphaChanged(val) => { self.inspector_state.alpha = val; Task::none() }
+            Message::InspectorLevelChanged(val) => { self.inspector_state.frame_level = val; Task::none() }
+            Message::InspectorVisibleToggled(val) => { self.inspector_state.visible = val; Task::none() }
+            Message::InspectorMouseEnabledToggled(val) => { self.inspector_state.mouse_enabled = val; Task::none() }
+            Message::InspectorApply => { self.handle_inspector_apply(); Task::none() }
+            Message::ToggleFramesPanel => { self.frames_panel_collapsed = !self.frames_panel_collapsed; Task::none() }
+            Message::ToggleXpBar(visible) => { self.handle_toggle_xp_bar(visible); Task::none() }
             Message::ToggleRotDamage(enabled) => {
                 self.rot_damage_enabled = enabled;
                 self.save_config();
+                Task::none()
             }
-            Message::KeyPress(ref key, ref text) => self.handle_key_press(key, text.as_deref()),
-            Message::PlayerClassChanged(ref name) => self.handle_player_class_changed(name),
-            Message::PlayerRaceChanged(ref name) => self.handle_player_race_changed(name),
-            Message::RotDamageLevelChanged(ref label) => self.handle_rot_damage_level_changed(label),
-        }
+            Message::KeyPress(ref key, ref text) => { self.handle_key_press(key, text.as_deref()); Task::none() }
+            Message::PlayerClassChanged(ref name) => { self.handle_player_class_changed(name); Task::none() }
+            Message::PlayerRaceChanged(ref name) => { self.handle_player_race_changed(name); Task::none() }
+            Message::RotDamageLevelChanged(ref label) => { self.handle_rot_damage_level_changed(label); Task::none() }
+        };
 
-        Task::none()
+        Task::batch([task, ipc_task])
     }
 
     // ── Event handlers ──────────────────────────────────────────────────
@@ -350,15 +355,21 @@ impl App {
         self.env.borrow().state().borrow().widgets.take_render_dirty();
         self.run_wow_timers();
         self.fire_on_update();
+        // Discard render_dirty from OnUpdate handlers — they call get_mut() on
+        // every tick (e.g. SetText to the same value) which sets dirty without
+        // actually changing visual state.  Only timers, health, and casting
+        // below should trigger invalidation.
+        self.env.borrow().state().borrow().widgets.take_render_dirty();
         self.tick_party_health();
         self.tick_casting();
+
         let widgets_changed = self.env.borrow().state().borrow().widgets.take_render_dirty();
         if widgets_changed {
             self.invalidate();
         } else {
             self.drain_console();
         }
-        self.process_debug_commands()
+        Task::none()
     }
 
     fn update_fps_counter(&mut self) {

@@ -14,7 +14,7 @@ pub(super) struct StatusBarFill {
 /// Returns a map from bar texture widget ID to its fill info.
 pub(super) fn collect_statusbar_fills(registry: &crate::widget::WidgetRegistry) -> HashMap<u64, StatusBarFill> {
     let mut fills = HashMap::new();
-    for id in registry.all_ids() {
+    for id in registry.iter_ids() {
         let Some(frame) = registry.get(id) else { continue };
         if frame.widget_type != WidgetType::StatusBar {
             continue;

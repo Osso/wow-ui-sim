@@ -7,6 +7,7 @@ use super::{QuadBatch, WowUiPrimitive};
 use iced::mouse;
 use iced::widget::shader::{self, Action};
 use iced::{Event, Rectangle};
+use std::sync::Arc;
 
 /// Shader program for rendering WoW UI frames.
 ///
@@ -14,12 +15,12 @@ use iced::{Event, Rectangle};
 /// to integrate with iced's `Shader` widget.
 pub struct WowUiProgram {
     /// The quad batch to render.
-    quads: QuadBatch,
+    quads: Arc<QuadBatch>,
 }
 
 impl WowUiProgram {
     /// Create a new program with the given quad batch.
-    pub fn new(quads: QuadBatch) -> Self {
+    pub fn new(quads: Arc<QuadBatch>) -> Self {
         Self { quads }
     }
 }
@@ -50,9 +51,7 @@ impl<Message> shader::Program<Message> for WowUiProgram {
         _cursor: mouse::Cursor,
         _bounds: Rectangle,
     ) -> Self::Primitive {
-        // Clone the quads into a new primitive
-        // In a more optimized version, we could avoid this clone
-        WowUiPrimitive::new(self.quads.clone())
+        WowUiPrimitive::new(Arc::clone(&self.quads))
     }
 
     /// Return default mouse interaction.

@@ -89,14 +89,31 @@ impl WidgetRegistry {
         }
     }
 
-    /// Get all widget IDs.
-    pub fn all_ids(&self) -> Vec<u64> {
-        self.widgets.keys().copied().collect()
+    /// Iterate over all widget IDs.
+    pub fn iter_ids(&self) -> impl Iterator<Item = u64> + '_ {
+        self.widgets.keys().copied()
     }
 
     /// Check and clear the render-dirty flag. Returns true if any widget was mutated.
     pub fn take_render_dirty(&self) -> bool {
         self.render_dirty.replace(false)
+    }
+
+    /// Walk the parent chain and return true only if every ancestor has `visible=true`.
+    ///
+    /// Matches WoW's `IsVisible()` semantics: a frame is visible only when it
+    /// and all its parents are shown.
+    pub fn is_ancestor_visible(&self, id: u64) -> bool {
+        let mut current = id;
+        loop {
+            match self.widgets.get(&current) {
+                Some(f) if f.visible => match f.parent_id {
+                    Some(pid) => current = pid,
+                    None => return true,
+                },
+                _ => return false,
+            }
+        }
     }
 
     /// Check if setting a point from `frame_id` to `relative_to_id` would create a cycle.

@@ -1,7 +1,23 @@
 //! Frame collection and sorting helpers for rendering.
 
-use crate::widget::WidgetType;
+use crate::widget::{FrameStrata, WidgetType};
 use super::layout::{LayoutCache, compute_frame_rect_cached};
+
+/// Frame names excluded from hit testing (full-screen or non-interactive overlays).
+const HIT_TEST_EXCLUDED: &[&str] = &[
+    "UIParent", "Minimap", "WorldFrame",
+    "DEFAULT_CHAT_FRAME", "ChatFrame1",
+    "EventToastManagerFrame", "EditModeManagerFrame",
+];
+
+/// Result of collecting frames for rendering and hit testing.
+pub struct CollectedFrames<'a> {
+    /// Frames sorted by strata/level/draw-layer for rendering.
+    pub render: Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect, f32)>,
+    /// Frames eligible for hit testing, sorted by strata/level/id (low to high).
+    /// Rects are in unscaled WoW coordinates (caller applies UI_SCALE).
+    pub hittable: Vec<(u64, crate::LayoutRect)>,
+}
 
 /// Collect all frame IDs in the subtree rooted at the named frame.
 pub fn collect_subtree_ids(
@@ -9,7 +25,7 @@ pub fn collect_subtree_ids(
     root_name: &str,
 ) -> std::collections::HashSet<u64> {
     let mut ids = std::collections::HashSet::new();
-    let root_id = registry.all_ids().into_iter().find(|&id| {
+    let root_id = registry.iter_ids().find(|&id| {
         registry
             .get(id)
             .map(|f| f.name.as_deref() == Some(root_name))
@@ -39,8 +55,7 @@ pub fn collect_ancestor_visible_ids(
     let mut visible = std::collections::HashMap::new();
     // Queue entries: (frame_id, parent_effective_alpha)
     let mut queue: Vec<(u64, f32)> = registry
-        .all_ids()
-        .into_iter()
+        .iter_ids()
         .filter(|&id| {
             registry
                 .get(id)
@@ -103,21 +118,30 @@ fn is_button_state_texture(
 /// Only frames in `ancestor_visible` are considered, skipping layout
 /// computation for frames hidden by an ancestor. Each frame carries its
 /// effective alpha (product of all ancestor alphas).
+///
+/// Also builds a hit-test list as a side output: visible, mouse-enabled
+/// frames sorted by strata/level/id, excluding non-interactive overlays.
 pub fn collect_sorted_frames<'a>(
     registry: &'a crate::widget::WidgetRegistry,
     screen_width: f32,
     screen_height: f32,
     ancestor_visible: &std::collections::HashMap<u64, f32>,
     cache: &mut LayoutCache,
-) -> Vec<(u64, &'a crate::widget::Frame, crate::LayoutRect, f32)> {
-    let mut frames: Vec<_> = ancestor_visible
-        .iter()
-        .filter_map(|(&id, &eff_alpha)| {
-            let f = registry.get(id)?;
-            let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
-            Some((id, f, rect, eff_alpha))
-        })
-        .collect();
+) -> CollectedFrames<'a> {
+    let mut frames: Vec<(u64, &crate::widget::Frame, crate::LayoutRect, f32)> = Vec::new();
+    let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();
+
+    for (&id, &eff_alpha) in ancestor_visible {
+        let Some(f) = registry.get(id) else { continue };
+        let rect = compute_frame_rect_cached(registry, id, screen_width, screen_height, cache).rect;
+        frames.push((id, f, rect, eff_alpha));
+
+        if f.visible && f.mouse_enabled
+            && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
+        {
+            hittable.push((id, f.frame_strata, f.frame_level, rect));
+        }
+    }
 
     frames.sort_by(|a, b| {
         a.1.frame_strata
@@ -138,5 +162,14 @@ pub fn collect_sorted_frames<'a>(
             .then_with(|| a.0.cmp(&b.0))
     });
 
-    frames
+    hittable.sort_by(|a, b| {
+        a.1.cmp(&b.1)
+            .then_with(|| a.2.cmp(&b.2))
+            .then_with(|| a.0.cmp(&b.0))
+    });
+
+    CollectedFrames {
+        render: frames,
+        hittable: hittable.into_iter().map(|(id, _, _, r)| (id, r)).collect(),
+    }
 }

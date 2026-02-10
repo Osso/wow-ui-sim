@@ -120,8 +120,7 @@ impl WowLuaEnv {
             state.focused_frame_id.or_else(|| {
                 state
                     .widgets
-                    .all_ids()
-                    .into_iter()
+                    .iter_ids()
                     .find(|&id| {
                         state
                             .widgets

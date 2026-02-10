@@ -162,7 +162,7 @@ pub struct App {
     /// Track which textures have been uploaded to GPU atlas (avoid re-sending pixel data).
     pub(crate) gpu_uploaded_textures: RefCell<std::collections::HashSet<String>>,
     /// Cached quad batch for shader (avoids rebuilding every frame).
-    pub(crate) cached_quads: RefCell<Option<(Size, crate::render::QuadBatch)>>,
+    pub(crate) cached_quads: RefCell<Option<(Size, std::sync::Arc<crate::render::QuadBatch>)>>,
     /// Cached sorted hit-test rects (rebuilt when layout changes).
     /// Pre-sorted top-to-bottom (highest strata first) with pre-scaled bounds.
     pub(crate) cached_hittable: RefCell<Option<Vec<(u64, Rectangle)>>>,
@@ -409,6 +409,78 @@ impl App {
             );
         }
         (debug_borders, debug_anchors)
+    }
+}
+
+impl App {
+    /// Determine how often the timer subscription should tick.
+    ///
+    /// Returns `Some(interval)` when periodic work is needed (OnUpdate handlers,
+    /// animations, casting, pending C_Timers, rot damage), or `None` when fully
+    /// idle (only user input triggers redraws).
+    pub(crate) fn compute_tick_interval(&self) -> Option<std::time::Duration> {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+
+        // Fast tick: playing animations, active cast, or dirty quads.
+        // OnUpdate handlers do NOT force ticks — they fire as a side effect of
+        // ticks caused by other activity. In the simulator there's no server
+        // pushing real changes, so OnUpdate handlers are effectively no-ops.
+        let has_animations = state.animation_groups.values().any(|g| {
+            g.playing && !g.paused
+                && g.has_visual_effects()
+                && state.widgets.is_ancestor_visible(g.owner_frame_id)
+        });
+        let has_casting = state.casting.is_some();
+        // DEBUG: log animation count transitions
+        {
+            static LAST: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(u32::MAX);
+            let count = state.animation_groups.values()
+                .filter(|g| g.playing && !g.paused && g.has_visual_effects()
+                    && state.widgets.is_ancestor_visible(g.owner_frame_id))
+                .count() as u32;
+            let prev = LAST.swap(count, std::sync::atomic::Ordering::Relaxed);
+            if count != prev {
+                eprintln!("[tick] visual anims: {} → {}", prev, count);
+            }
+        }
+        if has_animations || has_casting || self.quads_dirty.get() {
+            {
+                static LOGGED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+                if !has_animations && !has_casting && !LOGGED.swap(true, std::sync::atomic::Ordering::Relaxed) {
+                    eprintln!("[tick] anims done but quads_dirty still true");
+                }
+            }
+            return Some(std::time::Duration::from_millis(16));
+        }
+        drop(state);
+
+        // Timer tick: wake up when next C_Timer fires (min 16ms)
+        if let Some(delay) = env.next_timer_delay() {
+            {
+                static LOGGED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+                if !LOGGED.swap(true, std::sync::atomic::Ordering::Relaxed) {
+                    eprintln!("[tick] C_Timer pending, delay={:?}, timer count={}",
+                        delay, env.state().borrow().timers.len());
+                }
+            }
+            return Some(delay.max(std::time::Duration::from_millis(16)));
+        }
+        drop(env);
+
+        // Slow heartbeat: rot damage needs 2s ticks
+        if self.rot_damage_enabled {
+            return Some(std::time::Duration::from_secs(2));
+        }
+
+        // Idle: no tick needed, pure event-driven
+        {
+            static LOGGED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+            if !LOGGED.swap(true, std::sync::atomic::Ordering::Relaxed) {
+                eprintln!("[tick] Fully idle — no animations, casting, timers, or dirty quads");
+            }
+        }
+        None
     }
 }
 

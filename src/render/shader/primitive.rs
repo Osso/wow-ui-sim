@@ -3,6 +3,7 @@
 use super::{QuadBatch, WowUiPipeline};
 use iced::widget::shader::{self, Viewport};
 use iced::Rectangle;
+use std::sync::Arc;
 
 /// Loaded texture data ready for GPU upload.
 #[derive(Debug, Clone)]
@@ -23,8 +24,8 @@ pub struct GpuTextureData {
 /// The associated `WowUiPipeline` holds persistent GPU resources.
 #[derive(Debug)]
 pub struct WowUiPrimitive {
-    /// Batched quads to render.
-    pub quads: QuadBatch,
+    /// Batched quads to render (Arc-shared with the cache to avoid deep clones).
+    pub quads: Arc<QuadBatch>,
     /// Small overlay batch (cursor, hover highlight) appended after world quads.
     /// Kept separate so the world batch can be cached without cloning.
     pub overlay: QuadBatch,
@@ -41,7 +42,7 @@ pub struct WowUiPrimitive {
 
 impl WowUiPrimitive {
     /// Create a new primitive with the given quad batch.
-    pub fn new(quads: QuadBatch) -> Self {
+    pub fn new(quads: Arc<QuadBatch>) -> Self {
         Self {
             quads,
             overlay: QuadBatch::new(),
@@ -53,7 +54,7 @@ impl WowUiPrimitive {
     }
 
     /// Create a new primitive with quads and texture data.
-    pub fn with_textures(quads: QuadBatch, textures: Vec<GpuTextureData>) -> Self {
+    pub fn with_textures(quads: Arc<QuadBatch>, textures: Vec<GpuTextureData>) -> Self {
         Self {
             quads,
             overlay: QuadBatch::new(),
@@ -66,7 +67,7 @@ impl WowUiPrimitive {
 
     /// Create an empty primitive.
     pub fn empty() -> Self {
-        Self::new(QuadBatch::new())
+        Self::new(Arc::new(QuadBatch::new()))
     }
 }
 

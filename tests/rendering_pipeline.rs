@@ -1148,7 +1148,7 @@ fn nine_slice_corner_rust_layout_nonzero() {
 
     // Find the TopLeftCorner texture by checking atlas
     let mut found_corner = false;
-    for &id in state.widgets.all_ids().iter() {
+    for id in state.widgets.iter_ids() {
         let f = state.widgets.get(id).unwrap();
         if let Some(ref atlas) = f.atlas {
             if atlas.to_lowercase().contains("cornertopleft") {
