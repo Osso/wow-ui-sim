@@ -351,20 +351,23 @@ impl App {
     fn handle_process_timers(&mut self) -> Task<Message> {
         self.update_fps_counter();
         self.run_pending_exec_lua();
-        // Clear the dirty flag before running Lua so we detect new mutations.
+
+        // Track timer dirty separately — timer callbacks can legitimately change widgets.
         self.env.borrow().state().borrow().widgets.take_render_dirty();
         self.run_wow_timers();
-        self.fire_on_update();
+        let timers_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
+
         // Discard render_dirty from OnUpdate handlers — they call get_mut() on
         // every tick (e.g. SetText to the same value) which sets dirty without
-        // actually changing visual state.  Only timers, health, and casting
-        // below should trigger invalidation.
+        // actually changing visual state.
+        self.fire_on_update();
         self.env.borrow().state().borrow().widgets.take_render_dirty();
+
         self.tick_party_health();
         self.tick_casting();
 
-        let widgets_changed = self.env.borrow().state().borrow().widgets.take_render_dirty();
-        if widgets_changed {
+        let health_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
+        if timers_dirty || health_dirty {
             self.invalidate();
         } else {
             self.drain_console();

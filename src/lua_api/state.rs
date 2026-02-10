@@ -176,6 +176,9 @@ pub struct SimState {
     pub message_frames: HashMap<u64, MessageFrameData>,
     /// Frame IDs with active OnUpdate script handlers.
     pub on_update_frames: HashSet<u64>,
+    /// Cached subset of `on_update_frames` whose ancestors are all visible.
+    /// Invalidated when `WidgetRegistry::visibility_dirty` is set.
+    pub visible_on_update_cache: Option<Vec<u64>>,
     /// Animation groups keyed by unique group ID.
     pub animation_groups: HashMap<u64, AnimGroupState>,
     /// Counter for generating unique animation group IDs.
@@ -238,6 +241,7 @@ impl Default for SimState {
             simple_htmls: HashMap::new(),
             message_frames: HashMap::new(),
             on_update_frames: HashSet::new(),
+            visible_on_update_cache: None,
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
             screen_width: 1024.0,
@@ -261,6 +265,57 @@ impl Default for SimState {
             start_time: Instant::now(),
             casting: None,
             next_cast_id: 1,
+        }
+    }
+}
+
+impl SimState {
+    /// Set a frame's visibility and eagerly update `visible_on_update_cache`.
+    ///
+    /// When hiding: remove the frame and all descendants from the cache.
+    /// When showing: add the frame and any descendants that have OnUpdate
+    /// and are now ancestor-visible.
+    pub fn set_frame_visible(&mut self, id: u64, visible: bool) {
+        let was_visible = self.widgets.get(id).map(|f| f.visible).unwrap_or(false);
+        self.widgets.set_visible(id, visible);
+        if was_visible == visible {
+            return;
+        }
+        // Take cache out to avoid borrow conflict with self.widgets
+        let Some(mut cache) = self.visible_on_update_cache.take() else {
+            return;
+        };
+        if visible {
+            self.add_on_update_descendants(id, &mut cache);
+        } else {
+            self.remove_on_update_descendants(id, &mut cache);
+        }
+        self.visible_on_update_cache = Some(cache);
+    }
+
+    /// Add `id` and its descendants to cache if they have OnUpdate and are ancestor-visible.
+    fn add_on_update_descendants(&self, id: u64, cache: &mut Vec<u64>) {
+        if self.on_update_frames.contains(&id) && self.widgets.is_ancestor_visible(id) {
+            if !cache.contains(&id) {
+                cache.push(id);
+            }
+        }
+        let children: Vec<u64> = self.widgets.get(id)
+            .map(|f| f.children.clone()).unwrap_or_default();
+        for child_id in children {
+            if self.widgets.get(child_id).is_some_and(|f| f.visible) {
+                self.add_on_update_descendants(child_id, cache);
+            }
+        }
+    }
+
+    /// Remove `id` and all its descendants from cache (hidden ancestor = all hidden).
+    fn remove_on_update_descendants(&self, id: u64, cache: &mut Vec<u64>) {
+        cache.retain(|&cached_id| cached_id != id);
+        let children: Vec<u64> = self.widgets.get(id)
+            .map(|f| f.children.clone()).unwrap_or_default();
+        for child_id in children {
+            self.remove_on_update_descendants(child_id, cache);
         }
     }
 }

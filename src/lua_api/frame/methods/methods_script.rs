@@ -29,6 +29,7 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
                 if h == crate::event::ScriptHandler::OnUpdate || h == crate::event::ScriptHandler::OnPostUpdate {
                     state.on_update_frames.insert(this.id);
+                    state.visible_on_update_cache = None;
                 }
             } else {
                 // nil func: remove the handler
@@ -39,6 +40,7 @@ fn add_set_script_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
                 if h == crate::event::ScriptHandler::OnUpdate || h == crate::event::ScriptHandler::OnPostUpdate {
                     state.on_update_frames.remove(&this.id);
+                    state.visible_on_update_cache = None;
                 }
             }
         }
@@ -146,7 +148,9 @@ fn add_clear_scripts_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         // Clear script entries in state
         let mut state = this.state.borrow_mut();
         state.scripts.remove_all(this.id);
-        state.on_update_frames.remove(&this.id);
+        if state.on_update_frames.remove(&this.id) {
+            state.visible_on_update_cache = None;
+        }
 
         Ok(())
     });

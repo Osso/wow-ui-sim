@@ -50,9 +50,7 @@ fn add_tooltip_owner_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 td.owner_id = owner_id;
                 td.anchor_type = anchor.clone();
             }
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.visible = true;
-            }
+            state.set_frame_visible(this.id, true);
             position_tooltip(&mut state, this.id, owner_id, &anchor);
         }
 
@@ -325,9 +323,7 @@ fn add_tooltip_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // FadeOut() - Hide tooltip, clear owner
     methods.add_method("FadeOut", |_, this, ()| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.visible = false;
-        }
+        state.set_frame_visible(this.id, false);
         if let Some(td) = state.tooltips.get_mut(&this.id) {
             td.owner_id = None;
         }

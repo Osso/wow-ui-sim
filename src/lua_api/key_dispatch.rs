@@ -193,9 +193,7 @@ impl WowLuaEnv {
                     .map(|f| f.visible)
                     .unwrap_or(false);
                 if is_visible {
-                    if let Some(f) = self.state.borrow_mut().widgets.get_mut(id) {
-                        f.visible = false;
-                    }
+                    self.state.borrow_mut().set_frame_visible(id, false);
                     closed = true;
                 }
             }
@@ -341,13 +339,9 @@ impl WowLuaEnv {
             .map(|f| f.visible)
             .unwrap_or(false);
         if is_visible {
-            if let Some(f) = self.state.borrow_mut().widgets.get_mut(id) {
-                f.visible = false;
-            }
+            self.state.borrow_mut().set_frame_visible(id, false);
         } else {
-            if let Some(f) = self.state.borrow_mut().widgets.get_mut(id) {
-                f.visible = true;
-            }
+            self.state.borrow_mut().set_frame_visible(id, true);
             super::frame::fire_on_show_recursive(&self.lua, &self.state, id)?;
         }
         Ok(())

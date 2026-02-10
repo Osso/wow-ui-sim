@@ -99,6 +99,18 @@ impl WidgetRegistry {
         self.render_dirty.replace(false)
     }
 
+    /// Set a widget's visibility flag and mark render-dirty.
+    ///
+    /// Prefer `SimState::set_frame_visible` which also updates the OnUpdate cache.
+    pub fn set_visible(&mut self, id: u64, visible: bool) {
+        if let Some(f) = self.widgets.get_mut(&id) {
+            if f.visible != visible {
+                f.visible = visible;
+                self.render_dirty.set(true);
+            }
+        }
+    }
+
     /// Walk the parent chain and return true only if every ancestor has `visible=true`.
     ///
     /// Matches WoW's `IsVisible()` semantics: a frame is visible only when it

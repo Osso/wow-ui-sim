@@ -203,10 +203,11 @@ fn register_add_button(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
 
                 if let Ok(text) = info.get::<mlua::String>("text") {
                     let mut s = state.borrow_mut();
-                    if let Some(btn_frame) = s.widgets.get_mut(btn_handle.id) {
+                    let btn_id = btn_handle.id;
+                    if let Some(btn_frame) = s.widgets.get_mut(btn_id) {
                         btn_frame.text = Some(text.to_string_lossy().to_string());
-                        btn_frame.visible = true;
                     }
+                    s.set_frame_visible(btn_id, true);
                 }
             }
 
@@ -379,10 +380,7 @@ fn register_toggle_and_close(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result
             let list_name = format!("DropDownList{}", lvl);
             if let Ok(list_ud) = lua.globals().get::<mlua::AnyUserData>(list_name.as_str())
                 && let Ok(handle) = list_ud.borrow::<FrameHandle>() {
-                    let mut s = state_c.borrow_mut();
-                    if let Some(f) = s.widgets.get_mut(handle.id) {
-                        f.visible = false;
-                    }
+                    state_c.borrow_mut().set_frame_visible(handle.id, false);
                 }
         }
         lua.globals()

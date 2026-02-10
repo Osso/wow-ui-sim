@@ -52,10 +52,9 @@ fn register_frame_global_impl(
     let id = {
         let mut st = state.borrow_mut();
         if let Some(existing) = st.widgets.get_id_by_name(name) {
-            if !visible
-                && let Some(frame) = st.widgets.get_mut(existing) {
-                    frame.visible = false;
-                }
+            if !visible {
+                st.set_frame_visible(existing, false);
+            }
             existing
         } else {
             let mut frame = Frame::new(widget_type, Some(name.to_string()), None);

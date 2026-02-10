@@ -502,34 +502,10 @@ impl WowLuaEnv {
     pub fn fire_on_update(&self, elapsed: f64) -> Result<()> {
         use super::script_helpers::{call_error_handler, get_frame_ref, get_script};
 
-        // Fire frame OnUpdate handlers
-        let frame_ids: Vec<u64> = {
-            let state = self.state.borrow();
-            state
-                .on_update_frames
-                .iter()
-                .copied()
-                .filter(|&id| state.widgets.is_ancestor_visible(id))
-                .collect()
-        };
+        let frame_ids = self.get_visible_on_update_frames();
 
         if !frame_ids.is_empty() {
-            let elapsed_val = Value::Number(elapsed);
-            let mut errored_ids = self.on_update_errors.borrow_mut();
-
-            for widget_id in &frame_ids {
-                if errored_ids.contains(widget_id) {
-                    continue;
-                }
-                if let Some(handler) = get_script(&self.lua, *widget_id, "OnUpdate")
-                    && let Some(frame) = get_frame_ref(&self.lua, *widget_id)
-                        && let Err(e) = handler
-                            .call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
-                        {
-                            call_error_handler(&self.lua, &e.to_string());
-                            errored_ids.insert(*widget_id);
-                        }
-            }
+            self.fire_on_update_handlers(&frame_ids, elapsed);
         }
 
         // Fire OnPostUpdate handlers
@@ -551,6 +527,44 @@ impl WowLuaEnv {
         super::animation::tick_animation_groups(&self.state, &self.lua, elapsed)?;
 
         Ok(())
+    }
+
+    /// Return the cached visible OnUpdate frame IDs.
+    /// The cache is built on first call and kept up to date by `set_frame_visible`.
+    fn get_visible_on_update_frames(&self) -> Vec<u64> {
+        let mut state = self.state.borrow_mut();
+        if let Some(ref cached) = state.visible_on_update_cache {
+            return cached.clone();
+        }
+        // Initial build: filter all on_update_frames by ancestor visibility.
+        let ids: Vec<u64> = state
+            .on_update_frames
+            .iter()
+            .copied()
+            .filter(|&id| state.widgets.is_ancestor_visible(id))
+            .collect();
+        state.visible_on_update_cache = Some(ids.clone());
+        ids
+    }
+
+    /// Execute OnUpdate Lua handlers for the given visible frame IDs.
+    fn fire_on_update_handlers(&self, frame_ids: &[u64], elapsed: f64) {
+        use super::script_helpers::{call_error_handler, get_frame_ref, get_script};
+        let elapsed_val = Value::Number(elapsed);
+        let mut errored_ids = self.on_update_errors.borrow_mut();
+        for widget_id in frame_ids {
+            if errored_ids.contains(widget_id) {
+                continue;
+            }
+            if let Some(handler) = get_script(&self.lua, *widget_id, "OnUpdate")
+                && let Some(frame) = get_frame_ref(&self.lua, *widget_id)
+                    && let Err(e) = handler
+                        .call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
+                    {
+                        call_error_handler(&self.lua, &e.to_string());
+                        errored_ids.insert(*widget_id);
+                    }
+        }
     }
 
     /// Fire `EDIT_MODE_LAYOUTS_UPDATED` with layout info from `C_EditMode.GetLayouts()`.

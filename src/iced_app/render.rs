@@ -579,23 +579,14 @@ pub fn build_quad_batch_with_cache(
 
 impl App {
     /// Return cached quads or rebuild if dirty/resized.
-    ///
-    /// Rebuilds are throttled to at most once per `REBUILD_INTERVAL` so that
-    /// the cursor overlay (appended separately) stays responsive even when
-    /// the world quad batch is expensive to rebuild. Animations continuously
-    /// mark render_dirty, so without throttling every 16ms tick would rebuild.
     fn get_or_rebuild_quads(&self, size: Size) -> std::sync::Arc<QuadBatch> {
-        const REBUILD_INTERVAL: std::time::Duration = std::time::Duration::from_millis(33);
-
         let mut cache = self.cached_quads.borrow_mut();
         let size_changed = cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true);
-        let time_ok = self.last_quad_rebuild.get().elapsed() >= REBUILD_INTERVAL;
 
-        if size_changed || (self.quads_dirty.get() && time_ok) {
+        if size_changed || self.quads_dirty.get() {
             let new_quads = std::sync::Arc::new(self.build_quad_batch(size));
             *cache = Some((size, std::sync::Arc::clone(&new_quads)));
             self.quads_dirty.set(false);
-            self.last_quad_rebuild.set(std::time::Instant::now());
             new_quads
         } else {
             std::sync::Arc::clone(&cache.as_ref().unwrap().1)

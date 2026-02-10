@@ -290,12 +290,7 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 .unwrap_or(false)
         };
 
-        {
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.visible = true;
-            }
-        }
+        this.state.borrow_mut().set_frame_visible(this.id, true);
 
         // Fire OnShow if transitioning from hidden to visible
         if was_hidden {
@@ -306,10 +301,7 @@ fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     // Hide()
     methods.add_method("Hide", |_, this, ()| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.visible = false;
-        }
+        this.state.borrow_mut().set_frame_visible(this.id, false);
         Ok(())
     });
 
