@@ -116,6 +116,13 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         drop(state);
 
         let mut state = this.state.borrow_mut();
+        // Debug: log SetPoint calls with LEFT relative point (Spark repositioning)
+        if relative_point == crate::widget::AnchorPoint::Left && x_ofs > 0.0 {
+            let name = state.widgets.get(this.id)
+                .and_then(|f| f.name.clone())
+                .unwrap_or_else(|| format!("id:{}", this.id));
+            eprintln!("[SetPoint] {name} point={point:?} rel_point=LEFT x_ofs={x_ofs:.1} y_ofs={y_ofs:.1}");
+        }
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
