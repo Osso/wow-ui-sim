@@ -96,6 +96,8 @@ fn register_c_guild_info(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
     t.set("GetGuildTabardInfo", lua.create_function(|_, _unit: Option<String>| Ok(Value::Nil))?)?;
     t.set("GetGuildNewsInfo", lua.create_function(|_, _index: i32| Ok(Value::Nil))?)?;
+    t.set("AreGuildEventsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GuildRoster", lua.create_function(|_, ()| Ok(()))?)?;
     lua.globals().set("C_GuildInfo", t)?;
     Ok(())
 }

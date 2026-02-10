@@ -192,6 +192,7 @@ fn register_c_club(lua: &Lua) -> Result<()> {
     t.set("ClearClubPresenceSubscription", lua.create_function(|_, ()| Ok(()))?)?;
     t.set("GetInvitationsForSelf", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("IsRestricted", lua.create_function(|_, ()| Ok(0i32))?)?;
+    t.set("ShouldAllowClubType", lua.create_function(|_, _ct: Value| Ok(false))?)?;
     lua.globals().set("C_Club", t)?;
     Ok(())
 }

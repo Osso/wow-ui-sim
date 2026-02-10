@@ -383,6 +383,7 @@ fn register_trial_raf_token(lua: &Lua, g: &mlua::Table) -> Result<()> {
     wow_token.set("GetCommerceSystemStatus", lua.create_function(|_, ()| {
         Ok((false, false, false))
     })?)?;
+    wow_token.set("UpdateMarketPrice", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("C_WowTokenPublic", wow_token)?;
 
     // C_FriendList - friend list / who system
@@ -393,6 +394,7 @@ fn register_trial_raf_token(lua: &Lua, g: &mlua::Table) -> Result<()> {
     friend_list.set("GetNumFriends", lua.create_function(|_, ()| Ok(0i32))?)?;
     friend_list.set("GetNumOnlineFriends", lua.create_function(|_, ()| Ok(0i32))?)?;
     friend_list.set("GetFriendInfoByIndex", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
+    friend_list.set("ShowFriends", lua.create_function(|_, ()| Ok(()))?)?;
     g.set("C_FriendList", friend_list)?;
 
     Ok(())

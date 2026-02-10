@@ -97,6 +97,7 @@ fn create_quest_info(lua: &Lua, idx: i32) -> Result<Value> {
 /// In WoW, these trigger server requests. We stub them as no-ops.
 fn register_quest_log_requests(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("RequestLoadQuestByID", lua.create_function(|_, _id: i32| Ok(()))?)?;
+    t.set("UpdateCampaignHeaders", lua.create_function(|_, ()| Ok(()))?)?;
     Ok(())
 }
 
