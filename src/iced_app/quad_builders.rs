@@ -159,6 +159,9 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     if f.rotation != 0.0 {
         apply_uv_rotation(batch, vert_before, f.rotation);
     }
+    if f.desaturated {
+        apply_desaturate_flag(batch, vert_before);
+    }
 }
 
 /// Apply StatusBar fill clipping to bounds.
@@ -211,6 +214,14 @@ fn apply_uv_rotation(batch: &mut QuadBatch, vert_before: usize, radians: f32) {
             v.tex_coords[0] = cx + du * cos_r - dv * sin_r;
             v.tex_coords[1] = cy + du * sin_r + dv * cos_r;
         }
+    }
+}
+
+/// Apply the desaturation flag to vertices added after `vert_before`.
+fn apply_desaturate_flag(batch: &mut QuadBatch, vert_before: usize) {
+    use crate::render::shader::FLAG_DESATURATE;
+    for v in &mut batch.vertices[vert_before..] {
+        v.flags |= FLAG_DESATURATE;
     }
 }
 
@@ -292,6 +303,7 @@ pub fn emit_frame_quads(
     registry: &crate::widget::WidgetRegistry,
     screen_size: (f32, f32),
     cache: &mut LayoutCache,
+    elapsed_secs: f64,
 ) {
     match f.widget_type {
         WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
@@ -341,19 +353,64 @@ pub fn emit_frame_quads(
                 }
         }
         WidgetType::EditBox => {
-            build_editbox_quads(batch, bounds, f);
-            if let Some((fs, ga)) = text_ctx
-                && let Some(ref txt) = f.text {
-                    let (left_inset, right_inset, top_inset, bottom_inset) = f.editbox_text_insets;
-                    let left_pad = if left_inset > 0.0 { left_inset } else { 4.0 };
-                    let right_pad = if right_inset > 0.0 { right_inset } else { 4.0 };
-                    let text_bounds = Rectangle::new(
-                        Point::new(bounds.x + left_pad, bounds.y + top_inset),
-                        Size::new((bounds.width - left_pad - right_pad).max(0.0), (bounds.height - top_inset - bottom_inset).max(0.0)),
-                    );
-                    emit_widget_text_quads(batch, fs, ga, f, txt, text_bounds, TextJustify::Left, TextJustify::Center, false, 0);
-                }
+            emit_editbox_with_text(batch, bounds, f, text_ctx);
+        }
+        WidgetType::Cooldown => {
+            build_cooldown_quads(batch, bounds, f, elapsed_secs);
         }
         _ => {}
     }
+}
+
+/// EditBox with text insets.
+fn emit_editbox_with_text(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    f: &crate::widget::Frame,
+    text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+) {
+    build_editbox_quads(batch, bounds, f);
+    if let Some((fs, ga)) = text_ctx
+        && let Some(ref txt) = f.text {
+            let (left_inset, right_inset, top_inset, bottom_inset) = f.editbox_text_insets;
+            let left_pad = if left_inset > 0.0 { left_inset } else { 4.0 };
+            let right_pad = if right_inset > 0.0 { right_inset } else { 4.0 };
+            let text_bounds = Rectangle::new(
+                Point::new(bounds.x + left_pad, bounds.y + top_inset),
+                Size::new((bounds.width - left_pad - right_pad).max(0.0), (bounds.height - top_inset - bottom_inset).max(0.0)),
+            );
+            emit_widget_text_quads(batch, fs, ga, f, txt, text_bounds, TextJustify::Left, TextJustify::Center, false, 0);
+        }
+}
+
+/// Build a cooldown swipe overlay quad.
+fn build_cooldown_quads(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    f: &crate::widget::Frame,
+    elapsed_secs: f64,
+) {
+    if !f.cooldown_draw_swipe || f.cooldown_duration <= 0.0 {
+        return;
+    }
+    let elapsed_since_start = elapsed_secs - f.cooldown_start;
+    let progress = (elapsed_since_start / f.cooldown_duration).clamp(0.0, 1.0);
+    if progress >= 1.0 {
+        return; // Cooldown finished, no overlay
+    }
+    let swipe_progress = if f.cooldown_reverse { 1.0 - progress } else { progress } as f32;
+    let color = parse_swipe_color(f);
+    batch.push_cooldown_swipe(bounds, swipe_progress, color);
+}
+
+/// Parse the swipe color from the frame's `__swipe_color` attribute, or return default.
+fn parse_swipe_color(f: &crate::widget::Frame) -> [f32; 4] {
+    use crate::widget::AttributeValue;
+    if let Some(AttributeValue::String(s)) = f.attributes.get("__swipe_color") {
+        let parts: Vec<f32> = s.split(',').filter_map(|p| p.trim().parse().ok()).collect();
+        if parts.len() == 4 {
+            return [parts[0], parts[1], parts[2], parts[3]];
+        }
+    }
+    [0.0, 0.0, 0.0, 0.62] // WoW default: semi-transparent black
 }

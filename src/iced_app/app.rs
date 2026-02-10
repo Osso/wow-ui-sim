@@ -430,6 +430,10 @@ impl App {
                 && state.widgets.is_ancestor_visible(g.owner_frame_id)
         });
         let has_casting = state.casting.is_some();
+        let has_cooldowns = has_active_cooldowns(&state);
+        if has_cooldowns {
+            self.quads_dirty.set(true);
+        }
         if has_animations || has_casting || self.quads_dirty.get() {
             return Some(std::time::Duration::from_millis(16));
         }
@@ -449,6 +453,17 @@ impl App {
         // Idle: no tick needed, pure event-driven
         None
     }
+}
+
+/// Check if any GCD or spell cooldowns are still active.
+fn has_active_cooldowns(state: &crate::lua_api::SimState) -> bool {
+    let now = state.start_time.elapsed().as_secs_f64();
+    if let Some((start, dur)) = state.gcd {
+        if now < start + dur {
+            return true;
+        }
+    }
+    state.spell_cooldowns.values().any(|cd| now < cd.start + cd.duration)
 }
 
 impl Drop for App {

@@ -10,7 +10,7 @@ pub fn register_action_bar_functions(lua: &Lua, state: Rc<RefCell<SimState>>) ->
     register_action_bar_queries(lua, &state)?;
     register_action_cooldown(lua, &state)?;
     register_use_action(lua, &state)?;
-    register_action_bar_stubs(lua)?;
+    register_action_bar_stubs(lua, &state)?;
     Ok(())
 }
 
@@ -248,7 +248,10 @@ pub fn start_cast(
         lua.create_string("player")?,
         cast_id as i64,
         spell_id as i64,
-    ))
+    ))?;
+    // Tell action buttons to re-check IsCurrentAction() for checked state.
+    fire.call::<()>(lua.create_string("ACTIONBAR_UPDATE_STATE")?)?;
+    Ok(())
 }
 
 /// Apply an instant spell effect and fire UNIT_SPELLCAST_SUCCEEDED.
@@ -277,9 +280,9 @@ pub fn apply_instant_spell(
     ))
 }
 
-/// Stateless action bar stub functions.
-fn register_action_bar_stubs(lua: &Lua) -> Result<()> {
-    register_action_slot_query_stubs(lua)?;
+/// Action bar stub functions (mostly stateless, some need state).
+fn register_action_bar_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    register_action_slot_query_stubs(lua, state)?;
     register_action_bar_indices(lua)?;
     register_release_and_highlight_functions(lua)?;
     Ok(())
@@ -306,7 +309,7 @@ fn register_release_and_highlight_functions(lua: &Lua) -> Result<()> {
 }
 
 /// Action slot query stubs (GetActionCooldown is overridden by stateful version).
-fn register_action_slot_query_stubs(lua: &Lua) -> Result<()> {
+fn register_action_slot_query_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
     globals.set("GetActionText", lua.create_function(|_, _slot: Value| Ok(Value::Nil))?)?;
     globals.set("GetActionCount", lua.create_function(|_, _slot: Value| Ok(0))?)?;
@@ -314,7 +317,16 @@ fn register_action_slot_query_stubs(lua: &Lua) -> Result<()> {
     globals.set("IsStackableAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
     globals.set("IsAttackAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
     globals.set("IsAutoRepeatAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
-    globals.set("IsCurrentAction", lua.create_function(|_, _slot: Value| Ok(false))?)?;
+    let st = Rc::clone(state);
+    globals.set("IsCurrentAction", lua.create_function(move |_, slot: Value| {
+        let slot = slot_from_value(&slot).unwrap_or(0);
+        let state = st.borrow();
+        let casting = match &state.casting {
+            Some(c) => c.spell_id,
+            None => return Ok(false),
+        };
+        Ok(state.action_bars.get(&slot).copied() == Some(casting))
+    })?)?;
     globals.set(
         "GetActionCharges",
         lua.create_function(|_, _slot: Value| Ok((0, 0, 0.0_f64, 0.0_f64, 1.0_f64)))?,

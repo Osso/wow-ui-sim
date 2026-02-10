@@ -117,16 +117,31 @@ fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: 
         })
     });
 
-    methods.add_method("SetDesaturated", |_, _this, _desaturated: bool| {
-        // Stub - desaturation is a rendering effect
+    methods.add_method("SetDesaturated", |_, this, desaturated: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(this.id) {
+            f.desaturated = desaturated;
+        }
         Ok(())
     });
 
-    methods.add_method("IsDesaturated", |_, _this, ()| Ok(false));
+    methods.add_method("IsDesaturated", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(state.widgets.get(this.id).map(|f| f.desaturated).unwrap_or(false))
+    });
 
-    methods.add_method("GetDesaturation", |_, _this, ()| Ok(0.0_f64));
+    methods.add_method("GetDesaturation", |_, this, ()| {
+        let state = this.state.borrow();
+        Ok(if state.widgets.get(this.id).map(|f| f.desaturated).unwrap_or(false) { 1.0_f64 } else { 0.0 })
+    });
 
-    methods.add_method("SetDesaturation", |_, _this, _desat: f64| Ok(()));
+    methods.add_method("SetDesaturation", |_, this, desat: f64| {
+        let mut state = this.state.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(this.id) {
+            f.desaturated = desat > 0.0;
+        }
+        Ok(())
+    });
 }
 
 /// SetAtlas, GetAtlas.

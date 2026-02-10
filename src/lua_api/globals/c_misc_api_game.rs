@@ -301,7 +301,7 @@ fn register_global_action_stubs(lua: &Lua) -> Result<()> {
     g.set("IsConsumableAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     g.set("IsStackableAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     g.set("IsItemAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
-    g.set("IsCurrentAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
+    // IsCurrentAction has a stateful implementation in action_bar_api.rs — don't overwrite it.
     g.set("IsAutoRepeatAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     g.set("IsAttackAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     // HasAction, GetActionInfo, GetActionTexture, IsUsableAction, GetActionCooldown

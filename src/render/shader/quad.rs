@@ -5,6 +5,13 @@ use iced::Rectangle;
 /// Flag bit: clip to a circle using UV coordinates (for minimap).
 pub const FLAG_CIRCLE_CLIP: u32 = 0x100;
 
+/// Flag bit: cooldown swipe (radial clock wipe). Uses local_uv for position,
+/// tex_coords.x for progress (0.0 = full coverage, 1.0 = empty).
+pub const FLAG_COOLDOWN_SWIPE: u32 = 0x200;
+
+/// Flag bit: desaturate (convert to greyscale).
+pub const FLAG_DESATURATE: u32 = 0x400;
+
 /// Blend mode for quad rendering.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 #[repr(u32)]
@@ -177,6 +184,43 @@ impl QuadBatch {
             base_index,
             base_index + 2,
             base_index + 3,
+        ]);
+    }
+
+    /// Push a cooldown swipe quad (radial clock wipe overlay).
+    ///
+    /// `progress` is 0.0 (fully covered) to 1.0 (fully revealed/done).
+    /// `color` is the swipe overlay color (typically semi-transparent black).
+    pub fn push_cooldown_swipe(&mut self, bounds: Rectangle, progress: f32, color: [f32; 4]) {
+        let base_index = self.vertices.len() as u32;
+        let positions = [
+            [bounds.x, bounds.y],
+            [bounds.x + bounds.width, bounds.y],
+            [bounds.x + bounds.width, bounds.y + bounds.height],
+            [bounds.x, bounds.y + bounds.height],
+        ];
+        let local_uvs = [
+            [0.0_f32, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [0.0, 1.0],
+        ];
+        let flags = BlendMode::Alpha as u32 | FLAG_COOLDOWN_SWIPE;
+        for i in 0..4 {
+            self.vertices.push(QuadVertex {
+                position: positions[i],
+                tex_coords: [progress, 0.0], // progress encoded in tex_coords.x
+                color,
+                tex_index: -1,
+                flags,
+                local_uv: local_uvs[i],
+                mask_tex_index: -1,
+                mask_tex_coords: [0.0, 0.0],
+            });
+        }
+        self.indices.extend_from_slice(&[
+            base_index, base_index + 1, base_index + 2,
+            base_index, base_index + 2, base_index + 3,
         ]);
     }
 
@@ -401,150 +445,6 @@ impl QuadBatch {
         );
     }
 
-    /// Push a 9-slice texture (corners fixed, edges stretched, center stretched).
-    ///
-    /// Used for WoW panel borders and frames.
-    ///
-    /// # Arguments
-    /// * `bounds` - Target screen rectangle
-    /// * `corner_size` - Size of corners in pixels (assumed square)
-    /// * `edge_size` - Thickness of edges in pixels
-    /// * `textures` - Texture indices for each slice: [tl, t, tr, l, c, r, bl, b, br]
-    /// * `color` - Vertex color/tint with alpha
-    pub fn push_nine_slice(
-        &mut self,
-        bounds: Rectangle,
-        corner_size: f32,
-        edge_size: f32,
-        textures: &NineSliceTextures,
-        color: [f32; 4],
-    ) {
-        // If bounds too small for corners, just draw center
-        if bounds.width < corner_size * 2.0 || bounds.height < corner_size * 2.0 {
-            if let Some(center) = textures.center {
-                self.push_textured(bounds, center, color, BlendMode::Alpha);
-            }
-            return;
-        }
-
-        let inner_width = bounds.width - corner_size * 2.0;
-        let inner_height = bounds.height - corner_size * 2.0;
-        let full_uv = Rectangle::new(iced::Point::ORIGIN, iced::Size::new(1.0, 1.0));
-
-        self.push_nine_slice_center(bounds, edge_size, textures, color, full_uv);
-        self.push_nine_slice_corners(bounds, corner_size, textures, color, full_uv);
-        self.push_nine_slice_edges(bounds, corner_size, edge_size, inner_width, inner_height, textures, color, full_uv);
-    }
-
-    /// Push the center quad of a 9-slice texture.
-    fn push_nine_slice_center(
-        &mut self,
-        bounds: Rectangle,
-        edge_size: f32,
-        textures: &NineSliceTextures,
-        color: [f32; 4],
-        full_uv: Rectangle,
-    ) {
-        if let Some(tex) = textures.center {
-            let center_bounds = Rectangle::new(
-                iced::Point::new(bounds.x + edge_size, bounds.y + edge_size),
-                iced::Size::new(bounds.width - edge_size * 2.0, bounds.height - edge_size * 2.0),
-            );
-            self.push_quad(center_bounds, full_uv, color, tex, BlendMode::Alpha);
-        }
-    }
-
-    /// Push the four corner quads of a 9-slice texture.
-    fn push_nine_slice_corners(
-        &mut self,
-        bounds: Rectangle,
-        corner_size: f32,
-        textures: &NineSliceTextures,
-        color: [f32; 4],
-        full_uv: Rectangle,
-    ) {
-        if let Some(tex) = textures.top_left {
-            let corner = Rectangle::new(
-                iced::Point::new(bounds.x, bounds.y),
-                iced::Size::new(corner_size, corner_size),
-            );
-            self.push_quad(corner, full_uv, color, tex, BlendMode::Alpha);
-        }
-
-        if let Some(tex) = textures.top_right {
-            let corner = Rectangle::new(
-                iced::Point::new(bounds.x + bounds.width - corner_size, bounds.y),
-                iced::Size::new(corner_size, corner_size),
-            );
-            self.push_quad(corner, full_uv, color, tex, BlendMode::Alpha);
-        }
-
-        if let Some(tex) = textures.bottom_left {
-            let corner = Rectangle::new(
-                iced::Point::new(bounds.x, bounds.y + bounds.height - corner_size),
-                iced::Size::new(corner_size, corner_size),
-            );
-            self.push_quad(corner, full_uv, color, tex, BlendMode::Alpha);
-        }
-
-        if let Some(tex) = textures.bottom_right {
-            let corner = Rectangle::new(
-                iced::Point::new(
-                    bounds.x + bounds.width - corner_size,
-                    bounds.y + bounds.height - corner_size,
-                ),
-                iced::Size::new(corner_size, corner_size),
-            );
-            self.push_quad(corner, full_uv, color, tex, BlendMode::Alpha);
-        }
-    }
-
-    /// Push the four edge quads of a 9-slice texture.
-    #[allow(clippy::too_many_arguments)]
-    fn push_nine_slice_edges(
-        &mut self,
-        bounds: Rectangle,
-        corner_size: f32,
-        edge_size: f32,
-        inner_width: f32,
-        inner_height: f32,
-        textures: &NineSliceTextures,
-        color: [f32; 4],
-        full_uv: Rectangle,
-    ) {
-        if let Some(tex) = textures.top {
-            let edge = Rectangle::new(
-                iced::Point::new(bounds.x + corner_size, bounds.y),
-                iced::Size::new(inner_width, edge_size),
-            );
-            self.push_quad(edge, full_uv, color, tex, BlendMode::Alpha);
-        }
-
-        if let Some(tex) = textures.bottom {
-            let edge = Rectangle::new(
-                iced::Point::new(bounds.x + corner_size, bounds.y + bounds.height - edge_size),
-                iced::Size::new(inner_width, edge_size),
-            );
-            self.push_quad(edge, full_uv, color, tex, BlendMode::Alpha);
-        }
-
-        if let Some(tex) = textures.left {
-            let edge = Rectangle::new(
-                iced::Point::new(bounds.x, bounds.y + corner_size),
-                iced::Size::new(edge_size, inner_height),
-            );
-            self.push_quad(edge, full_uv, color, tex, BlendMode::Alpha);
-        }
-
-        if let Some(tex) = textures.right {
-            let edge = Rectangle::new(
-                iced::Point::new(bounds.x + bounds.width - edge_size, bounds.y + corner_size),
-                iced::Size::new(edge_size, inner_height),
-            );
-            self.push_quad(edge, full_uv, color, tex, BlendMode::Alpha);
-        }
-    }
-
     /// Push a tiled texture filling the bounds.
     ///
     /// # Arguments
@@ -707,16 +607,3 @@ impl QuadBatch {
     }
 }
 
-/// Texture indices for 9-slice rendering.
-#[derive(Debug, Clone, Copy, Default)]
-pub struct NineSliceTextures {
-    pub top_left: Option<i32>,
-    pub top: Option<i32>,
-    pub top_right: Option<i32>,
-    pub left: Option<i32>,
-    pub center: Option<i32>,
-    pub right: Option<i32>,
-    pub bottom_left: Option<i32>,
-    pub bottom: Option<i32>,
-    pub bottom_right: Option<i32>,
-}

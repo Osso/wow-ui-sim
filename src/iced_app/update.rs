@@ -298,7 +298,6 @@ impl App {
                 let _ = env.fire_event_with_args("ADDON_LOADED", &[mlua::Value::String(s)]);
             }
             let _ = env.fire_event("VARIABLES_LOADED");
-            let _ = env.fire_event("PLAYER_LOGIN");
             let _ = env.fire_event_with_args(
                 "PLAYER_ENTERING_WORLD",
                 &[mlua::Value::Boolean(false), mlua::Value::Boolean(true)],
@@ -495,10 +494,14 @@ impl App {
     }
 
     /// Clear caches that depend on widget layout (quads and hit-test rects).
+    ///
+    /// Note: cached_hittable is NOT cleared here. It's rebuilt on every quad
+    /// rebuild in build_quad_batch(). Clearing it would cause hit_test() to
+    /// return None for any mouse events batched after a timer tick in the same
+    /// frame, dropping the hovered_frame and making hover highlights disappear.
     pub(super) fn invalidate_layout(&mut self) {
         self.frame_cache.clear();
         self.quads_dirty.set(true);
-        *self.cached_hittable.borrow_mut() = None;
         *self.cached_layout_rects.borrow_mut() = None;
     }
 
@@ -647,6 +650,8 @@ fn fire_cast_complete_events(
     ];
     let _ = env.fire_event_with_args("UNIT_SPELLCAST_STOP", args);
     let _ = env.fire_event_with_args("UNIT_SPELLCAST_SUCCEEDED", args);
+    // Tell action buttons to re-check IsCurrentAction() (casting is now None).
+    let _ = env.fire_event("ACTIONBAR_UPDATE_STATE");
 }
 
 /// Apply healing from a completed cast spell to the target or self.

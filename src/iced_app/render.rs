@@ -154,6 +154,7 @@ fn emit_all_frames(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     cache: &mut LayoutCache,
+    elapsed_secs: f64,
 ) {
     let statusbar_fills = collect_statusbar_fills(render_list, registry);
 
@@ -171,7 +172,7 @@ fn emit_all_frames(
             Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
         );
         let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache);
+        emit_frame_quads(batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache, elapsed_secs);
     }
 }
 
@@ -196,7 +197,7 @@ pub fn build_quad_batch_for_registry(
     let (batch, _collected) = build_quad_batch_with_cache(
         registry, screen_size, root_name, pressed_frame, hovered_frame,
         &mut text_ctx, message_frames, tooltip_data, &mut cache,
-        &ancestor_visible, None, None,
+        &ancestor_visible, None, None, 0.0,
     );
     batch
 }
@@ -222,6 +223,7 @@ pub fn build_quad_batch_with_cache(
     ancestor_visible: &std::collections::HashMap<u64, f32>,
     strata_buckets: Option<&Vec<Vec<u64>>>,
     cached_render_list: Option<CollectedFrames>,
+    elapsed_secs: f64,
 ) -> (QuadBatch, CollectedFrames) {
     let mut batch = QuadBatch::with_capacity(1000);
     let (screen_width, screen_height) = screen_size;
@@ -246,7 +248,7 @@ pub fn build_quad_batch_with_cache(
     emit_all_frames(
         &mut batch, &collected.render, registry, screen_size,
         &visible_ids, pressed_frame, hovered_frame,
-        text_ctx, message_frames, tooltip_data, cache,
+        text_ctx, message_frames, tooltip_data, cache, elapsed_secs,
     );
     (batch, collected)
 }
@@ -323,6 +325,7 @@ impl App {
             (vis, buckets, layout, render)
         };
         let state = env.state().borrow();
+        let elapsed_secs = state.start_time.elapsed().as_secs_f64();
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
         let mut glyph_atlas = self.glyph_atlas.borrow_mut();
         let (batch, collected) = build_quad_batch_with_cache(
@@ -331,7 +334,7 @@ impl App {
             &mut Some((&mut font_sys, &mut glyph_atlas)),
             Some(&state.message_frames), Some(&tooltip_data),
             &mut cache, &ancestor_visible, strata_buckets.as_ref(),
-            cached_render,
+            cached_render, elapsed_secs,
         );
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
         *self.cached_hittable.borrow_mut() = Some(

@@ -144,6 +144,41 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         color *= 1.0 - smoothstep(0.96, 1.0, dist);
     }
 
+    // Cooldown swipe — radial clock wipe from 12 o'clock clockwise.
+    // tex_coords.x holds progress (0.0 = fully covered, 1.0 = fully revealed).
+    // Pixels where the clock sweep has NOT yet passed are kept; passed pixels discarded.
+    const FLAG_COOLDOWN_SWIPE: u32 = 0x200u;
+    if (in.flags & FLAG_COOLDOWN_SWIPE) != 0u {
+        let progress = in.tex_coords.x;
+        // Convert progress to angle threshold (0 → 0, 1 → 2π)
+        let threshold = progress * 6.2831853;
+        // Compute pixel angle from center, 0 = top, clockwise
+        let centered = in.local_uv * 2.0 - 1.0;
+        let angle = atan2(centered.x, -centered.y);
+        // Remap from [-π, π] to [0, 2π]
+        var pixel_angle = angle;
+        if pixel_angle < 0.0 {
+            pixel_angle += 6.2831853;
+        }
+        // Keep pixels where pixel_angle >= threshold (not yet swept away)
+        if pixel_angle < threshold {
+            color = vec4f(0.0);
+        }
+    }
+
+    // Desaturation — convert to greyscale using luminance weights.
+    // Applied before masking so the mask alpha still works correctly.
+    const FLAG_DESATURATE: u32 = 0x400u;
+    if (in.flags & FLAG_DESATURATE) != 0u {
+        // Unpremultiply, desaturate, re-premultiply.
+        let a = color.a;
+        if a > 0.001 {
+            let rgb = color.rgb / a;
+            let lum = dot(rgb, vec3f(0.2126, 0.7152, 0.0722));
+            color = vec4f(vec3f(lum) * a, a);
+        }
+    }
+
     // Mask texture sampling — scale premultiplied output by mask alpha
     if in.mask_tex_index >= 0 {
         let mask_color = sample_tiered_texture(in.mask_tex_index, in.mask_tex_coords);

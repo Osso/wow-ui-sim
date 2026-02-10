@@ -347,6 +347,10 @@ pub struct Frame {
     pub cooldown_hide_countdown: bool,
     /// Whether cooldown is paused.
     pub cooldown_paused: bool,
+
+    // --- Rendering effect fields ---
+    /// Whether this texture/frame is desaturated (greyscale).
+    pub desaturated: bool,
 }
 
 /// Build a `Frame` with all defaults. `$id` is the expression for the `id` field.
@@ -479,6 +483,9 @@ macro_rules! frame_defaults {
             cooldown_draw_bling: true,
             cooldown_hide_countdown: false,
             cooldown_paused: false,
+
+            // Rendering effects
+            desaturated: false,
         }
     };
 }
