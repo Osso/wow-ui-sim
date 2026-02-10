@@ -348,6 +348,10 @@ fn register_action_slot_query_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) ->
         let action = iter.next().and_then(|v| slot_from_value(v));
         if let (Some(fid), Some(slot)) = (frame_id, action) {
             let mut s = st.borrow_mut();
+            let frame_name = s.widgets.get(fid)
+                .and_then(|f| f.name.clone())
+                .unwrap_or_else(|| format!("(id={})", fid));
+            eprintln!("[SetActionUIButton] frame={} id={} slot={}", frame_name, fid, slot);
             // Remove any previous registration for this frame.
             s.action_ui_buttons.retain(|(id, _)| *id != fid);
             s.action_ui_buttons.push((fid, slot));
