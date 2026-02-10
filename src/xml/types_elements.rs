@@ -28,7 +28,7 @@ impl LayerXml {
     /// Returns (texture, is_mask) pairs.
     pub fn textures(&self) -> impl Iterator<Item = (&TextureXml, bool)> {
         self.elements.iter().filter_map(|e| match e {
-            LayerElement::Texture(t) => Some((t, false)),
+            LayerElement::Texture(t) | LayerElement::Line(t) => Some((t, false)),
             LayerElement::MaskTexture(t) => Some((t, true)),
             _ => None,
         })
