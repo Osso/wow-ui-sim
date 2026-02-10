@@ -61,6 +61,10 @@ fn register_c_map(lua: &Lua) -> Result<mlua::Table> {
         "RequestPreloadMap",
         lua.create_function(|_, _map_id: i32| Ok(()))?,
     )?;
+    t.set(
+        "MapHasArt",
+        lua.create_function(|_, _map_id: i32| Ok(true))?,
+    )?;
 
     Ok(t)
 }

@@ -54,6 +54,7 @@ pub mod global_frames;
 pub mod item_api;
 pub mod locale_api;
 pub mod mixin_api;
+pub mod action_bar_api;
 pub mod player_api;
 pub mod pool_api;
 pub mod spell_api;

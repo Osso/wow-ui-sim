@@ -291,6 +291,7 @@ fn register_global_combat_stubs(lua: &Lua) -> Result<()> {
     g.set("HasArtifactEquipped", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("IsInActiveWorldPVP", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("IsWatchingHonorAsXP", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("DoEmote", lua.create_function(|_, _emote: Option<String>| Ok(()))?)?;
     Ok(())
 }
 
@@ -303,11 +304,10 @@ fn register_global_action_stubs(lua: &Lua) -> Result<()> {
     g.set("IsCurrentAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     g.set("IsAutoRepeatAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
     g.set("IsAttackAction", lua.create_function(|_, _s: Option<i32>| Ok(false))?)?;
-    // HasAction, GetActionInfo, GetActionTexture, IsUsableAction have stateful
-    // implementations in player_api.rs — don't overwrite them with stubs here.
+    // HasAction, GetActionInfo, GetActionTexture, IsUsableAction, GetActionCooldown
+    // have stateful implementations in action_bar_api.rs — don't overwrite them.
     g.set("GetActionText", lua.create_function(|_, _s: Option<i32>| Ok(Value::Nil))?)?;
     g.set("GetActionCount", lua.create_function(|_, _s: Option<i32>| Ok(0i32))?)?;
-    g.set("GetActionCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64, false)))?)?;
     g.set("GetActionCharges", lua.create_function(|_, _s: Option<i32>| Ok((0i32, 0i32, 0.0f64, 0.0f64)))?)?;
     g.set("GetActionLossOfControlCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64)))?)?;
     g.set("GetCursorInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;

@@ -40,6 +40,7 @@ pub fn apply(env: &WowLuaEnv) {
     patch_lfg_backfill(env);
     init_console_saved_vars(env);
     init_lfg_events_in_background(env);
+    patch_scrollbox_nil_dataprovider(env);
 }
 
 /// SuperTrackedFrame shows a quest navigation arrow positioned by the engine's
@@ -370,6 +371,7 @@ fn show_chat_frame(env: &WowLuaEnv) {
             ChatFrame1:ClearAllPoints()
             ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 32, 32)
             ChatFrame1:SetSize(430, 120)
+            ChatFrame1.oldAlpha = ChatFrame1.oldAlpha or DEFAULT_CHATFRAME_ALPHA or 0.3
         end
     "#,
     );
@@ -696,6 +698,28 @@ fn init_lfg_events_in_background(env: &WowLuaEnv) {
         r#"
         if LFGListFrame and not LFGListFrame.EventsInBackground then
             LFGListFrame.EventsInBackground = {}
+        end
+    "#,
+    );
+}
+
+/// Guard ScrollBoxListViewMixin methods against nil DataProvider.
+///
+/// CommunitiesFrame opens before its ScrollBox has a DataProvider set,
+/// causing nil index errors in FindElementDataIndexByPredicate etc.
+fn patch_scrollbox_nil_dataprovider(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        local cl = CommunitiesFrameCommunitiesList
+        if cl then
+            cl.ScrollToClub = function(self, clubId)
+                if self.ScrollBox and self.ScrollBox.HasDataProvider
+                   and self.ScrollBox:HasDataProvider() then
+                    self.ScrollBox:ScrollToElementDataByPredicate(function(elementData)
+                        return elementData.clubInfo and elementData.clubInfo.clubId == clubId
+                    end, ScrollBoxConstants.AlignCenter)
+                end
+            end
         end
     "#,
     );
