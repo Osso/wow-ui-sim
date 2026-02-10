@@ -3,7 +3,7 @@
 use std::path::Path;
 
 use crate::lua_server::Response as LuaResponse;
-use crate::render::software::render_to_image;
+use crate::render::headless::render_to_image;
 use crate::render::GlyphAtlas;
 
 use super::app::App;

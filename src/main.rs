@@ -590,7 +590,7 @@ fn run_screenshot(
     exec_lua: Option<&str>,
 ) {
     use wow_ui_sim::iced_app::build_quad_batch_for_registry;
-    use wow_ui_sim::render::software::render_to_image;
+    use wow_ui_sim::render::headless::render_to_image;
     use wow_ui_sim::render::GlyphAtlas;
 
     env.set_screen_size(width as f32, height as f32);
