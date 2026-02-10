@@ -522,17 +522,40 @@ impl App {
     }
 
     /// Hit test to find frame under cursor (uses cached rects from render pass).
+    ///
+    /// After finding the topmost frame at the cursor position (highest strata/level),
+    /// drills down through child frames to find the deepest mouse-enabled descendant.
+    /// This matches WoW behavior where child frames always receive clicks over parents,
+    /// regardless of the parent's frame level.
     pub(crate) fn hit_test(&self, pos: iced::Point) -> Option<u64> {
         let cache = self.cached_hittable.borrow();
         let list = cache.as_ref()?;
-        // Iterate top-to-bottom (highest strata/level = last in list)
-        list.iter().rev().find_map(|(id, rect)| {
-            if rect.contains(pos) {
-                Some(*id)
-            } else {
-                None
+
+        // Find initial hit (highest strata/level frame containing the point).
+        let initial_id = list.iter().rev().find_map(|(id, rect)| {
+            if rect.contains(pos) { Some(*id) } else { None }
+        })?;
+
+        // Build lookup of hittable frame IDs → rects for fast child checks.
+        let hittable: std::collections::HashMap<u64, &iced::Rectangle> =
+            list.iter().map(|(id, rect)| (*id, rect)).collect();
+
+        // Drill down through children: prefer the deepest mouse-enabled descendant.
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        let mut current = initial_id;
+        loop {
+            let Some(frame) = state.widgets.get(current) else { break };
+            let child_hit = frame.children.iter().rev().find(|&&cid| {
+                hittable.get(&cid).is_some_and(|r| r.contains(pos))
+            });
+            match child_hit {
+                Some(&cid) => current = cid,
+                None => break,
             }
-        })
+        }
+
+        Some(current)
     }
 
 }
