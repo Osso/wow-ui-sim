@@ -26,12 +26,54 @@ pub fn init_edit_mode_layout(env: &WowLuaEnv) {
         local savedLayouts = emm.layoutInfo.layouts
         emm.layoutInfo.layouts = EditModePresetLayoutManager:GetCopyOfPresetLayouts()
         tAppendAll(emm.layoutInfo.layouts, savedLayouts)
+
+        -- Mirror the real UpdateLayoutInfo flow:
+        -- 1. layoutApplyInProgress prevents UpdateBottomActionBarPositions
+        --    from running inside ApplySystemAnchor (bar has no width yet)
+        -- 2. InitSystemAnchors sets up anchors from preset layout
+        -- 3. UpdateSystems applies all settings (orientation, grid, etc.)
+        -- 4. After clearing the flag, UpdateActionBarPositions computes
+        --    the final BOTTOMLEFT anchor using the now-valid bar width
+        emm.layoutApplyInProgress = true
         emm:InitSystemAnchors()
+        pcall(emm.UpdateSystems, emm)
+        emm.layoutApplyInProgress = false
+        pcall(emm.UpdateActionBarPositions, emm)
 
         -- Ensure accountSettings is set so CanEnterEditMode() returns true
         if not emm.accountSettings then
             emm.accountSettings = C_EditMode.GetAccountSettings()
         end
+    "#,
+    );
+    fix_action_bar_nan_size(env);
+}
+
+/// Fix MainActionBar NaN size after UpdateSystems.
+///
+/// In the live GUI, Layout() produces NaN because the bar has no size yet
+/// when children try to resolve anchors relative to it (chicken-and-egg).
+/// Compute the bar size directly from children's grid positions, then
+/// re-run UpdateActionBarPositions to set the correct BOTTOMLEFT anchor.
+fn fix_action_bar_nan_size(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not MainActionBar then return end
+        local w = MainActionBar:GetWidth()
+        if w == w then return end  -- not NaN, nothing to fix
+        -- Compute width from button containers only (12 slots, 45px each
+        -- with 2px gap = 47px stride). Last container offset + width.
+        local lastOx, lastW = 0, 45
+        for i = 1, 12 do
+            local c = _G["MainActionBarButtonContainer" .. i]
+            if c and c:GetNumPoints() > 0 then
+                local _, _, _, ox, _ = c:GetPoint(1)
+                if ox and ox == ox then lastOx = ox end
+            end
+        end
+        MainActionBar:SetSize(lastOx + lastW, lastW)
+        pcall(EditModeManagerFrame.UpdateActionBarPositions,
+              EditModeManagerFrame)
     "#,
     );
 }
@@ -40,10 +82,10 @@ pub fn init_edit_mode_layout(env: &WowLuaEnv) {
 ///
 /// Before EDIT_MODE_LAYOUTS_UPDATED fires, layoutInfo is nil. Guard
 /// GetActiveLayoutInfo with a fallback. Replace InitSystemAnchors with a
-/// custom implementation that reads the active preset layout and applies
-/// anchorInfo to all 43 registered system frames. Stub UpdateSystems as
-/// a no-op since our InitSystemAnchors already handles positioning and
-/// the full UpdateSystem chain has too many dependencies.
+/// custom implementation that reads the active preset layout, applies
+/// anchorInfo to all 43 registered system frames, then calls UpdateSystems
+/// to apply settings (orientation, num rows, etc.) through the normal
+/// Blizzard code path. Per-frame errors are caught by secureexecuterange.
 ///
 /// Also patches ShowUIPanel/HideUIPanel to bypass FramePositionDelegate,
 /// and wraps EnterEditMode/ExitEditMode with pcall protection so edit
@@ -53,6 +95,7 @@ pub fn patch_edit_mode_manager(env: &WowLuaEnv) {
     patch_get_setting_value(env);
     patch_init_anchors(env);
     patch_update_systems(env);
+    patch_update_layout_info(env);
     patch_default_anchor(env);
     patch_show_hide_ui_panel(env);
     patch_enter_exit_edit_mode(env);
@@ -111,7 +154,8 @@ fn patch_get_setting_value(env: &WowLuaEnv) {
 ///
 /// Builds a lookup from (system, systemIndex) → sysInfo, then iterates
 /// registeredSystemFrames and calls ClearAllPoints + SetPoint for each.
-/// Sets systemInfo on each frame so IsInitialized() returns true.
+/// UpdateSystems is called separately from init_edit_mode_layout (after
+/// this) to apply EditMode settings through the normal code path.
 fn patch_init_anchors(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
@@ -145,14 +189,6 @@ fn patch_init_anchors(env: &WowLuaEnv) {
                         a.point, rel, a.relativePoint,
                         a.offsetX, a.offsetY
                     )
-                    -- Set systemInfo so IsInitialized() returns true,
-                    -- and build settingMap so GetSettingValue() works.
-                    frame.systemInfo = sysInfo
-                    if EditModeUtil and EditModeUtil.GetSettingMapFromSettings then
-                        frame.settingMap = EditModeUtil:GetSettingMapFromSettings(
-                            sysInfo.settings, frame.settingDisplayInfoMap
-                        )
-                    end
                 end
             end
         end
@@ -160,13 +196,44 @@ fn patch_init_anchors(env: &WowLuaEnv) {
     );
 }
 
-/// Stub UpdateSystems — InitSystemAnchors handles positioning and the
-/// full UpdateSystem chain (settings, dialogs, etc.) isn't needed.
+/// Implement UpdateSystems to call UpdateSystem on each registered frame.
+///
+/// The real WoW UpdateSystems uses secureexecuterange which swallows
+/// per-frame errors. We replicate that: look up each frame's systemInfo
+/// from the active layout and call frame:UpdateSystem(sysInfo). Frames
+/// that crash (missing subsystems, etc.) are caught individually.
 fn patch_update_systems(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
         if not EditModeManagerFrame then return end
-        function EditModeManagerFrame:UpdateSystems() end
+        function EditModeManagerFrame:UpdateSystems()
+            local function callUpdateSystem(index, systemFrame)
+                local sysInfo = self:GetActiveLayoutSystemInfo(
+                    systemFrame.system, systemFrame.systemIndex
+                )
+                if sysInfo then
+                    systemFrame:UpdateSystem(sysInfo)
+                end
+            end
+            secureexecuterange(self.registeredSystemFrames, callUpdateSystem)
+        end
+    "#,
+    );
+}
+
+/// Override UpdateLayoutInfo to prevent double initialization.
+///
+/// The EDIT_MODE_LAYOUTS_UPDATED event handler in EditModeManager.lua:178
+/// calls UpdateLayoutInfo after init_edit_mode_layout already ran the full
+/// InitSystemAnchors + UpdateSystems + UpdateActionBarPositions flow. The
+/// second pass produces NaN coordinates because Layout() → GetExtents()
+/// fails on children that haven't been sized yet in the live GUI context.
+/// Replace with a no-op since init_edit_mode_layout handles everything.
+fn patch_update_layout_info(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if not EditModeManagerFrame then return end
+        function EditModeManagerFrame:UpdateLayoutInfo() end
     "#,
     );
 }
