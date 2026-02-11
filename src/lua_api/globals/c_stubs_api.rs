@@ -520,16 +520,28 @@ fn register_missing_globals(lua: &Lua) -> Result<()> {
         // Returns: inProgress, slots, members, category, lfgID, isBattleground
         Ok((false, 0i32, 0i32, 0i32, 0i32, false))
     })?)?;
+    register_paperdoll_container_and_misc_stubs(lua, &g)?;
+    Ok(())
+}
+
+/// PaperDoll, container frame, group roster, and miscellaneous stubs.
+fn register_paperdoll_container_and_misc_stubs(lua: &Lua, g: &mlua::Table) -> Result<()> {
     g.set("PaperDollItemSlotButton_OnLoad", lua.create_function(|_, _frame: Value| Ok(()))?)?;
     g.set("PaperDollItemSlotButton_OnShow", lua.create_function(|_, _frame: Value| Ok(()))?)?;
-    g.set("ContainerFrame_GetContainerNumSlots", lua.create_function(|_, _id: Value| Ok(0i32))?)?;
+    g.set("ContainerFrame_GetContainerNumSlots", lua.create_function(|_, id: Value| {
+        let bag = match id {
+            Value::Integer(n) => n as i32,
+            Value::Number(n) => n as i32,
+            _ => -1,
+        };
+        let count = super::c_container_api::bag_slot_count(bag);
+        Ok((count, count))
+    })?)?;
     g.set("GetGroupMemberCounts", lua.create_function(|lua, ()| {
         let t = lua.create_table()?;
-        t.set("TANK", 0i32)?;
-        t.set("HEALER", 0i32)?;
-        t.set("DAMAGER", 0i32)?;
-        t.set("NOROLE", 0i32)?;
-        t.set("ASSIGNEDROLE", 0i32)?;
+        for key in ["TANK", "HEALER", "DAMAGER", "NOROLE", "ASSIGNEDROLE"] {
+            t.set(key, 0i32)?;
+        }
         Ok(t)
     })?)?;
     g.set("GetDungeonDifficultyID", lua.create_function(|_, ()| Ok(1i32))?)?;

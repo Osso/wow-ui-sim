@@ -23,7 +23,7 @@ fn register_c_new_items(lua: &Lua) -> Result<()> {
 }
 
 /// Slot count per bag index (0=backpack, 1–4=equipped bags, 5=reagent bag).
-fn bag_slot_count(bag: i32) -> i32 {
+pub(super) fn bag_slot_count(bag: i32) -> i32 {
     match bag {
         0 => 16,     // backpack
         1..=4 => 16, // equipped bags
