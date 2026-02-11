@@ -88,22 +88,18 @@ fn update_bag_button_textures(env: &WowLuaEnv) {
             return
         end
         for _, btn in ipairs(MainMenuBarBagManager.allBagButtons) do
-            if PaperDollItemSlotButton_OnLoad then
+            -- Backpack has its own OnLoadInternal that doesn't call
+            -- PaperDollItemSlotButton_OnLoad (name pattern doesn't match,
+            -- producing wrong slot ID and head-slot icon texture).
+            local isBackpack = btn:IsBackpack()
+            if not isBackpack and PaperDollItemSlotButton_OnLoad then
                 pcall(PaperDollItemSlotButton_OnLoad, btn)
             end
-            if PaperDollItemSlotButton_Update then
+            if not isBackpack and PaperDollItemSlotButton_Update then
                 pcall(PaperDollItemSlotButton_Update, btn)
             end
             if btn.UpdateTextures then
                 pcall(btn.UpdateTextures, btn)
-            end
-        end
-        if MainMenuBarBackpackButton then
-            if PaperDollItemSlotButton_OnLoad then
-                pcall(PaperDollItemSlotButton_OnLoad, MainMenuBarBackpackButton)
-            end
-            if PaperDollItemSlotButton_Update then
-                pcall(PaperDollItemSlotButton_Update, MainMenuBarBackpackButton)
             end
         end
     "#,
