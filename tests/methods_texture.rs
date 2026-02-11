@@ -662,7 +662,7 @@ fn test_draw_layer_default() {
             "#,
         )
         .unwrap();
-    assert_eq!(layer, "ARTWORK");
+    assert_eq!(layer, "BACKGROUND");
     assert_eq!(sublayer, 0);
 }
 
