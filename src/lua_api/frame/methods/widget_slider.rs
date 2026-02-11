@@ -155,12 +155,20 @@ fn add_statusbar_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
             }
         }
         // When called with a string, apply atlas/texture to the bar texture child.
+        // Create the child if it doesn't exist yet.
         if let Some(ref tex_str) = path {
-            let bar_child_id = find_bar_texture_child(&state.widgets, this.id);
-            if let Some(child_id) = bar_child_id {
-                apply_bar_texture(&mut state.widgets, child_id, tex_str);
-                anchor_bar_to_parent(&mut state.widgets, child_id, this.id);
-            }
+            let bar_child_id = find_bar_texture_child(&state.widgets, this.id)
+                .unwrap_or_else(|| {
+                    let child_id = super::methods_helpers::get_or_create_button_texture(
+                        &mut state, this.id, "StatusBarTexture",
+                    );
+                    if let Some(frame) = state.widgets.get_mut(this.id) {
+                        frame.statusbar_bar_id = Some(child_id);
+                    }
+                    child_id
+                });
+            apply_bar_texture(&mut state.widgets, bar_child_id, tex_str);
+            anchor_bar_to_parent(&mut state.widgets, bar_child_id, this.id);
         }
         // The bar texture fills its parent; apply SetAllPoints anchors.
         if let Some(id) = bar_id {

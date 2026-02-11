@@ -281,10 +281,30 @@ fn register_c_ui_color(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
+fn class_color(name: &str) -> (f32, f32, f32) {
+    match name {
+        "WARRIOR" => (0.78, 0.61, 0.43),
+        "PALADIN" => (0.96, 0.55, 0.73),
+        "HUNTER" => (0.67, 0.83, 0.45),
+        "ROGUE" => (1.00, 0.96, 0.41),
+        "PRIEST" => (1.00, 1.00, 1.00),
+        "DEATHKNIGHT" => (0.77, 0.12, 0.23),
+        "SHAMAN" => (0.00, 0.44, 0.87),
+        "MAGE" => (0.25, 0.78, 0.92),
+        "WARLOCK" => (0.53, 0.53, 0.93),
+        "MONK" => (0.00, 1.00, 0.60),
+        "DRUID" => (1.00, 0.49, 0.04),
+        "DEMONHUNTER" => (0.64, 0.19, 0.79),
+        "EVOKER" => (0.20, 0.58, 0.50),
+        _ => (1.0, 1.0, 1.0),
+    }
+}
+
 fn register_c_class_color(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
-    t.set("GetClassColor", lua.create_function(|lua, _class: String| {
-        let (r, g, b, a) = (1.0f32, 1.0f32, 1.0f32, 1.0f32);
+    t.set("GetClassColor", lua.create_function(|lua, class: String| {
+        let (r, g, b) = class_color(&class);
+        let a = 1.0f32;
         let color = lua.create_table()?;
         color.set("r", r)?;
         color.set("g", g)?;
