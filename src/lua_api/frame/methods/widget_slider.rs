@@ -39,12 +39,14 @@ pub fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
                     .attributes
                     .insert("__checked".to_string(), AttributeValue::Boolean(checked));
             }
-            // Also toggle CheckedTexture visibility if it exists
-            if let Some(frame) = state.widgets.get(this.id)
-                && let Some(&checked_tex_id) = frame.children_keys.get("CheckedTexture")
-                    && let Some(tex) = state.widgets.get_mut(checked_tex_id) {
-                        tex.visible = checked;
-                    }
+            // Toggle CheckedTexture visibility via set_frame_visible so that
+            // ancestor_visible_cache, strata_buckets, and cached_render_list
+            // are properly updated (direct tex.visible = checked bypassed these).
+            let checked_tex_id = state.widgets.get(this.id)
+                .and_then(|f| f.children_keys.get("CheckedTexture").copied());
+            if let Some(tex_id) = checked_tex_id {
+                state.set_frame_visible(tex_id, checked);
+            }
         }
         Ok(())
     });
