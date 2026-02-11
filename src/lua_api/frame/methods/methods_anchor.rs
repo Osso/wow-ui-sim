@@ -136,6 +136,17 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         drop(state);
 
         let mut state = this.state.borrow_mut();
+        // Update reverse anchor index: remove old target, add new target
+        if let Some(frame) = state.widgets.get(this.id) {
+            if let Some(old) = frame.anchors.iter().find(|a| a.point == point) {
+                if let Some(old_target) = old.relative_to_id {
+                    state.widgets.remove_anchor_dependent(old_target as u64, this.id);
+                }
+            }
+        }
+        if let Some(rel_id) = relative_to {
+            state.widgets.add_anchor_dependent(rel_id as u64, this.id);
+        }
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
@@ -152,6 +163,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             .map(|f| f.anchors.is_empty()).unwrap_or(true);
         if !already_empty {
             let mut state = this.state.borrow_mut();
+            state.widgets.remove_all_anchor_dependents_for(this.id);
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.clear_all_points();
             }
@@ -166,6 +178,14 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
         let point = crate::widget::AnchorPoint::from_str(&point_name);
         if let Some(point) = point {
             let mut state = this.state.borrow_mut();
+            // Remove reverse index entry for the cleared anchor
+            if let Some(frame) = state.widgets.get(this.id) {
+                if let Some(anchor) = frame.anchors.iter().find(|a| a.point == point) {
+                    if let Some(target) = anchor.relative_to_id {
+                        state.widgets.remove_anchor_dependent(target as u64, this.id);
+                    }
+                }
+            }
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.anchors.retain(|a| a.point != point);
             }
@@ -217,6 +237,12 @@ fn add_set_all_points_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 && state.widgets.would_create_anchor_cycle(this.id, rel_id as u64) {
                     return Ok(());
                 }
+
+            // Update reverse index: remove old, add new
+            state.widgets.remove_all_anchor_dependents_for(this.id);
+            if let Some(rel_id) = relative_to_id {
+                state.widgets.add_anchor_dependent(rel_id as u64, this.id);
+            }
 
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.clear_all_points();

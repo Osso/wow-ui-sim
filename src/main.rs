@@ -198,6 +198,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Some(Commands::DumpTree { filter, filter_key, visible_only }) => {
             fire_startup_events(&env);
             env.apply_post_event_workarounds();
+            env.state().borrow_mut().widgets.rebuild_anchor_index();
             process_pending_timers(&env);
             fire_one_on_update_tick(&env);
             let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
@@ -683,6 +684,7 @@ fn run_screenshot(
     env.set_screen_size(width as f32, height as f32);
     fire_startup_events(env);
     env.apply_post_event_workarounds();
+    env.state().borrow_mut().widgets.rebuild_anchor_index();
     process_pending_timers(env);
     fire_one_on_update_tick(env);
     let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());

@@ -13,6 +13,8 @@ pub struct WidgetRegistry {
     names: HashMap<String, u64>,
     /// Set to true when any widget is mutated; cleared by the render loop.
     render_dirty: Cell<bool>,
+    /// Reverse index: target_id → set of frame IDs anchored to it.
+    anchor_dependents: HashMap<u64, HashSet<u64>>,
 }
 
 impl WidgetRegistry {
@@ -187,5 +189,55 @@ impl WidgetRegistry {
         }
 
         false
+    }
+
+    /// Record that `frame_id` is anchored to `target_id`.
+    pub fn add_anchor_dependent(&mut self, target_id: u64, frame_id: u64) {
+        self.anchor_dependents.entry(target_id).or_default().insert(frame_id);
+    }
+
+    /// Remove `frame_id` from `target_id`'s dependents.
+    pub fn remove_anchor_dependent(&mut self, target_id: u64, frame_id: u64) {
+        if let Some(set) = self.anchor_dependents.get_mut(&target_id) {
+            set.remove(&frame_id);
+            if set.is_empty() {
+                self.anchor_dependents.remove(&target_id);
+            }
+        }
+    }
+
+    /// Remove `frame_id` from all reverse-index entries by reading its current
+    /// anchors to find the targets.
+    pub fn remove_all_anchor_dependents_for(&mut self, frame_id: u64) {
+        let targets: Vec<u64> = self.widgets.get(&frame_id)
+            .map(|f| f.anchors.iter()
+                .filter_map(|a| a.relative_to_id.map(|t| t as u64))
+                .collect())
+            .unwrap_or_default();
+        for target in targets {
+            self.remove_anchor_dependent(target, frame_id);
+        }
+    }
+
+    /// Get frame IDs anchored to `target_id`.
+    pub fn get_anchor_dependents(&self, target_id: u64) -> Option<&HashSet<u64>> {
+        self.anchor_dependents.get(&target_id)
+    }
+
+    /// Rebuild the reverse anchor index from all existing anchors.
+    /// Call once after initial load to capture anchors set during XML parsing
+    /// and frame creation.
+    pub fn rebuild_anchor_index(&mut self) {
+        self.anchor_dependents.clear();
+        let entries: Vec<(u64, u64)> = self.widgets.values()
+            .flat_map(|f| {
+                f.anchors.iter().filter_map(move |a| {
+                    a.relative_to_id.map(|target| (target as u64, f.id))
+                })
+            })
+            .collect();
+        for (target, frame_id) in entries {
+            self.anchor_dependents.entry(target).or_default().insert(frame_id);
+        }
     }
 }

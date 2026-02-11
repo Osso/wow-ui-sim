@@ -329,6 +329,7 @@ impl App {
         let env_ref = env_rc.borrow();
         env_ref.apply_post_event_workarounds();
         let _ = crate::lua_api::hide_runtime_hidden_frames(env_ref.lua());
+        env_ref.state().borrow_mut().widgets.rebuild_anchor_index();
     }
 
     fn take_init_params() -> (

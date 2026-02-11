@@ -315,10 +315,9 @@ impl SimState {
         }
     }
 
-    /// Recompute sibling frames anchored to `target_id`.
+    /// Recompute frames anchored to `target_id` using the reverse index.
     ///
-    /// Only checks children of the same parent (O(siblings) not O(all_frames)).
-    /// Handles the common case: cast bar Spark moves → StandardGlow follows.
+    /// O(k) where k = number of frames anchored to target_id.
     fn recompute_anchor_dependents(
         widgets: &mut crate::widget::WidgetRegistry,
         target_id: u64,
@@ -326,21 +325,11 @@ impl SimState {
         cache: &mut crate::iced_app::layout::LayoutCache,
         _depth: u32,
     ) {
-        let siblings = widgets.get(target_id)
-            .and_then(|f| f.parent_id)
-            .and_then(|pid| widgets.get(pid))
-            .map(|p| p.children.clone())
+        let deps: Vec<u64> = widgets.get_anchor_dependents(target_id)
+            .map(|s| s.iter().copied().collect())
             .unwrap_or_default();
-
-        let target_usize = target_id as usize;
-        for sib_id in siblings {
-            if sib_id == target_id { continue; }
-            let is_anchored = widgets.get(sib_id).is_some_and(|f| {
-                f.anchors.iter().any(|a| a.relative_to_id == Some(target_usize))
-            });
-            if is_anchored {
-                Self::recompute_layout_subtree(widgets, sib_id, sw, sh, cache);
-            }
+        for dep_id in deps {
+            Self::recompute_layout_subtree(widgets, dep_id, sw, sh, cache);
         }
     }
 
