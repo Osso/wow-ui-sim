@@ -83,6 +83,69 @@ pub struct SpellCooldownState {
     pub duration: f64,
 }
 
+/// Spell target type: determines which units a spell can be cast on.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SpellTargetType {
+    /// Damage/CC spells — require a hostile target.
+    Harmful,
+    /// Healing/buff spells — require a friendly target (auto-target self if none).
+    Helpful,
+    /// Self-only spells (defensives, auras) — always cast regardless of target.
+    SelfOnly,
+}
+
+/// Classify a spell by its target type using the `implicit_target` field
+/// from SpellEffect.db2 (auto-generated into `data/spells.rs`).
+///
+/// ImplicitTarget_0 values (from first effect, DifficultyID=0):
+///   1=CASTER, 6=TARGET_ENEMY, 18=DEST_CASTER, 21=TARGET_ALLY,
+///   22=SRC_CASTER, 24=CONE_ENEMY, 25=TARGET_ANY, 53=TARGET_ENEMY_OR_ALLY,
+///   57=TARGET_ALLY_OR_RAID, 59=DEST_AREA_ALLY, 87=DEST_CASTER_GROUND,
+///   104=CONE_TO_DEST_ENEMY
+pub fn spell_target_type(spell_id: u32) -> SpellTargetType {
+    let target = crate::spells::get_spell(spell_id)
+        .map(|s| s.implicit_target)
+        .unwrap_or(0);
+    implicit_target_to_type(target)
+}
+
+/// Map an ImplicitTarget_0 value to a SpellTargetType.
+fn implicit_target_to_type(target: u8) -> SpellTargetType {
+    match target {
+        // Hostile: TARGET_ENEMY, CONE_ENEMY variants
+        6 | 24 | 104 => SpellTargetType::Harmful,
+        // Friendly: TARGET_ALLY, ALLY_OR_RAID, DEST_AREA_ALLY
+        21 | 57 | 59 => SpellTargetType::Helpful,
+        // Self/ground/any/unknown: CASTER, DEST_CASTER, SRC_CASTER,
+        // DEST_CASTER_GROUND, TARGET_ANY, and everything else
+        _ => SpellTargetType::SelfOnly,
+    }
+}
+
+/// Check whether a spell can be cast given the current target.
+/// Returns Ok(()) if the cast should proceed, Err(message) with a WoW-style
+/// error string if it should be blocked.
+///
+/// WoW behavior:
+/// - Helpful spells with no target or hostile target → auto-target self (Ok)
+/// - Harmful spells with no target → "You have no target"
+/// - Harmful spells with friendly target → "Target is friendly"
+/// - Self-only spells → always Ok
+pub fn validate_spell_target(
+    spell_id: u32,
+    target: Option<&TargetInfo>,
+) -> std::result::Result<(), &'static str> {
+    match spell_target_type(spell_id) {
+        SpellTargetType::SelfOnly => Ok(()),
+        SpellTargetType::Helpful => Ok(()), // auto-target self handled by caller
+        SpellTargetType::Harmful => match target {
+            None => Err("You have no target."),
+            Some(t) if !t.is_enemy => Err("Target is friendly."),
+            Some(_) => Ok(()),
+        },
+    }
+}
+
 /// Standard GCD duration in seconds (1.5s for most spells).
 pub const GCD_DURATION: f64 = 1.5;
 

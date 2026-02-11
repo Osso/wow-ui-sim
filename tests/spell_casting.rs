@@ -114,7 +114,9 @@ fn cast_completes_and_heals_target() {
 
 #[test]
 fn instant_spell_does_not_show_cast_bar() {
-    let env = env_with_friendly_target();
+    let env = WowLuaEnv::new().expect("create env");
+    // Avenger's Shield is harmful — needs hostile target
+    env.exec("TargetUnit('enemy1')").expect("target enemy1");
 
     // Slot 2 = Avenger's Shield (instant cast)
     env.exec("UseAction(2)").expect("UseAction(2)");
@@ -353,4 +355,63 @@ fn cast_bar_visible_during_cast() {
 
     env.exec("UseAction(1)").expect("UseAction(1)");
     assert_cast_bar_shows(&env);
+}
+
+#[test]
+fn harmful_spell_blocked_with_no_target() {
+    let env = WowLuaEnv::new().expect("create env");
+    // No target set — harmful spell should not cast
+    env.exec("CastSpellByID(275779)").expect("CastSpellByID");
+    let casting: bool = env
+        .eval("return UnitCastingInfo('player') ~= nil")
+        .unwrap();
+    assert!(!casting, "harmful spell with no target should not cast");
+}
+
+#[test]
+fn harmful_spell_blocked_on_friendly_target() {
+    let env = env_with_friendly_target();
+    // Judgment (harmful) on a friendly target should be blocked
+    env.exec("CastSpellByID(275779)").expect("CastSpellByID");
+    let casting: bool = env
+        .eval("return UnitCastingInfo('player') ~= nil")
+        .unwrap();
+    assert!(!casting, "harmful spell on friendly target should not cast");
+}
+
+#[test]
+fn harmful_spell_succeeds_on_hostile_target() {
+    let env = WowLuaEnv::new().expect("create env");
+    env.exec("TargetUnit('enemy1')").expect("target enemy1");
+    // Judgment (harmful, instant) on a hostile target should succeed
+    env.exec("CastSpellByID(275779)").expect("CastSpellByID");
+    // Instant spell — no cast bar, but cooldown should start
+    let on_cd: bool = env
+        .eval("local info = C_Spell.GetSpellCooldown(275779); return info.duration > 0")
+        .unwrap();
+    assert!(on_cd, "harmful spell on hostile target should cast and trigger GCD");
+}
+
+#[test]
+fn helpful_spell_succeeds_on_hostile_target() {
+    let env = WowLuaEnv::new().expect("create env");
+    env.exec("TargetUnit('enemy1')").expect("target enemy1");
+    // Flash of Light (helpful) on hostile target — should still cast (auto-target self)
+    env.exec("UseAction(1)").expect("UseAction(1)");
+    let casting: bool = env
+        .eval("return UnitCastingInfo('player') ~= nil")
+        .unwrap();
+    assert!(casting, "helpful spell should cast even with hostile target (auto-self)");
+}
+
+#[test]
+fn self_only_spell_succeeds_with_no_target() {
+    let env = WowLuaEnv::new().expect("create env");
+    // Divine Shield (self-only) should cast regardless of target
+    env.exec("CastSpellByID(642)").expect("CastSpellByID");
+    // Divine Shield is instant and off-GCD, verify it succeeded via cooldown
+    let on_cd: bool = env
+        .eval("local info = C_Spell.GetSpellCooldown(642); return info.duration > 0")
+        .unwrap();
+    assert!(on_cd, "self-only spell should cast with no target");
 }

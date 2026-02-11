@@ -7,6 +7,8 @@
 //!     SpellIconFileDataID[27], SpellID[33])
 //!   - SpellPower.csv (ID, OrderIndex, ManaCost, PowerCostPct, PowerType,
 //!     RequiredAuraSpellID, OptionalCost, SpellID, ...)
+//!   - SpellEffect.csv (ID, ..., DifficultyID[2], EffectIndex[3],
+//!     ImplicitTarget_0[34], SpellID[36])
 //!
 //! Generates: data/spells.rs, data/spell_power.rs
 
@@ -31,13 +33,18 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let spell_power = load_spell_power(&wow_data.join("SpellPower.csv"))?;
     println!("SpellPower: {} spells with costs", spell_power.len());
 
+    let spell_targets = load_spell_effect_targets(&wow_data.join("SpellEffect.csv"))?;
+    println!("SpellEffect (targets): {} spells", spell_targets.len());
+
     std::fs::create_dir_all("data")?;
 
     // Generate data/spells.rs
     let output_path = Path::new("data/spells.rs");
     let mut out = File::create(output_path)?;
     write_header(&mut out)?;
-    let count = build_spell_map(&mut out, &spell_names, &spell_subtexts, &spell_misc)?;
+    let count = build_spell_map(
+        &mut out, &spell_names, &spell_subtexts, &spell_misc, &spell_targets,
+    )?;
     write_lookup_fn(&mut out)?;
     write_tests(&mut out)?;
     println!("Generated {} spell entries", count);
@@ -58,6 +65,7 @@ fn build_spell_map(
     spell_names: &HashMap<u32, String>,
     spell_subtexts: &HashMap<u32, String>,
     spell_misc: &HashMap<u32, (u32, u32)>,
+    spell_targets: &HashMap<u32, u8>,
 ) -> Result<u32, Box<dyn std::error::Error>> {
     let mut builder = phf_codegen::Map::new();
     let mut count = 0u32;
@@ -72,10 +80,15 @@ fn build_spell_map(
             .get(&spell_id)
             .copied()
             .unwrap_or((136243, 0));
+        let implicit_target = spell_targets
+            .get(&spell_id)
+            .copied()
+            .unwrap_or(0);
 
         let value = format!(
-            "SpellInfo {{ name: \"{}\", subtext: \"{}\", icon_file_data_id: {}, school_mask: {} }}",
-            escaped_name, subtext, icon, school
+            "SpellInfo {{ name: \"{}\", subtext: \"{}\", icon_file_data_id: {}, \
+             school_mask: {}, implicit_target: {} }}",
+            escaped_name, subtext, icon, school, implicit_target
         );
         builder.entry(spell_id, &value);
         count += 1;
@@ -103,6 +116,9 @@ fn write_header(out: &mut File) -> std::io::Result<()> {
     writeln!(out, "    pub subtext: &'static str,")?;
     writeln!(out, "    pub icon_file_data_id: u32,")?;
     writeln!(out, "    pub school_mask: u32,")?;
+    writeln!(out, "    /// ImplicitTarget_0 from first SpellEffect (EffectIndex=0, DifficultyID=0).")?;
+    writeln!(out, "    /// Determines valid target type: 1=Self, 6=Enemy, 21=Ally, 25=Any, etc.")?;
+    writeln!(out, "    pub implicit_target: u8,")?;
     writeln!(out, "}}")?;
     writeln!(out)?;
     Ok(())
@@ -357,6 +373,43 @@ fn write_spell_power_tests(out: &mut File) -> std::io::Result<()> {
     writeln!(out, "        assert!(get_spell_power(999_999_999).is_none());")?;
     writeln!(out, "    }}")?;
     writeln!(out, "}}")
+}
+
+/// Load ImplicitTarget_0 for each spell's first effect (EffectIndex=0, DifficultyID=0).
+///
+/// Columns: DifficultyID[2], EffectIndex[3], ImplicitTarget_0[34], SpellID[36]
+fn load_spell_effect_targets(
+    path: &Path,
+) -> Result<HashMap<u32, u8>, Box<dyn std::error::Error>> {
+    let file = File::open(path)?;
+    let reader = BufReader::new(file);
+    let mut map = HashMap::new();
+
+    for (i, line) in reader.lines().enumerate() {
+        let line = line?;
+        if i == 0 {
+            continue;
+        }
+        let f = parse_csv_line(&line);
+        if f.len() < 37 {
+            continue;
+        }
+        let difficulty_id: u32 = f[2].parse().unwrap_or(1);
+        if difficulty_id != 0 {
+            continue;
+        }
+        let effect_index: u32 = f[3].parse().unwrap_or(999);
+        if effect_index != 0 {
+            continue;
+        }
+        let spell_id: u32 = match f[36].parse() {
+            Ok(id) => id,
+            Err(_) => continue,
+        };
+        let target: u8 = f[34].parse().unwrap_or(0);
+        map.entry(spell_id).or_insert(target);
+    }
+    Ok(map)
 }
 
 fn load_spell_misc(

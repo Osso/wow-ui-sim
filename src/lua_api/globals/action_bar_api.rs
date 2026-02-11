@@ -165,6 +165,17 @@ fn register_use_action(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
             if st.borrow().casting.is_some() {
                 return Ok(());
             }
+            // Validate target compatibility
+            {
+                let s = st.borrow();
+                if let Err(msg) = crate::lua_api::game_data::validate_spell_target(
+                    spell_id, s.current_target.as_ref(),
+                ) {
+                    eprintln!("[action] Blocked: {} (spell {})", msg, spell_id);
+                    super::spell_api::fire_ui_error(lua, msg)?;
+                    return Ok(());
+                }
+            }
             let cast_time_ms = super::spell_api::spell_cast_time(spell_id as i32);
             if cast_time_ms > 0 {
                 start_cast(&st, lua, spell_id, cast_time_ms)?;
