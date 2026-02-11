@@ -79,7 +79,7 @@ pub fn fire_startup_events(env: &WowLuaEnv) {
     call_unit_frame_set_unit(env);
 
     fire_unit_aura(env);
-    diagnose_buff_pipeline(env);
+    seed_buff_durations(env);
 
     fire("BAG_UPDATE_DELAYED");
     fire("GROUP_ROSTER_UPDATE");
@@ -198,41 +198,15 @@ fn force_show_party_member_frames(env: &WowLuaEnv) {
     }
 }
 
-/// Trace the buff pipeline state after UNIT_AURA fires (temporary diagnostic).
-pub fn diagnose_buff_pipeline(env: &WowLuaEnv) {
-    if let Err(e) = env.exec(r#"
-        print("[DIAG] PlayerFrame.unit =", tostring(PlayerFrame and PlayerFrame.unit))
-        print("[DIAG] AuraUtil.ForEachAura type =", type(AuraUtil and AuraUtil.ForEachAura))
-        if AuraUtil and AuraUtil.ForEachAura and PlayerFrame and PlayerFrame.unit then
-            local count = 0
-            AuraUtil.ForEachAura(PlayerFrame.unit, "HELPFUL", 32, function(auraData)
-                count = count + 1
-                local n = type(auraData) == "table" and auraData.name or tostring(auraData)
-                print("[DIAG] ForEachAura cb #" .. count .. ": " .. tostring(n))
-            end, true)
-            print("[DIAG] ForEachAura returned " .. count .. " buffs")
-        else
-            print("[DIAG] ForEachAura or PlayerFrame.unit missing")
-        end
-        if BuffFrame then
-            print("[DIAG] BuffFrame vis=" .. tostring(BuffFrame:IsVisible()))
-            local ai = BuffFrame.auraInfo
-            if ai then
-                local n = 0; for _ in pairs(ai) do n = n + 1 end
-                print("[DIAG] BuffFrame.auraInfo has " .. n .. " entries")
-            else
-                print("[DIAG] BuffFrame.auraInfo is nil")
+/// Seed buff duration text so it's visible immediately without waiting
+/// for the first OnUpdate tick. OnUpdate handlers maintain it afterwards.
+pub fn seed_buff_durations(env: &WowLuaEnv) {
+    let _ = env.exec(r#"
+        if not BuffFrame or not BuffFrame.auraFrames then return end
+        for _, b in ipairs(BuffFrame.auraFrames) do
+            if b:IsVisible() and b.timeLeft and b.UpdateDuration then
+                pcall(b.UpdateDuration, b, b.timeLeft)
             end
-            local af = BuffFrame.auraFrames
-            if af and af[1] then
-                print("[DIAG] auraFrames[1] vis=" .. tostring(af[1]:IsVisible()))
-            else
-                print("[DIAG] auraFrames missing or empty")
-            end
-        else
-            print("[DIAG] BuffFrame missing")
         end
-    "#) {
-        eprintln!("[DIAG] error: {e}");
-    }
+    "#);
 }

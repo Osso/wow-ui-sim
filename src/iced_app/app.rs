@@ -94,7 +94,9 @@ fn fire_login_events(env: &WowLuaEnv) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
     }
 
+    crate::startup::call_unit_frame_set_unit(env);
     fire_unit_aura_event(env);
+    crate::startup::seed_buff_durations(env);
 }
 
 /// Fire UNIT_AURA("player", {isFullUpdate=true}) to trigger buff frame population.
@@ -416,9 +418,8 @@ impl App {
     /// casting, pending C_Timers, rot damage), or `None` when fully idle
     /// (only user input triggers redraws).
     ///
-    /// OnUpdate handlers do NOT force ticks — they fire as a side effect of
-    /// ticks caused by other activity. In the simulator there's no server
-    /// pushing real changes, so OnUpdate handlers are effectively no-ops.
+    /// OnUpdate handlers cause a 1-second tick when any frames have them
+    /// registered (e.g., buff duration countdown text).
     pub(crate) fn compute_tick_interval(&self) -> Option<std::time::Duration> {
         let env = self.env.borrow();
         let state = env.state().borrow();
@@ -450,8 +451,9 @@ impl App {
             return Some(std::time::Duration::from_secs(2));
         }
 
-        // Idle: no tick needed, pure event-driven
-        None
+        // Idle heartbeat: fire OnUpdate handlers at 1s intervals even when
+        // nothing else is active (e.g., buff duration countdown text).
+        Some(std::time::Duration::from_secs(1))
     }
 }
 

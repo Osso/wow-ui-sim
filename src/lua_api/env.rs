@@ -570,6 +570,7 @@ impl WowLuaEnv {
         }
     }
 
+
     /// Fire `EDIT_MODE_LAYOUTS_UPDATED` with layout info from `C_EditMode.GetLayouts()`.
     ///
     /// Triggers `EditModeManagerFrame:UpdateLayoutInfo()` to initialize `layoutInfo`

@@ -14,8 +14,9 @@ pub fn register_aura_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> 
     register_unit_buff(lua, state.clone())?;
     register_unit_debuff(lua)?;
     register_unit_aura(lua, state.clone())?;
-    register_get_player_aura_by_spell_id(lua, state)?;
-    lua.globals().set("AuraUtil", register_aura_util(lua)?)?;
+    register_get_player_aura_by_spell_id(lua, state.clone())?;
+    lua.globals()
+        .set("AuraUtil", register_aura_util(lua, state)?)?;
     Ok(())
 }
 
@@ -152,22 +153,66 @@ fn register_get_player_aura_by_spell_id(
     )
 }
 
-/// AuraUtil namespace stubs (overridden by Blizzard AuraUtil.lua in full sim).
-fn register_aura_util(lua: &Lua) -> Result<mlua::Table> {
-    let aura_util = lua.create_table()?;
-    aura_util.set(
+/// ForEachAura: iterate player buffs/debuffs and call the callback for each.
+///
+/// Signature: ForEachAura(unit, filter, maxCount, callback, usePackedAura)
+/// If usePackedAura is true, passes the AuraData table directly.
+/// Otherwise passes it through AuraUtil.UnpackAuraData (multi-return).
+/// If the callback returns true, iteration stops early.
+fn register_for_each_aura(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    t.set(
         "ForEachAura",
         lua.create_function(
-            |_,
-             (_unit, _filter, _max, _cb, _packed): (
+            move |lua,
+                  (unit, filter, max, cb, use_packed): (
                 String,
                 String,
                 Option<i32>,
                 mlua::Function,
                 Option<bool>,
-            )| { Ok(()) },
+            )| {
+                if unit != "player" {
+                    return Ok(());
+                }
+                let is_harmful = filter.contains("HARMFUL");
+                let is_helpful = filter.contains("HELPFUL");
+                if !is_harmful && !is_helpful {
+                    return Ok(());
+                }
+                // We only have player buffs; debuffs return nothing.
+                if is_harmful {
+                    return Ok(());
+                }
+                let limit = max.unwrap_or(i32::MAX) as usize;
+                let s = state.borrow();
+                for (i, aura) in s.player_buffs.iter().enumerate() {
+                    if i >= limit {
+                        break;
+                    }
+                    let tbl = build_aura_data_table(lua, aura)?;
+                    let done: Option<bool> = if use_packed.unwrap_or(false) {
+                        cb.call(Value::Table(tbl))?
+                    } else {
+                        cb.call(build_aura_multi_value(lua, aura)?)?
+                    };
+                    if done == Some(true) {
+                        break;
+                    }
+                }
+                Ok(())
+            },
         )?,
-    )?;
+    )
+}
+
+/// AuraUtil namespace (may be overridden by Blizzard AuraUtil.lua in full sim).
+fn register_aura_util(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Table> {
+    let aura_util = lua.create_table()?;
+    register_for_each_aura(lua, &aura_util, state)?;
     aura_util.set(
         "FindAura",
         lua.create_function(

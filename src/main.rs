@@ -277,13 +277,16 @@ fn load_blizzard_addons(env: &WowLuaEnv) {
     }
 
     let addons = discover_blizzard_addons(&blizzard_ui_path);
+    let verbose = std::env::var("WOW_SIM_VERBOSE").is_ok();
     println!("\nLoading {} Blizzard addons...", addons.len());
     let blizzard_start = std::time::Instant::now();
     let mut total_timing = LoadTiming::default();
     for (name, toc_path) in &addons {
         match load_addon(&env.loader_env(), toc_path) {
             Ok(r) => {
-                println!("{} loaded: {} Lua, {} XML, {} warnings", name, r.lua_files, r.xml_files, r.warnings.len());
+                if verbose {
+                    println!("{} loaded: {} Lua, {} XML, {} warnings", name, r.lua_files, r.xml_files, r.warnings.len());
+                }
                 for w in &r.warnings {
                     println!("  [!] {}", w);
                 }
@@ -409,12 +412,14 @@ fn load_single_addon(
 
 /// Record a successful addon load: print status and accumulate stats.
 fn record_addon_success(name: &str, r: &LoadResult, stats: &mut LoadStats) {
-    let status = if r.warnings.is_empty() { "✓" } else { "⚠" };
-    let t = &r.timing;
-    println!("{} {} loaded: {} Lua, {} XML, {} warnings ({:.1?} total: io={:.1?} xml={:.1?} lua={:.1?} sv={:.1?})",
-        status, name, r.lua_files, r.xml_files, r.warnings.len(),
-        t.total(), t.io_time, t.xml_parse_time, t.lua_exec_time, t.saved_vars_time);
-    stats.addon_times.push((name.to_string(), t.total()));
+    if std::env::var("WOW_SIM_VERBOSE").is_ok() {
+        let status = if r.warnings.is_empty() { "✓" } else { "⚠" };
+        let t = &r.timing;
+        println!("{} {} loaded: {} Lua, {} XML, {} warnings ({:.1?} total: io={:.1?} xml={:.1?} lua={:.1?} sv={:.1?})",
+            status, name, r.lua_files, r.xml_files, r.warnings.len(),
+            t.total(), t.io_time, t.xml_parse_time, t.lua_exec_time, t.saved_vars_time);
+    }
+    stats.addon_times.push((name.to_string(), r.timing.total()));
     print_addon_warnings(name, &r.warnings);
     stats.total_lua += r.lua_files;
     stats.total_xml += r.xml_files;

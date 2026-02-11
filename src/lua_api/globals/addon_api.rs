@@ -505,13 +505,15 @@ fn load_addon_runtime(
     match crate::loader::load_addon(&loader_env, &toc_path) {
         Ok(result) => {
             let load_time_secs = result.timing.total().as_secs_f64();
-            eprintln!(
-                "[LoadAddOn] {} loaded: {} Lua, {} XML ({:.1?})",
-                addon_name,
-                result.lua_files,
-                result.xml_files,
-                result.timing.total()
-            );
+            if std::env::var("WOW_SIM_VERBOSE").is_ok() {
+                eprintln!(
+                    "[LoadAddOn] {} loaded: {} Lua, {} XML ({:.1?})",
+                    addon_name,
+                    result.lua_files,
+                    result.xml_files,
+                    result.timing.total()
+                );
+            }
             register_loaded_addon(state, addon_name, load_time_secs);
             fire_addon_loaded(&loader_env, addon_name);
             Ok((true, Value::Nil))

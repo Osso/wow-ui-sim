@@ -34,10 +34,6 @@ pub fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             if already {
                 return Ok(());
             }
-            let frame_name = state.widgets.get(this.id)
-                .and_then(|f| f.name.clone())
-                .unwrap_or_else(|| format!("(id={})", this.id));
-            eprintln!("[SetChecked] {} checked={} frame_id={}", frame_name, checked, this.id);
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame
                     .attributes

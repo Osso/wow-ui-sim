@@ -407,7 +407,7 @@ impl App {
         self.last_on_update_time = now;
         let env = self.env.borrow();
         if let Err(e) = env.fire_on_update(elapsed.as_secs_f64()) {
-            eprintln!("OnUpdate error: {}", e);
+            eprintln!("[OnUpdate] error: {}", e);
         }
     }
 

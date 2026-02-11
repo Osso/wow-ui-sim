@@ -337,14 +337,6 @@ pub fn emit_frame_quads(
             }
         }
         WidgetType::FontString => {
-            {
-                use std::sync::atomic::{AtomicU64, Ordering};
-                static COUNT: AtomicU64 = AtomicU64::new(0);
-                let c = COUNT.fetch_add(1, Ordering::Relaxed);
-                if c < 5 || (c % 500 == 0) {
-                    eprintln!("[diag-fs] #{} id={} name={:?} text={:?} vis={} bounds=({:.0},{:.0} {:.0}x{:.0})", c, id, f.name, f.text.as_deref().map(|t| &t[..t.len().min(20)]), f.visible, bounds.x, bounds.y, bounds.width, bounds.height);
-                }
-            }
             if let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
                     emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, f.word_wrap, f.max_lines);
