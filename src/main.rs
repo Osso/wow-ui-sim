@@ -36,7 +36,8 @@ struct Args {
     #[arg(long, value_name = "MS")]
     delay: Option<u64>,
 
-    /// Execute Lua code after startup (runs after first frame in GUI, after events in screenshot/dump-tree)
+    /// Execute Lua code after startup (runs after first frame in GUI, after events in screenshot/dump-tree).
+    /// Prefix with @ to load from file (e.g., --exec-lua @/tmp/debug.lua).
     #[arg(long, value_name = "CODE")]
     exec_lua: Option<String>,
 
@@ -78,6 +79,10 @@ enum Commands {
         /// Render only this frame subtree (name substring match)
         #[arg(short, long)]
         filter: Option<String>,
+
+        /// Crop the output image to WxH+X+Y (e.g., 700x150+400+650)
+        #[arg(long, value_name = "WxH+X+Y")]
+        crop: Option<String>,
     },
 }
 
@@ -187,6 +192,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     load_third_party_addons(&args, &env, &mut saved_vars);
     run_post_load_scripts(&env)?;
 
+    let exec_lua = resolve_exec_lua(&args.exec_lua);
+
     match args.command {
         Some(Commands::DumpTree { filter, filter_key, visible_only }) => {
             fire_startup_events(&env);
@@ -194,7 +201,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             process_pending_timers(&env);
             fire_one_on_update_tick(&env);
             let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
-            if let Some(code) = &args.exec_lua
+            if let Some(code) = &exec_lua
                 && let Err(e) = env.exec(code) {
                     eprintln!("[exec-lua] error: {e}");
                 }
@@ -202,19 +209,33 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let state = env.state().borrow();
             wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only);
         }
-        Some(Commands::Screenshot { output, width, height, filter }) => {
-            run_screenshot(&env, &font_system, output, width, height, filter, args.delay, args.exec_lua.as_deref());
+        Some(Commands::Screenshot { output, width, height, filter, crop }) => {
+            run_screenshot(&env, &font_system, output, width, height, filter, crop, args.delay, exec_lua.as_deref());
         }
         None => {
             let debug = wow_ui_sim::DebugOptions {
                 borders: args.debug_borders || args.debug_elements,
                 anchors: args.debug_anchors || args.debug_elements,
             };
-            wow_ui_sim::run_iced_ui(env, debug, saved_vars, args.exec_lua)?;
+            wow_ui_sim::run_iced_ui(env, debug, saved_vars, exec_lua)?;
         }
     }
 
     Ok(())
+}
+
+/// Resolve exec-lua argument: if prefixed with `@`, read the file contents.
+fn resolve_exec_lua(arg: &Option<String>) -> Option<String> {
+    arg.as_ref().map(|s| {
+        if let Some(path) = s.strip_prefix('@') {
+            std::fs::read_to_string(path).unwrap_or_else(|e| {
+                eprintln!("[exec-lua] Failed to read {path}: {e}");
+                String::new()
+            })
+        } else {
+            s.clone()
+        }
+    })
 }
 
 /// Configure SavedVariables from WTF directory based on args/env.
@@ -582,6 +603,69 @@ fn dump_game_menu_buttons(env: &WowLuaEnv) {
     }
 }
 
+/// Parse a crop string in WxH+X+Y format (e.g., "700x150+400+650").
+/// Returns (width, height, x, y) or None if the format is invalid.
+fn parse_crop(s: &str) -> Option<(u32, u32, u32, u32)> {
+    let (dims, rest) = s.split_once('+')?;
+    let (x_str, y_str) = rest.split_once('+')?;
+    let (w_str, h_str) = dims.split_once('x')?;
+    let w = w_str.parse().ok()?;
+    let h = h_str.parse().ok()?;
+    let x = x_str.parse().ok()?;
+    let y = y_str.parse().ok()?;
+    Some((w, h, x, y))
+}
+
+/// Apply crop to an image, exiting on invalid input.
+fn apply_crop(img: image::RgbaImage, crop_str: &str) -> image::RgbaImage {
+    use image::GenericImageView;
+    let (cw, ch, cx, cy) = parse_crop(crop_str).unwrap_or_else(|| {
+        eprintln!("Invalid crop format '{}', expected WxH+X+Y (e.g., 700x150+400+650)", crop_str);
+        std::process::exit(1);
+    });
+    if cx + cw > img.width() || cy + ch > img.height() {
+        eprintln!(
+            "Crop region {}x{}+{}+{} exceeds image bounds {}x{}",
+            cw, ch, cx, cy, img.width(), img.height()
+        );
+        std::process::exit(1);
+    }
+    img.view(cx, cy, cw, ch).to_image()
+}
+
+/// Build the quad batch and glyph atlas for headless rendering.
+fn build_screenshot_batch(
+    env: &WowLuaEnv,
+    font_system: &Rc<RefCell<WowFontSystem>>,
+    width: u32,
+    height: u32,
+    filter: Option<&str>,
+) -> (wow_ui_sim::render::QuadBatch, wow_ui_sim::render::GlyphAtlas) {
+    use wow_ui_sim::iced_app::build_quad_batch_for_registry;
+    use wow_ui_sim::render::GlyphAtlas;
+
+    let mut glyph_atlas = GlyphAtlas::new();
+    let batch = {
+        let mut fs = font_system.borrow_mut();
+        {
+            let mut state = env.state().borrow_mut();
+            state.ensure_layout_rects();
+            wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut fs);
+        }
+        let state = env.state().borrow();
+        let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
+        build_quad_batch_for_registry(
+            &state.widgets,
+            (width as f32, height as f32),
+            filter, None, None,
+            Some((&mut fs, &mut glyph_atlas)),
+            Some(&state.message_frames),
+            Some(&tooltip_data),
+        )
+    };
+    (batch, glyph_atlas)
+}
+
 /// Render a headless screenshot.
 #[allow(clippy::too_many_arguments)]
 fn run_screenshot(
@@ -591,12 +675,11 @@ fn run_screenshot(
     width: u32,
     height: u32,
     filter: Option<String>,
+    crop: Option<String>,
     delay: Option<u64>,
     exec_lua: Option<&str>,
 ) {
-    use wow_ui_sim::iced_app::build_quad_batch_for_registry;
     use wow_ui_sim::render::headless::render_to_image;
-    use wow_ui_sim::render::GlyphAtlas;
 
     env.set_screen_size(width as f32, height as f32);
     fire_startup_events(env);
@@ -611,33 +694,10 @@ fn run_screenshot(
         }
     apply_delay(delay);
 
-    let mut glyph_atlas = GlyphAtlas::new();
-    let batch = {
-        let mut fs = font_system.borrow_mut();
-        // Update tooltip sizes before rendering
-        {
-            let mut state = env.state().borrow_mut();
-            wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut fs);
-        }
-        let state = env.state().borrow();
-        let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
-        build_quad_batch_for_registry(
-            &state.widgets,
-            (width as f32, height as f32),
-            filter.as_deref(), None, None,
-            Some((&mut fs, &mut glyph_atlas)),
-            Some(&state.message_frames),
-            Some(&tooltip_data),
-        )
-    };
-
-    eprintln!(
-        "QuadBatch: {} quads, {} texture requests",
-        batch.quad_count(), batch.texture_requests.len()
-    );
+    let (batch, glyph_atlas) = build_screenshot_batch(env, font_system, width, height, filter.as_deref());
+    eprintln!("QuadBatch: {} quads, {} texture requests", batch.quad_count(), batch.texture_requests.len());
 
     let mut tex_mgr = create_texture_manager();
-
     let glyph_data = if glyph_atlas.is_dirty() {
         let (data, size, _) = glyph_atlas.texture_data();
         Some((data, size))
@@ -646,9 +706,19 @@ fn run_screenshot(
     };
 
     let img = render_to_image(&batch, &mut tex_mgr, width, height, glyph_data);
+    let img = match crop.as_deref() {
+        Some(crop_str) => apply_crop(img, crop_str),
+        None => img,
+    };
+
     let output = output.with_extension("webp");
     save_screenshot(&img, &output);
-    eprintln!("Saved {}x{} screenshot to {}", width, height, output.display());
+    let size_label = if crop.is_some() {
+        format!("{}x{} (cropped from {}x{})", img.width(), img.height(), width, height)
+    } else {
+        format!("{}x{}", width, height)
+    };
+    eprintln!("Saved {} screenshot to {}", size_label, output.display());
 }
 
 /// Save screenshot image as lossy WebP (quality 15). Extension is forced to .webp.
