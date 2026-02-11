@@ -491,6 +491,20 @@ fn register_screen_size_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> R
         let s = st.borrow();
         Ok((s.screen_width as i32, s.screen_height as i32))
     })?)?;
+    let st = Rc::clone(state);
+    globals.set("SetScreenSize", lua.create_function(move |_, (w, h): (f32, f32)| {
+        let mut s = st.borrow_mut();
+        s.screen_width = w;
+        s.screen_height = h;
+        s.layout_rect_cache = None;
+        s.cached_render_list = None;
+        s.widgets.clear_all_layout_rects();
+        for name in ["UIParent", "WorldFrame"] {
+            if let Some(id) = s.widgets.get_id_by_name(name)
+                && let Some(f) = s.widgets.get_mut(id) { f.width = w; f.height = h; }
+        }
+        Ok(())
+    })?)?;
     Ok(())
 }
 

@@ -485,9 +485,17 @@ impl SimState {
         buckets: &mut Option<Vec<Vec<u64>>>,
     ) {
         let Some(f) = self.widgets.get(id) else { return };
-        let parent_alpha = f.parent_id
-            .and_then(|pid| cache.get(&pid).copied())
-            .unwrap_or(1.0);
+        // If this frame has a parent that is NOT in the ancestor-visible cache,
+        // the ancestor chain is broken (a hidden ancestor exists). Do not add
+        // this frame or its descendants — they should remain invisible.
+        let parent_alpha = if let Some(pid) = f.parent_id {
+            match cache.get(&pid) {
+                Some(&alpha) => alpha,
+                None => return, // parent not visible → skip entire subtree
+            }
+        } else {
+            1.0 // root frame, no parent
+        };
         if !f.visible {
             if is_button_state_texture(f, id, &self.widgets) {
                 cache.insert(id, parent_alpha * f.alpha);
