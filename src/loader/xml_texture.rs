@@ -139,7 +139,6 @@ pub fn create_texture_from_xml(
 
     let tex_name = resolve_child_name(texture.name.as_deref(), parent_name, "__tex_");
     let lua_code = build_texture_lua(&tex_name, texture, parent_name, draw_layer, is_mask, sub_level);
-
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!(
             "Failed to create texture {} on {}: {}",

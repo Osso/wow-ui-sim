@@ -64,14 +64,6 @@ pub(super) fn create_texture_from_template(
         code.push_str("            tex:Hide()\n");
     }
 
-    if let Some(a) = texture.alpha {
-        code.push_str(&format!("            tex:SetAlpha({})\n", a));
-    }
-
-    if let Some(ref mode) = texture.alpha_mode {
-        code.push_str(&format!("            tex:SetBlendMode(\"{}\")\n", mode));
-    }
-
     append_mask_wiring(&mut code, is_mask, texture);
 
     code.push_str("        end\n");
@@ -184,6 +176,18 @@ fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml
             "            {}:SetColorTexture({}, {}, {}, {})\n",
             var, r, g, b, a
         ));
+    }
+    if texture.horiz_tile == Some(true) {
+        code.push_str(&format!("            {}:SetHorizTile(true)\n", var));
+    }
+    if texture.vert_tile == Some(true) {
+        code.push_str(&format!("            {}:SetVertTile(true)\n", var));
+    }
+    if let Some(a) = texture.alpha {
+        code.push_str(&format!("            {}:SetAlpha({})\n", var, a));
+    }
+    if let Some(ref mode) = texture.alpha_mode {
+        code.push_str(&format!("            {}:SetBlendMode(\"{}\")\n", var, mode));
     }
 }
 
