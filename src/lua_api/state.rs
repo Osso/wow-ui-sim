@@ -427,7 +427,18 @@ impl SimState {
         };
         let mut buckets = self.strata_buckets.take();
         if visible {
-            self.add_visible_descendants(id, &mut cache, &mut buckets);
+            // Only add to cache if parent is ancestor-visible (or frame is a root).
+            // This prevents hidden-ancestor frames from leaking into the render cache
+            // (e.g. OverrideActionBar children becoming visible while the bar is hidden).
+            let parent_visible = self
+                .widgets
+                .get(id)
+                .and_then(|f| f.parent_id)
+                .map(|pid| cache.contains_key(&pid))
+                .unwrap_or(true); // root frames have no parent → always eligible
+            if parent_visible {
+                self.add_visible_descendants(id, &mut cache, &mut buckets);
+            }
         } else {
             self.remove_visible_descendants(id, &mut cache, &mut buckets);
         }
@@ -480,22 +491,20 @@ impl SimState {
     }
 
     /// Add `id` and visible descendants to the ancestor-visible cache with alpha.
+    ///
+    /// Caller (`update_ancestor_visible_cache`) must ensure the parent is already
+    /// in the cache before calling this. The `unwrap_or(1.0)` for parent alpha
+    /// handles root frames (no parent) — non-root frames with missing parents
+    /// should never reach here.
     fn add_visible_descendants(
         &self, id: u64, cache: &mut HashMap<u64, f32>,
         buckets: &mut Option<Vec<Vec<u64>>>,
     ) {
         let Some(f) = self.widgets.get(id) else { return };
-        // If this frame has a parent that is NOT in the ancestor-visible cache,
-        // the ancestor chain is broken (a hidden ancestor exists). Do not add
-        // this frame or its descendants — they should remain invisible.
-        let parent_alpha = if let Some(pid) = f.parent_id {
-            match cache.get(&pid) {
-                Some(&alpha) => alpha,
-                None => return, // parent not visible → skip entire subtree
-            }
-        } else {
-            1.0 // root frame, no parent
-        };
+        let parent_alpha = f
+            .parent_id
+            .and_then(|pid| cache.get(&pid).copied())
+            .unwrap_or(1.0);
         if !f.visible {
             if is_button_state_texture(f, id, &self.widgets) {
                 cache.insert(id, parent_alpha * f.alpha);
