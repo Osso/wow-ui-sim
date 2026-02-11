@@ -418,9 +418,13 @@ fn add_enable_disable_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         Ok(())
     });
 
-    methods.add_method("IsEnabled", |_, this, ()| {
+    methods.add_method("IsEnabled", |lua, this, ()| {
+        // Check for Lua mixin override first (e.g. ConsolidatedBuffsMixin:IsEnabled)
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "IsEnabled") {
+            return func.call::<Value>(ud);
+        }
         let state = this.state.borrow();
-        Ok(state
+        let enabled = state
             .widgets
             .get(this.id)
             .and_then(|f| f.attributes.get("__enabled"))
@@ -431,7 +435,8 @@ fn add_enable_disable_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
                     None
                 }
             })
-            .unwrap_or(true))
+            .unwrap_or(true);
+        Ok(Value::Boolean(enabled))
     });
 }
 
