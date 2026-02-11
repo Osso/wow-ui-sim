@@ -275,6 +275,24 @@ impl SimState {
         }
     }
 
+    /// Like `invalidate_layout` but also recomputes sibling frames anchored to
+    /// `id`. Use this at runtime when a frame moves (e.g. cast bar Spark) and
+    /// siblings anchored to it need updating. Avoid during bulk loading — it
+    /// scans all widgets to find dependents.
+    pub fn invalidate_layout_with_dependents(&mut self, id: u64) {
+        self.cached_render_list = None;
+        let sw = self.screen_width;
+        let sh = self.screen_height;
+        if let Some(cache) = self.layout_rect_cache.as_mut() {
+            Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, cache);
+            Self::recompute_anchor_dependents(&mut self.widgets, id, sw, sh, cache, 0);
+        } else {
+            let mut cache = crate::iced_app::layout::LayoutCache::default();
+            Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
+            Self::recompute_anchor_dependents(&mut self.widgets, id, sw, sh, &mut cache, 0);
+        }
+    }
+
     fn recompute_layout_subtree(
         widgets: &mut crate::widget::WidgetRegistry,
         id: u64,
@@ -294,6 +312,35 @@ impl SimState {
         }
         for child_id in children {
             Self::recompute_layout_subtree(widgets, child_id, screen_width, screen_height, cache);
+        }
+    }
+
+    /// Recompute sibling frames anchored to `target_id`.
+    ///
+    /// Only checks children of the same parent (O(siblings) not O(all_frames)).
+    /// Handles the common case: cast bar Spark moves → StandardGlow follows.
+    fn recompute_anchor_dependents(
+        widgets: &mut crate::widget::WidgetRegistry,
+        target_id: u64,
+        sw: f32, sh: f32,
+        cache: &mut crate::iced_app::layout::LayoutCache,
+        _depth: u32,
+    ) {
+        let siblings = widgets.get(target_id)
+            .and_then(|f| f.parent_id)
+            .and_then(|pid| widgets.get(pid))
+            .map(|p| p.children.clone())
+            .unwrap_or_default();
+
+        let target_usize = target_id as usize;
+        for sib_id in siblings {
+            if sib_id == target_id { continue; }
+            let is_anchored = widgets.get(sib_id).is_some_and(|f| {
+                f.anchors.iter().any(|a| a.relative_to_id == Some(target_usize))
+            });
+            if is_anchored {
+                Self::recompute_layout_subtree(widgets, sib_id, sw, sh, cache);
+            }
         }
     }
 
@@ -415,10 +462,14 @@ impl SimState {
     }
 
     /// Insert `id` into the correct sorted position in its strata bucket.
+    /// Skips insertion if the id is already present (avoids duplicate rendering).
     fn insert_into_strata_bucket(&self, f: &crate::widget::Frame, id: u64, buckets: &mut Option<Vec<Vec<u64>>>) {
         use crate::iced_app::frame_collect::intra_strata_sort_key;
         let Some(b) = buckets.as_mut() else { return };
         let bucket = &mut b[f.frame_strata.as_index()];
+        if bucket.contains(&id) {
+            return;
+        }
         let key = intra_strata_sort_key(f, id);
         let pos = bucket.binary_search_by(|&other_id| {
             self.widgets.get(other_id)

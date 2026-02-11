@@ -120,7 +120,7 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
         state.widgets.mark_rect_dirty_subtree(this.id);
-        state.invalidate_layout(this.id);
+        state.invalidate_layout_with_dependents(this.id);
         Ok(())
     });
 }
