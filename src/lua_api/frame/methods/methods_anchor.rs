@@ -21,12 +21,31 @@ fn get_number(v: &Value) -> Option<f32> {
 }
 
 /// Helper to extract frame ID from Value.
-fn get_frame_id(v: &Value) -> Option<usize> {
-    if let Value::UserData(ud) = v
-        && let Ok(frame_handle) = ud.borrow::<FrameHandle>() {
-            return Some(frame_handle.id as usize);
+///
+/// Handles both UserData (direct frame reference) and String (global name
+/// lookup via `_G`), matching WoW's SetPoint behavior where string frame
+/// names are resolved to the corresponding frame object.
+fn get_frame_id(lua: &mlua::Lua, v: &Value) -> Option<usize> {
+    match v {
+        Value::UserData(ud) => {
+            if let Ok(frame_handle) = ud.borrow::<FrameHandle>() {
+                return Some(frame_handle.id as usize);
+            }
+            None
         }
-    None
+        Value::String(s) => {
+            let name = s.to_string_lossy();
+            if let Ok(val) = lua.globals().get::<Value>(name.as_str()) {
+                if let Value::UserData(ud) = val {
+                    if let Ok(fh) = ud.borrow::<FrameHandle>() {
+                        return Some(fh.id as usize);
+                    }
+                }
+            }
+            None
+        }
+        _ => None,
+    }
 }
 
 /// Extract an anchor point string from a Value, defaulting to "CENTER".
@@ -43,6 +62,7 @@ fn extract_point_str(v: Option<&Value>) -> String {
 
 /// Parse variable SetPoint arguments into (relative_to, relative_point, x_ofs, y_ofs).
 fn parse_set_point_args(
+    lua: &mlua::Lua,
     args: &[Value],
     point: crate::widget::AnchorPoint,
 ) -> (Option<usize>, crate::widget::AnchorPoint, f32, f32) {
@@ -55,7 +75,7 @@ fn parse_set_point_args(
                 // SetPoint("point", x, y)
                 (None, point, x, y)
             } else {
-                let rel_to = args.get(1).and_then(get_frame_id);
+                let rel_to = args.get(1).map(|v| get_frame_id(lua, v)).flatten();
                 // Check if 3rd arg is a relativePoint string:
                 // SetPoint("point", relativeTo, "relativePoint")
                 let rel_point = args.get(2).and_then(|v| {
@@ -69,7 +89,7 @@ fn parse_set_point_args(
             }
         }
         _ => {
-            let rel_to = args.get(1).and_then(get_frame_id);
+            let rel_to = args.get(1).map(|v| get_frame_id(lua, v)).flatten();
             let rel_point_str = args.get(2).and_then(|v| {
                 if let Value::String(s) = v {
                     Some(s.to_string_lossy().to_string())
@@ -89,11 +109,11 @@ fn parse_set_point_args(
 
 /// SetPoint(point, relativeTo, relativePoint, xOfs, yOfs)
 fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetPoint", |_, this, args: mlua::MultiValue| {
+    methods.add_method("SetPoint", |lua, this, args: mlua::MultiValue| {
         let args: Vec<Value> = args.into_iter().collect();
         let point_str = extract_point_str(args.first());
         let point = crate::widget::AnchorPoint::from_str(&point_str).unwrap_or_default();
-        let (relative_to, relative_point, x_ofs, y_ofs) = parse_set_point_args(&args, point);
+        let (relative_to, relative_point, x_ofs, y_ofs) = parse_set_point_args(lua, &args, point);
 
         let state = this.state.borrow();
 

@@ -61,13 +61,13 @@ fn emit_horiz_edges(batch: &mut QuadBatch, bounds: Rectangle, ns: &NineSliceAtla
         Point::new(edge_x, bounds.y),
         Size::new(edge_w, ns.edge_top.height as f32),
     );
-    emit_horiz_tiles(batch, top_bounds, &piece_uvs(&ns.edge_top), ns.edge_top.file, ns.edge_top.width as f32, alpha, BlendMode::Alpha);
+    emit_horiz_tiles(batch, top_bounds, &piece_uvs(&ns.edge_top), ns.edge_top.file, ns.edge_top.width as f32, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
 
     let bot_bounds = Rectangle::new(
         Point::new(edge_x, bounds.y + bounds.height - ns.edge_bottom.height as f32),
         Size::new(edge_w, ns.edge_bottom.height as f32),
     );
-    emit_horiz_tiles(batch, bot_bounds, &piece_uvs(&ns.edge_bottom), ns.edge_bottom.file, ns.edge_bottom.width as f32, alpha, BlendMode::Alpha);
+    emit_horiz_tiles(batch, bot_bounds, &piece_uvs(&ns.edge_bottom), ns.edge_bottom.file, ns.edge_bottom.width as f32, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
 }
 
 /// Emit tiled vertical edges (left and right) between corners.
@@ -82,13 +82,13 @@ fn emit_vert_edges(batch: &mut QuadBatch, bounds: Rectangle, ns: &NineSliceAtlas
         Point::new(bounds.x, edge_y),
         Size::new(ns.edge_left.width as f32, edge_h),
     );
-    emit_vert_tiles(batch, left_bounds, &piece_uvs(&ns.edge_left), ns.edge_left.file, ns.edge_left.height as f32, alpha, BlendMode::Alpha);
+    emit_vert_tiles(batch, left_bounds, &piece_uvs(&ns.edge_left), ns.edge_left.file, ns.edge_left.height as f32, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
 
     let right_bounds = Rectangle::new(
         Point::new(bounds.x + bounds.width - ns.edge_right.width as f32, edge_y),
         Size::new(ns.edge_right.width as f32, edge_h),
     );
-    emit_vert_tiles(batch, right_bounds, &piece_uvs(&ns.edge_right), ns.edge_right.file, ns.edge_right.height as f32, alpha, BlendMode::Alpha);
+    emit_vert_tiles(batch, right_bounds, &piece_uvs(&ns.edge_right), ns.edge_right.file, ns.edge_right.height as f32, [1.0, 1.0, 1.0, alpha], BlendMode::Alpha);
 }
 
 /// Emit a nine-slice atlas kit: 4 corners, 4 tiled edges, optional stretched center.
