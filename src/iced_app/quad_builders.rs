@@ -16,19 +16,19 @@ use super::masking::apply_mask_texture;
 use super::tooltip::TooltipRenderData;
 
 /// Build quads for a Frame widget (backdrop).
-pub fn build_frame_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+pub fn build_frame_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame, alpha: f32) {
     if f.backdrop.enabled {
         let bg = &f.backdrop.bg_color;
-        batch.push_solid(bounds, [bg.r, bg.g, bg.b, bg.a * f.alpha]);
+        batch.push_solid(bounds, [bg.r, bg.g, bg.b, bg.a * alpha]);
 
         if f.backdrop.edge_size > 0.0 {
             let bc = &f.backdrop.border_color;
-            batch.push_border(bounds, f.backdrop.edge_size.max(1.0), [bc.r, bc.g, bc.b, bc.a * f.alpha]);
+            batch.push_border(bounds, f.backdrop.edge_size.max(1.0), [bc.r, bc.g, bc.b, bc.a * alpha]);
         }
     }
 
     if f.nine_slice_layout.is_some() {
-        batch.push_border(bounds, 2.0, [0.6, 0.45, 0.15, f.alpha]);
+        batch.push_border(bounds, 2.0, [0.6, 0.45, 0.15, alpha]);
     }
 }
 
@@ -39,6 +39,7 @@ pub fn build_button_quads(
     f: &crate::widget::Frame,
     is_pressed: bool,
     is_hovered: bool,
+    alpha: f32,
 ) {
     let has_normal_child = f.children_keys.contains_key("NormalTexture");
     let has_pushed_child = f.children_keys.contains_key("PushedTexture");
@@ -54,12 +55,12 @@ pub fn build_button_quads(
     };
 
     if !skip {
-        emit_button_texture(batch, bounds, texture_path, tex_coords, f.alpha);
+        emit_button_texture(batch, bounds, texture_path, tex_coords, alpha);
     }
 
     let has_highlight_child = f.children_keys.contains_key("HighlightTexture");
     if is_hovered && !is_pressed && !has_highlight_child {
-        emit_button_highlight(batch, bounds, f);
+        emit_button_highlight(batch, bounds, f, alpha);
     }
 }
 
@@ -86,13 +87,13 @@ fn emit_button_texture(
 }
 
 /// Render the button highlight overlay on hover.
-pub(super) fn emit_button_highlight(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+pub(super) fn emit_button_highlight(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame, alpha: f32) {
     if let Some(highlight_path) = &f.highlight_texture {
         if let Some((left, right, top, bottom)) = f.highlight_tex_coords {
             let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
             batch.push_textured_path_uv(
                 bounds, uvs, highlight_path,
-                [1.0, 1.0, 1.0, 0.5 * f.alpha], BlendMode::Additive,
+                [1.0, 1.0, 1.0, 0.5 * alpha], BlendMode::Additive,
             );
         } else {
             const BUTTON_TEX_WIDTH: f32 = 128.0;
@@ -100,16 +101,16 @@ pub(super) fn emit_button_highlight(batch: &mut QuadBatch, bounds: Rectangle, f:
             batch.push_three_slice_h_path_blend(
                 bounds, BUTTON_CAP_WIDTH, BUTTON_CAP_WIDTH,
                 highlight_path, BUTTON_TEX_WIDTH,
-                [1.0, 1.0, 1.0, 0.5 * f.alpha], BlendMode::Additive,
+                [1.0, 1.0, 1.0, 0.5 * alpha], BlendMode::Additive,
             );
         }
     }
 }
 
 /// Build quads for a Texture widget, optionally clipped by a StatusBar fill.
-pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame, bar_fill: Option<&StatusBarFill>) {
+pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame, bar_fill: Option<&StatusBarFill>, alpha: f32) {
     if let Some(ref ns) = f.nine_slice_atlas {
-        super::nine_slice::emit_nine_slice_atlas(batch, bounds, ns, f.alpha);
+        super::nine_slice::emit_nine_slice_atlas(batch, bounds, ns, alpha);
         return;
     }
 
@@ -118,20 +119,19 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
         vc.map_or(1.0, |c| c.r),
         vc.map_or(1.0, |c| c.g),
         vc.map_or(1.0, |c| c.b),
-        vc.map_or(1.0, |c| c.a) * f.alpha,
+        vc.map_or(1.0, |c| c.a) * alpha,
     ];
 
     let tint = if let Some(fill) = bar_fill
         && let Some(c) = &fill.color {
-            [c.r, c.g, c.b, c.a * f.alpha]
+            [c.r, c.g, c.b, c.a * alpha]
         } else {
             base_tint
         };
 
     if let Some(color) = f.color_texture {
         let fill_bounds = apply_bar_fill(bounds, bar_fill);
-        // Temporary debug removed
-        batch.push_solid(fill_bounds, [color.r * tint[0], color.g * tint[1], color.b * tint[2], color.a * f.alpha]);
+        batch.push_solid(fill_bounds, [color.r * tint[0], color.g * tint[1], color.b * tint[2], color.a * alpha]);
         return;
     }
 
@@ -139,7 +139,7 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
         if let Some(fill) = bar_fill
             && let Some(c) = &fill.color {
                 let fill_bounds = apply_bar_fill(bounds, bar_fill);
-                batch.push_solid(fill_bounds, [c.r, c.g, c.b, c.a * f.alpha]);
+                batch.push_solid(fill_bounds, [c.r, c.g, c.b, c.a * alpha]);
             }
         return;
     };
@@ -149,7 +149,7 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     if let Some((left, right, top, bottom)) = fill_uvs {
         let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
         if f.horiz_tile || f.vert_tile {
-            emit_tiled_texture(batch, fill_bounds, &uvs, tex_path, f);
+            emit_tiled_texture(batch, fill_bounds, &uvs, tex_path, f, alpha);
         } else {
             batch.push_textured_path_uv(fill_bounds, uvs, tex_path, tint, f.blend_mode);
         }
@@ -227,24 +227,24 @@ fn apply_desaturate_flag(batch: &mut QuadBatch, vert_before: usize) {
 }
 
 /// Build quads for a Minimap widget - map texture clipped to a circle.
-pub fn build_minimap_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+pub fn build_minimap_quads(batch: &mut QuadBatch, bounds: Rectangle, _f: &crate::widget::Frame, alpha: f32) {
     use crate::render::shader::FLAG_CIRCLE_CLIP;
     batch.push_textured_path(
         bounds,
         r"Interface\Minimap\placeholder-map",
-        [1.0, 1.0, 1.0, f.alpha],
+        [1.0, 1.0, 1.0, alpha],
         BlendMode::Alpha,
     );
     batch.set_extra_flags(4, FLAG_CIRCLE_CLIP);
 }
 
 /// Build quads for an EditBox widget.
-pub fn build_editbox_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame) {
+pub fn build_editbox_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::widget::Frame, alpha: f32) {
     if !f.children_keys.is_empty() {
         return;
     }
-    batch.push_solid(bounds, [0.06, 0.06, 0.08, 0.9 * f.alpha]);
-    batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, f.alpha]);
+    batch.push_solid(bounds, [0.06, 0.06, 0.08, 0.9 * alpha]);
+    batch.push_border(bounds, 1.0, [0.3, 0.25, 0.15, alpha]);
 }
 
 /// Emit text quads for a widget, extracting color/shadow from the frame.
@@ -260,15 +260,16 @@ fn emit_widget_text_quads(
     justify_v: TextJustify,
     word_wrap: bool,
     max_lines: u32,
+    alpha: f32,
 ) {
     let color = [
         f.text_color.r,
         f.text_color.g,
         f.text_color.b,
-        f.text_color.a * f.alpha,
+        f.text_color.a * alpha,
     ];
     let shadow = if f.shadow_color.a > 0.0 {
-        Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * f.alpha])
+        Some([f.shadow_color.r, f.shadow_color.g, f.shadow_color.b, f.shadow_color.a * alpha])
     } else {
         None
     };
@@ -289,6 +290,9 @@ fn is_button_pressed(f: &crate::widget::Frame, id: u64, pressed_frame: Option<u6
 }
 
 /// Emit quads for a single visible frame based on its widget type.
+///
+/// `eff_alpha` is the effective alpha from the ancestor chain (`parent_alpha * f.alpha`),
+/// matching WoW's `GetEffectiveAlpha()` behavior where parent alpha dims all descendants.
 #[allow(clippy::too_many_arguments)]
 pub fn emit_frame_quads(
     batch: &mut QuadBatch,
@@ -305,32 +309,33 @@ pub fn emit_frame_quads(
     screen_size: (f32, f32),
     cache: &mut LayoutCache,
     elapsed_secs: f64,
+    eff_alpha: f32,
 ) {
     match f.widget_type {
-        WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f),
+        WidgetType::Frame | WidgetType::StatusBar => build_frame_quads(batch, bounds, f, eff_alpha),
         WidgetType::MessageFrame => {
-            build_frame_quads(batch, bounds, f);
+            build_frame_quads(batch, bounds, f, eff_alpha);
             if let Some((fs, ga)) = text_ctx
                 && let Some(mf_map) = message_frames {
-                    emit_message_frame_text(batch, fs, ga, f, id, bounds, mf_map);
+                    emit_message_frame_text(batch, fs, ga, f, id, bounds, mf_map, eff_alpha);
                 }
         }
         WidgetType::GameTooltip => {
-            super::tooltip::build_tooltip_quads(batch, bounds, f, tooltip_data, id, text_ctx);
+            super::tooltip::build_tooltip_quads(batch, bounds, f, tooltip_data, id, text_ctx, eff_alpha);
         }
-        WidgetType::Minimap => build_minimap_quads(batch, bounds, f),
+        WidgetType::Minimap => build_minimap_quads(batch, bounds, f, eff_alpha),
         WidgetType::Button => {
-            build_button_quads(batch, bounds, f, is_button_pressed(f, id, pressed_frame), hovered_frame == Some(id));
+            build_button_quads(batch, bounds, f, is_button_pressed(f, id, pressed_frame), hovered_frame == Some(id), eff_alpha);
             if !f.children_keys.contains_key("Text")
                 && let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
-                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, false, 0);
+                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, false, 0, eff_alpha);
                 }
         }
         WidgetType::Texture => {
             if !f.is_mask {
                 let vert_before = batch.vertices.len();
-                build_texture_quads(batch, bounds, f, bar_fill);
+                build_texture_quads(batch, bounds, f, bar_fill, eff_alpha);
                 if !f.mask_textures.is_empty() {
                     apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry, screen_size, cache);
                 }
@@ -339,22 +344,22 @@ pub fn emit_frame_quads(
         WidgetType::FontString => {
             if let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
-                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, f.word_wrap, f.max_lines);
+                    emit_widget_text_quads(batch, fs, ga, f, txt, bounds, f.justify_h, f.justify_v, f.word_wrap, f.max_lines, eff_alpha);
                 }
         }
         WidgetType::CheckButton => {
-            build_button_quads(batch, bounds, f, is_button_pressed(f, id, pressed_frame), hovered_frame == Some(id));
+            build_button_quads(batch, bounds, f, is_button_pressed(f, id, pressed_frame), hovered_frame == Some(id), eff_alpha);
             if let Some((fs, ga)) = text_ctx
                 && let Some(ref txt) = f.text {
                     let label_bounds = Rectangle::new(
                         Point::new(bounds.x + 20.0, bounds.y),
                         Size::new(bounds.width - 20.0, bounds.height),
                     );
-                    emit_widget_text_quads(batch, fs, ga, f, txt, label_bounds, TextJustify::Left, TextJustify::Center, false, 0);
+                    emit_widget_text_quads(batch, fs, ga, f, txt, label_bounds, TextJustify::Left, TextJustify::Center, false, 0, eff_alpha);
                 }
         }
         WidgetType::EditBox => {
-            emit_editbox_with_text(batch, bounds, f, text_ctx);
+            emit_editbox_with_text(batch, bounds, f, text_ctx, eff_alpha);
         }
         WidgetType::Cooldown => {
             build_cooldown_quads(batch, bounds, f, elapsed_secs);
@@ -369,8 +374,9 @@ fn emit_editbox_with_text(
     bounds: Rectangle,
     f: &crate::widget::Frame,
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+    alpha: f32,
 ) {
-    build_editbox_quads(batch, bounds, f);
+    build_editbox_quads(batch, bounds, f, alpha);
     if let Some((fs, ga)) = text_ctx
         && let Some(ref txt) = f.text {
             let (left_inset, right_inset, top_inset, bottom_inset) = f.editbox_text_insets;
@@ -380,7 +386,7 @@ fn emit_editbox_with_text(
                 Point::new(bounds.x + left_pad, bounds.y + top_inset),
                 Size::new((bounds.width - left_pad - right_pad).max(0.0), (bounds.height - top_inset - bottom_inset).max(0.0)),
             );
-            emit_widget_text_quads(batch, fs, ga, f, txt, text_bounds, TextJustify::Left, TextJustify::Center, false, 0);
+            emit_widget_text_quads(batch, fs, ga, f, txt, text_bounds, TextJustify::Left, TextJustify::Center, false, 0, alpha);
         }
 }
 

@@ -136,17 +136,18 @@ pub fn collect_tooltip_data(
 pub fn build_tooltip_quads(
     batch: &mut QuadBatch,
     bounds: Rectangle,
-    f: &crate::widget::Frame,
+    _f: &crate::widget::Frame,
     tooltip_data: Option<&HashMap<u64, TooltipRenderData>>,
     id: u64,
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
+    eff_alpha: f32,
 ) {
     // Only render when there are lines to display — otherwise the tooltip is
     // "owned" but has no content yet (e.g. during addon init).
     let data = tooltip_data.and_then(|map| map.get(&id));
     let Some(data) = data else { return };
 
-    let alpha = f.alpha;
+    let alpha = eff_alpha;
 
     // Tooltip border and background via nine-slice atlas (rounded corners).
     // WoW calls SetCenterColor(0, 0, 0, 1) — TOOLTIP_DEFAULT_BACKGROUND_COLOR is black.

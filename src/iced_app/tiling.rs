@@ -75,13 +75,13 @@ fn uv_repeat_tile_size(f: &crate::widget::Frame) -> (f32, f32) {
     }
 }
 
-fn frame_tint(f: &crate::widget::Frame) -> [f32; 4] {
+fn frame_tint(f: &crate::widget::Frame, alpha: f32) -> [f32; 4] {
     let vc = f.vertex_color.as_ref();
     [
         vc.map_or(1.0, |c| c.r),
         vc.map_or(1.0, |c| c.g),
         vc.map_or(1.0, |c| c.b),
-        vc.map_or(1.0, |c| c.a) * f.alpha,
+        vc.map_or(1.0, |c| c.a) * alpha,
     ]
 }
 
@@ -92,19 +92,20 @@ pub(super) fn emit_tiled_texture(
     uvs: &Rectangle,
     tex_path: &str,
     f: &crate::widget::Frame,
+    alpha: f32,
 ) {
     // Check for UV-based repeat tiling (BackdropTemplateMixin pattern):
     // 8-arg SetTexCoord with values >1.0 encoding repeat counts.
     if let Some(raw) = &f.tex_coords_quad {
         if raw.iter().any(|&v| v > 1.0) {
-            emit_uv_repeat_tiled(batch, bounds, raw, tex_path, f);
+            emit_uv_repeat_tiled(batch, bounds, raw, tex_path, f, alpha);
             return;
         }
     }
 
     let (left, right, top, bottom) = (uvs.x, uvs.x + uvs.width, uvs.y, uvs.y + uvs.height);
     let (tile_w, tile_h) = tile_dimensions(f, right - left, bottom - top);
-    let tint = frame_tint(f);
+    let tint = frame_tint(f, alpha);
 
     if f.horiz_tile && !f.vert_tile {
         emit_horiz_tiles(batch, bounds, uvs, tex_path, tile_w, tint, f.blend_mode);
@@ -122,8 +123,9 @@ fn emit_uv_repeat_tiled(
     raw: &[f32; 8],
     tex_path: &str,
     f: &crate::widget::Frame,
+    alpha: f32,
 ) {
-    let tint = frame_tint(f);
+    let tint = frame_tint(f, alpha);
     let info = analyze_uv_repeat(raw);
     let tile_size = uv_repeat_tile_size(f);
 

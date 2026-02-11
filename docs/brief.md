@@ -49,9 +49,19 @@ Two contributing factors:
 - `src/iced_app/tiling.rs` — `analyze_uv_repeat()`, `emit_uv_repeat_tiled()`, `emit_rotated_horiz_tiles()`
 - `src/render/shader/quad.rs` — Added `push_textured_path_uv4()` for per-vertex UV quads
 
+## Completed: Effective Alpha Propagation
+
+**Problem:** Child frames rendered using only their own `f.alpha`, ignoring ancestor alpha. In WoW, `GetEffectiveAlpha()` returns `self.alpha * parent:GetEffectiveAlpha()` — if any ancestor has alpha < 1.0, all descendants are dimmed. Our simulator computed `eff_alpha` in `frame_collect.rs` but only used it for visibility checks, not rendering.
+
+**Fix:** Threaded `eff_alpha` through the entire rendering pipeline:
+- `render.rs` → passes `eff_alpha` to `emit_frame_quads`
+- `quad_builders.rs` → all builder functions accept `alpha: f32` parameter (the effective alpha), replacing direct `f.alpha` usage
+- `tiling.rs` → `emit_tiled_texture` and `frame_tint` accept `alpha` parameter
+- `tooltip.rs` → `build_tooltip_quads` accepts `eff_alpha`
+- `message_frame_render.rs` → `emit_message_frame_text` and `render_message` accept `alpha`
+
 ## Known Issues
 
-- **eff_alpha not used in rendering**: `collect_ancestor_visible_ids()` computes effective alpha per-frame but `emit_frame_quads` only uses `f.alpha` directly. All quad builders ignore ancestor alpha. Currently not visible because parent alphas are 1.0 in the default UI, but will cause incorrect rendering for frames with non-1.0 parent alpha chains.
 - Buff duration text missing in live GUI mode (OnUpdate not called during GUI startup)
 - Script inheritance bug: `src/loader/helpers.rs` lines 297-299 prepend/append boolean swapped
 

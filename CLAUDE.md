@@ -90,10 +90,11 @@ Uses **Lua 5.1** via mlua (WoW's Lua version).
 
 ### Running the Simulator
 
-**Always use `timeout 20` or less** when running the simulator to prevent hung processes:
+**Always compile separately from running** — `cargo run` combines build + run under a single timeout, but compilation alone can take 30s+. Build first, then run with a timeout:
 ```bash
-WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 15 cargo run --bin wow-sim
+cargo build --bin wow-sim && WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 30 cargo run --bin wow-sim
 ```
+**Always use `timeout 30` or less** on the run step to prevent hung processes.
 
 ### CLI Arguments
 

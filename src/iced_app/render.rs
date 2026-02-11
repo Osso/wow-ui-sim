@@ -174,7 +174,7 @@ fn emit_all_frames(
             Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
         );
         let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache, elapsed_secs);
+        emit_frame_quads(batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache, elapsed_secs, eff_alpha);
     }
 }
 
@@ -389,7 +389,7 @@ impl App {
         let has_highlight_child = f.children_keys.contains_key("HighlightTexture");
         let is_pressed = self.pressed_frame == Some(hovered_id) || f.button_state == 1;
         if !is_pressed && !has_highlight_child {
-            emit_button_highlight(quads, bounds, f);
+            emit_button_highlight(quads, bounds, f, f.alpha);
         }
 
         if let Some(&ht_id) = f.children_keys.get("HighlightTexture")
@@ -409,7 +409,7 @@ impl App {
                         Point::new(ht_rect.x * UI_SCALE, ht_rect.y * UI_SCALE),
                         Size::new(ht_rect.width * UI_SCALE, ht_rect.height * UI_SCALE),
                     );
-                    build_texture_quads(quads, ht_bounds, ht, None);
+                    build_texture_quads(quads, ht_bounds, ht, None, ht.alpha);
                 }
             }
     }

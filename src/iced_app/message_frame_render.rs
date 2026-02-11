@@ -23,6 +23,7 @@ pub fn emit_message_frame_text(
     id: u64,
     bounds: Rectangle,
     mf_map: &std::collections::HashMap<u64, MessageFrameData>,
+    alpha: f32,
 ) {
     let Some(data) = mf_map.get(&id) else { return };
     if data.messages.is_empty() || bounds.width <= 0.0 || bounds.height <= 0.0 {
@@ -48,7 +49,7 @@ pub fn emit_message_frame_text(
         y -= height;
         render_message(
             batch, font_sys, glyph_atlas, f, bounds,
-            &data.messages[msg_idx], y, height,
+            &data.messages[msg_idx], y, height, alpha,
         );
     }
 }
@@ -93,6 +94,7 @@ fn render_message(
     msg: &crate::lua_api::message_frame::Message,
     y: f32,
     height: f32,
+    alpha: f32,
 ) {
     let line_bounds = Rectangle {
         x: bounds.x,
@@ -100,8 +102,8 @@ fn render_message(
         width: bounds.width,
         height,
     };
-    let color = [msg.r, msg.g, msg.b, msg.a * f.alpha];
-    let shadow = Some([0.0, 0.0, 0.0, f.alpha]);
+    let color = [msg.r, msg.g, msg.b, msg.a * alpha];
+    let shadow = Some([0.0, 0.0, 0.0, alpha]);
 
     emit_text_quads(
         batch, font_sys, glyph_atlas,
