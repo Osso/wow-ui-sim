@@ -76,7 +76,10 @@ pub fn fire_startup_events(env: &WowLuaEnv) {
         eprintln!("Error firing PLAYER_ENTERING_WORLD: {}", e);
     }
 
+    call_unit_frame_set_unit(env);
+
     fire_unit_aura(env);
+    diagnose_buff_pipeline(env);
 
     fire("BAG_UPDATE_DELAYED");
     fire("GROUP_ROSTER_UPDATE");
@@ -86,6 +89,63 @@ pub fn fire_startup_events(env: &WowLuaEnv) {
     fire("UI_SCALE_CHANGED");
     fire("UPDATE_CHAT_WINDOWS");
     fire("PLAYER_LEAVING_WORLD");
+}
+
+/// Call `UnitFrame_SetUnit` on the main unit frames after PLAYER_ENTERING_WORLD.
+///
+/// In real WoW, `PlayerFrame_ToPlayerArt` calls `UnitFrame_SetUnit` during
+/// `PLAYER_ENTERING_WORLD`. `UnitFrame_Initialize` (called during `OnLoad`)
+/// already sets `self.unit`, but `UnitFrame_SetUnit` also registers unit events
+/// on health/mana bars, sets the `"unit"` attribute, and calls `UnitFrame_Update`.
+/// If something in the event chain errors before reaching `UnitFrame_SetUnit`,
+/// the unit binding is incomplete. This ensures the call happens for each frame.
+pub fn call_unit_frame_set_unit(env: &WowLuaEnv) {
+    if let Err(e) = env.exec(
+        r#"
+        if not UnitFrame_SetUnit then return end
+
+        local frames = {
+            {
+                frame = PlayerFrame,
+                unit = "player",
+                healthbar = PlayerFrame_GetHealthBar and PlayerFrame_GetHealthBar(),
+                manabar = PlayerFrame_GetManaBar and PlayerFrame_GetManaBar(),
+            },
+            {
+                frame = PetFrame,
+                unit = "pet",
+                healthbar = PetFrameHealthBar,
+                manabar = PetFrameManaBar,
+            },
+            {
+                frame = TargetFrame,
+                unit = "target",
+                healthbar = TargetFrame and TargetFrame.healthbar,
+                manabar = TargetFrame and TargetFrame.manabar,
+            },
+            {
+                frame = FocusFrame,
+                unit = "focus",
+                healthbar = FocusFrame and FocusFrame.healthbar,
+                manabar = FocusFrame and FocusFrame.manabar,
+            },
+        }
+
+        for _, info in ipairs(frames) do
+            if info.frame and info.healthbar then
+                local ok, err = pcall(UnitFrame_SetUnit,
+                    info.frame, info.unit, info.healthbar, info.manabar)
+                if not ok then
+                    print("[startup] UnitFrame_SetUnit("
+                        .. (info.frame:GetName() or "?") .. ", "
+                        .. info.unit .. ") failed: " .. tostring(err))
+                end
+            end
+        end
+    "#,
+    ) {
+        eprintln!("[startup] call_unit_frame_set_unit error: {e}");
+    }
 }
 
 /// Fire UNIT_AURA("player", {isFullUpdate=true}) to populate buff frames.
@@ -135,5 +195,44 @@ fn force_show_party_member_frames(env: &WowLuaEnv) {
         PartyFrame:Layout()
     "#) {
         eprintln!("[startup] party frame safety-net error: {e}");
+    }
+}
+
+/// Trace the buff pipeline state after UNIT_AURA fires (temporary diagnostic).
+pub fn diagnose_buff_pipeline(env: &WowLuaEnv) {
+    if let Err(e) = env.exec(r#"
+        print("[DIAG] PlayerFrame.unit =", tostring(PlayerFrame and PlayerFrame.unit))
+        print("[DIAG] AuraUtil.ForEachAura type =", type(AuraUtil and AuraUtil.ForEachAura))
+        if AuraUtil and AuraUtil.ForEachAura and PlayerFrame and PlayerFrame.unit then
+            local count = 0
+            AuraUtil.ForEachAura(PlayerFrame.unit, "HELPFUL", 32, function(auraData)
+                count = count + 1
+                local n = type(auraData) == "table" and auraData.name or tostring(auraData)
+                print("[DIAG] ForEachAura cb #" .. count .. ": " .. tostring(n))
+            end, true)
+            print("[DIAG] ForEachAura returned " .. count .. " buffs")
+        else
+            print("[DIAG] ForEachAura or PlayerFrame.unit missing")
+        end
+        if BuffFrame then
+            print("[DIAG] BuffFrame vis=" .. tostring(BuffFrame:IsVisible()))
+            local ai = BuffFrame.auraInfo
+            if ai then
+                local n = 0; for _ in pairs(ai) do n = n + 1 end
+                print("[DIAG] BuffFrame.auraInfo has " .. n .. " entries")
+            else
+                print("[DIAG] BuffFrame.auraInfo is nil")
+            end
+            local af = BuffFrame.auraFrames
+            if af and af[1] then
+                print("[DIAG] auraFrames[1] vis=" .. tostring(af[1]:IsVisible()))
+            else
+                print("[DIAG] auraFrames missing or empty")
+            end
+        else
+            print("[DIAG] BuffFrame missing")
+        end
+    "#) {
+        eprintln!("[DIAG] error: {e}");
     }
 }
