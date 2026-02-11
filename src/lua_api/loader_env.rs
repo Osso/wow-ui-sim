@@ -68,6 +68,7 @@ impl<'a> LoaderEnv<'a> {
     /// Fire an event with arguments to all registered frames.
     pub fn fire_event_with_args(&self, event: &str, args: &[mlua::Value]) -> Result<()> {
         use super::script_helpers::{call_error_handler, get_frame_ref, get_script};
+        use std::time::Instant;
 
         let listeners = {
             let state = self.state.borrow();
@@ -77,11 +78,21 @@ impl<'a> LoaderEnv<'a> {
         for widget_id in listeners {
             if let Some(handler) = get_script(self.lua, widget_id, "OnEvent")
                 && let Some(frame) = get_frame_ref(self.lua, widget_id) {
+                    let addon_idx = self.state.borrow().widgets.get(widget_id)
+                        .and_then(|f| f.owner_addon);
                     let mut call_args =
                         vec![frame, mlua::Value::String(self.lua.create_string(event)?)];
                     call_args.extend(args.iter().cloned());
+                    let start = Instant::now();
                     if let Err(e) = handler.call::<()>(mlua::MultiValue::from_vec(call_args)) {
                         call_error_handler(self.lua, &e.to_string());
+                    }
+                    if let Some(idx) = addon_idx {
+                        let elapsed_ms = start.elapsed().as_secs_f64() * 1000.0;
+                        let mut state = self.state.borrow_mut();
+                        if let Some(addon) = state.addons.get_mut(idx as usize) {
+                            addon.runtime.current_frame_ms += elapsed_ms;
+                        }
                     }
                 }
         }

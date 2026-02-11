@@ -360,6 +360,10 @@ pub struct Frame {
     // --- Rendering effect fields ---
     /// Whether this texture/frame is desaturated (greyscale).
     pub desaturated: bool,
+
+    /// Index into `SimState.addons` identifying which addon owns this frame.
+    /// Set during frame creation based on `SimState.loading_addon_index`.
+    pub owner_addon: Option<u16>,
 }
 
 /// Build a `Frame` with all defaults. `$id` is the expression for the `id` field.
@@ -498,6 +502,9 @@ macro_rules! frame_defaults {
 
             // Rendering effects
             desaturated: false,
+
+            // Profiler
+            owner_addon: None,
         }
     };
 }

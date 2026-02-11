@@ -321,37 +321,97 @@ fn register_profiler(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     register_legacy_memory_globals(lua, state)
 }
 
+/// Extract a metric value from an addon's runtime metrics.
+fn addon_metric_value(addon: &AddonInfo, metric: i32) -> f64 {
+    let rt = &addon.runtime;
+    match metric {
+        0 => { // SessionAverageTime
+            if rt.session_frame_count > 0 { rt.session_total_ms / rt.session_frame_count as f64 } else { 0.0 }
+        }
+        1 => { // RecentAverageTime
+            if rt.recent_frames.is_empty() { 0.0 }
+            else { rt.recent_frames.iter().sum::<f64>() / rt.recent_frames.len() as f64 }
+        }
+        2 => 0.0, // EncounterAverageTime (not implemented)
+        3 => rt.recent_frames.back().copied().unwrap_or(0.0), // LastTime
+        4 => rt.peak_ms, // PeakTime
+        5 => rt.count_over_1ms as f64,
+        6 => rt.count_over_5ms as f64,
+        7 => rt.count_over_10ms as f64,
+        8 => rt.count_over_50ms as f64,
+        9 => rt.count_over_100ms as f64,
+        10 => rt.count_over_500ms as f64,
+        11 => rt.count_over_1000ms as f64,
+        _ => 0.0,
+    }
+}
+
+/// Extract the metric index from a Lua value (integer or number).
+fn metric_index(v: &Value) -> i32 {
+    match v {
+        Value::Integer(n) => *n as i32,
+        Value::Number(n) => *n as i32,
+        _ => -1,
+    }
+}
+
+/// Extract a time-based metric from app-level frame metrics.
+/// Returns total frame time (not just addon time) for percentage calculations.
+fn app_metric_value(app: &crate::lua_api::state::AppFrameMetrics, metric: i32) -> f64 {
+    match metric {
+        0 => { // SessionAverageTime
+            if app.session_frame_count > 0 { app.session_total_ms / app.session_frame_count as f64 } else { 0.0 }
+        }
+        1 => { // RecentAverageTime
+            if app.recent_frame_ms.is_empty() { 0.0 }
+            else { app.recent_frame_ms.iter().sum::<f64>() / app.recent_frame_ms.len() as f64 }
+        }
+        3 => app.recent_frame_ms.back().copied().unwrap_or(0.0), // LastTime
+        4 => app.peak_ms, // PeakTime
+        // Threshold counters don't apply to app-level; fall back to sum of addons
+        _ => 0.0,
+    }
+}
+
 /// Profiler metric query methods (GetApplicationMetric, GetOverallMetric, etc.).
 fn register_profiler_metrics(
     lua: &Lua, t: &mlua::Table, state: &Rc<RefCell<SimState>>,
 ) -> Result<()> {
     let s = Rc::clone(state);
-    t.set("GetApplicationMetric", lua.create_function(move |_, _metric: Value| {
+    t.set("GetApplicationMetric", lua.create_function(move |_, metric: Value| {
         let state = s.borrow();
-        let overall: f64 = state.addons.iter().map(|a| a.load_time_secs).sum();
-        Ok(overall * 3.0)
+        let m = metric_index(&metric);
+        // App metric = total frame time (for time-based metrics) or sum of addons (counters).
+        let app_val = app_metric_value(&state.app_frame_metrics, m);
+        if app_val > 0.0 { Ok(app_val) }
+        else { Ok(state.addons.iter().map(|a| addon_metric_value(a, m)).sum::<f64>()) }
     })?)?;
 
     let s = Rc::clone(state);
-    t.set("GetOverallMetric", lua.create_function(move |_, _metric: Value| {
+    t.set("GetOverallMetric", lua.create_function(move |_, metric: Value| {
         let state = s.borrow();
-        Ok(state.addons.iter().map(|a| a.load_time_secs).sum::<f64>())
+        let m = metric_index(&metric);
+        Ok(state.addons.iter().map(|a| addon_metric_value(a, m)).sum::<f64>())
     })?)?;
 
     let s = Rc::clone(state);
-    t.set("GetAddOnMetric", lua.create_function(move |_, (addon, _metric): (Value, Value)| {
+    t.set("GetAddOnMetric", lua.create_function(move |_, (addon, metric): (Value, Value)| {
         let state = s.borrow();
+        let m = metric_index(&metric);
         let val = find_addon_by_value(&state.addons, &addon)
-            .map(|a| a.load_time_secs)
+            .map(|a| addon_metric_value(a, m))
             .unwrap_or(0.0);
         Ok(val)
     })?)?;
 
     let s = Rc::clone(state);
-    t.set("GetTopKAddOnsForMetric", lua.create_function(move |lua, (_metric, k): (Value, usize)| {
+    t.set("GetTopKAddOnsForMetric", lua.create_function(move |lua, (metric, k): (Value, usize)| {
         let state = s.borrow();
+        let m = metric_index(&metric);
         let mut sorted: Vec<_> = state.addons.iter().collect();
-        sorted.sort_by(|a, b| b.load_time_secs.partial_cmp(&a.load_time_secs).unwrap());
+        sorted.sort_by(|a, b| {
+            addon_metric_value(b, m).partial_cmp(&addon_metric_value(a, m)).unwrap()
+        });
         let result = lua.create_table()?;
         for (i, addon) in sorted.iter().take(k).enumerate() {
             let entry = lua.create_table()?;
@@ -376,7 +436,7 @@ fn register_legacy_memory_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> R
         lua.create_function(move |_, addon: Value| {
             let state = s.borrow();
             let kb = find_addon_by_value(&state.addons, &addon)
-                .map(|a| a.load_time_secs * 500.0)
+                .map(|a| a.runtime.session_total_ms * 0.5 + a.load_time_secs * 500.0)
                 .unwrap_or(0.0);
             Ok(kb)
         })?,
@@ -558,11 +618,8 @@ fn register_loaded_addon(state: &Rc<RefCell<SimState>>, name: &str, load_time_se
         s.addons.push(AddonInfo {
             folder_name: name.to_string(),
             title: name.to_string(),
-            notes: String::new(),
-            enabled: true,
-            loaded: true,
-            load_on_demand: true,
-            load_time_secs,
+            enabled: true, loaded: true, load_on_demand: true,
+            load_time_secs, ..Default::default()
         });
     }
 }

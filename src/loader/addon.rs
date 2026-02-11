@@ -84,6 +84,16 @@ pub fn load_addon_internal(
     }
 
     let addon_table = env.create_addon_table().map_err(|e| LoadError::Lua(e.to_string()))?;
+
+    // Set loading_addon_index so frames created during this addon's load
+    // are attributed to it for profiler metrics.
+    {
+        let s = env.state().borrow();
+        let idx = s.addons.iter().position(|a| a.folder_name == folder_name);
+        drop(s);
+        env.state().borrow_mut().loading_addon_index = idx.map(|i| i as u16);
+    }
+
     let ctx = AddonContext {
         name: folder_name,
         table: addon_table,
@@ -119,6 +129,10 @@ pub fn load_addon_internal(
             }
         }
     }
+
+    // Clear loading_addon_index so runtime-created frames don't get attributed
+    // to this addon after it finishes loading.
+    env.state().borrow_mut().loading_addon_index = None;
 
     Ok(result)
 }

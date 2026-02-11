@@ -26,15 +26,12 @@ fn create_timer_after(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::F
         let id = next_timer_id();
         let callback_key = lua.create_registry_value(callback)?;
         let fire_at = Instant::now() + Duration::from_secs_f64(seconds);
+        let owner_addon = state.borrow().loading_addon_index;
 
         let timer = PendingTimer {
-            id,
-            fire_at,
-            callback_key,
-            interval: None,
-            remaining: None,
-            cancelled: false,
-            handle_key: None,
+            id, fire_at, callback_key,
+            interval: None, remaining: None, cancelled: false,
+            handle_key: None, owner_addon,
         };
 
         state.borrow_mut().timers.push_back(timer);
@@ -50,18 +47,15 @@ fn create_new_ticker(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Fu
             let callback_key = lua.create_registry_value(callback)?;
             let fire_at = Instant::now() + Duration::from_secs_f64(seconds);
             let interval = Duration::from_secs_f64(seconds);
+            let owner_addon = state.borrow().loading_addon_index;
 
             let ticker = create_timer_handle(lua, id, &state)?;
             let handle_key = lua.create_registry_value(ticker.clone())?;
 
             let timer = PendingTimer {
-                id,
-                fire_at,
-                callback_key,
-                interval: Some(interval),
-                remaining: iterations,
-                cancelled: false,
-                handle_key: Some(handle_key),
+                id, fire_at, callback_key,
+                interval: Some(interval), remaining: iterations, cancelled: false,
+                handle_key: Some(handle_key), owner_addon,
             };
 
             state.borrow_mut().timers.push_back(timer);
@@ -76,18 +70,15 @@ fn create_new_timer(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Fun
         let id = next_timer_id();
         let callback_key = lua.create_registry_value(callback)?;
         let fire_at = Instant::now() + Duration::from_secs_f64(seconds);
+        let owner_addon = state.borrow().loading_addon_index;
 
         let timer_handle = create_timer_handle(lua, id, &state)?;
         let handle_key = lua.create_registry_value(timer_handle.clone())?;
 
         let timer = PendingTimer {
-            id,
-            fire_at,
-            callback_key,
-            interval: None,
-            remaining: None,
-            cancelled: false,
-            handle_key: Some(handle_key),
+            id, fire_at, callback_key,
+            interval: None, remaining: None, cancelled: false,
+            handle_key: Some(handle_key), owner_addon,
         };
 
         state.borrow_mut().timers.push_back(timer);

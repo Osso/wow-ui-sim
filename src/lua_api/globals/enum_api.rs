@@ -270,7 +270,9 @@ fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
     seq_enum(lua, enum_table, "AddOnEnableState", &["None", "Some", "All"])?;
 
     seq_enum(lua, enum_table, "AddOnProfilerMetric", &[
-        "RecentAverageTime", "SessionAverageTime", "PeakTime", "EncounterAverageTime",
+        "SessionAverageTime", "RecentAverageTime", "EncounterAverageTime", "LastTime",
+        "PeakTime", "CountTimeOver1Ms", "CountTimeOver5Ms", "CountTimeOver10Ms",
+        "CountTimeOver50Ms", "CountTimeOver100Ms", "CountTimeOver500Ms", "CountTimeOver1000Ms",
     ])?;
 
     seq_enum(lua, enum_table, "WeeklyRewardChestThresholdType", &[

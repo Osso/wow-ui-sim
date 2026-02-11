@@ -181,7 +181,16 @@ fn register_new_frame(
     name: Option<String>,
     parent_id: Option<u64>,
 ) -> u64 {
-    let frame = Frame::new(widget_type, name.clone(), parent_id);
+    let mut frame = Frame::new(widget_type, name.clone(), parent_id);
+
+    // Attribute frame to the addon currently being loaded, or inherit from parent.
+    {
+        let s = state.borrow();
+        frame.owner_addon = s.loading_addon_index.or_else(|| {
+            parent_id.and_then(|pid| s.widgets.get(pid).and_then(|p| p.owner_addon))
+        });
+    }
+
     let frame_id = frame.id;
 
     let mut state = state.borrow_mut();

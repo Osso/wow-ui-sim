@@ -40,6 +40,63 @@ pub struct PendingTimer {
     pub cancelled: bool,
     /// The timer/ticker handle table (stored in registry) to pass to callback.
     pub handle_key: Option<RegistryKey>,
+    /// Addon that created this timer (for profiler attribution).
+    pub owner_addon: Option<u16>,
+}
+
+/// Per-addon runtime profiler metrics, updated each frame.
+#[derive(Debug, Clone)]
+pub struct AddonRuntimeMetrics {
+    /// Time spent in this addon's handlers during the current frame (accumulator).
+    pub current_frame_ms: f64,
+    /// Rolling window of per-frame times (last 60 frames) for RecentAverageTime.
+    pub recent_frames: VecDeque<f64>,
+    /// Peak time ever recorded in a single frame.
+    pub peak_ms: f64,
+    /// Session total time (ms) across all frames.
+    pub session_total_ms: f64,
+    /// Number of frames where this addon had handlers fire.
+    pub session_frame_count: u64,
+    /// Threshold counters: frames where addon time exceeded N ms.
+    pub count_over_1ms: u32,
+    pub count_over_5ms: u32,
+    pub count_over_10ms: u32,
+    pub count_over_50ms: u32,
+    pub count_over_100ms: u32,
+    pub count_over_500ms: u32,
+    pub count_over_1000ms: u32,
+}
+
+impl Default for AddonRuntimeMetrics {
+    fn default() -> Self {
+        Self {
+            current_frame_ms: 0.0,
+            recent_frames: VecDeque::with_capacity(60),
+            peak_ms: 0.0,
+            session_total_ms: 0.0,
+            session_frame_count: 0,
+            count_over_1ms: 0,
+            count_over_5ms: 0,
+            count_over_10ms: 0,
+            count_over_50ms: 0,
+            count_over_100ms: 0,
+            count_over_500ms: 0,
+            count_over_1000ms: 0,
+        }
+    }
+}
+
+/// Application-level frame timing for profiler (total frame time, not just addon time).
+#[derive(Debug, Clone, Default)]
+pub struct AppFrameMetrics {
+    /// Rolling window of total frame times in ms (last 60 frames).
+    pub recent_frame_ms: VecDeque<f64>,
+    /// Peak frame time ever recorded.
+    pub peak_ms: f64,
+    /// Session total frame time in ms.
+    pub session_total_ms: f64,
+    /// Number of frames recorded.
+    pub session_frame_count: u64,
 }
 
 /// Information about a loaded addon.
@@ -59,6 +116,8 @@ pub struct AddonInfo {
     pub load_on_demand: bool,
     /// Total load time in seconds (for profiler metrics).
     pub load_time_secs: f64,
+    /// Runtime profiler metrics (updated per frame).
+    pub runtime: AddonRuntimeMetrics,
 }
 
 /// Shared simulator state accessible from Lua.
@@ -152,6 +211,11 @@ pub struct SimState {
     /// Buttons registered via SetActionUIButton(button, action, cooldownFrame).
     /// Stores (frame_id, action_slot) pairs for engine-pushed state updates.
     pub action_ui_buttons: Vec<(u64, u32)>,
+    /// Index of the addon currently being loaded (into `addons` vec).
+    /// Set by the loader, read by CreateFrame to assign `owner_addon`.
+    pub loading_addon_index: Option<u16>,
+    /// Application-level frame metrics (total frame time for profiler ratios).
+    pub app_frame_metrics: AppFrameMetrics,
 }
 
 impl Default for SimState {
@@ -200,6 +264,8 @@ impl Default for SimState {
             gcd: None,
             spell_cooldowns: HashMap::new(),
             action_ui_buttons: Vec::new(),
+            loading_addon_index: None,
+            app_frame_metrics: AppFrameMetrics::default(),
         }
     }
 }
@@ -305,6 +371,9 @@ impl SimState {
         let rect = crate::iced_app::compute_frame_rect_cached(
             widgets, id, screen_width, screen_height, cache,
         ).rect;
+        if widgets.get(id).is_some_and(|f| f.name.as_deref().unwrap_or("").contains("TestTS")) {
+            eprintln!("[recompute] id={id} rect={rect:?} anchors={}", widgets.get(id).map(|f| f.anchors.len()).unwrap_or(0));
+        }
         let children: Vec<u64> = widgets.get(id)
             .map(|f| f.children.clone()).unwrap_or_default();
         if let Some(f) = widgets.get_mut_silent(id) {
@@ -333,6 +402,28 @@ impl SimState {
         }
     }
 
+}
+
+/// DEBUG: log layout recomputation for frames with "Center" parentKey.
+fn debug_log_recompute(
+    widgets: &crate::widget::WidgetRegistry,
+    id: u64,
+    rect: &crate::LayoutRect,
+) {
+    let Some(f) = widgets.get(id) else { return };
+    let name = f.name.as_deref().unwrap_or("");
+    // Only log textures named TestTSCenter or with "Center" parentKey pattern
+    // Log ALL frames during debug
+    return; // TEMP: disable to see if this function is called at all
+    eprintln!("[recompute] id={id} name={name} anchors={} rect={rect:?} w={} h={} scale={}",
+        f.anchors.len(), f.width, f.height, f.scale);
+    for (i, a) in f.anchors.iter().enumerate() {
+        eprintln!("  anchor[{i}]: {:?}->{:?}.{:?} offset=({},{})",
+            a.point, a.relative_to_id, a.relative_point, a.x_offset, a.y_offset);
+    }
+}
+
+impl SimState {
     /// Ensure every frame has a layout_rect and clear rect_dirty flags.
     /// Computes missing rects using the same eager path as invalidate_layout.
     /// Called before quad rebuilds (acts as the "next frame" layout resolution).

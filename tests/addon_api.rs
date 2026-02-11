@@ -15,6 +15,7 @@ fn env_with_addons() -> WowLuaEnv {
             loaded: true,
             load_on_demand: false,
             load_time_secs: 0.0,
+                ..Default::default()
         });
         state.addons.push(AddonInfo {
             folder_name: "LODAddon".into(),
@@ -24,6 +25,7 @@ fn env_with_addons() -> WowLuaEnv {
             loaded: false,
             load_on_demand: true,
             load_time_secs: 0.0,
+                ..Default::default()
         });
     }
     env
@@ -362,4 +364,58 @@ fn test_legacy_is_addon_load_on_demand() {
         .eval("return IsAddOnLoadOnDemand('MyAddon')")
         .unwrap();
     assert!(!not_lod);
+}
+
+// ============================================================================
+// C_AddOnProfiler runtime metrics
+// ============================================================================
+
+/// Verify that GetApplicationMetric and GetOverallMetric return different values
+/// so that addon CPU percentages are not 100%.
+#[test]
+fn test_profiler_app_vs_overall_metric_differ() {
+    let env = env_with_addons();
+    // Create a frame owned by MyAddon (index 0) with a busy OnUpdate handler.
+    {
+        let mut state = env.state().borrow_mut();
+        state.loading_addon_index = Some(0);
+    }
+    env.eval::<()>(r#"
+        local f = CreateFrame("Frame", "ProfTestFrame", UIParent)
+        f:SetScript("OnUpdate", function(self, elapsed)
+            local x = 0
+            for i = 1, 5000 do x = x + i end
+        end)
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.loading_addon_index = None;
+    }
+
+    // Simulate several frames so metrics accumulate.
+    for _ in 0..10 {
+        env.fire_on_update(0.016).unwrap(); // ~60fps
+    }
+
+    // GetApplicationMetric (total frame time) should be greater than GetOverallMetric
+    // (addon-only time), meaning the percentage is not 100%.
+    let app_val: f64 = env.eval(
+        "return C_AddOnProfiler.GetApplicationMetric(Enum.AddOnProfilerMetric.RecentAverageTime)"
+    ).unwrap();
+    let overall_val: f64 = env.eval(
+        "return C_AddOnProfiler.GetOverallMetric(Enum.AddOnProfilerMetric.RecentAverageTime)"
+    ).unwrap();
+    let addon_val: f64 = env.eval(
+        "return C_AddOnProfiler.GetAddOnMetric('MyAddon', Enum.AddOnProfilerMetric.RecentAverageTime)"
+    ).unwrap();
+
+    assert!(app_val > 0.0, "App metric should be positive after frames");
+    assert!(overall_val > 0.0, "Overall metric should be positive (addon ran)");
+    assert!(addon_val > 0.0, "Addon metric should be positive");
+    assert!(app_val > overall_val,
+        "App metric ({app_val:.3}) should exceed overall addon metric ({overall_val:.3})");
+
+    // The percentage should be less than 100%.
+    let pct = overall_val / app_val * 100.0;
+    assert!(pct < 100.0, "Addon CPU percentage should be < 100%, got {pct:.1}%");
 }

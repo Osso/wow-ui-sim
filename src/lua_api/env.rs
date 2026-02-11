@@ -1,7 +1,7 @@
 //! WoW Lua environment.
 
 use super::builtin_frames::create_builtin_frames;
-use super::state::{AddonInfo, PendingTimer, SimState};
+use super::state::{AddonRuntimeMetrics, AddonInfo, PendingTimer, SimState};
 use crate::render::font::WowFontSystem;
 use crate::Result;
 use mlua::{Lua, MultiValue, Value};
@@ -135,12 +135,22 @@ impl WowLuaEnv {
         for widget_id in listeners {
             if let Some(handler) = get_script(&self.lua, widget_id, "OnEvent")
                 && let Some(frame) = get_frame_ref(&self.lua, widget_id) {
+                    let addon_idx = self.state.borrow().widgets.get(widget_id)
+                        .and_then(|f| f.owner_addon);
                     let mut call_args =
                         vec![frame, Value::String(self.lua.create_string(event)?)];
                     call_args.extend(args.iter().cloned());
 
+                    let start = Instant::now();
                     if let Err(e) = handler.call::<()>(MultiValue::from_vec(call_args)) {
                         call_error_handler(&self.lua, &e.to_string());
+                    }
+                    if let Some(idx) = addon_idx {
+                        let elapsed_ms = start.elapsed().as_secs_f64() * 1000.0;
+                        let mut state = self.state.borrow_mut();
+                        if let Some(addon) = state.addons.get_mut(idx as usize) {
+                            addon.runtime.current_frame_ms += elapsed_ms;
+                        }
                     }
                 }
         }
@@ -348,13 +358,9 @@ impl WowLuaEnv {
                 })
                 .unwrap_or_else(|| (name.clone(), String::new(), false));
             addons.push(AddonInfo {
-                folder_name: name,
-                title,
-                notes,
-                enabled: true,
-                loaded: false,
-                load_on_demand,
-                load_time_secs: 0.0,
+                folder_name: name, title, notes,
+                enabled: true, loaded: false, load_on_demand,
+                load_time_secs: 0.0, ..Default::default()
             });
         }
         addons.sort_by(|a, b| a.folder_name.to_lowercase().cmp(&b.folder_name.to_lowercase()));
@@ -379,14 +385,11 @@ impl WowLuaEnv {
         let callback_key = self.lua.create_registry_value(callback)?;
         let fire_at = Instant::now() + std::time::Duration::from_secs_f64(seconds);
 
+        let owner_addon = self.state.borrow().loading_addon_index;
         let timer = PendingTimer {
-            id,
-            fire_at,
-            callback_key,
-            interval,
-            remaining: iterations,
-            cancelled: false,
-            handle_key: None,
+            id, fire_at, callback_key, interval,
+            remaining: iterations, cancelled: false,
+            handle_key: None, owner_addon,
         };
 
         self.state.borrow_mut().timers.push_back(timer);
@@ -460,12 +463,20 @@ impl WowLuaEnv {
 
             if state.timers[i].fire_at <= now {
                 let mut timer = state.timers.remove(i).unwrap();
+                let timer_addon = timer.owner_addon;
                 // Drop state borrow before calling Lua callback
                 drop(state);
 
+                let cb_start = Instant::now();
                 if self.fire_timer_callback(&timer) {
+                    let elapsed_ms = cb_start.elapsed().as_secs_f64() * 1000.0;
                     fired += 1;
                     state = self.state.borrow_mut();
+                    if let Some(idx) = timer_addon {
+                        if let Some(addon) = state.addons.get_mut(idx as usize) {
+                            addon.runtime.current_frame_ms += elapsed_ms;
+                        }
+                    }
 
                     if let Some(interval) = timer.interval {
                         if Self::ticker_should_repeat(&mut timer) {
@@ -516,6 +527,9 @@ impl WowLuaEnv {
             let elapsed_val = Value::Number(elapsed);
 
             for widget_id in &frame_ids {
+                let addon_idx = self.state.borrow().widgets.get(*widget_id)
+                    .and_then(|f| f.owner_addon);
+                let start = Instant::now();
                 if let Some(handler) = get_script(&self.lua, *widget_id, "OnPostUpdate")
                     && let Some(frame) = get_frame_ref(&self.lua, *widget_id)
                         && let Err(e) = handler
@@ -523,11 +537,22 @@ impl WowLuaEnv {
                         {
                             call_error_handler(&self.lua, &e.to_string());
                         }
+                if let Some(idx) = addon_idx {
+                    let elapsed_ms = start.elapsed().as_secs_f64() * 1000.0;
+                    let mut state = self.state.borrow_mut();
+                    if let Some(addon) = state.addons.get_mut(idx as usize) {
+                        addon.runtime.current_frame_ms += elapsed_ms;
+                    }
+                }
             }
         }
 
         // Tick animation groups
         super::animation::tick_animation_groups(&self.state, &self.lua, elapsed)?;
+
+        // Finalize per-addon metrics for this frame.
+        // elapsed is delta-time in seconds; convert to ms for metrics.
+        self.finalize_frame_metrics(elapsed * 1000.0);
 
         Ok(())
     }
@@ -559,6 +584,9 @@ impl WowLuaEnv {
             if errored_ids.contains(widget_id) {
                 continue;
             }
+            let addon_idx = self.state.borrow().widgets.get(*widget_id)
+                .and_then(|f| f.owner_addon);
+            let start = Instant::now();
             if let Some(handler) = get_script(&self.lua, *widget_id, "OnUpdate")
                 && let Some(frame) = get_frame_ref(&self.lua, *widget_id)
                     && let Err(e) = handler
@@ -567,9 +595,49 @@ impl WowLuaEnv {
                         call_error_handler(&self.lua, &e.to_string());
                         errored_ids.insert(*widget_id);
                     }
+            if let Some(idx) = addon_idx {
+                let elapsed_ms = start.elapsed().as_secs_f64() * 1000.0;
+                let mut state = self.state.borrow_mut();
+                if let Some(addon) = state.addons.get_mut(idx as usize) {
+                    addon.runtime.current_frame_ms += elapsed_ms;
+                }
+            }
         }
     }
 
+
+    /// Aggregate per-addon metrics at the end of each frame tick.
+    fn finalize_frame_metrics(&self, frame_elapsed_ms: f64) {
+        let mut state = self.state.borrow_mut();
+        // Update app-level frame metrics (total frame time for percentage calculations).
+        let app = &mut state.app_frame_metrics;
+        app.recent_frame_ms.push_back(frame_elapsed_ms);
+        if app.recent_frame_ms.len() > 60 {
+            app.recent_frame_ms.pop_front();
+        }
+        if frame_elapsed_ms > app.peak_ms {
+            app.peak_ms = frame_elapsed_ms;
+        }
+        app.session_total_ms += frame_elapsed_ms;
+        app.session_frame_count += 1;
+
+        for addon in &mut state.addons {
+            let ms = addon.runtime.current_frame_ms;
+            if ms > 0.0 {
+                addon.runtime.recent_frames.push_back(ms);
+                if addon.runtime.recent_frames.len() > 60 {
+                    addon.runtime.recent_frames.pop_front();
+                }
+                if ms > addon.runtime.peak_ms {
+                    addon.runtime.peak_ms = ms;
+                }
+                addon.runtime.session_total_ms += ms;
+                addon.runtime.session_frame_count += 1;
+                update_threshold_counters(&mut addon.runtime, ms);
+            }
+            addon.runtime.current_frame_ms = 0.0;
+        }
+    }
 
     /// Fire `EDIT_MODE_LAYOUTS_UPDATED` with layout info from `C_EditMode.GetLayouts()`.
     ///
@@ -612,4 +680,15 @@ impl WowLuaEnv {
         let state = self.state.borrow();
         super::diagnostics::dump_frames(&state)
     }
+}
+
+/// Increment threshold counters for a frame's addon time.
+fn update_threshold_counters(rt: &mut AddonRuntimeMetrics, ms: f64) {
+    if ms > 1.0 { rt.count_over_1ms += 1; }
+    if ms > 5.0 { rt.count_over_5ms += 1; }
+    if ms > 10.0 { rt.count_over_10ms += 1; }
+    if ms > 50.0 { rt.count_over_50ms += 1; }
+    if ms > 100.0 { rt.count_over_100ms += 1; }
+    if ms > 500.0 { rt.count_over_500ms += 1; }
+    if ms > 1000.0 { rt.count_over_1000ms += 1; }
 }

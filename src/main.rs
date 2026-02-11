@@ -406,29 +406,28 @@ fn load_single_addon(
 ) {
     let (title, notes, load_on_demand) = parse_addon_metadata(name, toc_path);
 
+    // Pre-register so loading_addon_index attributes frames to this addon.
+    env.register_addon(AddonInfo {
+        folder_name: name.to_string(), title, notes,
+        enabled: true, loaded: false, load_on_demand, ..Default::default()
+    });
+
     let result = match saved_vars.as_mut() {
         Some(sv) => load_addon_with_saved_vars(&env.loader_env(), toc_path, sv),
         None => load_addon(&env.loader_env(), toc_path),
     };
     match result {
         Ok(r) => {
-            let load_time_secs = r.timing.total().as_secs_f64();
-            env.register_addon(AddonInfo {
-                folder_name: name.to_string(), title: title.clone(),
-                notes: notes.clone(), enabled: true, loaded: true, load_on_demand,
-                load_time_secs,
-            });
+            let t = r.timing.total().as_secs_f64();
+            let mut s = env.state().borrow_mut();
+            if let Some(a) = s.addons.iter_mut().find(|a| a.folder_name == name) {
+                a.loaded = true;
+                a.load_time_secs = t;
+            }
+            drop(s);
             record_addon_success(name, &r, stats);
         }
-        Err(e) => {
-            env.register_addon(AddonInfo {
-                folder_name: name.to_string(), title, notes,
-                enabled: true, loaded: false, load_on_demand,
-                load_time_secs: 0.0,
-            });
-            println!("✗ {} failed: {}", name, e);
-            stats.fail_count += 1;
-        }
+        Err(e) => { println!("✗ {} failed: {}", name, e); stats.fail_count += 1; }
     }
 }
 
@@ -457,13 +456,12 @@ fn record_addon_success(name: &str, r: &LoadResult, stats: &mut LoadStats) {
 
 /// Addons whose warnings are shown during loading.
 const VERBOSE_WARNING_ADDONS: &[&str] = &[
-    "BetterWardrobe", "Plumber", "BetterBlizzFrames", "Baganator", "Angleur",
-    "ExtraQuestButton", "WaypointUI", "TomTom", "WorldQuestTracker", "SavedInstances",
-    "Rarity", "SimpleItemLevel", "TalentLoadoutManager", "Simulationcraft", "TomCats",
-    "RaiderIO", "!BugGrabber", "AdvancedInterfaceOptions", "CraftSim", "BlizzMove_Debug",
-    "ClickableRaidBuffs", "Dejunk", "Cell", "AngryKeystones", "AutoPotion",
-    "BigWigs_Plugins", "BugSack", "Clicked", "DeathNote", "DeModal",
-    "ElvUI_OptionsUI", "DragonRaceTimes", "DynamicCam", "DialogueUI", "Chattynator",
+    "BetterWardrobe", "Plumber", "BetterBlizzFrames", "Baganator", "Angleur", "ExtraQuestButton",
+    "WaypointUI", "TomTom", "WorldQuestTracker", "SavedInstances", "Rarity", "SimpleItemLevel",
+    "TalentLoadoutManager", "Simulationcraft", "TomCats", "RaiderIO", "!BugGrabber",
+    "AdvancedInterfaceOptions", "CraftSim", "BlizzMove_Debug", "ClickableRaidBuffs", "Dejunk",
+    "Cell", "AngryKeystones", "AutoPotion", "BigWigs_Plugins", "BugSack", "Clicked", "DeathNote",
+    "DeModal", "ElvUI_OptionsUI", "DragonRaceTimes", "DynamicCam", "DialogueUI", "Chattynator",
     "AstralKeys", "Leatrix_Plus", "CooldownToGo_Options", "HousingItemTracker", "idTip",
     "Macroriffic", "NameplateSCT", "Krowi_ExtendedVendorUI", "OmniCD", "Auctionator",
     "EditModeExpanded", "GlobalIgnoreList", "AllTheThings", "BigWigs_KhazAlgar",
