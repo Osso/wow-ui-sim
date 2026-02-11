@@ -643,7 +643,6 @@ fn build_screenshot_batch(
 ) -> (wow_ui_sim::render::QuadBatch, wow_ui_sim::render::GlyphAtlas) {
     use wow_ui_sim::iced_app::build_quad_batch_for_registry;
     use wow_ui_sim::render::GlyphAtlas;
-
     let mut glyph_atlas = GlyphAtlas::new();
     let batch = {
         let mut fs = font_system.borrow_mut();
@@ -693,7 +692,6 @@ fn run_screenshot(
             eprintln!("[exec-lua] error: {e}");
         }
     apply_delay(delay);
-
     let (batch, glyph_atlas) = build_screenshot_batch(env, font_system, width, height, filter.as_deref());
     eprintln!("QuadBatch: {} quads, {} texture requests", batch.quad_count(), batch.texture_requests.len());
 

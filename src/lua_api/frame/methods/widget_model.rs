@@ -104,7 +104,6 @@ fn add_model_scene_rendering_stubs<M: UserDataMethods<FrameHandle>>(methods: &mu
     methods.add_method("SetAllowOverlappedModels", |_, _this, _allow: bool| Ok(()));
     methods.add_method("IsAllowOverlappedModels", |_, _this, ()| Ok(false));
     methods.add_method("SetPaused", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetDrawLayer", |_, _this, _args: mlua::MultiValue| Ok(()));
     // Project3DPointTo2D(x, y, z) -> screenX, screenY, depthScale
     methods.add_method(
         "Project3DPointTo2D",

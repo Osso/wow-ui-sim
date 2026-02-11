@@ -128,6 +128,7 @@ pub fn create_texture_from_xml(
     parent_name: &str,
     draw_layer: &str,
     is_mask: bool,
+    sub_level: i32,
 ) -> Result<(), LoadError> {
     if texture.is_virtual == Some(true) {
         if let Some(ref name) = texture.name {
@@ -137,7 +138,7 @@ pub fn create_texture_from_xml(
     }
 
     let tex_name = resolve_child_name(texture.name.as_deref(), parent_name, "__tex_");
-    let lua_code = build_texture_lua(&tex_name, texture, parent_name, draw_layer, is_mask);
+    let lua_code = build_texture_lua(&tex_name, texture, parent_name, draw_layer, is_mask, sub_level);
 
     env.exec(&lua_code).map_err(|e| {
         LoadError::Lua(format!(
@@ -157,6 +158,7 @@ fn build_texture_lua(
     parent_name: &str,
     draw_layer: &str,
     is_mask: bool,
+    sub_level: i32,
 ) -> String {
     let create_method = if is_mask { "CreateMaskTexture" } else { "CreateTexture" };
     let mut code = format!(
@@ -166,6 +168,12 @@ fn build_texture_lua(
         "#,
         lua_global_ref(parent_name), create_method, tex_name, draw_layer
     );
+    if sub_level != 0 {
+        code.push_str(&format!(
+            "\n        tex:SetDrawLayer(\"{}\", {})\n        ",
+            draw_layer, sub_level
+        ));
+    }
     code.push_str(&generate_mixin_code(texture));
     code.push_str(&generate_texture_source_code(texture, is_mask));
     code.push_str(&generate_texture_visual_code(texture));

@@ -117,15 +117,21 @@ fn is_button_state_texture(
         .any(|key| parent.children_keys.get(*key) == Some(&id))
 }
 
-/// Intra-strata sort key: (level, region_flag, draw_layer, sub_layer, id).
+/// Intra-strata sort key for regions within the same frame strata.
 ///
-/// Non-regions get flag=0, regions get flag=1, so non-regions sort first
-/// at the same level. Within regions, draw_layer and sub_layer apply.
-pub fn intra_strata_sort_key(f: &crate::widget::Frame, id: u64) -> (i32, u8, i32, i32, u64) {
+/// Non-regions get region_flag=0, regions get region_flag=1, so non-regions
+/// sort first at the same level. Within regions, draw_layer and sub_layer
+/// apply. FontStrings (type_flag=1) always render above Textures
+/// (type_flag=0) in the same layer per WoW rules. Within the same type
+/// and layer, WoW's render order is undefined — we use reverse ID order
+/// (earlier-created on top) which matches WoW's observed behaviour for
+/// action bar icons and other overlapping same-layer textures.
+pub fn intra_strata_sort_key(f: &crate::widget::Frame, id: u64) -> (i32, u8, i32, i32, u8, std::cmp::Reverse<u64>) {
     if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
-        (f.frame_level, 1, f.draw_layer as i32, f.draw_sub_layer, id)
+        let type_flag = if f.widget_type == WidgetType::FontString { 1u8 } else { 0u8 };
+        (f.frame_level, 1, f.draw_layer as i32, f.draw_sub_layer, type_flag, std::cmp::Reverse(id))
     } else {
-        (f.frame_level, 0, 0, 0, id)
+        (f.frame_level, 0, 0, 0, 0, std::cmp::Reverse(id))
     }
 }
 

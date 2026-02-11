@@ -575,6 +575,15 @@ fn add_draw_layer_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 let mut state = this.state.borrow_mut();
                 if let Some(frame) = state.widgets.get_mut(this.id) {
                     frame.draw_layer = layer;
+                    // Second arg is sublevel (default 0, range -8..7)
+                    if let Some(sub_val) = args_vec.get(1) {
+                        let sub = match sub_val {
+                            Value::Integer(n) => *n as i32,
+                            Value::Number(n) => *n as i32,
+                            _ => 0,
+                        };
+                        frame.draw_sub_layer = sub;
+                    }
                 }
             }
         }
@@ -583,12 +592,11 @@ fn add_draw_layer_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("GetDrawLayer", |_, this, ()| {
         let state = this.state.borrow();
-        let layer = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.draw_layer.as_str())
-            .unwrap_or("ARTWORK");
-        Ok((layer.to_string(), 0i32))
+        if let Some(f) = state.widgets.get(this.id) {
+            Ok((f.draw_layer.as_str().to_string(), f.draw_sub_layer))
+        } else {
+            Ok(("ARTWORK".to_string(), 0i32))
+        }
     });
 }
 

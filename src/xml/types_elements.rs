@@ -18,6 +18,8 @@ pub struct LayersXml {
 pub struct LayerXml {
     #[serde(rename = "@level")]
     pub level: Option<String>,
+    #[serde(rename = "@textureSubLevel", default)]
+    pub texture_sub_level: Option<i32>,
     #[serde(rename = "$value", default)]
     pub elements: Vec<LayerElement>,
 }
