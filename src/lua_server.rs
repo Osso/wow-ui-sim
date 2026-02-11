@@ -33,6 +33,8 @@ pub enum Request {
         height: u32,
         /// Render only this frame subtree (name substring match)
         filter: Option<String>,
+        /// Crop the output image to WxH+X+Y (e.g., 700x150+400+650)
+        crop: Option<String>,
     },
 }
 
@@ -65,6 +67,7 @@ pub enum LuaCommand {
         width: u32,
         height: u32,
         filter: Option<String>,
+        crop: Option<String>,
         respond: mpsc::Sender<Response>,
     },
 }
@@ -197,8 +200,8 @@ fn handle_connection(
             Request::DumpTree { filter, visible_only } => {
                 send_command(cmd_tx, |respond| LuaCommand::DumpTree { filter, visible_only, respond })
             }
-            Request::Screenshot { output, width, height, filter } => {
-                send_command(cmd_tx, |respond| LuaCommand::Screenshot { output, width, height, filter, respond })
+            Request::Screenshot { output, width, height, filter, crop } => {
+                send_command(cmd_tx, |respond| LuaCommand::Screenshot { output, width, height, filter, crop, respond })
             }
         };
 
@@ -282,6 +285,7 @@ pub mod client {
         width: u32,
         height: u32,
         filter: Option<String>,
+        crop: Option<String>,
     ) -> Result<String, String> {
         let mut stream =
             UnixStream::connect(socket).map_err(|e| format!("Connect failed: {}", e))?;
@@ -291,6 +295,7 @@ pub mod client {
             width,
             height,
             filter,
+            crop,
         };
         writeln!(stream, "{}", serde_json::to_string(&request).unwrap())
             .map_err(|e| format!("Write failed: {}", e))?;

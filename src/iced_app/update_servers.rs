@@ -82,9 +82,10 @@ impl App {
                     width,
                     height,
                     filter,
+                    crop,
                     respond,
                 } => {
-                    let result = self.render_screenshot(&output, width, height, filter.as_deref());
+                    let result = self.render_screenshot(&output, width, height, filter.as_deref(), crop.as_deref());
                     let _ = respond.send(result);
                 }
             }

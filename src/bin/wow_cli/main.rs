@@ -80,6 +80,10 @@ enum Commands {
         /// Render only this frame subtree (name substring match)
         #[arg(short, long)]
         filter: Option<String>,
+
+        /// Crop the output image to WxH+X+Y (e.g., 700x150+400+650)
+        #[arg(long, value_name = "WxH+X+Y")]
+        crop: Option<String>,
     },
 
     /// Extract textures referenced by addons to WebP format (standalone)
@@ -158,8 +162,8 @@ fn main() {
         Commands::DumpTree { filter, visible_only } => {
             dump_tree(filter, visible_only);
         }
-        Commands::Screenshot { output, width, height, filter } => {
-            take_screenshot(&output, width, height, filter);
+        Commands::Screenshot { output, width, height, filter, crop } => {
+            take_screenshot(&output, width, height, filter, crop);
         }
         Commands::ExtractTextures { addons, interface, output } => {
             let (found, missing) =
@@ -272,13 +276,13 @@ fn dump_tree(filter: Option<String>, visible_only: bool) {
     }
 }
 
-fn take_screenshot(output: &PathBuf, width: u32, height: u32, filter: Option<String>) {
+fn take_screenshot(output: &PathBuf, width: u32, height: u32, filter: Option<String>, crop: Option<String>) {
     let socket = resolve_socket();
     // Canonicalize output path so the server can write to the right location
     let abs_output = std::env::current_dir()
         .map(|cwd| cwd.join(output))
         .unwrap_or_else(|_| output.clone());
-    match client::screenshot(&socket, &abs_output.to_string_lossy(), width, height, filter) {
+    match client::screenshot(&socket, &abs_output.to_string_lossy(), width, height, filter, crop) {
         Ok(msg) => println!("{}", msg),
         Err(e) => {
             eprintln!("Error: {}", e);
