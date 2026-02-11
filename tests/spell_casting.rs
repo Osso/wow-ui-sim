@@ -415,3 +415,27 @@ fn self_only_spell_succeeds_with_no_target() {
         .unwrap();
     assert!(on_cd, "self-only spell should cast with no target");
 }
+
+#[test]
+fn ui_error_message_wired_with_blizzard_ui() {
+    let env = env_with_full_blizzard_ui();
+    env.exec("TargetUnit('party1')").expect("target party1");
+    install_test_error_handler(&env);
+
+    // UIErrorsFrame should exist and handle UI_ERROR_MESSAGE
+    let exists: bool = env
+        .eval("return UIErrorsFrame ~= nil")
+        .unwrap();
+    assert!(exists, "UIErrorsFrame should exist");
+
+    // Cast harmful spell on friendly target — should fire UI_ERROR_MESSAGE
+    env.exec("CastSpellByID(275779)").expect("CastSpellByID");
+
+    let errors = drain_test_errors(&env);
+    assert!(
+        errors.is_empty(),
+        "UI_ERROR_MESSAGE handling produced {} Lua error(s):\n{}",
+        errors.len(),
+        errors.join("\n"),
+    );
+}

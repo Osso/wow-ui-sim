@@ -154,14 +154,16 @@ fn cast_spell_by_id(
     use super::action_bar_api::{apply_instant_spell, start_cast, start_cooldowns};
     use crate::lua_api::game_data::validate_spell_target;
 
-    // Validate target compatibility
-    {
+    // Validate target compatibility (borrow must be dropped before fire_ui_error
+    // because the event handler chain borrows state again for AddMessage).
+    let blocked_msg = {
         let s = state.borrow();
-        if let Err(msg) = validate_spell_target(spell_id, s.current_target.as_ref()) {
-            eprintln!("[cast] Blocked: {} (spell {})", msg, spell_id);
-            fire_ui_error(lua, msg)?;
-            return Ok(());
-        }
+        validate_spell_target(spell_id, s.current_target.as_ref()).err()
+    };
+    if let Some(msg) = blocked_msg {
+        eprintln!("[cast] Blocked: {} (spell {})", msg, spell_id);
+        fire_ui_error(lua, msg)?;
+        return Ok(());
     }
 
     let cast_time_ms = spell_cast_time(spell_id as i32);

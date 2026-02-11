@@ -14,6 +14,7 @@ pub fn register_sound_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
     g.set("StopSound", create_stop_sound(lua, Rc::clone(&state))?)?;
 
     register_c_sound(lua, state)?;
+    register_game_message_info(lua)?;
     Ok(())
 }
 
@@ -89,5 +90,19 @@ fn register_c_sound(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     snd.set("PlayVocalErrorSound", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
 
     lua.globals().set("C_Sound", snd)?;
+    Ok(())
+}
+
+/// GetGameMessageInfo(gameErrorIndex) -> errorName, soundKitID, voiceID
+///
+/// Returns error string ID and optional sound info for a game error type.
+/// UIErrorsFrame.lua calls this after AddMessage to play error sounds.
+/// We return nil (MayReturnNothing per API docs) since we don't have the
+/// GameErrors.db2 table loaded.
+fn register_game_message_info(lua: &Lua) -> Result<()> {
+    lua.globals().set(
+        "GetGameMessageInfo",
+        lua.create_function(|_, _index: Value| Ok(mlua::MultiValue::new()))?,
+    )?;
     Ok(())
 }
