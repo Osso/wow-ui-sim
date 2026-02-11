@@ -189,6 +189,11 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     let mut state = state_rc.borrow_mut();
                     if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
                         parent_frame.children_keys.insert(key.clone(), child_id);
+                        // Ensure the child is also in the children Vec so
+                        // ancestor-visibility walks and tree dumps find it.
+                        if !parent_frame.children.contains(&child_id) {
+                            parent_frame.children.push(child_id);
+                        }
                     }
                 } else {
                     // Value is not a FrameHandle — remove any stale children_keys entry
