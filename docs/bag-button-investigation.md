@@ -14,13 +14,23 @@ Bag buttons (CharacterBag0Slot through CharacterBag3Slot) appeared greyed-out in
 
 Files: `src/lua_api/globals/c_item_api.rs`, `textures/paperdoll/`
 
-### 2. `ContainerFrame_GetContainerNumSlots` stub returned 0 (FIXED)
+### 2. `ContainerFrame_GetContainerNumSlots` stub returned 0 (FIXED, committed)
 
 The stub in `c_stubs_api.rs` always returned 0, telling `BaseBagSlotButtonMixin:UpdateTextures()` that bags had zero slots. This selected the `bag-border-empty` atlas (dark background with embedded bag icon silhouette) instead of `bag-border` (transparent-center golden ring).
 
 **Fix**: Stub now delegates to `bag_slot_count()` which returns 16 for bags 0-4.
 
 Files: `src/lua_api/globals/c_stubs_api.rs`, `src/lua_api/globals/c_container_api.rs`
+
+### 3. `ItemContextOverlay` rendered black 80% overlay on bag icons (FIXED)
+
+`ItemButton`'s `PostOnShow` calls `UpdateItemContextMatching()` during creation. This calls `self:GetItemContextMatchResult()` which for bag buttons calls `ItemButtonUtil.GetItemContextMatchResultForContainer()` → `ItemButtonUtil.GetItemContext()`. `GetItemContext()` calls unstubbed `C_Spell.TargetSpellReplacesBonusTree()` etc., causing errors. The pcalled `UpdateItemContextMatching` fails, leaving `self.itemContextMatchResult = nil`.
+
+Later, `PLAYER_ENTERING_WORLD` fires `UpdateBagMatchesSearch` → `SetMatchesSearch(true)` → `UpdateItemContextOverlay` → `GetItemContextOverlayMode`. With `itemContextMatchResult = nil`: `nil ~= DoesNotApply(3)` → `contextApplies = true` → returns `Standard` → `SetColorTexture(0,0,0,0.8)` + `SetShown(true)`.
+
+**Fix**: Post-event workaround directly sets `btn.itemContextMatchResult = DoesNotApply` and calls `UpdateItemContextOverlay()` to clear the overlay.
+
+Files: `src/lua_api/workarounds_bags.rs`
 
 ## Investigation Notes
 
@@ -38,4 +48,6 @@ Files: `src/lua_api/globals/c_stubs_api.rs`, `src/lua_api/globals/c_container_ap
 
 ### Workaround timing
 
-`Blizzard_MainMenuBarBagButtons` loads before `Blizzard_UIPanels_Game` (which defines the real `ContainerFrame_GetContainerNumSlots`). The workaround in `workarounds.rs:update_bag_button_textures()` re-runs `UpdateTextures()` after all addons load to fix this ordering issue.
+`Blizzard_MainMenuBarBagButtons` loads before `Blizzard_UIPanels_Game` (which defines the real `ContainerFrame_GetContainerNumSlots`). The workaround in `workarounds_bags.rs:update_bag_button_textures()` re-runs `UpdateTextures()` after all addons load to fix this ordering issue.
+
+The `ItemContextOverlay` fix runs in `apply_post_event` (after startup events) because the overlay is set visible by `PLAYER_ENTERING_WORLD` → `SetMatchesSearch` which fires during startup events.

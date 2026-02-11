@@ -2,6 +2,7 @@
 //! unimplemented engine features (AnimationGroups, EditMode, etc.).
 
 use super::WowLuaEnv;
+use super::workarounds_bags;
 use super::workarounds_editmode;
 
 /// Apply workarounds that must run after startup events.
@@ -9,7 +10,8 @@ use super::workarounds_editmode;
 /// Some workarounds (like BagsBar anchoring) get undone by event handlers
 /// (e.g. EDIT_MODE_LAYOUTS_UPDATED repositions managed frames).
 pub fn apply_post_event(env: &WowLuaEnv) {
-    fix_bags_bar_anchor(env);
+    workarounds_bags::fix_bags_bar_anchor(env);
+    workarounds_bags::fix_bag_item_context_overlay(env);
     workarounds_editmode::init_edit_mode_layout(env);
 }
 
@@ -30,8 +32,8 @@ pub fn apply(env: &WowLuaEnv) {
     setup_managed_frame_containers(env);
     init_objective_tracker(env);
     show_chat_frame(env);
-    init_bag_bar(env);
-    init_bag_token_tracker(env);
+    workarounds_bags::init_bag_bar(env);
+    workarounds_bags::init_bag_token_tracker(env);
     hide_super_tracked_frame(env);
     workarounds_editmode::patch_edit_mode_manager(env);
     patch_compact_raid_container_pools(env);
@@ -493,90 +495,6 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
         C_Timer.After(15, function() C_Timer.NewTicker(40, function()
             post("guild", "|Hchannel:Guild|h[Guild]|h ", 0.25, 1.0, 0.25)
         end) end)
-    "#,
-    );
-}
-
-/// Re-run bag button initialization that failed during OnLoad.
-///
-/// Blizzard_MainMenuBarBagButtons loads before both Blizzard_MicroMenu and
-/// Blizzard_UIPanels_Game. This causes two problems:
-///
-/// 1. BagsBar's anchor `relativeTo="MicroButtonAndBagsBar"` resolves to nil
-///    because MicroButtonAndBagsBar doesn't exist yet, placing BagsBar at
-///    UIParent's TOPRIGHT (top of screen instead of bottom-right).
-///
-/// 2. `ContainerFrame_GetContainerNumSlots` and `PaperDollItemSlotButton_OnLoad`
-///    don't exist when bag button OnLoad fires, so `UpdateTextures()` fails.
-///
-/// Fix both by re-anchoring BagsBar and re-calling UpdateTextures after all
-/// addons are loaded.
-fn init_bag_bar(env: &WowLuaEnv) {
-    fix_bags_bar_anchor(env);
-    update_bag_button_textures(env);
-}
-
-/// `Blizzard_TokenUI` is an on-demand addon that creates `BackpackTokenFrame`.
-/// `ContainerFrameSettingsManager:SetTokenTrackerOwner()` crashes if
-/// `self.TokenTracker` is nil.  Create a stub frame to avoid the nil index.
-fn init_bag_token_tracker(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if ContainerFrameSettingsManager and not ContainerFrameSettingsManager.TokenTracker then
-            local f = CreateFrame("Frame", "BackpackTokenFrame", UIParent)
-            f.ShouldShow = function() return false end
-            f.MarkDirty = function() end
-            f.CleanDirty = function() end
-            f.SetIsCombinedInventory = function() end
-            ContainerFrameSettingsManager.TokenTracker = f
-        end
-    "#,
-    );
-}
-
-/// Re-anchor BagsBar to MicroButtonAndBagsBar now that it exists.
-fn fix_bags_bar_anchor(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if BagsBar and MicroButtonAndBagsBar then
-            BagsBar:ClearAllPoints()
-            BagsBar:SetPoint("TOPRIGHT", MicroButtonAndBagsBar, "TOPRIGHT", 0, 0)
-        end
-    "#,
-    );
-}
-
-/// Re-run bag button initialization now that PaperDollItemSlotButton_OnLoad exists.
-///
-/// During initial OnLoad, `PaperDollItemSlotButton_OnLoad` was a no-op stub
-/// (Blizzard_UIPanels_Game hadn't loaded yet). Re-run it on each bag button
-/// to set the correct slot ID, backgroundTextureName, etc., then update
-/// textures via `PaperDollItemSlotButton_Update` and `UpdateTextures`.
-fn update_bag_button_textures(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        if not MainMenuBarBagManager or not MainMenuBarBagManager.allBagButtons then
-            return
-        end
-        for _, btn in ipairs(MainMenuBarBagManager.allBagButtons) do
-            if PaperDollItemSlotButton_OnLoad then
-                pcall(PaperDollItemSlotButton_OnLoad, btn)
-            end
-            if PaperDollItemSlotButton_Update then
-                pcall(PaperDollItemSlotButton_Update, btn)
-            end
-            if btn.UpdateTextures then
-                pcall(btn.UpdateTextures, btn)
-            end
-        end
-        if MainMenuBarBackpackButton then
-            if PaperDollItemSlotButton_OnLoad then
-                pcall(PaperDollItemSlotButton_OnLoad, MainMenuBarBackpackButton)
-            end
-            if PaperDollItemSlotButton_Update then
-                pcall(PaperDollItemSlotButton_Update, MainMenuBarBackpackButton)
-            end
-        end
     "#,
     );
 }
