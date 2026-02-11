@@ -29,7 +29,7 @@ rodio = { version = "0.21", optional = true }
 # Iced GUI
 iced = { version = "0.14", features = ["advanced", "canvas", "image", "tokio", "wgpu"] }
 iced_wgpu = "0.14"
-iced-layout-inspector = { path = "/home/osso/Projects/lib/iced-layout-inspector", features = ["server"] }
+iced-layout-inspector = { git = "https://github.com/Osso/iced-layout-inspector.git", tag = "v0.2.0", features = ["server"] }
 
 # Text rendering
 cosmic-text = "0.15"

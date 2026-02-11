@@ -1699,6 +1699,7 @@ dependencies = [
 [[package]]
 name = "iced-layout-inspector"
 version = "0.1.0"
+source = "git+https://github.com/Osso/iced-layout-inspector.git?tag=v0.2.0#c1f1dd2cda01a14c3fbcca66e3a767daa355da9e"
 dependencies = [
  "base64",
  "glob",
@@ -3143,6 +3144,7 @@ checksum = "35fb2e5f958ec131621fdd531e9fc186ed768cbe395337403ae56c17a74c68ec"
 [[package]]
 name = "peercred-ipc"
 version = "0.1.0"
+source = "git+https://github.com/Osso/peercred-ipc.git?tag=v0.2.0#dc0093cf4103b6bd887fc5941132fd9d4293e22e"
 dependencies = [
  "libc",
  "rmp-serde",
