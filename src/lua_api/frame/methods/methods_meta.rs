@@ -187,11 +187,16 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     let child_id = child_handle.id;
                     drop(child_handle);
                     let mut state = state_rc.borrow_mut();
+                    // Only add to children Vec if this is a real parent-child
+                    // relationship (child.parent_id == frame_id). Arbitrary Lua
+                    // references like `frame.previousButton = otherFrame` must
+                    // NOT create tree edges — cycles would cause infinite loops
+                    // in tree walkers (collect_ancestor_visible_ids etc.).
+                    let is_real_child = state.widgets.get(child_id)
+                        .is_some_and(|c| c.parent_id == Some(frame_id));
                     if let Some(parent_frame) = state.widgets.get_mut(frame_id) {
                         parent_frame.children_keys.insert(key.clone(), child_id);
-                        // Ensure the child is also in the children Vec so
-                        // ancestor-visibility walks and tree dumps find it.
-                        if !parent_frame.children.contains(&child_id) {
+                        if is_real_child && !parent_frame.children.contains(&child_id) {
                             parent_frame.children.push(child_id);
                         }
                     }
