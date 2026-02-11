@@ -5,7 +5,7 @@ use crate::lua_api::LoaderEnv;
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
 use super::helpers::{escape_lua_string, generate_anchors_code, generate_scripts_code, get_size_values, lua_global_ref, rand_id};
-use super::helpers_anim::generate_animation_group_code;
+use super::xml_frame_extras::{apply_animation_groups, apply_bar_texture, init_action_bar_tables};
 use super::xml_lifecycle::fire_lifecycle_scripts;
 use super::xml_fontstring::create_fontstring_from_xml;
 use super::xml_texture::create_texture_from_xml;
@@ -61,12 +61,25 @@ pub fn create_frame_from_xml(
         None => explicit_inherits,
     };
 
-    let mut lua_code = build_create_frame_code(widget_type, &name, explicit_parent, inherits);
+    let lua_code = build_frame_lua_code(widget_type, &name, explicit_parent, inherits, frame, parent);
+    exec_create_frame_code(env, &lua_code, &name)?;
+    apply_intrinsic_property(env, intrinsic_base, &name);
+    create_children_and_finalize(env, frame, &name, inherits)?;
+    Ok(Some(name))
+}
 
+/// Build the Lua code that creates a frame and sets all XML-driven properties.
+fn build_frame_lua_code(
+    widget_type: &str, name: &str, explicit_parent: Option<&str>,
+    inherits: &str, frame: &crate::xml::FrameXml, parent: &str,
+) -> String {
+    let mut lua_code = build_create_frame_code(widget_type, name, explicit_parent, inherits);
     append_parent_key_code(&mut lua_code, frame, parent);
     append_mixins_code(&mut lua_code, frame, inherits);
     append_size_code(&mut lua_code, frame, inherits);
     append_anchors_code(&mut lua_code, frame, inherits, parent);
+    append_frame_strata_code(&mut lua_code, frame, inherits);
+    append_frame_level_code(&mut lua_code, frame, inherits);
     append_hidden_code(&mut lua_code, frame, inherits);
     append_alpha_code(&mut lua_code, frame, inherits);
     append_enable_mouse_code(&mut lua_code, frame, inherits);
@@ -76,30 +89,30 @@ pub fn create_frame_from_xml(
     append_xml_attributes_code(&mut lua_code, frame);
     append_id_code(&mut lua_code, frame);
     append_scripts_code(&mut lua_code, frame);
+    lua_code
+}
 
-    exec_create_frame_code(env, &lua_code, &name)?;
-
-    // Set the `intrinsic` property on intrinsic frames (e.g. frame.intrinsic = "DropdownButton").
-    // WoW Lua code checks this property to validate intrinsic types.
+/// Set the `intrinsic` property on intrinsic frames (e.g. frame.intrinsic = "DropdownButton").
+fn apply_intrinsic_property(env: &LoaderEnv<'_>, intrinsic_base: Option<&str>, name: &str) {
     if let Some(base) = intrinsic_base {
-        let code = format!("{}.intrinsic = \"{}\"", lua_global_ref(&name), base);
+        let code = format!("{}.intrinsic = \"{}\"", lua_global_ref(name), base);
         env.exec(&code).ok();
     }
+}
 
-    // Child frames first: they may be referenced by layer children via relativeKey
-    create_child_frames(env, frame, &name)?;
-    create_layer_children(env, frame, &name)?;
-    apply_animation_groups(env, frame, &name, inherits)?;
-
-    apply_button_textures(env, frame, &name)?;
-    apply_button_text(env, frame, &name, inherits)?;
-    apply_bar_texture(env, frame, &name)?;
-
-    init_action_bar_tables(env, &name);
-
-    fire_lifecycle_scripts(env, &name);
-
-    Ok(Some(name))
+/// Create child frames, layer children, animations, and apply button/bar textures.
+fn create_children_and_finalize(
+    env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str, inherits: &str,
+) -> Result<(), LoadError> {
+    create_child_frames(env, frame, name)?;
+    create_layer_children(env, frame, name)?;
+    apply_animation_groups(env, frame, name, inherits)?;
+    apply_button_textures(env, frame, name)?;
+    apply_button_text(env, frame, name, inherits)?;
+    apply_bar_texture(env, frame, name)?;
+    init_action_bar_tables(env, name);
+    fire_lifecycle_scripts(env, name);
+    Ok(())
 }
 
 /// Execute the CreateFrame Lua code with OnLoad suppression.
@@ -637,114 +650,39 @@ fn create_frame_elements(
     Ok(())
 }
 
-/// Apply animation groups from the frame and its inherited templates.
-fn apply_animation_groups(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str, inherits: &str) -> Result<(), LoadError> {
-    if let Some(anims) = frame.animations() {
-        exec_animation_groups(env, anims, name);
-    }
-
-    if !inherits.is_empty() {
-        for template_entry in &crate::xml::get_template_chain(inherits) {
-            if let Some(anims) = template_entry.frame.animations() {
-                exec_animation_groups(env, anims, name);
-            }
-        }
-    }
-    Ok(())
-}
-
-/// Generate and execute Lua code for a set of animation groups on a frame.
-fn exec_animation_groups(env: &LoaderEnv<'_>, anims: &crate::xml::AnimationsXml, name: &str) {
-    let mut anim_code = format!(
-        r#"
-            local frame = {}
-            "#,
-        lua_global_ref(name)
-    );
-    for anim_group_xml in &anims.animations {
-        if anim_group_xml.is_virtual == Some(true) {
-            if let Some(ref name) = anim_group_xml.name {
-                crate::xml::register_anim_group_template(name, anim_group_xml.clone());
-            }
-            continue;
-        }
-        anim_code.push_str(&generate_animation_group_code(anim_group_xml, "frame"));
-    }
-    if let Err(e) = env.exec(&anim_code) {
-        eprintln!("[AnimSetup] error: {}", e);
+/// Append `frame:SetFrameStrata(strata)` if the frame has a frameStrata attribute.
+fn append_frame_strata_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
+    let strata = frame.frame_strata.clone().or_else(|| {
+        resolve_string_from_templates(inherits, |f| f.frame_strata.clone())
+    });
+    if let Some(s) = strata {
+        lua_code.push_str(&format!("\n        frame:SetFrameStrata(\"{}\")\n        ", s));
     }
 }
 
-/// Create the bar texture for a StatusBar from its inline `<BarTexture>` XML element.
-fn apply_bar_texture(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name: &str) -> Result<(), LoadError> {
-    let Some(bar) = frame.bar_texture() else { return Ok(()) };
-
-    let bar_name = bar
-        .name
-        .as_ref()
-        .map(|n| n.replace("$parent", name))
-        .unwrap_or_else(|| format!("__bar_{}", rand_id()));
-
-    let parent_ref = lua_global_ref(name);
-    let mut code = format!(
-        r#"
-        local parent = {parent_ref}
-        if parent and parent.SetStatusBarTexture then
-            local bar = parent:CreateTexture("{}", "ARTWORK")
-        "#,
-        escape_lua_string(&bar_name),
-    );
-
-    if let Some(file) = &bar.file {
-        code.push_str(&format!(
-            "            bar:SetTexture(\"{}\")\n",
-            escape_lua_string(file)
-        ));
+/// Append `frame:SetFrameLevel(level)` if the frame has a frameLevel attribute.
+fn append_frame_level_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
+    let level = frame.frame_level.or_else(|| {
+        resolve_from_templates(inherits, |f| f.frame_level)
+    });
+    if let Some(l) = level {
+        lua_code.push_str(&format!("\n        frame:SetFrameLevel({})\n        ", l));
     }
-    if let Some(atlas) = &bar.atlas {
-        code.push_str(&format!(
-            "            bar:SetAtlas(\"{}\")\n",
-            escape_lua_string(atlas)
-        ));
-    }
-    if let Some(color) = &bar.color {
-        code.push_str(&format!(
-            "            bar:SetColorTexture({}, {}, {}, {})\n",
-            color.r.unwrap_or(1.0),
-            color.g.unwrap_or(1.0),
-            color.b.unwrap_or(1.0),
-            color.a.unwrap_or(1.0)
-        ));
-    }
-
-    code.push_str("            parent:SetStatusBarTexture(bar)\n");
-    let parent_key = bar.parent_key.as_deref().unwrap_or("Bar");
-    code.push_str(&format!("            parent.{} = bar\n", parent_key));
-
-    if bar.name.is_some() {
-        code.push_str(&format!(
-            "            _G[\"{}\"] = bar\n",
-            escape_lua_string(&bar_name)
-        ));
-    }
-
-    code.push_str("        end\n");
-    env.exec(&code).map_err(|e| {
-        LoadError::Lua(format!("Failed to create bar texture on {}: {}", name, e))
-    })?;
-    Ok(())
 }
 
-/// Initialize tables expected by action bar OnLoad handlers.
-/// Frames with `numButtons` KeyValue are action bars that need `actionButtons = {}`.
-fn init_action_bar_tables(env: &LoaderEnv<'_>, name: &str) {
-    let code = format!(
-        r#"do local f = {}
-        if f and f.numButtons and not f.actionButtons then
-            f.actionButtons = {{}}
-        end end"#,
-        lua_global_ref(name)
-    );
-    let _ = env.exec(&code);
+/// Search template chain for the first Some value returned by the extractor.
+fn resolve_from_templates<T: Copy>(inherits: &str, extract: fn(&crate::xml::FrameXml) -> Option<T>) -> Option<T> {
+    if inherits.is_empty() { return None; }
+    crate::xml::get_template_chain(inherits)
+        .iter()
+        .find_map(|entry| extract(&entry.frame))
+}
+
+/// Search template chain for the first Some(String) returned by the extractor.
+fn resolve_string_from_templates(inherits: &str, extract: fn(&crate::xml::FrameXml) -> Option<String>) -> Option<String> {
+    if inherits.is_empty() { return None; }
+    crate::xml::get_template_chain(inherits)
+        .iter()
+        .find_map(|entry| extract(&entry.frame))
 }
 

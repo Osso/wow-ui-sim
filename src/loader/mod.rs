@@ -10,6 +10,7 @@ mod lua_file;
 mod xml_file;
 mod xml_fontstring;
 mod xml_frame;
+mod xml_frame_extras;
 mod xml_lifecycle;
 mod xml_texture;
 

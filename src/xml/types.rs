@@ -132,6 +132,12 @@ pub struct FrameXml {
     pub parent_array: Option<String>,
     #[serde(rename = "@id")]
     pub xml_id: Option<i32>,
+    #[serde(rename = "@frameStrata")]
+    pub frame_strata: Option<String>,
+    #[serde(rename = "@frameLevel")]
+    pub frame_level: Option<i32>,
+    #[serde(rename = "@toplevel")]
+    pub toplevel: Option<bool>,
 
     // Child elements collected via $value to allow multiples
     #[serde(rename = "$value", default)]
