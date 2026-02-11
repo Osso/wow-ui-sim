@@ -387,11 +387,14 @@ fn register_spell_stub_globals(lua: &Lua) -> Result<()> {
 fn register_inventory_globals(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    // Returns (slotID, textureName, checkRelic) — callers destructure all three.
+    // Returns (slotID, textureFileDataID) — WoW returns the slot's background icon as a fileDataID.
     globals.set(
         "GetInventorySlotInfo",
         lua.create_function(|_, slot_name: String| {
-            Ok((inventory_slot_id(&slot_name), Value::Nil, false))
+            Ok((
+                inventory_slot_id(&slot_name),
+                slot_texture_file_data_id(&slot_name),
+            ))
         })?,
     )?;
     globals.set(
@@ -651,5 +654,31 @@ fn inventory_slot_id(slot_name: &str) -> i32 {
         "Bag3Slot" => 23,
         "ReagentBag0Slot" => 24,
         _ => 0,
+    }
+}
+
+/// Map inventory slot name to the fileDataID for its background icon texture.
+fn slot_texture_file_data_id(slot_name: &str) -> i32 {
+    match slot_name {
+        "HeadSlot" => 136516,
+        "NeckSlot" => 136519,
+        "ShoulderSlot" => 136526,
+        "ShirtSlot" => 136525,
+        "ChestSlot" => 136512,
+        "WaistSlot" => 136529,
+        "LegsSlot" => 136517,
+        "FeetSlot" => 136513,
+        "WristSlot" => 136530,
+        "HandsSlot" => 136515,
+        "Finger0Slot" | "Finger1Slot" => 136514,
+        "Trinket0Slot" | "Trinket1Slot" => 136528,
+        "BackSlot" => 136521,
+        "MainHandSlot" => 136518,
+        "SecondaryHandSlot" => 136524,
+        "RangedSlot" => 136520,
+        "TabardSlot" => 136527,
+        "AmmoSlot" => 136510,
+        "Bag0Slot" | "Bag1Slot" | "Bag2Slot" | "Bag3Slot" | "ReagentBag0Slot" => 136511,
+        _ => 136516, // fallback to head slot icon
     }
 }

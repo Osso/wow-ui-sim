@@ -343,19 +343,21 @@ fn test_legacy_get_container_num_slots() {
 #[test]
 fn test_get_inventory_slot_info() {
     let env = env();
-    let slot: i32 = env
+    let (slot, texture): (i32, i32) = env
         .eval(r#"return GetInventorySlotInfo("HeadSlot")"#)
         .unwrap();
     assert_eq!(slot, 1);
+    assert_eq!(texture, 136516);
 }
 
 #[test]
 fn test_get_inventory_slot_info_mainhand() {
     let env = env();
-    let slot: i32 = env
+    let (slot, texture): (i32, i32) = env
         .eval(r#"return GetInventorySlotInfo("MainHandSlot")"#)
         .unwrap();
     assert_eq!(slot, 16);
+    assert_eq!(texture, 136518);
 }
 
 #[test]
@@ -372,12 +374,22 @@ fn test_get_inventory_slot_info_bag_slots() {
 }
 
 #[test]
-fn test_get_inventory_slot_info_returns_three_values() {
+fn test_get_inventory_slot_info_returns_two_values() {
     let env = env();
     let count: i32 = env
         .eval(r#"return select('#', GetInventorySlotInfo("HeadSlot"))"#)
         .unwrap();
-    assert_eq!(count, 3);
+    assert_eq!(count, 2);
+}
+
+#[test]
+fn test_get_inventory_slot_info_bag_slot_texture() {
+    let env = env();
+    let (slot, texture): (i32, i32) = env
+        .eval(r#"return GetInventorySlotInfo("Bag0Slot")"#)
+        .unwrap();
+    assert_eq!(slot, 20);
+    assert_eq!(texture, 136511);
 }
 
 #[test]
