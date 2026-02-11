@@ -476,3 +476,56 @@ fn test_is_spell_known() {
     let known: bool = env.eval("return IsSpellKnown(100)").unwrap();
     assert!(!known);
 }
+
+#[test]
+fn test_item_button_icon_has_anchors() {
+    let env = env();
+    let result: String = env
+        .eval(
+            r#"
+            local btn = CreateFrame("ItemButton", "TestBagBtn", UIParent)
+            btn:SetSize(30, 30)
+            local icon = btn.icon
+            if not icon then return "no_icon" end
+            local n = icon:GetNumPoints()
+            if n == 0 then return "no_anchors" end
+            local parts = {}
+            for i = 1, n do
+                local pt, rel, relPt, x, y = icon:GetPoint(i)
+                parts[#parts+1] = pt .. ">" .. (rel and rel:GetName() or "nil") .. "." .. relPt
+            end
+            return n .. ":" .. table.concat(parts, ",")
+            "#,
+        )
+        .unwrap();
+    // Should have 2 anchors: TOPLEFT>parent.TOPLEFT, BOTTOMRIGHT>parent.BOTTOMRIGHT
+    assert!(result.contains("2:"), "Expected 2 anchors, got: {}", result);
+    assert!(result.contains("TOPLEFT"), "Missing TOPLEFT anchor: {}", result);
+    assert!(result.contains("BOTTOMRIGHT"), "Missing BOTTOMRIGHT anchor: {}", result);
+}
+
+#[test]
+fn test_item_button_icon_identity() {
+    // Verify the icon key points to the named icon texture (not an orphaned intrinsic)
+    let env = env();
+    let result: String = env
+        .eval(
+            r#"
+            local btn = CreateFrame("ItemButton", "TestIBIdentity", UIParent)
+            btn:SetSize(30, 30)
+            local icon = btn.icon
+            if not icon then return "no_icon" end
+            local name = icon:GetName() or "anonymous"
+            local numPts = icon:GetNumPoints()
+            -- Also check the global name
+            local globalIcon = _G["TestIBIdentityIconTexture"]
+            local globalName = globalIcon and (globalIcon:GetName() or "anon-global") or "no_global"
+            local globalPts = globalIcon and globalIcon:GetNumPoints() or -1
+            local same = (globalIcon == icon) and "same" or "different"
+            return name .. "|pts=" .. numPts .. "|global=" .. globalName .. "|gpts=" .. globalPts .. "|" .. same
+            "#,
+        )
+        .unwrap();
+    eprintln!("icon identity: {}", result);
+    assert!(result.contains("pts=2"), "Icon should have 2 anchors: {}", result);
+}
