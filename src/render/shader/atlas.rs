@@ -347,18 +347,19 @@ impl GpuTextureAtlas {
         );
     }
 
-    /// Get memory usage statistics.
+    /// Get memory usage statistics (includes glyph atlas).
     pub fn memory_stats(&self) -> TierStats {
         let mut stats = TierStats::default();
         for (i, tier) in self.tiers.iter().enumerate() {
-            // Each tier uses one ATLAS_SIZE x ATLAS_SIZE texture
             let tier_bytes = (ATLAS_SIZE * ATLAS_SIZE * 4) as usize;
             stats.allocated_bytes += tier_bytes;
             stats.used_slots[i] = tier.next_slot as usize;
-            // Approximate used bytes based on slots
             let slot_bytes = (tier.cell_size * tier.cell_size * 4) as usize;
             stats.used_bytes += slot_bytes * tier.next_slot as usize;
         }
+        // Glyph atlas
+        let glyph_bytes = (self.glyph_atlas_size * self.glyph_atlas_size * 4) as usize;
+        stats.allocated_bytes += glyph_bytes;
         stats
     }
 }
@@ -395,12 +396,7 @@ fn create_glyph_atlas(
 }
 
 /// Create bind group layout and bind group for tier textures, sampler, and glyph atlas.
-fn create_atlas_bind_groups(
-    device: &wgpu::Device,
-    tiers: &[TierAtlas; NUM_TIERS],
-    glyph_view: &wgpu::TextureView,
-    sampler: &wgpu::Sampler,
-) -> (wgpu::BindGroupLayout, wgpu::BindGroup) {
+fn create_atlas_bind_group_layout(device: &wgpu::Device) -> wgpu::BindGroupLayout {
     let texture_entry = |binding: u32| wgpu::BindGroupLayoutEntry {
         binding,
         visibility: wgpu::ShaderStages::FRAGMENT,
@@ -411,8 +407,7 @@ fn create_atlas_bind_groups(
         },
         count: None,
     };
-
-    let layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+    device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
         label: Some("WoW UI Texture Bind Group Layout"),
         entries: &[
             texture_entry(0), // Tier 0 (64x64 cells)
@@ -427,7 +422,16 @@ fn create_atlas_bind_groups(
             },
             texture_entry(5), // Glyph atlas
         ],
-    });
+    })
+}
+
+fn create_atlas_bind_groups(
+    device: &wgpu::Device,
+    tiers: &[TierAtlas; NUM_TIERS],
+    glyph_view: &wgpu::TextureView,
+    sampler: &wgpu::Sampler,
+) -> (wgpu::BindGroupLayout, wgpu::BindGroup) {
+    let layout = create_atlas_bind_group_layout(device);
 
     let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
         label: Some("WoW UI Texture Bind Group"),

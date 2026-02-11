@@ -95,6 +95,24 @@ fn upload_pending_textures(
     if let Some(glyph_data) = glyph_atlas_data {
         atlas.upload_glyph_atlas(queue, glyph_data, glyph_atlas_size);
     }
+
+    log_gpu_memory_once(atlas);
+}
+
+/// Log GPU atlas memory usage once after the first batch of textures.
+fn log_gpu_memory_once(atlas: &crate::render::shader::atlas::GpuTextureAtlas) {
+    use std::sync::atomic::{AtomicBool, Ordering};
+    static LOGGED: AtomicBool = AtomicBool::new(false);
+    if LOGGED.swap(true, Ordering::Relaxed) {
+        return;
+    }
+    let stats = atlas.memory_stats();
+    eprintln!(
+        "[GPU] Atlas memory: {:.0} MB allocated, {:.1} MB used | slots: 64px={} 128px={} 256px={} 512px={}",
+        stats.allocated_bytes as f64 / (1024.0 * 1024.0),
+        stats.used_bytes as f64 / (1024.0 * 1024.0),
+        stats.used_slots[0], stats.used_slots[1], stats.used_slots[2], stats.used_slots[3],
+    );
 }
 
 /// Resolve pending texture indices (-2) and scale vertex positions to physical pixels.
