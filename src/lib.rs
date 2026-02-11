@@ -14,6 +14,8 @@ pub mod items;
 pub mod manifest_interface_data;
 #[path = "../data/spells.rs"]
 pub mod spells;
+#[path = "../data/spell_power.rs"]
+pub mod spell_power;
 #[path = "../data/traits.rs"]
 pub mod traits;
 pub mod config;

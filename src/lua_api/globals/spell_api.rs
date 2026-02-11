@@ -324,28 +324,26 @@ fn register_c_spell(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Tab
     Ok(t)
 }
 
-/// Return mana cost info for a spell. WoW returns an array of SpellPowerCostInfo
-/// tables with fields: type, name, cost, minCost, costPercent, costPerSec,
-/// requiredAuraID, hasRequiredAura. Returns nil for unknown spells.
+/// Return power cost info for a spell from the generated SpellPower database.
+/// WoW returns an array of SpellPowerCostInfo tables with fields: type, name,
+/// cost, minCost, costPercent, costPerSec, requiredAuraID, hasRequiredAura.
 fn create_spell_power_cost(lua: &Lua, spell_id: i32) -> Result<Value> {
-    let (power_type, power_name, cost) = match spell_id {
-        19750 => (0, "MANA", 2600),  // Flash of Light
-        82326 => (0, "MANA", 3800),  // Holy Light
-        85673 => (0, "MANA", 1800),  // Word of Glory (actually Holy Power but simplify)
-        7328 => (0, "MANA", 6400),   // Redemption
-        _ => return Ok(Value::Nil),
+    let Some(costs) = crate::spell_power::get_spell_power(spell_id as u32) else {
+        return Ok(Value::Nil);
     };
-    let entry = lua.create_table()?;
-    entry.set("type", power_type)?;
-    entry.set("name", power_name)?;
-    entry.set("cost", cost)?;
-    entry.set("minCost", cost)?;
-    entry.set("costPercent", 0)?;
-    entry.set("costPerSec", 0)?;
-    entry.set("requiredAuraID", 0)?;
-    entry.set("hasRequiredAura", false)?;
     let result = lua.create_table()?;
-    result.set(1, entry)?;
+    for (i, cost) in costs.iter().enumerate() {
+        let entry = lua.create_table()?;
+        entry.set("type", cost.power_type as i32)?;
+        entry.set("name", crate::spell_power::power_type_name(cost.power_type))?;
+        entry.set("cost", cost.mana_cost)?;
+        entry.set("minCost", cost.mana_cost)?;
+        entry.set("costPercent", cost.cost_pct as f64)?;
+        entry.set("costPerSec", cost.cost_per_sec as f64)?;
+        entry.set("requiredAuraID", cost.required_aura_id as i64)?;
+        entry.set("hasRequiredAura", cost.required_aura_id != 0)?;
+        result.set(i as i64 + 1, entry)?;
+    }
     Ok(Value::Table(result))
 }
 
