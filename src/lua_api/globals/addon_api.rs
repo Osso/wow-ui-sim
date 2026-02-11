@@ -307,55 +307,61 @@ fn register_global_constants(lua: &Lua) -> Result<()> {
 /// Per-addon metric = that addon's load time.
 fn register_profiler(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let c_profiler = lua.create_table()?;
-
     c_profiler.set("IsEnabled", lua.create_function(|_, ()| Ok(true))?)?;
-
-    let s = Rc::clone(state);
-    c_profiler.set(
-        "GetApplicationMetric",
-        lua.create_function(move |_, _metric: Value| {
-            let state = s.borrow();
-            let overall: f64 = state.addons.iter().map(|a| a.load_time_secs).sum();
-            // Application time = addon time * 3 so addons show as ~33% of total
-            Ok(overall * 3.0)
-        })?,
-    )?;
-
-    let s = Rc::clone(state);
-    c_profiler.set(
-        "GetOverallMetric",
-        lua.create_function(move |_, _metric: Value| {
-            let state = s.borrow();
-            let overall: f64 = state.addons.iter().map(|a| a.load_time_secs).sum();
-            Ok(overall)
-        })?,
-    )?;
-
-    let s = Rc::clone(state);
-    c_profiler.set(
-        "GetAddOnMetric",
-        lua.create_function(move |_, (addon, _metric): (Value, Value)| {
-            let state = s.borrow();
-            let val = find_addon_by_value(&state.addons, &addon)
-                .map(|a| a.load_time_secs)
-                .unwrap_or(0.0);
-            Ok(val)
-        })?,
-    )?;
-
+    register_profiler_metrics(lua, &c_profiler, state)?;
     c_profiler.set(
         "CheckForPerformanceMessage",
         lua.create_function(|_, ()| Ok(mlua::Value::Nil))?,
     )?;
-
     c_profiler.set(
         "AddPerformanceMessageShown",
         lua.create_function(|_, _msg: Value| Ok(()))?,
     )?;
-
     lua.globals().set("C_AddOnProfiler", c_profiler)?;
-
     register_legacy_memory_globals(lua, state)
+}
+
+/// Profiler metric query methods (GetApplicationMetric, GetOverallMetric, etc.).
+fn register_profiler_metrics(
+    lua: &Lua, t: &mlua::Table, state: &Rc<RefCell<SimState>>,
+) -> Result<()> {
+    let s = Rc::clone(state);
+    t.set("GetApplicationMetric", lua.create_function(move |_, _metric: Value| {
+        let state = s.borrow();
+        let overall: f64 = state.addons.iter().map(|a| a.load_time_secs).sum();
+        Ok(overall * 3.0)
+    })?)?;
+
+    let s = Rc::clone(state);
+    t.set("GetOverallMetric", lua.create_function(move |_, _metric: Value| {
+        let state = s.borrow();
+        Ok(state.addons.iter().map(|a| a.load_time_secs).sum::<f64>())
+    })?)?;
+
+    let s = Rc::clone(state);
+    t.set("GetAddOnMetric", lua.create_function(move |_, (addon, _metric): (Value, Value)| {
+        let state = s.borrow();
+        let val = find_addon_by_value(&state.addons, &addon)
+            .map(|a| a.load_time_secs)
+            .unwrap_or(0.0);
+        Ok(val)
+    })?)?;
+
+    let s = Rc::clone(state);
+    t.set("GetTopKAddOnsForMetric", lua.create_function(move |lua, (_metric, k): (Value, usize)| {
+        let state = s.borrow();
+        let mut sorted: Vec<_> = state.addons.iter().collect();
+        sorted.sort_by(|a, b| b.load_time_secs.partial_cmp(&a.load_time_secs).unwrap());
+        let result = lua.create_table()?;
+        for (i, addon) in sorted.iter().take(k).enumerate() {
+            let entry = lua.create_table()?;
+            entry.set("addOnName", addon.folder_name.as_str())?;
+            result.set(i + 1, entry)?;
+        }
+        Ok(result)
+    })?)?;
+
+    Ok(())
 }
 
 fn register_legacy_memory_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
