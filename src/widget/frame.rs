@@ -232,6 +232,10 @@ pub struct Frame {
     pub vert_tile: bool,
     /// Texture coordinates (left, right, top, bottom) — final UV coords used for rendering.
     pub tex_coords: Option<(f32, f32, f32, f32)>,
+    /// Raw 8-arg SetTexCoord values: [ULx, ULy, LLx, LLy, URx, URy, LRx, LRy].
+    /// Stored when 8-arg SetTexCoord is called, used by tiling code to detect
+    /// UV-based repeat tiling (BackdropTemplateMixin) where values >1.0 encode repeat counts.
+    pub tex_coords_quad: Option<[f32; 8]>,
     /// Atlas base texture coordinates — the sub-region on the texture file.
     /// SetTexCoord remaps relative to these when an atlas is active.
     pub atlas_tex_coords: Option<(f32, f32, f32, f32)>,
@@ -426,6 +430,7 @@ macro_rules! frame_defaults {
             horiz_tile: false,
             vert_tile: false,
             tex_coords: None,
+            tex_coords_quad: None,
             atlas_tex_coords: None,
             atlas: None,
             nine_slice_layout: None,

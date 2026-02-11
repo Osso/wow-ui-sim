@@ -309,6 +309,49 @@ impl QuadBatch {
         });
     }
 
+    /// Push a textured quad by path with explicit per-vertex UV coordinates.
+    /// Used for rotated UV mappings (e.g., BackdropTemplateMixin edge textures).
+    /// `uvs` is [TL, TR, BR, BL] with each entry being [u, v].
+    pub fn push_textured_path_uv4(
+        &mut self,
+        bounds: Rectangle,
+        uvs: [[f32; 2]; 4],
+        path: &str,
+        color: [f32; 4],
+        blend_mode: BlendMode,
+    ) {
+        let vertex_start = self.vertices.len() as u32;
+        let base_index = self.vertices.len() as u32;
+        let positions = [
+            [bounds.x, bounds.y],
+            [bounds.x + bounds.width, bounds.y],
+            [bounds.x + bounds.width, bounds.y + bounds.height],
+            [bounds.x, bounds.y + bounds.height],
+        ];
+        let flags = blend_mode as u32;
+        for i in 0..4 {
+            self.vertices.push(QuadVertex {
+                position: positions[i],
+                tex_coords: uvs[i],
+                color,
+                tex_index: -2,
+                flags,
+                local_uv: uvs[i],
+                mask_tex_index: -1,
+                mask_tex_coords: [0.0, 0.0],
+            });
+        }
+        self.indices.extend_from_slice(&[
+            base_index, base_index + 1, base_index + 2,
+            base_index, base_index + 2, base_index + 3,
+        ]);
+        self.texture_requests.push(TextureRequest {
+            path: path.to_string(),
+            vertex_start,
+            vertex_count: 4,
+        });
+    }
+
     /// Push a horizontal 3-slice texture by path (left cap, stretched middle, right cap).
     ///
     /// Used for WoW button textures with fixed left/right caps and stretchable middle.

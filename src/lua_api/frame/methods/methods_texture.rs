@@ -23,11 +23,22 @@ pub fn add_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// SetTexture, GetTexture, SetColorTexture.
 fn add_texture_path_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetTexture", |_, this, value: Value| {
-        let path = resolve_file_data_id_or_path(&value);
+    methods.add_method("SetTexture", |_, this, args: mlua::MultiValue| {
+        let args_vec: Vec<Value> = args.into_iter().collect();
+        let path = args_vec.first().map(resolve_file_data_id_or_path).unwrap_or(None);
+        let horiz_tile = args_vec.get(1).and_then(|v| match v {
+            Value::Boolean(b) => Some(*b),
+            _ => None,
+        });
+        let vert_tile = args_vec.get(2).and_then(|v| match v {
+            Value::Boolean(b) => Some(*b),
+            _ => None,
+        });
         let mut state = this.state.borrow_mut();
         if let Some(frame) = state.widgets.get_mut(this.id) {
             frame.texture = path;
+            if let Some(h) = horiz_tile { frame.horiz_tile = h; }
+            if let Some(v) = vert_tile { frame.vert_tile = v; }
         }
         Ok(())
     });
@@ -175,6 +186,7 @@ fn add_atlas_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     frame.atlas = Some(name);
                     frame.texture = None;
                     frame.tex_coords = None;
+                    frame.tex_coords_quad = None;
                 }
             } else if let Some(lookup) = lookup {
                 let atlas_info = lookup.info;
@@ -419,17 +431,42 @@ fn add_tex_coord_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("SetTexCoord", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
-        if args_vec.len() >= 4 {
-            let left = value_to_f32(&args_vec[0], 0.0);
-            let right = value_to_f32(&args_vec[1], 1.0);
-            let top = value_to_f32(&args_vec[2], 0.0);
-            let bottom = value_to_f32(&args_vec[3], 1.0);
+        let mut raw_quad: Option<[f32; 8]> = None;
+        let (left, right, top, bottom) = if args_vec.len() >= 8 {
+            // 8-arg form: ULx, ULy, LLx, LLy, URx, URy, LRx, LRy
+            // (topLeft, bottomLeft, topRight, bottomRight) as (u, v) pairs.
+            let ul_x = value_to_f32(&args_vec[0], 0.0);
+            let ul_y = value_to_f32(&args_vec[1], 0.0);
+            let ll_x = value_to_f32(&args_vec[2], 0.0);
+            let ll_y = value_to_f32(&args_vec[3], 1.0);
+            let ur_x = value_to_f32(&args_vec[4], 1.0);
+            let ur_y = value_to_f32(&args_vec[5], 0.0);
+            let lr_x = value_to_f32(&args_vec[6], 1.0);
+            let lr_y = value_to_f32(&args_vec[7], 1.0);
+            raw_quad = Some([ul_x, ul_y, ll_x, ll_y, ur_x, ur_y, lr_x, lr_y]);
+            // Compute axis-aligned bounding box from all 4 corners.
+            let left = ul_x.min(ll_x).min(ur_x).min(lr_x);
+            let right = ul_x.max(ll_x).max(ur_x).max(lr_x);
+            let top = ul_y.min(ll_y).min(ur_y).min(lr_y);
+            let bottom = ul_y.max(ll_y).max(ur_y).max(lr_y);
+            (left, right, top, bottom)
+        } else if args_vec.len() >= 4 {
+            // 4-arg form: left, right, top, bottom
+            (
+                value_to_f32(&args_vec[0], 0.0),
+                value_to_f32(&args_vec[1], 1.0),
+                value_to_f32(&args_vec[2], 0.0),
+                value_to_f32(&args_vec[3], 1.0),
+            )
+        } else {
+            return Ok(());
+        };
 
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
-                frame.tex_coords =
-                    Some(remap_tex_coords(frame.atlas_tex_coords, left, right, top, bottom));
-            }
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.tex_coords =
+                Some(remap_tex_coords(frame.atlas_tex_coords, left, right, top, bottom));
+            frame.tex_coords_quad = raw_quad;
         }
         Ok(())
     });
@@ -529,10 +566,29 @@ fn add_rotation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_draw_layer_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetGradient", |_, _this, _args: mlua::MultiValue| Ok(()));
 
-    methods.add_method("SetDrawLayer", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.add_method("SetDrawLayer", |_, this, args: mlua::MultiValue| {
+        use crate::widget::DrawLayer;
+        let args_vec: Vec<Value> = args.into_iter().collect();
+        if let Some(Value::String(s)) = args_vec.first() {
+            let layer_str = s.to_string_lossy();
+            if let Some(layer) = DrawLayer::from_str(&layer_str) {
+                let mut state = this.state.borrow_mut();
+                if let Some(frame) = state.widgets.get_mut(this.id) {
+                    frame.draw_layer = layer;
+                }
+            }
+        }
+        Ok(())
+    });
 
-    methods.add_method("GetDrawLayer", |_, _this, ()| {
-        Ok(("ARTWORK", 0i32))
+    methods.add_method("GetDrawLayer", |_, this, ()| {
+        let state = this.state.borrow();
+        let layer = state
+            .widgets
+            .get(this.id)
+            .map(|f| f.draw_layer.as_str())
+            .unwrap_or("ARTWORK");
+        Ok((layer.to_string(), 0i32))
     });
 }
 

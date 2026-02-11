@@ -382,6 +382,7 @@ fn apply_bar_texture(widgets: &mut crate::widget::WidgetRegistry, child_id: u64,
         frame.texture = Some(tex_str.to_string());
         frame.atlas = None;
         frame.tex_coords = None;
+        frame.tex_coords_quad = None;
         frame.atlas_tex_coords = None;
     }
 }
