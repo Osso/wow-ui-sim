@@ -42,12 +42,47 @@ impl App {
     fn exec_lua_command(&self, code: &str) -> LuaResponse {
         let env = self.env.borrow();
         env.state().borrow_mut().console_output.clear();
+
+        // Install print interceptor that captures output to a Lua table.
+        // Blizzard_PrintHandler overwrites the Rust `print` during addon load,
+        // so console_output is never populated. This wrapper captures print
+        // calls at the Lua level regardless of which print is active.
+        let _ = env.exec(r##"
+            __repl_prev_print = print
+            __repl_captured = {}
+            print = function(...)
+                __repl_prev_print(...)
+                local parts = {}
+                for i = 1, select("#", ...) do
+                    parts[#parts + 1] = tostring(select(i, ...))
+                end
+                __repl_captured[#__repl_captured + 1] = table.concat(parts, "\t")
+            end
+        "##);
+
         let result = env.exec(code);
+
+        // Restore original print
+        let _ = env.exec("print = __repl_prev_print");
+
         match result {
             Ok(()) => {
+                // Read captured print output from Lua table
+                let captured: String = env
+                    .eval(r#"return table.concat(__repl_captured or {}, "\n")"#)
+                    .unwrap_or_default();
+
                 let mut state = env.state().borrow_mut();
-                let output = state.console_output.join("\n");
+                let console = state.console_output.join("\n");
                 state.console_output.clear();
+
+                // Combine console output and captured print output
+                let output = match (console.is_empty(), captured.is_empty()) {
+                    (true, true) => String::new(),
+                    (false, true) => console,
+                    (true, false) => captured,
+                    (false, false) => format!("{}\n{}", console, captured),
+                };
                 LuaResponse::Output(output)
             }
             Err(e) => LuaResponse::Error(e.to_string()),

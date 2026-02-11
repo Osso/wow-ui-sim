@@ -15,6 +15,10 @@
 - `docs/glow-plan.md` - Glow/shine effect plan
 - `docs/anchor-resolution.md` - Anchor resolution walkthrough: data structures, core functions, single/multi-anchor, SetPoint API, coordinate inversion
 
+## Addon Directories
+
+- `./Interface/AddOns/` - Third-party addons bundled with the simulator (e.g., AccountPlayed). This is the simulator's own addon directory, NOT the WoW game extract.
+
 ## WoW Game Files
 
 - `~/Projects/wow/Interface` - code & art extract from WoW game files (2026-01-16)
