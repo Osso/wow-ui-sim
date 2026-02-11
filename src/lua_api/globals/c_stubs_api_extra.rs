@@ -18,6 +18,7 @@ pub fn register_extra_stubs(lua: &Lua) -> Result<()> {
     register_missing_global_tables(lua, &g)?;
     register_c_delves_ui(lua)?;
     register_c_zone_ability(lua)?;
+    register_simulate_ping(lua)?;
     Ok(())
 }
 
@@ -312,18 +313,14 @@ fn register_secure_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     Ok(())
 }
 
-/// C_AuthChallenge, C_PingSecure, C_StoreSecure stubs.
+/// C_AuthChallenge, C_PingSecure, C_Ping, C_StoreSecure stubs.
 fn register_auth_ping_store(lua: &Lua, g: &mlua::Table) -> Result<()> {
     let auth_challenge = lua.create_table()?;
     auth_challenge.set("SetFrame", lua.create_function(|_, _frame: Value| Ok(()))?)?;
     g.set("C_AuthChallenge", auth_challenge)?;
 
-    // C_PingSecure - uses noop metatable for all callback setters
-    lua.load(r#"
-        C_PingSecure = setmetatable({}, {
-            __index = function() return function() end end,
-        })
-    "#).exec()?;
+    register_c_ping_secure(lua)?;
+    register_c_ping(lua)?;
 
     // C_WowTokenSecure - secure token operations (noop metatable)
     lua.load(r#"
@@ -331,12 +328,6 @@ fn register_auth_ping_store(lua: &Lua, g: &mlua::Table) -> Result<()> {
             __index = function() return function() end end,
         })
     "#).exec()?;
-
-    // C_Ping - ping system (non-secure side)
-    let ping = lua.create_table()?;
-    ping.set("GetDefaultPingOptions", lua.create_function(|lua, ()| lua.create_table())?)?;
-    ping.set("GetTextureKitForType", lua.create_function(|_, _ping_type: Value| Ok(Value::Nil))?)?;
-    g.set("C_Ping", ping)?;
 
     // C_StoreSecure - uses noop metatable for ~40 methods
     lua.load(r#"
@@ -349,6 +340,60 @@ fn register_auth_ping_store(lua: &Lua, g: &mlua::Table) -> Result<()> {
         }, { __index = function() return function() end end })
     "#).exec()?;
     Ok(())
+}
+
+/// C_PingSecure - stores callbacks for Blizzard PingUI, implements action methods.
+fn register_c_ping_secure(lua: &Lua) -> Result<()> {
+    lua.load(r#"
+        _G.__PingSecureCallbacks = _G.__PingSecureCallbacks or {}
+        local cbs = _G.__PingSecureCallbacks
+        C_PingSecure = {
+            SetPingRadialWheelCreatedCallback = function(cb) cbs.RadialWheelCreated = cb end,
+            SetPingPinFrameAddedCallback = function(cb) cbs.PingPinFrameAdded = cb end,
+            SetPingPinFrameRemovedCallback = function(cb) cbs.PingPinFrameRemoved = cb end,
+            SetPingPinFrameScreenClampStateUpdatedCallback = function(cb) cbs.ScreenClampStateUpdated = cb end,
+            SetSendMacroPingCallback = function(cb) cbs.SendMacroPing = cb end,
+            SetTogglePingListenerCallback = function(cb) cbs.TogglePingListener = cb end,
+            SetPendingPingOffScreenCallback = function(cb) cbs.PendingPingOffScreen = cb end,
+            SetPingCooldownStartedCallback = function(cb) cbs.PingCooldownStarted = cb end,
+            CreateFrame = function()
+                local f = CreateFrame("Frame", nil, UIParent)
+                if cbs.RadialWheelCreated then cbs.RadialWheelCreated(f) end
+            end,
+            SendPing = function(pingType, guid) return Enum.PingResult.Success end,
+            GetTargetPingReceiver = function(x, y) return nil end,
+            GetTargetWorldPing = function(x, y) return true end,
+            GetTargetWorldPingAndSend = function()
+                return { result = Enum.PingResult.Success }
+            end,
+            DisplayError = function(err) end,
+            ClearPendingPingInfo = function() end,
+        }
+    "#).exec()
+}
+
+/// C_Ping - non-secure ping API with real data for PingManager:SetupDefaultPingOptions.
+fn register_c_ping(lua: &Lua) -> Result<()> {
+    lua.load(r#"
+        local TEXTURE_KIT_MAP = {
+            [0] = "Attack", [1] = "Warning", [2] = "Assist",
+            [3] = "OnMyWay", [4] = "Threat", [5] = "NonThreat",
+        }
+        C_Ping = {
+            GetDefaultPingOptions = function()
+                return {
+                    { orderIndex = 0, type = 0, uiTextureKitID = "Attack" },
+                    { orderIndex = 1, type = 1, uiTextureKitID = "Warning" },
+                    { orderIndex = 2, type = 2, uiTextureKitID = "Assist" },
+                    { orderIndex = 3, type = 3, uiTextureKitID = "OnMyWay" },
+                }
+            end,
+            GetTextureKitForType = function(pingType)
+                return TEXTURE_KIT_MAP[pingType]
+            end,
+            GetCooldownInfo = function() return nil end,
+        }
+    "#).exec()
 }
 
 /// C_ClassTrial, C_RecruitAFriend, C_WowTokenPublic, C_FriendList stubs.
@@ -530,6 +575,28 @@ fn stub_get_achievement_info(lua: &Lua, id: Value) -> Result<mlua::MultiValue> {
         Value::Boolean(false),
         Value::Nil,
     ]))
+}
+
+/// SimulatePing(textureKit) - fires stored PingManager callbacks to render a pin.
+fn register_simulate_ping(lua: &Lua) -> Result<()> {
+    lua.load(r#"
+        function SimulatePing(textureKit)
+            textureKit = textureKit or "Attack"
+            local cbs = _G.__PingSecureCallbacks
+            if not cbs or not cbs.PingPinFrameAdded then
+                print("SimulatePing: PingManager not initialized (no PingPinFrameAdded callback)")
+                return
+            end
+            local anchor = CreateFrame("Frame", nil, UIParent)
+            anchor:SetSize(1, 1)
+            anchor:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+            anchor:Show()
+            cbs.PingPinFrameAdded(anchor, textureKit, true)
+            C_Timer.After(5, function()
+                if cbs.PingPinFrameRemoved then cbs.PingPinFrameRemoved(anchor) end
+            end)
+        end
+    "#).exec()
 }
 
 /// Loot, content-tracking, and achievement telemetry namespace stubs.

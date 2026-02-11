@@ -90,7 +90,25 @@ pub fn restore_secure_stubs(env: &super::WowLuaEnv) {
     lua.load(r#"
         local noop_mt = { __index = function() return function() end end }
         C_WowTokenSecure = C_WowTokenSecure or setmetatable({}, noop_mt)
-        C_PingSecure = C_PingSecure or setmetatable({}, noop_mt)
+        if not C_PingSecure then
+            -- Restore from stored callbacks so post-init calls still work
+            local cbs = _G.__PingSecureCallbacks or {}
+            C_PingSecure = {
+                SendPing = function(t, g) return Enum.PingResult.Success end,
+                GetTargetPingReceiver = function(x, y) return nil end,
+                GetTargetWorldPing = function(x, y) return true end,
+                GetTargetWorldPingAndSend = function()
+                    return { result = Enum.PingResult.Success }
+                end,
+                DisplayError = function(err) end,
+                ClearPendingPingInfo = function() end,
+                CreateFrame = function()
+                    local f = CreateFrame("Frame", nil, UIParent)
+                    if cbs.RadialWheelCreated then cbs.RadialWheelCreated(f) end
+                end,
+            }
+            setmetatable(C_PingSecure, noop_mt)
+        end
         C_StoreSecure = C_StoreSecure or setmetatable({
             IsStoreAvailable = function() return false end,
             IsAvailable = function() return false end,

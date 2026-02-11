@@ -304,6 +304,8 @@ fn register_misc_enums(lua: &Lua, enum_table: &mlua::Table) -> Result<()> {
         "Attack", "Warning", "Assist", "OnMyWay", "AlertThreat", "AlertNotThreat",
     ])?;
 
+    seq_enum(lua, enum_table, "PingMode", &["KeyDown", "ClickDrag"])?;
+
     seq_enum(lua, enum_table, "TtsBoolSetting", &[
         "PlaySoundSeparatingChatLineBreaks", "AddCharacterNameToSpeech",
         "PlayActivitySoundWhenNotFocused", "AlternateSystemVoice", "NarrateMyMessages",
