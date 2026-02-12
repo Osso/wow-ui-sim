@@ -1,71 +1,219 @@
 //! C_Traits namespace - talent/loadout system (Dragonflight+).
 //!
-//! Backed by static data from `data/traits.rs`.
+//! Backed by static data from `data/traits.rs` and runtime state in `TalentState`.
 
+use crate::lua_api::SimState;
 use mlua::{Lua, Result, Value};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 /// Build and return the C_Traits Lua table.
-pub fn register_c_traits(lua: &Lua) -> Result<mlua::Table> {
+pub fn register_c_traits(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Table> {
     let t = lua.create_table()?;
-    register_c_traits_config(&t, lua)?;
-    register_c_traits_tree(&t, lua)?;
-    register_c_traits_node(&t, lua)?;
+    register_c_traits_config(&t, lua, Rc::clone(&state))?;
+    register_c_traits_tree(&t, lua, Rc::clone(&state))?;
+    register_c_traits_node(&t, lua, state)?;
     Ok(t)
 }
 
 /// C_Traits config-level APIs.
-fn register_c_traits_config(t: &mlua::Table, lua: &Lua) -> Result<()> {
+fn register_c_traits_config(
+    t: &mlua::Table, lua: &Lua, state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    register_config_stubs(t, lua)?;
+    register_config_mutations(t, lua, state)?;
+    Ok(())
+}
+
+/// Stateless config stubs.
+fn register_config_stubs(t: &mlua::Table, lua: &Lua) -> Result<()> {
     t.set("GenerateImportString", lua.create_function(|_, _id: i32| Ok("dummy_talent_string".to_string()))?)?;
     t.set("GetConfigIDBySystemID", lua.create_function(|_, _id: i32| Ok(1i32))?)?;
     t.set("GetConfigIDByTreeID", lua.create_function(|_, _id: i32| Ok(1i32))?)?;
     t.set("GetConfigInfo", lua.create_function(create_config_info)?)?;
     t.set("CanPurchaseRank", lua.create_function(|_, (_a, _b, _c): (i32, i32, i32)| Ok(false))?)?;
     t.set("GetLoadoutSerializationVersion", lua.create_function(|_, ()| Ok(2i32))?)?;
-    t.set("ConfigHasStagedChanges", lua.create_function(|_, _id: i32| Ok(false))?)?;
     t.set("CommitConfig", lua.create_function(|_, _id: i32| Ok(true))?)?;
     t.set("RollbackConfig", lua.create_function(|_, _id: i32| Ok(true))?)?;
     t.set("GetStagedChanges", lua.create_function(|lua, _id: i32| {
         Ok((lua.create_table()?, lua.create_table()?, lua.create_table()?))
     })?)?;
     t.set("GetStagedChangesCost", lua.create_function(|lua, _id: i32| lua.create_table())?)?;
-    t.set("PurchaseRank", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
-    t.set("RefundRank", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
     t.set("RefundAllRanks", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
-    t.set("SetSelection", lua.create_function(|_, (_a, _b, _c): (i32, i32, i32)| Ok(false))?)?;
     t.set("CascadeRepurchaseRanks", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(false))?)?;
     t.set("ClearCascadeRepurchaseHistory", lua.create_function(|_, _id: i32| Ok(()))?)?;
-    t.set("ResetTree", lua.create_function(|_, _id: i32| Ok(true))?)?;
-    t.set("ResetTreeByCurrency", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(true))?)?;
     t.set("GenerateInspectImportString", lua.create_function(|_, _unit: String| Ok("".to_string()))?)?;
     t.set("GetTreeHash", lua.create_function(|_, _id: i32| Ok("0".to_string()))?)?;
     Ok(())
 }
 
+/// State-aware config mutations: PurchaseRank, RefundRank, SetSelection, Reset, etc.
+fn register_config_mutations(
+    t: &mlua::Table, lua: &Lua, state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    let st = Rc::clone(&state);
+    t.set("PurchaseRank", lua.create_function(move |lua, (config_id, node_id): (i32, i32)| {
+        purchase_rank(&st, lua, config_id, node_id as u32)
+    })?)?;
+
+    let st = Rc::clone(&state);
+    t.set("RefundRank", lua.create_function(move |lua, (config_id, node_id): (i32, i32)| {
+        refund_rank(&st, lua, config_id, node_id as u32)
+    })?)?;
+
+    let st = Rc::clone(&state);
+    t.set("SetSelection", lua.create_function(move |lua, (config_id, node_id, entry_id): (i32, i32, i32)| {
+        set_selection(&st, lua, config_id, node_id as u32, entry_id as u32)
+    })?)?;
+
+    let st = Rc::clone(&state);
+    t.set("ConfigHasStagedChanges", lua.create_function(move |_, _id: i32| {
+        Ok(st.borrow().talents.node_ranks.values().any(|&r| r > 0))
+    })?)?;
+
+    let st = Rc::clone(&state);
+    t.set("ResetTree", lua.create_function(move |lua, config_id: i32| {
+        reset_tree(&st, lua, config_id)
+    })?)?;
+
+    let st = Rc::clone(&state);
+    t.set("ResetTreeByCurrency", lua.create_function(move |lua, (config_id, currency_id): (i32, i32)| {
+        reset_tree_by_currency(&st, lua, config_id, currency_id as u32)
+    })?)?;
+
+    Ok(())
+}
+
+fn purchase_rank(
+    state: &Rc<RefCell<SimState>>, lua: &Lua, config_id: i32, node_id: u32,
+) -> Result<bool> {
+    use crate::traits::TRAIT_NODE_DB;
+    let Some(node) = TRAIT_NODE_DB.get(&node_id) else { return Ok(false) };
+    let max_ranks = super::traits_api_node::node_max_ranks(node);
+    let mut s = state.borrow_mut();
+    let current = *s.talents.node_ranks.get(&node_id).unwrap_or(&0);
+    if current >= max_ranks as u32 {
+        return Ok(false);
+    }
+    s.talents.node_ranks.insert(node_id, current + 1);
+    drop(s);
+    fire_trait_config_updated(lua, config_id)
+}
+
+fn refund_rank(
+    state: &Rc<RefCell<SimState>>, lua: &Lua, config_id: i32, node_id: u32,
+) -> Result<bool> {
+    let mut s = state.borrow_mut();
+    let current = *s.talents.node_ranks.get(&node_id).unwrap_or(&0);
+    if current == 0 {
+        return Ok(false);
+    }
+    if current == 1 {
+        s.talents.node_ranks.remove(&node_id);
+        s.talents.node_selections.remove(&node_id);
+    } else {
+        s.talents.node_ranks.insert(node_id, current - 1);
+    }
+    drop(s);
+    fire_trait_config_updated(lua, config_id)
+}
+
+fn set_selection(
+    state: &Rc<RefCell<SimState>>, lua: &Lua,
+    config_id: i32, node_id: u32, entry_id: u32,
+) -> Result<bool> {
+    let mut s = state.borrow_mut();
+    s.talents.node_selections.insert(node_id, entry_id);
+    let current = *s.talents.node_ranks.get(&node_id).unwrap_or(&0);
+    if current == 0 {
+        s.talents.node_ranks.insert(node_id, 1);
+    }
+    drop(s);
+    fire_trait_config_updated(lua, config_id)
+}
+
+fn reset_tree(
+    state: &Rc<RefCell<SimState>>, lua: &Lua, config_id: i32,
+) -> Result<bool> {
+    let mut s = state.borrow_mut();
+    s.talents.node_ranks.clear();
+    s.talents.node_selections.clear();
+    drop(s);
+    fire_trait_config_updated(lua, config_id)
+}
+
+fn reset_tree_by_currency(
+    state: &Rc<RefCell<SimState>>, lua: &Lua, config_id: i32, currency_id: u32,
+) -> Result<bool> {
+    let mut s = state.borrow_mut();
+    let nodes_to_clear: Vec<u32> = s.talents.node_ranks.keys()
+        .filter(|nid| s.talents.node_currency_map.get(nid) == Some(&currency_id))
+        .copied()
+        .collect();
+    for nid in &nodes_to_clear {
+        s.talents.node_ranks.remove(nid);
+        s.talents.node_selections.remove(nid);
+    }
+    drop(s);
+    fire_trait_config_updated(lua, config_id)
+}
+
+fn fire_trait_config_updated(lua: &Lua, config_id: i32) -> Result<bool> {
+    let fire: mlua::Function = lua.globals().get("FireEvent")?;
+    fire.call::<()>((
+        lua.create_string("TRAIT_CONFIG_UPDATED")?,
+        config_id as i64,
+    ))?;
+    Ok(true)
+}
+
 /// C_Traits tree-level APIs.
-fn register_c_traits_tree(t: &mlua::Table, lua: &Lua) -> Result<()> {
+fn register_c_traits_tree(
+    t: &mlua::Table, lua: &Lua, state: Rc<RefCell<SimState>>,
+) -> Result<()> {
     t.set("InitializeViewLoadout", lua.create_function(|_, (_a, _b): (i32, i32)| Ok(true))?)?;
     t.set("GetTreeInfo", lua.create_function(create_tree_info)?)?;
     t.set("GetTreeNodes", lua.create_function(create_tree_nodes)?)?;
-    t.set("GetTreeCurrencyInfo", lua.create_function(create_tree_currency_info)?)?;
     t.set("GetAllTreeIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("GetTraitSystemFlags", lua.create_function(|_, _id: i32| Ok(0))?)?;
+
+    let st = Rc::clone(&state);
+    t.set("GetTreeCurrencyInfo", lua.create_function(move |lua, (_config_id, tree_id): (i32, i32)| {
+        create_tree_currency_info(lua, &st, tree_id)
+    })?)?;
+
     Ok(())
 }
 
 /// C_Traits node/entry/definition-level APIs.
-fn register_c_traits_node(t: &mlua::Table, lua: &Lua) -> Result<()> {
-    t.set("GetNodeInfo", lua.create_function(create_node_info)?)?;
-    t.set("GetEntryInfo", lua.create_function(create_entry_info)?)?;
-    t.set("GetDefinitionInfo", lua.create_function(create_definition_info)?)?;
-    t.set("GetConditionInfo", lua.create_function(create_condition_info)?)?;
-    t.set("GetSubTreeInfo", lua.create_function(create_sub_tree_info)?)?;
-    t.set("GetNodeCost", lua.create_function(|lua, (_cfg, _node): (i32, i32)| lua.create_table())?)?;
+fn register_c_traits_node(
+    t: &mlua::Table, lua: &Lua, state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    let st = Rc::clone(&state);
+    t.set("GetNodeInfo", lua.create_function(move |lua, (cfg, nid): (Value, Value)| {
+        super::traits_api_node::create_node_info(lua, &st, cfg, nid)
+    })?)?;
+
+    t.set("GetEntryInfo", lua.create_function(super::traits_api_node::create_entry_info)?)?;
+    t.set("GetDefinitionInfo", lua.create_function(super::traits_api_node::create_definition_info)?)?;
+
+    let st = Rc::clone(&state);
+    t.set("GetConditionInfo", lua.create_function(move |lua, (_cfg, cid): (i32, i32)| {
+        super::traits_api_node::create_condition_info(lua, &st, cid)
+    })?)?;
+
+    t.set("GetSubTreeInfo", lua.create_function(super::traits_api_node::create_sub_tree_info)?)?;
+
+    let st = Rc::clone(&state);
+    t.set("GetNodeCost", lua.create_function(move |lua, (_cfg, node_id): (i32, i32)| {
+        create_node_cost(lua, &st, node_id as u32)
+    })?)?;
+
     Ok(())
 }
 
 fn create_config_info(lua: &Lua, _config_id: i32) -> Result<Value> {
     let info = lua.create_table()?;
-    // Return tree 790 (Paladin) as the configured tree
     let tree_ids = lua.create_table()?;
     tree_ids.set(1, 790)?;
     info.set("treeIDs", tree_ids)?;
@@ -103,223 +251,63 @@ fn create_tree_nodes(lua: &Lua, tree_id: i32) -> Result<mlua::Table> {
     Ok(t)
 }
 
-fn create_tree_currency_info(lua: &Lua, (_config_id, tree_id): (i32, i32)) -> Result<Value> {
-    use crate::traits::{TRAIT_TREE_DB, TRAIT_CURRENCY_DB};
+/// Max points for a currency, derived from currency flags.
+/// flags=4 → class (31 points), flags=8 → spec (30 points).
+pub(crate) fn max_points_for_currency(currency_id: u32) -> u32 {
+    use crate::traits::TRAIT_CURRENCY_DB;
+    let Some(c) = TRAIT_CURRENCY_DB.get(&currency_id) else { return 0 };
+    match c.flags {
+        4 => 31,
+        8 => 30,
+        _ => 0,
+    }
+}
+
+fn create_tree_currency_info(
+    lua: &Lua, state: &Rc<RefCell<SimState>>, tree_id: i32,
+) -> Result<Value> {
+    use crate::traits::{TRAIT_CURRENCY_DB, TRAIT_TREE_DB};
     let Some(tree) = TRAIT_TREE_DB.get(&(tree_id as u32)) else {
         return Ok(Value::Nil);
     };
+    let s = state.borrow();
     let arr = lua.create_table()?;
     for (i, &cid) in tree.currency_ids.iter().enumerate() {
         let entry = lua.create_table()?;
         entry.set("traitCurrencyID", cid as i64)?;
-        // Simulate having max currency spent
-        let quantity = if let Some(c) = TRAIT_CURRENCY_DB.get(&cid) {
-            if c.currency_type == 1 { 50 } else { 0 }
-        } else { 0 };
-        entry.set("quantity", quantity)?;
-        entry.set("maxQuantity", quantity)?;
-        entry.set("spent", 0)?;
-        entry.set("flags", 0)?;
+        let max_pts = max_points_for_currency(cid);
+        let spent = s.talents.spent_for_currency(cid);
+        let quantity = max_pts.saturating_sub(spent);
+        entry.set("quantity", quantity as i64)?;
+        entry.set("maxQuantity", max_pts as i64)?;
+        entry.set("spent", spent as i64)?;
+        let flags = TRAIT_CURRENCY_DB.get(&cid).map(|c| c.flags).unwrap_or(0);
+        entry.set("flags", flags as i64)?;
         arr.set(i as i64 + 1, entry)?;
     }
     Ok(Value::Table(arr))
 }
 
-fn create_node_info(lua: &Lua, (_config_id, node_id): (Value, Value)) -> Result<Value> {
-    use crate::traits::TRAIT_NODE_DB;
-    let node_id = match &node_id {
-        Value::Integer(n) => *n as i32,
-        Value::Number(n) => *n as i32,
-        _ => return build_empty_node_info(lua, 0),
-    };
-    let Some(node) = TRAIT_NODE_DB.get(&(node_id as u32)) else {
-        return build_empty_node_info(lua, node_id);
-    };
-    let info = lua.create_table()?;
-    info.set("ID", node_id)?;
-    info.set("posX", node.pos_x)?;
-    info.set("posY", node.pos_y)?;
-    info.set("type", node.node_type as i32)?;
-    info.set("flags", node.flags as i32)?;
-    // subTreeID must be nil (not 0) when absent — Lua treats 0 as truthy
-    if node.sub_tree_id != 0 {
-        info.set("subTreeID", node.sub_tree_id as i64)?;
+fn create_node_cost(
+    lua: &Lua, state: &Rc<RefCell<SimState>>, node_id: u32,
+) -> Result<mlua::Table> {
+    let t = lua.create_table()?;
+    let s = state.borrow();
+    if let Some(&cid) = s.talents.node_currency_map.get(&node_id) {
+        let cost = lua.create_table()?;
+        cost.set("ID", cid as i64)?;
+        cost.set("amount", 1)?;
+        t.set(1, cost)?;
     }
-
-    build_node_entry_ids(lua, &info, node)?;
-    build_node_edges(lua, &info, node)?;
-    build_node_cond_ids(lua, &info, node)?;
-    build_node_group_ids(lua, &info, node)?;
-
-    // State: fully talented
-    let max_ranks = node_max_ranks(node);
-    info.set("currentRank", max_ranks)?;
-    info.set("activeRank", max_ranks)?;
-    info.set("ranksPurchased", max_ranks)?;
-    info.set("maxRanks", max_ranks)?;
-    let active_entry = lua.create_table()?;
-    active_entry.set("entryID", node.entry_ids.first().copied().unwrap_or(0) as i64)?;
-    active_entry.set("rank", max_ranks)?;
-    info.set("activeEntry", active_entry)?;
-    info.set("isVisible", true)?;
-    info.set("isAvailable", true)?;
-    info.set("canPurchaseRank", false)?;
-    info.set("canRefundRank", false)?;
-    info.set("meetsEdgeRequirements", true)?;
-    info.set("isCascadeRepurchasable", false)?;
-    Ok(Value::Table(info))
+    Ok(t)
 }
 
-/// Build a minimal nodeInfo for nodes not in the trait DB (e.g. Delves companion nodes).
-/// WoW always returns a struct, so callers don't guard against nil.
-fn build_empty_node_info(lua: &Lua, node_id: i32) -> Result<Value> {
-    let info = lua.create_table()?;
-    info.set("ID", node_id)?;
-    info.set("posX", 0)?;
-    info.set("posY", 0)?;
-    info.set("type", 0)?;
-    info.set("flags", 0)?;
-    // subTreeID omitted (nil) — Lua treats 0 as truthy
-    info.set("entryIDs", lua.create_table()?)?;
-    info.set("visibleEdges", lua.create_table()?)?;
-    info.set("conditionIDs", lua.create_table()?)?;
-    info.set("groupIDs", lua.create_table()?)?;
-    info.set("currentRank", 0)?;
-    info.set("activeRank", 0)?;
-    info.set("ranksPurchased", 0)?;
-    info.set("maxRanks", 0)?;
-    let active_entry = lua.create_table()?;
-    active_entry.set("entryID", 0i64)?;
-    active_entry.set("rank", 0)?;
-    info.set("activeEntry", active_entry)?;
-    info.set("isVisible", false)?;
-    info.set("isAvailable", false)?;
-    info.set("canPurchaseRank", false)?;
-    info.set("canRefundRank", false)?;
-    info.set("meetsEdgeRequirements", false)?;
-    info.set("isCascadeRepurchasable", false)?;
-    Ok(Value::Table(info))
-}
-
-fn build_node_entry_ids(lua: &Lua, info: &mlua::Table, node: &crate::traits::TraitNodeInfo) -> Result<()> {
-    let entry_ids = lua.create_table()?;
-    for (i, &eid) in node.entry_ids.iter().enumerate() {
-        entry_ids.set(i as i64 + 1, eid as i64)?;
-    }
-    info.set("entryIDs", entry_ids)?;
-    Ok(())
-}
-
-fn build_node_edges(lua: &Lua, info: &mlua::Table, node: &crate::traits::TraitNodeInfo) -> Result<()> {
-    let edges = lua.create_table()?;
-    for (i, edge) in node.edges.iter().enumerate() {
-        let e = lua.create_table()?;
-        e.set("targetNode", edge.source_node_id as i64)?;
-        e.set("type", edge.edge_type as i32)?;
-        e.set("visualStyle", edge.visual_style as i32)?;
-        e.set("isActive", true)?;
-        edges.set(i as i64 + 1, e)?;
-    }
-    info.set("visibleEdges", edges)?;
-    Ok(())
-}
-
-fn build_node_cond_ids(lua: &Lua, info: &mlua::Table, node: &crate::traits::TraitNodeInfo) -> Result<()> {
-    let cond_ids = lua.create_table()?;
-    for (i, &cid) in node.cond_ids.iter().enumerate() {
-        cond_ids.set(i as i64 + 1, cid as i64)?;
-    }
-    info.set("conditionIDs", cond_ids)?;
-    Ok(())
-}
-
-fn build_node_group_ids(lua: &Lua, info: &mlua::Table, node: &crate::traits::TraitNodeInfo) -> Result<()> {
-    let group_ids = lua.create_table()?;
-    for (i, &gid) in node.group_ids.iter().enumerate() {
-        group_ids.set(i as i64 + 1, gid as i64)?;
-    }
-    info.set("groupIDs", group_ids)?;
-    Ok(())
-}
-
-/// Get max ranks for a node from its first entry.
-fn node_max_ranks(node: &crate::traits::TraitNodeInfo) -> i32 {
-    use crate::traits::TRAIT_ENTRY_DB;
-    node.entry_ids.first()
-        .and_then(|eid| TRAIT_ENTRY_DB.get(eid))
-        .map(|e| e.max_ranks as i32)
-        .unwrap_or(1)
-}
-
-fn create_entry_info(lua: &Lua, (_config_id, entry_id): (i32, i32)) -> Result<Value> {
-    use crate::traits::TRAIT_ENTRY_DB;
-    let Some(entry) = TRAIT_ENTRY_DB.get(&(entry_id as u32)) else {
-        return Ok(Value::Nil);
-    };
-    let info = lua.create_table()?;
-    info.set("entryID", entry_id)?;
-    info.set("definitionID", entry.definition_id as i64)?;
-    info.set("type", entry.entry_type as i32)?;
-    info.set("maxRanks", entry.max_ranks as i32)?;
-    if entry.sub_tree_id != 0 {
-        info.set("subTreeID", entry.sub_tree_id as i64)?;
-    }
-    info.set("isAvailable", true)?;
-    info.set("conditionIDs", lua.create_table()?)?;
-    Ok(Value::Table(info))
-}
-
-fn create_definition_info(lua: &Lua, def_id: i32) -> Result<Value> {
-    use crate::traits::TRAIT_DEFINITION_DB;
-    let Some(def) = TRAIT_DEFINITION_DB.get(&(def_id as u32)) else {
-        return Ok(Value::Nil);
-    };
-    let info = lua.create_table()?;
-    info.set("spellID", if def.spell_id != 0 { Value::Integer(def.spell_id as i64) } else { Value::Nil })?;
-    info.set("overriddenSpellID", if def.overrides_spell_id != 0 { Value::Integer(def.overrides_spell_id as i64) } else { Value::Nil })?;
-    info.set("overrideIcon", if def.override_icon != 0 { Value::Integer(def.override_icon as i64) } else { Value::Nil })?;
-    info.set("visibleSpellID", if def.visible_spell_id != 0 { Value::Integer(def.visible_spell_id as i64) } else { Value::Nil })?;
-    info.set("overrideName", def.override_name)?;
-    info.set("overrideSubtext", def.override_subtext)?;
-    info.set("overrideDescription", def.override_description)?;
-    Ok(Value::Table(info))
-}
-
-fn create_condition_info(lua: &Lua, (_config_id, cond_id): (i32, i32)) -> Result<Value> {
-    use crate::traits::TRAIT_COND_DB;
-    let Some(cond) = TRAIT_COND_DB.get(&(cond_id as u32)) else {
-        return Ok(Value::Nil);
-    };
-    let info = lua.create_table()?;
-    info.set("condID", cond_id)?;
-    info.set("condType", cond.cond_type as i32)?;
-    info.set("traitCurrencyID", cond.currency_id as i64)?;
-    info.set("spentAmountRequired", cond.spent_amount as i32)?;
-    info.set("specSetID", cond.spec_set_id as i32)?;
-    info.set("questID", cond.quest_id as i64)?;
-    info.set("achievementID", cond.achievement_id as i64)?;
-    info.set("requiredLevel", cond.required_level as i32)?;
-    info.set("traitNodeGroupID", cond.group_id as i64)?;
-    info.set("traitNodeID", cond.node_id as i64)?;
-    info.set("grantedRanks", cond.granted_ranks as i32)?;
-    info.set("isMet", true)?;
-    info.set("isSufficient", true)?;
-    Ok(Value::Table(info))
-}
-
-fn create_sub_tree_info(lua: &Lua, (_config_id, sub_tree_id): (i32, i32)) -> Result<Value> {
-    use crate::traits::TRAIT_SUBTREE_DB;
-    let Some(st) = TRAIT_SUBTREE_DB.get(&(sub_tree_id as u32)) else {
-        return Ok(Value::Nil);
-    };
-    let info = lua.create_table()?;
-    info.set("ID", sub_tree_id)?;
-    info.set("name", st.name)?;
-    info.set("description", st.description)?;
-    info.set("traitTreeID", st.tree_id as i64)?;
-    info.set("iconElementID", st.atlas_element_id as i64)?;
-    info.set("isActive", true)?;
-    info.set("posX", 0)?;
-    info.set("posY", 0)?;
-    Ok(Value::Table(info))
+/// Check if `HasUnspentTalentPoints` — any class/spec currency has remaining points.
+pub fn has_unspent_talent_points(state: &SimState) -> bool {
+    use crate::traits::TRAIT_TREE_DB;
+    let Some(tree) = TRAIT_TREE_DB.get(&790) else { return false };
+    tree.currency_ids.iter().any(|&cid| {
+        let max_pts = max_points_for_currency(cid);
+        max_pts > 0 && state.talents.spent_for_currency(cid) < max_pts
+    })
 }

@@ -66,6 +66,7 @@ pub mod system_api;
 pub mod strings;
 pub mod targeting_api;
 pub mod traits_api;
+pub mod traits_api_node;
 pub mod template;
 pub mod timer_api;
 pub mod tooltip_api;

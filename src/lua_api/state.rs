@@ -216,6 +216,8 @@ pub struct SimState {
     pub loading_addon_index: Option<u16>,
     /// Application-level frame metrics (total frame time for profiler ratios).
     pub app_frame_metrics: AppFrameMetrics,
+    /// Talent tree interactive state (ranks, selections, currency mappings).
+    pub talents: super::talent_state::TalentState,
 }
 
 impl Default for SimState {
@@ -266,6 +268,7 @@ impl Default for SimState {
             action_ui_buttons: Vec::new(),
             loading_addon_index: None,
             app_frame_metrics: AppFrameMetrics::default(),
+            talents: super::talent_state::TalentState::new(),
         }
     }
 }

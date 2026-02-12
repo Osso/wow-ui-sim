@@ -15,7 +15,7 @@ pub fn register_spell_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
 
     globals.set("C_SpellBook", register_c_spell_book(lua, Rc::clone(&state))?)?;
     globals.set("C_Spell", register_c_spell(lua, Rc::clone(&state))?)?;
-    globals.set("C_Traits", super::traits_api::register_c_traits(lua)?)?;
+    globals.set("C_Traits", super::traits_api::register_c_traits(lua, Rc::clone(&state))?)?;
     register_cast_globals(lua, state)?;
 
     Ok(())

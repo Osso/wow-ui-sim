@@ -18,9 +18,9 @@
 use mlua::{Lua, ObjectLike, Result, Value};
 
 /// Register all additional C_* namespace stubs.
-pub fn register_c_stubs_api(lua: &Lua) -> Result<()> {
+pub fn register_c_stubs_api(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>) -> Result<()> {
     register_c_achievement_info(lua)?;
-    register_c_class_talents(lua)?;
+    register_c_class_talents(lua, state)?;
     register_c_guild(lua)?;
     register_c_guild_info(lua)?;
     register_c_lfg_list(lua)?;
@@ -58,7 +58,7 @@ fn register_c_achievement_info(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-fn register_c_class_talents(lua: &Lua) -> Result<()> {
+fn register_c_class_talents(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>) -> Result<()> {
     let t = lua.create_table()?;
     t.set("GetActiveConfigID", lua.create_function(|_, ()| Ok(1i32))?)?;
     t.set("GetConfigIDsBySpecID", lua.create_function(|lua, _spec_id: Option<i32>| {
@@ -72,7 +72,8 @@ fn register_c_class_talents(lua: &Lua) -> Result<()> {
     t.set("GetHeroTalentSpecsForClassSpec", lua.create_function(|lua, (_cfg, _spec): (Option<i32>, Option<i32>)| {
         Ok((Value::Table(lua.create_table()?), Value::Integer(71)))
     })?)?;
-    t.set("HasUnspentTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
+    let st = state;
+    t.set("HasUnspentTalentPoints", lua.create_function(move |_, ()| Ok(super::traits_api::has_unspent_talent_points(&st.borrow())))?)?;
     t.set("HasUnspentHeroTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetLastSelectedSavedConfigID", lua.create_function(|_, _spec_id: Option<i32>| Ok(Value::Nil))?)?;
     t.set("CanChangeTalents", lua.create_function(|_, ()| Ok((true, false)))?)?;
