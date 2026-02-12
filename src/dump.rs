@@ -101,11 +101,11 @@ fn emit_frame_line(
     let rect = compute_frame_rect(widgets, id, screen_width, screen_height);
     let size_str = format_size_str(frame, &rect);
     let stale_str = format_stale_str(frame, &rect);
-    let keys_str = format_keys_str(frame);
+    let info_str = format_info_str(frame, &rect);
     let text_str = format_text_str(widgets, frame);
     let font_str = format_font_str(frame);
     lines.push(format!(
-        "{indent}{display_name} [{:?}] {size_str} {vis}{stale_str}{text_str}{font_str}{keys_str}",
+        "{indent}{display_name} [{:?}] {size_str} {vis}{stale_str}{info_str}{text_str}{font_str}",
         frame.widget_type,
     ));
     emit_anchor_lines(widgets, frame, &indent, screen_width, screen_height, lines);
@@ -185,16 +185,12 @@ fn format_stale_str(frame: &Frame, rect: &LayoutRect) -> String {
     }
 }
 
-fn format_keys_str(frame: &Frame) -> String {
-    let keys: Vec<_> = frame.children_keys.keys().collect();
-    if keys.is_empty() {
-        String::new()
-    } else {
-        format!(
-            " keys=[{}]",
-            keys.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", ")
-        )
-    }
+fn format_info_str(frame: &Frame, rect: &LayoutRect) -> String {
+    format!(
+        " x={}, y={}, alpha={:.2}",
+        rect.x as i32, rect.y as i32,
+        frame.alpha,
+    )
 }
 
 fn format_text_str(widgets: &WidgetRegistry, frame: &Frame) -> String {
