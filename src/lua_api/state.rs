@@ -342,9 +342,9 @@ impl SimState {
     }
 
     /// Like `invalidate_layout` but also recomputes sibling frames anchored to
-    /// `id`. Use this at runtime when a frame moves (e.g. cast bar Spark) and
-    /// siblings anchored to it need updating. Avoid during bulk loading — it
-    /// scans all widgets to find dependents.
+    /// `id`. Uses the reverse anchor index for O(k) lookup where k = number of
+    /// dependents. Called by SetWidth/SetHeight/SetSize/SetScale/SetAtlas so
+    /// that cross-frame-anchored siblings (e.g. three-slice Center) update.
     pub fn invalidate_layout_with_dependents(&mut self, id: u64) {
         self.cached_render_list = None;
         let sw = self.screen_width;

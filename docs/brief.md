@@ -101,22 +101,22 @@ GameMenuFrame has `toplevel="true"` in XML, which in WoW means the frame is rais
 - `src/lua_api/frame/mod.rs` — Re-export `propagate_strata_level_pub`
 - `src/loader/xml_frame.rs` — `append_toplevel_code` parses and emits `SetToplevel(true)`
 
-## Active Investigation: Three-Slice Button Center Texture 0x0
+## Completed: Three-Slice Button Center Texture Fix
 
-**Problem:** Game menu buttons (ThreeSliceButtonTemplate) have Center texture rendering as 0x0, making the middle of each button transparent. Only Left and Right end-caps render.
+**Problem:** Game menu buttons (ThreeSliceButtonTemplate) had Center texture rendering as 0x0, making the middle of each button transparent. Only Left and Right end-caps rendered.
 
-**Root cause identified:** The Center texture uses cross-frame anchors (TOPLEFT→Left.TOPRIGHT, BOTTOMRIGHT→Right.BOTTOMLEFT) where Left and Right are sibling textures. Two separate bugs:
+**Root cause:** When Left/Right textures were resized (via SetAtlas/SetWidth/SetScale in UpdateButton/UpdateScale), `invalidate_layout()` only recomputed that texture and its children. The Center texture — a sibling anchored to Left and Right via cross-frame anchors — was never recomputed. Additionally, `calculate_frame_width/height` (Lua GetWidth/GetHeight) required both anchors to reference the same frame.
 
-1. **Lua API `calculate_frame_width/height`** (`src/lua_api/frame/methods/methods_helpers.rs:42`): Requires both anchors to reference the **same** frame (`left_anchor.relative_to_id == right_anchor.relative_to_id`). Falls through to explicit width (0) when anchors reference different siblings.
+**Fix (three parts):**
+1. **SetWidth/SetHeight/SetSize/SetScale** now call `invalidate_layout_with_dependents()` instead of `invalidate_layout()`, propagating layout recomputation to frames anchored to the resized frame via the reverse anchor index.
+2. **SetAtlas with useAtlasSize** now triggers `invalidate_layout_with_dependents()` after setting frame dimensions from atlas info.
+3. **`calculate_frame_width/height`** falls back to `layout_rect / eff_scale` for cross-frame anchor cases (different `relative_to_id` on opposite edges).
 
-2. **Rendering layout engine** (`src/iced_app/layout.rs`): `resolve_multi_anchor_edges` correctly handles cross-frame anchors — each anchor resolves its relative frame independently. But `compute_frame_rect` uses a fresh empty cache per call (uncached variant), so it must walk the full parent chain for each anchor's relative frame. The layout engine should produce correct results.
-
-**Dump-tree confirmation:** `.CenterBG [Texture] (0x0) visible` in GameMenuFrame tree dump confirms the computed rect is zero-sized.
-
-**Next steps:**
-- Add targeted debug logging in `compute_frame_rect_cached` for multi-anchor frames where both left_x and right_x edges are resolved but rect is still 0x0
-- Check if the issue is that Left/Right textures themselves compute to 0x0 (they use scale=0.28125 with TOPLEFT/TOPRIGHT anchors — single-anchor path uses `frame.width * eff_scale`)
-- Fix `calculate_frame_width/height` to handle cross-frame anchors (separate relative_to_id)
+**Files modified:**
+- `src/lua_api/frame/methods/methods_core.rs` — SetWidth/SetHeight/SetSize/SetScale use `invalidate_layout_with_dependents`
+- `src/lua_api/frame/methods/methods_texture.rs` — SetAtlas invalidates layout when useAtlasSize=true
+- `src/lua_api/frame/methods/methods_helpers.rs` — `calculate_frame_width/height` handle cross-frame anchors via layout_rect
+- `src/lua_api/state.rs` — Updated comment on `invalidate_layout_with_dependents`
 
 ## Known Issues
 

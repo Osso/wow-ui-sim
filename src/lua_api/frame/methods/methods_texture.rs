@@ -194,6 +194,9 @@ fn add_atlas_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 let parent_info = find_parent_key(&state.widgets, this.id);
                 apply_atlas_to_frame(&mut state.widgets, this.id, atlas_info, &name, &lookup, use_atlas_size);
                 propagate_atlas_to_button(&mut state.widgets, parent_info, atlas_info);
+                if use_atlas_size {
+                    state.invalidate_layout_with_dependents(this.id);
+                }
             } else {
                 let mut state = this.state.borrow_mut();
                 if let Some(frame) = state.widgets.get_mut(this.id) {
