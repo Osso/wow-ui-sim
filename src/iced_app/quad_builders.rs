@@ -364,6 +364,9 @@ pub fn emit_frame_quads(
         WidgetType::Cooldown => {
             build_cooldown_quads(batch, bounds, f, elapsed_secs);
         }
+        WidgetType::Line => {
+            build_line_quads(batch, f, registry, screen_size, cache, eff_alpha);
+        }
         _ => {}
     }
 }
@@ -420,4 +423,103 @@ fn parse_swipe_color(f: &crate::widget::Frame) -> [f32; 4] {
         }
     }
     [0.0, 0.0, 0.0, 0.62] // WoW default: semi-transparent black
+}
+
+/// Resolve a line anchor to screen-space pixel coordinates.
+fn resolve_line_endpoint(
+    anchor: &crate::widget::LineAnchor,
+    registry: &crate::widget::WidgetRegistry,
+    screen_size: (f32, f32),
+    cache: &mut LayoutCache,
+) -> Option<(f32, f32)> {
+    use super::layout::{anchor_position, compute_frame_rect_cached};
+
+    let target_id = anchor.target_id?;
+    let r = compute_frame_rect_cached(registry, target_id, screen_size.0, screen_size.1, cache).rect;
+    let (ax, ay) = anchor_position(anchor.point, r.x, r.y, r.width, r.height);
+    let ui_scale = crate::render::texture::UI_SCALE;
+    Some(((ax + anchor.x_offset) * ui_scale, (ay - anchor.y_offset) * ui_scale))
+}
+
+/// Compute the 4 corner positions of a rotated line quad from endpoints and thickness.
+fn line_quad_positions(start: (f32, f32), end: (f32, f32), thickness: f32) -> Option<[[f32; 2]; 4]> {
+    let dx = end.0 - start.0;
+    let dy = end.1 - start.1;
+    let len = (dx * dx + dy * dy).sqrt();
+    if len < 0.001 { return None; }
+    let half_t = thickness / 2.0;
+    let px = -dy / len * half_t;
+    let py = dx / len * half_t;
+    Some([
+        [start.0 + px, start.1 + py],
+        [start.0 - px, start.1 - py],
+        [end.0 - px, end.1 - py],
+        [end.0 + px, end.1 + py],
+    ])
+}
+
+/// Build quads for a Line widget — a rotated quad between two anchor points.
+fn build_line_quads(
+    batch: &mut QuadBatch,
+    f: &crate::widget::Frame,
+    registry: &crate::widget::WidgetRegistry,
+    screen_size: (f32, f32),
+    cache: &mut LayoutCache,
+    alpha: f32,
+) {
+    let (Some(start_anchor), Some(end_anchor)) = (&f.line_start, &f.line_end) else { return };
+    let Some(sp) = resolve_line_endpoint(start_anchor, registry, screen_size, cache) else { return };
+    let Some(ep) = resolve_line_endpoint(end_anchor, registry, screen_size, cache) else { return };
+
+    let thickness = f.line_thickness * crate::render::texture::UI_SCALE;
+    let Some(positions) = line_quad_positions(sp, ep, thickness) else { return };
+    let uvs = [[0.0, 0.0], [0.0, 1.0], [1.0, 1.0], [1.0, 0.0]];
+
+    let vc = f.vertex_color.as_ref();
+    let tint = [
+        vc.map_or(1.0, |c| c.r), vc.map_or(1.0, |c| c.g),
+        vc.map_or(1.0, |c| c.b), vc.map_or(1.0, |c| c.a) * alpha,
+    ];
+
+    if let Some(color) = f.color_texture {
+        let c = [color.r * tint[0], color.g * tint[1], color.b * tint[2], color.a * alpha];
+        emit_line_vertices(batch, &positions, &uvs, c, -1);
+    } else if let Some(ref tex_path) = f.texture {
+        let vertex_start = batch.vertices.len() as u32;
+        emit_line_vertices(batch, &positions, &uvs, tint, -2);
+        batch.texture_requests.push(crate::render::shader::TextureRequest {
+            path: tex_path.clone(), vertex_start, vertex_count: 4,
+        });
+    } else {
+        emit_line_vertices(batch, &positions, &uvs, tint, -1);
+    }
+}
+
+/// Push 4 vertices and 6 indices for a line quad with arbitrary positions.
+fn emit_line_vertices(
+    batch: &mut QuadBatch,
+    positions: &[[f32; 2]; 4],
+    uvs: &[[f32; 2]; 4],
+    color: [f32; 4],
+    tex_index: i32,
+) {
+    use crate::render::shader::QuadVertex;
+    use crate::render::BlendMode;
+
+    let base = batch.vertices.len() as u32;
+    let flags = BlendMode::Alpha as u32;
+    for i in 0..4 {
+        batch.vertices.push(QuadVertex {
+            position: positions[i],
+            tex_coords: uvs[i],
+            color,
+            tex_index,
+            flags,
+            local_uv: uvs[i],
+            mask_tex_index: -1,
+            mask_tex_coords: [0.0, 0.0],
+        });
+    }
+    // TL(0)-BL(1)-BR(2) and TL(0)-BR(2)-TR(3)
+    batch.indices.extend_from_slice(&[base, base + 1, base + 2, base, base + 2, base + 3]);
 }

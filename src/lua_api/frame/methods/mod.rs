@@ -26,6 +26,7 @@ mod methods_core;
 mod methods_create;
 mod methods_event;
 mod methods_helpers;
+mod methods_line;
 pub(crate) mod methods_hierarchy;
 mod methods_meta;
 mod methods_misc;
@@ -90,5 +91,8 @@ impl UserData for FrameHandle {
 
         // Add widget-specific methods (EditBox, Slider, StatusBar, Cooldown, etc.)
         methods_widget::add_widget_methods(methods);
+
+        // Add Line-specific methods (SetStartPoint, SetEndPoint, SetThickness, etc.)
+        methods_line::add_line_methods(methods);
     }
 }

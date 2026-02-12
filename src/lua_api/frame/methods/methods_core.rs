@@ -740,7 +740,9 @@ fn widget_type_is_a(wt: crate::widget::WidgetType, type_name: &str) -> bool {
     // Check parent types
     match type_name.to_ascii_lowercase().as_str() {
         "region" => true, // Everything is a Region
-        "frame" => !matches!(wt, WidgetType::FontString | WidgetType::Texture),
+        "frame" => !matches!(wt, WidgetType::FontString | WidgetType::Texture | WidgetType::Line),
+        "texture" => matches!(wt, WidgetType::Texture | WidgetType::Line),
+        "line" => matches!(wt, WidgetType::Line),
         "button" => matches!(wt, WidgetType::Button | WidgetType::CheckButton),
         _ => false,
     }

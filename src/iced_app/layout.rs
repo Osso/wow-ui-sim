@@ -2,7 +2,7 @@
 
 use std::collections::HashMap;
 
-use crate::widget::{AnchorPoint, WidgetRegistry};
+use crate::widget::{AnchorPoint, LineAnchor, WidgetType, WidgetRegistry};
 use crate::LayoutRect;
 
 /// Cached layout result: computed rect + effective scale.
@@ -228,6 +228,17 @@ pub fn compute_frame_rect_cached(
     rect.x += frame.anim_offset_x;
     rect.y += frame.anim_offset_y;
 
+    if frame.widget_type == WidgetType::Line {
+        if let (Some(start), Some(end)) = (&frame.line_start, &frame.line_end) {
+            if let (Some(sp), Some(ep)) = (
+                resolve_line_anchor(start, registry, screen_width, screen_height, cache),
+                resolve_line_anchor(end, registry, screen_width, screen_height, cache),
+            ) {
+                rect = line_bounding_box(sp, ep, frame.line_thickness * scale);
+            }
+        }
+    }
+
     if frame.clamped_to_screen && rect.width > 0.0 && rect.height > 0.0 {
         clamp_rect_to_screen(&mut rect, screen_width, screen_height);
     }
@@ -301,6 +312,46 @@ pub fn frame_position_from_anchor(
         AnchorPoint::Bottom => (anchor_x - w / 2.0, anchor_y - h),
         AnchorPoint::BottomRight => (anchor_x - w, anchor_y - h),
     }
+}
+
+/// Resolve a line anchor to absolute screen coordinates.
+fn resolve_line_anchor(
+    anchor: &LineAnchor,
+    registry: &WidgetRegistry,
+    screen_width: f32,
+    screen_height: f32,
+    cache: &mut LayoutCache,
+) -> Option<(f32, f32)> {
+    let target_id = anchor.target_id?;
+    let target_layout = compute_frame_rect_cached(registry, target_id, screen_width, screen_height, cache);
+    let r = target_layout.rect;
+    let (ax, ay) = anchor_position(anchor.point, r.x, r.y, r.width, r.height);
+    // WoW y-offset is inverted (positive = up in WoW, but down in screen coords)
+    Some((ax + anchor.x_offset, ay - anchor.y_offset))
+}
+
+/// Compute axis-aligned bounding box for a line between two points with thickness.
+fn line_bounding_box(start: (f32, f32), end: (f32, f32), thickness: f32) -> LayoutRect {
+    let dx = end.0 - start.0;
+    let dy = end.1 - start.1;
+    let len = (dx * dx + dy * dy).sqrt();
+    if len < 0.001 {
+        return LayoutRect { x: start.0, y: start.1, width: 0.0, height: 0.0 };
+    }
+    let half_t = thickness / 2.0;
+    let px = -dy / len * half_t;
+    let py = dx / len * half_t;
+    let corners = [
+        (start.0 + px, start.1 + py),
+        (start.0 - px, start.1 - py),
+        (end.0 + px, end.1 + py),
+        (end.0 - px, end.1 - py),
+    ];
+    let min_x = corners.iter().map(|c| c.0).fold(f32::INFINITY, f32::min);
+    let max_x = corners.iter().map(|c| c.0).fold(f32::NEG_INFINITY, f32::max);
+    let min_y = corners.iter().map(|c| c.1).fold(f32::INFINITY, f32::min);
+    let max_y = corners.iter().map(|c| c.1).fold(f32::NEG_INFINITY, f32::max);
+    LayoutRect { x: min_x, y: min_y, width: max_x - min_x, height: max_y - min_y }
 }
 
 #[cfg(test)]

@@ -284,8 +284,8 @@ fn apply_layers(lua: &Lua, template: &FrameXml, frame_name: &str, subst_parent: 
     for layers in template.layers() {
         for layer in &layers.layers {
             let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
-            for (texture, is_mask) in layer.textures() {
-                elements::create_texture_from_template(lua, texture, frame_name, subst_parent, draw_layer, is_mask);
+            for (texture, is_mask, is_line) in layer.textures() {
+                elements::create_texture_from_template(lua, texture, frame_name, subst_parent, draw_layer, is_mask, is_line);
             }
             for fontstring in layer.font_strings() {
                 elements::create_fontstring_from_template(lua, fontstring, frame_name, subst_parent, draw_layer);

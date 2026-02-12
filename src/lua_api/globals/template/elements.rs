@@ -18,6 +18,7 @@ pub(super) fn create_texture_from_template(
     subst_parent: &str,
     draw_layer: &str,
     is_mask: bool,
+    is_line: bool,
 ) {
     let child_name = texture
         .name
@@ -25,7 +26,7 @@ pub(super) fn create_texture_from_template(
         .map(|n| n.replace("$parent", subst_parent))
         .unwrap_or_else(|| format!("__tex_{}", rand_id()));
 
-    let create_method = if is_mask { "CreateMaskTexture" } else { "CreateTexture" };
+    let create_method = if is_line { "CreateLine" } else if is_mask { "CreateMaskTexture" } else { "CreateTexture" };
     let mut code = format!(
         r#"
         local parent = {}
@@ -42,6 +43,12 @@ pub(super) fn create_texture_from_template(
             "            if {} then Mixin(tex, {}) end\n",
             m, m
         ));
+    }
+
+    if is_line {
+        if let Some(t) = texture.thickness {
+            code.push_str(&format!("            tex:SetThickness({})\n", t));
+        }
     }
 
     append_texture_properties(&mut code, texture, "tex", is_mask);

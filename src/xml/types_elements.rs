@@ -27,11 +27,12 @@ pub struct LayerXml {
 impl LayerXml {
     /// Get all Texture elements in this layer (includes MaskTextures — they
     /// need to exist as child widgets so Lua code can reference them via parentKey).
-    /// Returns (texture, is_mask) pairs.
-    pub fn textures(&self) -> impl Iterator<Item = (&TextureXml, bool)> {
+    /// Returns (texture, is_mask, is_line) triples.
+    pub fn textures(&self) -> impl Iterator<Item = (&TextureXml, bool, bool)> {
         self.elements.iter().filter_map(|e| match e {
-            LayerElement::Texture(t) | LayerElement::Line(t) => Some((t, false)),
-            LayerElement::MaskTexture(t) => Some((t, true)),
+            LayerElement::Texture(t) => Some((t, false, false)),
+            LayerElement::Line(t) => Some((t, false, true)),
+            LayerElement::MaskTexture(t) => Some((t, true, false)),
             _ => None,
         })
     }
@@ -81,6 +82,8 @@ pub struct TextureXml {
     pub horiz_tile: Option<bool>,
     #[serde(rename = "@vertTile")]
     pub vert_tile: Option<bool>,
+    #[serde(rename = "@thickness")]
+    pub thickness: Option<f32>,
     #[serde(rename = "@hidden")]
     pub hidden: Option<bool>,
     #[serde(rename = "@alpha")]

@@ -5,7 +5,7 @@ mod frame;
 mod registry;
 
 pub use anchor::{Anchor, AnchorPoint};
-pub use frame::{AttributeValue, Backdrop, Color, DrawLayer, Frame, FrameStrata, TextJustify, TextOutline};
+pub use frame::{AttributeValue, Backdrop, Color, DrawLayer, Frame, FrameStrata, LineAnchor, TextJustify, TextOutline};
 pub use crate::atlas::NineSliceAtlasInfo;
 pub use registry::WidgetRegistry;
 
@@ -25,6 +25,7 @@ pub enum WidgetType {
     Button,
     FontString,
     Texture,
+    Line,
     EditBox,
     ScrollFrame,
     Slider,
@@ -52,6 +53,7 @@ impl WidgetType {
             "button" | "dropdownbutton" | "itembutton" | "containedalertframe" => Some(Self::Button),
             "fontstring" => Some(Self::FontString),
             "texture" => Some(Self::Texture),
+            "line" => Some(Self::Line),
             "editbox" => Some(Self::EditBox),
             "scrollframe" => Some(Self::ScrollFrame),
             "slider" => Some(Self::Slider),
@@ -76,6 +78,7 @@ impl WidgetType {
             Self::Button => "Button",
             Self::FontString => "FontString",
             Self::Texture => "Texture",
+            Self::Line => "Line",
             Self::EditBox => "EditBox",
             Self::ScrollFrame => "ScrollFrame",
             Self::Slider => "Slider",

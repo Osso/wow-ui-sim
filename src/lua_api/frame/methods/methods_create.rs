@@ -131,7 +131,7 @@ fn add_create_line_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let layer = extract_string_arg(&args, 1);
         let name = resolve_child_name(name_raw, this);
 
-        let mut line = Frame::new(WidgetType::Texture, name.clone(), Some(this.id));
+        let mut line = Frame::new(WidgetType::Line, name.clone(), Some(this.id));
 
         if let Some(layer_str) = layer
             && let Some(draw_layer) = DrawLayer::from_str(&layer_str) {

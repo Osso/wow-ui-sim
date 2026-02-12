@@ -532,8 +532,8 @@ fn create_layer_children(env: &LoaderEnv<'_>, frame: &crate::xml::FrameXml, name
         for layer in &layers.layers {
             let draw_layer = layer.level.as_deref().unwrap_or("ARTWORK");
             let sub_level = layer.texture_sub_level.unwrap_or(0);
-            for (texture, is_mask) in layer.textures() {
-                create_texture_from_xml(env, texture, name, draw_layer, is_mask, sub_level)?;
+            for (texture, is_mask, is_line) in layer.textures() {
+                create_texture_from_xml(env, texture, name, draw_layer, is_mask, is_line, sub_level)?;
             }
             for fontstring in layer.font_strings() {
                 create_fontstring_from_xml(env, fontstring, name, draw_layer, sub_level)?;

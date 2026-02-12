@@ -122,7 +122,7 @@ fn effective_strata(
     f: &crate::widget::Frame,
     registry: &crate::widget::WidgetRegistry,
 ) -> FrameStrata {
-    if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+    if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
         f.parent_id
             .and_then(|pid| registry.get(pid))
             .map(|p| p.frame_strata)
@@ -153,7 +153,7 @@ pub fn intra_strata_sort_key(
     id: u64,
     registry: &crate::widget::WidgetRegistry,
 ) -> IntraStrataKey {
-    if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+    if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
         let (parent_level, parent_id) = f.parent_id
             .and_then(|pid| registry.get(pid).map(|p| (p.frame_level, pid)))
             .unwrap_or((f.frame_level, id));

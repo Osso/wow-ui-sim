@@ -314,8 +314,6 @@ const TEXTURE_METHODS: &[&str] = &[
     "GetNumChildren", "PlaySoundFile", "ClearNineSlice",
     "SetAutomaticFrameLevelEnabled", "IsAutomaticFrameLevelEnabled",
     "SetVisuals",
-    // Line methods (Line is a Texture subtype with start/end point anchoring)
-    "SetStartPoint", "SetEndPoint", "SetThickness",
 ];
 
 const BUTTON_METHODS: &[&str] = &[

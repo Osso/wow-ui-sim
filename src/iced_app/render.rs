@@ -165,7 +165,8 @@ fn emit_all_frames(
             continue;
         }
         let is_fontstring = matches!(f.widget_type, WidgetType::FontString);
-        if rect.height <= 0.0 || (rect.width <= 0.0 && !is_fontstring) {
+        let is_line = matches!(f.widget_type, WidgetType::Line);
+        if (rect.height <= 0.0 && !is_line) || (rect.width <= 0.0 && !is_fontstring && !is_line) {
             continue;
         }
 

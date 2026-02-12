@@ -159,7 +159,7 @@ fn add_children_region_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
         let count = state.widgets.get(this.id).map(|f| {
             f.children.iter().filter(|&&cid| {
                 state.widgets.get(cid).map(|c| {
-                    matches!(c.widget_type, WidgetType::Texture | WidgetType::FontString)
+                    matches!(c.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line)
                 }).unwrap_or(false)
             }).count()
         }).unwrap_or(0);
@@ -178,7 +178,7 @@ fn add_children_region_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
                 let is_region = {
                     let state = this.state.borrow();
                     state.widgets.get(child_id).map(|f| {
-                        matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString)
+                        matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line)
                     }).unwrap_or(false)
                 };
                 if is_region {

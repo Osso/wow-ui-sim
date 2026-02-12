@@ -101,6 +101,15 @@ pub struct Backdrop {
     pub insets: f32,
 }
 
+/// Anchor for Line widget start/end points.
+#[derive(Debug, Clone, Default)]
+pub struct LineAnchor {
+    pub point: AnchorPoint,
+    pub target_id: Option<u64>,
+    pub x_offset: f32,
+    pub y_offset: f32,
+}
+
 /// A Frame is the base widget type in WoW's UI system.
 #[derive(Debug)]
 pub struct Frame {
@@ -359,6 +368,14 @@ pub struct Frame {
     /// Whether cooldown is paused.
     pub cooldown_paused: bool,
 
+    // --- Line fields ---
+    /// Line start anchor (for Line widgets).
+    pub line_start: Option<LineAnchor>,
+    /// Line end anchor (for Line widgets).
+    pub line_end: Option<LineAnchor>,
+    /// Line thickness in pixels (for Line widgets).
+    pub line_thickness: f32,
+
     // --- Rendering effect fields ---
     /// Whether this texture/frame is desaturated (greyscale).
     pub desaturated: bool,
@@ -502,6 +519,11 @@ macro_rules! frame_defaults {
             cooldown_draw_bling: true,
             cooldown_hide_countdown: false,
             cooldown_paused: false,
+
+            // Line
+            line_start: None,
+            line_end: None,
+            line_thickness: 1.0,
 
             // Rendering effects
             desaturated: false,

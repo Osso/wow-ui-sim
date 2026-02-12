@@ -299,7 +299,7 @@ impl SimState {
         let mut buckets = vec![Vec::new(); crate::widget::FrameStrata::COUNT];
         for &id in visible.keys() {
             if let Some(f) = self.widgets.get(id) {
-                let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+                let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
                     f.parent_id
                         .and_then(|pid| self.widgets.get(pid))
                         .map(|p| p.frame_strata)
@@ -606,7 +606,7 @@ impl SimState {
         use crate::iced_app::frame_collect::intra_strata_sort_key;
         use crate::widget::WidgetType;
         let Some(b) = buckets.as_mut() else { return };
-        let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+        let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
             f.parent_id
                 .and_then(|pid| self.widgets.get(pid))
                 .map(|p| p.frame_strata)
@@ -671,7 +671,7 @@ impl SimState {
             if let Some(b) = buckets.as_mut() {
                 if let Some(f) = self.widgets.get(id) {
                     use crate::widget::WidgetType;
-                    let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+                    let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
                         f.parent_id
                             .and_then(|pid| self.widgets.get(pid))
                             .map(|p| p.frame_strata)
