@@ -209,8 +209,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             apply_delay(args.delay);
             let state = env.state().borrow();
-            let (sw, sh) = (width as f32, height as f32);
-            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only, sw, sh);
+            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only, width as f32, height as f32);
         }
         Some(Commands::Screenshot { output, width, height, filter, crop }) => {
             run_screenshot(&env, &font_system, output, width, height, filter, crop, args.delay, exec_lua.as_deref());
