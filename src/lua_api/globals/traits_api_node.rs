@@ -208,11 +208,8 @@ fn build_node_edges_dynamic(
         e.set("targetNode", edge.source_node_id as i64)?;
         e.set("type", edge.edge_type as i32)?;
         e.set("visualStyle", edge.visual_style as i32)?;
-        let is_active = if edge.edge_type == 0 {
-            true
-        } else {
-            *state.talents.node_ranks.get(&edge.source_node_id).unwrap_or(&0) > 0
-        };
+        let is_active =
+            *state.talents.node_ranks.get(&edge.source_node_id).unwrap_or(&0) > 0;
         e.set("isActive", is_active)?;
         edges.set(idx, e)?;
     }

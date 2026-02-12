@@ -524,7 +524,13 @@ fn build_line_quads(
 
     let thickness = f.line_thickness * crate::render::texture::UI_SCALE;
     let Some(positions) = line_quad_positions(sp, ep, thickness) else { return };
-    let uvs = [[0.0, 0.0], [0.0, 1.0], [1.0, 1.0], [1.0, 0.0]];
+
+    // Use atlas/SetTexCoord UVs when available, otherwise full texture.
+    let uvs = if let Some((left, right, top, bottom)) = f.tex_coords {
+        [[left, top], [left, bottom], [right, bottom], [right, top]]
+    } else {
+        [[0.0, 0.0], [0.0, 1.0], [1.0, 1.0], [1.0, 0.0]]
+    };
 
     let vc = f.vertex_color.as_ref();
     let tint = [
