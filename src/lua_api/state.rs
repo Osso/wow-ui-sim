@@ -391,6 +391,7 @@ impl SimState {
         if let Some(f) = widgets.get_mut_silent(id) {
             f.layout_rect = Some(rect);
         }
+        widgets.mark_layout_resolved(id);
         for child_id in children {
             Self::recompute_layout_subtree(widgets, child_id, screen_width, screen_height, cache);
         }
@@ -421,25 +422,20 @@ impl SimState {
     /// Computes missing rects using the same eager path as invalidate_layout.
     /// Called before quad rebuilds (acts as the "next frame" layout resolution).
     pub fn ensure_layout_rects(&mut self) {
-        let sw = self.screen_width;
-        let sh = self.screen_height;
-        let mut cache = self.layout_rect_cache.take().unwrap_or_default();
-        let missing: Vec<u64> = self.widgets.iter_ids()
-            .filter(|&id| self.widgets.get(id).is_some_and(|f| f.layout_rect.is_none()))
-            .collect();
-        for id in missing {
-            Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
-        }
-        // Clear rect_dirty on all frames that have anchors (layout resolved).
-        let dirty_ids: Vec<u64> = self.widgets.iter_ids()
-            .filter(|&id| self.widgets.get(id).is_some_and(|f| f.rect_dirty))
-            .collect();
-        for id in dirty_ids {
-            if let Some(f) = self.widgets.get_mut_silent(id) {
-                f.rect_dirty = false;
+        let pending = self.widgets.drain_pending_layout();
+        if !pending.is_empty() {
+            let sw = self.screen_width;
+            let sh = self.screen_height;
+            let mut cache = self.layout_rect_cache.take().unwrap_or_default();
+            for id in pending {
+                if self.widgets.get(id).is_some_and(|f| f.layout_rect.is_none()) {
+                    Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
+                }
             }
+            self.layout_rect_cache = Some(cache);
         }
-        self.layout_rect_cache = Some(cache);
+        // Clear rect_dirty flags using the tracked set.
+        self.widgets.drain_rect_dirty();
     }
 
     /// Force layout resolution for a single frame, clearing its rect_dirty flag.
@@ -456,11 +452,9 @@ impl SimState {
     }
 
     fn clear_rect_dirty_subtree(widgets: &mut crate::widget::WidgetRegistry, id: u64) {
+        widgets.clear_rect_dirty(id);
         let children: Vec<u64> = widgets.get(id)
             .map(|f| f.children.clone()).unwrap_or_default();
-        if let Some(f) = widgets.get_mut_silent(id) {
-            f.rect_dirty = false;
-        }
         for child_id in children {
             Self::clear_rect_dirty_subtree(widgets, child_id);
         }

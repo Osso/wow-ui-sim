@@ -692,6 +692,12 @@ fn run_screenshot(
         && let Err(e) = env.exec(code) {
             eprintln!("[exec-lua] error: {e}");
         }
+    // Fire extra OnUpdate ticks so deferred UI (talent frame, etc.) can process.
+    for _ in 0..3 {
+        env.state().borrow_mut().ensure_layout_rects();
+        fire_one_on_update_tick(env);
+        process_pending_timers(env);
+    }
     apply_delay(delay);
     let (batch, glyph_atlas) = build_screenshot_batch(env, font_system, width, height, filter.as_deref());
     eprintln!("QuadBatch: {} quads, {} texture requests", batch.quad_count(), batch.texture_requests.len());
@@ -712,12 +718,7 @@ fn run_screenshot(
 
     let output = output.with_extension("webp");
     save_screenshot(&img, &output);
-    let size_label = if crop.is_some() {
-        format!("{}x{} (cropped from {}x{})", img.width(), img.height(), width, height)
-    } else {
-        format!("{}x{}", width, height)
-    };
-    eprintln!("Saved {} screenshot to {}", size_label, output.display());
+    eprintln!("Saved {}x{} screenshot to {}", img.width(), img.height(), output.with_extension("webp").display());
 }
 
 /// Save screenshot image as lossy WebP (quality 15). Extension is forced to .webp.

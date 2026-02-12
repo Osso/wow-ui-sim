@@ -15,6 +15,10 @@ pub struct WidgetRegistry {
     render_dirty: Cell<bool>,
     /// Reverse index: target_id → set of frame IDs anchored to it.
     anchor_dependents: HashMap<u64, HashSet<u64>>,
+    /// Frames with `rect_dirty = true`, for fast lookup in `ensure_layout_rects`.
+    rect_dirty_ids: HashSet<u64>,
+    /// Frames with `layout_rect = None` that need layout computation.
+    pending_layout_ids: HashSet<u64>,
 }
 
 impl WidgetRegistry {
@@ -33,6 +37,9 @@ impl WidgetRegistry {
             }
         if let Some(ref name) = widget.name {
             self.names.insert(name.clone(), id);
+        }
+        if widget.layout_rect.is_none() {
+            self.pending_layout_ids.insert(id);
         }
         self.widgets.insert(id, widget);
         id
@@ -98,8 +105,9 @@ impl WidgetRegistry {
 
     /// Clear all cached layout rects (e.g. after screen resize).
     pub fn clear_all_layout_rects(&mut self) {
-        for frame in self.widgets.values_mut() {
+        for (&id, frame) in self.widgets.iter_mut() {
             frame.layout_rect = None;
+            self.pending_layout_ids.insert(id);
         }
         self.render_dirty.set(true);
     }
@@ -142,6 +150,7 @@ impl WidgetRegistry {
     pub fn mark_rect_dirty_subtree(&mut self, id: u64) {
         if let Some(f) = self.widgets.get_mut(&id) {
             f.rect_dirty = true;
+            self.rect_dirty_ids.insert(id);
             let children = f.children.clone();
             for child_id in children {
                 self.mark_rect_dirty_subtree(child_id);
@@ -154,6 +163,28 @@ impl WidgetRegistry {
         if let Some(f) = self.widgets.get_mut(&id) {
             f.rect_dirty = false;
         }
+        self.rect_dirty_ids.remove(&id);
+    }
+
+    /// Drain rect_dirty_ids, clearing dirty flags. Returns the set for callers that need it.
+    pub fn drain_rect_dirty(&mut self) -> HashSet<u64> {
+        let ids = std::mem::take(&mut self.rect_dirty_ids);
+        for &id in &ids {
+            if let Some(f) = self.widgets.get_mut(&id) {
+                f.rect_dirty = false;
+            }
+        }
+        ids
+    }
+
+    /// Drain pending_layout_ids (frames missing layout_rect).
+    pub fn drain_pending_layout(&mut self) -> HashSet<u64> {
+        std::mem::take(&mut self.pending_layout_ids)
+    }
+
+    /// Mark a frame's layout_rect as resolved (remove from pending set).
+    pub fn mark_layout_resolved(&mut self, id: u64) {
+        self.pending_layout_ids.remove(&id);
     }
 
     /// Check if setting a point from `frame_id` to `relative_to_id` would create a cycle.
