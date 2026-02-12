@@ -340,12 +340,11 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
     // Text fontstring for button label — fill parent so it inherits the
     // button's width and renders at Overlay layer (above child textures
     // like three-slice Background-layer Left/Right/Center).
-    let mut text_fs = Frame::new(WidgetType::FontString, None, Some(frame_id));
-    add_fill_parent_anchors(&mut text_fs, frame_id);
-    text_fs.draw_layer = crate::widget::DrawLayer::Overlay;
-    let text_id = text_fs.id;
-    state.widgets.register(text_fs);
-    state.widgets.add_child(frame_id, text_id);
+    let text_id = create_child_widget(state, WidgetType::FontString, frame_id);
+    if let Some(text_fs) = state.widgets.get_mut(text_id) {
+        add_fill_parent_anchors(text_fs, frame_id);
+        text_fs.draw_layer = crate::widget::DrawLayer::Overlay;
+    }
 
     if let Some(btn) = state.widgets.get_mut(frame_id) {
         btn.children_keys.insert("NormalTexture".to_string(), normal_id);
@@ -453,6 +452,14 @@ fn create_child_widget(state: &mut SimState, widget_type: WidgetType, parent_id:
     let child_id = child.id;
     state.widgets.register(child);
     state.widgets.add_child(parent_id, child_id);
+    // Inherit strata and level from parent
+    let parent_props = state.widgets.get(parent_id).map(|p| (p.frame_strata, p.frame_level));
+    if let Some((parent_strata, parent_level)) = parent_props {
+        if let Some(f) = state.widgets.get_mut(child_id) {
+            f.frame_strata = parent_strata;
+            f.frame_level = parent_level + 1;
+        }
+    }
     child_id
 }
 

@@ -117,18 +117,35 @@ fn is_button_state_texture(
         .any(|key| parent.children_keys.get(*key) == Some(&id))
 }
 
+/// Effective strata for rendering: regions use their parent's strata.
+fn effective_strata(
+    f: &crate::widget::Frame,
+    registry: &crate::widget::WidgetRegistry,
+) -> FrameStrata {
+    if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+        f.parent_id
+            .and_then(|pid| registry.get(pid))
+            .map(|p| p.frame_strata)
+            .unwrap_or(f.frame_strata)
+    } else {
+        f.frame_strata
+    }
+}
+
 /// Sort key type for frame rendering order within a strata bucket.
-pub type IntraStrataKey = (i32, std::cmp::Reverse<u64>, u8, i32, i32, u8, std::cmp::Reverse<u64>);
+pub type IntraStrataKey = (i32, u64, u8, i32, i32, u8, u64);
 
 /// Intra-strata sort key for rendering order within the same frame strata.
 ///
 /// In WoW, regions (Texture/FontString) render as part of their parent frame,
 /// not independently. Regions use their parent's frame_level and group with
-/// their parent via `Reverse(parent_id)`, ensuring all regions of a frame
-/// render immediately after that frame (before any higher-level content).
+/// their parent via `parent_id`, ensuring all regions of a frame render
+/// immediately after that frame (before any higher-level content).
 ///
-/// Non-regions sort by `(frame_level, Reverse(id))`. FontStrings (type_flag=1)
-/// render above Textures (type_flag=0) in the same draw layer per WoW rules.
+/// Non-regions sort by `(frame_level, id)` — higher IDs (later-created frames)
+/// render on top at the same level, matching WoW's creation-order stacking.
+/// FontStrings (type_flag=1) render above Textures (type_flag=0) in the same
+/// draw layer per WoW rules.
 pub fn intra_strata_sort_key(
     f: &crate::widget::Frame,
     id: u64,
@@ -139,9 +156,9 @@ pub fn intra_strata_sort_key(
             .and_then(|pid| registry.get(pid).map(|p| (p.frame_level, pid)))
             .unwrap_or((f.frame_level, id));
         let type_flag = if f.widget_type == WidgetType::FontString { 1u8 } else { 0u8 };
-        (parent_level, std::cmp::Reverse(parent_id), 1, f.draw_layer as i32, f.draw_sub_layer, type_flag, std::cmp::Reverse(id))
+        (parent_level, parent_id, 1, f.draw_layer as i32, f.draw_sub_layer, type_flag, id)
     } else {
-        (f.frame_level, std::cmp::Reverse(id), 0, 0, 0, 0, std::cmp::Reverse(0))
+        (f.frame_level, id, 0, 0, 0, 0, 0)
     }
 }
 
@@ -193,8 +210,12 @@ pub fn collect_sorted_frames(
         }
         frames.sort_by(|&(id_a, _, _), &(id_b, _, _)| {
             match (registry.get(id_a), registry.get(id_b)) {
-                (Some(fa), Some(fb)) => fa.frame_strata.cmp(&fb.frame_strata)
-                    .then_with(|| intra_strata_sort_key(fa, id_a, registry).cmp(&intra_strata_sort_key(fb, id_b, registry))),
+                (Some(fa), Some(fb)) => {
+                    let strata_a = effective_strata(fa, registry);
+                    let strata_b = effective_strata(fb, registry);
+                    strata_a.cmp(&strata_b)
+                        .then_with(|| intra_strata_sort_key(fa, id_a, registry).cmp(&intra_strata_sort_key(fb, id_b, registry)))
+                }
                 _ => id_a.cmp(&id_b),
             }
         });

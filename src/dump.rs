@@ -104,8 +104,9 @@ fn emit_frame_line(
     let info_str = format_info_str(frame, &rect);
     let text_str = format_text_str(widgets, frame);
     let font_str = format_font_str(frame);
+    let strata_str = format!(" {}:{}", frame.frame_strata.as_str(), frame.frame_level);
     lines.push(format!(
-        "{indent}{display_name} [{:?}] {size_str} {vis}{stale_str}{info_str}{text_str}{font_str}",
+        "{indent}{display_name} [{:?}] {size_str} {vis}{strata_str}{stale_str}{info_str}{text_str}{font_str}",
         frame.widget_type,
     ));
     emit_anchor_lines(widgets, frame, &indent, screen_width, screen_height, lines);

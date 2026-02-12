@@ -52,6 +52,15 @@ fn register_child_widget(
         let mut state = this.state.borrow_mut();
         state.widgets.register(child);
         state.widgets.add_child(this.id, child_id);
+
+        // Inherit strata and level from parent (regions render in parent's context)
+        let parent_props = state.widgets.get(this.id).map(|p| (p.frame_strata, p.frame_level));
+        if let Some((parent_strata, parent_level)) = parent_props {
+            if let Some(f) = state.widgets.get_mut(child_id) {
+                f.frame_strata = parent_strata;
+                f.frame_level = parent_level + 1;
+            }
+        }
     }
 
     let handle = FrameHandle {

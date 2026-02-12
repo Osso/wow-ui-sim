@@ -157,6 +157,11 @@ pub fn get_or_create_button_texture(
 
     let mut texture = Frame::new(WidgetType::Texture, None, Some(button_id));
     set_all_points_anchors(&mut texture, button_id);
+    // Inherit strata and level from parent button
+    if let Some(parent) = state.widgets.get(button_id) {
+        texture.frame_strata = parent.frame_strata;
+        texture.frame_level = parent.frame_level + 1;
+    }
     let texture_id = texture.id;
 
     state.widgets.register(texture);

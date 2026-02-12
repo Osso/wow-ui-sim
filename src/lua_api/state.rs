@@ -290,12 +290,24 @@ impl SimState {
     }
 
     /// Build per-strata ID buckets from the ancestor-visible map, sorted by render order.
+    ///
+    /// Regions (Texture/FontString) use their parent's strata for bucket placement,
+    /// matching WoW's behavior where regions render in the parent frame's context.
     fn build_strata_buckets(&self, visible: &HashMap<u64, f32>) -> Vec<Vec<u64>> {
         use crate::iced_app::frame_collect::intra_strata_sort_key;
+        use crate::widget::WidgetType;
         let mut buckets = vec![Vec::new(); crate::widget::FrameStrata::COUNT];
         for &id in visible.keys() {
             if let Some(f) = self.widgets.get(id) {
-                buckets[f.frame_strata.as_index()].push(id);
+                let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+                    f.parent_id
+                        .and_then(|pid| self.widgets.get(pid))
+                        .map(|p| p.frame_strata)
+                        .unwrap_or(f.frame_strata)
+                } else {
+                    f.frame_strata
+                };
+                buckets[strata.as_index()].push(id);
             }
         }
         for bucket in &mut buckets {
@@ -589,10 +601,20 @@ impl SimState {
 
     /// Insert `id` into the correct sorted position in its strata bucket.
     /// Skips insertion if the id is already present (avoids duplicate rendering).
+    /// Regions use parent's strata for bucket placement.
     fn insert_into_strata_bucket(&self, f: &crate::widget::Frame, id: u64, buckets: &mut Option<Vec<Vec<u64>>>) {
         use crate::iced_app::frame_collect::intra_strata_sort_key;
+        use crate::widget::WidgetType;
         let Some(b) = buckets.as_mut() else { return };
-        let bucket = &mut b[f.frame_strata.as_index()];
+        let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+            f.parent_id
+                .and_then(|pid| self.widgets.get(pid))
+                .map(|p| p.frame_strata)
+                .unwrap_or(f.frame_strata)
+        } else {
+            f.frame_strata
+        };
+        let bucket = &mut b[strata.as_index()];
         if bucket.contains(&id) {
             return;
         }
@@ -640,6 +662,7 @@ impl SimState {
     }
 
     /// Remove `id` and all descendants from ancestor-visible cache.
+    /// Regions use parent's strata for bucket lookup (matching insert logic).
     fn remove_visible_descendants(
         &self, id: u64, cache: &mut HashMap<u64, f32>,
         buckets: &mut Option<Vec<Vec<u64>>>,
@@ -647,7 +670,16 @@ impl SimState {
         if cache.remove(&id).is_some() {
             if let Some(b) = buckets.as_mut() {
                 if let Some(f) = self.widgets.get(id) {
-                    let bucket = &mut b[f.frame_strata.as_index()];
+                    use crate::widget::WidgetType;
+                    let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString) {
+                        f.parent_id
+                            .and_then(|pid| self.widgets.get(pid))
+                            .map(|p| p.frame_strata)
+                            .unwrap_or(f.frame_strata)
+                    } else {
+                        f.frame_strata
+                    };
+                    let bucket = &mut b[strata.as_index()];
                     if let Some(pos) = bucket.iter().position(|&x| x == id) {
                         bucket.remove(pos); // preserve sorted order
                     }
