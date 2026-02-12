@@ -52,6 +52,12 @@ fn set_node_dynamic_fields(
     let max_ranks = node_max_ranks(node);
     let s = state.borrow();
 
+    // SubTreeSelection nodes (type 3) are not instantiated by the Blizzard UI.
+    if node.node_type == 3 {
+        info.set("isVisible", false)?;
+        return set_empty_ranks(info, lua, max_ranks);
+    }
+
     // Hero subtree nodes stay fully talented.
     if node.sub_tree_id != 0 {
         return set_fully_talented(lua, info, node, max_ranks);
@@ -89,21 +95,44 @@ fn set_fully_talented(
     info.set("canPurchaseRank", false)?;
     info.set("canRefundRank", false)?;
     info.set("meetsEdgeRequirements", true)?;
-    // Edges all active for hero nodes.
+    // Edges all active for hero nodes, filtered to same subtree.
     let edges = lua.create_table()?;
-    for (i, edge) in node.edges.iter().enumerate() {
+    let mut idx = 0i64;
+    for edge in node.edges.iter() {
+        if !should_show_edge(node.sub_tree_id, edge.source_node_id) {
+            continue;
+        }
+        idx += 1;
         let e = lua.create_table()?;
         e.set("targetNode", edge.source_node_id as i64)?;
         e.set("type", edge.edge_type as i32)?;
         e.set("visualStyle", edge.visual_style as i32)?;
         e.set("isActive", true)?;
-        edges.set(i as i64 + 1, e)?;
+        edges.set(idx, e)?;
     }
     info.set("visibleEdges", edges)?;
     let active_entry = lua.create_table()?;
     active_entry.set("entryID", node.entry_ids.first().copied().unwrap_or(0) as i64)?;
     active_entry.set("rank", max_ranks)?;
     info.set("activeEntry", active_entry)?;
+    Ok(())
+}
+
+/// Minimal rank fields for non-instantiated nodes (SubTreeSelection).
+fn set_empty_ranks(info: &mlua::Table, lua: &Lua, max_ranks: i32) -> Result<()> {
+    info.set("currentRank", 0)?;
+    info.set("activeRank", 0)?;
+    info.set("ranksPurchased", 0)?;
+    info.set("maxRanks", max_ranks)?;
+    info.set("isAvailable", false)?;
+    info.set("canPurchaseRank", false)?;
+    info.set("canRefundRank", false)?;
+    info.set("meetsEdgeRequirements", false)?;
+    info.set("visibleEdges", lua.create_table()?)?;
+    let ae = lua.create_table()?;
+    ae.set("entryID", 0i64)?;
+    ae.set("rank", 0)?;
+    info.set("activeEntry", ae)?;
     Ok(())
 }
 
@@ -163,11 +192,18 @@ fn check_has_currency(node_id: u32, state: &SimState) -> bool {
 }
 
 /// Build edges with dynamic isActive based on source node purchase state.
+/// Filters out cross-subtree edges: non-hero nodes only show edges to other
+/// non-hero nodes, hero nodes only show edges within the same subtree.
 fn build_node_edges_dynamic(
     lua: &Lua, info: &mlua::Table, node: &TraitNodeInfo, state: &SimState,
 ) -> Result<()> {
     let edges = lua.create_table()?;
-    for (i, edge) in node.edges.iter().enumerate() {
+    let mut idx = 0i64;
+    for edge in node.edges.iter() {
+        if !should_show_edge(node.sub_tree_id, edge.source_node_id) {
+            continue;
+        }
+        idx += 1;
         let e = lua.create_table()?;
         e.set("targetNode", edge.source_node_id as i64)?;
         e.set("type", edge.edge_type as i32)?;
@@ -178,10 +214,23 @@ fn build_node_edges_dynamic(
             *state.talents.node_ranks.get(&edge.source_node_id).unwrap_or(&0) > 0
         };
         e.set("isActive", is_active)?;
-        edges.set(i as i64 + 1, e)?;
+        edges.set(idx, e)?;
     }
     info.set("visibleEdges", edges)?;
     Ok(())
+}
+
+/// Filter cross-subtree edges: only show edges between nodes in the same
+/// subtree (both hero or both non-hero).
+fn should_show_edge(this_sub_tree: u32, target_node_id: u32) -> bool {
+    let target_sub_tree = TRAIT_NODE_DB.get(&target_node_id)
+        .map(|n| n.sub_tree_id)
+        .unwrap_or(0);
+    match (this_sub_tree, target_sub_tree) {
+        (0, 0) => true,                          // both non-hero
+        (a, b) if a != 0 && a == b => true,       // same hero subtree
+        _ => false,                                // cross-subtree
+    }
 }
 
 /// Build a minimal nodeInfo for nodes not in the trait DB.
