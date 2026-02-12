@@ -256,6 +256,9 @@ pub struct Frame {
     pub nine_slice_layout: Option<String>,
     /// Nine-slice atlas kit (detected from SetAtlas when name is a kit prefix).
     pub nine_slice_atlas: Option<NineSliceAtlasInfo>,
+    /// Horizontal three-slice caps for stretched atlas textures.
+    /// (left_cap_px, right_cap_px, atlas_entry_width_px)
+    pub three_slice_h: Option<(f32, f32, f32)>,
     /// Blend mode for texture rendering (Alpha or Additive).
     pub blend_mode: BlendMode,
     /// Whether this frame receives ALL events (set by RegisterAllEvents).
@@ -459,6 +462,7 @@ macro_rules! frame_defaults {
             atlas: None,
             nine_slice_layout: None,
             nine_slice_atlas: None,
+            three_slice_h: None,
             blend_mode: BlendMode::Alpha,
             register_all_events: false,
             clips_children: false,

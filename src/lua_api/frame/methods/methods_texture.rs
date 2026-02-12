@@ -283,10 +283,21 @@ fn apply_atlas_to_frame(
         frame.horiz_tile = atlas_info.tiles_horizontally;
         frame.vert_tile = atlas_info.tiles_vertically;
         frame.atlas = Some(atlas_name.to_string());
+        frame.three_slice_h = three_slice_caps_for_atlas(atlas_name, atlas_info.width);
         if use_atlas_size {
             frame.width = lookup.width() as f32;
             frame.height = lookup.height() as f32;
         }
+    }
+}
+
+/// Return horizontal three-slice cap info for known atlas entries.
+/// Returns (left_cap_px, right_cap_px, atlas_entry_width_px).
+fn three_slice_caps_for_atlas(atlas_name: &str, atlas_width: u32) -> Option<(f32, f32, f32)> {
+    let w = atlas_width as f32;
+    match atlas_name {
+        "common-dropdown-textholder" => Some((12.0, 12.0, w)),
+        _ => None,
     }
 }
 

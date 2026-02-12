@@ -146,7 +146,13 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     let (fill_bounds, fill_uvs) = apply_bar_fill_with_uvs(bounds, f.tex_coords, bar_fill);
 
     let vert_before = batch.vertices.len();
-    if let Some((left, right, top, bottom)) = fill_uvs {
+    if let Some((left_cap, right_cap, atlas_w)) = f.three_slice_h
+        && let Some((left, right, top, bottom)) = fill_uvs
+        && fill_bounds.width > left_cap + right_cap
+    {
+        emit_three_slice_h_atlas(batch, fill_bounds, left_cap, right_cap, atlas_w,
+            (left, right, top, bottom), tex_path, tint, f.blend_mode);
+    } else if let Some((left, right, top, bottom)) = fill_uvs {
         let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
         if f.horiz_tile || f.vert_tile {
             emit_tiled_texture(batch, fill_bounds, &uvs, tex_path, f, alpha);
@@ -163,6 +169,51 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     if f.desaturated {
         apply_desaturate_flag(batch, vert_before);
     }
+}
+
+/// Render an atlas texture as 3 horizontal slices (left cap, stretched middle, right cap).
+#[allow(clippy::too_many_arguments)]
+fn emit_three_slice_h_atlas(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    left_cap_px: f32,
+    right_cap_px: f32,
+    atlas_width_px: f32,
+    (left_uv, right_uv, top_uv, bottom_uv): (f32, f32, f32, f32),
+    tex_path: &str,
+    tint: [f32; 4],
+    blend: crate::render::BlendMode,
+) {
+    let uv_w = right_uv - left_uv;
+    let uv_h = bottom_uv - top_uv;
+    let left_frac = left_cap_px / atlas_width_px;
+    let right_frac = right_cap_px / atlas_width_px;
+
+    let left_cap_uv_end = left_uv + left_frac * uv_w;
+    let right_cap_uv_start = right_uv - right_frac * uv_w;
+
+    let mid_x = bounds.x + left_cap_px;
+    let mid_w = bounds.width - left_cap_px - right_cap_px;
+    let right_x = bounds.x + bounds.width - right_cap_px;
+
+    // Left cap
+    batch.push_textured_path_uv(
+        Rectangle::new(Point::new(bounds.x, bounds.y), Size::new(left_cap_px, bounds.height)),
+        Rectangle::new(Point::new(left_uv, top_uv), Size::new(left_cap_uv_end - left_uv, uv_h)),
+        tex_path, tint, blend,
+    );
+    // Middle (stretched)
+    batch.push_textured_path_uv(
+        Rectangle::new(Point::new(mid_x, bounds.y), Size::new(mid_w, bounds.height)),
+        Rectangle::new(Point::new(left_cap_uv_end, top_uv), Size::new(right_cap_uv_start - left_cap_uv_end, uv_h)),
+        tex_path, tint, blend,
+    );
+    // Right cap
+    batch.push_textured_path_uv(
+        Rectangle::new(Point::new(right_x, bounds.y), Size::new(right_cap_px, bounds.height)),
+        Rectangle::new(Point::new(right_cap_uv_start, top_uv), Size::new(right_uv - right_cap_uv_start, uv_h)),
+        tex_path, tint, blend,
+    );
 }
 
 /// Apply StatusBar fill clipping to bounds.
