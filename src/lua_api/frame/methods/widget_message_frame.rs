@@ -26,6 +26,12 @@ fn add_message_frame_add_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
         Ok(())
     });
 
+    // _AddMessageSilent(text, r, g, b, ...) - Internal: same as AddMessage but no terminal log
+    methods.add_method("_AddMessageSilent", |_, this, args: mlua::MultiValue| {
+        add_message_silent_impl(this, args);
+        Ok(())
+    });
+
     // BackFillMessage(text, r, g, b, ...) - Add message to back of history
     methods.add_method("BackFillMessage", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
@@ -311,6 +317,15 @@ fn log_message(handle: &FrameHandle, text: &str) {
 
 /// Shared AddMessage implementation for AddMessage/AddMsg.
 fn add_message_impl(this: &FrameHandle, args: mlua::MultiValue) {
+    add_message_core(this, args, true);
+}
+
+/// Silent variant: same as AddMessage but skips terminal logging.
+fn add_message_silent_impl(this: &FrameHandle, args: mlua::MultiValue) {
+    add_message_core(this, args, false);
+}
+
+fn add_message_core(this: &FrameHandle, args: mlua::MultiValue, log: bool) {
     let args_vec: Vec<Value> = args.into_iter().collect();
     let text = match args_vec.first() {
         Some(Value::String(s)) => s.to_string_lossy().to_string(),
@@ -325,7 +340,9 @@ fn add_message_impl(this: &FrameHandle, args: mlua::MultiValue) {
         Some(Value::Number(n)) => Some(*n as i64),
         _ => None,
     };
-    log_message(this, &text);
+    if log {
+        log_message(this, &text);
+    }
     let mut state = this.state.borrow_mut();
     let timestamp = state.start_time.elapsed().as_secs_f64();
     let data = state.message_frames.entry(this.id)

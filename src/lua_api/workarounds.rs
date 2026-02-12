@@ -472,7 +472,7 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
         end
         local function post(channel, prefix, r, g, b)
             local msg, name = fc:pick(channel)
-            ChatFrame1:AddMessage(timestamp() .. prefix ..
+            ChatFrame1:_AddMessageSilent(timestamp() .. prefix ..
                 "|Hplayer:" .. name .. "|h[" .. name .. "]|h: " .. msg,
                 r, g, b)
         end
@@ -487,7 +487,7 @@ fn schedule_fake_chat_tickers(env: &WowLuaEnv) {
         -- Say (10s offset, white — uses "says:" format)
         C_Timer.After(10, function() C_Timer.NewTicker(40, function()
             local msg, name = fc:pick("say")
-            ChatFrame1:AddMessage(
+            ChatFrame1:_AddMessageSilent(
                 timestamp() .. "|Hplayer:" .. name .. "|h[" .. name .. "]|h says: " .. msg,
                 1.0, 1.0, 1.0)
         end) end)
