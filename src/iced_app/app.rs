@@ -128,11 +128,6 @@ fn fire_world_and_ui_events(env: &WowLuaEnv) {
         }
     }
 
-    let _ = env.lua().load(r#"
-        if SlashCmdList and SlashCmdList.ACCOUNTPLAYEDPOPUP then
-            SlashCmdList.ACCOUNTPLAYEDPOPUP()
-        end
-    "#).exec();
 }
 
 /// Application state.
