@@ -158,13 +158,40 @@ fn reset_tree_by_currency(
     fire_trait_config_updated(lua, config_id)
 }
 
+/// Fire all events the Blizzard UI needs after a talent state change:
+/// - TRAIT_NODE_CHANGED for each node (invalidates nodeInfo cache)
+/// - TRAIT_TREE_CURRENCY_INFO_UPDATED for the tree (refreshes point display)
+/// - TRAIT_CONFIG_UPDATED for the config (commit handling)
 fn fire_trait_config_updated(lua: &Lua, config_id: i32) -> Result<bool> {
+    fire_node_changed_events(lua)?;
+    fire_currency_updated_event(lua)?;
     let fire: mlua::Function = lua.globals().get("FireEvent")?;
     fire.call::<()>((
         lua.create_string("TRAIT_CONFIG_UPDATED")?,
         config_id as i64,
     ))?;
     Ok(true)
+}
+
+fn fire_node_changed_events(lua: &Lua) -> Result<()> {
+    use crate::traits::TRAIT_TREE_DB;
+    let fire: mlua::Function = lua.globals().get("FireEvent")?;
+    let event = lua.create_string("TRAIT_NODE_CHANGED")?;
+    if let Some(tree) = TRAIT_TREE_DB.get(&790) {
+        for &nid in tree.node_ids {
+            fire.call::<()>((event.clone(), nid as i64))?;
+        }
+    }
+    Ok(())
+}
+
+fn fire_currency_updated_event(lua: &Lua) -> Result<()> {
+    let fire: mlua::Function = lua.globals().get("FireEvent")?;
+    fire.call::<()>((
+        lua.create_string("TRAIT_TREE_CURRENCY_INFO_UPDATED")?,
+        790i64,
+    ))?;
+    Ok(())
 }
 
 /// C_Traits tree-level APIs.

@@ -364,6 +364,13 @@ impl App {
         self.run_wow_timers();
         let timers_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
 
+        // Resolve pending layout before OnUpdate so IsRectValid() returns true
+        // for frames whose rects have been computed.  Without this, Blizzard code
+        // that iterates buttonsWithDirtyEdges during OnUpdate can trigger
+        // MarkEdgesDirty mid-iteration (via arrow-edge UpdatePosition calling
+        // IsRectValid), corrupting the table and producing "invalid key to next".
+        self.env.borrow().state().borrow_mut().ensure_layout_rects();
+
         self.fire_on_update();
         let on_update_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
 
