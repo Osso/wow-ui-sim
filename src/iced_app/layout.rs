@@ -302,3 +302,53 @@ pub fn frame_position_from_anchor(
         AnchorPoint::BottomRight => (anchor_x - w, anchor_y - h),
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::widget::{Anchor, AnchorPoint, Frame};
+
+    fn anchor(point: AnchorPoint, rel_id: Option<usize>, rel_point: AnchorPoint) -> Anchor {
+        Anchor { point, relative_to_id: rel_id, relative_to: None, relative_point: rel_point, x_offset: 0.0, y_offset: 0.0 }
+    }
+
+    fn make_frame(id: u64, parent: Option<u64>, w: f32, h: f32, children: Vec<u64>, anchors: Vec<Anchor>) -> Frame {
+        let mut f = Frame::default();
+        f.id = id;
+        f.parent_id = parent;
+        f.width = w;
+        f.height = h;
+        f.children = children;
+        f.anchors = anchors;
+        f
+    }
+
+    /// Build a three-slice registry: UIParent → button → Left, Right, Center.
+    fn build_three_slice_registry() -> WidgetRegistry {
+        let mut reg = WidgetRegistry::new();
+        let mut uip = make_frame(1, None, 1024.0, 768.0, vec![10], vec![]);
+        uip.name = Some("UIParent".to_string());
+        reg.register(uip);
+        reg.register(make_frame(10, Some(1), 200.0, 36.0, vec![20, 21, 22],
+            vec![anchor(AnchorPoint::Center, None, AnchorPoint::Center)]));
+        reg.register(make_frame(20, Some(10), 32.0, 39.0, vec![],
+            vec![anchor(AnchorPoint::Left, None, AnchorPoint::Left)]));
+        reg.register(make_frame(21, Some(10), 32.0, 39.0, vec![],
+            vec![anchor(AnchorPoint::Right, None, AnchorPoint::Right)]));
+        reg.register(make_frame(22, Some(10), 0.0, 0.0, vec![], vec![
+            anchor(AnchorPoint::TopLeft, Some(20), AnchorPoint::TopRight),
+            anchor(AnchorPoint::BottomRight, Some(21), AnchorPoint::BottomLeft),
+        ]));
+        reg
+    }
+
+    /// Three-slice Center texture with cross-frame anchors must have non-zero size.
+    #[test]
+    fn test_cross_frame_anchor_center_texture() {
+        let registry = build_three_slice_registry();
+        let rect = compute_frame_rect(&registry, 22, 1024.0, 768.0);
+        // Width = btn.width - left.width - right.width = 200 - 32 - 32 = 136
+        assert!(rect.width > 100.0, "Center width should be ~136, got {}", rect.width);
+        assert!(rect.height > 30.0, "Center height should be ~39, got {}", rect.height);
+    }
+}

@@ -60,6 +60,12 @@ enum Commands {
         /// Show only visible frames
         #[arg(long)]
         visible_only: bool,
+        /// Screen width for layout computation
+        #[arg(long, default_value_t = 1024)]
+        width: u32,
+        /// Screen height for layout computation
+        #[arg(long, default_value_t = 768)]
+        height: u32,
     },
 
     /// Render UI to an image file (no GUI needed)
@@ -127,11 +133,6 @@ fn apply_resource_limits() {
     );
 }
 
-/// Find the best .toc file for an addon directory (prefer _Mainline.toc for retail)
-fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
-    wow_ui_sim::loader::find_toc_file(addon_dir)
-}
-
 /// Scan addons directory and return sorted list of addon directories
 fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
     let mut addons = Vec::new();
@@ -145,7 +146,7 @@ fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
                 let skip = name.starts_with('.')
                     || name == "BlizzardUI";
                 if !skip
-                    && let Some(toc_path) = find_toc_file(&path)
+                    && let Some(toc_path) = wow_ui_sim::loader::find_toc_file(&path)
                         && let Ok(toc) = TocFile::from_file(&toc_path)
                             && !toc.is_glue_only() && !toc.is_ptr_only() && !toc.is_game_type_restricted() {
                                 addons.push((name, toc_path));
@@ -195,7 +196,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let exec_lua = resolve_exec_lua(&args.exec_lua);
 
     match args.command {
-        Some(Commands::DumpTree { filter, filter_key, visible_only }) => {
+        Some(Commands::DumpTree { filter, filter_key, visible_only, width, height }) => {
             fire_startup_events(&env);
             env.apply_post_event_workarounds();
             env.state().borrow_mut().widgets.rebuild_anchor_index();
@@ -208,7 +209,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             apply_delay(args.delay);
             let state = env.state().borrow();
-            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only);
+            let (sw, sh) = (width as f32, height as f32);
+            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only, sw, sh);
         }
         Some(Commands::Screenshot { output, width, height, filter, crop }) => {
             run_screenshot(&env, &font_system, output, width, height, filter, crop, args.delay, exec_lua.as_deref());

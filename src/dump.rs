@@ -1,9 +1,17 @@
 //! Frame tree dump and diagnostic utilities.
 
+use crate::iced_app::layout::compute_frame_rect;
 use crate::widget::{Frame, WidgetRegistry, WidgetType};
 
 /// Dump the frame tree to stdout.
-pub fn print_frame_tree(widgets: &WidgetRegistry, filter: Option<&str>, filter_key: Option<&str>, visible_only: bool) {
+pub fn print_frame_tree(
+    widgets: &WidgetRegistry,
+    filter: Option<&str>,
+    filter_key: Option<&str>,
+    visible_only: bool,
+    screen_width: f32,
+    screen_height: f32,
+) {
     let mut roots = collect_root_frames(widgets);
     roots.sort_by(|a, b| {
         let name_a = a.1.as_deref().unwrap_or("");
@@ -15,10 +23,10 @@ pub fn print_frame_tree(widgets: &WidgetRegistry, filter: Option<&str>, filter_k
     eprintln!("\n=== Frame Tree ===\n");
 
     if let Some(key_filter) = filter_key {
-        print_subtrees_matching_key(widgets, &roots, key_filter, visible_only);
+        print_subtrees_matching_key(widgets, &roots, key_filter, visible_only, screen_width, screen_height);
     } else {
         for (id, _) in &roots {
-            print_frame(widgets, *id, 0, filter, visible_only);
+            print_frame(widgets, *id, 0, filter, visible_only, screen_width, screen_height);
         }
     }
 }
@@ -122,11 +130,13 @@ fn print_subtrees_matching_key(
     roots: &[(u64, Option<String>)],
     key_filter: &str,
     visible_only: bool,
+    sw: f32,
+    sh: f32,
 ) {
     let key_lower = key_filter.to_lowercase();
     let matching_ids = collect_key_matches(widgets, roots, &key_lower);
     for id in matching_ids {
-        print_frame_subtree(widgets, id, 0, visible_only);
+        print_frame_subtree(widgets, id, 0, visible_only, sw, sh);
     }
 }
 
@@ -166,25 +176,30 @@ fn print_frame_subtree(
     id: u64,
     depth: usize,
     visible_only: bool,
+    sw: f32,
+    sh: f32,
 ) {
     let Some(frame) = widgets.get(id) else { return };
     if visible_only && !frame.visible {
         return;
     }
     let display_name = resolve_display_name(widgets, frame, id);
-    print_frame_line(frame, &display_name, depth, widgets);
+    print_frame_line(frame, id, &display_name, depth, widgets, sw, sh);
     for &child_id in &frame.children {
-        print_frame_subtree(widgets, child_id, depth + 1, visible_only);
+        print_frame_subtree(widgets, child_id, depth + 1, visible_only, sw, sh);
     }
 }
 
 /// Recursively print a frame and its children.
+#[allow(clippy::too_many_arguments)]
 fn print_frame(
     widgets: &WidgetRegistry,
     id: u64,
     depth: usize,
     filter: Option<&str>,
     visible_only: bool,
+    sw: f32,
+    sh: f32,
 ) {
     let Some(frame) = widgets.get(id) else { return };
 
@@ -198,31 +213,70 @@ fn print_frame(
         .unwrap_or(true);
 
     if matches_filter {
-        print_frame_line(frame, &display_name, depth, widgets);
+        print_frame_line(frame, id, &display_name, depth, widgets, sw, sh);
     }
 
     for &child_id in &frame.children {
-        print_frame(widgets, child_id, depth + 1, filter, visible_only);
+        print_frame(widgets, child_id, depth + 1, filter, visible_only, sw, sh);
     }
 }
 
-/// Format and print a single frame line.
-fn print_frame_line(frame: &Frame, display_name: &str, depth: usize, widgets: &WidgetRegistry) {
+/// Format and print a single frame line with stored size and computed layout rect.
+fn print_frame_line(
+    frame: &Frame,
+    id: u64,
+    display_name: &str,
+    depth: usize,
+    widgets: &WidgetRegistry,
+    sw: f32,
+    sh: f32,
+) {
     let indent = "  ".repeat(depth);
     let vis = if frame.visible { "visible" } else { "hidden" };
+    let rect = compute_frame_rect(widgets, id, sw, sh);
+    let size_str = format_size_str(frame, &rect);
+    let keys_str = format_keys_str(frame);
+    let text_str = resolve_display_text(widgets, frame)
+        .map(|t| format!(" text={:?}", t))
+        .unwrap_or_default();
+    let font_str = format_font_str(frame);
+    println!(
+        "{indent}{display_name} [{:?}] {size_str} {vis}{text_str}{font_str}{keys_str}",
+        frame.widget_type,
+    );
+}
+
+/// Format size string: show computed rect, add stored size if it differs.
+fn format_size_str(frame: &Frame, rect: &crate::LayoutRect) -> String {
+    let stored_differs = (frame.width - rect.width).abs() > 0.5
+        || (frame.height - rect.height).abs() > 0.5;
+    if stored_differs && (frame.width > 0.0 || frame.height > 0.0) {
+        format!(
+            "({}x{}) [stored={}x{}]",
+            rect.width as i32, rect.height as i32,
+            frame.width as i32, frame.height as i32,
+        )
+    } else {
+        format!("({}x{})", rect.width as i32, rect.height as i32)
+    }
+}
+
+/// Format children_keys display string.
+fn format_keys_str(frame: &Frame) -> String {
     let keys: Vec<_> = frame.children_keys.keys().collect();
-    let keys_str = if keys.is_empty() {
+    if keys.is_empty() {
         String::new()
     } else {
         format!(
             " keys=[{}]",
             keys.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", ")
         )
-    };
-    let text_str = resolve_display_text(widgets, frame)
-        .map(|t| format!(" text={:?}", t))
-        .unwrap_or_default();
-    let font_str = if frame.widget_type == WidgetType::FontString {
+    }
+}
+
+/// Format font info for FontString widgets.
+fn format_font_str(frame: &Frame) -> String {
+    if frame.widget_type == WidgetType::FontString {
         format!(
             " font={:?} size={}",
             frame.font.as_deref().unwrap_or("(none)"),
@@ -230,19 +284,7 @@ fn print_frame_line(frame: &Frame, display_name: &str, depth: usize, widgets: &W
         )
     } else {
         String::new()
-    };
-    println!(
-        "{}{} [{:?}] ({}x{}) {}{}{}{}",
-        indent,
-        display_name,
-        frame.widget_type,
-        frame.width as i32,
-        frame.height as i32,
-        vis,
-        text_str,
-        font_str,
-        keys_str
-    );
+    }
 }
 
 /// Resolve a display name for a frame: global name, parentKey, or "(anonymous)".
