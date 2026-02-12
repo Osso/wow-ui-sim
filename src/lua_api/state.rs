@@ -371,9 +371,6 @@ impl SimState {
         let rect = crate::iced_app::compute_frame_rect_cached(
             widgets, id, screen_width, screen_height, cache,
         ).rect;
-        if widgets.get(id).is_some_and(|f| f.name.as_deref().unwrap_or("").contains("TestTS")) {
-            eprintln!("[recompute] id={id} rect={rect:?} anchors={}", widgets.get(id).map(|f| f.anchors.len()).unwrap_or(0));
-        }
         let children: Vec<u64> = widgets.get(id)
             .map(|f| f.children.clone()).unwrap_or_default();
         if let Some(f) = widgets.get_mut_silent(id) {
@@ -402,25 +399,6 @@ impl SimState {
         }
     }
 
-}
-
-/// DEBUG: log layout recomputation for frames with "Center" parentKey.
-fn debug_log_recompute(
-    widgets: &crate::widget::WidgetRegistry,
-    id: u64,
-    rect: &crate::LayoutRect,
-) {
-    let Some(f) = widgets.get(id) else { return };
-    let name = f.name.as_deref().unwrap_or("");
-    // Only log textures named TestTSCenter or with "Center" parentKey pattern
-    // Log ALL frames during debug
-    return; // TEMP: disable to see if this function is called at all
-    eprintln!("[recompute] id={id} name={name} anchors={} rect={rect:?} w={} h={} scale={}",
-        f.anchors.len(), f.width, f.height, f.scale);
-    for (i, a) in f.anchors.iter().enumerate() {
-        eprintln!("  anchor[{i}]: {:?}->{:?}.{:?} offset=({},{})",
-            a.point, a.relative_to_id, a.relative_point, a.x_offset, a.y_offset);
-    }
 }
 
 impl SimState {
