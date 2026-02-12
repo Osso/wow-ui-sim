@@ -349,11 +349,14 @@ fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_strata_methods(methods);
     add_level_methods(methods);
 
-    // SetToplevel(toplevel) - Mark frame as toplevel (raises on click)
-    methods.add_method("SetToplevel", |_, _this, _toplevel: bool| Ok(()));
-
-    // IsToplevel()
-    methods.add_method("IsToplevel", |_, _this, ()| Ok(false));
+    methods.add_method("SetToplevel", |_, this, toplevel: bool| {
+        let mut state = this.state.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(this.id) { f.toplevel = toplevel; }
+        Ok(())
+    });
+    methods.add_method("IsToplevel", |_, this, ()| {
+        Ok(this.state.borrow().widgets.get(this.id).map(|f| f.toplevel).unwrap_or(false))
+    });
 
     // NOTE: Raise() and Lower() methods are handled in __index metamethod
     // to allow custom properties with these names to take precedence.
@@ -427,6 +430,10 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             child.frame_strata = s;
             queue.extend(child.children.iter().copied());
         }
+        // Invalidate render caches since strata changed.
+        state.strata_buckets = None;
+        state.ancestor_visible_cache = None;
+        state.cached_render_list = None;
         Ok(())
     });
 

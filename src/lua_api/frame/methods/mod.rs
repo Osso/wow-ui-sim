@@ -26,7 +26,7 @@ mod methods_core;
 mod methods_create;
 mod methods_event;
 mod methods_helpers;
-mod methods_hierarchy;
+pub(crate) mod methods_hierarchy;
 mod methods_meta;
 mod methods_misc;
 mod methods_script;

@@ -81,6 +81,7 @@ fn build_frame_lua_code(
     append_frame_strata_code(&mut lua_code, frame, inherits);
     append_frame_level_code(&mut lua_code, frame, inherits);
     append_hidden_code(&mut lua_code, frame, inherits);
+    append_toplevel_code(&mut lua_code, frame, inherits);
     append_alpha_code(&mut lua_code, frame, inherits);
     append_enable_mouse_code(&mut lua_code, frame, inherits);
     append_clamped_to_screen_code(&mut lua_code, frame, inherits);
@@ -355,6 +356,16 @@ fn append_hidden_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inher
         frame:Hide()
         "#,
         );
+    }
+}
+
+/// Append `frame:SetToplevel(true)` if the frame has toplevel="true" (directly or via template).
+fn append_toplevel_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
+    let toplevel = frame.toplevel.or_else(|| {
+        resolve_from_templates(inherits, |f| f.toplevel)
+    });
+    if toplevel == Some(true) {
+        lua_code.push_str("\n        frame:SetToplevel(true)\n        ");
     }
 }
 

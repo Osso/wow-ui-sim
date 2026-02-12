@@ -301,7 +301,7 @@ impl SimState {
         for bucket in &mut buckets {
             bucket.sort_by(|&a, &b| {
                 match (self.widgets.get(a), self.widgets.get(b)) {
-                    (Some(fa), Some(fb)) => intra_strata_sort_key(fa, a).cmp(&intra_strata_sort_key(fb, b)),
+                    (Some(fa), Some(fb)) => intra_strata_sort_key(fa, a, &self.widgets).cmp(&intra_strata_sort_key(fb, b, &self.widgets)),
                     _ => a.cmp(&b),
                 }
             });
@@ -462,8 +462,65 @@ impl SimState {
         if was_visible == visible {
             return;
         }
+        // Toplevel frames are raised above siblings when shown (WoW behavior).
+        if visible {
+            let is_toplevel = self.widgets.get(id).map(|f| f.toplevel).unwrap_or(false);
+            if is_toplevel {
+                self.raise_frame(id);
+            }
+        }
         self.update_on_update_cache(id, visible);
         self.update_ancestor_visible_cache(id, visible);
+    }
+
+    /// Raise a frame above all siblings in the same strata.
+    ///
+    /// Finds the maximum frame_level among sibling frames (same parent, same
+    /// strata) and sets this frame's level to max + 1. Propagates the new level
+    /// to all descendants.
+    pub fn raise_frame(&mut self, id: u64) {
+        let (parent_id, strata) = match self.widgets.get(id) {
+            Some(f) => (f.parent_id, f.frame_strata),
+            None => return,
+        };
+        // Find max level among siblings in the same strata.
+        let max_sibling_level = self.max_sibling_level(id, parent_id, strata);
+        let current_level = self.widgets.get(id).map(|f| f.frame_level).unwrap_or(0);
+        if current_level > max_sibling_level {
+            return; // Already on top
+        }
+        let new_level = max_sibling_level + 1;
+        if let Some(f) = self.widgets.get_mut(id) {
+            f.frame_level = new_level;
+        }
+        crate::lua_api::frame::propagate_strata_level_pub(
+            &mut self.widgets, id,
+        );
+        // Invalidate render caches since level changed.
+        self.strata_buckets = None;
+        self.ancestor_visible_cache = None;
+        self.cached_render_list = None;
+    }
+
+    /// Find the maximum frame_level among siblings of `id` in the given strata.
+    fn max_sibling_level(&self, id: u64, parent_id: Option<u64>, strata: crate::widget::FrameStrata) -> i32 {
+        let sibling_ids: Vec<u64> = if let Some(pid) = parent_id {
+            self.widgets.get(pid)
+                .map(|p| p.children.clone())
+                .unwrap_or_default()
+        } else {
+            // Root frames: all frames with no parent
+            self.widgets.iter_ids()
+                .filter(|&fid| self.widgets.get(fid).map(|f| f.parent_id.is_none()).unwrap_or(false))
+                .collect()
+        };
+        sibling_ids.iter()
+            .filter(|&&sid| sid != id)
+            .filter_map(|&sid| self.widgets.get(sid))
+            .filter(|f| f.frame_strata == strata)
+            .map(|f| f.frame_level)
+            .max()
+            .unwrap_or(0)
     }
 
     fn update_on_update_cache(&mut self, id: u64, visible: bool) {
@@ -539,10 +596,10 @@ impl SimState {
         if bucket.contains(&id) {
             return;
         }
-        let key = intra_strata_sort_key(f, id);
+        let key = intra_strata_sort_key(f, id, &self.widgets);
         let pos = bucket.binary_search_by(|&other_id| {
             self.widgets.get(other_id)
-                .map(|o| intra_strata_sort_key(o, other_id).cmp(&key))
+                .map(|o| intra_strata_sort_key(o, other_id, &self.widgets).cmp(&key))
                 .unwrap_or(std::cmp::Ordering::Less)
         }).unwrap_or_else(|p| p);
         bucket.insert(pos, id);

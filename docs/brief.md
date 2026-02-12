@@ -60,6 +60,64 @@ Two contributing factors:
 - `tooltip.rs` → `build_tooltip_quads` accepts `eff_alpha`
 - `message_frame_render.rs` → `emit_message_frame_text` and `render_message` accept `alpha`
 
+## Completed: Frame Render Order Fix (Toplevel + Region Sort)
+
+**Problem:** AccountPlayed popup content rendered on top of GameMenuFrame button textures, despite both being in DIALOG strata. Three contributing issues:
+
+### Issue 1: Region sort key didn't group regions with parent frame
+
+In WoW, regions (Texture/FontString) render as part of their parent frame — they don't participate in the global frame-level sort independently. Our sort key used the region's own `frame_level` (parent_level + 1), causing deeply nested regions from one hierarchy to interleave with shallow regions from another.
+
+**Fix:** Changed `intra_strata_sort_key` in `frame_collect.rs` to use the parent frame's `frame_level` for regions, and group regions with their parent via `Reverse(parent_id)`. Sort key is now:
+- Non-regions: `(frame_level, Reverse(id), 0, 0, 0, 0, Reverse(0))`
+- Regions: `(parent_level, Reverse(parent_id), 1, draw_layer, sub_layer, type_flag, Reverse(id))`
+
+This ensures all regions of a frame render immediately after that frame, before any higher-level content from other hierarchies.
+
+### Issue 2: `toplevel` attribute was a no-op
+
+GameMenuFrame has `toplevel="true"` in XML, which in WoW means the frame is raised above siblings when shown. Our `SetToplevel` was a no-op.
+
+**Fix:**
+- Added `toplevel: bool` field to Frame struct
+- `SetToplevel`/`IsToplevel` now store/read the value
+- `append_toplevel_code` in `xml_frame.rs` parses `toplevel` from XML
+- `set_frame_visible` in `state.rs`: when a toplevel frame becomes visible, `raise_frame()` is called
+- `raise_frame()`: finds max frame_level among siblings in the same strata, sets this frame's level to max + 1, propagates to descendants
+
+### Issue 3: `SetFrameStrata` didn't invalidate render cache
+
+`SetFrameStrata()` changed `frame.frame_strata` and propagated to descendants, but didn't invalidate `ancestor_visible_cache`, `strata_buckets`, or `cached_render_list`. Frames that changed strata at runtime would remain in the wrong strata bucket.
+
+**Fix:** Added cache invalidation at the end of `SetFrameStrata()` in `methods_core.rs`.
+
+**Files modified:**
+- `src/widget/frame.rs` — Added `toplevel` field
+- `src/iced_app/frame_collect.rs` — New `IntraStrataKey` type, `intra_strata_sort_key` uses parent level/id for regions
+- `src/lua_api/state.rs` — `raise_frame()`, `max_sibling_level()`, toplevel raise in `set_frame_visible`
+- `src/lua_api/frame/methods/methods_core.rs` — `SetToplevel`/`IsToplevel` store value, `SetFrameStrata` invalidates cache
+- `src/lua_api/frame/methods/methods_meta.rs` — `Raise()` calls `state.raise_frame()` instead of just +1
+- `src/lua_api/frame/methods/mod.rs` — Re-export `propagate_strata_level_pub`
+- `src/lua_api/frame/mod.rs` — Re-export `propagate_strata_level_pub`
+- `src/loader/xml_frame.rs` — `append_toplevel_code` parses and emits `SetToplevel(true)`
+
+## Active Investigation: Three-Slice Button Center Texture 0x0
+
+**Problem:** Game menu buttons (ThreeSliceButtonTemplate) have Center texture rendering as 0x0, making the middle of each button transparent. Only Left and Right end-caps render.
+
+**Root cause identified:** The Center texture uses cross-frame anchors (TOPLEFT→Left.TOPRIGHT, BOTTOMRIGHT→Right.BOTTOMLEFT) where Left and Right are sibling textures. Two separate bugs:
+
+1. **Lua API `calculate_frame_width/height`** (`src/lua_api/frame/methods/methods_helpers.rs:42`): Requires both anchors to reference the **same** frame (`left_anchor.relative_to_id == right_anchor.relative_to_id`). Falls through to explicit width (0) when anchors reference different siblings.
+
+2. **Rendering layout engine** (`src/iced_app/layout.rs`): `resolve_multi_anchor_edges` correctly handles cross-frame anchors — each anchor resolves its relative frame independently. But `compute_frame_rect` uses a fresh empty cache per call (uncached variant), so it must walk the full parent chain for each anchor's relative frame. The layout engine should produce correct results.
+
+**Dump-tree confirmation:** `.CenterBG [Texture] (0x0) visible` in GameMenuFrame tree dump confirms the computed rect is zero-sized.
+
+**Next steps:**
+- Add targeted debug logging in `compute_frame_rect_cached` for multi-anchor frames where both left_x and right_x edges are resolved but rect is still 0x0
+- Check if the issue is that Left/Right textures themselves compute to 0x0 (they use scale=0.28125 with TOPLEFT/TOPRIGHT anchors — single-anchor path uses `frame.width * eff_scale`)
+- Fix `calculate_frame_width/height` to handle cross-frame anchors (separate relative_to_id)
+
 ## Known Issues
 
 - Buff duration text missing in live GUI mode (OnUpdate not called during GUI startup)
@@ -89,3 +147,9 @@ Both paths converge on similar Lua code generation but are maintained separately
 - Sampler: `address_mode_u/v: ClampToEdge` in `src/render/shader/atlas.rs`
 - Shader: clamps UVs to `[0.0, 0.9999]` in quad.wgsl
 - Atlas UV remapping: `vertex.tex_coords[0] = entry.uv_x + vertex.tex_coords[0] * entry.uv_width`
+
+### WoW Region Rendering Model
+- **Regions** (Texture, FontString) are NOT frames. They render as part of their parent frame's rendering unit.
+- Sort order within a strata: frames sorted by frame_level, regions grouped with their parent
+- `toplevel="true"`: frame is auto-raised above siblings when Show() is called
+- `Raise()`: sets frame_level to max(sibling levels in same strata) + 1, propagates to descendants

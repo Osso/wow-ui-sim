@@ -132,6 +132,8 @@ pub struct Frame {
     pub frame_strata: FrameStrata,
     /// Whether frame strata was explicitly set (not inherited from parent).
     pub has_fixed_frame_strata: bool,
+    /// Top-level frame: auto-raised above siblings when shown.
+    pub toplevel: bool,
     /// Alpha transparency (0.0 - 1.0).
     pub alpha: f32,
     /// Additive animation translation offset (from Animation Translation, not anchors).
@@ -384,6 +386,7 @@ macro_rules! frame_defaults {
             has_fixed_frame_level: false,
             frame_strata: FrameStrata::Medium,
             has_fixed_frame_strata: false,
+            toplevel: false,
             alpha: 1.0,
             anim_offset_x: 0.0,
             anim_offset_y: 0.0,
