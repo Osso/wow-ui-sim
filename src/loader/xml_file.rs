@@ -73,6 +73,11 @@ fn process_element(
             register_virtual_anim_group(ag);
             Ok(0)
         }
+        XmlElement::Animation(_) => {
+            // Standalone virtual Animation templates (e.g. PointsOffsetAnimationTemplate)
+            // are only meaningful within AnimationGroups; ignore at top level.
+            Ok(0)
+        }
         _ => {
             process_frame_element(env, element)?;
             Ok(0)
