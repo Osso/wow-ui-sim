@@ -97,11 +97,11 @@ fn purchase_rank(
     }
     s.talents.node_ranks.insert(node_id, current + 1);
     drop(s);
-    fire_trait_config_updated(lua, config_id)
+    fire_trait_nodes_changed(lua)
 }
 
 fn refund_rank(
-    state: &Rc<RefCell<SimState>>, lua: &Lua, config_id: i32, node_id: u32,
+    state: &Rc<RefCell<SimState>>, lua: &Lua, _config_id: i32, node_id: u32,
 ) -> Result<bool> {
     let mut s = state.borrow_mut();
     let current = *s.talents.node_ranks.get(&node_id).unwrap_or(&0);
@@ -115,12 +115,12 @@ fn refund_rank(
         s.talents.node_ranks.insert(node_id, current - 1);
     }
     drop(s);
-    fire_trait_config_updated(lua, config_id)
+    fire_trait_nodes_changed(lua)
 }
 
 fn set_selection(
     state: &Rc<RefCell<SimState>>, lua: &Lua,
-    config_id: i32, node_id: u32, entry_id: Option<u32>,
+    _config_id: i32, node_id: u32, entry_id: Option<u32>,
 ) -> Result<bool> {
     let mut s = state.borrow_mut();
     match entry_id {
@@ -143,7 +143,7 @@ fn set_selection(
         }
     }
     drop(s);
-    fire_trait_config_updated(lua, config_id)
+    fire_trait_nodes_changed(lua)
 }
 
 fn reset_tree(
@@ -172,13 +172,21 @@ fn reset_tree_by_currency(
     fire_trait_config_updated(lua, config_id)
 }
 
-/// Fire all events the Blizzard UI needs after a talent state change:
+/// Fire events for staging operations (PurchaseRank, RefundRank, SetSelection):
 /// - TRAIT_NODE_CHANGED for each node (invalidates nodeInfo cache)
 /// - TRAIT_TREE_CURRENCY_INFO_UPDATED for the tree (refreshes point display)
-/// - TRAIT_CONFIG_UPDATED for the config (commit handling)
-fn fire_trait_config_updated(lua: &Lua, config_id: i32) -> Result<bool> {
+/// Does NOT fire TRAIT_CONFIG_UPDATED — that only happens on CommitConfig.
+fn fire_trait_nodes_changed(lua: &Lua) -> Result<bool> {
     fire_node_changed_events(lua)?;
     fire_currency_updated_event(lua)?;
+    Ok(true)
+}
+
+/// Fire all events after a config commit or full reset:
+/// - TRAIT_NODE_CHANGED + TRAIT_TREE_CURRENCY_INFO_UPDATED (via fire_trait_nodes_changed)
+/// - TRAIT_CONFIG_UPDATED for the config (triggers tree reload in the UI)
+fn fire_trait_config_updated(lua: &Lua, config_id: i32) -> Result<bool> {
+    fire_trait_nodes_changed(lua)?;
     let fire: mlua::Function = lua.globals().get("FireEvent")?;
     fire.call::<()>((
         lua.create_string("TRAIT_CONFIG_UPDATED")?,
