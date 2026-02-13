@@ -155,6 +155,7 @@ pub const VAS_TRANSACTION_PURCHASE_RESULT: SeqEnumDef = (
         "DbInvalidName",
         "DbNeedsEraChoice",
         "DbCannotMoveArenaCaptn",
+        "DbHouseOwnerRestriction",
     ],
 );
 
@@ -519,4 +520,13 @@ pub const BAG_INDEX: EnumDef = (
         ("Keyring", -1),
         ("ReagentBag", 5),
     ],
+);
+
+// ============================================================================
+// NamePlate Enums
+// ============================================================================
+
+pub const NAME_PLATE_SIZE: EnumDef = (
+    "NamePlateSize",
+    &[("Small", 1), ("Medium", 2), ("Large", 3), ("ExtraLarge", 4), ("Huge", 5)],
 );

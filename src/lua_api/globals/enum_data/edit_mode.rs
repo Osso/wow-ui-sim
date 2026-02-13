@@ -252,7 +252,7 @@ pub const ENCOUNTER_EVENTS_ORIENTATION: SeqEnumDef = (
 
 pub const ENCOUNTER_EVENTS_ICON_DIRECTION: SeqEnumDef = (
     "EncounterEventsIconDirection",
-    &["Left", "Right"],
+    &["Left", "Right", "Bottom", "Top"],
 );
 
 pub const ENCOUNTER_EVENTS_VISIBILITY: SeqEnumDef = (

@@ -47,6 +47,7 @@ pub fn register_c_stubs_api(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<cra
     register_game_state_stubs(lua)?;
     register_c_incoming_summon(lua)?;
     super::c_stubs_api_extra::register_extra_stubs(lua)?;
+    super::c_stubs_api_combat::register_combat_stubs(lua)?;
     Ok(())
 }
 
