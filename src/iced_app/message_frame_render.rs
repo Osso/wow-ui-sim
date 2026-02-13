@@ -24,6 +24,7 @@ pub fn emit_message_frame_text(
     bounds: Rectangle,
     mf_map: &std::collections::HashMap<u64, MessageFrameData>,
     alpha: f32,
+    elapsed_secs: f64,
 ) {
     let Some(data) = mf_map.get(&id) else { return };
     if data.messages.is_empty() || bounds.width <= 0.0 || bounds.height <= 0.0 {
@@ -47,11 +48,36 @@ pub fn emit_message_frame_text(
     let mut y = bounds.y + bounds.height;
     for &(msg_idx, height) in measured.iter().rev() {
         y -= height;
+        let msg_alpha = message_fade_alpha(data, &data.messages[msg_idx], elapsed_secs);
+        if msg_alpha <= 0.0 {
+            continue;
+        }
         render_message(
             batch, font_sys, glyph_atlas, f, bounds,
-            &data.messages[msg_idx], y, height, alpha,
+            &data.messages[msg_idx], y, height, alpha * msg_alpha,
         );
     }
+}
+
+/// Compute fade alpha for a single message.
+///
+/// WoW MessageFrame fading: after `time_visible` seconds the message starts
+/// fading out over `fade_duration` seconds, with optional `fade_power` curve.
+/// Returns 1.0 (fully visible) → 0.0 (fully faded).
+fn message_fade_alpha(data: &MessageFrameData, msg: &crate::lua_api::message_frame::Message, now: f64) -> f32 {
+    if !data.fading {
+        return 1.0;
+    }
+    let age = now - msg.timestamp;
+    if age <= data.time_visible {
+        return 1.0;
+    }
+    let fade_elapsed = age - data.time_visible;
+    if data.fade_duration <= 0.0 || fade_elapsed >= data.fade_duration {
+        return 0.0;
+    }
+    let t = 1.0 - (fade_elapsed / data.fade_duration);
+    t.powf(data.fade_power) as f32
 }
 
 /// Measure messages from newest to oldest, returning (index, height) pairs

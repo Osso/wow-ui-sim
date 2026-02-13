@@ -423,7 +423,7 @@ pub fn emit_frame_quads(
             build_frame_quads(batch, bounds, f, eff_alpha);
             if let Some((fs, ga)) = text_ctx
                 && let Some(mf_map) = message_frames {
-                    emit_message_frame_text(batch, fs, ga, f, id, bounds, mf_map, eff_alpha);
+                    emit_message_frame_text(batch, fs, ga, f, id, bounds, mf_map, eff_alpha, elapsed_secs);
                 }
         }
         WidgetType::GameTooltip => {

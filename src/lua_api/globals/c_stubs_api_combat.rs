@@ -167,7 +167,7 @@ fn register_c_combat_audio_alert(lua: &Lua, g: &mlua::Table) -> Result<()> {
 fn register_c_housing_photo_sharing(lua: &Lua, g: &mlua::Table) -> Result<()> {
     let t = lua.create_table()?;
     t.set("IsEnabled", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("IsAuthorized", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("IsAuthorized", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("BeginAuthorizationFlow", lua.create_function(|_, ()| Ok(()))?)?;
     t.set("ClearAuthorization", lua.create_function(|_, ()| Ok(()))?)?;
     t.set("CompleteAuthorizationFlow", lua.create_function(|_, _url: Value| Ok(()))?)?;
