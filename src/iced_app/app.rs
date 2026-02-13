@@ -143,6 +143,10 @@ pub struct App {
     pub(crate) pressed_frame: Option<u64>,
     pub(crate) mouse_down_frame: Option<u64>,
     pub(crate) right_mouse_down_frame: Option<u64>,
+    /// Position where mouse button was pressed (for drag threshold detection).
+    pub(crate) mouse_down_pos: Option<Point>,
+    /// True once drag threshold is exceeded for the current press.
+    pub(crate) dragging: bool,
     pub(crate) scroll_offset: f32,
     /// Current canvas size (updated each frame for layout calculations).
     pub(crate) screen_size: std::cell::Cell<Size>,
@@ -268,6 +272,8 @@ impl App {
             pressed_frame: None,
             mouse_down_frame: None,
             right_mouse_down_frame: None,
+            mouse_down_pos: None,
+            dragging: false,
             scroll_offset: 0.0,
             screen_size: std::cell::Cell::new(Size::new(800.0, 600.0)),
             debug_rx: Some(cmd_rx),

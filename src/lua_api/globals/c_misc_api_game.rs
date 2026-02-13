@@ -311,7 +311,7 @@ fn register_global_action_stubs(lua: &Lua) -> Result<()> {
     g.set("GetActionCount", lua.create_function(|_, _s: Option<i32>| Ok(0i32))?)?;
     g.set("GetActionCharges", lua.create_function(|_, _s: Option<i32>| Ok((0i32, 0i32, 0.0f64, 0.0f64)))?)?;
     g.set("GetActionLossOfControlCooldown", lua.create_function(|_, _s: Option<i32>| Ok((0.0f64, 0.0f64)))?)?;
-    g.set("GetCursorInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
+    // GetCursorInfo is registered by cursor_api with real cursor state.
     Ok(())
 }
 

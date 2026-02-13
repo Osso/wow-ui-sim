@@ -444,7 +444,7 @@ fn register_c_action_bar_slot_stubs(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("FindPetActionButtons", lua.create_function(|lua, _: Value| lua.create_table())?)?;
     t.set("GetPetActionPetBarIndices", lua.create_function(|lua, _: Value| lua.create_table())?)?;
     t.set("RegisterActionUIButton", lua.create_function(|_, _: mlua::MultiValue| Ok(()))?)?;
-    t.set("PutActionInSlot", lua.create_function(|_, _: Value| Ok(()))?)?;
+    // PutActionInSlot is registered by cursor_api with real implementation.
     t.set("IsAutoCastPetAction", lua.create_function(|_, _: Value| Ok(false))?)?;
     t.set("IsEnabledAutoCastPetAction", lua.create_function(|_, _: Value| Ok(false))?)?;
     t.set("ToggleAutoCastPetAction", lua.create_function(|_, _: Value| Ok(()))?)?;

@@ -20,6 +20,15 @@ pub use super::game_data::{
     build_target_info, tick_party_health,
 };
 pub use super::game_data::SpellCooldownState;
+
+/// What is currently held on the cursor (drag-and-drop state).
+#[derive(Debug, Clone)]
+pub enum CursorInfo {
+    /// An action bar spell: PickupAction(slot) removes it from the bar.
+    Action { slot: u32, spell_id: u32 },
+    /// A spell from the spellbook (doesn't remove from spellbook).
+    Spell { spell_id: u32 },
+}
 use super::game_data::{
     default_action_bars, default_party, default_player_buffs, random_player_name,
 };
@@ -211,6 +220,8 @@ pub struct SimState {
     /// Buttons registered via SetActionUIButton(button, action, cooldownFrame).
     /// Stores (frame_id, action_slot) pairs for engine-pushed state updates.
     pub action_ui_buttons: Vec<(u64, u32)>,
+    /// What is currently held on the cursor (drag-and-drop).
+    pub cursor_item: Option<CursorInfo>,
     /// Index of the addon currently being loaded (into `addons` vec).
     /// Set by the loader, read by CreateFrame to assign `owner_addon`.
     pub loading_addon_index: Option<u16>,
@@ -266,6 +277,7 @@ impl Default for SimState {
             gcd: None,
             spell_cooldowns: HashMap::new(),
             action_ui_buttons: Vec::new(),
+            cursor_item: None,
             loading_addon_index: None,
             app_frame_metrics: AppFrameMetrics::default(),
             talents: super::talent_state::TalentState::new(),

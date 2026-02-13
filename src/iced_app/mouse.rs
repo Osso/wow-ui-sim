@@ -4,6 +4,9 @@ use iced::Point;
 
 use super::app::App;
 
+/// Minimum distance (in pixels) the mouse must move while held to start a drag.
+const DRAG_THRESHOLD: f32 = 5.0;
+
 impl App {
     pub(super) fn handle_mouse_move(&mut self, pos: Point) {
         self.mouse_position = Some(pos);
@@ -11,6 +14,19 @@ impl App {
             let env = self.env.borrow();
             env.state().borrow_mut().mouse_position = Some((pos.x, pos.y));
         }
+
+        // Check drag threshold while mouse is held down.
+        if let (Some(down_pos), Some(down_frame), false) =
+            (self.mouse_down_pos, self.mouse_down_frame, self.dragging)
+        {
+            let dx = pos.x - down_pos.x;
+            let dy = pos.y - down_pos.y;
+            if (dx * dx + dy * dy).sqrt() >= DRAG_THRESHOLD {
+                self.dragging = true;
+                self.fire_drag_start(down_frame);
+            }
+        }
+
         let new_hovered = self.hit_test(pos);
         if new_hovered == self.hovered_frame {
             return;
@@ -54,6 +70,8 @@ impl App {
         }
 
         self.mouse_down_frame = Some(frame_id);
+        self.mouse_down_pos = Some(pos);
+        self.dragging = false;
         self.pressed_frame = Some(frame_id);
 
         {
@@ -65,8 +83,18 @@ impl App {
     }
 
     pub(super) fn handle_mouse_up(&mut self, pos: Point) {
+        let was_dragging = self.dragging;
+        let drag_source = self.mouse_down_frame;
+
+        // Reset drag state first.
+        self.mouse_down_pos = None;
+        self.dragging = false;
+
         let released_on = self.hit_test(pos);
-        if let Some(frame_id) = released_on {
+
+        if was_dragging {
+            self.finish_drag(drag_source, released_on);
+        } else if let Some(frame_id) = released_on {
             {
                 let env = self.env.borrow();
                 let button_val =
@@ -93,10 +121,10 @@ impl App {
 
                 let _ = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val]);
             }
-            self.invalidate();
         }
         self.mouse_down_frame = None;
         self.pressed_frame = None;
+        self.invalidate();
     }
 
     pub(super) fn handle_right_mouse_down(&mut self, pos: Point) {
@@ -156,6 +184,57 @@ impl App {
             let max_scroll = 2600.0;
             self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
             self.invalidate_layout();
+        }
+    }
+
+    /// Fire OnDragStart on the source frame (walks up parent chain).
+    fn fire_drag_start(&mut self, frame_id: u64) {
+        let env = self.env.borrow();
+        let lua = env.lua();
+        let button_val = mlua::Value::String(lua.create_string("LeftButton").unwrap());
+
+        // Walk up parent chain looking for a frame with OnDragStart registered.
+        let mut current = Some(frame_id);
+        while let Some(id) = current {
+            if env.has_script_handler(id, "OnDragStart") {
+                eprintln!("[drag] OnDragStart fired on frame {}", id);
+                let _ = env.fire_script_handler(id, "OnDragStart", vec![button_val]);
+                return;
+            }
+            current = env.state().borrow().widgets.get(id).and_then(|f| f.parent_id);
+        }
+    }
+
+    /// Fire OnDragStop on source and OnReceiveDrag on target.
+    fn finish_drag(&mut self, source: Option<u64>, target: Option<u64>) {
+        let env = self.env.borrow();
+        let lua = env.lua();
+        let button_val = mlua::Value::String(lua.create_string("LeftButton").unwrap());
+
+        // Fire OnDragStop on the source frame (walk up parent chain).
+        if let Some(src_id) = source {
+            let mut current = Some(src_id);
+            while let Some(id) = current {
+                if env.has_script_handler(id, "OnDragStop") {
+                    eprintln!("[drag] OnDragStop fired on frame {}", id);
+                    let _ = env.fire_script_handler(id, "OnDragStop", vec![button_val.clone()]);
+                    break;
+                }
+                current = env.state().borrow().widgets.get(id).and_then(|f| f.parent_id);
+            }
+        }
+
+        // Fire OnReceiveDrag on the target frame (walk up parent chain).
+        if let Some(tgt_id) = target {
+            let mut current = Some(tgt_id);
+            while let Some(id) = current {
+                if env.has_script_handler(id, "OnReceiveDrag") {
+                    eprintln!("[drag] OnReceiveDrag fired on frame {}", id);
+                    let _ = env.fire_script_handler(id, "OnReceiveDrag", vec![button_val]);
+                    return;
+                }
+                current = env.state().borrow().widgets.get(id).and_then(|f| f.parent_id);
+            }
         }
     }
 

@@ -28,6 +28,7 @@ use super::globals::quest_frames::register_quest_frames;
 use super::globals::register_all_ui_strings;
 use super::globals::settings_api::register_settings_api;
 use super::globals::sound_api::register_sound_api;
+use super::globals::cursor_api;
 use super::globals::spell_api::register_spell_api;
 use super::globals::system_api::register_system_api;
 use super::globals::timer_api::register_timer_api;
@@ -431,6 +432,11 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_spell_api(lua, Rc::clone(state))?;
     register_item_api(lua)?;
     register_font_api(lua)?;
+
+    // Cursor/drag-and-drop API (after C_Spell and C_ActionBar are registered)
+    cursor_api::register_cursor_functions(lua, Rc::clone(state))?;
+    cursor_api::register_c_spell_pickup(lua, state)?;
+    cursor_api::register_c_action_bar_put(lua, state)?;
 
     // Stateful APIs (need SimState)
     register_sound_api(lua, Rc::clone(state))?;

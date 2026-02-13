@@ -55,6 +55,7 @@ pub mod item_api;
 pub mod locale_api;
 pub mod mixin_api;
 pub mod action_bar_api;
+pub mod cursor_api;
 pub mod player_api;
 pub mod spell_api;
 pub mod spellbook_data;

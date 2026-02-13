@@ -533,6 +533,7 @@ fn register_paperdoll_container_and_misc_stubs(lua: &Lua, g: &mlua::Table) -> Re
     g.set("GetSendMailPrice", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("GuildControlSetRank", lua.create_function(|_, _rank: Value| Ok(()))?)?;
     g.set("StoreSecureReference", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    // ResetCursor — cursor_api handles ClearCursor; ResetCursor resets visual.
     g.set("ResetCursor", lua.create_function(|_, ()| Ok(()))?)?;
     Ok(())
 }
