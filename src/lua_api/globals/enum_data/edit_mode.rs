@@ -19,6 +19,7 @@ pub const EDIT_MODE_SYSTEM: SeqEnumDef = (
         "VehicleLeaveButton", "LootFrame", "HudTooltip", "ObjectiveTracker",
         "MicroMenu", "Bags", "StatusTrackingBar", "DurabilityFrame",
         "TimerBars", "VehicleSeatIndicator", "ArchaeologyBar", "CooldownViewer",
+        "PersonalResourceDisplay", "EncounterEvents", "DamageMeter",
     ],
 );
 
@@ -38,6 +39,8 @@ pub const EDIT_MODE_ACCOUNT_SETTING: SeqEnumDef = (
         "ShowArenaFrames", "ShowLootFrame", "ShowHudTooltip", "ShowStatusTrackingBar2",
         "ShowDurabilityFrame", "EnableSnap", "EnableAdvancedOptions", "ShowPetFrame",
         "ShowTimerBars", "ShowVehicleSeatIndicator", "ShowArchaeologyBar", "ShowCooldownViewer",
+        "ShowPersonalResourceDisplay", "ShowEncounterEvents", "ShowDamageMeter",
+        "ShowExternalDefensives",
     ],
 );
 
@@ -53,7 +56,7 @@ pub const EDIT_MODE_UNIT_FRAME_SETTING: SeqEnumDef = (
         "UseRaidStylePartyFrames", "ShowPartyFrameBackground", "UseHorizontalGroups",
         "CastBarOnSide", "ShowCastTime", "ViewRaidSize", "FrameWidth", "FrameHeight",
         "DisplayBorder", "RaidGroupDisplayType", "SortPlayersBy", "RowSize",
-        "FrameSize", "ViewArenaSize",
+        "FrameSize", "ViewArenaSize", "AuraOrganizationType", "IconSize", "Opacity",
     ],
 );
 
@@ -80,12 +83,13 @@ pub const EDIT_MODE_AURA_FRAME_SETTING: SeqEnumDef = (
     &[
         "Orientation", "IconWrap", "IconDirection", "IconLimitBuffFrame",
         "IconLimitDebuffFrame", "IconSize", "IconPadding", "DeprecatedShowFull",
+        "VisibleSetting", "Opacity", "ShowDispelType",
     ],
 );
 
 pub const EDIT_MODE_AURA_FRAME_SYSTEM_INDICES: EnumDef = (
     "EditModeAuraFrameSystemIndices",
-    &[("BuffFrame", 1), ("DebuffFrame", 2)],
+    &[("BuffFrame", 1), ("DebuffFrame", 2), ("ExternalDefensivesFrame", 3)],
 );
 
 pub const EDIT_MODE_BAGS_SETTING: SeqEnumDef = (
@@ -138,7 +142,7 @@ pub const EDIT_MODE_COOLDOWN_VIEWER_SETTING: SeqEnumDef = (
     &[
         "Orientation", "IconLimit", "IconDirection", "IconSize", "IconPadding",
         "Opacity", "VisibleSetting", "BarContent", "HideWhenInactive", "ShowTimer",
-        "ShowTooltips",
+        "ShowTooltips", "BarWidthScale",
     ],
 );
 
@@ -220,6 +224,92 @@ pub const COOLDOWN_VIEWER_ORIENTATION: SeqEnumDef = (
 pub const COOLDOWN_VIEWER_VISIBLE_SETTING: SeqEnumDef = (
     "CooldownViewerVisibleSetting",
     &["Always", "InCombat", "Hidden"],
+);
+
+pub const EDIT_MODE_PERSONAL_RESOURCE_DISPLAY_SETTING: SeqEnumDef = (
+    "EditModePersonalResourceDisplaySetting",
+    &["HideHealthAndPower", "OnlyShowInCombat"],
+);
+
+pub const EDIT_MODE_ENCOUNTER_EVENTS_SETTING: SeqEnumDef = (
+    "EditModeEncounterEventsSetting",
+    &[
+        "Orientation", "IconDirection", "ShowSpellName", "IconSize", "OverallSize",
+        "BackgroundTransparency", "Transparency", "Visibility", "TooltipAnchor",
+        "ShowTimer", "ViewType", "FlipHorizontally", "BarWidth", "Padding",
+    ],
+);
+
+pub const ENCOUNTER_EVENTS_VIEW_TYPE: SeqEnumDef = (
+    "EncounterEventsViewType",
+    &["Timeline", "Bars"],
+);
+
+pub const ENCOUNTER_EVENTS_ORIENTATION: SeqEnumDef = (
+    "EncounterEventsOrientation",
+    &["Horizontal", "Vertical"],
+);
+
+pub const ENCOUNTER_EVENTS_ICON_DIRECTION: SeqEnumDef = (
+    "EncounterEventsIconDirection",
+    &["Left", "Right"],
+);
+
+pub const ENCOUNTER_EVENTS_VISIBILITY: SeqEnumDef = (
+    "EncounterEventsVisibility",
+    &["Always", "InEncounter", "DeprecatedHidden"],
+);
+
+pub const ENCOUNTER_EVENTS_TOOLTIP_ANCHOR: SeqEnumDef = (
+    "EncounterEventsTooltipAnchor",
+    &["Hidden", "Default", "Cursor"],
+);
+
+pub const EDIT_MODE_DAMAGE_METER_SETTING: SeqEnumDef = (
+    "EditModeDamageMeterSetting",
+    &[
+        "Visibility", "Style", "Numbers", "FrameWidth", "FrameHeight",
+        "Padding", "Transparency", "ObsoleteReuse1", "ShowSpecIcon",
+        "ShowClassColor", "BarHeight", "TextSize", "BackgroundTransparency",
+    ],
+);
+
+pub const DAMAGE_METER_STYLE: SeqEnumDef = (
+    "DamageMeterStyle",
+    &["Default", "Thin", "Bordered", "FullBackground"],
+);
+
+pub const DAMAGE_METER_NUMBERS: SeqEnumDef = (
+    "DamageMeterNumbers",
+    &["Minimal", "Compact", "Complete"],
+);
+
+pub const DAMAGE_METER_VISIBILITY: SeqEnumDef = (
+    "DamageMeterVisibility",
+    &["Always", "InCombat", "Hidden"],
+);
+
+pub const RAID_AURA_ORGANIZATION_TYPE: SeqEnumDef = (
+    "RaidAuraOrganizationType",
+    &["Legacy", "BuffsTopDebuffsBottom", "BuffsRightDebuffsLeft"],
+);
+
+pub const AURA_FRAME_VISIBLE_SETTING: SeqEnumDef = (
+    "AuraFrameVisibleSetting",
+    &["Always", "InCombat", "Hidden"],
+);
+
+pub const EDIT_MODE_ENCOUNTER_EVENTS_SYSTEM_INDICES: EnumDef = (
+    "EditModeEncounterEventsSystemIndices",
+    &[
+        ("Timeline", 1), ("CriticalWarnings", 2),
+        ("MediumWarnings", 3), ("NormalWarnings", 4),
+    ],
+);
+
+pub const EDIT_MODE_SETTING_DISPLAY_TYPE: SeqEnumDef = (
+    "EditModeSettingDisplayType",
+    &["Dropdown", "Checkbox", "Slider"],
 );
 
 // ============================================================================
