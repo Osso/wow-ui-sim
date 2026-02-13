@@ -40,7 +40,7 @@ pub fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
                     .insert("__checked".to_string(), AttributeValue::Boolean(checked));
             }
             // Toggle CheckedTexture visibility via set_frame_visible so that
-            // ancestor_visible_cache, strata_buckets, and cached_render_list
+            // effective_alpha, strata_buckets, and cached_render_list
             // are properly updated (direct tex.visible = checked bypassed these).
             let checked_tex_id = state.widgets.get(this.id)
                 .and_then(|f| f.children_keys.get("CheckedTexture").copied());

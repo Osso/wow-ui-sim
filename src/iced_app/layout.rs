@@ -193,22 +193,21 @@ pub fn compute_frame_rect_cached(
     if frame.name.as_deref() == Some("UIParent") || (frame.parent_id.is_none() && id == 1) {
         let result = CachedFrameLayout {
             rect: LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height },
-            eff_scale: frame.scale,
+            eff_scale: frame.effective_scale,
         };
         cache.insert(id, result);
         return result;
     }
 
     // Compute parent layout (cache hit for siblings)
-    let (parent_rect, parent_eff_scale) = if let Some(parent_id) = frame.parent_id {
-        let parent = compute_frame_rect_cached(registry, parent_id, screen_width, screen_height, cache);
-        (parent.rect, parent.eff_scale)
+    let parent_rect = if let Some(parent_id) = frame.parent_id {
+        compute_frame_rect_cached(registry, parent_id, screen_width, screen_height, cache).rect
     } else {
-        (LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height }, 1.0)
+        LayoutRect { x: 0.0, y: 0.0, width: screen_width, height: screen_height }
     };
 
-    // Effective scale computed incrementally from parent (avoids separate walk)
-    let scale = parent_eff_scale * frame.scale;
+    // Effective scale is eagerly propagated on frames.
+    let scale = frame.effective_scale;
 
     let mut rect = if frame.anchors.is_empty() {
         let w = frame.width * scale;

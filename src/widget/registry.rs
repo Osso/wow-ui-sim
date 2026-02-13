@@ -129,20 +129,61 @@ impl WidgetRegistry {
         }
     }
 
-    /// Walk the parent chain and return true only if every ancestor has `visible=true`.
+    /// Check if a frame and all its ancestors are visible.
     ///
-    /// Matches WoW's `IsVisible()` semantics: a frame is visible only when it
-    /// and all its parents are shown.
+    /// Matches WoW's `IsVisible()` semantics: uses eagerly-propagated
+    /// `effective_alpha` — a frame is visible when effective_alpha > 0 and
+    /// its own `visible` flag is true.
     pub fn is_ancestor_visible(&self, id: u64) -> bool {
-        let mut current = id;
-        loop {
-            match self.widgets.get(&current) {
-                Some(f) if f.visible => match f.parent_id {
-                    Some(pid) => current = pid,
-                    None => return true,
-                },
-                _ => return false,
-            }
+        self.widgets.get(&id)
+            .is_some_and(|f| f.visible && f.effective_alpha > 0.0)
+    }
+
+    /// Recompute `effective_alpha` for a frame and propagate to all descendants.
+    ///
+    /// effective_alpha = parent_effective_alpha × own_alpha when visible,
+    /// 0.0 when the frame itself is hidden.
+    pub fn propagate_effective_alpha(&mut self, id: u64, parent_effective_alpha: f32) {
+        let Some(f) = self.widgets.get_mut(&id) else { return };
+        let eff = if f.visible { parent_effective_alpha * f.alpha } else { 0.0 };
+        f.effective_alpha = eff;
+        let children: Vec<u64> = f.children.clone();
+        for child_id in children {
+            self.propagate_effective_alpha(child_id, eff);
+        }
+    }
+
+    /// Propagate effective_alpha for ALL frames from root. Called once at startup
+    /// to initialize effective_alpha after all frames are created and parented.
+    pub fn propagate_all_effective_alpha(&mut self) {
+        let root_ids: Vec<u64> = self.widgets.keys().copied()
+            .filter(|&id| self.widgets.get(&id).is_some_and(|f| f.parent_id.is_none()))
+            .collect();
+        for id in root_ids {
+            self.propagate_effective_alpha(id, 1.0);
+        }
+    }
+
+    /// Propagate effective_scale for ALL frames from root. Called once at startup.
+    pub fn propagate_all_effective_scale(&mut self) {
+        let root_ids: Vec<u64> = self.widgets.keys().copied()
+            .filter(|&id| self.widgets.get(&id).is_some_and(|f| f.parent_id.is_none()))
+            .collect();
+        for id in root_ids {
+            self.propagate_effective_scale(id, 1.0);
+        }
+    }
+
+    /// Recompute `effective_scale` for a frame and propagate to all descendants.
+    ///
+    /// effective_scale = parent_effective_scale × own_scale.
+    pub fn propagate_effective_scale(&mut self, id: u64, parent_effective_scale: f32) {
+        let Some(f) = self.widgets.get_mut(&id) else { return };
+        let eff = parent_effective_scale * f.scale;
+        f.effective_scale = eff;
+        let children: Vec<u64> = f.children.clone();
+        for child_id in children {
+            self.propagate_effective_scale(child_id, eff);
         }
     }
 

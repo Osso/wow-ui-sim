@@ -41,6 +41,13 @@ fn make_texture_manager() -> Option<TextureManager> {
     Some(mgr)
 }
 
+/// Build strata buckets from a WowLuaEnv (mutable borrow), then return a clone.
+fn build_strata_buckets(env: &wow_ui_sim::lua_api::WowLuaEnv) -> Vec<Vec<u64>> {
+    let mut state = env.state().borrow_mut();
+    let _ = state.get_strata_buckets();
+    state.strata_buckets.as_ref().unwrap().clone()
+}
+
 /// Scroll bar texture paths used by the classic FauxScrollFrameTemplate.
 const SCROLL_UP_BUTTON: &str = "Interface/Buttons/UI-ScrollBar-ScrollUpButton-Up";
 const SCROLL_DOWN_BUTTON: &str = "Interface/Buttons/UI-ScrollBar-ScrollDownButton-Up";
@@ -184,6 +191,27 @@ fn layer2_atlas_db_returns_scroll_bar_entries() {
 // Layer 3: Layout verification
 // ============================================================================
 
+/// Find scrollbar child IDs from a FauxScrollFrameTemplate.
+/// Returns (scrollbar_id, up_button_id, down_button_id).
+fn find_scrollbar_children(
+    registry: &wow_ui_sim::widget::WidgetRegistry,
+    sf_name: &str,
+) -> (u64, u64, u64) {
+    let sf_id = registry.get_id_by_name(sf_name).expect("ScrollFrame should exist");
+    let sf = registry.get(sf_id).unwrap();
+
+    let scrollbar_id = *sf.children_keys.get("ScrollBar")
+        .expect("Should have ScrollBar child key");
+    let scrollbar = registry.get(scrollbar_id).unwrap();
+
+    let up_id = *scrollbar.children_keys.get("ScrollUpButton")
+        .expect("ScrollBar should have ScrollUpButton child key");
+    let down_id = *scrollbar.children_keys.get("ScrollDownButton")
+        .expect("ScrollBar should have ScrollDownButton child key");
+
+    (scrollbar_id, up_id, down_id)
+}
+
 #[test]
 fn layer3_scrollbar_layout_positions() {
     let env = env_with_shared_xml();
@@ -199,48 +227,22 @@ fn layer3_scrollbar_layout_positions() {
 
     let state = env.state().borrow();
     let registry = &state.widgets;
-
-    // Find TestSF
-    let sf_id = registry.get_id_by_name("TestSF");
-    assert!(sf_id.is_some(), "TestSF should exist in registry");
-    let sf_id = sf_id.unwrap();
-
-    let sf = registry.get(sf_id).unwrap();
-
-    // Navigate to ScrollBar via children_keys
-    let scrollbar_id = sf.children_keys.get("ScrollBar");
-    assert!(scrollbar_id.is_some(), "TestSF should have ScrollBar child key");
-    let scrollbar_id = *scrollbar_id.unwrap();
-
-    let scrollbar = registry.get(scrollbar_id).unwrap();
-
-    // Navigate to buttons via children_keys
-    let up_id = scrollbar.children_keys.get("ScrollUpButton");
-    assert!(up_id.is_some(), "ScrollBar should have ScrollUpButton child key");
-    let up_id = *up_id.unwrap();
-
-    let down_id = scrollbar.children_keys.get("ScrollDownButton");
-    assert!(down_id.is_some(), "ScrollBar should have ScrollDownButton child key");
-    let down_id = *down_id.unwrap();
-
-    // Compute layout rects (use 1024x768 as screen size)
     let screen_w = 1024.0;
     let screen_h = 768.0;
+
+    let sf_id = registry.get_id_by_name("TestSF").unwrap();
+    let (scrollbar_id, up_id, down_id) = find_scrollbar_children(registry, "TestSF");
 
     let sf_rect = compute_frame_rect(registry, sf_id, screen_w, screen_h);
     let sb_rect = compute_frame_rect(registry, scrollbar_id, screen_w, screen_h);
     let up_rect = compute_frame_rect(registry, up_id, screen_w, screen_h);
     let down_rect = compute_frame_rect(registry, down_id, screen_w, screen_h);
 
-    // ScrollFrame should have positive dimensions
     assert!(sf_rect.width > 0.0 && sf_rect.height > 0.0,
         "ScrollFrame should have positive size: {:?}", sf_rect);
-
-    // ScrollBar should have positive dimensions
     assert!(sb_rect.width > 0.0 && sb_rect.height > 0.0,
         "ScrollBar should have positive size: {:?}", sb_rect);
 
-    // ScrollUpButton should be near the top of the ScrollBar
     assert!(up_rect.width > 0.0 && up_rect.height > 0.0,
         "ScrollUpButton should have positive size: {:?}", up_rect);
     assert!(
@@ -249,7 +251,6 @@ fn layer3_scrollbar_layout_positions() {
         up_rect.y, sb_rect.y, sb_rect.height,
     );
 
-    // ScrollDownButton should be near the bottom of the ScrollBar
     assert!(down_rect.width > 0.0 && down_rect.height > 0.0,
         "ScrollDownButton should have positive size: {:?}", down_rect);
     assert!(
@@ -278,6 +279,7 @@ fn layer4_quad_batch_has_quads_for_scroll_widgets() {
     )
     .unwrap();
 
+    let buckets = build_strata_buckets(&env);
     let state = env.state().borrow();
     let batch = build_quad_batch_for_registry(
         &state.widgets,
@@ -288,6 +290,7 @@ fn layer4_quad_batch_has_quads_for_scroll_widgets() {
         None,
         None,
         None,
+        &buckets,
     );
 
     // Should have at least the background quad + some widget quads
@@ -358,6 +361,7 @@ fn layer4_quad_batch_vertex_positions_match_layout() {
     )
     .unwrap();
 
+    let buckets = build_strata_buckets(&env);
     let state = env.state().borrow();
     let registry = &state.widgets;
 
@@ -377,34 +381,38 @@ fn layer4_quad_batch_vertex_positions_match_layout() {
         None,
         None,
         None,
+        &buckets,
     );
 
     // The first quad is the background (full screen). Skip it.
     // Remaining quads should have positions within or near the scroll frame area.
     // UI_SCALE is 1.0, so layout coords == screen coords.
-    let mut found_in_range = false;
-    for quad_idx in 1..batch.quad_count() {
-        let vi = quad_idx * 4; // 4 vertices per quad
-        if vi >= batch.vertices.len() {
-            break;
-        }
-        let vx = batch.vertices[vi].position[0];
-        let vy = batch.vertices[vi].position[1];
-        // Check if vertex is in the general area of the scroll frame
-        if vx >= sf_rect.x - 50.0
-            && vx <= sf_rect.x + sf_rect.width + 50.0
-            && vy >= sf_rect.y - 50.0
-            && vy <= sf_rect.y + sf_rect.height + 50.0
-        {
-            found_in_range = true;
-            break;
-        }
-    }
+    let found_in_range = find_vertex_near_rect(&batch, &sf_rect);
 
     assert!(
         found_in_range || batch.quad_count() <= 1,
         "At least one widget quad should be near the scroll frame area",
     );
+}
+
+/// Check if any quad vertex (after the first background quad) is near the given rect.
+fn find_vertex_near_rect(batch: &QuadBatch, rect: &wow_ui_sim::LayoutRect) -> bool {
+    for quad_idx in 1..batch.quad_count() {
+        let vi = quad_idx * 4;
+        if vi >= batch.vertices.len() {
+            break;
+        }
+        let vx = batch.vertices[vi].position[0];
+        let vy = batch.vertices[vi].position[1];
+        if vx >= rect.x - 50.0
+            && vx <= rect.x + rect.width + 50.0
+            && vy >= rect.y - 50.0
+            && vy <= rect.y + rect.height + 50.0
+        {
+            return true;
+        }
+    }
+    false
 }
 
 // ============================================================================
@@ -540,633 +548,4 @@ fn layer5_gpu_atlas_real_scroll_textures() {
             assert!(entry.uv_height > 0.0);
         }
     }
-}
-
-// ============================================================================
-// MinimalCheckboxTemplate
-// ============================================================================
-
-#[test]
-fn minimal_checkbox_size() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCheckbox", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("TestMinCheckbox").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-
-    assert_eq!(frame.width, 30.0, "MinimalCheckboxTemplate width should be 30");
-    assert_eq!(frame.height, 29.0, "MinimalCheckboxTemplate height should be 29");
-}
-
-#[test]
-fn minimal_checkbox_normal_texture_atlas() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbNormal", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("TestMinCbNormal").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-
-    assert!(
-        frame.normal_texture.is_some(),
-        "normal_texture should be set from checkbox-minimal atlas"
-    );
-    let path = frame.normal_texture.as_ref().unwrap();
-    assert!(
-        path.to_lowercase().contains("minimalcheckbox"),
-        "normal_texture path should reference minimalcheckbox: {}",
-        path
-    );
-    assert!(
-        frame.normal_tex_coords.is_some(),
-        "normal_tex_coords should be set from atlas"
-    );
-}
-
-#[test]
-fn minimal_checkbox_pushed_texture_atlas() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbPushed", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("TestMinCbPushed").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-
-    assert!(
-        frame.pushed_texture.is_some(),
-        "pushed_texture should be set from checkbox-minimal atlas"
-    );
-    assert!(
-        frame.pushed_tex_coords.is_some(),
-        "pushed_tex_coords should be set from atlas"
-    );
-}
-
-#[test]
-fn minimal_checkbox_highlight_texture_atlas() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbHighlight", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("TestMinCbHighlight").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-
-    assert!(
-        frame.highlight_texture.is_some(),
-        "highlight_texture should be set from checkbox-minimal atlas"
-    );
-    assert!(
-        frame.highlight_tex_coords.is_some(),
-        "highlight_tex_coords should be set from atlas"
-    );
-}
-
-#[test]
-fn minimal_checkbox_checked_texture_atlas() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbChecked", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("TestMinCbChecked").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-
-    assert!(
-        frame.checked_texture.is_some(),
-        "checked_texture should be set from checkmark-minimal atlas"
-    );
-    let path = frame.checked_texture.as_ref().unwrap();
-    assert!(
-        path.to_lowercase().contains("minimalcheckbox"),
-        "checked_texture path should reference minimalcheckbox: {}",
-        path
-    );
-    assert!(
-        frame.checked_tex_coords.is_some(),
-        "checked_tex_coords should be set from atlas"
-    );
-}
-
-#[test]
-fn minimal_checkbox_disabled_checked_texture_atlas() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbDisChecked", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("TestMinCbDisChecked").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-
-    assert!(
-        frame.disabled_checked_texture.is_some(),
-        "disabled_checked_texture should be set from checkmark-minimal-disabled atlas"
-    );
-    let path = frame.disabled_checked_texture.as_ref().unwrap();
-    assert!(
-        path.to_lowercase().contains("minimalcheckbox"),
-        "disabled_checked_texture path should reference minimalcheckbox: {}",
-        path
-    );
-    assert!(
-        frame.disabled_checked_tex_coords.is_some(),
-        "disabled_checked_tex_coords should be set from atlas"
-    );
-}
-
-#[test]
-fn minimal_checkbox_set_checked_visibility() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbVis", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    // CheckedTexture child should exist and start hidden
-    {
-        let state = env.state().borrow();
-        let id = state.widgets.get_id_by_name("TestMinCbVis").unwrap();
-        let frame = state.widgets.get(id).unwrap();
-        let checked_tex_id = frame.children_keys.get("CheckedTexture");
-        assert!(
-            checked_tex_id.is_some(),
-            "CheckedTexture child should exist after template application"
-        );
-        let tex = state.widgets.get(*checked_tex_id.unwrap()).unwrap();
-        assert!(!tex.visible, "CheckedTexture should start hidden");
-    }
-
-    // SetChecked(true) should show it
-    env.exec("TestMinCbVis:SetChecked(true)").unwrap();
-    {
-        let state = env.state().borrow();
-        let id = state.widgets.get_id_by_name("TestMinCbVis").unwrap();
-        let frame = state.widgets.get(id).unwrap();
-        let checked_tex_id = *frame.children_keys.get("CheckedTexture").unwrap();
-        let tex = state.widgets.get(checked_tex_id).unwrap();
-        assert!(tex.visible, "CheckedTexture should be visible after SetChecked(true)");
-    }
-
-    // SetChecked(false) should hide it
-    env.exec("TestMinCbVis:SetChecked(false)").unwrap();
-    {
-        let state = env.state().borrow();
-        let id = state.widgets.get_id_by_name("TestMinCbVis").unwrap();
-        let frame = state.widgets.get(id).unwrap();
-        let checked_tex_id = *frame.children_keys.get("CheckedTexture").unwrap();
-        let tex = state.widgets.get(checked_tex_id).unwrap();
-        assert!(!tex.visible, "CheckedTexture should be hidden after SetChecked(false)");
-    }
-}
-
-#[test]
-fn minimal_checkbox_quad_batch() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbQuad", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-        cb:Show()
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let batch = build_quad_batch_for_registry(
-        &state.widgets,
-        (1024.0, 768.0),
-        Some("TestMinCbQuad"),
-        None,
-        None,
-        None,
-        None,
-        None,
-    );
-
-    // Should have texture requests referencing the checkbox atlas path
-    let checkbox_requests: Vec<_> = batch
-        .texture_requests
-        .iter()
-        .filter(|r| r.path.to_lowercase().contains("minimalcheckbox"))
-        .collect();
-
-    assert!(
-        !checkbox_requests.is_empty(),
-        "Quad batch should contain texture requests for minimalcheckbox atlas. Got paths: {:?}",
-        batch.texture_requests.iter().map(|r| &r.path).collect::<Vec<_>>()
-    );
-}
-
-#[test]
-fn minimal_checkbox_click_toggles_checked() {
-    let env = env_with_shared_xml();
-
-    // Create checkbox with an OnClick handler that toggles checked state
-    // (WoW CheckButtons have no built-in toggle - addons must wire OnClick)
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbClick", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-        cb:SetScript("OnClick", function(self, button, down)
-            self:SetChecked(not self:GetChecked())
-        end)
-    "#,
-    )
-    .unwrap();
-
-    // Starts unchecked
-    let checked: bool = env.eval("return TestMinCbClick:GetChecked()").unwrap();
-    assert!(!checked, "Should start unchecked");
-
-    // Click() fires OnClick → toggles to checked
-    env.exec("TestMinCbClick:Click()").unwrap();
-    let checked: bool = env.eval("return TestMinCbClick:GetChecked()").unwrap();
-    assert!(checked, "Should be checked after first Click()");
-
-    // CheckedTexture should now be visible
-    {
-        let state = env.state().borrow();
-        let id = state.widgets.get_id_by_name("TestMinCbClick").unwrap();
-        let frame = state.widgets.get(id).unwrap();
-        let tex_id = *frame.children_keys.get("CheckedTexture").unwrap();
-        let tex = state.widgets.get(tex_id).unwrap();
-        assert!(tex.visible, "CheckedTexture should be visible when checked");
-    }
-
-    // Click() again → toggles to unchecked
-    env.exec("TestMinCbClick:Click()").unwrap();
-    let checked: bool = env.eval("return TestMinCbClick:GetChecked()").unwrap();
-    assert!(!checked, "Should be unchecked after second Click()");
-
-    // CheckedTexture should be hidden again
-    {
-        let state = env.state().borrow();
-        let id = state.widgets.get_id_by_name("TestMinCbClick").unwrap();
-        let frame = state.widgets.get(id).unwrap();
-        let tex_id = *frame.children_keys.get("CheckedTexture").unwrap();
-        let tex = state.widgets.get(tex_id).unwrap();
-        assert!(!tex.visible, "CheckedTexture should be hidden when unchecked");
-    }
-}
-
-#[test]
-fn minimal_checkbox_mouse_enabled_by_default() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local cb = CreateFrame("CheckButton", "TestMinCbMouse", UIParent, "MinimalCheckboxTemplate")
-        cb:SetPoint("CENTER")
-    "#,
-    )
-    .unwrap();
-
-    // CheckButton should have mouse enabled by default (like WoW)
-    let mouse_enabled: bool = env
-        .eval("return TestMinCbMouse:IsMouseEnabled()")
-        .unwrap();
-    assert!(
-        mouse_enabled,
-        "CheckButton should have mouse enabled by default"
-    );
-
-    // Also verify via Rust state
-    let state = env.state().borrow();
-    let id = state.widgets.get_id_by_name("TestMinCbMouse").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-    assert!(
-        frame.mouse_enabled,
-        "CheckButton frame.mouse_enabled should be true"
-    );
-}
-
-#[test]
-fn button_mouse_enabled_by_default() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local btn = CreateFrame("Button", "TestBtnMouse", UIParent)
-        btn:SetPoint("CENTER")
-        btn:SetSize(100, 30)
-    "#,
-    )
-    .unwrap();
-
-    let mouse_enabled: bool = env.eval("return TestBtnMouse:IsMouseEnabled()").unwrap();
-    assert!(
-        mouse_enabled,
-        "Button should have mouse enabled by default"
-    );
-}
-
-// ============================================================================
-// NineSlice title bar textures
-// ============================================================================
-
-/// The NineSlice child of a ButtonFrameTemplate should have corner/edge
-/// Texture children with atlas textures set by NineSliceUtil.ApplyLayout.
-/// These render as normal Texture widgets — no special NineSlice rendering needed.
-#[test]
-fn nine_slice_corner_textures_have_atlas() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local f = CreateFrame("Frame", "TestNineSlice", UIParent, "ButtonFrameTemplate")
-        f:SetSize(400, 300)
-        f:SetPoint("CENTER")
-        f:Show()
-    "#,
-    )
-    .unwrap();
-
-    // The NineSlice child should exist (created by PortraitFrameBaseTemplate)
-    let has_nine_slice: bool = env
-        .eval("return TestNineSlice.NineSlice ~= nil")
-        .unwrap();
-    assert!(has_nine_slice, "ButtonFrameTemplate should have a NineSlice child");
-
-    // NineSliceUtil.ApplyLayout should have set atlas on corner textures
-    let tl_atlas: String = env
-        .eval(
-            r#"
-        local ns = TestNineSlice.NineSlice
-        if ns and ns.TopLeftCorner then
-            return ns.TopLeftCorner:GetAtlas() or ""
-        end
-        return ""
-    "#,
-        )
-        .unwrap();
-
-    assert!(
-        !tl_atlas.is_empty(),
-        "NineSlice TopLeftCorner should have an atlas set (got empty string)"
-    );
-    assert!(
-        tl_atlas.to_lowercase().contains("corner"),
-        "TopLeftCorner atlas should contain 'corner', got: '{}'",
-        tl_atlas
-    );
-}
-
-/// NineSlice corner/edge textures should produce quads with atlas texture paths
-/// in the rendering pipeline — they render as normal Texture widgets.
-#[test]
-fn nine_slice_textures_produce_quads() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local f = CreateFrame("Frame", "TestNS9Quads", UIParent, "ButtonFrameTemplate")
-        f:SetSize(400, 300)
-        f:SetPoint("CENTER")
-        f:Show()
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-    let batch = build_quad_batch_for_registry(
-        &state.widgets,
-        (1024.0, 768.0),
-        Some("TestNS9Quads"),
-        None,
-        None,
-        None,
-        None,
-        None,
-    );
-
-    // Collect all texture request paths
-    let tex_paths: Vec<&str> = batch
-        .texture_requests
-        .iter()
-        .map(|r| r.path.as_str())
-        .collect();
-
-    // NineSlice corner/edge textures use atlas entries from uiframemetal files
-    let has_nine_slice_texture = tex_paths.iter().any(|p| {
-        let lower = p.to_lowercase();
-        lower.contains("uiframemetal") || lower.contains("uiframehorizontal") || lower.contains("uiframemetalvertical")
-    });
-
-    assert!(
-        has_nine_slice_texture,
-        "Quad batch should contain NineSlice atlas texture requests (uiframemetal/uiframehorizontal), \
-         got: {:?}",
-        tex_paths
-    );
-}
-
-/// The NineSlice child frame created by SetAllPoints should match
-/// the parent frame's bounds in the Rust layout computation.
-#[test]
-fn nine_slice_child_fills_parent_bounds() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local f = CreateFrame("Frame", "TestNSFill", UIParent, "ButtonFrameTemplate")
-        f:SetSize(400, 300)
-        f:SetPoint("CENTER")
-        f:Show()
-    "#,
-    )
-    .unwrap();
-
-    // Check NineSlice anchor count from Lua side
-    let ns_num_points: i32 = env.eval(r#"
-        local ns = TestNSFill.NineSlice
-        if ns then return ns:GetNumPoints() end
-        return -1
-    "#).unwrap();
-
-    assert!(
-        ns_num_points >= 2,
-        "NineSlice should have at least 2 anchor points (from SetAllPoints), got {}",
-        ns_num_points
-    );
-
-    // Verify the NineSlice Rust layout matches parent
-    let state = env.state().borrow();
-    let parent_id = state.widgets.get_id_by_name("TestNSFill").unwrap();
-    let parent_rect = compute_frame_rect(&state.widgets, parent_id, 1024.0, 768.0);
-
-    // Find the NineSlice child's Rust widget
-    let parent = state.widgets.get(parent_id).unwrap();
-    if let Some(&ns_id) = parent.children_keys.get("NineSlice") {
-        let ns_rect = compute_frame_rect(&state.widgets, ns_id, 1024.0, 768.0);
-        eprintln!("Parent: ({}, {}, {}x{})", parent_rect.x, parent_rect.y, parent_rect.width, parent_rect.height);
-        eprintln!("NineSlice: ({}, {}, {}x{})", ns_rect.x, ns_rect.y, ns_rect.width, ns_rect.height);
-
-        assert!(
-            (ns_rect.width - parent_rect.width).abs() < 1.0,
-            "NineSlice width {} should match parent width {}",
-            ns_rect.width,
-            parent_rect.width
-        );
-    } else {
-        panic!("NineSlice not found in Rust children_keys");
-    }
-}
-
-/// The NineSlice corner textures should have non-zero size layout rects
-/// so they actually render visibly on screen.
-#[test]
-fn nine_slice_corner_has_nonzero_layout() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local f = CreateFrame("Frame", "TestNSLayout", UIParent, "ButtonFrameTemplate")
-        f:SetSize(400, 300)
-        f:SetPoint("CENTER")
-        f:Show()
-    "#,
-    )
-    .unwrap();
-
-    // Check TopLeftCorner dimensions
-    let (w, h): (f32, f32) = env
-        .eval(
-            r#"
-        local ns = TestNSLayout.NineSlice
-        local tl = ns and ns.TopLeftCorner
-        if tl then
-            return tl:GetWidth(), tl:GetHeight()
-        end
-        return 0, 0
-    "#,
-        )
-        .unwrap();
-
-    assert!(
-        w > 0.0 && h > 0.0,
-        "TopLeftCorner should have non-zero size, got {}x{}",
-        w,
-        h
-    );
-
-    // Check that corner is visible
-    let visible: bool = env
-        .eval(
-            r#"
-        local ns = TestNSLayout.NineSlice
-        return ns.TopLeftCorner:IsVisible()
-    "#,
-        )
-        .unwrap();
-
-    assert!(visible, "TopLeftCorner should be visible");
-
-    // Check TopEdge (title bar edge) dimensions
-    let (ew, eh): (f32, f32) = env
-        .eval(
-            r#"
-        local ns = TestNSLayout.NineSlice
-        local te = ns and ns.TopEdge
-        if te then
-            return te:GetWidth(), te:GetHeight()
-        end
-        return 0, 0
-    "#,
-        )
-        .unwrap();
-
-    assert!(
-        eh > 0.0,
-        "TopEdge (title bar) should have non-zero height, got {}x{}",
-        ew,
-        eh
-    );
-}
-
-/// NineSlice corner textures should have non-zero layout rects in the Rust
-/// layout computation (what actually drives rendering).
-#[test]
-fn nine_slice_corner_rust_layout_nonzero() {
-    let env = env_with_shared_xml();
-
-    env.exec(
-        r#"
-        local f = CreateFrame("Frame", "TestNSRustLayout", UIParent, "ButtonFrameTemplate")
-        f:SetSize(400, 300)
-        f:SetPoint("CENTER")
-        f:Show()
-    "#,
-    )
-    .unwrap();
-
-    let state = env.state().borrow();
-
-    // Find the TopLeftCorner texture by checking atlas
-    let mut found_corner = false;
-    for id in state.widgets.iter_ids() {
-        let f = state.widgets.get(id).unwrap();
-        if let Some(ref atlas) = f.atlas {
-            if atlas.to_lowercase().contains("cornertopleft") {
-                let rect = compute_frame_rect(&state.widgets, id, 1024.0, 768.0);
-                eprintln!(
-                    "TopLeftCorner atlas='{}' layout=({}, {}, {}x{}), visible={}, anchors={}",
-                    atlas, rect.x, rect.y, rect.width, rect.height,
-                    f.visible, f.anchors.len()
-                );
-                assert!(
-                    rect.width > 0.0 && rect.height > 0.0,
-                    "TopLeftCorner Rust layout should have non-zero size, got {}x{}",
-                    rect.width,
-                    rect.height
-                );
-                found_corner = true;
-            }
-        }
-    }
-    assert!(found_corner, "Should find a TopLeftCorner texture with atlas set");
 }

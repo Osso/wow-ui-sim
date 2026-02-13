@@ -25,11 +25,12 @@ impl App {
         let batch = {
             let env = self.env.borrow();
             let mut fs = self.font_system.borrow_mut();
-            // Update tooltip sizes before rendering
-            {
+            let buckets = {
                 let mut state = env.state().borrow_mut();
                 super::tooltip::update_tooltip_sizes(&mut state, &mut fs);
-            }
+                let _ = state.get_strata_buckets();
+                state.strata_buckets.as_ref().unwrap().clone()
+            };
             let state = env.state().borrow();
             let tooltip_data = super::tooltip::collect_tooltip_data(&state);
             build_quad_batch_for_registry(
@@ -41,6 +42,7 @@ impl App {
                 Some((&mut fs, &mut glyph_atlas)),
                 Some(&state.message_frames),
                 Some(&tooltip_data),
+                &buckets,
             )
         };
 

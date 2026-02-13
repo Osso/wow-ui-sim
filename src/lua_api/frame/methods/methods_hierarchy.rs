@@ -59,17 +59,17 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
             old_parent.children.retain(|&id| id != child_id);
         }
 
-    // Get parent's strata and level for inheritance
+    // Get parent's strata, level, effective_alpha, effective_scale for inheritance
     let parent_props = new_parent_id.and_then(|pid| {
         widgets
             .get(pid)
-            .map(|p| (p.frame_strata, p.frame_level))
+            .map(|p| (p.frame_strata, p.frame_level, p.effective_alpha, p.effective_scale))
     });
 
     if let Some(frame) = widgets.get_mut(child_id) {
         frame.parent_id = new_parent_id;
         // Inherit strata and level from parent (like wowless does)
-        if let Some((parent_strata, parent_level)) = parent_props {
+        if let Some((parent_strata, parent_level, _, _)) = parent_props {
             if !frame.has_fixed_frame_strata {
                 frame.frame_strata = parent_strata;
             }
@@ -82,6 +82,12 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
     // Recursively propagate strata/level to all descendants (pool-acquired
     // frames keep stale levels from their original parent otherwise).
     propagate_strata_level(widgets, child_id);
+
+    // Propagate effective_alpha and effective_scale from new parent.
+    let parent_eff_alpha = parent_props.map(|(_, _, a, _)| a).unwrap_or(1.0);
+    let parent_eff_scale = parent_props.map(|(_, _, _, s)| s).unwrap_or(1.0);
+    widgets.propagate_effective_alpha(child_id, parent_eff_alpha);
+    widgets.propagate_effective_scale(child_id, parent_eff_scale);
 
     // Add to new parent's children list
     if let Some(new_pid) = new_parent_id

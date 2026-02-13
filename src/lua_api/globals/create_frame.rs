@@ -213,12 +213,13 @@ fn register_new_frame(
     if let Some(pid) = parent_id {
         state.widgets.add_child(pid, frame_id);
 
-        // Inherit strata and level from parent (like wowless does)
-        let parent_props = state.widgets.get(pid).map(|p| (p.frame_strata, p.frame_level));
-        if let Some((parent_strata, parent_level)) = parent_props
+        // Inherit strata, level, and effective_alpha from parent.
+        let parent_props = state.widgets.get(pid).map(|p| (p.frame_strata, p.frame_level, p.effective_alpha));
+        if let Some((parent_strata, parent_level, parent_eff)) = parent_props
             && let Some(f) = state.widgets.get_mut(frame_id) {
                 f.frame_strata = parent_strata;
                 f.frame_level = parent_level + 1;
+                f.effective_alpha = parent_eff * f.alpha;
             }
     }
 

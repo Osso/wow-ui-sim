@@ -16,6 +16,11 @@ fn build_batch_for_button(
     pressed: Option<u64>,
     hovered: Option<u64>,
 ) -> wow_ui_sim::render::QuadBatch {
+    let buckets = {
+        let mut state = env.state().borrow_mut();
+        let _ = state.get_strata_buckets();
+        state.strata_buckets.as_ref().unwrap().clone()
+    };
     let state = env.state().borrow();
     build_quad_batch_for_registry(
         &state.widgets,
@@ -26,6 +31,7 @@ fn build_batch_for_button(
         None,
         None,
         None,
+        &buckets,
     )
 }
 

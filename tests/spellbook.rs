@@ -7,7 +7,6 @@
 mod common;
 
 use std::path::PathBuf;
-use wow_ui_sim::iced_app::frame_collect::collect_ancestor_visible_ids;
 use wow_ui_sim::iced_app::{build_quad_batch_for_registry, compute_frame_rect};
 use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -109,28 +108,34 @@ fn collect_viewframe_children(registry: &WidgetRegistry, paged_id: u64) -> Vec<u
     items
 }
 
-/// Build quad batch for the full registry at 1024x768.
-fn build_quads(env: &WowLuaEnv) -> usize {
-    let state = env.state().borrow();
-    let batch = build_quad_batch_for_registry(
-        &state.widgets,
-        (1024.0, 768.0),
-        None,
-        None,
-        None,
-        None,
-        None,
-        None,
-    );
-    batch.quad_count()
+/// Build strata buckets from a WowLuaEnv (mutable borrow), then return a clone.
+fn build_strata_buckets(env: &WowLuaEnv) -> Vec<Vec<u64>> {
+    let mut state = env.state().borrow_mut();
+    let _ = state.get_strata_buckets();
+    state.strata_buckets.as_ref().unwrap().clone()
 }
 
-fn build_quads_with_textures(env: &WowLuaEnv) -> (usize, Vec<String>) {
+/// Build quad batch for the full registry at 1024x768.
+fn build_quads(env: &WowLuaEnv) -> usize {
+    let buckets = build_strata_buckets(env);
     let state = env.state().borrow();
     let batch = build_quad_batch_for_registry(
         &state.widgets,
         (1024.0, 768.0),
         None, None, None, None, None, None,
+        &buckets,
+    );
+    batch.quad_count()
+}
+
+fn build_quads_with_textures(env: &WowLuaEnv) -> (usize, Vec<String>) {
+    let buckets = build_strata_buckets(env);
+    let state = env.state().borrow();
+    let batch = build_quad_batch_for_registry(
+        &state.widgets,
+        (1024.0, 768.0),
+        None, None, None, None, None, None,
+        &buckets,
     );
     let textures: Vec<String> = batch.texture_requests.iter()
         .map(|r| r.path.clone())
@@ -235,21 +240,28 @@ fn spellbook_spells_visible_on_first_open() {
     );
 }
 
-/// Check which items are missing from ancestor_visible and log details.
+/// Check which items are missing from ancestor-visible set and log details.
+/// Uses effective_alpha > 0 as the visibility check (requires get_strata_buckets called first).
 fn diagnose_missing_items(env: &WowLuaEnv, item_ids: &[u64]) {
+    // Propagate effective_alpha
+    {
+        let mut state = env.state().borrow_mut();
+        let _ = state.get_strata_buckets();
+    }
+
     let state = env.state().borrow();
     let registry = &state.widgets;
-    let ancestor_visible = collect_ancestor_visible_ids(registry);
 
     let mut in_set = 0;
     let mut missing = 0;
     for &item_id in item_ids {
-        if ancestor_visible.contains_key(&item_id) {
+        let is_visible = registry.get(item_id).is_some_and(|f| f.effective_alpha > 0.0);
+        if is_visible {
             in_set += 1;
         } else {
             missing += 1;
             let (ok, detail) = check_frame_reachability(registry, item_id);
-            eprintln!("Item {} NOT in ancestor_visible: ok={}, {}", item_id, ok, detail);
+            eprintln!("Item {} NOT ancestor-visible: ok={}, {}", item_id, ok, detail);
             log_ancestor_chain(registry, item_id);
         }
     }
@@ -261,15 +273,19 @@ fn spellbook_spell_items_in_ancestor_visible() {
     let env = setup_full_ui();
     open_spellbook(&env);
 
+    // Propagate effective_alpha
+    {
+        let mut state = env.state().borrow_mut();
+        let _ = state.get_strata_buckets();
+    }
+
     let state = env.state().borrow();
     let item_ids = find_spell_item_ids(&state.widgets);
     assert!(!item_ids.is_empty(), "Should have spell items");
 
-    let ancestor_visible = collect_ancestor_visible_ids(&state.widgets);
-
     let missing: Vec<_> = item_ids
         .iter()
-        .filter(|id| !ancestor_visible.contains_key(id))
+        .filter(|&&id| !state.widgets.get(id).is_some_and(|f| f.effective_alpha > 0.0))
         .map(|&id| {
             let name = state.widgets.get(id)
                 .and_then(|f| f.name.as_deref())
@@ -280,7 +296,7 @@ fn spellbook_spell_items_in_ancestor_visible() {
 
     assert!(
         missing.is_empty(),
-        "All visible spell items should be in ancestor_visible.\n\
+        "All visible spell items should have effective_alpha > 0.\n\
          Missing {} items: {:?}",
         missing.len(),
         &missing[..missing.len().min(10)]
@@ -292,12 +308,16 @@ fn spellbook_icon_textures_in_ancestor_visible() {
     let env = setup_full_ui();
     open_spellbook(&env);
 
+    // Propagate effective_alpha
+    {
+        let mut state = env.state().borrow_mut();
+        let _ = state.get_strata_buckets();
+    }
+
     let state = env.state().borrow();
     let registry = &state.widgets;
     let item_ids = find_spell_item_ids(registry);
     assert!(!item_ids.is_empty(), "Should have spell items");
-
-    let ancestor_visible = collect_ancestor_visible_ids(registry);
 
     // For each spell item, find its Button child, then Icon texture child
     let mut icons_found = 0u32;
@@ -309,15 +329,16 @@ fn spellbook_icon_textures_in_ancestor_visible() {
         let Some(&icon_id) = btn.children_keys.get("Icon") else { continue };
         let Some(icon) = registry.get(icon_id) else { continue };
 
-        if ancestor_visible.contains_key(&icon_id) {
+        if icon.effective_alpha > 0.0 {
             icons_found += 1;
         } else {
             icons_missing += 1;
             if icons_missing <= 3 {
                 let (ok, detail) = check_frame_reachability(registry, icon_id);
-                eprintln!("Icon {icon_id} NOT in ancestor_visible: ok={ok} {detail}");
-                eprintln!("  icon: vis={} tex={:?} w={} h={}",
-                    icon.visible, icon.texture, icon.width, icon.height);
+                eprintln!("Icon {icon_id} NOT ancestor-visible: ok={ok} {detail}");
+                eprintln!("  icon: vis={} tex={:?} w={} h={} alpha={}",
+                    icon.visible, icon.texture, icon.width, icon.height,
+                    icon.effective_alpha);
                 eprintln!("  btn {btn_id}: vis={} children={:?}",
                     btn.visible, btn.children);
                 eprintln!("  item {item_id}: vis={} children={:?}",
@@ -327,7 +348,7 @@ fn spellbook_icon_textures_in_ancestor_visible() {
     }
     eprintln!("Icons: found={icons_found} missing={icons_missing}");
     assert_eq!(icons_missing, 0,
-        "All spell icon textures should be in ancestor_visible");
+        "All spell icon textures should have effective_alpha > 0");
 }
 
 #[test]

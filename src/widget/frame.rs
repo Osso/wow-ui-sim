@@ -145,12 +145,18 @@ pub struct Frame {
     pub toplevel: bool,
     /// Alpha transparency (0.0 - 1.0).
     pub alpha: f32,
+    /// Effective alpha (product of all ancestor alphas × own alpha).
+    /// Updated eagerly when visibility or alpha changes. 0.0 when any ancestor is hidden.
+    pub effective_alpha: f32,
     /// Additive animation translation offset (from Animation Translation, not anchors).
     pub anim_offset_x: f32,
     /// Additive animation translation offset (from Animation Translation, not anchors).
     pub anim_offset_y: f32,
     /// Scale factor (affects visible size; default 1.0).
     pub scale: f32,
+    /// Effective scale (product of all ancestor scales × own scale).
+    /// Updated eagerly when scale changes or frame is reparented.
+    pub effective_scale: f32,
     /// Whether mouse is enabled.
     pub mouse_enabled: bool,
     /// Whether keyboard input is enabled for this frame.
@@ -408,9 +414,11 @@ macro_rules! frame_defaults {
             has_fixed_frame_strata: false,
             toplevel: false,
             alpha: 1.0,
+            effective_alpha: 1.0,
             anim_offset_x: 0.0,
             anim_offset_y: 0.0,
             scale: 1.0,
+            effective_scale: 1.0,
             mouse_enabled: false,
             keyboard_enabled: false,
             propagate_keyboard_input: false,

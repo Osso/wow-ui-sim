@@ -189,7 +189,7 @@ fn add_newindex_metamethod<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     // relationship (child.parent_id == frame_id). Arbitrary Lua
                     // references like `frame.previousButton = otherFrame` must
                     // NOT create tree edges — cycles would cause infinite loops
-                    // in tree walkers (collect_ancestor_visible_ids etc.).
+                    // in tree walkers (propagate_effective_alpha etc.).
                     let is_real_child = state.widgets.get(child_id)
                         .is_some_and(|c| c.parent_id == Some(frame_id));
                     if let Some(parent_frame) = state.widgets.get_mut(frame_id) {

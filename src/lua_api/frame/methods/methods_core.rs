@@ -371,9 +371,16 @@ fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .map(|f| f.alpha != clamped)
             .unwrap_or(false);
         if changed {
+            // Get parent's effective_alpha before mutating.
+            let parent_eff = state.widgets.get(this.id)
+                .and_then(|f| f.parent_id)
+                .and_then(|pid| state.widgets.get(pid))
+                .map(|p| p.effective_alpha)
+                .unwrap_or(1.0);
             if let Some(frame) = state.widgets.get_mut(this.id) {
                 frame.alpha = clamped;
             }
+            state.widgets.propagate_effective_alpha(this.id, parent_eff);
         }
         Ok(())
     });
@@ -384,28 +391,23 @@ fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         Ok(alpha)
     });
 
-    // GetEffectiveAlpha() - walk parent chain multiplying alpha values
     methods.add_method("GetEffectiveAlpha", |_, this, ()| {
         let state = this.state.borrow();
-        let mut alpha = 1.0f32;
-        let mut current_id = Some(this.id);
-        while let Some(id) = current_id {
-            if let Some(f) = state.widgets.get(id) {
-                alpha *= f.alpha;
-                current_id = f.parent_id;
-            } else {
-                break;
-            }
-        }
-        Ok(alpha)
+        Ok(state.widgets.get(this.id).map(|f| f.effective_alpha).unwrap_or(1.0))
     });
 
-    // SetAlphaFromBoolean(flag) - set alpha to 1.0 if true, 0.0 if false
     methods.add_method("SetAlphaFromBoolean", |_, this, flag: bool| {
         let mut state = this.state.borrow_mut();
+        let new_alpha = if flag { 1.0 } else { 0.0 };
+        let parent_eff = state.widgets.get(this.id)
+            .and_then(|f| f.parent_id)
+            .and_then(|pid| state.widgets.get(pid))
+            .map(|p| p.effective_alpha)
+            .unwrap_or(1.0);
         if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.alpha = if flag { 1.0 } else { 0.0 };
+            frame.alpha = new_alpha;
         }
+        state.widgets.propagate_effective_alpha(this.id, parent_eff);
         Ok(())
     });
 }
@@ -432,7 +434,6 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         // Invalidate render caches since strata changed.
         state.strata_buckets = None;
-        state.ancestor_visible_cache = None;
         state.cached_render_list = None;
         Ok(())
     });
@@ -640,27 +641,23 @@ fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetScale(scale) - set frame's scale factor (affects visible size)
     methods.add_method("SetScale", |_, this, scale: f32| {
         let mut state = this.state.borrow_mut();
+        let parent_eff_scale = state.widgets.get(this.id)
+            .and_then(|f| f.parent_id)
+            .and_then(|pid| state.widgets.get(pid))
+            .map(|p| p.effective_scale)
+            .unwrap_or(1.0);
         if let Some(f) = state.widgets.get_mut(this.id) {
             f.scale = scale;
         }
+        state.widgets.propagate_effective_scale(this.id, parent_eff_scale);
         state.invalidate_layout_with_dependents(this.id);
         Ok(())
     });
 
-    // GetEffectiveScale() - get product of all ancestor scales * this frame's scale
+    // GetEffectiveScale() - product of all ancestor scales × own scale
     methods.add_method("GetEffectiveScale", |_, this, ()| {
         let state = this.state.borrow();
-        let mut scale = 1.0f32;
-        let mut current_id = Some(this.id);
-        while let Some(id) = current_id {
-            if let Some(f) = state.widgets.get(id) {
-                scale *= f.scale;
-                current_id = f.parent_id;
-            } else {
-                break;
-            }
-        }
-        Ok(scale)
+        Ok(state.widgets.get(this.id).map(|f| f.effective_scale).unwrap_or(1.0))
     });
 
     // SetIgnoreParentScale(ignore) - set whether frame ignores parent scale

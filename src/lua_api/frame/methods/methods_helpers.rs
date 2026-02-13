@@ -27,19 +27,9 @@ pub fn get_mixin_override(
     Some((func, ud))
 }
 
-/// Compute effective scale by walking up the parent chain.
+/// Read the eagerly-propagated effective scale from the frame.
 fn eff_scale(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
-    let mut scale = 1.0f32;
-    let mut current = Some(id);
-    while let Some(cid) = current {
-        if let Some(f) = widgets.get(cid) {
-            scale *= f.scale;
-            current = f.parent_id;
-        } else {
-            break;
-        }
-    }
-    scale
+    widgets.get(id).map(|f| f.effective_scale).unwrap_or(1.0)
 }
 
 /// Calculate frame width from anchors or explicit size (recursive).

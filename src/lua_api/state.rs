@@ -155,11 +155,8 @@ pub struct SimState {
     /// Cached subset of `on_update_frames` whose ancestors are all visible.
     /// Invalidated when `WidgetRegistry::visibility_dirty` is set.
     pub visible_on_update_cache: Option<Vec<u64>>,
-    /// Cached ancestor-visible IDs with effective alpha. Built lazily on first
-    /// `draw()`, then updated eagerly by `set_frame_visible`.
-    pub ancestor_visible_cache: Option<HashMap<u64, f32>>,
     /// Per-strata buckets of visible frame IDs. Index = FrameStrata as usize.
-    /// Built alongside ancestor_visible_cache, updated eagerly by `set_frame_visible`.
+    /// Built lazily, invalidated when visibility/strata changes.
     pub strata_buckets: Option<Vec<Vec<u64>>>,
     /// Persistent layout rect cache. Built lazily on first `draw()`, entries
     /// invalidated eagerly when layout-affecting properties change (anchors,
@@ -247,7 +244,6 @@ impl Default for SimState {
             message_frames: HashMap::new(),
             on_update_frames: HashSet::new(),
             visible_on_update_cache: None,
-            ancestor_visible_cache: None,
             strata_buckets: None,
             layout_rect_cache: None,
             cached_render_list: None,
@@ -286,44 +282,40 @@ impl Default for SimState {
 }
 
 impl SimState {
-    /// Return the cached ancestor-visible map, building it on first call.
-    /// Also builds strata_buckets as a side effect.
-    pub fn get_ancestor_visible(&mut self) -> &HashMap<u64, f32> {
-        if self.ancestor_visible_cache.is_none() {
-            let visible = crate::iced_app::frame_collect::collect_ancestor_visible_ids(&self.widgets);
-            let buckets = self.build_strata_buckets(&visible);
-            self.strata_buckets = Some(buckets);
-            self.ancestor_visible_cache = Some(visible);
+    /// Return the per-strata buckets, building lazily if needed.
+    pub fn get_strata_buckets(&mut self) -> Option<&Vec<Vec<u64>>> {
+        if self.strata_buckets.is_none() {
+            self.strata_buckets = Some(self.build_strata_buckets());
             self.cached_render_list = None;
         }
-        self.ancestor_visible_cache.as_ref().unwrap()
-    }
-
-    /// Return the per-strata buckets (requires ancestor_visible to have been built).
-    pub fn get_strata_buckets(&self) -> Option<&Vec<Vec<u64>>> {
         self.strata_buckets.as_ref()
     }
 
-    /// Build per-strata ID buckets from the ancestor-visible map, sorted by render order.
+    /// Build per-strata ID buckets from frames with effective_alpha > 0, sorted by render order.
     ///
-    /// Regions (Texture/FontString) use their parent's strata for bucket placement,
-    /// matching WoW's behavior where regions render in the parent frame's context.
-    fn build_strata_buckets(&self, visible: &HashMap<u64, f32>) -> Vec<Vec<u64>> {
+    /// Also includes button state textures (visible=false but state-driven).
+    fn build_strata_buckets(&mut self) -> Vec<Vec<u64>> {
+        // Ensure effective_alpha is correct for all frames (handles direct
+        // .visible = false assignments during initialization that bypass
+        // set_frame_visible propagation).
+        self.widgets.propagate_all_effective_alpha();
+        self.widgets.propagate_all_effective_scale();
         use crate::iced_app::frame_collect::intra_strata_sort_key;
         use crate::widget::WidgetType;
         let mut buckets = vec![Vec::new(); crate::widget::FrameStrata::COUNT];
-        for &id in visible.keys() {
-            if let Some(f) = self.widgets.get(id) {
-                let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
-                    f.parent_id
-                        .and_then(|pid| self.widgets.get(pid))
-                        .map(|p| p.frame_strata)
-                        .unwrap_or(f.frame_strata)
-                } else {
-                    f.frame_strata
-                };
-                buckets[strata.as_index()].push(id);
-            }
+        for id in self.widgets.iter_ids() {
+            let Some(f) = self.widgets.get(id) else { continue };
+            if f.effective_alpha <= 0.0
+                && !is_button_state_texture(f, id, &self.widgets) { continue; }
+            let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
+                f.parent_id
+                    .and_then(|pid| self.widgets.get(pid))
+                    .map(|p| p.frame_strata)
+                    .unwrap_or(f.frame_strata)
+            } else {
+                f.frame_strata
+            };
+            buckets[strata.as_index()].push(id);
         }
         for bucket in &mut buckets {
             bucket.sort_by(|&a, &b| {
@@ -472,11 +464,7 @@ impl SimState {
         }
     }
 
-    /// Set a frame's visibility and eagerly update both caches.
-    ///
-    /// When hiding: remove the frame and all descendants from both caches.
-    /// When showing: add the frame and any descendants that are now
-    /// ancestor-visible.
+    /// Set a frame's visibility and eagerly propagate effective_alpha.
     pub fn set_frame_visible(&mut self, id: u64, visible: bool) {
         let was_visible = self.widgets.get(id).map(|f| f.visible).unwrap_or(false);
         self.widgets.set_visible(id, visible);
@@ -491,7 +479,16 @@ impl SimState {
             }
         }
         self.update_on_update_cache(id, visible);
-        self.update_ancestor_visible_cache(id, visible);
+        // Propagate effective_alpha: look up parent's effective_alpha.
+        let parent_eff = self.widgets.get(id)
+            .and_then(|f| f.parent_id)
+            .and_then(|pid| self.widgets.get(pid))
+            .map(|p| p.effective_alpha)
+            .unwrap_or(1.0);
+        self.widgets.propagate_effective_alpha(id, parent_eff);
+        // Invalidate render caches since visibility changed.
+        self.strata_buckets = None;
+        self.cached_render_list = None;
     }
 
     /// Raise a frame above all siblings in the same strata.
@@ -519,7 +516,6 @@ impl SimState {
         );
         // Invalidate render caches since level changed.
         self.strata_buckets = None;
-        self.ancestor_visible_cache = None;
         self.cached_render_list = None;
     }
 
@@ -556,32 +552,6 @@ impl SimState {
         self.visible_on_update_cache = Some(cache);
     }
 
-    fn update_ancestor_visible_cache(&mut self, id: u64, visible: bool) {
-        self.cached_render_list = None;
-        let Some(mut cache) = self.ancestor_visible_cache.take() else {
-            return;
-        };
-        let mut buckets = self.strata_buckets.take();
-        if visible {
-            // Only add to cache if parent is ancestor-visible (or frame is a root).
-            // This prevents hidden-ancestor frames from leaking into the render cache
-            // (e.g. OverrideActionBar children becoming visible while the bar is hidden).
-            let parent_visible = self
-                .widgets
-                .get(id)
-                .and_then(|f| f.parent_id)
-                .map(|pid| cache.contains_key(&pid))
-                .unwrap_or(true); // root frames have no parent → always eligible
-            if parent_visible {
-                self.add_visible_descendants(id, &mut cache, &mut buckets);
-            }
-        } else {
-            self.remove_visible_descendants(id, &mut cache, &mut buckets);
-        }
-        self.ancestor_visible_cache = Some(cache);
-        self.strata_buckets = buckets;
-    }
-
     /// Add `id` and its descendants to cache if they have OnUpdate and are ancestor-visible.
     fn add_on_update_descendants(&self, id: u64, cache: &mut Vec<u64>) {
         if self.on_update_frames.contains(&id) && self.widgets.is_ancestor_visible(id) {
@@ -608,99 +578,6 @@ impl SimState {
         }
     }
 
-    /// Insert `id` into the correct sorted position in its strata bucket.
-    /// Skips insertion if the id is already present (avoids duplicate rendering).
-    /// Regions use parent's strata for bucket placement.
-    fn insert_into_strata_bucket(&self, f: &crate::widget::Frame, id: u64, buckets: &mut Option<Vec<Vec<u64>>>) {
-        use crate::iced_app::frame_collect::intra_strata_sort_key;
-        use crate::widget::WidgetType;
-        let Some(b) = buckets.as_mut() else { return };
-        let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
-            f.parent_id
-                .and_then(|pid| self.widgets.get(pid))
-                .map(|p| p.frame_strata)
-                .unwrap_or(f.frame_strata)
-        } else {
-            f.frame_strata
-        };
-        let bucket = &mut b[strata.as_index()];
-        if bucket.contains(&id) {
-            return;
-        }
-        let key = intra_strata_sort_key(f, id, &self.widgets);
-        let pos = bucket.binary_search_by(|&other_id| {
-            self.widgets.get(other_id)
-                .map(|o| intra_strata_sort_key(o, other_id, &self.widgets).cmp(&key))
-                .unwrap_or(std::cmp::Ordering::Less)
-        }).unwrap_or_else(|p| p);
-        bucket.insert(pos, id);
-    }
-
-    /// Add `id` and visible descendants to the ancestor-visible cache with alpha.
-    ///
-    /// Caller (`update_ancestor_visible_cache`) must ensure the parent is already
-    /// in the cache before calling this. The `unwrap_or(1.0)` for parent alpha
-    /// handles root frames (no parent) — non-root frames with missing parents
-    /// should never reach here.
-    fn add_visible_descendants(
-        &self, id: u64, cache: &mut HashMap<u64, f32>,
-        buckets: &mut Option<Vec<Vec<u64>>>,
-    ) {
-        let Some(f) = self.widgets.get(id) else { return };
-        let parent_alpha = f
-            .parent_id
-            .and_then(|pid| cache.get(&pid).copied())
-            .unwrap_or(1.0);
-        if !f.visible {
-            if is_button_state_texture(f, id, &self.widgets) {
-                cache.insert(id, parent_alpha * f.alpha);
-                self.insert_into_strata_bucket(f, id, buckets);
-            }
-            return;
-        }
-        let eff = parent_alpha * f.alpha;
-        cache.insert(id, eff);
-        self.insert_into_strata_bucket(f, id, buckets);
-        if f.widget_type == crate::widget::WidgetType::GameTooltip {
-            return;
-        }
-        let children: Vec<u64> = f.children.clone();
-        for child_id in children {
-            self.add_visible_descendants(child_id, cache, buckets);
-        }
-    }
-
-    /// Remove `id` and all descendants from ancestor-visible cache.
-    /// Regions use parent's strata for bucket lookup (matching insert logic).
-    fn remove_visible_descendants(
-        &self, id: u64, cache: &mut HashMap<u64, f32>,
-        buckets: &mut Option<Vec<Vec<u64>>>,
-    ) {
-        if cache.remove(&id).is_some() {
-            if let Some(b) = buckets.as_mut() {
-                if let Some(f) = self.widgets.get(id) {
-                    use crate::widget::WidgetType;
-                    let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
-                        f.parent_id
-                            .and_then(|pid| self.widgets.get(pid))
-                            .map(|p| p.frame_strata)
-                            .unwrap_or(f.frame_strata)
-                    } else {
-                        f.frame_strata
-                    };
-                    let bucket = &mut b[strata.as_index()];
-                    if let Some(pos) = bucket.iter().position(|&x| x == id) {
-                        bucket.remove(pos); // preserve sorted order
-                    }
-                }
-            }
-        }
-        let children: Vec<u64> = self.widgets.get(id)
-            .map(|f| f.children.clone()).unwrap_or_default();
-        for child_id in children {
-            self.remove_visible_descendants(child_id, cache, buckets);
-        }
-    }
 }
 
 /// Check if a frame is a button state texture (NormalTexture, PushedTexture, etc.).

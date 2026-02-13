@@ -647,11 +647,13 @@ fn build_screenshot_batch(
     let mut glyph_atlas = GlyphAtlas::new();
     let batch = {
         let mut fs = font_system.borrow_mut();
-        {
+        let buckets = {
             let mut state = env.state().borrow_mut();
             state.ensure_layout_rects();
             wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut fs);
-        }
+            let _ = state.get_strata_buckets();
+            state.strata_buckets.as_ref().unwrap().clone()
+        };
         let state = env.state().borrow();
         let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
         build_quad_batch_for_registry(
@@ -661,6 +663,7 @@ fn build_screenshot_batch(
             Some((&mut fs, &mut glyph_atlas)),
             Some(&state.message_frames),
             Some(&tooltip_data),
+            &buckets,
         )
     };
     (batch, glyph_atlas)

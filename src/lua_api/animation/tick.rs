@@ -171,6 +171,9 @@ fn apply_effects(
             None => Some(owner_frame_id),
         };
         let Some(id) = target_id else { continue };
+        let alpha_changed = fx.alpha.is_some_and(|a| {
+            state.widgets.get(id).map(|f| f.alpha != a).unwrap_or(false)
+        });
         let Some(frame) = state.widgets.get_mut_silent(id) else { continue };
         if let Some(alpha) = fx.alpha {
             frame.alpha = alpha;
@@ -184,6 +187,14 @@ fn apply_effects(
         }
         if offset_changed {
             state.invalidate_layout(id);
+        }
+        if alpha_changed {
+            let parent_eff = state.widgets.get(id)
+                .and_then(|f| f.parent_id)
+                .and_then(|pid| state.widgets.get(pid))
+                .map(|p| p.effective_alpha)
+                .unwrap_or(1.0);
+            state.widgets.propagate_effective_alpha(id, parent_eff);
         }
     }
 }

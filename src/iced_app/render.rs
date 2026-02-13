@@ -11,7 +11,7 @@ use crate::render::{GpuTextureData, QuadBatch, WowUiPrimitive, load_texture_or_c
 use crate::widget::{WidgetType};
 
 use super::app::App;
-use super::frame_collect::{CollectedFrames, collect_subtree_ids, collect_ancestor_visible_ids, collect_sorted_frames};
+use super::frame_collect::{CollectedFrames, collect_subtree_ids, collect_sorted_frames};
 use super::layout::LayoutCache;
 use super::quad_builders::{build_texture_quads, emit_button_highlight, emit_frame_quads};
 use super::statusbar::collect_statusbar_fills;
@@ -211,14 +211,14 @@ pub fn build_quad_batch_for_registry(
     mut text_ctx: Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
+    strata_buckets: &Vec<Vec<u64>>,
 ) -> QuadBatch {
     let mut cache = LayoutCache::new();
-    let ancestor_visible = collect_ancestor_visible_ids(registry);
 
     let (batch, _collected) = build_quad_batch_with_cache(
         registry, screen_size, root_name, pressed_frame, hovered_frame,
         &mut text_ctx, message_frames, tooltip_data, &mut cache,
-        &ancestor_visible, None, None, 0.0,
+        strata_buckets, None, 0.0,
     );
     batch
 }
@@ -241,8 +241,7 @@ pub fn build_quad_batch_with_cache(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     cache: &mut LayoutCache,
-    ancestor_visible: &std::collections::HashMap<u64, f32>,
-    strata_buckets: Option<&Vec<Vec<u64>>>,
+    strata_buckets: &Vec<Vec<u64>>,
     cached_render_list: Option<CollectedFrames>,
     elapsed_secs: f64,
 ) -> (QuadBatch, CollectedFrames) {
@@ -263,7 +262,7 @@ pub fn build_quad_batch_with_cache(
     let collected = if let Some(c) = cached_render_list {
         c
     } else {
-        collect_sorted_frames(registry, screen_width, screen_height, ancestor_visible, strata_buckets, cache)
+        collect_sorted_frames(registry, screen_width, screen_height, strata_buckets, cache)
     };
 
     emit_all_frames(
@@ -330,16 +329,17 @@ impl App {
     pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
         let env = self.env.borrow();
         let mut font_sys = self.font_system.borrow_mut();
-        // Mutable phase: update tooltips + build/get caches.
-        let (ancestor_visible, strata_buckets, mut cache, cached_render) = {
+        // Mutable phase: ensure strata buckets exist, take caches.
+        let (strata_buckets, mut cache, cached_render) = {
             let mut state = env.state().borrow_mut();
             state.ensure_layout_rects();
             super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
-            let vis = state.get_ancestor_visible().clone();
-            let buckets = state.get_strata_buckets().cloned();
+            // get_strata_buckets builds lazily if None.
+            let _ = state.get_strata_buckets();
+            let buckets = state.strata_buckets.take().unwrap();
             let layout = state.take_layout_cache();
             let render = state.cached_render_list.take();
-            (vis, buckets, layout, render)
+            (buckets, layout, render)
         };
         let state = env.state().borrow();
         let elapsed_secs = state.start_time.elapsed().as_secs_f64();
@@ -350,7 +350,7 @@ impl App {
             self.pressed_frame, None,
             &mut Some((&mut font_sys, &mut glyph_atlas)),
             Some(&state.message_frames), Some(&tooltip_data),
-            &mut cache, &ancestor_visible, strata_buckets.as_ref(),
+            &mut cache, &strata_buckets,
             cached_render, elapsed_secs,
         );
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
@@ -364,6 +364,7 @@ impl App {
         );
         drop(state);
         let mut state = env.state().borrow_mut();
+        state.strata_buckets = Some(strata_buckets);
         state.set_layout_cache(cache);
         state.cached_render_list = Some(collected);
         batch

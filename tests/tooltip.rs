@@ -465,15 +465,25 @@ fn test_micro_menu_hover_shows_tooltip() {
     assert!(num_lines > 0, "GameTooltip should have at least one line, got {}", num_lines);
 
     // Verify the tooltip text content
+    {
+        let state = env.state().borrow();
+        let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+        let td = state.tooltips.get(&gt_id).expect("tooltip data should exist");
+        assert!(!td.lines.is_empty(), "tooltip should have line data");
+        eprintln!("Tooltip text: {:?}", td.lines[0].left_text);
+    }
+
+    // Propagate effective_alpha via get_strata_buckets, then verify
+    {
+        let mut state = env.state().borrow_mut();
+        let _ = state.get_strata_buckets();
+    }
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
-    let td = state.tooltips.get(&gt_id).expect("tooltip data should exist");
-    assert!(!td.lines.is_empty(), "tooltip should have line data");
-    eprintln!("Tooltip text: {:?}", td.lines[0].left_text);
-
-    // Verify the frame is in the ancestor-visible set
-    let ancestor_vis = wow_ui_sim::iced_app::frame_collect::collect_ancestor_visible_ids(&state.widgets);
-    assert!(ancestor_vis.contains_key(&gt_id), "GameTooltip should be ancestor-visible");
+    assert!(
+        state.widgets.get(gt_id).is_some_and(|f| f.effective_alpha > 0.0),
+        "GameTooltip should be ancestor-visible (effective_alpha > 0)"
+    );
 
     // Check frame dimensions (tooltip should not be 0x0)
     let frame = state.widgets.get(gt_id).unwrap();
@@ -530,6 +540,11 @@ fn test_tooltip_produces_quads_after_hover() {
     }
 
     // Build quads and verify tooltip emits something
+    let buckets = {
+        let mut state = env.state().borrow_mut();
+        let _ = state.get_strata_buckets();
+        state.strata_buckets.as_ref().unwrap().clone()
+    };
     let state = env.state().borrow();
     let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
     assert!(!tooltip_data.is_empty(), "Tooltip render data should exist");
@@ -542,6 +557,7 @@ fn test_tooltip_produces_quads_after_hover() {
         Some((&mut font_sys, &mut glyph_atlas)),
         Some(&state.message_frames),
         Some(&tooltip_data),
+        &buckets,
     );
 
     // Tooltip renders via glyph quads (text) not texture quads.
