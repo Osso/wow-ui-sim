@@ -295,8 +295,8 @@ pub fn append_script_handler(
     let Some(new_handler) = build_handler_expr(handler_name, script) else { return };
 
     match script.inherit.as_deref() {
-        Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, true),
-        Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, false),
+        Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, false),
+        Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, true),
         _ => {
             code.push_str(&format!(
                 "\n        {target}:SetScript(\"{handler_name}\", {new_handler})\n        "
@@ -306,6 +306,9 @@ pub fn append_script_handler(
 }
 
 /// Emit a chained handler that wraps the existing handler (new_first=true → new runs first).
+/// WoW semantics: "prepend"/"append" describe the INHERITED handler's position:
+///   inherit="prepend" → inherited (old) runs first, instance (new) second → new_first=false
+///   inherit="append"  → instance (new) runs first, inherited (old) second → new_first=true
 fn emit_chained_handler(
     code: &mut String,
     target: &str,
