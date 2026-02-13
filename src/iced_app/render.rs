@@ -110,6 +110,9 @@ impl shader::Program<Message> for &App {
         let mut overlay = QuadBatch::new();
         self.append_hover_highlight(&mut overlay, size);
         if let Some(pos) = self.mouse_position {
+            // If something is on the cursor, render the spell icon attached to cursor.
+            self.append_cursor_item_icon(&mut overlay, pos);
+
             const CURSOR_SIZE: f32 = 32.0;
             overlay.push_textured_path(
                 Rectangle::new(Point::new(pos.x, pos.y), Size::new(CURSOR_SIZE, CURSOR_SIZE)),
@@ -422,5 +425,32 @@ impl App {
                     build_texture_quads(quads, ht_bounds, ht, None, ht.alpha);
                 }
             }
+    }
+
+    /// Render the spell icon attached to the cursor when dragging.
+    fn append_cursor_item_icon(&self, overlay: &mut QuadBatch, pos: Point) {
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        let spell_id = match &state.cursor_item {
+            Some(crate::lua_api::state::CursorInfo::Action { spell_id, .. }) => *spell_id,
+            Some(crate::lua_api::state::CursorInfo::Spell { spell_id }) => *spell_id,
+            None => return,
+        };
+        let Some(spell) = crate::spells::get_spell(spell_id) else { return };
+        let Some(path) = crate::manifest_interface_data::get_texture_path(spell.icon_file_data_id) else { return };
+        let tex_path = format!("Interface\\{}", path.replace('/', "\\"));
+
+        const ICON_SIZE: f32 = 32.0;
+        // Offset the icon slightly from the cursor tip so it's clearly attached.
+        let icon_bounds = Rectangle::new(
+            Point::new(pos.x + 4.0, pos.y + 4.0),
+            Size::new(ICON_SIZE, ICON_SIZE),
+        );
+        overlay.push_textured_path(
+            icon_bounds,
+            &tex_path,
+            [1.0, 1.0, 1.0, 1.0],
+            crate::render::BlendMode::Alpha,
+        );
     }
 }
