@@ -155,15 +155,24 @@ fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: 
     });
 }
 
+/// Resolve atlas name from a Lua value (string or numeric element ID).
+fn resolve_atlas_name(value: &Value) -> Option<String> {
+    match value {
+        Value::String(s) => Some(s.to_string_lossy().to_string()),
+        Value::Integer(id) => {
+            crate::atlas::get_atlas_name_by_element_id(*id as u32)
+                .map(|s| s.to_string())
+        }
+        _ => None,
+    }
+}
+
 /// SetAtlas, GetAtlas.
 fn add_atlas_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetAtlas(atlasName, useAtlasSize, filterMode, resetTexCoords)
     methods.add_method("SetAtlas", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
-        let atlas_name = args_vec.first().and_then(|v| match v {
-            Value::String(s) => Some(s.to_string_lossy().to_string()),
-            _ => None,
-        });
+        let atlas_name = args_vec.first().and_then(resolve_atlas_name);
         let use_atlas_size = args_vec
             .get(1)
             .map(|v| matches!(v, Value::Boolean(true)))

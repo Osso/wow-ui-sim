@@ -129,3 +129,23 @@ fn test_tcontains_nil_safe() {
     let result: bool = env.eval("return tContains(nil, 42)").unwrap();
     assert!(!result, "tContains(nil, x) should return false");
 }
+
+#[test]
+fn test_set_atlas_numeric_element_id() {
+    let env = env();
+    // SetAtlas should accept numeric element IDs (e.g. iconElementID from subtree info)
+    // Element 26680 = "talents-heroclass-paladin-lightsmith"
+    let result: String = env
+        .eval(
+            r#"
+            local t = UIParent:CreateTexture(nil, "ARTWORK")
+            t:SetAtlas(26680)
+            return t:GetAtlas() or "nil"
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        result, "talents-heroclass-paladin-lightsmith",
+        "SetAtlas should resolve numeric element ID to atlas name"
+    );
+}

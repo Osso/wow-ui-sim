@@ -4,6 +4,7 @@
 //! size-suffixed entries (e.g. "coin-copper" → "coin-copper-20x20").
 
 pub use crate::atlas_data::{AtlasInfo, AtlasLookup, ATLAS_DB};
+pub use crate::atlas_elements::get_atlas_name_by_element_id;
 
 /// A single piece of a nine-slice atlas kit.
 #[derive(Debug, Clone)]

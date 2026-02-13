@@ -26,8 +26,8 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     println!("  {} entries", atlases.len());
 
     println!("Loading UiTextureAtlasElement...");
-    let _elements = load_elements(&wow_data.join("UiTextureAtlasElement.csv"))?;
-    println!("  {} entries", _elements.len());
+    let elements = load_elements(&wow_data.join("UiTextureAtlasElement.csv"))?;
+    println!("  {} entries", elements.len());
 
     println!("Loading UiTextureAtlasMember...");
     let members = load_members(&wow_data.join("UiTextureAtlasMember.csv"))?;
@@ -42,7 +42,11 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_lookup_fn(&mut out)?;
     let (count, skipped) = write_atlas_entries(&mut out, &members, &atlases, &listfile)?;
 
-    println!("Generated {} atlas entries ({} skipped)", count, skipped);
+    let elem_path = Path::new("data/atlas_elements.rs");
+    let mut elem_out = File::create(elem_path)?;
+    let elem_count = write_element_map(&mut elem_out, &elements)?;
+
+    println!("Generated {} atlas entries ({} skipped), {} element mappings", count, skipped, elem_count);
     println!("Output: {}", output_path.display());
     Ok(())
 }
@@ -261,7 +265,7 @@ fn load_atlas(path: &Path) -> Result<HashMap<u32, AtlasEntry>, Box<dyn std::erro
     Ok(map)
 }
 
-fn load_elements(path: &Path) -> Result<HashMap<String, u32>, Box<dyn std::error::Error>> {
+fn load_elements(path: &Path) -> Result<HashMap<u32, String>, Box<dyn std::error::Error>> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let mut map = HashMap::new();
@@ -274,10 +278,41 @@ fn load_elements(path: &Path) -> Result<HashMap<String, u32>, Box<dyn std::error
         if fields.len() >= 2 {
             let name = fields[0].to_string();
             let id: u32 = fields[1].parse()?;
-            map.insert(name, id);
+            map.insert(id, name);
         }
     }
     Ok(map)
+}
+
+/// Write element ID → atlas name map (for numeric atlas lookups like iconElementID).
+fn write_element_map(
+    out: &mut File,
+    elements: &HashMap<u32, String>,
+) -> Result<u32, Box<dyn std::error::Error>> {
+    writeln!(out, "//! Auto-generated atlas element ID → name map.")?;
+    writeln!(out, "//! Do not edit manually - regenerate with: wow-cli generate atlas")?;
+    writeln!(out)?;
+    writeln!(out, "use phf::phf_map;")?;
+    writeln!(out)?;
+    writeln!(out, "pub fn get_atlas_name_by_element_id(id: u32) -> Option<&'static str> {{")?;
+    writeln!(out, "    ATLAS_ELEMENT_DB.get(&id).copied()")?;
+    writeln!(out, "}}")?;
+    writeln!(out)?;
+    writeln!(out, "static ATLAS_ELEMENT_DB: phf::Map<u32, &'static str> = phf_map! {{")?;
+
+    let mut sorted: Vec<_> = elements.iter().collect();
+    sorted.sort_by_key(|(id, _)| *id);
+
+    let mut count = 0u32;
+    for (id, name) in &sorted {
+        let name_lower = name.to_lowercase()
+            .replace('\\', "\\\\")
+            .replace('"', "\\\"");
+        writeln!(out, "    {}u32 => \"{}\",", id, name_lower)?;
+        count += 1;
+    }
+    writeln!(out, "}};")?;
+    Ok(count)
 }
 
 fn load_members(path: &Path) -> Result<Vec<MemberEntry>, Box<dyn std::error::Error>> {

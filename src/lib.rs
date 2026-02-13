@@ -5,6 +5,8 @@
 
 #[path = "../data/atlas.rs"]
 mod atlas_data;
+#[path = "../data/atlas_elements.rs"]
+mod atlas_elements;
 pub mod atlas;
 #[path = "../data/global_strings.rs"]
 pub mod global_strings;
