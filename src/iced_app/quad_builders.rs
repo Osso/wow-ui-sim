@@ -145,22 +145,27 @@ pub fn build_texture_quads(batch: &mut QuadBatch, bounds: Rectangle, f: &crate::
     };
     let (fill_bounds, fill_uvs) = apply_bar_fill_with_uvs(bounds, f.tex_coords, bar_fill);
 
+    // When a frame uses an atlas sub-region (SetAtlas), crop the sub-region at load time
+    // instead of uploading the full texture (which gets downscaled if >512px).
+    // This keeps small atlas entries (40x40 icons from 2048x1024 textures) at native resolution.
+    let (effective_path, effective_uvs) = remap_atlas_crop(tex_path, fill_uvs, f.atlas_tex_coords);
+
     let vert_before = batch.vertices.len();
     if let Some((left_cap, right_cap, atlas_w)) = f.three_slice_h
-        && let Some((left, right, top, bottom)) = fill_uvs
+        && let Some((left, right, top, bottom)) = effective_uvs
         && fill_bounds.width > left_cap + right_cap
     {
         emit_three_slice_h_atlas(batch, fill_bounds, left_cap, right_cap, atlas_w,
-            (left, right, top, bottom), tex_path, tint, f.blend_mode);
-    } else if let Some((left, right, top, bottom)) = fill_uvs {
+            (left, right, top, bottom), &effective_path, tint, f.blend_mode);
+    } else if let Some((left, right, top, bottom)) = effective_uvs {
         let uvs = Rectangle::new(Point::new(left, top), Size::new(right - left, bottom - top));
         if f.horiz_tile || f.vert_tile {
-            emit_tiled_texture(batch, fill_bounds, &uvs, tex_path, f, alpha);
+            emit_tiled_texture(batch, fill_bounds, &uvs, &effective_path, f, alpha);
         } else {
-            batch.push_textured_path_uv(fill_bounds, uvs, tex_path, tint, f.blend_mode);
+            batch.push_textured_path_uv(fill_bounds, uvs, &effective_path, tint, f.blend_mode);
         }
     } else {
-        batch.push_textured_path(fill_bounds, tex_path, tint, f.blend_mode);
+        batch.push_textured_path(fill_bounds, &effective_path, tint, f.blend_mode);
     }
 
     if f.rotation != 0.0 {
@@ -228,6 +233,56 @@ fn apply_bar_fill(bounds: Rectangle, bar_fill: Option<&StatusBarFill>) -> Rectan
     } else {
         Rectangle::new(bounds.position(), Size::new(fill_width, bounds.height))
     }
+}
+
+/// Remap atlas sub-region textures: encode crop coords in path, remap UVs to [0,1].
+///
+/// When a frame has `atlas_tex_coords` (from SetAtlas), the source texture may be very large
+/// (e.g. 2048x1024 `talents.blp`). Uploading the full texture to the GPU atlas would downscale
+/// it to 512x512, making small sub-regions (40x40) extremely pixelated (~12px after downscale).
+///
+/// Instead, encode the crop region in the texture path so `load_new_textures` extracts just
+/// the sub-region at native resolution. The cropped region (e.g. 50x50) fits in a small GPU
+/// atlas tier without any downscaling.
+fn remap_atlas_crop(
+    tex_path: &str,
+    fill_uvs: Option<(f32, f32, f32, f32)>,
+    atlas_tex_coords: Option<(f32, f32, f32, f32)>,
+) -> (String, Option<(f32, f32, f32, f32)>) {
+    let Some((cl, cr, ct, cb)) = atlas_tex_coords else {
+        return (tex_path.to_string(), fill_uvs);
+    };
+    // Skip cropping if atlas covers the full texture (no sub-region)
+    let is_full = (cl - 0.0).abs() < 0.001
+        && (cr - 1.0).abs() < 0.001
+        && (ct - 0.0).abs() < 0.001
+        && (cb - 1.0).abs() < 0.001;
+    if is_full {
+        return (tex_path.to_string(), fill_uvs);
+    }
+
+    // Encode crop region in path for texture loader to extract
+    let crop_key = format!(
+        "{}@crop:{:.6},{:.6},{:.6},{:.6}",
+        tex_path, cl, cr, ct, cb,
+    );
+
+    // Remap vertex UVs from source-texture-space to crop-region-space [0,1]
+    let remapped_uvs = fill_uvs.map(|(fl, fr, ft, fb)| {
+        let cw = cr - cl;
+        let ch = cb - ct;
+        if cw <= 0.0 || ch <= 0.0 {
+            return (0.0, 1.0, 0.0, 1.0);
+        }
+        (
+            (fl - cl) / cw,
+            (fr - cl) / cw,
+            (ft - ct) / ch,
+            (fb - ct) / ch,
+        )
+    });
+
+    (crop_key, remapped_uvs)
 }
 
 /// Apply StatusBar fill clipping to bounds and UV coordinates.

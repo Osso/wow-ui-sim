@@ -5,6 +5,7 @@
 //! - Tier 1: 128x128 cells (buttons, medium elements)
 //! - Tier 2: 256x256 cells (panels, frames)
 //! - Tier 3: 512x512 cells (large textures, backgrounds)
+//! - Tier 4: 2048x2048 cells (full atlas textures like talents.blp)
 //!
 //! Each tier is a large 2D texture (ATLAS_SIZE x ATLAS_SIZE) with textures
 //! packed in a grid. UV coordinates select the correct sub-region.
@@ -13,10 +14,10 @@
 use std::collections::HashMap;
 
 /// Cell sizes for each tier.
-pub const TIER_SIZES: [u32; 4] = [64, 128, 256, 512];
+pub const TIER_SIZES: [u32; 5] = [64, 128, 256, 512, 2048];
 
 /// Number of tiers.
-pub const NUM_TIERS: usize = 4;
+pub const NUM_TIERS: usize = 5;
 
 /// Size of each tier's atlas texture.
 const ATLAS_SIZE: u32 = 4096;
@@ -24,7 +25,7 @@ const ATLAS_SIZE: u32 = 4096;
 /// Entry for a texture in the atlas.
 #[derive(Debug, Clone, Copy)]
 pub struct TextureEntry {
-    /// Tier index (0-3).
+    /// Tier index (0-4).
     pub tier: u32,
     /// Grid position X within the tier atlas.
     pub grid_x: u32,
@@ -131,7 +132,7 @@ impl TierAtlas {
 }
 
 /// Texture index used for glyph atlas quads.
-pub const GLYPH_ATLAS_TEX_INDEX: i32 = 4;
+pub const GLYPH_ATLAS_TEX_INDEX: i32 = 5;
 
 /// GPU texture atlas with multiple size tiers.
 pub struct GpuTextureAtlas {
@@ -414,13 +415,14 @@ fn create_atlas_bind_group_layout(device: &wgpu::Device) -> wgpu::BindGroupLayou
             texture_entry(1), // Tier 1 (128x128 cells)
             texture_entry(2), // Tier 2 (256x256 cells)
             texture_entry(3), // Tier 3 (512x512 cells)
+            texture_entry(4), // Tier 4 (2048x2048 cells)
             wgpu::BindGroupLayoutEntry {
-                binding: 4,
+                binding: 5,
                 visibility: wgpu::ShaderStages::FRAGMENT,
                 ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
                 count: None,
             },
-            texture_entry(5), // Glyph atlas
+            texture_entry(6), // Glyph atlas
         ],
     })
 }
@@ -455,10 +457,14 @@ fn create_atlas_bind_groups(
             },
             wgpu::BindGroupEntry {
                 binding: 4,
-                resource: wgpu::BindingResource::Sampler(sampler),
+                resource: wgpu::BindingResource::TextureView(&tiers[4].view),
             },
             wgpu::BindGroupEntry {
                 binding: 5,
+                resource: wgpu::BindingResource::Sampler(sampler),
+            },
+            wgpu::BindGroupEntry {
+                binding: 6,
                 resource: wgpu::BindingResource::TextureView(glyph_view),
             },
         ],
@@ -551,6 +557,7 @@ impl std::fmt::Debug for GpuTextureAtlas {
             .field("tier_128_slots", &stats.used_slots[1])
             .field("tier_256_slots", &stats.used_slots[2])
             .field("tier_512_slots", &stats.used_slots[3])
+            .field("tier_2048_slots", &stats.used_slots[4])
             .field("used_mb", &(stats.used_bytes / 1024 / 1024))
             .field("allocated_mb", &(stats.allocated_bytes / 1024 / 1024))
             .finish()

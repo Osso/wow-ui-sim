@@ -12,7 +12,7 @@ mod quad_nine_slice;
 
 pub use atlas::{GpuTextureAtlas, TextureEntry, GLYPH_ATLAS_TEX_INDEX};
 pub use pipeline::WowUiPipeline;
-pub use primitive::{GpuTextureData, WowUiPrimitive};
+pub use primitive::{GpuTextureData, WowUiPrimitive, load_texture_or_crop};
 pub use program::WowUiProgram;
 pub use quad::FLAG_CIRCLE_CLIP;
 pub use quad::FLAG_DESATURATE;

@@ -7,7 +7,7 @@ use iced::{Event, Point, Rectangle, Size};
 use crate::render::font::WowFontSystem;
 use crate::render::glyph::GlyphAtlas;
 use crate::render::texture::UI_SCALE;
-use crate::render::{GpuTextureData, QuadBatch, WowUiPrimitive};
+use crate::render::{GpuTextureData, QuadBatch, WowUiPrimitive, load_texture_or_crop};
 use crate::widget::{WidgetType};
 
 use super::app::App;
@@ -301,14 +301,9 @@ impl App {
             if textures.iter().any(|t: &GpuTextureData| t.path == request.path) {
                 continue;
             }
-            if let Some(tex_data) = tex_mgr.load(&request.path) {
-                textures.push(GpuTextureData {
-                    path: request.path.clone(),
-                    width: tex_data.width,
-                    height: tex_data.height,
-                    rgba: tex_data.pixels.clone(),
-                });
+            if let Some(gpu_data) = load_texture_or_crop(&mut tex_mgr, &request.path) {
                 uploaded.insert(request.path.clone());
+                textures.push(gpu_data);
             }
         }
         textures

@@ -12,6 +12,7 @@ pub mod texture;
 pub use shader::{
     BlendMode, GpuTextureAtlas, GpuTextureData, NineSliceTextures, QuadBatch, QuadVertex,
     TextureEntry, TextureRequest, WowUiPipeline, WowUiPrimitive, WowUiProgram,
+    load_texture_or_crop,
 };
 pub use font::WowFontSystem;
 pub use glyph::{emit_text_quads, GlyphAtlas};

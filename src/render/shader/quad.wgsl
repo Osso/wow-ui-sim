@@ -2,9 +2,9 @@
 //
 // Renders textured/colored quads for UI elements.
 // Supports solid colors and tiered 2D texture sampling.
-// Textures are stored in 4 tier atlases: 64x64, 128x128, 256x256, 512x512 cells.
+// Textures are stored in 5 tier atlases: 64x64, 128x128, 256x256, 512x512, 2048x2048 cells.
 // Each tier is a large 2D texture with textures packed in a grid.
-// tex_index encodes tier: 0-3 for the 4 tiers.
+// tex_index encodes tier: 0-4 for the 5 tiers.
 // UV coordinates are pre-transformed to select the correct sub-region.
 
 // Uniforms (group 0)
@@ -30,9 +30,12 @@ var tier_256: texture_2d<f32>;    // Atlas for 256x256 textures
 var tier_512: texture_2d<f32>;    // Atlas for 512x512 textures
 
 @group(1) @binding(4)
-var texture_sampler: sampler;
+var tier_2048: texture_2d<f32>;   // Atlas for 2048x2048 textures
 
 @group(1) @binding(5)
+var texture_sampler: sampler;
+
+@group(1) @binding(6)
 var glyph_atlas: texture_2d<f32>; // Glyph atlas for text rendering
 
 // Vertex input
@@ -84,7 +87,7 @@ const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
 
 // Sample from the appropriate tier based on tex_index
-// tex_index 0-3: tiered texture atlases, 4: glyph atlas
+// tex_index 0-4: tiered texture atlases, 5: glyph atlas
 // UV coordinates are already transformed to the correct sub-region
 fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
     // Clamp tex_coords to valid range
@@ -95,6 +98,7 @@ fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
     let s1 = textureSampleLevel(tier_128, texture_sampler, uv, 0.0);
     let s2 = textureSampleLevel(tier_256, texture_sampler, uv, 0.0);
     let s3 = textureSampleLevel(tier_512, texture_sampler, uv, 0.0);
+    let s4 = textureSampleLevel(tier_2048, texture_sampler, uv, 0.0);
     let sg = textureSampleLevel(glyph_atlas, texture_sampler, uv, 0.0);
 
     // Select result based on tier
@@ -106,6 +110,8 @@ fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
         return s2;
     } else if tex_index == 3 {
         return s3;
+    } else if tex_index == 4 {
+        return s4;
     } else {
         return sg;
     }

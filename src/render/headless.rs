@@ -20,14 +20,9 @@ fn load_batch_textures(
         if seen.contains(&request.path) {
             continue;
         }
-        if let Some(tex_data) = tex_mgr.load(&request.path) {
-            textures.push(GpuTextureData {
-                path: request.path.clone(),
-                width: tex_data.width,
-                height: tex_data.height,
-                rgba: tex_data.pixels.clone(),
-            });
+        if let Some(gpu_data) = super::shader::load_texture_or_crop(tex_mgr, &request.path) {
             seen.insert(request.path.clone());
+            textures.push(gpu_data);
         }
     }
     textures

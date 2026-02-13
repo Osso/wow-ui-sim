@@ -18,6 +18,72 @@ pub struct GpuTextureData {
     pub rgba: Vec<u8>,
 }
 
+/// Load a texture by path, handling `@crop:` paths by extracting a sub-region.
+///
+/// Atlas sub-region paths have format `"base_path@crop:left,right,top,bottom"` where
+/// left/right/top/bottom are UV coordinates in the source texture. The sub-region is
+/// extracted at native resolution so small atlas entries aren't degraded by downscaling
+/// the full oversized texture into a 512px GPU atlas cell.
+pub fn load_texture_or_crop(
+    tex_mgr: &mut crate::texture::TextureManager,
+    path: &str,
+) -> Option<GpuTextureData> {
+    if let Some(crop_start) = path.find("@crop:") {
+        let base_path = &path[..crop_start];
+        let crop_str = &path[crop_start + 6..];
+        let coords: Vec<f32> = crop_str.split(',').filter_map(|s| s.parse().ok()).collect();
+        if coords.len() != 4 {
+            return None;
+        }
+        let (cl, cr, ct, cb) = (coords[0], coords[1], coords[2], coords[3]);
+        let tex_data = tex_mgr.load(base_path)?;
+        let (w, h) = (tex_data.width, tex_data.height);
+        let (crop_w, crop_h, cropped) = crop_sub_region(&tex_data.pixels, w, h, cl, cr, ct, cb);
+        Some(GpuTextureData { path: path.to_string(), width: crop_w, height: crop_h, rgba: cropped })
+    } else {
+        let tex_data = tex_mgr.load(path)?;
+        Some(GpuTextureData {
+            path: path.to_string(),
+            width: tex_data.width,
+            height: tex_data.height,
+            rgba: tex_data.pixels.clone(),
+        })
+    }
+}
+
+/// Extract a rectangular sub-region from RGBA pixel data using UV coordinates.
+fn crop_sub_region(
+    pixels: &[u8],
+    width: u32,
+    height: u32,
+    uv_left: f32,
+    uv_right: f32,
+    uv_top: f32,
+    uv_bottom: f32,
+) -> (u32, u32, Vec<u8>) {
+    let x0 = (uv_left * width as f32).round() as u32;
+    let x1 = (uv_right * width as f32).round() as u32;
+    let y0 = (uv_top * height as f32).round() as u32;
+    let y1 = (uv_bottom * height as f32).round() as u32;
+    let crop_w = x1.saturating_sub(x0).max(1).min(width);
+    let crop_h = y1.saturating_sub(y0).max(1).min(height);
+
+    let mut cropped = vec![0u8; (crop_w * crop_h * 4) as usize];
+    for row in 0..crop_h {
+        let src_y = (y0 + row).min(height - 1);
+        let src_off = (src_y * width + x0) as usize * 4;
+        let dst_off = (row * crop_w) as usize * 4;
+        let row_bytes = (crop_w * 4) as usize;
+        let src_end = (src_off + row_bytes).min(pixels.len());
+        let copy_len = src_end.saturating_sub(src_off);
+        if copy_len > 0 {
+            cropped[dst_off..dst_off + copy_len]
+                .copy_from_slice(&pixels[src_off..src_off + copy_len]);
+        }
+    }
+    (crop_w, crop_h, cropped)
+}
+
 /// Primitive data for rendering WoW UI frames.
 ///
 /// This is created each frame and contains all quads to render.
@@ -108,10 +174,10 @@ fn log_gpu_memory_once(atlas: &crate::render::shader::atlas::GpuTextureAtlas) {
     }
     let stats = atlas.memory_stats();
     eprintln!(
-        "[GPU] Atlas memory: {:.0} MB allocated, {:.1} MB used | slots: 64px={} 128px={} 256px={} 512px={}",
+        "[GPU] Atlas memory: {:.0} MB allocated, {:.1} MB used | slots: 64px={} 128px={} 256px={} 512px={} 2048px={}",
         stats.allocated_bytes as f64 / (1024.0 * 1024.0),
         stats.used_bytes as f64 / (1024.0 * 1024.0),
-        stats.used_slots[0], stats.used_slots[1], stats.used_slots[2], stats.used_slots[3],
+        stats.used_slots[0], stats.used_slots[1], stats.used_slots[2], stats.used_slots[3], stats.used_slots[4],
     );
 }
 
