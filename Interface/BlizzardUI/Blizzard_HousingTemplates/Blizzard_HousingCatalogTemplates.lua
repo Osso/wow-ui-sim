@@ -1,25 +1,42 @@
 
 local function SetHeaderText(barDivider, elementData)
 	barDivider:SetHeaderText(elementData.text, HOUSING_HEADER_COLOR);
+	barDivider:SetMarginSpacing(4);
+end
+
+local function SetInstructionText(scrollBoxText, elementData)
+	scrollBoxText:SetElementText(elementData.text, HOUSING_HEADER_COLOR);
+end
+
+local function BarDividerReset(pool, barDivider)
+	barDivider:SetHeaderText("");
+	Pool_HideAndClearAnchors(pool, barDivider);
 end
 
 local Templates = {
 	["CATALOG_ENTRY_DECOR"] = { template = "HousingCatalogDecorEntryTemplate", initFunc = HousingCatalogEntryMixin.Init, resetFunc = HousingCatalogEntryMixin.Reset },
 	["CATALOG_ENTRY_ROOM"] = { template = "HousingCatalogRoomEntryTemplate", initFunc = HousingCatalogEntryMixin.Init, resetFunc = HousingCatalogEntryMixin.Reset },
 	["CATALOG_ENTRY_BUNDLE"] = { template = "HousingCatalogBundleDisplayTemplate", initFunc = HousingCatalogBundleDisplayMixin.Init, resetFunc = HousingCatalogBundleDisplayMixin.Reset },
-	["CATALOG_ENTRY_BUNDLE_DIVIDER"] = { template = "BarDividerTemplate", initFunc = nop, resetFunc = Pool_HideAndClearAnchors },
-	["CATALOG_ENTRY_HEADER"] = { template = "BarDividerTemplate", initFunc = SetHeaderText, resetFunc = Pool_HideAndClearAnchors },
+	["CATALOG_ENTRY_BUNDLE_DIVIDER"] = { template = "BarDividerTemplate", initFunc = nop, resetFunc = BarDividerReset },
+	["CATALOG_ENTRY_HEADER"] = { template = "BarDividerTemplate", initFunc = SetHeaderText, resetFunc = BarDividerReset },
+	["CATALOG_ENTRY_INSTRUCTIONS"] = { template = "ScrollBoxTextContainerTemplate", initFunc = SetInstructionText, resetFunc = Pool_HideAndClearAnchors },
 };
 
 local FullWidthTemplateKeySet = {
 	["CATALOG_ENTRY_BUNDLE_DIVIDER"] = true,
 	["CATALOG_ENTRY_HEADER"] = true,
+	["CATALOG_ENTRY_INSTRUCTIONS"] = true,
+};
+
+local TemplateHeightAdjust = {
+	["CATALOG_ENTRY_BUNDLE"] = -8,
+	["CATALOG_ENTRY_BUNDLE_DIVIDER"] = -24,
 };
 
 -- Base Mixin
 BaseHousingCatalogMixin = {};
 
-function BaseHousingCatalogMixin:SetCatalogData(catalogEntries, retainCurrentPosition, headerText)
+function BaseHousingCatalogMixin:SetCatalogData(catalogEntries, retainCurrentPosition, headerText, instructionText)
 	if not catalogEntries or #catalogEntries == 0 then
 		self:ClearCatalogData();
 		return;
@@ -45,7 +62,7 @@ function BaseHousingCatalogMixin:SetCatalogData(catalogEntries, retainCurrentPos
 			end
 
 			if catalogEntry.decorID then
-				elementData = { bundleEntryInfo = catalogEntry, };
+				elementData = { bundleItemInfo = catalogEntry, };
 
 				elementData.templateKey = "CATALOG_ENTRY_DECOR";
 			else
@@ -66,6 +83,10 @@ function BaseHousingCatalogMixin:SetCatalogData(catalogEntries, retainCurrentPos
 			lastTemplate = elementData.templateKey;
 			table.insert(catalogElements, elementData);
 		end
+	end
+
+	if instructionText then
+		table.insert(catalogElements, { templateKey = "CATALOG_ENTRY_INSTRUCTIONS", text = instructionText });
 	end
 
 	self:SetCatalogElements(catalogElements, retainCurrentPosition);
@@ -132,14 +153,17 @@ function ScrollingHousingCatalogMixin:OnLoad()
 	view:SetElementSizeCalculator(function(_dataIndex, elementData)
 		local templateKey = elementData.templateKey;
 
+		local heightAdjust = TemplateHeightAdjust[templateKey] or 0;
+
 		-- The divider should fill the whole width of the scroll box.
 		if FullWidthTemplateKeySet[templateKey] then
 			local template = Templates[elementData.templateKey].template;
 			local templateInfo = C_XMLUtil.GetTemplateInfo(template);
-			return 0, templateInfo.height;
+			return 0, templateInfo.height + heightAdjust;
 		end
 
-		return view:GetTemplateSizeFromElementData(elementData);
+		local templateWidth, templateHeight = view:GetTemplateSizeFromElementData(elementData);
+		return templateWidth, templateHeight + heightAdjust;
 	end);
 
 
@@ -183,4 +207,12 @@ function ScrollingHousingCatalogMixin:TryGetElementAndFrame(entryID)
 		frame = self.ScrollBox:FindFrame(focusedElementData);
 	end
 	return focusedElementData, frame;
+end
+
+function ScrollingHousingCatalogMixin:RefreshFrames()
+	for _, frame in self.ScrollBox:EnumerateFrames() do
+		if frame.UpdateVisuals then
+			frame:UpdateVisuals();
+		end
+	end
 end
