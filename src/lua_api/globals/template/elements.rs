@@ -150,10 +150,37 @@ fn safe_add_mask_texture_code(root: &str, key: &str) -> String {
     format!("if {guard_str} then {full_path}:AddMaskTexture(tex) end")
 }
 
-/// Append texture-specific property setters (size, file, atlas, color) to Lua code.
-///
-/// `is_mask`: MaskTextures default to `useAtlasSize=true` when not explicit,
-/// matching WoW behavior where masks auto-size from their atlas.
+/// Append texture source setters (file, atlas, texcoords) to Lua code.
+fn append_texture_source(code: &mut String, texture: &crate::xml::TextureXml, var: &str, is_mask: bool) {
+    if let Some(file) = &texture.file {
+        code.push_str(&format!(
+            "            {}:SetTexture(\"{}\")\n",
+            var,
+            escape_lua_string(file)
+        ));
+    }
+    if let Some(atlas) = &texture.atlas {
+        let use_atlas_size = texture.use_atlas_size.unwrap_or(is_mask);
+        code.push_str(&format!(
+            "            {}:SetAtlas(\"{}\", {})\n",
+            var,
+            escape_lua_string(atlas),
+            use_atlas_size
+        ));
+    }
+    if let Some(tc) = &texture.tex_coords {
+        let left = tc.left.unwrap_or(0.0);
+        let right = tc.right.unwrap_or(1.0);
+        let top = tc.top.unwrap_or(0.0);
+        let bottom = tc.bottom.unwrap_or(1.0);
+        code.push_str(&format!(
+            "            {}:SetTexCoord({}, {}, {}, {})\n",
+            var, left, right, top, bottom
+        ));
+    }
+}
+
+/// Append texture-specific property setters (size, source, color, tiling, etc.) to Lua code.
 fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml, var: &str, is_mask: bool) {
     if let Some(size) = &texture.size {
         let (width, height) = get_size_values(size);
@@ -170,23 +197,7 @@ fn append_texture_properties(code: &mut String, texture: &crate::xml::TextureXml
             _ => {}
         }
     }
-    if let Some(file) = &texture.file {
-        code.push_str(&format!(
-            "            {}:SetTexture(\"{}\")\n",
-            var,
-            escape_lua_string(file)
-        ));
-    }
-    if let Some(atlas) = &texture.atlas {
-        let default_use_atlas_size = is_mask;
-        let use_atlas_size = texture.use_atlas_size.unwrap_or(default_use_atlas_size);
-        code.push_str(&format!(
-            "            {}:SetAtlas(\"{}\", {})\n",
-            var,
-            escape_lua_string(atlas),
-            use_atlas_size
-        ));
-    }
+    append_texture_source(code, texture, var, is_mask);
     if let Some(color) = &texture.color {
         let r = color.r.unwrap_or(1.0);
         let g = color.g.unwrap_or(1.0);

@@ -104,9 +104,25 @@ pub struct TextureXml {
     pub animations: Option<AnimationsXml>,
     #[serde(rename = "Scripts")]
     pub scripts: Option<ScriptsXml>,
+    /// Texture coordinates (left, right, top, bottom) for UV mapping.
+    #[serde(rename = "TexCoords")]
+    pub tex_coords: Option<TexCoordsXml>,
     /// MaskedTextures — declares which sibling textures this mask applies to.
     #[serde(rename = "MaskedTextures")]
     pub masked_textures: Option<MaskedTexturesXml>,
+}
+
+/// TexCoords element with left/right/top/bottom UV coordinates.
+#[derive(Debug, Deserialize, Default, Clone)]
+pub struct TexCoordsXml {
+    #[serde(rename = "@left")]
+    pub left: Option<f32>,
+    #[serde(rename = "@right")]
+    pub right: Option<f32>,
+    #[serde(rename = "@top")]
+    pub top: Option<f32>,
+    #[serde(rename = "@bottom")]
+    pub bottom: Option<f32>,
 }
 
 /// Container for MaskedTexture entries inside a MaskTexture element.

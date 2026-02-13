@@ -673,18 +673,23 @@ fn apply_inline_button_textures(lua: &Lua, frame: &crate::xml::FrameXml, frame_n
 fn apply_button_text(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) {
     let Some(fs) = frame.button_text() else { return };
     elements::create_fontstring_from_template(lua, fs, frame_name, subst_parent, "OVERLAY");
-    // Assign to parent key (fontstring creation already does this if parentKey is set,
-    // but ButtonText defaults to "Text" when no parentKey is specified)
-    if fs.parent_key.is_none() {
-        let code = format!(
-            "do local p = {} if p then \
-             local n = p:GetNumRegions() \
-             if n > 0 then p.Text = select(n, p:GetRegions()) end \
-             end end",
-            lua_global_ref(frame_name)
-        );
-        let _ = lua.load(&code).exec();
-    }
+    // ButtonText implicitly gets SetAllPoints so text fills the button area
+    // and justifyH/justifyV can center it. Also assign to "Text" parentKey
+    // when none is specified.
+    let text_ref = if let Some(ref pk) = fs.parent_key {
+        format!("p[\"{}\"]", escape_lua_string(pk))
+    } else {
+        "select(p:GetNumRegions(), p:GetRegions())".to_string()
+    };
+    let code = format!(
+        "do local p = {} if p then \
+         local t = {text_ref} \
+         if t then t:SetAllPoints(p) end \
+         if not p.Text then p.Text = t end \
+         end end",
+        lua_global_ref(frame_name)
+    );
+    let _ = lua.load(&code).exec();
 }
 
 /// Apply NormalFont/HighlightFont/DisabledFont from template XML.

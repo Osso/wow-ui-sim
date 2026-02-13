@@ -37,6 +37,19 @@ fn generate_texture_source_code(texture: &crate::xml::TextureXml, is_mask: bool)
         ));
     }
 
+    if let Some(tc) = &texture.tex_coords {
+        let left = tc.left.unwrap_or(0.0);
+        let right = tc.right.unwrap_or(1.0);
+        let top = tc.top.unwrap_or(0.0);
+        let bottom = tc.bottom.unwrap_or(1.0);
+        code.push_str(&format!(
+            r#"
+        tex:SetTexCoord({}, {}, {}, {})
+        "#,
+            left, right, top, bottom
+        ));
+    }
+
     if let Some(size) = &texture.size {
         let (x, y) = get_size_values(size);
         match (x, y) {
