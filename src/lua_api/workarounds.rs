@@ -13,6 +13,7 @@ pub fn apply_post_event(env: &WowLuaEnv) {
     workarounds_bags::fix_bags_bar_anchor(env);
     workarounds_bags::fix_bag_item_context_overlay(env);
     workarounds_editmode::init_edit_mode_layout(env);
+    finish_objective_tracker(env);
 }
 
 /// Apply all post-load workarounds. Called after addon loading, before events.
@@ -118,17 +119,29 @@ fn patch_spell_alert_animations(env: &WowLuaEnv) {
     );
 }
 
-/// Initialize ObjectiveTrackerManager if EventRegistry dispatch didn't reach it.
-/// The manager registers via EventRegistry:RegisterFrameEventAndCallback which
-/// needs the full event dispatch chain. Call OnPlayerEnteringWorld directly,
-/// then fire quest data callbacks so async title population works.
+/// Pre-event objective tracker setup: hide empty frames, configure the
+/// tracker frame container, and patch animation stubs.
+///
+/// Module registration happens automatically when PLAYER_ENTERING_WORLD and
+/// VARIABLES_LOADED fire (via EventUtil.ContinueAfterAllEvents → Init).
+/// Post-event work (quest title callbacks, height fix) runs in
+/// `finish_objective_tracker`.
 fn init_objective_tracker(env: &WowLuaEnv) {
     hide_empty_managed_frames(env);
     setup_tracker_frame(env);
     patch_tracker_animations(env);
-    start_objective_tracker(env);
-    populate_quest_titles(env);
     update_managed_frame_containers(env);
+}
+
+/// Post-event objective tracker setup: ensure modules are registered,
+/// populate quest titles, update the quest module, and force height.
+///
+/// By this point, PLAYER_ENTERING_WORLD and VARIABLES_LOADED have fired,
+/// triggering ObjectiveTrackerManager:Init() via ContinueAfterAllEvents.
+/// If Init didn't run (e.g. EventRegistry dispatch failed), we call it here.
+pub fn finish_objective_tracker(env: &WowLuaEnv) {
+    ensure_tracker_initialized(env);
+    populate_quest_titles(env);
 }
 
 /// Hide managed frames that have no content in the simulator.
@@ -296,23 +309,24 @@ fn setup_tracker_frame(env: &WowLuaEnv) {
     );
 }
 
-/// Initialize ObjectiveTrackerManager by calling Init() directly.
+/// Ensure ObjectiveTrackerManager:Init() has run.
 ///
-/// In WoW, `EventUtil.ContinueAfterAllEvents` triggers Init() after both
-/// PLAYER_ENTERING_WORLD and VARIABLES_LOADED fire through EventRegistry.
-/// The simulator's event dispatch doesn't always reach EventRegistry's
-/// internal frame, so we call Init() directly. Init() adds the container
-/// (ObjectiveTrackerFrame) and all 11 tracker modules via SetModuleContainer,
-/// which calls AddModule → SetContainer on each module, giving them their
-/// parentContainer reference. Init may error during UpdateAll (e.g. missing
-/// GetQuestDetailsTheme in POIButton) but the module registration completes.
-fn start_objective_tracker(env: &WowLuaEnv) {
+/// Init is normally triggered by EventUtil.ContinueAfterAllEvents after both
+/// PLAYER_ENTERING_WORLD and VARIABLES_LOADED fire. If EventRegistry dispatch
+/// didn't reach the hidden frame, modules won't be registered. Check by
+/// testing QuestObjectiveTracker.parentContainer — Init sets it via
+/// SetModuleContainer → AddModule → SetContainer.
+fn ensure_tracker_initialized(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
         if not ObjectiveTrackerManager or not ObjectiveTrackerManager.Init then
             return
         end
-        pcall(ObjectiveTrackerManager.Init, ObjectiveTrackerManager)
+        -- Only call Init if it hasn't run (modules not registered)
+        local qt = QuestObjectiveTracker
+        if qt and not qt.parentContainer then
+            pcall(ObjectiveTrackerManager.Init, ObjectiveTrackerManager)
+        end
     "#,
     );
 }
@@ -340,7 +354,7 @@ fn populate_quest_titles(env: &WowLuaEnv) {
         if not qt.parentContainer then return end
         local c = qt.parentContainer
         local avail = c:GetAvailableHeight()
-        local ok, err = pcall(qt.Update, qt, avail, false)
+        pcall(qt.Update, qt, avail, false)
         local h = qt.contentsHeight or 0
         if h > 0 then
             qt:SetHeight(h + (qt.bottomSpacing or 0))

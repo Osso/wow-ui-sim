@@ -6,6 +6,7 @@
 //! - C_PartyInfo, C_ChatInfo, C_EventUtils, C_AzeriteEssence
 //! - C_PvP, C_FriendList, C_AuctionHouse, C_Bank
 //! - C_EncounterJournal, C_GMTicketInfo, C_UnitAuras, C_CurrencyInfo
+//! - C_NeighborhoodInitiative
 
 use mlua::{Lua, Result, Value};
 
@@ -29,6 +30,7 @@ pub(super) fn register_all(lua: &Lua) -> Result<()> {
     register_c_gm_ticket_info(lua)?;
     register_c_unit_auras(lua)?;
     register_c_currency_info(lua)?;
+    register_c_neighborhood_initiative(lua)?;
     Ok(())
 }
 
@@ -333,6 +335,7 @@ fn register_c_pvp(lua: &Lua) -> Result<()> {
     t.set("CanToggleWarMode", lua.create_function(|_, _desired: Value| Ok(false))?)?;
     t.set("IsWarModeDesired", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("CanToggleWarModeInArea", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("ArePvpTalentsUnlocked", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_PvP", t)?;
     Ok(())
 }
@@ -485,6 +488,20 @@ fn currency_list_info(lua: &Lua, index: i32) -> Result<Value> {
     info.set("isAccountTransferable", false)?;
     info.set("transferPercentage", 0)?;
     Ok(Value::Table(info))
+}
+
+fn register_c_neighborhood_initiative(lua: &Lua) -> Result<()> {
+    let t = lua.create_table()?;
+    t.set("GetTrackedInitiativeTasks", lua.create_function(|lua, ()| {
+        let result = lua.create_table()?;
+        result.set("trackedIDs", lua.create_table()?)?;
+        Ok(result)
+    })?)?;
+    t.set("GetInitiativeTaskInfo", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
+    t.set("RemoveTrackedInitiativeTask", lua.create_function(|_, _id: i32| Ok(()))?)?;
+    t.set("IsInitiativeEnabled", lua.create_function(|_, ()| Ok(false))?)?;
+    lua.globals().set("C_NeighborhoodInitiative", t)?;
+    Ok(())
 }
 
 fn backpack_currency_info(lua: &Lua, index: i32) -> Result<Value> {
