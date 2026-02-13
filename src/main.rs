@@ -207,6 +207,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 && let Err(e) = env.exec(code) {
                     eprintln!("[exec-lua] error: {e}");
                 }
+            run_extra_update_ticks(&env, 3);
             apply_delay(args.delay);
             let state = env.state().borrow();
             wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only, width as f32, height as f32);
@@ -538,6 +539,15 @@ use wow_ui_sim::startup::{
     apply_delay, fire_one_on_update_tick, fire_startup_events, process_pending_timers,
 };
 
+/// Fire extra OnUpdate ticks so deferred UI (talent frame, pool-created frames) can process.
+fn run_extra_update_ticks(env: &WowLuaEnv, n: usize) {
+    for _ in 0..n {
+        env.state().borrow_mut().ensure_layout_rects();
+        fire_one_on_update_tick(env);
+        process_pending_timers(env);
+    }
+}
+
 /// Debug: open game menu via micro button click for screenshot testing.
 fn debug_show_game_menu(env: &WowLuaEnv) {
     if std::env::var("WOW_SIM_SHOW_GAME_MENU").is_err() {
@@ -553,25 +563,16 @@ fn debug_show_game_menu(env: &WowLuaEnv) {
         eprintln!("[debug_game_menu] click error: {e}");
     }
     // Check what SetText resolves to for a game menu button
-    if let Err(e) = env.exec(r#"
-        if GameMenuFrame and GameMenuFrame.buttonPool then
-            for button in GameMenuFrame.buttonPool:EnumerateActive() do
-                local text = button:GetText() or "(nil)"
-                local st = button.SetText
-                io.stderr:write(string.format("[lua_debug] text=%q type(SetText)=%s\n",
-                    text, type(st)))
-                if type(st) == "function" then
-                    -- Try getting debug info
-                    local info = debug.getinfo(st, "S")
-                    io.stderr:write(string.format("[lua_debug] SetText source=%s\n",
-                        info and info.source or "unknown"))
-                end
-                break
+    if let Err(e) = env.exec(r#"if GameMenuFrame and GameMenuFrame.buttonPool then
+        for button in GameMenuFrame.buttonPool:EnumerateActive() do
+            local text, st = button:GetText() or "(nil)", button.SetText
+            io.stderr:write(("[lua_debug] text=%q type(SetText)=%s\n"):format(text, type(st)))
+            if type(st) == "function" then
+                local info = debug.getinfo(st, "S")
+                io.stderr:write(("[lua_debug] SetText source=%s\n"):format(info and info.source or "unknown"))
             end
-        end
-    "#) {
-        eprintln!("[debug_game_menu] lua debug error: {e}");
-    }
+            break
+        end end"#) { eprintln!("[debug_game_menu] lua debug error: {e}"); }
     dump_game_menu_buttons(env);
 }
 
@@ -692,12 +693,7 @@ fn run_screenshot(
         && let Err(e) = env.exec(code) {
             eprintln!("[exec-lua] error: {e}");
         }
-    // Fire extra OnUpdate ticks so deferred UI (talent frame, etc.) can process.
-    for _ in 0..3 {
-        env.state().borrow_mut().ensure_layout_rects();
-        fire_one_on_update_tick(env);
-        process_pending_timers(env);
-    }
+    run_extra_update_ticks(env, 3);
     apply_delay(delay);
     let (batch, glyph_atlas) = build_screenshot_batch(env, font_system, width, height, filter.as_deref());
     eprintln!("QuadBatch: {} quads, {} texture requests", batch.quad_count(), batch.texture_requests.len());

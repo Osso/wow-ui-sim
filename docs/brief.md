@@ -1,155 +1,88 @@
-# WoW UI Sim Brief - 2026-02-11
+# WoW UI Sim Brief - 2026-02-12
 
-## Completed: GameMenuFrame Strata + Tiling Fix
+## Completed: Talent Frame Performance + Edge Lines
 
-### Problem 1: Game menu rendered behind other windows
+### Two issues fixed:
+1. **Performance: ensure_layout_rects O(47K) scan every frame** — FIXED (commit 0fee158)
+2. **Multiple overlapping edge lines visible** — RESOLVED (commit 5c8f28d fixed atlas UVs + isActive)
 
-GameMenuFrame uses `frameStrata="DIALOG"` in its XML template, but the simulator wasn't parsing `frameStrata` from XML attributes on frames.
+### Performance Fix (ensure_layout_rects)
 
-**Fix:** Parse `frameStrata` XML attribute in `create_frame_from_xml` and call `SetFrameStrata()` on the frame. Files: `src/loader/xml_frame.rs`.
+**Problem:** `ensure_layout_rects()` scanned ALL ~47K widgets every frame to find missing layout_rects and clear rect_dirty flags. Cost: **31ms/frame** — making the simulator crawl when the talent frame is open.
 
-### Problem 2: Game menu appeared ~50% transparent
+**Fix:** Added tracking sets to `WidgetRegistry`:
+- `rect_dirty_ids: HashSet<u64>` — populated by `mark_rect_dirty_subtree`, drained by `ensure_layout_rects`
+- `pending_layout_ids: HashSet<u64>` — populated by `register()` and `clear_all_layout_rects()`, drained by `ensure_layout_rects`
 
-Two contributing factors:
-
-1. **Template texture tiling not propagated.** The `DialogBorderTemplate` defines `<Texture parentKey="Bg" horizTile="true" vertTile="true">` for the dialog background. The XML loader path (`src/loader/xml_texture.rs`) already handled these attributes, but the template application path (`src/lua_api/globals/template/elements.rs`) did not call `SetHorizTile`/`SetVertTile` on textures created via `create_texture_from_template`. Result: the 64x64 `ui-dialogbox-background` texture was stretched over the full frame instead of tiling, making it appear washed out.
-
-2. **Background texture has inherent 60% opacity.** The `ui-dialogbox-background.webp` texture is 64x64, all black (RGB=0,0,0) with uniform alpha=153/255≈0.6. This is by design — it's a semi-transparent dark overlay.
-
-**Fix:** Added `horizTile`, `vertTile`, `alpha`, and `alphaMode` propagation to `append_texture_properties()` in `src/lua_api/globals/template/elements.rs`. This ensures template-created textures get these visual properties applied, matching the existing XML loader behavior.
-
-**Template creation path:**
-1. `CreateFrame("Frame", name, parent, "DialogBorderTemplate")` — Lua call
-2. `apply_templates_from_registry` → `apply_single_template` → `apply_layers` — Rust template system
-3. `create_texture_from_template` → `append_texture_properties` — generates Lua code for `SetHorizTile`/`SetVertTile`
-
-## Completed: Backdrop Edge Rendering
-
-**Problem:** BackdropTemplate nine-slice edge textures (top/bottom/left/right borders) were not rendering. Corners rendered fine.
-
-**Root cause — three interconnected issues:**
-
-1. **Both tile flags set**: `BackdropTemplateMixin.SetupPieceVisuals` calls `SetTexture(file, true, true)` setting both `horiz_tile` and `vert_tile` for ALL pieces, routing edges to `emit_grid_tiles` instead of directional tiling.
-
-2. **UV values >1.0**: BackdropTemplateMixin uses UV-based tiling where `SetTexCoord` 8-arg coords contain repeat values >1.0 (e.g., `edgeRepeatX ≈ 14.19`). Our `ClampToEdge` sampler can't handle UVs >1.0.
-
-3. **Rotated UV mapping lost**: 8-arg `SetTexCoord` reduced to axis-aligned bounding box, losing rotation. TopEdge/BottomEdge have V→horizontal rotation.
-
-**Fix (implemented):**
-1. Added `tex_coords_quad: Option<[f32; 8]>` to Frame struct — stores raw 8-arg SetTexCoord values
-2. In `emit_tiled_texture`, when `tex_coords_quad` has values >1.0: `analyze_uv_repeat()` detects tiling direction and UV rotation from the raw 8-arg pattern
-3. For rotated edges (TopEdge/BottomEdge): `emit_rotated_horiz_tiles()` uses `push_textured_path_uv4()` with per-vertex UV coords to handle the V→horizontal rotation
-4. For standard edges (LeftEdge/RightEdge): uses existing `emit_vert_tiles()` with clamped base UVs
-5. Tile pixel size: uses the non-zero dimension (edgeSize) for both axes (square tiles)
+**Result:** First call processes pending set (199ms one-time at boot). Subsequent calls: **<1µs/frame** (from 31ms).
 
 **Files modified:**
-- `src/widget/frame.rs` — Added `tex_coords_quad` field
-- `src/lua_api/frame/methods/methods_texture.rs` — Store raw 8-arg coords in SetTexCoord
-- `src/lua_api/frame/methods/widget_slider.rs` — Clear `tex_coords_quad` on texture change
-- `src/iced_app/tiling.rs` — `analyze_uv_repeat()`, `emit_uv_repeat_tiled()`, `emit_rotated_horiz_tiles()`
-- `src/render/shader/quad.rs` — Added `push_textured_path_uv4()` for per-vertex UV quads
+- `src/widget/registry.rs` — Added `rect_dirty_ids`, `pending_layout_ids` fields; `drain_rect_dirty()`, `drain_pending_layout()`, `mark_layout_resolved()` methods
+- `src/lua_api/state.rs` — `ensure_layout_rects()` uses tracked sets instead of full scan; `recompute_layout_subtree` calls `mark_layout_resolved`; `clear_rect_dirty_subtree` uses `clear_rect_dirty`
 
-## Completed: Effective Alpha Propagation
+Also moved one-time initial layout resolution to `boot()` so first render doesn't pay the cost.
 
-**Problem:** Child frames rendered using only their own `f.alpha`, ignoring ancestor alpha. In WoW, `GetEffectiveAlpha()` returns `self.alpha * parent:GetEffectiveAlpha()` — if any ancestor has alpha < 1.0, all descendants are dimmed. Our simulator computed `eff_alpha` in `frame_collect.rs` but only used it for visibility checks, not rendering.
+### Edge Lines Issue (resolved)
 
-**Fix:** Threaded `eff_alpha` through the entire rendering pipeline:
-- `render.rs` → passes `eff_alpha` to `emit_frame_quads`
-- `quad_builders.rs` → all builder functions accept `alpha: f32` parameter (the effective alpha), replacing direct `f.alpha` usage
-- `tiling.rs` → `emit_tiled_texture` and `frame_tint` accept `alpha` parameter
-- `tooltip.rs` → `build_tooltip_quads` accepts `eff_alpha`
-- `message_frame_render.rs` → `emit_message_frame_text` and `render_message` accept `alpha`
+**Symptoms:** Multiple colored edge lines visible simultaneously between talent nodes (gray + yellow, locked + active, etc.)
 
-## Completed: Frame Render Order Fix (Toplevel + Region Sort)
+**Root cause:** Two issues in commit 5c8f28d:
+- `build_line_quads` was hardcoding full texture UVs instead of using `f.tex_coords` from atlas
+- `build_node_edges_dynamic` wasn't computing `isActive` from source node ranks
 
-**Problem:** AccountPlayed popup content rendered on top of GameMenuFrame button textures, despite both being in DIALOG strata. Three contributing issues:
+**Investigation confirmed:** Pool system (`SecureFramePoolCollectionMixin`) works correctly — 352 active edges, 0 duplicates, all GhostLines properly hidden. The 249 unique line positions vs 352 total is expected: multiple edges converge on the same talent node.
 
-### Issue 1: Region sort key didn't group regions with parent frame
+### Extra OnUpdate Ticks for Headless Modes
 
-In WoW, regions (Texture/FontString) render as part of their parent frame — they don't participate in the global frame-level sort independently. Our sort key used the region's own `frame_level` (parent_level + 1), causing deeply nested regions from one hierarchy to interleave with shallow regions from another.
+Added `run_extra_update_ticks()` helper that runs 3 cycles of `ensure_layout_rects` + `fire_one_on_update_tick` + `process_pending_timers` after exec-lua. Applied to both screenshot and dump-tree paths so deferred UI (talent frames, pool-created frames) can fully process.
 
-**Fix:** Changed `intra_strata_sort_key` in `frame_collect.rs` to use the parent frame's `frame_level` for regions, and group regions with their parent via `Reverse(parent_id)`. Sort key is now:
-- Non-regions: `(frame_level, Reverse(id), 0, 0, 0, 0, Reverse(0))`
-- Regions: `(parent_level, Reverse(parent_id), 1, draw_layer, sub_layer, type_flag, Reverse(id))`
+### ClassTalentsFrame Visibility in Headless Mode
 
-This ensures all regions of a frame render immediately after that frame, before any higher-level content from other hierarchies.
+`PlayerSpellsFrame` uses `TabSystemOwnerMixin` (`SetTab`/`TrySetTab`) to show/hide content frames. The simulator doesn't implement TabSystem, so `TogglePlayerSpellsFrame()` alone doesn't show the talent tree content. Workaround: directly call `PlayerSpellsFrame.TalentsFrame:Show()` in exec-lua.
 
-### Issue 2: `toplevel` attribute was a no-op
+**File:** `src/main.rs`
 
-GameMenuFrame has `toplevel="true"` in XML, which in WoW means the frame is raised above siblings when shown. Our `SetToplevel` was a no-op.
+## Prior Session Context
 
-**Fix:**
-- Added `toplevel: bool` field to Frame struct
-- `SetToplevel`/`IsToplevel` now store/read the value
-- `append_toplevel_code` in `xml_frame.rs` parses `toplevel` from XML
-- `set_frame_visible` in `state.rs`: when a toplevel frame becomes visible, `raise_frame()` is called
-- `raise_frame()`: finds max frame_level among siblings in the same strata, sets this frame's level to max + 1, propagates to descendants
+### Talent State Machine (commits c708903 through 5c8f28d)
 
-### Issue 3: `SetFrameStrata` didn't invalidate render cache
+Implemented interactive talent selection/removal:
+- `TalentState` struct with `node_ranks`, `node_selections`, `group_currency_map`, `node_currency_map`
+- State-aware `GetNodeInfo`, `PurchaseRank`, `RefundRank`, `SetSelection`, `ResetTree`, `GetTreeCurrencyInfo`, `GetNodeCost`
+- Dynamic `create_condition_info` (gate conditions check spent amounts)
+- Edge `isActive` computed from source node ranks
+- Events: `TRAIT_NODE_CHANGED` (per-node), `TRAIT_TREE_CURRENCY_INFO_UPDATED`, `TRAIT_CONFIG_UPDATED`
+- Cross-subtree edge filtering, SubTreeSelection node hiding
 
-`SetFrameStrata()` changed `frame.frame_strata` and propagated to descendants, but didn't invalidate `ancestor_visible_cache`, `strata_buckets`, or `cached_render_list`. Frames that changed strata at runtime would remain in the wrong strata bucket.
+### Key Files
+- `src/lua_api/globals/traits_api.rs` — C_Traits config/tree/node APIs, event firing
+- `src/lua_api/globals/traits_api_node.rs` — GetNodeInfo, edge building, condition info
+- `src/lua_api/state.rs` — TalentState, ensure_layout_rects, invalidate_layout
+- `src/widget/registry.rs` — WidgetRegistry with dirty tracking sets
+- `src/iced_app/quad_builders.rs` — Line widget rendering with atlas UVs
+- `src/iced_app/update.rs` — Timer handler, ensure_layout_rects before OnUpdate
+- `src/iced_app/app.rs` — boot() with eager layout resolution
 
-**Fix:** Added cache invalidation at the end of `SetFrameStrata()` in `methods_core.rs`.
+### Blizzard UI Files (read, not modified)
+- `Blizzard_SharedTalentFrame.lua` — TalentFrameBaseMixin: OnUpdate, LoadTalentTree, UpdateEdgesForButton, MarkEdgesDirty
+- `Blizzard_SharedTalentEdgeTemplates.lua` — TalentEdgeArrowMixin: UpdateState (sets atlas based on edge state), UpdatePosition (checks IsRectValid)
+- `Blizzard_ClassTalentEdgeTemplates.lua` — ClassTalentEdgeArrowMixin: parent matching, alpha visibility
+- `Blizzard_TalentButtonBase.lua` — FullUpdate, UpdateNodeInfo, MarkEdgesDirty
+- `Blizzard_TalentButtonArt.lua` — ApplyVisualState, UpdateStateBorder (SetAtlas with UseAtlasSize)
 
-**Files modified:**
-- `src/widget/frame.rs` — Added `toplevel` field
-- `src/iced_app/frame_collect.rs` — New `IntraStrataKey` type, `intra_strata_sort_key` uses parent level/id for regions
-- `src/lua_api/state.rs` — `raise_frame()`, `max_sibling_level()`, toplevel raise in `set_frame_visible`
-- `src/lua_api/frame/methods/methods_core.rs` — `SetToplevel`/`IsToplevel` store value, `SetFrameStrata` invalidates cache
-- `src/lua_api/frame/methods/methods_meta.rs` — `Raise()` calls `state.raise_frame()` instead of just +1
-- `src/lua_api/frame/methods/mod.rs` — Re-export `propagate_strata_level_pub`
-- `src/lua_api/frame/mod.rs` — Re-export `propagate_strata_level_pub`
-- `src/loader/xml_frame.rs` — `append_toplevel_code` parses and emits `SetToplevel(true)`
+### Event Flow on Talent Change
+1. `PurchaseRank`/`RefundRank` → updates `node_ranks`
+2. `fire_node_changed_events` → `TRAIT_NODE_CHANGED` × 237 nodes
+3. `fire_currency_updated_event` → `TRAIT_TREE_CURRENCY_INFO_UPDATED`
+4. `fire_trait_config_updated` → `TRAIT_CONFIG_UPDATED`
+5. Blizzard handlers mark nodes/edges dirty → RegisterOnUpdate
+6. Next OnUpdate: processes dirty nodes → FullUpdate → UpdateStateBorder → edges
 
-## Completed: Three-Slice Button Center Texture Fix
-
-**Problem:** Game menu buttons (ThreeSliceButtonTemplate) had Center texture rendering as 0x0, making the middle of each button transparent. Only Left and Right end-caps rendered.
-
-**Root cause:** When Left/Right textures were resized (via SetAtlas/SetWidth/SetScale in UpdateButton/UpdateScale), `invalidate_layout()` only recomputed that texture and its children. The Center texture — a sibling anchored to Left and Right via cross-frame anchors — was never recomputed. Additionally, `calculate_frame_width/height` (Lua GetWidth/GetHeight) required both anchors to reference the same frame.
-
-**Fix (three parts):**
-1. **SetWidth/SetHeight/SetSize/SetScale** now call `invalidate_layout_with_dependents()` instead of `invalidate_layout()`, propagating layout recomputation to frames anchored to the resized frame via the reverse anchor index.
-2. **SetAtlas with useAtlasSize** now triggers `invalidate_layout_with_dependents()` after setting frame dimensions from atlas info.
-3. **`calculate_frame_width/height`** falls back to `layout_rect / eff_scale` for cross-frame anchor cases (different `relative_to_id` on opposite edges).
-
-**Files modified:**
-- `src/lua_api/frame/methods/methods_core.rs` — SetWidth/SetHeight/SetSize/SetScale use `invalidate_layout_with_dependents`
-- `src/lua_api/frame/methods/methods_texture.rs` — SetAtlas invalidates layout when useAtlasSize=true
-- `src/lua_api/frame/methods/methods_helpers.rs` — `calculate_frame_width/height` handle cross-frame anchors via layout_rect
-- `src/lua_api/state.rs` — Updated comment on `invalidate_layout_with_dependents`
+### IsRectValid Infinite Loop Risk
+`TalentEdgeArrowMixin:UpdatePosition` (line 161-163): if `startButton:IsRectValid()` or `endButton:IsRectValid()` returns false → marks edges dirty → RegisterOnUpdate → next tick repeats. Our `IsRectValid` = `!anchors.is_empty() && !rect_dirty`. The `ensure_layout_rects` clears `rect_dirty` before OnUpdate, breaking the cycle. Without it → infinite dirty loop.
 
 ## Known Issues
 
-- Buff duration text missing in live GUI mode (OnUpdate not called during GUI startup)
+- Buff duration text missing in live GUI mode
 - Script inheritance bug: `src/loader/helpers.rs` lines 297-299 prepend/append boolean swapped
-
-## Key Technical Context
-
-### Template Texture Properties
-
-Two parallel code paths create textures from XML definitions:
-
-| Path | Entry Point | Handles Tiling? |
-|------|-------------|-----------------|
-| XML loader (addon loading) | `create_texture_from_xml` in `src/loader/xml_texture.rs` | Yes (always did) |
-| Template system (CreateFrame inherits) | `create_texture_from_template` in `src/lua_api/globals/template/elements.rs` | Yes (after fix) |
-
-Both paths converge on similar Lua code generation but are maintained separately. When adding new texture properties, both paths must be updated.
-
-### BackdropTemplateMixin UV Tiling
-- `textureUVs` table (Backdrop.lua:146): edges use "repeatX"/"repeatY" placeholders replaced with computed repeat counts
-- `coordStart = 0.0625`, `coordEnd = 0.9375` — edge texture has padding at borders
-- TopEdge/BottomEdge: UV rotated (V→horizontal), width=0 (from anchors), height=edgeSize
-- LeftEdge/RightEdge: UV standard (V→vertical), width=edgeSize, height=0 (from anchors)
-- Corners: all UVs <1.0, SetSize(edgeSize, edgeSize) — work fine even with both tile flags
-
-### Renderer Constraints
-- Sampler: `address_mode_u/v: ClampToEdge` in `src/render/shader/atlas.rs`
-- Shader: clamps UVs to `[0.0, 0.9999]` in quad.wgsl
-- Atlas UV remapping: `vertex.tex_coords[0] = entry.uv_x + vertex.tex_coords[0] * entry.uv_width`
-
-### WoW Region Rendering Model
-- **Regions** (Texture, FontString) are NOT frames. They render as part of their parent frame's rendering unit.
-- Sort order within a strata: frames sorted by frame_level, regions grouped with their parent
-- `toplevel="true"`: frame is auto-raised above siblings when Show() is called
-- `Raise()`: sets frame_level to max(sibling levels in same strata) + 1, propagates to descendants
+- TabSystem not implemented — headless talent screenshots require explicit `PlayerSpellsFrame.TalentsFrame:Show()`
