@@ -104,11 +104,10 @@ fn patch_string_format(lua: &Lua) -> Result<()> {
     "#).exec()
 }
 
-/// Override `print` to capture output to the console buffer.
+/// Override `print` to capture output to the console buffer (shown in GUI log panel).
 fn register_print(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let print_func = lua.create_function(move |_lua, args: mlua::Variadic<Value>| {
         let output = format_print_args(&args);
-        println!("{}", output);
         state.borrow_mut().console_output.push(output);
         Ok(())
     })?;

@@ -1,50 +1,33 @@
 # WoW UI Sim Brief - 2026-02-12
 
-## Completed: Talent Frame Performance + Edge Lines
+## Recently Fixed: Spec Node Filtering + Right-Click
 
-### Two issues fixed:
-1. **Performance: ensure_layout_rects O(47K) scan every frame** — FIXED (commit 0fee158)
-2. **Multiple overlapping edge lines visible** — RESOLVED (commit 5c8f28d fixed atlas UVs + isActive)
+### Spec filtering (FIXED)
+Protection spec now correctly shows only ~40 spec nodes (was 119 from all three specs).
 
-### Performance Fix (ensure_layout_rects)
+**Root cause:** `isVisible` in `GetNodeInfo` was always `true` for non-subtree nodes. Spec filtering happens via group-level conditions (condType=1) from `TraitNodeGroupXTraitCond` join table, not direct node conditions. The Blizzard UI relies on `isVisible` to decide whether to instantiate talent buttons.
 
-**Problem:** `ensure_layout_rects()` scanned ALL ~47K widgets every frame to find missing layout_rects and clear rect_dirty flags. Cost: **31ms/frame** — making the simulator crawl when the talent frame is open.
+**Fix:**
+- Added `group_cond_ids` field to `TraitNodeInfo` (codegen: `gen_traits_load.rs`, `gen_traits_emit.rs`)
+- `check_spec_conditions_met()` checks both node conditions and group conditions for condType=1
+- `spec_set_contains_active_spec()` maps Paladin specSetIDs (27→Holy/65, 28→Protection/66, 29→Retribution/70) via SpecSetMember DB2 data from wago.tools
+- Edges to hidden spec nodes are also filtered in `build_node_edges_dynamic`
+- `evaluate_condition` also uses this for `create_condition_info` (isMet flag)
 
-**Fix:** Added tracking sets to `WidgetRegistry`:
-- `rect_dirty_ids: HashSet<u64>` — populated by `mark_rect_dirty_subtree`, drained by `ensure_layout_rects`
-- `pending_layout_ids: HashSet<u64>` — populated by `register()` and `clear_all_layout_rects()`, drained by `ensure_layout_rects`
+**Result:** visible=91 (51 class + 40 Protection), hidden=103, subtree=43
 
-**Result:** First call processes pending set (199ms one-time at boot). Subsequent calls: **<1µs/frame** (from 31ms).
+### Right-click (FIXED)
+Right-click now fires `OnMouseDown`/`OnClick`/`PostClick`/`OnMouseUp` with `"RightButton"`, enabling talent refund via `RefundRank()`.
 
-**Files modified:**
-- `src/widget/registry.rs` — Added `rect_dirty_ids`, `pending_layout_ids` fields; `drain_rect_dirty()`, `drain_pending_layout()`, `mark_layout_resolved()` methods
-- `src/lua_api/state.rs` — `ensure_layout_rects()` uses tracked sets instead of full scan; `recompute_layout_subtree` calls `mark_layout_resolved`; `clear_rect_dirty_subtree` uses `clear_rect_dirty`
-
-Also moved one-time initial layout resolution to `boot()` so first render doesn't pay the cost.
-
-### Edge Lines Issue (resolved)
-
-**Symptoms:** Multiple colored edge lines visible simultaneously between talent nodes (gray + yellow, locked + active, etc.)
-
-**Root cause:** Two issues in commit 5c8f28d:
-- `build_line_quads` was hardcoding full texture UVs instead of using `f.tex_coords` from atlas
-- `build_node_edges_dynamic` wasn't computing `isActive` from source node ranks
-
-**Investigation confirmed:** Pool system (`SecureFramePoolCollectionMixin`) works correctly — 352 active edges, 0 duplicates, all GhostLines properly hidden. The 249 unique line positions vs 352 total is expected: multiple edges converge on the same talent node.
-
-### Extra OnUpdate Ticks for Headless Modes
-
-Added `run_extra_update_ticks()` helper that runs 3 cycles of `ensure_layout_rects` + `fire_one_on_update_tick` + `process_pending_timers` after exec-lua. Applied to both screenshot and dump-tree paths so deferred UI (talent frames, pool-created frames) can fully process.
-
-### ClassTalentsFrame Visibility in Headless Mode
-
-`PlayerSpellsFrame` uses `TabSystemOwnerMixin` (`SetTab`/`TrySetTab`) to show/hide content frames. The simulator doesn't implement TabSystem, so `TogglePlayerSpellsFrame()` alone doesn't show the talent tree content. Workaround: directly call `PlayerSpellsFrame.TalentsFrame:Show()` in exec-lua.
-
-**File:** `src/main.rs`
+**Changes:**
+- `CanvasMessage`: added `RightMouseDown`/`RightMouseUp` variants
+- `render.rs`: handles `mouse::Button::Right` press/release
+- `mouse.rs`: new module extracted from `update.rs` — all mouse event handlers
+- `app.rs`: added `right_mouse_down_frame` field for tracking right-click target
 
 ## Prior Session Context
 
-### Talent State Machine (commits c708903 through 5c8f28d)
+### Talent State Machine (commits c708903 through 207492e)
 
 Implemented interactive talent selection/removal:
 - `TalentState` struct with `node_ranks`, `node_selections`, `group_currency_map`, `node_currency_map`
@@ -53,36 +36,88 @@ Implemented interactive talent selection/removal:
 - Edge `isActive` computed from source node ranks
 - Events: `TRAIT_NODE_CHANGED` (per-node), `TRAIT_TREE_CURRENCY_INFO_UPDATED`, `TRAIT_CONFIG_UPDATED`
 - Cross-subtree edge filtering, SubTreeSelection node hiding
+- Performance fix: dirty tracking sets in WidgetRegistry (commit 0fee158)
+- Line widget atlas UV fix + isActive computation (commit 5c8f28d)
+- Extra OnUpdate ticks for headless modes (commit 207492e)
 
 ### Key Files
 - `src/lua_api/globals/traits_api.rs` — C_Traits config/tree/node APIs, event firing
-- `src/lua_api/globals/traits_api_node.rs` — GetNodeInfo, edge building, condition info
+- `src/lua_api/globals/traits_api_node.rs` — GetNodeInfo, edge building, condition info, evaluate_condition, spec filtering
 - `src/lua_api/state.rs` — TalentState, ensure_layout_rects, invalidate_layout
+- `src/lua_api/talent_state.rs` — TalentState struct definition
 - `src/widget/registry.rs` — WidgetRegistry with dirty tracking sets
 - `src/iced_app/quad_builders.rs` — Line widget rendering with atlas UVs
-- `src/iced_app/update.rs` — Timer handler, ensure_layout_rects before OnUpdate
-- `src/iced_app/app.rs` — boot() with eager layout resolution
+- `src/iced_app/mouse.rs` — Mouse event handlers (left, right, middle, scroll, hover)
+- `src/iced_app/render.rs` — Mouse event dispatch to CanvasMessage
+- `src/iced_app/state.rs` — CanvasMessage enum
+- `data/traits.rs` — Auto-generated trait data (includes group_cond_ids)
 
-### Blizzard UI Files (read, not modified)
-- `Blizzard_SharedTalentFrame.lua` — TalentFrameBaseMixin: OnUpdate, LoadTalentTree, UpdateEdgesForButton, MarkEdgesDirty
-- `Blizzard_SharedTalentEdgeTemplates.lua` — TalentEdgeArrowMixin: UpdateState (sets atlas based on edge state), UpdatePosition (checks IsRectValid)
-- `Blizzard_ClassTalentEdgeTemplates.lua` — ClassTalentEdgeArrowMixin: parent matching, alpha visibility
-- `Blizzard_TalentButtonBase.lua` — FullUpdate, UpdateNodeInfo, MarkEdgesDirty
-- `Blizzard_TalentButtonArt.lua` — ApplyVisualState, UpdateStateBorder (SetAtlas with UseAtlasSize)
+### OnUpdate error handling (FIXED)
+OnUpdate handlers were permanently disabled after a single Lua error (`on_update_errors` HashSet in `env.rs`). This prevented the talent frame's deferred edge update from ever running again after any error, causing edge Line widgets to stop updating (and potentially disappear if they were released before the error).
 
-### Event Flow on Talent Change
-1. `PurchaseRank`/`RefundRank` → updates `node_ranks`
-2. `fire_node_changed_events` → `TRAIT_NODE_CHANGED` × 237 nodes
-3. `fire_currency_updated_event` → `TRAIT_TREE_CURRENCY_INFO_UPDATED`
-4. `fire_trait_config_updated` → `TRAIT_CONFIG_UPDATED`
-5. Blizzard handlers mark nodes/edges dirty → RegisterOnUpdate
-6. Next OnUpdate: processes dirty nodes → FullUpdate → UpdateStateBorder → edges
+**Root cause:** `fire_on_update_handlers` added errored frame IDs to a permanent HashSet. In real WoW, OnUpdate errors show an error popup but the handler keeps firing.
 
-### IsRectValid Infinite Loop Risk
-`TalentEdgeArrowMixin:UpdatePosition` (line 161-163): if `startButton:IsRectValid()` or `endButton:IsRectValid()` returns false → marks edges dirty → RegisterOnUpdate → next tick repeats. Our `IsRectValid` = `!anchors.is_empty() && !rect_dirty`. The `ensure_layout_rects` clears `rect_dirty` before OnUpdate, breaking the cycle. Without it → infinite dirty loop.
+**Fix:** Changed `on_update_errors` from `HashSet<u64>` to `HashMap<u64, u32>` counting consecutive errors per frame. Handlers retry on next tick (count resets on success). Logging suppressed after 100 consecutive errors. Error messages include frame name for diagnostics.
+
+**Edge update flow (Blizzard code):**
+- `MarkEdgesDirty(button)` → just sets `buttonsWithDirtyEdges[button] = true` + RegisterOnUpdate
+- `UpdateEdgesForButton(button)` → atomically releases old edges (Hide+ClearAllPoints) and acquires new ones (Init+Show) during OnUpdate
+- Between click and OnUpdate, edges remain visible with stale state
+
+### SetSelection nil deselect (FIXED)
+Right-clicking a selection node to deselect crashed with `bad argument #3: error converting Lua nil to i32`.
+
+**Root cause:** Blizzard code calls `C_Traits.SetSelection(configID, nodeID, nil, shouldClearEdges)` when deselecting. Rust binding required `(i32, i32, i32)`.
+
+**Fix:** Changed `entry_id` parameter to `Option<i32>`. When `None`: removes ranks and selections (deselect/refund). When `Some`: sets selection and ensures rank >= 1.
+
+### Line widget blend mode (FIXED)
+`emit_line_vertices` in `quad_builders.rs` hardcoded `BlendMode::Alpha`, ignoring `f.blend_mode`. This caused FillScroll1/2 lines (alphaMode="ADD") to render with alpha blending instead of additive, making them too opaque.
+
+**Fix:** Pass `f.blend_mode` through to `emit_line_vertices`.
+
+## Debug: Showing Talent Panel on Load
+
+The talent panel is a LoadOnDemand addon (`Blizzard_PlayerSpells`). It must be loaded explicitly.
+Both `PlayerSpellsFrame:Show()` and `TalentsFrame:Show()` are needed (parent must be visible).
+
+- **GUI mode:** Debug script `/tmp/debug-scrollbox-update.lua` works — runs before startup events but talent buttons are created when events fire during the GUI loop
+- **Headless (screenshot/dump-tree):** Use `--exec-lua` — the debug script runs too early (before startup events), so talent buttons don't exist yet. `--exec-lua` runs after startup events + timers + OnUpdate.
+
+```bash
+# Screenshot with talent tree
+wow-sim --no-addons --no-saved-vars --delay 100 --exec-lua \
+  'C_AddOns.LoadAddOn("Blizzard_PlayerSpells"); PlayerSpellsFrame:Show(); PlayerSpellsFrame.TalentsFrame:Show()' \
+  screenshot -o talents.webp --filter PlayerSpellsFrame
+```
 
 ## Known Issues
 
+### ApplyButton (Activate) — text/size FIXED, rendering still wrong
+Text and size are now correct (164x22, "Apply Changes"). Two fixes were needed:
+
+**Root cause 1 — Runtime template child size ordering (FIXED):**
+`ClassTalentsFrameTemplate` is `virtual="true"`, so its children (including ApplyButton) are created by the runtime template loader (`template/mod.rs`). The child creation flow is:
+1. `build_create_child_code` — creates frame, sets anchors
+2. `apply_templates_from_registry` — applies inherited templates (sets template default sizes)
+3. `apply_inline_frame_content` — applies instance-specific inline content
+
+Previously, size was set in step 1 (`append_child_size_and_anchors`) and overwritten by step 2 (template defaults like UIButtonTemplate's 20x20). Step 3 never re-applied it.
+
+**Fix:** Removed size from step 1 (now `append_child_anchors`). Added `elements::apply_inline_size()` in step 3 (`apply_inline_frame_content`). Templates set defaults first, then inline content overrides — matching WoW's property precedence.
+
+**Root cause 2 — Missing text attribute in runtime template loader (FIXED):**
+The `text=` XML attribute on Button elements wasn't applied during runtime template creation. Added `apply_button_text_attribute()` which resolves global strings and calls SetText.
+
+**Remaining rendering issue:** NormalTexture/PushedTexture/DisabledTexture render as solid red overlays covering the three-slice children (Left/Right/Middle from `UI-Panel-Button-Up`). The `UIButtonTemplate` mixin sets `128-RedButton` atlas via `SetButtonArtKit()` in `InitButton()`, which overlaps the three-slice texture children.
+
+### Edge lines hide too early in live GUI
+When purchasing a talent in the live GUI, edge lines briefly or permanently disappear. The OnUpdate error fix helps (handlers no longer permanently disabled), but the root timing issue may still exist.
+
+**Pool system:** Blizzard's `Pools.lua` (line 825) overwrites the Rust `CreateFramePool` shim. The real pools use `SecureObjectPoolMixin` with `Pool_HideAndClearAnchors` as the default resetter, which calls `Hide()` + `ClearAllPoints()` on release.
+
+**Flow:** `ReleaseEdge` → `pool:Release()` → `Pool_HideAndClearAnchors` (Hide+ClearAllPoints) → then `AcquireEdge` → `pool:Acquire()` → `Init()` → `Show()`. This is atomic within one OnUpdate handler, so edges should be hidden then immediately replaced.
+
+### Other
 - Buff duration text missing in live GUI mode
 - Script inheritance bug: `src/loader/helpers.rs` lines 297-299 prepend/append boolean swapped
-- TabSystem not implemented — headless talent screenshots require explicit `PlayerSpellsFrame.TalentsFrame:Show()`

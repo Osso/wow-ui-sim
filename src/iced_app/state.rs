@@ -19,5 +19,7 @@ pub enum CanvasMessage {
     MouseMove(Point),
     MouseDown(Point),
     MouseUp(Point),
+    RightMouseDown(Point),
+    RightMouseUp(Point),
     MiddleClick(Point),
 }

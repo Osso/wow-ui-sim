@@ -24,6 +24,7 @@ mod state;
 mod tiling;
 pub mod tooltip;
 mod styles;
+mod mouse;
 mod update;
 mod update_servers;
 mod screenshot;

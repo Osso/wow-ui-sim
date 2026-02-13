@@ -142,6 +142,7 @@ pub struct App {
     pub(crate) hovered_frame: Option<u64>,
     pub(crate) pressed_frame: Option<u64>,
     pub(crate) mouse_down_frame: Option<u64>,
+    pub(crate) right_mouse_down_frame: Option<u64>,
     pub(crate) scroll_offset: f32,
     /// Current canvas size (updated each frame for layout calculations).
     pub(crate) screen_size: std::cell::Cell<Size>,
@@ -266,6 +267,7 @@ impl App {
             hovered_frame: None,
             pressed_frame: None,
             mouse_down_frame: None,
+            right_mouse_down_frame: None,
             scroll_offset: 0.0,
             screen_size: std::cell::Cell::new(Size::new(800.0, 600.0)),
             debug_rx: Some(cmd_rx),

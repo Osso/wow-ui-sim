@@ -90,6 +90,7 @@ pub struct JoinMaps {
     pub node_to_conds: HashMap<u32, Vec<u32>>,
     pub tree_to_currencies: HashMap<u32, Vec<u32>>,
     pub node_to_groups: HashMap<u32, Vec<u32>>,
+    pub group_to_conds: HashMap<u32, Vec<u32>>,
 }
 
 /// Load all raw data from CSV files.
@@ -139,7 +140,11 @@ fn load_join_tables(data_dir: &Path) -> Result<JoinMaps, Box<dyn std::error::Err
     let node_to_groups = load_pair_csv(
         &data_dir.join("TraitNodeGroupXTraitNode.csv"), 2, 1,
     )?;
-    Ok(JoinMaps { node_to_entries, node_to_conds, tree_to_currencies, node_to_groups })
+    // TraitNodeGroupXTraitCond: ID, TraitCondID, TraitNodeGroupID
+    let group_to_conds = load_pair_csv(
+        &data_dir.join("TraitNodeGroupXTraitCond.csv"), 2, 1,
+    )?;
+    Ok(JoinMaps { node_to_entries, node_to_conds, tree_to_currencies, node_to_groups, group_to_conds })
 }
 
 /// Load a CSV join table, collecting values from `val_col` grouped by `key_col`.

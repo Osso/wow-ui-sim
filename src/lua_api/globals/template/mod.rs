@@ -163,6 +163,7 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
 
     // Apply ButtonText and EditBox FontString
     apply_button_text(lua, template, frame_name, frame_name);
+    elements::apply_button_text_attribute(lua, template, frame_name);
     apply_editbox_fontstring(lua, template, frame_name, frame_name);
     apply_button_fonts(lua, template, frame_name);
     apply_animation_groups(lua, template, frame_name);
@@ -501,14 +502,10 @@ fn build_create_child_code(
     code
 }
 
-/// Append size, anchors, setAllPoints, and hidden to child frame code.
+/// Append anchors, setAllPoints, and hidden to child frame code.
+/// Size is NOT set here — it's applied later in apply_inline_frame_content
+/// so that template defaults are set first, then inline size overrides.
 fn append_child_size_and_anchors(code: &mut String, frame: &FrameXml, parent_name: &str) {
-    if let Some(size) = frame.size() {
-        let (width, height) = get_size_values(size);
-        if let (Some(w), Some(h)) = (width, height) {
-            code.push_str(&format!("            child:SetSize({}, {})\n", w, h));
-        }
-    }
     if let Some(anchors) = frame.anchors() {
         code.push_str(&generate_set_point_code(anchors, "child", "parent", parent_name, "nil"));
     }
@@ -586,11 +583,11 @@ fn create_scroll_child_frames(
 }
 
 /// Apply inline content from a FrameXml to an already-created frame.
-///
-/// `subst_parent` is the name used for `$parent` substitution in child names.
 fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) -> Vec<String> {
     apply_mixin(lua, &frame.combined_mixin(), frame_name);
     apply_inline_key_values(lua, frame, frame_name);
+    // Re-apply inline size — templates may override the size set in build_create_child_code.
+    elements::apply_inline_size(lua, frame, frame_name);
     apply_layers(lua, frame, frame_name, subst_parent);
 
     if let Some(thumb) = frame.thumb_texture() {
@@ -602,6 +599,7 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
 
     apply_inline_button_textures(lua, frame, frame_name, subst_parent);
     apply_button_text(lua, frame, frame_name, subst_parent);
+    elements::apply_button_text_attribute(lua, frame, frame_name);
     apply_editbox_fontstring(lua, frame, frame_name, subst_parent);
     apply_animation_groups(lua, frame, frame_name);
 
@@ -715,7 +713,7 @@ fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, fram
 }
 
 /// Get size values from a SizeXml.
-fn get_size_values(size: &crate::xml::SizeXml) -> (Option<f32>, Option<f32>) {
+pub(super) fn get_size_values(size: &crate::xml::SizeXml) -> (Option<f32>, Option<f32>) {
     if size.x.is_some() || size.y.is_some() {
         (size.x, size.y)
     } else if let Some(abs) = &size.abs_dimension {

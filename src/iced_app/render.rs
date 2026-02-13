@@ -55,6 +55,20 @@ impl shader::Program<Message> for &App {
                         )));
                     }
                 }
+                mouse::Event::ButtonPressed(mouse::Button::Right) => {
+                    if let Some(pos) = cursor.position_in(bounds) {
+                        return Some(shader::Action::publish(Message::CanvasEvent(
+                            CanvasMessage::RightMouseDown(pos),
+                        )));
+                    }
+                }
+                mouse::Event::ButtonReleased(mouse::Button::Right) => {
+                    if let Some(pos) = cursor.position_in(bounds) {
+                        return Some(shader::Action::publish(Message::CanvasEvent(
+                            CanvasMessage::RightMouseUp(pos),
+                        )));
+                    }
+                }
                 mouse::Event::ButtonPressed(mouse::Button::Middle) => {
                     if let Some(pos) = cursor.position_in(bounds) {
                         return Some(shader::Action::publish(Message::CanvasEvent(

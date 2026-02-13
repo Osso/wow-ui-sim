@@ -62,8 +62,8 @@ fn register_config_mutations(
     })?)?;
 
     let st = Rc::clone(&state);
-    t.set("SetSelection", lua.create_function(move |lua, (config_id, node_id, entry_id): (i32, i32, i32)| {
-        set_selection(&st, lua, config_id, node_id as u32, entry_id as u32)
+    t.set("SetSelection", lua.create_function(move |lua, (config_id, node_id, entry_id): (i32, i32, Option<i32>)| {
+        set_selection(&st, lua, config_id, node_id as u32, entry_id.map(|id| id as u32))
     })?)?;
 
     let st = Rc::clone(&state);
@@ -120,13 +120,27 @@ fn refund_rank(
 
 fn set_selection(
     state: &Rc<RefCell<SimState>>, lua: &Lua,
-    config_id: i32, node_id: u32, entry_id: u32,
+    config_id: i32, node_id: u32, entry_id: Option<u32>,
 ) -> Result<bool> {
     let mut s = state.borrow_mut();
-    s.talents.node_selections.insert(node_id, entry_id);
-    let current = *s.talents.node_ranks.get(&node_id).unwrap_or(&0);
-    if current == 0 {
-        s.talents.node_ranks.insert(node_id, 1);
+    match entry_id {
+        Some(eid) => {
+            // Select an entry: set selection and ensure rank >= 1.
+            s.talents.node_selections.insert(node_id, eid);
+            let current = *s.talents.node_ranks.get(&node_id).unwrap_or(&0);
+            if current == 0 {
+                s.talents.node_ranks.insert(node_id, 1);
+            }
+        }
+        None => {
+            // nil entry_id = deselect/refund the selection node.
+            let current = *s.talents.node_ranks.get(&node_id).unwrap_or(&0);
+            if current == 0 {
+                return Ok(false);
+            }
+            s.talents.node_ranks.remove(&node_id);
+            s.talents.node_selections.remove(&node_id);
+        }
     }
     drop(s);
     fire_trait_config_updated(lua, config_id)

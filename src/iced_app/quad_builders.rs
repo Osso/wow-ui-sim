@@ -540,15 +540,15 @@ fn build_line_quads(
 
     if let Some(color) = f.color_texture {
         let c = [color.r * tint[0], color.g * tint[1], color.b * tint[2], color.a * alpha];
-        emit_line_vertices(batch, &positions, &uvs, c, -1);
+        emit_line_vertices(batch, &positions, &uvs, c, -1, f.blend_mode);
     } else if let Some(ref tex_path) = f.texture {
         let vertex_start = batch.vertices.len() as u32;
-        emit_line_vertices(batch, &positions, &uvs, tint, -2);
+        emit_line_vertices(batch, &positions, &uvs, tint, -2, f.blend_mode);
         batch.texture_requests.push(crate::render::shader::TextureRequest {
             path: tex_path.clone(), vertex_start, vertex_count: 4,
         });
     } else {
-        emit_line_vertices(batch, &positions, &uvs, tint, -1);
+        emit_line_vertices(batch, &positions, &uvs, tint, -1, f.blend_mode);
     }
 }
 
@@ -559,12 +559,12 @@ fn emit_line_vertices(
     uvs: &[[f32; 2]; 4],
     color: [f32; 4],
     tex_index: i32,
+    blend_mode: BlendMode,
 ) {
     use crate::render::shader::QuadVertex;
-    use crate::render::BlendMode;
 
     let base = batch.vertices.len() as u32;
-    let flags = BlendMode::Alpha as u32;
+    let flags = blend_mode as u32;
     for i in 0..4 {
         batch.vertices.push(QuadVertex {
             position: positions[i],

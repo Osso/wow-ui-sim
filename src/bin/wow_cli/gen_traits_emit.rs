@@ -27,6 +27,7 @@ pub struct NodeInfo {
     pub cond_ids: Vec<u32>,
     pub edges: Vec<(u32, u32, u32)>, // (source_node_id, edge_type, visual_style)
     pub group_ids: Vec<u32>,
+    pub group_cond_ids: Vec<u32>,
 }
 
 // ── Denormalization ──
@@ -57,10 +58,19 @@ fn build_node_info(
     let cond_ids = joins.node_to_conds.get(&n.id).cloned().unwrap_or_default();
     let edges = edges_by_target.get(&n.id).cloned().unwrap_or_default();
     let group_ids = joins.node_to_groups.get(&n.id).cloned().unwrap_or_default();
+    // Collect all condition IDs from this node's groups (via TraitNodeGroupXTraitCond).
+    let mut group_cond_ids = Vec::new();
+    for &gid in &group_ids {
+        if let Some(cids) = joins.group_to_conds.get(&gid) {
+            group_cond_ids.extend(cids);
+        }
+    }
+    group_cond_ids.sort_unstable();
+    group_cond_ids.dedup();
     NodeInfo {
         id: n.id, tree_id: n.tree_id, pos_x: n.pos_x, pos_y: n.pos_y,
         node_type: n.node_type, flags: n.flags, sub_tree_id: n.sub_tree_id,
-        entry_ids, cond_ids, edges, group_ids,
+        entry_ids, cond_ids, edges, group_ids, group_cond_ids,
     }
 }
 
@@ -102,6 +112,7 @@ pub fn write_struct_defs(out: &mut File) -> std::io::Result<()> {
         "pub node_type: u32", "pub flags: u32", "pub sub_tree_id: u32",
         "pub entry_ids: &'static [u32]", "pub cond_ids: &'static [u32]",
         "pub edges: &'static [TraitEdgeInfo]", "pub group_ids: &'static [u32]",
+        "pub group_cond_ids: &'static [u32]",
     ])?;
     write_struct(out, "TraitEntryInfo", &[
         "pub id: u32", "pub definition_id: u32", "pub max_ranks: u32",
@@ -178,6 +189,7 @@ pub fn write_node_db(
         emit_u32_array(out, &format!("NODE_{}_CONDS", n.id), &n.cond_ids)?;
         emit_edge_array(out, &format!("NODE_{}_EDGES", n.id), &n.edges)?;
         emit_u32_array(out, &format!("NODE_{}_GROUPS", n.id), &n.group_ids)?;
+        emit_u32_array(out, &format!("NODE_{}_GCONDS", n.id), &n.group_cond_ids)?;
     }
     let mut builder = phf_codegen::Map::new();
     for n in nodes {
@@ -185,7 +197,8 @@ pub fn write_node_db(
             "TraitNodeInfo {{ id: {}, tree_id: {}, pos_x: {}, pos_y: {}, \
              node_type: {}, flags: {}, sub_tree_id: {}, \
              entry_ids: &NODE_{id}_ENTRIES, cond_ids: &NODE_{id}_CONDS, \
-             edges: &NODE_{id}_EDGES, group_ids: &NODE_{id}_GROUPS }}",
+             edges: &NODE_{id}_EDGES, group_ids: &NODE_{id}_GROUPS, \
+             group_cond_ids: &NODE_{id}_GCONDS }}",
             n.id, n.tree_id, n.pos_x, n.pos_y, n.node_type, n.flags, n.sub_tree_id,
             id = n.id
         );

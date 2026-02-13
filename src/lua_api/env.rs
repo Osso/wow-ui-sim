@@ -21,8 +21,10 @@ pub(crate) fn next_timer_id() -> u64 {
 pub struct WowLuaEnv {
     pub(crate) lua: Lua,
     pub(crate) state: Rc<RefCell<SimState>>,
-    /// OnUpdate handlers that errored are suppressed to avoid repeated stack traces.
-    on_update_errors: RefCell<std::collections::HashSet<u64>>,
+    /// OnUpdate handlers: maps frame ID → consecutive error count.
+    /// Errors are logged but handlers keep firing (matching WoW behavior).
+    /// Only suppressed after many consecutive errors to avoid infinite spam.
+    on_update_errors: RefCell<std::collections::HashMap<u64, u32>>,
 }
 
 impl WowLuaEnv {
@@ -49,7 +51,7 @@ impl WowLuaEnv {
         Ok(Self {
             lua,
             state,
-            on_update_errors: RefCell::new(std::collections::HashSet::new()),
+            on_update_errors: RefCell::new(std::collections::HashMap::new()),
         })
     }
 
@@ -576,12 +578,18 @@ impl WowLuaEnv {
     }
 
     /// Execute OnUpdate Lua handlers for the given visible frame IDs.
+    ///
+    /// Matches WoW behavior: handlers continue firing after errors (WoW shows
+    /// an error popup but doesn't disable the handler). We suppress logging
+    /// after 100 consecutive errors per frame to avoid infinite spam.
     fn fire_on_update_handlers(&self, frame_ids: &[u64], elapsed: f64) {
         use super::script_helpers::{call_error_handler, get_frame_ref, get_script};
+        const SUPPRESS_THRESHOLD: u32 = 100;
         let elapsed_val = Value::Number(elapsed);
-        let mut errored_ids = self.on_update_errors.borrow_mut();
+        let mut error_counts = self.on_update_errors.borrow_mut();
         for widget_id in frame_ids {
-            if errored_ids.contains(widget_id) {
+            let count = error_counts.get(widget_id).copied().unwrap_or(0);
+            if count >= SUPPRESS_THRESHOLD {
                 continue;
             }
             let addon_idx = self.state.borrow().widgets.get(*widget_id)
@@ -589,12 +597,34 @@ impl WowLuaEnv {
             let start = Instant::now();
             if let Some(handler) = get_script(&self.lua, *widget_id, "OnUpdate")
                 && let Some(frame) = get_frame_ref(&self.lua, *widget_id)
-                    && let Err(e) = handler
-                        .call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()]))
-                    {
-                        call_error_handler(&self.lua, &e.to_string());
-                        errored_ids.insert(*widget_id);
+            {
+                match handler.call::<()>(MultiValue::from_vec(vec![frame, elapsed_val.clone()])) {
+                    Ok(()) => {
+                        // Success: reset consecutive error count.
+                        error_counts.remove(widget_id);
                     }
+                    Err(e) => {
+                        let new_count = count + 1;
+                        if new_count <= 3 || new_count == SUPPRESS_THRESHOLD {
+                            let name = self.state.borrow().widgets.get(*widget_id)
+                                .and_then(|f| f.name.clone())
+                                .unwrap_or_else(|| format!("id={}", widget_id));
+                            eprintln!(
+                                "[OnUpdate] error #{} in frame '{}': {}",
+                                new_count, name, e
+                            );
+                            call_error_handler(&self.lua, &e.to_string());
+                            if new_count == SUPPRESS_THRESHOLD {
+                                eprintln!(
+                                    "[OnUpdate] suppressing '{}' after {} consecutive errors",
+                                    name, SUPPRESS_THRESHOLD
+                                );
+                            }
+                        }
+                        error_counts.insert(*widget_id, new_count);
+                    }
+                }
+            }
             if let Some(idx) = addon_idx {
                 let elapsed_ms = start.elapsed().as_secs_f64() * 1000.0;
                 let mut state = self.state.borrow_mut();
