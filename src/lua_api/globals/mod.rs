@@ -51,6 +51,7 @@ pub mod enum_api;
 pub mod enum_data;
 pub mod font_api;
 pub mod global_frames;
+pub mod hero_talents;
 pub mod item_api;
 pub mod locale_api;
 pub mod mixin_api;

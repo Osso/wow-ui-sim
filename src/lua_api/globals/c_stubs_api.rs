@@ -70,8 +70,21 @@ fn register_c_class_talents(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<cra
     t.set("CanEditTalents", lua.create_function(|_, ()| Ok((true, Value::Nil)))?)?;
     t.set("GetStarterBuildActive", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetHasStarterBuild", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("GetHeroTalentSpecsForClassSpec", lua.create_function(|lua, (_cfg, _spec): (Option<i32>, Option<i32>)| {
-        Ok((Value::Table(lua.create_table()?), Value::Integer(71)))
+    t.set("GetHeroTalentSpecsForClassSpec", lua.create_function(|lua, (_cfg, spec_id): (Option<i32>, Option<i32>)| {
+        use super::hero_talents::{spec_id_to_spec_set, subtree_ids_for_spec, HERO_SPEC_UNLOCK_LEVEL};
+        let spec = spec_id.unwrap_or(66) as u32; // default to Protection
+        let spec_set = spec_id_to_spec_set(spec);
+        let tree_id = 790u32; // Paladin
+        match subtree_ids_for_spec(tree_id, spec_set) {
+            Some(ids) if !ids.is_empty() => {
+                let t = lua.create_table()?;
+                for (i, &id) in ids.iter().enumerate() {
+                    t.set(i as i64 + 1, id as i64)?;
+                }
+                Ok((Value::Table(t), Value::Integer(HERO_SPEC_UNLOCK_LEVEL as i64)))
+            }
+            _ => Ok((Value::Nil, Value::Integer(HERO_SPEC_UNLOCK_LEVEL as i64))),
+        }
     })?)?;
     let st = state;
     t.set("HasUnspentTalentPoints", lua.create_function(move |_, ()| Ok(super::traits_api::has_unspent_talent_points(&st.borrow())))?)?;
@@ -322,6 +335,7 @@ fn register_quest_global_functions(lua: &Lua) -> Result<()> {
     g.set("GetQuestProgressBarPercent", lua.create_function(|_, _quest_id: i32| Ok(0.0f64))?)?;
     g.set("QuestMapFrame_GetFocusedQuestID", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("IsModifiedClick", lua.create_function(|_, _action: String| Ok(false))?)?;
+    g.set("GetQuestLink", lua.create_function(|_, _quest_id: i32| Ok(Value::Nil))?)?;
     g.set("IsInJailersTower", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("IsOnGroundFloorInJailersTower", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetNumAutoQuestPopUps", lua.create_function(|_, ()| Ok(0i32))?)?;

@@ -7,6 +7,7 @@ use mlua::{UserDataMethods, Value};
 /// Add attribute methods to FrameHandle UserData.
 pub fn add_attribute_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     add_get_set_attribute_methods(methods);
+    add_execute_attribute(methods);
     add_frame_ref_methods(methods);
     add_security_and_input_stubs(methods);
 }
@@ -194,6 +195,14 @@ fn fire_on_attribute_changed(
         }
     }
     Ok(())
+}
+
+/// ExecuteAttribute - look up attribute as function and call it. No-op in sim.
+fn add_execute_attribute<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+    methods.add_method(
+        "ExecuteAttribute",
+        |_, _this, _args: mlua::MultiValue| Ok(Value::Nil),
+    );
 }
 
 /// SetFrameRef/GetFrameRef - secure frame reference stubs.

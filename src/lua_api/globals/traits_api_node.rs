@@ -52,10 +52,12 @@ fn set_node_dynamic_fields(
     let max_ranks = node_max_ranks(node);
     let s = state.borrow();
 
-    // SubTreeSelection nodes (type 3) are not instantiated by the Blizzard UI.
+    // SubTreeSelection nodes (type 3): visible only if spec condition met.
     if node.node_type == 3 {
-        info.set("isVisible", false)?;
-        return set_empty_ranks(info, lua, max_ranks);
+        let spec_ok = check_spec_conditions_met(node);
+        info.set("isVisible", spec_ok)?;
+        info.set("isAvailable", spec_ok)?;
+        return set_selection_node_ranks(info, lua, max_ranks, spec_ok);
     }
 
     // Hero subtree nodes stay fully talented.
@@ -124,7 +126,27 @@ fn set_fully_talented(
     Ok(())
 }
 
-/// Minimal rank fields for non-instantiated nodes (SubTreeSelection).
+/// Rank fields for SubTreeSelection nodes.
+/// When visible (spec matches), the node is available for interaction.
+fn set_selection_node_ranks(
+    info: &mlua::Table, lua: &Lua, max_ranks: i32, visible: bool,
+) -> Result<()> {
+    info.set("currentRank", 0)?;
+    info.set("activeRank", 0)?;
+    info.set("ranksPurchased", 0)?;
+    info.set("maxRanks", max_ranks)?;
+    info.set("canPurchaseRank", false)?;
+    info.set("canRefundRank", false)?;
+    info.set("meetsEdgeRequirements", visible)?;
+    info.set("visibleEdges", lua.create_table()?)?;
+    let ae = lua.create_table()?;
+    ae.set("entryID", 0i64)?;
+    ae.set("rank", 0)?;
+    info.set("activeEntry", ae)?;
+    Ok(())
+}
+
+/// Minimal rank fields for non-instantiated nodes.
 fn set_empty_ranks(info: &mlua::Table, lua: &Lua, max_ranks: i32) -> Result<()> {
     info.set("currentRank", 0)?;
     info.set("activeRank", 0)?;
@@ -425,6 +447,7 @@ fn evaluate_condition(cond: &crate::traits::TraitCondInfo, state: &SimState) -> 
 }
 
 pub fn create_sub_tree_info(lua: &Lua, (_config_id, sub_tree_id): (i32, i32)) -> Result<Value> {
+    use super::hero_talents::selection_node_ids_for_subtree;
     use crate::traits::TRAIT_SUBTREE_DB;
     let Some(st) = TRAIT_SUBTREE_DB.get(&(sub_tree_id as u32)) else {
         return Ok(Value::Nil);
@@ -438,5 +461,11 @@ pub fn create_sub_tree_info(lua: &Lua, (_config_id, sub_tree_id): (i32, i32)) ->
     info.set("isActive", true)?;
     info.set("posX", 0)?;
     info.set("posY", 0)?;
+    let sel_nodes = selection_node_ids_for_subtree(sub_tree_id as u32);
+    let sel_table = lua.create_table()?;
+    for (i, &nid) in sel_nodes.iter().enumerate() {
+        sel_table.set(i as i64 + 1, nid as i64)?;
+    }
+    info.set("subTreeSelectionNodeIDs", sel_table)?;
     Ok(Value::Table(info))
 }

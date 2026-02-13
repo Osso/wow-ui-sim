@@ -85,11 +85,13 @@ fn register_table_search(lua: &Lua) -> Result<()> {
 
     globals.set(
         "tContains",
-        lua.create_function(|_, (tbl, value): (mlua::Table, Value)| {
-            for pair in tbl.pairs::<Value, Value>() {
-                let (_, v) = pair?;
-                if v == value {
-                    return Ok(true);
+        lua.create_function(|_, (tbl, value): (Option<mlua::Table>, Value)| {
+            if let Some(tbl) = tbl {
+                for pair in tbl.pairs::<Value, Value>() {
+                    let (_, v) = pair?;
+                    if v == value {
+                        return Ok(true);
+                    }
                 }
             }
             Ok(false)
