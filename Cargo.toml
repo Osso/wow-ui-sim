@@ -60,6 +60,7 @@ sound = ["rodio"]
 [profile.release]
 lto = false
 incremental = true
+debug = "line-tables-only"
 
 [profile.dev]
 lto = false
