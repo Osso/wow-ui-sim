@@ -87,6 +87,42 @@ fn test_subtree_info_has_selection_node_ids() {
 }
 
 #[test]
+fn test_activate_hero_spec_lightsmith() {
+    let env = env();
+    // Activate Lightsmith by selecting entry 123361 on node 99838 (Protection's selection node)
+    // Then verify: nodeInfo has the selection, and GetActiveHeroTalentSpec returns subtree 49
+    let result: String = env
+        .eval(
+            r#"
+            -- Before activation: no active hero spec
+            assert(C_ClassTalents.GetActiveHeroTalentSpec() == nil, "should be nil before activation")
+
+            -- Selection node 99838 should be visible (Protection spec)
+            local nodeInfo = C_Traits.GetNodeInfo(1, 99838)
+            assert(nodeInfo.isVisible, "selection node should be visible for Protection")
+            assert(nodeInfo.activeEntry.entryID == 0, "no entry selected yet")
+
+            -- Activate Lightsmith: select entry 123361 (subtree 49) on node 99838
+            local ok = C_Traits.SetSelection(1, 99838, 123361)
+            assert(ok, "SetSelection should succeed")
+
+            -- Verify nodeInfo now reflects the selection
+            local updated = C_Traits.GetNodeInfo(1, 99838)
+            assert(updated.activeEntry.entryID == 123361, "entry should be 123361, got: " .. tostring(updated.activeEntry.entryID))
+            assert(updated.ranksPurchased == 1, "should have rank 1 after selection")
+
+            -- Verify GetActiveHeroTalentSpec returns Lightsmith's subtree
+            local active = C_ClassTalents.GetActiveHeroTalentSpec()
+            assert(active == 49, "active hero spec should be 49 (Lightsmith), got: " .. tostring(active))
+
+            return "ok"
+            "#,
+        )
+        .unwrap();
+    assert_eq!(result, "ok");
+}
+
+#[test]
 fn test_tcontains_nil_safe() {
     let env = env();
     // tContains should return false when passed nil table

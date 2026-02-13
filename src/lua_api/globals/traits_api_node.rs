@@ -53,11 +53,12 @@ fn set_node_dynamic_fields(
     let s = state.borrow();
 
     // SubTreeSelection nodes (type 3): visible only if spec condition met.
+    // Must read actual selection state so activation works.
     if node.node_type == 3 {
         let spec_ok = check_spec_conditions_met(node);
         info.set("isVisible", spec_ok)?;
         info.set("isAvailable", spec_ok)?;
-        return set_selection_node_ranks(info, lua, max_ranks, spec_ok);
+        return set_selection_node_ranks(info, lua, node, node_id, max_ranks, spec_ok, &s);
     }
 
     // Hero subtree nodes stay fully talented.
@@ -127,21 +128,30 @@ fn set_fully_talented(
 }
 
 /// Rank fields for SubTreeSelection nodes.
-/// When visible (spec matches), the node is available for interaction.
+/// Reads actual selection state so hero spec activation persists.
 fn set_selection_node_ranks(
-    info: &mlua::Table, lua: &Lua, max_ranks: i32, visible: bool,
+    info: &mlua::Table, lua: &Lua, node: &TraitNodeInfo,
+    node_id: u32, max_ranks: i32, visible: bool,
+    state: &crate::lua_api::SimState,
 ) -> Result<()> {
-    info.set("currentRank", 0)?;
-    info.set("activeRank", 0)?;
-    info.set("ranksPurchased", 0)?;
+    let ranks = *state.talents.node_ranks.get(&node_id).unwrap_or(&0) as i32;
+    info.set("currentRank", ranks)?;
+    info.set("activeRank", ranks)?;
+    info.set("ranksPurchased", ranks)?;
     info.set("maxRanks", max_ranks)?;
     info.set("canPurchaseRank", false)?;
-    info.set("canRefundRank", false)?;
+    info.set("canRefundRank", ranks > 0)?;
     info.set("meetsEdgeRequirements", visible)?;
     info.set("visibleEdges", lua.create_table()?)?;
     let ae = lua.create_table()?;
-    ae.set("entryID", 0i64)?;
-    ae.set("rank", 0)?;
+    let entry_id = if ranks > 0 {
+        state.talents.node_selections.get(&node_id).copied()
+            .unwrap_or_else(|| node.entry_ids.first().copied().unwrap_or(0))
+    } else {
+        0
+    };
+    ae.set("entryID", entry_id as i64)?;
+    ae.set("rank", ranks)?;
     info.set("activeEntry", ae)?;
     Ok(())
 }

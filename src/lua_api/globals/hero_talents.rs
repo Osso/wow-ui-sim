@@ -10,8 +10,12 @@
 //! - `C_ClassTalents.GetHeroTalentSpecsForClassSpec` → returns subtree IDs + unlock level
 //! - `C_Traits.GetSubTreeInfo` → returns `subTreeSelectionNodeIDs` per subtree
 
+use crate::lua_api::SimState;
 use crate::traits::{TRAIT_COND_DB, TRAIT_ENTRY_DB, TRAIT_NODE_DB, TRAIT_TREE_DB};
+use mlua::{Lua, Result, Value};
+use std::cell::RefCell;
 use std::collections::HashMap;
+use std::rc::Rc;
 use std::sync::LazyLock;
 
 /// Hero spec unlock level (WoW requires level 71 to pick a hero spec).
@@ -139,4 +143,79 @@ fn collect_entry_subtree_ids(entry_ids: &[u32]) -> Vec<u32> {
         }
     }
     ids
+}
+
+/// Get the active hero subtree ID from talent state, or None.
+///
+/// Checks SubTreeSelection nodes for the active spec (Protection, spec_set=28)
+/// in tree 790. If one has a selection, returns the selected entry's subtree ID.
+pub fn get_active_hero_subtree(state: &SimState) -> Value {
+    let spec_set = 28u32; // Protection
+    let tree_id = 790u32;
+    let Some(subtree_ids) = subtree_ids_for_spec(tree_id, spec_set) else {
+        return Value::Nil;
+    };
+    for &st_id in subtree_ids {
+        for &node_id in selection_node_ids_for_subtree(st_id) {
+            if let Some(&entry_id) = state.talents.node_selections.get(&node_id) {
+                if let Some(entry) = TRAIT_ENTRY_DB.get(&entry_id) {
+                    if entry.sub_tree_id != 0 {
+                        return Value::Integer(entry.sub_tree_id as i64);
+                    }
+                }
+            }
+        }
+    }
+    Value::Nil
+}
+
+/// C_ClassTalents namespace — class talent configuration and hero spec APIs.
+pub fn register_c_class_talents(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    let t = lua.create_table()?;
+    register_config_stubs(&t, lua)?;
+    register_hero_spec_apis(&t, lua, &state)?;
+    let st = Rc::clone(&state);
+    t.set("HasUnspentTalentPoints", lua.create_function(move |_, ()| {
+        Ok(super::traits_api::has_unspent_talent_points(&st.borrow()))
+    })?)?;
+    t.set("HasUnspentHeroTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
+    let st = state;
+    t.set("GetActiveHeroTalentSpec", lua.create_function(move |_, ()| {
+        Ok(get_active_hero_subtree(&st.borrow()))
+    })?)?;
+    lua.globals().set("C_ClassTalents", t)?;
+    Ok(())
+}
+
+fn register_config_stubs(t: &mlua::Table, lua: &Lua) -> Result<()> {
+    t.set("GetActiveConfigID", lua.create_function(|_, ()| Ok(1i32))?)?;
+    t.set("GetConfigIDsBySpecID", lua.create_function(|lua, _spec_id: Option<i32>| {
+        let t = lua.create_table()?;
+        t.set(1, 1i32)?;
+        Ok(t)
+    })?)?;
+    t.set("CanEditTalents", lua.create_function(|_, ()| Ok((true, Value::Nil)))?)?;
+    t.set("GetStarterBuildActive", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetHasStarterBuild", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetLastSelectedSavedConfigID", lua.create_function(|_, _spec_id: Option<i32>| Ok(Value::Nil))?)?;
+    t.set("CanChangeTalents", lua.create_function(|_, ()| Ok((true, false)))?)?;
+    Ok(())
+}
+
+fn register_hero_spec_apis(t: &mlua::Table, lua: &Lua, _state: &Rc<RefCell<SimState>>) -> Result<()> {
+    t.set("GetHeroTalentSpecsForClassSpec", lua.create_function(|lua, (_cfg, spec_id): (Option<i32>, Option<i32>)| {
+        let spec = spec_id.unwrap_or(66) as u32;
+        let spec_set = spec_id_to_spec_set(spec);
+        match subtree_ids_for_spec(790, spec_set) {
+            Some(ids) if !ids.is_empty() => {
+                let t = lua.create_table()?;
+                for (i, &id) in ids.iter().enumerate() {
+                    t.set(i as i64 + 1, id as i64)?;
+                }
+                Ok((Value::Table(t), Value::Integer(HERO_SPEC_UNLOCK_LEVEL as i64)))
+            }
+            _ => Ok((Value::Nil, Value::Integer(HERO_SPEC_UNLOCK_LEVEL as i64))),
+        }
+    })?)?;
+    Ok(())
 }

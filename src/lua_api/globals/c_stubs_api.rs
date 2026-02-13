@@ -20,7 +20,7 @@ use mlua::{Lua, ObjectLike, Result, Value};
 /// Register all additional C_* namespace stubs.
 pub fn register_c_stubs_api(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>) -> Result<()> {
     register_c_achievement_info(lua)?;
-    register_c_class_talents(lua, std::rc::Rc::clone(&state))?;
+    super::hero_talents::register_c_class_talents(lua, std::rc::Rc::clone(&state))?;
     register_c_guild(lua)?;
     register_c_guild_info(lua)?;
     register_c_lfg_list(lua)?;
@@ -59,42 +59,6 @@ fn register_c_achievement_info(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-fn register_c_class_talents(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>) -> Result<()> {
-    let t = lua.create_table()?;
-    t.set("GetActiveConfigID", lua.create_function(|_, ()| Ok(1i32))?)?;
-    t.set("GetConfigIDsBySpecID", lua.create_function(|lua, _spec_id: Option<i32>| {
-        let t = lua.create_table()?;
-        t.set(1, 1i32)?;
-        Ok(t)
-    })?)?;
-    t.set("CanEditTalents", lua.create_function(|_, ()| Ok((true, Value::Nil)))?)?;
-    t.set("GetStarterBuildActive", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("GetHasStarterBuild", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("GetHeroTalentSpecsForClassSpec", lua.create_function(|lua, (_cfg, spec_id): (Option<i32>, Option<i32>)| {
-        use super::hero_talents::{spec_id_to_spec_set, subtree_ids_for_spec, HERO_SPEC_UNLOCK_LEVEL};
-        let spec = spec_id.unwrap_or(66) as u32; // default to Protection
-        let spec_set = spec_id_to_spec_set(spec);
-        let tree_id = 790u32; // Paladin
-        match subtree_ids_for_spec(tree_id, spec_set) {
-            Some(ids) if !ids.is_empty() => {
-                let t = lua.create_table()?;
-                for (i, &id) in ids.iter().enumerate() {
-                    t.set(i as i64 + 1, id as i64)?;
-                }
-                Ok((Value::Table(t), Value::Integer(HERO_SPEC_UNLOCK_LEVEL as i64)))
-            }
-            _ => Ok((Value::Nil, Value::Integer(HERO_SPEC_UNLOCK_LEVEL as i64))),
-        }
-    })?)?;
-    let st = state;
-    t.set("HasUnspentTalentPoints", lua.create_function(move |_, ()| Ok(super::traits_api::has_unspent_talent_points(&st.borrow())))?)?;
-    t.set("HasUnspentHeroTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
-    t.set("GetActiveHeroTalentSpec", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
-    t.set("GetLastSelectedSavedConfigID", lua.create_function(|_, _spec_id: Option<i32>| Ok(Value::Nil))?)?;
-    t.set("CanChangeTalents", lua.create_function(|_, ()| Ok((true, false)))?)?;
-    lua.globals().set("C_ClassTalents", t)?;
-    Ok(())
-}
 
 fn register_c_guild(lua: &Lua) -> Result<()> {
     let t = lua.create_table()?;
