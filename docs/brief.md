@@ -27,14 +27,10 @@ wow-sim --no-addons --no-saved-vars --delay 100 --exec-lua \
   screenshot -o talents.webp --filter PlayerSpellsFrame
 ```
 
-## In Progress: 2048 Atlas Tier (pixelated talent icons)
-
-`atlas.rs`, `quad.wgsl`, `primitive.rs` updated to add tier 4 (2048px cells). `render.rs` and `quad_builders.rs` have incomplete atlas crop code — `load_texture_or_crop` and `remap_atlas_crop` referenced but not yet implemented. Needed so atlas sub-regions (40x40 icons from 2048x1024 textures) render at native resolution instead of being downscaled.
-
 ## Known Issues
 
-### ApplyButton (Activate) — rendering wrong
-NormalTexture/PushedTexture/DisabledTexture render as solid red overlays covering the three-slice children (Left/Right/Middle from `UI-Panel-Button-Up`). The `UIButtonTemplate` mixin sets `128-RedButton` atlas via `SetButtonArtKit()` in `InitButton()`, which overlaps the three-slice texture children.
+### ApplyButton (Activate) — no longer broken, low priority
+The "solid red overlay" issue described previously is gone — NormalTexture/PushedTexture/DisabledTexture children exist (created unconditionally by `create_frame.rs:313-316` for all buttons) but have no texture set, so they render nothing. Three-slice children (Left/Right/Center) render correctly via atlas. Note: all buttons waste 4 empty texture widgets; could be optimized to create on demand only.
 
 ### Edge lines hide too early in live GUI
 When purchasing a talent in the live GUI, edge lines briefly or permanently disappear.
