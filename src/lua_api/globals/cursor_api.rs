@@ -181,7 +181,8 @@ fn put_action_in_slot(state: &Rc<RefCell<SimState>>, lua: &Lua, action: u32, slo
 /// Fire ACTIONBAR_SLOT_CHANGED and push button state updates.
 fn fire_action_bar_updates(state: &Rc<RefCell<SimState>>, lua: &Lua) -> Result<()> {
     let fire: mlua::Function = lua.globals().get("FireEvent")?;
-    fire.call::<()>(lua.create_string("ACTIONBAR_SLOT_CHANGED")?)?;
+    // arg1=0 means "all slots changed" — without it, button handlers skip the update.
+    fire.call::<()>((lua.create_string("ACTIONBAR_SLOT_CHANGED")?, 0))?;
     fire.call::<()>(lua.create_string("ACTIONBAR_UPDATE_STATE")?)?;
     super::action_bar_api::push_action_button_state_update(state, lua)?;
     Ok(())

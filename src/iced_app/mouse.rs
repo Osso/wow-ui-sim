@@ -95,7 +95,13 @@ impl App {
         if was_dragging {
             self.finish_drag(drag_source, released_on);
         } else if let Some(frame_id) = released_on {
-            {
+            // WoW fires OnReceiveDrag on any click when cursor holds an item,
+            // even without an actual drag gesture.  When it does, OnClick is
+            // NOT fired — otherwise the just-placed action would be cast.
+            let cursor_has_item = self.env.borrow().state().borrow().cursor_item.is_some();
+            if cursor_has_item {
+                self.fire_receive_drag(frame_id);
+            } else {
                 let env = self.env.borrow();
                 let button_val =
                     mlua::Value::String(env.lua().create_string("LeftButton").unwrap());
@@ -207,34 +213,41 @@ impl App {
 
     /// Fire OnDragStop on source and OnReceiveDrag on target.
     fn finish_drag(&mut self, source: Option<u64>, target: Option<u64>) {
-        let env = self.env.borrow();
-        let lua = env.lua();
-        let button_val = mlua::Value::String(lua.create_string("LeftButton").unwrap());
-
         // Fire OnDragStop on the source frame (walk up parent chain).
         if let Some(src_id) = source {
+            let env = self.env.borrow();
+            let lua = env.lua();
+            let button_val = mlua::Value::String(lua.create_string("LeftButton").unwrap());
             let mut current = Some(src_id);
             while let Some(id) = current {
                 if env.has_script_handler(id, "OnDragStop") {
                     eprintln!("[drag] OnDragStop fired on frame {}", id);
-                    let _ = env.fire_script_handler(id, "OnDragStop", vec![button_val.clone()]);
+                    let _ = env.fire_script_handler(id, "OnDragStop", vec![button_val]);
                     break;
                 }
                 current = env.state().borrow().widgets.get(id).and_then(|f| f.parent_id);
             }
         }
 
-        // Fire OnReceiveDrag on the target frame (walk up parent chain).
         if let Some(tgt_id) = target {
-            let mut current = Some(tgt_id);
-            while let Some(id) = current {
-                if env.has_script_handler(id, "OnReceiveDrag") {
-                    eprintln!("[drag] OnReceiveDrag fired on frame {}", id);
-                    let _ = env.fire_script_handler(id, "OnReceiveDrag", vec![button_val]);
-                    return;
-                }
-                current = env.state().borrow().widgets.get(id).and_then(|f| f.parent_id);
+            self.fire_receive_drag(tgt_id);
+        }
+    }
+
+    /// Fire OnReceiveDrag on a frame (walks up parent chain).
+    /// Used both at end of drag and on click when cursor holds an item.
+    fn fire_receive_drag(&mut self, frame_id: u64) {
+        let env = self.env.borrow();
+        let lua = env.lua();
+        let button_val = mlua::Value::String(lua.create_string("LeftButton").unwrap());
+        let mut current = Some(frame_id);
+        while let Some(id) = current {
+            if env.has_script_handler(id, "OnReceiveDrag") {
+                eprintln!("[drag] OnReceiveDrag fired on frame {}", id);
+                let _ = env.fire_script_handler(id, "OnReceiveDrag", vec![button_val]);
+                return;
             }
+            current = env.state().borrow().widgets.get(id).and_then(|f| f.parent_id);
         }
     }
 

@@ -441,9 +441,9 @@ impl App {
         let tex_path = format!("Interface\\{}", path.replace('/', "\\"));
 
         const ICON_SIZE: f32 = 32.0;
-        // Offset the icon slightly from the cursor tip so it's clearly attached.
+        // WoW centers the drag icon on the cursor position.
         let icon_bounds = Rectangle::new(
-            Point::new(pos.x + 4.0, pos.y + 4.0),
+            Point::new(pos.x - ICON_SIZE * 0.5, pos.y - ICON_SIZE * 0.5),
             Size::new(ICON_SIZE, ICON_SIZE),
         );
         overlay.push_textured_path(
