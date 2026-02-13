@@ -160,6 +160,7 @@ fn register_c_nameplate(lua: &Lua) -> Result<()> {
     t.set("SetNamePlateEnemyClickThrough", lua.create_function(|_, _c: bool| Ok(()))?)?;
     t.set("SetNamePlateFriendlyClickThrough", lua.create_function(|_, _c: bool| Ok(()))?)?;
     t.set("SetTargetClampingInsets", lua.create_function(|_, (_top, _bottom): (f64, f64)| Ok(()))?)?;
+    t.set("SetNamePlateSize", lua.create_function(|_, (_w, _h): (f64, f64)| Ok(()))?)?;
     lua.globals().set("C_NamePlate", t)?;
     Ok(())
 }

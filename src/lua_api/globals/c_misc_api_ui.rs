@@ -256,6 +256,7 @@ fn register_c_game_rules(lua: &Lua) -> Result<()> {
     t.set("IsStandard", lua.create_function(|_, ()| Ok(true))?)?;
     t.set("IsWoWHack", lua.create_function(|_, ()| Ok(false))?)?;
     t.set("GetGameRuleAsFrameStrata", lua.create_function(|_, _r: Value| Ok(Value::Nil))?)?;
+    t.set("IsPersonalResourceDisplayEnabled", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_GameRules", t)?;
     Ok(())
 }

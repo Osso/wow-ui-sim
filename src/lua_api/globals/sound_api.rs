@@ -71,8 +71,13 @@ fn create_stop_sound(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Fu
 }
 
 /// Register C_Sound namespace with IsPlaying and stub methods.
+/// Also includes PlaySound/PlaySoundFile since Sound.lua reassigns globals from C_Sound.
 fn register_c_sound(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     let snd = lua.create_table()?;
+
+    // C_Sound.PlaySound — Sound.lua does `PlaySound = C_Sound.PlaySound`
+    snd.set("PlaySound", create_play_sound(lua, Rc::clone(&state))?)?;
+    snd.set("PlaySoundFile", create_play_sound_file(lua, Rc::clone(&state))?)?;
 
     let st = Rc::clone(&state);
     snd.set("IsPlaying", lua.create_function(move |_, handle: Value| {

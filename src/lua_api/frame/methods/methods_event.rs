@@ -55,6 +55,12 @@ fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
         Ok(false)
     });
 
+    // RegisterEventCallback(event, callbackContainer) - callback-based event registration
+    methods.add_method(
+        "RegisterEventCallback",
+        |_, _this, (_event, _cb): (Value, Value)| Ok(()),
+    );
+
     // RegisterAllEvents() - register for all events
     methods.add_method("RegisterAllEvents", |_, this, ()| {
         let mut state = this.state.borrow_mut();
