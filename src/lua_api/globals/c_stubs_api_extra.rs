@@ -156,6 +156,9 @@ fn register_missing_constants(lua: &Lua, g: &mlua::Table) -> Result<()> {
     register_bag_constants(lua, g)?;
     register_chat_constants(lua, g)?;
     register_pet_inventory_constants(lua, g)?;
+    // Defined in Blizzard_UIParent/Mainline/UIParent.lua but needed earlier
+    // by Blizzard_GameTooltip which loads before Blizzard_UIParent.
+    g.set("TOOLTIP_UPDATE_TIME", 0.2f64)?;
     Ok(())
 }
 
