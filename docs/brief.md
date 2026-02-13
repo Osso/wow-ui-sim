@@ -32,9 +32,7 @@ wow-sim --no-addons --no-saved-vars --delay 100 --exec-lua \
 ### ApplyButton (Activate) — no longer broken, low priority
 The "solid red overlay" issue described previously is gone — NormalTexture/PushedTexture/DisabledTexture children exist (created unconditionally by `create_frame.rs:313-316` for all buttons) but have no texture set, so they render nothing. Three-slice children (Left/Right/Center) render correctly via atlas. Note: all buttons waste 4 empty texture widgets; could be optimized to create on demand only.
 
-### Edge lines hide too early in live GUI
-When purchasing a talent in the live GUI, edge lines briefly or permanently disappear.
+### Edge lines hide too early in live GUI — fixed
+When purchasing a talent, `UpdateNodeInfo()` during OnUpdate dirtied button rects (via SetVisualState → SetFrameLevel). Arrow edge `UpdatePosition()` then called `IsRectValid()` which returned false (rect dirty), triggering `MarkEdgesDirty` which modified `buttonsWithDirtyEdges` mid-`pairs()` iteration → `"invalid key to next"` error, dropping edges from 158 to 57.
 
-**Pool system:** Blizzard's `Pools.lua` (line 825) overwrites the Rust `CreateFramePool` shim. The real pools use `SecureObjectPoolMixin` with `Pool_HideAndClearAnchors` as the default resetter, which calls `Hide()` + `ClearAllPoints()` on release.
-
-**Flow:** `ReleaseEdge` → `pool:Release()` → `Pool_HideAndClearAnchors` (Hide+ClearAllPoints) → then `AcquireEdge` → `pool:Acquire()` → `Init()` → `Show()`. This is atomic within one OnUpdate handler, so edges should be hidden then immediately replaced.
+**Fix:** `IsRectValid()` now lazily resolves layout via `resolve_rect_if_dirty()` (like GetSize/GetWidth already do). Also added missing `issecretvalue`/`canaccessvalue`/`canaccesstable` stubs needed by `Pools.lua`/`SecureTypes.lua`.

@@ -24,7 +24,6 @@ use super::globals::item_api::register_item_api;
 use super::globals::locale_api::register_locale_api;
 use super::globals::mixin_api::register_mixin_api;
 use super::globals::player_api::register_player_api;
-use super::globals::pool_api::register_pool_api;
 use super::globals::quest_frames::register_quest_frames;
 use super::globals::register_all_ui_strings;
 use super::globals::settings_api::register_settings_api;
@@ -437,7 +436,6 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_sound_api(lua, Rc::clone(state))?;
     register_unit_api(lua, Rc::clone(state))?;
     register_addon_api(lua, Rc::clone(state))?;
-    register_pool_api(lua, Rc::clone(state))?;
     register_timer_api(lua, Rc::clone(state))?;
     register_dropdown_api(lua, Rc::clone(state))?;
     register_cvar_api(lua, Rc::clone(state))?;

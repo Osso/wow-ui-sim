@@ -19,7 +19,6 @@
 //! - `settings_api` - Settings namespace for addon configuration UI
 //! - `mixin_api` - UI mixins (POIButtonMixin, MapCanvasPinMixin, Menu, MenuUtil)
 //! - `player_api` - Player related functions (BattleNet, specialization, action bars)
-//! - `pool_api` - Pool creation (CreateTexturePool, CreateFramePool, CreateObjectPool)
 //! - `cvar_api` - CVar and key binding functions
 //! - `global_frames` - Global frame objects (UIParent, WorldFrame, PlayerFrame, etc.)
 //!
@@ -56,7 +55,6 @@ pub mod locale_api;
 pub mod mixin_api;
 pub mod action_bar_api;
 pub mod player_api;
-pub mod pool_api;
 pub mod spell_api;
 pub mod spellbook_data;
 pub mod quest_frames;
