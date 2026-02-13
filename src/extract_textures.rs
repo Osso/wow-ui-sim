@@ -103,9 +103,11 @@ pub fn convert_to_webp(src: &Path, dst: &Path) -> Result<(), Box<dyn std::error:
         let rgba = blp_img.to_rgba8();
         let (width, height) = rgba.dimensions();
 
-        // Create new image with current image crate version
+        // Fix 1-bit alpha: image-blp decodes 1-bit alpha as literal 0/1 byte values
+        let mut pixels = rgba.into_raw();
+        crate::texture::fix_1bit_alpha(&mut pixels);
         let img =
-            image::RgbaImage::from_raw(width, height, rgba.into_raw()).expect("invalid dimensions");
+            image::RgbaImage::from_raw(width, height, pixels).expect("invalid dimensions");
         img.save(dst)?;
     } else {
         let img = image::open(src)?;

@@ -255,7 +255,7 @@ fn normalize_wow_path(path: &str) -> String {
 /// The image-blp crate decodes this as byte values 0 or 1 instead of 0 or
 /// 255, making textures nearly invisible. This remaps: 0 stays 0, any
 /// non-zero alpha becomes 255.
-fn fix_1bit_alpha(pixels: &mut [u8]) {
+pub fn fix_1bit_alpha(pixels: &mut [u8]) {
     // Check if alpha looks like 1-bit (max alpha value <= 1)
     let max_alpha = pixels.iter().skip(3).step_by(4).copied().max().unwrap_or(0);
     if max_alpha > 1 {

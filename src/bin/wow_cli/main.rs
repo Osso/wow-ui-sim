@@ -315,7 +315,9 @@ fn convert_texture(input: &PathBuf, output: Option<&PathBuf>) {
         }
     };
 
-    let rgba = img.to_rgba8();
+    let mut rgba = img.to_rgba8();
+    // Fix 1-bit alpha: image-blp decodes 1-bit alpha as literal 0/1 byte values
+    wow_ui_sim::texture::fix_1bit_alpha(rgba.as_mut());
     if let Err(e) = rgba.save(&output_path) {
         eprintln!("Error saving {}: {}", output_path.display(), e);
         std::process::exit(1);
