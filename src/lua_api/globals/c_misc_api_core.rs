@@ -329,6 +329,9 @@ fn register_c_pvp(lua: &Lua) -> Result<()> {
     t.set("GetPvpTalentsUnlockedLevel", lua.create_function(|_, ()| Ok(10i32))?)?;
     t.set("GetWarModeRewardBonusDefault", lua.create_function(|_, ()| Ok(10i32))?)?;
     t.set("GetWarModeRewardBonus", lua.create_function(|_, ()| Ok(10i32))?)?;
+    t.set("CanToggleWarMode", lua.create_function(|_, _desired: Value| Ok(false))?)?;
+    t.set("IsWarModeDesired", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("CanToggleWarModeInArea", lua.create_function(|_, ()| Ok(false))?)?;
     lua.globals().set("C_PvP", t)?;
     Ok(())
 }
