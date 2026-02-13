@@ -203,10 +203,19 @@ pub const RACE_DATA: &[(&str, &str, &str)] = &[
 
 /// Rot damage intensity levels: (label, percentage of max HP per tick).
 pub const ROT_DAMAGE_LEVELS: &[(&str, f64)] = &[
+    ("Off", 0.0),
     ("Light (1%)", 0.01),
     ("Medium (3%)", 0.03),
     ("Heavy (5%)", 0.05),
     ("Brutal (10%)", 0.10),
+];
+
+/// XP bar levels: (label, fraction of XP bar filled). "Max Level" hides the bar entirely.
+pub const XP_LEVELS: &[(&str, f64)] = &[
+    ("Max Level", 0.0),
+    ("33%", 0.33),
+    ("66%", 0.66),
+    ("100%", 1.0),
 ];
 
 /// Pick a random WoW-style player name using the current time as a seed.

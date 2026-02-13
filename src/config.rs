@@ -24,10 +24,8 @@ pub struct SimConfig {
     pub player_race: String,
     #[serde(default = "default_rot_level")]
     pub rot_damage_level: String,
-    #[serde(default)]
-    pub rot_damage_enabled: bool,
-    #[serde(default = "default_true")]
-    pub xp_bar_visible: bool,
+    #[serde(default = "default_xp_level")]
+    pub xp_level: String,
     /// Path the config was loaded from (not serialized).
     #[serde(skip)]
     path: PathBuf,
@@ -35,8 +33,8 @@ pub struct SimConfig {
 
 fn default_class() -> String { "Warrior".into() }
 fn default_race() -> String { "Human".into() }
-fn default_rot_level() -> String { "Light (1%)".into() }
-fn default_true() -> bool { true }
+fn default_rot_level() -> String { "Off".into() }
+fn default_xp_level() -> String { "33%".into() }
 
 impl Default for SimConfig {
     fn default() -> Self {
@@ -44,8 +42,7 @@ impl Default for SimConfig {
             player_class: default_class(),
             player_race: default_race(),
             rot_damage_level: default_rot_level(),
-            rot_damage_enabled: false,
-            xp_bar_visible: true,
+            xp_level: default_xp_level(),
             path: default_path(),
         }
     }

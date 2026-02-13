@@ -34,16 +34,20 @@ impl App {
             Message::InspectorMouseEnabledToggled(val) => { self.inspector_state.mouse_enabled = val; Task::none() }
             Message::InspectorApply => { self.handle_inspector_apply(); Task::none() }
             Message::ToggleFramesPanel => { self.frames_panel_collapsed = !self.frames_panel_collapsed; Task::none() }
-            Message::ToggleXpBar(visible) => { self.handle_toggle_xp_bar(visible); Task::none() }
-            Message::ToggleRotDamage(enabled) => {
-                self.rot_damage_enabled = enabled;
-                self.save_config();
+            Message::XpLevelChanged(ref label) => { self.handle_xp_level_changed(label); Task::none() }
+            Message::KeyPress(ref key, ref text) => {
+                if key == "ESCAPE" && self.options_modal_visible {
+                    self.options_modal_visible = false;
+                } else {
+                    self.handle_key_press(key, text.as_deref());
+                }
                 Task::none()
             }
-            Message::KeyPress(ref key, ref text) => { self.handle_key_press(key, text.as_deref()); Task::none() }
             Message::PlayerClassChanged(ref name) => { self.handle_player_class_changed(name); Task::none() }
             Message::PlayerRaceChanged(ref name) => { self.handle_player_race_changed(name); Task::none() }
             Message::RotDamageLevelChanged(ref label) => { self.handle_rot_damage_level_changed(label); Task::none() }
+            Message::ToggleOptionsModal => { self.options_modal_visible = !self.options_modal_visible; Task::none() }
+            Message::CloseOptionsModal => { self.options_modal_visible = false; Task::none() }
         };
 
         Task::batch([task, ipc_task])
@@ -85,18 +89,27 @@ impl App {
         self.invalidate();
     }
 
-    fn handle_toggle_xp_bar(&mut self, visible: bool) {
-        self.xp_bar_visible = visible;
-        let at_max = if visible { "false" } else { "true" };
-        let event = if visible { "ENABLE_XP_GAIN" } else { "DISABLE_XP_GAIN" };
+    fn handle_xp_level_changed(&mut self, label: &str) {
+        use crate::lua_api::state::XP_LEVELS;
+        self.selected_xp_level = label.to_string();
+        let fraction = XP_LEVELS.iter()
+            .find(|(l, _)| *l == label)
+            .map(|(_, f)| *f)
+            .unwrap_or(0.0);
+        let at_max = fraction == 0.0;
+        let event = if at_max { "DISABLE_XP_GAIN" } else { "ENABLE_XP_GAIN" };
         {
             let env = self.env.borrow();
+            let xp_max = 89_750i32;
+            let xp_current = (xp_max as f64 * fraction) as i32;
             let lua_code = format!(
-                "IsPlayerAtEffectiveMaxLevel = function() return {} end",
-                at_max
+                "IsPlayerAtEffectiveMaxLevel = function() return {} end; \
+                 UnitXP = function() return {} end; \
+                 UnitXPMax = function() return {} end",
+                at_max, xp_current, xp_max
             );
             if let Err(e) = env.exec(&lua_code) {
-                self.log_messages.push(format!("XP toggle error: {}", e));
+                self.log_messages.push(format!("XP level error: {}", e));
             }
             if let Err(e) = env.fire_event(event) {
                 self.log_messages.push(format!("XP event error: {}", e));
@@ -278,7 +291,7 @@ impl App {
 
 
     fn tick_party_health(&mut self) {
-        if !self.rot_damage_enabled {
+        if self.selected_rot_level == "Off" {
             return;
         }
         let now = std::time::Instant::now();
@@ -356,8 +369,7 @@ impl App {
         config.player_class = self.selected_class.clone();
         config.player_race = self.selected_race.clone();
         config.rot_damage_level = self.selected_rot_level.clone();
-        config.rot_damage_enabled = self.rot_damage_enabled;
-        config.xp_bar_visible = self.xp_bar_visible;
+        config.xp_level = self.selected_xp_level.clone();
         config.save();
     }
 

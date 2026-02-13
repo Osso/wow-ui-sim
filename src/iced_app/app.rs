@@ -202,18 +202,18 @@ pub struct App {
     pub(crate) saved_vars: Option<SavedVariablesManager>,
     /// Lua code to execute after first frame (from --exec-lua).
     pub(crate) pending_exec_lua: Option<String>,
-    /// Whether the XP bar is currently visible (toggled by UI checkbox).
-    pub(crate) xp_bar_visible: bool,
+    /// Currently selected XP bar level label.
+    pub(crate) selected_xp_level: String,
     /// Last time party health was ticked (random walk every 2 seconds).
     pub(crate) last_party_health_tick: std::time::Instant,
-    /// Whether rot damage is applied to party members every tick.
-    pub(crate) rot_damage_enabled: bool,
     /// Currently selected player class name (for picker display).
     pub(crate) selected_class: String,
     /// Currently selected player race name (for picker display).
     pub(crate) selected_race: String,
     /// Currently selected rot damage level label.
     pub(crate) selected_rot_level: String,
+    /// Whether the options modal is visible.
+    pub(crate) options_modal_visible: bool,
 }
 
 impl App {
@@ -301,12 +301,12 @@ impl App {
             last_on_update_time: now,
             saved_vars,
             pending_exec_lua: INIT_EXEC_LUA.with(|cell| cell.borrow_mut().take()),
-            xp_bar_visible: config.xp_bar_visible,
+            selected_xp_level: config.xp_level.clone(),
             last_party_health_tick: now,
-            rot_damage_enabled: config.rot_damage_enabled,
             selected_class: config.player_class,
             selected_race: config.player_race,
             selected_rot_level: config.rot_damage_level,
+            options_modal_visible: false,
         }
     }
 
@@ -453,7 +453,7 @@ impl App {
         drop(env);
 
         // Slow heartbeat: rot damage needs 2s ticks
-        if self.rot_damage_enabled {
+        if self.selected_rot_level != "Off" {
             return Some(std::time::Duration::from_secs(2));
         }
 

@@ -2,8 +2,8 @@
 
 use iced::widget::shader::Shader;
 use iced::widget::{
-    button, checkbox, column, container, pick_list, row, scrollable, space, stack, text,
-    text_input, Column, Container,
+    button, checkbox, column, container, mouse_area, opaque, pick_list, row, scrollable, space,
+    stack, text, text_input, Column, Container,
 };
 use iced::{Border, Color, Element, Font, Length, Padding, Subscription};
 
@@ -89,34 +89,6 @@ impl App {
         }
     }
 
-    /// Build the player configuration row (class, race, damage level dropdowns).
-    fn build_player_config_row(&self) -> Element<'_, Message> {
-        use crate::lua_api::state::{CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS};
-
-        let class_options: Vec<String> = CLASS_LABELS.iter().map(|s| s.to_string()).collect();
-        let race_options: Vec<String> = RACE_DATA.iter().map(|(n, _, _)| n.to_string()).collect();
-        let rot_options: Vec<String> = ROT_DAMAGE_LEVELS.iter().map(|(l, _)| l.to_string()).collect();
-
-        row![
-            text("Class:").size(12).color(palette::TEXT_SECONDARY),
-            pick_list(class_options, Some(self.selected_class.clone()), Message::PlayerClassChanged)
-                .text_size(12).width(130).style(pick_list_style),
-            text("Race:").size(12).color(palette::TEXT_SECONDARY),
-            pick_list(race_options, Some(self.selected_race.clone()), Message::PlayerRaceChanged)
-                .text_size(12).width(130).style(pick_list_style),
-            space::horizontal(),
-            checkbox(self.xp_bar_visible)
-                .label("XP Bar").on_toggle(Message::ToggleXpBar).size(14).text_size(12),
-            checkbox(self.rot_damage_enabled)
-                .label("Rot Damage").on_toggle(Message::ToggleRotDamage).size(14).text_size(12),
-            pick_list(rot_options, Some(self.selected_rot_level.clone()), Message::RotDamageLevelChanged)
-                .text_size(12).width(120).style(pick_list_style),
-        ]
-        .spacing(6)
-        .align_y(iced::Alignment::Center)
-        .into()
-    }
-
     /// Build the event trigger buttons row.
     fn build_event_buttons(&self) -> Element<'_, Message> {
         row![
@@ -190,25 +162,103 @@ impl App {
             .align_x(iced::alignment::Horizontal::Right);
         let content_row = stack![render_container, sidebar_positioned];
 
-        let main_column = column![
-            title,
-            content_row,
-            self.build_player_config_row(),
-            self.build_event_buttons(),
+        let bottom_row = row![
+            button(text("Options").size(12))
+                .on_press(Message::ToggleOptionsModal)
+                .style(event_button_style),
             self.build_command_row(),
-            self.build_console(),
         ]
-        .spacing(5)
-        .padding(7);
+        .spacing(6)
+        .align_y(iced::Alignment::Center);
 
-        container(main_column)
+        let main_column = column![title, content_row, bottom_row, self.build_console()]
+            .spacing(5)
+            .padding(7);
+
+        let base: Element<'_, Message> = container(main_column)
             .width(Length::Fill)
             .height(Length::Fill)
             .style(|_| container::Style {
                 background: Some(iced::Background::Color(palette::BG_DARK)),
                 ..Default::default()
             })
-            .into()
+            .into();
+
+        if self.options_modal_visible {
+            self.wrap_with_modal(base)
+        } else {
+            base
+        }
+    }
+
+    /// Wrap the base view with a modal overlay containing options.
+    fn wrap_with_modal<'a>(&'a self, base: Element<'a, Message>) -> Element<'a, Message> {
+        let modal_content = container(
+            column![
+                self.build_modal_title(),
+                self.build_player_config_column(),
+                self.build_event_buttons(),
+            ]
+            .spacing(12)
+            .padding(16),
+        )
+        .width(340)
+        .style(|_| container::Style {
+            background: Some(iced::Background::Color(palette::BG_PANEL)),
+            border: Border {
+                color: palette::BORDER_HIGHLIGHT,
+                width: 1.0,
+                radius: 6.0.into(),
+            },
+            ..Default::default()
+        });
+
+        let backdrop = mouse_area(
+            container(opaque(modal_content))
+                .width(Length::Fill)
+                .height(Length::Fill)
+                .center(Length::Fill),
+        )
+        .on_press(Message::CloseOptionsModal);
+
+        stack![base, opaque(backdrop)].into()
+    }
+
+    /// Title row for the options modal with close button.
+    fn build_modal_title(&self) -> Element<'_, Message> {
+        row![
+            text("Options").size(16).color(palette::GOLD),
+            space::horizontal(),
+            button(text("x").size(14))
+                .on_press(Message::CloseOptionsModal)
+                .padding(2)
+                .style(|_, _| button::Style {
+                    background: Some(iced::Background::Color(Color::TRANSPARENT)),
+                    text_color: palette::TEXT_SECONDARY,
+                    ..Default::default()
+                }),
+        ]
+        .align_y(iced::Alignment::Center)
+        .into()
+    }
+
+    /// Vertical layout of player config options for the modal.
+    fn build_player_config_column(&self) -> Element<'_, Message> {
+        use crate::lua_api::state::{CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS, XP_LEVELS};
+
+        let class_opts: Vec<String> = CLASS_LABELS.iter().map(|s| s.to_string()).collect();
+        let race_opts: Vec<String> = RACE_DATA.iter().map(|(n, _, _)| n.to_string()).collect();
+        let xp_opts: Vec<String> = XP_LEVELS.iter().map(|(l, _)| l.to_string()).collect();
+        let rot_opts: Vec<String> = ROT_DAMAGE_LEVELS.iter().map(|(l, _)| l.to_string()).collect();
+
+        column![
+            labeled_pick_list("Class:", class_opts, &self.selected_class, Message::PlayerClassChanged),
+            labeled_pick_list("Race:", race_opts, &self.selected_race, Message::PlayerRaceChanged),
+            labeled_pick_list("XP Bar:", xp_opts, &self.selected_xp_level, Message::XpLevelChanged),
+            labeled_pick_list("Rot Damage:", rot_opts, &self.selected_rot_level, Message::RotDamageLevelChanged),
+        ]
+        .spacing(8)
+        .into()
     }
 
     pub fn subscription(&self) -> Subscription<Message> {
@@ -557,5 +607,23 @@ impl App {
 
         Some(current)
     }
+}
 
+/// A label + pick_list row used in the options modal.
+fn labeled_pick_list<'a>(
+    label: &'a str,
+    options: Vec<String>,
+    selected: &str,
+    on_select: fn(String) -> Message,
+) -> Element<'a, Message> {
+    row![
+        text(label).size(12).color(palette::TEXT_SECONDARY).width(80),
+        pick_list(options, Some(selected.to_string()), on_select)
+            .text_size(12)
+            .width(Length::Fill)
+            .style(pick_list_style),
+    ]
+    .spacing(6)
+    .align_y(iced::Alignment::Center)
+    .into()
 }

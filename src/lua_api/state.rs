@@ -16,7 +16,7 @@ use std::time::Instant;
 // Re-export game data types so existing `crate::lua_api::state::X` imports keep working.
 pub use super::game_data::{
     AuraInfo, CastingState, PartyMember, TargetInfo,
-    CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS,
+    CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS, XP_LEVELS,
     build_target_info, tick_party_health,
 };
 pub use super::game_data::SpellCooldownState;
@@ -264,7 +264,7 @@ impl Default for SimState {
             player_health_max: 100_000,
             player_class_index: 2,  // Paladin
             player_race_index: 0,   // Human
-            rot_damage_level: 0,    // Light
+            rot_damage_level: 0,    // Off
             player_buffs: default_player_buffs(),
             fps: 0.0,
             start_time: Instant::now(),

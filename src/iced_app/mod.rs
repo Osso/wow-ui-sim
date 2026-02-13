@@ -82,10 +82,8 @@ pub enum Message {
     InspectorApply,
     /// Toggle frames panel collapsed state.
     ToggleFramesPanel,
-    /// Toggle XP bar visibility (simulate max level vs leveling).
-    ToggleXpBar(bool),
-    /// Toggle periodic rot damage to all party members.
-    ToggleRotDamage(bool),
+    /// XP bar level changed via dropdown.
+    XpLevelChanged(String),
     /// Keyboard input dispatched to Lua (WoW key name, e.g. "ESCAPE", "ENTER", "A")
     /// plus optional raw text for character input into focused EditBox.
     KeyPress(String, Option<String>),
@@ -95,6 +93,10 @@ pub enum Message {
     PlayerRaceChanged(String),
     /// Rot damage level changed via dropdown.
     RotDamageLevelChanged(String),
+    /// Toggle options modal visibility.
+    ToggleOptionsModal,
+    /// Close options modal (backdrop click or Escape).
+    CloseOptionsModal,
 }
 
 /// Run the iced UI with the given Lua environment.
