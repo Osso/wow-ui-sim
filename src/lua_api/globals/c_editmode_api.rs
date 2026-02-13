@@ -22,12 +22,12 @@ pub fn register_c_editmode_api(lua: &Lua) -> Result<()> {
         })?,
     )?;
 
-    // GetAccountSettings: returns array of { setting, value } entries for enums 0–28.
+    // GetAccountSettings: returns array of { setting, value } entries for enums 0–32.
     t.set(
         "GetAccountSettings",
         lua.create_function(|lua, ()| {
             let settings = lua.create_table()?;
-            for i in 0..=28 {
+            for i in 0..=32 {
                 let entry = lua.create_table()?;
                 entry.set("setting", i)?;
                 entry.set("value", account_setting_default(i))?;
@@ -72,7 +72,7 @@ pub fn register_c_editmode_api(lua: &Lua) -> Result<()> {
 }
 
 /// Default value for an account setting enum index.
-/// Enum values 0–28 map to EditMode account settings. Most "Show*" = 1 (visible).
+/// Enum values 0–32 map to EditMode account settings. Most "Show*" = 1 (visible).
 fn account_setting_default(setting: i32) -> i32 {
     match setting {
         // ShowGrid = 0

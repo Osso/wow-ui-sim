@@ -139,8 +139,8 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     // Apply SetAllPoints from template
     apply_template_set_all_points(lua, template, frame_name);
 
-    // Apply key values from template
-    if let Some(key_values) = template.key_values() {
+    // Apply key values from template (handles multiple <KeyValues> blocks)
+    for key_values in template.all_key_values() {
         apply_key_values(lua, key_values, frame_name);
     }
 
@@ -628,17 +628,18 @@ fn apply_animation_groups(lua: &Lua, frame: &FrameXml, frame_name: &str) {
     let _ = lua.load(&code).exec();
 }
 
-/// Apply KeyValues from inline frame content.
+/// Apply KeyValues from inline frame content (handles multiple `<KeyValues>` blocks).
 fn apply_inline_key_values(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
-    let Some(key_values) = frame.key_values() else { return };
     let frame_ref = lua_global_ref(frame_name);
-    for kv in &key_values.values {
-        let value = format_key_value(&kv.value, kv.value_type.as_deref());
-        let code = format!(
-            "do local f = {} if f then f.{} = {} end end",
-            frame_ref, kv.key, value
-        );
-        let _ = lua.load(&code).exec();
+    for key_values in frame.all_key_values() {
+        for kv in &key_values.values {
+            let value = format_key_value(&kv.value, kv.value_type.as_deref());
+            let code = format!(
+                "do local f = {} if f then f.{} = {} end end",
+                frame_ref, kv.key, value
+            );
+            let _ = lua.load(&code).exec();
+        }
     }
 }
 

@@ -123,6 +123,9 @@ fn add_cooldown_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
     methods.add_method("SetBlingTexture", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("SetEdgeScale", |_, _this, _scale: Value| Ok(()));
     methods.add_method("SetUseCircularEdge", |_, _this, _use_circular: bool| Ok(()));
+    methods.add_method("SetCountdownAbbrevThreshold", |_, _this, _seconds: Value| Ok(()));
+    methods.add_method("SetCountdownFont", |_, _this, _font: Value| Ok(()));
+    methods.add_method("SetUseAuraDisplayTime", |_, _this, _use: Value| Ok(()));
     methods.add_method("GetReverse", |_, this, ()| {
         let state = this.state.borrow();
         Ok(state.widgets.get(this.id).map(|f| f.cooldown_reverse).unwrap_or(false))

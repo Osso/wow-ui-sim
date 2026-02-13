@@ -343,6 +343,10 @@ fn register_c_spell(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Tab
     t.set("GetSpellLossOfControlCooldown", lua.create_function(|_, _spell_id: i32| Ok((0.0f64, 0.0f64)))?)?;
     t.set("GetMawPowerBorderAtlasBySpellID", lua.create_function(|_, _spell_id: i32| Ok(Value::Nil))?)?;
     t.set("GetSpellPowerCost", lua.create_function(create_spell_power_cost)?)?;
+    // GetVisibilityInfo(spellId, context) -> hasCustom, alwaysShowMine, showForMySpec
+    t.set("GetVisibilityInfo", lua.create_function(|_, (_spell_id, _ctx): (Value, Value)| {
+        Ok((false, false, false))
+    })?)?;
 
     Ok(t)
 }

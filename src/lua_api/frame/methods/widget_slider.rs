@@ -90,10 +90,20 @@ fn add_slider_step_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 }
 
 fn add_slider_orientation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetOrientation", |_, this, orientation: String| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.slider_orientation = orientation.to_uppercase();
+    methods.add_method("SetOrientation", |lua, this, args: mlua::MultiValue| {
+        // Mixins (e.g. CompactUnitFrameDispelOverlayMixin) override SetOrientation with
+        // a Lua function that accepts different args.  Rust add_method takes priority over
+        // __index, so check for a mixin override first.
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "SetOrientation") {
+            let mut call_args = vec![ud];
+            call_args.extend(args);
+            return func.call::<Value>(mlua::MultiValue::from_iter(call_args)).map(|_| ());
+        }
+        if let Some(Value::String(s)) = args.into_iter().next() {
+            let mut state = this.state.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(this.id) {
+                frame.slider_orientation = s.to_str().map(|s| s.to_uppercase()).unwrap_or_else(|_| "HORIZONTAL".to_string());
+            }
         }
         Ok(())
     });

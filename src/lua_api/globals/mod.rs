@@ -33,6 +33,7 @@ pub mod c_editmode_api;
 pub mod constants_api;
 pub mod c_item_api;
 pub mod c_stubs_api;
+pub mod c_stubs_api_combat;
 pub mod c_stubs_api_extra;
 pub mod c_map_api;
 pub mod c_misc_api;
@@ -71,6 +72,7 @@ pub mod tooltip_api;
 pub mod unit_api;
 pub mod unit_combat_api;
 pub mod unit_health_power_api;
+pub mod security_api;
 pub mod utility_api;
 
 // Re-export for backwards compatibility

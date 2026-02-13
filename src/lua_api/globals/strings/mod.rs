@@ -368,6 +368,20 @@ fn register_lua_table_constants(lua: &Lua, globals: &mlua::Table) -> Result<()> 
     register_item_quality_colors(lua, globals)?;
     register_class_name_tables(lua, globals)?;
     register_icon_list(lua, globals)?;
+    register_unit_frame_colors(lua, globals)?;
+    Ok(())
+}
+
+/// Register CompactUnitFrame health bar color constants (engine-defined globals).
+fn register_unit_frame_colors(lua: &Lua, globals: &mlua::Table) -> Result<()> {
+    globals.set(
+        "COMPACT_UNIT_FRAME_FRIENDLY_HEALTH_COLOR",
+        make_color_table(lua, 0.0, 1.0, 0.0, 1.0)?,
+    )?;
+    globals.set(
+        "COMPACT_UNIT_FRAME_FRIENDLY_HEALTH_COLOR_BG",
+        make_color_table(lua, 0.0, 0.35, 0.0, 1.0)?,
+    )?;
     Ok(())
 }
 

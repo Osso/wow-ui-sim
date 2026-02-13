@@ -3,8 +3,8 @@
 use serde::Deserialize;
 
 use super::types_elements::{
-    ActorXml, ActorsXml, AnimationGroupXml, FontFamilyXml, FontStringXml, FontXml, FrameElement,
-    FramesXml, IncludeXml, LayersXml, ScriptXml, TextureXml,
+    ActorXml, ActorsXml, AnimationGroupXml, AnimationXml, FontFamilyXml, FontStringXml, FontXml,
+    FrameElement, FramesXml, IncludeXml, LayersXml, ScriptXml, TextureXml,
 };
 
 /// Root element of a WoW UI XML file.
@@ -83,6 +83,7 @@ pub enum XmlElement {
     #[serde(rename = "include")]
     IncludeLower(IncludeXml),
     // Animation elements
+    Animation(AnimationXml),
     AnimationGroup(AnimationGroupXml),
     // ModelScene elements
     Actor(ActorXml),
@@ -228,9 +229,17 @@ impl FrameXml {
         })
     }
 
-    /// Get the KeyValues element if present.
+    /// Get the first KeyValues element if present.
     pub fn key_values(&self) -> Option<&KeyValuesXml> {
         self.children.iter().find_map(|c| match c {
+            FrameChildElement::KeyValues(k) => Some(k),
+            _ => None,
+        })
+    }
+
+    /// Iterate over all KeyValues elements (frames can have multiple `<KeyValues>` blocks).
+    pub fn all_key_values(&self) -> impl Iterator<Item = &KeyValuesXml> {
+        self.children.iter().filter_map(|c| match c {
             FrameChildElement::KeyValues(k) => Some(k),
             _ => None,
         })

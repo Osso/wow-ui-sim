@@ -24,7 +24,13 @@ pub fn register_extra_stubs(lua: &Lua) -> Result<()> {
 
 /// C_* namespace stubs that are referenced during addon loading.
 fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
-    // C_ItemSocketInfo
+    register_item_pet_aura_namespaces(lua, g)?;
+    register_utility_namespaces(lua, g)?;
+    Ok(())
+}
+
+/// C_ItemSocketInfo, C_PetInfo, C_UnitAurasPrivate stubs.
+fn register_item_pet_aura_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     let isi = lua.create_table()?;
     isi.set("GetCurrUIType", lua.create_function(|_, ()| Ok(0i32))?)?;
     isi.set("GetExistingSocketInfo", lua.create_function(|_, _idx: i32| Ok(Value::Nil))?)?;
@@ -33,14 +39,12 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     isi.set("IsArtifactRelicItem", lua.create_function(|_, _item: Value| Ok(false))?)?;
     g.set("C_ItemSocketInfo", isi)?;
 
-    // C_PetInfo
     let pi = lua.create_table()?;
     pi.set("GetPetTamersForMap", lua.create_function(|lua, _map_id: Value| lua.create_table())?)?;
     pi.set("GetSpellForPetAction", lua.create_function(|_, _action: Value| Ok(Value::Nil))?)?;
     pi.set("IsPetActionPassive", lua.create_function(|_, _action: Value| Ok(false))?)?;
     g.set("C_PetInfo", pi)?;
 
-    // C_UnitAurasPrivate
     let uap = lua.create_table()?;
     uap.set("GetAuraDataBySlot", lua.create_function(|_, (_unit, _slot): (Value, Value)| Ok(Value::Nil))?)?;
     uap.set("SetPrivateAuraAnchorAddedCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
@@ -48,71 +52,72 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     uap.set("GetPrivateAuraAnchors", lua.create_function(|lua, _unit: Value| lua.create_table())?)?;
     uap.set("SetPrivateWarningTextFrame", lua.create_function(|_, _frame: Value| Ok(()))?)?;
     uap.set("SetPrivateRaidBossMessageCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
+    uap.set("SetShowDispelTypeCallback", lua.create_function(|_, _cb: Value| Ok(()))?)?;
     g.set("C_UnitAurasPrivate", uap)?;
+    Ok(())
+}
 
-    // C_LevelLink - level-gated spell/action locking (nothing locked in simulator)
+/// C_LevelLink, C_EventScheduler, C_RestrictedActions, C_TransmogOutfitInfo stubs.
+fn register_utility_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     let ll = lua.create_table()?;
     ll.set("IsActionLocked", lua.create_function(|_, _action_id: Value| Ok(false))?)?;
     ll.set("IsSpellLocked", lua.create_function(|_, _spell_id: Value| Ok(false))?)?;
     g.set("C_LevelLink", ll)?;
 
-    // C_EventScheduler - in-game event scheduling
     let es = lua.create_table()?;
     es.set("CanShowEvents", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("C_EventScheduler", es)?;
-
     Ok(())
 }
 
 /// Global functions referenced during addon loading.
 fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
-    // IsPlayerInWorld - always true in the simulator
+    register_gameplay_globals(lua, g)?;
+    register_legacy_constants(g)?;
+    register_combat_log_globals(lua, g)?;
+    register_taint_and_env_globals(lua, g)?;
+    Ok(())
+}
+
+/// Gameplay-related global function stubs.
+fn register_gameplay_globals(lua: &Lua, g: &mlua::Table) -> Result<()> {
     g.set("IsPlayerInWorld", lua.create_function(|_, ()| Ok(true))?)?;
-
-    // ActionBarController_GetCurrentActionBarState - returns LE_ACTIONBAR_STATE_MAIN (1)
     g.set("ActionBarController_GetCurrentActionBarState", lua.create_function(|_, ()| Ok(1i32))?)?;
-
-    // GetMaxLevelForLatestExpansion - max player level for current expansion (The War Within = 80)
     g.set("GetMaxLevelForLatestExpansion", lua.create_function(|_, ()| Ok(80i32))?)?;
-
-    // Glyph functions
     g.set("HasAttachedGlyph", lua.create_function(|_, _spell_id: Value| Ok(false))?)?;
     g.set("IsSpellValidForPendingGlyph", lua.create_function(|_, _spell_id: Value| Ok(false))?)?;
-
-    // RegisterUIPanel - registers a frame for panel layout management
     g.set("RegisterUIPanel", lua.create_function(|_, (_frame, _attrs): (Value, Option<Value>)| Ok(()))?)?;
-
-    // GetScenariosChoiceOrder - returns table of scenario ordering
     g.set("GetScenariosChoiceOrder", lua.create_function(|lua, ()| lua.create_table())?)?;
+    g.set("SpellIsSelfBuff", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
+    g.set("GetExpansionDisplayInfo", lua.create_function(|_, _expansion_level: Value| Ok(Value::Nil))?)?;
+    g.set("AddSourceLocationExclude", lua.create_function(|_, _location: Value| Ok(()))?)?;
+    g.set("RegisterEventCallback", lua.create_function(|_, (_event, _callback): (Value, Value)| Ok(()))?)?;
+    g.set("UnitIsHumanPlayer", lua.create_function(|_, _args: mlua::MultiValue| Ok(false))?)?;
+    Ok(())
+}
 
-    // NUM_LE_LFG_CATEGORYS - number of LFG categories
+/// Legacy LE_* constants and label strings.
+fn register_legacy_constants(g: &mlua::Table) -> Result<()> {
     g.set("NUM_LE_LFG_CATEGORYS", 7i32)?;
-
-    // LE_AUTOCOMPLETE_PRIORITY_* constants
-    g.set("LE_AUTOCOMPLETE_PRIORITY_OTHER", 1i32)?;
-    g.set("LE_AUTOCOMPLETE_PRIORITY_INTERACTED", 2i32)?;
-    g.set("LE_AUTOCOMPLETE_PRIORITY_IN_GROUP", 3i32)?;
-    g.set("LE_AUTOCOMPLETE_PRIORITY_GUILD", 4i32)?;
-    g.set("LE_AUTOCOMPLETE_PRIORITY_FRIEND", 5i32)?;
-    g.set("LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER", 6i32)?;
-    g.set("LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER_SAME_REALM", 7i32)?;
-
-    // AUTOCOMPLETE_LABEL_* strings used alongside priority constants
+    for (i, name) in ["OTHER", "INTERACTED", "IN_GROUP", "GUILD",
+                       "FRIEND", "ACCOUNT_CHARACTER", "ACCOUNT_CHARACTER_SAME_REALM"]
+        .iter().enumerate()
+    {
+        g.set(format!("LE_AUTOCOMPLETE_PRIORITY_{name}"), (i + 1) as i32)?;
+    }
     g.set("AUTOCOMPLETE_LABEL_INTERACTED", "Interacted")?;
     g.set("AUTOCOMPLETE_LABEL_GROUP", "Group")?;
     g.set("AUTOCOMPLETE_LABEL_GUILD", "Guild")?;
     g.set("AUTOCOMPLETE_LABEL_FRIEND", "Friend")?;
-
-    // LE_PARTY_CATEGORY_* used by VoiceUtils.lua
     g.set("LE_PARTY_CATEGORY_HOME", 1i32)?;
     g.set("LE_PARTY_CATEGORY_INSTANCE", 2i32)?;
+    Ok(())
+}
 
-    // SpellIsSelfBuff - returns whether a spell is a self-buff (used by AuraUtil)
-    g.set("SpellIsSelfBuff", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
-
-    // CombatLog C++ API functions used by Blizzard_CombatLog
+/// CombatLog C++ API functions used by Blizzard_CombatLog.
+fn register_combat_log_globals(lua: &Lua, g: &mlua::Table) -> Result<()> {
     g.set("CombatLogResetFilter", lua.create_function(|_, ()| Ok(()))?)?;
-    g.set("CombatLogAddFilter", lua.create_function(|_, (_event_list, _source_flags, _dest_flags): (Value, Value, Value)| Ok(()))?)?;
+    g.set("CombatLogAddFilter", lua.create_function(|_, _a: mlua::MultiValue| Ok(()))?)?;
     g.set("CombatLogSetCurrentEntry", lua.create_function(|_, _index: Value| Ok(()))?)?;
     g.set("CombatLogGetCurrentEntry", lua.create_function(|_, ()| Ok(0i32))?)?;
     g.set("CombatLogGetNumEntries", lua.create_function(|_, ()| Ok(0i32))?)?;
@@ -122,14 +127,27 @@ fn register_missing_global_functions(lua: &Lua, g: &mlua::Table) -> Result<()> {
     g.set("CombatLogGetCurrentEventInfo", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     g.set("CombatLogGetRetentionTime", lua.create_function(|_, ()| Ok(300.0f64))?)?;
     g.set("CombatLogSetRetentionTime", lua.create_function(|_, _time: Value| Ok(()))?)?;
-    // CombatLog_Object_IsA: checks if unitFlags match a filter mask (bitwise AND)
     g.set("CombatLog_Object_IsA", lua.create_function(|_, (unit_flags, mask): (i64, i64)| {
         Ok(unit_flags & mask != 0)
     })?)?;
+    Ok(())
+}
 
-    // GetExpansionDisplayInfo - returns expansion logo data (nil = no data)
-    g.set("GetExpansionDisplayInfo", lua.create_function(|_, _expansion_level: Value| Ok(Value::Nil))?)?;
-
+/// Taint system and restricted environment globals.
+fn register_taint_and_env_globals(lua: &Lua, g: &mlua::Table) -> Result<()> {
+    g.set("GetGlobalEnvironment", lua.create_function(|lua, ()| Ok(lua.globals()))?)?;
+    lua.load(r#"
+        function secretwrap(...) return ... end
+        function AbbreviateNumbers(value, options)
+            if not value then return "0" end
+            local n = tonumber(value)
+            if not n then return tostring(value) end
+            if n >= 1000000000 then return string.format("%.1fB", n / 1000000000)
+            elseif n >= 1000000 then return string.format("%.1fM", n / 1000000)
+            elseif n >= 10000 then return string.format("%.1fK", n / 1000)
+            else return tostring(math.floor(n)) end
+        end
+    "#).exec().map_err(|e| mlua::Error::external(e.to_string()))?;
     Ok(())
 }
 
@@ -397,6 +415,7 @@ fn register_c_ping(lua: &Lua) -> Result<()> {
                 return TEXTURE_KIT_MAP[pingType]
             end,
             GetCooldownInfo = function() return nil end,
+            IsPingSystemEnabled = function() return false end,
         }
     "#).exec()
 }

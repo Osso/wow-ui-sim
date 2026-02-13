@@ -35,6 +35,8 @@ pub const GAME_INT_CONSTANTS: &[IntDef] = &[
     ("MAX_BOSS_FRAMES", 8),
     ("MAX_PARTY_MEMBERS", 4),
     ("MAX_RAID_MEMBERS", 40),
+    ("BUFF_MAX_DISPLAY", 32),
+    ("DEBUFF_MAX_DISPLAY", 16),
 ];
 
 pub const GAME_STRING_CONSTANTS: &[StringDef] = &[

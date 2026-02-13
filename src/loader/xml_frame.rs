@@ -458,10 +458,14 @@ fn append_set_all_points_code(lua_code: &mut String, frame: &crate::xml::FrameXm
 fn append_key_values_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
     if !inherits.is_empty() {
         for template_entry in &crate::xml::get_template_chain(inherits) {
-            append_key_values_from_xml(lua_code, template_entry.frame.key_values());
+            for kv in template_entry.frame.all_key_values() {
+                append_key_values_from_xml(lua_code, Some(kv));
+            }
         }
     }
-    append_key_values_from_xml(lua_code, frame.key_values());
+    for kv in frame.all_key_values() {
+        append_key_values_from_xml(lua_code, Some(kv));
+    }
 }
 
 /// Append `frame.key = value` assignments for a KeyValues block.
