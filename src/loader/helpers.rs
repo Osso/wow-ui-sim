@@ -295,8 +295,8 @@ pub fn append_script_handler(
     let Some(new_handler) = build_handler_expr(handler_name, script) else { return };
 
     match script.inherit.as_deref() {
-        Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, false),
-        Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, true),
+        Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, true),
+        Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, false),
         _ => {
             code.push_str(&format!(
                 "\n        {target}:SetScript(\"{handler_name}\", {new_handler})\n        "
