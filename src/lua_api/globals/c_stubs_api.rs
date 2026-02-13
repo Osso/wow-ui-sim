@@ -89,6 +89,7 @@ fn register_c_class_talents(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<cra
     let st = state;
     t.set("HasUnspentTalentPoints", lua.create_function(move |_, ()| Ok(super::traits_api::has_unspent_talent_points(&st.borrow())))?)?;
     t.set("HasUnspentHeroTalentPoints", lua.create_function(|_, ()| Ok(false))?)?;
+    t.set("GetActiveHeroTalentSpec", lua.create_function(|_, ()| Ok(Value::Nil))?)?;
     t.set("GetLastSelectedSavedConfigID", lua.create_function(|_, _spec_id: Option<i32>| Ok(Value::Nil))?)?;
     t.set("CanChangeTalents", lua.create_function(|_, ()| Ok((true, false)))?)?;
     lua.globals().set("C_ClassTalents", t)?;
