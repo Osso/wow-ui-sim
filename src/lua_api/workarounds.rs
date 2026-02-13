@@ -296,28 +296,23 @@ fn setup_tracker_frame(env: &WowLuaEnv) {
     );
 }
 
-/// Call OnPlayerEnteringWorld on the tracker manager.
+/// Initialize ObjectiveTrackerManager by calling Init() directly.
 ///
-/// The first call may fail at AdventureObjectiveTracker:InitModule because
-/// POIButtonOwnerMixin:Init isn't applied by the simulator's template system.
-/// A second call succeeds because the container's init guard prevents
-/// re-initialization, and modules before AdventureObjectiveTracker (including
-/// QuestObjectiveTracker) get their parentContainer set.
+/// In WoW, `EventUtil.ContinueAfterAllEvents` triggers Init() after both
+/// PLAYER_ENTERING_WORLD and VARIABLES_LOADED fire through EventRegistry.
+/// The simulator's event dispatch doesn't always reach EventRegistry's
+/// internal frame, so we call Init() directly. Init() adds the container
+/// (ObjectiveTrackerFrame) and all 11 tracker modules via SetModuleContainer,
+/// which calls AddModule → SetContainer on each module, giving them their
+/// parentContainer reference. Init may error during UpdateAll (e.g. missing
+/// GetQuestDetailsTheme in POIButton) but the module registration completes.
 fn start_objective_tracker(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
-        if not ObjectiveTrackerManager
-            or not ObjectiveTrackerManager.OnPlayerEnteringWorld then
+        if not ObjectiveTrackerManager or not ObjectiveTrackerManager.Init then
             return
         end
-        -- Call twice: first call may fail at AdventureObjectiveTracker Init,
-        -- second call succeeds with container init guard already set.
-        for i = 1, 2 do
-            pcall(
-                ObjectiveTrackerManager.OnPlayerEnteringWorld,
-                ObjectiveTrackerManager, true, false
-            )
-        end
+        pcall(ObjectiveTrackerManager.Init, ObjectiveTrackerManager)
     "#,
     );
 }
@@ -341,20 +336,18 @@ fn populate_quest_titles(env: &WowLuaEnv) {
         -- Update quest module directly (bypass container loop which
         -- crashes on MawBuffs/ScenarioObjectiveTracker stubs)
         local qt = QuestObjectiveTracker
-        if qt and qt.parentContainer then
-            local c = qt.parentContainer
-            local avail = c:GetAvailableHeight()
-            pcall(qt.Update, qt, avail, false)
-            -- Force module height and positioning (EndLayout may not
-            -- run UpdateHeight due to state/animation issues)
-            local h = qt.contentsHeight or 0
-            if h > 0 then
-                qt:SetHeight(h + (qt.bottomSpacing or 0))
-                qt:ClearAllPoints()
-                qt:SetPoint("TOP", c, "TOP", 0, -(c.topModulePadding or 0))
-                qt:SetPoint("LEFT", c, "LEFT", qt.leftMargin or 0, 0)
-                qt:Show()
-            end
+        if not qt then return end
+        if not qt.parentContainer then return end
+        local c = qt.parentContainer
+        local avail = c:GetAvailableHeight()
+        local ok, err = pcall(qt.Update, qt, avail, false)
+        local h = qt.contentsHeight or 0
+        if h > 0 then
+            qt:SetHeight(h + (qt.bottomSpacing or 0))
+            qt:ClearAllPoints()
+            qt:SetPoint("TOP", c, "TOP", 0, -(c.topModulePadding or 0))
+            qt:SetPoint("LEFT", c, "LEFT", qt.leftMargin or 0, 0)
+            qt:Show()
         end
     "#,
     );

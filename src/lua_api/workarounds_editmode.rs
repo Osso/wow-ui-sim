@@ -15,6 +15,13 @@ use super::WowLuaEnv;
 /// preset layouts, then call our custom InitSystemAnchors. Also ensures
 /// accountSettings is initialized so CanEnterEditMode() returns true.
 pub fn init_edit_mode_layout(env: &WowLuaEnv) {
+    apply_edit_mode_layout(env);
+    fix_action_bar_nan_size(env);
+    fix_action_bar_scale(env);
+}
+
+/// Apply preset layout anchors and settings to all EditMode system frames.
+fn apply_edit_mode_layout(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
         if not EditModeManagerFrame then return end
@@ -46,15 +53,14 @@ pub fn init_edit_mode_layout(env: &WowLuaEnv) {
         end
     "#,
     );
-    fix_action_bar_nan_size(env);
 }
 
 /// Fix MainActionBar NaN size after UpdateSystems.
 ///
-/// In the live GUI, Layout() produces NaN because the bar has no size yet
-/// when children try to resolve anchors relative to it (chicken-and-egg).
-/// Compute the bar size directly from children's grid positions, then
-/// re-run UpdateActionBarPositions to set the correct BOTTOMLEFT anchor.
+/// Layout() produces NaN because the bar has no size yet when children try
+/// to resolve anchors relative to it (chicken-and-egg). Compute the bar
+/// size directly from children's grid positions, then re-run
+/// UpdateActionBarPositions to set the correct BOTTOMLEFT anchor.
 fn fix_action_bar_nan_size(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
@@ -74,6 +80,29 @@ fn fix_action_bar_nan_size(env: &WowLuaEnv) {
         MainActionBar:SetSize(lastOx + lastW, lastW)
         pcall(EditModeManagerFrame.UpdateActionBarPositions,
               EditModeManagerFrame)
+    "#,
+    );
+}
+
+/// Ensure MainActionBar has scale=1 after EditMode initialization.
+///
+/// Blizzard's EditMode overrides SetScale → SetScaleOverride via
+/// `self.SetScale = self.SetScaleOverride` in OnSystemLoad, storing the
+/// override in Lua frame_fields. However, mlua's registered metatable
+/// methods take priority over frame_fields in __index lookups, so
+/// `:SetScale()` calls always hit the Rust method directly, bypassing the
+/// Lua override. This means SetScaleOverride (which adjusts anchor offsets
+/// for scale changes) never runs, and various code paths that call
+/// `:SetScale(0)` during startup leave the bar invisible.
+///
+/// The real fix would be making __index check frame_fields before metatable
+/// methods, but that's a broader architectural change. For now, force
+/// scale=1 after init since that's what UIParent_ManageFramePositions
+/// would set anyway.
+fn fix_action_bar_scale(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
+        if MainActionBar then MainActionBar:SetScale(1) end
     "#,
     );
 }

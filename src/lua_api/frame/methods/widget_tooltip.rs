@@ -30,6 +30,14 @@ fn add_tooltip_setup_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_tooltip_owner_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetOwner(owner, anchor, x, y) - Set the tooltip's owner and anchor
     methods.add_method("SetOwner", |lua, this, args: mlua::MultiValue| {
+        // Mixin overrides (e.g. CooldownViewerSettingsEditAlertMixin:SetOwner)
+        // shadow this Rust method name. Delegate to the Lua override if present.
+        if let Some((func, ud)) = get_mixin_override(lua, this.id, "SetOwner") {
+            let mut call_args = vec![ud];
+            call_args.extend(args);
+            return func.call::<Value>(mlua::MultiValue::from_iter(call_args)).map(|_| ());
+        }
+
         let mut args_iter = args.into_iter();
         let owner_val = args_iter.next().unwrap_or(Value::Nil);
         let anchor: String = match args_iter.next() {

@@ -144,6 +144,15 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
         apply_key_values(lua, key_values, frame_name);
     }
 
+    // Apply hidden from template (before children/scripts so OnLoad sees correct visibility)
+    if template.hidden == Some(true) {
+        let code = format!(
+            "do local f = {} if f then f:Hide() end end",
+            lua_global_ref(frame_name)
+        );
+        let _ = lua.load(&code).exec();
+    }
+
     // Apply layers (textures and fontstrings)
     // subst_parent = frame_name at the template root level
     apply_layers(lua, template, frame_name, frame_name);
@@ -178,7 +187,7 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
 
     // Apply scripts from template (after children, so OnLoad can reference them)
     if let Some(scripts) = template.scripts() {
-        apply_scripts_from_template(lua, scripts, frame_name);
+        elements::apply_scripts_from_template(lua, scripts, frame_name);
     }
 
     child_names
@@ -609,7 +618,7 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
     }
 
     if let Some(scripts) = frame.scripts() {
-        apply_scripts_from_template(lua, scripts, frame_name);
+        elements::apply_scripts_from_template(lua, scripts, frame_name);
     }
 
     nested_names
@@ -696,21 +705,6 @@ fn apply_button_fonts(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str)
 fn apply_editbox_fontstring(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) {
     let Some(fs) = frame.font_string_child() else { return };
     elements::create_fontstring_from_template(lua, fs, frame_name, subst_parent, "OVERLAY");
-}
-
-/// Apply scripts from template.
-fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, frame_name: &str) {
-    use crate::loader::helpers::generate_scripts_code;
-
-    let handlers_code = generate_scripts_code(scripts);
-
-    if !handlers_code.is_empty() {
-        let frame_ref = lua_global_ref(frame_name);
-        let code = format!(
-            "\n        local frame = {frame_ref}\n        if frame then\n        {handlers_code}\n        end\n"
-        );
-        let _ = lua.load(&code).exec();
-    }
 }
 
 /// Get size values from a SizeXml.

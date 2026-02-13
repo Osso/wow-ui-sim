@@ -1,10 +1,23 @@
 //! Template element creation: textures, fontstrings, thumb/button textures.
 
-use crate::loader::helpers::{generate_set_point_code, resolve_lua_escapes};
+use crate::loader::helpers::{generate_scripts_code, generate_set_point_code, resolve_lua_escapes};
 use crate::loader::helpers_anim::generate_animation_group_code;
 use mlua::Lua;
 
 use super::{escape_lua_string, get_size_values, lua_global_ref, rand_id};
+
+/// Apply scripts from template.
+pub(super) fn apply_scripts_from_template(lua: &Lua, scripts: &crate::xml::ScriptsXml, frame_name: &str) {
+    let handlers_code = generate_scripts_code(scripts);
+
+    if !handlers_code.is_empty() {
+        let frame_ref = lua_global_ref(frame_name);
+        let code = format!(
+            "\n        local frame = {frame_ref}\n        if frame then\n        {handlers_code}\n        end\n"
+        );
+        let _ = lua.load(&code).exec();
+    }
+}
 
 /// Create a texture from template XML.
 ///

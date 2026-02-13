@@ -154,6 +154,7 @@ fn register_quest_log_status(lua: &Lua, t: &mlua::Table) -> Result<()> {
     t.set("GetNextWaypointText", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
     t.set("GetTimeAllowed", lua.create_function(|_, _id: i32| Ok((Value::Nil, Value::Nil)))?)?;
     t.set("IsAccountQuest", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("GetQuestDetailsTheme", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
     Ok(())
 }
 

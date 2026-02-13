@@ -363,11 +363,30 @@ fn register_error_handlers(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-/// Misc stubs: nop function.
+/// Misc stubs: nop function, mapvalues.
 fn register_misc_stubs(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
     let nop = lua.create_function(|_, _: mlua::MultiValue| Ok(()))?;
     globals.set("nop", nop)?;
+
+    // mapvalues(func, ...) - apply func to each value, return mapped results
+    globals.set(
+        "mapvalues",
+        lua.create_function(|_, args: mlua::MultiValue| {
+            let mut iter = args.into_iter();
+            let func = match iter.next() {
+                Some(Value::Function(f)) => f,
+                _ => return Ok(mlua::MultiValue::new()),
+            };
+            let mut result = mlua::MultiValue::new();
+            for val in iter {
+                let mapped: Value = func.call(val)?;
+                result.push_back(mapped);
+            }
+            Ok(result)
+        })?,
+    )?;
+
     Ok(())
 }
 
