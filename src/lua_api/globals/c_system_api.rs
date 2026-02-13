@@ -145,6 +145,7 @@ fn register_c_reputation(lua: &Lua) -> Result<mlua::Table> {
 /// Reputation stubs that don't need data.
 fn register_c_reputation_stubs(t: &mlua::Table, lua: &Lua) -> Result<()> {
     t.set("IsFactionParagon", lua.create_function(|_, _id: i32| Ok(false))?)?;
+    t.set("IsFactionParagonForCurrentPlayer", lua.create_function(|_, _id: i32| Ok(false))?)?;
     t.set("GetFactionParagonInfo", lua.create_function(|_, _id: i32| Ok(Value::Nil))?)?;
     t.set("SetWatchedFactionByID", lua.create_function(|_, _id: i32| Ok(()))?)?;
     t.set("ExpandFactionHeader", lua.create_function(|_, _i: i32| Ok(()))?)?;

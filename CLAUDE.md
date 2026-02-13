@@ -21,9 +21,9 @@
 
 ## WoW Game Files
 
-- `~/Projects/wow/Interface` - code & art extract from WoW game files (2026-01-16)
+- `./Interface/BlizzardUI/` - Blizzard base UI code (loaded before addons, not scanned as addon)
+- `~/Projects/wow/Interface` - art extract from WoW game files (BLP textures, fallback for texture loading)
 - `~/Projects/wow/WTF` - SavedVariables from real WoW installation
-- `~/Projects/wow/reference-addons/wow-ui-source` - Blizzard base UI (loaded before addons, not scanned as addon)
 
 ## Reference Implementations
 
@@ -83,6 +83,15 @@ if let Value::UserData(child_ud) = &value {
 ```
 
 This allows Rust methods like `SetTitle()` to find child frames via fast HashMap lookup instead of querying Lua. Test: `test_lua_property_syncs_to_rust_children_keys`.
+
+### XML Script Inheritance (`inherit="prepend"` / `inherit="append"`)
+
+The `inherit` attribute on `<Scripts>` elements describes the **inherited** (template) handler's position, not the new instance handler:
+
+- `inherit="prepend"` → inherited (old) runs **first**, instance (new) runs second
+- `inherit="append"` → instance (new) runs **first**, inherited (old) runs second
+
+This is counterintuitive — "append" means the inherited handler is appended (runs after), so the new code runs first. Confirmed via wowless (`wowless/modules/loader.lua:201-210`). Implementation: `src/loader/helpers.rs` `emit_chained_handler`.
 
 ## Performance
 

@@ -20,7 +20,7 @@ use mlua::{Lua, ObjectLike, Result, Value};
 /// Register all additional C_* namespace stubs.
 pub fn register_c_stubs_api(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>) -> Result<()> {
     register_c_achievement_info(lua)?;
-    register_c_class_talents(lua, state)?;
+    register_c_class_talents(lua, std::rc::Rc::clone(&state))?;
     register_c_guild(lua)?;
     register_c_guild_info(lua)?;
     register_c_lfg_list(lua)?;
@@ -28,7 +28,7 @@ pub fn register_c_stubs_api(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<cra
     register_c_mail(lua)?;
     register_c_stable_info(lua)?;
     register_c_tutorial(lua)?;
-    register_c_action_bar(lua)?;
+    super::action_bar_api::register_c_action_bar_namespace(lua, state)?;
     register_unit_frame_global_stubs(lua)?;
     register_powerbar_prediction_colors(lua)?;
     super::c_stubs_api_extra::register_achievement_stubs(lua)?;
@@ -151,23 +151,6 @@ fn register_c_tutorial(lua: &Lua) -> Result<()> {
     Ok(())
 }
 
-fn register_c_action_bar(lua: &Lua) -> Result<()> {
-    let t = lua.create_table()?;
-    t.set("GetBonusBarIndexForSlot", lua.create_function(|_, _slot: i32| Ok(0i32))?)?;
-    t.set("IsOnBarOrSpecialBar", lua.create_function(|_, _slot: i32| Ok(false))?)?;
-    t.set("FindSpellActionButtons", lua.create_function(|lua, _spell_id: i32| lua.create_table())?)?;
-    t.set("GetCurrentActionBarByClass", lua.create_function(|_, ()| Ok(1i32))?)?;
-    t.set("HasFlyoutActionButtons", lua.create_function(|_, _flyout_id: i32| Ok(false))?)?;
-    t.set("EnableActionRangeCheck", lua.create_function(|_, (_action, _enable): (Value, bool)| Ok(()))?)?;
-    t.set("IsAssistedCombatAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
-    t.set("GetItemActionOnEquipSpellID", lua.create_function(|_, _action: Value| Ok(Value::Nil))?)?;
-    t.set("IsAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
-    t.set("IsEnabledAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(false))?)?;
-    t.set("ToggleAutoCastPetAction", lua.create_function(|_, _action: Value| Ok(()))?)?;
-    t.set("HasAssistedCombatActionButtons", lua.create_function(|_, ()| Ok(false))?)?;
-    lua.globals().set("C_ActionBar", t)?;
-    Ok(())
-}
 
 /// Resolve a texture path or file data ID to a WoW interface path.
 fn resolve_texture_path(value: &Value) -> Option<String> {

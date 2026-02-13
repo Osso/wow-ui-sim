@@ -305,6 +305,9 @@ fn register_security_functions(lua: &Lua) -> Result<()> {
     globals.set("securecallfunction", lua.create_function(securecall_impl)?)?;
 
     globals.set("forceinsecure", lua.create_function(|_, ()| Ok(()))?)?;
+    globals.set("issecretvalue", lua.create_function(|_, _val: Value| Ok(false))?)?;
+    globals.set("canaccessvalue", lua.create_function(|_, _val: Value| Ok(true))?)?;
+    globals.set("canaccesstable", lua.create_function(|_, _val: Value| Ok(true))?)?;
 
     register_hooksecurefunc(lua)?;
     register_secureexecuterange(lua)?;

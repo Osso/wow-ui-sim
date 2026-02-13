@@ -91,6 +91,7 @@ fn register_expansion_functions(lua: &Lua) -> Result<()> {
 
     globals.set("GetExpansionLevel", lua.create_function(|_, ()| Ok(10))?)?;
     globals.set("GetMaxLevelForPlayerExpansion", lua.create_function(|_, ()| Ok(80))?)?;
+    globals.set("GetMaxPlayerLevel", lua.create_function(|_, ()| Ok(80))?)?;
     globals.set(
         "GetMaxLevelForExpansionLevel",
         lua.create_function(|_, expansion: i32| {

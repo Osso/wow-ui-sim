@@ -678,17 +678,17 @@ fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
 /// Region/frame query methods: IsRectValid, IsObjectLoaded, IsMouseOver, etc.
 fn add_region_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // IsRectValid() - true if the frame has anchors and layout has been resolved.
-    // Returns false after anchor/size changes until the next render pass or
-    // a layout-forcing call (GetSize, GetWidth, GetHeight).
+    // IsRectValid() - lazily resolves layout when dirty, preventing
+    // "invalid key to next" when arrow-edge UpdatePosition calls IsRectValid
+    // mid-iteration of buttonsWithDirtyEdges during OnUpdate.
     methods.add_method("IsRectValid", |_, this, ()| {
-        let state = this.state.borrow();
-        let valid = state
-            .widgets
-            .get(this.id)
-            .map(|f| !f.anchors.is_empty() && !f.rect_dirty)
-            .unwrap_or(false);
-        Ok(valid)
+        let has_anchors = this.state.borrow().widgets.get(this.id)
+            .map(|f| !f.anchors.is_empty()).unwrap_or(false);
+        if !has_anchors {
+            return Ok(false);
+        }
+        this.state.borrow_mut().resolve_rect_if_dirty(this.id);
+        Ok(true)
     });
 
     // IsObjectLoaded() - always true in the simulator

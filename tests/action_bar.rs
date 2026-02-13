@@ -92,6 +92,9 @@ fn fire_startup_events(env: &WowLuaEnv) {
     );
     let _ = env.fire_edit_mode_layouts_updated();
 
+    // WoW's C++ engine fires ACTIONBAR_SHOWGRID on startup to show empty slots.
+    let _ = env.fire_event("ACTIONBAR_SHOWGRID");
+
     for event in ["UPDATE_BINDINGS", "DISPLAY_SIZE_CHANGED", "UI_SCALE_CHANGED"] {
         let _ = env.fire_event(event);
     }

@@ -56,6 +56,11 @@ fn register_missing_c_namespaces(lua: &Lua, g: &mlua::Table) -> Result<()> {
     ll.set("IsSpellLocked", lua.create_function(|_, _spell_id: Value| Ok(false))?)?;
     g.set("C_LevelLink", ll)?;
 
+    // C_EventScheduler - in-game event scheduling
+    let es = lua.create_table()?;
+    es.set("CanShowEvents", lua.create_function(|_, ()| Ok(false))?)?;
+    g.set("C_EventScheduler", es)?;
+
     Ok(())
 }
 
@@ -450,6 +455,7 @@ fn register_shop_who_auras(lua: &Lua, g: &mlua::Table) -> Result<()> {
     let catalog_shop = lua.create_table()?;
     catalog_shop.set("GetAvailableCategoryIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
     catalog_shop.set("IsShop2Enabled", lua.create_function(|_, ()| Ok(false))?)?;
+    catalog_shop.set("HasNewProducts", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("C_CatalogShop", catalog_shop)?;
 
     let who = lua.create_table()?;
