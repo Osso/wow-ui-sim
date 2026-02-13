@@ -347,6 +347,8 @@ fn register_c_spell(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<mlua::Tab
     t.set("GetVisibilityInfo", lua.create_function(|_, (_spell_id, _ctx): (Value, Value)| {
         Ok((false, false, false))
     })?)?;
+    t.set("IsSelfBuff", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
+    t.set("IsPriorityAura", lua.create_function(|_, _spell_id: i32| Ok(false))?)?;
 
     Ok(t)
 }
