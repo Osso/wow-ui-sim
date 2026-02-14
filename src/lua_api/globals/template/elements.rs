@@ -76,10 +76,6 @@ pub(super) fn create_texture_from_template(
         code.push_str("            tex:SetAllPoints(true)\n");
     }
 
-    if texture.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = tex\n", escape_lua_string(&child_name)));
-    }
-
     if texture.hidden == Some(true) {
         code.push_str("            tex:Hide()\n");
     }
@@ -303,10 +299,6 @@ pub(super) fn create_fontstring_from_template(
     );
     append_fontstring_wrap_and_lines(&mut code, fontstring);
 
-    if fontstring.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = fs\n", escape_lua_string(&child_name)));
-    }
-
     if fontstring.hidden == Some(true) {
         code.push_str("            fs:Hide()\n");
     }
@@ -425,10 +417,6 @@ pub(super) fn create_bar_texture_from_template(
     let parent_key = bar.parent_key.as_deref().unwrap_or("Bar");
     code.push_str(&format!("            parent[\"{}\"] = bar\n", escape_lua_string(parent_key)));
 
-    if bar.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = bar\n", escape_lua_string(&child_name)));
-    }
-
     code.push_str("        end\n");
     let _ = lua.load(&code).exec();
 }
@@ -484,10 +472,6 @@ pub(super) fn create_thumb_texture_from_template(
         code.push_str("            parent[\"ThumbTexture\"] = thumb\n");
     }
 
-    if thumb.name.is_some() {
-        code.push_str(&format!("            _G[\"{}\"] = thumb\n", escape_lua_string(&child_name)));
-    }
-
     code.push_str("        end\n");
     let _ = lua.load(&code).exec();
 }
@@ -522,7 +506,6 @@ pub(super) fn create_button_texture_from_template(
         setter_method,
         actual_parent_key,
         &tex_name,
-        child_name.is_some(),
     );
     let _ = lua.load(&code).exec();
 }
@@ -534,7 +517,6 @@ fn build_button_texture_code(
     setter_method: &str,
     actual_parent_key: &str,
     tex_name: &str,
-    is_named: bool,
 ) -> String {
     let key_escaped = escape_lua_string(actual_parent_key);
     let mut code = format!(
@@ -581,10 +563,6 @@ fn build_button_texture_code(
             escape_lua_string(atlas),
             use_atlas_size
         ));
-    }
-
-    if is_named {
-        code.push_str(&format!("            _G[\"{}\"] = tex\n", escape_lua_string(tex_name)));
     }
 
     code.push_str("        end\n");

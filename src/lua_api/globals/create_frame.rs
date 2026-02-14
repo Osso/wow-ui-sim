@@ -226,7 +226,12 @@ fn register_new_frame(
     frame_id
 }
 
-/// Create the Lua userdata handle and register it in globals.
+/// Create the Lua userdata handle for a frame and cache it in `_G`.
+///
+/// `CreateFrame` returns the userdata directly to Lua, so we must cache it
+/// in `_G` via `raw_set` to ensure identity: `_G["name"] == returned_handle`.
+/// Without this, the `__index` metamethod would create a separate userdata
+/// object and `==` comparisons would fail.
 fn create_frame_userdata(
     lua: &Lua,
     state: &Rc<RefCell<SimState>>,
@@ -239,20 +244,23 @@ fn create_frame_userdata(
     };
     let ud = lua.create_userdata(handle)?;
 
+    let globals = lua.globals();
     if let Some(n) = name {
-        lua.globals().set(n, ud.clone())?;
+        globals.raw_set(n, ud.clone())?;
     }
-
     let frame_key = format!("__frame_{}", frame_id);
-    lua.globals().set(frame_key.as_str(), ud.clone())?;
+    globals.raw_set(frame_key.as_str(), ud.clone())?;
 
     Ok(ud)
 }
 
-/// Register button's default texture children as Lua globals.
+/// Register button's default texture children in the widget registry by name.
+///
 /// In WoW, named buttons get globals like `ButtonNameNormalTexture`, etc.
+/// Instead of eagerly creating Lua userdata, we just set names in the
+/// registry so the `__index` metamethod on `_G` can find them lazily.
 fn register_button_child_globals(
-    lua: &Lua,
+    _lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     frame_id: u64,
     button_name: &str,
@@ -267,12 +275,10 @@ fn register_button_child_globals(
             })
             .collect()
     };
-    let globals = lua.globals();
+    let mut st = state.borrow_mut();
     for (key, child_id) in keys {
         let global_name = format!("{}{}", button_name, key);
-        let handle = FrameHandle { id: child_id, state: Rc::clone(state) };
-        let ud = lua.create_userdata(handle)?;
-        globals.set(global_name.as_str(), ud)?;
+        st.widgets.set_name(child_id, global_name);
     }
     Ok(())
 }

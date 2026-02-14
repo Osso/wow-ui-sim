@@ -462,7 +462,6 @@ fn build_create_child_code(
 
     append_child_size_and_anchors(&mut code, frame, parent_name);
     append_child_parent_refs(&mut code, frame);
-    code.push_str(&format!("            _G[\"{}\"] = child\n", escape_lua_string(child_name)));
     code.push_str("        end\n");
     code
 }

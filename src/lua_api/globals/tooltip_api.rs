@@ -1,6 +1,5 @@
 //! Tooltip frame creation (GameTooltip, ItemRefTooltip, ShoppingTooltip, etc.)
 
-use crate::lua_api::frame::FrameHandle;
 use crate::lua_api::tooltip::TooltipData;
 use crate::lua_api::SimState;
 use crate::widget::{Frame, FrameStrata, WidgetType};
@@ -8,9 +7,12 @@ use mlua::{Lua, ObjectLike, Result};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-/// Create a tooltip frame, register it, and store in Lua globals.
+/// Create a tooltip frame and register it in the widget registry.
+///
+/// Does NOT set `_G` entries — the `__index` metamethod on `_G` handles
+/// lazy materialization.
 fn create_tooltip_frame(
-    lua: &Lua,
+    _lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     name: &str,
 ) -> Result<u64> {
@@ -27,21 +29,9 @@ fn create_tooltip_frame(
     frame.has_fixed_frame_strata = true;
     let frame_id = frame.id;
 
-    {
-        let mut s = state.borrow_mut();
-        s.widgets.register(frame);
-        s.tooltips.insert(frame_id, TooltipData::default());
-    }
-
-    let handle = FrameHandle {
-        id: frame_id,
-        state: Rc::clone(state),
-    };
-    let ud = lua.create_userdata(handle)?;
-
-    let globals = lua.globals();
-    globals.set(name, ud.clone())?;
-    globals.set(format!("__frame_{}", frame_id).as_str(), ud)?;
+    let mut s = state.borrow_mut();
+    s.widgets.register(frame);
+    s.tooltips.insert(frame_id, TooltipData::default());
 
     Ok(frame_id)
 }
@@ -93,8 +83,7 @@ fn register_game_tooltips(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()
 }
 
 /// Register FriendsListFrame with a ScrollBox child.
-fn register_friends_list_frame(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
-    let globals = lua.globals();
+fn register_friends_list_frame(_lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let ui_parent_id = state.borrow().widgets.get_id_by_name("UIParent");
     let mut friends_frame = Frame::new(
         WidgetType::Frame,
@@ -109,22 +98,12 @@ fn register_friends_list_frame(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
 
     let scrollbox = Frame::new(WidgetType::Frame, None, Some(friends_id));
     let scrollbox_id = scrollbox.id;
-    {
-        let mut s = state.borrow_mut();
-        s.widgets.register(scrollbox);
-        s.widgets.add_child(friends_id, scrollbox_id);
-        if let Some(f) = s.widgets.get_mut_visual(friends_id) {
-            f.children_keys
-                .insert("ScrollBox".to_string(), scrollbox_id);
-        }
+    let mut s = state.borrow_mut();
+    s.widgets.register(scrollbox);
+    s.widgets.add_child(friends_id, scrollbox_id);
+    if let Some(f) = s.widgets.get_mut_visual(friends_id) {
+        f.children_keys
+            .insert("ScrollBox".to_string(), scrollbox_id);
     }
-
-    let handle = FrameHandle {
-        id: friends_id,
-        state: Rc::clone(state),
-    };
-    let ud = lua.create_userdata(handle)?;
-    globals.set("FriendsListFrame", ud.clone())?;
-    globals.set(format!("__frame_{}", friends_id).as_str(), ud)?;
     Ok(())
 }

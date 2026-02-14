@@ -18,22 +18,18 @@ fn get_or_create_frame_fields(lua: &Lua, frame_id: u64) -> Result<mlua::Table> {
     Ok(crate::lua_api::script_helpers::get_or_create_frame_fields(lua, frame_id))
 }
 
-/// Register a frame widget as a Lua global, returning its ID.
+/// Register a frame widget in the widget registry, returning its ID.
+///
+/// Does NOT set `_G` entries — the `__index` metamethod on `_G` handles
+/// lazy materialization.
 fn create_and_register_global(
-    lua: &Lua,
+    _lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     frame: Frame,
-    name: &str,
+    _name: &str,
 ) -> Result<u64> {
     let id = frame.id;
     state.borrow_mut().widgets.register(frame);
-    let ud = lua.create_userdata(FrameHandle {
-        id,
-        state: Rc::clone(state),
-    })?;
-    lua.globals().set(name, ud.clone())?;
-    lua.globals()
-        .set(format!("__frame_{}", id).as_str(), ud)?;
     Ok(id)
 }
 

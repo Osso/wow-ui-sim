@@ -85,6 +85,14 @@ impl WidgetRegistry {
         self.render_dirty_ids.borrow_mut().insert(u64::MAX);
     }
 
+    /// Set (or update) the name of a widget, updating the names index.
+    pub fn set_name(&mut self, id: u64, name: String) {
+        self.names.insert(name.clone(), id);
+        if let Some(frame) = self.widgets.get_mut(&id) {
+            frame.name = Some(name);
+        }
+    }
+
     /// Get a widget by name.
     pub fn get_by_name(&self, name: &str) -> Option<&Frame> {
         self.names.get(name).and_then(|id| self.widgets.get(id))

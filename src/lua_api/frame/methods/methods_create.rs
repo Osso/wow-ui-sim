@@ -39,7 +39,11 @@ fn extract_string_arg(args: &[Value], index: usize) -> Option<String> {
     })
 }
 
-/// Register a child widget in the state and create its Lua userdata + globals.
+/// Register a child widget in the state and create its Lua userdata.
+///
+/// Caches the returned userdata in `_G` via `raw_set` for named children
+/// (and always for `__frame_{id}`) so that Lua identity is preserved when
+/// addon code compares `_G["name"] == CreateTexture(...)`.
 fn register_child_widget(
     lua: &mlua::Lua,
     this: &FrameHandle,
@@ -69,12 +73,13 @@ fn register_child_widget(
     };
     let ud = lua.create_userdata(handle)?;
 
+    // Cache in _G so Lua identity matches for named lookups
+    let globals = lua.globals();
     if let Some(n) = name {
-        lua.globals().set(n.as_str(), ud.clone())?;
+        globals.raw_set(n.as_str(), ud.clone())?;
     }
-
     let frame_key = format!("__frame_{}", child_id);
-    lua.globals().set(frame_key.as_str(), ud.clone())?;
+    globals.raw_set(frame_key.as_str(), ud.clone())?;
 
     Ok(ud)
 }
