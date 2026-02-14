@@ -131,23 +131,18 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         color = tex_color * in.color;
     }
 
-    // Premultiplied alpha blending: pipeline uses src + dst * (1 - src.a).
-    // Normal: output (rgb * a, a) → src.rgb*a + dst * (1-a) = correct alpha blend.
-    // Additive: output (rgb * a, 0) → src.rgb*a + dst * 1 = correct additive.
+    // Straight alpha blending: pipeline uses src * src.a + dst * (1 - src.a).
     let blend_mode = in.flags & 0xFFu;
     if blend_mode == BLEND_ADDITIVE {
-        color = vec4f(color.rgb * color.a, 0.0);
-    } else {
-        color = vec4f(color.rgb * color.a, color.a);
+        color.a = min(color.a * 1.5, 1.0);
     }
 
     // Circle clip (for minimap) — uses local_uv which is preserved across atlas remapping
-    // Scale both premultiplied RGB and alpha together.
     const FLAG_CIRCLE_CLIP: u32 = 0x100u;
     if (in.flags & FLAG_CIRCLE_CLIP) != 0u {
         let centered = in.local_uv * 2.0 - 1.0;
         let dist = length(centered);
-        color *= 1.0 - smoothstep(0.96, 1.0, dist);
+        color.a *= 1.0 - smoothstep(0.96, 1.0, dist);
     }
 
     // Cooldown swipe — radial clock wipe from 12 o'clock clockwise.
@@ -168,7 +163,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         }
         // Keep pixels where pixel_angle >= threshold (not yet swept away)
         if pixel_angle < threshold {
-            color = vec4f(0.0);
+            color.a = 0.0;
         }
     }
 
@@ -176,19 +171,14 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     // Applied before masking so the mask alpha still works correctly.
     const FLAG_DESATURATE: u32 = 0x400u;
     if (in.flags & FLAG_DESATURATE) != 0u {
-        // Unpremultiply, desaturate, re-premultiply.
-        let a = color.a;
-        if a > 0.001 {
-            let rgb = color.rgb / a;
-            let lum = dot(rgb, vec3f(0.2126, 0.7152, 0.0722));
-            color = vec4f(vec3f(lum) * a, a);
-        }
+        let lum = dot(color.rgb, vec3f(0.2126, 0.7152, 0.0722));
+        color = vec4f(vec3f(lum), color.a);
     }
 
-    // Mask texture sampling — scale premultiplied output by mask alpha
+    // Mask texture sampling — multiply alpha by the mask texture's alpha channel
     if in.mask_tex_index >= 0 {
         let mask_color = sample_tiered_texture(in.mask_tex_index, in.mask_tex_coords);
-        color *= mask_color.a;
+        color.a *= mask_color.a;
     }
 
     return color;
