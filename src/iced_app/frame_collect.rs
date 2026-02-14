@@ -111,7 +111,7 @@ pub fn collect_sorted_frames(
                     .unwrap_or(0.0)
             };
             frames.push((id, rect, eff));
-            if f.visible && f.mouse_enabled
+            if f.visible && f.effective_alpha > 0.0 && f.mouse_enabled
                 && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
             {
                 hittable.push((id, f.frame_strata, f.frame_level, rect));
