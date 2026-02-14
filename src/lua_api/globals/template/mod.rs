@@ -673,18 +673,20 @@ fn apply_inline_button_textures(lua: &Lua, frame: &crate::xml::FrameXml, frame_n
 fn apply_button_text(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) {
     let Some(fs) = frame.button_text() else { return };
     elements::create_fontstring_from_template(lua, fs, frame_name, subst_parent, "OVERLAY");
-    // ButtonText implicitly gets SetAllPoints so text fills the button area
-    // and justifyH/justifyV can center it. Also assign to "Text" parentKey
-    // when none is specified.
+    // Only apply SetAllPoints when the ButtonText has no explicit anchors.
+    // Templates like ChatTabTemplate define explicit anchors (e.g. CENTER 0 -5)
+    // that would be wiped by SetAllPoints.
+    let has_anchors = fs.anchors.as_ref().is_some_and(|a| !a.anchors.is_empty());
     let text_ref = if let Some(ref pk) = fs.parent_key {
         format!("p[\"{}\"]", escape_lua_string(pk))
     } else {
         "select(p:GetNumRegions(), p:GetRegions())".to_string()
     };
+    let set_all_points = if has_anchors { "" } else { "if t then t:SetAllPoints(p) end " };
     let code = format!(
         "do local p = {} if p then \
          local t = {text_ref} \
-         if t then t:SetAllPoints(p) end \
+         {set_all_points}\
          if not p.Text then p.Text = t end \
          end end",
         lua_global_ref(frame_name)
