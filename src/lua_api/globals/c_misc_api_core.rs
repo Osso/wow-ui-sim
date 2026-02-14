@@ -110,6 +110,8 @@ fn register_c_trade_skill(lua: &Lua) -> Result<()> {
     t.set("GetRecipesTracked", lua.create_function(|lua, _is_recraft: bool| lua.create_table())?)?;
     t.set("GetItemReagentQualityByItemInfo", lua.create_function(|_, _item: Value| Ok(Value::Nil))?)?;
     t.set("GetItemCraftedQualityByItemInfo", lua.create_function(|_, _item: Value| Ok(Value::Nil))?)?;
+    t.set("GetItemReagentQualityInfo", lua.create_function(|_, _item: Value| Ok(Value::Nil))?)?;
+    t.set("GetItemCraftedQualityInfo", lua.create_function(|_, _item: Value| Ok(Value::Nil))?)?;
 
     lua.globals().set("C_TradeSkillUI", t)?;
     Ok(())
@@ -270,6 +272,7 @@ fn register_c_chat_info(lua: &Lua) -> Result<()> {
     t.set("GetNumActiveChannels", lua.create_function(|_, ()| Ok(0i32))?)?;
     t.set("IsChannelRegionalForChannelID", lua.create_function(|_, _id: Value| Ok(false))?)?;
     t.set("GetChannelShortcutForChannelID", lua.create_function(|_, _id: Value| Ok(Value::Nil))?)?;
+    t.set("PerformEmote", lua.create_function(|_, (_emote, _target, _silent): (Value, Value, Value)| Ok(()))?)?;
     lua.globals().set("C_ChatInfo", t)?;
     Ok(())
 }

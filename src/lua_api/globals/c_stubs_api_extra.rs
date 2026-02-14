@@ -147,6 +147,15 @@ fn register_taint_and_env_globals(lua: &Lua, g: &mlua::Table) -> Result<()> {
             elseif n >= 10000 then return string.format("%.1fK", n / 1000)
             else return tostring(math.floor(n)) end
         end
+        function AbbreviateLargeNumbers(value, options)
+            if not value then return "0" end
+            local n = tonumber(value)
+            if not n then return tostring(value) end
+            if n >= 1000000000 then return string.format("%.1fB", n / 1000000000)
+            elseif n >= 1000000 then return string.format("%.1fM", n / 1000000)
+            elseif n >= 1000 then return string.format("%.1fK", n / 1000)
+            else return tostring(math.floor(n)) end
+        end
     "#).exec().map_err(|e| mlua::Error::external(e.to_string()))?;
     Ok(())
 }
