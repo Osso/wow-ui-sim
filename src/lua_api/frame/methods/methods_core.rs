@@ -434,7 +434,7 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         }
         // Invalidate render caches since strata changed.
         state.strata_buckets = None;
-        state.cached_render_list = None;
+        state.invalidate_all_render_strata();
         Ok(())
     });
 

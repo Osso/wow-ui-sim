@@ -15,11 +15,19 @@ pub const HIT_TEST_EXCLUDED: &[&str] = &[
 /// from the registry during emit. This allows the render list to be cached
 /// across rebuilds (no borrowed references).
 pub struct CollectedFrames {
-    /// Frames sorted by strata/level/draw-layer for rendering.
-    pub render: Vec<(u64, crate::LayoutRect, f32)>,
+    /// Per-strata render lists, indexed by `FrameStrata::as_index()`.
+    /// Each sub-list is sorted by level/draw-layer for rendering.
+    pub per_strata: [Vec<(u64, crate::LayoutRect, f32)>; FrameStrata::COUNT],
     /// Frames eligible for hit testing, sorted by strata/level/id (low to high).
     /// Rects are in unscaled WoW coordinates (caller applies UI_SCALE).
     pub hittable: Vec<(u64, crate::LayoutRect)>,
+}
+
+impl CollectedFrames {
+    /// Iterate all render entries in strata order (low to high).
+    pub fn render_iter(&self) -> impl Iterator<Item = &(u64, crate::LayoutRect, f32)> {
+        self.per_strata.iter().flat_map(|v| v.iter())
+    }
 }
 
 /// Collect all frame IDs in the subtree rooted at the named frame.
@@ -87,12 +95,13 @@ pub fn intra_strata_sort_key(
 /// frames sorted by strata/level/id, excluding non-interactive overlays.
 pub fn collect_sorted_frames(
     registry: &crate::widget::WidgetRegistry,
-    strata_buckets: &Vec<Vec<u64>>,
+    strata_buckets: &[Vec<u64>],
 ) -> CollectedFrames {
-    let mut frames: Vec<(u64, crate::LayoutRect, f32)> = Vec::new();
+    let mut per_strata: [Vec<(u64, crate::LayoutRect, f32)>; FrameStrata::COUNT] =
+        std::array::from_fn(|_| Vec::new());
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();
 
-    for bucket in strata_buckets {
+    for (strata_idx, bucket) in strata_buckets.iter().enumerate() {
         for &id in bucket {
             let Some(f) = registry.get(id) else { continue };
             let Some(rect) = f.layout_rect else { continue };
@@ -106,7 +115,7 @@ pub fn collect_sorted_frames(
                     .map(|p| p.effective_alpha)
                     .unwrap_or(0.0)
             };
-            frames.push((id, rect, eff));
+            per_strata[strata_idx].push((id, rect, eff));
             if f.visible && f.effective_alpha > 0.0 && f.mouse_enabled
                 && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
             {
@@ -122,7 +131,29 @@ pub fn collect_sorted_frames(
     });
 
     CollectedFrames {
-        render: frames,
+        per_strata,
         hittable: hittable.into_iter().map(|(id, _, _, r)| (id, r)).collect(),
     }
+}
+
+/// Rebuild a single strata's render sub-list from its bucket.
+pub fn collect_single_strata(
+    registry: &crate::widget::WidgetRegistry,
+    bucket: &[u64],
+) -> Vec<(u64, crate::LayoutRect, f32)> {
+    let mut frames = Vec::new();
+    for &id in bucket {
+        let Some(f) = registry.get(id) else { continue };
+        let Some(rect) = f.layout_rect else { continue };
+        let eff = if f.effective_alpha > 0.0 {
+            f.effective_alpha
+        } else {
+            f.parent_id
+                .and_then(|pid| registry.get(pid))
+                .map(|p| p.effective_alpha)
+                .unwrap_or(0.0)
+        };
+        frames.push((id, rect, eff));
+    }
+    frames
 }

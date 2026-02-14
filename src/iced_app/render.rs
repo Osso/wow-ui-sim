@@ -11,7 +11,7 @@ use crate::render::{GpuTextureData, QuadBatch, WowUiPrimitive, load_texture_or_c
 use crate::widget::{WidgetType};
 
 use super::app::App;
-use super::frame_collect::{CollectedFrames, collect_subtree_ids, collect_sorted_frames};
+use super::frame_collect::{CollectedFrames, collect_subtree_ids, collect_sorted_frames, collect_single_strata};
 use super::layout::LayoutCache;
 use super::quad_builders::{build_texture_quads, emit_button_highlight, emit_frame_quads};
 use super::statusbar::collect_statusbar_fills;
@@ -161,7 +161,7 @@ impl shader::Program<Message> for &App {
 #[allow(clippy::too_many_arguments)]
 fn emit_all_frames(
     batch: &mut QuadBatch,
-    render_list: &[(u64, crate::LayoutRect, f32)],
+    collected: &CollectedFrames,
     registry: &crate::widget::WidgetRegistry,
     screen_size: (f32, f32),
     visible_ids: &Option<std::collections::HashSet<u64>>,
@@ -173,9 +173,10 @@ fn emit_all_frames(
     cache: &mut LayoutCache,
     elapsed_secs: f64,
 ) {
-    let statusbar_fills = collect_statusbar_fills(render_list, registry);
+    let render_list: Vec<_> = collected.render_iter().copied().collect();
+    let statusbar_fills = collect_statusbar_fills(&render_list, registry);
 
-    for &(id, rect, eff_alpha) in render_list {
+    for &(id, rect, eff_alpha) in &render_list {
         let Some(f) = registry.get(id) else { continue };
 
         if super::button_vis::should_skip_frame(f, id, eff_alpha, visible_ids, registry, pressed_frame, hovered_frame) {
@@ -218,7 +219,7 @@ pub fn build_quad_batch_for_registry(
     let (batch, _collected) = build_quad_batch_with_cache(
         registry, screen_size, root_name, pressed_frame, hovered_frame,
         &mut text_ctx, message_frames, tooltip_data, &mut cache,
-        strata_buckets, None, 0.0,
+        strata_buckets, None, 0, 0.0,
     );
     batch
 }
@@ -258,8 +259,9 @@ pub fn build_quad_batch_with_cache(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     cache: &mut LayoutCache,
-    strata_buckets: &Vec<Vec<u64>>,
+    strata_buckets: &[Vec<u64>],
     cached_render_list: Option<CollectedFrames>,
+    dirty_strata: u16,
     elapsed_secs: f64,
 ) -> (QuadBatch, CollectedFrames) {
     let mut batch = QuadBatch::with_capacity(1000);
@@ -276,14 +278,22 @@ pub fn build_quad_batch_with_cache(
     );
 
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
-    let collected = if let Some(c) = cached_render_list {
+    let mut collected = if let Some(mut c) = cached_render_list {
+        // Rebuild only dirty strata sub-lists.
+        for i in 0..crate::widget::FrameStrata::COUNT {
+            if dirty_strata & (1 << i) != 0 {
+                c.per_strata[i] = collect_single_strata(registry, &strata_buckets[i]);
+            }
+        }
         c
     } else {
         collect_sorted_frames(registry, strata_buckets)
     };
+    // Clear dirty flags — all strata are now up to date.
+    let _ = &mut collected;
 
     emit_all_frames(
-        &mut batch, &collected.render, registry, screen_size,
+        &mut batch, &collected, registry, screen_size,
         &visible_ids, pressed_frame, hovered_frame,
         text_ctx, message_frames, tooltip_data, cache, elapsed_secs,
     );
@@ -347,7 +357,7 @@ impl App {
         let env = self.env.borrow();
         let mut font_sys = self.font_system.borrow_mut();
         // Mutable phase: ensure strata buckets exist, take caches.
-        let (strata_buckets, mut cache, cached_render) = {
+        let (strata_buckets, mut cache, cached_render, dirty_strata) = {
             let mut state = env.state().borrow_mut();
             state.ensure_layout_rects();
             super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
@@ -355,7 +365,9 @@ impl App {
             let buckets = state.strata_buckets.take().unwrap();
             let layout = state.take_layout_cache();
             let render = state.cached_render_list.take();
-            (buckets, layout, render)
+            let dirty = state.dirty_render_strata;
+            state.dirty_render_strata = 0;
+            (buckets, layout, render, dirty)
         };
         let state = env.state().borrow();
         let elapsed_secs = state.start_time.elapsed().as_secs_f64();
@@ -367,7 +379,7 @@ impl App {
             &mut Some((&mut font_sys, &mut glyph_atlas)),
             Some(&state.message_frames), Some(&tooltip_data),
             &mut cache, &strata_buckets,
-            cached_render, elapsed_secs,
+            cached_render, dirty_strata, elapsed_secs,
         );
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
         if self.cached_hittable.borrow().is_none() {

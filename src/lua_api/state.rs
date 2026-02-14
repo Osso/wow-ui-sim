@@ -165,6 +165,9 @@ pub struct SimState {
     /// Cached render and hit-test lists from `collect_sorted_frames`.
     /// Skips the per-frame collection pass when only content (not layout/visibility) changes.
     pub cached_render_list: Option<crate::iced_app::frame_collect::CollectedFrames>,
+    /// Bitfield of strata indices that need their render sub-list rebuilt.
+    /// When a strata is dirty, only that sub-list is recollected from its bucket.
+    pub dirty_render_strata: u16,
     /// Pending HitGrid updates from `set_frame_visible`. Each entry is the root
     /// frame ID that changed visibility and whether it became visible.
     /// Drained and applied by the App after Lua handlers run.
@@ -251,6 +254,7 @@ impl Default for SimState {
             strata_buckets: None,
             layout_rect_cache: None,
             cached_render_list: None,
+            dirty_render_strata: 0,
             pending_hit_grid_changes: Vec::new(),
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
@@ -287,11 +291,26 @@ impl Default for SimState {
 }
 
 impl SimState {
+    /// Mark all strata as needing render list rebuild.
+    pub fn invalidate_all_render_strata(&mut self) {
+        self.cached_render_list = None;
+    }
+
+    /// Mark a specific strata as needing render list rebuild.
+    /// If no cached render list exists, this is a no-op (full rebuild will happen).
+    pub fn invalidate_render_strata(&mut self, strata: crate::widget::FrameStrata) {
+        if self.cached_render_list.is_some() {
+            self.dirty_render_strata |= 1 << strata.as_index();
+        } else {
+            // No cached list — full rebuild will happen anyway.
+        }
+    }
+
     /// Return the per-strata buckets, building lazily if needed.
     pub fn get_strata_buckets(&mut self) -> Option<&Vec<Vec<u64>>> {
         if self.strata_buckets.is_none() {
             self.strata_buckets = Some(self.build_strata_buckets());
-            self.cached_render_list = None;
+            self.invalidate_all_render_strata();
         }
         self.strata_buckets.as_ref()
     }
@@ -353,7 +372,11 @@ impl SimState {
     /// Called when layout-affecting properties change (anchors, size, scale, parent).
     /// Stores the computed rect on each Frame so the renderer can use it directly.
     pub fn invalidate_layout(&mut self, id: u64) {
-        self.cached_render_list = None;
+        if let Some(f) = self.widgets.get(id) {
+            self.invalidate_render_strata(f.frame_strata);
+        } else {
+            self.invalidate_all_render_strata();
+        }
         let sw = self.screen_width;
         let sh = self.screen_height;
         if let Some(cache) = self.layout_rect_cache.as_mut() {
@@ -369,7 +392,11 @@ impl SimState {
     /// dependents. Called by SetWidth/SetHeight/SetSize/SetScale/SetAtlas so
     /// that cross-frame-anchored siblings (e.g. three-slice Center) update.
     pub fn invalidate_layout_with_dependents(&mut self, id: u64) {
-        self.cached_render_list = None;
+        if let Some(f) = self.widgets.get(id) {
+            self.invalidate_render_strata(f.frame_strata);
+        } else {
+            self.invalidate_all_render_strata();
+        }
         let sw = self.screen_width;
         let sh = self.screen_height;
         if let Some(cache) = self.layout_rect_cache.as_mut() {
@@ -480,9 +507,12 @@ impl SimState {
             .map(|p| p.effective_alpha)
             .unwrap_or(1.0);
         self.widgets.propagate_effective_alpha(id, parent_eff);
-        // Visibility changed — invalidate the render list (which frames to draw)
-        // but NOT strata_buckets (sort order is unchanged by show/hide).
-        self.cached_render_list = None;
+        // Visibility changed — invalidate only the affected strata's render sub-list.
+        if let Some(f) = self.widgets.get(id) {
+            self.invalidate_render_strata(f.frame_strata);
+        } else {
+            self.invalidate_all_render_strata();
+        }
         // Record for incremental HitGrid update (applied by App after Lua runs).
         self.pending_hit_grid_changes.push((id, visible));
     }
@@ -512,7 +542,7 @@ impl SimState {
         );
         // Invalidate render caches since level changed.
         self.strata_buckets = None;
-        self.cached_render_list = None;
+        self.invalidate_all_render_strata();
     }
 
     /// Find the maximum frame_level among siblings of `id` in the given strata.
