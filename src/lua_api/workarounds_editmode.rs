@@ -116,8 +116,7 @@ fn fix_action_bar_scale(env: &WowLuaEnv) {
 /// to apply settings (orientation, num rows, etc.) through the normal
 /// Blizzard code path. Per-frame errors are caught by secureexecuterange.
 ///
-/// Also patches ShowUIPanel/HideUIPanel to bypass FramePositionDelegate,
-/// and wraps EnterEditMode/ExitEditMode with pcall protection so edit
+/// Also wraps EnterEditMode/ExitEditMode with pcall protection so edit
 /// mode can activate even when subsystems crash.
 pub fn patch_edit_mode_manager(env: &WowLuaEnv) {
     patch_get_active_layout(env);
