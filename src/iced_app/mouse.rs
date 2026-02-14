@@ -49,7 +49,6 @@ impl App {
         // OnEnter/OnLeave scripts may show/hide tooltips or change widget state.
         // Check if Lua mutated any widget and invalidate the quad cache if so.
         if self.env.borrow().state().borrow().widgets.take_render_dirty() {
-            eprintln!("[perf] mouse_move invalidate: hover changed {:?} -> {:?}", old_hovered, new_hovered);
             self.invalidate();
         } else {
             self.drain_console();

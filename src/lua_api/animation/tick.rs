@@ -185,6 +185,12 @@ fn apply_effects(
         if let Some((rows, cols, frames, progress)) = fx.flipbook {
             apply_flipbook_uv(frame, rows, cols, frames, progress);
         }
+        // Only mark dirty when something actually changed — animations tick
+        // every frame and the render pipeline already picks up changes via
+        // the 33ms rebuild throttle.
+        if alpha_changed || offset_changed {
+            state.widgets.mark_visual_dirty(id);
+        }
         if offset_changed {
             state.invalidate_layout(id);
         }
