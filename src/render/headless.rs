@@ -152,7 +152,7 @@ pub fn render_to_image(
     glyph_atlas_data: Option<(&[u8], u32)>,
 ) -> RgbaImage {
     let textures = load_batch_textures(batch, tex_mgr);
-    let mut primitive = WowUiPrimitive::with_textures(std::sync::Arc::new(batch.clone()), textures);
+    let mut primitive = WowUiPrimitive::new_merged_with_textures(std::sync::Arc::new(batch.clone()), textures);
 
     if let Some((data, size)) = glyph_atlas_data {
         primitive.glyph_atlas_data = Some(data.to_vec());

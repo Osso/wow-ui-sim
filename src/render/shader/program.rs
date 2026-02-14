@@ -51,7 +51,7 @@ impl<Message> shader::Program<Message> for WowUiProgram {
         _cursor: mouse::Cursor,
         _bounds: Rectangle,
     ) -> Self::Primitive {
-        WowUiPrimitive::new(Arc::clone(&self.quads))
+        WowUiPrimitive::new_merged(Arc::clone(&self.quads))
     }
 
     /// Return default mouse interaction.

@@ -103,14 +103,12 @@ impl shader::Program<Message> for &App {
         let size = bounds.size();
         self.screen_size.set(size);
         self.sync_screen_size_to_state(size);
-        let (quads, rebuilt) = self.get_or_rebuild_quads(size);
+        let (dirty_strata, rebuilt) = self.get_or_rebuild_quads(size);
 
         // Build overlay (hover highlight + cursor) as a separate small batch.
-        // This avoids cloning the entire world quad batch every frame.
         let mut overlay = QuadBatch::new();
         self.append_hover_highlight(&mut overlay, size);
         if let Some(pos) = self.mouse_position {
-            // If something is on the cursor, render the spell icon attached to cursor.
             self.append_cursor_item_icon(&mut overlay, pos);
 
             const CURSOR_SIZE: f32 = 32.0;
@@ -122,11 +120,15 @@ impl shader::Program<Message> for &App {
             );
         }
 
-        let mut textures = self.load_new_textures(&quads);
+        // Load textures from dirty strata batches.
+        let mut textures = Vec::new();
+        for batch_opt in &dirty_strata {
+            if let Some(batch) = batch_opt {
+                textures.extend(self.load_new_textures(batch));
+            }
+        }
         textures.extend(self.load_new_textures(&overlay));
 
-        // Only update frame time when quads were actually rebuilt.
-        // Cache-hit draws are trivial (~0.1ms) and would drown out real rebuild costs.
         if rebuilt {
             let elapsed_ms = start.elapsed().as_secs_f32() * 1000.0;
             self.frame_time_ms.set(elapsed_ms);
@@ -134,8 +136,14 @@ impl shader::Program<Message> for &App {
             self.frame_time_avg.set(0.33 * elapsed_ms + 0.67 * avg);
         }
 
-        let mut primitive = WowUiPrimitive::with_textures(quads, textures);
-        primitive.overlay = overlay;
+        let mut primitive = WowUiPrimitive {
+            strata_batches: dirty_strata,
+            overlay,
+            clear_color: [0.10, 0.11, 0.14, 1.0],
+            textures,
+            glyph_atlas_data: None,
+            glyph_atlas_size: 0,
+        };
         self.attach_dirty_glyph_atlas(&mut primitive);
         primitive
     }
@@ -154,14 +162,14 @@ impl shader::Program<Message> for &App {
     }
 }
 
-/// Emit quads for all frames by iterating strata buckets directly.
+/// Emit quads for a single strata bucket.
 ///
 /// Reads rect and effective_alpha fresh from the registry for each frame.
 /// Button state textures use parent's effective_alpha as fallback.
 #[allow(clippy::too_many_arguments)]
-fn emit_all_frames(
+fn emit_single_strata(
     batch: &mut QuadBatch,
-    strata_buckets: &[Vec<u64>],
+    bucket: &[u64],
     registry: &crate::widget::WidgetRegistry,
     screen_size: (f32, f32),
     visible_ids: &Option<std::collections::HashSet<u64>>,
@@ -173,23 +181,20 @@ fn emit_all_frames(
     cache: &mut LayoutCache,
     elapsed_secs: f64,
 ) {
-    // Build render list from buckets, reading rect/alpha fresh from registry.
     let mut render_list: Vec<(u64, crate::LayoutRect, f32)> = Vec::new();
-    for bucket in strata_buckets {
-        for &id in bucket {
-            let Some(f) = registry.get(id) else { continue };
-            let Some(rect) = f.layout_rect else { continue };
-            let eff_alpha = if f.effective_alpha > 0.0 {
-                f.effective_alpha
-            } else {
-                f.parent_id
-                    .and_then(|pid| registry.get(pid))
-                    .map(|p| p.effective_alpha)
-                    .unwrap_or(0.0)
-            };
-            if eff_alpha <= 0.0 { continue; }
-            render_list.push((id, rect, eff_alpha));
-        }
+    for &id in bucket {
+        let Some(f) = registry.get(id) else { continue };
+        let Some(rect) = f.layout_rect else { continue };
+        let eff_alpha = if f.effective_alpha > 0.0 {
+            f.effective_alpha
+        } else {
+            f.parent_id
+                .and_then(|pid| registry.get(pid))
+                .map(|p| p.effective_alpha)
+                .unwrap_or(0.0)
+        };
+        if eff_alpha <= 0.0 { continue; }
+        render_list.push((id, rect, eff_alpha));
     }
     let statusbar_fills = collect_statusbar_fills(&render_list, registry);
 
@@ -292,29 +297,131 @@ pub fn build_quad_batch_with_cache(
     let visible_ids = root_name.map(|name| collect_subtree_ids(registry, name));
     let collected = collect_hittable_frames(registry, strata_buckets);
 
-    emit_all_frames(
-        &mut batch, strata_buckets, registry, screen_size,
-        &visible_ids, pressed_frame, hovered_frame,
-        text_ctx, message_frames, tooltip_data, cache, elapsed_secs,
-    );
+    for bucket in strata_buckets {
+        emit_single_strata(
+            &mut batch, bucket, registry, screen_size,
+            &visible_ids, pressed_frame, hovered_frame,
+            text_ctx, message_frames, tooltip_data, cache, elapsed_secs,
+        );
+    }
     (batch, collected)
 }
 
 
-impl App {
-    /// Return cached quads or rebuild if dirty/resized. Returns (quads, rebuilt).
-    fn get_or_rebuild_quads(&self, size: Size) -> (std::sync::Arc<QuadBatch>, bool) {
-        let mut cache = self.cached_quads.borrow_mut();
-        let size_changed = cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true);
+use crate::widget::FrameStrata;
+use std::sync::Arc;
 
-        if size_changed || self.quads_dirty.get() {
-            let new_quads = std::sync::Arc::new(self.build_quad_batch(size));
-            *cache = Some((size, std::sync::Arc::clone(&new_quads)));
-            self.quads_dirty.set(false);
-            (new_quads, true)
-        } else {
-            (std::sync::Arc::clone(&cache.as_ref().unwrap().1), false)
+impl App {
+    /// Return per-strata dirty batches, rebuilding only strata whose bit is
+    /// set in `strata_dirty`. Clean strata get `None` — the GPU pipeline
+    /// keeps their buffers from the previous frame.
+    ///
+    /// Returns `(batches, rebuilt)` where `rebuilt` is true when any strata
+    /// was re-emitted (used for frame-time measurement).
+    fn get_or_rebuild_quads(
+        &self,
+        size: Size,
+    ) -> ([Option<Arc<QuadBatch>>; FrameStrata::COUNT], bool) {
+        let mut size_cache = self.cached_quads.borrow_mut();
+        let size_changed = size_cache.as_ref().map(|(s, _)| *s != size).unwrap_or(true);
+
+        if size_changed {
+            self.mark_all_strata_dirty();
+            // Invalidate per-strata cache — screen size changed.
+            *self.cached_strata_quads.borrow_mut() = std::array::from_fn(|_| None);
         }
+
+        let dirty = self.strata_dirty.get();
+        if dirty == 0 {
+            return (std::array::from_fn(|_| None), false);
+        }
+
+        self.rebuild_dirty_strata(size, dirty);
+        self.strata_dirty.set(0);
+        // Record current size so next frame detects resize.
+        *size_cache = Some((size, Arc::new(QuadBatch::new())));
+
+        let strata = self.cached_strata_quads.borrow();
+        let result = std::array::from_fn(|i| {
+            if dirty & (1 << i) != 0 {
+                strata[i].clone()
+            } else {
+                None
+            }
+        });
+        (result, true)
+    }
+
+    /// Rebuild only the strata whose bits are set in `dirty`.
+    ///
+    /// Stores results in `cached_strata_quads`. Also updates the hittable
+    /// grid on first build and syncs layout caches.
+    fn rebuild_dirty_strata(&self, size: Size, dirty: u16) {
+        let env = self.env.borrow();
+        let mut font_sys = self.font_system.borrow_mut();
+
+        // Mutable phase: ensure strata buckets exist, take caches.
+        let (strata_buckets, mut layout_cache) = {
+            let mut state = env.state().borrow_mut();
+            state.ensure_layout_rects();
+            super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+            let _ = state.get_strata_buckets();
+            let buckets = state.strata_buckets.take().unwrap();
+            let layout = state.take_layout_cache();
+            (buckets, layout)
+        };
+
+        let state = env.state().borrow();
+        let elapsed_secs = state.start_time.elapsed().as_secs_f64();
+        let tooltip_data = super::tooltip::collect_tooltip_data(&state);
+        let mut glyph_atlas = self.glyph_atlas.borrow_mut();
+        let mut text_ctx: Option<(&mut WowFontSystem, &mut GlyphAtlas)> =
+            Some((&mut font_sys, &mut glyph_atlas));
+
+        let mut strata_cache = self.cached_strata_quads.borrow_mut();
+
+        for i in 0..FrameStrata::COUNT {
+            if dirty & (1 << i) == 0 && strata_cache[i].is_some() {
+                continue;
+            }
+            let mut batch = QuadBatch::new();
+            // World strata (index 0) gets the marble background.
+            if i == 0 {
+                batch.push_tiled_path(
+                    Rectangle::new(Point::ORIGIN, size),
+                    256.0,
+                    256.0,
+                    "framegeneral/ui-background-marble",
+                    [0.55, 0.55, 0.55, 1.0],
+                );
+            }
+            if let Some(bucket) = strata_buckets.get(i) {
+                emit_single_strata(
+                    &mut batch, bucket, &state.widgets,
+                    (size.width, size.height), &None,
+                    self.pressed_frame, None,
+                    &mut text_ctx, Some(&state.message_frames),
+                    Some(&tooltip_data), &mut layout_cache, elapsed_secs,
+                );
+            }
+            strata_cache[i] = Some(Arc::new(batch));
+        }
+        drop(strata_cache);
+
+        // Build hittable grid on first render.
+        *self.cached_layout_rects.borrow_mut() = Some(layout_cache.clone());
+        if self.cached_hittable.borrow().is_none() {
+            let collected = collect_hittable_frames(&state.widgets, &strata_buckets);
+            let hittable = build_hittable_rects(&collected, &state.widgets);
+            let grid = super::hit_grid::HitGrid::new(hittable, size.width, size.height);
+            *self.cached_hittable.borrow_mut() = Some(grid);
+        }
+        drop(state);
+        self.apply_hit_grid_changes();
+
+        let mut state = env.state().borrow_mut();
+        state.strata_buckets = Some(strata_buckets);
+        state.set_layout_cache(layout_cache);
     }
 
     /// Load textures not yet uploaded to the GPU atlas.
@@ -347,50 +454,6 @@ impl App {
             primitive.glyph_atlas_size = size;
             ga.mark_clean();
         }
-    }
-
-    /// Build a QuadBatch for GPU shader rendering.
-    ///
-    /// Hover highlights are NOT baked in — they're appended dynamically in
-    /// `draw()` so that hover changes don't force a full quad rebuild.
-    pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
-        let env = self.env.borrow();
-        let mut font_sys = self.font_system.borrow_mut();
-        // Mutable phase: ensure strata buckets exist, take caches.
-        let (strata_buckets, mut cache) = {
-            let mut state = env.state().borrow_mut();
-            state.ensure_layout_rects();
-            super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
-            let _ = state.get_strata_buckets();
-            let buckets = state.strata_buckets.take().unwrap();
-            let layout = state.take_layout_cache();
-            (buckets, layout)
-        };
-        let state = env.state().borrow();
-        let elapsed_secs = state.start_time.elapsed().as_secs_f64();
-        let tooltip_data = super::tooltip::collect_tooltip_data(&state);
-        let mut glyph_atlas = self.glyph_atlas.borrow_mut();
-        let (batch, collected) = build_quad_batch_with_cache(
-            &state.widgets, (size.width, size.height), None,
-            self.pressed_frame, None,
-            &mut Some((&mut font_sys, &mut glyph_atlas)),
-            Some(&state.message_frames), Some(&tooltip_data),
-            &mut cache, &strata_buckets, elapsed_secs,
-        );
-        *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
-        if self.cached_hittable.borrow().is_none() {
-            // Initial build: construct grid from scratch.
-            let hittable = build_hittable_rects(&collected, &state.widgets);
-            let grid = super::hit_grid::HitGrid::new(hittable, size.width, size.height);
-            *self.cached_hittable.borrow_mut() = Some(grid);
-        }
-        drop(state);
-        // Apply any pending visibility changes to the grid.
-        self.apply_hit_grid_changes();
-        let mut state = env.state().borrow_mut();
-        state.strata_buckets = Some(strata_buckets);
-        state.set_layout_cache(cache);
-        batch
     }
 
     /// Append hover highlight quads for the currently hovered button.

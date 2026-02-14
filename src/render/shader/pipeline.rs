@@ -29,6 +29,20 @@ impl Uniforms {
     }
 }
 
+use crate::widget::FrameStrata;
+
+/// Per-strata GPU vertex and index buffers.
+struct StrataGpuBuffer {
+    vertex_buffer: wgpu::Buffer,
+    index_buffer: wgpu::Buffer,
+    vertex_capacity: usize,
+    index_capacity: usize,
+    index_count: usize,
+}
+
+/// Total number of GPU buffer slots: 9 strata + 1 overlay.
+const BUFFER_SLOTS: usize = FrameStrata::COUNT + 1;
+
 /// GPU pipeline holding persistent rendering resources.
 pub struct WowUiPipeline {
     /// Render pipeline for quad drawing.
@@ -37,31 +51,45 @@ pub struct WowUiPipeline {
     uniform_buffer: wgpu::Buffer,
     /// Bind group for uniforms.
     uniform_bind_group: wgpu::BindGroup,
-    /// Vertex buffer (resized as needed).
-    vertex_buffer: wgpu::Buffer,
-    /// Index buffer (resized as needed).
-    index_buffer: wgpu::Buffer,
-    /// Current vertex buffer capacity.
-    vertex_capacity: usize,
-    /// Current index buffer capacity.
-    index_capacity: usize,
+    /// Per-strata GPU buffers (9 strata + 1 overlay).
+    strata_buffers: Vec<StrataGpuBuffer>,
     /// Texture format (stored for potential pipeline recreation).
     _format: wgpu::TextureFormat,
     /// Current viewport size.
     viewport_size: (u32, u32),
     /// GPU texture atlas for texture storage.
     texture_atlas: GpuTextureAtlas,
-    /// Number of indices in the last uploaded batch (for render).
-    last_index_count: usize,
 }
 
 impl std::fmt::Debug for WowUiPipeline {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("WowUiPipeline")
-            .field("vertex_capacity", &self.vertex_capacity)
-            .field("index_capacity", &self.index_capacity)
+            .field("buffer_slots", &self.strata_buffers.len())
             .field("viewport_size", &self.viewport_size)
             .finish()
+    }
+}
+
+/// Create a single strata GPU buffer pair (vertex + index) with initial capacity.
+fn create_strata_buffer(device: &wgpu::Device, label_idx: usize) -> StrataGpuBuffer {
+    let vb = device.create_buffer(&wgpu::BufferDescriptor {
+        label: Some(&format!("WoW UI Vertex Buffer [strata {}]", label_idx)),
+        size: 4096,
+        usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST,
+        mapped_at_creation: false,
+    });
+    let ib = device.create_buffer(&wgpu::BufferDescriptor {
+        label: Some(&format!("WoW UI Index Buffer [strata {}]", label_idx)),
+        size: 4096,
+        usage: wgpu::BufferUsages::INDEX | wgpu::BufferUsages::COPY_DST,
+        mapped_at_creation: false,
+    });
+    StrataGpuBuffer {
+        vertex_buffer: vb,
+        index_buffer: ib,
+        vertex_capacity: 4096,
+        index_capacity: 4096,
+        index_count: 0,
     }
 }
 
@@ -119,76 +147,76 @@ impl WowUiPipeline {
         })
     }
 
-    /// Prepare GPU buffers with quad data.
-    pub fn prepare(
-        &mut self,
-        device: &wgpu::Device,
-        queue: &wgpu::Queue,
-        bounds: &iced::Rectangle,
-        quads: &QuadBatch,
-    ) {
-        // Use widget bounds for projection (not full viewport)
-        // This makes coordinates relative to the widget like canvas does
+    /// Update the projection matrix if the viewport size changed.
+    pub fn update_projection(&mut self, queue: &wgpu::Queue, bounds: &iced::Rectangle) {
         let width = bounds.width as u32;
         let height = bounds.height as u32;
-
-        // Update projection if size changed
         if self.viewport_size != (width, height) {
             self.viewport_size = (width, height);
             let uniforms = Uniforms::new(bounds.width, bounds.height);
             queue.write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(&[uniforms]));
         }
+    }
 
-        // Resize vertex buffer if needed
+    /// Upload quad data for a single strata/overlay slot.
+    ///
+    /// Resizes the slot's vertex/index buffers if needed, then writes data.
+    pub fn upload_strata(
+        &mut self,
+        device: &wgpu::Device,
+        queue: &wgpu::Queue,
+        slot: usize,
+        quads: &QuadBatch,
+    ) {
+        let buf = &mut self.strata_buffers[slot];
+
         let vertex_size = quads.vertices.len() * mem::size_of::<QuadVertex>();
-        if vertex_size > self.vertex_capacity {
-            self.vertex_capacity = vertex_size.next_power_of_two().max(4096);
-            self.vertex_buffer = device.create_buffer(&wgpu::BufferDescriptor {
-                label: Some("WoW UI Vertex Buffer"),
-                size: self.vertex_capacity as u64,
+        if vertex_size > buf.vertex_capacity {
+            buf.vertex_capacity = vertex_size.next_power_of_two().max(4096);
+            buf.vertex_buffer = device.create_buffer(&wgpu::BufferDescriptor {
+                label: Some(&format!("WoW UI Vertex Buffer [strata {}]", slot)),
+                size: buf.vertex_capacity as u64,
                 usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST,
                 mapped_at_creation: false,
             });
         }
 
-        // Resize index buffer if needed
         let index_size = quads.indices.len() * mem::size_of::<u32>();
-        if index_size > self.index_capacity {
-            self.index_capacity = index_size.next_power_of_two().max(4096);
-            self.index_buffer = device.create_buffer(&wgpu::BufferDescriptor {
-                label: Some("WoW UI Index Buffer"),
-                size: self.index_capacity as u64,
+        if index_size > buf.index_capacity {
+            buf.index_capacity = index_size.next_power_of_two().max(4096);
+            buf.index_buffer = device.create_buffer(&wgpu::BufferDescriptor {
+                label: Some(&format!("WoW UI Index Buffer [strata {}]", slot)),
+                size: buf.index_capacity as u64,
                 usage: wgpu::BufferUsages::INDEX | wgpu::BufferUsages::COPY_DST,
                 mapped_at_creation: false,
             });
         }
 
-        // Upload vertex and index data
         if !quads.vertices.is_empty() {
             queue.write_buffer(
-                &self.vertex_buffer,
+                &buf.vertex_buffer,
                 0,
                 bytemuck::cast_slice(&quads.vertices),
             );
         }
         if !quads.indices.is_empty() {
-            queue.write_buffer(&self.index_buffer, 0, bytemuck::cast_slice(&quads.indices));
+            queue.write_buffer(&buf.index_buffer, 0, bytemuck::cast_slice(&quads.indices));
         }
-
-        // Store index count for render
-        self.last_index_count = quads.indices.len();
+        buf.index_count = quads.indices.len();
     }
 
-    /// Render the quads using data uploaded in prepare().
+    /// Clear the index count for a strata slot (keeps buffer allocated).
+    pub fn clear_strata(&mut self, slot: usize) {
+        self.strata_buffers[slot].index_count = 0;
+    }
+
+    /// Render all strata + overlay using per-strata GPU buffers.
     pub fn render(
         &self,
         encoder: &mut wgpu::CommandEncoder,
         target: &wgpu::TextureView,
         clip_bounds: &Rectangle<u32>,
     ) {
-        // Use LoadOp::Load to preserve iced's UI elements (console border, etc.)
-        // The scissor rect only affects draw calls, not clear operations.
-        // We draw a background quad instead of using clear.
         let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("WoW UI Render Pass"),
             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
@@ -205,7 +233,6 @@ impl WowUiPipeline {
             occlusion_query_set: None,
         });
 
-        // Set viewport to match clip bounds - this ensures coordinates map correctly
         render_pass.set_viewport(
             clip_bounds.x as f32,
             clip_bounds.y as f32,
@@ -214,23 +241,23 @@ impl WowUiPipeline {
             0.0,
             1.0,
         );
-
-        // Set scissor rect to clip drawing to widget bounds
         render_pass.set_scissor_rect(
             clip_bounds.x,
             clip_bounds.y,
             clip_bounds.width,
             clip_bounds.height,
         );
-
         render_pass.set_pipeline(&self.pipeline);
         render_pass.set_bind_group(0, &self.uniform_bind_group, &[]);
         render_pass.set_bind_group(1, self.texture_atlas.bind_group(), &[]);
-        render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
-        render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint32);
 
-        if self.last_index_count > 0 {
-            render_pass.draw_indexed(0..self.last_index_count as u32, 0, 0..1);
+        // Draw each strata + overlay in order.
+        for buf in &self.strata_buffers {
+            if buf.index_count > 0 {
+                render_pass.set_vertex_buffer(0, buf.vertex_buffer.slice(..));
+                render_pass.set_index_buffer(buf.index_buffer.slice(..), wgpu::IndexFormat::Uint32);
+                render_pass.draw_indexed(0..buf.index_count as u32, 0, 0..1);
+            }
         }
     }
 
@@ -271,22 +298,22 @@ impl WowUiPipeline {
             0.0,
             1.0,
         );
-
         render_pass.set_scissor_rect(
             clip_bounds.x,
             clip_bounds.y,
             clip_bounds.width,
             clip_bounds.height,
         );
-
         render_pass.set_pipeline(&self.pipeline);
         render_pass.set_bind_group(0, &self.uniform_bind_group, &[]);
         render_pass.set_bind_group(1, self.texture_atlas.bind_group(), &[]);
-        render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
-        render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint32);
 
-        if self.last_index_count > 0 {
-            render_pass.draw_indexed(0..self.last_index_count as u32, 0, 0..1);
+        for buf in &self.strata_buffers {
+            if buf.index_count > 0 {
+                render_pass.set_vertex_buffer(0, buf.vertex_buffer.slice(..));
+                render_pass.set_index_buffer(buf.index_buffer.slice(..), wgpu::IndexFormat::Uint32);
+                render_pass.draw_indexed(0..buf.index_count as u32, 0, 0..1);
+            }
         }
     }
 
@@ -307,20 +334,6 @@ impl shader::Pipeline for WowUiPipeline {
         let (uniform_buffer, uniform_bind_group_layout, uniform_bind_group) =
             create_uniform_resources(device);
 
-        let vertex_buffer = device.create_buffer(&wgpu::BufferDescriptor {
-            label: Some("WoW UI Vertex Buffer"),
-            size: 4096,
-            usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST,
-            mapped_at_creation: false,
-        });
-
-        let index_buffer = device.create_buffer(&wgpu::BufferDescriptor {
-            label: Some("WoW UI Index Buffer"),
-            size: 4096,
-            usage: wgpu::BufferUsages::INDEX | wgpu::BufferUsages::COPY_DST,
-            mapped_at_creation: false,
-        });
-
         let pipeline = Self::create_pipeline(
             device,
             format,
@@ -328,18 +341,17 @@ impl shader::Pipeline for WowUiPipeline {
             texture_atlas.bind_group_layout(),
         );
 
+        let strata_buffers: Vec<StrataGpuBuffer> =
+            (0..BUFFER_SLOTS).map(|i| create_strata_buffer(device, i)).collect();
+
         Self {
             pipeline,
             uniform_buffer,
             uniform_bind_group,
-            vertex_buffer,
-            index_buffer,
-            vertex_capacity: 4096,
-            index_capacity: 4096,
+            strata_buffers,
             _format: format,
             viewport_size: (0, 0),
             texture_atlas,
-            last_index_count: 0,
         }
     }
 }

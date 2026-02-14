@@ -161,14 +161,16 @@ pub struct App {
     pub(crate) debug_anchors: bool,
     /// Track which textures have been uploaded to GPU atlas (avoid re-sending pixel data).
     pub(crate) gpu_uploaded_textures: RefCell<std::collections::HashSet<String>>,
-    /// Cached quad batch for shader (avoids rebuilding every frame).
+    /// Cached merged quad batch (all strata combined), used by draw().
     pub(crate) cached_quads: RefCell<Option<(Size, std::sync::Arc<crate::render::QuadBatch>)>>,
+    /// Per-strata cached quad batches. Index = FrameStrata::as_index().
+    pub(crate) cached_strata_quads: RefCell<[Option<std::sync::Arc<crate::render::QuadBatch>>; crate::widget::FrameStrata::COUNT]>,
     /// Spatial grid for fast hit testing (rebuilt when layout changes).
     pub(crate) cached_hittable: RefCell<Option<super::hit_grid::HitGrid>>,
     /// Cached layout rects from the last quad build, shared with hit testing.
     pub(crate) cached_layout_rects: RefCell<Option<super::layout::LayoutCache>>,
-    /// Flag to invalidate quad cache (set when content changes).
-    pub(crate) quads_dirty: std::cell::Cell<bool>,
+    /// Per-strata dirty bitmask — bit `i` means strata index `i` needs re-emit.
+    pub(crate) strata_dirty: std::cell::Cell<u16>,
     /// FPS counter: frame count since last update (interior mutability for draw()).
     pub(crate) frame_count: std::cell::Cell<u32>,
     /// FPS counter: last FPS calculation time.
@@ -279,9 +281,10 @@ impl App {
             debug_anchors,
             gpu_uploaded_textures: RefCell::new(std::collections::HashSet::new()),
             cached_quads: RefCell::new(None),
+            cached_strata_quads: RefCell::new(std::array::from_fn(|_| None)),
             cached_hittable: RefCell::new(None),
             cached_layout_rects: RefCell::new(None),
-            quads_dirty: std::cell::Cell::new(true),
+            strata_dirty: std::cell::Cell::new((1u16 << crate::widget::FrameStrata::COUNT) - 1),
             frame_count: std::cell::Cell::new(0),
             fps_last_time: now,
             fps: 0.0,
@@ -414,6 +417,16 @@ impl App {
 }
 
 impl App {
+    /// Mark specific strata as dirty (need quad re-emit + GPU re-upload).
+    pub(crate) fn mark_strata_dirty(&self, mask: u16) {
+        self.strata_dirty.set(self.strata_dirty.get() | mask);
+    }
+
+    /// Mark ALL strata as dirty (full rebuild).
+    pub(crate) fn mark_all_strata_dirty(&self) {
+        self.strata_dirty.set((1u16 << crate::widget::FrameStrata::COUNT) - 1);
+    }
+
     /// Determine how often the timer subscription should tick.
     ///
     /// Returns `Some(interval)` when periodic work is needed (animations,
@@ -435,9 +448,9 @@ impl App {
         let has_casting = state.casting.is_some();
         let has_cooldowns = has_active_cooldowns(&state);
         if has_cooldowns {
-            self.quads_dirty.set(true);
+            self.mark_all_strata_dirty();
         }
-        if has_animations || has_casting || self.quads_dirty.get() {
+        if has_animations || has_casting || self.strata_dirty.get() != 0 {
             return Some(std::time::Duration::from_millis(16));
         }
         drop(state);

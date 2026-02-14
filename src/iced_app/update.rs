@@ -187,7 +187,7 @@ impl App {
         }
         self.drain_console();
         self.log_messages.push("UI reloaded.".to_string());
-        self.quads_dirty.set(true);
+        self.mark_all_strata_dirty();
     }
 
     fn handle_execute_command(&mut self) {
@@ -200,7 +200,7 @@ impl App {
         self.execute_command_inner(&cmd);
         self.drain_console();
         self.command_input.clear();
-        self.quads_dirty.set(true);
+        self.mark_all_strata_dirty();
     }
 
     fn execute_command_inner(&mut self, cmd: &str) {
@@ -233,7 +233,7 @@ impl App {
         // Track timer dirty separately — timer callbacks can legitimately change widgets.
         self.env.borrow().state().borrow().widgets.take_render_dirty();
         self.run_wow_timers();
-        let timers_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
+        let timers_mask = self.env.borrow().state().borrow().widgets.take_render_dirty();
 
         // Resolve pending layout before OnUpdate so IsRectValid() returns true
         // for frames whose rects have been computed.  Without this, Blizzard code
@@ -243,19 +243,21 @@ impl App {
         self.env.borrow().state().borrow_mut().ensure_layout_rects();
 
         self.fire_on_update();
-        let on_update_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
+        let on_update_mask = self.env.borrow().state().borrow().widgets.take_render_dirty();
 
         self.tick_party_health();
         self.tick_casting();
 
-        let health_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
-        if timers_dirty || on_update_dirty || health_dirty {
+        let health_mask = self.env.borrow().state().borrow().widgets.take_render_dirty();
+        let combined = timers_mask | on_update_mask | health_mask;
+        if combined != 0 {
             static CNT: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(0);
             let c = CNT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
             if c % 60 == 0 {
-                eprintln!("[idle-debug] invalidate #{c}: timers={timers_dirty} on_update={on_update_dirty} health={health_dirty}");
+                eprintln!("[idle-debug] invalidate #{c}: timers=0x{timers_mask:03x} on_update=0x{on_update_mask:03x} health=0x{health_mask:03x}");
             }
-            self.invalidate();
+            self.drain_console();
+            self.mark_strata_dirty(combined);
         } else {
             self.drain_console();
         }
@@ -362,7 +364,7 @@ impl App {
     fn handle_inspector_apply(&mut self) {
         if let Some(frame_id) = self.inspected_frame {
             self.apply_inspector_changes(frame_id);
-            self.quads_dirty.set(true);
+            self.mark_all_strata_dirty();
         }
     }
 
@@ -378,10 +380,10 @@ impl App {
         config.save();
     }
 
-    /// Drain console, clear frame cache, and mark quads dirty.
+    /// Drain console, clear frame cache, and mark all strata dirty.
     pub(super) fn invalidate(&mut self) {
         self.drain_console();
-        self.quads_dirty.set(true);
+        self.mark_all_strata_dirty();
     }
 
     /// Apply pending HitGrid changes from `set_frame_visible` calls.

@@ -512,7 +512,7 @@ fn test_tooltip_produces_quads_after_hover() {
     let mut font_sys = WowFontSystem::new(&PathBuf::from("./fonts"));
     {
         let mut state = env.state().borrow_mut();
-        state.widgets.take_render_dirty();
+        let _ = state.widgets.take_render_dirty();
         wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
     }
 

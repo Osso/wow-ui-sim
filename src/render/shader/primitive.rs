@@ -84,56 +84,66 @@ fn crop_sub_region(
     (crop_w, crop_h, cropped)
 }
 
+use crate::widget::FrameStrata;
+
 /// Primitive data for rendering WoW UI frames.
 ///
-/// This is created each frame and contains all quads to render.
-/// The associated `WowUiPipeline` holds persistent GPU resources.
+/// Per-strata batches: each `FrameStrata` gets its own vertex/index data on
+/// the GPU.  Only dirty strata carry `Some(batch)` — clean strata are `None`
+/// and the pipeline keeps their GPU buffers from the previous frame.
 #[derive(Debug)]
 pub struct WowUiPrimitive {
-    /// Batched quads to render (Arc-shared with the cache to avoid deep clones).
-    pub quads: Arc<QuadBatch>,
+    /// Per-strata quad batches. Index = `FrameStrata::as_index()`.
+    /// `Some` = dirty (re-upload), `None` = clean (pipeline keeps old buffer).
+    pub strata_batches: [Option<Arc<QuadBatch>>; FrameStrata::COUNT],
     /// Small overlay batch (cursor, hover highlight) appended after world quads.
-    /// Kept separate so the world batch can be cached without cloning.
     pub overlay: QuadBatch,
     /// Background clear color.
     pub clear_color: [f32; 4],
     /// Texture data to upload (path -> image data).
     pub textures: Vec<GpuTextureData>,
     /// Glyph atlas RGBA data for text rendering (2048x2048).
-    /// When Some, uploaded to the GPU glyph atlas texture.
     pub glyph_atlas_data: Option<Vec<u8>>,
     /// Size of the glyph atlas (width = height).
     pub glyph_atlas_size: u32,
 }
 
 impl WowUiPrimitive {
-    /// Create a new primitive with the given quad batch.
-    pub fn new(quads: Arc<QuadBatch>) -> Self {
+    /// Create a primitive with a single merged batch placed in strata 0 (World).
+    ///
+    /// Used by the headless renderer and tests where per-strata separation
+    /// isn't needed — all quads are already in draw order.
+    pub fn new_merged(quads: Arc<QuadBatch>) -> Self {
+        let mut strata_batches: [Option<Arc<QuadBatch>>; FrameStrata::COUNT] =
+            std::array::from_fn(|_| None);
+        strata_batches[0] = Some(quads);
         Self {
-            quads,
+            strata_batches,
             overlay: QuadBatch::new(),
-            clear_color: [0.10, 0.11, 0.14, 1.0], // Dark blue-grey background
+            clear_color: [0.10, 0.11, 0.14, 1.0],
             textures: Vec::new(),
             glyph_atlas_data: None,
             glyph_atlas_size: 0,
         }
     }
 
-    /// Create a new primitive with quads and texture data.
-    pub fn with_textures(quads: Arc<QuadBatch>, textures: Vec<GpuTextureData>) -> Self {
-        Self {
-            quads,
-            overlay: QuadBatch::new(),
-            clear_color: [0.10, 0.11, 0.14, 1.0],
-            textures,
-            glyph_atlas_data: None,
-            glyph_atlas_size: 0,
-        }
+    /// Create a merged primitive with texture data (headless path).
+    pub fn new_merged_with_textures(quads: Arc<QuadBatch>, textures: Vec<GpuTextureData>) -> Self {
+        let mut p = Self::new_merged(quads);
+        p.textures = textures;
+        p
     }
 
     /// Create an empty primitive.
     pub fn empty() -> Self {
-        Self::new(Arc::new(QuadBatch::new()))
+        Self {
+            strata_batches: std::array::from_fn(|_| None),
+            overlay: QuadBatch::new(),
+            clear_color: [0.10, 0.11, 0.14, 1.0],
+            textures: Vec::new(),
+            glyph_atlas_data: None,
+            glyph_atlas_size: 0,
+        }
     }
 }
 
@@ -250,13 +260,24 @@ impl shader::Primitive for WowUiPrimitive {
         );
 
         upload_pending_textures(pipeline, queue, &self.textures, &self.glyph_atlas_data, self.glyph_atlas_size);
+        pipeline.update_projection(queue, &physical_bounds);
 
-        let mut resolved_quads = resolve_and_scale_quads(pipeline, &self.quads, scale);
-        if !self.overlay.vertices.is_empty() {
-            let resolved_overlay = resolve_and_scale_quads(pipeline, &self.overlay, scale);
-            resolved_quads.append(&resolved_overlay);
+        // Upload only dirty strata (Some = dirty, None = keep previous GPU buffer).
+        for (i, batch_opt) in self.strata_batches.iter().enumerate() {
+            if let Some(batch) = batch_opt {
+                let resolved = resolve_and_scale_quads(pipeline, batch, scale);
+                pipeline.upload_strata(device, queue, i, &resolved);
+            }
         }
-        pipeline.prepare(device, queue, &physical_bounds, &resolved_quads);
+
+        // Overlay slot (index = COUNT) — always re-uploaded since cursor moves every frame.
+        let overlay_idx = FrameStrata::COUNT;
+        if !self.overlay.vertices.is_empty() {
+            let resolved = resolve_and_scale_quads(pipeline, &self.overlay, scale);
+            pipeline.upload_strata(device, queue, overlay_idx, &resolved);
+        } else {
+            pipeline.clear_strata(overlay_idx);
+        }
     }
 
     fn render(

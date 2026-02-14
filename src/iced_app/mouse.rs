@@ -49,9 +49,11 @@ impl App {
         // OnEnter/OnLeave scripts may show/hide tooltips or change widget state.
         // Apply incremental HitGrid updates before the next hit_test.
         self.apply_hit_grid_changes();
-        // Check if Lua mutated any widget and invalidate the quad cache if so.
-        if self.env.borrow().state().borrow().widgets.take_render_dirty() {
-            self.invalidate();
+        // Check if Lua mutated any widget and mark affected strata dirty.
+        let dirty_mask = self.env.borrow().state().borrow().widgets.take_render_dirty();
+        if dirty_mask != 0 {
+            self.drain_console();
+            self.mark_strata_dirty(dirty_mask);
         } else {
             self.drain_console();
         }
@@ -191,7 +193,7 @@ impl App {
             self.scroll_offset -= dy * scroll_speed;
             let max_scroll = 2600.0;
             self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
-            self.quads_dirty.set(true);
+            self.mark_all_strata_dirty();
         }
     }
 

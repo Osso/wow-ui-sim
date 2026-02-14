@@ -130,12 +130,46 @@ impl WidgetRegistry {
         !self.render_dirty_ids.borrow().is_empty()
     }
 
-    /// Drain and return the set of visually dirty frame IDs. Clears the set.
-    pub fn take_render_dirty(&self) -> bool {
+    /// Drain the set of visually dirty frame IDs and return a per-strata
+    /// bitmask indicating which strata contain dirty frames.
+    ///
+    /// Bit `i` is set when at least one dirty frame lives in strata index `i`.
+    /// The sentinel `u64::MAX` (from `mark_all_visual_dirty`) produces the
+    /// all-strata mask `(1 << COUNT) - 1`.
+    pub fn take_render_dirty(&self) -> u16 {
         let mut ids = self.render_dirty_ids.borrow_mut();
-        let had_any = !ids.is_empty();
+        if ids.is_empty() {
+            return 0;
+        }
+        let all_mask = (1u16 << super::FrameStrata::COUNT) - 1;
+        let mut mask: u16 = 0;
+        for &id in ids.iter() {
+            if id == u64::MAX {
+                mask = all_mask;
+                break;
+            }
+            mask |= self.strata_bit_for(id);
+            if mask == all_mask { break; }
+        }
         ids.clear();
-        had_any
+        mask
+    }
+
+    /// Return the strata bitmask for a single frame ID.
+    ///
+    /// Regions (Texture, FontString, Line) use their parent's strata.
+    fn strata_bit_for(&self, id: u64) -> u16 {
+        let Some(f) = self.widgets.get(&id) else { return 0 };
+        let strata = match f.widget_type {
+            super::WidgetType::Texture | super::WidgetType::FontString | super::WidgetType::Line => {
+                f.parent_id
+                    .and_then(|pid| self.widgets.get(&pid))
+                    .map(|p| p.frame_strata)
+                    .unwrap_or(f.frame_strata)
+            }
+            _ => f.frame_strata,
+        };
+        1u16 << strata.as_index()
     }
 
     /// Set a widget's visibility flag and mark it visually dirty.
