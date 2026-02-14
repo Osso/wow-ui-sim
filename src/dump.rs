@@ -189,8 +189,13 @@ fn format_stale_str(frame: &Frame, rect: &LayoutRect) -> String {
 }
 
 fn format_info_str(frame: &Frame, rect: &LayoutRect) -> String {
+    let scale_str = if (frame.scale - 1.0).abs() > 0.001 {
+        format!(" scale={:.2}", frame.scale)
+    } else {
+        String::new()
+    };
     format!(
-        " x={}, y={}, alpha={:.2}",
+        " x={}, y={}, alpha={:.2}{scale_str}",
         rect.x as i32, rect.y as i32,
         frame.alpha,
     )

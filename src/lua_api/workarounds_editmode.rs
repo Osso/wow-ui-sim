@@ -126,7 +126,6 @@ pub fn patch_edit_mode_manager(env: &WowLuaEnv) {
     patch_update_systems(env);
     patch_update_layout_info(env);
     patch_default_anchor(env);
-    patch_show_hide_ui_panel(env);
     patch_enter_exit_edit_mode(env);
 }
 
@@ -280,64 +279,6 @@ fn patch_default_anchor(env: &WowLuaEnv) {
                 offsetX = -205,
                 offsetY = -13,
             }
-        end
-    "#,
-    );
-}
-
-/// Override ShowUIPanel/HideUIPanel to bypass FramePositionDelegate.
-///
-/// The real ShowUIPanel dispatches through FramePositionDelegate secure
-/// attributes which the simulator doesn't support, so panels never become
-/// visible. Replace with wrappers that also handle scaling and positioning,
-/// mirroring the real FramePositionDelegate:ShowUIPanel behavior:
-///
-/// 1. Scale-to-fit (FrameUtil.UpdateScaleForFitSpecific) — when the panel
-///    is wider or taller than the screen (plus extra padding from
-///    checkFitExtraWidth/Height), scale it down so it fits.
-/// 2. Position at TOP center (UpdateUIPanelPositions for "center" area).
-/// 3. Raise strata to HIGH so the panel renders above HUD elements.
-fn patch_show_hide_ui_panel(env: &WowLuaEnv) {
-    let _ = env.exec(
-        r#"
-        ShowUIPanel = function(frame, force)
-            if not frame or frame:IsShown() then return end
-
-            -- Look up panel registration (from RegisterUIPanel calls)
-            local name = frame.GetName and frame:GetName()
-            local attrs = UIPanelWindows and name and UIPanelWindows[name]
-
-            -- Scale-to-fit: mirrors FrameUtil.UpdateScaleForFitSpecific
-            if attrs and attrs.checkFit == 1 then
-                frame:SetScale(1)
-                local extraW = attrs.checkFitExtraWidth or 200
-                local extraH = attrs.checkFitExtraHeight or 140
-                local fw = frame:GetWidth() + extraW
-                local fh = frame:GetHeight() + extraH
-                local sw = GetScreenWidth()
-                local sh = GetScreenHeight()
-                local hRatio = sw / fw
-                local vRatio = sh / fh
-                if hRatio < 1 or vRatio < 1 then
-                    frame:SetScale(math.min(hRatio, vRatio))
-                end
-            end
-
-            -- Position: center at top with y-offset (like "center" area)
-            local yOff = (attrs and attrs.yoffset) or 0
-            local scale = frame:GetScale()
-            frame:ClearAllPoints()
-            frame:SetPoint("TOP", UIParent, "TOP", 0, (-10 - yOff) / scale)
-
-            -- Raise above normal HUD frames
-            frame:SetFrameStrata("HIGH")
-
-            frame:Show()
-        end
-
-        HideUIPanel = function(frame, skipSetPoint)
-            if not frame or not frame:IsShown() then return end
-            frame:Hide()
         end
     "#,
     );
