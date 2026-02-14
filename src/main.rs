@@ -61,10 +61,10 @@ enum Commands {
         #[arg(long)]
         visible_only: bool,
         /// Screen width for layout computation
-        #[arg(long, default_value_t = 1024)]
+        #[arg(long, default_value_t = 1600)]
         width: u32,
         /// Screen height for layout computation
-        #[arg(long, default_value_t = 768)]
+        #[arg(long, default_value_t = 1200)]
         height: u32,
     },
 
@@ -75,11 +75,11 @@ enum Commands {
         output: PathBuf,
 
         /// Image width in pixels
-        #[arg(long, default_value_t = 1024)]
+        #[arg(long, default_value_t = 1600)]
         width: u32,
 
         /// Image height in pixels
-        #[arg(long, default_value_t = 768)]
+        #[arg(long, default_value_t = 1200)]
         height: u32,
 
         /// Render only this frame subtree (name substring match)
