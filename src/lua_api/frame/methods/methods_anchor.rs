@@ -150,7 +150,7 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
-        state.widgets.mark_rect_dirty_subtree(this.id);
+        state.widgets.mark_rect_dirty(this.id);
         state.invalidate_layout_with_dependents(this.id);
         Ok(())
     });
@@ -167,7 +167,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.clear_all_points();
             }
-            state.widgets.mark_rect_dirty_subtree(this.id);
+            state.widgets.mark_rect_dirty(this.id);
             state.invalidate_layout(this.id);
         }
         Ok(())
@@ -189,7 +189,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.anchors.retain(|a| a.point != point);
             }
-            state.widgets.mark_rect_dirty_subtree(this.id);
+            state.widgets.mark_rect_dirty(this.id);
             state.invalidate_layout(this.id);
         }
         Ok(())
@@ -208,7 +208,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
                     anchor.y_offset += y_offset;
                 }
             }
-            state.widgets.mark_rect_dirty_subtree(this.id);
+            state.widgets.mark_rect_dirty(this.id);
             state.invalidate_layout(this.id);
             Ok(())
         },
@@ -261,7 +261,7 @@ fn add_set_all_points_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     0.0,
                 );
             }
-            state.widgets.mark_rect_dirty_subtree(this.id);
+            state.widgets.mark_rect_dirty(this.id);
             state.invalidate_layout(this.id);
         }
         Ok(())

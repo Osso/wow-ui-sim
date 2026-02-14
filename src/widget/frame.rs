@@ -288,8 +288,11 @@ pub struct Frame {
     /// Eagerly computed layout rect (updated on SetPoint, SetSize, etc.).
     pub layout_rect: Option<crate::LayoutRect>,
     /// Layout-dirty flag for `IsRectValid()`. Set when anchors/size change;
-    /// cleared by the render pass or by layout-forcing methods (GetSize, etc.).
-    pub rect_dirty: bool,
+    /// cleared when layout is recomputed.
+    /// - `None` = unknown, check ancestors to determine dirtiness
+    /// - `Some(true)` = confirmed dirty (this frame or an ancestor changed)
+    /// - `Some(false)` = confirmed clean
+    pub rect_dirty: Option<bool>,
 
     // --- Slider fields ---
     /// Current slider value.
@@ -484,7 +487,7 @@ macro_rules! frame_defaults {
             user_id: 0,
             button_state: 0,
             layout_rect: None,
-            rect_dirty: true,
+            rect_dirty: None,
 
             // Slider
             slider_value: 0.0,

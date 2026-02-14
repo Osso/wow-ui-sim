@@ -113,7 +113,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.set_size(width, height);
         }
-        state.widgets.mark_rect_dirty_subtree(this.id);
+        state.widgets.mark_rect_dirty(this.id);
         state.invalidate_layout_with_dependents(this.id);
         Ok(())
     });
@@ -124,7 +124,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.width = width;
         }
-        state.widgets.mark_rect_dirty_subtree(this.id);
+        state.widgets.mark_rect_dirty(this.id);
         state.invalidate_layout_with_dependents(this.id);
         Ok(())
     });
@@ -135,7 +135,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.height = height;
         }
-        state.widgets.mark_rect_dirty_subtree(this.id);
+        state.widgets.mark_rect_dirty(this.id);
         state.invalidate_layout_with_dependents(this.id);
         Ok(())
     });

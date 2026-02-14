@@ -208,22 +208,62 @@ impl WidgetRegistry {
         }
     }
 
-    /// Mark a frame and all its descendants as rect-dirty (for `IsRectValid()`).
-    pub fn mark_rect_dirty_subtree(&mut self, id: u64) {
+    /// Mark a frame as rect-dirty root. O(1) — no subtree walk.
+    /// Descendants discover dirtiness lazily via `is_rect_dirty` ancestor walk.
+    pub fn mark_rect_dirty(&mut self, id: u64) {
         if let Some(f) = self.widgets.get_mut(&id) {
-            f.rect_dirty = true;
+            f.rect_dirty = Some(true);
             self.rect_dirty_ids.insert(id);
-            let children = f.children.clone();
-            for child_id in children {
-                self.mark_rect_dirty_subtree(child_id);
-            }
         }
     }
 
-    /// Clear rect-dirty on a single frame (after layout resolution).
+    /// Check if a frame is rect-dirty by walking up ancestors.
+    /// Caches the result on the walked chain so subsequent calls are O(1).
+    pub fn is_rect_dirty(&mut self, id: u64) -> bool {
+        // Fast path: already resolved
+        if let Some(f) = self.widgets.get(&id) {
+            match f.rect_dirty {
+                Some(true) => return true,
+                Some(false) => return false,
+                None => {}
+            }
+        } else {
+            return false;
+        }
+
+        // Walk up ancestors collecting the path
+        let mut path = vec![id];
+        let mut current = self.widgets.get(&id).and_then(|f| f.parent_id);
+        let mut found_dirty = false;
+        while let Some(pid) = current {
+            if let Some(f) = self.widgets.get(&pid) {
+                match f.rect_dirty {
+                    Some(true) => { found_dirty = true; break; }
+                    Some(false) => { break; }
+                    None => {
+                        path.push(pid);
+                        current = f.parent_id;
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+
+        // Cache the result on the entire walked path
+        let result = Some(found_dirty);
+        for &walked_id in &path {
+            if let Some(f) = self.widgets.get_mut(&walked_id) {
+                f.rect_dirty = result;
+            }
+        }
+        found_dirty
+    }
+
+    /// Clear rect-dirty on a single frame (after layout recomputation).
     pub fn clear_rect_dirty(&mut self, id: u64) {
         if let Some(f) = self.widgets.get_mut(&id) {
-            f.rect_dirty = false;
+            f.rect_dirty = None;
         }
         self.rect_dirty_ids.remove(&id);
     }
@@ -233,7 +273,7 @@ impl WidgetRegistry {
         let ids = std::mem::take(&mut self.rect_dirty_ids);
         for &id in &ids {
             if let Some(f) = self.widgets.get_mut(&id) {
-                f.rect_dirty = false;
+                f.rect_dirty = None;
             }
         }
         ids
@@ -244,9 +284,10 @@ impl WidgetRegistry {
         std::mem::take(&mut self.pending_layout_ids)
     }
 
-    /// Mark a frame's layout_rect as resolved (remove from pending set).
+    /// Mark a frame's layout as resolved: remove from pending set and clear rect_dirty.
     pub fn mark_layout_resolved(&mut self, id: u64) {
         self.pending_layout_ids.remove(&id);
+        self.clear_rect_dirty(id);
     }
 
     /// Check if setting a point from `frame_id` to `relative_to_id` would create a cycle.
