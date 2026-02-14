@@ -291,8 +291,9 @@ impl SimState {
     /// Build per-strata ID buckets for visible frames only, sorted by render order.
     ///
     /// A frame is included if its "render alpha" > 0: either its own
-    /// `effective_alpha > 0`, or (for button state textures with `visible=false`)
-    /// its parent's `effective_alpha > 0`.
+    /// `effective_alpha > 0`, or (for button state textures with `visible=false`
+    /// but `alpha > 0`) its parent's `effective_alpha > 0`. Frames with
+    /// explicit `alpha=0` (glow/anim textures) are always excluded.
     fn build_strata_buckets(&mut self) -> Vec<Vec<u64>> {
         // Ensure effective_alpha is correct for all frames (handles direct
         // .visible = false assignments during initialization that bypass
@@ -305,13 +306,17 @@ impl SimState {
         for id in self.widgets.iter_ids() {
             let Some(f) = self.widgets.get(id) else { continue };
             // Visibility filter: skip frames with no render alpha.
+            // Fall back to parent alpha only for frames hidden via visible=false
+            // (button state textures), NOT for frames with explicit alpha=0.
             let render_alpha = if f.effective_alpha > 0.0 {
                 f.effective_alpha
-            } else {
+            } else if f.alpha > 0.0 {
                 f.parent_id
                     .and_then(|pid| self.widgets.get(pid))
                     .map(|p| p.effective_alpha)
                     .unwrap_or(0.0)
+            } else {
+                0.0
             };
             if render_alpha <= 0.0 {
                 continue;
@@ -489,7 +494,7 @@ impl SimState {
     /// Insert newly-visible frames from a subtree into strata_buckets.
     ///
     /// Walks all descendants and inserts those with render_alpha > 0
-    /// (own effective_alpha, or parent's for button state textures).
+    /// (own effective_alpha, or parent's for button state textures with alpha > 0).
     fn insert_subtree_into_buckets(&mut self, root_id: u64) {
         let Some(buckets) = self.strata_buckets.as_mut() else { return };
         use crate::iced_app::frame_collect::intra_strata_sort_key;
@@ -501,11 +506,13 @@ impl SimState {
             queue.extend(f.children.iter().copied());
             let render_alpha = if f.effective_alpha > 0.0 {
                 f.effective_alpha
-            } else {
+            } else if f.alpha > 0.0 {
                 f.parent_id
                     .and_then(|pid| self.widgets.get(pid))
                     .map(|p| p.effective_alpha)
                     .unwrap_or(0.0)
+            } else {
+                0.0
             };
             if render_alpha <= 0.0 {
                 continue;

@@ -184,11 +184,17 @@ fn emit_single_strata(
         let Some(rect) = f.layout_rect else { continue };
         let eff_alpha = if f.effective_alpha > 0.0 {
             f.effective_alpha
-        } else {
+        } else if f.alpha > 0.0 {
+            // Frame hidden via visible=false (e.g. button state textures):
+            // fall back to parent's effective_alpha so the active texture renders.
             f.parent_id
                 .and_then(|pid| registry.get(pid))
                 .map(|p| p.effective_alpha)
                 .unwrap_or(0.0)
+        } else {
+            // Frame explicitly set to alpha=0 (e.g. glow/anim textures):
+            // genuinely invisible, no fallback.
+            0.0
         };
         if eff_alpha <= 0.0 { continue; }
         render_list.push((id, rect, eff_alpha));
