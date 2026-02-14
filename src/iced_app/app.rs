@@ -167,8 +167,6 @@ pub struct App {
     pub(crate) cached_strata_quads: RefCell<[Option<std::sync::Arc<crate::render::QuadBatch>>; crate::widget::FrameStrata::COUNT]>,
     /// Spatial grid for fast hit testing (rebuilt when layout changes).
     pub(crate) cached_hittable: RefCell<Option<super::hit_grid::HitGrid>>,
-    /// Cached layout rects from the last quad build, shared with hit testing.
-    pub(crate) cached_layout_rects: RefCell<Option<super::layout::LayoutCache>>,
     /// Per-strata dirty bitmask — bit `i` means strata index `i` needs re-emit.
     pub(crate) strata_dirty: std::cell::Cell<u16>,
     /// FPS counter: frame count since last update (interior mutability for draw()).
@@ -283,7 +281,6 @@ impl App {
             cached_quads: RefCell::new(None),
             cached_strata_quads: RefCell::new(std::array::from_fn(|_| None)),
             cached_hittable: RefCell::new(None),
-            cached_layout_rects: RefCell::new(None),
             strata_dirty: std::cell::Cell::new((1u16 << crate::widget::FrameStrata::COUNT) - 1),
             frame_count: std::cell::Cell::new(0),
             fps_last_time: now,

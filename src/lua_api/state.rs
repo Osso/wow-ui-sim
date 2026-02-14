@@ -160,10 +160,6 @@ pub struct SimState {
     /// textures with visible parent). Built lazily, maintained surgically
     /// by `set_frame_visible`.
     pub strata_buckets: Option<Vec<Vec<u64>>>,
-    /// Persistent layout rect cache. Built lazily on first `draw()`, entries
-    /// invalidated eagerly when layout-affecting properties change (anchors,
-    /// size, scale, parent). Frames not in cache are recomputed on next rebuild.
-    pub layout_rect_cache: Option<crate::iced_app::layout::LayoutCache>,
     /// Pending HitGrid updates from `set_frame_visible`. Each entry is the root
     /// frame ID that changed visibility and whether it became visible.
     /// Drained and applied by the App after Lua handlers run.
@@ -248,7 +244,6 @@ impl Default for SimState {
             on_update_frames: HashSet::new(),
             visible_on_update_cache: None,
             strata_buckets: None,
-            layout_rect_cache: None,
             pending_hit_grid_changes: Vec::new(),
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
@@ -342,35 +337,14 @@ impl SimState {
         buckets
     }
 
-    /// Take the persistent layout cache for use during quad rebuild.
-    /// Returns the existing cache (or empty) for the caller to populate.
-    /// Caller must return it via `set_layout_cache` after the rebuild.
-    pub fn take_layout_cache(&mut self) -> crate::iced_app::layout::LayoutCache {
-        self.layout_rect_cache.take().unwrap_or_default()
-    }
-
-    /// Store the layout cache back after a quad rebuild, propagating rects to frames.
-    pub fn set_layout_cache(&mut self, cache: crate::iced_app::layout::LayoutCache) {
-        for (&id, &cached) in &cache {
-            if let Some(f) = self.widgets.get_mut(id) {
-                f.layout_rect = Some(cached.rect);
-            }
-        }
-        self.layout_rect_cache = Some(cache);
-    }
-
     /// Eagerly recompute layout rect for a frame and all its descendants.
     /// Called when layout-affecting properties change (anchors, size, scale, parent).
     /// Stores the computed rect on each Frame so the renderer can use it directly.
     pub fn invalidate_layout(&mut self, id: u64) {
         let sw = self.screen_width;
         let sh = self.screen_height;
-        if let Some(cache) = self.layout_rect_cache.as_mut() {
-            Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, cache);
-        } else {
-            let mut cache = crate::iced_app::layout::LayoutCache::default();
-            Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
-        }
+        let mut cache = crate::iced_app::layout::LayoutCache::default();
+        Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
     }
 
     /// Like `invalidate_layout` but also recomputes sibling frames anchored to
@@ -380,14 +354,9 @@ impl SimState {
     pub fn invalidate_layout_with_dependents(&mut self, id: u64) {
         let sw = self.screen_width;
         let sh = self.screen_height;
-        if let Some(cache) = self.layout_rect_cache.as_mut() {
-            Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, cache);
-            Self::recompute_anchor_dependents(&mut self.widgets, id, sw, sh, cache, 0);
-        } else {
-            let mut cache = crate::iced_app::layout::LayoutCache::default();
-            Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
-            Self::recompute_anchor_dependents(&mut self.widgets, id, sw, sh, &mut cache, 0);
-        }
+        let mut cache = crate::iced_app::layout::LayoutCache::default();
+        Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
+        Self::recompute_anchor_dependents(&mut self.widgets, id, sw, sh, &mut cache, 0);
     }
 
     fn recompute_layout_subtree(
@@ -442,13 +411,12 @@ impl SimState {
         if !pending.is_empty() {
             let sw = self.screen_width;
             let sh = self.screen_height;
-            let mut cache = self.layout_rect_cache.take().unwrap_or_default();
+            let mut cache = crate::iced_app::layout::LayoutCache::default();
             for id in pending {
                 if self.widgets.get(id).is_some_and(|f| f.layout_rect.is_none()) {
                     Self::recompute_layout_subtree(&mut self.widgets, id, sw, sh, &mut cache);
                 }
             }
-            self.layout_rect_cache = Some(cache);
         }
         // Clear rect_dirty flags using the tracked set.
         self.widgets.drain_rect_dirty();

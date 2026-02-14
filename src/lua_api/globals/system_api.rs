@@ -496,7 +496,6 @@ fn register_screen_size_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> R
         let mut s = st.borrow_mut();
         s.screen_width = w;
         s.screen_height = h;
-        s.layout_rect_cache = None;
         s.strata_buckets = None;
         s.widgets.clear_all_layout_rects();
         for name in ["UIParent", "WorldFrame"] {

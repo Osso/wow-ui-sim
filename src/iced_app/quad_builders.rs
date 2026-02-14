@@ -8,7 +8,6 @@ use crate::render::shader::GLYPH_ATLAS_TEX_INDEX;
 use crate::render::{BlendMode, QuadBatch};
 use crate::widget::{TextJustify, WidgetType};
 
-use super::layout::LayoutCache;
 use super::message_frame_render::emit_message_frame_text;
 use super::statusbar::StatusBarFill;
 use super::tiling::emit_tiled_texture;
@@ -412,8 +411,6 @@ pub fn emit_frame_quads(
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     registry: &crate::widget::WidgetRegistry,
-    screen_size: (f32, f32),
-    cache: &mut LayoutCache,
     elapsed_secs: f64,
     eff_alpha: f32,
 ) {
@@ -443,7 +440,7 @@ pub fn emit_frame_quads(
                 let vert_before = batch.vertices.len();
                 build_texture_quads(batch, bounds, f, bar_fill, eff_alpha);
                 if !f.mask_textures.is_empty() {
-                    apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry, screen_size, cache);
+                    apply_mask_texture(batch, vert_before, bounds, &f.mask_textures, registry);
                 }
             }
         }
@@ -471,7 +468,7 @@ pub fn emit_frame_quads(
             build_cooldown_quads(batch, bounds, f, elapsed_secs);
         }
         WidgetType::Line => {
-            build_line_quads(batch, f, registry, screen_size, cache, eff_alpha);
+            build_line_quads(batch, f, registry, eff_alpha);
         }
         _ => {}
     }
@@ -535,13 +532,11 @@ fn parse_swipe_color(f: &crate::widget::Frame) -> [f32; 4] {
 fn resolve_line_endpoint(
     anchor: &crate::widget::LineAnchor,
     registry: &crate::widget::WidgetRegistry,
-    screen_size: (f32, f32),
-    cache: &mut LayoutCache,
 ) -> Option<(f32, f32)> {
-    use super::layout::{anchor_position, compute_frame_rect_cached};
+    use super::layout::anchor_position;
 
     let target_id = anchor.target_id?;
-    let r = compute_frame_rect_cached(registry, target_id, screen_size.0, screen_size.1, cache).rect;
+    let r = registry.get(target_id)?.layout_rect?;
     let (ax, ay) = anchor_position(anchor.point, r.x, r.y, r.width, r.height);
     let ui_scale = crate::render::texture::UI_SCALE;
     Some(((ax + anchor.x_offset) * ui_scale, (ay - anchor.y_offset) * ui_scale))
@@ -569,13 +564,11 @@ fn build_line_quads(
     batch: &mut QuadBatch,
     f: &crate::widget::Frame,
     registry: &crate::widget::WidgetRegistry,
-    screen_size: (f32, f32),
-    cache: &mut LayoutCache,
     alpha: f32,
 ) {
     let (Some(start_anchor), Some(end_anchor)) = (&f.line_start, &f.line_end) else { return };
-    let Some(sp) = resolve_line_endpoint(start_anchor, registry, screen_size, cache) else { return };
-    let Some(ep) = resolve_line_endpoint(end_anchor, registry, screen_size, cache) else { return };
+    let Some(sp) = resolve_line_endpoint(start_anchor, registry) else { return };
+    let Some(ep) = resolve_line_endpoint(end_anchor, registry) else { return };
 
     let thickness = f.line_thickness * crate::render::texture::UI_SCALE;
     let Some(positions) = line_quad_positions(sp, ep, thickness) else { return };

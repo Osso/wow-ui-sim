@@ -14,8 +14,6 @@ use crate::render::{QuadBatch, TextureRequest};
 pub fn apply_mask_texture(
     batch: &mut QuadBatch, vert_before: usize, icon_bounds: Rectangle,
     mask_textures: &[u64], registry: &crate::widget::WidgetRegistry,
-    screen_size: (f32, f32),
-    cache: &mut super::layout::LayoutCache,
 ) {
     let count = batch.vertices.len() - vert_before;
     if count == 0 || mask_textures.is_empty() { return; }
@@ -29,9 +27,7 @@ pub fn apply_mask_texture(
     // Check if icon overlaps the mask area at all. If not, remove the quads
     // entirely — the texture is fully outside the mask (e.g., animation-driven
     // textures at rest position).
-    let mask_rect = super::layout::compute_frame_rect_cached(
-        registry, mask_id, screen_size.0, screen_size.1, cache,
-    ).rect;
+    let Some(mask_rect) = mask_frame.layout_rect else { return };
     let mask_screen = mask_to_screen_rect(mask_rect);
     if !rects_overlap(icon_bounds, mask_screen) {
         batch.vertices.truncate(vert_before);

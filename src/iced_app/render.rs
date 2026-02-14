@@ -12,7 +12,6 @@ use crate::widget::{WidgetType};
 
 use super::app::App;
 use super::frame_collect::{CollectedFrames, collect_subtree_ids, collect_hittable_frames};
-use super::layout::LayoutCache;
 use super::quad_builders::{build_texture_quads, emit_button_highlight, emit_frame_quads};
 use super::statusbar::collect_statusbar_fills;
 use super::state::CanvasMessage;
@@ -107,7 +106,7 @@ impl shader::Program<Message> for &App {
 
         // Build overlay (hover highlight + cursor) as a separate small batch.
         let mut overlay = QuadBatch::new();
-        self.append_hover_highlight(&mut overlay, size);
+        self.append_hover_highlight(&mut overlay);
         if let Some(pos) = self.mouse_position {
             self.append_cursor_item_icon(&mut overlay, pos);
 
@@ -171,14 +170,12 @@ fn emit_single_strata(
     batch: &mut QuadBatch,
     bucket: &[u64],
     registry: &crate::widget::WidgetRegistry,
-    screen_size: (f32, f32),
     visible_ids: &Option<std::collections::HashSet<u64>>,
     pressed_frame: Option<u64>,
     hovered_frame: Option<u64>,
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
-    cache: &mut LayoutCache,
     elapsed_secs: f64,
 ) {
     let mut render_list: Vec<(u64, crate::LayoutRect, f32)> = Vec::new();
@@ -215,7 +212,7 @@ fn emit_single_strata(
             Size::new(rect.width * UI_SCALE, rect.height * UI_SCALE),
         );
         let bar_fill = statusbar_fills.get(&id);
-        emit_frame_quads(batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, screen_size, cache, elapsed_secs, eff_alpha);
+        emit_frame_quads(batch, id, f, bounds, bar_fill, pressed_frame, hovered_frame, text_ctx, message_frames, tooltip_data, registry, elapsed_secs, eff_alpha);
     }
 }
 
@@ -236,11 +233,9 @@ pub fn build_quad_batch_for_registry(
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
     strata_buckets: &Vec<Vec<u64>>,
 ) -> QuadBatch {
-    let mut cache = LayoutCache::new();
-
     let (batch, _collected) = build_quad_batch_with_cache(
         registry, screen_size, root_name, pressed_frame, hovered_frame,
-        &mut text_ctx, message_frames, tooltip_data, &mut cache,
+        &mut text_ctx, message_frames, tooltip_data,
         strata_buckets, 0.0,
     );
     batch
@@ -277,7 +272,6 @@ pub fn build_quad_batch_with_cache(
     text_ctx: &mut Option<(&mut WowFontSystem, &mut GlyphAtlas)>,
     message_frames: Option<&std::collections::HashMap<u64, crate::lua_api::message_frame::MessageFrameData>>,
     tooltip_data: Option<&std::collections::HashMap<u64, TooltipRenderData>>,
-    cache: &mut LayoutCache,
     strata_buckets: &[Vec<u64>],
     elapsed_secs: f64,
 ) -> (QuadBatch, CollectedFrames) {
@@ -299,9 +293,9 @@ pub fn build_quad_batch_with_cache(
 
     for bucket in strata_buckets {
         emit_single_strata(
-            &mut batch, bucket, registry, screen_size,
+            &mut batch, bucket, registry,
             &visible_ids, pressed_frame, hovered_frame,
-            text_ctx, message_frames, tooltip_data, cache, elapsed_secs,
+            text_ctx, message_frames, tooltip_data, elapsed_secs,
         );
     }
     (batch, collected)
@@ -360,15 +354,13 @@ impl App {
         let env = self.env.borrow();
         let mut font_sys = self.font_system.borrow_mut();
 
-        // Mutable phase: ensure strata buckets exist, take caches.
-        let (strata_buckets, mut layout_cache) = {
+        // Mutable phase: ensure strata buckets exist.
+        let strata_buckets = {
             let mut state = env.state().borrow_mut();
             state.ensure_layout_rects();
             super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
             let _ = state.get_strata_buckets();
-            let buckets = state.strata_buckets.take().unwrap();
-            let layout = state.take_layout_cache();
-            (buckets, layout)
+            state.strata_buckets.take().unwrap()
         };
 
         let state = env.state().borrow();
@@ -399,10 +391,10 @@ impl App {
             if let Some(bucket) = strata_buckets.get(i) {
                 emit_single_strata(
                     &mut batch, bucket, &state.widgets,
-                    (size.width, size.height), &None,
+                    &None,
                     self.pressed_frame, None,
                     &mut text_ctx, Some(&state.message_frames),
-                    Some(&tooltip_data), &mut layout_cache, elapsed_secs,
+                    Some(&tooltip_data), elapsed_secs,
                 );
             }
             strata_cache[i] = Some(Arc::new(batch));
@@ -410,7 +402,6 @@ impl App {
         drop(strata_cache);
 
         // Build hittable grid on first render.
-        *self.cached_layout_rects.borrow_mut() = Some(layout_cache.clone());
         if self.cached_hittable.borrow().is_none() {
             let collected = collect_hittable_frames(&state.widgets, &strata_buckets);
             let hittable = build_hittable_rects(&collected, &state.widgets);
@@ -422,7 +413,6 @@ impl App {
 
         let mut state = env.state().borrow_mut();
         state.strata_buckets = Some(strata_buckets);
-        state.set_layout_cache(layout_cache);
     }
 
     /// Load textures not yet uploaded to the GPU atlas.
@@ -458,7 +448,7 @@ impl App {
     }
 
     /// Append hover highlight quads for the currently hovered button.
-    fn append_hover_highlight(&self, quads: &mut QuadBatch, screen_size: Size) {
+    fn append_hover_highlight(&self, quads: &mut QuadBatch) {
         let Some(hovered_id) = self.hovered_frame else { return };
         let env = self.env.borrow();
         let state = env.state().borrow();
@@ -469,16 +459,7 @@ impl App {
             return;
         }
 
-        let rect = {
-            let layout_cache = self.cached_layout_rects.borrow();
-            if let Some(cache) = layout_cache.as_ref()
-                && let Some(cached) = cache.get(&hovered_id) {
-                    cached.rect
-                } else {
-                    drop(layout_cache);
-                    super::layout::compute_frame_rect(registry, hovered_id, screen_size.width, screen_size.height)
-                }
-        };
+        let Some(rect) = f.layout_rect else { return };
         if rect.width <= 0.0 || rect.height <= 0.0 {
             return;
         }
@@ -495,16 +476,7 @@ impl App {
 
         if let Some(&ht_id) = f.children_keys.get("HighlightTexture")
             && let Some(ht) = registry.get(ht_id) {
-                let ht_rect = {
-                    let layout_cache = self.cached_layout_rects.borrow();
-                    if let Some(cache) = layout_cache.as_ref()
-                        && let Some(cached) = cache.get(&ht_id) {
-                                cached.rect
-                            } else {
-                                drop(layout_cache);
-                                super::layout::compute_frame_rect(registry, ht_id, screen_size.width, screen_size.height)
-                            }
-                };
+                let Some(ht_rect) = ht.layout_rect else { return };
                 if ht_rect.width > 0.0 && ht_rect.height > 0.0 {
                     let ht_bounds = Rectangle::new(
                         Point::new(ht_rect.x * UI_SCALE, ht_rect.y * UI_SCALE),
