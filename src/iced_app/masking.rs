@@ -36,6 +36,12 @@ pub fn apply_mask_texture(
     if !rects_overlap(icon_bounds, mask_screen) {
         batch.vertices.truncate(vert_before);
         batch.indices.truncate(vert_before / 4 * 6);
+        // Remove texture requests that reference the truncated vertices.
+        // Without this, orphaned requests resolve later frames' vertices
+        // to the wrong texture (the truncated frame's texture instead of
+        // the correct one).
+        let vb = vert_before as u32;
+        batch.texture_requests.retain(|r| r.vertex_start < vb);
         return;
     }
     let (tl, tr, tt, tb) = mask_frame.tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0));
