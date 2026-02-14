@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use std::rc::Rc;
 
 use iced::widget::canvas::Cache;
-use iced::{Point, Rectangle, Size, Task};
+use iced::{Point, Size, Task};
 use tokio::sync::mpsc;
 use tokio::sync::oneshot;
 
@@ -165,9 +165,8 @@ pub struct App {
     pub(crate) gpu_uploaded_textures: RefCell<std::collections::HashSet<String>>,
     /// Cached quad batch for shader (avoids rebuilding every frame).
     pub(crate) cached_quads: RefCell<Option<(Size, std::sync::Arc<crate::render::QuadBatch>)>>,
-    /// Cached sorted hit-test rects (rebuilt when layout changes).
-    /// Pre-sorted top-to-bottom (highest strata first) with pre-scaled bounds.
-    pub(crate) cached_hittable: RefCell<Option<Vec<(u64, Rectangle)>>>,
+    /// Spatial grid for fast hit testing (rebuilt when layout changes).
+    pub(crate) cached_hittable: RefCell<Option<super::hit_grid::HitGrid>>,
     /// Cached layout rects from the last quad build, shared with hit testing.
     pub(crate) cached_layout_rects: RefCell<Option<super::layout::LayoutCache>>,
     /// Flag to invalidate quad cache (set when content changes).

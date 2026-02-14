@@ -12,6 +12,7 @@
 mod app;
 mod button_vis;
 pub mod frame_collect;
+mod hit_grid;
 mod keybinds;
 pub mod layout;
 mod message_frame_render;

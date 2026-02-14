@@ -384,9 +384,9 @@ impl App {
                 batch.quad_count());
         }
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
-        *self.cached_hittable.borrow_mut() = Some(
-            build_hittable_rects(&collected, &state.widgets),
-        );
+        let hittable = build_hittable_rects(&collected, &state.widgets);
+        let grid = super::hit_grid::HitGrid::new(hittable, size.width, size.height);
+        *self.cached_hittable.borrow_mut() = Some(grid);
         drop(state);
         let mut state = env.state().borrow_mut();
         state.strata_buckets = Some(strata_buckets);

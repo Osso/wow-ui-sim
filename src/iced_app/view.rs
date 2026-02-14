@@ -579,25 +579,19 @@ impl App {
     /// regardless of the parent's frame level.
     pub(crate) fn hit_test(&self, pos: iced::Point) -> Option<u64> {
         let cache = self.cached_hittable.borrow();
-        let list = cache.as_ref()?;
+        let grid = cache.as_ref()?;
 
-        // Find initial hit (highest strata/level frame containing the point).
-        let initial_id = list.iter().rev().find_map(|(id, rect)| {
-            if rect.contains(pos) { Some(*id) } else { None }
-        })?;
+        // Phase 1: Grid lookup — O(1) cell + O(k) scan within cell.
+        let initial_id = grid.topmost_at(pos)?;
 
-        // Build lookup of hittable frame IDs → rects for fast child checks.
-        let hittable: std::collections::HashMap<u64, &iced::Rectangle> =
-            list.iter().map(|(id, rect)| (*id, rect)).collect();
-
-        // Drill down through children: prefer the deepest mouse-enabled descendant.
+        // Phase 2: Drill down through children to deepest mouse-enabled descendant.
         let env = self.env.borrow();
         let state = env.state().borrow();
         let mut current = initial_id;
         loop {
             let Some(frame) = state.widgets.get(current) else { break };
             let child_hit = frame.children.iter().rev().find(|&&cid| {
-                hittable.get(&cid).is_some_and(|r| r.contains(pos))
+                grid.contains(cid, pos)
             });
             match child_hit {
                 Some(&cid) => current = cid,
