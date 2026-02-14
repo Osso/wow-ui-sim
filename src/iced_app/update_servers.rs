@@ -102,7 +102,7 @@ impl App {
                     let response = self.exec_lua_command(&code);
                     let _ = respond.send(response);
                     self.drain_console();
-                    self.invalidate_layout();
+                    self.quads_dirty.set(true);
                 }
                 LuaCommand::DumpTree {
                     filter,

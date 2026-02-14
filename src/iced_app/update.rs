@@ -187,7 +187,7 @@ impl App {
         }
         self.drain_console();
         self.log_messages.push("UI reloaded.".to_string());
-        self.invalidate_layout();
+        self.quads_dirty.set(true);
     }
 
     fn handle_execute_command(&mut self) {
@@ -200,7 +200,7 @@ impl App {
         self.execute_command_inner(&cmd);
         self.drain_console();
         self.command_input.clear();
-        self.invalidate_layout();
+        self.quads_dirty.set(true);
     }
 
     fn execute_command_inner(&mut self, cmd: &str) {
@@ -250,6 +250,11 @@ impl App {
 
         let health_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
         if timers_dirty || on_update_dirty || health_dirty {
+            static CNT: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(0);
+            let c = CNT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+            if c % 60 == 0 {
+                eprintln!("[idle-debug] invalidate #{c}: timers={timers_dirty} on_update={on_update_dirty} health={health_dirty}");
+            }
             self.invalidate();
         } else {
             self.drain_console();
@@ -357,7 +362,7 @@ impl App {
     fn handle_inspector_apply(&mut self) {
         if let Some(frame_id) = self.inspected_frame {
             self.apply_inspector_changes(frame_id);
-            self.invalidate_layout();
+            self.quads_dirty.set(true);
         }
     }
 
@@ -376,19 +381,60 @@ impl App {
     /// Drain console, clear frame cache, and mark quads dirty.
     pub(super) fn invalidate(&mut self) {
         self.drain_console();
-        self.invalidate_layout();
+        self.quads_dirty.set(true);
     }
 
-    /// Clear caches that depend on widget layout (quads and hit-test rects).
+    /// Apply pending HitGrid changes from `set_frame_visible` calls.
     ///
-    /// Note: cached_hittable is NOT cleared here. It's rebuilt on every quad
-    /// rebuild in build_quad_batch(). Clearing it would cause hit_test() to
-    /// return None for any mouse events batched after a timer tick in the same
-    /// frame, dropping the hovered_frame and making hover highlights disappear.
-    pub(super) fn invalidate_layout(&mut self) {
-        self.frame_cache.clear();
-        self.quads_dirty.set(true);
-        *self.cached_layout_rects.borrow_mut() = None;
+    /// Walks the subtree of each changed root and inserts/removes hittable
+    /// frames from the grid. Called after Lua handlers fire.
+    pub(super) fn apply_hit_grid_changes(&self) {
+        let env = self.env.borrow();
+        let mut state = env.state().borrow_mut();
+        let changes = std::mem::take(&mut state.pending_hit_grid_changes);
+        if changes.is_empty() {
+            return;
+        }
+        drop(state);
+
+        let mut grid_ref = self.cached_hittable.borrow_mut();
+        let Some(grid) = grid_ref.as_mut() else { return };
+
+        let state = env.state().borrow();
+        let registry = &state.widgets;
+
+        for (root_id, became_visible) in changes {
+            // Walk subtree and update each frame in the grid.
+            let mut stack = vec![root_id];
+            while let Some(id) = stack.pop() {
+                let Some(f) = registry.get(id) else { continue };
+                if became_visible {
+                    if f.visible && f.effective_alpha > 0.0 && f.mouse_enabled
+                        && !f.name.as_deref().is_some_and(|n| {
+                            super::frame_collect::HIT_TEST_EXCLUDED.contains(&n)
+                        })
+                    {
+                        if let Some(rect) = f.layout_rect {
+                            let (il, ir, it, ib) = f.hit_rect_insets;
+                            let scaled = iced::Rectangle::new(
+                                iced::Point::new(
+                                    (rect.x + il) * crate::render::texture::UI_SCALE,
+                                    (rect.y + it) * crate::render::texture::UI_SCALE,
+                                ),
+                                iced::Size::new(
+                                    (rect.width - il - ir).max(0.0) * crate::render::texture::UI_SCALE,
+                                    (rect.height - it - ib).max(0.0) * crate::render::texture::UI_SCALE,
+                                ),
+                            );
+                            grid.insert(id, scaled);
+                        }
+                    }
+                } else {
+                    grid.remove(id);
+                }
+                stack.extend_from_slice(&f.children);
+            }
+        }
     }
 
     /// Check whether a frame's `__enabled` attribute is true (default: true).

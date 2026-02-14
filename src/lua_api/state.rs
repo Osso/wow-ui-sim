@@ -165,6 +165,10 @@ pub struct SimState {
     /// Cached render and hit-test lists from `collect_sorted_frames`.
     /// Skips the per-frame collection pass when only content (not layout/visibility) changes.
     pub cached_render_list: Option<crate::iced_app::frame_collect::CollectedFrames>,
+    /// Pending HitGrid updates from `set_frame_visible`. Each entry is the root
+    /// frame ID that changed visibility and whether it became visible.
+    /// Drained and applied by the App after Lua handlers run.
+    pub pending_hit_grid_changes: Vec<(u64, bool)>,
     /// Animation groups keyed by unique group ID.
     pub animation_groups: HashMap<u64, AnimGroupState>,
     /// Counter for generating unique animation group IDs.
@@ -247,6 +251,7 @@ impl Default for SimState {
             strata_buckets: None,
             layout_rect_cache: None,
             cached_render_list: None,
+            pending_hit_grid_changes: Vec::new(),
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
             screen_width: 1600.0,
@@ -478,6 +483,8 @@ impl SimState {
         // Visibility changed — invalidate the render list (which frames to draw)
         // but NOT strata_buckets (sort order is unchanged by show/hide).
         self.cached_render_list = None;
+        // Record for incremental HitGrid update (applied by App after Lua runs).
+        self.pending_hit_grid_changes.push((id, visible));
     }
 
     /// Raise a frame above all siblings in the same strata.

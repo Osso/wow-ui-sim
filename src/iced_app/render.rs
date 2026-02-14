@@ -370,10 +370,15 @@ impl App {
             cached_render, elapsed_secs,
         );
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
-        let hittable = build_hittable_rects(&collected, &state.widgets);
-        let grid = super::hit_grid::HitGrid::new(hittable, size.width, size.height);
-        *self.cached_hittable.borrow_mut() = Some(grid);
+        if self.cached_hittable.borrow().is_none() {
+            // Initial build: construct grid from scratch.
+            let hittable = build_hittable_rects(&collected, &state.widgets);
+            let grid = super::hit_grid::HitGrid::new(hittable, size.width, size.height);
+            *self.cached_hittable.borrow_mut() = Some(grid);
+        }
         drop(state);
+        // Apply any pending visibility changes to the grid.
+        self.apply_hit_grid_changes();
         let mut state = env.state().borrow_mut();
         state.strata_buckets = Some(strata_buckets);
         state.set_layout_cache(cache);

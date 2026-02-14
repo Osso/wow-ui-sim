@@ -47,6 +47,8 @@ impl App {
             }
         }
         // OnEnter/OnLeave scripts may show/hide tooltips or change widget state.
+        // Apply incremental HitGrid updates before the next hit_test.
+        self.apply_hit_grid_changes();
         // Check if Lua mutated any widget and invalidate the quad cache if so.
         if self.env.borrow().state().borrow().widgets.take_render_dirty() {
             self.invalidate();
@@ -189,7 +191,7 @@ impl App {
             self.scroll_offset -= dy * scroll_speed;
             let max_scroll = 2600.0;
             self.scroll_offset = self.scroll_offset.clamp(0.0, max_scroll);
-            self.invalidate_layout();
+            self.quads_dirty.set(true);
         }
     }
 

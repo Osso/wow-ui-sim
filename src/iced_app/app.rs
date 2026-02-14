@@ -4,7 +4,6 @@ use std::cell::RefCell;
 use std::path::PathBuf;
 use std::rc::Rc;
 
-use iced::widget::canvas::Cache;
 use iced::{Point, Size, Task};
 use tokio::sync::mpsc;
 use tokio::sync::oneshot;
@@ -138,7 +137,6 @@ pub struct App {
     pub(crate) texture_manager: Rc<RefCell<TextureManager>>,
     pub(crate) font_system: Rc<RefCell<WowFontSystem>>,
     pub(crate) glyph_atlas: Rc<RefCell<GlyphAtlas>>,
-    pub(crate) frame_cache: Cache,
     pub(crate) hovered_frame: Option<u64>,
     pub(crate) pressed_frame: Option<u64>,
     pub(crate) mouse_down_frame: Option<u64>,
@@ -266,7 +264,6 @@ impl App {
             texture_manager,
             font_system,
             glyph_atlas,
-            frame_cache: Cache::new(),
             hovered_frame: None,
             pressed_frame: None,
             mouse_down_frame: None,

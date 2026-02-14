@@ -65,6 +65,10 @@ impl WidgetRegistry {
     /// Use when changing visual properties: texture, text, alpha, color,
     /// visibility, size, anchors, draw_layer, frame_strata, backdrop, etc.
     pub fn get_mut_visual(&mut self, id: u64) -> Option<&mut Frame> {
+        if self.render_dirty_ids.borrow().is_empty() {
+            let name = self.widgets.get(&id).and_then(|f| f.name.clone()).unwrap_or_default();
+            eprintln!("[dirty-first] id={id} name={name}");
+        }
         self.render_dirty_ids.borrow_mut().insert(id);
         self.widgets.get_mut(&id)
     }

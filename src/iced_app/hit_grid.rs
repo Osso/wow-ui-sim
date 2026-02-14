@@ -66,6 +66,34 @@ impl HitGrid {
     pub fn contains(&self, id: u64, pos: Point) -> bool {
         self.rects.get(&id).is_some_and(|r| r.contains(pos))
     }
+
+    /// Remove a frame from the grid.
+    ///
+    /// Uses the stored rect to find which cells contained the frame.
+    pub fn remove(&mut self, id: u64) {
+        let Some(rect) = self.rects.remove(&id) else { return };
+        let (c0, r0, c1, r1) = cell_range(rect, self.cols, self.rows);
+        for row in r0..=r1 {
+            for col in c0..=c1 {
+                let cell = &mut self.cells[row * self.cols + col];
+                cell.retain(|&fid| fid != id);
+            }
+        }
+    }
+
+    /// Insert a frame into the grid.
+    ///
+    /// Appends to each overlapping cell. Caller must ensure the frame is not
+    /// already in the grid (call `remove` first to update an existing frame).
+    pub fn insert(&mut self, id: u64, rect: Rectangle) {
+        self.rects.insert(id, rect);
+        let (c0, r0, c1, r1) = cell_range(rect, self.cols, self.rows);
+        for row in r0..=r1 {
+            for col in c0..=c1 {
+                self.cells[row * self.cols + col].push(id);
+            }
+        }
+    }
 }
 
 /// Compute the inclusive cell range `(col_start, row_start, col_end, row_end)`

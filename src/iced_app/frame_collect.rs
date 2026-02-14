@@ -3,7 +3,7 @@
 use crate::widget::{FrameStrata, WidgetType};
 
 /// Frame names excluded from hit testing (full-screen or non-interactive overlays).
-const HIT_TEST_EXCLUDED: &[&str] = &[
+pub const HIT_TEST_EXCLUDED: &[&str] = &[
     "UIParent", "Minimap", "WorldFrame",
     "DEFAULT_CHAT_FRAME", "ChatFrame1",
     "EventToastManagerFrame", "EditModeManagerFrame",
