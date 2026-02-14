@@ -191,7 +191,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut saved_vars = configure_saved_vars(&args);
     load_blizzard_addons(&env);
     load_third_party_addons(&args, &env, &mut saved_vars);
-    run_post_load_scripts(&env)?;
+    env.apply_post_load_workarounds();
 
     let exec_lua = resolve_exec_lua(&args.exec_lua);
 
@@ -203,10 +203,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             process_pending_timers(&env);
             fire_one_on_update_tick(&env);
             let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+            run_debug_script(&env);
             if let Some(code) = &exec_lua
                 && let Err(e) = env.exec(code) {
                     eprintln!("[exec-lua] error: {e}");
                 }
+            std::thread::sleep(std::time::Duration::from_secs(2));
             run_extra_update_ticks(&env, 3);
             apply_delay(args.delay);
             let state = env.state().borrow();
@@ -516,19 +518,14 @@ fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
     }
 }
 
-/// Run post-load Lua test scripts and debug hooks.
-fn run_post_load_scripts(env: &WowLuaEnv) -> Result<(), Box<dyn std::error::Error>> {
-    env.apply_post_load_workarounds();
-
-    let debug_script = PathBuf::from("/tmp/debug-scrollbox-update.lua");
-    if debug_script.exists() {
-        let script = std::fs::read_to_string(&debug_script)?;
+/// Run /tmp/debug-scrollbox-update.lua after startup events (ShowUIPanel needs them).
+fn run_debug_script(env: &WowLuaEnv) {
+    let path = PathBuf::from("/tmp/debug-scrollbox-update.lua");
+    if let Ok(script) = std::fs::read_to_string(&path) {
         if let Err(e) = env.exec(&script) {
             println!("[Debug] Script error: {}", e);
         }
     }
-
-    Ok(())
 }
 
 /// Process pending timers (deferred template wiring, addon callbacks, etc.).
@@ -692,10 +689,12 @@ fn run_screenshot(
     fire_one_on_update_tick(env);
     let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
     debug_show_game_menu(env);
+    run_debug_script(env);
     if let Some(code) = exec_lua
         && let Err(e) = env.exec(code) {
             eprintln!("[exec-lua] error: {e}");
         }
+    std::thread::sleep(std::time::Duration::from_secs(2));
     run_extra_update_ticks(env, 3);
     apply_delay(delay);
     let (batch, glyph_atlas) = build_screenshot_batch(env, font_system, width, height, filter.as_deref());

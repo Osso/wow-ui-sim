@@ -6,6 +6,7 @@
 use crate::iced_app::layout::{anchor_position, compute_frame_rect};
 use crate::widget::{Frame, WidgetRegistry, WidgetType};
 use crate::LayoutRect;
+use regex::RegexBuilder;
 
 // ── Public entry points ─────────────────────────────────────────────
 
@@ -43,15 +44,23 @@ pub fn build_tree(
     });
 
     let mut lines = Vec::new();
+    let compile_re = |pat: &str| {
+        RegexBuilder::new(pat).case_insensitive(true).build()
+            .unwrap_or_else(|_| {
+                // Fall back to escaped literal if regex is invalid
+                RegexBuilder::new(&regex::escape(pat)).case_insensitive(true).build().unwrap()
+            })
+    };
     if let Some(key_filter) = filter_key {
-        let key_lower = key_filter.to_lowercase();
-        let matching = collect_key_matches(widgets, &roots, &key_lower);
+        let re = compile_re(key_filter);
+        let matching = collect_key_matches(widgets, &roots, &re);
         for id in matching {
             emit_subtree(widgets, id, 0, visible_only, screen_width, screen_height, &mut lines);
         }
     } else {
+        let re = filter.map(|f| compile_re(f));
         for (id, _) in &roots {
-            emit_filtered(widgets, *id, 0, filter, visible_only, screen_width, screen_height, &mut lines);
+            emit_filtered(widgets, *id, 0, re.as_ref(), visible_only, screen_width, screen_height, &mut lines);
         }
     }
     lines
@@ -242,13 +251,13 @@ fn emit_subtree(
     }
 }
 
-/// Emit frames matching a name filter.
+/// Emit frames matching a name filter (regex, case-insensitive).
 #[allow(clippy::too_many_arguments)]
 fn emit_filtered(
     widgets: &WidgetRegistry,
     id: u64,
     depth: usize,
-    filter: Option<&str>,
+    filter: Option<&regex::Regex>,
     visible_only: bool,
     screen_width: f32,
     screen_height: f32,
@@ -259,9 +268,7 @@ fn emit_filtered(
         return;
     }
     let name = resolve_display_name(widgets, frame, id);
-    let matches = filter
-        .map(|f| name.to_lowercase().contains(&f.to_lowercase()))
-        .unwrap_or(true);
+    let matches = filter.map(|re| re.is_match(&name)).unwrap_or(true);
     if matches {
         emit_frame_line(frame, id, &name, depth, widgets, screen_width, screen_height, lines);
     }
@@ -314,11 +321,11 @@ fn build_warnings(frame: &Frame, rect: &LayoutRect, screen_width: f32, screen_he
 fn collect_key_matches(
     widgets: &WidgetRegistry,
     roots: &[(u64, Option<String>)],
-    key_lower: &str,
+    re: &regex::Regex,
 ) -> Vec<u64> {
     let mut result = Vec::new();
     for &(id, _) in roots {
-        collect_key_matches_recursive(widgets, id, key_lower, &mut result);
+        collect_key_matches_recursive(widgets, id, re, &mut result);
     }
     result
 }
@@ -326,17 +333,17 @@ fn collect_key_matches(
 fn collect_key_matches_recursive(
     widgets: &WidgetRegistry,
     id: u64,
-    key_lower: &str,
+    re: &regex::Regex,
     result: &mut Vec<u64>,
 ) {
     let Some(frame) = widgets.get(id) else { return };
     let display = resolve_display_name(widgets, frame, id);
-    if display.to_lowercase().contains(key_lower) {
+    if re.is_match(&display) {
         result.push(id);
         return;
     }
     for &child_id in &frame.children {
-        collect_key_matches_recursive(widgets, child_id, key_lower, result);
+        collect_key_matches_recursive(widgets, child_id, re, result);
     }
 }
 
