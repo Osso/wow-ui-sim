@@ -159,6 +159,8 @@ pub struct Frame {
     pub effective_scale: f32,
     /// Whether mouse is enabled.
     pub mouse_enabled: bool,
+    /// Hit rect insets (left, right, top, bottom) — shrinks the clickable area.
+    pub hit_rect_insets: (f32, f32, f32, f32),
     /// Whether keyboard input is enabled for this frame.
     pub keyboard_enabled: bool,
     /// Whether keyboard input propagates to parent frames.
@@ -420,6 +422,7 @@ macro_rules! frame_defaults {
             scale: 1.0,
             effective_scale: 1.0,
             mouse_enabled: false,
+            hit_rect_insets: (0.0, 0.0, 0.0, 0.0),
             keyboard_enabled: false,
             propagate_keyboard_input: false,
             texture: None,

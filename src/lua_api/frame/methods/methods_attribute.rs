@@ -249,10 +249,24 @@ fn add_security_and_input_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M
         |_, _this, _enabled: Option<bool>| Ok(()),
     );
     methods.add_method("GetMotionScriptsWhileDisabled", |_, _this, ()| Ok(false));
-    methods.add_method("SetHitRectInsets", |_, _this, _args: mlua::MultiValue| {
+    methods.add_method("SetHitRectInsets", |_, this, args: mlua::MultiValue| {
+        let mut it = args.into_iter();
+        let l = match it.next() { Some(Value::Number(n)) => n as f32, Some(Value::Integer(n)) => n as f32, _ => 0.0 };
+        let r = match it.next() { Some(Value::Number(n)) => n as f32, Some(Value::Integer(n)) => n as f32, _ => 0.0 };
+        let t = match it.next() { Some(Value::Number(n)) => n as f32, Some(Value::Integer(n)) => n as f32, _ => 0.0 };
+        let b = match it.next() { Some(Value::Number(n)) => n as f32, Some(Value::Integer(n)) => n as f32, _ => 0.0 };
+        let mut state = this.state.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(this.id) {
+            frame.hit_rect_insets = (l, r, t, b);
+        }
         Ok(())
     });
-    methods.add_method("GetHitRectInsets", |_, _this, ()| {
+    methods.add_method("GetHitRectInsets", |_, this, ()| {
+        let state = this.state.borrow();
+        if let Some(frame) = state.widgets.get(this.id) {
+            let (l, r, t, b) = frame.hit_rect_insets;
+            return Ok((l as f64, r as f64, t as f64, b as f64));
+        }
         Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64))
     });
 }

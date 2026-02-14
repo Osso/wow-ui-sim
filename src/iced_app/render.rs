@@ -228,6 +228,23 @@ pub fn build_quad_batch_for_registry(
 /// When `cached_render_list` is provided, skips the per-frame collection pass
 /// (`collect_sorted_frames`) and re-emits quads from the cached list. Otherwise
 /// builds the list from scratch and returns it for caching.
+/// Scale hittable layout rects to screen coordinates, applying hit rect insets.
+fn build_hittable_rects(
+    collected: &CollectedFrames,
+    registry: &crate::widget::WidgetRegistry,
+) -> Vec<(u64, Rectangle)> {
+    collected.hittable.iter().map(|&(id, r)| {
+        let (il, ir, it, ib) = registry.get(id)
+            .map(|f| f.hit_rect_insets)
+            .unwrap_or((0.0, 0.0, 0.0, 0.0));
+        (id, Rectangle::new(
+            Point::new((r.x + il) * UI_SCALE, (r.y + it) * UI_SCALE),
+            Size::new((r.width - il - ir).max(0.0) * UI_SCALE,
+                      (r.height - it - ib).max(0.0) * UI_SCALE),
+        ))
+    }).collect()
+}
+
 ///
 /// Returns the quad batch and the `CollectedFrames` used (for caller to cache).
 #[allow(clippy::too_many_arguments)]
@@ -333,16 +350,22 @@ impl App {
         // Mutable phase: ensure strata buckets exist, take caches.
         let (strata_buckets, mut cache, cached_render) = {
             let mut state = env.state().borrow_mut();
+            let t_layout = std::time::Instant::now();
             state.ensure_layout_rects();
+            let layout_ms = t_layout.elapsed().as_secs_f32() * 1000.0;
             super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
-            // get_strata_buckets builds lazily if None.
+            let t_strata = std::time::Instant::now();
             let _ = state.get_strata_buckets();
+            let strata_ms = t_strata.elapsed().as_secs_f32() * 1000.0;
+            if layout_ms > 1.0 || strata_ms > 1.0 {
+                eprintln!("[perf] layout={layout_ms:.1}ms strata={strata_ms:.1}ms");
+            }
             let buckets = state.strata_buckets.take().unwrap();
             let layout = state.take_layout_cache();
             let render = state.cached_render_list.take();
             (buckets, layout, render)
         };
-        let t1 = std::time::Instant::now();
+        let had_cached_render = cached_render.is_some();
         let state = env.state().borrow();
         let elapsed_secs = state.start_time.elapsed().as_secs_f64();
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
@@ -355,20 +378,14 @@ impl App {
             &mut cache, &strata_buckets,
             cached_render, elapsed_secs,
         );
-        let t2 = std::time::Instant::now();
-        eprintln!("[perf] layout+strata={:.1}ms  emit={:.1}ms  total={:.1}ms  quads={}",
-            t1.duration_since(t0).as_secs_f32() * 1000.0,
-            t2.duration_since(t1).as_secs_f32() * 1000.0,
-            t2.duration_since(t0).as_secs_f32() * 1000.0,
-            batch.quad_count());
+        let total_ms = t0.elapsed().as_secs_f32() * 1000.0;
+        if total_ms > 5.0 {
+            eprintln!("[perf] total={total_ms:.1}ms quads={} cached_render={had_cached_render}",
+                batch.quad_count());
+        }
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
         *self.cached_hittable.borrow_mut() = Some(
-            collected.hittable.iter().map(|&(id, r)| {
-                (id, Rectangle::new(
-                    Point::new(r.x * UI_SCALE, r.y * UI_SCALE),
-                    Size::new(r.width * UI_SCALE, r.height * UI_SCALE),
-                ))
-            }).collect(),
+            build_hittable_rects(&collected, &state.widgets),
         );
         drop(state);
         let mut state = env.state().borrow_mut();
