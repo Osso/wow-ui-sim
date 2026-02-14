@@ -73,8 +73,10 @@ pub fn create_frame_from_xml(
 /// Build the Lua code that creates a frame and sets Lua-only XML properties.
 ///
 /// Declarative properties (size, anchors, strata, level, alpha, hidden, toplevel,
-/// enableMouse, hitRectInsets, clampedToScreen, setAllPoints, id) are set directly
+/// enableMouse, hitRectInsets, clampedToScreen, setAllPoints) are set directly
 /// in Rust by `apply_xml_properties_direct()` after this Lua chunk executes.
+/// Note: `id` is set here in Lua (not deferred to Rust) because template child
+/// OnLoad handlers may reference parent IDs during fire_deferred_child_onloads.
 fn build_frame_lua_code(
     widget_type: &str, name: &str, explicit_parent: Option<&str>,
     inherits: &str, frame: &crate::xml::FrameXml, parent: &str,
@@ -84,6 +86,12 @@ fn build_frame_lua_code(
     append_mixins_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
     append_xml_attributes_code(&mut lua_code, frame);
+    // SetID must be in the Lua chunk (not deferred to Rust direct-set) because
+    // template child OnLoad handlers may call GetParent():GetID() during
+    // fire_deferred_child_onloads, which runs before apply_xml_properties_direct.
+    if let Some(id) = frame.xml_id {
+        lua_code.push_str(&format!("\n        frame:SetID({})", id));
+    }
     append_scripts_code(&mut lua_code, frame);
     lua_code
 }
