@@ -18,7 +18,7 @@ mod message_frame_render;
 mod nine_slice;
 mod masking;
 mod quad_builders;
-mod render;
+pub(crate) mod render;
 mod statusbar;
 mod state;
 mod tiling;

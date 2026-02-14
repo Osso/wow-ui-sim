@@ -606,3 +606,70 @@ fn test_get_attribute_multi_arg_and_wildcard() {
         "non-existent multi-arg attribute should be nil",
     );
 }
+
+#[test]
+fn test_set_get_hit_rect_insets() {
+    let (t, _) = load_test_lua("test-hit-rect-insets", r#"
+        local f = CreateFrame("Frame", "HitRectTestFrame", UIParent)
+        f:SetSize(200, 100)
+        f:SetPoint("CENTER")
+
+        -- Default insets should be zero
+        local l, r, top, b = f:GetHitRectInsets()
+        assert(l == 0 and r == 0 and top == 0 and b == 0,
+            "default insets should be 0,0,0,0 but got " .. l .. "," .. r .. "," .. top .. "," .. b)
+
+        -- Set and verify
+        f:SetHitRectInsets(10, 20, 5, 15)
+        local l2, r2, t2, b2 = f:GetHitRectInsets()
+        assert(l2 == 10, "left inset should be 10, got " .. l2)
+        assert(r2 == 20, "right inset should be 20, got " .. r2)
+        assert(t2 == 5, "top inset should be 5, got " .. t2)
+        assert(b2 == 15, "bottom inset should be 15, got " .. b2)
+
+        -- Overwrite with new values
+        f:SetHitRectInsets(0, 0, 0, 0)
+        local l3, r3, t3, b3 = f:GetHitRectInsets()
+        assert(l3 == 0 and r3 == 0 and t3 == 0 and b3 == 0,
+            "reset insets should be 0,0,0,0")
+
+        HIT_RECT_TEST_OK = true
+    "#);
+
+    let ok: bool = t.env.eval("return HIT_RECT_TEST_OK == true").unwrap();
+    assert!(ok, "SetHitRectInsets / GetHitRectInsets Lua test failed");
+}
+
+#[test]
+fn test_hit_rect_insets_shrinks_hittable_rect() {
+    use crate::LayoutRect;
+    use crate::iced_app::frame_collect::CollectedFrames;
+    use crate::iced_app::render::build_hittable_rects;
+
+    let mut registry = crate::widget::WidgetRegistry::new();
+    let frame = crate::widget::Frame::default();
+    let id = frame.id;
+    registry.register(frame);
+    let frame = registry.get_mut(id).unwrap();
+    frame.hit_rect_insets = (10.0, 20.0, 5.0, 15.0);
+
+    let collected = CollectedFrames {
+        render: vec![],
+        hittable: vec![(id, LayoutRect { x: 100.0, y: 50.0, width: 200.0, height: 100.0 })],
+    };
+
+    let result = build_hittable_rects(&collected, &registry);
+    assert_eq!(result.len(), 1);
+    let (rid, rect) = &result[0];
+    assert_eq!(*rid, id);
+
+    let scale = crate::render::texture::UI_SCALE;
+    let expected_x = (100.0 + 10.0) * scale;
+    let expected_y = (50.0 + 5.0) * scale;
+    let expected_w = (200.0 - 10.0 - 20.0) * scale;
+    let expected_h = (100.0 - 5.0 - 15.0) * scale;
+    assert!((rect.x - expected_x).abs() < 0.01, "x: {} != {}", rect.x, expected_x);
+    assert!((rect.y - expected_y).abs() < 0.01, "y: {} != {}", rect.y, expected_y);
+    assert!((rect.width - expected_w).abs() < 0.01, "w: {} != {}", rect.width, expected_w);
+    assert!((rect.height - expected_h).abs() < 0.01, "h: {} != {}", rect.height, expected_h);
+}

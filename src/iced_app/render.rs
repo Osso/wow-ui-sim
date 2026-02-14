@@ -229,7 +229,7 @@ pub fn build_quad_batch_for_registry(
 /// (`collect_sorted_frames`) and re-emits quads from the cached list. Otherwise
 /// builds the list from scratch and returns it for caching.
 /// Scale hittable layout rects to screen coordinates, applying hit rect insets.
-fn build_hittable_rects(
+pub fn build_hittable_rects(
     collected: &CollectedFrames,
     registry: &crate::widget::WidgetRegistry,
 ) -> Vec<(u64, Rectangle)> {
