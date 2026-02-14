@@ -129,6 +129,14 @@ fn emit_frame_line(
     if let Some(ref atlas) = frame.atlas {
         lines.push(format!("{indent}  [atlas] {atlas}"));
     }
+    if !frame.mask_textures.is_empty() {
+        let mask_names: Vec<_> = frame.mask_textures.iter()
+            .map(|mid| widgets.get(*mid)
+                .map(|m| m.texture.as_deref().unwrap_or("?"))
+                .unwrap_or("missing"))
+            .collect();
+        lines.push(format!("{indent}  [masks] {}", mask_names.join(", ")));
+    }
 }
 
 /// Emit anchor detail lines for a frame.

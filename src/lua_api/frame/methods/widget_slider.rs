@@ -187,6 +187,21 @@ fn add_statusbar_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
         Ok(())
     });
     methods.add_method("GetStatusBarTexture", |lua, this, ()| {
+        // Return the actual bar fill frame (set by SetStatusBarTexture) when available.
+        // Falling back to children_keys["StatusBarTexture"] creates a phantom frame
+        // that has no texture, so masks added to it never render.
+        let bar_id = {
+            let state = this.state.borrow();
+            state.widgets.get(this.id).and_then(|f| f.statusbar_bar_id)
+        };
+        if let Some(bar_id) = bar_id {
+            let handle = FrameHandle {
+                id: bar_id,
+                state: Rc::clone(&this.state),
+            };
+            let ud = lua.create_userdata(handle)?;
+            return Ok(Value::UserData(ud));
+        }
         get_or_create_child_texture(lua, this, "StatusBarTexture")
     });
     methods.add_method("SetRotatesTexture", |_, _this, _rotates: bool| Ok(()));
