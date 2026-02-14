@@ -93,6 +93,18 @@ enum Commands {
         #[arg(long, value_name = "FILTER")]
         dump_tree: Option<Option<String>>,
     },
+
+    /// Dump textures used by frames to disk (for debugging atlas crops)
+    DumpTexture {
+        #[arg(short, long, default_value = "/tmp/claude/textures")]
+        output: PathBuf,
+        /// Filter texture paths (substring, case-insensitive)
+        #[arg(short, long)]
+        filter: Option<String>,
+        /// Render only this frame subtree (name substring match)
+        #[arg(long)]
+        frame_filter: Option<String>,
+    },
 }
 
 /// Apply resource limits (10GB memory, 1 CPU core by default).
@@ -115,26 +127,19 @@ fn apply_resource_limits() {
 /// Scan addons directory and return sorted list of addon directories
 fn scan_addons(base_path: &PathBuf) -> Vec<(String, PathBuf)> {
     let mut addons = Vec::new();
-
     if let Ok(entries) = std::fs::read_dir(base_path) {
         for entry in entries.flatten() {
             let path = entry.path();
-            if path.is_dir() {
-                let name = path.file_name().unwrap().to_str().unwrap().to_string();
-                // Skip hidden directories and special directories
-                let skip = name.starts_with('.')
-                    || name == "BlizzardUI";
-                if !skip
-                    && let Some(toc_path) = wow_ui_sim::loader::find_toc_file(&path)
-                        && let Ok(toc) = TocFile::from_file(&toc_path)
-                            && !toc.is_glue_only() && !toc.is_ptr_only() && !toc.is_game_type_restricted() {
-                                addons.push((name, toc_path));
-                            }
-            }
+            if !path.is_dir() { continue; }
+            let name = path.file_name().unwrap().to_str().unwrap().to_string();
+            if name.starts_with('.') || name == "BlizzardUI" { continue; }
+            if let Some(toc_path) = wow_ui_sim::loader::find_toc_file(&path)
+                && let Ok(toc) = TocFile::from_file(&toc_path)
+                    && !toc.is_glue_only() && !toc.is_ptr_only() && !toc.is_game_type_restricted() {
+                        addons.push((name, toc_path));
+                    }
         }
     }
-
-    // Sort alphabetically
     addons.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
     addons
 }
@@ -196,6 +201,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Some(Commands::Screenshot { output, width, height, filter, crop, dump_tree }) => {
             run_screenshot(&env, &font_system, output, width, height, filter, crop, args.delay, exec_lua.as_deref(), dump_tree);
         }
+        Some(Commands::DumpTexture { output, filter, frame_filter }) => {
+            run_dump_texture(&env, &font_system, output, filter, frame_filter);
+        }
         None => {
             let debug = wow_ui_sim::DebugOptions {
                 borders: args.debug_borders || args.debug_elements,
@@ -225,29 +233,15 @@ fn resolve_exec_lua(arg: &Option<String>) -> Option<String> {
 /// Configure SavedVariables from WTF directory based on args/env.
 fn configure_saved_vars(args: &Args) -> Option<SavedVariablesManager> {
     let skip = args.no_saved_vars
-        || std::env::var("WOW_SIM_NO_SAVED_VARS")
-            .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
-            .unwrap_or(false);
-
-    if skip {
-        println!("SavedVariables loading disabled");
-        return None;
-    }
-
+        || std::env::var("WOW_SIM_NO_SAVED_VARS").map(|v| v == "1").unwrap_or(false);
+    if skip { println!("SavedVariables loading disabled"); return None; }
     let mut saved_vars = SavedVariablesManager::new();
-
     let wtf_path = PathBuf::from("/syncthing/Sync/Projects/wow/WTF");
     if wtf_path.exists() {
-        let wtf_config = WtfConfig::new(wtf_path, "50868465#2", "Burning Blade", "Haky");
-        println!("WTF config: {} @ {}/{}", wtf_config.account, wtf_config.realm, wtf_config.character);
-        println!("  Account SavedVariables: {:?}", wtf_config.account_saved_vars_path());
-        println!("  Character SavedVariables: {:?}", wtf_config.character_saved_vars_path());
-        saved_vars.set_wtf_config(wtf_config);
-    } else {
-        println!("SavedVariables storage: {:?}", std::env::var("HOME")
-            .map(|h| format!("{}/.local/share/wow-sim/SavedVariables", h)).unwrap_or_default());
+        let wtf = WtfConfig::new(wtf_path, "50868465#2", "Burning Blade", "Haky");
+        println!("WTF config: {} @ {}/{}", wtf.account, wtf.realm, wtf.character);
+        saved_vars.set_wtf_config(wtf);
     }
-
     Some(saved_vars)
 }
 
@@ -713,6 +707,27 @@ fn save_screenshot(img: &image::RgbaImage, output: &std::path::Path) {
         eprintln!("Failed to save WebP: {}", e);
         std::process::exit(1);
     }
+}
+
+/// Dump textures used by frames to disk.
+fn run_dump_texture(
+    env: &WowLuaEnv, font_system: &Rc<RefCell<WowFontSystem>>,
+    output: PathBuf, filter: Option<String>, frame_filter: Option<String>,
+) {
+    env.set_screen_size(1600.0, 1200.0);
+    fire_startup_events(env);
+    env.apply_post_event_workarounds();
+    env.state().borrow_mut().widgets.rebuild_anchor_index();
+    process_pending_timers(env);
+    fire_one_on_update_tick(env);
+    let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+    run_debug_script(env);
+    std::thread::sleep(std::time::Duration::from_secs(2));
+    run_extra_update_ticks(env, 3);
+    let (batch, _) = build_screenshot_batch(env, font_system, 1600, 1200, frame_filter.as_deref());
+    eprintln!("QuadBatch: {} quads, {} tex requests", batch.quad_count(), batch.texture_requests.len());
+    let mut tex_mgr = create_texture_manager();
+    wow_ui_sim::dump_texture::dump_batch_textures(&batch, &mut tex_mgr, &output, filter.as_deref());
 }
 
 /// Create a TextureManager with local and fallback texture paths.

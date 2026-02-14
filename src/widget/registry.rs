@@ -50,20 +50,14 @@ impl WidgetRegistry {
         self.widgets.get(&id)
     }
 
-    /// Get a mutable widget by ID. Marks the registry as render-dirty.
-    pub fn get_mut(&mut self, id: u64) -> Option<&mut Frame> {
-        let result = self.widgets.get_mut(&id);
-        if result.is_some() {
-            self.render_dirty.set(true);
-        }
-        result
-    }
-
-    /// Get a mutable widget by ID without marking render-dirty.
+    /// Get a mutable widget by ID.
     ///
-    /// Use for mutations that don't affect rendering (script tables, internal
-    /// bookkeeping, event registration, etc.).
-    pub fn get_mut_silent(&mut self, id: u64) -> Option<&mut Frame> {
+    /// Does NOT automatically mark the registry as render-dirty. Callers that
+    /// change visual properties (texture, alpha, text, visibility, size) must
+    /// call `mark_render_dirty()` explicitly. This avoids false invalidation
+    /// from read-like access (e.g. OnUpdate handlers that inspect but don't
+    /// change widget state).
+    pub fn get_mut(&mut self, id: u64) -> Option<&mut Frame> {
         self.widgets.get_mut(&id)
     }
 

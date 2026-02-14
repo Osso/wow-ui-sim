@@ -153,7 +153,7 @@ fn apply_anim_to_entry(anim: &super::AnimState, progress: f64, entry: &mut Targe
 
 /// Resolve child_key to frame ID and apply effects to widget state.
 ///
-/// Uses `get_mut_silent` to avoid setting `render_dirty` every tick.
+/// Uses `get_mut` to avoid setting `render_dirty` every tick.
 /// Animations modify alpha/offset continuously; the render pipeline
 /// picks up changes via `quads_dirty` which is set when something
 /// structurally changes (show/hide, resize, texture swap).  Animation
@@ -174,7 +174,7 @@ fn apply_effects(
         let alpha_changed = fx.alpha.is_some_and(|a| {
             state.widgets.get(id).map(|f| f.alpha != a).unwrap_or(false)
         });
-        let Some(frame) = state.widgets.get_mut_silent(id) else { continue };
+        let Some(frame) = state.widgets.get_mut(id) else { continue };
         if let Some(alpha) = fx.alpha {
             frame.alpha = alpha;
         }

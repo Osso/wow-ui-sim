@@ -23,6 +23,7 @@ pub mod traits;
 pub mod config;
 pub mod cvars;
 pub mod dump;
+pub mod dump_texture;
 pub mod error;
 pub mod event;
 pub mod extract_textures;

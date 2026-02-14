@@ -291,9 +291,10 @@ impl SimState {
         self.strata_buckets.as_ref()
     }
 
-    /// Build per-strata ID buckets from frames with effective_alpha > 0, sorted by render order.
+    /// Build per-strata ID buckets for ALL frames, sorted by render order.
     ///
-    /// Also includes button state textures (visible=false but state-driven).
+    /// Includes hidden frames so that Show/Hide doesn't require a full re-sort.
+    /// Visibility filtering happens later in `collect_sorted_frames`.
     fn build_strata_buckets(&mut self) -> Vec<Vec<u64>> {
         // Ensure effective_alpha is correct for all frames (handles direct
         // .visible = false assignments during initialization that bypass
@@ -305,8 +306,6 @@ impl SimState {
         let mut buckets = vec![Vec::new(); crate::widget::FrameStrata::COUNT];
         for id in self.widgets.iter_ids() {
             let Some(f) = self.widgets.get(id) else { continue };
-            if f.effective_alpha <= 0.0
-                && !is_button_state_texture(f, id, &self.widgets) { continue; }
             let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
                 f.parent_id
                     .and_then(|pid| self.widgets.get(pid))
@@ -338,7 +337,7 @@ impl SimState {
     /// Store the layout cache back after a quad rebuild, propagating rects to frames.
     pub fn set_layout_cache(&mut self, cache: crate::iced_app::layout::LayoutCache) {
         for (&id, &cached) in &cache {
-            if let Some(f) = self.widgets.get_mut_silent(id) {
+            if let Some(f) = self.widgets.get_mut(id) {
                 f.layout_rect = Some(cached.rect);
             }
         }
@@ -392,7 +391,7 @@ impl SimState {
         ).rect;
         let children: Vec<u64> = widgets.get(id)
             .map(|f| f.children.clone()).unwrap_or_default();
-        if let Some(f) = widgets.get_mut_silent(id) {
+        if let Some(f) = widgets.get_mut(id) {
             f.layout_rect = Some(rect);
         }
         widgets.mark_layout_resolved(id);
@@ -486,8 +485,8 @@ impl SimState {
             .map(|p| p.effective_alpha)
             .unwrap_or(1.0);
         self.widgets.propagate_effective_alpha(id, parent_eff);
-        // Invalidate render caches since visibility changed.
-        self.strata_buckets = None;
+        // Visibility changed — invalidate the render list (which frames to draw)
+        // but NOT strata_buckets (sort order is unchanged by show/hide).
         self.cached_render_list = None;
     }
 
@@ -580,22 +579,3 @@ impl SimState {
 
 }
 
-/// Check if a frame is a button state texture (NormalTexture, PushedTexture, etc.).
-fn is_button_state_texture(
-    f: &crate::widget::Frame,
-    id: u64,
-    registry: &crate::widget::WidgetRegistry,
-) -> bool {
-    use crate::widget::WidgetType;
-    if !matches!(f.widget_type, WidgetType::Texture) {
-        return false;
-    }
-    let Some(parent_id) = f.parent_id else { return false };
-    let Some(parent) = registry.get(parent_id) else { return false };
-    if !matches!(parent.widget_type, WidgetType::Button | WidgetType::CheckButton) {
-        return false;
-    }
-    ["NormalTexture", "PushedTexture", "HighlightTexture", "DisabledTexture"]
-        .iter()
-        .any(|key| parent.children_keys.get(*key) == Some(&id))
-}

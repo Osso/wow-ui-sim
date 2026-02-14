@@ -250,6 +250,7 @@ impl App {
 
         let health_dirty = self.env.borrow().state().borrow().widgets.take_render_dirty();
         if timers_dirty || on_update_dirty || health_dirty {
+            eprintln!("[perf] timer_invalidate: timers={timers_dirty} on_update={on_update_dirty} health={health_dirty}");
             self.invalidate();
         } else {
             self.drain_console();
