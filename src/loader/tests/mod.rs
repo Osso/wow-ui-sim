@@ -696,3 +696,5 @@ fn test_xml_hit_rect_insets() {
     assert_eq!(insets, (10.0, 20.0, 5.0, 15.0),
         "XML HitRectInsets should be applied: got {:?}", insets);
 }
+
+mod global_frame_access;
