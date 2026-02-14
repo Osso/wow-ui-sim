@@ -432,9 +432,8 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             child.frame_strata = s;
             queue.extend(child.children.iter().copied());
         }
-        // Invalidate render caches since strata changed.
+        // Invalidate strata buckets since strata changed (affects bucket assignment).
         state.strata_buckets = None;
-        state.invalidate_all_render_strata();
         Ok(())
     });
 

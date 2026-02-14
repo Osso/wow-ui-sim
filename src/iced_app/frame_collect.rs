@@ -9,25 +9,12 @@ pub const HIT_TEST_EXCLUDED: &[&str] = &[
     "EventToastManagerFrame", "EditModeManagerFrame",
 ];
 
-/// Result of collecting frames for rendering and hit testing.
+/// Result of collecting frames for hit testing.
 ///
-/// Render list stores `(id, rect, effective_alpha)` — frame data is looked up
-/// from the registry during emit. This allows the render list to be cached
-/// across rebuilds (no borrowed references).
+/// Rects are in unscaled WoW coordinates (caller applies UI_SCALE).
 pub struct CollectedFrames {
-    /// Per-strata render lists, indexed by `FrameStrata::as_index()`.
-    /// Each sub-list is sorted by level/draw-layer for rendering.
-    pub per_strata: [Vec<(u64, crate::LayoutRect, f32)>; FrameStrata::COUNT],
     /// Frames eligible for hit testing, sorted by strata/level/id (low to high).
-    /// Rects are in unscaled WoW coordinates (caller applies UI_SCALE).
     pub hittable: Vec<(u64, crate::LayoutRect)>,
-}
-
-impl CollectedFrames {
-    /// Iterate all render entries in strata order (low to high).
-    pub fn render_iter(&self) -> impl Iterator<Item = &(u64, crate::LayoutRect, f32)> {
-        self.per_strata.iter().flat_map(|v| v.iter())
-    }
 }
 
 /// Collect all frame IDs in the subtree rooted at the named frame.
@@ -86,41 +73,20 @@ pub fn intra_strata_sort_key(
     }
 }
 
-/// Collect frames with computed rects, sorted by strata/level/draw-layer.
+/// Build a hit-test list from visible-only strata buckets.
 ///
-/// Uses pre-built strata buckets (already sorted by render order).
-/// Reads `frame.effective_alpha` directly instead of a separate HashMap.
-///
-/// Also builds a hit-test list as a side output: visible, mouse-enabled
-/// frames sorted by strata/level/id, excluding non-interactive overlays.
-pub fn collect_sorted_frames(
+/// Returns visible, mouse-enabled frames sorted by strata/level/id,
+/// excluding non-interactive overlays.
+pub fn collect_hittable_frames(
     registry: &crate::widget::WidgetRegistry,
     strata_buckets: &[Vec<u64>],
 ) -> CollectedFrames {
-    let mut per_strata: [Vec<(u64, crate::LayoutRect, f32)>; FrameStrata::COUNT] =
-        std::array::from_fn(|_| Vec::new());
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();
 
-    for (strata_idx, bucket) in strata_buckets.iter().enumerate() {
+    for bucket in strata_buckets {
         for &id in bucket {
             let Some(f) = registry.get(id) else { continue };
             let Some(rect) = f.layout_rect else { continue };
-            // Button state textures (visible=false, effective_alpha=0) use
-            // parent's effective_alpha for state-dependent rendering.
-            let eff = if f.effective_alpha > 0.0 {
-                f.effective_alpha
-            } else {
-                f.parent_id
-                    .and_then(|pid| registry.get(pid))
-                    .map(|p| p.effective_alpha)
-                    .unwrap_or(0.0)
-            };
-            // Skip truly invisible frames — neither the frame nor its parent
-            // has any opacity. This eliminates ~95% of frames from the emit loop.
-            if eff <= 0.0 {
-                continue;
-            }
-            per_strata[strata_idx].push((id, rect, eff));
             if f.visible && f.effective_alpha > 0.0 && f.mouse_enabled
                 && !f.name.as_deref().is_some_and(|n| HIT_TEST_EXCLUDED.contains(&n))
             {
@@ -136,32 +102,6 @@ pub fn collect_sorted_frames(
     });
 
     CollectedFrames {
-        per_strata,
         hittable: hittable.into_iter().map(|(id, _, _, r)| (id, r)).collect(),
     }
-}
-
-/// Rebuild a single strata's render sub-list from its bucket.
-pub fn collect_single_strata(
-    registry: &crate::widget::WidgetRegistry,
-    bucket: &[u64],
-) -> Vec<(u64, crate::LayoutRect, f32)> {
-    let mut frames = Vec::new();
-    for &id in bucket {
-        let Some(f) = registry.get(id) else { continue };
-        let Some(rect) = f.layout_rect else { continue };
-        let eff = if f.effective_alpha > 0.0 {
-            f.effective_alpha
-        } else {
-            f.parent_id
-                .and_then(|pid| registry.get(pid))
-                .map(|p| p.effective_alpha)
-                .unwrap_or(0.0)
-        };
-        if eff <= 0.0 {
-            continue;
-        }
-        frames.push((id, rect, eff));
-    }
-    frames
 }

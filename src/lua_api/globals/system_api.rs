@@ -497,7 +497,7 @@ fn register_screen_size_functions(lua: &Lua, state: &Rc<RefCell<SimState>>) -> R
         s.screen_width = w;
         s.screen_height = h;
         s.layout_rect_cache = None;
-        s.invalidate_all_render_strata();
+        s.strata_buckets = None;
         s.widgets.clear_all_layout_rects();
         for name in ["UIParent", "WorldFrame"] {
             if let Some(id) = s.widgets.get_id_by_name(name)

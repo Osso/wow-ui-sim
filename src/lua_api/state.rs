@@ -156,18 +156,14 @@ pub struct SimState {
     /// Invalidated when `WidgetRegistry::visibility_dirty` is set.
     pub visible_on_update_cache: Option<Vec<u64>>,
     /// Per-strata buckets of visible frame IDs. Index = FrameStrata as usize.
-    /// Built lazily, invalidated when visibility/strata changes.
+    /// Contains only frames with render_alpha > 0 (visible or button state
+    /// textures with visible parent). Built lazily, maintained surgically
+    /// by `set_frame_visible`.
     pub strata_buckets: Option<Vec<Vec<u64>>>,
     /// Persistent layout rect cache. Built lazily on first `draw()`, entries
     /// invalidated eagerly when layout-affecting properties change (anchors,
     /// size, scale, parent). Frames not in cache are recomputed on next rebuild.
     pub layout_rect_cache: Option<crate::iced_app::layout::LayoutCache>,
-    /// Cached render and hit-test lists from `collect_sorted_frames`.
-    /// Skips the per-frame collection pass when only content (not layout/visibility) changes.
-    pub cached_render_list: Option<crate::iced_app::frame_collect::CollectedFrames>,
-    /// Bitfield of strata indices that need their render sub-list rebuilt.
-    /// When a strata is dirty, only that sub-list is recollected from its bucket.
-    pub dirty_render_strata: u16,
     /// Pending HitGrid updates from `set_frame_visible`. Each entry is the root
     /// frame ID that changed visibility and whether it became visible.
     /// Drained and applied by the App after Lua handlers run.
@@ -253,8 +249,6 @@ impl Default for SimState {
             visible_on_update_cache: None,
             strata_buckets: None,
             layout_rect_cache: None,
-            cached_render_list: None,
-            dirty_render_strata: 0,
             pending_hit_grid_changes: Vec::new(),
             animation_groups: HashMap::new(),
             next_anim_group_id: 1,
@@ -291,34 +285,19 @@ impl Default for SimState {
 }
 
 impl SimState {
-    /// Mark all strata as needing render list rebuild.
-    pub fn invalidate_all_render_strata(&mut self) {
-        self.cached_render_list = None;
-    }
-
-    /// Mark a specific strata as needing render list rebuild.
-    /// If no cached render list exists, this is a no-op (full rebuild will happen).
-    pub fn invalidate_render_strata(&mut self, strata: crate::widget::FrameStrata) {
-        if self.cached_render_list.is_some() {
-            self.dirty_render_strata |= 1 << strata.as_index();
-        } else {
-            // No cached list — full rebuild will happen anyway.
-        }
-    }
-
     /// Return the per-strata buckets, building lazily if needed.
     pub fn get_strata_buckets(&mut self) -> Option<&Vec<Vec<u64>>> {
         if self.strata_buckets.is_none() {
             self.strata_buckets = Some(self.build_strata_buckets());
-            self.invalidate_all_render_strata();
         }
         self.strata_buckets.as_ref()
     }
 
-    /// Build per-strata ID buckets for ALL frames, sorted by render order.
+    /// Build per-strata ID buckets for visible frames only, sorted by render order.
     ///
-    /// Includes hidden frames so that Show/Hide doesn't require a full re-sort.
-    /// Visibility filtering happens later in `collect_sorted_frames`.
+    /// A frame is included if its "render alpha" > 0: either its own
+    /// `effective_alpha > 0`, or (for button state textures with `visible=false`)
+    /// its parent's `effective_alpha > 0`.
     fn build_strata_buckets(&mut self) -> Vec<Vec<u64>> {
         // Ensure effective_alpha is correct for all frames (handles direct
         // .visible = false assignments during initialization that bypass
@@ -330,6 +309,18 @@ impl SimState {
         let mut buckets = vec![Vec::new(); crate::widget::FrameStrata::COUNT];
         for id in self.widgets.iter_ids() {
             let Some(f) = self.widgets.get(id) else { continue };
+            // Visibility filter: skip frames with no render alpha.
+            let render_alpha = if f.effective_alpha > 0.0 {
+                f.effective_alpha
+            } else {
+                f.parent_id
+                    .and_then(|pid| self.widgets.get(pid))
+                    .map(|p| p.effective_alpha)
+                    .unwrap_or(0.0)
+            };
+            if render_alpha <= 0.0 {
+                continue;
+            }
             let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
                 f.parent_id
                     .and_then(|pid| self.widgets.get(pid))
@@ -372,11 +363,6 @@ impl SimState {
     /// Called when layout-affecting properties change (anchors, size, scale, parent).
     /// Stores the computed rect on each Frame so the renderer can use it directly.
     pub fn invalidate_layout(&mut self, id: u64) {
-        if let Some(f) = self.widgets.get(id) {
-            self.invalidate_render_strata(f.frame_strata);
-        } else {
-            self.invalidate_all_render_strata();
-        }
         let sw = self.screen_width;
         let sh = self.screen_height;
         if let Some(cache) = self.layout_rect_cache.as_mut() {
@@ -392,11 +378,6 @@ impl SimState {
     /// dependents. Called by SetWidth/SetHeight/SetSize/SetScale/SetAtlas so
     /// that cross-frame-anchored siblings (e.g. three-slice Center) update.
     pub fn invalidate_layout_with_dependents(&mut self, id: u64) {
-        if let Some(f) = self.widgets.get(id) {
-            self.invalidate_render_strata(f.frame_strata);
-        } else {
-            self.invalidate_all_render_strata();
-        }
         let sw = self.screen_width;
         let sh = self.screen_height;
         if let Some(cache) = self.layout_rect_cache.as_mut() {
@@ -486,6 +467,7 @@ impl SimState {
     }
 
     /// Set a frame's visibility and eagerly propagate effective_alpha.
+    /// Surgically updates strata_buckets: inserts on show, removes on hide.
     pub fn set_frame_visible(&mut self, id: u64, visible: bool) {
         let was_visible = self.widgets.get(id).map(|f| f.visible).unwrap_or(false);
         self.widgets.set_visible(id, visible);
@@ -506,15 +488,78 @@ impl SimState {
             .and_then(|pid| self.widgets.get(pid))
             .map(|p| p.effective_alpha)
             .unwrap_or(1.0);
+        if !visible {
+            // Hide: remove subtree from buckets BEFORE propagating alpha to 0.
+            self.remove_subtree_from_buckets(id);
+        }
         self.widgets.propagate_effective_alpha(id, parent_eff);
-        // Visibility changed — invalidate only the affected strata's render sub-list.
-        if let Some(f) = self.widgets.get(id) {
-            self.invalidate_render_strata(f.frame_strata);
-        } else {
-            self.invalidate_all_render_strata();
+        if visible {
+            // Show: insert newly-visible frames AFTER propagating alpha.
+            self.insert_subtree_into_buckets(id);
         }
         // Record for incremental HitGrid update (applied by App after Lua runs).
         self.pending_hit_grid_changes.push((id, visible));
+    }
+
+    /// Remove a frame and all its descendants from strata_buckets.
+    fn remove_subtree_from_buckets(&mut self, root_id: u64) {
+        let Some(buckets) = self.strata_buckets.as_mut() else { return };
+        // Collect all IDs in the subtree.
+        let mut subtree = std::collections::HashSet::new();
+        let mut queue = vec![root_id];
+        while let Some(fid) = queue.pop() {
+            subtree.insert(fid);
+            if let Some(f) = self.widgets.get(fid) {
+                queue.extend(f.children.iter().copied());
+            }
+        }
+        for bucket in buckets.iter_mut() {
+            bucket.retain(|id| !subtree.contains(id));
+        }
+    }
+
+    /// Insert newly-visible frames from a subtree into strata_buckets.
+    ///
+    /// Walks all descendants and inserts those with render_alpha > 0
+    /// (own effective_alpha, or parent's for button state textures).
+    fn insert_subtree_into_buckets(&mut self, root_id: u64) {
+        let Some(buckets) = self.strata_buckets.as_mut() else { return };
+        use crate::iced_app::frame_collect::intra_strata_sort_key;
+        use crate::widget::WidgetType;
+        // Walk all descendants.
+        let mut queue = vec![root_id];
+        while let Some(fid) = queue.pop() {
+            let Some(f) = self.widgets.get(fid) else { continue };
+            queue.extend(f.children.iter().copied());
+            let render_alpha = if f.effective_alpha > 0.0 {
+                f.effective_alpha
+            } else {
+                f.parent_id
+                    .and_then(|pid| self.widgets.get(pid))
+                    .map(|p| p.effective_alpha)
+                    .unwrap_or(0.0)
+            };
+            if render_alpha <= 0.0 {
+                continue;
+            }
+            let strata = if matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line) {
+                f.parent_id
+                    .and_then(|pid| self.widgets.get(pid))
+                    .map(|p| p.frame_strata)
+                    .unwrap_or(f.frame_strata)
+            } else {
+                f.frame_strata
+            };
+            let key = intra_strata_sort_key(f, fid, &self.widgets);
+            let bucket = &mut buckets[strata.as_index()];
+            let pos = bucket.partition_point(|&existing_id| {
+                self.widgets.get(existing_id)
+                    .map(|ef| intra_strata_sort_key(ef, existing_id, &self.widgets))
+                    .unwrap_or_default()
+                    < key
+            });
+            bucket.insert(pos, fid);
+        }
     }
 
     /// Raise a frame above all siblings in the same strata.
@@ -540,9 +585,8 @@ impl SimState {
         crate::lua_api::frame::propagate_strata_level_pub(
             &mut self.widgets, id,
         );
-        // Invalidate render caches since level changed.
+        // Invalidate strata buckets since level changed (affects sort order).
         self.strata_buckets = None;
-        self.invalidate_all_render_strata();
     }
 
     /// Find the maximum frame_level among siblings of `id` in the given strata.

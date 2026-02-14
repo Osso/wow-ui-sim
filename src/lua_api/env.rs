@@ -314,9 +314,9 @@ impl WowLuaEnv {
         let mut state = self.state.borrow_mut();
         state.screen_width = width;
         state.screen_height = height;
-        // Screen resize invalidates all cached layout rects and the render list.
+        // Screen resize invalidates all cached layout rects and strata buckets.
         state.layout_rect_cache = None;
-        state.invalidate_all_render_strata();
+        state.strata_buckets = None;
         state.widgets.clear_all_layout_rects();
         for name in &["UIParent", "WorldFrame"] {
             if let Some(id) = state.widgets.get_id_by_name(name)
