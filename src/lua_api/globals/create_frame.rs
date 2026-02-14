@@ -213,13 +213,16 @@ fn register_new_frame(
     if let Some(pid) = parent_id {
         state.widgets.add_child(pid, frame_id);
 
-        // Inherit strata, level, and effective_alpha from parent.
-        let parent_props = state.widgets.get(pid).map(|p| (p.frame_strata, p.frame_level, p.effective_alpha));
-        if let Some((parent_strata, parent_level, parent_eff)) = parent_props
+        // Inherit strata, level, effective_alpha, and effective_scale from parent.
+        let parent_props = state.widgets.get(pid).map(|p| {
+            (p.frame_strata, p.frame_level, p.effective_alpha, p.effective_scale)
+        });
+        if let Some((parent_strata, parent_level, parent_eff_alpha, parent_eff_scale)) = parent_props
             && let Some(f) = state.widgets.get_mut_visual(frame_id) {
                 f.frame_strata = parent_strata;
                 f.frame_level = parent_level + 1;
-                f.effective_alpha = parent_eff * f.alpha;
+                f.effective_alpha = parent_eff_alpha * f.alpha;
+                f.effective_scale = parent_eff_scale * f.scale;
             }
     }
 
