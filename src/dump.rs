@@ -105,8 +105,9 @@ fn emit_frame_line(
     let text_str = format_text_str(widgets, frame);
     let font_str = format_font_str(frame);
     let strata_str = format!(" {}:{}", frame.frame_strata.as_str(), frame.frame_level);
+    let mask_str = if frame.is_mask { " MASK" } else { "" };
     lines.push(format!(
-        "{indent}{display_name} [{:?}] {size_str} {vis}{strata_str}{stale_str}{info_str}{text_str}{font_str}",
+        "{indent}{display_name} [{:?}] {size_str} {vis}{strata_str}{mask_str}{stale_str}{info_str}{text_str}{font_str}",
         frame.widget_type,
     ));
     emit_anchor_lines(widgets, frame, &indent, screen_width, screen_height, lines);
