@@ -85,6 +85,7 @@ fn build_frame_lua_code(
     append_toplevel_code(&mut lua_code, frame, inherits);
     append_alpha_code(&mut lua_code, frame, inherits);
     append_enable_mouse_code(&mut lua_code, frame, inherits);
+    append_hit_rect_insets_code(&mut lua_code, frame);
     append_clamped_to_screen_code(&mut lua_code, frame, inherits);
     append_set_all_points_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
@@ -408,6 +409,19 @@ fn append_enable_mouse_code(lua_code: &mut String, frame: &crate::xml::FrameXml,
         frame:EnableMouse({})
         "#,
             if enabled { "true" } else { "false" }
+        ));
+    }
+}
+
+/// Apply HitRectInsets from XML if present.
+fn append_hit_rect_insets_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
+    if let Some(insets) = frame.hit_rect_insets() {
+        let l = insets.left.unwrap_or(0.0);
+        let r = insets.right.unwrap_or(0.0);
+        let t = insets.top.unwrap_or(0.0);
+        let b = insets.bottom.unwrap_or(0.0);
+        lua_code.push_str(&format!(
+            "\n        frame:SetHitRectInsets({}, {}, {}, {})\n        ", l, r, t, b
         ));
     }
 }

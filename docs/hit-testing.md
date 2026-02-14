@@ -58,7 +58,7 @@ Insets are stored on the `Frame` struct as `hit_rect_insets: (f32, f32, f32, f32
 
 - `frame:SetHitRectInsets(left, right, top, bottom)` — set insets
 - `frame:GetHitRectInsets()` — returns `left, right, top, bottom`
-- XML: `<HitRectInsets left="10" right="10" top="5" bottom="5"/>` (parsed but not yet applied from XML)
+- XML: `<HitRectInsets left="10" right="10" top="5" bottom="5"/>` — calls `SetHitRectInsets` during frame creation
 
 ### Example
 

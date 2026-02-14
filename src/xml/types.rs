@@ -260,6 +260,14 @@ impl FrameXml {
         })
     }
 
+    /// Get the HitRectInsets element if present.
+    pub fn hit_rect_insets(&self) -> Option<&InsetsXml> {
+        self.children.iter().find_map(|c| match c {
+            FrameChildElement::HitRectInsets(i) => Some(i),
+            _ => None,
+        })
+    }
+
     /// Get the BarTexture element if present (StatusBar-specific).
     pub fn bar_texture(&self) -> Option<&TextureXml> {
         self.children.iter().find_map(|c| match c {

@@ -644,7 +644,7 @@ fn test_set_get_hit_rect_insets() {
 fn test_hit_rect_insets_shrinks_hittable_rect() {
     use crate::LayoutRect;
     use crate::iced_app::frame_collect::CollectedFrames;
-    use crate::iced_app::render::build_hittable_rects;
+    use crate::iced_app::build_hittable_rects;
 
     let mut registry = crate::widget::WidgetRegistry::new();
     let frame = crate::widget::Frame::default();
@@ -672,4 +672,28 @@ fn test_hit_rect_insets_shrinks_hittable_rect() {
     assert!((rect.y - expected_y).abs() < 0.01, "y: {} != {}", rect.y, expected_y);
     assert!((rect.width - expected_w).abs() < 0.01, "w: {} != {}", rect.width, expected_w);
     assert!((rect.height - expected_h).abs() < 0.01, "h: {} != {}", rect.height, expected_h);
+}
+
+#[test]
+fn test_xml_hit_rect_insets() {
+    let t = load_test_xml(
+        "test-xml-hit-rect-insets",
+        r#"<Ui>
+            <Frame name="HitRectXMLFrame" parent="UIParent">
+                <Size x="200" y="100"/>
+                <Anchors><Anchor point="CENTER"/></Anchors>
+                <HitRectInsets left="10" right="20" top="5" bottom="15"/>
+            </Frame>
+        </Ui>"#,
+    );
+
+    t.assert_lua_true(
+        "return HitRectXMLFrame ~= nil",
+        "HitRectXMLFrame should exist",
+    );
+    let insets: (f64, f64, f64, f64) = t.env.eval(
+        "return HitRectXMLFrame:GetHitRectInsets()"
+    ).unwrap();
+    assert_eq!(insets, (10.0, 20.0, 5.0, 15.0),
+        "XML HitRectInsets should be applied: got {:?}", insets);
 }

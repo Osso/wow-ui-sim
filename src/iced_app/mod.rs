@@ -18,7 +18,7 @@ mod message_frame_render;
 mod nine_slice;
 mod masking;
 mod quad_builders;
-pub(crate) mod render;
+mod render;
 mod statusbar;
 mod state;
 mod tiling;
@@ -41,7 +41,7 @@ use crate::saved_variables::SavedVariablesManager;
 // Re-export public types
 pub use app::App;
 pub use layout::{anchor_position, compute_frame_rect, compute_frame_rect_cached, frame_position_from_anchor, CachedFrameLayout, LayoutCache};
-pub use render::build_quad_batch_for_registry;
+pub use render::{build_quad_batch_for_registry, build_hittable_rects};
 pub use state::{CanvasMessage, InspectorState};
 pub use styles::palette;
 
