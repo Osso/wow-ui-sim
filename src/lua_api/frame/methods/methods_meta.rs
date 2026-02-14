@@ -99,7 +99,7 @@ fn lookup_fallback_method(
                 if let Some(Value::UserData(ud)) = args.into_iter().next()
                     && let Ok(handle) = ud.borrow::<FrameHandle>() {
                         let mut state = state_clone.borrow_mut();
-                        if let Some(frame) = state.widgets.get_mut(handle.id) {
+                        if let Some(frame) = state.widgets.get_mut_visual(handle.id) {
                             frame.frame_level = (frame.frame_level - 1).max(0);
                         }
                     }

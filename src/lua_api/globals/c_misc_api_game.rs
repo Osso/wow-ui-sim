@@ -102,7 +102,7 @@ fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
         if let Value::UserData(ud) = &tex {
             if let Ok(handle) = ud.borrow::<FrameHandle>() {
                 let mut state = handle.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut(handle.id) {
+                if let Some(frame) = state.widgets.get_mut_visual(handle.id) {
                     frame.texture = Some(texture_path);
                 }
             }

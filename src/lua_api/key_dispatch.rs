@@ -214,7 +214,7 @@ impl WowLuaEnv {
 
         {
             let mut state = self.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(fid) {
+            if let Some(frame) = state.widgets.get_mut_visual(fid) {
                 let current = frame.text.get_or_insert_with(String::new);
                 let char_pos = frame.editbox_cursor_pos as usize;
                 // Convert char position to byte position
@@ -243,7 +243,7 @@ impl WowLuaEnv {
     fn editbox_backspace(&self, fid: u64) -> Result<()> {
         let changed = {
             let mut state = self.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(fid) {
+            if let Some(frame) = state.widgets.get_mut_visual(fid) {
                 let current = frame.text.get_or_insert_with(String::new);
                 let char_pos = frame.editbox_cursor_pos as usize;
                 if char_pos > 0 {
@@ -269,7 +269,7 @@ impl WowLuaEnv {
     fn editbox_delete(&self, fid: u64) -> Result<()> {
         let changed = {
             let mut state = self.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(fid) {
+            if let Some(frame) = state.widgets.get_mut_visual(fid) {
                 let current = frame.text.get_or_insert_with(String::new);
                 let char_pos = frame.editbox_cursor_pos as usize;
                 let char_count = current.chars().count();

@@ -71,7 +71,7 @@ fn register_game_tooltips(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()
         let mut s = state.borrow_mut();
         s.widgets.register(nine_slice);
         s.widgets.add_child(gt_id, nine_slice_id);
-        if let Some(f) = s.widgets.get_mut(gt_id) {
+        if let Some(f) = s.widgets.get_mut_visual(gt_id) {
             f.children_keys
                 .insert("NineSlice".to_string(), nine_slice_id);
         }
@@ -113,7 +113,7 @@ fn register_friends_list_frame(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resu
         let mut s = state.borrow_mut();
         s.widgets.register(scrollbox);
         s.widgets.add_child(friends_id, scrollbox_id);
-        if let Some(f) = s.widgets.get_mut(friends_id) {
+        if let Some(f) = s.widgets.get_mut_visual(friends_id) {
             f.children_keys
                 .insert("ScrollBox".to_string(), scrollbox_id);
         }

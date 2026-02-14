@@ -35,7 +35,7 @@ fn add_texture_path_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             _ => None,
         });
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.texture = path;
             if let Some(h) = horiz_tile { frame.horiz_tile = h; }
             if let Some(v) = vert_tile { frame.vert_tile = v; }
@@ -56,7 +56,7 @@ fn add_texture_path_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         "SetColorTexture",
         |_, this, (r, g, b, a): (f32, f32, f32, Option<f32>)| {
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.color_texture =
                     Some(crate::widget::Color::new(r, g, b, a.unwrap_or(1.0)));
                 // Clear file texture when setting color texture
@@ -71,7 +71,7 @@ fn add_texture_path_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_tiling_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetHorizTile", |_, this, tile: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.horiz_tile = tile;
         }
         Ok(())
@@ -89,7 +89,7 @@ fn add_tiling_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("SetVertTile", |_, this, tile: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.vert_tile = tile;
         }
         Ok(())
@@ -114,7 +114,7 @@ fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: 
             _ => crate::render::BlendMode::Alpha,
         };
         let mut state = this.state.borrow_mut();
-        if let Some(f) = state.widgets.get_mut(this.id) {
+        if let Some(f) = state.widgets.get_mut_visual(this.id) {
             f.blend_mode = blend;
         }
         Ok(())
@@ -130,7 +130,7 @@ fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: 
 
     methods.add_method("SetDesaturated", |_, this, desaturated: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(f) = state.widgets.get_mut(this.id) {
+        if let Some(f) = state.widgets.get_mut_visual(this.id) {
             f.desaturated = desaturated;
         }
         Ok(())
@@ -148,7 +148,7 @@ fn add_blend_and_desaturation_methods<M: UserDataMethods<FrameHandle>>(methods: 
 
     methods.add_method("SetDesaturation", |_, this, desat: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(f) = state.widgets.get_mut(this.id) {
+        if let Some(f) = state.widgets.get_mut_visual(this.id) {
             f.desaturated = desat > 0.0;
         }
         Ok(())
@@ -190,7 +190,7 @@ fn add_atlas_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
             if let Some(ns_info) = ns_info {
                 let mut state = this.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                     frame.nine_slice_atlas = Some(ns_info);
                     frame.atlas = Some(name);
                     frame.texture = None;
@@ -208,7 +208,7 @@ fn add_atlas_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 }
             } else {
                 let mut state = this.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                     frame.atlas = Some(name);
                 }
             }
@@ -279,7 +279,7 @@ fn apply_atlas_to_frame(
     lookup: &crate::atlas::AtlasLookup,
     use_atlas_size: bool,
 ) {
-    if let Some(frame) = widgets.get_mut(frame_id) {
+    if let Some(frame) = widgets.get_mut_visual(frame_id) {
         frame.texture = Some(atlas_info.file.to_string());
         let atlas_uvs = (
             atlas_info.left_tex_coord,
@@ -320,7 +320,7 @@ fn propagate_atlas_to_button(
     let Some((parent_id, Some(parent_key))) = parent_info else {
         return;
     };
-    let Some(parent) = widgets.get_mut(parent_id) else {
+    let Some(parent) = widgets.get_mut_visual(parent_id) else {
         return;
     };
     if !matches!(
@@ -417,7 +417,7 @@ fn add_vertex_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 .unwrap_or(false);
             if !already_set {
                 let mut state = this.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                     frame.vertex_color = Some(new_color);
                 }
             }
@@ -486,7 +486,7 @@ fn add_tex_coord_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         };
 
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.tex_coords =
                 Some(remap_tex_coords(frame.atlas_tex_coords, left, right, top, bottom));
             frame.tex_coords_quad = raw_quad;
@@ -534,7 +534,7 @@ fn add_mask_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             if let Ok(mask_handle) = ud.borrow::<FrameHandle>() {
                 let mask_id = mask_handle.id;
                 let mut state = this.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                     if !frame.mask_textures.contains(&mask_id) {
                         frame.mask_textures.push(mask_id);
                     }
@@ -549,7 +549,7 @@ fn add_mask_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             if let Ok(mask_handle) = ud.borrow::<FrameHandle>() {
                 let mask_id = mask_handle.id;
                 let mut state = this.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                     frame.mask_textures.retain(|&id| id != mask_id);
                 }
             }
@@ -569,7 +569,7 @@ fn add_mask_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_rotation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetRotation", |_, this, radians: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.rotation = radians as f32;
         }
         Ok(())
@@ -596,7 +596,7 @@ fn add_draw_layer_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             let layer_str = s.to_string_lossy();
             if let Some(layer) = DrawLayer::from_str(&layer_str) {
                 let mut state = this.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut(this.id) {
+                if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                     frame.draw_layer = layer;
                     // Second arg is sublevel (default 0, range -8..7)
                     if let Some(sub_val) = args_vec.get(1) {

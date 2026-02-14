@@ -15,7 +15,7 @@ pub fn add_line_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("SetThickness", |_, this, thickness: f32| {
         let mut state = this.state.borrow_mut();
-        if let Some(f) = state.widgets.get_mut(this.id) {
+        if let Some(f) = state.widgets.get_mut_visual(this.id) {
             f.line_thickness = thickness;
         }
         Ok(())
@@ -71,7 +71,7 @@ fn set_line_point(this: &FrameHandle, args: mlua::MultiValue, is_start: bool) ->
     };
 
     let mut state = this.state.borrow_mut();
-    if let Some(f) = state.widgets.get_mut(this.id) {
+    if let Some(f) = state.widgets.get_mut_visual(this.id) {
         if is_start {
             f.line_start = Some(anchor);
         } else {

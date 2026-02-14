@@ -56,7 +56,7 @@ fn register_child_widget(
         // Inherit strata and level from parent (regions render in parent's context)
         let parent_props = state.widgets.get(this.id).map(|p| (p.frame_strata, p.frame_level));
         if let Some((parent_strata, parent_level)) = parent_props {
-            if let Some(f) = state.widgets.get_mut(child_id) {
+            if let Some(f) = state.widgets.get_mut_visual(child_id) {
                 f.frame_strata = parent_strata;
                 f.frame_level = parent_level + 1;
             }

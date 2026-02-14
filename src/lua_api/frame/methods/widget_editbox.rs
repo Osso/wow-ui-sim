@@ -64,7 +64,7 @@ fn add_editbox_focus_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_editbox_cursor_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetCursorPosition", |_, this, pos: i32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_cursor_pos = pos;
         }
         Ok(())
@@ -76,7 +76,7 @@ fn add_editbox_cursor_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
     methods.add_method("HighlightText", |_, _this, _args: mlua::MultiValue| Ok(()));
     methods.add_method("Insert", |_, this, text: String| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             let current = frame.text.get_or_insert_with(String::new);
             let pos = (frame.editbox_cursor_pos as usize).min(current.len());
             current.insert_str(pos, &text);
@@ -97,7 +97,7 @@ fn add_editbox_cursor_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
 fn add_editbox_number_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetNumber", |_, this, n: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.text = Some(n.to_string());
         }
         Ok(())
@@ -115,7 +115,7 @@ fn add_editbox_number_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
 fn add_editbox_limit_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetMaxLetters", |_, this, max: i32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_max_letters = max;
         }
         Ok(())
@@ -126,7 +126,7 @@ fn add_editbox_limit_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
     methods.add_method("SetMaxBytes", |_, this, max: i32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_max_bytes = max;
         }
         Ok(())
@@ -145,7 +145,7 @@ fn add_editbox_flag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_editbox_mode_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetMultiLine", |_, this, multi: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_multi_line = multi;
         }
         Ok(())
@@ -156,7 +156,7 @@ fn add_editbox_mode_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
     methods.add_method("SetAutoFocus", |_, this, auto: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_auto_focus = auto;
         }
         Ok(())
@@ -167,7 +167,7 @@ fn add_editbox_mode_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
     methods.add_method("SetNumeric", |_, this, numeric: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_numeric = numeric;
         }
         Ok(())
@@ -181,7 +181,7 @@ fn add_editbox_mode_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_editbox_input_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetPassword", |_, this, pw: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_password = pw;
         }
         Ok(())
@@ -192,7 +192,7 @@ fn add_editbox_input_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
     methods.add_method("SetBlinkSpeed", |_, this, speed: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_blink_speed = speed;
         }
         Ok(())
@@ -203,7 +203,7 @@ fn add_editbox_input_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     });
     methods.add_method("SetCountInvisibleLetters", |_, this, count: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_count_invisible_letters = count;
         }
         Ok(())
@@ -213,7 +213,7 @@ fn add_editbox_input_flags<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_editbox_history_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("AddHistoryLine", |_, this, text: String| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_history.push(text);
             let max = frame.editbox_history_max;
             if max > 0 && frame.editbox_history.len() > max as usize {
@@ -231,7 +231,7 @@ fn add_editbox_history_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     });
     methods.add_method("SetHistoryLines", |_, this, max: i32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_history_max = max;
         }
         Ok(())
@@ -246,7 +246,7 @@ fn add_editbox_inset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let t = val_to_f32(it.next(), 0.0);
         let b = val_to_f32(it.next(), 0.0);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.editbox_text_insets = (l, r, t, b);
         }
         Ok(())

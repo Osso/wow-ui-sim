@@ -25,7 +25,7 @@ fn add_cooldown_timing_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             _ => 0.0,
         };
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_start = start;
             frame.cooldown_duration = duration;
         }
@@ -44,7 +44,7 @@ fn add_cooldown_timing_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             _ => 0.0,
         };
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_start = start;
             frame.cooldown_duration = end - start;
         }
@@ -71,7 +71,7 @@ fn add_cooldown_display_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
         let b = val_to_f32(it.next(), 0.0);
         let a = val_to_f32(it.next(), 0.8);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.attributes.insert(
                 "__swipe_color".to_string(),
                 AttributeValue::String(format!("{},{},{},{}", r, g, b, a)),
@@ -81,35 +81,35 @@ fn add_cooldown_display_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
     });
     methods.add_method("SetDrawSwipe", |_, this, draw: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_draw_swipe = draw;
         }
         Ok(())
     });
     methods.add_method("SetDrawEdge", |_, this, draw: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_draw_edge = draw;
         }
         Ok(())
     });
     methods.add_method("SetDrawBling", |_, this, draw: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_draw_bling = draw;
         }
         Ok(())
     });
     methods.add_method("SetReverse", |_, this, reverse: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_reverse = reverse;
         }
         Ok(())
     });
     methods.add_method("SetHideCountdownNumbers", |_, this, hide: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_hide_countdown = hide;
         }
         Ok(())
@@ -138,7 +138,7 @@ fn add_cooldown_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
             _ => 0.0,
         };
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_duration = duration;
         }
         Ok(())
@@ -150,14 +150,14 @@ fn add_cooldown_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
 fn add_cooldown_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("Pause", |_, this, ()| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_paused = true;
         }
         Ok(())
     });
     methods.add_method("Resume", |_, this, ()| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.cooldown_paused = false;
         }
         Ok(())

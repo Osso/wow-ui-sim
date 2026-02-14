@@ -348,7 +348,7 @@ fn position_tooltip(
     owner_id: Option<u64>,
     anchor_type: &str,
 ) {
-    let frame = match state.widgets.get_mut(tooltip_id) {
+    let frame = match state.widgets.get_mut_visual(tooltip_id) {
         Some(f) => f,
         None => return,
     };

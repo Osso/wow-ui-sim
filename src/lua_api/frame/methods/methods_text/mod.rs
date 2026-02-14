@@ -92,7 +92,7 @@ fn add_text_get_set_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                     let mut state = this.state.borrow_mut();
                     let changed = state.widgets.get(this.id).map(|f| f.width != width).unwrap_or(false);
                     if changed {
-                        if let Some(frame) = state.widgets.get_mut(this.id) {
+                        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                             frame.width = width;
                         }
                     }
@@ -166,7 +166,7 @@ fn handle_set_text(lua: &mlua::Lua, this: &FrameHandle, args: mlua::MultiValue) 
             let width = fs.measure_text_width(&text, font.as_deref(), font_size);
             let changed = state.widgets.get(id).map(|f| f.width != width).unwrap_or(false);
             if changed {
-                if let Some(frame) = state.widgets.get_mut(id) {
+                if let Some(frame) = state.widgets.get_mut_visual(id) {
                     frame.width = width;
                 }
             }
@@ -218,7 +218,7 @@ fn set_text_on_frame(
             return;
         }
     }
-    if let Some(frame) = state.widgets.get_mut(id) {
+    if let Some(frame) = state.widgets.get_mut_visual(id) {
         let min_height = frame.font_size.max(12.0);
         let is_fontstring = frame.widget_type == crate::widget::WidgetType::FontString;
         if text.is_some() && is_fontstring && frame.height < min_height {
@@ -258,7 +258,7 @@ fn add_set_font_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             _ => None,
         };
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.font = Some(font);
             if let Some(s) = size {
                 frame.font_size = s;
@@ -484,7 +484,7 @@ fn resolve_font_table(lua: &mlua::Lua, font_object: &Value) -> Option<mlua::Tabl
 fn apply_font_table_to_frame(this: &FrameHandle, font_table: Option<&mlua::Table>) {
     let Some(src) = font_table else { return };
     let mut state = this.state.borrow_mut();
-    let Some(frame) = state.widgets.get_mut(this.id) else { return };
+    let Some(frame) = state.widgets.get_mut_visual(this.id) else { return };
 
     if let Ok(path) = src.get::<String>("__fontPath").or_else(|_| src.get::<String>("__font")) {
         frame.font = Some(path);
@@ -560,7 +560,7 @@ fn add_text_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let b = val_to_f32(args_vec.get(2), 1.0);
         let a = val_to_f32(args_vec.get(3), 1.0);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.text_color = crate::widget::Color::new(r, g, b, a);
         }
         Ok(())
@@ -622,7 +622,7 @@ fn add_justification_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(Value::String(j)) = args_vec.first() {
             let justify = j.to_string_lossy().to_string();
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.justify_h = crate::widget::TextJustify::from_wow_str(&justify);
             }
         }
@@ -653,7 +653,7 @@ fn add_justification_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(Value::String(j)) = args_vec.first() {
             let justify = j.to_string_lossy().to_string();
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.justify_v = crate::widget::TextJustify::from_wow_str(&justify);
             }
         }

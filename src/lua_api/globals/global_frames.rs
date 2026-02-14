@@ -252,7 +252,7 @@ fn setup_edit_mode_manager(_lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<
         state.borrow_mut().widgets.add_child(parent_id, child_id);
         {
             let mut st = state.borrow_mut();
-            if let Some(parent) = st.widgets.get_mut(parent_id) {
+            if let Some(parent) = st.widgets.get_mut_visual(parent_id) {
                 parent.children_keys.insert("AccountSettings".to_string(), child_id);
             }
         }

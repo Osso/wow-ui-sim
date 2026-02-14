@@ -69,7 +69,7 @@ pub(super) fn stop_group(state: &mut SimState, group_id: u64) {
         // Restore alphas if not keeping final values
         if !keep_alpha {
             for (id, alpha) in &saved_alphas {
-                if let Some(frame) = state.widgets.get_mut(*id) {
+                if let Some(frame) = state.widgets.get_mut_visual(*id) {
                     frame.alpha = *alpha;
                 }
             }
@@ -78,7 +78,7 @@ pub(super) fn stop_group(state: &mut SimState, group_id: u64) {
         for id in &translation_targets {
             let had_offset = state.widgets.get(*id)
                 .is_some_and(|f| f.anim_offset_x != 0.0 || f.anim_offset_y != 0.0);
-            if let Some(frame) = state.widgets.get_mut(*id) {
+            if let Some(frame) = state.widgets.get_mut_visual(*id) {
                 frame.anim_offset_x = 0.0;
                 frame.anim_offset_y = 0.0;
             }

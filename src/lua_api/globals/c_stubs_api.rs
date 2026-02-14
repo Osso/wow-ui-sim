@@ -160,7 +160,7 @@ fn set_texture_on_handle(tex: &Value, path: Option<String>) {
     if let Value::UserData(ud) = tex {
         if let Ok(handle) = ud.borrow::<FrameHandle>() {
             let mut state = handle.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(handle.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(handle.id) {
                 frame.texture = path;
             }
         }

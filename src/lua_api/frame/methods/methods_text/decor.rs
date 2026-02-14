@@ -28,14 +28,14 @@ fn add_title_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .and_then(|tc| tc.children_keys.get("TitleText").copied());
 
         if let Some(tt_id) = title_text_id
-            && let Some(title_text) = state.widgets.get_mut(tt_id) {
+            && let Some(title_text) = state.widgets.get_mut_visual(tt_id) {
                 title_text.text = title.clone();
                 if title_text.height == 0.0 {
                     title_text.height = title_text.font_size.max(12.0);
                 }
             }
 
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.title = title;
         }
         Ok(())
@@ -141,7 +141,7 @@ fn add_shadow_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let x = val_to_f64(args_vec.first(), 0.0);
         let y = val_to_f64(args_vec.get(1), 0.0);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.shadow_offset = (x as f32, y as f32);
         }
         Ok(())
@@ -196,7 +196,7 @@ fn add_shadow_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
         let (r, g, b, a) = extract_rgba(&args_vec);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.shadow_color = crate::widget::Color::new(r, g, b, a);
         }
         Ok(())

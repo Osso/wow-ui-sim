@@ -55,7 +55,7 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
     // Remove from old parent's children list
     let old_parent_id = widgets.get(child_id).and_then(|f| f.parent_id);
     if let Some(old_pid) = old_parent_id
-        && let Some(old_parent) = widgets.get_mut(old_pid) {
+        && let Some(old_parent) = widgets.get_mut_visual(old_pid) {
             old_parent.children.retain(|&id| id != child_id);
         }
 
@@ -66,7 +66,7 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
             .map(|p| (p.frame_strata, p.frame_level, p.effective_alpha, p.effective_scale))
     });
 
-    if let Some(frame) = widgets.get_mut(child_id) {
+    if let Some(frame) = widgets.get_mut_visual(child_id) {
         frame.parent_id = new_parent_id;
         // Inherit strata and level from parent (like wowless does)
         if let Some((parent_strata, parent_level, _, _)) = parent_props {
@@ -91,7 +91,7 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
 
     // Add to new parent's children list
     if let Some(new_pid) = new_parent_id
-        && let Some(new_parent) = widgets.get_mut(new_pid)
+        && let Some(new_parent) = widgets.get_mut_visual(new_pid)
             && !new_parent.children.contains(&child_id) {
                 new_parent.children.push(child_id);
             }
@@ -103,7 +103,7 @@ fn add_parent_key_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let mut state = this.state.borrow_mut();
         let parent_id = state.widgets.get(this.id).and_then(|f| f.parent_id);
         if let Some(pid) = parent_id
-            && let Some(parent) = state.widgets.get_mut(pid) {
+            && let Some(parent) = state.widgets.get_mut_visual(pid) {
                 parent.children_keys.insert(key, this.id);
             }
         Ok(())
@@ -225,7 +225,7 @@ fn propagate_strata_level(widgets: &mut WidgetRegistry, root_id: u64) {
         .collect();
 
     while let Some((child_id, parent_strata, parent_level)) = queue.pop() {
-        let Some(child) = widgets.get_mut(child_id) else { continue };
+        let Some(child) = widgets.get_mut_visual(child_id) else { continue };
         if !child.has_fixed_frame_strata {
             child.frame_strata = parent_strata;
         }

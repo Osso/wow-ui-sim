@@ -96,7 +96,7 @@ pub fn add_misc_widget_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetTextToFit(text) - FontString method that auto-sizes
     methods.add_method("SetTextToFit", |_, this, text: Option<String>| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.text = text;
         }
         Ok(())
@@ -149,7 +149,7 @@ fn add_colorselect_rgb_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     // SetColorRGB(r, g, b) - Set the RGB color
     methods.add_method("SetColorRGB", |_, this, (r, g, b): (f64, f64, f64)| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame
                 .attributes
                 .insert("colorR".to_string(), AttributeValue::Number(r));
@@ -187,7 +187,7 @@ fn add_colorselect_hsv_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     methods.add_method("SetColorHSV", |_, this, (h, s, v): (f64, f64, f64)| {
         let (r, g, b) = hsv_to_rgb(h, s, v);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame
                 .attributes
                 .insert("colorR".to_string(), AttributeValue::Number(r));
@@ -241,7 +241,7 @@ fn add_colorselect_hsv_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
 fn add_drag_start_stop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("StartMoving", |_, this, ()| {
         if let Ok(mut s) = this.state.try_borrow_mut()
-            && let Some(frame) = s.widgets.get_mut(this.id)
+            && let Some(frame) = s.widgets.get_mut_visual(this.id)
                 && frame.movable {
                     frame.is_moving = true;
                 }
@@ -249,14 +249,14 @@ fn add_drag_start_stop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     });
     methods.add_method("StopMovingOrSizing", |_, this, ()| {
         if let Ok(mut s) = this.state.try_borrow_mut()
-            && let Some(frame) = s.widgets.get_mut(this.id) {
+            && let Some(frame) = s.widgets.get_mut_visual(this.id) {
                 frame.is_moving = false;
             }
         Ok(())
     });
     methods.add_method("SetMovable", |_, this, movable: bool| {
         if let Ok(mut s) = this.state.try_borrow_mut()
-            && let Some(frame) = s.widgets.get_mut(this.id) {
+            && let Some(frame) = s.widgets.get_mut_visual(this.id) {
                 frame.movable = movable;
             }
         Ok(())
@@ -270,7 +270,7 @@ fn add_drag_start_stop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
     });
     methods.add_method("SetResizable", |_, this, resizable: bool| {
         if let Ok(mut s) = this.state.try_borrow_mut()
-            && let Some(frame) = s.widgets.get_mut(this.id) {
+            && let Some(frame) = s.widgets.get_mut_visual(this.id) {
                 frame.resizable = resizable;
             }
         Ok(())
@@ -287,7 +287,7 @@ fn add_drag_start_stop_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
 fn add_drag_clamp_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetClampedToScreen", |_, this, clamped: bool| {
         if let Ok(mut s) = this.state.try_borrow_mut()
-            && let Some(frame) = s.widgets.get_mut(this.id) {
+            && let Some(frame) = s.widgets.get_mut_visual(this.id) {
                 frame.clamped_to_screen = clamped;
             }
         Ok(())

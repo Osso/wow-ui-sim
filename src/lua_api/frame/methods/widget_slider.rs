@@ -34,7 +34,7 @@ pub fn add_checkbutton_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             if already {
                 return Ok(());
             }
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame
                     .attributes
                     .insert("__checked".to_string(), AttributeValue::Boolean(checked));
@@ -77,7 +77,7 @@ pub fn add_shared_value_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
 fn add_slider_step_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetValueStep", |_, this, step: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.slider_step = step;
         }
         Ok(())
@@ -101,7 +101,7 @@ fn add_slider_orientation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut
         }
         if let Some(Value::String(s)) = args.into_iter().next() {
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.slider_orientation = s.to_str().map(|s| s.to_uppercase()).unwrap_or_else(|_| "HORIZONTAL".to_string());
             }
         }
@@ -126,14 +126,14 @@ fn add_slider_thumb_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_slider_drag_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetObeyStepOnDrag", |_, this, obey: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.slider_obey_step_on_drag = obey;
         }
         Ok(())
     });
     methods.add_method("SetStepsPerPage", |_, this, steps: i32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.slider_steps_per_page = steps;
         }
         Ok(())
@@ -158,7 +158,7 @@ fn add_statusbar_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
             _ => (None, None),
         };
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.statusbar_texture_path = path.clone();
             if let Some(id) = bar_id {
                 frame.statusbar_bar_id = Some(id);
@@ -172,7 +172,7 @@ fn add_statusbar_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
                     let child_id = super::methods_helpers::get_or_create_button_texture(
                         &mut state, this.id, "StatusBarTexture",
                     );
-                    if let Some(frame) = state.widgets.get_mut(this.id) {
+                    if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                         frame.statusbar_bar_id = Some(child_id);
                     }
                     child_id
@@ -200,7 +200,7 @@ fn add_statusbar_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
         let b = val_to_f32(it.next(), 1.0);
         let a = val_to_f32(it.next(), 1.0);
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.statusbar_color = Some(Color::new(r, g, b, a));
         }
         Ok(())
@@ -218,14 +218,14 @@ fn add_statusbar_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
 fn add_statusbar_fill_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFillStyle", |_, this, style: String| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.statusbar_fill_style = style;
         }
         Ok(())
     });
     methods.add_method("SetReverseFill", |_, this, reverse: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.statusbar_reverse_fill = reverse;
         }
         Ok(())
@@ -297,7 +297,7 @@ fn add_shared_set_min_max<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             _ => false,
         }).unwrap_or(false);
         if !changed { return Ok(()); }
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             match frame.widget_type {
                 WidgetType::Slider => {
                     frame.slider_min = min;
@@ -340,7 +340,7 @@ fn set_slider_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua::Re
         if clamped == frame.slider_value {
             return Ok(());
         }
-        let frame = state.widgets.get_mut(this.id).unwrap();
+        let frame = state.widgets.get_mut_visual(this.id).unwrap();
         frame.slider_value = clamped;
         clamped
     };
@@ -355,7 +355,7 @@ fn set_statusbar_value(lua: &mlua::Lua, this: &FrameHandle, value: f64) -> mlua:
         if clamped == frame.statusbar_value {
             return Ok(());
         }
-        let frame = state.widgets.get_mut(this.id).unwrap();
+        let frame = state.widgets.get_mut_visual(this.id).unwrap();
         frame.statusbar_value = clamped;
         clamped
     };
@@ -386,7 +386,7 @@ fn apply_bar_texture(widgets: &mut crate::widget::WidgetRegistry, child_id: u64,
     // Try atlas lookup first
     if let Some(lookup) = crate::atlas::get_atlas_info(tex_str) {
         let info = lookup.info;
-        if let Some(frame) = widgets.get_mut(child_id) {
+        if let Some(frame) = widgets.get_mut_visual(child_id) {
             frame.texture = Some(info.file.to_string());
             let uvs = (info.left_tex_coord, info.right_tex_coord, info.top_tex_coord, info.bottom_tex_coord);
             frame.atlas_tex_coords = Some(uvs);
@@ -395,7 +395,7 @@ fn apply_bar_texture(widgets: &mut crate::widget::WidgetRegistry, child_id: u64,
             frame.vert_tile = info.tiles_vertically;
             frame.atlas = Some(tex_str.to_string());
         }
-    } else if let Some(frame) = widgets.get_mut(child_id) {
+    } else if let Some(frame) = widgets.get_mut_visual(child_id) {
         // Treat as a file path
         frame.texture = Some(tex_str.to_string());
         frame.atlas = None;
@@ -408,7 +408,7 @@ fn apply_bar_texture(widgets: &mut crate::widget::WidgetRegistry, child_id: u64,
 /// Apply SetAllPoints-style anchors to make a bar texture fill its parent.
 fn anchor_bar_to_parent(widgets: &mut crate::widget::WidgetRegistry, bar_id: u64, parent_id: u64) {
     use crate::widget::{Anchor, AnchorPoint};
-    if let Some(bar) = widgets.get_mut(bar_id) {
+    if let Some(bar) = widgets.get_mut_visual(bar_id) {
         bar.anchors = vec![
             Anchor {
                 point: AnchorPoint::TopLeft,

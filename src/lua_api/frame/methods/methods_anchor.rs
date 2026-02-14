@@ -147,7 +147,7 @@ fn add_set_point_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         if let Some(rel_id) = relative_to {
             state.widgets.add_anchor_dependent(rel_id as u64, this.id);
         }
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.set_point(point, relative_to, relative_point, x_ofs, y_ofs);
         }
         state.widgets.mark_rect_dirty_subtree(this.id);
@@ -164,7 +164,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
         if !already_empty {
             let mut state = this.state.borrow_mut();
             state.widgets.remove_all_anchor_dependents_for(this.id);
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.clear_all_points();
             }
             state.widgets.mark_rect_dirty_subtree(this.id);
@@ -186,7 +186,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
                     }
                 }
             }
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.anchors.retain(|a| a.point != point);
             }
             state.widgets.mark_rect_dirty_subtree(this.id);
@@ -202,7 +202,7 @@ fn add_clear_and_adjust_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M
         "AdjustPointsOffset",
         |_, this, (x_offset, y_offset): (f32, f32)| {
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 for anchor in &mut frame.anchors {
                     anchor.x_offset += x_offset;
                     anchor.y_offset += y_offset;
@@ -244,7 +244,7 @@ fn add_set_all_points_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 state.widgets.add_anchor_dependent(rel_id as u64, this.id);
             }
 
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.clear_all_points();
                 frame.set_point(
                     crate::widget::AnchorPoint::TopLeft,

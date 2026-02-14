@@ -186,7 +186,7 @@ impl App {
     pub(crate) fn apply_inspector_changes(&mut self, frame_id: u64) {
         let env = self.env.borrow();
         let mut state = env.state().borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(frame_id) {
+        if let Some(frame) = state.widgets.get_mut_visual(frame_id) {
             if let Ok(w) = self.inspector_state.width.parse::<f32>() {
                 frame.width = w;
             }

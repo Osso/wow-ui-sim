@@ -133,11 +133,11 @@ fn apply_button_texture_setter(
         let resolved = path.as_ref().map(|p| resolve_texture_string(p));
         let resolved_path = resolved.as_ref().map(|r| r.path.clone());
         let tex_coords = resolved.as_ref().and_then(|r| r.tex_coords);
-        if let Some(frame) = state.widgets.get_mut(button_id) {
+        if let Some(frame) = state.widgets.get_mut_visual(button_id) {
             set_button_field(frame, resolved_path.clone(), tex_coords);
         }
         let tex_id = get_or_create_button_texture(state, button_id, parent_key);
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
+        if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
             tex.texture = resolved_path;
             tex.tex_coords = tex_coords;
             tex.atlas_tex_coords = tex_coords;
@@ -275,12 +275,12 @@ fn apply_atlas_to_button<F>(
             lookup.info.top_tex_coord,
             lookup.info.bottom_tex_coord,
         );
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
+        if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
             tex.atlas = Some(atlas_name.to_string());
             tex.texture = Some(lookup.info.file.to_string());
             tex.tex_coords = Some(tex_coords);
         }
-        if let Some(frame) = state.widgets.get_mut(button_id) {
+        if let Some(frame) = state.widgets.get_mut_visual(button_id) {
             set_button_field(frame, lookup.info.file.to_string(), tex_coords);
         }
     }
@@ -296,12 +296,12 @@ fn add_checked_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
         let mut state = this.state.borrow_mut();
 
         if !is_userdata
-            && let Some(frame) = state.widgets.get_mut(this.id) {
+            && let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.checked_texture = path.clone();
             }
 
         let tex_id = get_or_create_button_texture(&mut state, this.id, "CheckedTexture");
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
+        if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
             if !is_userdata {
                 tex.texture = path;
             }
@@ -318,13 +318,13 @@ fn add_checked_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             let mut state = this.state.borrow_mut();
 
             if !is_userdata
-                && let Some(frame) = state.widgets.get_mut(this.id) {
+                && let Some(frame) = state.widgets.get_mut_visual(this.id) {
                     frame.disabled_checked_texture = path.clone();
                 }
 
             let tex_id =
                 get_or_create_button_texture(&mut state, this.id, "DisabledCheckedTexture");
-            if let Some(tex) = state.widgets.get_mut(tex_id) {
+            if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
                 if !is_userdata {
                     tex.texture = path;
                 }
@@ -340,7 +340,7 @@ fn add_three_slice_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetLeftTexture", |_, this, texture: Value| {
         let path = value_to_optional_path(texture)?;
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.left_texture = path;
         }
         Ok(())
@@ -349,7 +349,7 @@ fn add_three_slice_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetMiddleTexture", |_, this, texture: Value| {
         let path = value_to_optional_path(texture)?;
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.middle_texture = path;
         }
         Ok(())
@@ -358,7 +358,7 @@ fn add_three_slice_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetRightTexture", |_, this, texture: Value| {
         let path = value_to_optional_path(texture)?;
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.right_texture = path;
         }
         Ok(())
@@ -442,7 +442,7 @@ fn add_enable_disable_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
 
 /// Update the `__enabled` attribute on a widget.
 fn set_enabled_attribute(state: &mut crate::lua_api::SimState, id: u64, enabled: bool) {
-    if let Some(frame) = state.widgets.get_mut(id) {
+    if let Some(frame) = state.widgets.get_mut_visual(id) {
         frame.attributes.insert(
             "__enabled".to_string(),
             crate::widget::AttributeValue::Boolean(enabled),
@@ -474,7 +474,7 @@ fn add_button_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         |_, this, (state_str, _locked): (String, Option<bool>)| {
             let val = if state_str.eq_ignore_ascii_case("PUSHED") { 1 } else { 0 };
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.button_state = val;
             }
             Ok(())

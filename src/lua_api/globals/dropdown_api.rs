@@ -204,7 +204,7 @@ fn register_add_button(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
                 if let Ok(text) = info.get::<mlua::String>("text") {
                     let mut s = state.borrow_mut();
                     let btn_id = btn_handle.id;
-                    if let Some(btn_frame) = s.widgets.get_mut(btn_id) {
+                    if let Some(btn_frame) = s.widgets.get_mut_visual(btn_id) {
                         btn_frame.text = Some(text.to_string_lossy().to_string());
                     }
                     s.set_frame_visible(btn_id, true);
@@ -224,7 +224,7 @@ fn register_width_and_text(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
         move |_lua, (frame, width, _padding): (mlua::AnyUserData, f32, Option<f32>)| {
             if let Ok(handle) = frame.borrow::<FrameHandle>() {
                 let mut s = state_w.borrow_mut();
-                if let Some(f) = s.widgets.get_mut(handle.id) {
+                if let Some(f) = s.widgets.get_mut_visual(handle.id) {
                     f.width = width;
                 }
             }
@@ -238,7 +238,7 @@ fn register_width_and_text(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
         move |_lua, (frame, text): (mlua::AnyUserData, Option<String>)| {
             if let Ok(handle) = frame.borrow::<FrameHandle>() {
                 let mut s = state_st.borrow_mut();
-                if let Some(f) = s.widgets.get_mut(handle.id) {
+                if let Some(f) = s.widgets.get_mut_visual(handle.id) {
                     f.text = text;
                 }
             }
@@ -308,7 +308,7 @@ fn register_enable_disable(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     let enable = lua.create_function(move |_lua, frame: mlua::AnyUserData| {
         if let Ok(handle) = frame.borrow::<FrameHandle>() {
             let mut s = state_e.borrow_mut();
-            if let Some(f) = s.widgets.get_mut(handle.id) {
+            if let Some(f) = s.widgets.get_mut_visual(handle.id) {
                 f.attributes.insert(
                     "__dropdown_enabled".to_string(),
                     crate::widget::AttributeValue::Boolean(true),
@@ -323,7 +323,7 @@ fn register_enable_disable(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     let disable = lua.create_function(move |_lua, frame: mlua::AnyUserData| {
         if let Ok(handle) = frame.borrow::<FrameHandle>() {
             let mut s = state_d.borrow_mut();
-            if let Some(f) = s.widgets.get_mut(handle.id) {
+            if let Some(f) = s.widgets.get_mut_visual(handle.id) {
                 f.attributes.insert(
                     "__dropdown_enabled".to_string(),
                     crate::widget::AttributeValue::Boolean(false),
@@ -361,7 +361,7 @@ fn register_toggle_and_close(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result
             if let Ok(list_ud) = lua.globals().get::<mlua::AnyUserData>(list_name.as_str())
                 && let Ok(handle) = list_ud.borrow::<FrameHandle>() {
                     let mut s = state_t.borrow_mut();
-                    if let Some(f) = s.widgets.get_mut(handle.id) {
+                    if let Some(f) = s.widgets.get_mut_visual(handle.id) {
                         f.visible = !f.visible;
                     }
                 }
@@ -422,7 +422,7 @@ fn register_anchor_and_strata(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resul
         move |_lua, (frame, strata): (mlua::AnyUserData, String)| {
             if let Ok(handle) = frame.borrow::<FrameHandle>() {
                 let mut s = state_s.borrow_mut();
-                if let Some(f) = s.widgets.get_mut(handle.id) {
+                if let Some(f) = s.widgets.get_mut_visual(handle.id) {
                     f.frame_strata = match strata.to_uppercase().as_str() {
                         "WORLD" | "BACKGROUND" => FrameStrata::Background,
                         "LOW" => FrameStrata::Low,

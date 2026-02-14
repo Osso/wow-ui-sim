@@ -1,7 +1,7 @@
 //! Global widget registry for tracking all widgets.
 
 use super::Frame;
-use std::cell::Cell;
+use std::cell::RefCell;
 use std::collections::{HashMap, HashSet, VecDeque};
 
 /// Registry of all widgets in the UI.
@@ -11,8 +11,9 @@ pub struct WidgetRegistry {
     widgets: HashMap<u64, Frame>,
     /// Widget IDs by name.
     names: HashMap<String, u64>,
-    /// Set to true when any widget is mutated; cleared by the render loop.
-    render_dirty: Cell<bool>,
+    /// Frame IDs whose visual properties changed since last render.
+    /// Checked and drained by the render loop.
+    render_dirty_ids: RefCell<HashSet<u64>>,
     /// Reverse index: target_id → set of frame IDs anchored to it.
     anchor_dependents: HashMap<u64, HashSet<u64>>,
     /// Frames with `rect_dirty = true`, for fast lookup in `ensure_layout_rects`.
@@ -50,20 +51,38 @@ impl WidgetRegistry {
         self.widgets.get(&id)
     }
 
-    /// Get a mutable widget by ID.
+    /// Get a mutable widget by ID. Does not mark dirty.
     ///
-    /// Does NOT automatically mark the registry as render-dirty. Callers that
-    /// change visual properties (texture, alpha, text, visibility, size) must
-    /// call `mark_render_dirty()` explicitly. This avoids false invalidation
-    /// from read-like access (e.g. OnUpdate handlers that inspect but don't
-    /// change widget state).
+    /// Use for non-visual mutations (event registration, attributes, input
+    /// config, animation offsets, layout cache, parent-child bookkeeping).
+    /// For visual mutations, use `get_mut_visual()` instead.
     pub fn get_mut(&mut self, id: u64) -> Option<&mut Frame> {
         self.widgets.get_mut(&id)
     }
 
-    /// Explicitly mark the registry as render-dirty.
-    pub fn mark_render_dirty(&self) {
-        self.render_dirty.set(true);
+    /// Get a mutable widget by ID and mark it visually dirty.
+    ///
+    /// Use when changing visual properties: texture, text, alpha, color,
+    /// visibility, size, anchors, draw_layer, frame_strata, backdrop, etc.
+    pub fn get_mut_visual(&mut self, id: u64) -> Option<&mut Frame> {
+        self.render_dirty_ids.borrow_mut().insert(id);
+        self.widgets.get_mut(&id)
+    }
+
+    /// Mark a frame as visually dirty (needs re-render).
+    ///
+    /// Call after changing visual properties: texture, text, alpha, color,
+    /// visibility, size, anchors, tex_coords, atlas, blend_mode, vertex_color,
+    /// nine_slice, backdrop, rotation, desaturated.
+    pub fn mark_visual_dirty(&self, id: u64) {
+        self.render_dirty_ids.borrow_mut().insert(id);
+    }
+
+    /// Mark all frames as visually dirty (e.g. after screen resize).
+    pub fn mark_all_visual_dirty(&self) {
+        // Insert a sentinel value that consumers check via has_dirty_frames().
+        // Avoids iterating all 50K frames just to insert their IDs.
+        self.render_dirty_ids.borrow_mut().insert(u64::MAX);
     }
 
     /// Get a widget by name.
@@ -103,22 +122,30 @@ impl WidgetRegistry {
             frame.layout_rect = None;
             self.pending_layout_ids.insert(id);
         }
-        self.render_dirty.set(true);
+        self.mark_all_visual_dirty();
     }
 
-    /// Check and clear the render-dirty flag. Returns true if any widget was mutated.
+    /// Check whether any frames have been visually dirtied since last drain.
+    pub fn has_dirty_frames(&self) -> bool {
+        !self.render_dirty_ids.borrow().is_empty()
+    }
+
+    /// Drain and return the set of visually dirty frame IDs. Clears the set.
     pub fn take_render_dirty(&self) -> bool {
-        self.render_dirty.replace(false)
+        let mut ids = self.render_dirty_ids.borrow_mut();
+        let had_any = !ids.is_empty();
+        ids.clear();
+        had_any
     }
 
-    /// Set a widget's visibility flag and mark render-dirty.
+    /// Set a widget's visibility flag and mark it visually dirty.
     ///
     /// Prefer `SimState::set_frame_visible` which also updates the OnUpdate cache.
     pub fn set_visible(&mut self, id: u64, visible: bool) {
         if let Some(f) = self.widgets.get_mut(&id) {
             if f.visible != visible {
                 f.visible = visible;
-                self.render_dirty.set(true);
+                self.mark_visual_dirty(id);
             }
         }
     }

@@ -19,7 +19,7 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 
         // Apply the 5th argument (frame ID) if provided
         if let Some(frame_lua_id) = id {
-            if let Some(frame) = state_clone.borrow_mut().widgets.get_mut(frame_id) {
+            if let Some(frame) = state_clone.borrow_mut().widgets.get_mut_visual(frame_id) {
                 frame.user_id = frame_lua_id;
             }
         }
@@ -216,7 +216,7 @@ fn register_new_frame(
         // Inherit strata, level, and effective_alpha from parent.
         let parent_props = state.widgets.get(pid).map(|p| (p.frame_strata, p.frame_level, p.effective_alpha));
         if let Some((parent_strata, parent_level, parent_eff)) = parent_props
-            && let Some(f) = state.widgets.get_mut(frame_id) {
+            && let Some(f) = state.widgets.get_mut_visual(frame_id) {
                 f.frame_strata = parent_strata;
                 f.frame_level = parent_level + 1;
                 f.effective_alpha = parent_eff * f.alpha;
@@ -297,7 +297,7 @@ fn create_widget_type_defaults(state: &mut SimState, frame_id: u64, widget_type:
             create_slider_defaults(state, frame_id);
         }
         WidgetType::EditBox => {
-            if let Some(frame) = state.widgets.get_mut(frame_id) {
+            if let Some(frame) = state.widgets.get_mut_visual(frame_id) {
                 frame.mouse_enabled = true;
             }
         }
@@ -307,7 +307,7 @@ fn create_widget_type_defaults(state: &mut SimState, frame_id: u64, widget_type:
 
 /// Create default texture slots and text fontstring for Button/CheckButton.
 fn create_button_defaults(state: &mut SimState, frame_id: u64) {
-    if let Some(frame) = state.widgets.get_mut(frame_id) {
+    if let Some(frame) = state.widgets.get_mut_visual(frame_id) {
         frame.mouse_enabled = true;
     }
 
@@ -318,7 +318,7 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
 
     // Button textures fill the parent by default (SetAllPoints equivalent)
     for tex_id in [normal_id, pushed_id, highlight_id, disabled_id] {
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
+        if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
             add_fill_parent_anchors(tex, frame_id);
         }
     }
@@ -326,13 +326,13 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
     // Button state textures render below child regions (icon, etc.) in WoW.
     // Set to Background layer so they don't occlude Border/Artwork children.
     for tex_id in [normal_id, pushed_id, disabled_id] {
-        if let Some(tex) = state.widgets.get_mut(tex_id) {
+        if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
             tex.draw_layer = crate::widget::DrawLayer::Background;
         }
     }
 
     // HighlightTexture is only visible on hover in WoW, uses additive blending
-    if let Some(highlight) = state.widgets.get_mut(highlight_id) {
+    if let Some(highlight) = state.widgets.get_mut_visual(highlight_id) {
         highlight.draw_layer = crate::widget::DrawLayer::Highlight;
         highlight.visible = false;
         highlight.blend_mode = crate::render::BlendMode::Additive;
@@ -342,12 +342,12 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
     // button's width and renders at Overlay layer (above child textures
     // like three-slice Background-layer Left/Right/Center).
     let text_id = create_child_widget(state, WidgetType::FontString, frame_id);
-    if let Some(text_fs) = state.widgets.get_mut(text_id) {
+    if let Some(text_fs) = state.widgets.get_mut_visual(text_id) {
         add_fill_parent_anchors(text_fs, frame_id);
         text_fs.draw_layer = crate::widget::DrawLayer::Overlay;
     }
 
-    if let Some(btn) = state.widgets.get_mut(frame_id) {
+    if let Some(btn) = state.widgets.get_mut_visual(frame_id) {
         btn.children_keys.insert("NormalTexture".to_string(), normal_id);
         btn.children_keys.insert("PushedTexture".to_string(), pushed_id);
         btn.children_keys.insert("HighlightTexture".to_string(), highlight_id);
@@ -359,7 +359,7 @@ fn create_button_defaults(state: &mut SimState, frame_id: u64) {
 /// Create default tooltip state and set TOOLTIP strata.
 fn create_tooltip_defaults(state: &mut SimState, frame_id: u64) {
     state.tooltips.insert(frame_id, crate::lua_api::tooltip::TooltipData::default());
-    if let Some(frame) = state.widgets.get_mut(frame_id) {
+    if let Some(frame) = state.widgets.get_mut_visual(frame_id) {
         frame.frame_strata = crate::widget::FrameStrata::Tooltip;
         frame.has_fixed_frame_strata = true;
     }
@@ -372,7 +372,7 @@ fn create_slider_defaults(state: &mut SimState, frame_id: u64) {
     let text_id = create_child_widget(state, WidgetType::FontString, frame_id);
     let thumb_id = create_child_widget(state, WidgetType::Texture, frame_id);
 
-    if let Some(slider) = state.widgets.get_mut(frame_id) {
+    if let Some(slider) = state.widgets.get_mut_visual(frame_id) {
         slider.children_keys.insert("Low".to_string(), low_id);
         slider.children_keys.insert("High".to_string(), high_id);
         slider.children_keys.insert("Text".to_string(), text_id);
@@ -405,10 +405,10 @@ fn add_fill_parent_anchors(frame: &mut Frame, parent_id: u64) {
 fn orphan_old_frame(widgets: &mut crate::widget::WidgetRegistry, old_id: u64) {
     if let Some(old_frame) = widgets.get(old_id)
         && let Some(old_parent_id) = old_frame.parent_id
-            && let Some(old_parent) = widgets.get_mut(old_parent_id) {
+            && let Some(old_parent) = widgets.get_mut_visual(old_parent_id) {
                 old_parent.children.retain(|&c| c != old_id);
             }
-    if let Some(old_frame) = widgets.get_mut(old_id) {
+    if let Some(old_frame) = widgets.get_mut_visual(old_id) {
         old_frame.visible = false;
     }
 }
@@ -427,7 +427,7 @@ fn migrate_children_to_new_frame(
         .map(|f| f.children.clone())
         .unwrap_or_default();
     for &child_id in &children {
-        if let Some(child) = widgets.get_mut(child_id) {
+        if let Some(child) = widgets.get_mut_visual(child_id) {
             child.parent_id = Some(new_id);
         }
     }
@@ -435,13 +435,13 @@ fn migrate_children_to_new_frame(
     let keys: std::collections::HashMap<String, u64> = widgets.get(old_id)
         .map(|f| f.children_keys.clone())
         .unwrap_or_default();
-    if let Some(new_frame) = widgets.get_mut(new_id) {
+    if let Some(new_frame) = widgets.get_mut_visual(new_id) {
         new_frame.children.extend(&children);
         for (k, v) in keys {
             new_frame.children_keys.entry(k).or_insert(v);
         }
     }
-    if let Some(old_frame) = widgets.get_mut(old_id) {
+    if let Some(old_frame) = widgets.get_mut_visual(old_id) {
         old_frame.children.clear();
         old_frame.children_keys.clear();
     }
@@ -456,7 +456,7 @@ fn create_child_widget(state: &mut SimState, widget_type: WidgetType, parent_id:
     // Inherit strata and level from parent
     let parent_props = state.widgets.get(parent_id).map(|p| (p.frame_strata, p.frame_level));
     if let Some((parent_strata, parent_level)) = parent_props {
-        if let Some(f) = state.widgets.get_mut(child_id) {
+        if let Some(f) = state.widgets.get_mut_visual(child_id) {
             f.frame_strata = parent_strata;
             f.frame_level = parent_level + 1;
         }
@@ -470,14 +470,14 @@ fn create_child_widget(state: &mut SimState, widget_type: WidgetType, parent_id:
 fn create_item_button_intrinsics(state: &mut SimState, frame_id: u64) {
     // icon texture (BORDER layer, fills parent)
     let icon_id = create_child_widget(state, WidgetType::Texture, frame_id);
-    if let Some(tex) = state.widgets.get_mut(icon_id) {
+    if let Some(tex) = state.widgets.get_mut_visual(icon_id) {
         tex.draw_layer = crate::widget::DrawLayer::Border;
         add_fill_parent_anchors(tex, frame_id);
     }
 
     // Count fontstring (ARTWORK layer, hidden, anchored BOTTOMRIGHT)
     let count_id = create_child_widget(state, WidgetType::FontString, frame_id);
-    if let Some(fs) = state.widgets.get_mut(count_id) {
+    if let Some(fs) = state.widgets.get_mut_visual(count_id) {
         fs.draw_layer = crate::widget::DrawLayer::Artwork;
         fs.visible = false;
         fs.justify_h = crate::widget::TextJustify::Right;
@@ -493,7 +493,7 @@ fn create_item_button_intrinsics(state: &mut SimState, frame_id: u64) {
 
     // Stock fontstring (ARTWORK layer, hidden)
     let stock_id = create_child_widget(state, WidgetType::FontString, frame_id);
-    if let Some(fs) = state.widgets.get_mut(stock_id) {
+    if let Some(fs) = state.widgets.get_mut_visual(stock_id) {
         fs.draw_layer = crate::widget::DrawLayer::Artwork;
         fs.visible = false;
     }
@@ -505,7 +505,7 @@ fn create_item_button_intrinsics(state: &mut SimState, frame_id: u64) {
 
     // searchOverlay (OVERLAY layer, hidden, fills parent)
     let search_overlay_id = create_child_widget(state, WidgetType::Texture, frame_id);
-    if let Some(tex) = state.widgets.get_mut(search_overlay_id) {
+    if let Some(tex) = state.widgets.get_mut_visual(search_overlay_id) {
         tex.draw_layer = crate::widget::DrawLayer::Overlay;
         tex.visible = false;
         add_fill_parent_anchors(tex, frame_id);
@@ -514,7 +514,7 @@ fn create_item_button_intrinsics(state: &mut SimState, frame_id: u64) {
     // ItemContextOverlay (OVERLAY layer, hidden)
     let context_overlay_id = create_hidden_overlay(state, frame_id);
 
-    if let Some(btn) = state.widgets.get_mut(frame_id) {
+    if let Some(btn) = state.widgets.get_mut_visual(frame_id) {
         btn.children_keys.insert("icon".to_string(), icon_id);
         btn.children_keys.insert("Count".to_string(), count_id);
         btn.children_keys.insert("Stock".to_string(), stock_id);
@@ -552,7 +552,7 @@ fn apply_parent_array_from_template(lua: &Lua, template_names: &str, _frame_id: 
 /// Create a hidden overlay texture child (OVERLAY layer, hidden, centered on parent).
 fn create_hidden_overlay(state: &mut SimState, parent_id: u64) -> u64 {
     let id = create_child_widget(state, WidgetType::Texture, parent_id);
-    if let Some(tex) = state.widgets.get_mut(id) {
+    if let Some(tex) = state.widgets.get_mut_visual(id) {
         tex.draw_layer = crate::widget::DrawLayer::Overlay;
         tex.visible = false;
         tex.anchors.push(crate::widget::Anchor {

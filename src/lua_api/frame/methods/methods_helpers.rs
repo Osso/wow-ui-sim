@@ -143,7 +143,7 @@ pub fn get_or_create_button_texture(
     if let Some(tex_id) = existing_tex_id {
         let needs_anchors = state.widgets.get(tex_id).map(|t| t.anchors.is_empty()).unwrap_or(false);
         if needs_anchors
-            && let Some(tex) = state.widgets.get_mut(tex_id) {
+            && let Some(tex) = state.widgets.get_mut_visual(tex_id) {
                 set_all_points_anchors(tex, button_id);
             }
         return tex_id;
@@ -161,7 +161,7 @@ pub fn get_or_create_button_texture(
     state.widgets.register(texture);
     state.widgets.add_child(button_id, texture_id);
 
-    if let Some(frame) = state.widgets.get_mut(button_id) {
+    if let Some(frame) = state.widgets.get_mut_visual(button_id) {
         frame.children_keys.insert(key.to_string(), texture_id);
     }
 

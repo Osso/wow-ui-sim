@@ -110,7 +110,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetSize(width, height)
     methods.add_method("SetSize", |_, this, (width, height): (f32, f32)| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.set_size(width, height);
         }
         state.widgets.mark_rect_dirty_subtree(this.id);
@@ -121,7 +121,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetWidth(width)
     methods.add_method("SetWidth", |_, this, width: f32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.width = width;
         }
         state.widgets.mark_rect_dirty_subtree(this.id);
@@ -132,7 +132,7 @@ fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     // SetHeight(height)
     methods.add_method("SetHeight", |_, this, height: f32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.height = height;
         }
         state.widgets.mark_rect_dirty_subtree(this.id);
@@ -377,7 +377,7 @@ fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
                 .and_then(|pid| state.widgets.get(pid))
                 .map(|p| p.effective_alpha)
                 .unwrap_or(1.0);
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.alpha = clamped;
             }
             state.widgets.propagate_effective_alpha(this.id, parent_eff);
@@ -404,7 +404,7 @@ fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .and_then(|pid| state.widgets.get(pid))
             .map(|p| p.effective_alpha)
             .unwrap_or(1.0);
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.alpha = new_alpha;
         }
         state.widgets.propagate_effective_alpha(this.id, parent_eff);
@@ -419,7 +419,7 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let Some(s) = crate::widget::FrameStrata::from_str(&strata) else {
             return Ok(());
         };
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.frame_strata = s;
             frame.has_fixed_frame_strata = true;
         }
@@ -427,7 +427,7 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
         let mut queue: Vec<u64> = state.widgets.get(this.id)
             .map(|f| f.children.clone()).unwrap_or_default();
         while let Some(child_id) = queue.pop() {
-            let Some(child) = state.widgets.get_mut(child_id) else { continue };
+            let Some(child) = state.widgets.get_mut_visual(child_id) else { continue };
             if child.has_fixed_frame_strata { continue; }
             child.frame_strata = s;
             queue.extend(child.children.iter().copied());
@@ -450,7 +450,7 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("SetFixedFrameStrata", |_, this, fixed: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.has_fixed_frame_strata = fixed;
         }
         Ok(())
@@ -471,7 +471,7 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetFrameLevel", |_, this, level: i32| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.frame_level = level;
             frame.has_fixed_frame_level = true;
         }
@@ -495,7 +495,7 @@ fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("SetFixedFrameLevel", |_, this, fixed: bool| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.has_fixed_frame_level = fixed;
         }
         Ok(())
@@ -646,7 +646,7 @@ fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             .and_then(|pid| state.widgets.get(pid))
             .map(|p| p.effective_scale)
             .unwrap_or(1.0);
-        if let Some(f) = state.widgets.get_mut(this.id) {
+        if let Some(f) = state.widgets.get_mut_visual(this.id) {
             f.scale = scale;
         }
         state.widgets.propagate_effective_scale(this.id, parent_eff_scale);

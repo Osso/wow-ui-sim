@@ -38,7 +38,7 @@ fn add_model_transform_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             _ => 0.0,
         };
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.rotation = rad_f64 as f32;
         }
         Ok(())

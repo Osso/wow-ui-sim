@@ -90,7 +90,7 @@ fn measure_text_width(lua: &mlua::Lua, this: &FrameHandle) -> mlua::Result<f64> 
 fn add_word_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetWordWrap", |_, this, wrap: bool| {
         if let Ok(mut s) = this.state.try_borrow_mut()
-            && let Some(frame) = s.widgets.get_mut(this.id) {
+            && let Some(frame) = s.widgets.get_mut_visual(this.id) {
                 frame.word_wrap = wrap;
             }
         Ok(())
@@ -122,7 +122,7 @@ fn add_word_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 
     methods.add_method("SetMaxLines", |_, this, max_lines: i32| {
         if let Ok(mut s) = this.state.try_borrow_mut()
-            && let Some(frame) = s.widgets.get_mut(this.id) {
+            && let Some(frame) = s.widgets.get_mut_visual(this.id) {
                 frame.max_lines = max_lines.max(0) as u32;
             }
         Ok(())
@@ -141,7 +141,7 @@ fn add_word_wrap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_text_height_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetTextHeight", |_, this, height: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.font_size = height as f32;
         }
         Ok(())
@@ -160,7 +160,7 @@ fn add_text_height_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
 fn add_text_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetTextScale", |_, this, scale: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.text_scale = scale;
         }
         Ok(())

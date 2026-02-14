@@ -320,7 +320,7 @@ impl WowLuaEnv {
         state.widgets.clear_all_layout_rects();
         for name in &["UIParent", "WorldFrame"] {
             if let Some(id) = state.widgets.get_id_by_name(name)
-                && let Some(frame) = state.widgets.get_mut(id) {
+                && let Some(frame) = state.widgets.get_mut_visual(id) {
                     frame.width = width;
                     frame.height = height;
                 }

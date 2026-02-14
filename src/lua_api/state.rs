@@ -507,7 +507,7 @@ impl SimState {
             return; // Already on top
         }
         let new_level = max_sibling_level + 1;
-        if let Some(f) = self.widgets.get_mut(id) {
+        if let Some(f) = self.widgets.get_mut_visual(id) {
             f.frame_level = new_level;
         }
         crate::lua_api::frame::propagate_strata_level_pub(

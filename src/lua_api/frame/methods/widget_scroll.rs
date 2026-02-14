@@ -29,7 +29,7 @@ fn add_scrollframe_child_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
             _ => None,
         };
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.scroll_child_id = child_id;
         }
         Ok(())
@@ -53,7 +53,7 @@ fn add_scrollframe_child_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
 fn add_scrollframe_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
     methods.add_method("SetHorizontalScroll", |_, this, offset: f64| {
         let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
             frame.scroll_horizontal = offset;
         }
         Ok(())
@@ -65,7 +65,7 @@ fn add_scrollframe_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut
     methods.add_method("SetVerticalScroll", |lua, this, offset: f64| {
         {
             let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
                 frame.scroll_vertical = offset;
             }
         }
