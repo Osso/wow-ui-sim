@@ -1,9 +1,14 @@
 //! Tests for pool_api.rs: CreateFramePool, CreateTexturePool, CreateObjectPool.
+//!
+//! These pool functions are defined in Blizzard's Lua code (Pools.lua in
+//! Blizzard_SharedXMLBase), so the tests need that addon loaded.
 
-use wow_ui_sim::lua_api::WowLuaEnv;
+mod common;
 
-fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("Failed to create Lua environment")
+use common::env_with_shared_xml;
+
+fn env() -> wow_ui_sim::lua_api::WowLuaEnv {
+    env_with_shared_xml()
 }
 
 // ============================================================================
