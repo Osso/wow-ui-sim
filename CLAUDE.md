@@ -105,9 +105,9 @@ Uses **Lua 5.1** via mlua (WoW's Lua version).
 cargo build --bin wow-sim
 
 # Step 2: Run (with timeout — prevents hung processes)
-WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 30 cargo run --bin wow-sim
+WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 90 cargo run --bin wow-sim
 ```
-**Always use `timeout 30` or less** on the run step to prevent hung processes. Never put a timeout on the build step.
+**Always use `timeout 90` or less** on the run step to prevent hung processes. Never put a timeout on the build step.
 
 ### CLI Arguments
 

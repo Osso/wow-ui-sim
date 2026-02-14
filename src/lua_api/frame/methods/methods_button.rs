@@ -442,6 +442,15 @@ fn add_enable_disable_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
 
 /// Update the `__enabled` attribute on a widget.
 fn set_enabled_attribute(state: &mut crate::lua_api::SimState, id: u64, enabled: bool) {
+    // Skip if the value is already set to avoid dirtying the frame on no-op calls
+    // (e.g. LeaveInstanceGroupButton calls SetEnabled every OnUpdate tick).
+    if let Some(frame) = state.widgets.get(id) {
+        if let Some(crate::widget::AttributeValue::Boolean(cur)) = frame.attributes.get("__enabled") {
+            if *cur == enabled {
+                return;
+            }
+        }
+    }
     if let Some(frame) = state.widgets.get_mut_visual(id) {
         frame.attributes.insert(
             "__enabled".to_string(),

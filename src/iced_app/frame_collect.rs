@@ -1,7 +1,6 @@
 //! Frame collection and sorting helpers for rendering.
 
 use crate::widget::{FrameStrata, WidgetType};
-use super::layout::LayoutCache;
 
 /// Frame names excluded from hit testing (full-screen or non-interactive overlays).
 const HIT_TEST_EXCLUDED: &[&str] = &[
@@ -88,10 +87,7 @@ pub fn intra_strata_sort_key(
 /// frames sorted by strata/level/id, excluding non-interactive overlays.
 pub fn collect_sorted_frames(
     registry: &crate::widget::WidgetRegistry,
-    screen_width: f32,
-    screen_height: f32,
     strata_buckets: &Vec<Vec<u64>>,
-    cache: &mut LayoutCache,
 ) -> CollectedFrames {
     let mut frames: Vec<(u64, crate::LayoutRect, f32)> = Vec::new();
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();

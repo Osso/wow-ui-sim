@@ -25,6 +25,18 @@ pub fn register_enum_api(lua: &Lua) -> Result<()> {
     register_misc_enums(lua, &enum_table)?;
 
     globals.set("Enum", enum_table)?;
+
+    // Save enum fields that Blizzard_EnvironmentCleanup will nil out.
+    // In real WoW these survive in the separate secure environment; we
+    // stash them so restore_secure_stubs() can put them back.
+    lua.load(r#"
+        _G.__SavedSecureEnums = {
+            StoreError = Enum.StoreError,
+            VasTransactionPurchaseResult = Enum.VasTransactionPurchaseResult,
+            VasServiceType = Enum.VasServiceType,
+        }
+    "#).exec()?;
+
     Ok(())
 }
 

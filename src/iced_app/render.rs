@@ -279,7 +279,7 @@ pub fn build_quad_batch_with_cache(
     let collected = if let Some(c) = cached_render_list {
         c
     } else {
-        collect_sorted_frames(registry, screen_width, screen_height, strata_buckets, cache)
+        collect_sorted_frames(registry, strata_buckets)
     };
 
     emit_all_frames(
@@ -344,28 +344,19 @@ impl App {
     /// Hover highlights are NOT baked in — they're appended dynamically in
     /// `draw()` so that hover changes don't force a full quad rebuild.
     pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
-        let t0 = std::time::Instant::now();
         let env = self.env.borrow();
         let mut font_sys = self.font_system.borrow_mut();
         // Mutable phase: ensure strata buckets exist, take caches.
         let (strata_buckets, mut cache, cached_render) = {
             let mut state = env.state().borrow_mut();
-            let t_layout = std::time::Instant::now();
             state.ensure_layout_rects();
-            let layout_ms = t_layout.elapsed().as_secs_f32() * 1000.0;
             super::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
-            let t_strata = std::time::Instant::now();
             let _ = state.get_strata_buckets();
-            let strata_ms = t_strata.elapsed().as_secs_f32() * 1000.0;
-            if layout_ms > 1.0 || strata_ms > 1.0 {
-                eprintln!("[perf] layout={layout_ms:.1}ms strata={strata_ms:.1}ms");
-            }
             let buckets = state.strata_buckets.take().unwrap();
             let layout = state.take_layout_cache();
             let render = state.cached_render_list.take();
             (buckets, layout, render)
         };
-        let had_cached_render = cached_render.is_some();
         let state = env.state().borrow();
         let elapsed_secs = state.start_time.elapsed().as_secs_f64();
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
@@ -378,11 +369,6 @@ impl App {
             &mut cache, &strata_buckets,
             cached_render, elapsed_secs,
         );
-        let total_ms = t0.elapsed().as_secs_f32() * 1000.0;
-        if total_ms > 5.0 {
-            eprintln!("[perf] total={total_ms:.1}ms quads={} cached_render={had_cached_render}",
-                batch.quad_count());
-        }
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
         let hittable = build_hittable_rects(&collected, &state.widgets);
         let grid = super::hit_grid::HitGrid::new(hittable, size.width, size.height);

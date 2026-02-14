@@ -85,7 +85,7 @@ fn register_config_mutations(
 }
 
 fn purchase_rank(
-    state: &Rc<RefCell<SimState>>, lua: &Lua, config_id: i32, node_id: u32,
+    state: &Rc<RefCell<SimState>>, lua: &Lua, _config_id: i32, node_id: u32,
 ) -> Result<bool> {
     use crate::traits::TRAIT_NODE_DB;
     let Some(node) = TRAIT_NODE_DB.get(&node_id) else { return Ok(false) };

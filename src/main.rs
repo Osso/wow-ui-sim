@@ -181,22 +181,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     match args.command {
         Some(Commands::DumpTree { filter, filter_key, visible_only, width, height }) => {
-            fire_startup_events(&env);
-            env.apply_post_event_workarounds();
-            env.state().borrow_mut().widgets.rebuild_anchor_index();
-            process_pending_timers(&env);
-            fire_one_on_update_tick(&env);
-            let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
-            run_debug_script(&env);
-            if let Some(code) = &exec_lua
-                && let Err(e) = env.exec(code) {
-                    eprintln!("[exec-lua] error: {e}");
-                }
-            std::thread::sleep(std::time::Duration::from_secs(2));
-            run_extra_update_ticks(&env, 3);
-            apply_delay(args.delay);
-            let state = env.state().borrow();
-            wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only, width as f32, height as f32);
+            run_dump_tree(&env, filter, filter_key, visible_only, width, height, args.delay, exec_lua.as_deref());
         }
         Some(Commands::Screenshot { output, width, height, filter, crop, dump_tree }) => {
             run_screenshot(&env, &font_system, output, width, height, filter, crop, args.delay, exec_lua.as_deref(), dump_tree);
@@ -639,6 +624,35 @@ fn build_screenshot_batch(
     (batch, glyph_atlas)
 }
 
+/// Run startup events, timers, and settle the UI state for headless subcommands.
+fn run_headless_startup(env: &WowLuaEnv) {
+    fire_startup_events(env);
+    env.apply_post_event_workarounds();
+    env.state().borrow_mut().widgets.rebuild_anchor_index();
+    process_pending_timers(env);
+    fire_one_on_update_tick(env);
+    let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+    run_debug_script(env);
+    std::thread::sleep(std::time::Duration::from_secs(2));
+    run_extra_update_ticks(env, 3);
+}
+
+/// Load UI and dump the frame tree to stdout.
+#[allow(clippy::too_many_arguments)]
+fn run_dump_tree(
+    env: &WowLuaEnv, filter: Option<String>, filter_key: Option<String>,
+    visible_only: bool, width: u32, height: u32, delay: Option<u64>, exec_lua: Option<&str>,
+) {
+    run_headless_startup(env);
+    if let Some(code) = exec_lua
+        && let Err(e) = env.exec(code) {
+            eprintln!("[exec-lua] error: {e}");
+        }
+    apply_delay(delay);
+    let state = env.state().borrow();
+    wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only, width as f32, height as f32);
+}
+
 /// Render a headless screenshot.
 #[allow(clippy::too_many_arguments)]
 fn run_screenshot(
@@ -656,20 +670,12 @@ fn run_screenshot(
     use wow_ui_sim::render::headless::render_to_image;
 
     env.set_screen_size(width as f32, height as f32);
-    fire_startup_events(env);
-    env.apply_post_event_workarounds();
-    env.state().borrow_mut().widgets.rebuild_anchor_index();
-    process_pending_timers(env);
-    fire_one_on_update_tick(env);
-    let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
+    run_headless_startup(env);
     debug_show_game_menu(env);
-    run_debug_script(env);
     if let Some(code) = exec_lua
         && let Err(e) = env.exec(code) {
             eprintln!("[exec-lua] error: {e}");
         }
-    std::thread::sleep(std::time::Duration::from_secs(2));
-    run_extra_update_ticks(env, 3);
     apply_delay(delay);
     let (batch, glyph_atlas) = build_screenshot_batch(env, font_system, width, height, filter.as_deref());
     if let Some(dump_filter) = &dump_tree {
@@ -698,7 +704,6 @@ fn run_screenshot(
     eprintln!("Saved {}x{} screenshot to {}", img.width(), img.height(), output.with_extension("webp").display());
 }
 
-/// Save screenshot image as lossy WebP (quality 15). Extension is forced to .webp.
 fn save_screenshot(img: &image::RgbaImage, output: &std::path::Path) {
     let output = output.with_extension("webp");
     let encoder = webp::Encoder::from_rgba(img.as_raw(), img.width(), img.height());
@@ -715,15 +720,7 @@ fn run_dump_texture(
     output: PathBuf, filter: Option<String>, frame_filter: Option<String>,
 ) {
     env.set_screen_size(1600.0, 1200.0);
-    fire_startup_events(env);
-    env.apply_post_event_workarounds();
-    env.state().borrow_mut().widgets.rebuild_anchor_index();
-    process_pending_timers(env);
-    fire_one_on_update_tick(env);
-    let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(env.lua());
-    run_debug_script(env);
-    std::thread::sleep(std::time::Duration::from_secs(2));
-    run_extra_update_ticks(env, 3);
+    run_headless_startup(env);
     let (batch, _) = build_screenshot_batch(env, font_system, 1600, 1200, frame_filter.as_deref());
     eprintln!("QuadBatch: {} quads, {} tex requests", batch.quad_count(), batch.texture_requests.len());
     let mut tex_mgr = create_texture_manager();

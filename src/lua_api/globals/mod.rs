@@ -92,6 +92,20 @@ pub fn restore_secure_stubs(env: &super::WowLuaEnv) {
     let lua = env.lua();
     lua.load(r#"
         local noop_mt = { __index = function() return function() end end }
+
+        -- Restore Enum fields that EnvironmentCleanup nils out.
+        -- In real WoW, secure code runs in a separate env via setfenv so
+        -- EnvironmentCleanup only affects the addon env. We have one env,
+        -- so we save and restore the fields we need.
+        if Enum then
+            local saved = _G.__SavedSecureEnums
+            if saved then
+                for k, v in pairs(saved) do
+                    Enum[k] = Enum[k] or v
+                end
+            end
+        end
+
         C_WowTokenSecure = C_WowTokenSecure or setmetatable({}, noop_mt)
         if not C_PingSecure then
             -- Restore from stored callbacks so post-init calls still work
