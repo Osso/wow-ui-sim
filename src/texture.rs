@@ -132,7 +132,7 @@ impl TextureManager {
     }
 
     /// Resolve a WoW texture path to a file system path.
-    fn resolve_path(&self, normalized_path: &str) -> Option<PathBuf> {
+    pub fn resolve_path(&self, normalized_path: &str) -> Option<PathBuf> {
         // Handle addon textures: Interface/AddOns/AddonName/path/texture
         if let Some(addon_relative) = normalized_path
             .strip_prefix("Interface/AddOns/")
@@ -238,7 +238,7 @@ impl TextureManager {
 }
 
 /// Normalize a WoW texture path.
-fn normalize_wow_path(path: &str) -> String {
+pub fn normalize_wow_path(path: &str) -> String {
     // Replace backslashes with forward slashes
     let normalized = path.replace('\\', "/");
     // Remove file extension if present

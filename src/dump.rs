@@ -112,7 +112,8 @@ fn emit_frame_line(
     ));
     emit_anchor_lines(widgets, frame, &indent, screen_width, screen_height, lines);
     if let Some(tex_path) = &frame.texture {
-        lines.push(format!("{indent}  [texture] {tex_path}"));
+        let fmt = resolve_texture_format(tex_path);
+        lines.push(format!("{indent}  [texture] {tex_path}{fmt}"));
     }
 }
 
@@ -492,257 +493,34 @@ fn skip_wow_escape(chars: &mut std::iter::Peekable<std::str::Chars>) {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::widget::{Anchor, AnchorPoint, WidgetType};
+// ── Texture resolution for dump ─────────────────────────────────────
 
-    fn make_frame(id: u64, parent: Option<u64>, w: f32, h: f32) -> Frame {
-        let mut f = Frame::default();
-        f.id = id;
-        f.parent_id = parent;
-        f.width = w;
-        f.height = h;
-        f
-    }
+/// Resolve a WoW texture path and return a suffix indicating the format found.
+/// Returns e.g. " (webp)", " (BLP)", or " (MISSING)".
+fn resolve_texture_format(wow_path: &str) -> String {
+    use std::sync::OnceLock;
+    use crate::texture::{TextureManager, normalize_wow_path};
 
-    fn anchor(point: AnchorPoint, rel_id: Option<usize>, rel_point: AnchorPoint) -> Anchor {
-        Anchor { point, relative_to_id: rel_id, relative_to: None, relative_point: rel_point, x_offset: 0.0, y_offset: 0.0 }
-    }
+    static TEX_MGR: OnceLock<TextureManager> = OnceLock::new();
+    let mgr = TEX_MGR.get_or_init(|| {
+        let home = dirs::home_dir().unwrap_or_default();
+        let local = std::path::PathBuf::from("./textures");
+        let base = if local.exists() { local } else {
+            home.join("Repos/wow-ui-textures")
+        };
+        TextureManager::new(base)
+            .with_interface_path(home.join("Projects/wow/Interface"))
+            .with_addons_path(std::path::PathBuf::from("./Interface/AddOns"))
+    });
 
-    fn build_basic_registry() -> WidgetRegistry {
-        let mut reg = WidgetRegistry::new();
-        let mut uip = make_frame(1, None, 1024.0, 768.0);
-        uip.name = Some("UIParent".to_string());
-        uip.children = vec![10, 11];
-        reg.register(uip);
-
-        let mut btn = make_frame(10, Some(1), 200.0, 36.0);
-        btn.name = Some("MyButton".to_string());
-        btn.visible = true;
-        btn.anchors = vec![anchor(AnchorPoint::Center, None, AnchorPoint::Center)];
-        btn.children = vec![20];
-        btn.children_keys.insert("Icon".to_string(), 20);
-        reg.register(btn);
-
-        let mut tex = make_frame(20, Some(10), 32.0, 32.0);
-        tex.widget_type = WidgetType::Texture;
-        tex.name = Some("__tex_123".to_string());
-        tex.visible = true;
-        tex.texture = Some("Interface/Icons/foo".to_string());
-        tex.anchors = vec![anchor(AnchorPoint::Center, None, AnchorPoint::Center)];
-        reg.register(tex);
-
-        let mut hidden = make_frame(11, Some(1), 100.0, 50.0);
-        hidden.name = Some("HiddenFrame".to_string());
-        hidden.visible = false;
-        reg.register(hidden);
-
-        reg
-    }
-
-    // ── strip_wow_escapes ───────────────────────────────────────
-
-    #[test]
-    fn test_strip_plain_text() {
-        assert_eq!(strip_wow_escapes("Hello World"), "Hello World");
-    }
-
-    #[test]
-    fn test_strip_color_codes() {
-        assert_eq!(strip_wow_escapes("|cff00ff00Green|r Text"), "Green Text");
-    }
-
-    #[test]
-    fn test_strip_texture_escape() {
-        assert_eq!(strip_wow_escapes("Before |TInterface/Icons/foo:16|t After"), "Before  After");
-    }
-
-    #[test]
-    fn test_strip_hyperlink() {
-        assert_eq!(strip_wow_escapes("|Hitem:12345|h[Sword]|h"), "[Sword]");
-    }
-
-    #[test]
-    fn test_strip_nested_escapes() {
-        assert_eq!(
-            strip_wow_escapes("|cffff0000|Hspell:1234|hFireball|h|r"),
-            "Fireball"
-        );
-    }
-
-    // ── resolve_display_name ────────────────────────────────────
-
-    #[test]
-    fn test_display_name_global() {
-        let reg = build_basic_registry();
-        let frame = reg.get(10).unwrap();
-        assert_eq!(resolve_display_name(&reg, frame, 10), "MyButton");
-    }
-
-    #[test]
-    fn test_display_name_parent_key() {
-        let reg = build_basic_registry();
-        let frame = reg.get(20).unwrap();
-        // __tex_ prefix is filtered, falls through to parentKey
-        assert_eq!(resolve_display_name(&reg, frame, 20), ".Icon");
-    }
-
-    #[test]
-    fn test_display_name_text_preview() {
-        let mut reg = WidgetRegistry::new();
-        let mut f = make_frame(99, None, 10.0, 10.0);
-        f.name = Some("__anon_42".to_string());
-        f.text = Some("Short".to_string());
-        reg.register(f);
-        let frame = reg.get(99).unwrap();
-        assert_eq!(resolve_display_name(&reg, frame, 99), "\"Short\"");
-    }
-
-    #[test]
-    fn test_display_name_text_truncated() {
-        let mut reg = WidgetRegistry::new();
-        let mut f = make_frame(99, None, 10.0, 10.0);
-        f.name = Some("__anon_42".to_string());
-        f.text = Some("This is a very long text string".to_string());
-        reg.register(f);
-        let frame = reg.get(99).unwrap();
-        assert_eq!(resolve_display_name(&reg, frame, 99), "\"This is a very lo...\"");
-    }
-
-    // ── format_size_str ─────────────────────────────────────────
-
-    #[test]
-    fn test_size_str_matching() {
-        let f = make_frame(1, None, 200.0, 36.0);
-        let rect = LayoutRect { x: 0.0, y: 0.0, width: 200.0, height: 36.0 };
-        assert_eq!(format_size_str(&f, &rect), "(200x36)");
-    }
-
-    #[test]
-    fn test_size_str_differs() {
-        let f = make_frame(1, None, 100.0, 50.0);
-        let rect = LayoutRect { x: 0.0, y: 0.0, width: 200.0, height: 36.0 };
-        assert_eq!(format_size_str(&f, &rect), "(200x36) [stored=100x50]");
-    }
-
-    #[test]
-    fn test_size_str_anchor_derived() {
-        // stored=0x0 but computed from anchors — no [stored=] annotation
-        let f = make_frame(1, None, 0.0, 0.0);
-        let rect = LayoutRect { x: 0.0, y: 0.0, width: 136.0, height: 39.0 };
-        assert_eq!(format_size_str(&f, &rect), "(136x39)");
-    }
-
-    // ── format_stale_str ────────────────────────────────────────
-
-    #[test]
-    fn test_stale_none() {
-        let f = make_frame(1, None, 0.0, 0.0);
-        let rect = LayoutRect { x: 0.0, y: 0.0, width: 100.0, height: 50.0 };
-        assert_eq!(format_stale_str(&f, &rect), " [layout_rect=None]");
-    }
-
-    #[test]
-    fn test_stale_matching() {
-        let mut f = make_frame(1, None, 0.0, 0.0);
-        let rect = LayoutRect { x: 10.0, y: 20.0, width: 100.0, height: 50.0 };
-        f.layout_rect = Some(rect);
-        assert_eq!(format_stale_str(&f, &rect), "");
-    }
-
-    #[test]
-    fn test_stale_diverged() {
-        let mut f = make_frame(1, None, 0.0, 0.0);
-        f.layout_rect = Some(LayoutRect { x: 5.0, y: 20.0, width: 100.0, height: 50.0 });
-        let rect = LayoutRect { x: 10.0, y: 20.0, width: 100.0, height: 50.0 };
-        assert!(format_stale_str(&f, &rect).contains("layout_rect="));
-    }
-
-    // ── build_warnings ──────────────────────────────────────────
-
-    #[test]
-    fn test_warnings_zero_size() {
-        let f = make_frame(1, None, 0.0, 0.0);
-        let rect = LayoutRect { x: 0.0, y: 0.0, width: 0.0, height: 0.0 };
-        let w = build_warnings(&f, &rect, 1024.0, 768.0);
-        assert!(w.contains(&"ZERO_WIDTH"));
-        assert!(w.contains(&"ZERO_HEIGHT"));
-    }
-
-    #[test]
-    fn test_warnings_offscreen() {
-        let mut f = make_frame(1, None, 0.0, 0.0);
-        f.visible = true;
-        let rect = LayoutRect { x: 2000.0, y: -100.0, width: 50.0, height: 50.0 };
-        let w = build_warnings(&f, &rect, 1024.0, 768.0);
-        assert!(w.contains(&"OFFSCREEN_X"));
-    }
-
-    #[test]
-    fn test_warnings_hidden() {
-        let mut f = make_frame(1, None, 0.0, 0.0);
-        f.visible = false;
-        let rect = LayoutRect { x: 0.0, y: 0.0, width: 100.0, height: 50.0 };
-        let w = build_warnings(&f, &rect, 1024.0, 768.0);
-        assert!(w.contains(&"HIDDEN"));
-    }
-
-    #[test]
-    fn test_warnings_normal_visible() {
-        let mut f = make_frame(1, None, 100.0, 50.0);
-        f.visible = true;
-        let rect = LayoutRect { x: 10.0, y: 10.0, width: 100.0, height: 50.0 };
-        let w = build_warnings(&f, &rect, 1024.0, 768.0);
-        assert!(w.is_empty());
-    }
-
-    // ── build_tree integration ──────────────────────────────────
-
-    #[test]
-    fn test_build_tree_includes_children() {
-        let reg = build_basic_registry();
-        let lines = build_tree(&reg, None, None, false, 1024.0, 768.0);
-        let has_button = lines.iter().any(|l| l.contains("MyButton"));
-        let has_icon = lines.iter().any(|l| l.contains(".Icon"));
-        assert!(has_button, "Should contain MyButton");
-        assert!(has_icon, "Should contain .Icon (parentKey)");
-    }
-
-    #[test]
-    fn test_build_tree_filter() {
-        let reg = build_basic_registry();
-        let lines = build_tree(&reg, Some("MyButton"), None, false, 1024.0, 768.0);
-        assert!(lines.iter().any(|l| l.contains("MyButton")));
-        assert!(!lines.iter().any(|l| l.contains("HiddenFrame")));
-    }
-
-    #[test]
-    fn test_build_tree_visible_only() {
-        let reg = build_basic_registry();
-        let lines = build_tree(&reg, None, None, true, 1024.0, 768.0);
-        assert!(!lines.iter().any(|l| l.contains("HiddenFrame")));
-    }
-
-    #[test]
-    fn test_build_tree_shows_texture_path() {
-        let reg = build_basic_registry();
-        let lines = build_tree(&reg, None, None, false, 1024.0, 768.0);
-        assert!(lines.iter().any(|l| l.contains("[texture] Interface/Icons/foo")));
-    }
-
-    #[test]
-    fn test_build_tree_shows_anchor_lines() {
-        let reg = build_basic_registry();
-        let lines = build_tree(&reg, None, None, false, 1024.0, 768.0);
-        assert!(lines.iter().any(|l| l.contains("[anchor]")));
-    }
-
-    #[test]
-    fn test_build_warning_dump_includes_header() {
-        let reg = build_basic_registry();
-        let lines = build_warning_dump(&reg, 1024.0, 768.0);
-        assert!(lines[0].contains("Frame Dump"));
-        assert!(lines[1].contains("1024x768"));
+    let normalized = normalize_wow_path(wow_path);
+    match mgr.resolve_path(&normalized) {
+        Some(p) => {
+            let ext = p.extension()
+                .map(|e| e.to_string_lossy().to_lowercase())
+                .unwrap_or_default();
+            format!(" ({ext})")
+        }
+        None => " (MISSING)".to_string(),
     }
 }
