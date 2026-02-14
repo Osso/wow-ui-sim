@@ -262,15 +262,23 @@ pub fn compute_frame_rect(
 }
 
 /// Shift a rect so it stays within screen bounds (WoW `clampedToScreen` behavior).
+///
+/// When a frame fits within the screen, it is kept fully on-screen.
+/// When a frame is larger than the screen (e.g. a tall objective tracker in
+/// a small window), the top-left corner is kept on-screen and the frame is
+/// allowed to extend past the bottom/right edges — matching WoW behavior
+/// where oversized frames clip rather than getting pushed to y=0.
 fn clamp_rect_to_screen(rect: &mut LayoutRect, screen_w: f32, screen_h: f32) {
-    if rect.x + rect.width > screen_w {
+    // Pull right/bottom edges on-screen, but only when the frame fits
+    if rect.width <= screen_w && rect.x + rect.width > screen_w {
         rect.x = screen_w - rect.width;
     }
+    if rect.height <= screen_h && rect.y + rect.height > screen_h {
+        rect.y = screen_h - rect.height;
+    }
+    // Top-left always stays on-screen (takes priority)
     if rect.x < 0.0 {
         rect.x = 0.0;
-    }
-    if rect.y + rect.height > screen_h {
-        rect.y = screen_h - rect.height;
     }
     if rect.y < 0.0 {
         rect.y = 0.0;
