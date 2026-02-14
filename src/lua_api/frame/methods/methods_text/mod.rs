@@ -530,39 +530,50 @@ fn apply_font_table_colors(src: &mlua::Table, frame: &mut crate::widget::Frame) 
     }
 }
 
+/// Apply SetTextColor for SimpleHTML typed text styles.
+fn set_text_color_html(this: &FrameHandle, args: &[Value], type_str: String) {
+    let r = val_to_f32(args.get(1), 1.0);
+    let g = val_to_f32(args.get(2), 1.0);
+    let b = val_to_f32(args.get(3), 1.0);
+    let a = val_to_f32(args.get(4), 1.0);
+    let mut state = this.state.borrow_mut();
+    if let Some(data) = state.simple_htmls.get_mut(&this.id) {
+        let style = data.text_styles.entry(type_str).or_insert_with(TextStyle::default);
+        style.text_color = (r, g, b, a);
+    }
+}
+
+/// Apply SetTextColor for standard FontString/Frame widgets.
+fn set_text_color_standard(this: &FrameHandle, args: &[Value]) {
+    let r = val_to_f32(args.first(), 1.0);
+    let g = val_to_f32(args.get(1), 1.0);
+    let b = val_to_f32(args.get(2), 1.0);
+    let a = val_to_f32(args.get(3), 1.0);
+    let new_color = crate::widget::Color::new(r, g, b, a);
+    let mut state = this.state.borrow_mut();
+    let unchanged = state.widgets.get(this.id)
+        .is_some_and(|f| f.text_color == new_color);
+    if !unchanged {
+        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+            frame.text_color = new_color;
+        }
+    }
+}
+
 /// SetTextColor, GetTextColor.
 fn add_text_color_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetTextColor([textType,] r, g, b, a) - for FontString or SimpleHTML widgets
     methods.add_method("SetTextColor", |_, this, args: mlua::MultiValue| {
         let args_vec: Vec<Value> = args.into_iter().collect();
-        let is_html = is_simple_html(this);
-
-        if is_html
-            && let Some(Value::String(s)) = args_vec.first() {
-                let type_str = s.to_string_lossy().to_string();
-                if is_text_type(&type_str) {
-                    let r = val_to_f32(args_vec.get(1), 1.0);
-                    let g = val_to_f32(args_vec.get(2), 1.0);
-                    let b = val_to_f32(args_vec.get(3), 1.0);
-                    let a = val_to_f32(args_vec.get(4), 1.0);
-                    let mut state = this.state.borrow_mut();
-                    if let Some(data) = state.simple_htmls.get_mut(&this.id) {
-                        let style = data.text_styles.entry(type_str).or_insert_with(TextStyle::default);
-                        style.text_color = (r, g, b, a);
-                    }
-                    return Ok(());
-                }
+        if is_simple_html(this)
+            && let Some(Value::String(s)) = args_vec.first()
+        {
+            let type_str = s.to_string_lossy().to_string();
+            if is_text_type(&type_str) {
+                set_text_color_html(this, &args_vec, type_str);
+                return Ok(());
             }
-
-        // Standard FontString/Frame path
-        let r = val_to_f32(args_vec.first(), 1.0);
-        let g = val_to_f32(args_vec.get(1), 1.0);
-        let b = val_to_f32(args_vec.get(2), 1.0);
-        let a = val_to_f32(args_vec.get(3), 1.0);
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
-            frame.text_color = crate::widget::Color::new(r, g, b, a);
         }
+        set_text_color_standard(this, &args_vec);
         Ok(())
     });
 

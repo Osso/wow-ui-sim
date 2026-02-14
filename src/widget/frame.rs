@@ -15,7 +15,7 @@ pub enum AttributeValue {
 }
 
 /// RGBA color value.
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default, PartialEq)]
 pub struct Color {
     pub r: f32,
     pub g: f32,

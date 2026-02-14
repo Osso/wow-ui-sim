@@ -654,7 +654,7 @@ fn test_hit_rect_insets_shrinks_hittable_rect() {
     frame.hit_rect_insets = (10.0, 20.0, 5.0, 15.0);
 
     let collected = CollectedFrames {
-        render: vec![],
+        per_strata: std::array::from_fn(|_| Vec::new()),
         hittable: vec![(id, LayoutRect { x: 100.0, y: 50.0, width: 200.0, height: 100.0 })],
     };
 
