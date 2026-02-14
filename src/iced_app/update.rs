@@ -251,11 +251,6 @@ impl App {
         let health_mask = self.env.borrow().state().borrow().widgets.take_render_dirty();
         let combined = timers_mask | on_update_mask | health_mask;
         if combined != 0 {
-            static CNT: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(0);
-            let c = CNT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-            if c % 60 == 0 {
-                eprintln!("[idle-debug] invalidate #{c}: timers=0x{timers_mask:03x} on_update=0x{on_update_mask:03x} health=0x{health_mask:03x}");
-            }
             self.drain_console();
             self.mark_strata_dirty(combined);
         } else {
