@@ -88,10 +88,10 @@ pub fn intra_strata_sort_key(
 /// frames sorted by strata/level/id, excluding non-interactive overlays.
 pub fn collect_sorted_frames(
     registry: &crate::widget::WidgetRegistry,
-    _screen_width: f32,
-    _screen_height: f32,
+    screen_width: f32,
+    screen_height: f32,
     strata_buckets: &Vec<Vec<u64>>,
-    _cache: &mut LayoutCache,
+    cache: &mut LayoutCache,
 ) -> CollectedFrames {
     let mut frames: Vec<(u64, crate::LayoutRect, f32)> = Vec::new();
     let mut hittable: Vec<(u64, FrameStrata, i32, crate::LayoutRect)> = Vec::new();

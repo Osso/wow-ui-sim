@@ -327,6 +327,7 @@ impl App {
     /// Hover highlights are NOT baked in — they're appended dynamically in
     /// `draw()` so that hover changes don't force a full quad rebuild.
     pub(crate) fn build_quad_batch(&self, size: Size) -> QuadBatch {
+        let t0 = std::time::Instant::now();
         let env = self.env.borrow();
         let mut font_sys = self.font_system.borrow_mut();
         // Mutable phase: ensure strata buckets exist, take caches.
@@ -341,6 +342,7 @@ impl App {
             let render = state.cached_render_list.take();
             (buckets, layout, render)
         };
+        let t1 = std::time::Instant::now();
         let state = env.state().borrow();
         let elapsed_secs = state.start_time.elapsed().as_secs_f64();
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
@@ -353,6 +355,12 @@ impl App {
             &mut cache, &strata_buckets,
             cached_render, elapsed_secs,
         );
+        let t2 = std::time::Instant::now();
+        eprintln!("[perf] layout+strata={:.1}ms  emit={:.1}ms  total={:.1}ms  quads={}",
+            t1.duration_since(t0).as_secs_f32() * 1000.0,
+            t2.duration_since(t1).as_secs_f32() * 1000.0,
+            t2.duration_since(t0).as_secs_f32() * 1000.0,
+            batch.quad_count());
         *self.cached_layout_rects.borrow_mut() = Some(cache.clone());
         *self.cached_hittable.borrow_mut() = Some(
             collected.hittable.iter().map(|&(id, r)| {

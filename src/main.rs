@@ -89,48 +89,27 @@ enum Commands {
         /// Crop the output image to WxH+X+Y (e.g., 700x150+400+650)
         #[arg(long, value_name = "WxH+X+Y")]
         crop: Option<String>,
+        /// Also dump frame tree before rendering (optional parentKey filter)
+        #[arg(long, value_name = "FILTER")]
+        dump_tree: Option<Option<String>>,
     },
 }
 
-/// Apply resource limits to prevent runaway memory/CPU usage.
-/// Defaults: 10GB memory, 1 CPU core.
+/// Apply resource limits (10GB memory, 1 CPU core by default).
 fn apply_resource_limits() {
-    // Memory limit via RLIMIT_AS (virtual address space)
-    let max_mem_bytes: u64 = std::env::var("WOW_SIM_MAX_MEM_GB")
-        .ok()
-        .and_then(|s| s.parse::<u64>().ok())
-        .unwrap_or(10)
-        * 1024
-        * 1024
-        * 1024;
-
-    let mem_limit = libc::rlimit {
-        rlim_cur: max_mem_bytes,
-        rlim_max: max_mem_bytes,
-    };
-    unsafe {
-        libc::setrlimit(libc::RLIMIT_AS, &mem_limit);
-    }
-
-    // CPU core limit via sched_setaffinity
+    let max_mem_gb: u64 = std::env::var("WOW_SIM_MAX_MEM_GB")
+        .ok().and_then(|s| s.parse().ok()).unwrap_or(10);
+    let max_mem_bytes = max_mem_gb * 1024 * 1024 * 1024;
+    let mem_limit = libc::rlimit { rlim_cur: max_mem_bytes, rlim_max: max_mem_bytes };
+    unsafe { libc::setrlimit(libc::RLIMIT_AS, &mem_limit); }
     let max_cores: usize = std::env::var("WOW_SIM_MAX_CORES")
-        .ok()
-        .and_then(|s| s.parse::<usize>().ok())
-        .unwrap_or(1);
-
+        .ok().and_then(|s| s.parse().ok()).unwrap_or(1);
     unsafe {
         let mut cpuset: libc::cpu_set_t = std::mem::zeroed();
-        for i in 0..max_cores {
-            libc::CPU_SET(i, &mut cpuset);
-        }
+        for i in 0..max_cores { libc::CPU_SET(i, &mut cpuset); }
         libc::sched_setaffinity(0, std::mem::size_of::<libc::cpu_set_t>(), &cpuset);
     }
-
-    println!(
-        "Resource limits: {}GB memory, {} CPU core(s)",
-        max_mem_bytes / 1024 / 1024 / 1024,
-        max_cores
-    );
+    println!("Resource limits: {max_mem_gb}GB memory, {max_cores} CPU core(s)");
 }
 
 /// Scan addons directory and return sorted list of addon directories
@@ -214,8 +193,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let state = env.state().borrow();
             wow_ui_sim::dump::print_frame_tree(&state.widgets, filter.as_deref(), filter_key.as_deref(), visible_only, width as f32, height as f32);
         }
-        Some(Commands::Screenshot { output, width, height, filter, crop }) => {
-            run_screenshot(&env, &font_system, output, width, height, filter, crop, args.delay, exec_lua.as_deref());
+        Some(Commands::Screenshot { output, width, height, filter, crop, dump_tree }) => {
+            run_screenshot(&env, &font_system, output, width, height, filter, crop, args.delay, exec_lua.as_deref(), dump_tree);
         }
         None => {
             let debug = wow_ui_sim::DebugOptions {
@@ -678,6 +657,7 @@ fn run_screenshot(
     crop: Option<String>,
     delay: Option<u64>,
     exec_lua: Option<&str>,
+    dump_tree: Option<Option<String>>,
 ) {
     use wow_ui_sim::render::headless::render_to_image;
 
@@ -698,6 +678,11 @@ fn run_screenshot(
     run_extra_update_ticks(env, 3);
     apply_delay(delay);
     let (batch, glyph_atlas) = build_screenshot_batch(env, font_system, width, height, filter.as_deref());
+    if let Some(dump_filter) = &dump_tree {
+        let state = env.state().borrow();
+        let fk = dump_filter.as_deref();
+        wow_ui_sim::dump::print_frame_tree(&state.widgets, None, fk, false, width as f32, height as f32);
+    }
     eprintln!("QuadBatch: {} quads, {} texture requests", batch.quad_count(), batch.texture_requests.len());
 
     let mut tex_mgr = create_texture_manager();

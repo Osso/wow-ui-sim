@@ -120,9 +120,14 @@ fn emit_frame_line(
         frame.widget_type,
     ));
     emit_anchor_lines(widgets, frame, &indent, screen_width, screen_height, lines);
-    if let Some(tex_path) = &frame.texture {
-        let fmt = resolve_texture_format(tex_path);
-        lines.push(format!("{indent}  [texture] {tex_path}{fmt}"));
+    let tex_path = frame.texture.as_deref()
+        .or_else(|| resolve_button_state_texture(widgets, frame, id));
+    if let Some(path) = tex_path {
+        let fmt = resolve_texture_format(path);
+        lines.push(format!("{indent}  [texture] {path}{fmt}"));
+    }
+    if let Some(ref atlas) = frame.atlas {
+        lines.push(format!("{indent}  [atlas] {atlas}"));
     }
 }
 
@@ -502,6 +507,25 @@ fn skip_wow_escape(chars: &mut std::iter::Peekable<std::str::Chars>) {
         Some('c') => { chars.next(); for _ in 0..8 { chars.next(); } }
         Some('r') => { chars.next(); }
         _ => {}
+    }
+}
+
+// ── Button state texture lookup ──────────────────────────────────────
+
+/// For Texture children with parentKey like NormalTexture/PushedTexture/etc.,
+/// look up the texture path from the parent button's corresponding field.
+fn resolve_button_state_texture<'a>(widgets: &'a WidgetRegistry, frame: &Frame, id: u64) -> Option<&'a str> {
+    if frame.widget_type != WidgetType::Texture { return None; }
+    let parent = widgets.get(frame.parent_id?)?;
+    let key = parent.children_keys.iter()
+        .find(|&(_, cid)| *cid == id)
+        .map(|(k, _)| k.as_str())?;
+    match key {
+        "NormalTexture" => parent.normal_texture.as_deref(),
+        "PushedTexture" => parent.pushed_texture.as_deref(),
+        "HighlightTexture" => parent.highlight_texture.as_deref(),
+        "DisabledTexture" => parent.disabled_texture.as_deref(),
+        _ => None,
     }
 }
 

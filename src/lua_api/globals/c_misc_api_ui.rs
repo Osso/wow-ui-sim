@@ -353,6 +353,7 @@ fn register_c_spec_info(lua: &Lua) -> Result<()> {
             Value::Integer(2), // classID = Paladin
         ]))
     })?)?;
+    t.set("SetSpecialization", lua.create_function(|_, _spec_index: i32| Ok(true))?)?;
     t.set("GetAllSelectedPvpTalentIDs", lua.create_function(|lua, ()| lua.create_table())?)?;
     t.set("GetPvpTalentSlotInfo", lua.create_function(|_, _s: i32| Ok(Value::Nil))?)?;
     t.set("GetNumSpecializationsForClassID", lua.create_function(|_, (_class_id, _sex): (Option<i32>, Option<i32>)| {
