@@ -48,6 +48,9 @@ impl WowLuaEnv {
         // Initialize keybinding tables with defaults
         super::keybindings::init_keybindings(&lua)?;
 
+        // Precompile Lua helper functions for the XML loader
+        crate::loader::precompiled::init(&lua)?;
+
         Ok(Self {
             lua,
             state,

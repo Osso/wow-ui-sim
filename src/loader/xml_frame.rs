@@ -5,6 +5,7 @@ use crate::lua_api::LoaderEnv;
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
 use super::helpers::{escape_lua_string, generate_anchors_code, generate_scripts_code, get_size_values, lua_global_ref, rand_id};
+use super::precompiled;
 use super::xml_frame_extras::{apply_animation_groups, apply_bar_texture, init_action_bar_tables};
 use super::xml_lifecycle::fire_lifecycle_scripts;
 use super::xml_fontstring::create_fontstring_from_xml;
@@ -96,8 +97,8 @@ fn build_frame_lua_code(
 /// Set the `intrinsic` property on intrinsic frames (e.g. frame.intrinsic = "DropdownButton").
 fn apply_intrinsic_property(env: &LoaderEnv<'_>, intrinsic_base: Option<&str>, name: &str) {
     if let Some(base) = intrinsic_base {
-        let code = format!("{}.intrinsic = \"{}\"", lua_global_ref(name), base);
-        env.exec(&code).ok();
+        let fns = precompiled::get(env.lua());
+        fns.set_intrinsic.call::<()>((name, base)).ok();
     }
 }
 
@@ -123,11 +124,12 @@ fn create_children_and_finalize(
 /// instance-level KeyValues (e.g. layoutIndex) are applied in the Lua chunk.
 /// Uses a depth counter to handle recursive create_frame_from_xml calls correctly.
 fn exec_create_frame_code(env: &LoaderEnv<'_>, lua_code: &str, name: &str) -> Result<(), LoadError> {
-    env.exec("__suppress_create_frame_onload = (__suppress_create_frame_onload or 0) + 1").ok();
+    let fns = precompiled::get(env.lua());
+    fns.suppress_push.call::<()>(()).ok();
     let exec_result = env.exec(lua_code).map_err(|e| {
         LoadError::Lua(format!("Failed to create frame {}: {}", name, e))
     });
-    env.exec("__suppress_create_frame_onload = __suppress_create_frame_onload - 1").ok();
+    fns.suppress_pop.call::<()>(()).ok();
     exec_result?;
     crate::lua_api::globals::template::fire_deferred_child_onloads(env.lua());
     Ok(())
@@ -631,8 +633,8 @@ fn create_single_child_frame(
     if let (Some(actual_child_name), Some(parent_key)) =
         (child_name, &child_frame.parent_key)
     {
-        let lua_code = format!("{}.{} = {}", lua_global_ref(parent_name), parent_key, lua_global_ref(&actual_child_name));
-        env.exec(&lua_code).ok();
+        let fns = precompiled::get(env.lua());
+        fns.assign_parent_key.call::<()>((parent_name, parent_key.as_str(), actual_child_name.as_str())).ok();
     }
     Ok(())
 }
@@ -653,13 +655,10 @@ fn create_frame_elements(
         // Assign parentKey so the parent can reference the child.
         // The Lua assignment triggers __newindex which syncs to Rust children_keys.
         if let (Some(actual_child_name), Some(parent_key)) =
-            (child_name.clone(), &child_frame.parent_key)
+            (child_name, &child_frame.parent_key)
         {
-            let lua_code = format!(
-                "\n                    {}.{} = {}\n                    ",
-                lua_global_ref(parent_name), parent_key, lua_global_ref(&actual_child_name)
-            );
-            env.exec(&lua_code).ok();
+            let fns = precompiled::get(env.lua());
+            fns.assign_parent_key.call::<()>((parent_name, parent_key.as_str(), actual_child_name.as_str())).ok();
         }
     }
     Ok(())
