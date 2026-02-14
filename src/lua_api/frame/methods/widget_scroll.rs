@@ -1,87 +1,101 @@
 //! ScrollFrame and ScrollBox widget methods.
 
 use super::widget_tooltip::fire_tooltip_script;
-use super::FrameHandle;
-use mlua::{UserDataMethods, Value};
+use crate::lua_api::frame::handle::{extract_frame_id, frame_lud, get_sim_state, lud_to_id};
+use mlua::{LightUserData, Lua, Value};
 
-pub fn add_scrollframe_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_scrollframe_child_methods(methods);
-    add_scrollframe_offset_methods(methods);
-    add_scrollframe_range_methods(methods);
+pub fn add_scrollframe_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_scrollframe_child_methods(lua, methods)?;
+    add_scrollframe_offset_methods(lua, methods)?;
+    add_scrollframe_range_methods(lua, methods)?;
+    Ok(())
 }
 
-pub fn add_scrollbox_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("RegisterCallback", |_, _this, _args: mlua::MultiValue| {
-        Ok(())
-    });
-    methods.add_method("ForEachFrame", |_, _this, _callback: mlua::Function| Ok(()));
-    methods.add_method("UnregisterCallback", |_, _this, _args: mlua::MultiValue| {
-        Ok(())
-    });
-    methods.add_method("CanInterpolateScroll", |_, _this, ()| Ok(false));
-    methods.add_method("SetInterpolateScroll", |_, _this, _enabled: bool| Ok(()));
+pub fn add_scrollbox_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("RegisterCallback", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("ForEachFrame", lua.create_function(|_, (_ud, _cb): (LightUserData, mlua::Function)| Ok(()))?)?;
+    methods.set("UnregisterCallback", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("CanInterpolateScroll", lua.create_function(|_, _ud: LightUserData| Ok(false))?)?;
+    methods.set("SetInterpolateScroll", lua.create_function(|_, (_ud, _enabled): (LightUserData, bool)| Ok(()))?)?;
+    Ok(())
 }
 
-fn add_scrollframe_child_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetScrollChild", |_, this, child: Value| {
-        let child_id = match &child {
-            Value::UserData(ud) => ud.borrow::<FrameHandle>().ok().map(|h| h.id),
-            _ => None,
-        };
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+fn add_scrollframe_child_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetScrollChild", lua.create_function(|lua, (ud, child): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        let child_id = extract_frame_id(&child);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.scroll_child_id = child_id;
         }
         Ok(())
-    });
-    methods.add_method("GetScrollChild", |lua, this, ()| {
+    })?)?;
+
+    methods.set("GetScrollChild", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
         let child_id = {
-            let state = this.state.borrow();
-            state.widgets.get(this.id).and_then(|f| f.scroll_child_id)
+            let state_rc = get_sim_state(lua);
+            let state = state_rc.borrow();
+            state.widgets.get(id).and_then(|f| f.scroll_child_id)
         };
         match child_id {
-            Some(id) => {
-                let key = format!("__frame_{}", id);
-                lua.globals().get::<Value>(key.as_str())
-            }
+            Some(cid) => Ok(frame_lud(cid)),
             None => Ok(Value::Nil),
         }
-    });
-    methods.add_method("UpdateScrollChildRect", |_, _this, ()| Ok(()));
+    })?)?;
+
+    methods.set("UpdateScrollChildRect", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    Ok(())
 }
 
-fn add_scrollframe_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetHorizontalScroll", |_, this, offset: f64| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+fn add_scrollframe_offset_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetHorizontalScroll", lua.create_function(|lua, (ud, offset): (LightUserData, f64)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.scroll_horizontal = offset;
         }
         Ok(())
-    });
-    methods.add_method("GetHorizontalScroll", |_, this, ()| {
-        let state = this.state.borrow();
-        Ok(state.widgets.get(this.id).map(|f| f.scroll_horizontal).unwrap_or(0.0))
-    });
-    methods.add_method("SetVerticalScroll", |lua, this, offset: f64| {
+    })?)?;
+
+    methods.set("GetHorizontalScroll", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.scroll_horizontal).unwrap_or(0.0))
+    })?)?;
+
+    methods.set("SetVerticalScroll", lua.create_function(|lua, (ud, offset): (LightUserData, f64)| {
+        let id = lud_to_id(ud);
         {
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut_visual(id) {
                 frame.scroll_vertical = offset;
             }
         }
-        fire_tooltip_script(lua, this.id, "OnScrollRangeChanged")?;
+        fire_tooltip_script(lua, id, "OnScrollRangeChanged")?;
         Ok(())
-    });
-    methods.add_method("GetVerticalScroll", |_, this, ()| {
-        let state = this.state.borrow();
-        Ok(state.widgets.get(this.id).map(|f| f.scroll_vertical).unwrap_or(0.0))
-    });
+    })?)?;
+
+    methods.set("GetVerticalScroll", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.scroll_vertical).unwrap_or(0.0))
+    })?)?;
+
+    Ok(())
 }
 
-fn add_scrollframe_range_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetHorizontalScrollRange", |_, this, ()| {
-        let state = this.state.borrow();
-        let frame = match state.widgets.get(this.id) {
+fn add_scrollframe_range_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetHorizontalScrollRange", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let frame = match state.widgets.get(id) {
             Some(f) => f,
             None => return Ok(0.0_f64),
         };
@@ -90,10 +104,13 @@ fn add_scrollframe_range_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
             .map(|c| c.width as f64)
             .unwrap_or(0.0);
         Ok((child_width - frame.width as f64).max(0.0))
-    });
-    methods.add_method("GetVerticalScrollRange", |_, this, ()| {
-        let state = this.state.borrow();
-        let frame = match state.widgets.get(this.id) {
+    })?)?;
+
+    methods.set("GetVerticalScrollRange", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let frame = match state.widgets.get(id) {
             Some(f) => f,
             None => return Ok(0.0_f64),
         };
@@ -102,5 +119,7 @@ fn add_scrollframe_range_methods<M: UserDataMethods<FrameHandle>>(methods: &mut 
             .map(|c| c.height as f64)
             .unwrap_or(0.0);
         Ok((child_height - frame.height as f64).max(0.0))
-    });
+    })?)?;
+
+    Ok(())
 }

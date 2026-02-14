@@ -15,7 +15,7 @@
 //! - C_ActionBar - Action bar queries
 //! - C_ZoneAbility - Zone ability data
 
-use mlua::{Lua, ObjectLike, Result, Value};
+use mlua::{Lua, Result, Value};
 
 /// Register all additional C_* namespace stubs.
 pub fn register_c_stubs_api(lua: &Lua, state: std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>) -> Result<()> {
@@ -154,15 +154,13 @@ fn resolve_texture_path(value: &Value) -> Option<String> {
     }
 }
 
-/// Set texture path on a FrameHandle userdata widget.
-fn set_texture_on_handle(tex: &Value, path: Option<String>) {
-    use crate::lua_api::frame::FrameHandle;
-    if let Value::UserData(ud) = tex {
-        if let Ok(handle) = ud.borrow::<FrameHandle>() {
-            let mut state = handle.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut_visual(handle.id) {
-                frame.texture = path;
-            }
+/// Set texture path on a frame LightUserData widget.
+fn set_texture_on_handle(lua: &mlua::Lua, tex: &Value, path: Option<String>) {
+    if let Some(id) = crate::lua_api::frame::extract_frame_id(tex) {
+        let state_rc = crate::lua_api::frame::get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
+            frame.texture = path;
         }
     }
 }
@@ -186,8 +184,8 @@ fn register_unit_frame_global_stubs(lua: &Lua) -> Result<()> {
     g.set("PartialPlayTime", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("NoPlayTime", lua.create_function(|_, ()| Ok(false))?)?;
     g.set("GetBillingTimeRested", lua.create_function(|_, ()| Ok(0i32))?)?;
-    g.set("SetPortraitToTexture", lua.create_function(|_, (tex, path): (Value, Value)| {
-        set_texture_on_handle(&tex, resolve_texture_path(&path));
+    g.set("SetPortraitToTexture", lua.create_function(|lua, (tex, path): (Value, Value)| {
+        set_texture_on_handle(lua, &tex, resolve_texture_path(&path));
         Ok(())
     })?)?;
     register_unit_frame_global_stubs_2(lua)?;
@@ -418,12 +416,14 @@ fn register_fading_frame_stubs(lua: &Lua) -> Result<()> {
     let g = lua.globals();
     // FadingFrame_OnLoad initializes fading state on the frame.
     // Frames may be UserData or Table depending on context.
-    g.set("FadingFrame_OnLoad", lua.create_function(|_, frame: Value| {
-        match frame {
-            Value::UserData(ud) => {
-                ud.set("fadeInTime", 0.0f64)?;
-                ud.set("fadeOutTime", 0.0f64)?;
-                ud.set("holdTime", 0.0f64)?;
+    g.set("FadingFrame_OnLoad", lua.create_function(|lua, frame: Value| {
+        match &frame {
+            Value::LightUserData(lud) => {
+                let id = crate::lua_api::frame::lud_to_id(*lud);
+                let fields = crate::lua_api::script_helpers::get_or_create_frame_fields(lua, id);
+                fields.set("fadeInTime", 0.0f64)?;
+                fields.set("fadeOutTime", 0.0f64)?;
+                fields.set("holdTime", 0.0f64)?;
             }
             Value::Table(t) => {
                 t.set("fadeInTime", 0.0f64)?;

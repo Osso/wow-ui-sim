@@ -168,8 +168,7 @@ impl WowLuaEnv {
         let Some(handler) = get_script(&self.lua, widget_id, handler_name) else {
             return Ok(false);
         };
-        let frame_ref_key = format!("__frame_{}", widget_id);
-        let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
+        let frame = super::frame::frame_lud(widget_id);
         let result: Value = handler.call(MultiValue::from_vec(vec![frame]))?;
         Ok(is_truthy(&result))
     }
@@ -342,7 +341,7 @@ impl WowLuaEnv {
             self.state.borrow_mut().set_frame_visible(id, false);
         } else {
             self.state.borrow_mut().set_frame_visible(id, true);
-            super::frame::fire_on_show_recursive(&self.lua, &self.state, id)?;
+            super::frame::fire_on_show_recursive(&self.lua, id)?;
         }
         Ok(())
     }

@@ -3,7 +3,7 @@
 //! Orchestrates registration of all WoW API globals by delegating to
 //! sub-modules and registering core Lua overrides (print, ipairs, getmetatable).
 
-use super::frame::FrameHandle;
+use super::frame::{frame_lud, get_sim_state, lud_to_id};
 use super::globals::addon_api::register_addon_api;
 use super::globals::c_collection_api::register_c_collection_api;
 use super::globals::c_item_api::register_c_item_api;
@@ -36,12 +36,17 @@ use super::globals::tooltip_api::register_tooltip_frames;
 use super::globals::unit_api::register_unit_api;
 use super::globals::utility_api::register_utility_api;
 use super::SimState;
-use mlua::{Lua, ObjectLike, Result, Value};
+use mlua::{Lua, Result, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
 
 /// Register all global WoW API functions.
 pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+    // Store SimState in Lua app_data for LightUserData methods to access
+    lua.set_app_data(Rc::clone(&state));
+    // Set up the shared LightUserData metatable for all frames
+    super::frame::metatable::setup_frame_metatable(lua)?;
+
     register_print(lua, Rc::clone(&state))?;
     register_custom_ipairs(lua, Rc::clone(&state))?;
     register_custom_getmetatable(lua)?;
@@ -139,20 +144,18 @@ fn format_print_args(args: &[Value]) -> String {
     output
 }
 
-/// Override `ipairs` to support iterating over frame userdata children.
+/// Override `ipairs` to support iterating over frame LightUserData children.
 ///
 /// WoW addons iterate frame children with `for i, child in ipairs(frame)`.
 /// Falls back to the original `ipairs` for regular tables.
-fn register_custom_ipairs(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
+fn register_custom_ipairs(lua: &Lua, _state: Rc<RefCell<SimState>>) -> Result<()> {
     let globals = lua.globals();
     let original_ipairs: mlua::Function = globals.get("ipairs")?;
 
     let custom_ipairs = lua.create_function(move |lua, value: Value| {
-        if let Value::UserData(ud) = &value
-            && let Ok(handle) = ud.borrow::<FrameHandle>() {
-                return create_frame_children_iterator(lua, &handle, &state);
-            }
-        // Fall back to original ipairs for tables
+        if let Value::LightUserData(lud) = &value {
+            return create_frame_children_iterator(lua, lud_to_id(*lud));
+        }
         let original_ipairs: mlua::Function = lua.globals().get("__original_ipairs")?;
         original_ipairs.call(value)
     })?;
@@ -164,35 +167,22 @@ fn register_custom_ipairs(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()>
 /// Create a stateless iterator over a frame's children for use with `ipairs`.
 ///
 /// Returns `(iterator_fn, nil, 0)` matching Lua's generic for protocol.
-fn create_frame_children_iterator(
-    lua: &Lua,
-    handle: &FrameHandle,
-    state: &Rc<RefCell<SimState>>,
-) -> Result<mlua::MultiValue> {
-    let frame_id = handle.id;
-    let state_rc = Rc::clone(&handle.state);
-
+fn create_frame_children_iterator(lua: &Lua, frame_id: u64) -> Result<mlua::MultiValue> {
+    let state_rc = get_sim_state(lua);
     let children: Vec<u64> = {
         let st = state_rc.borrow();
         st.widgets.get(frame_id).map(|f| f.children.clone()).unwrap_or_default()
     };
 
-    let iterator_state = Rc::clone(state);
-    let iterator = lua.create_function(move |lua, (_, idx): (Value, i32)| {
+    let iterator = lua.create_function(move |_lua, (_, idx): (Value, i32)| {
         let next_idx = idx + 1;
         if next_idx as usize > children.len() {
             return Ok(mlua::MultiValue::new());
         }
-
         let child_id = children[(next_idx - 1) as usize];
-        let handle = FrameHandle {
-            id: child_id,
-            state: Rc::clone(&iterator_state),
-        };
-        let ud = lua.create_userdata(handle)?;
         Ok(mlua::MultiValue::from_vec(vec![
             Value::Integer(next_idx as i64),
-            Value::UserData(ud),
+            frame_lud(child_id),
         ]))
     })?;
 
@@ -203,7 +193,7 @@ fn create_frame_children_iterator(
     ]))
 }
 
-/// Override `getmetatable` to return a proper metatable for frame userdata.
+/// Override `getmetatable` to return a proper metatable for frame LightUserData.
 ///
 /// WoW addons expect `getmetatable(frame).__index` to be an iterable table
 /// of method names mapped to functions.
@@ -211,10 +201,9 @@ fn register_custom_getmetatable(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
     let custom_getmetatable = lua.create_function(|lua, value: Value| {
-        if let Value::UserData(ud) = &value
-            && ud.borrow::<FrameHandle>().is_ok() {
-                return build_frame_metatable(lua, ud);
-            }
+        if let Value::LightUserData(_) = &value {
+            return build_frame_metatable(lua);
+        }
         let real_getmetatable: mlua::Function = lua.globals().get("__real_getmetatable")?;
         real_getmetatable.call(value)
     })?;
@@ -224,20 +213,22 @@ fn register_custom_getmetatable(lua: &Lua) -> Result<()> {
     globals.set("getmetatable", custom_getmetatable)
 }
 
-/// Build a fake metatable for frame userdata with `__index` populated from actual methods.
-fn build_frame_metatable(lua: &Lua, ud: &mlua::AnyUserData) -> Result<Value> {
+/// Build a fake metatable for frame LightUserData with `__index` from the methods table.
+fn build_frame_metatable(lua: &Lua) -> Result<Value> {
     let mt = lua.create_table()?;
+    let methods_table: mlua::Table = lua.named_registry_value("__frame_methods_table")?;
     let index_table = lua.create_table()?;
-    populate_method_index(ud, &index_table)?;
+    populate_method_index(&methods_table, &index_table)?;
     mt.set("__index", index_table)?;
     Ok(Value::Table(mt))
 }
 
 /// Populate an index table with all frame method names from the categorized lists.
-fn populate_method_index(ud: &mlua::AnyUserData, index_table: &mlua::Table) -> Result<()> {
+fn populate_method_index(methods_table: &mlua::Table, index_table: &mlua::Table) -> Result<()> {
     for methods in ALL_METHOD_GROUPS {
         for &name in *methods {
-            if let Ok(method) = ud.get::<mlua::Function>(name) {
+            let method: Value = methods_table.raw_get(name)?;
+            if method != Value::Nil {
                 index_table.set(name, method)?;
             }
         }
@@ -469,9 +460,7 @@ fn register_ui_strings_and_fonts(lua: &Lua) -> Result<()> {
 ///
 /// When Lua accesses `_G["SomeName"]` and no value exists, this metamethod
 /// checks the widget registry for a named frame or a `__frame_{id}` pattern.
-/// On hit it creates a FrameHandle userdata, caches it via `rawset`, and
-/// returns it. This avoids eagerly creating userdata for every frame at
-/// registration time.
+/// On hit it returns a LightUserData (zero-cost) and caches it via `rawset`.
 fn install_globals_metatable(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
     let state_clone = Rc::clone(state);
     let neg_cache: Rc<RefCell<std::collections::HashSet<String>>> =
@@ -481,42 +470,40 @@ fn install_globals_metatable(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result
         let key_str = key.to_str().map_err(|e| mlua::Error::runtime(e.to_string()))?;
         let key_s: &str = &key_str;
 
-        // Check negative cache first — avoids borrow + HashMap lookup for known misses
         if neg_cache.borrow().contains(key_s) {
             return Ok(Value::Nil);
         }
 
-        let frame_id = {
-            let st = state_clone.borrow();
-            if let Some(id) = st.widgets.get_id_by_name(key_s) {
-                Some(id)
-            } else if let Some(suffix) = key_s.strip_prefix("__frame_") {
-                suffix.parse::<u64>().ok().filter(|id| st.widgets.get(*id).is_some())
-            } else {
-                None
-            }
-        };
+        let frame_id = lookup_frame_id(&state_clone, key_s);
 
         let Some(id) = frame_id else {
             neg_cache.borrow_mut().insert(key_s.to_string());
             return Ok(Value::Nil);
         };
 
-        let handle = FrameHandle {
-            id,
-            state: Rc::clone(&state_clone),
-        };
-        let ud = lua.create_userdata(handle)?;
+        let lud = frame_lud(id);
 
         // Cache in _G via rawset so future lookups don't hit __index again
         let globals = lua.globals();
-        globals.raw_set(key_s, ud.clone())?;
+        globals.raw_set(key_s, lud.clone())?;
 
-        Ok(Value::UserData(ud))
+        Ok(lud)
     })?;
 
     let meta = lua.create_table()?;
     meta.set("__index", index_fn)?;
     lua.globals().set_metatable(Some(meta));
     Ok(())
+}
+
+/// Look up a frame ID by name or `__frame_{id}` pattern.
+fn lookup_frame_id(state: &Rc<RefCell<SimState>>, key: &str) -> Option<u64> {
+    let st = state.borrow();
+    if let Some(id) = st.widgets.get_id_by_name(key) {
+        Some(id)
+    } else if let Some(suffix) = key.strip_prefix("__frame_") {
+        suffix.parse::<u64>().ok().filter(|id| st.widgets.get(*id).is_some())
+    } else {
+        None
+    }
 }

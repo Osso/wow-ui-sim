@@ -1,143 +1,143 @@
 //! Miscellaneous frame-type-specific method stubs (Minimap, ScrollingMessage, Alerts, etc.).
 
-use super::FrameHandle;
-use mlua::{UserDataMethods, Value};
-use std::rc::Rc;
+use crate::lua_api::frame::handle::{frame_lud, lud_to_id};
+use mlua::{LightUserData, Lua, Value};
 
 /// Add all miscellaneous frame-type-specific methods.
-pub fn add_misc_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_minimap_methods(methods);
-    add_scrolling_message_methods(methods);
-    add_alert_and_data_provider_methods(methods);
+pub fn add_misc_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_minimap_methods(lua, methods)?;
+    add_scrolling_message_methods(lua, methods)?;
+    add_alert_and_data_provider_methods(lua, methods)?;
     // DropdownButtonMixin stub
-    methods.add_method("IsMenuOpen", |_, _this, ()| Ok(false));
+    methods.set("IsMenuOpen", lua.create_function(|_, _ud: LightUserData| Ok(false))?)?;
     // StaticPopupElementMixin stub (dialog ownership tracking)
-    methods.add_method("SetOwningDialog", |_, _this, _dialog: Value| Ok(()));
+    methods.set("SetOwningDialog", lua.create_function(|_, (_ud, _dialog): (LightUserData, Value)| Ok(()))?)?;
     // GuildRenameFrameMixin / layout tracking methods (no-op in simulator)
-    methods.add_method("RegisterFontStrings", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("RegisterFrames", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("RegisterBackgroundTexture", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.set("RegisterFontStrings", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    methods.set("RegisterFrames", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    methods.set("RegisterBackgroundTexture", lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?)?;
+    Ok(())
 }
 
 /// Minimap and WorldMap stubs.
-fn add_minimap_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_minimap_core_methods(methods);
-    add_minimap_texture_setters(methods);
-    add_minimap_blob_setters(methods);
+fn add_minimap_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_minimap_core_methods(lua, methods)?;
+    add_minimap_texture_setters(lua, methods)?;
+    add_minimap_blob_setters(lua, methods)?;
     // GetCanvas() - for WorldMapFrame (returns self as the canvas)
-    methods.add_method("GetCanvas", |lua, this, ()| {
-        let handle = FrameHandle {
-            id: this.id,
-            state: Rc::clone(&this.state),
-        };
-        lua.create_userdata(handle)
-    });
+    methods.set("GetCanvas", lua.create_function(|_, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        Ok(frame_lud(id))
+    })?)?;
+    Ok(())
 }
 
 /// Minimap core: zoom, ping, blips.
-fn add_minimap_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetZoom", |_, _this, ()| Ok(0));
-    methods.add_method("SetZoom", |_, _this, _zoom: i32| Ok(()));
-    methods.add_method("GetZoomLevels", |_, _this, ()| Ok(5));
-    methods.add_method("GetPingPosition", |_, _this, ()| Ok((0.0f64, 0.0f64)));
-    methods.add_method("PingLocation", |_, _this, (_x, _y): (f64, f64)| Ok(()));
-    methods.add_method("UpdateBlips", |_, _this, ()| Ok(()));
+fn add_minimap_core_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetZoom", lua.create_function(|_, _ud: LightUserData| Ok(0))?)?;
+    methods.set("SetZoom", lua.create_function(|_, (_ud, _zoom): (LightUserData, i32)| Ok(()))?)?;
+    methods.set("GetZoomLevels", lua.create_function(|_, _ud: LightUserData| Ok(5))?)?;
+    methods.set("GetPingPosition", lua.create_function(|_, _ud: LightUserData| Ok((0.0f64, 0.0f64)))?)?;
+    methods.set("PingLocation", lua.create_function(|_, (_ud, _x, _y): (LightUserData, f64, f64)| Ok(()))?)?;
+    methods.set("UpdateBlips", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    Ok(())
 }
 
 /// Minimap texture setters (no-op stubs).
-fn add_minimap_texture_setters<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetBlipTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetMaskTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetIconTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetPOIArrowTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetCorpsePOIArrowTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetStaticPOIArrowTexture", |_, _this, _asset: Value| Ok(()));
+fn add_minimap_texture_setters(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetBlipTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetMaskTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetIconTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetPOIArrowTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetCorpsePOIArrowTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetStaticPOIArrowTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    Ok(())
 }
 
 /// Minimap quest/task/arch blob setters (no-op stubs).
-fn add_minimap_blob_setters<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetQuestBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetQuestBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetQuestBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetQuestBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetQuestBlobRingTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetQuestBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
-    methods.add_method("SetQuestBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetTaskBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetTaskBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetTaskBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetTaskBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetTaskBlobRingTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetTaskBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
-    methods.add_method("SetTaskBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetArchBlobInsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetArchBlobInsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetArchBlobOutsideTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetArchBlobOutsideAlpha", |_, _this, _alpha: f32| Ok(()));
-    methods.add_method("SetArchBlobRingTexture", |_, _this, _asset: Value| Ok(()));
-    methods.add_method("SetArchBlobRingScalar", |_, _this, _scalar: f32| Ok(()));
-    methods.add_method("SetArchBlobRingAlpha", |_, _this, _alpha: f32| Ok(()));
+fn add_minimap_blob_setters(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetQuestBlobInsideTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetQuestBlobInsideAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetQuestBlobOutsideTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetQuestBlobOutsideAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetQuestBlobRingTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetQuestBlobRingScalar", lua.create_function(|_, (_ud, _scalar): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetQuestBlobRingAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetTaskBlobInsideTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetTaskBlobInsideAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetTaskBlobOutsideTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetTaskBlobOutsideAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetTaskBlobRingTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetTaskBlobRingScalar", lua.create_function(|_, (_ud, _scalar): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetTaskBlobRingAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetArchBlobInsideTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetArchBlobInsideAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetArchBlobOutsideTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetArchBlobOutsideAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetArchBlobRingTexture", lua.create_function(|_, (_ud, _asset): (LightUserData, Value)| Ok(()))?)?;
+    methods.set("SetArchBlobRingScalar", lua.create_function(|_, (_ud, _scalar): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetArchBlobRingAlpha", lua.create_function(|_, (_ud, _alpha): (LightUserData, f32)| Ok(()))?)?;
+    Ok(())
 }
 
 /// ScrollingMessageFrame and EditBox stubs.
-fn add_scrolling_message_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetTextCopyable", |_, _this, _copyable: bool| Ok(()));
-    methods.add_method("SetInsertMode", |_, _this, _mode: String| Ok(()));
-    methods.add_method("SetFading", |_, _this, _fading: bool| Ok(()));
-    methods.add_method("SetFadeDuration", |_, _this, _duration: f32| Ok(()));
-    methods.add_method("SetTimeVisible", |_, _this, _time: f32| Ok(()));
+fn add_scrolling_message_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetTextCopyable", lua.create_function(|_, (_ud, _copyable): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("SetInsertMode", lua.create_function(|_, (_ud, _mode): (LightUserData, String)| Ok(()))?)?;
+    methods.set("SetFading", lua.create_function(|_, (_ud, _fading): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("SetFadeDuration", lua.create_function(|_, (_ud, _duration): (LightUserData, f32)| Ok(()))?)?;
+    methods.set("SetTimeVisible", lua.create_function(|_, (_ud, _time): (LightUserData, f32)| Ok(()))?)?;
+    Ok(())
 }
 
 /// Alert subsystem, data provider, and EditMode stubs.
-fn add_alert_and_data_provider_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+fn add_alert_and_data_provider_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
     // AddQueuedAlertFrameSubSystem(system) - for AlertFrame
-    methods.add_method(
-        "AddQueuedAlertFrameSubSystem",
-        |lua, _this, _args: mlua::MultiValue| {
-            let subsystem = lua.create_table()?;
-            subsystem.set(
-                "SetCanShowMoreConditionFunc",
-                lua.create_function(|_, (_self, _func): (Value, Value)| Ok(()))?,
-            )?;
-            subsystem.set(
-                "AddAlert",
-                lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-            )?;
-            subsystem.set(
-                "RemoveAlert",
-                lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
-            )?;
-            subsystem.set(
-                "ClearAllAlerts",
-                lua.create_function(|_, _self: Value| Ok(()))?,
-            )?;
-            Ok(Value::Table(subsystem))
-        },
-    );
+    methods.set("AddQueuedAlertFrameSubSystem", lua.create_function(|lua, (_ud, _args): (LightUserData, mlua::MultiValue)| {
+        let subsystem = lua.create_table()?;
+        subsystem.set(
+            "SetCanShowMoreConditionFunc",
+            lua.create_function(|_, (_self, _func): (Value, Value)| Ok(()))?,
+        )?;
+        subsystem.set(
+            "AddAlert",
+            lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+        )?;
+        subsystem.set(
+            "RemoveAlert",
+            lua.create_function(|_, _args: mlua::MultiValue| Ok(()))?,
+        )?;
+        subsystem.set(
+            "ClearAllAlerts",
+            lua.create_function(|_, _self: Value| Ok(()))?,
+        )?;
+        Ok(Value::Table(subsystem))
+    })?)?;
 
     // AddDataProvider(provider) - for WorldMapFrame (used by HereBeDragons)
-    methods.add_method("AddDataProvider", |_, _this, _provider: mlua::Value| Ok(()));
+    methods.set("AddDataProvider", lua.create_function(|_, (_ud, _provider): (LightUserData, Value)| Ok(()))?)?;
 
     // RemoveDataProvider(provider) - for WorldMapFrame
-    methods.add_method("RemoveDataProvider", |_, _this, _provider: mlua::Value| {
-        Ok(())
-    });
+    methods.set("RemoveDataProvider", lua.create_function(|_, (_ud, _provider): (LightUserData, Value)| Ok(()))?)?;
 
     // UseRaidStylePartyFrames() -> bool (for EditModeManagerFrame)
-    methods.add_method("UseRaidStylePartyFrames", |_, _this, ()| Ok(false));
+    methods.set("UseRaidStylePartyFrames", lua.create_function(|_, _ud: LightUserData| Ok(false))?)?;
 
     // EditModeSystemMixin stubs - delegate to mixin if present, otherwise
     // return safe defaults (in default position, not initialized).
-    methods.add_method("IsInDefaultPosition", |lua, this, ()| {
-        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "IsInDefaultPosition") {
+    methods.set("IsInDefaultPosition", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, id, "IsInDefaultPosition") {
             return func.call::<bool>(ud);
         }
         Ok(true)
-    });
-    methods.add_method("IsInitialized", |lua, this, ()| {
-        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "IsInitialized") {
+    })?)?;
+    methods.set("IsInitialized", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, id, "IsInitialized") {
             return func.call::<bool>(ud);
         }
         Ok(false)
-    });
+    })?)?;
+    Ok(())
 }

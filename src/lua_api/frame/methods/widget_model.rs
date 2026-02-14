@@ -1,158 +1,165 @@
 //! Model and ModelScene widget method stubs.
 
-use super::FrameHandle;
-use mlua::{IntoLuaMulti, Result, UserDataMethods, Value};
+use crate::lua_api::frame::handle::{get_sim_state, lud_to_id};
+use mlua::{IntoLuaMulti, LightUserData, Lua, Result, Value};
 
-pub fn add_model_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_model_transform_methods(methods);
-    add_model_appearance_methods(methods);
-    add_model_scene_id_methods(methods);
+pub fn add_model_methods(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    add_model_transform_methods(lua, methods)?;
+    add_model_appearance_methods(lua, methods)?;
+    add_model_scene_id_methods(lua, methods)?;
+    Ok(())
 }
 
-fn add_model_transform_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetModel", |_, _this, _path: String| Ok(()));
-    methods.add_method("GetModel", |_, _this, ()| -> Result<Option<String>> {
+fn add_model_transform_methods(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("SetModel", lua.create_function(|_, (_ud, _path): (LightUserData, String)| Ok(()))?)?;
+    methods.set("GetModel", lua.create_function(|_, _ud: LightUserData| -> Result<Option<String>> {
         Ok(None)
-    });
-    methods.add_method("SetModelScale", |_, _this, _scale: f64| Ok(()));
-    methods.add_method("GetModelScale", |_, _this, ()| Ok(1.0_f64));
-    methods.add_method("SetPosition", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetPosition", |lua, this, ()| {
-        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "GetPosition") {
-            return func.call::<mlua::MultiValue>(ud);
+    })?)?;
+    methods.set("SetModelScale", lua.create_function(|_, (_ud, _scale): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("GetModelScale", lua.create_function(|_, _ud: LightUserData| Ok(1.0_f64))?)?;
+    methods.set("SetPosition", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+
+    methods.set("GetPosition", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        if let Some((func, frame_ud)) = super::methods_helpers::get_mixin_override(lua, id, "GetPosition") {
+            return func.call::<mlua::MultiValue>(frame_ud);
         }
         (0.0_f64, 0.0_f64, 0.0_f64).into_lua_multi(lua)
-    });
-    methods.add_method("SetFacing", |_, _this, _radians: f64| Ok(()));
-    methods.add_method("GetFacing", |_, _this, ()| Ok(0.0_f64));
+    })?)?;
+
+    methods.set("SetFacing", lua.create_function(|_, (_ud, _radians): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("GetFacing", lua.create_function(|_, _ud: LightUserData| Ok(0.0_f64))?)?;
+
     // Mixin override: ModelScenelRotateButtonMixin defines SetRotation(direction)
     // Falls through to Texture:SetRotation(radians) when no mixin override exists.
-    methods.add_method("SetRotation", |lua, this, radians: Value| {
-        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "SetRotation") {
-            return func.call::<()>((ud, radians));
+    methods.set("SetRotation", lua.create_function(|lua, (ud, radians): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        if let Some((func, frame_ud)) = super::methods_helpers::get_mixin_override(lua, id, "SetRotation") {
+            return func.call::<()>((frame_ud, radians));
         }
-        // Default: treat as texture UV rotation
         let rad_f64 = match radians {
             Value::Number(n) => n,
             Value::Integer(n) => n as f64,
             _ => 0.0,
         };
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.rotation = rad_f64 as f32;
         }
         Ok(())
-    });
+    })?)?;
+
+    Ok(())
 }
 
-fn add_model_appearance_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetUnit", |lua, this, args: mlua::MultiValue| {
-        // Mixin override: CastingBarMixin.SetUnit stores unit on the frame.
-        // Without this, the Rust no-op shadows the Lua mixin method.
-        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "SetUnit") {
-            let mut call_args = vec![ud];
+fn add_model_appearance_methods(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("SetUnit", lua.create_function(|lua, (ud, args): (LightUserData, mlua::MultiValue)| {
+        let id = lud_to_id(ud);
+        if let Some((func, frame_ud)) = super::methods_helpers::get_mixin_override(lua, id, "SetUnit") {
+            let mut call_args = vec![frame_ud];
             call_args.extend(args);
             return func.call::<()>(mlua::MultiValue::from_iter(call_args));
         }
         Ok(())
-    });
-    methods.add_method("SetAutoDress", |_, _this, _auto_dress: bool| Ok(()));
-    methods.add_method("SetDisplayInfo", |_, _this, _display_id: i32| Ok(()));
-    methods.add_method("SetCreature", |_, _this, _creature_id: i32| Ok(()));
-    methods.add_method("SetAnimation", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetCamDistanceScale", |_, _this, _scale: f64| Ok(()));
-    methods.add_method("GetCamDistanceScale", |_, _this, ()| Ok(1.0_f64));
-    methods.add_method("SetCamera", |_, _this, _camera_id: i32| Ok(()));
-    methods.add_method("SetPortraitZoom", |_, _this, _zoom: f64| Ok(()));
-    methods.add_method("SetDesaturation", |_, _this, _desat: f64| Ok(()));
-    methods.add_method("SetLight", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetSequence", |_, _this, _sequence: i32| Ok(()));
-    methods.add_method("SetSequenceTime", |_, _this, (_seq, _time): (i32, i32)| {
-        Ok(())
-    });
-    methods.add_method("ClearModel", |_, _this, ()| Ok(()));
-    methods.add_method("RefreshUnit", |_, _this, ()| Ok(()));
-    methods.add_method("RefreshCamera", |_, _this, ()| Ok(()));
+    })?)?;
+
+    add_model_appearance_stubs(lua, methods)?;
+    Ok(())
 }
 
-fn add_model_scene_id_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method(
-        "TransitionToModelSceneID",
-        |_, _this, _args: mlua::MultiValue| Ok(()),
-    );
-    methods.add_method("SetFromModelSceneID", |_, _this, _scene_id: i32| Ok(()));
-    methods.add_method("GetModelSceneID", |_, _this, ()| Ok(0i32));
-    methods.add_method("CycleVariation", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetUpperEmblemTexture", |_, _this, ()| -> Result<Option<String>> {
+fn add_model_appearance_stubs(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("SetAutoDress", lua.create_function(|_, (_ud, _auto): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("SetDisplayInfo", lua.create_function(|_, (_ud, _id): (LightUserData, i32)| Ok(()))?)?;
+    methods.set("SetCreature", lua.create_function(|_, (_ud, _id): (LightUserData, i32)| Ok(()))?)?;
+    methods.set("SetAnimation", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("SetCamDistanceScale", lua.create_function(|_, (_ud, _scale): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("GetCamDistanceScale", lua.create_function(|_, _ud: LightUserData| Ok(1.0_f64))?)?;
+    methods.set("SetCamera", lua.create_function(|_, (_ud, _cam): (LightUserData, i32)| Ok(()))?)?;
+    methods.set("SetPortraitZoom", lua.create_function(|_, (_ud, _zoom): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("SetDesaturation", lua.create_function(|_, (_ud, _desat): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("SetLight", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("SetSequence", lua.create_function(|_, (_ud, _seq): (LightUserData, i32)| Ok(()))?)?;
+    methods.set("SetSequenceTime", lua.create_function(|_, (_ud, _seq, _time): (LightUserData, i32, i32)| Ok(()))?)?;
+    methods.set("ClearModel", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    methods.set("RefreshUnit", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    methods.set("RefreshCamera", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    Ok(())
+}
+
+fn add_model_scene_id_methods(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("TransitionToModelSceneID", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("SetFromModelSceneID", lua.create_function(|_, (_ud, _id): (LightUserData, i32)| Ok(()))?)?;
+    methods.set("GetModelSceneID", lua.create_function(|_, _ud: LightUserData| Ok(0i32))?)?;
+    methods.set("CycleVariation", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("GetUpperEmblemTexture", lua.create_function(|_, _ud: LightUserData| -> Result<Option<String>> {
         Ok(None)
-    });
-    methods.add_method("GetLowerEmblemTexture", |_, _this, ()| -> Result<Option<String>> {
+    })?)?;
+    methods.set("GetLowerEmblemTexture", lua.create_function(|_, _ud: LightUserData| -> Result<Option<String>> {
         Ok(None)
-    });
+    })?)?;
+    Ok(())
 }
 
 /// Native ModelScene methods (C++ side in WoW, stubs here).
 /// The Lua-side logic lives in ModelSceneMixin; these are the engine calls it invokes.
-pub fn add_model_scene_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_model_scene_rendering_stubs(methods);
-    add_model_scene_camera_stubs(methods);
-    add_model_scene_light_stubs(methods);
-    add_model_scene_fog_stubs(methods);
+pub fn add_model_scene_methods(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    add_model_scene_rendering_stubs(lua, methods)?;
+    add_model_scene_camera_stubs(lua, methods)?;
+    add_model_scene_light_stubs(lua, methods)?;
+    add_model_scene_fog_stubs(lua, methods)?;
+    Ok(())
 }
 
-fn add_model_scene_rendering_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetAllowOverlappedModels", |_, _this, _allow: bool| Ok(()));
-    methods.add_method("IsAllowOverlappedModels", |_, _this, ()| Ok(false));
-    methods.add_method("SetPaused", |_, _this, _args: mlua::MultiValue| Ok(()));
-    // Project3DPointTo2D(x, y, z) -> screenX, screenY, depthScale
-    methods.add_method(
-        "Project3DPointTo2D",
-        |_, _this, _args: mlua::MultiValue| -> Result<(f64, f64, f64)> {
+fn add_model_scene_rendering_stubs(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("SetAllowOverlappedModels", lua.create_function(|_, (_ud, _allow): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("IsAllowOverlappedModels", lua.create_function(|_, _ud: LightUserData| Ok(false))?)?;
+    methods.set("SetPaused", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("Project3DPointTo2D", lua.create_function(
+        |_, (_ud, _args): (LightUserData, mlua::MultiValue)| -> Result<(f64, f64, f64)> {
             Ok((0.0, 0.0, 1.0))
         },
-    );
-    methods.add_method("SetViewInsets", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetViewInsets", |_, _this, ()| {
-        Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64))
-    });
-    methods.add_method("GetViewTranslation", |_, _this, ()| {
-        Ok((0.0_f64, 0.0_f64))
-    });
+    )?)?;
+    methods.set("SetViewInsets", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("GetViewInsets", lua.create_function(|_, _ud: LightUserData| Ok((0.0_f64, 0.0_f64, 0.0_f64, 0.0_f64)))?)?;
+    methods.set("GetViewTranslation", lua.create_function(|_, _ud: LightUserData| Ok((0.0_f64, 0.0_f64)))?)?;
+    Ok(())
 }
 
-fn add_model_scene_camera_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetCameraPosition", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetCameraPosition", |_, _this, ()| {
-        Ok((0.0_f64, 0.0_f64, 0.0_f64))
-    });
-    methods.add_method("SetCameraOrientationByYawPitchRoll", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetCameraOrientationByAxisVectors", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetCameraForward", |_, _this, ()| Ok((0.0_f64, 0.0_f64, 1.0_f64)));
-    methods.add_method("GetCameraRight", |_, _this, ()| Ok((1.0_f64, 0.0_f64, 0.0_f64)));
-    methods.add_method("GetCameraUp", |_, _this, ()| Ok((0.0_f64, 1.0_f64, 0.0_f64)));
-    methods.add_method("SetCameraFieldOfView", |_, _this, _fov: f64| Ok(()));
-    methods.add_method("GetCameraFieldOfView", |_, _this, ()| Ok(0.785_f64));
-    methods.add_method("SetCameraNearClip", |_, _this, _clip: f64| Ok(()));
-    methods.add_method("SetCameraFarClip", |_, _this, _clip: f64| Ok(()));
-    methods.add_method("GetCameraNearClip", |_, _this, ()| Ok(0.1_f64));
-    methods.add_method("GetCameraFarClip", |_, _this, ()| Ok(100.0_f64));
+fn add_model_scene_camera_stubs(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("SetCameraPosition", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("GetCameraPosition", lua.create_function(|_, _ud: LightUserData| Ok((0.0_f64, 0.0_f64, 0.0_f64)))?)?;
+    methods.set("SetCameraOrientationByYawPitchRoll", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("SetCameraOrientationByAxisVectors", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("GetCameraForward", lua.create_function(|_, _ud: LightUserData| Ok((0.0_f64, 0.0_f64, 1.0_f64)))?)?;
+    methods.set("GetCameraRight", lua.create_function(|_, _ud: LightUserData| Ok((1.0_f64, 0.0_f64, 0.0_f64)))?)?;
+    methods.set("GetCameraUp", lua.create_function(|_, _ud: LightUserData| Ok((0.0_f64, 1.0_f64, 0.0_f64)))?)?;
+    methods.set("SetCameraFieldOfView", lua.create_function(|_, (_ud, _fov): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("GetCameraFieldOfView", lua.create_function(|_, _ud: LightUserData| Ok(0.785_f64))?)?;
+    methods.set("SetCameraNearClip", lua.create_function(|_, (_ud, _clip): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("SetCameraFarClip", lua.create_function(|_, (_ud, _clip): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("GetCameraNearClip", lua.create_function(|_, _ud: LightUserData| Ok(0.1_f64))?)?;
+    methods.set("GetCameraFarClip", lua.create_function(|_, _ud: LightUserData| Ok(100.0_f64))?)?;
+    Ok(())
 }
 
-fn add_model_scene_light_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetLightType", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetLightPosition", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetLightPosition", |_, _this, ()| Ok((0.0_f64, 0.0_f64, 0.0_f64)));
-    methods.add_method("SetLightDirection", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("GetLightDirection", |_, _this, ()| Ok((0.0_f64, -1.0_f64, 0.0_f64)));
-    methods.add_method("SetLightAmbientColor", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetLightDiffuseColor", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("SetLightVisible", |_, _this, _visible: bool| Ok(()));
-    methods.add_method("IsLightVisible", |_, _this, ()| Ok(true));
+fn add_model_scene_light_stubs(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("SetLightType", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("SetLightPosition", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("GetLightPosition", lua.create_function(|_, _ud: LightUserData| Ok((0.0_f64, 0.0_f64, 0.0_f64)))?)?;
+    methods.set("SetLightDirection", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("GetLightDirection", lua.create_function(|_, _ud: LightUserData| Ok((0.0_f64, -1.0_f64, 0.0_f64)))?)?;
+    methods.set("SetLightAmbientColor", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("SetLightDiffuseColor", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("SetLightVisible", lua.create_function(|_, (_ud, _vis): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("IsLightVisible", lua.create_function(|_, _ud: LightUserData| Ok(true))?)?;
+    Ok(())
 }
 
-fn add_model_scene_fog_stubs<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetFogNear", |_, _this, _near: f64| Ok(()));
-    methods.add_method("SetFogFar", |_, _this, _far: f64| Ok(()));
-    methods.add_method("SetFogColor", |_, _this, _args: mlua::MultiValue| Ok(()));
-    methods.add_method("ClearFog", |_, _this, ()| Ok(()));
+fn add_model_scene_fog_stubs(lua: &Lua, methods: &mlua::Table) -> Result<()> {
+    methods.set("SetFogNear", lua.create_function(|_, (_ud, _near): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("SetFogFar", lua.create_function(|_, (_ud, _far): (LightUserData, f64)| Ok(()))?)?;
+    methods.set("SetFogColor", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
+    methods.set("ClearFog", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    Ok(())
 }

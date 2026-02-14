@@ -1,50 +1,50 @@
 //! Core frame methods: GetName, SetSize, Show/Hide, strata/level, mouse, scale, rect.
 
-use super::FrameHandle;
 use super::methods_helpers::{calculate_frame_height, calculate_frame_width};
+use crate::lua_api::frame::handle::{frame_lud, get_sim_state, lud_to_id};
 use crate::lua_api::layout::compute_frame_rect;
 use crate::lua_api::SimState;
-use mlua::{Lua, UserDataMethods, Value};
-use std::cell::RefCell;
-use std::rc::Rc;
+use mlua::{LightUserData, Lua, Value};
 
 /// Read screen dimensions from SimState.
 fn screen_dims(state: &SimState) -> (f32, f32) {
     (state.screen_width, state.screen_height)
 }
 
-/// Add core frame methods to FrameHandle UserData.
-pub fn add_core_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_identity_methods(methods);
-    add_size_methods(methods);
-    add_rect_methods(methods);
-    add_visibility_methods(methods);
-    add_strata_level_methods(methods);
-    add_mouse_input_methods(methods);
-    add_scale_methods(methods);
-    add_region_query_methods(methods);
+/// Add core frame methods to the shared methods table.
+pub fn add_core_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_identity_methods(lua, methods)?;
+    add_size_methods(lua, methods)?;
+    add_rect_methods(lua, methods)?;
+    add_visibility_methods(lua, methods)?;
+    add_strata_level_methods(lua, methods)?;
+    add_mouse_input_methods(lua, methods)?;
+    add_scale_methods(lua, methods)?;
+    add_region_query_methods(lua, methods)?;
+    Ok(())
 }
 
 /// Identity methods: GetName, GetObjectType
-fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetName() — returns nil for unnamed frames (WoW behavior)
-    methods.add_method("GetName", |_, this, ()| {
-        let state = this.state.borrow();
-        Ok(state.widgets.get(this.id).and_then(|f| f.name.clone()))
-    });
+fn add_identity_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetName", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).and_then(|f| f.name.clone()))
+    })?)?;
 
-    // GetDebugName() — returns name, or parentKey path, or object type
-    methods.add_method("GetDebugName", |_, this, ()| {
-        let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
+    methods.set("GetDebugName", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        if let Some(frame) = state.widgets.get(id) {
             if let Some(ref name) = frame.name {
                 return Ok(name.clone());
             }
-            // Try parentKey from parent's children_keys
             if let Some(pid) = frame.parent_id
                 && let Some(parent) = state.widgets.get(pid) {
                     for (key, &cid) in &parent.children_keys {
-                        if cid == this.id {
+                        if cid == id {
                             let parent_name = parent.name.as_deref().unwrap_or("?");
                             return Ok(format!("{}.{}", parent_name, key));
                         }
@@ -53,92 +53,113 @@ fn add_identity_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             return Ok(format!("[{}]", frame.widget_type.as_str()));
         }
         Ok("[Unknown]".to_string())
-    });
+    })?)?;
 
-    // GetObjectType()
-    methods.add_method("GetObjectType", |_, this, ()| {
-        let state = this.state.borrow();
+    methods.set("GetObjectType", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let obj_type = state
             .widgets
-            .get(this.id)
+            .get(id)
             .map(|f| f.widget_type.as_str())
             .unwrap_or("Frame");
         Ok(obj_type.to_string())
-    });
+    })?)?;
 
-    // IsObjectType(type) - Check if object is or inherits from a type
-    methods.add_method("IsObjectType", |_, this, type_name: String| {
+    methods.set("IsObjectType", lua.create_function(|lua, (ud, type_name): (LightUserData, String)| {
         use crate::widget::WidgetType;
-        let state = this.state.borrow();
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let wt = state
             .widgets
-            .get(this.id)
+            .get(id)
             .map(|f| f.widget_type)
             .unwrap_or(WidgetType::Frame);
         Ok(widget_type_is_a(wt, &type_name))
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Size methods: GetWidth, GetHeight, GetSize, SetWidth, SetHeight, SetSize
-fn add_size_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetWidth() - returns explicit width or calculates from anchors.
-    // Forces layout resolution (clears rect_dirty) per WoW behavior.
-    methods.add_method("GetWidth", |_, this, ()| {
-        let mut state = this.state.borrow_mut();
-        state.resolve_rect_if_dirty(this.id);
-        Ok(calculate_frame_width(&state.widgets, this.id))
-    });
+fn add_size_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_size_getters(lua, methods)?;
+    add_size_setters(lua, methods)?;
+    Ok(())
+}
 
-    // GetHeight() - returns explicit height or calculates from anchors.
-    // Forces layout resolution (clears rect_dirty) per WoW behavior.
-    methods.add_method("GetHeight", |_, this, ()| {
-        let mut state = this.state.borrow_mut();
-        state.resolve_rect_if_dirty(this.id);
-        Ok(calculate_frame_height(&state.widgets, this.id))
-    });
+/// Size getter methods: GetWidth, GetHeight, GetSize
+fn add_size_getters(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetWidth", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        state.resolve_rect_if_dirty(id);
+        Ok(calculate_frame_width(&state.widgets, id))
+    })?)?;
 
-    // GetSize() -> width, height (with anchor calculation).
-    // Forces layout resolution (clears rect_dirty) per WoW behavior.
-    methods.add_method("GetSize", |_, this, _explicit: Option<bool>| {
-        let mut state = this.state.borrow_mut();
-        state.resolve_rect_if_dirty(this.id);
-        let width = calculate_frame_width(&state.widgets, this.id);
-        let height = calculate_frame_height(&state.widgets, this.id);
+    methods.set("GetHeight", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        state.resolve_rect_if_dirty(id);
+        Ok(calculate_frame_height(&state.widgets, id))
+    })?)?;
+
+    methods.set("GetSize", lua.create_function(|lua, (ud, _explicit): (LightUserData, Option<bool>)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        state.resolve_rect_if_dirty(id);
+        let width = calculate_frame_width(&state.widgets, id);
+        let height = calculate_frame_height(&state.widgets, id);
         Ok((width, height))
-    });
+    })?)?;
 
-    // SetSize(width, height)
-    methods.add_method("SetSize", |_, this, (width, height): (f32, f32)| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+    Ok(())
+}
+
+/// Size setter methods: SetSize, SetWidth, SetHeight
+fn add_size_setters(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetSize", lua.create_function(|lua, (ud, width, height): (LightUserData, f32, f32)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.set_size(width, height);
         }
-        state.widgets.mark_rect_dirty(this.id);
-        state.invalidate_layout_with_dependents(this.id);
+        state.widgets.mark_rect_dirty(id);
+        state.invalidate_layout_with_dependents(id);
         Ok(())
-    });
+    })?)?;
 
-    // SetWidth(width)
-    methods.add_method("SetWidth", |_, this, width: f32| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+    methods.set("SetWidth", lua.create_function(|lua, (ud, width): (LightUserData, f32)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.width = width;
         }
-        state.widgets.mark_rect_dirty(this.id);
-        state.invalidate_layout_with_dependents(this.id);
+        state.widgets.mark_rect_dirty(id);
+        state.invalidate_layout_with_dependents(id);
         Ok(())
-    });
+    })?)?;
 
-    // SetHeight(height)
-    methods.add_method("SetHeight", |_, this, height: f32| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+    methods.set("SetHeight", lua.create_function(|lua, (ud, height): (LightUserData, f32)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.height = height;
         }
-        state.widgets.mark_rect_dirty(this.id);
-        state.invalidate_layout_with_dependents(this.id);
+        state.widgets.mark_rect_dirty(id);
+        state.invalidate_layout_with_dependents(id);
         Ok(())
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Compute effective scale by walking up the parent chain.
@@ -156,120 +177,117 @@ fn effective_scale(widgets: &crate::widget::WidgetRegistry, id: u64) -> f32 {
     scale
 }
 
-/// Rect/position methods: GetRect, GetScaledRect, GetLeft, GetRight, GetTop, GetBottom,
-/// GetCenter, GetBounds.
-///
-/// WoW coordinate system: origin at bottom-left, Y increases upward.
-/// `compute_frame_rect` returns top-left origin (screen coords, Y-down), so we convert.
-fn add_rect_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_rect_full_methods(methods);
-    add_rect_edge_methods(methods);
+/// Rect/position methods
+fn add_rect_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_rect_full_methods(lua, methods)?;
+    add_rect_edge_methods(lua, methods)?;
+    Ok(())
 }
 
 /// GetRect, GetScaledRect, GetBounds
-fn add_rect_full_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetRect() -> left, bottom, width, height (unscaled, bottom-left origin)
-    methods.add_method("GetRect", |_, this, ()| {
-        let state = this.state.borrow();
+fn add_rect_full_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetRect", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
+        let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
         let bottom = screen_height - rect.y - rect.height;
         Ok((rect.x, bottom, rect.width, rect.height))
-    });
+    })?)?;
 
-    // GetScaledRect() -> left, bottom, width, height (scaled by effective scale)
-    methods.add_method("GetScaledRect", |_, this, ()| {
-        let state = this.state.borrow();
+    methods.set("GetScaledRect", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
-        let scale = effective_scale(&state.widgets, this.id);
+        let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
+        let scale = effective_scale(&state.widgets, id);
         let left = rect.x * scale;
         let bottom = (screen_height - rect.y - rect.height) * scale;
         Ok((left, bottom, rect.width * scale, rect.height * scale))
-    });
+    })?)?;
 
-    // GetBounds() -> left, bottom, width, height (same as GetRect in practice)
-    methods.add_method("GetBounds", |_, this, ()| {
-        let state = this.state.borrow();
+    methods.set("GetBounds", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
+        let rect = compute_frame_rect(&state.widgets, id, screen_width, screen_height);
         let bottom = screen_height - rect.y - rect.height;
         Ok((rect.x, bottom, rect.width, rect.height))
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// GetLeft, GetRight, GetTop, GetBottom, GetCenter
-fn add_rect_edge_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetLeft", |_, this, ()| {
-        let state = this.state.borrow();
-        let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
+fn add_rect_edge_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetLeft", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let (sw, sh) = screen_dims(&state);
+        let rect = compute_frame_rect(&state.widgets, id, sw, sh);
         Ok(rect.x)
-    });
+    })?)?;
 
-    methods.add_method("GetRight", |_, this, ()| {
-        let state = this.state.borrow();
-        let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
+    methods.set("GetRight", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let (sw, sh) = screen_dims(&state);
+        let rect = compute_frame_rect(&state.widgets, id, sw, sh);
         Ok(rect.x + rect.width)
-    });
+    })?)?;
 
-    methods.add_method("GetTop", |_, this, ()| {
-        let state = this.state.borrow();
-        let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
-        Ok(screen_height - rect.y)
-    });
+    methods.set("GetTop", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let (sw, sh) = screen_dims(&state);
+        let rect = compute_frame_rect(&state.widgets, id, sw, sh);
+        Ok(sh - rect.y)
+    })?)?;
 
-    methods.add_method("GetBottom", |_, this, ()| {
-        let state = this.state.borrow();
-        let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
-        Ok(screen_height - rect.y - rect.height)
-    });
+    methods.set("GetBottom", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let (sw, sh) = screen_dims(&state);
+        let rect = compute_frame_rect(&state.widgets, id, sw, sh);
+        Ok(sh - rect.y - rect.height)
+    })?)?;
 
-    methods.add_method("GetCenter", |_, this, ()| {
-        let state = this.state.borrow();
-        let (screen_width, screen_height) = screen_dims(&state);
-        let rect = compute_frame_rect(
-            &state.widgets, this.id, screen_width, screen_height,
-        );
+    methods.set("GetCenter", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let (sw, sh) = screen_dims(&state);
+        let rect = compute_frame_rect(&state.widgets, id, sw, sh);
         let cx = rect.x + rect.width / 2.0;
-        let cy = screen_height - rect.y - rect.height / 2.0;
+        let cy = sh - rect.y - rect.height / 2.0;
         Ok((cx, cy))
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Fire OnShow on a frame and recursively on its visible children.
 pub(crate) fn fire_on_show_recursive(
     lua: &Lua,
-    state: &Rc<RefCell<SimState>>,
     id: u64,
 ) -> mlua::Result<()> {
-    // Fire OnShow on this frame (intrinsic postcall handlers fire through template scripts)
-    if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, id, "OnShow")
-        && let Some(frame_ud) = crate::lua_api::script_helpers::get_frame_ref(lua, id)
-            && let Err(e) = handler.call::<()>(frame_ud) {
-                crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
-            }
+    if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, id, "OnShow") {
+        let frame_val = frame_lud(id);
+        if let Err(e) = handler.call::<()>(frame_val) {
+            crate::lua_api::script_helpers::call_error_handler(lua, &e.to_string());
+        }
+    }
 
-    // Collect visible children (borrow scoped)
     let children: Vec<u64> = {
-        let st = state.borrow();
+        let state_rc = get_sim_state(lua);
+        let st = state_rc.borrow();
         st.widgets
             .get(id)
             .map(|f| {
@@ -283,148 +301,164 @@ pub(crate) fn fire_on_show_recursive(
     };
 
     for child_id in children {
-        fire_on_show_recursive(lua, state, child_id)?;
+        fire_on_show_recursive(lua, child_id)?;
     }
 
     Ok(())
 }
 
 /// Visibility methods: Show, Hide, IsVisible, IsShown, SetShown
-fn add_visibility_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // Show()
-    methods.add_method("Show", |lua, this, ()| {
+fn add_visibility_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("Show", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
         let was_hidden = {
-            let state = this.state.borrow();
-            state.widgets.get(this.id).map(|f| !f.visible).unwrap_or(false)
+            let state = state_rc.borrow();
+            state.widgets.get(id).map(|f| !f.visible).unwrap_or(false)
         };
-        this.state.borrow_mut().set_frame_visible(this.id, true);
+        state_rc.borrow_mut().set_frame_visible(id, true);
         if was_hidden {
-            fire_on_show_recursive(lua, &this.state, this.id)?;
+            fire_on_show_recursive(lua, id)?;
         }
         Ok(())
-    });
+    })?)?;
 
-    // Hide()
-    methods.add_method("Hide", |_, this, ()| {
-        this.state.borrow_mut().set_frame_visible(this.id, false);
+    methods.set("Hide", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        state_rc.borrow_mut().set_frame_visible(id, false);
         Ok(())
-    });
+    })?)?;
 
-    // IsVisible() - true only if this frame AND all ancestors are shown
-    methods.add_method("IsVisible", |_, this, ()| {
-        let state = this.state.borrow();
-        let mut id = this.id;
+    methods.set("IsVisible", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let mut cur = id;
         loop {
-            match state.widgets.get(id) {
+            match state.widgets.get(cur) {
                 Some(f) if f.visible => match f.parent_id {
-                    Some(pid) => id = pid,
+                    Some(pid) => cur = pid,
                     None => return Ok(true),
                 },
                 _ => return Ok(false),
             }
         }
-    });
+    })?)?;
 
-    // IsShown() - true if this frame's own visible flag is set (ignores parents)
-    methods.add_method("IsShown", |_, this, ()| {
-        let state = this.state.borrow();
-        let visible = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.visible)
-            .unwrap_or(false);
+    methods.set("IsShown", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let visible = state.widgets.get(id).map(|f| f.visible).unwrap_or(false);
         Ok(visible)
-    });
+    })?)?;
 
-    // SetShown(shown) - show/hide based on boolean
-    methods.add_method("SetShown", |_, this, shown: bool| {
-        this.state.borrow_mut().set_frame_visible(this.id, shown);
+    methods.set("SetShown", lua.create_function(|lua, (ud, shown): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        state_rc.borrow_mut().set_frame_visible(id, shown);
         Ok(())
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Strata and level methods
-fn add_strata_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_alpha_methods(methods);
-    add_strata_methods(methods);
-    add_level_methods(methods);
+fn add_strata_level_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_alpha_methods(lua, methods)?;
+    add_strata_methods(lua, methods)?;
+    add_level_methods(lua, methods)?;
 
-    methods.add_method("SetToplevel", |_, this, toplevel: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(f) = state.widgets.get_mut(this.id) { f.toplevel = toplevel; }
+    methods.set("SetToplevel", lua.create_function(|lua, (ud, toplevel): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(id) { f.toplevel = toplevel; }
         Ok(())
-    });
-    methods.add_method("IsToplevel", |_, this, ()| {
-        Ok(this.state.borrow().widgets.get(this.id).map(|f| f.toplevel).unwrap_or(false))
-    });
+    })?)?;
 
-    // NOTE: Raise() and Lower() methods are handled in __index metamethod
-    // to allow custom properties with these names to take precedence.
+    methods.set("IsToplevel", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        Ok(state_rc.borrow().widgets.get(id).map(|f| f.toplevel).unwrap_or(false))
+    })?)?;
+
+    Ok(())
 }
 
 /// Alpha transparency methods.
-fn add_alpha_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetAlpha", |_, this, alpha: f32| {
+fn add_alpha_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetAlpha", lua.create_function(|lua, (ud, alpha): (LightUserData, f32)| {
+        let id = lud_to_id(ud);
         let clamped = alpha.clamp(0.0, 1.0);
-        let mut state = this.state.borrow_mut();
-        let changed = state.widgets.get(this.id)
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        let changed = state.widgets.get(id)
             .map(|f| f.alpha != clamped)
             .unwrap_or(false);
         if changed {
-            // Get parent's effective_alpha before mutating.
-            let parent_eff = state.widgets.get(this.id)
+            let parent_eff = state.widgets.get(id)
                 .and_then(|f| f.parent_id)
                 .and_then(|pid| state.widgets.get(pid))
                 .map(|p| p.effective_alpha)
                 .unwrap_or(1.0);
-            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+            if let Some(frame) = state.widgets.get_mut_visual(id) {
                 frame.alpha = clamped;
             }
-            state.widgets.propagate_effective_alpha(this.id, parent_eff);
+            state.widgets.propagate_effective_alpha(id, parent_eff);
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("GetAlpha", |_, this, ()| {
-        let state = this.state.borrow();
-        let alpha = state.widgets.get(this.id).map(|f| f.alpha).unwrap_or(1.0);
-        Ok(alpha)
-    });
+    methods.set("GetAlpha", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.alpha).unwrap_or(1.0))
+    })?)?;
 
-    methods.add_method("GetEffectiveAlpha", |_, this, ()| {
-        let state = this.state.borrow();
-        Ok(state.widgets.get(this.id).map(|f| f.effective_alpha).unwrap_or(1.0))
-    });
+    methods.set("GetEffectiveAlpha", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.effective_alpha).unwrap_or(1.0))
+    })?)?;
 
-    methods.add_method("SetAlphaFromBoolean", |_, this, flag: bool| {
-        let mut state = this.state.borrow_mut();
+    methods.set("SetAlphaFromBoolean", lua.create_function(|lua, (ud, flag): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
         let new_alpha = if flag { 1.0 } else { 0.0 };
-        let parent_eff = state.widgets.get(this.id)
+        let parent_eff = state.widgets.get(id)
             .and_then(|f| f.parent_id)
             .and_then(|pid| state.widgets.get(pid))
             .map(|p| p.effective_alpha)
             .unwrap_or(1.0);
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.alpha = new_alpha;
         }
-        state.widgets.propagate_effective_alpha(this.id, parent_eff);
+        state.widgets.propagate_effective_alpha(id, parent_eff);
         Ok(())
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Frame strata methods (major draw order).
-fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetFrameStrata", |_, this, strata: String| {
-        let mut state = this.state.borrow_mut();
+fn add_strata_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetFrameStrata", lua.create_function(|lua, (ud, strata): (LightUserData, String)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
         let Some(s) = crate::widget::FrameStrata::from_str(&strata) else {
             return Ok(());
         };
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.frame_strata = s;
             frame.has_fixed_frame_strata = true;
         }
-        // Propagate to descendants that don't have fixed strata
-        let mut queue: Vec<u64> = state.widgets.get(this.id)
+        let mut queue: Vec<u64> = state.widgets.get(id)
             .map(|f| f.children.clone()).unwrap_or_default();
         while let Some(child_id) = queue.pop() {
             let Some(child) = state.widgets.get_mut_visual(child_id) else { continue };
@@ -432,310 +466,265 @@ fn add_strata_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
             child.frame_strata = s;
             queue.extend(child.children.iter().copied());
         }
-        // Invalidate strata buckets since strata changed (affects bucket assignment).
         state.strata_buckets = None;
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("GetFrameStrata", |_, this, ()| {
-        let state = this.state.borrow();
-        let strata = state
-            .widgets
-            .get(this.id)
+    methods.set("GetFrameStrata", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let strata = state.widgets.get(id)
             .map(|f| f.frame_strata.as_str())
             .unwrap_or("MEDIUM");
         Ok(strata.to_string())
-    });
+    })?)?;
 
-    methods.add_method("SetFixedFrameStrata", |_, this, fixed: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+    methods.set("SetFixedFrameStrata", lua.create_function(|lua, (ud, fixed): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.has_fixed_frame_strata = fixed;
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("HasFixedFrameStrata", |_, this, ()| {
-        let state = this.state.borrow();
-        let fixed = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.has_fixed_frame_strata)
-            .unwrap_or(false);
-        Ok(fixed)
-    });
+    methods.set("HasFixedFrameStrata", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.has_fixed_frame_strata).unwrap_or(false))
+    })?)?;
+
+    Ok(())
 }
 
 /// Frame level methods (draw order within strata).
-fn add_level_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetFrameLevel", |_, this, level: i32| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+fn add_level_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetFrameLevel", lua.create_function(|lua, (ud, level): (LightUserData, i32)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.frame_level = level;
             frame.has_fixed_frame_level = true;
         }
-        // Propagate to descendants (children inherit parent_level + 1)
-        super::methods_hierarchy::propagate_strata_level_pub(
-            &mut state.widgets,
-            this.id,
-        );
+        super::methods_hierarchy::propagate_strata_level_pub(&mut state.widgets, id);
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("GetFrameLevel", |_, this, ()| {
-        let state = this.state.borrow();
-        let level = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.frame_level)
-            .unwrap_or(0);
-        Ok(level)
-    });
+    methods.set("GetFrameLevel", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.frame_level).unwrap_or(0))
+    })?)?;
 
-    methods.add_method("SetFixedFrameLevel", |_, this, fixed: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+    methods.set("SetFixedFrameLevel", lua.create_function(|lua, (ud, fixed): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.has_fixed_frame_level = fixed;
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("HasFixedFrameLevel", |_, this, ()| {
-        let state = this.state.borrow();
-        let fixed = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.has_fixed_frame_level)
-            .unwrap_or(false);
-        Ok(fixed)
-    });
+    methods.set("HasFixedFrameLevel", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.has_fixed_frame_level).unwrap_or(false))
+    })?)?;
+
+    Ok(())
 }
 
 /// Mouse and input methods
-fn add_mouse_input_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // SetID(id) - Set frame ID (used for tab ordering, etc.)
-    methods.add_method("SetID", |_, this, id: i32| {
-        if let Some(f) = this.state.borrow_mut().widgets.get_mut(this.id) {
-            f.user_id = id;
+fn add_mouse_input_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetID", lua.create_function(|lua, (ud, user_id): (LightUserData, i32)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        if let Some(f) = state_rc.borrow_mut().widgets.get_mut(id) {
+            f.user_id = user_id;
         }
         Ok(())
-    });
+    })?)?;
 
-    // GetID() - Get frame ID
-    methods.add_method("GetID", |_, this, ()| {
-        Ok(this.state.borrow().widgets.get(this.id).map(|f| f.user_id).unwrap_or(0))
-    });
+    methods.set("GetID", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        Ok(state_rc.borrow().widgets.get(id).map(|f| f.user_id).unwrap_or(0))
+    })?)?;
 
-    // GetMapID() / SetMapID() - Map canvas frame stubs
-    methods.add_method("GetMapID", |_, _this, ()| Ok(0));
-    methods.add_method("SetMapID", |_, _this, _map_id: i32| Ok(()));
+    methods.set("GetMapID", lua.create_function(|_, _ud: LightUserData| Ok(0))?)?;
+    methods.set("SetMapID", lua.create_function(|_, (_ud, _map_id): (LightUserData, i32)| Ok(()))?)?;
 
-    // EnableMouse(enable)
-    methods.add_method("EnableMouse", |_, this, enable: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.mouse_enabled = enable;
-        }
+    methods.set("EnableMouse", lua.create_function(|lua, (ud, enable): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) { frame.mouse_enabled = enable; }
         Ok(())
-    });
+    })?)?;
 
-    // IsMouseEnabled()
-    methods.add_method("IsMouseEnabled", |_, this, ()| {
-        let state = this.state.borrow();
-        let enabled = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.mouse_enabled)
-            .unwrap_or(false);
-        Ok(enabled)
-    });
+    methods.set("IsMouseEnabled", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.mouse_enabled).unwrap_or(false))
+    })?)?;
 
-    // EnableMouseWheel(enable) - enable mouse wheel events
-    methods.add_method("EnableMouseWheel", |_, _this, _enable: bool| Ok(()));
+    methods.set("EnableMouseWheel", lua.create_function(|_, (_ud, _enable): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("IsMouseWheelEnabled", lua.create_function(|_, _ud: LightUserData| Ok(false))?)?;
 
-    // IsMouseWheelEnabled()
-    methods.add_method("IsMouseWheelEnabled", |_, _this, ()| Ok(false));
-
-    // EnableKeyboard(enable) - enable keyboard input for frame
-    methods.add_method("EnableKeyboard", |_, this, enable: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(f) = state.widgets.get_mut(this.id) {
-            f.keyboard_enabled = enable;
-        }
+    methods.set("EnableKeyboard", lua.create_function(|lua, (ud, enable): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(f) = state.widgets.get_mut(id) { f.keyboard_enabled = enable; }
         Ok(())
-    });
+    })?)?;
 
-    // IsKeyboardEnabled()
-    methods.add_method("IsKeyboardEnabled", |_, this, ()| {
-        let state = this.state.borrow();
-        let enabled = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.keyboard_enabled)
-            .unwrap_or(false);
-        Ok(enabled)
-    });
+    methods.set("IsKeyboardEnabled", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.keyboard_enabled).unwrap_or(false))
+    })?)?;
 
-    // RegisterForMouse(button1, button2, ...) - register mouse buttons for click
-    methods.add_method("RegisterForMouse", |_, _this, _args: mlua::MultiValue| Ok(()));
+    methods.set("RegisterForMouse", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()))?)?;
 
-    add_mouse_motion_methods(methods);
+    add_mouse_motion_methods(lua, methods)?;
+    Ok(())
 }
 
 /// Mouse motion and click enabled methods.
-fn add_mouse_motion_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("EnableMouseMotion", |_, this, enable: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.mouse_motion_enabled = enable;
-        }
+fn add_mouse_motion_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("EnableMouseMotion", lua.create_function(|lua, (ud, enable): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) { frame.mouse_motion_enabled = enable; }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("IsMouseMotionEnabled", |_, this, ()| {
-        let state = this.state.borrow();
-        let enabled = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.mouse_motion_enabled)
-            .unwrap_or(false);
-        Ok(enabled)
-    });
+    methods.set("IsMouseMotionEnabled", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.mouse_motion_enabled).unwrap_or(false))
+    })?)?;
 
-    methods.add_method("SetMouseMotionEnabled", |_, this, enable: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.mouse_motion_enabled = enable;
-        }
+    methods.set("SetMouseMotionEnabled", lua.create_function(|lua, (ud, enable): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) { frame.mouse_motion_enabled = enable; }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("SetMouseClickEnabled", |_, this, enable: bool| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
-            frame.mouse_enabled = enable;
-        }
+    methods.set("SetMouseClickEnabled", lua.create_function(|lua, (ud, enable): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) { frame.mouse_enabled = enable; }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("IsMouseClickEnabled", |_, this, ()| {
-        let state = this.state.borrow();
-        let enabled = state
-            .widgets
-            .get(this.id)
-            .map(|f| f.mouse_enabled)
-            .unwrap_or(false);
-        Ok(enabled)
-    });
+    methods.set("IsMouseClickEnabled", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.mouse_enabled).unwrap_or(false))
+    })?)?;
+
+    Ok(())
 }
 
 /// Scale methods
-fn add_scale_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // GetScale() - get frame's scale
-    methods.add_method("GetScale", |_, this, ()| {
-        let state = this.state.borrow();
-        Ok(state.widgets.get(this.id).map(|f| f.scale).unwrap_or(1.0))
-    });
+fn add_scale_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetScale", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.scale).unwrap_or(1.0))
+    })?)?;
 
-    // SetScale(scale) - set frame's scale factor (affects visible size)
-    methods.add_method("SetScale", |_, this, scale: f32| {
-        let mut state = this.state.borrow_mut();
-        let parent_eff_scale = state.widgets.get(this.id)
+    methods.set("SetScale", lua.create_function(|lua, (ud, scale): (LightUserData, f32)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        let parent_eff_scale = state.widgets.get(id)
             .and_then(|f| f.parent_id)
             .and_then(|pid| state.widgets.get(pid))
             .map(|p| p.effective_scale)
             .unwrap_or(1.0);
-        if let Some(f) = state.widgets.get_mut_visual(this.id) {
+        if let Some(f) = state.widgets.get_mut_visual(id) {
             f.scale = scale;
         }
-        state.widgets.propagate_effective_scale(this.id, parent_eff_scale);
-        state.invalidate_layout_with_dependents(this.id);
+        state.widgets.propagate_effective_scale(id, parent_eff_scale);
+        state.invalidate_layout_with_dependents(id);
         Ok(())
-    });
+    })?)?;
 
-    // GetEffectiveScale() - product of all ancestor scales × own scale
-    methods.add_method("GetEffectiveScale", |_, this, ()| {
-        let state = this.state.borrow();
-        Ok(state.widgets.get(this.id).map(|f| f.effective_scale).unwrap_or(1.0))
-    });
+    methods.set("GetEffectiveScale", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.widgets.get(id).map(|f| f.effective_scale).unwrap_or(1.0))
+    })?)?;
 
-    // SetIgnoreParentScale(ignore) - set whether frame ignores parent scale
-    methods.add_method("SetIgnoreParentScale", |_, _this, _ignore: bool| Ok(()));
+    methods.set("SetIgnoreParentScale", lua.create_function(|_, (_ud, _ignore): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("GetIgnoreParentScale", lua.create_function(|_, _ud: LightUserData| Ok(false))?)?;
+    methods.set("SetIgnoreParentAlpha", lua.create_function(|_, (_ud, _ignore): (LightUserData, bool)| Ok(()))?)?;
+    methods.set("GetIgnoreParentAlpha", lua.create_function(|_, _ud: LightUserData| Ok(false))?)?;
 
-    // GetIgnoreParentScale() - get whether frame ignores parent scale
-    methods.add_method("GetIgnoreParentScale", |_, _this, ()| Ok(false));
-
-    // SetIgnoreParentAlpha(ignore) - set whether frame ignores parent alpha
-    methods.add_method("SetIgnoreParentAlpha", |_, _this, _ignore: bool| Ok(()));
-
-    // GetIgnoreParentAlpha() - get whether frame ignores parent alpha
-    methods.add_method("GetIgnoreParentAlpha", |_, _this, ()| Ok(false));
+    Ok(())
 }
 
-/// Region/frame query methods: IsRectValid, IsObjectLoaded, IsMouseOver, etc.
-fn add_region_query_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    // IsRectValid() - lazily resolves layout when dirty, preventing
-    // "invalid key to next" when arrow-edge UpdatePosition calls IsRectValid
-    // mid-iteration of buttonsWithDirtyEdges during OnUpdate.
-    methods.add_method("IsRectValid", |_, this, ()| {
-        let has_anchors = this.state.borrow().widgets.get(this.id)
+/// Region/frame query methods
+fn add_region_query_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("IsRectValid", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let has_anchors = state_rc.borrow().widgets.get(id)
             .map(|f| !f.anchors.is_empty()).unwrap_or(false);
         if !has_anchors {
             return Ok(false);
         }
-        this.state.borrow_mut().resolve_rect_if_dirty(this.id);
+        state_rc.borrow_mut().resolve_rect_if_dirty(id);
         Ok(true)
-    });
+    })?)?;
 
-    // IsObjectLoaded() - always true in the simulator
-    methods.add_method("IsObjectLoaded", |_, _this, ()| Ok(true));
+    methods.set("IsObjectLoaded", lua.create_function(|_, _ud: LightUserData| Ok(true))?)?;
+    methods.set("IsMouseOver", lua.create_function(|_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(true))?)?;
 
-    // IsMouseOver() - stub returning true (in the simulator, click handlers assume mouse-over)
-    methods.add_method("IsMouseOver", |_, _this, _args: mlua::MultiValue| Ok(true));
+    methods.set("IsMouseMotionFocus", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        Ok(state.hovered_frame == Some(id))
+    })?)?;
 
-    // IsMouseMotionFocus() - whether this frame is the current mouse hover target
-    methods.add_method("IsMouseMotionFocus", |_, this, ()| {
-        let state = this.state.borrow();
-        Ok(state.hovered_frame == Some(this.id))
-    });
+    methods.set("StopAnimating", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    methods.set("GetSourceLocation", lua.create_function(|_, _ud: LightUserData| Ok(Value::Nil))?)?;
+    methods.set("Intersects", lua.create_function(|_, (_ud, _region): (LightUserData, Value)| Ok(false))?)?;
+    methods.set("IsDrawLayerEnabled", lua.create_function(|_, (_ud, _layer): (LightUserData, String)| Ok(true))?)?;
+    methods.set("SetDrawLayerEnabled", lua.create_function(|_, (_ud, _layer, _enabled): (LightUserData, String, bool)| Ok(()))?)?;
 
-    // StopAnimating() - stub
-    methods.add_method("StopAnimating", |_, _this, ()| Ok(()));
-
-    // GetSourceLocation() - no debug info in simulator
-    methods.add_method("GetSourceLocation", |_, _this, ()| Ok(Value::Nil));
-
-    // Intersects(region) - stub returning false
-    methods.add_method("Intersects", |_, _this, _region: Value| Ok(false));
-
-    // IsDrawLayerEnabled(layer) - stub returning true
-    methods.add_method("IsDrawLayerEnabled", |_, _this, _layer: String| Ok(true));
-
-    // SetDrawLayerEnabled(layer, enabled) - stub
-    methods.add_method(
-        "SetDrawLayerEnabled",
-        |_, _this, (_layer, _enabled): (String, bool)| Ok(()),
-    );
+    Ok(())
 }
 
 /// Check if a widget type is or inherits from the given type name.
-/// WoW type hierarchy:
-/// - Region: base of all
-/// - Frame extends Region
-/// - Button extends Frame
-/// - CheckButton extends Button
-/// - GameTooltip extends Frame
-/// - EditBox, ScrollFrame, Slider, StatusBar, etc. extend Frame
-/// - FontString, Texture extend Region (not Frame)
 fn widget_type_is_a(wt: crate::widget::WidgetType, type_name: &str) -> bool {
     use crate::widget::WidgetType;
-    // Exact match
     if wt.as_str().eq_ignore_ascii_case(type_name) {
         return true;
     }
-    // Check parent types
     match type_name.to_ascii_lowercase().as_str() {
-        "region" => true, // Everything is a Region
+        "region" => true,
         "frame" => !matches!(wt, WidgetType::FontString | WidgetType::Texture | WidgetType::Line),
         "texture" => matches!(wt, WidgetType::Texture | WidgetType::Line),
         "line" => matches!(wt, WidgetType::Line),

@@ -352,11 +352,7 @@ fn register_action_slot_query_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) ->
     globals.set("SetActionUIButton", lua.create_function(move |_, args: mlua::MultiValue| {
         let mut iter = args.iter();
         let frame_id = iter.next().and_then(|v| {
-            if let Value::UserData(ud) = v {
-                ud.borrow::<super::super::frame::FrameHandle>().ok().map(|h| h.id)
-            } else {
-                None
-            }
+            crate::lua_api::frame::extract_frame_id(v)
         });
         let action = iter.next().and_then(|v| slot_from_value(v));
         if let (Some(fid), Some(slot)) = (frame_id, action) {

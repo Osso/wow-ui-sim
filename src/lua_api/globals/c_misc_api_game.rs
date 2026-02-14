@@ -97,14 +97,12 @@ fn register_game_menu_stubs(lua: &Lua) -> Result<()> {
     g.set("CanAutoSetGamePadCursorControl", lua.create_function(|_, _e: bool| Ok(false))?)?;
     g.set("SetGamePadCursorControl", nop.clone())?;
     g.set("SetPortraitTexture", lua.create_function(|lua, (tex, unit): (Value, Value)| {
-        use crate::lua_api::frame::FrameHandle;
         let texture_path = class_icon_path_for_unit(lua, &unit);
-        if let Value::UserData(ud) = &tex {
-            if let Ok(handle) = ud.borrow::<FrameHandle>() {
-                let mut state = handle.state.borrow_mut();
-                if let Some(frame) = state.widgets.get_mut_visual(handle.id) {
-                    frame.texture = Some(texture_path);
-                }
+        if let Some(id) = crate::lua_api::frame::extract_frame_id(&tex) {
+            let state_rc = crate::lua_api::frame::get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut_visual(id) {
+                frame.texture = Some(texture_path);
             }
         }
         Ok(())

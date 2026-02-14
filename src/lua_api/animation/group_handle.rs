@@ -1,6 +1,7 @@
 //! AnimGroupHandle userdata methods and metamethods.
 
 use crate::lua_api::SimState;
+use crate::lua_api::frame::frame_lud;
 use mlua::{Lua, MultiValue, UserData, UserDataMethods, Value};
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -342,12 +343,10 @@ impl AnimGroupHandle {
                 .and_then(|g| g.name.clone()))
         });
 
-        methods.add_method("GetParent", |lua, this, ()| {
+        methods.add_method("GetParent", |_, this, ()| {
             let state = this.state.borrow();
             if let Some(group) = state.animation_groups.get(&this.group_id) {
-                let frame_key = format!("__frame_{}", group.owner_frame_id);
-                let frame: Value = lua.globals().get(frame_key.as_str())?;
-                return Ok(frame);
+                return Ok(frame_lud(group.owner_frame_id));
             }
             Ok(Value::Nil)
         });

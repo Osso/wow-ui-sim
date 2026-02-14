@@ -1,85 +1,86 @@
 //! Button-specific methods: SetNormalTexture, SetPushedTexture, font objects, etc.
 
-use super::FrameHandle;
 use super::methods_helpers::get_or_create_button_texture;
-use mlua::{UserDataMethods, Value};
-use std::rc::Rc;
+use crate::lua_api::frame::handle::{frame_lud, get_sim_state, lud_to_id};
+use mlua::{LightUserData, Lua, Value};
 
-/// Add button-specific methods to FrameHandle UserData.
-pub fn add_button_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_font_object_methods(methods);
-    add_pushed_text_offset_methods(methods);
-    add_texture_getter_methods(methods);
-    add_texture_setter_methods(methods);
-    add_texture_setter_methods_2(methods);
-    add_atlas_setter_methods(methods);
-    add_checked_texture_methods(methods);
-    add_three_slice_methods(methods);
-    add_font_string_methods(methods);
-    add_enable_disable_methods(methods);
-    add_click_methods(methods);
-    add_button_state_methods(methods);
+/// Add button-specific methods to the shared methods table.
+pub fn add_button_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_font_object_methods(lua, methods)?;
+    add_pushed_text_offset_methods(lua, methods)?;
+    add_texture_getter_methods(lua, methods)?;
+    add_texture_setter_methods(lua, methods)?;
+    add_texture_setter_methods_2(lua, methods)?;
+    add_atlas_setter_methods(lua, methods)?;
+    add_checked_texture_methods(lua, methods)?;
+    add_three_slice_methods(lua, methods)?;
+    add_font_string_methods(lua, methods)?;
+    add_enable_disable_methods(lua, methods)?;
+    add_click_methods(lua, methods)?;
+    add_button_state_methods(lua, methods)?;
+    Ok(())
 }
 
 /// Set/Get font objects for normal, highlight, and disabled states.
 ///
 /// Stores font objects in `_G.__button_font_objects` keyed by `"{frame_id}:{state}"`.
-fn add_font_object_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+fn add_font_object_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
     for (set_name, get_name, state_key) in [
         ("SetNormalFontObject", "GetNormalFontObject", "normal"),
         ("SetHighlightFontObject", "GetHighlightFontObject", "highlight"),
         ("SetDisabledFontObject", "GetDisabledFontObject", "disabled"),
     ] {
-        methods.add_method(set_name, move |lua, this, font_object: Value| {
+        methods.set(set_name, lua.create_function(move |lua, (ud, font_object): (LightUserData, Value)| {
+            let id = lud_to_id(ud);
             let store: mlua::Table = lua
                 .load("_G.__button_font_objects = _G.__button_font_objects or {}; return _G.__button_font_objects")
                 .eval()?;
-            let key = format!("{}:{}", this.id, state_key);
+            let key = format!("{}:{}", id, state_key);
             store.set(key, font_object)?;
             Ok(())
-        });
+        })?)?;
 
-        methods.add_method(get_name, move |lua, this, ()| {
+        methods.set(get_name, lua.create_function(move |lua, ud: LightUserData| {
+            let id = lud_to_id(ud);
             let store: mlua::Table = lua
                 .load("return _G.__button_font_objects or {}")
                 .eval()?;
-            let key = format!("{}:{}", this.id, state_key);
+            let key = format!("{}:{}", id, state_key);
             let font: Value = store.get(key)?;
             Ok(font)
-        });
+        })?)?;
     }
+    Ok(())
 }
 
 /// SetPushedTextOffset / GetPushedTextOffset stubs.
-fn add_pushed_text_offset_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method(
-        "SetPushedTextOffset",
-        |_, _this, (_x, _y): (f64, f64)| Ok(()),
-    );
-    methods.add_method("GetPushedTextOffset", |_, _this, ()| Ok((0.0_f64, 0.0_f64)));
+fn add_pushed_text_offset_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetPushedTextOffset", lua.create_function(
+        |_, (_ud, _x, _y): (LightUserData, f64, f64)| Ok(()),
+    )?)?;
+    methods.set("GetPushedTextOffset", lua.create_function(
+        |_, _ud: LightUserData| Ok((0.0_f64, 0.0_f64)),
+    )?)?;
+    Ok(())
 }
 
 /// Get{Normal,Highlight,Pushed,Disabled}Texture - return or create texture children.
-fn add_texture_getter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
+fn add_texture_getter_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
     for (method_name, parent_key) in [
         ("GetNormalTexture", "NormalTexture"),
         ("GetHighlightTexture", "HighlightTexture"),
         ("GetPushedTexture", "PushedTexture"),
         ("GetDisabledTexture", "DisabledTexture"),
     ] {
-        methods.add_method(method_name, move |lua, this, ()| {
-            let tex_id = get_or_create_button_texture(
-                &mut this.state.borrow_mut(),
-                this.id,
-                parent_key,
-            );
-            let handle = FrameHandle {
-                id: tex_id,
-                state: Rc::clone(&this.state),
-            };
-            lua.create_userdata(handle).map(Value::UserData)
-        });
+        methods.set(method_name, lua.create_function(move |lua, ud: LightUserData| {
+            let id = lud_to_id(ud);
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            let tex_id = get_or_create_button_texture(&mut state, id, parent_key);
+            Ok(frame_lud(tex_id))
+        })?)?;
     }
+    Ok(())
 }
 
 /// Extract texture path from a Lua Value.
@@ -128,7 +129,7 @@ fn apply_button_texture_setter(
     set_button_field: fn(&mut crate::widget::Frame, Option<String>, Option<(f32, f32, f32, f32)>),
 ) -> Result<(), mlua::Error> {
     let path = extract_texture_path(texture)?;
-    let is_userdata = matches!(texture, Value::UserData(_));
+    let is_userdata = matches!(texture, Value::LightUserData(_));
     if !is_userdata {
         let resolved = path.as_ref().map(|p| resolve_texture_string(p));
         let resolved_path = resolved.as_ref().map(|r| r.path.clone());
@@ -149,97 +150,122 @@ fn apply_button_texture_setter(
 }
 
 /// Set{Normal,Highlight}Texture - set texture by path, atlas name, or userdata.
-fn add_texture_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetNormalTexture", |_, this, texture: Value| {
-        let mut state = this.state.borrow_mut();
-        apply_button_texture_setter(&mut state, this.id, "NormalTexture", &texture,
+fn add_texture_setter_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetNormalTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        apply_button_texture_setter(&mut state, id, "NormalTexture", &texture,
             |f, path, coords| { f.normal_texture = path; f.normal_tex_coords = coords; })
-    });
+    })?)?;
 
-    methods.add_method("SetHighlightTexture", |_, this, texture: Value| {
-        let mut state = this.state.borrow_mut();
-        apply_button_texture_setter(&mut state, this.id, "HighlightTexture", &texture,
+    methods.set("SetHighlightTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        apply_button_texture_setter(&mut state, id, "HighlightTexture", &texture,
             |f, path, coords| { f.highlight_texture = path; f.highlight_tex_coords = coords; })
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Set{Pushed,Disabled}Texture - set texture by path, atlas name, or userdata.
-fn add_texture_setter_methods_2<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetPushedTexture", |_, this, texture: Value| {
-        let mut state = this.state.borrow_mut();
-        apply_button_texture_setter(&mut state, this.id, "PushedTexture", &texture,
+fn add_texture_setter_methods_2(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetPushedTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        apply_button_texture_setter(&mut state, id, "PushedTexture", &texture,
             |f, path, coords| { f.pushed_texture = path; f.pushed_tex_coords = coords; })
-    });
+    })?)?;
 
-    methods.add_method("SetDisabledTexture", |_, this, texture: Value| {
-        let mut state = this.state.borrow_mut();
-        apply_button_texture_setter(&mut state, this.id, "DisabledTexture", &texture,
+    methods.set("SetDisabledTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        apply_button_texture_setter(&mut state, id, "DisabledTexture", &texture,
             |f, path, coords| { f.disabled_texture = path; f.disabled_tex_coords = coords; })
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Set{Normal,Pushed,Disabled,Highlight}Atlas - set button textures via atlas lookup.
-fn add_atlas_setter_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_normal_atlas_method(methods);
-    add_pushed_atlas_method(methods);
-    add_disabled_atlas_method(methods);
-    add_highlight_atlas_method(methods);
+fn add_atlas_setter_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_normal_atlas_method(lua, methods)?;
+    add_pushed_atlas_method(lua, methods)?;
+    add_disabled_atlas_method(lua, methods)?;
+    add_highlight_atlas_method(lua, methods)?;
+    Ok(())
 }
 
-fn add_normal_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetNormalAtlas", |_, this, args: mlua::MultiValue| {
+fn add_normal_atlas_method(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetNormalAtlas", lua.create_function(|lua, (ud, args): (LightUserData, mlua::MultiValue)| {
         if let Some(atlas_name) = extract_string_arg(&args) {
-            let mut state = this.state.borrow_mut();
-            let tex_id = get_or_create_button_texture(&mut state, this.id, "NormalTexture");
-            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            let id = lud_to_id(ud);
+            let tex_id = get_or_create_button_texture(&mut state, id, "NormalTexture");
+            apply_atlas_to_button(&mut state, id, tex_id, &atlas_name, |f, file, coords| {
                 f.normal_texture = Some(file);
                 f.normal_tex_coords = Some(coords);
             });
         }
         Ok(())
-    });
+    })?)?;
+    Ok(())
 }
 
-fn add_pushed_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetPushedAtlas", |_, this, args: mlua::MultiValue| {
+fn add_pushed_atlas_method(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetPushedAtlas", lua.create_function(|lua, (ud, args): (LightUserData, mlua::MultiValue)| {
         if let Some(atlas_name) = extract_string_arg(&args) {
-            let mut state = this.state.borrow_mut();
-            let tex_id = get_or_create_button_texture(&mut state, this.id, "PushedTexture");
-            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            let id = lud_to_id(ud);
+            let tex_id = get_or_create_button_texture(&mut state, id, "PushedTexture");
+            apply_atlas_to_button(&mut state, id, tex_id, &atlas_name, |f, file, coords| {
                 f.pushed_texture = Some(file);
                 f.pushed_tex_coords = Some(coords);
             });
         }
         Ok(())
-    });
+    })?)?;
+    Ok(())
 }
 
-fn add_disabled_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetDisabledAtlas", |_, this, args: mlua::MultiValue| {
+fn add_disabled_atlas_method(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetDisabledAtlas", lua.create_function(|lua, (ud, args): (LightUserData, mlua::MultiValue)| {
         if let Some(atlas_name) = extract_string_arg(&args) {
-            let mut state = this.state.borrow_mut();
-            let tex_id = get_or_create_button_texture(&mut state, this.id, "DisabledTexture");
-            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            let id = lud_to_id(ud);
+            let tex_id = get_or_create_button_texture(&mut state, id, "DisabledTexture");
+            apply_atlas_to_button(&mut state, id, tex_id, &atlas_name, |f, file, coords| {
                 f.disabled_texture = Some(file);
                 f.disabled_tex_coords = Some(coords);
             });
         }
         Ok(())
-    });
+    })?)?;
+    Ok(())
 }
 
-fn add_highlight_atlas_method<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetHighlightAtlas", |_, this, args: mlua::MultiValue| {
+fn add_highlight_atlas_method(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetHighlightAtlas", lua.create_function(|lua, (ud, args): (LightUserData, mlua::MultiValue)| {
         if let Some(atlas_name) = extract_string_arg(&args) {
-            let mut state = this.state.borrow_mut();
-            let tex_id = get_or_create_button_texture(&mut state, this.id, "HighlightTexture");
-            apply_atlas_to_button(&mut state, this.id, tex_id, &atlas_name, |f, file, coords| {
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            let id = lud_to_id(ud);
+            let tex_id = get_or_create_button_texture(&mut state, id, "HighlightTexture");
+            apply_atlas_to_button(&mut state, id, tex_id, &atlas_name, |f, file, coords| {
                 f.highlight_texture = Some(file);
                 f.highlight_tex_coords = Some(coords);
             });
         }
         Ok(())
-    });
+    })?)?;
+    Ok(())
 }
 
 /// Extract a string from the first argument of a MultiValue, ignoring non-strings.
@@ -289,18 +315,20 @@ fn apply_atlas_to_button<F>(
 /// Set{Checked,DisabledChecked}Texture - checked state textures for CheckButton.
 ///
 /// These textures start hidden (shown via SetChecked).
-fn add_checked_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetCheckedTexture", |_, this, texture: Value| {
+fn add_checked_texture_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetCheckedTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
         let path = extract_texture_path(&texture)?;
-        let is_userdata = matches!(texture, Value::UserData(_));
-        let mut state = this.state.borrow_mut();
+        let is_userdata = matches!(texture, Value::LightUserData(_));
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
 
         if !is_userdata
-            && let Some(frame) = state.widgets.get_mut_visual(this.id) {
+            && let Some(frame) = state.widgets.get_mut_visual(id) {
                 frame.checked_texture = path.clone();
             }
 
-        let tex_id = get_or_create_button_texture(&mut state, this.id, "CheckedTexture");
+        let tex_id = get_or_create_button_texture(&mut state, id, "CheckedTexture");
         if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
             if !is_userdata {
                 tex.texture = path;
@@ -308,61 +336,70 @@ fn add_checked_texture_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             tex.visible = false;
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method(
-        "SetDisabledCheckedTexture",
-        |_, this, texture: Value| {
-            let path = extract_texture_path(&texture)?;
-            let is_userdata = matches!(texture, Value::UserData(_));
-            let mut state = this.state.borrow_mut();
+    methods.set("SetDisabledCheckedTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        let path = extract_texture_path(&texture)?;
+        let is_userdata = matches!(texture, Value::LightUserData(_));
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
 
-            if !is_userdata
-                && let Some(frame) = state.widgets.get_mut_visual(this.id) {
-                    frame.disabled_checked_texture = path.clone();
-                }
-
-            let tex_id =
-                get_or_create_button_texture(&mut state, this.id, "DisabledCheckedTexture");
-            if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
-                if !is_userdata {
-                    tex.texture = path;
-                }
-                tex.visible = false;
+        if !is_userdata
+            && let Some(frame) = state.widgets.get_mut_visual(id) {
+                frame.disabled_checked_texture = path.clone();
             }
-            Ok(())
-        },
-    );
+
+        let tex_id =
+            get_or_create_button_texture(&mut state, id, "DisabledCheckedTexture");
+        if let Some(tex) = state.widgets.get_mut_visual(tex_id) {
+            if !is_userdata {
+                tex.texture = path;
+            }
+            tex.visible = false;
+        }
+        Ok(())
+    })?)?;
+
+    Ok(())
 }
 
 /// Set{Left,Middle,Right}Texture - three-slice button cap textures.
-fn add_three_slice_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetLeftTexture", |_, this, texture: Value| {
+fn add_three_slice_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetLeftTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
         let path = value_to_optional_path(texture)?;
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.left_texture = path;
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("SetMiddleTexture", |_, this, texture: Value| {
+    methods.set("SetMiddleTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
         let path = value_to_optional_path(texture)?;
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.middle_texture = path;
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("SetRightTexture", |_, this, texture: Value| {
+    methods.set("SetRightTexture", lua.create_function(|lua, (ud, texture): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
         let path = value_to_optional_path(texture)?;
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut_visual(id) {
             frame.right_texture = path;
         }
         Ok(())
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Convert a Lua Value to an optional texture path string.
@@ -379,54 +416,64 @@ fn value_to_optional_path(value: Value) -> Result<Option<String>, mlua::Error> {
 /// Mixins (e.g. ScrollingFontMixin) can override GetFontString with a Lua function.
 /// Since mlua's add_method takes priority over __index, we check for Lua overrides
 /// in __frame_fields before using the default (same pattern as GetAtlas).
-fn add_font_string_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetFontString", |lua, this, ()| {
-        let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id)
+fn add_font_string_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetFontString", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        if let Some(frame) = state.widgets.get(id)
             && let Some(&text_id) = frame.children_keys.get("Text") {
                 drop(state);
-                let handle = FrameHandle {
-                    id: text_id,
-                    state: Rc::clone(&this.state),
-                };
-                return lua.create_userdata(handle).map(Value::UserData);
+                return Ok(frame_lud(text_id));
             }
         drop(state);
-        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "GetFontString") {
-            return func.call::<Value>(ud).map(Ok)?;
+        if let Some((func, ud_val)) = super::methods_helpers::get_mixin_override(lua, id, "GetFontString") {
+            return func.call::<Value>(ud_val).map(Ok)?;
         }
         Ok(Value::Nil)
-    });
+    })?)?;
 
-    methods.add_method("SetFontString", |_, _this, _fontstring: Value| Ok(()));
+    methods.set("SetFontString", lua.create_function(
+        |_, (_ud, _fontstring): (LightUserData, Value)| Ok(()),
+    )?)?;
+
+    Ok(())
 }
 
 /// SetEnabled, Enable, Disable, IsEnabled - button enabled/disabled state.
-fn add_enable_disable_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetEnabled", |_, this, enabled: bool| {
-        set_enabled_attribute(&mut this.state.borrow_mut(), this.id, enabled);
+fn add_enable_disable_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetEnabled", lua.create_function(|lua, (ud, enabled): (LightUserData, bool)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        set_enabled_attribute(&mut state_rc.borrow_mut(), id, enabled);
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("Enable", |_, this, ()| {
-        set_enabled_attribute(&mut this.state.borrow_mut(), this.id, true);
+    methods.set("Enable", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        set_enabled_attribute(&mut state_rc.borrow_mut(), id, true);
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("Disable", |_, this, ()| {
-        set_enabled_attribute(&mut this.state.borrow_mut(), this.id, false);
+    methods.set("Disable", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        set_enabled_attribute(&mut state_rc.borrow_mut(), id, false);
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("IsEnabled", |lua, this, ()| {
+    methods.set("IsEnabled", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
         // Check for Lua mixin override first (e.g. ConsolidatedBuffsMixin:IsEnabled)
-        if let Some((func, ud)) = super::methods_helpers::get_mixin_override(lua, this.id, "IsEnabled") {
-            return func.call::<Value>(ud);
+        if let Some((func, ud_val)) = super::methods_helpers::get_mixin_override(lua, id, "IsEnabled") {
+            return func.call::<Value>(ud_val);
         }
-        let state = this.state.borrow();
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let enabled = state
             .widgets
-            .get(this.id)
+            .get(id)
             .and_then(|f| f.attributes.get("__enabled"))
             .and_then(|v| {
                 if let crate::widget::AttributeValue::Boolean(b) = v {
@@ -437,7 +484,9 @@ fn add_enable_disable_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) 
             })
             .unwrap_or(true);
         Ok(Value::Boolean(enabled))
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Update the `__enabled` attribute on a widget.
@@ -460,40 +509,49 @@ fn set_enabled_attribute(state: &mut crate::lua_api::SimState, id: u64, enabled:
 }
 
 /// Click, RegisterForClicks - click simulation and registration.
-fn add_click_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("Click", |lua, this, ()| {
-        if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, this.id, "OnClick") {
-            let frame_key = format!("__frame_{}", this.id);
-            let frame: Value = lua.globals().get(frame_key.as_str())?;
+fn add_click_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("Click", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, id, "OnClick") {
+            let frame_val = frame_lud(id);
             let button = lua.create_string("LeftButton")?;
-            handler.call::<()>((frame, button, false))?;
+            handler.call::<()>((frame_val, button, false))?;
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("RegisterForClicks", |_, _this, _args: mlua::MultiValue| {
-        Ok(())
-    });
+    methods.set("RegisterForClicks", lua.create_function(
+        |_, (_ud, _args): (LightUserData, mlua::MultiValue)| Ok(()),
+    )?)?;
+
+    Ok(())
 }
 
 /// SetButtonState / GetButtonState - control button visual state from Lua.
-fn add_button_state_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method(
-        "SetButtonState",
-        |_, this, (state_str, _locked): (String, Option<bool>)| {
+fn add_button_state_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetButtonState", lua.create_function(
+        |lua, (ud, state_str, _locked): (LightUserData, String, Option<bool>)| {
+            let id = lud_to_id(ud);
             let val = if state_str.eq_ignore_ascii_case("PUSHED") { 1 } else { 0 };
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut_visual(this.id) {
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut_visual(id) {
                 frame.button_state = val;
             }
             Ok(())
         },
-    );
-    methods.add_method("GetButtonState", |_, this, ()| {
-        let state = this.state.borrow();
-        let val = state.widgets.get(this.id).map(|f| f.button_state).unwrap_or(0);
+    )?)?;
+
+    methods.set("GetButtonState", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let val = state.widgets.get(id).map(|f| f.button_state).unwrap_or(0);
         Ok(if val == 1 { "PUSHED".to_string() } else { "NORMAL".to_string() })
-    });
-    methods.add_method("LockHighlight", |_, _this, ()| Ok(()));
-    methods.add_method("UnlockHighlight", |_, _this, ()| Ok(()));
+    })?)?;
+
+    methods.set("LockHighlight", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+    methods.set("UnlockHighlight", lua.create_function(|_, _ud: LightUserData| Ok(()))?)?;
+
+    Ok(())
 }

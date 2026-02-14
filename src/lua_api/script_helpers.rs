@@ -94,13 +94,12 @@ pub fn get_or_create_frame_fields(lua: &Lua, frame_id: u64) -> mlua::Table {
 
 // ── Frame reference ──────────────────────────────────────────────────
 
-/// Get the frame userdata for a given widget ID (from `__frame_{id}` global).
-pub fn get_frame_ref(lua: &Lua, widget_id: u64) -> Option<Value> {
-    let key = format!("__frame_{}", widget_id);
-    match lua.globals().get::<Value>(key.as_str()) {
-        Ok(v) if v != Value::Nil => Some(v),
-        _ => None,
-    }
+/// Get the LightUserData value for a given widget ID.
+///
+/// With LightUserData, this is a trivial pointer construction — no global
+/// lookup, no allocation. Always returns Some.
+pub fn get_frame_ref(_lua: &Lua, widget_id: u64) -> Option<Value> {
+    Some(super::frame::frame_lud(widget_id))
 }
 
 // ── Error handler ────────────────────────────────────────────────────

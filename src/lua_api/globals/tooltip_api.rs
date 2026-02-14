@@ -3,7 +3,7 @@
 use crate::lua_api::tooltip::TooltipData;
 use crate::lua_api::SimState;
 use crate::widget::{Frame, FrameStrata, WidgetType};
-use mlua::{Lua, ObjectLike, Result};
+use mlua::{Lua, Result};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -68,8 +68,8 @@ fn register_game_tooltips(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()
     }
     // Initialize updateTooltipTimer so GameTooltip_OnUpdate doesn't error
     // on arithmetic with nil before GameTooltip_SetTooltipWaitingForData runs.
-    lua.globals().get::<mlua::AnyUserData>("GameTooltip")?
-        .set("updateTooltipTimer", 0.0f64)?;
+    let gt_fields = crate::lua_api::script_helpers::get_or_create_frame_fields(lua, gt_id);
+    gt_fields.set("updateTooltipTimer", 0.0f64)?;
 
     create_tooltip_frame(lua, state, "ItemRefTooltip")?;
     for i in 1..=2 {

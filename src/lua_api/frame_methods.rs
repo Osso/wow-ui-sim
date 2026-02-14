@@ -1,5 +1,4 @@
 //! Additional frame methods (placeholder for expansion).
 
-// Frame methods are implemented directly on FrameHandle in globals.rs
-// This module can be used for more complex method implementations
-// that warrant separate organization.
+// Frame methods are implemented in frame/methods/ and registered via the shared
+// LightUserData methods table in frame/metatable.rs.

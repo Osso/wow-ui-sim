@@ -1,42 +1,48 @@
 //! Line-specific methods: SetStartPoint, SetEndPoint, SetThickness, and getters.
 
-use super::FrameHandle;
+use crate::lua_api::frame::handle::{extract_frame_id, frame_lud, get_sim_state, lud_to_id};
 use crate::widget::{AnchorPoint, LineAnchor};
-use mlua::{UserDataMethods, Value};
+use mlua::{LightUserData, Lua, Value};
 
-pub fn add_line_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetStartPoint", |_, this, args: mlua::MultiValue| {
-        set_line_point(this, args, true)
-    });
+pub fn add_line_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetStartPoint", lua.create_function(|lua, (ud, args): (LightUserData, mlua::MultiValue)| {
+        set_line_point(lua, lud_to_id(ud), args, true)
+    })?)?;
 
-    methods.add_method("SetEndPoint", |_, this, args: mlua::MultiValue| {
-        set_line_point(this, args, false)
-    });
+    methods.set("SetEndPoint", lua.create_function(|lua, (ud, args): (LightUserData, mlua::MultiValue)| {
+        set_line_point(lua, lud_to_id(ud), args, false)
+    })?)?;
 
-    methods.add_method("SetThickness", |_, this, thickness: f32| {
-        let mut state = this.state.borrow_mut();
-        if let Some(f) = state.widgets.get_mut_visual(this.id) {
+    methods.set("SetThickness", lua.create_function(|lua, (ud, thickness): (LightUserData, f32)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(f) = state.widgets.get_mut_visual(id) {
             f.line_thickness = thickness;
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("GetStartPoint", |lua, this, ()| {
-        get_line_point(lua, this, true)
-    });
+    methods.set("GetStartPoint", lua.create_function(|lua, ud: LightUserData| {
+        get_line_point(lua, lud_to_id(ud), true)
+    })?)?;
 
-    methods.add_method("GetEndPoint", |lua, this, ()| {
-        get_line_point(lua, this, false)
-    });
+    methods.set("GetEndPoint", lua.create_function(|lua, ud: LightUserData| {
+        get_line_point(lua, lud_to_id(ud), false)
+    })?)?;
 
-    methods.add_method("GetThickness", |_, this, ()| {
-        let state = this.state.borrow();
-        let thickness = state.widgets.get(this.id).map_or(1.0, |f| f.line_thickness);
+    methods.set("GetThickness", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let thickness = state.widgets.get(id).map_or(1.0, |f| f.line_thickness);
         Ok(thickness)
-    });
+    })?)?;
+
+    Ok(())
 }
 
-fn set_line_point(this: &FrameHandle, args: mlua::MultiValue, is_start: bool) -> mlua::Result<()> {
+fn set_line_point(lua: &Lua, id: u64, args: mlua::MultiValue, is_start: bool) -> mlua::Result<()> {
     let args: Vec<Value> = args.into_iter().collect();
 
     let point_str = match args.first() {
@@ -45,12 +51,7 @@ fn set_line_point(this: &FrameHandle, args: mlua::MultiValue, is_start: bool) ->
     };
     let point = AnchorPoint::from_str(&point_str).unwrap_or(AnchorPoint::Center);
 
-    let target_id = match args.get(1) {
-        Some(Value::UserData(ud)) => {
-            ud.borrow::<FrameHandle>().ok().map(|h| h.id)
-        }
-        _ => None,
-    };
+    let target_id = args.get(1).and_then(extract_frame_id);
 
     let x_offset = match args.get(2) {
         Some(Value::Number(n)) => *n as f32,
@@ -70,8 +71,9 @@ fn set_line_point(this: &FrameHandle, args: mlua::MultiValue, is_start: bool) ->
         y_offset,
     };
 
-    let mut state = this.state.borrow_mut();
-    if let Some(f) = state.widgets.get_mut_visual(this.id) {
+    let state_rc = get_sim_state(lua);
+    let mut state = state_rc.borrow_mut();
+    if let Some(f) = state.widgets.get_mut_visual(id) {
         if is_start {
             f.line_start = Some(anchor);
         } else {
@@ -81,9 +83,10 @@ fn set_line_point(this: &FrameHandle, args: mlua::MultiValue, is_start: bool) ->
     Ok(())
 }
 
-fn get_line_point(lua: &mlua::Lua, this: &FrameHandle, is_start: bool) -> mlua::Result<mlua::MultiValue> {
-    let state = this.state.borrow();
-    let anchor = state.widgets.get(this.id).and_then(|f| {
+fn get_line_point(lua: &Lua, id: u64, is_start: bool) -> mlua::Result<mlua::MultiValue> {
+    let state_rc = get_sim_state(lua);
+    let state = state_rc.borrow();
+    let anchor = state.widgets.get(id).and_then(|f| {
         if is_start { f.line_start.as_ref() } else { f.line_end.as_ref() }
     });
 
@@ -93,8 +96,7 @@ fn get_line_point(lua: &mlua::Lua, this: &FrameHandle, is_start: bool) -> mlua::
 
     let point_str = lua.create_string(anchor.point.as_str())?;
     let target: Value = if let Some(tid) = anchor.target_id {
-        let frame_key = format!("__frame_{}", tid);
-        lua.globals().get::<Value>(frame_key.as_str())?
+        frame_lud(tid)
     } else {
         Value::Nil
     };

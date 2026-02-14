@@ -1,96 +1,119 @@
 //! Event registration methods: RegisterEvent, UnregisterEvent, etc.
 
-use super::FrameHandle;
-use mlua::{UserDataMethods, Value};
+use crate::lua_api::frame::handle::{get_sim_state, lud_to_id};
+use mlua::{LightUserData, Lua, Value};
 
-/// Add event registration methods to FrameHandle UserData.
-pub fn add_event_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_event_register_methods(methods);
-    add_keyboard_propagation_methods(methods);
+/// Add event registration methods to the frame methods table.
+pub fn add_event_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_event_register_methods(lua, methods)?;
+    add_event_query_methods(lua, methods)?;
+    add_keyboard_propagation_methods(lua, methods)?;
+    Ok(())
 }
 
-/// RegisterEvent, RegisterUnitEvent, UnregisterEvent, UnregisterAllEvents, IsEventRegistered
-fn add_event_register_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("RegisterEvent", |_, this, event: String| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+/// RegisterEvent, RegisterUnitEvent, UnregisterEvent, UnregisterAllEvents, RegisterAllEvents
+fn add_event_register_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("RegisterEvent", lua.create_function(|lua, (ud, event): (LightUserData, String)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) {
             frame.register_event(&event);
         }
         Ok(())
-    });
+    })?)?;
 
     // Some addons pass a callback function as the last argument (non-standard)
-    methods.add_method(
-        "RegisterUnitEvent",
-        |_, this, (event, _args): (String, mlua::Variadic<Value>)| {
-            let mut state = this.state.borrow_mut();
-            if let Some(frame) = state.widgets.get_mut(this.id) {
+    methods.set("RegisterUnitEvent", lua.create_function(
+        |lua, (ud, event, _args): (LightUserData, String, mlua::Variadic<Value>)| {
+            let id = lud_to_id(ud);
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            if let Some(frame) = state.widgets.get_mut(id) {
                 frame.register_event(&event);
             }
             Ok(())
         },
-    );
+    )?)?;
 
-    methods.add_method("UnregisterEvent", |_, this, event: String| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+    methods.set("UnregisterEvent", lua.create_function(|lua, (ud, event): (LightUserData, String)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) {
             frame.unregister_event(&event);
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("UnregisterAllEvents", |_, this, ()| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+    methods.set("UnregisterAllEvents", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) {
             frame.registered_events.clear();
         }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("IsEventRegistered", |_, this, event: String| {
-        let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id) {
-            return Ok(frame.register_all_events || frame.registered_events.contains(&event));
-        }
-        Ok(false)
-    });
-
-    // RegisterEventCallback(event, callbackContainer) - callback-based event registration
-    methods.add_method(
-        "RegisterEventCallback",
-        |_, _this, (_event, _cb): (Value, Value)| Ok(()),
-    );
-
-    // RegisterAllEvents() - register for all events
-    methods.add_method("RegisterAllEvents", |_, this, ()| {
-        let mut state = this.state.borrow_mut();
-        if let Some(frame) = state.widgets.get_mut(this.id) {
+    methods.set("RegisterAllEvents", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        if let Some(frame) = state.widgets.get_mut(id) {
             frame.register_all_events = true;
         }
         Ok(())
-    });
+    })?)?;
+
+    Ok(())
+}
+
+/// IsEventRegistered, RegisterEventCallback
+fn add_event_query_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("IsEventRegistered", lua.create_function(|lua, (ud, event): (LightUserData, String)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        if let Some(frame) = state.widgets.get(id) {
+            return Ok(frame.register_all_events || frame.registered_events.contains(&event));
+        }
+        Ok(false)
+    })?)?;
+
+    // RegisterEventCallback(event, callbackContainer) - callback-based event registration
+    methods.set("RegisterEventCallback", lua.create_function(
+        |_lua, (_ud, _event, _cb): (LightUserData, Value, Value)| Ok(()),
+    )?)?;
+
+    Ok(())
 }
 
 /// SetPropagateKeyboardInput, GetPropagateKeyboardInput
-fn add_keyboard_propagation_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method(
-        "SetPropagateKeyboardInput",
-        |_, this, propagate: bool| {
-            let mut state = this.state.borrow_mut();
-            if let Some(f) = state.widgets.get_mut(this.id) {
+fn add_keyboard_propagation_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetPropagateKeyboardInput", lua.create_function(
+        |lua, (ud, propagate): (LightUserData, bool)| {
+            let id = lud_to_id(ud);
+            let state_rc = get_sim_state(lua);
+            let mut state = state_rc.borrow_mut();
+            if let Some(f) = state.widgets.get_mut(id) {
                 f.propagate_keyboard_input = propagate;
             }
             Ok(())
         },
-    );
+    )?)?;
 
-    methods.add_method("GetPropagateKeyboardInput", |_, this, ()| {
-        let state = this.state.borrow();
+    methods.set("GetPropagateKeyboardInput", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let propagate = state
             .widgets
-            .get(this.id)
+            .get(id)
             .map(|f| f.propagate_keyboard_input)
             .unwrap_or(false);
         Ok(propagate)
-    });
+    })?)?;
+
+    Ok(())
 }

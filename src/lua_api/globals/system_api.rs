@@ -1,7 +1,7 @@
 //! System utility functions.
 //!
 //! This module contains WoW's core system functions including:
-//! - `type()` - Type introspection with Frame userdata support
+//! - `type()` - Type introspection with Frame LightUserData support
 //! - `rawget()` - Raw table access with userdata compatibility
 //! - `xpcall()` - Protected call with error handler and varargs (Lua 5.2+ feature)
 //! - `SlashCmdList` - Slash command registry table
@@ -12,7 +12,7 @@
 //! - Battle.net stubs: `BNFeaturesEnabled()`, `BNConnected()`, etc.
 //! - Streaming stubs: `GetFileStreamingStatus()`, `GetBackgroundLoadingStatus()`
 
-use crate::lua_api::frame::FrameHandle;
+use crate::lua_api::frame::frame_lud;
 use crate::lua_api::SimState;
 use mlua::{Lua, MultiValue, Result, Value};
 use std::cell::RefCell;
@@ -41,12 +41,12 @@ pub fn register_system_api(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()
     Ok(())
 }
 
-/// Override `type()` and `rawget()` to handle FrameHandle userdata as "table".
+/// Override `type()` and `rawget()` to handle frame LightUserData as "table".
 fn register_type_overrides(lua: &Lua) -> Result<()> {
     let globals = lua.globals();
 
-    // Override type() to recognize FrameHandle as "table"
-    // Blizzard's Dump.lua does `type(v) == "table"` checks and we want FrameHandle to pass
+    // Override type() to recognize frame LightUserData as "table"
+    // Blizzard's Dump.lua does `type(v) == "table"` checks and we want frames to pass
     let type_fn = lua.create_function(|_lua, value: Value| {
         let type_str = match &value {
             Value::Nil => "nil",
@@ -56,14 +56,8 @@ fn register_type_overrides(lua: &Lua) -> Result<()> {
             Value::Table(_) => "table",
             Value::Function(_) => "function",
             Value::Thread(_) => "thread",
-            Value::UserData(ud) => {
-                if ud.is::<FrameHandle>() {
-                    return Ok("table");
-                } else {
-                    "userdata"
-                }
-            }
-            Value::LightUserData(_) => "userdata",
+            Value::UserData(_) => "userdata",
+            Value::LightUserData(_) => "table",
             Value::Error(_) => "error",
             Value::Other(_) => "userdata",
         };
@@ -76,7 +70,7 @@ fn register_type_overrides(lua: &Lua) -> Result<()> {
     let rawget_fn = lua.create_function(|lua, (table, key): (Value, Value)| {
         match table {
             Value::Table(t) => t.raw_get(key),
-            Value::UserData(_) => Ok(Value::Nil),
+            Value::UserData(_) | Value::LightUserData(_) => Ok(Value::Nil),
             _ => {
                 let original: mlua::Function = lua.globals().raw_get("__original_rawget")?;
                 original.call((table, key))
@@ -170,8 +164,7 @@ fn register_fire_event(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
 
         for widget_id in listeners {
             if let Some(handler) = crate::lua_api::script_helpers::get_script(lua, widget_id, "OnEvent") {
-                let frame_ref_key = format!("__frame_{}", widget_id);
-                let frame: Value = lua.globals().get(frame_ref_key.as_str()).unwrap_or(Value::Nil);
+                let frame = frame_lud(widget_id);
 
                 let mut call_args = vec![frame, Value::String(lua.create_string(&event_name)?)];
                 call_args.extend(event_args.iter().cloned());
@@ -439,16 +432,10 @@ fn register_input_state_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resul
     let st = Rc::clone(state);
     globals.set(
         "GetMouseFocus",
-        lua.create_function(move |lua, ()| {
+        lua.create_function(move |_lua, ()| {
             let hovered = st.borrow().hovered_frame;
             match hovered {
-                Some(id) => {
-                    let handle = FrameHandle {
-                        id,
-                        state: Rc::clone(&st),
-                    };
-                    lua.create_userdata(handle).map(Value::UserData)
-                }
+                Some(id) => Ok(frame_lud(id)),
                 None => Ok(Value::Nil),
             }
         })?,
@@ -462,11 +449,7 @@ fn register_input_state_stubs(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Resul
             let tbl = lua.create_table()?;
             let hovered = st2.borrow().hovered_frame;
             if let Some(id) = hovered {
-                let handle = FrameHandle {
-                    id,
-                    state: Rc::clone(&st2),
-                };
-                tbl.raw_set(1, lua.create_userdata(handle)?)?;
+                tbl.raw_set(1, frame_lud(id))?;
             }
             Ok(tbl)
         })?,

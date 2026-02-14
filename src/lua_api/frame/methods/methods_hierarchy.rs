@@ -1,53 +1,45 @@
 //! Hierarchy methods: GetParent, SetParent, GetNumChildren, GetChildren, GetRegions.
 
-use super::FrameHandle;
+use crate::lua_api::frame::handle::{extract_frame_id, frame_lud, get_sim_state, lud_to_id};
 use crate::widget::{FrameStrata, WidgetRegistry};
-use mlua::{UserDataMethods, Value};
-use std::rc::Rc;
+use mlua::{LightUserData, Lua, Value};
 
 /// Add hierarchy methods: parent access, children, regions.
-pub fn add_hierarchy_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    add_parent_methods(methods);
-    add_parent_key_methods(methods);
-    add_children_frame_methods(methods);
-    add_children_region_methods(methods);
+pub fn add_hierarchy_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    add_parent_methods(lua, methods)?;
+    add_parent_key_methods(lua, methods)?;
+    add_children_frame_methods(lua, methods)?;
+    add_children_region_methods(lua, methods)?;
+    Ok(())
 }
 
 /// GetParent, SetParent
-fn add_parent_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetParent", |lua, this, ()| {
-        let state = this.state.borrow();
-        if let Some(frame) = state.widgets.get(this.id)
-            && let Some(parent_id) = frame.parent_id {
-                // Return the canonical userdata stored in globals so that
-                // `frame:GetParent() == SomeGlobal` equality works in Lua 5.1.
-                let key = format!("__frame_{}", parent_id);
-                let val: Value = lua.globals().get(key)?;
-                if !val.is_nil() {
-                    return Ok(val);
-                }
-                // Fallback: create a new handle if not in globals
-                let handle = FrameHandle {
-                    id: parent_id,
-                    state: Rc::clone(&this.state),
-                };
-                return Ok(Value::UserData(lua.create_userdata(handle)?));
-            }
+fn add_parent_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetParent", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        if let Some(frame) = state.widgets.get(id)
+            && let Some(parent_id) = frame.parent_id
+        {
+            // Return the canonical LightUserData for the parent.
+            return Ok(frame_lud(parent_id));
+        }
         Ok(Value::Nil)
-    });
+    })?)?;
 
-    methods.add_method("SetParent", |_, this, parent: Value| {
-        let new_parent_id = match parent {
-            Value::Nil => None,
-            Value::UserData(ud) => ud.borrow::<FrameHandle>().ok().map(|h| h.id),
-            _ => None,
-        };
-        let mut state = this.state.borrow_mut();
-        reparent_widget(&mut state.widgets, this.id, new_parent_id);
+    methods.set("SetParent", lua.create_function(|lua, (ud, parent): (LightUserData, Value)| {
+        let id = lud_to_id(ud);
+        let new_parent_id = extract_frame_id(&parent);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        reparent_widget(&mut state.widgets, id, new_parent_id);
         state.visible_on_update_cache = None;
-        state.invalidate_layout(this.id);
+        state.invalidate_layout(id);
         Ok(())
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// Move a widget to a new parent, updating children lists and inheriting strata/level.
@@ -98,71 +90,78 @@ fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_id: O
 }
 
 /// SetParentKey, GetParentKey
-fn add_parent_key_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("SetParentKey", |_, this, key: String| {
-        let mut state = this.state.borrow_mut();
-        let parent_id = state.widgets.get(this.id).and_then(|f| f.parent_id);
+fn add_parent_key_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("SetParentKey", lua.create_function(|lua, (ud, key): (LightUserData, String)| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let mut state = state_rc.borrow_mut();
+        let parent_id = state.widgets.get(id).and_then(|f| f.parent_id);
         if let Some(pid) = parent_id
             && let Some(parent) = state.widgets.get_mut_visual(pid) {
-                parent.children_keys.insert(key, this.id);
+                parent.children_keys.insert(key, id);
             }
         Ok(())
-    });
+    })?)?;
 
-    methods.add_method("GetParentKey", |lua, this, ()| {
-        let state = this.state.borrow();
-        let parent_id = state.widgets.get(this.id).and_then(|f| f.parent_id);
+    methods.set("GetParentKey", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let parent_id = state.widgets.get(id).and_then(|f| f.parent_id);
         if let Some(pid) = parent_id
             && let Some(parent) = state.widgets.get(pid) {
                 for (key, &cid) in &parent.children_keys {
-                    if cid == this.id {
+                    if cid == id {
                         return Ok(Value::String(lua.create_string(key.as_bytes())?));
                     }
                 }
             }
         Ok(Value::Nil)
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// GetNumChildren, GetChildren
-fn add_children_frame_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetNumChildren", |_, this, ()| {
-        let state = this.state.borrow();
+fn add_children_frame_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetNumChildren", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let count = state
             .widgets
-            .get(this.id)
+            .get(id)
             .map(|f| f.children.len())
             .unwrap_or(0);
         Ok(count as i32)
-    });
+    })?)?;
 
-    methods.add_method("GetChildren", |lua, this, ()| {
-        let state = this.state.borrow();
+    methods.set("GetChildren", lua.create_function(|lua, ud: LightUserData| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let mut result = mlua::MultiValue::new();
-        if let Some(frame) = state.widgets.get(this.id) {
+        if let Some(frame) = state.widgets.get(id) {
             let children = frame.children.clone();
             drop(state);
-
             for child_id in children {
-                let handle = FrameHandle {
-                    id: child_id,
-                    state: Rc::clone(&this.state),
-                };
-                if let Ok(ud) = lua.create_userdata(handle) {
-                    result.push_back(Value::UserData(ud));
-                }
+                result.push_back(frame_lud(child_id));
             }
         }
         Ok(result)
-    });
+    })?)?;
+
+    Ok(())
 }
 
 /// GetNumRegions, GetRegions, GetAdditionalRegions
-fn add_children_region_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M) {
-    methods.add_method("GetNumRegions", |_, this, ()| {
+fn add_children_region_methods(lua: &Lua, methods: &mlua::Table) -> mlua::Result<()> {
+    methods.set("GetNumRegions", lua.create_function(|lua, ud: LightUserData| {
         use crate::widget::WidgetType;
-        let state = this.state.borrow();
-        let count = state.widgets.get(this.id).map(|f| {
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
+        let count = state.widgets.get(id).map(|f| {
             f.children.iter().filter(|&&cid| {
                 state.widgets.get(cid).map(|c| {
                     matches!(c.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line)
@@ -170,40 +169,37 @@ fn add_children_region_methods<M: UserDataMethods<FrameHandle>>(methods: &mut M)
             }).count()
         }).unwrap_or(0);
         Ok(count as i32)
-    });
+    })?)?;
 
-    methods.add_method("GetRegions", |lua, this, ()| {
+    methods.set("GetRegions", lua.create_function(|lua, ud: LightUserData| {
         use crate::widget::WidgetType;
-        let state = this.state.borrow();
+        let id = lud_to_id(ud);
+        let state_rc = get_sim_state(lua);
+        let state = state_rc.borrow();
         let mut result = mlua::MultiValue::new();
-        if let Some(frame) = state.widgets.get(this.id) {
+        if let Some(frame) = state.widgets.get(id) {
             let children = frame.children.clone();
             drop(state);
-
             for child_id in children {
                 let is_region = {
-                    let state = this.state.borrow();
+                    let state = state_rc.borrow();
                     state.widgets.get(child_id).map(|f| {
                         matches!(f.widget_type, WidgetType::Texture | WidgetType::FontString | WidgetType::Line)
                     }).unwrap_or(false)
                 };
                 if is_region {
-                    let handle = FrameHandle {
-                        id: child_id,
-                        state: Rc::clone(&this.state),
-                    };
-                    if let Ok(ud) = lua.create_userdata(handle) {
-                        result.push_back(Value::UserData(ud));
-                    }
+                    result.push_back(frame_lud(child_id));
                 }
             }
         }
         Ok(result)
-    });
+    })?)?;
 
-    methods.add_method("GetAdditionalRegions", |_, _this, ()| {
-        Ok(mlua::MultiValue::new())
-    });
+    methods.set("GetAdditionalRegions", lua.create_function(
+        |_lua, _ud: LightUserData| Ok(mlua::MultiValue::new()),
+    )?)?;
+
+    Ok(())
 }
 
 /// Public wrapper for propagation, used by SetFrameLevel in methods_core.

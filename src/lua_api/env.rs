@@ -176,8 +176,7 @@ impl WowLuaEnv {
         use super::script_helpers::{call_error_handler, get_script};
 
         if let Some(handler) = get_script(&self.lua, widget_id, handler_name) {
-            let frame_ref_key = format!("__frame_{}", widget_id);
-            let frame: Value = self.lua.globals().get(frame_ref_key.as_str())?;
+            let frame = super::frame::frame_lud(widget_id);
 
             let mut call_args = vec![frame];
             call_args.extend(extra_args);

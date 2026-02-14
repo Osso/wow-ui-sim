@@ -1,6 +1,6 @@
 //! CreateFrame implementation for creating WoW frames from Lua.
 
-use super::super::frame::FrameHandle;
+use super::super::frame::{extract_frame_id, frame_lud};
 use super::super::SimState;
 use super::template::{apply_templates_from_registry, fire_on_load};
 use crate::loader::helpers::lua_global_ref;
@@ -123,13 +123,7 @@ fn parse_create_frame_args(
         .map(|s| s.to_string_lossy().to_string());
 
     let parent_arg = args_iter.next();
-    let mut parent_id: Option<u64> = parent_arg.and_then(|v| {
-        if let Value::UserData(ud) = v {
-            ud.borrow::<FrameHandle>().ok().map(|h| h.id)
-        } else {
-            None
-        }
-    });
+    let mut parent_id: Option<u64> = parent_arg.and_then(|v| extract_frame_id(v));
 
     let template: Option<String> = args_iter
         .next()
@@ -229,32 +223,24 @@ fn register_new_frame(
     frame_id
 }
 
-/// Create the Lua userdata handle for a frame and cache it in `_G`.
+/// Create a LightUserData value for a frame and cache it in `_G`.
 ///
-/// `CreateFrame` returns the userdata directly to Lua, so we must cache it
-/// in `_G` via `raw_set` to ensure identity: `_G["name"] == returned_handle`.
-/// Without this, the `__index` metamethod would create a separate userdata
-/// object and `==` comparisons would fail.
+/// With LightUserData, creation is free (pointer from ID). We still cache
+/// named frames in `_G` via `raw_set` for Lua code that does `_G["name"]`.
 fn create_frame_userdata(
     lua: &Lua,
-    state: &Rc<RefCell<SimState>>,
+    _state: &Rc<RefCell<SimState>>,
     frame_id: u64,
     name: Option<&str>,
-) -> Result<mlua::AnyUserData> {
-    let handle = FrameHandle {
-        id: frame_id,
-        state: Rc::clone(state),
-    };
-    let ud = lua.create_userdata(handle)?;
+) -> Result<Value> {
+    let lud = frame_lud(frame_id);
 
     let globals = lua.globals();
     if let Some(n) = name {
-        globals.raw_set(n, ud.clone())?;
+        globals.raw_set(n, lud.clone())?;
     }
-    let frame_key = format!("__frame_{}", frame_id);
-    globals.raw_set(frame_key.as_str(), ud.clone())?;
 
-    Ok(ud)
+    Ok(lud)
 }
 
 /// Register button's default texture children in the widget registry by name.
