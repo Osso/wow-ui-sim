@@ -33,6 +33,40 @@ struct GlyphEntry {
     top: i32,
 }
 
+/// Key for the text shape cache, capturing all inputs that affect glyph layout.
+#[derive(Hash, Eq, PartialEq, Clone)]
+struct ShapeCacheKey {
+    text: String,
+    font_path: String,       // "" for default
+    font_size_bits: u32,     // f32::to_bits()
+    shape_width_bits: u32,   // effective width
+    bounds_height_bits: u32,
+    max_lines: u32,
+}
+
+/// A single glyph position extracted from a layout run.
+#[derive(Clone)]
+struct CachedGlyph {
+    cache_key: CacheKey,
+    x: i32,
+    y: i32,
+}
+
+/// Extracted layout run data for cache replay.
+#[derive(Clone)]
+struct CachedLayoutRun {
+    line_y: f32,
+    line_w: f32,
+    glyphs: Vec<CachedGlyph>,
+}
+
+/// Cached shape result with LRU tracking.
+struct ShapeCacheEntry {
+    runs: Vec<CachedLayoutRun>,
+    total_height: f32,
+    last_used: u64,
+}
+
 /// Atlas for rasterized glyph bitmaps.
 ///
 /// Packs glyphs left-to-right, top-to-bottom into a single RGBA texture.
@@ -48,6 +82,10 @@ pub struct GlyphAtlas {
     entries: HashMap<CacheKey, GlyphEntry>,
     /// Whether the atlas has new data since the last GPU upload.
     dirty: bool,
+    /// Cache of shaped text layout runs keyed by shaping inputs.
+    shape_cache: HashMap<ShapeCacheKey, ShapeCacheEntry>,
+    /// Generation counter for LRU eviction.
+    shape_cache_generation: u64,
     /// Unique path used to register this atlas in the GpuTextureAtlas.
     atlas_path: String,
 }
@@ -76,6 +114,8 @@ impl GlyphAtlas {
             row_height: 0,
             entries: HashMap::new(),
             dirty: false,
+            shape_cache: HashMap::new(),
+            shape_cache_generation: 0,
             atlas_path: "__glyph_atlas__".to_string(),
         }
     }
@@ -93,6 +133,18 @@ impl GlyphAtlas {
     /// Mark as clean after GPU upload.
     pub fn mark_clean(&mut self) {
         self.dirty = false;
+    }
+
+    /// Advance the cache generation counter and sweep stale entries.
+    ///
+    /// Call once per frame. Sweeps entries unused for 120 generations (~2s)
+    /// every 60 generations (~1s at 60fps).
+    pub fn advance_generation(&mut self) {
+        self.shape_cache_generation += 1;
+        if self.shape_cache_generation % 60 == 0 {
+            let generation = self.shape_cache_generation;
+            self.shape_cache.retain(|_, entry| generation - entry.last_used < 120);
+        }
     }
 
     /// Get the atlas pixel data and dimensions for GPU upload.
@@ -265,13 +317,37 @@ fn shape_text_to_runs(
     (buffer, total_height)
 }
 
-/// Emit glyph quads for all layout runs with a given color and offset.
+/// Extract glyph positions from layout runs into cacheable data.
+fn extract_layout_runs(buffer: &Buffer, max_lines: u32) -> Vec<CachedLayoutRun> {
+    let runs: Vec<_> = buffer.layout_runs().collect();
+    let runs_slice = if max_lines > 0 {
+        &runs[..runs.len().min(max_lines as usize)]
+    } else {
+        &runs
+    };
+    runs_slice
+        .iter()
+        .map(|run| {
+            let glyphs = run
+                .glyphs
+                .iter()
+                .map(|g| {
+                    let pg = g.physical((0.0, 0.0), 1.0);
+                    CachedGlyph { cache_key: pg.cache_key, x: pg.x, y: pg.y }
+                })
+                .collect();
+            CachedLayoutRun { line_y: run.line_y, line_w: run.line_w, glyphs }
+        })
+        .collect()
+}
+
+/// Emit glyph quads from cached layout runs with a given color and offset.
 #[allow(clippy::too_many_arguments)]
-fn emit_glyphs_for_runs(
+fn emit_glyphs_from_cache(
     batch: &mut QuadBatch,
     glyph_atlas: &mut GlyphAtlas,
     font_system: &mut WowFontSystem,
-    buffer: &Buffer,
+    runs: &[CachedLayoutRun],
     bounds: Rectangle,
     y_offset: f32,
     justify_h: TextJustify,
@@ -279,11 +355,7 @@ fn emit_glyphs_for_runs(
     offset_x: f32,
     offset_y: f32,
     glyph_tex_index: i32,
-    max_lines: u32,
 ) {
-    let runs: Vec<_> = buffer.layout_runs().collect();
-    let runs = if max_lines > 0 { &runs[..runs.len().min(max_lines as usize)] } else { &runs };
-
     for run in runs {
         let x_offset = if bounds.width > 0.0 {
             match justify_h {
@@ -295,11 +367,11 @@ fn emit_glyphs_for_runs(
             0.0
         };
 
-        for glyph in run.glyphs.iter() {
-            let pg = glyph.physical((0.0, 0.0), 1.0);
-            if let Some(entry) = glyph_atlas.ensure_glyph(font_system, pg.cache_key) {
-                let glyph_x = bounds.x + x_offset + pg.x as f32 + offset_x;
-                let glyph_y = bounds.y + y_offset + run.line_y + pg.y as f32 - entry.top as f32 + offset_y;
+        for glyph in &run.glyphs {
+            if let Some(entry) = glyph_atlas.ensure_glyph(font_system, glyph.cache_key) {
+                let glyph_x = bounds.x + x_offset + glyph.x as f32 + offset_x;
+                let glyph_y =
+                    bounds.y + y_offset + run.line_y + glyph.y as f32 - entry.top as f32 + offset_y;
                 let glyph_bounds = Rectangle::new(
                     iced::Point::new(glyph_x, glyph_y),
                     iced::Size::new(entry.width as f32, entry.height as f32),
@@ -317,9 +389,11 @@ fn emit_glyphs_for_runs(
 /// Measure the height of text after word-wrapping within the given width.
 ///
 /// Returns the total pixel height the text would occupy when rendered with
-/// the specified font, size, and wrapping constraints.
+/// the specified font, size, and wrapping constraints. Uses the shape cache
+/// to avoid re-shaping text that has already been measured.
 pub fn measure_text_height(
     font_system: &mut WowFontSystem,
+    glyph_atlas: &mut GlyphAtlas,
     text: &str,
     font_path: Option<&str>,
     font_size: f32,
@@ -330,10 +404,26 @@ pub fn measure_text_height(
     if stripped.is_empty() {
         return 0.0;
     }
-    let (_, total_height) = shape_text_to_runs(
+    let shape_width = if word_wrap && bounds_width > 0.0 { bounds_width } else { 10000.0 };
+    let key = ShapeCacheKey {
+        text: stripped.clone(),
+        font_path: font_path.unwrap_or("").to_string(),
+        font_size_bits: font_size.to_bits(),
+        shape_width_bits: shape_width.to_bits(),
+        bounds_height_bits: 10000.0_f32.to_bits(),
+        max_lines: 0,
+    };
+    if let Some(entry) = glyph_atlas.shape_cache.get_mut(&key) {
+        entry.last_used = glyph_atlas.shape_cache_generation;
+        return entry.total_height;
+    }
+    let (buffer, total_height) = shape_text_to_runs(
         font_system, &stripped, font_path, font_size,
         bounds_width, 10000.0, word_wrap, 0,
     );
+    let runs = extract_layout_runs(&buffer, 0);
+    let generation = glyph_atlas.shape_cache_generation;
+    glyph_atlas.shape_cache.insert(key, ShapeCacheEntry { runs, total_height, last_used: generation });
     total_height
 }
 
@@ -369,11 +459,34 @@ pub fn emit_text_quads(
         return;
     }
 
-    let (buffer, total_height) = shape_text_to_runs(
-        font_system, &stripped, font_path, font_size,
-        bounds.width, bounds.height, word_wrap, max_lines,
-    );
+    // Phase 1: Populate cache if miss, extract runs + total_height.
+    let shape_width = if word_wrap && bounds.width > 0.0 { bounds.width } else { 10000.0 };
+    let key = ShapeCacheKey {
+        text: stripped.clone(),
+        font_path: font_path.unwrap_or("").to_string(),
+        font_size_bits: font_size.to_bits(),
+        shape_width_bits: shape_width.to_bits(),
+        bounds_height_bits: bounds.height.to_bits(),
+        max_lines,
+    };
+    let generation = glyph_atlas.shape_cache_generation;
+    if !glyph_atlas.shape_cache.contains_key(&key) {
+        let (buffer, total_height) = shape_text_to_runs(
+            font_system, &stripped, font_path, font_size,
+            bounds.width, bounds.height, word_wrap, max_lines,
+        );
+        let runs = extract_layout_runs(&buffer, max_lines);
+        glyph_atlas.shape_cache.insert(
+            key.clone(),
+            ShapeCacheEntry { runs, total_height, last_used: generation },
+        );
+    }
+    let entry = glyph_atlas.shape_cache.get_mut(&key).unwrap();
+    entry.last_used = generation;
+    let total_height = entry.total_height;
+    let runs = entry.runs.clone();
 
+    // Phase 2: Emit quads from cached runs.
     let y_offset = match justify_v {
         TextJustify::Left => 0.0,   // TOP
         TextJustify::Center => (bounds.height - total_height) / 2.0,
@@ -382,7 +495,7 @@ pub fn emit_text_quads(
 
     let emit = |batch: &mut QuadBatch, ga: &mut GlyphAtlas, fs: &mut WowFontSystem,
                 c: [f32; 4], ox: f32, oy: f32| {
-        emit_glyphs_for_runs(batch, ga, fs, &buffer, bounds, y_offset, justify_h, c, ox, oy, glyph_tex_index, max_lines);
+        emit_glyphs_from_cache(batch, ga, fs, &runs, bounds, y_offset, justify_h, c, ox, oy, glyph_tex_index);
     };
 
     // Render outline first (behind everything)

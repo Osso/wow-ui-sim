@@ -41,7 +41,7 @@ pub fn emit_message_frame_text(
     // Pre-measure wrapped heights from newest to oldest, stopping when
     // we've filled the available vertical space.
     let measured = measure_visible_messages(
-        font_sys, f, &data.messages[..end], bounds.width, bounds.height,
+        font_sys, glyph_atlas, f, &data.messages[..end], bounds.width, bounds.height,
     );
 
     // Render bottom-aligned: walk measured messages from oldest to newest
@@ -84,6 +84,7 @@ fn message_fade_alpha(data: &MessageFrameData, msg: &crate::lua_api::message_fra
 /// in newest-first order, until available height is filled.
 fn measure_visible_messages(
     font_sys: &mut WowFontSystem,
+    glyph_atlas: &mut GlyphAtlas,
     f: &crate::widget::Frame,
     messages: &[crate::lua_api::message_frame::Message],
     width: f32,
@@ -94,7 +95,7 @@ fn measure_visible_messages(
 
     for i in (0..messages.len()).rev() {
         let h = measure_text_height(
-            font_sys, &messages[i].text,
+            font_sys, glyph_atlas, &messages[i].text,
             f.font.as_deref(), f.font_size, width, true,
         );
         if h <= 0.0 {

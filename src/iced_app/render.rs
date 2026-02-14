@@ -375,6 +375,7 @@ impl App {
         let elapsed_secs = state.start_time.elapsed().as_secs_f64();
         let tooltip_data = super::tooltip::collect_tooltip_data(&state);
         let mut glyph_atlas = self.glyph_atlas.borrow_mut();
+        glyph_atlas.advance_generation();
         let mut text_ctx: Option<(&mut WowFontSystem, &mut GlyphAtlas)> =
             Some((&mut font_sys, &mut glyph_atlas));
 
