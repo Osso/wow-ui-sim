@@ -144,8 +144,14 @@ fn apply_single_template(
     // Apply mixin (must be before children and scripts) — stays in Lua
     apply_mixin(lua, &template.combined_mixin(), frame_name);
 
-    // Look up frame_id for direct Rust property setting
-    let frame_id = state.borrow().widgets.get_id_by_name(frame_name);
+    // Look up frame_id for direct Rust property setting.
+    // Named frames are in the registry; unnamed frames use "__frame_{id}" as
+    // their Lua global key, so extract the id from the pattern as fallback.
+    let frame_id = state.borrow().widgets.get_id_by_name(frame_name).or_else(|| {
+        frame_name
+            .strip_prefix("__frame_")
+            .and_then(|s| s.parse::<u64>().ok())
+    });
 
     // Apply key values from template (handles multiple <KeyValues> blocks) — stays in Lua
     for key_values in template.all_key_values() {
@@ -555,7 +561,9 @@ fn apply_inline_frame_content(
     apply_mixin(lua, &frame.combined_mixin(), frame_name);
     apply_inline_key_values(lua, frame, frame_name);
     // Re-apply inline size — templates may override the size set in build_create_child_code.
-    let fid = state.borrow().widgets.get_id_by_name(frame_name);
+    let fid = state.borrow().widgets.get_id_by_name(frame_name).or_else(|| {
+        frame_name.strip_prefix("__frame_").and_then(|s| s.parse::<u64>().ok())
+    });
     if let Some(fid) = fid {
         direct::set_size_partial(state, fid, frame);
     }

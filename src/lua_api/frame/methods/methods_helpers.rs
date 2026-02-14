@@ -54,10 +54,8 @@ pub fn calculate_frame_width(widgets: &crate::widget::WidgetRegistry, id: u64) -
                         return (parent_width - left_anchor.x_offset + right_anchor.x_offset).max(0.0);
                     }
                 }
-            }
-            // Cross-frame anchors or parentless nil-target anchors (e.g. UIParent
-            // with setAllPoints="true"): use pre-computed layout_rect.
-            if let Some(rect) = frame.layout_rect {
+            } else if let Some(rect) = frame.layout_rect {
+                // Cross-frame anchors: use pre-computed layout_rect
                 let s = eff_scale(widgets, id);
                 if s > 0.0 && rect.width > 0.0 {
                     return rect.width / s;
@@ -92,10 +90,8 @@ pub fn calculate_frame_height(widgets: &crate::widget::WidgetRegistry, id: u64) 
                         return (parent_height + top_anchor.y_offset - bottom_anchor.y_offset).max(0.0);
                     }
                 }
-            }
-            // Cross-frame anchors or parentless nil-target anchors (e.g. UIParent
-            // with setAllPoints="true"): use pre-computed layout_rect.
-            if let Some(rect) = frame.layout_rect {
+            } else if let Some(rect) = frame.layout_rect {
+                // Cross-frame anchors: use pre-computed layout_rect
                 let s = eff_scale(widgets, id);
                 if s > 0.0 && rect.height > 0.0 {
                     return rect.height / s;
