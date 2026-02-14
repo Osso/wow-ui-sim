@@ -591,19 +591,6 @@ fn build_button_texture_code(
     code
 }
 
-/// Apply inline `<Size>` from a frame element, handling partial width/height.
-pub fn apply_inline_size(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str) {
-    let Some(size) = frame.size() else { return };
-    let (w, h) = super::get_size_values(size);
-    let f = lua_global_ref(frame_name);
-    match (w, h) {
-        (Some(w), Some(h)) => { let _ = lua.load(format!("do local f={f} if f then f:SetSize({w},{h}) end end")).exec(); }
-        (Some(w), None) => { let _ = lua.load(format!("do local f={f} if f then f:SetWidth({w}) end end")).exec(); }
-        (None, Some(h)) => { let _ = lua.load(format!("do local f={f} if f then f:SetHeight({h}) end end")).exec(); }
-        (None, None) => {}
-    }
-}
-
 /// Apply the `text=` attribute on a Button element via SetText.
 ///
 /// The XML `text` attribute is a localization key (resolved via global strings)

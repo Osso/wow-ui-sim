@@ -3,12 +3,16 @@
 //! This module provides functionality to apply XML templates from the registry
 //! when CreateFrame is called with a template name.
 
+pub(crate) mod direct;
 mod elements;
 
 use crate::loader::helpers::generate_set_point_code;
 use crate::loader::helpers_anim::generate_animation_group_code;
+use crate::lua_api::SimState;
 use crate::xml::{get_template_chain, FrameElement, FrameXml, TemplateEntry};
 use mlua::Lua;
+use std::cell::RefCell;
+use std::rc::Rc;
 
 /// Extract the FrameXml, widget type, and optional intrinsic name from a FrameElement.
 fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str, Option<&'static str>)> {
@@ -65,7 +69,12 @@ fn frame_element_type(element: &FrameElement) -> Option<(&FrameXml, &'static str
 ///
 /// This generates Lua code to create child frames, textures, and fontstrings
 /// defined in the template chain (including inherited templates).
-pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names: &str) {
+pub fn apply_templates_from_registry(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    frame_name: &str,
+    template_names: &str,
+) {
     let chain = get_template_chain(template_names);
     if chain.is_empty() {
         return;
@@ -73,7 +82,7 @@ pub fn apply_templates_from_registry(lua: &Lua, frame_name: &str, template_names
 
     let mut all_child_names = Vec::new();
     for entry in &chain {
-        let child_names = apply_single_template(lua, frame_name, entry);
+        let child_names = apply_single_template(lua, state, frame_name, entry);
         all_child_names.extend(child_names);
     }
 
@@ -124,33 +133,31 @@ pub fn fire_deferred_child_onloads(lua: &Lua) {
 }
 
 /// Apply a single template entry to a frame, returning names of created children.
-fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> Vec<String> {
+fn apply_single_template(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    frame_name: &str,
+    entry: &TemplateEntry,
+) -> Vec<String> {
     let template = &entry.frame;
 
-    // Apply mixin (must be before children and scripts)
+    // Apply mixin (must be before children and scripts) — stays in Lua
     apply_mixin(lua, &template.combined_mixin(), frame_name);
 
-    // Apply size from template
-    apply_template_size(lua, template, frame_name);
+    // Look up frame_id for direct Rust property setting
+    let frame_id = state.borrow().widgets.get_id_by_name(frame_name);
 
-    // Apply anchors from template
-    apply_template_anchors(lua, template, frame_name);
-
-    // Apply SetAllPoints from template
-    apply_template_set_all_points(lua, template, frame_name);
-
-    // Apply key values from template (handles multiple <KeyValues> blocks)
+    // Apply key values from template (handles multiple <KeyValues> blocks) — stays in Lua
     for key_values in template.all_key_values() {
         apply_key_values(lua, key_values, frame_name);
     }
 
-    // Apply hidden from template (before children/scripts so OnLoad sees correct visibility)
-    if template.hidden == Some(true) {
-        let code = format!(
-            "do local f = {} if f then f:Hide() end end",
-            lua_global_ref(frame_name)
-        );
-        let _ = lua.load(&code).exec();
+    // Direct Rust property setting (bypasses Lua compilation)
+    if let Some(fid) = frame_id {
+        direct::set_size(state, fid, template);
+        direct::set_anchors(state, fid, template, frame_name);
+        direct::set_all_points(state, fid, template);
+        direct::set_hidden(state, fid, template);
     }
 
     // Apply layers (textures and fontstrings)
@@ -178,11 +185,11 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     apply_animation_groups(lua, template, frame_name);
 
     // Create child frames defined in the template
-    let mut child_names = create_child_frames(lua, template, frame_name, frame_name);
+    let mut child_names = create_child_frames(lua, state, template, frame_name, frame_name);
 
     // Create ScrollChild children
     if let Some(scroll_child) = template.scroll_child() {
-        child_names.extend(create_scroll_child_frames(lua, &scroll_child.children, frame_name, frame_name));
+        child_names.extend(create_scroll_child_frames(lua, state, &scroll_child.children, frame_name, frame_name));
     }
 
     // Apply scripts from template (after children, so OnLoad can reference them)
@@ -191,72 +198,6 @@ fn apply_single_template(lua: &Lua, frame_name: &str, entry: &TemplateEntry) -> 
     }
 
     child_names
-}
-
-/// Apply size from a template to a frame.
-fn apply_template_size(lua: &Lua, template: &FrameXml, frame_name: &str) {
-    let Some(size) = template.size() else { return };
-    let (width, height) = get_size_values(size);
-    let (Some(w), Some(h)) = (width, height) else { return };
-    let code = format!(
-        "do local f = {} if f then f:SetSize({}, {}) end end",
-        lua_global_ref(frame_name), w, h
-    );
-    let _ = lua.load(&code).exec();
-}
-
-/// Apply anchors from a template to a frame.
-fn apply_template_anchors(lua: &Lua, template: &FrameXml, frame_name: &str) {
-    let Some(anchors) = template.anchors() else { return };
-    let frame_ref = lua_global_ref(frame_name);
-    for anchor in &anchors.anchors {
-        let (offset_x, offset_y) = anchor_offset(anchor);
-        let relative_to = anchor_relative_to(anchor, frame_name);
-        let point = anchor.point.as_str();
-        let relative_point = anchor.relative_point.as_deref().unwrap_or(point);
-        let code = format!(
-            "do local f = {} if f then f:SetPoint(\"{}\", {}, \"{}\", {}, {}) end end",
-            frame_ref, point, relative_to, relative_point, offset_x, offset_y
-        );
-        let _ = lua.load(&code).exec();
-    }
-}
-
-/// Extract offset values from an anchor.
-fn anchor_offset(anchor: &crate::xml::AnchorXml) -> (f32, f32) {
-    if let Some(offset) = &anchor.offset {
-        let abs = offset.abs_dimension.as_ref();
-        (
-            abs.and_then(|d| d.x).unwrap_or(0.0),
-            abs.and_then(|d| d.y).unwrap_or(0.0),
-        )
-    } else {
-        (anchor.x.unwrap_or(0.0), anchor.y.unwrap_or(0.0))
-    }
-}
-
-/// Determine the relativeTo target for an anchor.
-fn anchor_relative_to(anchor: &crate::xml::AnchorXml, frame_name: &str) -> String {
-    let frame_ref = lua_global_ref(frame_name);
-    match &anchor.relative_to {
-        Some(rel) if rel == "$parent" => {
-            format!("({} and {}:GetParent())", frame_ref, frame_ref)
-        }
-        Some(rel) => lua_global_ref(rel),
-        None => format!("({} and {}:GetParent())", frame_ref, frame_ref),
-    }
-}
-
-/// Apply SetAllPoints from a template to a frame.
-fn apply_template_set_all_points(lua: &Lua, template: &FrameXml, frame_name: &str) {
-    if template.set_all_points != Some(true) {
-        return;
-    }
-    let code = format!(
-        "do local f = {} if f then f:SetAllPoints(true) end end",
-        lua_global_ref(frame_name)
-    );
-    let _ = lua.load(&code).exec();
 }
 
 /// Apply key values from a template to a frame.
@@ -408,14 +349,22 @@ pub(crate) fn fire_on_load(lua: &Lua, frame_name: &str) {
 }
 
 /// Create child frames from template XML.
-fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str, subst_parent: &str) -> Vec<String> {
+fn create_child_frames(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    frame: &FrameXml,
+    parent_name: &str,
+    subst_parent: &str,
+) -> Vec<String> {
     let mut all_names = Vec::new();
     let elements = frame.all_frame_elements();
     for child in &elements {
         let Some((child_frame, child_type, intrinsic)) = frame_element_type(child) else {
             continue;
         };
-        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name, subst_parent);
+        let names = create_child_frame_from_template(
+            lua, state, child_frame, child_type, intrinsic, parent_name, subst_parent,
+        );
         all_names.extend(names);
     }
     all_names
@@ -429,6 +378,7 @@ fn create_child_frames(lua: &Lua, frame: &FrameXml, parent_name: &str, subst_par
 /// ancestor rather than using the auto-generated frame name.
 fn create_child_frame_from_template(
     lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     intrinsic: Option<&str>,
@@ -456,7 +406,7 @@ fn create_child_frame_from_template(
 
     // Apply intrinsic template (e.g. DropdownButton) and set the intrinsic property.
     if let Some(intrinsic_name) = intrinsic {
-        apply_templates_from_registry(lua, &child_name, intrinsic_name);
+        apply_templates_from_registry(lua, state, &child_name, intrinsic_name);
         let code = format!(
             "{}.intrinsic = \"{}\"",
             lua_global_ref(&child_name),
@@ -472,10 +422,10 @@ fn create_child_frame_from_template(
     // in place.
     let inherits = frame.inherits.as_deref().unwrap_or("");
     if !inherits.is_empty() {
-        apply_templates_from_registry(lua, &child_name, inherits);
+        apply_templates_from_registry(lua, state, &child_name, inherits);
     }
 
-    let nested_names = apply_inline_frame_content(lua, frame, &child_name, child_subst);
+    let nested_names = apply_inline_frame_content(lua, state, frame, &child_name, child_subst);
 
     let mut all_names = nested_names;
     all_names.push(child_name);
@@ -576,6 +526,7 @@ fn resolve_inherited_field(
 /// Create child frames from a ScrollChild element.
 fn create_scroll_child_frames(
     lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
     children: &[FrameElement],
     parent_name: &str,
     subst_parent: &str,
@@ -585,18 +536,29 @@ fn create_scroll_child_frames(
         let Some((child_frame, child_type, intrinsic)) = frame_element_type(child) else {
             continue;
         };
-        let names = create_child_frame_from_template(lua, child_frame, child_type, intrinsic, parent_name, subst_parent);
+        let names = create_child_frame_from_template(
+            lua, state, child_frame, child_type, intrinsic, parent_name, subst_parent,
+        );
         all_names.extend(names);
     }
     all_names
 }
 
 /// Apply inline content from a FrameXml to an already-created frame.
-fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_name: &str, subst_parent: &str) -> Vec<String> {
+fn apply_inline_frame_content(
+    lua: &Lua,
+    state: &Rc<RefCell<SimState>>,
+    frame: &crate::xml::FrameXml,
+    frame_name: &str,
+    subst_parent: &str,
+) -> Vec<String> {
     apply_mixin(lua, &frame.combined_mixin(), frame_name);
     apply_inline_key_values(lua, frame, frame_name);
     // Re-apply inline size — templates may override the size set in build_create_child_code.
-    elements::apply_inline_size(lua, frame, frame_name);
+    let fid = state.borrow().widgets.get_id_by_name(frame_name);
+    if let Some(fid) = fid {
+        direct::set_size_partial(state, fid, frame);
+    }
     apply_layers(lua, frame, frame_name, subst_parent);
 
     if let Some(thumb) = frame.thumb_texture() {
@@ -612,9 +574,9 @@ fn apply_inline_frame_content(lua: &Lua, frame: &crate::xml::FrameXml, frame_nam
     apply_editbox_fontstring(lua, frame, frame_name, subst_parent);
     apply_animation_groups(lua, frame, frame_name);
 
-    let mut nested_names = create_child_frames(lua, frame, frame_name, subst_parent);
+    let mut nested_names = create_child_frames(lua, state, frame, frame_name, subst_parent);
     if let Some(scroll_child) = frame.scroll_child() {
-        nested_names.extend(create_scroll_child_frames(lua, &scroll_child.children, frame_name, subst_parent));
+        nested_names.extend(create_scroll_child_frames(lua, state, &scroll_child.children, frame_name, subst_parent));
     }
 
     if let Some(scripts) = frame.scripts() {

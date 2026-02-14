@@ -61,7 +61,7 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
             // Use the canonical template name (PascalCase from XML definition),
             // not the raw Lua input which may be all-caps (e.g. "DROPDOWNBUTTON").
             let canonical = &entry.name;
-            apply_templates_from_registry(lua, &ref_name, canonical);
+            apply_templates_from_registry(lua, &state_clone, &ref_name, canonical);
             // Set frame.intrinsic = "TypeName" BEFORE user templates, so OnLoad
             // handlers (e.g. ValidateIsDropdownButtonIntrinsic) can see it.
             let code = format!(
@@ -74,7 +74,7 @@ pub fn create_frame_function(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<
 
         // Apply user-specified templates from the registry
         if let Some(ref tmpl) = template {
-            apply_templates_from_registry(lua, &ref_name, tmpl);
+            apply_templates_from_registry(lua, &state_clone, &ref_name, tmpl);
 
             // If any template in the chain defines parentArray, insert this frame
             // into its parent's array.  This handles dynamic CreateFrame calls like

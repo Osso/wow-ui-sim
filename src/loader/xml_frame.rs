@@ -4,7 +4,7 @@ use crate::lua_api::LoaderEnv;
 
 use super::button::{apply_button_text, apply_button_textures};
 use super::error::LoadError;
-use super::helpers::{escape_lua_string, generate_anchors_code, generate_scripts_code, get_size_values, lua_global_ref, rand_id};
+use super::helpers::{escape_lua_string, generate_scripts_code, lua_global_ref, rand_id};
 use super::precompiled;
 use super::xml_frame_extras::{apply_animation_groups, apply_bar_texture, init_action_bar_tables};
 use super::xml_lifecycle::fire_lifecycle_scripts;
@@ -64,12 +64,17 @@ pub fn create_frame_from_xml(
 
     let lua_code = build_frame_lua_code(widget_type, &name, explicit_parent, inherits, frame, parent);
     exec_create_frame_code(env, &lua_code, &name)?;
+    apply_xml_properties_direct(env, &name, frame, inherits, parent);
     apply_intrinsic_property(env, intrinsic_base, &name);
     create_children_and_finalize(env, frame, &name, inherits)?;
     Ok(Some(name))
 }
 
-/// Build the Lua code that creates a frame and sets all XML-driven properties.
+/// Build the Lua code that creates a frame and sets Lua-only XML properties.
+///
+/// Declarative properties (size, anchors, strata, level, alpha, hidden, toplevel,
+/// enableMouse, hitRectInsets, clampedToScreen, setAllPoints, id) are set directly
+/// in Rust by `apply_xml_properties_direct()` after this Lua chunk executes.
 fn build_frame_lua_code(
     widget_type: &str, name: &str, explicit_parent: Option<&str>,
     inherits: &str, frame: &crate::xml::FrameXml, parent: &str,
@@ -77,20 +82,8 @@ fn build_frame_lua_code(
     let mut lua_code = build_create_frame_code(widget_type, name, explicit_parent, inherits);
     append_parent_key_code(&mut lua_code, frame, parent);
     append_mixins_code(&mut lua_code, frame, inherits);
-    append_size_code(&mut lua_code, frame, inherits);
-    append_anchors_code(&mut lua_code, frame, inherits, parent);
-    append_frame_strata_code(&mut lua_code, frame, inherits);
-    append_frame_level_code(&mut lua_code, frame, inherits);
-    append_hidden_code(&mut lua_code, frame, inherits);
-    append_toplevel_code(&mut lua_code, frame, inherits);
-    append_alpha_code(&mut lua_code, frame, inherits);
-    append_enable_mouse_code(&mut lua_code, frame, inherits);
-    append_hit_rect_insets_code(&mut lua_code, frame);
-    append_clamped_to_screen_code(&mut lua_code, frame, inherits);
-    append_set_all_points_code(&mut lua_code, frame, inherits);
     append_key_values_code(&mut lua_code, frame, inherits);
     append_xml_attributes_code(&mut lua_code, frame);
-    append_id_code(&mut lua_code, frame);
     append_scripts_code(&mut lua_code, frame);
     lua_code
 }
@@ -134,6 +127,32 @@ fn exec_create_frame_code(env: &LoaderEnv<'_>, lua_code: &str, name: &str) -> Re
     exec_result?;
     crate::lua_api::globals::template::fire_deferred_child_onloads(env.lua());
     Ok(())
+}
+
+/// Set declarative frame properties directly in Rust after the Lua CreateFrame chunk.
+fn apply_xml_properties_direct(
+    env: &LoaderEnv<'_>,
+    name: &str,
+    frame: &crate::xml::FrameXml,
+    inherits: &str,
+    parent: &str,
+) {
+    use crate::lua_api::globals::template::direct;
+    let state = env.state();
+    let fid = state.borrow().widgets.get_id_by_name(name);
+    let Some(fid) = fid else { return };
+    direct::apply_xml_size(state, fid, frame, inherits);
+    direct::apply_xml_anchors(state, fid, frame, inherits, parent);
+    direct::apply_xml_frame_strata(state, fid, frame, inherits);
+    direct::apply_xml_frame_level(state, fid, frame, inherits);
+    direct::apply_xml_hidden(state, fid, frame, inherits);
+    direct::apply_xml_toplevel(state, fid, frame, inherits);
+    direct::apply_xml_alpha(state, fid, frame, inherits);
+    direct::apply_xml_enable_mouse(state, fid, frame, inherits);
+    direct::apply_xml_hit_rect_insets(state, fid, frame);
+    direct::apply_xml_clamped_to_screen(state, fid, frame, inherits);
+    direct::apply_xml_set_all_points(state, fid, frame, inherits);
+    direct::apply_xml_id(state, fid, frame);
 }
 
 /// Resolve the frame name, applying `$parent` substitution and generating anonymous names.
@@ -290,185 +309,6 @@ fn collect_mixins_from_attr(all_mixins: &mut Vec<String>, mixin_attr: Option<&st
     }
 }
 
-/// Resolve size from templates (base to derived) then the frame itself, and append SetSize.
-fn append_size_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let mut final_width: Option<f32> = None;
-    let mut final_height: Option<f32> = None;
-
-    if !inherits.is_empty() {
-        for template_entry in &crate::xml::get_template_chain(inherits) {
-            apply_size_from_xml(&mut final_width, &mut final_height, template_entry.frame.size());
-        }
-    }
-
-    apply_size_from_xml(&mut final_width, &mut final_height, frame.size());
-
-    if let (Some(w), Some(h)) = (final_width, final_height) {
-        lua_code.push_str(&format!(
-            r#"
-        frame:SetSize({}, {})
-        "#,
-            w, h
-        ));
-    }
-}
-
-/// Update width/height from a SizeXml if present.
-fn apply_size_from_xml(width: &mut Option<f32>, height: &mut Option<f32>, size: Option<&crate::xml::SizeXml>) {
-    if let Some(size) = size {
-        let (x, y) = get_size_values(size);
-        if let Some(x) = x {
-            *width = Some(x);
-        }
-        if let Some(y) = y {
-            *height = Some(y);
-        }
-    }
-}
-
-/// Append anchor SetPoint calls from the frame or inherited templates.
-fn append_anchors_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str, parent: &str) {
-    if let Some(anchors) = frame.anchors() {
-        lua_code.push_str(&generate_anchors_code(anchors, parent));
-    } else if !inherits.is_empty() {
-        // No direct anchors - most derived template with anchors wins
-        let template_chain = crate::xml::get_template_chain(inherits);
-        for template_entry in template_chain.iter().rev() {
-            if let Some(anchors) = template_entry.frame.anchors() {
-                lua_code.push_str(&generate_anchors_code(anchors, parent));
-                break;
-            }
-        }
-    }
-}
-
-/// Append `frame:Hide()` if the frame is marked hidden (directly or via template).
-fn append_hidden_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let mut hidden = frame.hidden;
-    if hidden.is_none() && !inherits.is_empty() {
-        for template_entry in &crate::xml::get_template_chain(inherits) {
-            if let Some(h) = template_entry.frame.hidden {
-                hidden = Some(h);
-                break;
-            }
-        }
-    }
-    if hidden == Some(true) {
-        lua_code.push_str(
-            r#"
-        frame:Hide()
-        "#,
-        );
-    }
-}
-
-/// Append `frame:SetToplevel(true)` if the frame has toplevel="true" (directly or via template).
-fn append_toplevel_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let toplevel = frame.toplevel.or_else(|| {
-        resolve_from_templates(inherits, |f| f.toplevel)
-    });
-    if toplevel == Some(true) {
-        lua_code.push_str("\n        frame:SetToplevel(true)\n        ");
-    }
-}
-
-/// Append `frame:SetAlpha(val)` if the frame has an alpha attribute (directly or via template).
-fn append_alpha_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let mut alpha = frame.alpha;
-    if alpha.is_none() && !inherits.is_empty() {
-        for template_entry in &crate::xml::get_template_chain(inherits) {
-            if let Some(a) = template_entry.frame.alpha {
-                alpha = Some(a);
-                break;
-            }
-        }
-    }
-    if let Some(a) = alpha {
-        lua_code.push_str(&format!(
-            r#"
-        frame:SetAlpha({})
-        "#,
-            a
-        ));
-    }
-}
-
-/// Resolve enableMouse from the frame and templates, then append EnableMouse call.
-fn append_enable_mouse_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let mut enable_mouse = frame.enable_mouse;
-    if enable_mouse.is_none() && !inherits.is_empty() {
-        for template_entry in &crate::xml::get_template_chain(inherits) {
-            if let Some(em) = template_entry.frame.enable_mouse {
-                enable_mouse = Some(em);
-            }
-        }
-    }
-    if let Some(enabled) = enable_mouse {
-        lua_code.push_str(&format!(
-            r#"
-        frame:EnableMouse({})
-        "#,
-            if enabled { "true" } else { "false" }
-        ));
-    }
-}
-
-/// Apply HitRectInsets from XML if present.
-fn append_hit_rect_insets_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
-    if let Some(insets) = frame.hit_rect_insets() {
-        let l = insets.left.unwrap_or(0.0);
-        let r = insets.right.unwrap_or(0.0);
-        let t = insets.top.unwrap_or(0.0);
-        let b = insets.bottom.unwrap_or(0.0);
-        lua_code.push_str(&format!(
-            "\n        frame:SetHitRectInsets({}, {}, {}, {})\n        ", l, r, t, b
-        ));
-    }
-}
-
-/// Resolve clampedToScreen from the frame and templates, then call SetClampedToScreen.
-fn append_clamped_to_screen_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let mut clamped = frame.clamped_to_screen;
-    if clamped.is_none() && !inherits.is_empty() {
-        for entry in &crate::xml::get_template_chain(inherits) {
-            if let Some(c) = entry.frame.clamped_to_screen {
-                clamped = Some(c);
-            }
-        }
-    }
-    if let Some(c) = clamped {
-        lua_code.push_str(&format!(
-            "\n        frame:SetClampedToScreen({})\n        ",
-            if c { "true" } else { "false" }
-        ));
-    }
-}
-
-/// Resolve setAllPoints from templates and frame, then append SetAllPoints call.
-fn append_set_all_points_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let mut has_set_all_points = false;
-
-    if !inherits.is_empty() {
-        for template_entry in &crate::xml::get_template_chain(inherits) {
-            if template_entry.frame.set_all_points == Some(true) {
-                has_set_all_points = true;
-                break;
-            }
-        }
-    }
-
-    if frame.set_all_points == Some(true) {
-        has_set_all_points = true;
-    }
-
-    if has_set_all_points {
-        lua_code.push_str(
-            r#"
-        frame:SetAllPoints(true)
-        "#,
-        );
-    }
-}
 
 /// Append KeyValue assignments from templates and the frame itself.
 fn append_key_values_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
@@ -529,13 +369,6 @@ fn append_xml_attributes_code(lua_code: &mut String, frame: &crate::xml::FrameXm
                 value
             ));
         }
-    }
-}
-
-/// Append SetID call if the frame has an `id` XML attribute.
-fn append_id_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
-    if let Some(id) = frame.xml_id {
-        lua_code.push_str(&format!("\n        frame:SetID({})\n        ", id));
     }
 }
 
@@ -678,39 +511,4 @@ fn create_frame_elements(
     Ok(())
 }
 
-/// Append `frame:SetFrameStrata(strata)` if the frame has a frameStrata attribute.
-fn append_frame_strata_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let strata = frame.frame_strata.clone().or_else(|| {
-        resolve_string_from_templates(inherits, |f| f.frame_strata.clone())
-    });
-    if let Some(s) = strata {
-        lua_code.push_str(&format!("\n        frame:SetFrameStrata(\"{}\")\n        ", s));
-    }
-}
-
-/// Append `frame:SetFrameLevel(level)` if the frame has a frameLevel attribute.
-fn append_frame_level_code(lua_code: &mut String, frame: &crate::xml::FrameXml, inherits: &str) {
-    let level = frame.frame_level.or_else(|| {
-        resolve_from_templates(inherits, |f| f.frame_level)
-    });
-    if let Some(l) = level {
-        lua_code.push_str(&format!("\n        frame:SetFrameLevel({})\n        ", l));
-    }
-}
-
-/// Search template chain for the first Some value returned by the extractor.
-fn resolve_from_templates<T: Copy>(inherits: &str, extract: fn(&crate::xml::FrameXml) -> Option<T>) -> Option<T> {
-    if inherits.is_empty() { return None; }
-    crate::xml::get_template_chain(inherits)
-        .iter()
-        .find_map(|entry| extract(&entry.frame))
-}
-
-/// Search template chain for the first Some(String) returned by the extractor.
-fn resolve_string_from_templates(inherits: &str, extract: fn(&crate::xml::FrameXml) -> Option<String>) -> Option<String> {
-    if inherits.is_empty() { return None; }
-    crate::xml::get_template_chain(inherits)
-        .iter()
-        .find_map(|entry| extract(&entry.frame))
-}
 

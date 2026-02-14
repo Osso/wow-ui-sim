@@ -279,12 +279,6 @@ pub fn generate_set_point_code(
     code
 }
 
-/// Generate Lua code for setting anchors on a frame.
-pub fn generate_anchors_code(anchors: &crate::xml::AnchorsXml, parent_ref: &str) -> String {
-    let safe_ref = lua_global_ref(parent_ref);
-    generate_set_point_code(anchors, "frame", &safe_ref, parent_ref, "nil")
-}
-
 /// Append a single SetScript call for a script handler to the code buffer.
 pub fn append_script_handler(
     code: &mut String,
