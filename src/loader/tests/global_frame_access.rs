@@ -1,7 +1,6 @@
 //! Tests for _G frame access behavior.
 //!
-//! These tests document how frames are accessed from Lua via _G and should
-//! continue passing after the __index-on-_G refactor (lazy Rust lookup).
+//! Frames are eagerly registered in _G via raw_set at creation time.
 
 use super::*;
 

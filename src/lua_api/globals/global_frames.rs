@@ -3,6 +3,7 @@
 //! This module registers all global frame objects that are expected to exist
 //! in the WoW UI environment, such as UIParent, WorldFrame, PlayerFrame, etc.
 
+use crate::lua_api::frame::frame_lud;
 use crate::lua_api::SimState;
 use crate::widget::{Frame, WidgetType};
 use mlua::{Lua, Result, Value};
@@ -42,23 +43,26 @@ fn register_frame_global_with_visibility(
 }
 
 fn register_frame_global_impl(
-    _lua: &Lua,
+    lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     name: &str,
     visible: bool,
     widget_type: WidgetType,
 ) -> Result<u64> {
     let mut st = state.borrow_mut();
-    if let Some(existing) = st.widgets.get_id_by_name(name) {
+    let id = if let Some(existing) = st.widgets.get_id_by_name(name) {
         if !visible {
             st.set_frame_visible(existing, false);
         }
-        Ok(existing)
+        existing
     } else {
         let mut frame = Frame::new(widget_type, Some(name.to_string()), None);
         frame.visible = visible;
-        Ok(st.widgets.register(frame))
-    }
+        st.widgets.register(frame)
+    };
+    drop(st);
+    lua.globals().raw_set(name, frame_lud(id))?;
+    Ok(id)
 }
 
 /// Get or create the `__frame_fields` table for a given frame ID.

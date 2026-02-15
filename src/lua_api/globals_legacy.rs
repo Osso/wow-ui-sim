@@ -51,9 +51,6 @@ pub fn register_globals(lua: &Lua, state: Rc<RefCell<SimState>>) -> Result<()> {
     register_custom_ipairs(lua, Rc::clone(&state))?;
     register_custom_getmetatable(lua)?;
     register_create_frame(lua, Rc::clone(&state))?;
-    // Install __index on _G before any Lua code runs that accesses frame globals.
-    // Sub-module registration (below) runs Lua setup code that indexes frame names.
-    install_globals_metatable(lua, &state)?;
     register_submodule_apis(lua, &state)?;
     register_ui_strings_and_fonts(lua)?;
     patch_string_format(lua)?;
@@ -456,54 +453,3 @@ fn register_ui_strings_and_fonts(lua: &Lua) -> Result<()> {
     create_standard_font_objects(lua)
 }
 
-/// Install a `__index` metamethod on `_G` for lazy frame lookup.
-///
-/// When Lua accesses `_G["SomeName"]` and no value exists, this metamethod
-/// checks the widget registry for a named frame or a `__frame_{id}` pattern.
-/// On hit it returns a LightUserData (zero-cost) and caches it via `rawset`.
-fn install_globals_metatable(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
-    let state_clone = Rc::clone(state);
-    let neg_cache: Rc<RefCell<std::collections::HashSet<String>>> =
-        Rc::new(RefCell::new(std::collections::HashSet::new()));
-
-    let index_fn = lua.create_function(move |lua, (_table, key): (mlua::Table, mlua::String)| {
-        let key_str = key.to_str().map_err(|e| mlua::Error::runtime(e.to_string()))?;
-        let key_s: &str = &key_str;
-
-        if neg_cache.borrow().contains(key_s) {
-            return Ok(Value::Nil);
-        }
-
-        let frame_id = lookup_frame_id(&state_clone, key_s);
-
-        let Some(id) = frame_id else {
-            neg_cache.borrow_mut().insert(key_s.to_string());
-            return Ok(Value::Nil);
-        };
-
-        let lud = frame_lud(id);
-
-        // Cache in _G via rawset so future lookups don't hit __index again
-        let globals = lua.globals();
-        globals.raw_set(key_s, lud.clone())?;
-
-        Ok(lud)
-    })?;
-
-    let meta = lua.create_table()?;
-    meta.set("__index", index_fn)?;
-    lua.globals().set_metatable(Some(meta));
-    Ok(())
-}
-
-/// Look up a frame ID by name or `__frame_{id}` pattern.
-fn lookup_frame_id(state: &Rc<RefCell<SimState>>, key: &str) -> Option<u64> {
-    let st = state.borrow();
-    if let Some(id) = st.widgets.get_id_by_name(key) {
-        Some(id)
-    } else if let Some(suffix) = key.strip_prefix("__frame_") {
-        suffix.parse::<u64>().ok().filter(|id| st.widgets.get(*id).is_some())
-    } else {
-        None
-    }
-}
