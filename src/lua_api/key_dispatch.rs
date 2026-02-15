@@ -30,7 +30,8 @@ impl WowLuaEnv {
         }
     }
 
-    /// Escape priority: focused EditBox → clear target → CloseSpecialWindows → toggle GameMenuFrame.
+    /// Escape priority: focused EditBox → clear target → CloseSpecialWindows
+    /// → CloseAllWindows (panels from ShowUIPanel) → toggle GameMenuFrame.
     fn dispatch_escape(&self) -> Result<()> {
         let focused = self.state.borrow().focused_frame_id;
         if let Some(fid) = focused
@@ -41,6 +42,9 @@ impl WowLuaEnv {
             return Ok(());
         }
         if self.close_special_windows()? {
+            return Ok(());
+        }
+        if self.close_all_windows()? {
             return Ok(());
         }
         self.toggle_game_menu()
@@ -198,6 +202,15 @@ impl WowLuaEnv {
             }
         }
         Ok(closed)
+    }
+
+    /// Call the Lua CloseAllWindows() to close panels opened via ShowUIPanel.
+    /// Returns false if CloseAllWindows is not defined (e.g. in tests).
+    fn close_all_windows(&self) -> Result<bool> {
+        let func: Option<mlua::Function> = self.lua.globals().get("CloseAllWindows").ok();
+        let Some(func) = func else { return Ok(false) };
+        let result: Value = func.call(())?;
+        Ok(is_truthy(&result))
     }
 
     // ── EditBox text editing helpers ─────────────────────────────────────

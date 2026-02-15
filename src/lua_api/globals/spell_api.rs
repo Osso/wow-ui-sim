@@ -134,9 +134,19 @@ fn register_c_spell_book_actions(
             cast_spell_by_id(&st, lua, spell_id)
         })?,
     )?;
+    let st2 = Rc::clone(&state);
     t.set(
         "PickupSpellBookItem",
-        lua.create_function(|_, (_slot, _bank): (i32, Option<i32>)| Ok(()))?,
+        lua.create_function(move |_, (slot, _bank): (i32, Option<i32>)| {
+            let spell_id = spellbook_data::get_spell_at_slot(slot)
+                .map(|(_, entry, _)| entry.spell_id);
+            if let Some(spell_id) = spell_id {
+                eprintln!("[cursor] PickupSpellBookItem({}) → spell {}", slot, spell_id);
+                st2.borrow_mut().cursor_item =
+                    Some(crate::lua_api::state::CursorInfo::Spell { spell_id });
+            }
+            Ok(())
+        })?,
     )?;
     t.set(
         "ToggleSpellBookItemAutoCast",

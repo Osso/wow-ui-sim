@@ -297,46 +297,70 @@ fn patch_default_anchor(env: &WowLuaEnv) {
 /// 2. Position at TOP center (UpdateUIPanelPositions for "center" area).
 /// 3. Raise strata to HIGH so the panel renders above HUD elements.
 fn patch_show_hide_ui_panel(env: &WowLuaEnv) {
+    patch_show_ui_panel(env);
+    patch_hide_ui_panel_and_close_all(env);
+}
+
+/// ShowUIPanel: scale-to-fit, position, show, and track for Escape closing.
+fn patch_show_ui_panel(env: &WowLuaEnv) {
     let _ = env.exec(
         r#"
+        __wow_shown_panels = __wow_shown_panels or {}
+
         ShowUIPanel = function(frame, force)
             if not frame or frame:IsShown() then return end
-
-            -- Look up panel registration (from RegisterUIPanel calls)
             local name = frame.GetName and frame:GetName()
             local attrs = UIPanelWindows and name and UIPanelWindows[name]
-
-            -- Scale-to-fit: mirrors FrameUtil.UpdateScaleForFitSpecific
             if attrs and attrs.checkFit == 1 then
                 frame:SetScale(1)
                 local extraW = attrs.checkFitExtraWidth or 200
                 local extraH = attrs.checkFitExtraHeight or 140
-                local fw = frame:GetWidth() + extraW
-                local fh = frame:GetHeight() + extraH
-                local sw = GetScreenWidth()
-                local sh = GetScreenHeight()
-                local hRatio = sw / fw
-                local vRatio = sh / fh
+                local hRatio = GetScreenWidth() / (frame:GetWidth() + extraW)
+                local vRatio = GetScreenHeight() / (frame:GetHeight() + extraH)
                 if hRatio < 1 or vRatio < 1 then
                     frame:SetScale(math.min(hRatio, vRatio))
                 end
             end
-
-            -- Position: center at top with y-offset (like "center" area)
             local yOff = (attrs and attrs.yoffset) or 0
-            local scale = frame:GetScale()
             frame:ClearAllPoints()
-            frame:SetPoint("TOP", UIParent, "TOP", 0, (-10 - yOff) / scale)
-
-            -- Raise above normal HUD frames
+            frame:SetPoint("TOP", UIParent, "TOP", 0, (-10 - yOff) / frame:GetScale())
             frame:SetFrameStrata("HIGH")
-
             frame:Show()
+            for i, f in ipairs(__wow_shown_panels) do
+                if f == frame then return end
+            end
+            table.insert(__wow_shown_panels, frame)
         end
+    "#,
+    );
+}
 
+/// HideUIPanel + CloseAllWindows: hide panels and maintain tracking table.
+fn patch_hide_ui_panel_and_close_all(env: &WowLuaEnv) {
+    let _ = env.exec(
+        r#"
         HideUIPanel = function(frame, skipSetPoint)
             if not frame or not frame:IsShown() then return end
             frame:Hide()
+            for i, f in ipairs(__wow_shown_panels) do
+                if f == frame then
+                    table.remove(__wow_shown_panels, i)
+                    break
+                end
+            end
+        end
+
+        CloseAllWindows = function()
+            local found = false
+            for i = #__wow_shown_panels, 1, -1 do
+                local f = __wow_shown_panels[i]
+                if f and f:IsShown() then
+                    f:Hide()
+                    found = true
+                end
+            end
+            __wow_shown_panels = {}
+            return found
         end
     "#,
     );
