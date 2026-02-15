@@ -23,13 +23,18 @@ fn get_or_create_frame_fields(lua: &Lua, frame_id: u64) -> Result<mlua::Table> {
 /// Does NOT set `_G` entries — the `__index` metamethod on `_G` handles
 /// lazy materialization.
 fn create_and_register_global(
-    _lua: &Lua,
+    lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     frame: Frame,
-    _name: &str,
+    name: &str,
 ) -> Result<u64> {
     let id = frame.id;
     state.borrow_mut().widgets.register(frame);
+    let lud = super::super::frame::frame_lud(id);
+    let globals = lua.globals();
+    globals.raw_set(name, lud.clone())?;
+    let frame_key = format!("__frame_{}", id);
+    globals.raw_set(frame_key.as_str(), lud)?;
     Ok(id)
 }
 

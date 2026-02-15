@@ -524,7 +524,7 @@ pub fn push_action_button_state_update(
     let buttons: Vec<u64> = state.borrow().action_ui_buttons
         .iter().map(|(id, _)| *id).collect();
     for frame_id in buttons {
-        // Use Lua code so __index resolves mixin methods correctly.
+        // Use Lua code so metatable __index resolves mixin methods correctly.
         let code = format!(
             "do local f = __frame_{} if f and f.UpdateState then f:UpdateState() end end",
             frame_id

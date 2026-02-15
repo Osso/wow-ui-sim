@@ -9,8 +9,8 @@ use std::rc::Rc;
 
 /// Create a tooltip frame and register it in the widget registry.
 ///
-/// Does NOT set `_G` entries — the `__index` metamethod on `_G` handles
-/// lazy materialization.
+/// `_G` entries are set by `sync_named_frames_to_globals` after all
+/// registration is complete.
 fn create_tooltip_frame(
     _lua: &Lua,
     state: &Rc<RefCell<SimState>>,

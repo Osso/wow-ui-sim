@@ -443,6 +443,30 @@ fn register_submodule_apis(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<(
     register_tooltip_frames(lua, Rc::clone(state))?;
     register_quest_frames(lua, Rc::clone(state))?;
 
+    // Ensure all named frames have _G entries. Covers frames created by
+    // builtin_frames.rs (no Lua access) and any registration site that
+    // only sets the widget registry name without calling raw_set on _G.
+    sync_named_frames_to_globals(lua, state)?;
+
+    Ok(())
+}
+
+/// Set `_G[name]` and `_G["__frame_{id}"]` for every named frame in the registry
+/// that doesn't already have a `_G` entry.
+fn sync_named_frames_to_globals(lua: &Lua, state: &Rc<RefCell<SimState>>) -> Result<()> {
+    let globals = lua.globals();
+    let st = state.borrow();
+    for (id, name) in st.widgets.named_frames() {
+        let lud = super::frame::frame_lud(id);
+        // Only set if not already present (avoid overwriting setup done above)
+        if globals.raw_get::<Value>(name.as_str())?.is_nil() {
+            globals.raw_set(name.as_str(), lud.clone())?;
+        }
+        let frame_key = format!("__frame_{}", id);
+        if globals.raw_get::<Value>(frame_key.as_str())?.is_nil() {
+            globals.raw_set(frame_key.as_str(), lud)?;
+        }
+    }
     Ok(())
 }
 

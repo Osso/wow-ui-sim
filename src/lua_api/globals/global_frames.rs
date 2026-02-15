@@ -61,7 +61,11 @@ fn register_frame_global_impl(
         st.widgets.register(frame)
     };
     drop(st);
-    lua.globals().raw_set(name, frame_lud(id))?;
+    let lud = frame_lud(id);
+    let globals = lua.globals();
+    globals.raw_set(name, lud.clone())?;
+    let frame_key = format!("__frame_{}", id);
+    globals.raw_set(frame_key.as_str(), lud)?;
     Ok(id)
 }
 

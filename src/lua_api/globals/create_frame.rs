@@ -225,8 +225,8 @@ fn register_new_frame(
 
 /// Create a LightUserData value for a frame and cache it in `_G`.
 ///
-/// With LightUserData, creation is free (pointer from ID). We still cache
-/// named frames in `_G` via `raw_set` for Lua code that does `_G["name"]`.
+/// Caches both `_G[name]` (for named frames) and `_G["__frame_{id}"]` (always)
+/// so that `lua_global_ref` lookups work for template application and mixin code.
 fn create_frame_userdata(
     lua: &Lua,
     _state: &Rc<RefCell<SimState>>,
@@ -239,17 +239,18 @@ fn create_frame_userdata(
     if let Some(n) = name {
         globals.raw_set(n, lud.clone())?;
     }
+    let frame_key = format!("__frame_{}", frame_id);
+    globals.raw_set(frame_key.as_str(), lud.clone())?;
 
     Ok(lud)
 }
 
-/// Register button's default texture children in the widget registry by name.
+/// Register button's default texture children as globals.
 ///
 /// In WoW, named buttons get globals like `ButtonNameNormalTexture`, etc.
-/// Instead of eagerly creating Lua userdata, we just set names in the
-/// registry so the `__index` metamethod on `_G` can find them lazily.
+/// Sets both the widget registry name and `_G` entry for each child.
 fn register_button_child_globals(
-    _lua: &Lua,
+    lua: &Lua,
     state: &Rc<RefCell<SimState>>,
     frame_id: u64,
     button_name: &str,
@@ -264,10 +265,12 @@ fn register_button_child_globals(
             })
             .collect()
     };
+    let globals = lua.globals();
     let mut st = state.borrow_mut();
     for (key, child_id) in keys {
         let global_name = format!("{}{}", button_name, key);
-        st.widgets.set_name(child_id, global_name);
+        st.widgets.set_name(child_id, global_name.clone());
+        let _ = globals.raw_set(global_name.as_str(), frame_lud(child_id));
     }
     Ok(())
 }

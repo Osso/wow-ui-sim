@@ -103,6 +103,11 @@ impl WidgetRegistry {
         self.names.get(name).copied()
     }
 
+    /// Iterate all (id, name) pairs in the registry.
+    pub fn named_frames(&self) -> impl Iterator<Item = (u64, &String)> {
+        self.names.iter().map(|(name, &id)| (id, name))
+    }
+
     /// Get all widgets registered for a specific event.
     pub fn get_event_listeners(&self, event: &str) -> Vec<u64> {
         self.widgets
