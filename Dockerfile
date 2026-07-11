@@ -44,7 +44,7 @@ RUN cargo fetch --locked
 COPY build.rs ./
 COPY data/ data/
 COPY src/ src/
-RUN cargo build --release --bin wow-sim --no-default-features --locked \
+RUN cargo build --release --bin wow-sim --no-default-features --features client-retail --locked \
     && strip /build/target/release/wow-sim
 
 # =============================================================================

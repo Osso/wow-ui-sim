@@ -368,6 +368,7 @@ fn retail_cache_entry_is_usable(entry: &str, path: &Path) -> bool {
     match entry {
         "Blizzard_FrameXMLUtil/RuneforgeUtil.xml" => {
             file_contains(path, r#"<Script file="RuneforgeUtil.lua"/>"#)
+                || file_contains(path, r#"name="RuneforgeCovenantSigilTemplate""#)
         }
         _ => true,
     }
@@ -556,10 +557,20 @@ mod tests {
             &runeforge_xml,
             r#"<Ui><Script file="RuneforgeUtil.lua"/></Ui>"#,
         )
-        .expect("write RuneforgeUtil.xml with Lua include");
+        .expect("write legacy RuneforgeUtil.xml with Lua include");
         assert!(
             cache_entry_is_usable("Blizzard_FrameXMLUtil/RuneforgeUtil.xml", &runeforge_xml),
-            "Retail cache should accept RuneforgeUtil.xml with the Lua include"
+            "Retail cache should accept a legacy RuneforgeUtil.xml with the Lua include"
+        );
+
+        std::fs::write(
+            &runeforge_xml,
+            r#"<Ui><Frame name="RuneforgeCovenantSigilTemplate" mixin="RuneforgeCovenantSigilMixin" virtual="true"/></Ui>"#,
+        )
+        .expect("write current RuneforgeUtil.xml");
+        assert!(
+            cache_entry_is_usable("Blizzard_FrameXMLUtil/RuneforgeUtil.xml", &runeforge_xml),
+            "Retail cache should accept the current RuneforgeUtil.xml template surface"
         );
 
         std::fs::remove_dir_all(root).expect("remove cache root");
