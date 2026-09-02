@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn definitions_frame_dir() -> PathBuf {
@@ -231,7 +232,7 @@ fn toc_raw_bytes_pin_metadata_with_default_state_enabled() {
 }
 
 #[test]
-fn toc_body_lists_eight_mainline_overrides_first_then_main_files_with_classic_comment() {
+fn toc_body_lists_nine_mainline_overrides_then_current_main_files() {
     let toc = TocFile::from_file(&definitions_frame_toc())
         .expect("Blizzard_SettingsDefinitions_Frame TOC parses");
     let listed: Vec<String> = toc
@@ -240,7 +241,7 @@ fn toc_body_lists_eight_mainline_overrides_first_then_main_files_with_classic_co
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
 
-    let first_eight: Vec<String> = listed.iter().take(8).cloned().collect();
+    let first_nine: Vec<String> = listed.iter().take(9).cloned().collect();
     let expected_overrides = [
         "Mainline/GameplaySettingsGroup.lua",
         "Mainline/InterfaceOverrides.lua",
@@ -250,9 +251,10 @@ fn toc_body_lists_eight_mainline_overrides_first_then_main_files_with_classic_co
         "Mainline/ColorblindOverrides.lua",
         "Mainline/KeybindingsOverrides.lua",
         "Mainline/AccessibilityOverrides.lua",
+        "Mainline/NameplatesOverrides.lua",
     ];
     assert_eq!(
-        first_eight,
+        first_nine,
         expected_overrides
             .iter()
             .map(|s| s.to_string())
@@ -279,11 +281,9 @@ fn toc_body_lists_eight_mainline_overrides_first_then_main_files_with_classic_co
         "Accessibility.lua",
         "Accessibility.xml",
         "Mainline/Colorblind.xml",
+        "CombatAudioAlertConstants.lua",
         "CombatAudioAlertUtil.lua",
-        "AudioAssist.lua",
-        "AudioAssist.xml",
         "Mounts.lua",
-        "Subtitles.xml",
         "AdvancedOptions.lua",
         "Nameplates.lua",
         "Nameplates.xml",
@@ -343,7 +343,7 @@ fn appears_only_on_game_screen_eager_discovery() {
 }
 
 #[test]
-fn root_directory_holds_eight_mainline_overrides_in_subdir() {
+fn root_directory_holds_nine_mainline_overrides_in_subdir() {
     let dir = definitions_frame_dir();
     let mainline_dir = dir.join("Mainline");
     assert!(
@@ -361,6 +361,7 @@ fn root_directory_holds_eight_mainline_overrides_in_subdir() {
         "ColorblindOverrides.lua",
         "KeybindingsOverrides.lua",
         "AccessibilityOverrides.lua",
+        "NameplatesOverrides.lua",
         "Colorblind.xml",
     ] {
         assert!(

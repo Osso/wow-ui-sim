@@ -7,7 +7,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn recent_allies_toc() -> PathBuf {
@@ -94,27 +95,22 @@ fn blizzard_recent_allies_toc_pins_eager_template_only_addon_with_spaced_title()
          (pinned characters, recent interactions) lives server-side in the Rolodex \
          backend, surfaced via C_RecentAllies, not in the per-character SavedVars file"
     );
-    assert!(
-        toc.dependencies().is_empty(),
-        "Blizzard_RecentAllies declares no `## Dependencies` — it is a self-contained \
-         template registry. Its consumer (Blizzard_FriendsFrame) reaches it through \
-         FriendsFrame's `## OptionalDeps: ..., Blizzard_RecentAllies` clause, which \
-         flips the load-order edge without making it a hard requirement"
+    assert_eq!(
+        toc.dependencies(),
+        vec!["Blizzard_SocialUIShared".to_string()],
+        "Retail 12.1.0.69497 declares Blizzard_SocialUIShared as the RecentAllies hard dependency"
     );
-    assert!(
-        toc.optional_deps().is_empty(),
-        "Blizzard_RecentAllies declares no `## OptionalDeps` either — it does not depend \
-         on any sibling addon to function. The relationship is one-way: FriendsFrame \
-         optionally loads-after-it, not the other way around"
+    assert_eq!(
+        toc.optional_deps(),
+        vec!["Blizzard_UnitPopupShared".to_string()],
+        "Retail 12.1.0.69497 declares Blizzard_UnitPopupShared as the RecentAllies optional dependency"
     );
 
     let toc_text =
         std::fs::read_to_string(recent_allies_toc()).expect("Blizzard_RecentAllies TOC reads");
     assert!(
-        toc_text.contains("## Title: Blizzard Recent Allies"),
-        "Blizzard_RecentAllies declares `## Title: Blizzard Recent Allies` (spaced, no \
-         underscore between words) — distinguishes the human-facing display title from \
-         the internal addon directory name"
+        toc_text.contains("## Title: Blizzard_RecentAllies"),
+        "Retail 12.1.0.69497 declares the underscored Blizzard_RecentAllies title"
     );
     assert!(
         toc_text.contains("## AllowLoad: both"),

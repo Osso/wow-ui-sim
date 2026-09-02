@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn runeforge_dir() -> PathBuf {
@@ -20,6 +21,7 @@ fn runeforge_toc() -> PathBuf {
 }
 
 const RUNEFORGE_TOC_FILES: &[&str] = &[
+    "Blizzard_RuneforgeUI_Bootstrap.lua",
     "Blizzard_RuneforgePowerList.xml",
     "Blizzard_RuneforgeModifierSlot.xml",
     "Blizzard_RuneforgeItemSlot.xml",
@@ -189,7 +191,7 @@ fn toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn toc_lists_seven_xml_files_lua_loaded_via_xml_script_directive() {
+fn toc_lists_bootstrap_and_seven_xml_files() {
     let toc = TocFile::from_file(&runeforge_toc()).expect("Blizzard_RuneforgeUI TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -198,20 +200,7 @@ fn toc_lists_seven_xml_files_lua_loaded_via_xml_script_directive() {
         .collect();
     assert_eq!(
         listed, RUNEFORGE_TOC_FILES,
-        "TOC body must list exactly 7 XML files in canonical order (PowerList → \
-         ModifierSlot → ItemSlot → CreateFrame → CraftingFrame → CraftingTooltip → \
-         Frame). Crucially the TOC lists ZERO .lua files — every Lua chunk loads via \
-         the legacy `<Script file=\"Blizzard_*.lua\"/>` directive embedded as the first \
-         child of each `<Ui>` root, dispatched through `process_include` at \
-         src/loader/xml_file.rs (treats .lua includes as `load_lua_file` calls during \
-         XML parsing). Order matters because each XML's mixin attribute resolves the \
-         Lua-defined mixin global at parse time, and the cross-file dependencies — \
-         RuneforgePowerSlotTemplate inherits RuneforgePowerButtonTemplate, \
-         RuneforgeUpgradeItemSlotTemplate inherits RuneforgeItemSlotTemplate, \
-         RuneforgeFrame's CraftingFrame child inherits RuneforgeCraftingFrameTemplate \
-         (defined later in CraftingFrame.xml), the ResultTooltip GameTooltip inherits \
-         RunforgeFrameTooltipTemplate (defined in CraftingTooltip.xml) — force the \
-         Frame.xml master file to load LAST"
+        "Retail 12.1.0.69497 lists the Runeforge bootstrap before its seven XML files"
     );
 }
 
@@ -284,7 +273,11 @@ fn root_directory_holds_seven_lua_xml_pairs_next_to_toc() {
             path.display()
         );
     }
-    for xml in RUNEFORGE_TOC_FILES {
+    assert!(
+        dir.join(RUNEFORGE_TOC_FILES[0]).is_file(),
+        "Runeforge bootstrap missing"
+    );
+    for xml in &RUNEFORGE_TOC_FILES[1..] {
         let path = dir.join(xml);
         assert!(path.is_file(), "{} missing", path.display());
     }
@@ -293,7 +286,10 @@ fn root_directory_holds_seven_lua_xml_pairs_next_to_toc() {
 #[test]
 fn xml_files_embed_lua_via_script_directive_at_top_of_ui_root() {
     let dir = runeforge_dir();
-    for (xml, expected_lua) in RUNEFORGE_TOC_FILES.iter().zip(RUNEFORGE_LUA_FILES.iter()) {
+    for (xml, expected_lua) in RUNEFORGE_TOC_FILES[1..]
+        .iter()
+        .zip(RUNEFORGE_LUA_FILES.iter())
+    {
         let body = std::fs::read_to_string(dir.join(xml))
             .unwrap_or_else(|err| panic!("read {xml}: {err}"));
         let directive = format!(r#"<Script file="{expected_lua}"/>"#);

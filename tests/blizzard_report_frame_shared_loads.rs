@@ -7,7 +7,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn report_shared_dir() -> PathBuf {
@@ -154,10 +155,7 @@ fn toc_declares_eager_both_screens_with_no_hard_deps() {
     );
     assert!(
         toc.dependencies().is_empty(),
-        "Blizzard_ReportFrameShared declares zero hard `## Dependencies:` — it sits at the base \
-         of the report dialog inheritance chain. The OptionalDep entries (Blizzard_UIParent, \
-         Blizzard_GlueParent) are advisory only, indicating the shared mixin tables live \
-         comfortably alongside either parent root"
+        "Blizzard_ReportFrameShared declares no hard dependencies; its sole optional dependency is Blizzard_GlueParent"
     );
     assert!(
         toc.saved_variables().is_empty() && toc.saved_variables_per_character().is_empty(),
@@ -176,18 +174,13 @@ fn toc_declares_optional_dep_singular_advisory_only() {
         .map(String::as_str)
         .unwrap_or("");
     assert_eq!(
-        optional_dep_singular, "Blizzard_UIParent, Blizzard_GlueParent",
-        "Blizzard_ReportFrameShared.toc declares `## OptionalDep: Blizzard_UIParent, \
-         Blizzard_GlueParent` — the SINGULAR `OptionalDep` form. The TOC parser at src/toc.rs:96 \
-         stores keys verbatim so the metadata HashMap holds `OptionalDep` (singular) as the key"
+        optional_dep_singular, "Blizzard_GlueParent",
+        "Retail 12.1.0.69497 declares Blizzard_GlueParent through singular OptionalDep metadata"
     );
     assert_eq!(
         toc.optional_deps(),
-        vec![
-            "Blizzard_UIParent".to_string(),
-            "Blizzard_GlueParent".to_string(),
-        ],
-        "the singular `## OptionalDep:` directive must expose both advisory dependencies"
+        vec!["Blizzard_GlueParent".to_string()],
+        "the singular `## OptionalDep:` directive exposes the current GlueParent advisory dependency"
     );
 }
 

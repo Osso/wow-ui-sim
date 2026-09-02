@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn scrapping_dir() -> PathBuf {
@@ -19,7 +20,10 @@ fn scrapping_toc() -> PathBuf {
     scrapping_dir().join("Blizzard_ScrappingMachineUI.toc")
 }
 
-const TOC_FILES: &[&str] = &["Blizzard_ScrappingMachineUI.xml"];
+const TOC_FILES: &[&str] = &[
+    "Blizzard_ScrappingMachineUI_Bootstrap.lua",
+    "Blizzard_ScrappingMachineUI.xml",
+];
 
 const SCRAPPING_MACHINE_MIXIN_METHODS: &[&str] = &[
     "SetupScrapButtonPool",
@@ -159,7 +163,7 @@ fn toc_declares_metadata_in_raw_bytes_with_carried_over_blizzard_typo() {
 }
 
 #[test]
-fn toc_lists_single_xml_file_with_lua_loaded_via_script_directive() {
+fn toc_lists_bootstrap_then_xml_with_lua_loaded_via_script_directive() {
     let toc = TocFile::from_file(&scrapping_toc()).expect("Blizzard_ScrappingMachineUI TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -168,13 +172,7 @@ fn toc_lists_single_xml_file_with_lua_loaded_via_script_directive() {
         .collect();
     assert_eq!(
         listed, TOC_FILES,
-        "TOC body must list exactly 1 file: Blizzard_ScrappingMachineUI.xml. The Lua \
-         chunk loads via the embedded `<Script file=\"Blizzard_ScrappingMachineUI.lua\"/>` \
-         directive at the top of the XML's `<Ui>` root, NOT directly from the TOC. \
-         Order matters: the Script directive is the first child of `<Ui>` so the \
-         mixin globals (`ScrappingMachineMixin`, `ScrappingMachineItemSlotMixin`) are \
-         in scope before the `<Button name=\"ScrappingMachineItemSlot\" \
-         mixin=\"ScrappingMachineItemSlotMixin\">` template parses"
+        "Retail 12.1.0.69497 lists the ScrappingMachine bootstrap before the XML file"
     );
 }
 
@@ -227,11 +225,14 @@ fn excluded_from_eager_discovery_due_to_load_on_demand() {
 }
 
 #[test]
-fn root_directory_holds_one_lua_and_one_xml_next_to_toc() {
+fn root_directory_holds_bootstrap_lua_and_xml_next_to_toc() {
     let dir = scrapping_dir();
     assert!(dir.join("Blizzard_ScrappingMachineUI.lua").is_file());
     assert!(dir.join("Blizzard_ScrappingMachineUI.xml").is_file());
     assert!(dir.join("Blizzard_ScrappingMachineUI.toc").is_file());
+    assert!(dir
+        .join("Blizzard_ScrappingMachineUI_Bootstrap.lua")
+        .is_file());
 
     let entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("read addon dir")
@@ -240,9 +241,8 @@ fn root_directory_holds_one_lua_and_one_xml_next_to_toc() {
         .collect();
     assert_eq!(
         entries.len(),
-        3,
-        "Blizzard_ScrappingMachineUI directory must contain exactly 3 entries (1 lua \
-         + 1 xml + 1 toc), got {entries:?}. No nested directories"
+        4,
+        "Retail 12.1.0.69497 adds a bootstrap Lua beside the TOC, XML, and embedded-script Lua: {entries:?}"
     );
 }
 

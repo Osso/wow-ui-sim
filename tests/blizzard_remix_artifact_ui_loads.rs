@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn remix_artifact_dir() -> PathBuf {
@@ -24,6 +25,7 @@ fn artifact_ui_toc() -> PathBuf {
 }
 
 const REMIX_FILES: &[&str] = &[
+    "Blizzard_RemixArtifactUI_Bootstrap.lua",
     "Blizzard_RemixArtifactUI.lua",
     "Blizzard_RemixArtifactUI.xml",
 ];
@@ -118,7 +120,7 @@ fn toc_declares_load_on_demand_standard_game_only_with_two_hard_deps() {
 }
 
 #[test]
-fn toc_lists_two_files_in_root_directory() {
+fn toc_lists_bootstrap_and_two_files_in_root_directory() {
     let toc = TocFile::from_file(&remix_artifact_toc())
         .expect("Blizzard_RemixArtifactUI TOC should parse");
     let listed: Vec<String> = toc
@@ -128,12 +130,7 @@ fn toc_lists_two_files_in_root_directory() {
         .collect();
     assert_eq!(
         listed, REMIX_FILES,
-        "TOC body must list exactly these 2 files in this order: \
-         Blizzard_RemixArtifactUI.lua loads FIRST so the 4 mixin tables \
-         (RemixArtifactFrameMixin / RemixArtifactCurrencyFrameMixin / RemixArtifactModelMixin / \
-         RemixArtifactUtil) plus the file-local LegionTemplatesByTalentType / \
-         TemplatesByEdgeVisualStyle dispatch tables publish before \
-         Blizzard_RemixArtifactUI.xml's `mixin=\"...Mixin\"` attributes resolve them"
+        "Retail 12.1.0.69497 lists the RemixArtifact bootstrap before its Lua and XML files"
     );
 }
 
@@ -178,7 +175,7 @@ fn excluded_from_eager_discovery_via_load_on_demand() {
 }
 
 #[test]
-fn root_directory_holds_two_files() {
+fn root_directory_holds_bootstrap_and_two_files() {
     let mut entries: Vec<String> = std::fs::read_dir(remix_artifact_dir())
         .expect("Blizzard_RemixArtifactUI directory should read")
         .flatten()
@@ -189,11 +186,11 @@ fn root_directory_holds_two_files() {
     assert_eq!(
         entries,
         vec![
+            "Blizzard_RemixArtifactUI_Bootstrap.lua".to_string(),
             "Blizzard_RemixArtifactUI.lua".to_string(),
             "Blizzard_RemixArtifactUI.xml".to_string(),
         ],
-        "Blizzard_RemixArtifactUI/ root must hold exactly the lua/xml pair next to the TOC — no \
-         per-flavor subdirectory and no localization stub"
+        "Retail 12.1.0.69497 ships the RemixArtifact bootstrap beside its Lua and XML files"
     );
 }
 

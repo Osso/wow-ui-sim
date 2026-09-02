@@ -7,7 +7,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn report_frame_dir() -> PathBuf {
@@ -20,7 +21,7 @@ fn report_frame_toc() -> PathBuf {
 
 const REPORT_FILES: &[&str] = &["ReportFrame.lua", "ReportFrame.xml"];
 
-const HARD_DEPENDENCIES: &[&str] = &["Blizzard_ReportFrameShared"];
+const HARD_DEPENDENCIES: &[&str] = &["Blizzard_ReportFrameShared", "Blizzard_GameMenuEsc"];
 
 const OVERRIDE_METHODS: &[&str] = &[
     "CanDisplayMinorCategory",
@@ -83,7 +84,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 
 #[test]
-fn toc_declares_eager_game_only_with_one_hard_dep() {
+fn toc_declares_eager_game_only_with_two_hard_deps() {
     let toc =
         TocFile::from_file(&report_frame_toc()).expect("Blizzard_ReportFrame TOC should parse");
     assert!(
@@ -109,12 +110,7 @@ fn toc_declares_eager_game_only_with_one_hard_dep() {
     assert_eq!(
         deps.iter().map(String::as_str).collect::<Vec<_>>(),
         HARD_DEPENDENCIES,
-        "Blizzard_ReportFrame declares exactly one hard dep `## Dependencies: \
-         Blizzard_ReportFrameShared` — the shared addon supplies SharedReportFrameTemplate (the \
-         virtual <Frame> that ReportFrame inherits via XML) and SharedReportFrameMixin (the base \
-         table that ReportFrameMixin = CreateFromMixins(SharedReportFrameMixin) extends). The \
-         retail/glue split keeps Blizzard_ReportFrameGlue's GlueReportFrame on the same shared \
-         base without colliding on the global `ReportFrame` name"
+        "Retail 12.1.0.69497 declares ReportFrameShared and GameMenuEsc as ReportFrame hard dependencies"
     );
     assert!(
         toc.optional_deps().is_empty(),

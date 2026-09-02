@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn settings_shared_dir() -> PathBuf {
@@ -16,10 +17,15 @@ fn settings_shared_dir() -> PathBuf {
 }
 
 fn settings_shared_toc() -> PathBuf {
-    settings_shared_dir().join("Blizzard_Settings_Shared_Mainline.toc")
+    settings_shared_dir().join("Blizzard_Settings_Shared.toc")
 }
 
-const HARD_DEPS: &[&str] = &["Blizzard_SharedXML", "Blizzard_HelpPlate"];
+const HARD_DEPS: &[&str] = &[
+    "Blizzard_SharedXML",
+    "Blizzard_HelpPlate",
+    "Blizzard_StaticPopup_Glue",
+    "Blizzard_StaticPopup_Game",
+];
 
 const PUBLIC_MIXINS: &[&str] = &[
     "SettingMixin",
@@ -114,23 +120,18 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn find_toc_file_resolves_mainline_variant() {
+fn find_toc_file_resolves_bare_variant() {
     let resolved =
         find_toc_file(&settings_shared_dir()).expect("Blizzard_Settings_Shared TOC resolves");
     assert_eq!(
         resolved,
         settings_shared_toc(),
-        "Blizzard_Settings_Shared ships only the `_Mainline.toc` flavor variant — \
-         no bare `Blizzard_Settings_Shared.toc`. `find_toc_file` at \
-         src/loader/mod.rs:65-95 prefers `_Mainline.toc` first which resolves to \
-         this file. The Mainline-only restriction also propagates from \
-         `## AllowLoadGameType: mainline` in the TOC body, blocking Classic flavor \
-         loads at `is_game_type_restricted` time"
+        "Retail 12.1.0.69497 ships the bare Blizzard_Settings_Shared.toc variant"
     );
 }
 
 #[test]
-fn toc_declares_eager_both_with_two_hard_deps() {
+fn toc_declares_eager_both_with_four_dep_entries() {
     let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
 
     assert!(
@@ -149,12 +150,7 @@ fn toc_declares_eager_both_with_two_hard_deps() {
     assert_eq!(
         deps.len(),
         HARD_DEPS.len(),
-        "TOC must declare exactly {} hard Dependencies in order: \
-         Blizzard_SharedXML (FrameUtil / SecureMixinCopy / CallbackRegistryMixin / \
-         CreateAndInitFromMixin / GenerateClosure / EnumUtil / FlagsUtil — every \
-         Settings primitive depends on these), Blizzard_HelpPlate (the tutorial \
-         tooltip system referenced by `Settings.AssignTutorialToCategory` to attach \
-         help-plate callouts to category tabs). Got: {deps:?}",
+        "Retail 12.1.0.69497 declares four Dep entries in published order. Got: {deps:?}",
         HARD_DEPS.len()
     );
     for (i, expected) in HARD_DEPS.iter().enumerate() {
@@ -172,17 +168,12 @@ fn toc_declares_eager_both_with_two_hard_deps() {
 }
 
 #[test]
-fn toc_singular_optional_dep_is_exposed_by_accessor() {
+fn toc_uses_dep_entries_without_optional_dependencies() {
     let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
 
-    assert_eq!(
-        toc.optional_deps(),
-        vec![
-            "Blizzard_StaticPopup_Glue".to_string(),
-            "Blizzard_StaticPopup_Game".to_string(),
-            "Blizzard_UIParent".to_string(),
-        ],
-        "the singular `## OptionalDep:` directive must expose all three soft dependencies"
+    assert!(
+        toc.optional_deps().is_empty(),
+        "Retail 12.1.0.69497 uses Dep entries, not OptionalDep metadata"
     );
 }
 
@@ -208,26 +199,23 @@ fn toc_allows_load_on_every_screen_via_allow_load_both() {
 }
 
 #[test]
-fn toc_raw_bytes_pin_optional_dep_singular_and_allow_load_game_type_mainline() {
+fn toc_raw_bytes_pin_current_dep_entries_and_allow_load_both() {
     let raw =
         std::fs::read_to_string(settings_shared_toc()).expect("Settings_Shared TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_Settings_Shared"));
-    assert!(raw.contains("## Author: Blizzard Entertainment"));
-    assert!(raw.contains("## DefaultState: enabled"));
-    assert!(raw.contains("## Dependencies: Blizzard_SharedXML, Blizzard_HelpPlate"));
-    assert!(
-        raw.contains(
-            "## OptionalDep: Blizzard_StaticPopup_Glue, Blizzard_StaticPopup_Game, \
-             Blizzard_UIParent"
-        ),
-        "TOC raw bytes must pin singular `## OptionalDep:` form. Real WoW \
-         tolerates both singular and plural; this test pins the form so an \
-         upstream rename to plural (which would suddenly populate \
-         `optional_deps()`) surfaces as a deliberate change"
-    );
-    assert!(raw.contains("## AllowLoad: Both"));
-    assert!(raw.contains("## AllowLoadGameType: mainline"));
+    for directive in [
+        "## Dep: Blizzard_SharedXML",
+        "## Dep: Blizzard_HelpPlate",
+        "## Dep: Blizzard_StaticPopup_Glue [AllowLoad glue]",
+        "## Dep: Blizzard_StaticPopup_Game [AllowLoad game]",
+        "## AllowLoad: Both",
+    ] {
+        assert!(
+            raw.contains(directive),
+            "missing current directive: {directive}"
+        );
+    }
     assert!(
         !raw.contains("## SavedVariables"),
         "Settings_Shared MUST NOT declare any SavedVariables — settings state \
@@ -238,6 +226,7 @@ fn toc_raw_bytes_pin_optional_dep_singular_and_allow_load_game_type_mainline() {
     assert!(!raw.contains("## LoadFirst"));
     assert!(!raw.contains("## UseSecureEnvironment"));
     assert!(!raw.contains("## RequiredDep"));
+    assert!(!raw.contains("## OptionalDep"));
 }
 
 #[test]
@@ -254,7 +243,8 @@ fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
 
     let expected_body = vec![
         "NewDefinitionsFramework.lua",
-        "Mainline\\NewDefinitions.lua",
+        "NewDefinitionsFramework.xml",
+        "[Family]\\NewDefinitions.lua [AllowLoadGameType mainline]",
         "Blizzard_SettingsRegistrar.lua",
         "Blizzard_Settings.lua",
         "Blizzard_Category.lua",
@@ -262,7 +252,7 @@ fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
         "Blizzard_SettingsList.xml",
         "Blizzard_Setting.lua",
         "Blizzard_SettingControls.xml",
-        "Mainline\\Blizzard_SettingsPanelTemplates.xml",
+        "[Family]\\Blizzard_SettingsPanelTemplates.xml",
         "Blizzard_SettingsPanel.lua",
         "Blizzard_SettingsPanel.xml",
         "Blizzard_Keybindings.xml",
@@ -271,27 +261,12 @@ fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
         "Blizzard_Registration.lua",
         "Blizzard_SettingsInbound.lua",
         "Blizzard_Deprecated.lua",
-        "Mainline\\GraphicsOverrides.lua",
-        "Mainline\\AudioOverrides.lua",
+        "[Family]\\GraphicsOverrides.lua",
+        "[Family]\\AudioOverrides.lua",
     ];
     assert_eq!(
         body_lines, expected_body,
-        "TOC body must list 20 entries in this exact order. Critical ordering \
-         rationale: (1) NewDefinitionsFramework.lua FIRST seeds `_G.NewSettings` / \
-         `NewSettingsSeen` / `NewSettingsPredicates` empty tables before \
-         Mainline/NewDefinitions.lua populates per-version setting names — \
-         reversing would crash on `NewSettings[10.1.0] = {{...}}` indexing nil. \
-         (2) Blizzard_Settings.lua (defines Settings.VarType / Settings.Default / \
-         Settings.CategorySet / Settings.ControlType / Settings.CommitFlag enum \
-         tables) MUST run before Blizzard_Category.lua / Blizzard_Setting.lua \
-         which reference those enums. (3) Blizzard_SettingsPanel.lua before \
-         Blizzard_SettingsPanel.xml so the XML's `mixin=\"SettingsPanelMixin\"` \
-         resolves at parse time. (4) Blizzard_Registration.lua AFTER \
-         SettingsPanel.xml because it calls `RegisterUIPanel(SettingsPanel, ...)` \
-         which requires the named SettingsPanel frame to exist in `_G`. (5) \
-         Mainline/GraphicsOverrides.lua / AudioOverrides.lua LAST — they install \
-         override functions onto Settings.* that downstream addons consume but \
-         cannot run before the namespace tables they hang off of"
+        "Retail 12.1.0.69497 lists 21 current Settings_Shared body entries in this exact order"
     );
 }
 
@@ -311,19 +286,11 @@ fn toc_entry_count_breakdown_matches_filesystem_layout() {
         .count();
     assert_eq!(
         lua_count, 14,
-        "TOC must list 14 .lua entries: NewDefinitionsFramework, \
-         Mainline/NewDefinitions, Blizzard_SettingsRegistrar, Blizzard_Settings, \
-         Blizzard_Category, Blizzard_Setting, Blizzard_SettingsPanel, \
-         Blizzard_Dialogs, Blizzard_SettingsLayouts, Blizzard_Registration, \
-         Blizzard_SettingsInbound, Blizzard_Deprecated, Mainline/GraphicsOverrides, \
-         Mainline/AudioOverrides. Got: {lua_count}"
+        "Retail 12.1.0.69497 lists 14 Lua entries. Got: {lua_count}"
     );
     assert_eq!(
-        xml_count, 6,
-        "TOC must list 6 .xml entries: Blizzard_CategoryList, \
-         Blizzard_SettingsList, Blizzard_SettingControls, \
-         Mainline/Blizzard_SettingsPanelTemplates, Blizzard_SettingsPanel, \
-         Blizzard_Keybindings. Got: {xml_count}"
+        xml_count, 7,
+        "Retail 12.1.0.69497 lists seven XML entries, including NewDefinitionsFramework.xml. Got: {xml_count}"
     );
 }
 

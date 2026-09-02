@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn remix_dir() -> PathBuf {
@@ -18,6 +19,7 @@ fn remix_toc() -> PathBuf {
 }
 
 const REMIX_FILES: &[&str] = &[
+    "Blizzard_RemixArtifactTutorialUI_Bootstrap.lua",
     "Blizzard_RemixArtifactTutorialUI.lua",
     "Blizzard_RemixArtifactTutorialUI.xml",
 ];
@@ -111,7 +113,7 @@ fn toc_declares_load_on_demand_standard_game_only_and_no_deps() {
 }
 
 #[test]
-fn toc_lists_two_files_in_root_directory() {
+fn toc_lists_bootstrap_and_two_files_in_root_directory() {
     let toc = TocFile::from_file(&remix_toc())
         .expect("Blizzard_RemixArtifactTutorialUI TOC should parse");
     let listed: Vec<String> = toc
@@ -121,11 +123,7 @@ fn toc_lists_two_files_in_root_directory() {
         .collect();
     assert_eq!(
         listed, REMIX_FILES,
-        "TOC body must list exactly these 2 files in this order: \
-         Blizzard_RemixArtifactTutorialUI.lua loads FIRST so RemixArtifactTutorialControllerMixin \
-         publishes before Blizzard_RemixArtifactTutorialUI.xml's `mixin=\"...Mixin\"` attribute \
-         wires the table onto the named frame. No localization stub, no flavor-suffix \
-         subdirectory — both files sit at the addon root"
+        "Retail 12.1.0.69497 lists the tutorial bootstrap before its Lua and XML files"
     );
 }
 
@@ -171,7 +169,7 @@ fn excluded_from_eager_discovery_via_load_on_demand() {
 }
 
 #[test]
-fn root_directory_holds_two_files() {
+fn root_directory_holds_bootstrap_and_two_files() {
     let mut entries: Vec<String> = std::fs::read_dir(remix_dir())
         .expect("Blizzard_RemixArtifactTutorialUI directory should read")
         .flatten()
@@ -182,13 +180,11 @@ fn root_directory_holds_two_files() {
     assert_eq!(
         entries,
         vec![
+            "Blizzard_RemixArtifactTutorialUI_Bootstrap.lua".to_string(),
             "Blizzard_RemixArtifactTutorialUI.lua".to_string(),
             "Blizzard_RemixArtifactTutorialUI.xml".to_string(),
         ],
-        "Blizzard_RemixArtifactTutorialUI/ root must hold exactly the lua/xml pair next to the \
-         TOC — no per-flavor subdirectory and no localization stub. The minimal addon shape \
-         reflects that the tutorial controller is a single 181-line mixin file with one XML \
-         frame definition"
+        "Retail 12.1.0.69497 ships the tutorial bootstrap beside its Lua and XML files"
     );
 }
 

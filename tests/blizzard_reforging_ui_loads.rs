@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn reforging_ui_dir() -> PathBuf {
@@ -18,6 +19,7 @@ fn reforging_ui_toc() -> PathBuf {
 }
 
 const REFORGING_FILES: &[&str] = &[
+    "Classic/Blizzard_ReforgingUI_Bootstrap.lua",
     "Classic/Blizzard_ReforgingUI.lua",
     "Classic/Blizzard_ReforgingUI.xml",
     "Classic/Localization.lua",
@@ -104,7 +106,7 @@ fn toc_declares_load_on_demand_secure_classic_only_and_no_deps() {
 }
 
 #[test]
-fn toc_lists_three_files_in_classic_subdirectory() {
+fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
     let toc =
         TocFile::from_file(&reforging_ui_toc()).expect("Blizzard_ReforgingUI TOC should parse");
     let listed: Vec<String> = toc
@@ -114,12 +116,7 @@ fn toc_lists_three_files_in_classic_subdirectory() {
         .collect();
     assert_eq!(
         listed, REFORGING_FILES,
-        "TOC body must list exactly these 3 files in this order: \
-         Classic/Blizzard_ReforgingUI.lua loads FIRST so the 17 free functions and \
-         REFORGE_MAX_STATS_SHOWN publish before Classic/Blizzard_ReforgingUI.xml's inline OnLoad \
-         attribute resolves `ReforgingFrame_OnLoad` from `_G`; Localization.lua loads LAST as a \
-         locale-injection trailer (the shipped file is a single comment — locale overrides may \
-         be patched in by region-specific overlays)"
+        "Retail 12.1.0.69497 lists the bootstrap before the classic Lua, XML, and localization files"
     );
 }
 
@@ -161,7 +158,7 @@ fn excluded_from_every_screen_auto_discovery_under_retail() {
 }
 
 #[test]
-fn classic_subdirectory_holds_three_lua_xml_files() {
+fn classic_subdirectory_holds_bootstrap_lua_xml_and_localization() {
     let classic_dir = reforging_ui_dir().join("Classic");
     let mut entries: Vec<String> = std::fs::read_dir(&classic_dir)
         .expect("Blizzard_ReforgingUI/Classic directory should read")
@@ -172,14 +169,12 @@ fn classic_subdirectory_holds_three_lua_xml_files() {
     assert_eq!(
         entries,
         vec![
+            "Blizzard_ReforgingUI_Bootstrap.lua".to_string(),
             "Blizzard_ReforgingUI.lua".to_string(),
             "Blizzard_ReforgingUI.xml".to_string(),
             "Localization.lua".to_string(),
         ],
-        "Blizzard_ReforgingUI/Classic/ must hold exactly 3 entries — the lua/xml pair plus a \
-         locale stub. The TOC at the parent directory references them via backslash-prefixed \
-         `Classic\\Blizzard_ReforgingUI.lua` style paths which TocFile.file_paths normalizes \
-         through resolve_path_case_insensitive (src/toc.rs:354)"
+        "Retail 12.1.0.69497 ships the classic bootstrap beside the Lua, XML, and localization files"
     );
 }
 
