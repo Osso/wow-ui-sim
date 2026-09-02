@@ -148,16 +148,15 @@ fn dashboard_house_list_request_hides_main_spinner() {
         let result: String = env
             .eval(
                 r#"
-                    C_Housing.GetPlayerOwnedHouses = function()
-                        FireEvent("PLAYER_HOUSE_LIST_UPDATED", {})
-                    end
-
                     local loaded, reason = C_AddOns.LoadAddOn("Blizzard_HousingDashboard")
                     if not loaded then
                         return "dashboard_load_failed:" .. tostring(reason)
                     end
 
-                    ShowUIPanel(HousingDashboardFrame)
+                    C_Housing.GetPlayerOwnedHouses = function()
+                        FireEvent("PLAYER_HOUSE_LIST_UPDATED", {})
+                    end
+                    HousingDashboardFrame.HouseDropdown:LoadHouses()
 
                     if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then
                         return "spinner_still_shown"
