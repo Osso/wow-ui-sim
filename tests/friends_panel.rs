@@ -59,7 +59,7 @@ fn social_panel_toggle_populates_online_friend_provider_and_provides_offline_fri
                     FriendsList_Update(true)
 
                     local providerOnlineNames = {}
-                    for elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
+                    for _, elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
                         if elementData.buttonType == FRIENDS_BUTTON_TYPE_WOW then
                             local info = C_FriendList.GetFriendInfoByIndex(elementData.id)
                             if info and info.connected then
