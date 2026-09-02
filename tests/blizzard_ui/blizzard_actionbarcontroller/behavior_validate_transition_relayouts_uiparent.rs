@@ -46,7 +46,7 @@ fn validate_transition_successful_paths_update_multibars_then_relayout_uiparent(
                 end
             end
 
-            function UIParent_ManageFramePositions()
+            function ManageFramePositions()
                 table.insert(_G.transitionRelayoutLog, "uiparent")
             end
 
@@ -189,7 +189,7 @@ fn assert_transition_relayout(
     );
     assert_eq!(
         second_call, "uiparent",
-        "{case_name} must call UIParent_ManageFramePositions after MultiActionBar_Update"
+        "{case_name} must call ManageFramePositions after MultiActionBar_Update"
     );
     assert!(
         call_count >= 2,

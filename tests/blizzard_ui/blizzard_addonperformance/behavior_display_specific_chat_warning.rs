@@ -7,11 +7,16 @@ const ROOT: &str = "Blizzard_AddOnPerformance";
 #[test]
 fn display_specific_chat_warning_formats_and_forwards_system_message() {
     with_blizzard_addon_smoke_shape(&["Blizzard_ChatFrameBase", ROOT], &[], |env, _loaded| {
-        env.state().borrow_mut().system_chat_log.clear();
-
         let expected_message: String = env
             .eval(
                 r#"
+                _G.addOnPerformanceSystemMessages = {}
+                DEFAULT_CHAT_FRAME = {
+                    AddMessage = function(_, text)
+                        table.insert(_G.addOnPerformanceSystemMessages, text)
+                    end,
+                }
+
                 local addOnName = "ChatWarningPerformanceProbe"
                 local expected = string.format(ADDON_PERFORMANCE_SPECIFIC_WARNING_TEXT, addOnName)
                 AddOnPerformance:DisplayMessage({
@@ -22,12 +27,14 @@ fn display_specific_chat_warning_formats_and_forwards_system_message() {
                 "#,
             )
             .expect("AddOnPerformance chat-warning display probe must run cleanly");
+        let captured_messages: Vec<String> = env
+            .eval("return _G.addOnPerformanceSystemMessages")
+            .expect("system chat message recorder must be readable");
 
-        let state = env.state().borrow();
         assert_eq!(
-            state.system_chat_log,
+            captured_messages,
             vec![expected_message],
-            "`SpecificAddOnChatWarning` must forward the formatted warning to `ChatFrameUtil.AddSystemMessage`"
+            "`SpecificAddOnChatWarning` must forward the formatted warning through Blizzard ChatFrameUtil.AddSystemMessage"
         );
     });
 }
