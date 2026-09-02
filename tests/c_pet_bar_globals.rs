@@ -5,8 +5,8 @@
 //! `CastPetAction`, `TogglePetAutocast`, `CancelPetPossess`, and
 //! `PetHasActionBar`/`HasPetUI` against `state.pet_actions`.
 
-use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{PetActionSlot, SpellCooldownState};
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env_with_pet_slots() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("WowLuaEnv init");
@@ -41,14 +41,31 @@ fn env_with_pet_slots() -> WowLuaEnv {
 }
 
 #[test]
-fn pet_bar_globals_live_under_real_globals_boundary() {
+fn cancel_pet_possess_fires_pet_bar_update_even_when_clearing_state() {
+    let env = env_with_pet_slots();
+    env.state().borrow_mut().pet_actions[0].is_active = true;
+
+    let fired: bool = env
+        .eval(
+            r#"
+            local fired = false
+            local frame = CreateFrame("Frame")
+            frame:RegisterEvent("PET_BAR_UPDATE")
+            frame:SetScript("OnEvent", function() fired = true end)
+            CancelPetPossess()
+            return fired
+            "#,
+        )
+        .expect("CancelPetPossess fires PET_BAR_UPDATE");
+
+    assert!(fired, "CancelPetPossess must fire PET_BAR_UPDATE");
     assert!(
-        !std::path::Path::new("src/lua_api/globals/pet_bar.rs").exists(),
-        "pet action-bar globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/pet_bar.rs").exists(),
-        "pet action-bar globals should stay classified as real modeled Lua globals",
+        env.state()
+            .borrow()
+            .pet_actions
+            .iter()
+            .all(|slot| !slot.is_active),
+        "CancelPetPossess must clear active pet slots"
     );
 }
 

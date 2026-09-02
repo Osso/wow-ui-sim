@@ -6,8 +6,8 @@
 //! `state.shapeshift_cooldowns`. `GetNumShapeshiftForms` is exercised by
 //! `tests/social_probes.rs`.
 
-use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{ShapeshiftForm, SpellCooldownState};
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env_with_druid_forms() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("WowLuaEnv init");
@@ -63,15 +63,13 @@ fn seeded_paladin_exposes_three_aura_forms() {
 }
 
 #[test]
-fn shapeshift_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/shapeshift.rs").exists(),
-        "shapeshift/stance globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/shapeshift.rs").exists(),
-        "shapeshift/stance globals should stay classified as real modeled Lua globals",
-    );
+fn get_shapeshift_form_cooldown_invalid_index_returns_zero_state() {
+    let env = env_with_druid_forms();
+    let (start, duration, enable): (f64, f64, f64) = env
+        .eval("return GetShapeshiftFormCooldown(0)")
+        .expect("invalid shapeshift cooldown index");
+
+    assert_eq!((start, duration, enable), (0.0, 0.0, 1.0));
 }
 
 #[test]
