@@ -1,6 +1,12 @@
 //! Modifier-key probes — SimState-backed round-trip.
 
+use std::path::PathBuf;
+
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+fn source_path(relative_path: &str) -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(relative_path)
+}
 
 fn all(env: &WowLuaEnv) -> (bool, bool, bool, bool, bool) {
     env.eval(
@@ -15,11 +21,11 @@ fn all(env: &WowLuaEnv) -> (bool, bool, bool, bool, bool) {
 #[test]
 fn modifier_keys_live_under_real_globals_boundary() {
     assert!(
-        !std::path::Path::new("src/lua_api/globals/modifier_keys.rs").exists(),
+        !source_path("src/lua_api/globals/modifier_keys.rs").exists(),
         "modifier-key globals are modeled through SimState and belong under globals::real",
     );
     assert!(
-        std::path::Path::new("src/lua_api/globals/real/modifier_keys.rs").exists(),
+        source_path("src/lua_api/globals/real/modifier_keys.rs").exists(),
         "modifier-key globals should stay classified as real modeled Lua globals",
     );
 }
