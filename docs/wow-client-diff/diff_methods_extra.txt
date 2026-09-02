@@ -1745,6 +1745,7 @@ ColorSelect:GetWorldScale
 ColorSelect:GetWrappedWidth
 ColorSelect:GetZoom
 ColorSelect:GetZoomLevels
+ColorSelect:HasAccessConstraints
 ColorSelect:HasAnimation
 ColorSelect:HasAnyForbiddenAspects
 ColorSelect:HasAttachmentPoints
@@ -2493,6 +2494,7 @@ Cooldown:GetWorldScale
 Cooldown:GetWrappedWidth
 Cooldown:GetZoom
 Cooldown:GetZoomLevels
+Cooldown:HasAccessConstraints
 Cooldown:HasAnimation
 Cooldown:HasAnyForbiddenAspects
 Cooldown:HasAttachmentPoints
@@ -3206,6 +3208,7 @@ EditBox:GetWorldScale
 EditBox:GetWrappedWidth
 EditBox:GetZoom
 EditBox:GetZoomLevels
+EditBox:HasAccessConstraints
 EditBox:HasAnimation
 EditBox:HasAnyForbiddenAspects
 EditBox:HasAttachmentPoints
@@ -3942,6 +3945,7 @@ FontString:GetWordWrap
 FontString:GetWorldScale
 FontString:GetZoom
 FontString:GetZoomLevels
+FontString:HasAccessConstraints
 FontString:HasAlphaGradient
 FontString:HasAnimation
 FontString:HasAnyForbiddenAspects
@@ -4754,6 +4758,7 @@ Frame:GetWorldScale
 Frame:GetWrappedWidth
 Frame:GetZoom
 Frame:GetZoomLevels
+Frame:HasAccessConstraints
 Frame:HasAnimation
 Frame:HasAnyForbiddenAspects
 Frame:HasAttachmentPoints
@@ -5519,6 +5524,7 @@ GameTooltip:GetWorldScale
 GameTooltip:GetWrappedWidth
 GameTooltip:GetZoom
 GameTooltip:GetZoomLevels
+GameTooltip:HasAccessConstraints
 GameTooltip:HasAnimation
 GameTooltip:HasAnyForbiddenAspects
 GameTooltip:HasAttachmentPoints
@@ -6264,6 +6270,7 @@ MessageFrame:GetWorldScale
 MessageFrame:GetWrappedWidth
 MessageFrame:GetZoom
 MessageFrame:GetZoomLevels
+MessageFrame:HasAccessConstraints
 MessageFrame:HasAnimation
 MessageFrame:HasAnyForbiddenAspects
 MessageFrame:HasAttachmentPoints
@@ -7003,6 +7010,7 @@ Model:GetWordWrap
 Model:GetWrappedWidth
 Model:GetZoom
 Model:GetZoomLevels
+Model:HasAccessConstraints
 Model:HasAnimation
 Model:HasAnyForbiddenAspects
 Model:HasFocus
@@ -7705,6 +7713,7 @@ PlayerModel:GetWordWrap
 PlayerModel:GetWrappedWidth
 PlayerModel:GetZoom
 PlayerModel:GetZoomLevels
+PlayerModel:HasAccessConstraints
 PlayerModel:HasAnyForbiddenAspects
 PlayerModel:HasFocus
 PlayerModel:HasMessageByID
@@ -8420,6 +8429,7 @@ ScrollFrame:GetWorldScale
 ScrollFrame:GetWrappedWidth
 ScrollFrame:GetZoom
 ScrollFrame:GetZoomLevels
+ScrollFrame:HasAccessConstraints
 ScrollFrame:HasAnimation
 ScrollFrame:HasAnyForbiddenAspects
 ScrollFrame:HasAttachmentPoints
@@ -9177,6 +9187,7 @@ SimpleHTML:GetWorldScale
 SimpleHTML:GetWrappedWidth
 SimpleHTML:GetZoom
 SimpleHTML:GetZoomLevels
+SimpleHTML:HasAccessConstraints
 SimpleHTML:HasAnimation
 SimpleHTML:HasAnyForbiddenAspects
 SimpleHTML:HasAttachmentPoints
@@ -9928,6 +9939,7 @@ Slider:GetWorldScale
 Slider:GetWrappedWidth
 Slider:GetZoom
 Slider:GetZoomLevels
+Slider:HasAccessConstraints
 Slider:HasAnimation
 Slider:HasAnyForbiddenAspects
 Slider:HasAttachmentPoints
@@ -10682,6 +10694,7 @@ StatusBar:GetWorldScale
 StatusBar:GetWrappedWidth
 StatusBar:GetZoom
 StatusBar:GetZoomLevels
+StatusBar:HasAccessConstraints
 StatusBar:HasAnimation
 StatusBar:HasAnyForbiddenAspects
 StatusBar:HasAttachmentPoints
@@ -11465,6 +11478,7 @@ Texture:GetWorldScale
 Texture:GetWrappedWidth
 Texture:GetZoom
 Texture:GetZoomLevels
+Texture:HasAccessConstraints
 Texture:HasAlphaGradient
 Texture:HasAnimation
 Texture:HasAnyForbiddenAspects
