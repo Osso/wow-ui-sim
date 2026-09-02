@@ -17,35 +17,6 @@
             return tostring(systemFrame.system) .. ":" .. tostring(systemFrame.systemIndex)
         end
 
-        local function record_action_bar_refresh_diagnostic(systemFrame, actionButtons)
-            local records = _G.__wow_action_bar_diagnostic_records or {}
-            _G.__wow_action_bar_diagnostic_records = records
-            if #records >= 32 then
-                return
-            end
-
-            local frameName = system_frame_name(systemFrame)
-            local globalRef = _G[frameName]
-            local tableProbeOk, tableProbeValue = pcall(next, actionButtons)
-            table.insert(records, {
-                phase = "editmode-refresh",
-                frameName = frameName,
-                globalRef = globalRef,
-                actionButtonsOwner = systemFrame,
-                actionButtons = actionButtons,
-                tableProbeOk = tableProbeOk,
-                tableProbeValue = tableProbeValue,
-            })
-            print(string.format(
-                "[action-bar-diagnostic] phase=editmode-refresh frame=%s global=%s table_probe=%s owner=%s actionButtons=%s",
-                tostring(frameName),
-                tostring(globalRef),
-                tostring(tableProbeOk),
-                tostring(systemFrame),
-                tostring(actionButtons)
-            ))
-        end
-
         local function is_bootstrap_action_bar(systemFrame)
             local frameName = system_frame_name(systemFrame)
             if string.sub(frameName, 1, 8) == "MultiBar" then
@@ -549,7 +520,6 @@
         local function refresh_action_bar_system(systemFrame)
             local systemInfo = systemFrame.systemInfo
             local actionButtons = systemFrame.actionButtons
-            record_action_bar_refresh_diagnostic(systemFrame, actionButtons)
             local hasActionButtons = actionButtons
                 and actionButtons[1] ~= nil
                 and actionButtons.GetObjectType == nil

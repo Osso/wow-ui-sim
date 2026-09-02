@@ -328,39 +328,13 @@ pub(crate) fn init_action_bar_tables(
     if !has_num_buttons {
         return;
     }
-    let global_ref = lua_global_ref(name);
     let code = format!(
         r#"do local f = {frame}
         local actionButtons = f and f.actionButtons
-        local tableProbeOk, tableProbeValue = pcall(next, actionButtons)
-        local records = _G.__wow_action_bar_diagnostic_records or {{}}
-        _G.__wow_action_bar_diagnostic_records = records
-        if #records < 32 then
-            local frameName = f and f.GetName and f:GetName() or {name:?}
-            table.insert(records, {{
-                phase = "xml-init",
-                frameName = frameName,
-                globalRef = {global_ref:?},
-                actionButtonsOwner = f,
-                actionButtons = actionButtons,
-                tableProbeOk = tableProbeOk,
-                tableProbeValue = tableProbeValue,
-            }})
-            print(string.format(
-                "[action-bar-diagnostic] phase=xml-init frame=%s global=%s table_probe=%s owner=%s actionButtons=%s",
-                tostring(frameName),
-                {global_ref:?},
-                tostring(tableProbeOk),
-                tostring(f),
-                tostring(actionButtons)
-            ))
-        end
-        if f and not tableProbeOk then
+        if f and not pcall(next, actionButtons) then
             f.actionButtons = {{}}
         end end"#,
-        frame = global_ref,
-        name = name,
-        global_ref = lua_global_ref(name),
+        frame = lua_global_ref(name),
     );
     let _ = env.exec(&code);
 }

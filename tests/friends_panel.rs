@@ -59,42 +59,7 @@ fn social_panel_toggle_populates_online_friend_provider_and_provides_offline_fri
                     FriendsList_Update(true)
 
                     local providerOnlineNames = {}
-                    local function printProviderElementDiagnostic(index, elementData)
-                        if index > 32 then
-                            return
-                        end
-
-                        local keys = {}
-                        for key, value in pairs(elementData) do
-                            if #keys == 8 then
-                                break
-                            end
-                            table.insert(keys, string.format(
-                                "%s=%s:%s",
-                                tostring(key),
-                                type(value),
-                                tostring(value)
-                            ))
-                        end
-                        table.sort(keys)
-
-                        local info = C_FriendList.GetFriendInfoByIndex(elementData.id)
-                        print(string.format(
-                            "[friends-panel-diagnostic] index=%s element=%s keys=[%s] friend=%s",
-                            tostring(index),
-                            tostring(elementData),
-                            table.concat(keys, ", "),
-                            info and string.format(
-                                "name=%s connected=%s id=%s",
-                                tostring(info.name),
-                                tostring(info.connected),
-                                tostring(elementData.id)
-                            ) or "nil"
-                        ))
-                    end
-
-                    for index, elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
-                        printProviderElementDiagnostic(index, elementData)
+                    for _, elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
                         if elementData.buttonType == FRIENDS_BUTTON_TYPE_WOW then
                             local info = C_FriendList.GetFriendInfoByIndex(elementData.id)
                             if info and info.connected then
