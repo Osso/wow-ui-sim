@@ -19,6 +19,10 @@ fn opening_world_map_does_not_darken_the_strip_above_the_panel() {
     let mut baseline_mgr = make_texture_manager();
     let baseline_render = render_to_image(&baseline_batch, &mut baseline_mgr, 1024, 768, None);
 
+    env.exec(
+        "SetCVarBitfield('closedInfoFrames', LE_FRAME_TUTORIAL_WORLD_MAP_FRAME, true)",
+    )
+    .expect("failed to mark the world map tutorial as seen");
     open_world_map(&env);
 
     let world_map_batch = build_screenshot_like_batch(&env, 1024, 768, None);
