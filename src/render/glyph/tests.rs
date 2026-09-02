@@ -94,6 +94,43 @@ fn zero_font_size_emits_no_text_quads() {
     assert_eq!(batch.quad_count(), 0);
 }
 
+#[test]
+fn glyph_quads_land_on_whole_pixels() {
+    // Frame origin, line position and shadow offset are fractional at any UI
+    // scale; a glyph bitmap drawn at a fractional position is smeared over
+    // two pixels by the bilinear glyph sampler.
+    let mut batch = QuadBatch::new();
+    let mut fonts = WowFontSystem::new();
+    let mut glyphs = GlyphAtlas::new();
+
+    emit_text_quads(
+        &mut batch,
+        &mut fonts,
+        &mut glyphs,
+        "Quests",
+        Rectangle::new(Point::new(10.3, 5.7), Size::new(200.0, 40.0)),
+        None,
+        14.0,
+        [1.0, 1.0, 1.0, 1.0],
+        TextJustify::Left,
+        TextJustify::Center,
+        0,
+        Some([0.0, 0.0, 0.0, 1.0]),
+        (1.6875, -1.6875),
+        TextOutline::None,
+        false,
+        0,
+        None,
+    );
+
+    assert!(batch.quad_count() > 0, "the text must render");
+    for vertex in &batch.vertices {
+        let [x, y] = vertex.position;
+        assert_eq!(x, x.round(), "glyph quad x {x} is not on the pixel grid");
+        assert_eq!(y, y.round(), "glyph quad y {y} is not on the pixel grid");
+    }
+}
+
 fn blank_atlas_pixels() -> Vec<u8> {
     vec![0; (GLYPH_ATLAS_SIZE * GLYPH_ATLAS_SIZE * 4) as usize]
 }

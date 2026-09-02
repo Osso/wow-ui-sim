@@ -80,10 +80,11 @@ if GetChatWindowInfo == nil then
     if chat and chat.docked ~= nil then
       docked = chat.docked == true
     end
-    local name = "Chat " .. tostring(realId)
-    if chat and chat.name ~= nil then
-      name = chat.name
-    end
+    -- An unnamed window answers "" as the client's cache does;
+    -- FCF_SetWindowName (FloatingChatFrame.lua:812-830) then names windows
+    -- 1..3 GENERAL / COMBAT_LOG / VOICE, formats CHAT_NAME_TEMPLATE for the
+    -- rest, and stores the result through SetChatWindowName.
+    local name = chat and chat.name or ""
     return name, 12, 0, 0, 0, 0.25, shown, false, docked, false
   end
 end
@@ -162,6 +163,30 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
+    fn chat_window_names_start_empty_and_round_trip() {
+        // FCF_SetWindowName names an unnamed window itself (GENERAL for 1,
+        // COMBAT_LOG for 2, VOICE for 3) and stores it with SetChatWindowName;
+        // a stub name such as "Chat 3" kept that branch from ever running,
+        // and without SetChatWindowName the branch raised.
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let (before, after, other): (String, String, String) = env
+            .eval(
+                r#"
+                local before = (GetChatWindowInfo(1))
+                SetChatWindowName(1, GENERAL or "General")
+                return before, (GetChatWindowInfo(1)), (GetChatWindowInfo(3))
+                "#,
+            )
+            .expect("chat window info");
+        assert_eq!(before, "", "an unnamed window answers an empty name");
+        assert_eq!(
+            after, "General",
+            "SetChatWindowName is read back by GetChatWindowInfo"
+        );
+        assert_eq!(other, "", "other windows are untouched");
+    }
+
+    #[test]
     fn installs_chat_window_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
@@ -187,7 +212,7 @@ mod tests {
                 if ChatFrameUtil.GetCommunitiesChannelLocalID(nil, nil) ~= nil then return "community_local_id" end
 
                 local name, fontSize, r, g, b, alpha, shown, locked, docked = GetChatWindowInfo(2)
-                if name ~= "Chat 2" or fontSize ~= 12 then return "info_shape" end
+                if name ~= "" or fontSize ~= 12 then return "info_shape" end
                 if r ~= 0 or g ~= 0 or b ~= 0 or alpha ~= 0.25 then return "info_color" end
                 if shown ~= false or locked ~= false or docked ~= false then return "hidden_defaults" end
 

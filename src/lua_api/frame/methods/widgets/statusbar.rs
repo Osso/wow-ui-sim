@@ -117,7 +117,7 @@ fn apply_statusbar_texture_source(frame: &mut crate::widget::Frame, path: Option
         return;
     };
 
-    if let Some(info) = crate::atlas::get_atlas_info(&path) {
+    if let Some(info) = crate::atlas::get_render_atlas_info(&path) {
         let tex_coords = (
             info.info.left_tex_coord,
             info.info.right_tex_coord,

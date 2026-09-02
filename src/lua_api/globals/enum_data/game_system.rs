@@ -732,3 +732,19 @@ pub const AUTO_COMPLETE_ENTRY_FLAG: EnumDef = (
         ("RecentPlayer", 256),
     ],
 );
+
+// ============================================================================
+// Aura-formatting and script-access enums.
+//
+// Values taken from Blizzard_APIDocumentationGenerated. Each of these was read
+// as nil at startup by Blizzard Lua that indexes it as a table key or a field,
+// which aborts the enclosing file or handler.
+// ============================================================================
+
+pub const SECONDS_FORMATTER_ROUNDING: SeqEnumDef =
+    ("SecondsFormatterRounding", &["RoundUp", "Truncate"]);
+
+pub const SCRIPT_OBJECT_ACCESS_RESTRICTION: EnumDef = (
+    "ScriptObjectAccessRestriction",
+    &[("DenyTaintedAccessWhenAurasAreSecret", 1)],
+);

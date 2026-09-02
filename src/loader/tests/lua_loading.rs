@@ -707,3 +707,44 @@ LoopingSoundEffect.lua
 
     std::fs::remove_dir_all(&temp_root).ok();
 }
+
+#[test]
+fn blizzard_combat_log_base_lua_replays_into_secure_environment() {
+    let env = WowLuaEnv::new().unwrap();
+    let temp_root = std::env::temp_dir().join("wow-sim-combat-log-base-secure-replay-test");
+    let addon_dir = temp_root.join("Blizzard_CombatLogBase");
+    std::fs::create_dir_all(&addon_dir).unwrap();
+    std::fs::write(
+        addon_dir.join("CombatLogUtil.lua"),
+        r#"CombatLogUtil = { marker = "secure-visible" }"#,
+    )
+    .unwrap();
+
+    let toc = crate::toc::TocFile::parse(
+        &addon_dir,
+        r#"
+## Title: Blizzard_CombatLogBase
+## LoadOnDemand: 1
+CombatLogUtil.lua
+"#,
+    );
+
+    let result = load_addon_from_toc(&env.loader_env(), &toc).unwrap();
+    assert_eq!(result.lua_files, 2);
+
+    let (global_marker, secure_marker): (String, String) = env
+        .eval(
+            r#"
+            return _G.CombatLogUtil.marker,
+                   __secureenv.CombatLogUtil.marker
+            "#,
+        )
+        .unwrap();
+    assert_eq!(global_marker, "secure-visible");
+    assert_eq!(
+        secure_marker, "secure-visible",
+        "secure Blizzard_CombatLogProcessor reads CombatLogUtil from this library"
+    );
+
+    std::fs::remove_dir_all(&temp_root).ok();
+}

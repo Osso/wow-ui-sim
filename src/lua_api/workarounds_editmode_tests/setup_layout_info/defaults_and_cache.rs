@@ -418,8 +418,8 @@ fn setup_layout_info_initializes_account_settings_from_saved_cache() {
         "saved status tracking bar 2 visibility should be applied during account initialization"
     );
     assert!(
-        status_tracking_bar2_refreshed,
-        "status tracking bar 2 must refresh after non-user account settings update the checkbox"
+        !status_tracking_bar2_refreshed,
+        "RefreshStatusTrackingBar2 is edit-mode-only (it highlights the container); startup must not call it"
     );
 
     let (

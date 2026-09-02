@@ -53,6 +53,10 @@ pub const PANEL_ADDONS: &[&str] = &[
     "Blizzard_Settings_Shared",
     "Blizzard_SettingsDefinitions_Shared",
     "Blizzard_SettingsDefinitions_Frame",
+    // Blizzard_FrameXML.toc (the bare TOC the loader now prefers) declares
+    // `## Dep: Blizzard_UIErrorsFrame`; the legacy _Mainline.toc carried
+    // UIErrorsFrame.xml itself.
+    "Blizzard_UIErrorsFrame",
     "Blizzard_FrameXML",
     "Blizzard_StaticPopup",
     "Blizzard_TimeManager",

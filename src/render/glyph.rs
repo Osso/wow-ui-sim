@@ -578,11 +578,20 @@ fn cached_glyph_bounds(
     glyph: &CachedGlyph,
     entry: GlyphEntry,
 ) -> Rectangle {
+    // The bitmap was rasterized for whole device pixels (plus the glyph's
+    // sub-pixel bin within its run); the frame origin, the justification
+    // offset, the line position and the shadow offset are fractional at any
+    // UI scale, and drawing the bitmap at a fractional position lets the
+    // bilinear glyph sampler smear every edge over two pixels. The client
+    // snaps text to the pixel grid; so does this. The rounding is the same
+    // for every glyph of a run, so the run keeps its shape.
     let glyph_x =
-        request.bounds.x + x_offset + glyph.x as f32 + entry.left as f32 + request.offset.0;
-    let glyph_y = request.bounds.y + request.y_offset + run.line_y + glyph.y as f32
+        (request.bounds.x + x_offset + glyph.x as f32 + entry.left as f32 + request.offset.0)
+            .round();
+    let glyph_y = (request.bounds.y + request.y_offset + run.line_y + glyph.y as f32
         - entry.top as f32
-        + request.offset.1;
+        + request.offset.1)
+        .round();
 
     Rectangle::new(
         iced::Point::new(glyph_x, glyph_y),

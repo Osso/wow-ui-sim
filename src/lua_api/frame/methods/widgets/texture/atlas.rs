@@ -88,8 +88,13 @@ fn apply_atlas(
             info.file.to_string(),
             tex_coords,
         );
-        let should_show = button_texture_should_show(widgets, parent_id, &parent_key);
-        widgets.set_visible(id, should_show);
+        // Only the button's own state slots follow the button state; a child
+        // with any other parentKey keeps the shown state it has (the bag
+        // slots' `SlotHighlightTexture` is declared hidden and gets its atlas
+        // from UpdateTextures long before a bag opens).
+        if let Some(should_show) = button_texture_should_show(widgets, parent_id, &parent_key) {
+            widgets.set_visible(id, should_show);
+        }
     }
 }
 
@@ -222,11 +227,13 @@ fn clear_button_slot(
     }
 }
 
+/// Whether a button's state-slot texture is shown for the button's current
+/// state; `None` for a parentKey that is not one of the six slots.
 fn button_texture_should_show(
     widgets: &crate::widget::WidgetRegistry,
     button_id: u64,
     parent_key: &str,
-) -> bool {
+) -> Option<bool> {
     let (enabled, checked, button_state) = widgets
         .get(button_id)
         .map(|frame| {
@@ -251,13 +258,13 @@ fn button_texture_should_show(
         .unwrap_or((true, false, 0));
 
     match parent_key {
-        "NormalTexture" => enabled && button_state == 0,
-        "PushedTexture" => enabled && button_state == 1,
-        "DisabledTexture" => !enabled,
-        "HighlightTexture" => false,
-        "CheckedTexture" => enabled && checked,
-        "DisabledCheckedTexture" => !enabled && checked,
-        _ => true,
+        "NormalTexture" => Some(enabled && button_state == 0),
+        "PushedTexture" => Some(enabled && button_state == 1),
+        "DisabledTexture" => Some(!enabled),
+        "HighlightTexture" => Some(false),
+        "CheckedTexture" => Some(enabled && checked),
+        "DisabledCheckedTexture" => Some(!enabled && checked),
+        _ => None,
     }
 }
 

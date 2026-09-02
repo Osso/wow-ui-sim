@@ -3,9 +3,9 @@
     {
       "path": "src/lua_api/globals/enum_data/missing_enums.lua",
       "source": "~/Repos/wowless/data/products/wow/globals.yaml",
-      "sha256": "60a333e293bcc26af280e487e3b546231330e3cd9feb51c77aecb258dab3f3a6",
-      "bytes": 320252,
-      "lines": 16342
+      "sha256": "11eb8f4adfdffd8366941314b1ace7d5f5b7e494aaa3362ce8695b3deec39d8d",
+      "bytes": 324476,
+      "lines": 16497
     },
     {
       "path": "src/lua_api/globals/enum_data/missing_constants.lua",

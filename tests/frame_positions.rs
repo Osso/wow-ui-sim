@@ -107,13 +107,16 @@ const POSITION_TESTS: &[TestCase] = &[
     ("player_frame",               "PlayerFrame",                    268.0,  850.0,  232.0, 100.0, 1.0),
     ("target_frame",               "TargetFrame",                   1100.0,  850.0,  232.0, 100.0, 1.0),
     ("focus_frame",                "FocusFrame",                    1320.0,  835.0, 232.0, 100.0, 1.0),
-    ("paladin_power_bar",          "PaladinPowerBarFrame",           314.0,  945.0,  150.0,  43.0, 1.0),
+    // Managed by PlayerBottomManagedFrameContainer: UIParent.lua:167 skips a
+    // frame that answers false to IsInDefaultPosition, and plain frames (no
+    // systemInfo) answered false before; the client has no method on them.
+    ("paladin_power_bar",          "PaladinPowerBarFrame",           341.5,  922.0,  150.0,  43.0, 1.0),
     ("party_frame",                "PartyFrame",                      22.0,  147.0,  120.0, 244.0, 1.0),
     ("compact_party_frame",        "CompactPartyFrame",               22.0,  147.0,   98.0, 234.0, 1.0),
     // HUD elements
     ("minimap",                    "Minimap",                       1391.0,   44.0,  198.0, 198.0, 1.0),
     ("minimap_cluster",            "MinimapCluster",                1360.0,    0.0,  240.0, 252.0, 1.0),
-    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 836.5, 1.0),
+    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 847.5, 1.0),
     ("bags_bar",                   "BagsBar",                       1386.0, 1104.0,  208.0,  47.0, 1.0),
     ("micro_button_bags_bar",      "MicroButtonAndBagsBar",         1362.0, 1114.0,  232.0,  80.0, 1.0),
     ("micro_menu",                 "MicroMenu",                     1265.0, 1154.0,  329.0,  40.0, 1.0),
@@ -129,12 +132,17 @@ const POSITION_TESTS: &[TestCase] = &[
     ("status_tracking_bar",        "StatusTrackingBarManager",       514.0, 1166.0,  571.0,  34.0, 1.0),
     // Overlay / warning frames
     ("ui_errors_frame",            "UIErrorsFrame",                  544.0,  122.0,  512.0,  60.0, 1.0),
-    ("raid_boss_emote_anchor",     "PrivateRaidBossEmoteFrameAnchor",544.0,  252.0,  512.0,  80.0, 1.0),
+    // 12.1.0 moved the anchor into Blizzard_RaidWarning (RaidWarning.xml:27,
+    // Size 800x80); the 512-wide definition is the legacy FrameXML copy.
+    ("raid_boss_emote_anchor",     "PrivateRaidBossEmoteFrameAnchor",400.0,  182.0,  800.0,  80.0, 1.0),
     ("critical_encounter_warnings","CriticalEncounterWarnings",      500.0,   40.0,  600.0,  48.0, 1.0),
     ("medium_encounter_warnings",  "MediumEncounterWarnings",        525.0,   90.0,  550.0,  36.0, 1.0),
     ("minor_encounter_warnings",   "MinorEncounterWarnings",         550.0,  130.0,  500.0,  36.0, 1.0),
     // Managed containers
-    ("right_managed_container",    "UIParentRightManagedFrameContainer", 1335.0, 260.0, 260.0, 847.0, 1.0),
+    // 12.1.0's UIParent.xml:83 leaves UIParentRightManagedFrameContainer an
+    // empty shell (no size, no anchors); the live container the tracker
+    // anchors to is Blizzard_ManagedFrameSystem's RightManagedFrameContainer.
+    ("right_managed_container",    "RightManagedFrameContainer",         1335.0, 260.0, 260.0, 847.0, 1.0),
     // Casting bar (hidden — no active cast; attached to PlayerFrame via PlayerFrame_AttachCastBar)
     ("casting_bar",                "PlayerCastingBarFrame",              696.0,  594.5,  208.0,  11.0, 1.0),
 ];

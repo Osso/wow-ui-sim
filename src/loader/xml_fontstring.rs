@@ -38,13 +38,20 @@ fn generate_fontstring_justify_color(code: &mut String, fs: &crate::xml::FontStr
         ));
     }
     if let Some(color) = &fs.color {
-        code.push_str(&format!(
-            "\n        fs:SetTextColor({}, {}, {}, {})\n        ",
-            color.r.unwrap_or(1.0),
-            color.g.unwrap_or(1.0),
-            color.b.unwrap_or(1.0),
-            color.a.unwrap_or(1.0)
-        ));
+        if let Some(named) = &color.color {
+            // <Color color="NORMAL_FONT_COLOR"/>: a colour object global.
+            code.push_str(&format!(
+                "\n        do local c = _G[\"{named}\"]; if c and c.GetRGBA then fs:SetTextColor(c:GetRGBA()) end end\n        "
+            ));
+        } else {
+            code.push_str(&format!(
+                "\n        fs:SetTextColor({}, {}, {}, {})\n        ",
+                color.r.unwrap_or(1.0),
+                color.g.unwrap_or(1.0),
+                color.b.unwrap_or(1.0),
+                color.a.unwrap_or(1.0)
+            ));
+        }
     }
 }
 

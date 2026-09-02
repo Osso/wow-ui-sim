@@ -529,7 +529,13 @@ fn create_font_object(env: &LoaderEnv<'_>, font: &crate::xml::FontXml) -> Result
     }
 
     let font_path = font_path(font);
-    let lua_code = build_font_lua_code(name, font, &font_path);
+    let mut lua_code = build_font_lua_code(name, font, &font_path);
+    if let Some(shadow) = &font.shadow {
+        lua_code.push_str(&shadow_override_lines(name, shadow));
+    }
+    if let Some(color) = &font.color {
+        lua_code.push_str(&text_color_override_lines(name, color));
+    }
     env.exec(&lua_code)
         .map_err(|e| LoadError::Lua(format!("Failed to create font {}: {}", name, e)))?;
 
@@ -570,6 +576,54 @@ fn build_font_inheritance_code(
     copy_code
 }
 
+/// Lua statements applying a `<Shadow>` element to font object `name`.
+/// Numeric colours are emitted directly; a named colour (`color="..."`) is
+/// resolved through the global colour table at load time.
+fn shadow_override_lines(name: &str, shadow: &crate::xml::ShadowXml) -> String {
+    let mut code = String::new();
+    if let Some(offset) = &shadow.offset {
+        code.push_str(&format!(
+            "{name}:SetShadowOffset({}, {})\n",
+            offset.x(),
+            offset.y()
+        ));
+    }
+    if let Some(color) = &shadow.color {
+        if let Some(named) = &color.color {
+            code.push_str(&format!(
+                "do local c = _G[\"{named}\"]; if c and c.GetRGBA then {name}:SetShadowColor(c:GetRGBA()) end end\n"
+            ));
+        } else {
+            code.push_str(&format!(
+                "{name}:SetShadowColor({}, {}, {}, {})\n",
+                color.r.unwrap_or(0.0),
+                color.g.unwrap_or(0.0),
+                color.b.unwrap_or(0.0),
+                color.a.unwrap_or(1.0)
+            ));
+        }
+    }
+    code
+}
+
+/// Lua statements applying a font's `<Color>` element to font object `name`,
+/// the same two forms as the shadow colour.
+fn text_color_override_lines(name: &str, color: &crate::xml::ColorXml) -> String {
+    if let Some(named) = &color.color {
+        format!(
+            "do local c = _G[\"{named}\"]; if c and c.GetRGBA then {name}:SetTextColor(c:GetRGBA()) end end\n"
+        )
+    } else {
+        format!(
+            "{name}:SetTextColor({}, {}, {}, {})\n",
+            color.r.unwrap_or(1.0),
+            color.g.unwrap_or(1.0),
+            color.b.unwrap_or(1.0),
+            color.a.unwrap_or(1.0)
+        )
+    }
+}
+
 fn append_font_override_lines(
     copy_code: &mut String,
     name: &str,
@@ -594,6 +648,12 @@ fn append_font_override_lines(
     }
     if let Some(jv) = &font.justify_v {
         copy_code.push_str(&format!("{name}:SetJustifyV(\"{jv}\")\n"));
+    }
+    if let Some(shadow) = &font.shadow {
+        copy_code.push_str(&shadow_override_lines(name, shadow));
+    }
+    if let Some(color) = &font.color {
+        copy_code.push_str(&text_color_override_lines(name, color));
     }
 }
 
@@ -650,6 +710,9 @@ fn build_roman_font_overrides(name: &str, font_family: &crate::xml::FontFamilyXm
     if let Some(o) = &font.outline {
         code.push_str(&format!("{name}.__outline = \"{o}\"\n"));
         code.push_str(&format!("{name}.__fontFlags = \"{o}\"\n"));
+    }
+    if let Some(shadow) = &font.shadow {
+        code.push_str(&shadow_override_lines(name, shadow));
     }
     code
 }

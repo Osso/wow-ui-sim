@@ -466,9 +466,9 @@ pub(super) fn set_countdown_font(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(child_id) = child_id {
         let font_path = font_object
             .clone()
-            .and_then(|font| font_field_string(state, font, "__font", "__fontPath"));
+            .and_then(|font| font_field_string(state, font, "__fontPath", "__font"));
         let font_height =
-            font_object.and_then(|font| font_field_number(state, font, "__height", "__fontHeight"));
+            font_object.and_then(|font| font_field_number(state, font, "__fontHeight", "__height"));
         let mut sim = borrow_state_mut(state)?;
         if let Some(child) = sim.widgets.get_mut_visual(child_id) {
             child.font = Some(font_path.unwrap_or(font_name));

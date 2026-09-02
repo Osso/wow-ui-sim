@@ -499,6 +499,50 @@ fn apply_desaturate_flag(batch: &mut QuadBatch, vert_before: usize) {
 
 const DEFAULT_MINIMAP_MASK_TEXTURE: &str = r"Interface\HUD\UIMinimapMask";
 
+const DEFAULT_MINIMAP_MASK_TEXTURE_2X: &str = r"Interface\HUD\UIMinimapMask2x";
+
+/// The Minimap frame is 198 units (Minimap.xml) and the built-in mask is a
+/// 256-texel canvas (BLP2 uncompressed BGRA, alpha uniformly 255, coverage
+/// in RGB) whose opaque disc is a circle of r = 96.7 texels centred on the
+/// canvas, with four compass notches and the outline of the N chevron
+/// around it. Decoding the compass frame art gives the ring's inner edge at
+/// r = 95.9 units and the client capture shows the terrain reaching that
+/// edge everywhere, so the client maps one mask texel to one UI unit,
+/// centred on the frame: the disc then ends within a pixel of the ring and
+/// the notch interiors sit under the ring's cusps and chevron. Stretching
+/// the disc's bounding box (203x210, notches included) over the frame,
+/// as before, squashed the disc into a 94x91-unit ellipse 5 px low and
+/// left a dark gap of 5-9 px inside the ring's NW half and the N notch's
+/// black interior 6 px inside the ring at the top.
+const MINIMAP_MASK_CANVAS: f32 = 256.0;
+const MINIMAP_FRAME_UNITS: f32 = 198.0;
+
+/// Screen rectangle to draw the built-in minimap mask into: the canvas at
+/// one texel per UI unit, centred on `bounds`.
+fn default_minimap_mask_rect(bounds: Rectangle) -> Rectangle {
+    let sx = bounds.width / MINIMAP_FRAME_UNITS;
+    let sy = bounds.height / MINIMAP_FRAME_UNITS;
+    let width = MINIMAP_MASK_CANVAS * sx;
+    let height = MINIMAP_MASK_CANVAS * sy;
+    Rectangle::new(
+        iced::Point::new(
+            bounds.x + (bounds.width - width) / 2.0,
+            bounds.y + (bounds.height - height) / 2.0,
+        ),
+        iced::Size::new(width, height),
+    )
+}
+
+/// The 2x mask (512 texels, the same disc) once the render draws the 2x
+/// compass art.
+fn default_minimap_mask_texture() -> &'static str {
+    if crate::atlas::prefer_hires_atlases() {
+        DEFAULT_MINIMAP_MASK_TEXTURE_2X
+    } else {
+        DEFAULT_MINIMAP_MASK_TEXTURE
+    }
+}
+
 /// Build quads for a Minimap widget - map texture clipped by the active minimap mask.
 pub(crate) fn build_minimap_quads(
     batch: &mut QuadBatch,
@@ -513,11 +557,19 @@ pub(crate) fn build_minimap_quads(
         [1.0, 1.0, 1.0, alpha],
         BlendMode::Alpha,
     );
-    let mask_texture = f
-        .minimap_mask_texture
-        .as_deref()
-        .unwrap_or(DEFAULT_MINIMAP_MASK_TEXTURE);
-    crate::iced_app::masking::apply_mask_path(batch, vert_before, bounds, mask_texture);
+    match f.minimap_mask_texture.as_deref() {
+        // An addon-supplied mask is a MaskTexture stretched over the frame,
+        // which is what the plain path does.
+        Some(mask_texture) => {
+            crate::iced_app::masking::apply_mask_path(batch, vert_before, bounds, mask_texture)
+        }
+        None => crate::iced_app::masking::apply_mask_path_with_rect(
+            batch,
+            vert_before,
+            default_minimap_mask_rect(bounds),
+            default_minimap_mask_texture(),
+        ),
+    }
 }
 
 #[cfg(test)]
@@ -573,6 +625,54 @@ mod tests {
                 .vertices
                 .iter()
                 .all(|vertex| vertex.mask_tex_index == -2)
+        );
+    }
+
+    /// The built-in mask is a 256-texel canvas whose disc (r = 96.7 texels,
+    /// centred) coincides with the compass ring's inner edge when one texel
+    /// is one UI unit centred on the 198-unit frame: the quad's mask UVs are
+    /// the central 198/256 of the canvas on both axes and the canvas centre
+    /// lands on the frame centre. Stretching the disc's bounding box (which
+    /// includes the compass notches) over the frame squashed the disc into
+    /// a 94x91-unit ellipse 5 px low and left a dark gap inside the ring.
+    #[test]
+    fn default_minimap_mask_maps_one_texel_to_one_unit_about_the_frame_centre() {
+        let mut batch = QuadBatch::new();
+        let frame = Frame::new(WidgetType::Minimap, Some("Minimap".to_string()), None);
+        let bounds = Rectangle::new(Point::new(10.0, 20.0), Size::new(198.0, 198.0));
+
+        build_minimap_quads(&mut batch, bounds, &frame, 1.0);
+
+        let us: Vec<f32> = batch
+            .vertices
+            .iter()
+            .map(|v| v.mask_tex_coords[0])
+            .collect();
+        let vs: Vec<f32> = batch
+            .vertices
+            .iter()
+            .map(|v| v.mask_tex_coords[1])
+            .collect();
+        let (umin, umax) = (
+            us.iter().cloned().fold(1.0, f32::min),
+            us.iter().cloned().fold(0.0, f32::max),
+        );
+        let (vmin, vmax) = (
+            vs.iter().cloned().fold(1.0, f32::min),
+            vs.iter().cloned().fold(0.0, f32::max),
+        );
+        let close = |a: f32, b: f32| (a - b).abs() < 0.002;
+        assert!(
+            close(umin, 29.0 / 256.0) && close(umax, 227.0 / 256.0),
+            "mask U range {umin}..{umax} should be the central 198 of 256 texels"
+        );
+        assert!(
+            close(vmin, 29.0 / 256.0) && close(vmax, 227.0 / 256.0),
+            "mask V range {vmin}..{vmax} should be the central 198 of 256 texels"
+        );
+        assert!(
+            close((umin + umax) / 2.0, 0.5) && close((vmin + vmax) / 2.0, 0.5),
+            "the canvas centre must land on the frame centre"
         );
     }
 

@@ -35,13 +35,23 @@ fn is_initialized(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// A frame without edit-mode `systemInfo` counts as in its default position:
+/// the client has this method only on edit-mode systems, and its callers
+/// outside the mixin (AlertFrames.lua:416, EditModeUtil.lua:22) treat a
+/// missing method that way. Every simulator frame carries the method, and
+/// answering false for plain frames kept `AlertContainerMixin:UpdateAnchors`
+/// from advancing past the text-to-speech button, so it and the Quick Join
+/// toast overlapped.
 fn is_in_default_position(state: &mut LuaState) -> LuaResult<u32> {
     let frame = Val::from_stack(state, 1)?;
     let system_info = table_get_static(state, frame, "systemInfo");
-    let is_default = matches!(
-        table_get_static(state, system_info, "isInDefaultPosition"),
-        Val::Bool(true)
-    );
+    let is_default = match system_info {
+        Val::Table(_) => matches!(
+            table_get_static(state, system_info, "isInDefaultPosition"),
+            Val::Bool(true)
+        ),
+        _ => true,
+    };
     state.push(Val::Bool(is_default));
     Ok(1)
 }

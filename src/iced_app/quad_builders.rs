@@ -171,6 +171,19 @@ fn effective_word_wrap(f: &crate::widget::Frame, requested_word_wrap: bool) -> b
     requested_word_wrap && !f.width_is_text_auto
 }
 
+/// The shadow offset a FontString stores is in WoW's UI units with y pointing
+/// up (`SetShadowOffset(1, -1)` is one unit right and one DOWN), while the quad
+/// builders work in screen pixels with y pointing down. Flip y and scale both
+/// axes by the frame's effective scale; passing the raw pair drew the shadow
+/// one unscaled pixel ABOVE the glyphs, so the bottom edge of every text lost
+/// its shadow at any UI scale.
+fn screen_shadow_offset(f: &crate::widget::Frame) -> (f32, f32) {
+    (
+        f.shadow_offset.0 * f.effective_scale,
+        -f.shadow_offset.1 * f.effective_scale,
+    )
+}
+
 /// Emit text quads for a widget, extracting color/shadow from the frame.
 pub(super) fn emit_widget_text_quads(
     text_renderer: &mut WidgetTextRenderer<'_>,
@@ -200,7 +213,7 @@ pub(super) fn emit_widget_text_quads(
         layout.justify_v,
         GLYPH_ATLAS_TEX_INDEX,
         shadow,
-        f.shadow_offset,
+        screen_shadow_offset(f),
         f.font_outline,
         layout.word_wrap,
         layout.max_lines,
@@ -271,7 +284,7 @@ fn emit_text_segment_chunk(
         TextJustify::Center,
         GLYPH_ATLAS_TEX_INDEX,
         shadow,
-        f.shadow_offset,
+        screen_shadow_offset(f),
         f.font_outline,
         false,
         0,

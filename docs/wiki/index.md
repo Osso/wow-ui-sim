@@ -443,6 +443,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[chatframe-scrollbar-anchor-reapply]] | Inherited child anchor reapply used the child name for `$parent...` substitution, pushing `ChatFrame1` scrollbar descendants off-screen |
 | [[crafting-cast-bar]] | `C_TradeSkillUI.CraftRecipe` updated inventory but did not start player casting or fire `UNIT_SPELLCAST_START`, so Blizzard's professions overlay cast bar had no backing spellbar state |
 | [[display-size-ui-scale-events]] | Live probe proved retail fires `DISPLAY_SIZE_CHANGED` → `UI_SCALE_CHANGED` as an ordered pair on every display/scale change (resize, slider, maximize, resolution) — never one alone; sim resize path and inverted test fixed |
+| [[blizzard-ui-manifest-drift]] | `ptr.txt` had drifted to 310 of the branch's 348 addon directories, so 39 addons never synced — `Blizzard_GameMenuEsc` among them, whose absence aborted 25 Blizzard files at file scope and left every `EditModeSystemTemplate` frame without a completed `OnLoad` |
 | [[hero-spec-dialog-anchors]] | LIGHTSMITH/TEMPLAR selection dialog: layer-children batched out of XML order + runtime templates skipped named-anchor re-resolution, dropping panel content to spec-frame edge |
 | [[hero-spec-icon-bug]] | Retired — 5 layers of evidence confirm icon renders correctly |
 | [[xml-scale-attribute]] | XML `scale` attribute was silently dropped (no `FrameXml` field); hero talents `scale="0.85"` never applied, node buttons overflowed the fixed 284×362 backplate |

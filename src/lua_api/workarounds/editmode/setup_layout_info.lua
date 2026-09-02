@@ -342,14 +342,10 @@
             applyFrameSetting(settingInfo.setting, accountSettings, settingInfo.setter, true)
         end
 
-        local accountSettingRefreshers = {
-            "RefreshStatusTrackingBar2",
-        }
-        for _, refresher in ipairs(accountSettingRefreshers) do
-            if type(accountSettings[refresher]) == "function" then
-                pcall(accountSettings[refresher], accountSettings)
-            end
-        end
+        -- RefreshStatusTrackingBar2 is edit-mode-only (EditModeManager.lua:2489,
+        -- reached from OnEditModeEnter): it sets isInEditMode and highlights
+        -- the secondary container, which then rendered its selection brackets
+        -- outside edit mode. syncStatusTrackingBars below applies the setting.
 
         local function getActiveLayoutInfo()
             local layoutInfo = emm.layoutInfo

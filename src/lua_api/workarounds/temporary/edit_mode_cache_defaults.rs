@@ -196,6 +196,11 @@ if rawget(C_EditMode, "GetAccountSettings") == nil then
 
     local layouts = {}
     for _ = 1, layoutCount do
+      -- A 12.1 client writes only the count and the account settings; do not
+      -- fabricate nameless layouts from an exhausted token stream.
+      if cursor > #tokens then
+        break
+      end
       local layoutIndex, layoutName, systemCount
       layoutIndex, cursor = __wow_edit_mode_read_number(tokens, cursor)
       layoutName, cursor = __wow_edit_mode_read(tokens, cursor)

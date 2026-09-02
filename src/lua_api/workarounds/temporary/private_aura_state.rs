@@ -178,6 +178,20 @@ if rawget(C_UnitAurasPrivate, "GetAllPrivateAuras") == nil then
     end
 end
 
+if rawget(C_UnitAurasPrivate, "GetAllPrivateAuraInstanceIDs") == nil then
+    -- Undocumented (no entry in Blizzard_APIDocumentationGenerated);
+    -- Blizzard_AuraContainerSources.lua:58 iterates the result with ipairs,
+    -- so a unit without private auras gets an empty table.
+    function C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs(unitToken)
+        local state = PrivateAuraState()
+        local ids = {}
+        for index, aura in ipairs(state.privateAurasByUnit[tostring(unitToken or "")] or {}) do
+            ids[index] = aura.auraInstanceID
+        end
+        return ids
+    end
+end
+
 if rawget(C_UnitAurasPrivate, "GetAuraDataByAuraInstanceIDPrivate") == nil then
     function C_UnitAurasPrivate.GetAuraDataByAuraInstanceIDPrivate(unitToken, auraInstanceID)
         local state = PrivateAuraState()

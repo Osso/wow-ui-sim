@@ -166,7 +166,13 @@ impl TextureManager {
         cache_root: Option<&Path>,
     ) -> Option<&TextureData> {
         let normalized = normalize_wow_path(wow_path);
-        let key = format!("{}#{}_{}_{}_{}", normalized, x, y, width, height);
+        // The version segment invalidates persistent crops written by an
+        // earlier extract_sub_region; a code change there otherwise never
+        // reaches an install whose crop cache is already populated.
+        let key = format!(
+            "{}#{}_{}_{}_{}#v{}",
+            normalized, x, y, width, height, CROP_CACHE_VERSION
+        );
 
         if self.sub_cache.contains_key(&key) {
             return self.sub_cache.get(&key);
@@ -428,7 +434,16 @@ fn extract_sub_region(
     })
 }
 
-const EDGE_BLEED_ALPHA_MAX: u8 = 128;
+/// Bumped whenever `extract_sub_region` changes what it writes.
+const CROP_CACHE_VERSION: u32 = 2;
+
+// Only fully transparent black texels take the neighbouring edge colour:
+// they contribute nothing on their own and only matter through bilinear
+// mixing at a crop edge. A black texel with ANY alpha is drawn art -- the
+// micro-menu icons and the bag rings carry a pure-black drop shadow at
+// alpha 2..128 on all four sides, and recolouring it with the icon's edge
+// colour turned the shadow into a coloured halo around every icon.
+const EDGE_BLEED_ALPHA_MAX: u8 = 0;
 const EDGE_BLEED_RGB_MAX: u8 = 4;
 const EDGE_SOURCE_ALPHA_MIN: u8 = 128;
 const EDGE_SOURCE_RGB_MIN: u8 = 64;
@@ -506,21 +521,35 @@ mod tests {
     use std::sync::Arc;
 
     #[test]
-    fn cropped_sub_region_bleeds_edge_rgb_into_low_alpha_black_padding() {
+    fn cropped_sub_region_bleeds_edge_rgb_only_into_fully_transparent_padding() {
+        // A black texel with alpha is a drawn drop shadow (the micro-menu
+        // icons carry one at alpha 2..128); only alpha 0 is padding.
         let data = TextureData {
-            width: 3,
+            width: 5,
             height: 1,
             pixels: Arc::from([
                 220, 180, 40, 255, // opaque edge color
-                0, 0, 0, 96, // transparent padding from atlas edge
+                0, 0, 0, 93, // drop shadow
+                0, 0, 0, 55, // drop shadow
+                0, 0, 0, 30, // drop shadow
                 0, 0, 0, 0, // fully transparent padding
             ]),
         };
 
-        let cropped = extract_sub_region(&data, 0, 0, 3, 1).unwrap();
+        let cropped = extract_sub_region(&data, 0, 0, 5, 1).unwrap();
 
-        assert_eq!(&cropped.pixels[4..8], &[220, 180, 40, 96]);
-        assert_eq!(&cropped.pixels[8..12], &[220, 180, 40, 0]);
+        assert_eq!(
+            &cropped.pixels[4..8],
+            &[0, 0, 0, 93],
+            "a shadow texel keeps its black"
+        );
+        assert_eq!(&cropped.pixels[8..12], &[0, 0, 0, 55]);
+        assert_eq!(&cropped.pixels[12..16], &[0, 0, 0, 30]);
+        assert_eq!(
+            &cropped.pixels[16..20],
+            &[220, 180, 40, 0],
+            "padding takes the edge colour"
+        );
     }
 
     #[test]

@@ -1578,3 +1578,24 @@ __global_mt.__newindex = function(t, key, value)
 end
 setmetatable(_G, __global_mt)
 __wow_seed_namespace_names()
+
+-- GetBuildOption(name) is documented in BuildDocumentation.lua and answered
+-- from the client's build configuration. The only option Blizzard Lua reads
+-- ("RestrictedAuraAPI", TargetFrameAuraShared.lua:32) selects the forbidden
+-- aura-button templates, which the simulator does not model, so every option
+-- reads as off. Without the function the unit-frame aura containers' OnLoad
+-- died on a nil call.
+if rawget(_G, "GetBuildOption") == nil then
+  function GetBuildOption(name)
+    return false
+  end
+end
+
+-- table.create(narr, nrec) is the client's preallocating constructor (seven
+-- Blizzard call sites, e.g. Blizzard_AuraContainerGroups.lua:27). Lua 5.1 has
+-- no preallocation; a plain table is equivalent.
+if table.create == nil then
+  function table.create(_narr, _nrec)
+    return {}
+  end
+end

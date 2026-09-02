@@ -4736,9 +4736,9 @@ end
 
 if not Enum.DamageMeterVisibilityMeta then
   Enum.DamageMeterVisibilityMeta = {
-    MaxValue = 2,
+    MaxValue = 3,
     MinValue = 0,
-    NumValues = 3,
+    NumValues = 4,
   }
 end
 
@@ -4910,9 +4910,9 @@ end
 
 if not Enum.EditModeAccountSettingMeta then
   Enum.EditModeAccountSettingMeta = {
-    MaxValue = 33,
+    MaxValue = 35,
     MinValue = 0,
-    NumValues = 34,
+    NumValues = 36,
   }
 end
 
@@ -5036,6 +5036,14 @@ if not Enum.EditModeLayoutTypeMeta then
   }
 end
 
+if not Enum.EditModeLossOfControlSettingMeta then
+  Enum.EditModeLossOfControlSettingMeta = {
+    MaxValue = 0,
+    MinValue = 0,
+    NumValues = 1,
+  }
+end
+
 if not Enum.EditModeMicroMenuSettingMeta then
   Enum.EditModeMicroMenuSettingMeta = {
     MaxValue = 3,
@@ -5118,9 +5126,9 @@ end
 
 if not Enum.EditModeSystemMeta then
   Enum.EditModeSystemMeta = {
-    MaxValue = 23,
+    MaxValue = 26,
     MinValue = 0,
-    NumValues = 24,
+    NumValues = 27,
   }
 end
 
@@ -7249,104 +7257,126 @@ end
 
 if not Enum.HousingResult then
   Enum.HousingResult = {
-    ActionLockedByCombat = 1,
-    BoundsFailureChildren = 2,
-    BoundsFailurePlot = 3,
-    BoundsFailureRoom = 4,
-    CannotAfford = 5,
-    CharterComplete = 6,
-    CollisionInvalid = 7,
-    DbError = 8,
-    DecorCannotBeRedeemed = 9,
-    DecorItemNotDestroyable = 10,
-    DecorNotFound = 11,
-    DecorNotFoundInStorage = 12,
-    DuplicateCharterSignature = 13,
-    FilterRejected = 14,
-    FixtureCantDeleteDoor = 15,
-    FixtureHookEmpty = 16,
-    FixtureHookOccupied = 17,
-    FixtureHouseTypeMismatch = 18,
-    FixtureNotFound = 19,
-    FixtureSizeMismatch = 20,
-    FixtureTypeMismatch = 21,
-    GenericFailure = 22,
-    GuildMoreAccountsNeeded = 23,
-    GuildMoreActivePlayersNeeded = 24,
-    GuildNotLoaded = 25,
-    HookNotChildOfFixture = 34,
-    HouseEditLockFailed = 26,
-    HouseExteriorAlreadyThatSize = 27,
-    HouseExteriorAlreadyThatType = 28,
-    HouseExteriorRootNotFound = 29,
-    HouseExteriorSizeNotAvailable = 33,
-    HouseExteriorTypeNeighborhoodMismatch = 30,
-    HouseExteriorTypeNotFound = 31,
-    HouseExteriorTypeSizeMismatch = 32,
-    HouseNotFound = 35,
-    IncorrectFaction = 36,
-    InvalidDecorItem = 37,
-    InvalidDistance = 38,
-    InvalidGuild = 39,
-    InvalidHouse = 40,
-    InvalidInstance = 41,
-    InvalidInteraction = 42,
-    InvalidMap = 43,
-    InvalidNeighborhoodName = 44,
-    InvalidRoomLayout = 45,
-    LockOperationFailed = 47,
-    LockedByOtherPlayer = 46,
-    MaxDecorReached = 48,
-    MaxPreviewDecorReached = 49,
-    MissingCoreFixture = 50,
-    MissingDye = 51,
-    MissingExpansionAccess = 52,
-    MissingFactionMap = 53,
-    MissingPrivateNeighborhoodInvite = 54,
-    MoreHouseSlotsNeeded = 55,
-    MoreSignaturesNeeded = 56,
-    NeighborhoodNotFound = 57,
-    NoNeighborhoodOwnershipRequests = 58,
-    NotInDecorEditMode = 59,
-    NotInFixtureEditMode = 60,
-    NotInLayoutEditMode = 61,
-    NotInsideHouse = 62,
-    NotOnOwnedPlot = 63,
-    OperationAborted = 64,
-    OwnerNotInGuild = 65,
-    PermissionDenied = 66,
-    PlacementTargetInvalid = 67,
-    PlayerNotFound = 68,
-    PlayerNotInInstance = 69,
-    PlotNotFound = 70,
-    PlotNotVacant = 71,
-    PlotReservationCooldown = 72,
-    PlotReserved = 73,
-    RoomNotFound = 74,
-    RoomUpdateFailed = 75,
-    RpcFailure = 76,
-    ServiceNotAvailable = 77,
-    StaticDataNotFound = 78,
+    AccountBanned = 1,
+    ActionLockedByCombat = 2,
+    BlueprintCodeInvalid = 3,
+    BlueprintDyeFailed = 4,
+    BlueprintGenericExportError = 5,
+    BlueprintGenericImportError = 6,
+    BlueprintLocationInvalid = 7,
+    BlueprintNameInvalid = 8,
+    BlueprintNotFound = 9,
+    BlueprintRequirementsUnmet = 10,
+    BlueprintRoomPlacementRequired = 11,
+    BlueprintStorageLimit = 14,
+    BlueprintTypeInvalid = 12,
+    BlueprintTypeLocationInvalid = 13,
+    BlueprintVersionInvalid = 15,
+    BoundToStartingArea = 19,
+    BoundsFailureChildren = 16,
+    BoundsFailurePlot = 17,
+    BoundsFailureRoom = 18,
+    CannotAfford = 20,
+    CharterComplete = 21,
+    CollisionInvalid = 22,
+    DbError = 23,
+    DecorCannotBeRedeemed = 24,
+    DecorItemNotDestroyable = 25,
+    DecorNotFound = 26,
+    DecorNotFoundInStorage = 27,
+    DuplicateCharterSignature = 28,
+    FilterRejected = 29,
+    FixtureCantDeleteDoor = 30,
+    FixtureHookEmpty = 31,
+    FixtureHookOccupied = 32,
+    FixtureHouseTypeMismatch = 33,
+    FixtureNotFound = 34,
+    FixtureSizeMismatch = 35,
+    FixtureTypeMismatch = 36,
+    GenericFailure = 37,
+    GuildMoreAccountsNeeded = 38,
+    GuildMoreActivePlayersNeeded = 39,
+    GuildNotLoaded = 40,
+    HookNotChildOfFixture = 49,
+    HouseEditLockFailed = 41,
+    HouseExteriorAlreadyThatSize = 42,
+    HouseExteriorAlreadyThatType = 43,
+    HouseExteriorRootNotFound = 44,
+    HouseExteriorSizeNotAvailable = 48,
+    HouseExteriorTypeNeighborhoodMismatch = 45,
+    HouseExteriorTypeNotFound = 46,
+    HouseExteriorTypeSizeMismatch = 47,
+    HouseNotFound = 50,
+    IncorrectFaction = 51,
+    InsufficientRoomBudget = 64,
+    InvalidDecorItem = 52,
+    InvalidDistance = 53,
+    InvalidExteriorDocument = 54,
+    InvalidGuild = 55,
+    InvalidHouse = 56,
+    InvalidInstance = 57,
+    InvalidInteraction = 58,
+    InvalidInteriorDocument = 59,
+    InvalidLightOverlap = 60,
+    InvalidMap = 61,
+    InvalidNeighborhoodName = 62,
+    InvalidRoomLayout = 63,
+    LockOperationFailed = 66,
+    LockedByOtherPlayer = 65,
+    MaxPetDecorReached = 68,
+    MaxPlacedDecorReached = 67,
+    MaxPreviewDecorReached = 69,
+    MaxStorageDecorReached = 70,
+    MissingCoreFixture = 71,
+    MissingDye = 72,
+    MissingExpansionAccess = 73,
+    MissingFactionMap = 74,
+    MissingPrivateNeighborhoodInvite = 75,
+    MoreHouseSlotsNeeded = 76,
+    MoreSignaturesNeeded = 77,
+    NeighborhoodNotFound = 78,
+    NoNeighborhoodOwnershipRequests = 79,
+    NotInDecorEditMode = 80,
+    NotInFixtureEditMode = 81,
+    NotInLayoutEditMode = 82,
+    NotInsideHouse = 83,
+    NotOnOwnedPlot = 84,
+    OperationAborted = 85,
+    OwnerNotInGuild = 86,
+    PermissionDenied = 87,
+    PlacementTargetInvalid = 88,
+    PlayerNotFound = 89,
+    PlayerNotInInstance = 90,
+    PlotNotFound = 91,
+    PlotNotVacant = 92,
+    PlotReservationCooldown = 93,
+    PlotReserved = 94,
+    RoomNotFound = 95,
+    RoomPlacementOutOfBounds = 96,
+    RoomUpdateFailed = 97,
+    RpcFailure = 98,
+    ServiceNotAvailable = 99,
+    StaticDataNotFound = 100,
     Success = 0,
-    TimeoutLimit = 79,
-    TimerunningNotAllowed = 80,
-    TokenRequired = 81,
-    TooManyRequests = 82,
-    TransactionFailure = 83,
-    UncollectedExteriorFixture = 84,
-    UncollectedHouseType = 85,
-    UncollectedRoom = 86,
-    UncollectedRoomMaterial = 87,
-    UncollectedRoomTheme = 88,
-    UnlockOperationFailed = 89,
+    TimeoutLimit = 101,
+    TimerunningNotAllowed = 102,
+    TokenRequired = 103,
+    TooManyRequests = 104,
+    TransactionFailure = 105,
+    UncollectedExteriorFixture = 106,
+    UncollectedHouseType = 107,
+    UncollectedRoom = 108,
+    UncollectedRoomMaterial = 109,
+    UncollectedRoomTheme = 110,
+    UnlockOperationFailed = 111,
   }
 end
 
 if not Enum.HousingResultMeta then
   Enum.HousingResultMeta = {
-    MaxValue = 89,
+    MaxValue = 111,
     MinValue = 0,
-    NumValues = 90,
+    NumValues = 112,
   }
 end
 
@@ -16338,5 +16368,130 @@ if not Enum.ZoneControlStateMeta then
     MaxValue = 1,
     MinValue = 0,
     NumValues = 2,
+  }
+end
+
+if not Enum.SecondsFormatterRoundingMeta then
+  Enum.SecondsFormatterRoundingMeta = { MaxValue = 1, MinValue = 0, NumValues = 2 }
+end
+
+if not Enum.CooldownViewerSoundMeta then
+  Enum.CooldownViewerSoundMeta = { MaxValue = 93, MinValue = 0, NumValues = 94 }
+end
+
+if not Enum.RecentAlliesFriendTagMeta then
+  Enum.RecentAlliesFriendTagMeta = { MaxValue = 5, MinValue = 0, NumValues = 6 }
+end
+
+if not Enum.BattleNetFriendLevelMeta then
+  Enum.BattleNetFriendLevelMeta = { MaxValue = 3, MinValue = 1, NumValues = 3 }
+end
+
+if not Enum.BattleNetFriendTagMeta then
+  Enum.BattleNetFriendTagMeta = { MaxValue = 9, MinValue = 0, NumValues = 10 }
+end
+
+if not Enum.RaidDispelOverlayTypeMeta then
+  Enum.RaidDispelOverlayTypeMeta = { MaxValue = 2, MinValue = 0, NumValues = 3 }
+end
+
+if not Enum.SocialSystemTypeMeta then
+  Enum.SocialSystemTypeMeta = { MaxValue = 4, MinValue = 0, NumValues = 5 }
+end
+
+if not Enum.VisualAlertTypeMeta then
+  Enum.VisualAlertTypeMeta = { MaxValue = 10, MinValue = 1, NumValues = 10 }
+end
+
+if not Enum.SocialUIPresenceTypeMeta then
+  Enum.SocialUIPresenceTypeMeta = { MaxValue = 5, MinValue = 0, NumValues = 6 }
+end
+
+if not Enum.SocialUIBlockTypeMeta then
+  Enum.SocialUIBlockTypeMeta = { MaxValue = 2, MinValue = 0, NumValues = 3 }
+end
+
+if not Enum.ScriptObjectAccessRestrictionMeta then
+  Enum.ScriptObjectAccessRestrictionMeta = { MaxValue = 1, MinValue = 1, NumValues = 1 }
+end
+
+-- From Blizzard_APIDocumentationGenerated/PlayerHousingConstantsDocumentation.lua (12.1.0).
+if not Enum.HousingBlueprintType then
+  Enum.HousingBlueprintType = {
+    Exterior = 4,
+    House = 1,
+    Interior = 3,
+    None = 0,
+    Room = 2,
+  }
+end
+
+if not Enum.HousingBlueprintTypeMeta then
+  Enum.HousingBlueprintTypeMeta = {
+    MaxValue = 4,
+    MinValue = 0,
+    NumValues = 5,
+  }
+end
+
+-- From Blizzard_APIDocumentationGenerated/HousingBlueprintConstantsDocumentation.lua (12.1.0).
+if not Enum.HousingBlueprintContentType then
+  Enum.HousingBlueprintContentType = {
+    Decor = 3,
+    Dye = 4,
+    Fixture = 5,
+    HouseType = 1,
+    None = 0,
+    Other = 6,
+    Room = 2,
+  }
+end
+
+if not Enum.HousingBlueprintContentTypeMeta then
+  Enum.HousingBlueprintContentTypeMeta = {
+    MaxValue = 6,
+    MinValue = 0,
+    NumValues = 7,
+  }
+end
+
+-- From Blizzard_APIDocumentationGenerated/HousingBlueprintConstantsDocumentation.lua (12.1.0).
+if not Enum.HousingBlueprintUnmetRequirementFlags then
+  Enum.HousingBlueprintUnmetRequirementFlags = {
+    HouseSizeLocked = 128,
+    HouseTypeLocked = 64,
+    InsufficientBudget = 1,
+    MismatchedExteriorFaction = 32,
+    MissingDecor = 8,
+    MissingDye = 16,
+    MissingFixture = 4,
+    MissingRoom = 2,
+  }
+end
+
+if not Enum.HousingBlueprintUnmetRequirementFlagsMeta then
+  Enum.HousingBlueprintUnmetRequirementFlagsMeta = {
+    MaxValue = 128,
+    MinValue = 1,
+    NumValues = 8,
+  }
+end
+
+-- From Blizzard_APIDocumentationGenerated/AuraContainerSharedDocumentation.lua (12.1.0).
+if not Enum.CustomAuraButtonDispelTypeTextureStyle then
+  Enum.CustomAuraButtonDispelTypeTextureStyle = {
+    Border = 0,
+    BorderWithIcon = 1,
+    CustomAsset = 4,
+    Icon = 2,
+    PreserveAsset = 3,
+  }
+end
+
+if not Enum.CustomAuraButtonDispelTypeTextureStyleMeta then
+  Enum.CustomAuraButtonDispelTypeTextureStyleMeta = {
+    MaxValue = 4,
+    MinValue = 0,
+    NumValues = 5,
   }
 end

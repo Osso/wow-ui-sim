@@ -42,6 +42,15 @@ if secretwrap == nil then
   end
 end
 
+-- secretunwrap(value) hands back the plain value of a secret; the simulator
+-- has no secret values, so every value is already plain
+-- (Blizzard_AuraContainerGroups.lua:229 keys its frame map with it).
+if secretunwrap == nil then
+  function secretunwrap(value)
+    return value
+  end
+end
+
 if GetCallstackHeight == nil then
   function GetCallstackHeight()
     return 0

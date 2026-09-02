@@ -31,23 +31,18 @@ __wow_fill_enum("EditModeUnitFrameSetting", { "BuffIconSize", "DebuffIconSize" }
 __wow_fill_enum("FragmentID", { "FMapObject", "FWorldStateListenerData" })
 __wow_fill_enum("FrameTutorialAccount", { "HousingPetBeds" })
 __wow_fill_enum("HouseFinderSuggestionReason", { "Relinquished" })
-__wow_fill_enum("HousingResult", {
-  "BlueprintGenericImportError",
-  "BlueprintStorageLimit",
-  "BlueprintTypeInvalid",
-  "BlueprintNotFound",
-  "InvalidExteriorDocument",
-  "BlueprintGenericExportError",
-  "InvalidInteriorDocument",
-  "BlueprintRequirementsUnmet",
-  "RoomPlacementOutOfBounds",
-  "BlueprintCodeInvalid",
-  "InsufficientRoomBudget",
-  "BlueprintLocationInvalid",
-  "BlueprintNameInvalid",
-  "BlueprintVersionInvalid",
-})
 __wow_fill_enum("NamePlateStyle", { "Classic" })
+
+-- Blizzard_HousingData.lua:124-127 keys a table by these four, but no
+-- Blizzard_APIDocumentationGenerated file defines them (HouseSettingFlags has
+-- no enumeration entry at all). Values unknown: the next free bits above
+-- both HouseSettingFlags definitions, in the order the file uses them.
+if Enum.HouseSettingFlags and Enum.HouseSettingFlags.BlueprintExportNeighbors == nil then
+  Enum.HouseSettingFlags.BlueprintExportNeighbors = 1024
+  Enum.HouseSettingFlags.BlueprintExportGuild = 2048
+  Enum.HouseSettingFlags.BlueprintExportFriends = 4096
+  Enum.HouseSettingFlags.BlueprintExportParty = 8192
+end
 __wow_fill_enum("PingResult", { "FailedSilent" })
 __wow_fill_enum("PingSubjectType", { "ActionReady", "ActionOnCooldown", "ActionUnavailable" })
 __wow_fill_enum("SecretAspect", { "RadialProgress" })

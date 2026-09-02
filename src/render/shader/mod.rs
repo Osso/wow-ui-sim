@@ -16,7 +16,7 @@ mod quad_nine_slice;
 
 pub use atlas::{GLYPH_ATLAS_TEX_INDEX, GpuTextureAtlas, TextureEntry};
 pub use atlas_bc::{BcFormat, BcTextureEntry};
-pub use pipeline::WowUiPipeline;
+pub use pipeline::{WowUiPipeline, brightness_boost_divisor, set_brightness_boost_divisor};
 pub use primitive::{GpuBcTextureData, GpuTextureData, WowUiPrimitive, load_texture_or_crop};
 pub use program::WowUiProgram;
 pub use quad::FLAG_CIRCLE_CLIP;

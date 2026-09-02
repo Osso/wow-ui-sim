@@ -19,8 +19,9 @@ fn channel(channel_id: i32, name: &str, channel_type: i32) -> VoiceChannel {
 // ── GetActiveChannelType ──────────────────────────────────────────────────────
 
 #[test]
-fn get_active_channel_type_returns_seeded_channel_type() {
+fn get_active_channel_type_returns_the_active_channel_type() {
     let env = env();
+    env.state().borrow_mut().voice_chat.active_channel_id = Some(1);
     let (value_type, channel_type): (String, i32) = env
         .eval(
             r#"
@@ -98,8 +99,20 @@ fn get_active_channel_type_returns_one_nil_for_stale_active_channel() {
 // ── GetActiveChannelID ────────────────────────────────────────────────────────
 
 #[test]
-fn get_active_channel_id_returns_seeded_id() {
+fn get_active_channel_id_is_nil_by_default() {
+    // A client that is not in a voice channel: the chat channel button shows
+    // the speaker icon, not the headset (ChannelFrameButtonMixin:OnLoad).
     let env = env();
+    let is_nil: bool = env
+        .eval("return C_VoiceChat.GetActiveChannelID() == nil")
+        .unwrap();
+    assert!(is_nil, "no active channel by default, as for a client outside voice chat");
+}
+
+#[test]
+fn get_active_channel_id_returns_the_active_channel() {
+    let env = env();
+    env.state().borrow_mut().voice_chat.active_channel_id = Some(1);
     let id: i32 = env.eval("return C_VoiceChat.GetActiveChannelID()").unwrap();
     assert_eq!(id, 1);
 }

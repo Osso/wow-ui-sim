@@ -135,7 +135,6 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     SOCIAL_SYSTEM_TYPE,
     TTS_VOICE_TYPE,
     GUILD_ERROR_TYPE,
-    ROLODEX_TYPE,
     INVALID_PLOT_SCREENSHOT_REASON,
     PING_RESULT,
     VOICE_CHAT_STATUS_CODE,
@@ -182,6 +181,7 @@ pub const SEQUENTIAL_ENUMS: &[SeqEnumDef] = &[
     RAID_DISPEL_OVERLAY_TYPE,
     NAME_PLATE_STYLE,
     AUTO_COMPLETE_PRIORITY,
+    SECONDS_FORMATTER_ROUNDING,
 ];
 
 // All explicit value enums (for batch registration)
@@ -318,4 +318,7 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     CREATION_CLASS_DISABLED_REASON,
     CREATION_RACE_DISABLED_REASON,
     VAS_QUEUE_STATUS,
+    // Starts at 1, so it cannot be a SeqEnumDef
+    ROLODEX_TYPE,
+    SCRIPT_OBJECT_ACCESS_RESTRICTION,
 ];

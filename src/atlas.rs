@@ -8,6 +8,8 @@ pub use crate::atlas_data::{
 };
 pub use crate::atlas_elements::get_atlas_name_by_element_id;
 
+use std::sync::atomic::{AtomicBool, Ordering};
+
 /// A single piece of a nine-slice atlas kit.
 #[derive(Debug, Clone)]
 pub struct NineSlicePiece {
@@ -93,7 +95,7 @@ fn nine_slice_key_candidates(key: &str) -> [String; 2] {
 }
 
 fn logical_nine_slice_piece_size(lookup: &AtlasInfo, from_2x: bool) -> (u32, u32) {
-    if from_2x {
+    if from_2x && !lookup.size_is_override {
         (
             (lookup.width as f32 / 2.0).round() as u32,
             (lookup.height as f32 / 2.0).round() as u32,
@@ -130,11 +132,25 @@ fn paired_2x_variant(lower: &str) -> Option<&'static AtlasInfo> {
     None
 }
 
-fn render_preferred_2x_variant(lower: &str) -> Option<&'static AtlasInfo> {
-    if !RENDER_PREFERRED_2X_ATLASES.contains(&lower) {
+fn render_preferred_2x_variant(lower: &str, prefer_hires: bool) -> Option<&'static AtlasInfo> {
+    if !prefer_hires && !RENDER_PREFERRED_2X_ATLASES.contains(&lower) {
         return None;
     }
     paired_2x_variant(lower)
+}
+
+/// Whether render lookups source texels from the paired `-2x` atlas entry
+/// whenever one exists. The client draws its 2x art once a UI unit spans more
+/// than one pixel (a 1440p client at uiScale 0.9 is 1.6875 px per unit); at
+/// 1 px per unit the 1x art is the authored one.
+static PREFER_HIRES_ATLASES: AtomicBool = AtomicBool::new(false);
+
+pub fn set_prefer_hires_atlases(prefer: bool) {
+    PREFER_HIRES_ATLASES.store(prefer, Ordering::Relaxed);
+}
+
+pub fn prefer_hires_atlases() -> bool {
+    PREFER_HIRES_ATLASES.load(Ordering::Relaxed)
 }
 
 /// Get atlas info by name (case-insensitive).
@@ -157,6 +173,7 @@ pub fn get_atlas_info(name: &str) -> Option<AtlasLookup> {
             return Some(AtlasLookup {
                 info,
                 is_2x_fallback: false,
+                logical_size: None,
             });
         }
     }
@@ -168,6 +185,7 @@ pub fn get_atlas_info(name: &str) -> Option<AtlasLookup> {
             return Some(AtlasLookup {
                 info,
                 is_2x_fallback: true,
+                logical_size: None,
             });
         }
         let with_1x = format!("{lower}{sep}1x");
@@ -175,6 +193,7 @@ pub fn get_atlas_info(name: &str) -> Option<AtlasLookup> {
             return Some(AtlasLookup {
                 info,
                 is_2x_fallback: false,
+                logical_size: None,
             });
         }
     }
@@ -188,16 +207,23 @@ pub fn get_atlas_info(name: &str) -> Option<AtlasLookup> {
 /// This keeps logical atlas dimensions unchanged while sourcing texels from
 /// the higher-resolution atlas file.
 pub fn get_render_atlas_info(name: &str) -> Option<AtlasLookup> {
+    get_render_atlas_info_with(name, prefer_hires_atlases())
+}
+
+/// `get_render_atlas_info` with the 2x preference passed explicitly; the
+/// public entry point reads the process-wide setting.
+pub fn get_render_atlas_info_with(name: &str, prefer_hires: bool) -> Option<AtlasLookup> {
     let lower = name.to_lowercase();
 
-    if exact_atlas_info(name).is_some() {
-        if let Some(info) = render_preferred_2x_variant(&lower) {
+    if let Some(base) = exact_atlas_info(name) {
+        if let Some(info) = render_preferred_2x_variant(&lower, prefer_hires) {
             return Some(AtlasLookup {
                 info,
                 is_2x_fallback: true,
+                logical_size: Some((base.width(), base.height())),
             });
         }
-        return exact_atlas_info(name);
+        return Some(base);
     }
 
     get_atlas_info(name)
@@ -245,6 +271,23 @@ mod tests {
     }
 
     #[test]
+    fn override_sized_2x_fallback_is_not_halved() {
+        // uimicromenu2x has no 1x sibling; its members carry OverrideWidth /
+        // OverrideHeight, so the DB width (32x41) is the logical size already
+        // and the plate must fill the 32x40 micro button. bagslots2x stores
+        // the pixel rect (96) and halves to the 48-unit bag slot.
+        let plate = get_atlas_info("ui-hud-micromenu-buttonbg-up").expect("micro-menu plate");
+        assert!(plate.is_2x_fallback);
+        assert!(plate.info.size_is_override);
+        assert_eq!((plate.width(), plate.height()), (32, 41));
+
+        let bag = get_atlas_info("bag-main").expect("bag slot");
+        assert!(bag.is_2x_fallback);
+        assert!(!bag.info.size_is_override);
+        assert_eq!((bag.width(), bag.height()), (48, 48));
+    }
+
+    #[test]
     fn nine_slice_piece_uses_2x_dimensions_when_base_piece_is_missing() {
         let corner = ATLAS_DB
             .get("ui-frame-metal-cornertopleft-2x")
@@ -289,5 +332,30 @@ mod tests {
         assert_eq!(lookup.info.file, r"Interface\questframe\questlogframe");
         assert_eq!(lookup.width(), 51);
         assert_eq!(lookup.height(), 60);
+    }
+
+    #[test]
+    fn hires_preference_sources_texels_from_the_2x_atlas_with_the_1x_logical_size() {
+        let hires = super::get_render_atlas_info_with("ui-hud-minimap-frame", true)
+            .expect("minimap frame atlas should exist");
+        assert_eq!(hires.info.file, r"Interface\hud\uiminimap2x");
+        assert!(hires.is_2x_fallback);
+        assert_eq!((hires.width(), hires.height()), (215, 226));
+        assert_eq!((hires.info.width, hires.info.height), (438, 460));
+
+        let lores = super::get_render_atlas_info_with("ui-hud-minimap-frame", false)
+            .expect("minimap frame atlas should exist");
+        assert_eq!(lores.info.file, r"Interface\hud\uiminimap");
+        assert!(!lores.is_2x_fallback);
+        assert_eq!((lores.width(), lores.height()), (215, 226));
+    }
+
+    #[test]
+    fn hires_preference_leaves_explicit_2x_names_alone() {
+        let explicit = super::get_render_atlas_info_with("ui-hud-minimap-frame-2x", true)
+            .expect("explicit 2x entry should exist");
+        assert_eq!(explicit.info.file, r"Interface\hud\uiminimap2x");
+        assert!(!explicit.is_2x_fallback);
+        assert_eq!(explicit.width(), 438);
     }
 }

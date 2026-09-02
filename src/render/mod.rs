@@ -80,12 +80,13 @@ fn skip_delimited_span(chars: &mut std::iter::Peekable<std::str::Chars>, end_mar
 pub use glyph::{GlyphAtlas, emit_text_quads};
 #[cfg(feature = "gui")]
 pub(crate) use shader::ThreeSlicePathParams;
-#[cfg(feature = "gui")]
 pub use shader::{
     FrameQuadSnapshot, GpuBcTextureData, GpuTextureAtlas, GpuTextureData, NineSliceTextures,
     QuadBatch, QuadVertex, TextureEntry, TextureRequest, WowUiPipeline, WowUiPrimitive,
     WowUiProgram, load_texture_or_crop,
 };
+#[cfg(feature = "gui")]
+pub use shader::{brightness_boost_divisor, set_brightness_boost_divisor};
 #[cfg(feature = "gui")]
 pub use text::TextRenderer;
 #[cfg(feature = "gui")]

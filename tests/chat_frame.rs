@@ -153,7 +153,9 @@ const CHAT_VOICE_BUTTON_SURFACE_LUA: &str = r#"
     local point, relativeTo, relativePoint, offsetX, offsetY = icon:GetPoint(1)
     local iconAtlasCount = 0
     for _, child in ipairs({ button:GetRegions() }) do
-        if child:GetObjectType() == "Texture" and child:GetAtlas() == "chatframe-button-icon-voicechat" then
+        -- every state icon (voicechat / headset / ...): Blizzard keeps exactly
+        -- one .Icon; a seeded second one under it showed the headset's green disc
+        if child:GetObjectType() == "Texture" and child:GetAtlas() and string.find(child:GetAtlas(), "^chatframe%-button%-icon%-") then
             iconAtlasCount = iconAtlasCount + 1
         end
     end

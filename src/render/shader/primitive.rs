@@ -624,9 +624,22 @@ fn apply_rgba_mask_entry(
     use_uv_inset: bool,
 ) {
     let tex_idx = entry.tex_index();
+    // The coverage encoding was guessed from the mask's file name before its
+    // pixels existed. Now that the entry is resolved, decide it from the
+    // data: a mask whose alpha is uniformly opaque carries coverage in RGB,
+    // anything else carries it in alpha. Both branches are needed - WoW ships
+    // both encodings - and the flag has to be cleared as well as set, or the
+    // name-based guess wins where it was wrong. See
+    // docs/wiki/investigations/mask-coverage-encoding.md.
+    let alpha_coverage = !entry.alpha_uniformly_opaque;
     for vertex in vertices.iter_mut() {
         if vertex.mask_tex_index == -2 {
             vertex.mask_tex_index = tex_idx;
+            if alpha_coverage {
+                vertex.flags |= crate::render::shader::FLAG_MASK_ALPHA_COVERAGE;
+            } else {
+                vertex.flags &= !crate::render::shader::FLAG_MASK_ALPHA_COVERAGE;
+            }
             vertex.mask_tex_coords[0] = remap_entry_uv(
                 vertex.mask_tex_coords[0],
                 UvRemap::entry_axis(entry.uv_x, entry.uv_width, entry.original_width, entry.tier)
@@ -698,13 +711,27 @@ impl UvRemap {
     }
 }
 
-fn remap_entry_uv(local_uv: f32, remap: UvRemap) -> f32 {
-    let uploaded_size = remap.original_size.min(remap.cell_size).max(1) as f32;
-    let inset = if remap.use_uv_inset && uploaded_size > 1.0 {
-        (remap.span_uv * 0.5 / uploaded_size).min(remap.span_uv * 0.5)
+/// Half-texel UV inset for one atlas axis.
+///
+/// A single-texel axis has no interior: under the bilinear sampler its only
+/// correct sample point is the texel centre, so the inset is half the span
+/// regardless of `use_uv_inset` and the quad's whole width maps to that one
+/// point. Spanning the texel edge to edge instead blends up to 50% with the
+/// neighbouring atlas cell (the 1-px tiling strips of the character-frame
+/// tabs showed this as a luminance ramp over the left half of the strip).
+fn half_texel_inset(span_uv: f32, uploaded_size: f32, use_uv_inset: bool) -> f32 {
+    if uploaded_size <= 1.0 {
+        span_uv * 0.5
+    } else if use_uv_inset {
+        (span_uv * 0.5 / uploaded_size).min(span_uv * 0.5)
     } else {
         0.0
-    };
+    }
+}
+
+fn remap_entry_uv(local_uv: f32, remap: UvRemap) -> f32 {
+    let uploaded_size = remap.original_size.min(remap.cell_size).max(1) as f32;
+    let inset = half_texel_inset(remap.span_uv, uploaded_size, remap.use_uv_inset);
     remap.base_uv + inset + local_uv * (remap.span_uv - inset * 2.0).max(0.0)
 }
 
@@ -712,11 +739,7 @@ fn remap_entry_uv(local_uv: f32, remap: UvRemap) -> f32 {
 fn remap_bc_entry_uv(local_uv: f32, base_uv: f32, span_uv: f32, original_size: u32) -> f32 {
     let cell_size = crate::render::shader::atlas::BC_CELL_SIZE;
     let uploaded_size = original_size.min(cell_size).max(1) as f32;
-    let inset = if uploaded_size > 1.0 {
-        (span_uv * 0.5 / uploaded_size).min(span_uv * 0.5)
-    } else {
-        0.0
-    };
+    let inset = half_texel_inset(span_uv, uploaded_size, true);
     base_uv + inset + local_uv * (span_uv - inset * 2.0).max(0.0)
 }
 

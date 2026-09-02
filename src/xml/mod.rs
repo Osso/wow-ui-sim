@@ -25,7 +25,7 @@ pub use types::{FrameChildElement, FrameXml, ScopedModifierXml, UiXml, XmlElemen
 pub use types_animation::{AnimationElement, AnimationGroupXml, AnimationXml};
 pub use types_elements::{
     ActorXml, ActorsXml, FontStringXml, FrameElement, FramesXml, IncludeXml, LayerElement,
-    LayerXml, LayersXml, ScriptXml, TextureXml, widget_type_for_tag,
+    LayerXml, LayersXml, ScriptXml, ShadowOffsetXml, ShadowXml, TextureXml, widget_type_for_tag,
 };
 pub use types_fonts::{FontFamilyMemberXml, FontFamilyXml, FontXml};
 pub use types_support::{

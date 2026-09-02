@@ -41,6 +41,45 @@ fn find_toc_file_scan_accepts_case_mismatch_and_flavor_suffix() {
 }
 
 #[test]
+fn find_toc_file_prefers_bare_toc_for_settings_definitions_frame() {
+    // Blizzard_SettingsDefinitions_Frame.toc lists CombatAudioAlertConstants.lua
+    // and drops the AudioAssist/Subtitles files that moved to
+    // Blizzard_SettingsDefinitions_Shared; its _Mainline.toc predates that
+    // split. Only retail-family profiles carry the split TOCs.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return;
+    }
+    let tmp = tempfile::tempdir().unwrap();
+    let dir = make_addon_dir(
+        tmp.path(),
+        "Blizzard_SettingsDefinitions_Frame",
+        &[
+            "Blizzard_SettingsDefinitions_Frame.toc",
+            "Blizzard_SettingsDefinitions_Frame_Mainline.toc",
+        ],
+    );
+    assert_eq!(
+        find_toc_file(&dir),
+        Some(dir.join("Blizzard_SettingsDefinitions_Frame.toc"))
+    );
+
+    // The preference is per addon, not a rule: any other addon keeps the
+    // flavor variant.
+    let other = make_addon_dir(
+        tmp.path(),
+        "Blizzard_UIParent",
+        &["Blizzard_UIParent.toc", "Blizzard_UIParent_Mainline.toc"],
+    );
+    assert_eq!(
+        find_toc_file(&other),
+        Some(other.join("Blizzard_UIParent_Mainline.toc"))
+    );
+}
+
+#[test]
 fn find_toc_file_scan_rejects_unrelated_toc_names() {
     let tmp = tempfile::tempdir().unwrap();
     let dir = make_addon_dir(tmp.path(), "MyAddon", &["SomethingElse.toc"]);

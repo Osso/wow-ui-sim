@@ -210,38 +210,63 @@ if rawget(C_CurveUtil, "CreateColorCurve") == nil then
 end
 
 if rawget(C_StringUtil, "CreateSecondsFormatter") == nil then
+  -- Surface taken from Blizzard_APIDocumentationGenerated/SecondsFormatterAPIDocumentation.lua.
+  -- Blizzard_AuraContainer/Blizzard_AuraContainerShared.lua calls SetRounding at
+  -- line 94, at file scope; a missing method there costs the whole file. Setters
+  -- store, getters read back, predicates read the same field; only Format
+  -- produces text.
   local secondsFormatterMethods = {}
 
-  function secondsFormatterMethods:SetDefaultAbbreviation(abbreviation)
-    self.defaultAbbreviation = abbreviation
+  local properties = {
+    "ApproximationSeconds", "CanApproximate", "CanRoundUpIntervals",
+    "CanRoundUpLastUnit", "ConvertToLower", "DefaultAbbreviation",
+    "DesiredUnitCount", "DesiredUnitCountCurve", "MaxInterval",
+    "MaxIntervalCurve", "MillisecondsThreshold", "MinInterval",
+    "MinIntervalCurve", "Rounding", "StripIntervalWhitespace",
+  }
+
+  for _, name in ipairs(properties) do
+    local field = name:sub(1, 1):lower() .. name:sub(2)
+    secondsFormatterMethods["Set" .. name] = function(self, value)
+      self[field] = value
+    end
+    secondsFormatterMethods["Get" .. name] = function(self)
+      return self[field]
+    end
   end
 
-  function secondsFormatterMethods:SetRounding(rounding)
-    self.rounding = rounding
+  -- Documented as predicates rather than getters.
+  for _, name in ipairs({ "CanApproximate", "CanRoundUpIntervals", "CanRoundUpLastUnit" }) do
+    local field = name:sub(1, 1):lower() .. name:sub(2)
+    secondsFormatterMethods[name] = function(self)
+      return self[field] == true
+    end
   end
 
-  function secondsFormatterMethods:SetCanRoundUpLastUnit(canRoundUp)
-    self.canRoundUpLastUnit = canRoundUp
+  -- Documented as evaluating the configured interval/count for a given seconds
+  -- value; without a modeled curve the configured value is the answer.
+  secondsFormatterMethods.EvaluateMinInterval = function(self)
+    return self.minInterval
+  end
+  secondsFormatterMethods.EvaluateMaxInterval = function(self)
+    return self.maxInterval
+  end
+  secondsFormatterMethods.EvaluateDesiredUnitCount = function(self)
+    return self.desiredUnitCount
   end
 
-  function secondsFormatterMethods:SetMinInterval(interval)
-    self.minInterval = interval
-  end
-
-  function secondsFormatterMethods:SetMaxInterval(interval)
-    self.maxInterval = interval
-  end
-
-  function secondsFormatterMethods:SetMaxIntervalCurve(curve)
-    self.maxIntervalCurve = curve
-  end
-
-  function secondsFormatterMethods:SetDesiredUnitCount(count)
-    self.desiredUnitCount = count
+  function secondsFormatterMethods:Reset()
+    for _, name in ipairs(properties) do
+      self[name:sub(1, 1):lower() .. name:sub(2)] = nil
+    end
   end
 
   function secondsFormatterMethods:Format(seconds)
     return tostring(seconds or 0)
+  end
+
+  function secondsFormatterMethods:FormatZero()
+    return self:Format(0)
   end
 
   function C_StringUtil.CreateSecondsFormatter()

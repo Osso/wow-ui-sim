@@ -455,6 +455,131 @@ mod tests {
     use super::{image_from_read_back_buffer, install_glyph_atlas_data, read_back_buffer_layout};
     use crate::render::shader::WowUiPrimitive;
 
+    /// The client magnifies UI art bilinearly; a nearest sampler turns every
+    /// upscaled icon and frame into stair-stepped pixel blocks. A 2x2 checker
+    /// drawn at 16x16 has a smooth ramp through the middle only when the
+    /// sampler interpolates: nearest yields nothing but 0 and 255.
+    #[test]
+    fn atlas_sampler_interpolates_between_texels() {
+        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let has_adapter = pollster::block_on(async {
+            instance
+                .request_adapter(&wgpu::RequestAdapterOptions::default())
+                .await
+                .is_ok()
+        });
+        if !has_adapter {
+            eprintln!("Skipping atlas sampler test: no GPU adapter available");
+            return;
+        }
+
+        let path = r"Interface\Test\Checker2x2";
+        let mut batch = crate::render::QuadBatch::default();
+        batch.push_textured_path(
+            iced::Rectangle::new(iced::Point::ORIGIN, iced::Size::new(16.0, 16.0)),
+            path,
+            [1.0, 1.0, 1.0, 1.0],
+            crate::BlendMode::Alpha,
+        );
+        // black / white / white / black
+        let rgba: Vec<u8> = [
+            [0u8, 0, 0, 255],
+            [255, 255, 255, 255],
+            [255, 255, 255, 255],
+            [0, 0, 0, 255],
+        ]
+        .concat();
+        let texture = crate::render::shader::GpuTextureData {
+            path: path.to_string(),
+            width: 2,
+            height: 2,
+            rgba: rgba.into(),
+        };
+        let mut primitive = WowUiPrimitive::new_merged_with_textures(
+            std::sync::Arc::new(batch),
+            vec![texture],
+            Vec::new(),
+        );
+        let image = super::HeadlessRenderContext::new(16, 16).render(&mut primitive);
+
+        let row: Vec<u8> = (0..16).map(|x| image.get_pixel(x, 4).0[0]).collect();
+        let intermediate = row.iter().filter(|&&v| v > 24 && v < 231).count();
+        assert!(
+            intermediate >= 3,
+            "a magnified checker should ramp between its texels with a bilinear sampler; row 4 = {row:?}"
+        );
+    }
+
+    /// A 1-texel-wide atlas strip stretched across a quad must sample its
+    /// texel centre everywhere. Atlas slots are allocated in upload order, so
+    /// uploading a white texture first puts its replicated right edge in the
+    /// column directly left of the strip's single texel; a UV span that runs
+    /// edge to edge lets the bilinear sampler blend that white into the left
+    /// half of the quad, and the row reads back as a ramp instead of a
+    /// constant.
+    #[test]
+    fn single_texel_strip_stretched_wide_reads_back_constant_row() {
+        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let has_adapter = pollster::block_on(async {
+            instance
+                .request_adapter(&wgpu::RequestAdapterOptions::default())
+                .await
+                .is_ok()
+        });
+        if !has_adapter {
+            eprintln!("Skipping single-texel strip test: no GPU adapter available");
+            return;
+        }
+
+        let neighbour_path = r"Interface\Test\StripNeighbourWhite";
+        let strip_path = r"Interface\Test\Strip1x8Blue";
+        let width = 64;
+        let height = 8;
+        let mut batch = crate::render::QuadBatch::default();
+        batch.push_textured_path(
+            iced::Rectangle::new(
+                iced::Point::ORIGIN,
+                iced::Size::new(width as f32, height as f32),
+            ),
+            strip_path,
+            [1.0, 1.0, 1.0, 1.0],
+            crate::BlendMode::Alpha,
+        );
+        let neighbour = crate::render::shader::GpuTextureData {
+            path: neighbour_path.to_string(),
+            width: 2,
+            height: 2,
+            rgba: vec![255u8; 2 * 2 * 4].into(),
+        };
+        let strip = crate::render::shader::GpuTextureData {
+            path: strip_path.to_string(),
+            width: 1,
+            height: height,
+            rgba: [[0u8, 0, 255, 255]; 8].concat().into(),
+        };
+        // Upload order decides slot order: the white texture takes slot 0,
+        // the strip slot 1, so the strip's texel is bordered on the left by
+        // the white texture's replicated edge.
+        let mut primitive = WowUiPrimitive::new_merged_with_textures(
+            std::sync::Arc::new(batch),
+            vec![neighbour, strip],
+            Vec::new(),
+        );
+        let image = super::HeadlessRenderContext::new(width, height).render(&mut primitive);
+
+        let row: Vec<[u8; 4]> = (0..width).map(|x| image.get_pixel(x, 4).0).collect();
+        let red_max = row.iter().map(|p| p[0]).max().unwrap();
+        let blue_min = row.iter().map(|p| p[2]).min().unwrap();
+        assert!(
+            blue_min >= 253,
+            "the blue strip must cover the whole row (blue min = {blue_min}); row = {row:?}"
+        );
+        assert!(
+            red_max <= 2,
+            "a stretched 1-texel strip must not blend with the neighbouring atlas cell (red max = {red_max}); row = {row:?}"
+        );
+    }
+
     #[test]
     fn read_back_buffer_layout_aligns_rows_to_256_bytes() {
         let layout = read_back_buffer_layout(3, 2);

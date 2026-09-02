@@ -25,11 +25,14 @@ function __wow_apply_chat_voice_button_surface()
 
     local channelButton = ChatFrameChannelButton
     if type(channelButton) == "table" then
+        -- Blizzard's PropertyButtonMixin:OnLoad creates .Icon and
+        -- ChannelFrameButtonMixin picks its atlas from the voice state
+        -- (voicechat without an active channel, headset with one). Only seed
+        -- an Icon when none exists; replacing Blizzard's left the orphaned
+        -- headset icon showing under the seeded speaker.
         local icon = channelButton.Icon
-        if type(channelButton.CreateTexture) == "function"
-            and (icon == nil
-                or type(icon.GetAtlas) ~= "function"
-                or icon:GetAtlas() ~= "chatframe-button-icon-voicechat") then
+        if (icon == nil or type(icon) ~= "table")
+            and type(channelButton.CreateTexture) == "function" then
             icon = channelButton:CreateTexture(nil, "OVERLAY")
             channelButton.Icon = icon
         end
@@ -47,10 +50,17 @@ function __wow_apply_chat_voice_button_surface()
                 and type(icon.SetPoint) == "function" then
                 icon:SetPoint("CENTER", channelButton, "CENTER", 0, 0)
             end
-            if type(icon.SetAtlas) == "function" then
-                icon:SetAtlas("chatframe-button-icon-voicechat")
-            else
-                rawset(icon, "atlas", "chatframe-button-icon-voicechat")
+            if type(channelButton.UpdateVisibleState) == "function" then
+                pcall(channelButton.UpdateVisibleState, channelButton)
+            end
+            local hasAtlas = type(icon.GetAtlas) == "function" and icon:GetAtlas() ~= nil
+                or rawget(icon, "atlas") ~= nil
+            if not hasAtlas then
+                if type(icon.SetAtlas) == "function" then
+                    icon:SetAtlas("chatframe-button-icon-voicechat")
+                else
+                    rawset(icon, "atlas", "chatframe-button-icon-voicechat")
+                end
             end
             if type(icon.Show) == "function" then
                 icon:Show()

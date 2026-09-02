@@ -477,6 +477,29 @@ fn test_patch_12_1_cvars_and_enums_exist() {
     assert_eq!(tiered_lairs, "number");
 }
 
+#[test]
+fn restore_after_cleanup_keeps_enum_members_added_from_lua() {
+    // restore_post_cleanup_globals runs init_enum_globals again after
+    // Blizzard_EnvironmentCleanup; replacing every Enum sub-table there dropped
+    // the members the PTR bootstrap and Blizzard Lua add (CooldownViewer's
+    // HiddenActive = -1), and three CooldownViewer files aborted on them.
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("Enum.CooldownViewerCategory.HiddenActive = -1")
+        .unwrap();
+    env.restore_post_cleanup_globals();
+    let (hidden, essential, table_kept): (String, f64, bool) = env
+        .eval(
+            r#"
+            local t = Enum.CooldownViewerCategory
+            return tostring(t.HiddenActive), t.Essential, t == Enum.CooldownViewerCategory
+            "#,
+        )
+        .unwrap();
+    assert_eq!(hidden, "-1", "a member Lua added survives the restore");
+    assert_eq!(essential, 0.0, "the Rust-defined members are still there");
+    assert!(table_kept);
+}
+
 #[cfg(feature = "retail-12-1-0")]
 #[test]
 fn test_patch_12_1_strict_removed_symbols_are_hidden() {

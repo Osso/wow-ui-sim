@@ -10,6 +10,8 @@
 // Uniforms (group 0)
 struct Uniforms {
     projection: mat4x4<f32>,
+    // x = brightness gamma divisor (1.5 lifts dark UI, 1.0 = identity)
+    params: vec4<f32>,
 }
 
 @group(0) @binding(0)
@@ -134,27 +136,39 @@ fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
     }
 }
 
+// sRGB electro-optical transfer: the vertex colour arrives as the sRGB value
+// Lua set (SetColorTexture, SetVertexColor, font colours), while atlas samples
+// are decoded to linear by their sRGB texture format and the render target
+// re-encodes on write. Without this the two paths disagree: a texel round-trips
+// unchanged, but a solid 0.5 lands at 0.735 (188/255) — one encode too bright.
+fn srgb_to_linear(c: vec3<f32>) -> vec3<f32> {
+    let low = c / 12.92;
+    let high = pow((c + vec3f(0.055)) / 1.055, vec3f(2.4));
+    return select(high, low, c <= vec3f(0.04045));
+}
+
 @fragment
 fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     var color: vec4<f32>;
     const FLAG_COOLDOWN_SWIPE: u32 = 0x200u;
+    let vertex_color = vec4f(srgb_to_linear(in.color.rgb), in.color.a);
 
     if (in.flags & FLAG_COOLDOWN_SWIPE) != 0u {
         if in.tex_index < 0 {
-            color = in.color;
+            color = vertex_color;
         } else {
             // Cooldown swipes use mask_tex_coords as sample UVs because tex_coords.x
             // is reserved for the radial progress value.
             let tex_color = sample_tiered_texture(in.tex_index, in.mask_tex_coords);
-            color = tex_color * in.color;
+            color = tex_color * vertex_color;
         }
     } else if in.tex_index < 0 {
         // Solid color or pending texture (-1 = solid, -2 = pending)
-        color = in.color;
+        color = vertex_color;
     } else {
         // Textured quad - sample from the appropriate tier atlas
         let tex_color = sample_tiered_texture(in.tex_index, in.tex_coords);
-        color = tex_color * in.color;
+        color = tex_color * vertex_color;
     }
 
     let blend_mode = in.flags & 0xFFu;
@@ -216,7 +230,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     // destination; boosting them also makes near-transparent atlas edge pixels
     // visible as stripes.
     if blend_mode != BLEND_ADDITIVE {
-        color = vec4f(pow(color.rgb, vec3f(1.0 / 1.5)), color.a);
+        color = vec4f(pow(color.rgb, vec3f(1.0 / uniforms.params.x)), color.a);
     }
 
     // Premultiplied alpha output: pipeline uses src + dst * (1 - src.a).

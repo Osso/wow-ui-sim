@@ -1,16 +1,24 @@
 //! C_StringUtil: string escaping helpers used by Blizzard diagnostics.
 
-use crate::lua_api::methods::{create_string, create_table, val_to_string};
+use crate::lua_api::methods::{create_string, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-use super::helpers::set_global_val;
+use super::helpers::ensure_global_table;
 
+/// Register `C_StringUtil`, keeping whatever the namespace already holds.
+///
+/// This runs a second time from `workarounds::temporary::environment_cleanup_restore`,
+/// which is after the workaround layer has installed
+/// `C_StringUtil.CreateSecondsFormatter`. Building a fresh table and assigning it
+/// over the global discarded that factory, so
+/// `Blizzard_AuraContainer/Blizzard_AuraContainerShared.lua:94` called
+/// `SetRounding` on nil and aborted the file. `ensure_global_table` reuses the
+/// existing table when there is one.
 pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
-    let c_string_util = create_table(state);
-    let Val::Table(c_string_util_ref) = c_string_util else {
-        unreachable!("create_table must return a table");
+    let Val::Table(c_string_util_ref) = ensure_global_table(state, "C_StringUtil") else {
+        unreachable!("ensure_global_table must return a table");
     };
     table_set_rust_fn_static(
         state,
@@ -18,7 +26,6 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "EscapeQuotedCodes",
         c_string_util_escape_quoted_codes,
     )?;
-    set_global_val(state, "C_StringUtil", c_string_util);
     Ok(())
 }
 

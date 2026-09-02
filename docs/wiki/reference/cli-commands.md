@@ -100,7 +100,7 @@ wow-cli casc sync-blizzard-ui
 |------|--------|
 | `--no-addons` | Skip third-party addons |
 | `--no-saved-vars` | Skip WTF SavedVariables (~18% of load time) |
-| `--delay <ms>` | Delay after startup events (dump-tree/screenshot) |
+| `--delay <ms>` | Delay after startup events (dump-tree/screenshot); followed by one OnUpdate tick carrying the slept time and the timers that came due, before `--exec-lua` runs |
 | `--exec-lua "code"` | Execute Lua after startup; prefix with `@` to load file |
 | `--debug-borders` | Red borders overlay |
 | `--debug-anchors` | Green anchor-point dots |

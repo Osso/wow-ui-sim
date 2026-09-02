@@ -22,7 +22,9 @@ fn edit_mode_position_methods_are_native_frame_methods() {
         )
         .expect("probe edit-mode frame methods");
 
-    assert_eq!(result, ("function".to_string(), false, true, true, false));
+    // Without systemInfo a frame counts as in its default position: Blizzard's
+    // callers outside the edit-mode mixin treat a missing method that way.
+    assert_eq!(result, ("function".to_string(), true, true, true, false));
 }
 
 #[test]

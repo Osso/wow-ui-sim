@@ -476,30 +476,34 @@ pub const GUILD_ERROR_TYPE: SeqEnumDef = (
     ],
 );
 
-pub const ROLODEX_TYPE: SeqEnumDef = (
+pub const ROLODEX_TYPE: EnumDef = (
     "RolodexType",
     &[
-        "None",
-        "PartyMember",
-        "RaidMember",
-        "Trade",
-        "Whisper",
-        "PublicOrderFilledByOther",
-        "PublicOrderFilledByYou",
-        "PersonalOrderFilledByOther",
-        "PersonalOrderFilledByYou",
-        "GuildOrderFilledByOther",
-        "GuildOrderFilledByYou",
-        "CreatureKill",
-        "CompleteDungeon",
-        "KillRaidBoss",
-        "KillLfrBoss",
-        "CompleteDelve",
-        "CompleteArena",
-        "CompleteBg",
-        "Duel",
-        "PetBattle",
-        "PvPKill",
+        ("None", 0),
+        ("PartyMember", 1),
+        ("RaidMember", 2),
+        ("Trade", 3),
+        ("Whisper", 4),
+        ("PublicOrderFilledByOther", 5),
+        ("PublicOrderFilledByYou", 6),
+        ("PersonalOrderFilledByOther", 7),
+        ("PersonalOrderFilledByYou", 8),
+        ("GuildOrderFilledByOther", 9),
+        ("GuildOrderFilledByYou", 10),
+        ("CreatureKill", 11),
+        ("CompleteDungeon", 12),
+        ("KillRaidBoss", 13),
+        ("KillLfrBoss", 14),
+        ("CompleteDelve", 15),
+        ("CompleteArena", 16),
+        ("CompleteBg", 17),
+        ("Duel", 18),
+        ("PetBattle", 19),
+        ("PvPKill", 20),
+        // 21 and 22 are absent from RolodexConstantsDocumentation.lua; LegacyFriend
+        // is 23 there, and Blizzard_RecentAlliesUtil.lua indexes a table by it at
+        // file scope, so the value has to match rather than follow the sequence.
+        ("LegacyFriend", 23),
     ],
 );
 

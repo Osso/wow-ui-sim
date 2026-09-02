@@ -137,12 +137,21 @@ fn status_tracking_bar_edit_mode_setting_ids_match_live_docs() {
 fn edit_mode_account_setting_ids_include_totem_action_bar() {
     let env = WowLuaEnv::new().expect("create Lua environment");
 
-    let (totem_action_bar, min_value, max_value, num_values): (i32, i32, i32, i32) = env
+    let (raid_warning, totem_action_bar, loss_of_control, min_value, max_value, num_values): (
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
+    ) = env
         .eval(
             r#"
             local setting = Enum.EditModeAccountSetting
             local meta = Enum.EditModeAccountSettingMeta
-            return setting.ShowTotemActionBar,
+            return setting.ShowRaidWarning,
+                setting.ShowTotemActionBar,
+                setting.ShowLossOfControl,
                 meta.MinValue,
                 meta.MaxValue,
                 meta.NumValues
@@ -150,10 +159,12 @@ fn edit_mode_account_setting_ids_include_totem_action_bar() {
         )
         .expect("read edit mode account setting enum");
 
-    assert_eq!(totem_action_bar, 33);
+    assert_eq!(raid_warning, 33);
+    assert_eq!(totem_action_bar, 34);
+    assert_eq!(loss_of_control, 35);
     assert_eq!(min_value, 0);
-    assert_eq!(max_value, 33);
-    assert_eq!(num_values, 34);
+    assert_eq!(max_value, 35);
+    assert_eq!(num_values, 36);
 }
 
 #[test]
@@ -254,7 +265,8 @@ fn edit_mode_profile_option_enums_match_blizzard_docs() {
                 "ShowDurabilityFrame", "EnableSnap", "EnableAdvancedOptions", "ShowPetFrame",
                 "ShowTimerBars", "ShowVehicleSeatIndicator", "ShowArchaeologyBar",
                 "ShowCooldownViewer", "ShowPersonalResourceDisplay", "ShowEncounterEvents",
-                "ShowDamageMeter", "ShowExternalDefensives", "ShowTotemActionBar",
+                "ShowDamageMeter", "ShowExternalDefensives", "ShowRaidWarning",
+                "ShowTotemActionBar", "ShowLossOfControl",
             },
             EditModeActionBarSetting = {
                 "Orientation", "NumRows", "NumIcons", "IconSize", "IconPadding",

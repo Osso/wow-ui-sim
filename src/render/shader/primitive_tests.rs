@@ -146,8 +146,52 @@ fn remap_entry_uv_insets_slot_edges_by_half_texel() {
     assert!((right - (0.25 + 31.5 / 4096.0)).abs() < 1e-6);
 }
 
+/// A 1-texel atlas axis has no interior to inset into: both quad edges must
+/// sit on the texel centre, or the bilinear sampler blends the quad's outer
+/// half with the neighbouring atlas cell.
 #[test]
-fn tab_crop_texture_requests_disable_half_texel_inset() {
+fn remap_entry_uv_pins_single_texel_axis_to_texel_centre() {
+    let span = 1.0 / 4096.0;
+    let expected = 0.25 + span * 0.5;
+    for use_uv_inset in [true, false] {
+        let remap = UvRemap::entry_axis(0.25, span, 1, 0).with_inset(use_uv_inset);
+        let left = remap_entry_uv(0.0, remap);
+        let right = remap_entry_uv(1.0, remap);
+
+        assert!(
+            (left - expected).abs() < 1e-9,
+            "use_uv_inset={use_uv_inset}: left = {left}, expected texel centre {expected}"
+        );
+        assert!(
+            (right - expected).abs() < 1e-9,
+            "use_uv_inset={use_uv_inset}: right = {right}, expected texel centre {expected}"
+        );
+    }
+}
+
+#[test]
+fn remap_bc_entry_uv_pins_single_texel_axis_to_texel_centre() {
+    let span = 1.0 / 4096.0;
+    let expected = 0.25 + span * 0.5;
+    let left = remap_bc_entry_uv(0.0, 0.25, span, 1);
+    let right = remap_bc_entry_uv(1.0, 0.25, span, 1);
+
+    assert!(
+        (left - expected).abs() < 1e-9,
+        "left = {left}, expected texel centre {expected}"
+    );
+    assert!(
+        (right - expected).abs() < 1e-9,
+        "right = {right}, expected texel centre {expected}"
+    );
+}
+
+/// The UIFrameTabs exclusion was written for the Nearest sampler, where an
+/// inset changes which texel a magnified edge picks. Under the bilinear
+/// sampler the inset maps quad edges to texel centres, and without it a cap's
+/// outer column blends with the neighbouring atlas cell like any other crop.
+#[test]
+fn tab_crop_texture_requests_keep_half_texel_inset() {
     let request = crate::render::TextureRequest::new(
         r"Interface\FrameGeneral\UIFrameTabs@crop:0.015625,0.593750,0.324219,0.488281",
         0,
@@ -155,8 +199,8 @@ fn tab_crop_texture_requests_disable_half_texel_inset() {
     );
 
     assert!(
-        !request.use_uv_inset,
-        "tab atlas crops should preserve exact UV edges"
+        request.use_uv_inset,
+        "tab atlas crops should get the same bleed protection as every other crop"
     );
 }
 
@@ -187,7 +231,7 @@ fn texture_request_inset_policy_can_be_overridden() {
 }
 
 #[test]
-fn resolved_tab_crop_uses_exact_atlas_slot_edges() {
+fn resolved_tab_crop_insets_atlas_slot_edges_by_half_texel() {
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
     let (device, queue) = pollster::block_on(async {
         let adapter = instance
@@ -216,11 +260,22 @@ fn resolved_tab_crop_uses_exact_atlas_slot_edges() {
     );
 
     let resolved = resolve_and_scale_quads(&mut pipeline, &batch, 1.0);
-    let left = &resolved.vertices[0];
-    let right = &resolved.vertices[1];
+    let left = resolved.vertices[0].tex_coords[0];
+    let right = resolved.vertices[1].tex_coords[0];
 
-    assert_eq!(left.tex_coords[0], entry.uv_x);
-    assert_eq!(right.tex_coords[0], entry.uv_x + entry.uv_width);
+    // 37 texels wide: the quad edges sit half a texel inside the slot.
+    let expected_left = entry.uv_x + 0.5 / 4096.0;
+    let expected_right = entry.uv_x + 36.5 / 4096.0;
+    assert!(
+        (left - expected_left).abs() < 1e-6,
+        "left = {left}, expected {expected_left} (slot edge {})",
+        entry.uv_x
+    );
+    assert!(
+        (right - expected_right).abs() < 1e-6,
+        "right = {right}, expected {expected_right} (slot edge {})",
+        entry.uv_x + entry.uv_width
+    );
 }
 
 #[test]

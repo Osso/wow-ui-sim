@@ -32,13 +32,22 @@ pub(super) fn set_vertex_color(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     let mut sim = borrow_state_mut(state)?;
-    let changed = sim
-        .widgets
-        .get(id)
-        .map(|frame| frame.vertex_color != Some(color))
-        .unwrap_or(false);
+    // On a FontString, SetVertexColor is the text colour: the client treats
+    // it as SetTextColor (PlayerLevelText, buff durations and the tracker
+    // headers are coloured that way), and text is drawn from `text_color`.
+    let (is_font_string, changed) = match sim.widgets.get(id) {
+        Some(frame) if frame.widget_type == crate::widget::WidgetType::FontString => {
+            (true, frame.text_color != color)
+        }
+        Some(frame) => (false, frame.vertex_color != Some(color)),
+        None => return Ok(0),
+    };
     if changed && let Some(frame) = sim.widgets.get_mut_visual(id) {
-        frame.vertex_color = Some(color);
+        if is_font_string {
+            frame.text_color = color;
+        } else {
+            frame.vertex_color = Some(color);
+        }
     }
     Ok(0)
 }
@@ -48,7 +57,13 @@ pub(super) fn get_vertex_color(state: &mut LuaState) -> LuaResult<u32> {
     let (r, g, b, a) = borrow_state(state)?
         .widgets
         .get(id)
-        .and_then(|frame| frame.vertex_color)
+        .and_then(|frame| {
+            if frame.widget_type == crate::widget::WidgetType::FontString {
+                Some(frame.text_color)
+            } else {
+                frame.vertex_color
+            }
+        })
         .map(|c| (c.r as f64, c.g as f64, c.b as f64, c.a as f64))
         .unwrap_or((1.0, 1.0, 1.0, 1.0));
     (r, g, b, a).into_stack(state)

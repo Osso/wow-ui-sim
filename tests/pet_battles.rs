@@ -209,8 +209,10 @@ fn pet_battles_actions_and_queue_state_are_mutable() {
         .eval(
             r#"
             C_PetBattles.StartPVPMatchmaking()
+            -- QueueStatusFrame.lua compares the status against the strings
+            -- "queued" / "proposal" / "suspended" / "entry", not the enum.
             local queueState, estimatedTime, queuedTime = C_PetBattles.GetPVPMatchmakingInfo()
-            if queueState ~= Enum.PetBattleQueueStatus.Matchmaking then
+            if queueState ~= "queued" then
                 return "matchmaking_should_seed_queue_state"
             end
             if estimatedTime <= 0 or queuedTime <= 0 then
@@ -221,7 +223,7 @@ fn pet_battles_actions_and_queue_state_are_mutable() {
             end
 
             C_PetBattles.AcceptQueuedPVPMatch()
-            if C_PetBattles.GetPVPMatchmakingInfo() ~= Enum.PetBattleQueueStatus.MatchAccepted then
+            if C_PetBattles.GetPVPMatchmakingInfo() ~= "proposal" then
                 return "accept_should_update_queue_status"
             end
             if C_PetBattles.CanAcceptQueuedPVPMatch() then

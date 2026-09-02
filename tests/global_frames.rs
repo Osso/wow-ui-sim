@@ -483,7 +483,7 @@ fn test_edit_mode_default_position_follows_system_info_without_override() {
         .unwrap();
 
     assert!(!before_init);
-    assert!(!before_default);
+    assert!(before_default, "no systemInfo counts as the default position (AlertFrames.lua:416)");
     assert!(after_init);
     assert!(after_default);
     assert!(!reset_default);

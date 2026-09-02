@@ -281,8 +281,18 @@ C_PetBattles.GetAllStates = function(parserEnv)
   end
   parserEnv.STATE_Stat_Power = 18
 end
+-- The client returns nothing while not queued (QueueStatusFrame lists a
+-- pet-battle entry for any non-nil status) and a status string otherwise.
 C_PetBattles.GetPVPMatchmakingInfo = function()
-  return __wow_pet_battle_state.queueStatus, __wow_pet_battle_state.queueEstimatedTime, __wow_pet_battle_state.queueTime
+  local status = __wow_pet_battle_state.queueStatus
+  local matchmaking = Enum.PetBattleQueueStatus and Enum.PetBattleQueueStatus.Matchmaking or 1
+  local accepted = Enum.PetBattleQueueStatus and Enum.PetBattleQueueStatus.MatchAccepted or 2
+  if status == matchmaking then
+    return "queued", __wow_pet_battle_state.queueEstimatedTime, __wow_pet_battle_state.queueTime
+  elseif status == accepted then
+    return "proposal", __wow_pet_battle_state.queueEstimatedTime, __wow_pet_battle_state.queueTime
+  end
+  return nil
 end
 C_PetBattles.CanAcceptQueuedPVPMatch = function()
   return __wow_pet_battle_state.canAcceptQueuedPVPMatch == true
@@ -366,6 +376,27 @@ mod tests {
             .expect("static pet-battle fallbacks should be callable");
 
         assert_eq!(result, "ok");
+    }
+
+    #[test]
+    fn pvp_matchmaking_info_is_nil_until_queued() {
+        // QueueStatusFrame lists a pet-battle entry for ANY non-nil status,
+        // so a numeric "None" showed the LFG eye with a phantom queue.
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let (idle, queued): (String, String) = env
+            .eval(
+                r#"
+                local idle = tostring(C_PetBattles.GetPVPMatchmakingInfo())
+                C_PetBattles.StartPVPMatchmaking()
+                return idle, tostring(C_PetBattles.GetPVPMatchmakingInfo())
+                "#,
+            )
+            .expect("matchmaking probe");
+        assert_eq!(idle, "nil", "not queued: no status at all");
+        assert_eq!(
+            queued, "queued",
+            "queued: the status string the UI compares against"
+        );
     }
 
     #[test]

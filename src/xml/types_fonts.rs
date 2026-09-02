@@ -19,6 +19,16 @@ pub struct FontXml {
     pub justify_h: Option<String>,
     #[serde(rename = "@justifyV")]
     pub justify_v: Option<String>,
+    /// `<Shadow>` child: offset and colour. Blizzard's shadowed system fonts
+    /// (`SystemFont_Shadow_*`) carry it here, and every `GameFont*` inherits
+    /// from one of them, so dropping it flattens nearly all UI text.
+    #[serde(rename = "Shadow")]
+    pub shadow: Option<crate::xml::ShadowXml>,
+    /// `<Color>` child: the text colour every FontString inheriting the font
+    /// starts with. `GameFontNormal` and its small/large siblings carry
+    /// `color="NORMAL_FONT_COLOR"`, the number fonts explicit r/g/b.
+    #[serde(rename = "Color")]
+    pub color: Option<crate::xml::ColorXml>,
 }
 
 /// FontFamily definition - collection of fonts for different alphabets.

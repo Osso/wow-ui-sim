@@ -293,7 +293,7 @@ fn describe_string_value(state: &LuaState, value: Val) -> Option<String> {
 
 #[cfg(test)]
 mod tests {
-    use super::patch_string_format;
+    use super::{patch_string_format, process_wow_format};
     use crate::lua_api::WowLuaEnv;
 
     #[test]
@@ -308,6 +308,12 @@ mod tests {
             .eval(r#"return string.format("%2$s %1$s %.1F", "first", "second", 3.25)"#)
             .expect("patched format should still work");
         assert_eq!(out, "second first 3.2");
+    }
+
+    #[test]
+    fn literal_utf8_in_the_format_string_survives() {
+        let (out, _) = process_wow_format("Version %s \u{b7} Ärger %d%%", &[]).unwrap();
+        assert_eq!(out, "Version %s \u{b7} Ärger %d%%");
     }
 
     #[test]
@@ -335,8 +341,14 @@ fn process_wow_format(fmt: &str, args: &[Val]) -> LuaResult<(String, Vec<Val>)> 
 
     while i < bytes.len() {
         if bytes[i] != b'%' {
-            out.push(bytes[i] as char);
-            i += 1;
+            // Copy the literal run as-is. `%` is ASCII, so the run ends on a
+            // char boundary; pushing byte-by-byte as `char` would re-encode
+            // every non-ASCII byte and turn "·" into "Â·".
+            let start = i;
+            while i < bytes.len() && bytes[i] != b'%' {
+                i += 1;
+            }
+            out.push_str(&fmt[start..i]);
         } else if i + 1 < bytes.len() && bytes[i + 1] == b'%' {
             out.push_str("%%");
             i += 2;

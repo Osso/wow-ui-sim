@@ -46,13 +46,26 @@ pub fn apply_mask_path(
     icon_bounds: Rectangle,
     mask_path: &str,
 ) {
+    apply_mask_path_with_rect(batch, vert_before, icon_bounds, mask_path);
+}
+
+/// Like [`apply_mask_path`], but `mask_rect` is the screen rectangle the mask
+/// texture is stretched over, which may differ from the quads it masks. A mask
+/// larger than the quad gives the quad a sub-range of the mask's UVs, which is
+/// how an oversized mask asset is centred on a smaller frame.
+pub fn apply_mask_path_with_rect(
+    batch: &mut QuadBatch,
+    vert_before: usize,
+    mask_rect: Rectangle,
+    mask_path: &str,
+) {
     let count = batch.vertices.len() - vert_before;
     if count == 0 {
         return;
     }
     let mask_info = MaskInfo {
         path: mask_path.to_string(),
-        screen_rect: icon_bounds,
+        screen_rect: mask_rect,
         tex_coords: (0.0, 1.0, 0.0, 1.0),
         coverage: mask_coverage_for_path(mask_path),
     };

@@ -171,6 +171,30 @@ fn implicit_blizzard_startup_dependencies() -> HashMap<String, Vec<String>> {
         ("Blizzard_AchievementUI".to_string(), vec![]),
         ("Blizzard_Transmog".to_string(), vec![]),
         ("Blizzard_ArdenwealdGardening".to_string(), vec![]),
+        // Blizzard_SharedXML.toc declares Blizzard_Narration; the legacy
+        // Blizzard_SharedXML_Mainline.toc that the loader prefers does not, so
+        // NarrationSliderMixin is still nil when Blizzard_EditMode builds its
+        // slider and MinimalSlider.lua:237 raises on SetNarrationValueFormatter.
+        // Restoring the edge is narrower than switching that addon to its bare
+        // TOC, which was measured to abort the whole Tutorial subsystem.
+        (
+            "Blizzard_SharedXML".to_string(),
+            vec!["Blizzard_Narration".to_string()],
+        ),
+        // The 12.1.0 Blizzard_UIParentPanelManager TOC declares
+        // Blizzard_ManagedFrameSystem and Blizzard_GameMenuEsc only; the
+        // `## LoadWith: Blizzard_UIParent` of earlier builds is gone. Its Lua
+        // still uses UIParent at file scope (UIPanelLayoutFrame.lua:11 parents
+        // a frame to it, UpdateUIPanelPositions.lua:1 sets its
+        // OnAttributeChanged script), and the eager-discovery order pinned by
+        // tests/blizzard_core_frame_lane.rs keeps UIParent first, so the edge
+        // is explicit rather than left to the sort's alphabetical tie-break:
+        // the Narration edge above moves UIParent later and would otherwise
+        // flip the pair.
+        (
+            "Blizzard_UIParentPanelManager".to_string(),
+            vec!["Blizzard_UIParent".to_string()],
+        ),
     ])
 }
 
@@ -244,6 +268,41 @@ fn toc_stem_matches_folder(stem: &str, folder_name: &str) -> bool {
     rest.is_empty() || rest.starts_with('_') || rest.starts_with('-')
 }
 
+/// Addons whose bare `<addon>.toc` supersedes the flavor-suffixed variant.
+///
+/// The 12.x TOC format annotates entries inline with `[AllowLoadGameType ...]`
+/// so one file can serve every flavor, which makes the per-flavor TOCs beside
+/// it legacy. `Blizzard_FrameXML.toc` carries 88 such annotations and lists 105
+/// files against `Blizzard_FrameXML_Mainline.toc`'s 86; taking the flavor
+/// variant drops the Lua for PVPHonorSystem, PVPUITemplates, EquipmentFlyout,
+/// GhostFrame and SharedPetBattleTemplates, whose XML siblings carry no
+/// `<Script file=...>` include to pull them back in. Six startup errors trace to
+/// that. The five entries the flavor TOC has and the bare one lacks
+/// (ColorPickerFrame, RaidWarning, SplashFrame, UIErrorsFrame) moved into
+/// addons of their own, so nothing is lost by preferring the bare file.
+///
+/// `Blizzard_SettingsDefinitions_Frame` is the same shape: its bare TOC lists
+/// `CombatAudioAlertConstants.lua` (which `CombatAudioAlertManager:OnLoad`
+/// reads) and uses `[Family]\` paths, while `_Mainline.toc` predates the split
+/// that moved `AudioAssist` and `Subtitles` into
+/// `Blizzard_SettingsDefinitions_Shared` and still lists them, so with the
+/// flavor TOC `Subtitles.lua` runs twice and registers the `movieSubtitle`
+/// setting twice.
+///
+/// Deliberately not generalised: of the sixteen addons shipping both variants,
+/// most have a *fuller* flavor TOC — `Blizzard_UIParent.toc` lists one file
+/// against its variant's six — so a blanket flip would lose far more than it
+/// fixes.
+fn prefers_bare_toc(addon_name: &str) -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && matches!(
+        addon_name,
+        "Blizzard_FrameXML" | "Blizzard_SettingsDefinitions_Frame"
+    )
+}
+
 fn profile_specific_fallback_toc(addon_name: &str) -> Option<String> {
     match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Mists if addon_name == "Blizzard_GameMenu" => {
@@ -272,10 +331,17 @@ pub fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
             return Some(toc_path);
         }
     }
-    let toc_variants = [
-        format!("{}{}.toc", addon_name, active_profile_toc_suffix()),
-        format!("{}.toc", addon_name),
-    ];
+    let toc_variants = if prefers_bare_toc(addon_name) {
+        [
+            format!("{}.toc", addon_name),
+            format!("{}{}.toc", addon_name, active_profile_toc_suffix()),
+        ]
+    } else {
+        [
+            format!("{}{}.toc", addon_name, active_profile_toc_suffix()),
+            format!("{}.toc", addon_name),
+        ]
+    };
     for variant in &toc_variants {
         let toc_path = addon_dir.join(variant);
         if toc_path.exists() {

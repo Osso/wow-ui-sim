@@ -50,6 +50,14 @@ pub struct TextureEntry {
     pub uv_y: f32,
     pub uv_width: f32,
     pub uv_height: f32,
+    /// True when every pixel's alpha is 255.
+    ///
+    /// WoW ships mask textures in two encodings and the file name does not say
+    /// which: some carry coverage in RGB with a uniformly opaque alpha, others
+    /// carry it in alpha with black RGB. Picking the wrong rule multiplies the
+    /// masked texture to zero everywhere. This flag is the discriminator, and
+    /// it is a property of the pixels rather than of the path.
+    pub alpha_uniformly_opaque: bool,
 }
 
 impl TextureEntry {
@@ -65,6 +73,18 @@ impl TextureEntry {
             iced::Size::new(self.uv_width, self.uv_height),
         )
     }
+}
+
+/// Whether every pixel of an RGBA buffer is fully opaque.
+///
+/// This is the discriminator between WoW's two mask encodings, which the file
+/// name does not reveal. A mask whose alpha is uniformly 255 carries its
+/// coverage in RGB (white shows, black hides); anything else carries coverage
+/// in alpha, and its RGB is frequently solid black. Applying the RGB rule to an
+/// alpha-coverage mask multiplies the masked texture by zero everywhere, which
+/// is why unit-frame portraits and status-bar fills rendered as empty holes.
+pub fn alpha_is_uniformly_opaque(rgba_data: &[u8]) -> bool {
+    rgba_data.chunks_exact(4).all(|px| px[3] == 255)
 }
 
 /// A single tier's 2D texture atlas.
@@ -271,6 +291,8 @@ impl GpuTextureAtlas {
             },
         );
 
+        let alpha_uniformly_opaque = alpha_is_uniformly_opaque(rgba_data);
+
         let entry = compute_texture_entry(
             &self.tiers[tier_idx],
             tier_idx,
@@ -279,6 +301,7 @@ impl GpuTextureAtlas {
             width,
             height,
             cell_size,
+            alpha_uniformly_opaque,
         );
 
         self.texture_map.insert(path.to_string(), entry);
@@ -582,6 +605,7 @@ fn compute_texture_entry(
     width: u32,
     height: u32,
     cell_size: u32,
+    alpha_uniformly_opaque: bool,
 ) -> TextureEntry {
     let (uv_base_x, uv_base_y) = tier.uv_offset(grid_x, grid_y);
     let cell_uv_size = cell_size as f32 / ATLAS_SIZE as f32;
@@ -605,6 +629,7 @@ fn compute_texture_entry(
         uv_y: uv_base_y,
         uv_width,
         uv_height,
+        alpha_uniformly_opaque,
     }
 }
 
@@ -741,5 +766,50 @@ mod tests {
         let padded = pad_texture_replicate(0, 2, &[], 4);
         assert_eq!(padded.len(), 4 * 4 * 4);
         assert!(padded.iter().all(|&b| b == 0));
+    }
+
+    /// The two mask encodings WoW actually ships, taken from decoded BLPs.
+    ///
+    /// `uiunitframeplayerportraitmask` is black RGB with opaque alpha inside
+    /// the circle and zero alpha outside; `uiminimapmask` is white-on-black RGB
+    /// with alpha 255 everywhere. Reading the file name cannot tell them apart,
+    /// and applying the RGB rule to the first one erases the portrait entirely.
+    #[test]
+    fn mask_coverage_encoding_is_decided_by_alpha_not_by_name() {
+        // Alpha-coverage shape: visible region is black but fully opaque.
+        let alpha_coverage: Vec<u8> = [
+            [0u8, 0, 0, 255], // inside the circle
+            [0, 0, 0, 255],
+            [255, 255, 255, 0], // outside
+            [0, 0, 0, 0],
+        ]
+        .concat();
+        assert!(
+            !alpha_is_uniformly_opaque(&alpha_coverage),
+            "a mask with any transparent pixel carries coverage in alpha"
+        );
+
+        // RGB-intensity shape: coverage is the colour, alpha is uniformly 255.
+        let rgb_coverage: Vec<u8> = [
+            [255u8, 255, 255, 255], // shows
+            [0, 0, 0, 255],         // hides
+            [128, 128, 128, 255],   // partial
+            [255, 255, 255, 255],
+        ]
+        .concat();
+        assert!(
+            alpha_is_uniformly_opaque(&rgb_coverage),
+            "a mask whose alpha is uniformly 255 carries coverage in RGB"
+        );
+
+        // A single non-opaque pixel is enough to switch encodings.
+        let mut nearly_opaque = rgb_coverage.clone();
+        nearly_opaque[7] = 254;
+        assert!(!alpha_is_uniformly_opaque(&nearly_opaque));
+
+        assert!(
+            alpha_is_uniformly_opaque(&[]),
+            "an empty buffer is vacuously opaque"
+        );
     }
 }

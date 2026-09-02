@@ -101,9 +101,7 @@ pub struct TextureRequest {
 impl TextureRequest {
     /// Create a new deferred texture request with fresh request-local state.
     pub fn new(path: impl Into<String>, vertex_start: u32, vertex_count: u32) -> Self {
-        let path = path.into();
-        let use_uv_inset = should_use_uv_inset(&path);
-        Self::new_with_uv_inset(path, vertex_start, vertex_count, use_uv_inset)
+        Self::new_with_uv_inset(path, vertex_start, vertex_count, true)
     }
 
     /// Create a new deferred texture request with explicit atlas UV inset behavior.
@@ -132,16 +130,6 @@ impl TextureRequest {
             handle: self.handle.clone(),
         }
     }
-}
-
-fn should_use_uv_inset(path: &str) -> bool {
-    !(path.contains("@crop:") && is_ui_frame_tabs_path(path))
-}
-
-fn is_ui_frame_tabs_path(path: &str) -> bool {
-    path.replace('\\', "/")
-        .to_ascii_lowercase()
-        .contains("interface/framegeneral/uiframetabs")
 }
 
 /// Shared request-local load state for a deferred texture request.

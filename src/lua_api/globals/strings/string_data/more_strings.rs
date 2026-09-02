@@ -780,6 +780,11 @@ pub const LFG_CATEGORY_CONSTANTS: &[IntDef] = &[
     ("LE_LFG_CATEGORY_FLEXRAID", 5),
     ("LE_LFG_CATEGORY_WORLDPVP", 6),
     ("LE_LFG_CATEGORY_BATTLEFIELD", 7),
+    // 12.1.0 adds the Lair category. Constants.lua indexes LFG_CATEGORY_NAMES by
+    // it at file scope and aborts without it (losing QUEST_TAG_ATLAS and
+    // everything else below line 497). The LE_ family is a 1-based ordinal with
+    // no documented value; 8 is the next slot after BATTLEFIELD.
+    ("LE_LFG_CATEGORY_LAIR", 8),
 ];
 
 #[cfg(feature = "retail-12-1-0")]

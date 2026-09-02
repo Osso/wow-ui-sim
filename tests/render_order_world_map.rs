@@ -15,6 +15,14 @@ use wow_ui_sim::screen::ScreenKind;
 fn opening_world_map_does_not_darken_the_strip_above_the_panel() {
     let env = env_with_isolated_world_map_ui();
 
+    // The first time the map opens, WorldMapTutorialMixin:CheckAndShowTooltip
+    // shows the HelpPlate tutorial tooltip above the "?" button -- that is
+    // client behaviour, and it lands in the strip this test watches. Startup
+    // in the full simulator has already flipped the bit; do the same here so
+    // the comparison is about the map, not about first-run help.
+    env.exec(r#"SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_WORLD_MAP_FRAME, true)"#)
+        .expect("closing the world map tutorial");
+
     let baseline_batch = build_screenshot_like_batch(&env, 1024, 768, None);
     let mut baseline_mgr = make_texture_manager();
     let baseline_render = render_to_image(&baseline_batch, &mut baseline_mgr, 1024, 768, None);

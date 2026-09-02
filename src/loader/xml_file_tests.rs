@@ -264,6 +264,64 @@ fn roman_font_overrides_with_all_fields() {
 }
 
 #[test]
+fn roman_font_overrides_emit_shadow_from_xml() {
+    let ff = crate::xml::FontFamilyXml {
+        name: Some("ShadowFont".to_string()),
+        is_virtual: None,
+        members: vec![crate::xml::FontFamilyMemberXml {
+            alphabet: Some("roman".to_string()),
+            font: Some(crate::xml::FontXml {
+                font: Some("Fonts\\Test.TTF".to_string()),
+                height: Some(14.0),
+                shadow: Some(crate::xml::ShadowXml {
+                    offset: Some(crate::xml::ShadowOffsetXml {
+                        x: Some(1.0),
+                        y: Some(-1.0),
+                        abs_dimension: None,
+                    }),
+                    color: Some(crate::xml::ColorXml {
+                        r: Some(0.1),
+                        g: Some(0.2),
+                        b: Some(0.3),
+                        a: Some(0.4),
+                        color: None,
+                    }),
+                }),
+                ..Default::default()
+            }),
+        }],
+    };
+    let code = build_roman_font_overrides("ShadowFont", &ff);
+    let env = crate::lua_api::WowLuaEnv::new().expect("env");
+    let lua_code = FONT_FAMILY_LUA_TEMPLATE.replace("{name}", "ShadowFont");
+    env.exec(&lua_code)
+        .expect("font family template should load");
+    env.exec(&code)
+        .expect("roman font overrides should apply to font object");
+
+    let (x, y, r, g, b, a): (f64, f64, f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local font = ShadowFont:GetFontObjectForAlphabet("roman")
+            local x, y = font:GetShadowOffset()
+            local r, g, b, a = font:GetShadowColor()
+            return x, y, r, g, b, a
+            "#,
+        )
+        .expect("shadow values should be observable on the font object");
+
+    assert_eq!((x, y), (1.0, -1.0));
+    assert!(
+        (r - 0.1).abs() < 1e-6 && (g - 0.2).abs() < 1e-6,
+        "shadow colour r/g: {r} {g}"
+    );
+    assert!(
+        (b - 0.3).abs() < 1e-6 && (a - 0.4).abs() < 1e-6,
+        "shadow colour b/a: {b} {a}"
+    );
+}
+
+#[test]
 fn font_family_template_supports_simple_font_alphabet_lookup() {
     let env = crate::lua_api::WowLuaEnv::new().expect("env");
     let lua_code = FONT_FAMILY_LUA_TEMPLATE.replace("{name}", "XmlFamilyAlphabetProbe");
