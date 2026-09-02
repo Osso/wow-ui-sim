@@ -186,9 +186,9 @@ fn root_directory_holds_bootstrap_and_two_files() {
     assert_eq!(
         entries,
         vec![
-            "Blizzard_RemixArtifactUI_Bootstrap.lua".to_string(),
             "Blizzard_RemixArtifactUI.lua".to_string(),
             "Blizzard_RemixArtifactUI.xml".to_string(),
+            "Blizzard_RemixArtifactUI_Bootstrap.lua".to_string(),
         ],
         "Retail 12.1.0.69497 ships the RemixArtifact bootstrap beside its Lua and XML files"
     );

@@ -169,9 +169,9 @@ fn classic_subdirectory_holds_bootstrap_lua_xml_and_localization() {
     assert_eq!(
         entries,
         vec![
-            "Blizzard_ReforgingUI_Bootstrap.lua".to_string(),
             "Blizzard_ReforgingUI.lua".to_string(),
             "Blizzard_ReforgingUI.xml".to_string(),
+            "Blizzard_ReforgingUI_Bootstrap.lua".to_string(),
             "Localization.lua".to_string(),
         ],
         "Retail 12.1.0.69497 ships the classic bootstrap beside the Lua, XML, and localization files"

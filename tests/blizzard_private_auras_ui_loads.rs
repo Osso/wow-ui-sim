@@ -418,8 +418,8 @@ fn blizzard_private_auras_ui_xml_uses_scoped_modifier_wrapper() {
         "PrivateAuraTemplate's Cooldown child must inherit CooldownFrameTemplate"
     );
     assert!(
-        raw.contains("inherits=\"RaidBossEmoteFrameTemplate\""),
-        "RaidBossEmoteFramePrivate must inherit RaidBossEmoteFrameTemplate"
+        raw.contains("inherits=\"RaidWarningFrameTemplate\""),
+        "RaidBossEmoteFramePrivate must inherit RaidWarningFrameTemplate"
     );
     let tooltip_raw =
         std::fs::read_to_string(private_auras_dir().join("Mainline/PrivateAurasTooltip.xml"))

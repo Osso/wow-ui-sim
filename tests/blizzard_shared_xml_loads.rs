@@ -183,7 +183,7 @@ fn mainline_toc_eager_load_with_allow_load_both_screens() {
 }
 
 #[test]
-fn mainline_toc_raw_bytes_pin_metadata_lines_and_no_savedvars() {
+fn toc_raw_bytes_pin_metadata_lines_and_no_savedvars() {
     let raw = std::fs::read_to_string(shared_xml_toc()).expect("TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_SharedXML"));
@@ -208,10 +208,10 @@ fn mainline_toc_raw_bytes_pin_metadata_lines_and_no_savedvars() {
     assert!(!raw.contains("## LoadOnDemand"));
     assert!(!raw.contains("## LoadFirst"));
     assert!(
-        raw.contains("## Deprecated. Retained only for addons"),
-        "TOC must contain the deprecation comment block — flags \
-         HybridScrollFrame.lua/.xml as legacy compatibility shims kept only \
-         for third-party addons that haven't migrated to ScrollBox/View"
+        raw.contains(
+            "## HybridScrollFrame is deprecated. Retained only for addons and legacy content"
+        ),
+        "TOC must retain the current HybridScrollFrame deprecation annotation"
     );
 }
 

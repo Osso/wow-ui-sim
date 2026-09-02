@@ -205,11 +205,9 @@ fn actual_selector_code_lives_in_shared_xml_body_not_this_folder() {
 }
 
 #[test]
-fn shared_xml_mainline_toc_lists_selector_files_in_its_body() {
-    let shared_xml_toc =
-        blizzard_ui_dir().join("Blizzard_SharedXML/Blizzard_SharedXML_Mainline.toc");
-    let raw = std::fs::read_to_string(&shared_xml_toc)
-        .expect("Blizzard_SharedXML_Mainline.toc reads utf-8");
+fn shared_xml_toc_lists_selector_files_in_its_body() {
+    let shared_xml_toc = blizzard_ui_dir().join("Blizzard_SharedXML/Blizzard_SharedXML.toc");
+    let raw = std::fs::read_to_string(&shared_xml_toc).expect("Blizzard_SharedXML.toc reads utf-8");
 
     for line in [
         "Shared\\Selector\\Blizzard_SelectorUI.lua",
@@ -221,7 +219,7 @@ fn shared_xml_mainline_toc_lists_selector_files_in_its_body() {
     ] {
         assert!(
             raw.contains(line),
-            "Blizzard_SharedXML_Mainline.toc must list `{line}` in its body — \
+            "Blizzard_SharedXML.toc must list `{line}` in its body — \
              this is how the selector widget code actually loads at runtime, \
              bypassing the empty Blizzard_SelectorUI shell entirely"
         );
