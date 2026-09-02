@@ -35,10 +35,9 @@ fn blizzard_azerite_respec_ui_set_respec_item_validates_item_and_selected_powers
                         local errorMessages = {{}}
                         _G.__azerite_respec_locked_location = nil
 
-                        local originalAddMessage = UIErrorsFrame.AddMessage
-                        UIErrorsFrame.AddMessage = function(self, message, ...)
+                        local originalAddExternalErrorMessage = UIErrorsFrame.AddExternalErrorMessage
+                        UIErrorsFrame.AddExternalErrorMessage = function(_, message)
                             table.insert(errorMessages, message)
-                            return originalAddMessage(self, message, ...)
                         end
                         mixinEnv.HelpTip = {{ Hide = function() end }}
                         mixinEnv.AzeriteEmpoweredItemDataSource = {{
@@ -94,7 +93,7 @@ fn blizzard_azerite_respec_ui_set_respec_item_validates_item_and_selected_powers
                         expect(AzeriteRespecFrame.ItemSlot.Icon:IsShown(),
                             "valid item should refresh and show the item icon")
 
-                        UIErrorsFrame.AddMessage = originalAddMessage
+                        UIErrorsFrame.AddExternalErrorMessage = originalAddExternalErrorMessage
                         return table.concat(failures, "\n")
                         "#
                     ))
