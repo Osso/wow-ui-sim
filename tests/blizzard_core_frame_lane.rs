@@ -25,13 +25,13 @@
 //!     FrameXMLBase   (AllowLoad: Game, deps: Blizzard_SharedXML, Blizzard_SharedXMLGame)
 //!         ├── FrameXMLUtil   (AllowLoad: Game, singular `## Dep:` form for
 //!         │                   SharedXMLGame / Colors / StaticPopup)
-//!         └── UIParent       (AllowLoad: game, deps: SharedXMLBase)
+//!         └── UIParent       (implicit/default game-only loading, Dep: SharedXMLBase)
 //!             └── UIParentPanelManager   (deps: ManagedFrameSystem, GameMenuEsc,
-//!                                          AllowLoadGameType: mainline,
-//!                                          3 files w/ [AllowLoadEnvironment Global])
-//!                 └── FrameXML   (LoadFirst: 1, AllowLoad: Game, MANY deps
-//!                                  including UIParent, UIParentPanelManager,
-//!                                  FrameXMLUtil, UIPanelTemplates, etc.)
+//!                                          AllowLoadGameType: mainline, 5 body files,
+//!                                          4 w/ [AllowLoadEnvironment Global])
+//!                 └── FrameXML   (LoadFirst: 1, MANY deps including
+//!                                  UIParentPanelManager, FrameXMLUtil,
+//!                                  UIPanelTemplates, etc.; no direct UIParent dep)
 
 use std::path::PathBuf;
 
@@ -163,6 +163,7 @@ fn lane_dep_edges_pin_canonical_chain() {
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
         "FrameXML must preserve all 17 current dependencies in retail TOC order, including \
+         Blizzard_UIParentPanelManager but no direct Blizzard_UIParent dependency, and \
          Blizzard_UnitPopup between Blizzard_ItemButton and Blizzard_FrameXMLUtil. Got: \
          {frame_xml_deps:?}"
     );
@@ -258,13 +259,14 @@ fn ui_parent_panel_manager_diagnostic_files_carry_allow_load_environment_global_
     let raw = std::fs::read_to_string(lane_toc("Blizzard_UIParentPanelManager"))
         .expect("UIParentPanelManager TOC reads");
     for entry in &[
+        "Shared\\UIPanelLayoutFrame.lua [AllowLoadEnvironment Global]",
         "Shared\\UIParentPanelManager.lua [AllowLoadEnvironment Global]",
         "Mainline\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
         "Shared\\UpdateUIPanelPositions.lua [AllowLoadEnvironment Global]",
     ] {
         assert!(
             raw.contains(entry),
-            "Raw bytes must contain `{entry}` — these three files explicitly restrict the line \
+            "Raw bytes must contain `{entry}` — these four files explicitly restrict the line \
              to the global load pass. The annotation is a load-pass filter, not an fenv override"
         );
     }
@@ -303,12 +305,12 @@ fn ui_parent_lane_addons_restrict_to_game_screen_only() {
         for screen in glue_screens {
             assert!(
                 !toc.allows_screen(screen),
-                "Core lane addon `{name}` MUST NOT load on glue screen {screen:?}. Every TOC \
-                 in this lane carries `## AllowLoad: Game` (case variants tolerated) — UIParent \
-                 references in-game character state, panel manager's positioning operates on \
-                 the in-game frame layout, FrameXML's combat-feedback / loot / talents / \
-                 instance-difficulty frames are all in-game-only. Glue screens use Blizzard_GlueXML \
-                 / Blizzard_GlueParent instead"
+                "Core lane addon `{name}` MUST NOT load on glue screen {screen:?}. Explicit \
+                 `## AllowLoad: Game` metadata or the default game-only TOC semantics keeps this \
+                 lane out of glue screens — UIParent references in-game character state, panel \
+                 manager positioning operates on the in-game frame layout, and FrameXML's \
+                 combat-feedback / loot / talents / instance-difficulty frames are in-game-only. \
+                 Glue screens use Blizzard_GlueXML / Blizzard_GlueParent instead"
             );
         }
         assert!(
@@ -410,7 +412,7 @@ fn lane_appears_in_eager_discovery_with_load_first_promoted_for_frame_xml() {
             let pos = position_in(&names, name).unwrap_or_else(|| {
                 panic!(
                     "Lane addon `{name}` must appear in Game eager discovery — every core-lane \
-                     addon is non-LoD and AllowLoad: Game"
+                     addon is non-LoD and uses explicit or default game-only loading semantics"
                 );
             });
             (*name, pos)
