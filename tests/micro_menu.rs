@@ -102,12 +102,8 @@ fn install_professions_book_bootstrap(env: &WowLuaEnv, ui: &Path) {
             bootstrap_path.display()
         )
     });
-    let escaped_source = source
-        .replace('\\', "\\\\")
-        .replace('"', "\\\"")
-        .replace('\n', "\\n");
     let loader = format!(
-        r#"local chunk, compile_error = loadstring("{escaped_source}", "@Blizzard_ProfessionsBook/Blizzard_ProfessionsBook_Bootstrap.lua")
+        r#"local chunk, compile_error = loadstring([==[{source}]==], "@Blizzard_ProfessionsBook/Blizzard_ProfessionsBook_Bootstrap.lua")
 if not chunk then error("compile ProfessionsBook bootstrap: " .. tostring(compile_error)) end
 local ok, runtime_error = pcall(chunk, "Blizzard_ProfessionsBook", {{}})
 if not ok then error("run ProfessionsBook bootstrap: " .. tostring(runtime_error)) end"#,
