@@ -156,6 +156,7 @@ fn dashboard_house_list_request_hides_main_spinner() {
                     C_Housing.GetPlayerOwnedHouses = function()
                         FireEvent("PLAYER_HOUSE_LIST_UPDATED", {})
                     end
+                    ShowUIPanel(HousingDashboardFrame)
                     HousingDashboardFrame.HouseDropdown:LoadHouses()
 
                     if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then
