@@ -121,6 +121,10 @@ fn find_toc_file_resolves_bare_toc() {
         shared_xml_toc(),
         "Retail 12.1.0.69497 ships a single bare Blizzard_SharedXML.toc"
     );
+}
+
+#[test]
+fn profile_specific_toc_variants_are_absent() {
     assert!(
         !shared_xml_dir()
             .join("Blizzard_SharedXML_Mainline.toc")
