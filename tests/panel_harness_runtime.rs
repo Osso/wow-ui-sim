@@ -42,7 +42,7 @@ const PANEL_HARNESS_ADDONS: &[(&str, &str)] = &[
     ),
     (
         "Blizzard_Settings_Shared",
-        "Blizzard_Settings_Shared_Mainline.toc",
+        "Blizzard_Settings_Shared.toc",
     ),
     (
         "Blizzard_SettingsDefinitions_Shared",
@@ -50,7 +50,7 @@ const PANEL_HARNESS_ADDONS: &[(&str, &str)] = &[
     ),
     (
         "Blizzard_SettingsDefinitions_Frame",
-        "Blizzard_SettingsDefinitions_Frame_Mainline.toc",
+        "Blizzard_SettingsDefinitions_Frame.toc",
     ),
     ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
     ("Blizzard_Menu", "Blizzard_Menu.toc"),
