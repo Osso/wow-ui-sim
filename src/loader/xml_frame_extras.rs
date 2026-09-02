@@ -330,7 +330,8 @@ pub(crate) fn init_action_bar_tables(
     }
     let code = format!(
         r#"do local f = {}
-        if f and type(f.actionButtons) ~= "table" then
+        local actionButtons = f and f.actionButtons
+        if f and not pcall(next, actionButtons) then
             f.actionButtons = {{}}
         end end"#,
         lua_global_ref(name)
