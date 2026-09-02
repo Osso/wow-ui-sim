@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn unit_frame_dir() -> PathBuf {
@@ -31,12 +32,15 @@ const GLUE_SCREENS: &[ScreenKind] = &[
 
 const TOC_DEPENDENCIES: &[&str] = &[
     "Blizzard_SettingsDefinitions_Frame",
-    "Blizzard_UIParent",
     "Blizzard_BuffFrame",
     "Blizzard_UIPanels_Game",
     "Blizzard_ActionBar",
     "Blizzard_TextStatusBar",
     "Blizzard_SpellDiminishUI",
+    "Blizzard_PingUI",
+    "Blizzard_ColorPickerFrame",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_StatusTrayManager",
 ];
 
 const REPRESENTATIVE_BODY_FILES: &[&str] = &[
@@ -266,7 +270,7 @@ fn find_toc_file_resolves_mainline_variant() {
 }
 
 #[test]
-fn toc_is_eager_with_seven_dependencies() {
+fn toc_is_eager_with_ten_dependencies() {
     let toc = TocFile::from_file(&unit_frame_toc()).expect("TOC parses");
 
     assert!(
@@ -280,21 +284,9 @@ fn toc_is_eager_with_seven_dependencies() {
     let deps = toc.dependencies();
     assert_eq!(
         deps, TOC_DEPENDENCIES,
-        "TOC must declare exactly these 7 hard deps. \
-         Blizzard_SettingsDefinitions_Frame is read by EditModeManager \
-         when registering the unit-frame system definitions; \
-         Blizzard_UIParent supplies UIParent while the current managed-frame system provides \
-         PlayerBottomManagedFrameTemplate (consumed by PetFrame and resource bars) and \
-         PlayerManagedContainerTemplate; Blizzard_BuffFrame must publish \
-         AuraFrame mixins before CompactUnitFrame pools subscribe; \
-         Blizzard_UIPanels_Game is the panel registry consumed by \
-         Show/HideUIPanel calls in the focus-frame teardown path; \
-         Blizzard_ActionBar publishes the bottom-bar layout the \
-         Mainline-only PlayerFrame anchors against; \
-         Blizzard_TextStatusBar publishes the StatusBar mixin the unit \
-         health/mana bars extend; Blizzard_SpellDiminishUI publishes \
-         the diminishing-returns icon overlay used by arena unit \
-         frames. Got: {deps:?}"
+        "Retail 12.1.0.69497 declares ten UnitFrame dependencies in published order, \
+         including PingUI, ColorPickerFrame, ManagedFrameSystem, and StatusTrayManager. \
+         Got: {deps:?}"
     );
 
     assert!(toc.optional_deps().is_empty());
@@ -360,9 +352,9 @@ fn toc_raw_bytes_pin_directives_and_representative_body_files() {
         "## Title: Blizzard_UnitFrame",
         "## Author: Blizzard Entertainment",
         "## Dependencies: Blizzard_SettingsDefinitions_Frame, \
-         Blizzard_UIParent, Blizzard_BuffFrame, Blizzard_UIPanels_Game, \
-         Blizzard_ActionBar, Blizzard_TextStatusBar, \
-         Blizzard_SpellDiminishUI",
+         Blizzard_BuffFrame, Blizzard_UIPanels_Game, Blizzard_ActionBar, \
+         Blizzard_TextStatusBar, Blizzard_SpellDiminishUI, Blizzard_PingUI, \
+         Blizzard_ColorPickerFrame, Blizzard_ManagedFrameSystem, Blizzard_StatusTrayManager",
         "## AllowLoad: Game",
         "## AllowLoadGameType: mainline",
     ];

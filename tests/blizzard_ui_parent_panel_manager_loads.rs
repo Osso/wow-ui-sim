@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn ui_parent_panel_manager_dir() -> PathBuf {
@@ -25,8 +26,7 @@ const GLUE_SCREENS: &[ScreenKind] = &[
     ScreenKind::CharacterCreate,
 ];
 
-const TOC_DEPENDENCIES: &[&str] = &["Blizzard_UIParent"];
-const LOAD_WITH_TRIGGERS: &[&str] = &["Blizzard_UIParent"];
+const TOC_DEPENDENCIES: &[&str] = &["Blizzard_ManagedFrameSystem", "Blizzard_GameMenuEsc"];
 
 const MODULE_LOAD_TABLES: &[&str] = &[
     "UIPanelWindows",
@@ -142,7 +142,7 @@ fn find_toc_file_resolves_mainline_variant() {
 }
 
 #[test]
-fn toc_is_eager_with_one_dependency_and_load_with_trigger() {
+fn toc_is_eager_with_two_dependencies() {
     let toc = TocFile::from_file(&ui_parent_panel_manager_toc()).expect("TOC parses");
 
     assert!(
@@ -157,22 +157,10 @@ fn toc_is_eager_with_one_dependency_and_load_with_trigger() {
     let deps = toc.dependencies();
     assert_eq!(
         deps, TOC_DEPENDENCIES,
-        "TOC must declare exactly Blizzard_UIParent as hard dep — the \
-         singleton UIParent frame must exist before \
-         Shared/UpdateUIPanelPositions.lua wires \
-         `UIParent:SetScript(\"OnAttributeChanged\", UpdateUIPanelPositions)`. \
-         Got: {deps:?}"
+        "Retail 12.1.0.69497 declares ManagedFrameSystem and GameMenuEsc before the panel \
+         manager installs its layout and panel-close hooks. Got: {deps:?}"
     );
-
-    let load_with = toc.load_with();
-    assert_eq!(
-        load_with, LOAD_WITH_TRIGGERS,
-        "TOC must declare `## LoadWith: Blizzard_UIParent` — toc.rs:221 \
-         exposes this via load_with(). On a build where UIParent loads \
-         later than discovery would otherwise place the panel manager, \
-         the LoadWith trigger guarantees the panel manager loads inline \
-         when UIParent loads. Got: {load_with:?}"
-    );
+    assert!(toc.load_with().is_empty());
 
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());
@@ -219,11 +207,11 @@ fn toc_raw_bytes_pin_directives_and_body_files_with_inline_annotations() {
         "## Title: Blizzard_UIParentPanelManager",
         "## Author: Blizzard Entertainment",
         "## DefaultState: enabled",
-        "## Dependencies: Blizzard_UIParent",
-        "## LoadWith: Blizzard_UIParent",
+        "## Dependencies: Blizzard_ManagedFrameSystem, Blizzard_GameMenuEsc",
         "## AllowLoad: game",
         "## AllowLoadGameType: mainline",
         "Mainline\\UIPanelWindows.lua",
+        "Shared\\UIPanelLayoutFrame.lua [AllowLoadEnvironment Global]",
         "Shared\\UIParentPanelManager.lua [AllowLoadEnvironment Global]",
         "Mainline\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
         "Shared\\UpdateUIPanelPositions.lua [AllowLoadEnvironment Global]",
@@ -233,19 +221,10 @@ fn toc_raw_bytes_pin_directives_and_body_files_with_inline_annotations() {
         assert!(
             raw.contains(line),
             "Raw TOC must pin `{line}`. Body order is deliberate: \
-             UIPanelWindows.lua FIRST publishes the \
-             UIPanelWindows_Initialize() function, then \
-             UIParentPanelManager.lua creates the empty UIPanelWindows \
-             table and immediately calls UIPanelWindows_Initialize() at \
-             module-scope (line 87) to populate it; \
-             UIParentPanelManagerOverrides.lua adds the addonTable \
-             helper UIParentManageFramePositions consumed at line 142 of \
-             the manager; finally UpdateUIPanelPositions.lua runs the \
-             single-line `UIParent:SetScript(\"OnAttributeChanged\", \
-             UpdateUIPanelPositions)` wiring that depends on UIParent \
-             existing AND UpdateUIPanelPositions being defined globally. \
-             The 3 `[AllowLoadEnvironment Global]` annotations are \
-             stripped from file paths and mapped to global-env file overrides"
+             UIPanelWindows.lua is followed by the layout frame, panel manager, \
+             Mainline overrides, and position updater. The four \
+             `[AllowLoadEnvironment Global]` annotations are stripped from file paths and \
+             mapped to global-env file overrides"
         );
     }
 
@@ -261,7 +240,7 @@ fn allow_load_environment_annotations_set_global_pass_filters() {
     let toc = TocFile::from_file(&ui_parent_panel_manager_toc()).expect("TOC parses");
 
     assert_eq!(toc.file_use_secure_env(0), None);
-    for index in 1..4 {
+    for index in 1..5 {
         assert_eq!(
             toc.file_use_secure_env(index),
             None,

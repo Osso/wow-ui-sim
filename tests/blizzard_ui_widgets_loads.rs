@@ -34,18 +34,18 @@ const TOC_DEPENDENCIES: &[&str] = &[
 ];
 
 const REPRESENTATIVE_BODY_FILES: &[&str] = &[
-    "Mainline\\Blizzard_WidgetsUtil.lua",
-    "Mainline\\Blizzard_UIWidgetManager.lua",
-    "Mainline\\Blizzard_UIWidgetManager.xml",
-    "Mainline\\Blizzard_UIWidgetAnimationTemplates.lua",
-    "Mainline\\Blizzard_UIWidgetTemplateBase.lua",
-    "Mainline\\Blizzard_UIWidgetTemplateBase.xml",
-    "Mainline\\Blizzard_UIWidgetTemplateScenarioHeaderTimer.lua",
-    "Mainline\\Blizzard_UIWidgetTemplateFillUpFrames.lua",
-    "Mainline\\Blizzard_UIWidgetTopCenterFrame.xml",
-    "Mainline\\Blizzard_UIWidgetBelowMinimapFrame.xml",
-    "Mainline\\Blizzard_UIWidgetPowerBarFrame.xml",
-    "Mainline\\Blizzard_UIWidgetCenterScreenFrame.xml",
+    "Blizzard_WidgetsUtil.lua",
+    "Blizzard_UIWidgetManager.lua",
+    "Blizzard_UIWidgetManager.xml",
+    "Blizzard_UIWidgetAnimationTemplates.lua",
+    "Blizzard_UIWidgetTemplateBase.lua",
+    "Blizzard_UIWidgetTemplateBase.xml",
+    "Blizzard_UIWidgetTemplateScenarioHeaderTimer.lua",
+    "Blizzard_UIWidgetTemplateFillUpFrames.lua",
+    "Blizzard_UIWidgetTopCenterFrame.xml",
+    "Blizzard_UIWidgetBelowMinimapFrame.xml",
+    "Blizzard_UIWidgetPowerBarFrame.xml",
+    "Blizzard_UIWidgetCenterScreenFrame.xml",
 ];
 
 const MANAGER_AND_CONTAINER_MIXINS: &[&str] = &[

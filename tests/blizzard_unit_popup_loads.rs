@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn unit_popup_dir() -> PathBuf {
@@ -29,7 +30,7 @@ const GLUE_SCREENS: &[ScreenKind] = &[
     ScreenKind::CharacterCreate,
 ];
 
-const TOC_DEPENDENCIES: &[&str] = &["Blizzard_UnitPopupShared"];
+const TOC_DEPENDENCIES: &[&str] = &["Blizzard_UnitPopupShared", "Blizzard_SocialUIShared"];
 
 const REPRESENTATIVE_BODY_FILES: &[&str] = &[
     "UnitPopupSlider.lua",

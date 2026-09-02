@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn ui_panels_game_dir() -> PathBuf {
@@ -36,6 +37,9 @@ const TOC_DEPENDENCIES: &[&str] = &[
     "Blizzard_Colors",
     "Blizzard_HelpPlate",
     "Blizzard_TransmogShared",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_GameMenuEsc",
 ];
 
 const REPRESENTATIVE_MIXINS: &[&str] = &[
@@ -112,7 +116,7 @@ fn find_toc_file_resolves_mainline_variant() {
 }
 
 #[test]
-fn toc_is_eager_with_ten_dependencies() {
+fn toc_is_eager_with_thirteen_dependencies() {
     let toc = TocFile::from_file(&ui_panels_game_mainline_toc()).expect("TOC parses");
 
     assert!(
@@ -215,7 +219,7 @@ fn toc_raw_bytes_pin_six_directives_and_localization_trailer() {
         "## Title: Blizzard_UIPanels_Game",
         "## Author: Blizzard Entertainment",
         "## DefaultState: enabled",
-        "## Dependencies: Blizzard_FrameXML, Blizzard_EditMode, Blizzard_GameTooltip, Blizzard_UIPanelTemplates, Blizzard_POIButton, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_Colors, Blizzard_HelpPlate, Blizzard_TransmogShared",
+        "## Dependencies: Blizzard_FrameXML, Blizzard_EditMode, Blizzard_GameTooltip, Blizzard_UIPanelTemplates, Blizzard_POIButton, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_Colors, Blizzard_HelpPlate, Blizzard_TransmogShared, Blizzard_FrameXMLUtil, Blizzard_ManagedFrameSystem, Blizzard_GameMenuEsc",
         "## AllowLoad: game",
         "## AllowLoadGameType: mainline",
         "Mainline\\Localization.lua",
