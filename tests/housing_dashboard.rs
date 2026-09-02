@@ -157,6 +157,7 @@ fn dashboard_house_list_request_hides_main_spinner() {
                         HousingDashboardFrame.HouseDropdown:OnHouseListUpdated({})
                     end
                     ShowUIPanel(HousingDashboardFrame)
+                    HousingDashboardFrame.HouseDropdown.playerHouseList = nil
                     HousingDashboardFrame.HouseDropdown:LoadHouses()
 
                     if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then
