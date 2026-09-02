@@ -6,7 +6,7 @@ const ROOT: &str = "Blizzard_AddOnPerformance";
 
 #[test]
 fn display_specific_chat_warning_formats_and_forwards_system_message() {
-    with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
+    with_blizzard_addon_smoke_shape(&["Blizzard_ChatFrameBase", ROOT], &[], |env, _loaded| {
         env.state().borrow_mut().system_chat_log.clear();
 
         let expected_message: String = env

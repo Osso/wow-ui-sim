@@ -6,7 +6,7 @@ use wow_ui_sim::toc::TocFile;
 
 const ROOT: &str = "Blizzard_ArchaeologyUI";
 const ROOT_TOC_FILE: &str = "Blizzard_ArchaeologyUI_Mainline.toc";
-const DECLARED_DEPENDENCIES: &[&str] = &["Blizzard_HelpPlate"];
+const DECLARED_DEPENDENCIES: &[&str] = &["Blizzard_FrameXMLUtil", "Blizzard_HelpPlate"];
 
 #[test]
 fn archaeology_ui_loads_cleanly_with_no_recorded_lua_errors() {

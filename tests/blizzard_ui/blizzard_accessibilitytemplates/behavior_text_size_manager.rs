@@ -7,7 +7,7 @@
 //!
 //! - `self.registeredObjects = {}` (initial empty registry)
 //! - `self.defaultScaleWeight = 0.5`
-//! - `self:SetCVarName("userFontScale")` ⇒ `GetCVarName() == "userFontScale"`
+//! - `self:SetCVarNames("userFontScale", "userFontScaleGlue")` configures both screen CVars
 //! - `self:SetMinimumScale(0.8)` ⇒ `GetMinimumScale() == math.max(0.8, 0.5) == 0.8`
 //! - `self:BuildFonts()` ⇒ `self.fonts` is a (possibly empty) table; the
 //!   simulator's `GetFonts()` returns an empty list so the loop body in
@@ -47,13 +47,21 @@ fn init_seeds_text_size_manager_state() {
              when registrationInfo.scaleWeight is absent)."
         );
 
-        let cvar_name: String = env
-            .eval("return TextSizeManager:GetCVarName()")
-            .expect("failed to probe TextSizeManager:GetCVarName()");
+        let cvar_names: Vec<String> = env
+            .eval("return TextSizeManager:GetCVarNames()")
+            .expect("failed to probe TextSizeManager:GetCVarNames()");
         assert_eq!(
-            cvar_name, "userFontScale",
-            "Init() calls `SetCVarName(\"userFontScale\")` so every \
-             GetSettingValue / SetSettingValue routes through that CVar."
+            cvar_names,
+            vec!["userFontScale".to_string(), "userFontScaleGlue".to_string()],
+            "Init() must configure both game and glue font-scale CVars"
+        );
+
+        let read_cvar_name: String = env
+            .eval("return TextSizeManager:GetReadCVarName()")
+            .expect("failed to probe TextSizeManager:GetReadCVarName()");
+        assert_eq!(
+            read_cvar_name, "userFontScale",
+            "Game TextSizeManager must read userFontScale first"
         );
 
         let minimum_scale: f64 = env

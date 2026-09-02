@@ -103,7 +103,7 @@ fn load_arrow_callout_frame(env: &wow_ui_sim::lua_api::WowLuaEnv) {
 fn ui_widgets_toc() -> std::path::PathBuf {
     blizzard_ui_dir()
         .join("Blizzard_UIWidgets")
-        .join("Blizzard_UIWidgets_Mainline.toc")
+        .join("Blizzard_UIWidgets.toc")
 }
 
 fn arrow_callout_toc() -> std::path::PathBuf {

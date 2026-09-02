@@ -27,13 +27,13 @@ fn arrow_callout_frame_loads_cleanly_with_no_recorded_lua_errors() {
 }
 
 #[test]
-fn arrow_callout_frame_toc_declares_ui_parent_and_help_plate_deps() {
+fn arrow_callout_frame_toc_declares_help_plate_dependency() {
     let toc = TocFile::from_file(&arrow_callout_toc())
         .expect("Blizzard_ArrowCalloutFrame TOC should parse");
 
     assert_eq!(
         toc.dependencies(),
-        ["Blizzard_UIParent", "Blizzard_HelpPlate"],
+        ["Blizzard_HelpPlate"],
         "`{ROOT}` must keep its source-declared load prerequisites explicit"
     );
     assert_eq!(

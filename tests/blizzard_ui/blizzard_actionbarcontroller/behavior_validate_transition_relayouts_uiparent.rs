@@ -8,7 +8,14 @@ const ROOT: &str = "Blizzard_ActionBarController";
 #[test]
 fn validate_transition_successful_paths_update_multibars_then_relayout_uiparent() {
     test_timeout! {
-    with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
+    with_blizzard_addon_smoke_shape(
+        &[
+            "Blizzard_ActionBar",
+            "Blizzard_OverrideActionBar",
+            ROOT,
+        ],
+        &[],
+        |env, _loaded| {
         env.exec(
             r#"
             _G.transitionRelayoutLog = {}
@@ -165,7 +172,8 @@ fn validate_transition_successful_paths_update_multibars_then_relayout_uiparent(
             main_shown_count,
             "main state with visible override",
         );
-    });
+        },
+    );
     }
 }
 

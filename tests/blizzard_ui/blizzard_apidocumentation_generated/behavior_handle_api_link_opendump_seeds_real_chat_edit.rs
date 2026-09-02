@@ -82,7 +82,8 @@ fn load_generated_api_documentation() -> wow_ui_sim::lua_api::WowLuaEnv {
     load_panel_addons(&env);
     clear_recorded_lua_errors(&env);
 
-    let loaded = load_blizzard_addon_closure_into_env(&env, &ui_dir, &[ROOT], &[]);
+    let loaded =
+        load_blizzard_addon_closure_into_env(&env, &ui_dir, &["Blizzard_ChatFrameBase", ROOT], &[]);
     assert!(
         loaded.iter().any(|addon| addon == ROOT),
         "{ROOT} must be included in the loaded addon closure; loaded={loaded:?}"
