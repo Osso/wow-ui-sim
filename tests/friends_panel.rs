@@ -49,17 +49,19 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
             let (
                 legacy_friend_system_enabled,
                 social_panel_shown,
+                provider_exists,
                 provider_row_count,
                 has_legacy_wow_row,
                 online_names,
                 offline_name,
                 offline_connected,
-            ): (bool, bool, i64, bool, String, String, bool) = env
+            ): (bool, bool, bool, i64, bool, String, String, bool) = env
                 .eval(
                     r#"
                     ToggleSocialPanel()
                     FriendsList_Update(true)
 
+                    local provider = FriendsListFrame.ScrollBox:GetDataProvider()
                     local providerRowCount = 0
                     local hasLegacyWowRow = false
                     for _, elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
@@ -85,6 +87,7 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
 
                     return C_FriendList.IsLegacyFriendSystemEnabled(),
                         FriendsListFrame:IsShown(),
+                        provider ~= nil,
                         providerRowCount,
                         hasLegacyWowRow,
                         table.concat(onlineNames, "\n"),
@@ -103,8 +106,12 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
                 "ToggleSocialPanel should show the social panel"
             );
             assert!(
-                provider_row_count > 0,
-                "current retail FriendsList provider should populate when the panel opens"
+                provider_exists,
+                "current retail FriendsList panel should retain its data provider"
+            );
+            assert_eq!(
+                provider_row_count, 0,
+                "current retail provider should contain zero legacy WoW friend rows"
             );
             assert!(
                 !has_legacy_wow_row,
