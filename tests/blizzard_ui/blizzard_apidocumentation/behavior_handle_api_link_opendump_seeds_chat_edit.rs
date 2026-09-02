@@ -120,6 +120,24 @@ fn seed_active_chat_edit_window(env: &wow_ui_sim::lua_api::WowLuaEnv) {
         )
         editBox.header = CreateFrame("Frame", nil, editBox)
         editBox.chatFrame = chatFrame
+        editBox.chatType = "SAY"
+        editBox.stickyType = "SAY"
+
+        function editBox:GetChatType()
+            return self.chatType
+        end
+
+        function editBox:SetChatType(chatType)
+            self.chatType = chatType
+        end
+
+        function editBox:GetStickyType()
+            return self.stickyType
+        end
+
+        function editBox:SetStickyType(stickyType)
+            self.stickyType = stickyType
+        end
 
         function editBox:UpdateNewcomerEditBoxHint() end
         function editBox:SetFocusRegionsShown() end
