@@ -101,34 +101,31 @@ fn test_uipanels_game_loads_before_bag_buttons() {
     }
 }
 
-/// Blizzard_ItemButton appears before Blizzard_FrameXMLUtil in eager discovery.
-/// Runtime addon loads may still pull FrameXMLUtil in earlier as a foundation.
+/// Blizzard_ItemButton and Blizzard_FrameXMLUtil must both load before
+/// Blizzard_FrameXML, which uses surfaces from each addon.
 #[test]
-fn test_item_button_loads_before_framexmlutil() {
+fn test_item_button_and_framexmlutil_load_before_framexml() {
     test_timeout! {
         let ui = blizzard_ui_dir();
         let addons = discover_blizzard_addons(&ui);
-
         let names: Vec<&str> = addons.iter().map(|(n, _)| n.as_str()).collect();
 
-        let item_button_pos = names.iter().position(|&n| n == "Blizzard_ItemButton");
-        let framexmlutil_pos = names.iter().position(|&n| n == "Blizzard_FrameXMLUtil");
+        let framexml_position = names
+            .iter()
+            .position(|name| *name == "Blizzard_FrameXML")
+            .expect("Blizzard_FrameXML should be in the addon list");
 
-        assert!(
-            item_button_pos.is_some(),
-            "Blizzard_ItemButton should be in the addon list"
-        );
-        assert!(
-            framexmlutil_pos.is_some(),
-            "Blizzard_FrameXMLUtil should be in the addon list"
-        );
+        for addon in ["Blizzard_ItemButton", "Blizzard_FrameXMLUtil"] {
+            let addon_position = names
+                .iter()
+                .position(|name| *name == addon)
+                .unwrap_or_else(|| panic!("{addon} should be in the addon list"));
 
-        assert!(
-            item_button_pos.unwrap() < framexmlutil_pos.unwrap(),
-            "Blizzard_ItemButton (pos {}) must currently load before Blizzard_FrameXMLUtil (pos {})",
-            item_button_pos.unwrap(),
-            framexmlutil_pos.unwrap(),
-        );
+            assert!(
+                addon_position < framexml_position,
+                "{addon} (pos {addon_position}) must load before Blizzard_FrameXML (pos {framexml_position})"
+            );
+        }
     }
 }
 
@@ -197,6 +194,7 @@ fn test_blizzard_addon_load_order_snapshot() {
 
         #[rustfmt::skip]
         let expected: &[&str] = &[
+            "Blizzard_ProjectConstants",
             "Blizzard_LoadLocale",
             "Blizzard_Fonts_Shared",
             "Blizzard_ScriptErrors",
@@ -205,15 +203,27 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_Menu",
             "Blizzard_Colors",
             "Blizzard_HelpPlate",
+            "Blizzard_Narration",
             "Blizzard_SharedXML",
-            "Blizzard_AuthChallengeUI",
-            "Blizzard_CatalogShopSharedUtil",
-            "Blizzard_CatalogShopSharedTemplates",
             "Blizzard_SharedXMLGame",
             "Blizzard_FrameXMLBase",
             "Blizzard_ObjectAPI",
-            "Blizzard_UIParent",
-            "Blizzard_UIParentPanelManager",
+            "Blizzard_StaticPopup",
+            "Blizzard_FrameXMLUtil",
+            "Blizzard_UIPanelTemplates",
+            "Blizzard_ManagedFrameSystem",
+            "Blizzard_GameMenuEsc",
+            "Blizzard_UIParentUtil",
+            "Blizzard_EditMode",
+            "Blizzard_GarrisonBase",
+            "Blizzard_GameTooltip",
+            "Blizzard_RaidWarning",
+            "Blizzard_VisualAlerts",
+            "Blizzard_PrivateAurasUI",
+            "Blizzard_AuraContainer",
+            "Blizzard_AuthChallengeUI",
+            "Blizzard_CatalogShopSharedUtil",
+            "Blizzard_CatalogShopSharedTemplates",
             "Blizzard_CatalogShop",
             "Blizzard_AsyncRequest",
             "Blizzard_CatalogShopRefundFlow",
@@ -222,7 +232,9 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_CombatLogBase",
             "Blizzard_CombatLogProcessor",
             "Blizzard_CommunitiesSecure",
-            "Blizzard_StaticPopup",
+            "Blizzard_DebugUtil",
+            "Blizzard_UIErrorsFrame",
+            "Blizzard_UIParentPanelManager",
             "Blizzard_ItemButton",
             "Blizzard_AutoComplete",
             "Blizzard_MoneyFrame",
@@ -232,12 +244,13 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_TextStatusBar",
             "Blizzard_SettingsDefinitions_Shared",
             "Blizzard_SettingsDefinitions_Frame",
-            "Blizzard_FrameXMLUtil",
-            "Blizzard_UIPanelTemplates",
-            "Blizzard_EditMode",
-            "Blizzard_GarrisonBase",
-            "Blizzard_GameTooltip",
+            "Blizzard_UnitPopupShared",
+            "Blizzard_AddFriend",
+            "Blizzard_SocialUIShared",
+            "Blizzard_UnitPopup",
             "Blizzard_TransmogShared",
+            "Blizzard_LFGUtil",
+            "Blizzard_MirrorTimer",
             "Blizzard_FrameXML",
             "Blizzard_SimpleCheckout",
             "Blizzard_StoreUI",
@@ -245,42 +258,58 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_POIButton",
             "Blizzard_UIPanels_Game",
             "Blizzard_Flyout",
-            "Blizzard_MicroMenu",
-            "Blizzard_ActionBar",
-            "Blizzard_Minimap",
-            "Blizzard_BuffFrame",
-            "Blizzard_SpellDiminishUI",
-            "Blizzard_UnitFrame",
+            "Blizzard_GuildControlUI",
             "Blizzard_TimerunningUtil",
             "Blizzard_ChatFrameBase",
             "Blizzard_VoiceToggleButton",
             "Blizzard_ChatFrame",
+            "Blizzard_Communities",
+            "Blizzard_MicroMenu",
+            "Blizzard_PingUI",
+            "Blizzard_ActionBar",
+            "Blizzard_Minimap",
+            "Blizzard_BuffFrame",
+            "Blizzard_SpellDiminishUI",
+            "Blizzard_ColorPickerFrame",
+            "Blizzard_StatusTrayManager",
+            "Blizzard_UnitFrame",
             "Blizzard_ScriptErrorsFrame",
             "Blizzard_RestrictedAddOnEnvironment",
             "Blizzard_EnvironmentCleanup",
+            "Blizzard_TimeManager",
+            "Blizzard_CooldownBroadcaster",
+            "middleclass",
+            "Blizzard_Dispatcher",
+            "Blizzard_BoostTutorial",
+            "Blizzard_CombatLog",
+            "Blizzard_Game",
             "Blizzard_MapCanvasSecureUtil",
-            "Blizzard_PingUI",
-            "Blizzard_PrivateAurasUI",
             "Blizzard_SecureTransferUI",
             "Blizzard_WowTokenUI",
+            "Blizzard_AccountStore",
+            "Blizzard_AchievementUI",
             "Blizzard_OverrideActionBar",
             "Blizzard_ActionBarController",
             "Blizzard_ActionStatus",
             "Blizzard_AddOnList",
             "Blizzard_AddOnPerformance",
+            "Blizzard_AnimatedShine",
+            "Blizzard_ArdenwealdGardening",
             "Blizzard_SocialToast",
             "Blizzard_BNet",
+            "Blizzard_ButtonPulse",
             "Blizzard_CUFProfiles",
             "Blizzard_Channels",
+            "Blizzard_ChatBubble",
             "Blizzard_ChatFrameUtil",
             "Blizzard_ClassMenu",
             "Blizzard_ClassTrial",
             "Blizzard_ClientSavedVariables",
+            "Blizzard_UIModes",
+            "Blizzard_ClientSceneVisManager",
             "Blizzard_CodeOfConduct",
             "Blizzard_CombatAudioAlerts",
             "Blizzard_CommandLineUtil",
-            "Blizzard_GuildControlUI",
-            "Blizzard_Communities",
             "Blizzard_RecentAllies",
             "Blizzard_FriendsFrame",
             "Blizzard_RaidFrame",
@@ -303,6 +332,7 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_DelvesToast",
             "Blizzard_Deprecated",
             "Blizzard_DeprecatedActionBar",
+            "Blizzard_DeprecatedAuraFilters",
             "Blizzard_DeprecatedAutoComplete",
             "Blizzard_DeprecatedBattleNet",
             "Blizzard_DeprecatedChatInfo",
@@ -310,7 +340,6 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_DeprecatedCurrencyScript",
             "Blizzard_DeprecatedGlue",
             "Blizzard_DeprecatedGuildScript",
-            "Blizzard_DeprecatedHousingCatalog",
             "Blizzard_DeprecatedInstanceEncounter",
             "Blizzard_DeprecatedItemScript",
             "Blizzard_DeprecatedItemSocketInfo",
@@ -318,6 +347,7 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_DeprecatedPartyInfo",
             "Blizzard_DeprecatedPetInfo",
             "Blizzard_DeprecatedPvpScript",
+            "Blizzard_DeprecatedRaidWarning",
             "Blizzard_DeprecatedSoundScript",
             "Blizzard_DeprecatedSpecialization",
             "Blizzard_DeprecatedSpellBook",
@@ -327,13 +357,13 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_DeprecatedWorldElapsedTimerTypes",
             "Blizzard_DurabilityFrame",
             "Blizzard_Deprecated_ArenaUI",
-            "Blizzard_Dispatcher",
             "Blizzard_EncounterTimeline",
             "Blizzard_EncounterWarnings",
             "Blizzard_ExpansionLandingPage",
             "Blizzard_FrameEffects",
             "Blizzard_FrameStack",
             "Blizzard_FramerateFrame",
+            "Blizzard_FullscreenBrowser",
             "Blizzard_GameMenu",
             "Blizzard_GlobalFXModelScenes",
             "Blizzard_GroupFinder",
@@ -345,12 +375,12 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_Tutorials",
             "Blizzard_HousingTutorials",
             "Blizzard_IME",
+            "Blizzard_MacroUI",
             "Blizzard_MailFrame",
             "Blizzard_MainMenuBarBagButtons",
             "Blizzard_MajorFactions",
             "Blizzard_MapCanvas",
             "Blizzard_MatchmakingQueueDisplay",
-            "Blizzard_MirrorTimer",
             "Blizzard_MoneyReceipt",
             "Blizzard_NamePlates",
             "Blizzard_Notification",
@@ -363,18 +393,23 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_QueueStatusFrame",
             "Blizzard_QuickJoin",
             "Blizzard_RPE_TurnStrafe",
+            "Blizzard_RaidUI",
             "Blizzard_RecruitAFriend",
             "Blizzard_ReportFrameShared",
             "Blizzard_ReportFrame",
             "Blizzard_SavedSets",
+            "Blizzard_ShakeUtil",
             "Blizzard_SharedMapDataProviders",
             "Blizzard_SharedWidgetFrames",
+            "Blizzard_SocialUI",
+            "Blizzard_SplashFrame",
             "Blizzard_StableUI",
             "Blizzard_Subtitles",
             "Blizzard_TokenUI",
+            "Blizzard_TrainerUI",
             "Blizzard_TransformManipulator",
-            "Blizzard_UnitPopupShared",
-            "Blizzard_UnitPopup",
+            "Blizzard_Transmog",
+            "Blizzard_UIParent",
             "Blizzard_WeeklyRewardsUtil",
             "Blizzard_WorldMap",
             "Blizzard_ZoneAbility",
