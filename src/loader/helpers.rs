@@ -383,10 +383,14 @@ fn append_script_handler_with_options(
     script: &crate::xml::ScriptBodyXml,
     default_binding: Option<u8>,
 ) {
-    let script_binding =
-        intrinsic_binding_index(script.intrinsic_order.as_deref()).or(default_binding);
+    let intrinsic_binding = intrinsic_binding_index(script.intrinsic_order.as_deref());
+    let default_binding = script
+        .inherit
+        .is_none()
+        .then_some(default_binding)
+        .flatten();
     if script_clears_handler(script) {
-        if let Some(binding) = script_binding {
+        if let Some(binding) = intrinsic_binding.or(default_binding) {
             emit_set_script_binding(code, target, handler_name, binding, "nil");
         } else {
             code.push_str(&format!(
@@ -403,7 +407,7 @@ fn append_script_handler_with_options(
         return;
     };
 
-    if let Some(binding) = script_binding {
+    if let Some(binding) = intrinsic_binding {
         emit_set_script_binding(code, target, handler_name, binding, &new_handler);
         return;
     }
@@ -411,6 +415,9 @@ fn append_script_handler_with_options(
     match script.inherit.as_deref() {
         Some("prepend") => emit_chained_handler(code, target, handler_name, &new_handler, false),
         Some("append") => emit_chained_handler(code, target, handler_name, &new_handler, true),
+        None if let Some(binding) = default_binding => {
+            emit_set_script_binding(code, target, handler_name, binding, &new_handler);
+        }
         _ => {
             code.push_str(&format!(
                 "\n        {target}:SetScript(\"{handler_name}\", {new_handler})\n        "
