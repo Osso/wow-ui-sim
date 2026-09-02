@@ -21,6 +21,7 @@ fn landing_soulbinds_toc() -> PathBuf {
 }
 
 const LANDING_SOULBINDS_TOC_FILES: &[&str] = &[
+    "Blizzard_LandingSoulbinds_Bootstrap.lua",
     "Blizzard_LandingSoulbindButton.xml",
     "Blizzard_LandingRenownButton.xml",
     "Blizzard_LandingSoulbindPanel.xml",
@@ -176,7 +177,7 @@ fn blizzard_landing_soulbinds_toc_does_not_declare_allow_load_so_defaults_to_gam
 }
 
 #[test]
-fn blizzard_landing_soulbinds_toc_lists_three_xml_files_in_dependency_order() {
+fn blizzard_landing_soulbinds_toc_lists_bootstrap_then_three_xml_files_in_dependency_order() {
     let toc =
         TocFile::from_file(&landing_soulbinds_toc()).expect("Blizzard_LandingSoulbinds TOC parses");
     assert_eq!(
@@ -185,28 +186,19 @@ fn blizzard_landing_soulbinds_toc_lists_three_xml_files_in_dependency_order() {
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
         LANDING_SOULBINDS_TOC_FILES,
-        "TOC body must list exactly 3 XML files in this order — \
-         Blizzard_LandingSoulbindButton.xml first (defines LandingPageSoulbindButtonTemplate \
-         used by the panel), Blizzard_LandingRenownButton.xml second (defines \
-         LandingPageRenownButtonTemplate used by the panel), Blizzard_LandingSoulbindPanel.xml \
-         last (defines LandingPageSoulbindPanelTemplate which inherits ResizeLayoutFrame and \
-         instantiates RenownButton + SoulbindButton via the inherits= attribute on Frames). \
-         The .lua files are loaded indirectly via `<Script file=\"...\"/>` tags inside each \
-         XML, NOT listed in the TOC body — the XML-driven script load contract guarantees \
-         mixin definitions land in `_G` before XML parsing reaches the inherits= attribute"
+        "Current retail TOC lists the bootstrap before the Button, RenownButton, and Panel XML \
+         files; each XML loads its paired lua through a Script directive"
     );
 }
 
 #[test]
-fn blizzard_landing_soulbinds_directory_holds_seven_entries_one_toc_three_lua_three_xml() {
+fn blizzard_landing_soulbinds_directory_holds_eight_entries() {
     let entries = std::fs::read_dir(landing_soulbinds_dir())
         .expect("Blizzard_LandingSoulbinds directory reads")
         .count();
     assert_eq!(
-        entries, 7,
-        "Directory must hold exactly 7 entries — the bare TOC plus three matched .lua/.xml \
-         pairs (Button / RenownButton / Panel). The .lua files are not listed in the TOC \
-         body but ride along via the `<Script file=...>` tag at the top of each XML"
+        entries, 8,
+        "Directory must hold exactly 8 entries: the TOC, bootstrap, and three lua/XML pairs"
     );
 }
 

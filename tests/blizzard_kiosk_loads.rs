@@ -208,17 +208,14 @@ fn blizzard_kiosk_toc_lists_eight_files_with_per_file_allow_load_brackets_stripp
 }
 
 #[test]
-fn blizzard_kiosk_directory_holds_four_entries_one_toc_two_files_one_subdir() {
+fn blizzard_kiosk_directory_holds_five_entries() {
     let entries = std::fs::read_dir(kiosk_dir())
         .expect("Blizzard_Kiosk directory should read")
         .count();
     assert_eq!(
-        entries, 4,
-        "Directory must hold exactly 4 entries — the bare TOC, Kiosk.lua, Kiosk.xml, and the \
-         Housing/ subdir holding the per-screen-target source pair plus the unused mixin / \
-         dialog scaffolding (Housing/Unused.lua + Unused.xml ship in the source tree but are \
-         intentionally NOT listed in the TOC body — they exist as a reference scaffold for \
-         the next developer iterating on the housing demo)"
+        entries, 5,
+        "Directory must hold exactly 5 entries: the TOC, bootstrap, Kiosk.lua, Kiosk.xml, and \
+         Housing/ source directory"
     );
 }
 

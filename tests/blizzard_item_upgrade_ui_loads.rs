@@ -23,6 +23,7 @@ fn item_upgrade_mainline_toc() -> PathBuf {
 }
 
 const ITEM_UPGRADE_MAINLINE_FILES: &[&str] = &[
+    "Blizzard_ItemUpgradeUI_Bootstrap.lua",
     "Mainline/Blizzard_ItemUpgradeUI.lua",
     "Mainline/Blizzard_ItemUpgradeUI.xml",
 ];
@@ -255,28 +256,20 @@ fn blizzard_item_upgrade_toc_lists_lua_then_xml_under_mainline_subdir() {
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
         ITEM_UPGRADE_MAINLINE_FILES,
-        "TOC body must list exactly 2 files in order — Mainline/Blizzard_ItemUpgradeUI.lua then \
-         Mainline/Blizzard_ItemUpgradeUI.xml. Lua loads BEFORE xml so the 7 mixin tables \
-         (ItemUpgradeMixin, ItemUpgradeButtonMixin, ItemUpgradePreviewMixin, ItemUpgradeSlotMixin, \
-         ItemUpgradeItemInfoMixin, ItemUpgradeCostQuantityMixin, ItemUpgradeCostIconMixin), the 2 \
-         free helpers (ItemUpgradeFrame_Show, ItemUpgradeFrame_Hide), and the UIPanelWindows \
-         entry all publish at file scope before any frame element processes its `mixin=` \
-         attribute. The Mainline/ source subdir keeps the retail variant isolated from the Mists/ \
-         variant which carries its own Blizzard_ItemUpgradeUI.{{lua,xml}} pair"
+        "TOC body must list the bootstrap before the Mainline lua and XML files. The Mainline \
+         source subdirectory remains isolated from the Mists variant"
     );
 }
 
 #[test]
-fn blizzard_item_upgrade_directory_holds_four_entries() {
+fn blizzard_item_upgrade_directory_holds_five_entries() {
     let entries = std::fs::read_dir(item_upgrade_dir())
         .expect("Blizzard_ItemUpgradeUI directory should read")
         .count();
     assert_eq!(
-        entries, 4,
-        "Directory must hold exactly 4 entries — 2 flavor-suffixed TOCs \
-         (Blizzard_ItemUpgradeUI_Mainline.toc + Blizzard_ItemUpgradeUI_Mists.toc) and 2 source \
-         subdirs (Mainline/ + Mists/). No bare-name TOC, no shared subdir — the retail and Mists \
-         variants are fully forked source trees"
+        entries, 5,
+        "Directory must hold exactly 5 entries: two flavor TOCs, the shared bootstrap, and the \
+         Mainline and Mists source directories"
     );
 }
 

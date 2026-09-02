@@ -20,7 +20,10 @@ fn item_interaction_toc() -> PathBuf {
     item_interaction_dir().join("Blizzard_ItemInteractionUI.toc")
 }
 
-const ITEM_INTERACTION_FILES: &[&str] = &["Blizzard_ItemInteractionUI.xml"];
+const ITEM_INTERACTION_FILES: &[&str] = &[
+    "Blizzard_ItemInteractionUI_Bootstrap.lua",
+    "Blizzard_ItemInteractionUI.xml",
+];
 
 const ITEM_INTERACTION_DEPENDENCIES: &[&str] = &["Blizzard_Colors"];
 
@@ -222,7 +225,7 @@ fn blizzard_item_interaction_toc_omits_allow_load_metadata() {
 }
 
 #[test]
-fn blizzard_item_interaction_toc_lists_xml_only_with_lua_loaded_via_script_directive() {
+fn blizzard_item_interaction_toc_lists_bootstrap_then_xml() {
     let toc = TocFile::from_file(&item_interaction_toc())
         .expect("Blizzard_ItemInteractionUI TOC should parse");
     assert_eq!(
@@ -231,26 +234,20 @@ fn blizzard_item_interaction_toc_lists_xml_only_with_lua_loaded_via_script_direc
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
         ITEM_INTERACTION_FILES,
-        "TOC body must list exactly 1 file — Blizzard_ItemInteractionUI.xml. The .lua sibling is \
-         loaded by the XML's `<Script file=\"Blizzard_ItemInteractionUI.lua\"/>` directive at \
-         line 3 BEFORE any frame element is parsed, so all 6 mixin tables \
-         (ItemInteractionMixin, ItemInteractionItemSlotMixin, ItemInteractionActionButtonMixin, \
-         ItemInteractionItemConversionFrameMixin, ItemInteractionItemConversionInputSlotMixin, \
-         ItemInteractionItemConversionOutputSlotMixin) publish at file scope before any \
-         `mixin=\"...\"` attribute resolves them through `_G`"
+        "TOC body must list the bootstrap before Blizzard_ItemInteractionUI.xml. The lua sibling \
+         is loaded by the XML's `<Script file=\"Blizzard_ItemInteractionUI.lua\"/>` directive \
+         before frame elements resolve its mixins"
     );
 }
 
 #[test]
-fn blizzard_item_interaction_directory_holds_three_entries() {
+fn blizzard_item_interaction_directory_holds_four_entries() {
     let entries = std::fs::read_dir(item_interaction_dir())
         .expect("Blizzard_ItemInteractionUI directory should read")
         .count();
     assert_eq!(
-        entries, 3,
-        "Directory must hold exactly 3 entries (1 TOC + 1 lua + 1 xml) — no flavor subdirectory, \
-         no Localization.lua. The locale-driven literals (RUNEFORGE_LEGENDARY_COST_LABEL, CANCEL, \
-         tutorial flag names) all live in the global locale tables"
+        entries, 4,
+        "Directory must hold exactly 4 entries: the TOC, bootstrap, lua, and XML files"
     );
 }
 

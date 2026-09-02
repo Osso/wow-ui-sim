@@ -121,7 +121,7 @@ fn blizzard_hybrid_minimap_toc_omits_game_type_and_screen_restrictions() {
 }
 
 #[test]
-fn blizzard_hybrid_minimap_toc_lists_only_the_xml_file() {
+fn blizzard_hybrid_minimap_toc_lists_bootstrap_then_xml() {
     let toc =
         TocFile::from_file(&hybrid_minimap_toc()).expect("Blizzard_HybridMinimap TOC should parse");
     assert_eq!(
@@ -129,23 +129,24 @@ fn blizzard_hybrid_minimap_toc_lists_only_the_xml_file() {
             .iter()
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
-        vec!["Blizzard_HybridMinimap.xml"],
-        "TOC body must list exactly the XML file. Blizzard_HybridMinimap.lua is NOT in the TOC \
-         because the XML pulls it in via `<Script file=\"Blizzard_HybridMinimap.lua\"/>` at line \
-         3 — XML-driven script loading is the older Blizzard pattern still used by single-file \
-         addons; modern addons declare both files in the TOC body"
+        vec![
+            "Blizzard_HybridMinimap_Bootstrap.lua",
+            "Blizzard_HybridMinimap.xml",
+        ],
+        "TOC body must list the bootstrap before the XML. Blizzard_HybridMinimap.lua is NOT in \
+         the TOC because the XML pulls it in via `<Script file=\"Blizzard_HybridMinimap.lua\"/>`; \
+         the bootstrap is explicitly marked `[Bootstrap]` in the current retail TOC"
     );
 }
 
 #[test]
-fn blizzard_hybrid_minimap_directory_holds_three_entries() {
+fn blizzard_hybrid_minimap_directory_holds_four_entries() {
     let entries = std::fs::read_dir(hybrid_minimap_dir())
         .expect("Blizzard_HybridMinimap directory should read")
         .count();
     assert_eq!(
-        entries, 3,
-        "Directory must hold exactly 3 entries (1 TOC + 1 lua + 1 xml) — no flavor subdirectory, \
-         no Localization.lua, single-file mixin module"
+        entries, 4,
+        "Directory must hold exactly 4 entries: the TOC, bootstrap, lua, and XML files"
     );
 }
 

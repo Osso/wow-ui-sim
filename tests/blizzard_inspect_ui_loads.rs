@@ -184,20 +184,14 @@ fn blizzard_inspect_ui_toc_lists_current_files_in_expected_order() {
 }
 
 #[test]
-fn blizzard_inspect_ui_directory_holds_fourteen_entries() {
+fn blizzard_inspect_ui_directory_holds_seven_entries() {
     let entries = std::fs::read_dir(inspect_ui_dir())
         .expect("Blizzard_InspectUI directory should read")
         .count();
     assert_eq!(
-        entries, 14,
-        "Directory must hold exactly 14 entries: 1 TOC + 9 source files + 4 flavor \
-         subdirectories (`Vanilla` / `TBC` / `Cata` / `Mists`). The 9 source files are the \
-         `Blizzard_InspectUI.lua`/`.xml` master pair plus the 3 sub-tab \
-         `InspectPaperDollFrame` / `InspectPVPFrame` / `InspectGuildFrame` lua/xml pairs (one \
-         lua + one xml each — InspectPVPFrame.lua + InspectGuildFrame.lua ride along via XML \
-         Script directives) plus `Localization.lua`. Flavor subdirectories ship classic-era \
-         variants of the inspect frames but are NOT listed in the retail TOC body — the retail \
-         loader only consumes the top-level files"
+        entries, 7,
+        "Current retail cache holds seven top-level entries: the mainline TOC, root bootstrap, \
+         and the Cata, Mainline, Mists, TBC, and Vanilla source directories"
     );
 }
 

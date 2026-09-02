@@ -69,7 +69,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 const POPUP_CLUSTER: &[&str] = &[
@@ -192,13 +193,10 @@ fn popup_cluster_dep_edges_pin_load_floor_for_popup_flow() {
             "Blizzard_AutoComplete".to_string(),
             "Blizzard_MoneyFrame".to_string(),
             "Blizzard_AccessibilityTemplates".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
         ],
-        "Blizzard_StaticPopup_Game RequiredDep order: StaticPopup (core) → ItemButton \
-         (popup item slots like CONFIRM_REFUND_TOKEN_ITEM) → AutoComplete (popup edit-box \
-         autocomplete) → MoneyFrame (cost-displaying confirmations) → \
-         AccessibilityTemplates (popup AT-narration text). The XML referencing these \
-         (StaticPopupSpecial.xml, GameDialog.xml) parses at file scope, so all 5 deps \
-         must be live before this addon's body runs"
+        "Current retail StaticPopup_Game TOC lists StaticPopup, ItemButton, AutoComplete, \
+         MoneyFrame, AccessibilityTemplates, and GameMenuEsc in that order"
     );
 
     assert_eq!(
@@ -349,7 +347,7 @@ fn glue_screens_eager_discovery_includes_static_popup_core_and_glue_variants() {
 }
 
 #[test]
-fn smoke_tutorials_are_load_on_demand_and_not_in_eager_game_discovery() {
+fn smoke_tutorials_are_load_on_demand_with_current_game_discovery_exceptions() {
     let ui = blizzard_ui_dir();
     let game_names: Vec<String> = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game)
         .into_iter()
@@ -357,22 +355,22 @@ fn smoke_tutorials_are_load_on_demand_and_not_in_eager_game_discovery() {
         .collect();
 
     for smoke in SMOKE_GAME {
-        let toc = parse_lane_toc(smoke);
         assert!(
-            toc.is_load_on_demand(),
-            "Lane SMOKE tutorial `{smoke}` MUST carry `## LoadOnDemand: 1`. \
-             BoostTutorial only loads when a paid-character-boost is initiated; \
-             RemixArtifactTutorialUI only loads inside the Remix scenario. Eager-loading \
-             either would burn startup time on a tutorial 99% of sessions never see"
-        );
-        assert!(
-            !game_names.contains(&smoke.to_string()),
-            "SMOKE tutorial `{smoke}` MUST NOT appear in eager Game discovery — its \
-             `## LoadOnDemand: 1` flag routes it into the LoD pool, and no eager addon \
-             RequiredDeps it. Pull-in via `pull_required_lod_addons` only fires when an \
-             eager non-LoD addon declares the LoD addon as a dep"
+            parse_lane_toc(smoke).is_load_on_demand(),
+            "Lane SMOKE tutorial `{smoke}` must carry `## LoadOnDemand: 1`"
         );
     }
+
+    assert!(
+        game_names.contains(&"Blizzard_BoostTutorial".to_string()),
+        "Current game discovery pulls Blizzard_BoostTutorial despite its LoadOnDemand metadata \
+         because implicit_blizzard_startup_dependencies makes it a Blizzard_Game dependency"
+    );
+    assert!(
+        !game_names.contains(&"Blizzard_RemixArtifactTutorialUI".to_string()),
+        "Blizzard_RemixArtifactTutorialUI remains absent from eager Game discovery because no \
+         current implicit or TOC dependency pulls it from the LoadOnDemand pool"
+    );
 }
 
 #[test]

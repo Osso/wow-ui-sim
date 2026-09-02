@@ -157,14 +157,14 @@ fn blizzard_load_locale_toc_lists_single_lua_file() {
 }
 
 #[test]
-fn blizzard_load_locale_directory_holds_two_entries_one_toc_one_lua() {
+fn blizzard_load_locale_directory_holds_three_entries() {
     let entries = std::fs::read_dir(load_locale_dir())
         .expect("Blizzard_LoadLocale directory reads")
         .count();
     assert_eq!(
-        entries, 2,
-        "Directory must hold exactly 2 entries — Blizzard_LoadLocale.toc and \
-         LoadLocale.lua. The synced retail source contains only the active locale marker"
+        entries, 3,
+        "Directory must hold exactly 3 entries: Blizzard_LoadLocale.toc, LoadLocale.lua, and \
+         LoadLocale.lua.missing"
     );
 }
 

@@ -29,6 +29,11 @@ fn ui_widgets_toc() -> PathBuf {
         .expect("Blizzard_UIWidgets TOC should resolve")
 }
 
+fn lfg_util_toc() -> PathBuf {
+    find_toc_file(&blizzard_ui_dir().join("Blizzard_LFGUtil"))
+        .expect("Blizzard_LFGUtil TOC should resolve")
+}
+
 const MIXIN_METHODS: &[&str] = &[
     "OnLoad",
     "OnEvent",
@@ -41,10 +46,12 @@ const MIXIN_METHODS: &[&str] = &[
 const PARENT_KEY_CHILDREN: &[&str] = &["OverlayElements", "ModelScene", "Score", "LeaveButton"];
 
 fn load_islands_party_pose_ui_with_dependencies(env: &WowLuaEnv) {
-    load_addon(&env.loader_env(), &ui_widgets_toc())
-        .expect("Blizzard_UIWidgets should load via explicit Rust loader call");
     load_addon(&env.loader_env(), &party_pose_toc())
         .expect("Blizzard_PartyPoseUI should load via explicit Rust loader call");
+    load_addon(&env.loader_env(), &ui_widgets_toc())
+        .expect("Blizzard_UIWidgets should load via explicit Rust loader call");
+    load_addon(&env.loader_env(), &lfg_util_toc())
+        .expect("Blizzard_LFGUtil should load via explicit Rust loader call");
     load_addon(&env.loader_env(), &islands_party_pose_toc())
         .expect("Blizzard_IslandsPartyPoseUI should load via explicit Rust loader call");
 }
@@ -62,7 +69,7 @@ fn blizzard_islands_party_pose_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_islands_party_pose_toc_declares_lod_with_two_required_deps() {
+fn blizzard_islands_party_pose_toc_declares_lod_with_three_required_deps() {
     let toc = TocFile::from_file(&islands_party_pose_toc())
         .expect("Blizzard_IslandsPartyPoseUI TOC should parse");
     assert!(
@@ -78,19 +85,14 @@ fn blizzard_islands_party_pose_toc_declares_lod_with_two_required_deps() {
         vec![
             "Blizzard_PartyPoseUI".to_string(),
             "Blizzard_UIWidgets".to_string(),
+            "Blizzard_LFGUtil".to_string(),
         ],
-        "Blizzard_IslandsPartyPoseUI declares `## RequiredDep: Blizzard_PartyPoseUI, \
-         Blizzard_UIWidgets` — `RequiredDep` resolves through the same `dependencies()` \
-         accessor as `Dependencies` (src/toc.rs:209-214). PartyPoseUI provides the \
-         PartyPoseMixin parent IslandsPartyPoseMixin extends via CreateFromMixins, the \
-         PartyPoseFrameTemplate the named frame inherits, the PartyPoseModelFrameTemplate the \
-         ModelScene child inherits, and the PartyPoseUtil.AddDismissClickHandler helper. \
-         Blizzard_UIWidgets provides the UIWidgetContainerTemplate the Score child inherits"
+        "Current retail TOC declares PartyPoseUI, UIWidgets, and LFGUtil as RequiredDeps"
     );
     assert!(
         toc.optional_deps().is_empty(),
-        "Blizzard_IslandsPartyPoseUI declares no `## OptionalDeps` — the two RequiredDeps cover \
-         every external template / mixin the addon consumes; no optional fallback path"
+        "Blizzard_IslandsPartyPoseUI declares no `## OptionalDeps` — its three RequiredDeps \
+         cover the declared load floor"
     );
     assert!(
         toc.saved_variables().is_empty(),
@@ -133,7 +135,7 @@ fn blizzard_islands_party_pose_toc_declares_standard_game_type_only() {
 }
 
 #[test]
-fn blizzard_islands_party_pose_toc_lists_lua_then_xml_in_order() {
+fn blizzard_islands_party_pose_toc_lists_bootstrap_lua_then_xml_in_order() {
     let toc = TocFile::from_file(&islands_party_pose_toc())
         .expect("Blizzard_IslandsPartyPoseUI TOC should parse");
     assert_eq!(
@@ -142,27 +144,22 @@ fn blizzard_islands_party_pose_toc_lists_lua_then_xml_in_order() {
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
         vec![
+            "Blizzard_IslandsPartyPoseUI_Bootstrap.lua".to_string(),
             "Blizzard_IslandsPartyPoseUI.lua".to_string(),
             "Blizzard_IslandsPartyPoseUI.xml".to_string(),
         ],
-        "TOC body must list lua FIRST then xml — the lua file declares IslandsPartyPoseMixin \
-         = CreateFromMixins(PartyPoseMixin) at file scope before any XML-instantiated frame's \
-         `mixin=\"IslandsPartyPoseMixin\"` attribute or `<OnLoad method=\"OnLoad\"/>` script \
-         binding tries to resolve the mixin table via `_G`. The XML follows so the \
-         IslandsPartyPoseFrame frame can be created with the mixin already present"
+        "Current retail TOC lists the bootstrap before the lua and XML files"
     );
 }
 
 #[test]
-fn blizzard_islands_party_pose_directory_holds_three_entries() {
+fn blizzard_islands_party_pose_directory_holds_four_entries() {
     let entries = std::fs::read_dir(islands_party_pose_dir())
         .expect("Blizzard_IslandsPartyPoseUI directory should read")
         .count();
     assert_eq!(
-        entries, 3,
-        "Directory must hold exactly 3 entries (1 TOC + 1 lua + 1 xml; no flavor subdirectory, \
-         no Localization.lua — strings come from the global locale table via the ISLAND_LEAVE \
-         constant the SetLeaveButtonText handler references)"
+        entries, 4,
+        "Directory must hold exactly 4 entries: the TOC, bootstrap, lua, and XML files"
     );
 }
 
