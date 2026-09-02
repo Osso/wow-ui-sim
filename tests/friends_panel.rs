@@ -47,6 +47,7 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
             let env = full_game_env_after_startup();
 
             let (
+                provider_diagnostic,
                 legacy_friend_system_enabled,
                 social_panel_shown,
                 provider_row_count,
@@ -54,25 +55,59 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
                 online_names,
                 offline_name,
                 offline_connected,
-            ): (bool, bool, i64, bool, String, String, bool) = env
+            ): (String, bool, bool, i64, bool, String, String, bool) = env
                 .eval(
                     r#"
                     ToggleSocialPanel()
                     FriendsList_Update(true)
 
+                    local scrollBox = FriendsListFrame and FriendsListFrame.ScrollBox
+                    local providerExists = scrollBox ~= nil
+                        and scrollBox.HasDataProvider ~= nil
+                        and scrollBox:HasDataProvider()
                     local providerRowCount = 0
                     local hasLegacyWowRow = false
-                    for _, elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
-                        providerRowCount = providerRowCount + 1
-                        if elementData.buttonType == FRIENDS_BUTTON_TYPE_WOW then
-                            hasLegacyWowRow = true
+                    local elementSummaries = {}
+                    if providerExists then
+                        for _, elementData in scrollBox:EnumerateDataProviderEntireRange() do
+                            providerRowCount = providerRowCount + 1
+                            if elementData.buttonType == FRIENDS_BUTTON_TYPE_WOW then
+                                hasLegacyWowRow = true
+                            end
+
+                            local keyTypes = {}
+                            if type(elementData) == "table" then
+                                for key, value in pairs(elementData) do
+                                    table.insert(keyTypes, tostring(key) .. ":" .. type(value))
+                                    if #keyTypes == 8 then
+                                        break
+                                    end
+                                end
+                            end
+                            table.sort(keyTypes)
+                            table.insert(
+                                elementSummaries,
+                                type(elementData) .. "{" .. table.concat(keyTypes, ",") .. "}"
+                            )
                         end
                     end
+
+                    local friendCount = C_FriendList.GetNumFriends()
+                    local onlineFriendCount = C_FriendList.GetNumOnlineFriends()
+                    local providerDiagnostic = string.format(
+                        "legacy_enabled=%s provider_exists=%s provider_rows=%d elements=[%s] friend_count=%d online_friend_count=%d",
+                        tostring(C_FriendList.IsLegacyFriendSystemEnabled()),
+                        tostring(providerExists),
+                        providerRowCount,
+                        table.concat(elementSummaries, ";"),
+                        friendCount,
+                        onlineFriendCount
+                    )
 
                     local onlineNames = {}
                     local offlineName = ""
                     local offlineConnected = true
-                    for index = 1, C_FriendList.GetNumFriends() do
+                    for index = 1, friendCount do
                         local info = C_FriendList.GetFriendInfoByIndex(index)
                         if info.connected then
                             table.insert(onlineNames, info.name)
@@ -83,7 +118,8 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
                     end
                     table.sort(onlineNames)
 
-                    return C_FriendList.IsLegacyFriendSystemEnabled(),
+                    return providerDiagnostic,
+                        C_FriendList.IsLegacyFriendSystemEnabled(),
                         FriendsListFrame:IsShown(),
                         providerRowCount,
                         hasLegacyWowRow,
@@ -93,6 +129,8 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
                     "#,
                 )
                 .unwrap();
+
+            eprintln!("[friends-provider-diagnostic] {provider_diagnostic}");
 
             assert!(
                 !legacy_friend_system_enabled,

@@ -8,12 +8,57 @@ use crate::lua_api::methods::create_table;
 use crate::lua_api::script_helpers::call_error_handler_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::Val;
-use rilua::vm::state::LuaState;
+use rilua::vm::state::{GlobalSlotRuntime, LuaState};
 use rilua::{Function, LuaApiMut};
 use std::cell::{Ref, RefMut};
 use std::marker::PhantomData;
 use std::ptr::NonNull;
 use std::rc::Rc;
+use std::sync::atomic::{AtomicUsize, Ordering};
+
+const GLOBAL_SLOTS_DIAGNOSTIC_ENV: &str = "WOW_SIM_GLOBAL_SLOTS_DIAGNOSTIC";
+const MAX_GLOBAL_SLOTS_DIAGNOSTICS: usize = 256;
+static GLOBAL_SLOTS_DIAGNOSTIC_COUNT: AtomicUsize = AtomicUsize::new(0);
+
+fn global_slots_diagnostics_enabled() -> bool {
+    std::env::var_os(GLOBAL_SLOTS_DIAGNOSTIC_ENV).is_some()
+}
+
+fn emit_global_slots_diagnostic(
+    state: &LuaState,
+    phase: &str,
+    source: &str,
+    slots_before: bool,
+    saved_slots: Option<&GlobalSlotRuntime>,
+) {
+    if !global_slots_diagnostics_enabled()
+        || GLOBAL_SLOTS_DIAGNOSTIC_COUNT.fetch_add(1, Ordering::Relaxed)
+            >= MAX_GLOBAL_SLOTS_DIAGNOSTICS
+    {
+        return;
+    }
+
+    let saved_root_table = match saved_slots {
+        Some(runtime) if state.gc.tables.get(runtime.root_global).is_some() => "table",
+        Some(_) => "missing",
+        None => "none",
+    };
+    let active_slots = if state.global_slots.is_some() {
+        "Some"
+    } else {
+        "None"
+    };
+    let saved_slots = if saved_slots.is_some() {
+        "Some"
+    } else {
+        "None"
+    };
+
+    eprintln!(
+        "[global-slots-diagnostic] phase={phase} source={source:?} slots_before={} active_slots={active_slots} saved_slots={saved_slots} saved_root_table={saved_root_table}",
+        if slots_before { "Some" } else { "None" },
+    );
+}
 
 use super::state::SimState;
 
@@ -68,11 +113,29 @@ impl<'a> LoaderEnv<'a> {
     /// slot runtime.
     fn with_global_slots_disabled<T>(
         state: &mut LuaState,
+        source: &str,
         operation: impl FnOnce(&mut LuaState) -> T,
     ) -> T {
+        let slots_before = state.global_slots.is_some();
         let saved_slots = state.global_slots.take();
+        emit_global_slots_diagnostic(state, "capture", source, slots_before, saved_slots.as_ref());
+        emit_global_slots_diagnostic(
+            state,
+            "compile-entry",
+            source,
+            slots_before,
+            saved_slots.as_ref(),
+        );
         let result = operation(state);
+        emit_global_slots_diagnostic(
+            state,
+            "restore-before",
+            source,
+            slots_before,
+            saved_slots.as_ref(),
+        );
         state.global_slots = saved_slots;
+        emit_global_slots_diagnostic(state, "restore-after", source, slots_before, None);
         result
     }
 
@@ -82,7 +145,7 @@ impl<'a> LoaderEnv<'a> {
         tag: &str,
     ) -> Result<rilua::Function> {
         let cache_tag = format!("{tag}-no-global-slots");
-        Self::with_global_slots_disabled(state, |state| {
+        Self::with_global_slots_disabled(state, &cache_tag, |state| {
             crate::loader::chunk_cache::load_chunk(state, code, &cache_tag)
                 .map_err(|error| crate::Error::Other(error.to_string()))
         })
@@ -148,7 +211,7 @@ impl<'a> LoaderEnv<'a> {
         addon_table: Val,
     ) -> Result<()> {
         self.with_state(|state| {
-            let func = Self::with_global_slots_disabled(state, |state| {
+            let func = Self::with_global_slots_disabled(state, name, |state| {
                 LuaApiMut::load_bytes(state, code.as_bytes(), name)
             })?;
             let addon_name = create_string(state, addon_name);
@@ -163,6 +226,8 @@ impl<'a> LoaderEnv<'a> {
 
     pub fn fire_event_with_args(&self, event: &str, args: &[Val]) -> Result<()> {
         let listeners = self.with_state(|state| {
+            let slots_before = state.global_slots.is_some();
+            emit_global_slots_diagnostic(state, "event-entry", event, slots_before, None);
             Ok::<Vec<u64>, crate::Error>(crate::lua_api::script_helpers::get_event_listeners(
                 state, event,
             ))
