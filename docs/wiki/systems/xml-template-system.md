@@ -71,9 +71,9 @@ Three `ScriptBodyXml` forms:
 
 For `method="X"`, live PTR 12.1 probing showed two separate stores: the object field (`frame.X`) and the script handler returned by `GetScript`. XML method binding installs the currently composed method function as the script handler. Later `frame.X = otherFunction` changes direct `frame:X()` calls but does not change `GetScript`; later `SetScript` changes `GetScript` but does not change `frame.X`. `__wow_bind_xml_method` resolves the public frame first, then the forbidden object table when `useForbiddenObjectTable="true"`; private handlers receive the forbidden self, whose missing frame methods forward to the public `FrameHandle`. This covers precompiled intrinsic `OnLoad` as well as ordinary XML handlers, matching `Blizzard_AuraContainer.xml`'s private `OnLoad_Intrinsic`/`OnEvent_Intrinsic` pattern.
 
-Intrinsic default scripts use the precall binding; ordinary XML scripts use the normal binding unless `intrinsicOrder` requests precall or postcall. Dispatch visits precall, normal, then postcall, while `GetScript(name)` without a binding argument returns only the normal handler. This distinction is required when checking an intrinsic handler alongside a derived style handler.
+Without `inherit`, intrinsic default scripts use the precall binding and ordinary XML scripts use the normal binding unless `intrinsicOrder` requests precall or postcall. Dispatch visits precall, normal, then postcall, while `GetScript(name)` without a binding argument returns only the normal handler. This distinction is required when checking an intrinsic handler alongside a derived style handler.
 
-`inherit="prepend"` or `"append"` chains new/existing handlers, both wrapped in `pcall`. Without `inherit`, new handler replaces old.
+`inherit="prepend"` runs the inherited handler before the new handler; `inherit="append"` runs the new handler before the inherited handler. Both chain with `pcall`. Explicit `inherit` takes precedence over the default intrinsic binding; explicit `intrinsicOrder` remains a direct binding request. Without `inherit`, a new handler replaces the old handler.
 
 ## Name Substitution and parentKey
 

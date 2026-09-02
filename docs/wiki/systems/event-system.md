@@ -56,7 +56,7 @@ After all addons load, the simulator fires in order: `ADDON_LOADED("WoWUISim")`,
 
 ## XML Script Setup
 
-Three handler forms: `function="X"` uses X directly, `method="X"` wraps as `self:X(...)`, inline body wraps as `function(self, ...) body end`. `inherit="prepend"` or `"append"` chains handlers with pcall wrapping.
+Three handler forms: `function="X"` uses X directly, `method="X"` wraps as `self:X(...)`, inline body wraps as `function(self, ...) body end`. `inherit="prepend"` runs inherited then new; `inherit="append"` runs new then inherited; both chain with pcall wrapping.
 
 ## Sources
 

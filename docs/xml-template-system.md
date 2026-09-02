@@ -504,11 +504,11 @@ Handler resolution in `build_handler_expr()` (`src/loader/helpers.rs:440-451`):
 
 The `inherit` attribute controls how a handler interacts with an existing handler:
 
-- **No inherit** (default): Replaces the existing handler via `SetScript()`
-- **`inherit="prepend"`**: New handler runs first, then the existing handler. Both wrapped in `pcall()`
-- **`inherit="append"`**: Existing handler runs first, then the new handler
+- **No inherit** (default): Replaces the existing handler via `SetScript()`.
+- **`inherit="prepend"`**: The inherited (existing) handler runs first, then the new handler. Both are wrapped in `pcall()`.
+- **`inherit="append"`**: The new handler runs first, then the inherited (existing) handler. Both are wrapped in `pcall()`.
 
-This is critical for templates: a derived template can prepend its own OnLoad while preserving the base template's OnLoad handler. Intrinsic default scripts use the precall binding; ordinary XML scripts use the normal binding unless `intrinsicOrder` requests precall or postcall. Dispatch visits precall, normal, then postcall, while `GetScript(name)` without a binding argument reads only the normal handler.
+`prepend` and `append` describe the inherited handler's position, not the new handler's. An explicit `inherit` chain takes precedence over the default intrinsic binding; `intrinsicOrder="precall"` or `"postcall"` remains an explicit binding request. Without `inherit`, intrinsic default scripts use the precall binding and ordinary XML scripts use the normal binding unless `intrinsicOrder` requests precall or postcall. Dispatch visits precall, normal, then postcall, while `GetScript(name)` without a binding argument reads only the normal handler.
 
 ### Lifecycle Script Firing
 **File:** `src/loader/xml_frame.rs:585-634`

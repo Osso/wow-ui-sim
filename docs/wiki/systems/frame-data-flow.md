@@ -101,7 +101,7 @@ Nested re-entry sees the active transaction: `C_AddOns.LoadAddOn()` returns succ
 
 **Engine-created roots**: `UIParent` and `WorldFrame` exist before Blizzard XML loads. Their XML definitions configure those existing objects; they must not call `CreateFrame` again. XML mixins, scripts, event registrations, and lifecycle configuration therefore remain attached to the object later observed through the global. A duplicate replacement leaves those behaviors on the original root while later code observes another object. This broke UIParent startup handlers and prevented CombatLog runtime state from loading. The XML code generator now special-cases both names (`src/loader/xml_frame_codegen.rs`, commit `e5089fbeb2`).
 
-**Script chaining order**: `inherit="prepend"` runs new handler before old. If new handler depends on state the old handler sets up, it will fail on first call.
+**Script chaining order**: `inherit="prepend"` runs inherited handler before new; `inherit="append"` runs new before inherited. A new handler that runs before state the inherited handler sets up can fail on its first call.
 
 ## Sources
 

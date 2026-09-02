@@ -1,3 +1,7 @@
+## [2026-09-02] audit | Correct XML script inheritance precedence
+
+Audited commit `aac1bb217`. Updated [[xml-template-system]], [[event-system]], and [[frame-data-flow]] plus their maintained architecture docs: `inherit="prepend"` places the inherited handler first; `inherit="append"` places it second. Explicit `inherit` now overrides a default intrinsic binding, while explicit `intrinsicOrder` remains direct binding selection. No spec, changelog, index update, `PLAN.md`, cache/vendor/Blizzard, or protected-file change was warranted.
+
 ## [2026-09-02] investigation | Preserve duplicate named region bindings
 
 Documented commit `601cde499`: duplicate sibling Texture/FontString regions with the same parent now keep the first `_G` binding while retaining both objects. Current `Blizzard_GMChatUI.xml` relies on this for its second `GMChatTabBG` texture to anchor to the first; last-writer replacement had produced a self-anchor error and aborted XML before `GMChatStatusFrame`, breaking Behavioral Messaging. Added [[duplicate-named-region-binding]], updated [[global-frame-index]], and recorded the related retail 12.1 Tiered Entrance enum, Transmog startup root, and `HasAccessConstraints` contracts in [[patch-12-1-api-audit]] and [[addon-loading]].
