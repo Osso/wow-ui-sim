@@ -12,9 +12,7 @@ use wow_ui_sim::toc::TocFile;
 
 const ROOT: &str = "Blizzard_AutoComplete";
 const ROOT_TOC_FILE: &str = "Blizzard_AutoComplete.toc";
-const GAME_SCOPED_DEP: &str = "Blizzard_UIParent";
-const RAW_GAME_DEP_LINE: &str = "## Dep: Blizzard_UIParent [AllowLoad game]";
-const RAW_GLUE_DEP_LINE: &str = "## Dep: Blizzard_GlueParent [AllowLoad glue]";
+const FONTS_SHARED: &str = "Blizzard_Fonts_Shared";
 
 #[test]
 fn blizzard_auto_complete_loads_without_ingestion_errors() {
@@ -57,66 +55,41 @@ fn blizzard_auto_complete_allowload_both_loads_in_game_and_glue_scopes() {
 }
 
 #[test]
-fn blizzard_auto_complete_game_scoped_dep_loads_uiparent_before_autocomplete() {
-    assert_toc_declares_uiparent_game_scoped_dep();
+fn blizzard_auto_complete_fonts_shared_loads_before_autocomplete() {
+    assert_toc_declares_fonts_shared_dep();
 
     common::with_perf_lock(|| {
         common::with_timeout(240, || {
             with_blizzard_addon_closure(&[ROOT], &[], |env, loaded| {
-                assert_loaded_before(loaded, GAME_SCOPED_DEP, ROOT);
+                assert_loaded_before(loaded, FONTS_SHARED, ROOT);
 
-                let (uiparent_loaded, autocomplete_loaded, color_code_available): (
-                    bool,
-                    bool,
-                    bool,
-                ) = env
+                let (fonts_shared_loaded, autocomplete_loaded): (bool, bool) = env
                     .eval(
                         r#"
-                        return C_AddOns.IsAddOnLoaded("Blizzard_UIParent"),
-                            C_AddOns.IsAddOnLoaded("Blizzard_AutoComplete"),
-                            type(RGBTableToColorCode) == "function"
+                        return C_AddOns.IsAddOnLoaded("Blizzard_Fonts_Shared"),
+                            C_AddOns.IsAddOnLoaded("Blizzard_AutoComplete")
                         "#,
                     )
-                    .expect("optional dependency availability probe should return");
+                    .expect("game closure loaded-state probe should return");
                 assert!(
-                    uiparent_loaded,
-                    "`{GAME_SCOPED_DEP}` must be loaded before `{ROOT}` evaluates"
+                    fonts_shared_loaded,
+                    "`{FONTS_SHARED}` must be loaded before `{ROOT}` evaluates"
                 );
                 assert!(
                     autocomplete_loaded,
-                    "`{ROOT}` must be loaded by the closure"
-                );
-                assert!(
-                    color_code_available,
-                    "`RGBTableToColorCode` must be available from `{GAME_SCOPED_DEP}` \
-                     before `{ROOT}` can evaluate `AutoComplete_UpdateResults` safely"
+                    "`{ROOT}` must be loaded by the game closure"
                 );
             });
         });
     });
 }
 
-fn assert_toc_declares_uiparent_game_scoped_dep() {
+fn assert_toc_declares_fonts_shared_dep() {
     let toc = load_root_toc();
-    let deps = toc.dependencies();
-    assert!(
-        deps.iter().any(|dep| dep == GAME_SCOPED_DEP),
-        "`{ROOT}` must declare `{GAME_SCOPED_DEP}` as a scoped `## Dep` so the \
-         closure walker keeps `RGBTableToColorCode` available before AutoComplete.lua \
-         evaluates. Dependencies: {deps:?}"
-    );
-
-    let toc_path = root_toc_path();
-    let raw_toc = std::fs::read_to_string(&toc_path).unwrap_or_else(|err| {
-        panic!(
-            "TOC at `{}` MUST be readable for raw scoped dependency verification: {err}",
-            toc_path.display()
-        )
-    });
-    assert!(
-        raw_toc.contains(RAW_GAME_DEP_LINE) && raw_toc.contains(RAW_GLUE_DEP_LINE),
-        "`{ROOT}` must keep the exact scoped dependency lines `{RAW_GAME_DEP_LINE}` and `{RAW_GLUE_DEP_LINE}`. \
-         Raw TOC:\n{raw_toc}"
+    assert_eq!(
+        toc.dependencies(),
+        [FONTS_SHARED],
+        "`{ROOT}` must keep its sole current `## Dep: {FONTS_SHARED}` declaration"
     );
 }
 

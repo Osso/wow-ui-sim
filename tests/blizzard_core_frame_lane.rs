@@ -123,42 +123,40 @@ fn lane_dep_edges_pin_canonical_chain() {
     let uiparent_deps = uiparent.dependencies();
     assert_eq!(
         uiparent_deps,
-        vec![
-            "Blizzard_FrameXMLBase".to_string(),
-            "Blizzard_ObjectAPI".to_string(),
-            "Blizzard_Colors".to_string(),
-        ],
-        "UIParent pins three deps. FrameXMLBase publishes Constants.lua / FrameLocks.lua before \
-         UIParent.lua needs them; ObjectAPI publishes the C_* / object-table surface that \
-         UIParent_OnLoad references; Colors is duplicated relative to the foundation lane (also \
-         pulled in transitively via SharedXML) so UIParent's color refs cannot regress on direct \
-         load. Got: {uiparent_deps:?}"
+        vec!["Blizzard_SharedXMLBase".to_string()],
+        "UIParent pins only SharedXMLBase in the current retail TOC. Got: {uiparent_deps:?}"
     );
 
     let panel_deps = panel_manager.dependencies();
     assert_eq!(
         panel_deps,
-        vec!["Blizzard_UIParent".to_string()],
-        "UIParentPanelManager pins exactly one dep — UIParent. The panel-positioning logic \
-         operates on UIParent's panel attributes (DEFAULT_FRAME_WIDTH / TOP_OFFSET / etc.) which \
-         the engine seeds in Rust before XML even loads (see \
-         engine_frames_pre_create_uiparent_with_panel_attributes_before_xml below). The \
-         dep is structural rather than data — UIParent must be loaded so its global frame \
-         exists for parent= references in panel-managed XML. Got: {panel_deps:?}"
+        vec![
+            "Blizzard_ManagedFrameSystem".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+        ],
+        "UIParentPanelManager pins its current managed-frame and game-menu dependencies. Got: \
+         {panel_deps:?}"
     );
 
     let frame_xml_deps = frame_xml.dependencies();
     let expected_frame_xml_deps = [
-        "Blizzard_UIParent",
+        "Blizzard_ObjectAPI",
+        "Blizzard_FrameXMLBase",
+        "Blizzard_UIErrorsFrame",
         "Blizzard_UIParentPanelManager",
         "Blizzard_SettingsDefinitions_Frame",
         "Blizzard_ItemButton",
+        "Blizzard_UnitPopup",
         "Blizzard_FrameXMLUtil",
+        "Blizzard_RaidWarning",
         "Blizzard_UIPanelTemplates",
         "Blizzard_GameTooltip",
         "Blizzard_MoneyFrame",
         "Blizzard_Colors",
         "Blizzard_TransmogShared",
+        "Blizzard_LFGUtil",
+        "Blizzard_ManagedFrameSystem",
+        "Blizzard_MirrorTimer",
     ];
     assert_eq!(
         frame_xml_deps,
@@ -166,13 +164,9 @@ fn lane_dep_edges_pin_canonical_chain() {
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
-        "FrameXML is the WIDEST dep edge in the lane — 10 deps. Order matters because the \
-         loader applies them sequentially. UIParent (parent global) and UIParentPanelManager \
-         (Show/HideUIPanel) are ALWAYS first; FrameXMLUtil's util tables (AchievementUtil, \
-         AzeriteUtil, etc.) must be live before AchievementDisplayFrame's onload reads them; \
-         UIPanelTemplates publishes UIPanelButtonTemplate which FrameXML's UIErrorsFrame / \
-         AlertFrame / SplashFrame inherit; GameTooltip / MoneyFrame / TransmogShared are needed \
-         by toast frames defined in FrameXML XML. Got: {frame_xml_deps:?}"
+        "FrameXML must preserve all 17 current dependencies in retail TOC order, including \
+         Blizzard_UnitPopup between Blizzard_ItemButton and Blizzard_FrameXMLUtil. Got: \
+         {frame_xml_deps:?}"
     );
 }
 
@@ -457,33 +451,20 @@ fn lane_appears_in_eager_discovery_with_load_first_promoted_for_frame_xml() {
     };
 
     let pos_base = pos("Blizzard_FrameXMLBase");
-    let pos_uiparent = pos("Blizzard_UIParent");
+    let pos_util = pos("Blizzard_FrameXMLUtil");
     let pos_panel_manager = pos("Blizzard_UIParentPanelManager");
     let pos_frame_xml = pos("Blizzard_FrameXML");
 
-    assert!(
-        pos_base < pos_uiparent,
-        "FrameXMLBase must precede UIParent (got positions {pos_base} and {pos_uiparent}). \
-         UIParent's `## Dependencies: Blizzard_FrameXMLBase, ...` requires base's Constants.lua \
-         / FlowContainer.lua / FrameLocks.lua to be live before UIParent.lua's file scope runs"
-    );
-    assert!(
-        pos_uiparent < pos_panel_manager,
-        "UIParent must precede UIParentPanelManager (got {pos_uiparent} and {pos_panel_manager}). \
-         The dep edge AND the LoadWith directive both demand this ordering"
-    );
-    assert!(
-        pos_panel_manager < pos_frame_xml,
-        "UIParentPanelManager must precede FrameXML (got {pos_panel_manager} and {pos_frame_xml}). \
-         FrameXML's `## Dependencies: Blizzard_UIParent, Blizzard_UIParentPanelManager, ...` \
-         requires both panel-manager globals (ShowUIPanel/HideUIPanel) to be live before \
-         FrameXML's file-scope can wire its panels"
-    );
-    assert!(
-        pos_uiparent < pos_frame_xml,
-        "UIParent must precede FrameXML — FrameXML's globals (UIErrorsFrame, AlertFrame, \
-         SplashFrame) all parent to UIParent at file-scope XML-instantiate time"
-    );
+    for (name, position) in [
+        ("Blizzard_FrameXMLBase", pos_base),
+        ("Blizzard_FrameXMLUtil", pos_util),
+        ("Blizzard_UIParentPanelManager", pos_panel_manager),
+    ] {
+        assert!(
+            position < pos_frame_xml,
+            "{name} must precede FrameXML (got positions {position} and {pos_frame_xml})"
+        );
+    }
 }
 
 prefork_full_ui_case! {

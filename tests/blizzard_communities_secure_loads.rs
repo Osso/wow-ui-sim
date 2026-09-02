@@ -57,7 +57,7 @@ fn blizzard_communities_secure_toc_declares_secure_environment_and_required_deps
          live in __secureenv"
     );
     let deps = toc.dependencies();
-    for required in ["Blizzard_SharedXML", "Blizzard_UIParent"] {
+    for required in ["Blizzard_SharedXML"] {
         assert!(
             deps.contains(&required.to_string()),
             "Blizzard_CommunitiesSecure should declare `## RequiredDep: {required}`, got {deps:?}"
