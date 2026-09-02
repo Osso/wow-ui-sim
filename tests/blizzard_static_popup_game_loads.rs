@@ -7,7 +7,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn static_popup_game_dir() -> PathBuf {
@@ -170,7 +171,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 
 #[test]
-fn dependencies_chain_pulls_five_blizzard_addons_via_plural_dependencies_key() {
+fn dependencies_chain_pulls_six_blizzard_addons_via_plural_dependencies_key() {
     let toc = TocFile::from_file(&static_popup_game_toc()).expect("TOC parses");
 
     let expected_deps = vec![
@@ -179,6 +180,7 @@ fn dependencies_chain_pulls_five_blizzard_addons_via_plural_dependencies_key() {
         "Blizzard_AutoComplete".to_string(),
         "Blizzard_MoneyFrame".to_string(),
         "Blizzard_AccessibilityTemplates".to_string(),
+        "Blizzard_GameMenuEsc".to_string(),
     ];
 
     assert_eq!(
@@ -187,7 +189,8 @@ fn dependencies_chain_pulls_five_blizzard_addons_via_plural_dependencies_key() {
         "Plural `## Dependencies:` parsed at toc.rs:210-217. Order: \
          StaticPopup (dispatcher), ItemButton (SetItemButtonTexture/Quality), \
          AutoComplete (EditBox template), MoneyFrame (Money templates), \
-         AccessibilityTemplates (UserScaledFrameTemplate). Got: {:?}",
+         AccessibilityTemplates (UserScaledFrameTemplate), GameMenuEsc \
+         (escape-menu integration). Got: {:?}",
         toc.dependencies()
     );
 }
@@ -242,7 +245,7 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
 
     let expected_directives = [
         "## Title: Blizzard_StaticPopup_Game",
-        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates",
+        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc",
         "## AllowLoad: game",
     ];
 

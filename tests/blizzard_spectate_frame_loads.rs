@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn spectate_dir() -> PathBuf {
@@ -64,7 +65,7 @@ fn find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn toc_declares_six_directives_and_blizzard_uipanels_game_dep() {
+fn toc_declares_six_directives_and_current_dependencies() {
     let toc = TocFile::from_file(&spectate_toc()).expect("SpectateFrame TOC parses");
 
     assert!(
@@ -79,15 +80,12 @@ fn toc_declares_six_directives_and_blizzard_uipanels_game_dep() {
     assert!(!toc.is_secure_env());
     assert_eq!(
         toc.dependencies(),
-        vec!["Blizzard_UIPanels_Game".to_string()],
-        "`## Dependencies: Blizzard_UIPanels_Game` MUST resolve to \
-         [Blizzard_UIPanels_Game] via the plural-key path at \
-         src/toc.rs:210-217. UIPanels_Game provides the SetFrameLock / \
-         StaticPopup_Show / StaticPopup_Hide / StaticPopupDialogs surface \
-         that SpectateFrame's three CONFIRM_LEAVE_MATCH dialogs and \
-         LeaveSpectatingMode register against, plus the \
-         EditModeManagerFrame:SetOverrideLayout / ClearOverrideLayout \
-         hooks driving the spectator-only HUD layout"
+        vec![
+            "Blizzard_UIPanels_Game".to_string(),
+            "Blizzard_UIModes".to_string(),
+        ],
+        "Retail 12.1.0.69497 declares Blizzard_UIPanels_Game and Blizzard_UIModes \
+         in published dependency order"
     );
     assert!(toc.optional_deps().is_empty());
     assert!(
@@ -132,7 +130,7 @@ fn raw_bytes_pin_six_metadata_directives() {
         "## Title: Blizzard_SpectateFrame",
         "## Author: Blizzard Entertainment",
         "## DefaultState: enabled",
-        "## Dependencies: Blizzard_UIPanels_Game",
+        "## Dependencies: Blizzard_UIPanels_Game, Blizzard_UIModes",
         "## AllowLoadGameType: plunderstorm",
         "## AllowLoad: Game",
     ];

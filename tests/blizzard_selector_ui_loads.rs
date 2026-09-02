@@ -7,7 +7,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn selector_ui_dir() -> PathBuf {
@@ -194,6 +195,13 @@ fn actual_selector_code_lives_in_shared_xml_body_not_this_folder() {
              empty Blizzard_SelectorUI shell"
         );
     }
+
+    assert!(
+        blizzard_ui_dir()
+            .join("Blizzard_SharedXML/Mainline/Selector/Blizzard_ScrollBoxSelector.xml")
+            .is_file(),
+        "The Mainline selector XML companion must exist outside Shared/Selector"
+    );
 }
 
 #[test]
@@ -208,6 +216,8 @@ fn shared_xml_mainline_toc_lists_selector_files_in_its_body() {
         "Shared\\Selector\\Blizzard_SelectorUI.xml",
         "Shared\\Selector\\Blizzard_GridSelectorUI.lua",
         "Shared\\Selector\\Blizzard_GridSelectorUI.xml",
+        "Shared\\Selector\\Blizzard_ScrollBoxSelector.lua",
+        "[Family]\\Selector\\Blizzard_ScrollBoxSelector.xml",
     ] {
         assert!(
             raw.contains(line),

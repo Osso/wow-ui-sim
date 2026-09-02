@@ -1,25 +1,29 @@
 use std::path::PathBuf;
 
 use crate::common::blizzard_addon_harness::{
-    build_blizzard_addon_closure_env, load_blizzard_addon_closure_into_env,
-    new_blizzard_addon_env,
+    build_blizzard_addon_closure_env, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::loader::{
-    BlizzardAddonOverride, discover_blizzard_addons_for_screen, find_toc_file,
+    discover_blizzard_addons_for_screen, find_toc_file, BlizzardAddonOverride,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 const ROOT_ADDON: &str = "Blizzard_SharedMapDataProviders";
-const IMPLICIT_DEPENDENCIES: &[&str] = &["Blizzard_SharedXML", "Blizzard_MapCanvas"];
+const IMPLICIT_DEPENDENCIES: &[&str] = &[
+    "Blizzard_SharedXML",
+    "Blizzard_MapCanvas",
+    "Blizzard_ChatFrameBase",
+];
 const ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOverride {
     addon: ROOT_ADDON,
     extra_roots: IMPLICIT_DEPENDENCIES,
 }];
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn map_data_providers_dir() -> PathBuf {

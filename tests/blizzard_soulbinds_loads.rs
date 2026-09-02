@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn soulbinds_dir() -> PathBuf {
@@ -149,7 +150,7 @@ fn toc_raw_bytes_pin_four_metadata_directives() {
 }
 
 #[test]
-fn body_resolves_to_eleven_entries_in_canonical_order() {
+fn body_resolves_to_twelve_entries_in_canonical_order() {
     let toc = TocFile::from_file(&soulbinds_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -159,6 +160,7 @@ fn body_resolves_to_eleven_entries_in_canonical_order() {
         .collect();
 
     let expected = [
+        "Blizzard_Soulbinds_Bootstrap.lua",
         "Blizzard_SoulbindsUtil.lua",
         "Blizzard_SoulbindsTemplates.xml",
         "Blizzard_SoulbindsSelectButton.xml",
@@ -175,10 +177,8 @@ fn body_resolves_to_eleven_entries_in_canonical_order() {
     assert_eq!(
         body.len(),
         expected.len(),
-        "Body must contain exactly 11 entries — the addon ships 9 \
-         XMLs (each with a `<Script file=...>` companion that sources \
-         the matching .lua) + 2 standalone .lua files (Util + Conduit) \
-         that have no XML half. Got: {body:?}"
+        "Retail 12.1.0.69497 body contains 12 entries, beginning with the \
+         Soulbinds bootstrap before its existing Lua/XML load sequence. Got: {body:?}"
     );
 
     for (i, want) in expected.iter().enumerate() {
@@ -191,7 +191,7 @@ fn body_resolves_to_eleven_entries_in_canonical_order() {
 }
 
 #[test]
-fn util_lua_loads_first_to_publish_soulbinds_namespace_before_consumers() {
+fn bootstrap_loads_before_util_to_publish_soulbinds_namespace_before_consumers() {
     let toc = TocFile::from_file(&soulbinds_toc()).expect("TOC parses");
 
     let first = toc
@@ -201,15 +201,13 @@ fn util_lua_loads_first_to_publish_soulbinds_namespace_before_consumers() {
         .unwrap_or_default();
 
     assert_eq!(
-        first, "Blizzard_SoulbindsUtil.lua",
-        "Blizzard_SoulbindsUtil.lua MUST be FIRST in the body — it \
-         publishes the `Soulbinds` namespace table at line 1 \
-         (`Soulbinds = {{}}`) and the SOULBINDS_RENOWN_CURRENCY_ID \
-         global which every later file in the addon dereferences via \
-         `Soulbinds.X(...)`. The Util file also publishes the four \
-         covenant-id constants and Soulbinds.GetConduitName / \
-         GetConduitEmblemAtlas helpers consumed by the conduit-button \
-         layer in ConduitList.lua"
+        first, "Blizzard_Soulbinds_Bootstrap.lua",
+        "Retail 12.1.0.69497 loads Blizzard_Soulbinds_Bootstrap.lua first"
+    );
+    assert_eq!(
+        toc.files[1].to_string_lossy(),
+        "Blizzard_SoulbindsUtil.lua",
+        "Blizzard_SoulbindsUtil.lua follows the bootstrap and publishes the Soulbinds namespace"
     );
 }
 

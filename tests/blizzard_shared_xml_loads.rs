@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn shared_xml_dir() -> PathBuf {
@@ -14,16 +15,18 @@ fn shared_xml_dir() -> PathBuf {
 }
 
 fn shared_xml_toc() -> PathBuf {
-    shared_xml_dir().join("Blizzard_SharedXML_Mainline.toc")
+    shared_xml_dir().join("Blizzard_SharedXML.toc")
 }
 
 const HARD_DEPS: &[&str] = &[
+    "Blizzard_ProjectConstants",
     "Blizzard_Fonts_Shared",
     "Blizzard_SharedXMLBase",
     "Blizzard_PrintHandler",
     "Blizzard_Menu",
     "Blizzard_Colors",
     "Blizzard_HelpPlate",
+    "Blizzard_Narration",
 ];
 
 const CORNERSTONE_MIXINS: &[&str] = &[
@@ -111,67 +114,33 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn find_toc_file_resolves_mainline_variant() {
+fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&shared_xml_dir()).expect("SharedXML TOC resolves");
     assert_eq!(
         resolved,
         shared_xml_toc(),
-        "Blizzard_SharedXML ships a `_Mainline.toc` AND a `_Mists.toc` flavor \
-         variant (NO bare `Blizzard_SharedXML.toc`). `find_toc_file` at \
-         src/loader/mod.rs prefers `_Mainline.toc` first, so the resolved \
-         path must be the Mainline variant. The Mists variant exists for \
-         Cataclysm Classic flavor where some Mainline-only globals \
-         (DragonRiding, MajorFactionRenown, hero talents) are absent"
+        "Retail 12.1.0.69497 ships a single bare Blizzard_SharedXML.toc"
     );
-}
-
-#[test]
-fn mists_toc_variant_exists_with_distinct_smaller_dep_set() {
-    let mists_toc = shared_xml_dir().join("Blizzard_SharedXML_Mists.toc");
     assert!(
-        mists_toc.is_file(),
-        "Blizzard_SharedXML_Mists.toc must exist on disk — Cataclysm Classic \
-         flavor consumes a reduced SharedXML surface (no DragonRiding / \
-         hero-talents / WoWLabs ProjectConstants). The simulator's \
-         find_toc_file prefers _Mainline first but the Mists file lives \
-         alongside as the alternate flavor target"
-    );
-
-    let toc = TocFile::from_file(&mists_toc).expect("Mists TOC parses");
-    let deps = toc.dependencies();
-    assert_eq!(
-        deps,
-        [
-            "Blizzard_Fonts_Shared",
-            "Blizzard_SharedXMLBase",
-            "Blizzard_PrintHandler",
-            "Blizzard_Menu"
-        ],
-        "Mists variant must declare exactly 4 hard deps (NO Blizzard_Colors, \
-         NO Blizzard_HelpPlate). Mainline adds Colors + HelpPlate because \
-         the retail surface uses class color overrides and tutorial-tooltip \
-         primitives that Cataclysm Classic doesn't ship. Got: {deps:?}"
+        !shared_xml_dir()
+            .join("Blizzard_SharedXML_Mainline.toc")
+            .exists()
+            && !shared_xml_dir()
+                .join("Blizzard_SharedXML_Mists.toc")
+                .exists(),
+        "Retail 12.1.0.69497 does not ship profile-specific SharedXML TOCs"
     );
 }
 
 #[test]
-fn mainline_toc_declares_six_hard_deps_in_published_order() {
-    let toc = TocFile::from_file(&shared_xml_toc()).expect("Mainline TOC parses");
+fn toc_declares_eight_hard_deps_in_published_order() {
+    let toc = TocFile::from_file(&shared_xml_toc()).expect("SharedXML TOC parses");
 
     let deps = toc.dependencies();
     assert_eq!(
         deps, HARD_DEPS,
-        "Mainline TOC must declare exactly 6 hard deps in this order: \
-         Blizzard_Fonts_Shared (font globals — XML inheritance references \
-         GameFontNormal etc. from this addon), Blizzard_SharedXMLBase \
-         (foundational mixins — CallbackRegistryMixin / EnumUtil / \
-         FlagsUtil / TableUtil / MathUtil / ColorMixin / FrameUtil — without \
-         these the SharedXML mixin layer cannot bootstrap), \
-         Blizzard_PrintHandler (chat-frame print routing), Blizzard_Menu \
-         (the new menu framework that DropDownToggleButton hooks into), \
-         Blizzard_Colors (CLASS_COLOR_OVERRIDES / TextColors), \
-         Blizzard_HelpPlate (HelpPlate.lua references HelpPlate primitives \
-         from the dep). Got: {deps:?}"
+        "Retail 12.1.0.69497 declares eight SharedXML dependencies in published \
+         order, including ProjectConstants first and Narration last. Got: {deps:?}"
     );
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());
@@ -214,15 +183,15 @@ fn mainline_toc_raw_bytes_pin_metadata_lines_and_no_savedvars() {
     let raw = std::fs::read_to_string(shared_xml_toc()).expect("TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_SharedXML"));
-    assert!(raw.contains("## Author: Blizzard Entertainment"));
-    assert!(raw.contains("## DefaultState: enabled"));
     assert!(raw.contains("## AllowLoad: Both"));
-    assert!(raw.contains("## AllowLoadGameType: mainline"));
     assert!(raw.contains(
-        "## Dependencies: Blizzard_Fonts_Shared, Blizzard_SharedXMLBase, \
-         Blizzard_PrintHandler, Blizzard_Menu, Blizzard_Colors, \
-         Blizzard_HelpPlate"
+        "## Dependencies: Blizzard_ProjectConstants, Blizzard_Fonts_Shared, \
+         Blizzard_SharedXMLBase, Blizzard_PrintHandler, Blizzard_Menu, \
+         Blizzard_Colors, Blizzard_HelpPlate, Blizzard_Narration"
     ));
+    assert!(!raw.contains("## Author"));
+    assert!(!raw.contains("## DefaultState"));
+    assert!(!raw.contains("## AllowLoadGameType"));
 
     assert!(
         !raw.contains("## SavedVariables"),
@@ -259,20 +228,14 @@ fn mainline_toc_body_starts_with_localization_machinery_then_constants() {
         first_three,
         [
             "Shared\\LocalizationMachinery.lua",
-            "ProjectConstants.lua",
-            "WoWLabs\\ProjectConstants.lua",
+            "SharedConstants.lua",
+            "ColorUtil.lua",
         ],
         "TOC body MUST start with these 3 entries in order. (1) \
          Shared\\LocalizationMachinery.lua bootstraps the Localization() \
          helper used by every later file's localized strings. (2) \
-         ProjectConstants.lua publishes WOW_PROJECT_ID, \
-         WOW_PROJECT_MAINLINE / CLASSIC / CATA / etc. — the project-id \
-         constants every flavor-gating check keys off. (3) \
-         WoWLabs\\ProjectConstants.lua adds the WoWLabs-specific project \
-         constants (Plunderstorm). Reordering breaks every later file that \
-         uses `if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then`. Backslashes \
-         in TOC paths are kept literal by src/toc.rs body parser. \
-         Got: {first_three:?}"
+         SharedConstants.lua publishes shared UI constants. (3) ColorUtil.lua \
+         publishes color helpers consumed by later widget files. Got: {first_three:?}"
     );
 }
 
@@ -293,20 +256,19 @@ fn mainline_toc_body_count_breakdown_matches_filesystem_layout() {
 
     assert_eq!(
         lua_count + xml_count,
-        219,
-        "TOC body must list exactly 219 file entries. Got lua={lua_count} \
-         xml={xml_count}"
+        218,
+        "Retail 12.1.0.69497 TOC body has 218 active Mainline file entries. \
+         Got lua={lua_count} xml={xml_count}"
     );
     assert_eq!(
-        lua_count, 147,
-        "TOC body must list exactly 147 .lua entries — most utility \
-         modules + per-mixin .lua files. Got: {lua_count}"
+        lua_count, 145,
+        "Retail 12.1.0.69497 TOC body has 145 active Mainline Lua entries. \
+         Got: {lua_count}"
     );
     assert_eq!(
-        xml_count, 72,
-        "TOC body must list exactly 72 .xml entries — virtual templates \
-         (UIPanelTemplates, LayoutFrame variants, ScrollBox primitives, \
-         AnimationTemplates, etc.). Got: {xml_count}"
+        xml_count, 73,
+        "Retail 12.1.0.69497 TOC body has 73 active Mainline XML entries. \
+         Got: {xml_count}"
     );
 }
 

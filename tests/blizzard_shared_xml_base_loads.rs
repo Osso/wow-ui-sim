@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn shared_xml_base_dir() -> PathBuf {
@@ -219,8 +220,8 @@ fn body_count_matches_filesystem_layout() {
         toc.files.len()
     );
     assert_eq!(
-        lua_count, 37,
-        "TOC body must list exactly 37 .lua files (one per primitive: \
+        lua_count, 36,
+        "TOC body must list exactly 36 .lua files (one per primitive: \
          Compat, ErrorUtil, Mixin, TableUtil, EnumUtil, LocaleUtil, \
          FunctionUtil, ObjectUpdater, MathUtil, ExportUtil, Rectangle, \
          TextureUtil, AddOnUtil, Flags, Event, CallbackRegistry, \
@@ -232,11 +233,9 @@ fn body_count_matches_filesystem_layout() {
          CombatAudioAlertConstants). Got {lua_count}"
     );
     assert_eq!(
-        xml_count, 2,
-        "TOC body must list exactly 2 .xml files: CallbackRegistrant.xml \
-         (CallbackRegistrantTemplate virtual) and ColorSwatch.xml \
-         (ColorSwatchTemplate virtual). All other XML in the dependency \
-         tree comes from later addons. Got {xml_count}"
+        xml_count, 3,
+        "TOC body must list exactly 3 .xml files: CallbackRegistrant.xml, \
+         ColorSwatch.xml, and ForbiddenAspectTemplates.xml. Got {xml_count}"
     );
 }
 

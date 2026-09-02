@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn shared_xml_game_dir() -> PathBuf {
@@ -163,14 +164,13 @@ fn body_substitutes_family_and_drops_vanilla_only_entries() {
         "Tooltip/TooltipComparisonManager.lua",
         "StaticModelInfo.lua",
         "DressUpModelFrameMixin.lua",
-        "Mainline/ListTemplates.lua",
-        "Mainline/ListTemplates.xml",
+        "Mainline/LootSpecialization.lua",
         "CompactUnitFramesConstants.lua",
     ];
 
     assert_eq!(
         body, expected,
-        "TOC body MUST reduce to exactly 11 entries on Mainline. The \
+        "TOC body MUST reduce to exactly 10 entries on Mainline. The \
          loader (src/toc.rs:138-152) does three things per body line: \
          (1) drops lines tagged `[AllowLoadGameType vanilla]` (the \
          `[Game]\\Localization.lua` line is vanilla-only and thus \
@@ -200,24 +200,13 @@ fn body_count_matches_filtered_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
-    assert_eq!(toc.files.len(), 11, "11 entries after Mainline filter");
+    assert_eq!(toc.files.len(), 10, "10 entries after Mainline filter");
     assert_eq!(
         lua_count, 10,
-        "Exactly 10 .lua entries survive Mainline filter: 2 Localization \
-         (Shared + Mainline; vanilla [Game]\\Localization stripped), 4 \
-         Tooltip (Util / DataHandler / DataRules / ComparisonManager — \
-         all gated to Mainline except DataHandler which is \
-         ExcludeLoadGameType vanilla), 2 root (StaticModelInfo / \
-         DressUpModelFrameMixin), 1 Mainline ListTemplates.lua, 1 \
-         CompactUnitFramesConstants.lua. Got {lua_count}"
+        "Retail 12.1.0.69497 retains 10 Lua entries after the Mainline filter, \
+         including Mainline/LootSpecialization.lua. Got {lua_count}"
     );
-    assert_eq!(
-        xml_count, 1,
-        "Exactly 1 .xml entry: Mainline/ListTemplates.xml — the only \
-         XML in the body. CollapseButtonTemplate / ListHeaderVisualTemplate \
-         / ListHeaderCodeTemplate / ListHeaderThreeSliceTemplate all \
-         live in this single XML file. Got {xml_count}"
-    );
+    assert_eq!(xml_count, 0, "No XML entries survive the Mainline filter");
 }
 
 #[test]
@@ -252,24 +241,15 @@ fn tooltip_lua_companions_load_before_dressup_consumer() {
         dress_up
     );
 
-    let list_lua = body
+    let loot_specialization = body
         .iter()
-        .position(|p| p == "Mainline/ListTemplates.lua")
-        .expect("ListTemplates.lua present");
-    let list_xml = body
-        .iter()
-        .position(|p| p == "Mainline/ListTemplates.xml")
-        .expect("ListTemplates.xml present");
+        .position(|p| p == "Mainline/LootSpecialization.lua")
+        .expect("LootSpecialization.lua present");
     assert!(
-        list_lua < list_xml,
-        "ListTemplates.lua MUST load before ListTemplates.xml. The XML \
-         declares CollapseButtonTemplate with `mixin=\"CollapseButtonMixin\"` \
-         and ListHeader{{Visual,Code,ThreeSlice}}Template with \
-         corresponding mixin attrs — those mixin attrs resolve against \
-         `_G` at parse time, so the .lua must publish them first. \
-         Got lua at {} xml at {}",
-        list_lua,
-        list_xml
+        dress_up < loot_specialization,
+        "DressUpModelFrameMixin.lua must load before Mainline/LootSpecialization.lua in the \
+         current SharedXMLGame body. Got dress-up at {dress_up} and loot specialization at \
+         {loot_specialization}"
     );
 }
 
