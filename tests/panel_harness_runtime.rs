@@ -154,27 +154,27 @@ fn achievement_addon_reports_runtime_load_reason() {
 }
 
 #[test]
-fn achievement_uiparent_load_matches_raw_load_addon() {
-    let ui_parent_env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    ui_parent_env.set_screen_size(1024.0, 768.0);
-    ui_parent_env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
-    load_panel_harness(&ui_parent_env);
+fn achievement_error_handling_load_matches_raw_load_addon() {
+    let error_handling_env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    error_handling_env.set_screen_size(1024.0, 768.0);
+    error_handling_env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&error_handling_env);
 
-    let (ui_parent_loaded, ui_parent_is_loaded): (bool, bool) = ui_parent_env
+    let (error_handling_loaded, error_handling_is_loaded): (bool, bool) = error_handling_env
         .eval(
             r#"
-            return UIParentLoadAddOn("Blizzard_AchievementUI"), C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI")
+            return LoadAddOnWithErrorHandling("Blizzard_AchievementUI"), C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI")
             "#,
         )
         .expect("load comparison should return");
 
     assert!(
-        ui_parent_loaded,
-        "UIParentLoadAddOn should succeed in a fresh panel harness"
+        error_handling_loaded,
+        "LoadAddOnWithErrorHandling should succeed in a fresh panel harness"
     );
     assert!(
-        ui_parent_is_loaded,
-        "UIParentLoadAddOn should mark the addon loaded"
+        error_handling_is_loaded,
+        "LoadAddOnWithErrorHandling should mark the addon loaded"
     );
 
     let raw_env = WowLuaEnv::new().expect("Failed to create Lua environment");
