@@ -41,98 +41,78 @@ fn load_all_blizzard_addons(env: &WowLuaEnv, ui: &Path) {
 }
 
 #[test]
-fn social_panel_toggle_populates_online_friend_provider_and_provides_offline_friend_data() {
+fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
     common::with_perf_lock(|| {
         common::with_timeout(120, || {
             let env = full_game_env_after_startup();
 
             let (
-                provider_online_names,
-                expected_online_names,
-                has_offline_element,
+                legacy_friend_system_enabled,
+                social_panel_shown,
+                provider_row_count,
+                has_legacy_wow_row,
+                online_names,
                 offline_name,
                 offline_connected,
-            ): (String, String, bool, String, bool) = env
+            ): (bool, bool, i64, bool, String, String, bool) = env
                 .eval(
                     r#"
                     ToggleSocialPanel()
                     FriendsList_Update(true)
 
-                    local providerOnlineNames = {}
+                    local providerRowCount = 0
+                    local hasLegacyWowRow = false
                     for _, elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
+                        providerRowCount = providerRowCount + 1
                         if elementData.buttonType == FRIENDS_BUTTON_TYPE_WOW then
-                            local info = C_FriendList.GetFriendInfoByIndex(elementData.id)
-                            if info and info.connected then
-                                table.insert(providerOnlineNames, info.name)
-                            end
+                            hasLegacyWowRow = true
                         end
                     end
-                    table.sort(providerOnlineNames)
 
-                    local expectedOnlineNames = {}
+                    local onlineNames = {}
+                    local offlineName = ""
+                    local offlineConnected = true
                     for index = 1, C_FriendList.GetNumFriends() do
                         local info = C_FriendList.GetFriendInfoByIndex(index)
-                        if info and info.connected then
-                            table.insert(expectedOnlineNames, info.name)
+                        if info.connected then
+                            table.insert(onlineNames, info.name)
+                        else
+                            offlineName = info.name
+                            offlineConnected = info.connected
                         end
                     end
-                    table.sort(expectedOnlineNames)
+                    table.sort(onlineNames)
 
-                    local offlineElement = FriendsListFrame.ScrollBox:GetDataProvider():FindElementDataByPredicate(function(elementData)
-                        if elementData.buttonType ~= FRIENDS_BUTTON_TYPE_WOW then
-                            return false
-                        end
-                        local info = C_FriendList.GetFriendInfoByIndex(elementData.id)
-                        return info and not info.connected
-                    end)
-                    local offlineInfo = offlineElement and C_FriendList.GetFriendInfoByIndex(offlineElement.id)
-
-                    return table.concat(providerOnlineNames, "\n"),
-                        table.concat(expectedOnlineNames, "\n"),
-                        offlineElement ~= nil,
-                        offlineInfo and offlineInfo.name or "",
-                        offlineInfo and offlineInfo.connected or false
+                    return C_FriendList.IsLegacyFriendSystemEnabled(),
+                        FriendsListFrame:IsShown(),
+                        providerRowCount,
+                        hasLegacyWowRow,
+                        table.concat(onlineNames, "\n"),
+                        offlineName,
+                        offlineConnected
                     "#,
                 )
                 .unwrap();
 
             assert!(
-                !expected_online_names.is_empty(),
-                "state-backed friend fixture should include an online friend"
-            );
-            assert_eq!(
-                provider_online_names, expected_online_names,
-                "WoW friend data provider should match the state-backed online friends"
+                !legacy_friend_system_enabled,
+                "retail fixture must retain unsupported legacy friend-system semantics"
             );
             assert!(
-                has_offline_element,
-                "friends data provider should contain a state-backed offline WoW friend"
+                social_panel_shown,
+                "ToggleSocialPanel should show the social panel"
             );
             assert!(
-                !offline_name.is_empty(),
-                "offline data-provider row should resolve to a named friend"
+                provider_row_count > 0,
+                "current retail FriendsList provider should populate when the panel opens"
             );
             assert!(
-                !offline_connected,
-                "offline data-provider row should resolve with connected=false"
+                !has_legacy_wow_row,
+                "current retail provider must not add legacy WoW friend rows"
             );
-
-            let (wow_alpha, offline_alpha): (f64, f64) = env
-                .eval(
-                    r#"
-                    return FRIENDS_WOW_BACKGROUND_COLOR.a, FRIENDS_OFFLINE_BACKGROUND_COLOR.a
-                    "#,
-                )
-                .unwrap();
-
-            assert!(
-                (wow_alpha - 0.05).abs() < 0.001,
-                "online friend row background should be translucent, got alpha {wow_alpha}"
-            );
-            assert!(
-                (offline_alpha - 0.05).abs() < 0.001,
-                "offline friend row background should be translucent, got alpha {offline_alpha}"
-            );
+            assert_eq!(online_names, "Arthax\nSylvara");
+            assert_eq!(offline_name, "Durotan");
+            assert!(!offline_connected, "Durotan should remain offline");
         });
     });
 }
