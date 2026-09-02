@@ -22,7 +22,11 @@ fn party_pose_toc() -> PathBuf {
     party_pose_dir().join("Blizzard_PartyPoseUI.toc")
 }
 
-const PARTY_POSE_TOC_FILES: &[&str] = &["Blizzard_PartyPoseUI.lua", "Blizzard_PartyPoseUI.xml"];
+const PARTY_POSE_TOC_FILES: &[&str] = &[
+    "Blizzard_PartyPoseUI_Bootstrap.lua",
+    "Blizzard_PartyPoseUI.lua",
+    "Blizzard_PartyPoseUI.xml",
+];
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_Colors"];
 
@@ -195,7 +199,7 @@ fn blizzard_party_pose_ui_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_party_pose_ui_toc_lists_two_files_lua_first_xml_after() {
+fn blizzard_party_pose_ui_toc_lists_bootstrap_lua_then_xml() {
     let toc = TocFile::from_file(&party_pose_toc()).expect("Blizzard_PartyPoseUI TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -204,11 +208,8 @@ fn blizzard_party_pose_ui_toc_lists_two_files_lua_first_xml_after() {
         .collect();
     assert_eq!(
         listed, PARTY_POSE_TOC_FILES,
-        "TOC body must list exactly 2 files in canonical order: Blizzard_PartyPoseUI.lua \
-         first (declares the 2 mixins + PartyPoseUtil namespace at module top — these MUST \
-         exist before the XML parses, since the XML's `mixin=\"PartyPoseRewardsMixin\"` and \
-         `mixin=\"PartyPoseMixin\"` attributes resolve the mixins by name at parse time), \
-         then Blizzard_PartyPoseUI.xml after"
+        "Retail 12.1.0.69497 lists its bootstrap first, then Blizzard_PartyPoseUI.lua and \
+         Blizzard_PartyPoseUI.xml. The main Lua still publishes the mixins before XML parses"
     );
 }
 

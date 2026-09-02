@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn player_choice_dir() -> PathBuf {
@@ -20,6 +21,7 @@ fn player_choice_toc() -> PathBuf {
 }
 
 const PLAYER_CHOICE_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerChoice_Bootstrap.lua",
     "Blizzard_PlayerChoiceToggleButton.lua",
     "Blizzard_PlayerChoiceToggleButton.xml",
     "Blizzard_PlayerChoiceOptionBase.lua",
@@ -269,7 +271,7 @@ fn blizzard_player_choice_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_player_choice_toc_lists_twenty_files_in_canonical_order() {
+fn blizzard_player_choice_toc_lists_bootstrap_then_twenty_files_in_canonical_order() {
     let toc = TocFile::from_file(&player_choice_toc()).expect("Blizzard_PlayerChoice TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -278,10 +280,8 @@ fn blizzard_player_choice_toc_lists_twenty_files_in_canonical_order() {
         .collect();
     assert_eq!(
         listed, PLAYER_CHOICE_TOC_FILES,
-        "TOC body must list exactly 20 files in current retail order, paired \
-         Lua-then-XML by module. ToggleButton and OptionBase publish shared \
-         mixins before the option variants consume them; the main PlayerChoice \
-         pair now follows all option variants, with Timer last"
+        "Retail 12.1.0.69497 lists its bootstrap first, then twenty PlayerChoice source files \
+         in the established paired Lua-then-XML module order"
     );
 }
 

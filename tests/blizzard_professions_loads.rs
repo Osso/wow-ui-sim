@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn professions_dir() -> PathBuf {
@@ -20,6 +21,7 @@ fn professions_toc() -> PathBuf {
 }
 
 const PROFESSIONS_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions_Bootstrap.lua",
     "Blizzard_ProfessionsRankBar.xml",
     "Blizzard_ProfessionsGuildMemberList.xml",
     "Blizzard_ProfessionsCraftingOutputLog.xml",
@@ -40,6 +42,7 @@ const REQUIRED_DEPS: &[&str] = &[
     "Blizzard_SharedTalentUI",
     "Blizzard_Colors",
     "Blizzard_HelpPlate",
+    "Blizzard_GameMenuEsc",
 ];
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
@@ -154,24 +157,15 @@ fn blizzard_professions_toc_declares_lod_mainline_game_only_addon() {
 }
 
 #[test]
-fn blizzard_professions_toc_declares_four_dependencies() {
+fn blizzard_professions_toc_declares_five_dependencies() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
 
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
         deps, REQUIRED_DEPS,
-        "TOC must declare exactly 4 deps in this order: Blizzard_ProfessionsTemplates \
-         (publishes ProfessionsRecipeListPanelMixin, ProfessionsReagentSlotButtonMixin, \
-         ProfessionsItemFlyoutMixin and the shared crafting templates that this addon's \
-         CraftingPage / OrdersPage inherit), Blizzard_SharedTalentUI (publishes \
-         TalentButtonSpendMixin / TalentDisplayMixin which the Specialization page's \
-         ProfessionsSpecPathMixin / ProfessionsSpecPerkMixin extend via \
-         CreateFromMixins), Blizzard_Colors (color globals like \
-         PROFESSIONS_RECIPE_COLOR_COMMON used across recipe rarity rendering), \
-         Blizzard_HelpPlate (the dotted-rectangle help-overlay system used by the \
-         Professions tutorial sequence). All 4 must already be loaded before the eager \
-         `LoadAddOn('Blizzard_Professions')` call resolves the symbols"
+        "Retail 12.1.0.69497 declares ProfessionsTemplates, SharedTalentUI, Colors, \
+         HelpPlate, and GameMenuEsc in published order"
     );
 
     assert!(
@@ -239,11 +233,9 @@ fn blizzard_professions_toc_declares_metadata_in_raw_bytes() {
     assert!(
         raw.contains(
             "## Dependencies: Blizzard_ProfessionsTemplates, Blizzard_SharedTalentUI, \
-             Blizzard_Colors, Blizzard_HelpPlate"
+             Blizzard_Colors, Blizzard_HelpPlate, Blizzard_GameMenuEsc"
         ),
-        "TOC must declare the 4-dep `## Dependencies:` line as a single comma-separated \
-         entry on one line — the canonical multi-dep form the parser expects at \
-         src/toc.rs:210-217"
+        "Retail 12.1.0.69497 declares all five dependencies on one comma-separated line"
     );
     assert!(
         raw.contains(
@@ -283,7 +275,7 @@ fn blizzard_professions_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_professions_toc_lists_thirteen_files_in_canonical_load_order() {
+fn blizzard_professions_toc_lists_bootstrap_then_thirteen_files_in_canonical_load_order() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -292,15 +284,9 @@ fn blizzard_professions_toc_lists_thirteen_files_in_canonical_load_order() {
         .collect();
     assert_eq!(
         listed, PROFESSIONS_TOC_FILES,
-        "TOC body must list 11 XML files first then 2 Lua files, in this canonical \
-         dependency order: leaf templates first (ProfessionsRankBar, GuildMemberList, \
-         CraftingOutputLog, RecipeLevel) → mid-level pages (Crafting, InspectRecipe, \
-         SpecializationsTemplates, Specializations, CrafterOrderView, CrafterOrderPage) \
-         → top-level container (ProfessionsFrame) → registration shim that calls \
-         RegisterUIPanel(ProfessionsFrame) and RegisterUIPanel(InspectRecipeFrame) → \
-         Localization. The 11 XML files each carry `<Script file=...>` directives that \
-         pull in the matching .lua sibling, so the actual Lua-load order is XML-driven, \
-         not TOC-driven"
+        "Retail 12.1.0.69497 lists its bootstrap first, then eleven XML entries, the \
+         registration Lua, and Localization. The XML entries continue to load paired Lua \
+         files through Script directives"
     );
 }
 

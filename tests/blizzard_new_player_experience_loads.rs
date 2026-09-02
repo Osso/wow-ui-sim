@@ -24,6 +24,7 @@ fn npe_toc() -> PathBuf {
 }
 
 const NPE_TOC_FILES: &[&str] = &[
+    "Blizzard_NewPlayerExperience_Bootstrap.lua",
     "Blizzard_TutorialKeyboardMouseFrame.xml",
     "Blizzard_TutorialData.lua",
     "Blizzard_TutorialWatchers.lua",
@@ -94,7 +95,7 @@ fn blizzard_npe_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_npe_toc_declares_load_on_demand_with_required_tutorial_manager_dep() {
+fn blizzard_npe_toc_declares_load_on_demand_with_current_required_deps() {
     let toc = TocFile::from_file(&npe_toc()).expect("Blizzard_NewPlayerExperience TOC parses");
     assert!(
         toc.is_load_on_demand(),
@@ -109,13 +110,13 @@ fn blizzard_npe_toc_declares_load_on_demand_with_required_tutorial_manager_dep()
     let deps = toc.dependencies();
     assert_eq!(
         deps,
-        vec!["Blizzard_TutorialManager"],
-        "TOC must declare `## RequiredDep: Blizzard_TutorialManager`. The NPEv2 overlay's \
-         entry point (Blizzard_Tutorial.lua line 13) references `TutorialManager.\
-         NPE_AchievementID` at module-load time inside :OnTutorialsEnabled — when the \
-         RequiredDep is wrong or missing the addon either fails to load or errors on the \
-         first TutorialsEnabled callback. `dependencies()` at src/toc.rs:210-217 reads the \
-         `RequiredDep` key as the first-priority alias for the Dependencies list"
+        vec![
+            "middleclass",
+            "Blizzard_TutorialManager",
+            "Blizzard_LFGUtil"
+        ],
+        "Retail 12.1.0.69497 declares middleclass, Blizzard_TutorialManager, and \
+         Blizzard_LFGUtil through its singular RequiredDep line"
     );
 
     assert!(
@@ -150,11 +151,9 @@ fn blizzard_npe_toc_declares_load_on_demand_in_raw_bytes() {
          src/loader/mod.rs:530-534, keeping it out of the eager Game-screen discovery sweep"
     );
     assert!(
-        raw.contains("## RequiredDep: Blizzard_TutorialManager"),
-        "TOC must declare `## RequiredDep: Blizzard_TutorialManager` exactly (singular `Dep`, \
-         not the plural `RequiredDeps` or `Dependencies` aliases). All three keys parse \
-         identically per src/toc.rs:212-214, but the canonical retail spelling here is the \
-         singular `RequiredDep` — the single-line directive pattern"
+        raw.contains("## RequiredDep: middleclass, Blizzard_TutorialManager, Blizzard_LFGUtil"),
+        "Retail 12.1.0.69497 declares all three RequiredDep values on one singular \
+         RequiredDep line"
     );
     assert!(
         !raw.contains("## AllowLoad:"),
@@ -166,7 +165,7 @@ fn blizzard_npe_toc_declares_load_on_demand_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_npe_toc_lists_seven_files_xml_first_lua_after() {
+fn blizzard_npe_toc_lists_bootstrap_then_seven_files() {
     let toc = TocFile::from_file(&npe_toc()).expect("Blizzard_NewPlayerExperience TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -175,22 +174,15 @@ fn blizzard_npe_toc_lists_seven_files_xml_first_lua_after() {
         .collect();
     assert_eq!(
         listed, NPE_TOC_FILES,
-        "TOC body must list exactly 7 files in the canonical NPE order: \
-         Blizzard_TutorialKeyboardMouseFrame.xml first (declares the two named frames + the \
-         virtual KeyboardMouseConfirmButton template — XML must run before any Lua references \
-         the frame globals), then 5 module Lua files (TutorialData → TutorialWatchers → \
-         TutorialServices → TutorialTutorials → TutorialLogic — each layer references seed \
-         tables defined in the previous), and Blizzard_Tutorial.lua last (the entry point \
-         that calls NewPlayerExperience:Initialize() at module top-level)"
+        "Retail 12.1.0.69497 lists its bootstrap before the XML and seven NPE source files; \
+         Blizzard_TutorialKeyboardMouseFrame.xml remains the first non-bootstrap entry and \
+         Blizzard_Tutorial.lua remains last"
     );
 
     assert_eq!(
-        listed.first().map(String::as_str),
+        listed.get(1).map(String::as_str),
         Some("Blizzard_TutorialKeyboardMouseFrame.xml"),
-        "First file MUST be the XML file — it declares TutorialKeyboardMouseFrame_Frame and \
-         TutorialWalk_Frame (the two named XML frames mixed with TutorialKeyboardMouseFrameMixin \
-         / TutorialWalkMixin). Lua files instantiated later read those frame globals at \
-         module-top-level"
+        "The first non-bootstrap entry must be the keyboard/mouse XML frame definition"
     );
     assert_eq!(
         listed.last().map(String::as_str),

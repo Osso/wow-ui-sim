@@ -27,6 +27,7 @@ const REQUIRED_DEPS: &[&str] = &[
     "Blizzard_ActionBar",
     "Blizzard_UnitFrame",
     "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
 ];
 
 const PUBLIC_MIXINS: &[&str] = &["OverrideActionBarMixin", "OverrideActionBarButtonMixin"];
@@ -83,7 +84,7 @@ fn blizzard_override_action_bar_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_override_action_bar_toc_declares_eager_game_only_with_three_required_deps() {
+fn blizzard_override_action_bar_toc_declares_eager_game_only_with_four_dependencies() {
     let toc = TocFile::from_file(&override_toc()).expect("Blizzard_OverrideActionBar TOC parses");
 
     assert!(
@@ -117,14 +118,8 @@ fn blizzard_override_action_bar_toc_declares_eager_game_only_with_three_required
     assert_eq!(
         toc.dependencies(),
         REQUIRED_DEPS,
-        "TOC must declare exactly 3 RequiredDeps in canonical order: Blizzard_ActionBar (the \
-         override-bar replaces the default action bars while in vehicles, so the default \
-         bars must be initialized first to be hidden/swapped), Blizzard_UnitFrame (the \
-         vehicle's pet-bar references the standard UnitFrame conventions for status bars / \
-         portraits), Blizzard_MicroMenu (the override-bar embeds a micro-menu strip on the \
-         right side, reusing the micro-menu button pool). `dependencies()` at \
-         src/toc.rs:210-217 reads `Dependencies` as the second-priority alias for the deps \
-         list — the canonical retail spelling here is the plural `Dependencies`"
+        "Retail 12.1.0.69497 declares ActionBar, UnitFrame, MicroMenu, and \
+         ManagedFrameSystem in that order"
     );
 
     assert!(
@@ -165,10 +160,11 @@ fn blizzard_override_action_bar_toc_declares_metadata_in_raw_bytes() {
          optional cosmetic addon"
     );
     assert!(
-        raw.contains("## Dependencies: Blizzard_ActionBar, Blizzard_UnitFrame, Blizzard_MicroMenu"),
-        "TOC must declare the 3 Dependencies in a single comma-separated `## Dependencies:` \
-         line. Pinning the exact spelling guards against silent reordering or a refactor \
-         that flips plural→singular"
+        raw.contains(
+            "## Dependencies: Blizzard_ActionBar, Blizzard_UnitFrame, Blizzard_MicroMenu, \
+             Blizzard_ManagedFrameSystem"
+        ),
+        "Retail 12.1.0.69497 declares all four dependencies on one Dependencies line"
     );
     assert!(
         raw.contains("## AllowLoad: Game"),

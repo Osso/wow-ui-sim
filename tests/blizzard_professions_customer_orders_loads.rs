@@ -9,7 +9,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn customer_orders_dir() -> PathBuf {
@@ -21,6 +22,7 @@ fn customer_orders_toc() -> PathBuf {
 }
 
 const CUSTOMER_ORDERS_TOC_FILES: &[&str] = &[
+    "Blizzard_ProfessionsCustomerOrders_Bootstrap.lua",
     "Blizzard_ProfessionsCustomerOrdersForm.xml",
     "Blizzard_ProfessionsCustomerOrdersRecipeCategoryList.xml",
     "Blizzard_ProfessionsCustomerOrdersRecipeList.xml",
@@ -294,7 +296,7 @@ fn blizzard_professions_customer_orders_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_professions_customer_orders_toc_lists_seven_files_in_canonical_order() {
+fn blizzard_professions_customer_orders_toc_lists_bootstrap_then_seven_files_in_canonical_order() {
     let toc = TocFile::from_file(&customer_orders_toc())
         .expect("Blizzard_ProfessionsCustomerOrders TOC parses");
     let listed: Vec<String> = toc
@@ -304,21 +306,8 @@ fn blizzard_professions_customer_orders_toc_lists_seven_files_in_canonical_order
         .collect();
     assert_eq!(
         listed, CUSTOMER_ORDERS_TOC_FILES,
-        "TOC must list 6 XML files first then Registration.lua last, in this canonical \
-         dependency order: Form (the order-detail edit form template — heaviest at \
-         ~64KB Lua / ~22KB XML, hosts ProfessionsCustomerOrderFormMixin + \
-         ProfessionsCustomerListingsElementMixin) → RecipeCategoryList → RecipeList \
-         (the 2 recipe browse panes, RecipeList depends on RecipeCategoryList for \
-         category-keyed filtering) → BrowseOrders (the public-orders browse page \
-         hosting ProfessionsCustomerOrdersBrowsePageMixin) → MyOrders (the player's \
-         own orders page hosting ProfessionsCustomerOrdersMyOrdersMixin) → \
-         Blizzard_ProfessionsCustomerOrders.xml (the root container that inherits all \
-         5 above as parentKey-mounted child Frames + the named \
-         ProfessionsCustomerOrdersFrame top-level frame) → Registration.lua (the \
-         RegisterUIPanel(ProfessionsCustomerOrdersFrame, attributes) shim that runs \
-         LAST so the named frame exists when the call resolves). Each XML file carries \
-         a `<Script file=...>` directive that pulls in its matching .lua sibling, so \
-         the actual Lua-load order is XML-driven, not TOC-driven"
+        "Retail 12.1.0.69497 lists its bootstrap first, then the six XML entries and \
+         Registration.lua. Each XML continues to load its paired Lua through Script directives"
     );
 }
 

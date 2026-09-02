@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn private_auras_dir() -> PathBuf {
@@ -144,11 +145,11 @@ fn blizzard_private_auras_ui_toc_uses_singular_dep_form() {
         [
             "Blizzard_SharedXMLGame",
             "Blizzard_FrameXMLUtil",
-            "Blizzard_GameTooltip"
+            "Blizzard_GameTooltip",
+            "Blizzard_RaidWarning",
+            "Blizzard_VisualAlerts",
         ],
-        "TOC declares deps in Blizzard's singular `## Dep:` form; the simulator must \
-         recognize those hard dependencies so load order does not depend on alphabetical \
-         discovery"
+        "Retail 12.1.0.69497 declares five hard dependencies through singular `## Dep:` lines"
     );
 
     assert!(
@@ -186,12 +187,13 @@ fn blizzard_private_auras_ui_toc_declares_metadata_in_raw_bytes() {
         "## Dep: Blizzard_SharedXMLGame",
         "## Dep: Blizzard_FrameXMLUtil",
         "## Dep: Blizzard_GameTooltip",
+        "## Dep: Blizzard_RaidWarning",
+        "## Dep: Blizzard_VisualAlerts",
     ] {
         assert!(
             raw.contains(dep_line),
-            "TOC must contain `{dep_line}` in raw bytes even though the parser ignores the \
-             singular `Dep:` form — the lines exist as documentation of the actual \
-             code-level dependencies"
+            "TOC must contain `{dep_line}` in raw bytes; the parser preserves singular \
+             Dep entries as hard dependencies"
         );
     }
 

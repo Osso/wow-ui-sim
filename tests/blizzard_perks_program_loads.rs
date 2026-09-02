@@ -22,6 +22,7 @@ fn perks_program_toc() -> PathBuf {
 }
 
 const PERKS_PROGRAM_TOC_FILES: &[&str] = &[
+    "Blizzard_PerksProgram_Bootstrap.lua",
     "Blizzard_PerksProgramElements.lua",
     "Blizzard_PerksProgramProducts.lua",
     "Blizzard_PerksProgramModel.lua",
@@ -266,7 +267,7 @@ fn blizzard_perks_program_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_perks_program_toc_lists_eight_files_in_canonical_order() {
+fn blizzard_perks_program_toc_lists_bootstrap_then_eight_files() {
     let toc = TocFile::from_file(&perks_program_toc()).expect("Blizzard_PerksProgram TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -275,15 +276,9 @@ fn blizzard_perks_program_toc_lists_eight_files_in_canonical_order() {
         .collect();
     assert_eq!(
         listed, PERKS_PROGRAM_TOC_FILES,
-        "TOC body must list exactly 8 files in canonical order: 5 Lua files first \
-         (Elements → Products → Model → Footer → main), then 2 XML files (Elements XML \
-         then main XML), then Localization.lua last. The ordering matters: Elements.lua \
-         declares the 31 base mixins (HeaderSort, PerksProductPrice, ProductButton, \
-         Cart*, Set*, Refund, etc.) that the products/model/footer Lua files extend via \
-         CreateFromMixins, and that Elements.xml's `mixin=\"...\"` attributes resolve at \
-         parse time. Localization.lua runs LAST so it can call \
-         `PerksProgramFrame:SetLabelFont(SystemFont_Shadow_Med2)` for zhCN/zhTW after \
-         the main XML has materialized the named PerksProgramFrame global"
+        "Retail 12.1.0.69497 lists its bootstrap first, followed by five Lua files, two XML \
+         files, and Localization.lua. The non-bootstrap source order remains Elements, \
+         Products, Model, Footer, main UI, Elements XML, main XML, and Localization"
     );
 }
 

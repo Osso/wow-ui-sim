@@ -22,7 +22,11 @@ fn move_pad_toc() -> PathBuf {
     move_pad_dir().join("Blizzard_MovePad.toc")
 }
 
-const MOVE_PAD_TOC_FILES: &[&str] = &["Blizzard_MovePad.lua", "Blizzard_MovePad.xml"];
+const MOVE_PAD_TOC_FILES: &[&str] = &[
+    "Blizzard_MovePad_Bootstrap.lua",
+    "Blizzard_MovePad.lua",
+    "Blizzard_MovePad.xml",
+];
 
 const PUBLIC_MIXINS: &[&str] = &[
     "MovePadMixin",
@@ -130,7 +134,7 @@ fn blizzard_move_pad_toc_declares_load_on_demand_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_move_pad_toc_lists_two_files_one_lua_one_xml() {
+fn blizzard_move_pad_toc_lists_bootstrap_lua_and_xml() {
     let toc = TocFile::from_file(&move_pad_toc()).expect("Blizzard_MovePad TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -139,12 +143,9 @@ fn blizzard_move_pad_toc_lists_two_files_one_lua_one_xml() {
         .collect();
     assert_eq!(
         listed, MOVE_PAD_TOC_FILES,
-        "TOC body must list exactly 2 files in declaration order — Blizzard_MovePad.lua \
-         (210 lines, defines all 9 mixins + the file-private OnValueChanged callback) then \
-         Blizzard_MovePad.xml (123 lines, defines 1 virtual MovePadCheckboxTemplate + the \
-         MovePadFrame root with 7 named child buttons + 1 anonymous DropdownButton). Lua \
-         must precede XML so the mixin tables exist when XML's mixin=\"...\" attribute \
-         resolves the per-frame mixin lookup"
+        "Retail 12.1.0.69497 lists the bootstrap first, then Blizzard_MovePad.lua and \
+         Blizzard_MovePad.xml. The main Lua must precede XML so its mixin tables exist when \
+         XML resolves per-frame mixins"
     );
 }
 

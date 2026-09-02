@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn professions_book_dir() -> PathBuf {
@@ -20,6 +21,7 @@ fn professions_book_toc() -> PathBuf {
 }
 
 const PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
+    "Blizzard_ProfessionsBook_Bootstrap.lua",
     "Blizzard_ProfessionsBook.lua",
     "Blizzard_ProfessionsBook.xml",
 ];
@@ -247,7 +249,7 @@ fn blizzard_professions_book_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_professions_book_toc_lists_two_files_in_canonical_order() {
+fn blizzard_professions_book_toc_lists_bootstrap_then_two_files_in_canonical_order() {
     let toc =
         TocFile::from_file(&professions_book_toc()).expect("Blizzard_ProfessionsBook TOC parses");
     let listed: Vec<String> = toc
@@ -257,15 +259,9 @@ fn blizzard_professions_book_toc_lists_two_files_in_canonical_order() {
         .collect();
     assert_eq!(
         listed, PROFESSIONS_BOOK_TOC_FILES,
-        "TOC must list exactly 2 files: Blizzard_ProfessionsBook.lua FIRST (declares \
-         PROFESSION_RANKS, ProfessionSpellButtonMixin, ProfessionsUnlearnButtonMixin, \
-         ProfessionsFrame_HelpPlate, and the global functions ProfessionsBookFrame_* / \
-         FormatProfession / ProfessionsBook_GetSpellBookItemSlot / \
-         ProfessionsBook_ToggleTutorial — must run before the XML so the \
-         `mixin=\"...\"` attributes resolve and the script-bound function names \
-         (function=\"ProfessionsBookFrame_OnLoad\" etc.) exist) and \
-         Blizzard_ProfessionsBook.xml SECOND (defines 5 virtual templates + \
-         ProfessionsBookFrame named root with its child frames)"
+        "Retail 12.1.0.69497 lists its bootstrap first, then Blizzard_ProfessionsBook.lua \
+         before Blizzard_ProfessionsBook.xml so mixins and script-bound functions exist \
+         before XML parsing"
     );
 }
 

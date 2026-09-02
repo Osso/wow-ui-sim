@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn ping_ui_dir() -> PathBuf {
@@ -23,6 +24,7 @@ const PING_UI_TOC_FILES: &[&str] = &[
     "Blizzard_PingManager.lua",
     "Blizzard_PingUI.lua",
     "Blizzard_PingUI.xml",
+    "Blizzard_PingUtil.lua",
 ];
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_SharedXML", "Blizzard_FrameXMLUtil"];
@@ -179,16 +181,8 @@ fn blizzard_ping_ui_toc_declares_eager_secure_mainline_only_with_sharedxml_dep()
     assert_eq!(
         toc.dependencies(),
         REQUIRED_DEPS,
-        "TOC must declare exactly 1 dep (`Blizzard_SharedXML`) — declared via the \
-         singular `## RequiredDep:` key (UNUSUAL spelling vs the more common \
-         `## Dependencies:` plural; `dependencies()` at src/toc.rs:212-214 reads \
-         `RequiredDep` first, then falls back to `Dependencies` then `RequiredDeps`). \
-         Blizzard_SharedXML provides the inherited `RadialWheelFrameTemplate` (used by \
-         PingFrame's `inherits=\"RadialWheelFrameTemplate\"`) and the \
-         `RadialWheelFrameMixin` (called by PingFrameMixin:OnLoad at line 22 via \
-         `RadialWheelFrameMixin.OnLoad(self)`). The dep is hard rather than optional \
-         because the XML inherits at parse time and the mixin call dereferences \
-         `RadialWheelFrameMixin` at frame OnLoad"
+        "Retail 12.1.0.69497 declares Blizzard_SharedXML and Blizzard_FrameXMLUtil through \
+         its singular RequiredDep line"
     );
 
     assert!(
@@ -214,10 +208,8 @@ fn blizzard_ping_ui_toc_declares_metadata_in_raw_bytes() {
          the space-and-prose form `Blizzard Ping UI`"
     );
     assert!(
-        raw.contains("## RequiredDep: Blizzard_SharedXML"),
-        "TOC must declare `## RequiredDep: Blizzard_SharedXML` exactly — UNUSUAL \
-         singular `RequiredDep` spelling vs the common plural `Dependencies` or \
-         `RequiredDeps`. The simulator's `dependencies()` accepts all three"
+        raw.contains("## RequiredDep: Blizzard_SharedXML, Blizzard_FrameXMLUtil"),
+        "Retail 12.1.0.69497 declares both dependencies on its singular RequiredDep line"
     );
     assert!(
         raw.contains("## UseSecureEnvironment: 1"),
@@ -265,7 +257,7 @@ fn blizzard_ping_ui_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_ping_ui_toc_lists_three_files_in_canonical_order() {
+fn blizzard_ping_ui_toc_lists_four_files_in_canonical_order() {
     let toc = TocFile::from_file(&ping_ui_toc()).expect("Blizzard_PingUI TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -274,17 +266,9 @@ fn blizzard_ping_ui_toc_lists_three_files_in_canonical_order() {
         .collect();
     assert_eq!(
         listed, PING_UI_TOC_FILES,
-        "TOC body must list exactly 3 files in canonical order: \
-         (1) Blizzard_PingManager.lua FIRST — declares the PingManager namespace global \
-         and the wedge-info data tables that PingListenerFrameMixin:OnLoad needs to call \
-         PingManager:Initialize() at line 71 of Blizzard_PingUI.lua. \
-         (2) Blizzard_PingUI.lua SECOND — declares 4 mixins (PingFrameMixin, \
-         PingListenerFrameMixin, PingPinFrameMixin, PingPinFlipBookAnimMixin) referenced \
-         by the XML's `mixin=\"...\"` attributes. \
-         (3) Blizzard_PingUI.xml LAST — materializes 2 named non-virtual Frames \
-         (PingFrame, PingListenerFrame) and 2 virtual templates (PingSpotFrameTemplate, \
-         PingPinFrameTemplate) all wrapped in `<ScopedModifier forbidden=\"true\">` so \
-         every frame in the file is marked forbidden at create time"
+        "Retail 12.1.0.69497 lists PingManager.lua, PingUI.lua, PingUI.xml, then \
+         PingUtil.lua with LoadIntoEnvironment global. The first two Lua files still publish \
+         symbols before PingUI.xml parses"
     );
 }
 

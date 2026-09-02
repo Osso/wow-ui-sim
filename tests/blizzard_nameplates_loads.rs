@@ -31,32 +31,33 @@ const NAMEPLATES_RETAIL_TOC_FILES: &[&str] = &[
     "Blizzard_NamePlateAuras.xml",
     "Blizzard_NamePlateHealthBar.lua",
     "Blizzard_NamePlateCastingBar.lua",
+    "Blizzard_NamePlateCastingBar.xml",
     "Blizzard_NamePlateClassificationFrame.lua",
     "Blizzard_NamePlateRaidTarget.lua",
     "Blizzard_NamePlateUnitFrame.lua",
     "Blizzard_NamePlateBase.lua",
     "Blizzard_NamePlates.lua",
     "Blizzard_NamePlates.xml",
-    "Blizzard_ClassNameplateBar.lua",
-    "Blizzard_ClassNameplateBar.xml",
-    "Blizzard_ClassNameplateAlternatePowerBarBase.lua",
-    "Blizzard_ClassNameplateAlternatePowerBarBase.xml",
-    "Blizzard_ClassNameplateBar_Paladin.lua",
-    "Blizzard_ClassNameplateBar_Paladin.xml",
-    "Blizzard_ClassNameplateBar_DeathKnight.lua",
-    "Blizzard_ClassNameplateBar_DeathKnight.xml",
-    "Blizzard_ClassNameplateBar_Dracthyr.lua",
-    "Blizzard_ClassNameplateBar_Dracthyr.xml",
-    "Blizzard_ClassNameplateBar_Rogue.lua",
-    "Blizzard_ClassNameplateBar_Rogue.xml",
-    "Blizzard_ClassNameplateBar_Druid.lua",
-    "Blizzard_ClassNameplateBar_Druid.xml",
-    "Blizzard_ClassNameplateBar_Mage.lua",
-    "Blizzard_ClassNameplateBar_Mage.xml",
-    "Blizzard_ClassNameplateBar_Monk.lua",
-    "Blizzard_ClassNameplateBar_Monk.xml",
-    "Blizzard_ClassNameplateBar_Warlock.lua",
-    "Blizzard_ClassNameplateBar_Warlock.xml",
+    "Mainline/Blizzard_ClassNameplateBar.lua",
+    "Mainline/Blizzard_ClassNameplateBar.xml",
+    "Mainline/Blizzard_ClassNameplateAlternatePowerBarBase.lua",
+    "Mainline/Blizzard_ClassNameplateAlternatePowerBarBase.xml",
+    "Mainline/Blizzard_ClassNameplateBar_Paladin.lua",
+    "Mainline/Blizzard_ClassNameplateBar_Paladin.xml",
+    "Mainline/Blizzard_ClassNameplateBar_DeathKnight.lua",
+    "Mainline/Blizzard_ClassNameplateBar_DeathKnight.xml",
+    "Mainline/Blizzard_ClassNameplateBar_Dracthyr.lua",
+    "Mainline/Blizzard_ClassNameplateBar_Dracthyr.xml",
+    "Mainline/Blizzard_ClassNameplateBar_Rogue.lua",
+    "Mainline/Blizzard_ClassNameplateBar_Rogue.xml",
+    "Mainline/Blizzard_ClassNameplateBar_Druid.lua",
+    "Mainline/Blizzard_ClassNameplateBar_Druid.xml",
+    "Mainline/Blizzard_ClassNameplateBar_Mage.lua",
+    "Mainline/Blizzard_ClassNameplateBar_Mage.xml",
+    "Mainline/Blizzard_ClassNameplateBar_Monk.lua",
+    "Mainline/Blizzard_ClassNameplateBar_Monk.xml",
+    "Mainline/Blizzard_ClassNameplateBar_Warlock.lua",
+    "Mainline/Blizzard_ClassNameplateBar_Warlock.xml",
 ];
 
 const WOWHACK_GATED_FILES: &[&str] = &[
@@ -199,11 +200,9 @@ fn blizzard_nameplates_toc_filters_wowhack_files_during_retail_parse() {
         .collect();
     assert_eq!(
         listed, NAMEPLATES_RETAIL_TOC_FILES,
-        "TOC body must list exactly the 33 retail files (21 Lua + 12 XML). The \
-         `[AllowLoadGameType wowhack]` annotations on AlternatePower's two files filter them \
-         out at parse time via `is_allowed_game_type` at src/toc.rs:43-57 — only `mainline` \
-         and `standard` are accepted as retail-allowed tokens; `wowhack` is dropped, so the \
-         AlternatePower bar's file pair never reaches the file list"
+        "Retail 12.1.0.69497 lists 34 retail files, including CastingBar.xml and Mainline/ \
+         class-bar paths. The two WoWHack-only AlternatePower files remain filtered from the \
+         retail parsed file list"
     );
 
     for wowhack in WOWHACK_GATED_FILES {

@@ -173,9 +173,8 @@ fn blizzard_order_hall_toc_declares_metadata_in_raw_bytes() {
          retail spelling for LoD addons"
     );
     assert!(
-        !raw.contains("## RequiredDep") && !raw.contains("## Dependencies"),
-        "TOC must NOT declare any dependency keys — zero RequiredDep / Dependencies / \
-         RequiredDeps. The talent UI is self-contained on foundational FrameXML"
+        raw.contains("## Dependencies: Blizzard_GameMenuEsc"),
+        "Retail 12.1.0.69497 declares Blizzard_GameMenuEsc as its hard dependency"
     );
     assert!(
         !raw.contains("## SavedVariables"),
@@ -198,14 +197,9 @@ fn blizzard_order_hall_toc_lists_bootstrap_xml_then_localization() {
         .collect();
     assert_eq!(
         listed, ORDER_HALL_TOC_FILES,
-        "TOC body must list exactly 2 files in canonical order: \
-         Blizzard_OrderHallTalents.xml first, then Localization.lua last. The XML loads the \
-         Lua INDIRECTLY via `<Script file=\"Blizzard_OrderHallTalents.lua\"/>` (xml line 3), \
-         so the actual load order is XML → embedded Lua → Localization.lua. The trailing \
-         Localization.lua (a 1-line `-- This file is executed at the end of addon load` \
-         placeholder) is the convention for addon-load-end hooks: any post-load \
-         localization-fixup / late-binding code would go there. Reversing the order would \
-         mean Localization.lua runs before any of the addon's mixins / templates exist"
+        "Retail 12.1.0.69497 lists its bootstrap first, then Blizzard_OrderHallTalents.xml \
+         and Localization.lua. The XML loads Blizzard_OrderHallTalents.lua through its Script \
+         directive before the trailing localization file"
     );
 }
 

@@ -93,7 +93,7 @@ fn blizzard_photo_sharing_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_photo_sharing_toc_declares_eager_mainline_only_with_zero_dependencies() {
+fn blizzard_photo_sharing_toc_declares_eager_mainline_only_with_game_menu_dependency() {
     let toc = TocFile::from_file(&photo_sharing_toc()).expect("Blizzard_PhotoSharing TOC parses");
 
     assert!(
@@ -136,13 +136,10 @@ fn blizzard_photo_sharing_toc_declares_eager_mainline_only_with_zero_dependencie
         );
     }
 
-    assert!(
-        toc.dependencies().is_empty(),
-        "Zero `## Dependencies:` — the photo-sharing UI is a leaf addon. It consumes \
-         only SettingsFrameTemplate (Blizzard_Settings_Shared), DefaultPanelTemplate \
-         (Blizzard_SharedXMLBase), and global font/color objects (YELLOW_FONT_COLOR, \
-         RED_FONT_COLOR), all of which are part of the always-loaded SharedXML core \
-         and don't require an explicit `## Dependencies:` line"
+    assert_eq!(
+        toc.dependencies(),
+        vec!["Blizzard_GameMenuEsc".to_string()],
+        "Retail 12.1.0.69497 declares Blizzard_GameMenuEsc as PhotoSharing's hard dependency"
     );
     assert!(
         toc.optional_deps().is_empty(),
@@ -188,8 +185,8 @@ fn blizzard_photo_sharing_toc_declares_metadata_in_raw_bytes() {
         "TOC must NOT declare any `## SavedVariables*` keys — pure stateless mirror"
     );
     assert!(
-        !raw.contains("## Dependencies"),
-        "TOC must NOT declare any `## Dependencies` keys — leaf addon"
+        raw.contains("## Dependencies: Blizzard_GameMenuEsc"),
+        "Retail 12.1.0.69497 declares Blizzard_GameMenuEsc on its Dependencies line"
     );
     assert!(
         !raw.contains("## OptionalDeps"),

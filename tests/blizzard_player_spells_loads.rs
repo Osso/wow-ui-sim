@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn player_spells_dir() -> PathBuf {
@@ -26,6 +27,7 @@ const REQUIRED_DEPS: &[&str] = &[
 ];
 
 const PLAYER_SPELLS_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerSpells_Bootstrap.lua",
     "ClassSpecializations/Blizzard_ClassSpecializationsFrame.xml",
     "ClassTalents/Blizzard_ClassTalentUtil.lua",
     "ClassTalents/Blizzard_ClassTalentLoadoutDialogTemplates.xml",
@@ -97,7 +99,6 @@ const SPELL_BOOK_MIXINS: &[&str] = &[
     "SpellBookItemMixin",
     "SpellBookItemButtonMixin",
     "SpellBookHeaderMixin",
-    "SpellBookCategoryTabMixin",
     "SpellBookSearchMixin",
     "BaseSpellBookCategoryMixin",
     "SpellBookGeneralCategoryMixin",
@@ -293,7 +294,7 @@ fn blizzard_player_spells_toc_declares_metadata_in_raw_bytes() {
 }
 
 #[test]
-fn blizzard_player_spells_toc_lists_twenty_six_files_in_canonical_order() {
+fn blizzard_player_spells_toc_lists_bootstrap_then_twenty_six_files_in_canonical_order() {
     let toc = TocFile::from_file(&player_spells_toc()).expect("Blizzard_PlayerSpells TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -302,24 +303,9 @@ fn blizzard_player_spells_toc_lists_twenty_six_files_in_canonical_order() {
         .collect();
     assert_eq!(
         listed, PLAYER_SPELLS_TOC_FILES,
-        "TOC body must list exactly 26 files in canonical order across 4 subdir \
-         groupings followed by 3 root-level files: \
-         (1) ClassSpecializations/ — 1 file (the spec-picker XML); \
-         (2) ClassTalents/ — 16 files (Util + LoadoutDialogTemplates + ImportExport + \
-         3 LoadoutDialogs + ButtonTemplates + EdgeTemplates pair + 2 HeroTalents pairs \
-         + Search + Frame); \
-         (3) PvPTalents/ — 3 XML files (List + Slot templates + WarmodeButton); \
-         (4) SpellBook/ — 4 files (Templates + Item + Search + Frame); \
-         (5) root — Blizzard_PlayerSpellsFrame.xml (loaded LAST among XML so the \
-         PlayerSpellsFrame can reference all sub-tab templates), then \
-         Blizzard_PlayerSpellsRegistration.lua (the OnLogin / OnLoad-time registration \
-         that wires PlayerSpellsFrame into UIPanelWindows + EventRegistry), then \
-         Localization.lua (font/string fixups for zhCN/zhTW that run AFTER all named \
-         frames are materialized). Note: `Blizzard_PlayerSpellsFrame.lua` is NOT in this \
-         list — it is loaded INLINE via `<Script file=\"Blizzard_PlayerSpellsFrame.lua\"/>` \
-         from inside Blizzard_PlayerSpellsFrame.xml, NOT via the TOC. Same pattern for \
-         Blizzard_SpellBookTemplates.lua (loaded via the SpellBookTemplates.xml \
-         <Script>)"
+        "Retail 12.1.0.69497 lists the PlayerSpells bootstrap first, then twenty-six source \
+         files across ClassSpecializations, ClassTalents, PvPTalents, SpellBook, and the \
+         root-level frame, registration, and localization entries"
     );
 }
 
