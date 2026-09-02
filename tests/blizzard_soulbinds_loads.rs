@@ -204,8 +204,12 @@ fn bootstrap_loads_before_util_to_publish_soulbinds_namespace_before_consumers()
         first, "Blizzard_Soulbinds_Bootstrap.lua",
         "Retail 12.1.0.69497 loads Blizzard_Soulbinds_Bootstrap.lua first"
     );
+    let second = toc
+        .files
+        .get(1)
+        .expect("Soulbinds TOC should list a file after the bootstrap");
     assert_eq!(
-        toc.files[1].to_string_lossy(),
+        second.to_string_lossy(),
         "Blizzard_SoulbindsUtil.lua",
         "Blizzard_SoulbindsUtil.lua follows the bootstrap and publishes the Soulbinds namespace"
     );

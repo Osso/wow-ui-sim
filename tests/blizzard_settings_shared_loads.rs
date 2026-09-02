@@ -150,8 +150,7 @@ fn toc_declares_eager_both_with_four_dep_entries() {
     assert_eq!(
         deps.len(),
         HARD_DEPS.len(),
-        "Retail 12.1.0.69497 declares four Dep entries in published order. Got: {deps:?}",
-        HARD_DEPS.len()
+        "Retail 12.1.0.69497 declares four Dep entries in published order. Got: {deps:?}"
     );
     for (i, expected) in HARD_DEPS.iter().enumerate() {
         assert_eq!(deps[i], *expected, "Hard dep #{i} must be {expected}");
