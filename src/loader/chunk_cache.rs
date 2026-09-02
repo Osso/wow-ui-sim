@@ -3,6 +3,7 @@
 use crate::loader::bytecode_cache;
 use crate::loader::error::LoadError;
 use rilua::LuaApiMut;
+use std::path::Path;
 
 /// Compile a generated Lua chunk for the active rilua VM.
 pub fn load_chunk<L: LuaApiMut>(
@@ -11,6 +12,7 @@ pub fn load_chunk<L: LuaApiMut>(
     tag: &str,
 ) -> Result<rilua::Function, LoadError> {
     let hash = bytecode_cache::content_hash(code.as_bytes(), tag);
+    dump_loader_exec_source(code, tag, hash);
     let chunk_name = format!("@generated/{tag}/{hash:016x}");
 
     if !bytecode_cache::is_disabled() {
@@ -31,6 +33,18 @@ pub fn load_chunk<L: LuaApiMut>(
         bytecode_cache::put(hash, &bytecode);
     }
     Ok(func)
+}
+
+fn dump_loader_exec_source(code: &str, tag: &str, hash: u64) {
+    if tag != "loader-exec-no-global-slots"
+        || std::env::var_os("WOW_SIM_DUMP_LOADER_EXEC_SOURCE").is_none()
+    {
+        return;
+    }
+
+    let directory = Path::new("/tmp/pi-loader-exec-diagnostic");
+    let path = directory.join(format!("{hash:016x}.lua"));
+    let _ = std::fs::create_dir_all(directory).and_then(|()| std::fs::write(path, code));
 }
 
 fn tagged_hash(bytes: &[u8], tag: &str) -> u64 {
