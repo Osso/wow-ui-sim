@@ -50,8 +50,8 @@ end
 local function assertAppendedRealm(results, name)
   local count, priority = countNamedResult(results, name)
   expect(count == 1, name .. " must appear exactly once, got " .. tostring(count))
-  expect(priority == LE_AUTOCOMPLETE_PRIORITY_OTHER,
-         name .. " must use LE_AUTOCOMPLETE_PRIORITY_OTHER")
+  expect(priority == Enum.AutoCompletePriority.Other,
+         name .. " must use Enum.AutoCompletePriority.Other")
 end
 
 local editBox = makeEditBox(function()
