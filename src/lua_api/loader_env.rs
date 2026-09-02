@@ -62,17 +62,30 @@ impl<'a> LoaderEnv<'a> {
         }
     }
 
+    /// Compile generated Lua without slot opcodes, restoring the caller's
+    /// runtime even when compilation fails. Nested calls capture and restore
+    /// independently, so synchronous Lua callbacks cannot lose their parent
+    /// slot runtime.
+    fn with_global_slots_disabled<T>(
+        state: &mut LuaState,
+        operation: impl FnOnce(&mut LuaState) -> T,
+    ) -> T {
+        let saved_slots = state.global_slots.take();
+        let result = operation(state);
+        state.global_slots = saved_slots;
+        result
+    }
+
     fn load_dynamic_chunk_without_slots(
         state: &mut LuaState,
         code: &str,
         tag: &str,
     ) -> Result<rilua::Function> {
-        let saved_slots = state.global_slots.take();
         let cache_tag = format!("{tag}-no-global-slots");
-        let result = crate::loader::chunk_cache::load_chunk(state, code, &cache_tag)
-            .map_err(|e| crate::Error::Other(e.to_string()));
-        state.global_slots = saved_slots;
-        result
+        Self::with_global_slots_disabled(state, |state| {
+            crate::loader::chunk_cache::load_chunk(state, code, &cache_tag)
+                .map_err(|error| crate::Error::Other(error.to_string()))
+        })
     }
 
     pub fn with_state<T, E>(
@@ -135,9 +148,9 @@ impl<'a> LoaderEnv<'a> {
         addon_table: Val,
     ) -> Result<()> {
         self.with_state(|state| {
-            let saved_slots = state.global_slots.take();
-            let func = LuaApiMut::load_bytes(state, code.as_bytes(), name)?;
-            state.global_slots = saved_slots;
+            let func = Self::with_global_slots_disabled(state, |state| {
+                LuaApiMut::load_bytes(state, code.as_bytes(), name)
+            })?;
             let addon_name = create_string(state, addon_name);
             crate::lua_api::methods::call_function_state(
                 state,
