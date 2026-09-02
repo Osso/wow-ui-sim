@@ -88,13 +88,11 @@ fn gossip_closed_event_reaches_listeners() {
 }
 
 #[test]
-fn gossip_probe_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/gossip_probes.rs").exists(),
-        "gossip probe globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/gossip_probes.rs").exists(),
-        "gossip probe globals should stay classified as real modeled Lua globals",
-    );
+fn gossip_counts_are_available_through_the_lua_boundary() {
+    let env = env();
+    env.state().borrow_mut().gossip.num_options = 4;
+
+    let options: i32 = env.eval("return GetGossipNumOptions()").unwrap();
+
+    assert_eq!(options, 4, "the Lua gossip probe should expose the seeded count");
 }

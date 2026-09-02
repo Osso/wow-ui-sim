@@ -280,6 +280,7 @@ Button:GetWorldScale
 Button:GetWrappedWidth
 Button:GetZoom
 Button:GetZoomLevels
+Button:HasAccessConstraints
 Button:HasAnimation
 Button:HasAnyForbiddenAspects
 Button:HasAttachmentPoints
@@ -1006,6 +1007,7 @@ CheckButton:GetWorldScale
 CheckButton:GetWrappedWidth
 CheckButton:GetZoom
 CheckButton:GetZoomLevels
+CheckButton:HasAccessConstraints
 CheckButton:HasAnimation
 CheckButton:HasAnyForbiddenAspects
 CheckButton:HasAttachmentPoints

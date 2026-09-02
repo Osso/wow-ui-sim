@@ -9,15 +9,28 @@ fn env() -> WowLuaEnv {
 // ── GetLootMethod ─────────────────────────────────────────────────────────────
 
 #[test]
-fn loot_method_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/loot_method.rs").exists(),
-        "loot-method globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/loot_method.rs").exists(),
-        "loot-method globals should stay classified as real modeled Lua globals",
-    );
+fn loot_method_refresh_queues_event_for_lua_listeners() {
+    let env = env();
+    env.exec(
+        r#"
+        __loot_method_refresh_received = false
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("PARTY_LOOT_METHOD_CHANGED")
+        listener:SetScript("OnEvent", function()
+            __loot_method_refresh_received = true
+        end)
+        RequestPartyLootMethod()
+        "#,
+    )
+    .unwrap();
+
+    let queued_events = env.state().borrow_mut().events.drain();
+    assert_eq!(queued_events.len(), 1, "one refresh event should be queued");
+    assert_eq!(queued_events[0].name, "PARTY_LOOT_METHOD_CHANGED");
+
+    env.fire_event(&queued_events[0].name).unwrap();
+    let received: bool = env.eval("return __loot_method_refresh_received").unwrap();
+    assert!(received, "Lua listeners should receive the queued refresh event");
 }
 
 #[test]
