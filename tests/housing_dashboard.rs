@@ -153,6 +153,9 @@ fn dashboard_house_list_request_hides_main_spinner() {
                         return "dashboard_load_failed:" .. tostring(reason)
                     end
 
+                    C_Housing.GetPlayerOwnedHouses = function()
+                        FireEvent("PLAYER_HOUSE_LIST_UPDATED", {})
+                    end
                     ShowUIPanel(HousingDashboardFrame)
 
                     if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then

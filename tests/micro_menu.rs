@@ -87,8 +87,24 @@ fn setup_env() -> WowLuaEnv {
     }
 
     env.apply_post_load_workarounds();
+    install_fixture_globals(&env);
     fire_startup_events(&env);
     env
+}
+
+fn install_fixture_globals(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        function KeybindFrames_InQuickKeybindMode()
+            return false
+        end
+
+        function CanShowAchievementUI()
+            return true
+        end
+        "#,
+    )
+    .expect("failed to install micro-menu fixture globals");
 }
 
 /// Fire startup events (same sequence as main.rs).

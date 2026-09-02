@@ -32,6 +32,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_StoreUI",
     "Blizzard_MicroMenu",
     "Blizzard_ManagedFrameSystem",
+    "Blizzard_Game",
     "Blizzard_GameMenuEsc",
     "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
