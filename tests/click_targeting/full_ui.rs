@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use wow_ui_sim::loader::{find_toc_file, load_addon};
-use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::globals::global_frames;
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 use super::common;
 
@@ -25,6 +25,9 @@ const CLICK_TARGETING_ADDONS: &[&str] = &[
     "Blizzard_Flyout",
     "Blizzard_StoreUI",
     "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_GameMenuEsc",
+    "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
@@ -47,8 +50,10 @@ const CLICK_TARGETING_ADDONS: &[&str] = &[
 ];
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .unwrap_or_else(|_| wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available"))
+    wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap_or_else(|_| {
+        wow_ui_sim::paths::default_blizzard_ui_addons_path()
+            .expect("Blizzard UI cache should be available")
+    })
 }
 
 pub(crate) fn env_with_full_ui() -> WowLuaEnv {
