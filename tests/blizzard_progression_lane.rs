@@ -37,7 +37,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 const LANE_ADDONS: &[&str] = &[
@@ -223,8 +224,11 @@ fn lane_dep_edges_classify_each_addons_load_floor() {
 
     assert_eq!(
         soulbinds.dependencies(),
-        vec!["Blizzard_Colors".to_string()],
-        "Soulbinds depends on Blizzard_Colors for conduit-rank tinting and node-state highlighting"
+        vec![
+            "Blizzard_Colors".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+        ],
+        "Retail 12.1.0.69497 Soulbinds depends on Blizzard_Colors and Blizzard_GameMenuEsc"
     );
 
     assert!(

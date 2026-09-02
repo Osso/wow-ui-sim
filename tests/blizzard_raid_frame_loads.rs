@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn raid_frame_dir() -> PathBuf {
@@ -19,7 +20,14 @@ fn raid_frame_mainline_toc() -> PathBuf {
     raid_frame_dir().join("Blizzard_RaidFrame_Mainline.toc")
 }
 
-const TOC_FILES: &[&str] = &["Mainline/RaidFrame.lua", "Mainline/RaidFrame.xml"];
+const TOC_FILES: &[&str] = &[
+    "Mainline/RaidFrame.lua",
+    "Mainline/RaidFrame.xml",
+    "Mainline/RaidFrameSocialView.lua",
+    "Mainline/RaidFrameSocialView.xml",
+    "Mainline/RaidInfoFrameSocialView.lua",
+    "Mainline/RaidInfoFrameSocialView.xml",
+];
 
 const REQUIRED_DEPS: &[&str] = &[
     "Blizzard_UIPanels_Game",
@@ -167,7 +175,11 @@ fn blizzard_raid_frame_toc_pins_eager_mainline_only_with_default_state_enabled()
         );
     }
 
-    assert!(toc.optional_deps().is_empty());
+    assert_eq!(
+        toc.optional_deps(),
+        vec!["Blizzard_SocialUIShared".to_string()],
+        "Retail 12.1.0.69497 declares Blizzard_SocialUIShared as an optional dependency"
+    );
     assert!(toc.load_with().is_empty());
     assert!(
         toc.saved_variables().is_empty(),
@@ -221,6 +233,7 @@ fn blizzard_raid_frame_toc_declares_metadata_in_raw_bytes() {
         "## Dependencies: Blizzard_UIPanels_Game, Blizzard_UnitFrame, Blizzard_FriendsFrame"
     ));
     assert!(raw.contains("## AllowLoadGameType: mainline"));
+    assert!(raw.contains("## OptionalDeps: Blizzard_SocialUIShared"));
 
     assert!(
         !raw.contains("## AllowLoad:"),
@@ -261,24 +274,8 @@ fn blizzard_raid_frame_toc_lists_two_files_lua_then_xml() {
         .collect();
     assert_eq!(
         listed, TOC_FILES,
-        "TOC body lists EXACTLY 2 files in the Mainline subdirectory in \
-         canonical Lua-then-XML order (paths normalized to forward slashes \
-         by src/toc.rs:147 — the raw bytes use Windows-style backslash \
-         separators `Mainline\\RaidFrame.lua` which the parser converts): \
-         Mainline/RaidFrame.lua FIRST (publishes 19 module-level public \
-         functions including the RaidFrame_OnLoad event registration block, \
-         the RaidParentFrame_OnLoad portrait setup, the RaidFrame_OnShow / \
-         RaidFrame_OnEvent / RaidFrame_Update state machine, the \
-         RaidInfoFrame_* family for the saved-instance scrollbox, and the \
-         ClaimRaidFrame parent-reparenting helper that other addons call to \
-         claim the raid tab content into their own panels), \
-         Mainline/RaidFrame.xml SECOND (publishes 2 virtual templates + the \
-         2 named non-virtual top-level frames RaidParentFrame and \
-         RaidFrame). UNLIKE the modern XML-driven Lua-loading pattern \
-         (Blizzard_QuickJoin / Blizzard_QuickKeybind / Blizzard_QuestNavigation \
-         which use `<Script file=>` includes), this addon uses the OLDER \
-         eager-load form where both .lua and .xml are listed explicitly in \
-         the TOC body — same shape as Blizzard_QuestTimer"
+        "Retail 12.1.0.69497 lists the core RaidFrame Lua/XML pair followed by \
+         RaidFrameSocialView and RaidInfoFrameSocialView Lua/XML pairs"
     );
 }
 

@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn pvp_match_dir() -> PathBuf {
@@ -26,7 +27,7 @@ const PVP_MATCH_TOC_FILES: &[&str] = &[
     "PVPMatchScoreboard.xml",
 ];
 
-const REQUIRED_DEPS: &[&str] = &["Blizzard_UIWidgets"];
+const REQUIRED_DEPS: &[&str] = &["Blizzard_UIWidgets", "Blizzard_LFGUtil"];
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
     "PVPRowMixin",

@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn quest_timer_dir() -> PathBuf {
@@ -19,7 +20,7 @@ fn quest_timer_toc() -> PathBuf {
 
 const TOC_FILES: &[&str] = &["Blizzard_QuestTimer.lua", "Blizzard_QuestTimer.xml"];
 
-const REQUIRED_DEPS: &[&str] = &["Blizzard_UIParent", "Blizzard_GameTooltip"];
+const REQUIRED_DEPS: &[&str] = &["Blizzard_GameTooltip", "Blizzard_ManagedFrameSystem"];
 
 #[test]
 fn blizzard_quest_timer_find_toc_resolves_bare_variant() {
@@ -91,18 +92,14 @@ fn blizzard_quest_timer_toc_pins_classic_only_with_default_state_enabled() {
 }
 
 #[test]
-fn blizzard_quest_timer_toc_declares_two_dependencies() {
+fn blizzard_quest_timer_toc_declares_game_tooltip_and_managed_frame_dependencies() {
     let toc = TocFile::from_file(&quest_timer_toc()).expect("TOC parses");
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
         deps, REQUIRED_DEPS,
-        "TOC must declare 2 hard deps in `## Dependencies:` (plural form, \
-         comma-separated): Blizzard_UIParent (publishes the parent UIParent \
-         frame and the UIParentRightManagedFrameTemplate the QuestTimerFrame \
-         inherits) and Blizzard_GameTooltip (publishes the GameTooltip global \
-         the QuestTimerButton OnEnter/OnLeave scripts call SetOwner / SetText \
-         / Show / Hide on)"
+        "Retail 12.1.0.69497 declares Blizzard_GameTooltip and \
+         Blizzard_ManagedFrameSystem in published order"
     );
 }
 
@@ -117,7 +114,7 @@ fn blizzard_quest_timer_toc_declares_metadata_in_raw_bytes() {
         "TOC must declare `## DefaultState: enabled` — the AddOn list UI shows \
          the addon enabled by default for users who toggle it manually"
     );
-    assert!(raw.contains("## Dependencies: Blizzard_UIParent, Blizzard_GameTooltip"));
+    assert!(raw.contains("## Dependencies: Blizzard_GameTooltip, Blizzard_ManagedFrameSystem"));
     assert!(raw.contains("## AllowLoad: game"));
     assert!(raw.contains("## AllowLoadGameType: classic"));
 

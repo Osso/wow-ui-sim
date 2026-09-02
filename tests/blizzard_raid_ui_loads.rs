@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn raid_ui_dir() -> PathBuf {
@@ -221,11 +222,8 @@ fn blizzard_raid_ui_toc_declares_metadata_in_raw_bytes() {
          still Blizzard_RaidUI"
     );
     assert!(raw.contains("## LoadOnDemand: 1"));
-    assert!(
-        raw.contains(
-            "## SavedVariablesPerCharacter: RAID_PULLOUT_POSITIONS, RAID_SINGLE_POSITIONS"
-        )
-    );
+    assert!(raw
+        .contains("## SavedVariablesPerCharacter: RAID_PULLOUT_POSITIONS, RAID_SINGLE_POSITIONS"));
 
     assert!(!raw.contains("## Author"));
     assert!(!raw.contains("## DefaultState"));
@@ -235,13 +233,12 @@ fn blizzard_raid_ui_toc_declares_metadata_in_raw_bytes() {
         "TOC must NOT carry OptionalDeps"
     );
     assert!(
-        !raw.contains("## AllowLoad:"),
-        "TOC must NOT carry `## AllowLoad:` — relies on the missing-directive \
-         Game-only default"
+        raw.contains("## AllowLoad: game"),
+        "Retail 12.1.0.69497 explicitly gates Blizzard_RaidUI to game screens"
     );
     assert!(
-        !raw.contains("## AllowLoadGameType"),
-        "TOC must NOT carry `## AllowLoadGameType:` — flavor-agnostic"
+        raw.contains("## AllowLoadGameType: mainline"),
+        "Retail 12.1.0.69497 restricts this TOC to mainline"
     );
     assert!(!raw.contains("## LoadFirst"));
     assert!(!raw.contains("## Version"));
@@ -280,26 +277,27 @@ fn blizzard_raid_ui_toc_lists_bootstrap_xml_then_localization() {
 }
 
 #[test]
-fn blizzard_raid_ui_excluded_from_eager_game_discovery() {
+fn blizzard_raid_ui_is_pulled_into_game_discovery_by_raid_frame() {
     let ui = blizzard_ui_dir();
+    let game_addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+    assert!(
+        game_addons
+            .iter()
+            .any(|(name, _)| name == "Blizzard_RaidUI"),
+        "Retail game discovery includes LoadOnDemand Blizzard_RaidUI through the explicit \
+         Blizzard_RaidUI -> Blizzard_RaidFrame startup dependency"
+    );
 
     for screen in [
-        ScreenKind::Game,
         ScreenKind::Login,
         ScreenKind::CharacterSelect,
         ScreenKind::CharacterCreate,
     ] {
-        let addons = discover_blizzard_addons_for_screen(&ui, screen);
-        let found = addons.iter().any(|(name, _)| name == "Blizzard_RaidUI");
         assert!(
-            !found,
-            "Blizzard_RaidUI must NOT appear in {screen:?} eager-discovery \
-             — `## LoadOnDemand: 1` triggers the loader filter at \
-             src/loader/mod.rs:527 which rejects LOD addons from the \
-             eager-load pool. It only loads when Blizzard_RaidFrame's \
-             RaidFrame_OnEvent (at PLAYER_LOGIN if IsInRaid, or on \
-             GROUP_ROSTER_UPDATE) calls RaidFrame_LoadUI which then calls \
-             UIParentLoadAddOn"
+            !discover_blizzard_addons_for_screen(&ui, screen)
+                .iter()
+                .any(|(name, _)| name == "Blizzard_RaidUI"),
+            "Blizzard_RaidUI remains absent from {screen:?} discovery"
         );
     }
 }
@@ -590,7 +588,7 @@ fn blizzard_raid_ui_registers_extra_events_on_raid_frame(env: &WowLuaEnv) {
 
 #[test]
 fn blizzard_raid_ui_xml_pulls_lua_via_script_directive() {
-    let xml_path = raid_ui_dir().join("Blizzard_RaidUI.xml");
+    let xml_path = raid_ui_dir().join("Mainline/Blizzard_RaidUI.xml");
     let xml = std::fs::read_to_string(&xml_path).expect("XML reads utf-8");
     assert!(
         xml.contains(r#"<Script file="Blizzard_RaidUI.lua"/>"#),

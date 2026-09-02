@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn queue_status_dir() -> PathBuf {
@@ -24,7 +25,7 @@ const TOC_FILES: &[&str] = &[
     "Mainline/QueueStatusFrame.xml",
 ];
 
-const REQUIRED_DEPS: &[&str] = &["Blizzard_ActionBar"];
+const REQUIRED_DEPS: &[&str] = &["Blizzard_ActionBar", "Blizzard_LFGUtil"];
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
     "EyeTemplateMixin",
@@ -198,21 +199,14 @@ fn blizzard_queue_status_frame_toc_pins_eager_mainline_only_with_default_state_e
 }
 
 #[test]
-fn blizzard_queue_status_frame_toc_declares_one_dependency() {
+fn blizzard_queue_status_frame_toc_declares_action_bar_and_lfg_util_dependencies() {
     let toc = TocFile::from_file(&queue_status_mainline_toc()).expect("TOC parses");
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
         deps, REQUIRED_DEPS,
-        "TOC must declare exactly 1 hard dep in `## Dependencies:`: \
-         Blizzard_ActionBar. The queue-status button (QueueStatusButton) \
-         declares `parent=\"MicroMenuContainer\"` in its XML, and \
-         MicroMenuContainer is published by Blizzard_MicroMenu's \
-         Mainline/MicroMenuContainer.xml. Blizzard_ActionBar transitively \
-         depends on Blizzard_MicroMenu, so declaring Blizzard_ActionBar as the \
-         hard dep guarantees both the action-bar load order and the \
-         MicroMenuContainer parent are ready when this addon's XML resolves \
-         the parent reference"
+        "Retail 12.1.0.69497 declares Blizzard_ActionBar and Blizzard_LFGUtil \
+         in published order"
     );
 }
 
@@ -227,7 +221,7 @@ fn blizzard_queue_status_frame_toc_declares_metadata_in_raw_bytes() {
         "TOC must declare `## DefaultState: enabled` — the AddOn list UI shows \
          the addon enabled by default for users who toggle it manually"
     );
-    assert!(raw.contains("## Dependencies: Blizzard_ActionBar"));
+    assert!(raw.contains("## Dependencies: Blizzard_ActionBar, Blizzard_LFGUtil"));
     assert!(raw.contains("## AllowLoad: game"));
     assert!(raw.contains("## AllowLoadGameType: mainline"));
 

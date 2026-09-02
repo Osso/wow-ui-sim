@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn pvp_ui_dir() -> PathBuf {
@@ -24,12 +25,14 @@ fn pvp_ui_mists_toc() -> PathBuf {
 }
 
 const MAINLINE_TOC_FILES: &[&str] = &[
+    "Mainline/Blizzard_PVPUI_Bootstrap.lua",
     "Mainline/Blizzard_PVPUI.lua",
     "Mainline/Blizzard_PVPUI.xml",
     "Localization.lua",
 ];
 
 const MISTS_TOC_FILES: &[&str] = &[
+    "Mists/Blizzard_PVPUI_Bootstrap.lua",
     "Mists/Blizzard_PVPUI.lua",
     "Mists/Blizzard_PVPUI.xml",
     "Localization.lua",
@@ -39,6 +42,7 @@ const MAINLINE_DEPS: &[&str] = &[
     "Blizzard_HelpPlate",
     "Blizzard_GroupFinder",
     "Blizzard_MatchmakingQueueDisplay",
+    "Blizzard_FrameXMLUtil",
 ];
 
 const MISTS_DEPS: &[&str] = &["Blizzard_HelpPlate", "Blizzard_GroupFinder"];
@@ -215,7 +219,7 @@ fn blizzard_pvp_ui_mists_toc_pins_classic_flavor_restriction() {
 }
 
 #[test]
-fn blizzard_pvp_ui_mainline_declares_three_dependencies() {
+fn blizzard_pvp_ui_mainline_declares_four_dependencies() {
     let toc =
         TocFile::from_file(&pvp_ui_mainline_toc()).expect("Blizzard_PVPUI_Mainline TOC parses");
 
@@ -223,18 +227,14 @@ fn blizzard_pvp_ui_mainline_declares_three_dependencies() {
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
         deps, MAINLINE_DEPS,
-        "Mainline TOC must declare 3 hard deps in `## Dependencies:` (plural \
-         form, comma-separated): Blizzard_HelpPlate (the dotted-rectangle \
-         tutorial-overlay system used by PVP onboarding tooltips), \
-         Blizzard_GroupFinder (publishes the parent PVEFrame that PVPUIFrame \
-         attaches to as `parent=\"PVEFrame\"`), and \
-         Blizzard_MatchmakingQueueDisplay (the modern queue-position-and-time \
-         display widget shown above the rated panels). The third dep is the \
-         RETAIL-ONLY differentiator — Mists variant omits it because the \
-         classic flavor uses an older queue UI"
+        "Retail 12.1.0.69497 Mainline TOC declares HelpPlate, GroupFinder, \
+         MatchmakingQueueDisplay, and FrameXMLUtil in published order"
     );
 
-    assert!(toc.optional_deps().is_empty());
+    assert_eq!(
+        toc.optional_deps(),
+        vec!["Blizzard_Plunderstorm".to_string()]
+    );
     assert!(toc.load_with().is_empty());
 }
 
@@ -279,7 +279,7 @@ fn blizzard_pvp_ui_mainline_toc_declares_metadata_in_raw_bytes() {
     assert!(raw.contains("## LoadOnDemand: 1"));
     assert!(raw.contains("## AllowLoad: game"));
     assert!(raw.contains(
-        "## Dependencies: Blizzard_HelpPlate, Blizzard_GroupFinder, Blizzard_MatchmakingQueueDisplay"
+        "## Dependencies: Blizzard_HelpPlate, Blizzard_GroupFinder, Blizzard_MatchmakingQueueDisplay, Blizzard_FrameXMLUtil"
     ));
     assert!(raw.contains("## AllowLoadGameType: mainline"));
 
@@ -292,13 +292,13 @@ fn blizzard_pvp_ui_mainline_toc_declares_metadata_in_raw_bytes() {
         "TOC must NOT declare any SavedVariables directive"
     );
     assert!(
-        !raw.contains("## OptionalDeps"),
-        "TOC must NOT declare `## OptionalDeps:`"
+        raw.contains("## OptionalDeps: Blizzard_Plunderstorm"),
+        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as an optional dependency"
     );
 }
 
 #[test]
-fn blizzard_pvp_ui_mainline_lists_three_files_with_variant_subdirectory() {
+fn blizzard_pvp_ui_mainline_lists_bootstrap_then_three_files_with_variant_subdirectory() {
     let toc = TocFile::from_file(&pvp_ui_mainline_toc()).expect("Mainline TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -307,20 +307,13 @@ fn blizzard_pvp_ui_mainline_lists_three_files_with_variant_subdirectory() {
         .collect();
     assert_eq!(
         listed, MAINLINE_TOC_FILES,
-        "Mainline TOC must list 3 files (paths normalized to forward slashes by \
-         src/toc.rs:147): Mainline/Blizzard_PVPUI.lua FIRST (the Mainline-flavor \
-         module declaring all 22 mixins + the PVPUIFrame/PVPQueueFrame logic), \
-         Mainline/Blizzard_PVPUI.xml SECOND (the matching XML with virtual \
-         templates and named frames), then Localization.lua THIRD at the addon \
-         root (SHARED across both flavor variants — pinned by the matching \
-         entry in MISTS_TOC_FILES). The variant-subdirectory file layout is \
-         the canonical pattern for cross-flavor addons that maintain divergent \
-         Lua/XML per flavor while sharing localization strings at the root level"
+        "Retail 12.1.0.69497 Mainline TOC lists its bootstrap before the Lua, XML, \
+         and shared localization files"
     );
 }
 
 #[test]
-fn blizzard_pvp_ui_mists_lists_three_files_with_mists_subdirectory() {
+fn blizzard_pvp_ui_mists_lists_bootstrap_then_three_files_with_mists_subdirectory() {
     let toc = TocFile::from_file(&pvp_ui_mists_toc()).expect("Mists TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -329,9 +322,8 @@ fn blizzard_pvp_ui_mists_lists_three_files_with_mists_subdirectory() {
         .collect();
     assert_eq!(
         listed, MISTS_TOC_FILES,
-        "Mists TOC must list the same 3-file structure as Mainline but with \
-         Mists/ subdirectory paths instead of Mainline/. Localization.lua is \
-         shared at root"
+        "Retail 12.1.0.69497 Mists TOC lists its bootstrap before the flavor files \
+         and shared localization"
     );
 }
 
