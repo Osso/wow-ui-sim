@@ -249,14 +249,13 @@ fn blizzard_deprecated_toc_lists_current_profile_scoped_shims() {
     assert_eq!(
         files,
         vec![
-            "Classic/Deprecated_1_15_8.lua",
-            "Classic/Deprecated_2_5_5.lua",
             "Mainline/Deprecated_12_0_1.lua",
             "Mainline/Deprecated_12_0_5.lua",
             "Mainline/Deprecated_12_0_7.lua",
             "Mainline/Deprecated_12_1_0.lua",
             "Shared/Deprecated_12_1_0.lua",
         ],
-        "Retail 12.1.0.69497 scopes deprecated shims by profile and shared 12.1 support"
+        "Retail TOC parsing keeps active mainline and shared deprecated shims while filtering \
+         classic-only entries"
     );
 }
