@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn warfronts_party_pose_dir() -> PathBuf {
@@ -141,7 +142,7 @@ fn toc_omits_allow_load_directives() {
 }
 
 #[test]
-fn toc_lists_lua_then_xml_in_order() {
+fn toc_lists_bootstrap_lua_then_xml_in_order() {
     let toc = TocFile::from_file(&warfronts_party_pose_toc())
         .expect("Blizzard_WarfrontsPartyPoseUI TOC should parse");
     assert_eq!(
@@ -150,10 +151,11 @@ fn toc_lists_lua_then_xml_in_order() {
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
         vec![
+            "Blizzard_WarfrontsPartyPoseUI_Bootstrap.lua".to_string(),
             "Blizzard_WarfrontsPartyPoseUI.lua".to_string(),
             "Blizzard_WarfrontsPartyPoseUI.xml".to_string(),
         ],
-        "TOC body lists lua FIRST then xml — the lua file declares WarfrontsPartyPoseMixin = \
+        "Retail 12.1.0.69497 TOC lists the bootstrap before lua and xml; the lua file declares WarfrontsPartyPoseMixin = \
          CreateFromMixins(PartyPoseMixin) at file scope (line 1) before any XML-instantiated \
          frame's `mixin=\"WarfrontsPartyPoseMixin\"` attribute or `<OnLoad method=\"OnLoad\"/>` \
          script binding tries to resolve the mixin table via `_G`"
@@ -179,6 +181,7 @@ fn toc_raw_bytes_pin_required_directives() {
     }
 
     for body in [
+        "Blizzard_WarfrontsPartyPoseUI_Bootstrap.lua [Bootstrap]",
         "Blizzard_WarfrontsPartyPoseUI.lua",
         "Blizzard_WarfrontsPartyPoseUI.xml",
     ] {
@@ -190,15 +193,13 @@ fn toc_raw_bytes_pin_required_directives() {
 }
 
 #[test]
-fn directory_holds_three_entries() {
+fn directory_holds_four_entries_with_bootstrap() {
     let entries = std::fs::read_dir(warfronts_party_pose_dir())
         .expect("Blizzard_WarfrontsPartyPoseUI directory should read")
         .count();
     assert_eq!(
-        entries, 3,
-        "Directory must hold exactly 3 entries (1 TOC + 1 lua + 1 xml; no flavor subdirectory, \
-         no Localization.lua — the WARFRONTS_LEAVE button text comes from the global locale \
-         table the SetLeaveButtonText handler references)"
+        entries, 4,
+        "Retail 12.1.0.69497 directory holds the TOC, bootstrap Lua, main Lua, and XML"
     );
 }
 

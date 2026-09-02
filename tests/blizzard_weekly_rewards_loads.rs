@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn weekly_rewards_dir() -> PathBuf {
@@ -127,7 +128,7 @@ fn toc_omits_allow_load_directives() {
 }
 
 #[test]
-fn toc_lists_only_xml_body_file() {
+fn toc_lists_bootstrap_then_xml_body_file() {
     let toc =
         TocFile::from_file(&weekly_rewards_toc()).expect("Blizzard_WeeklyRewards TOC should parse");
     assert_eq!(
@@ -135,8 +136,11 @@ fn toc_lists_only_xml_body_file() {
             .iter()
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
-        vec!["Blizzard_WeeklyRewards.xml".to_string()],
-        "TOC body lists ONLY the XML file — the lua file is loaded transitively via \
+        vec![
+            "Blizzard_WeeklyRewards_Bootstrap.lua".to_string(),
+            "Blizzard_WeeklyRewards.xml".to_string(),
+        ],
+        "Retail 12.1.0.69497 TOC lists the bootstrap then XML; the main lua file is loaded transitively via \
          `<Script file=\"Blizzard_WeeklyRewards.lua\"/>` at line 3 of the XML, NOT from the TOC \
          body. This is a deliberate Blizzard pattern: by deferring the lua load to the XML, the \
          mixin tables (WeeklyRewardsMixin / WeeklyRewardActivityItemMixin / etc.) are populated \
@@ -157,10 +161,15 @@ fn toc_raw_bytes_pin_minimal_directives() {
         );
     }
 
-    assert!(
-        raw.contains("Blizzard_WeeklyRewards.xml"),
-        "TOC must contain body file line `Blizzard_WeeklyRewards.xml`"
-    );
+    for body in [
+        "Blizzard_WeeklyRewards_Bootstrap.lua [Bootstrap]",
+        "Blizzard_WeeklyRewards.xml",
+    ] {
+        assert!(
+            raw.contains(body),
+            "TOC must contain body file line `{body}`"
+        );
+    }
 
     assert!(
         !raw.contains("Blizzard_WeeklyRewards.lua"),
@@ -182,22 +191,19 @@ fn toc_raw_bytes_pin_minimal_directives() {
         assert!(
             !raw.contains(absent_directive),
             "TOC must NOT contain `{absent_directive}` — Blizzard_WeeklyRewards is the most \
-             minimal addon analyzed in this campaign: just Title + LoadOnDemand:1 + 1 body line"
+             minimal addon analyzed in this campaign: Title + LoadOnDemand:1 + bootstrap/XML body lines"
         );
     }
 }
 
 #[test]
-fn directory_holds_three_entries() {
+fn directory_holds_four_entries_with_bootstrap() {
     let entries = std::fs::read_dir(weekly_rewards_dir())
         .expect("Blizzard_WeeklyRewards directory should read")
         .count();
     assert_eq!(
-        entries, 3,
-        "Directory must hold exactly 3 entries (1 TOC + 1 lua + 1 xml; no flavor subdirectory, \
-         no Localization.lua — every UI string comes from the global locale table via \
-         WEEKLY_REWARDS_CONFIRM_SELECT / GREAT_VAULT_RETIRE_WARNING / WORLD / PVP / RAIDS / \
-         DUNGEONS)"
+        entries, 4,
+        "Retail 12.1.0.69497 directory holds the TOC, bootstrap Lua, main Lua, and XML"
     );
 }
 

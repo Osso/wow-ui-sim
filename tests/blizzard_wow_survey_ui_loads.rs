@@ -6,7 +6,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn wow_survey_dir() -> PathBuf {
@@ -27,7 +28,11 @@ fn status_ui_toc() -> PathBuf {
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_StatusUI"];
 
-const BODY_FILES: &[&str] = &["Blizzard_WowSurveyUI.lua", "Blizzard_WowSurveyUI.xml"];
+const BODY_FILES: &[&str] = &[
+    "Blizzard_WowSurveyUI_Bootstrap.lua",
+    "Blizzard_WowSurveyUI.lua",
+    "Blizzard_WowSurveyUI.xml",
+];
 
 const SURVEY_MIXIN_METHODS: &[&str] = &["OnLoad", "OnEvent", "OnClick"];
 
@@ -115,7 +120,7 @@ fn toc_omits_allow_load_directives() {
 }
 
 #[test]
-fn toc_lists_both_lua_and_xml_body_files() {
+fn toc_lists_bootstrap_lua_and_xml_body_files() {
     let toc = TocFile::from_file(&wow_survey_toc()).expect("Blizzard_WowSurveyUI TOC should parse");
 
     let body_files: Vec<String> = toc
@@ -127,9 +132,9 @@ fn toc_lists_both_lua_and_xml_body_files() {
     assert_eq!(
         body_files,
         BODY_FILES.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
-        "TOC body lists `Blizzard_WowSurveyUI.lua` (51 lines) FIRST and \
-         `Blizzard_WowSurveyUI.xml` (10 lines) SECOND. The order matters because the lua file \
-         declares `WowSurveyStatusMixin = {{}}` and attaches OnLoad/OnEvent/OnClick to it BEFORE \
+        "Retail 12.1.0.69497 TOC lists the bootstrap, then `Blizzard_WowSurveyUI.lua`, then \
+         `Blizzard_WowSurveyUI.xml`. The lua file declares `WowSurveyStatusMixin = {{}}` and \
+         attaches OnLoad/OnEvent/OnClick to it BEFORE \
          the XML element `<Button name=\"WowSurveyStatusFrame\" mixin=\"WowSurveyStatusMixin\">` \
          resolves the mixin name. If the XML loaded first, the mixin reference would resolve \
          to `nil` and the Button would inherit nothing"
@@ -145,6 +150,7 @@ fn toc_raw_bytes_pin_directives() {
         "## Title: Blizzard_WowSurveyUI",
         "## LoadOnDemand: 1",
         "## Dependencies: Blizzard_StatusUI",
+        "Blizzard_WowSurveyUI_Bootstrap.lua [Bootstrap]",
         "Blizzard_WowSurveyUI.lua",
         "Blizzard_WowSurveyUI.xml",
     ] {
@@ -176,16 +182,16 @@ fn toc_raw_bytes_pin_directives() {
 }
 
 #[test]
-fn directory_holds_three_entries() {
+fn directory_holds_four_entries_with_bootstrap() {
     let entries: Vec<String> = std::fs::read_dir(wow_survey_dir())
         .expect("Blizzard_WowSurveyUI directory should exist")
         .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
         .collect();
     assert_eq!(
         entries.len(),
-        3,
-        "Blizzard_WowSurveyUI directory must hold exactly 3 entries (toc + lua + xml). \
-         No flavor subdirectory, no Localization.lua, no separate Mixins.lua. Got: {entries:?}"
+        4,
+        "Retail 12.1.0.69497 directory holds the TOC, bootstrap Lua, main Lua, and XML. \
+         Got: {entries:?}"
     );
 }
 
