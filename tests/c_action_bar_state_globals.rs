@@ -4,15 +4,24 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
-fn action_bar_state_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/action_bar_state.rs").exists(),
-        "action-bar transition globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/action_bar_state.rs").exists(),
-        "action-bar transition globals should stay classified as real modeled Lua globals",
-    );
+fn override_bar_index_is_visible_when_override_state_is_active() {
+    let env = WowLuaEnv::new().expect("env");
+    {
+        let mut state = env.state().borrow_mut();
+        state.has_override_action_bar = true;
+        state.override_bar_index = 14;
+    }
+
+    let (has_override_bar, override_bar_index): (bool, Option<i32>) = env
+        .eval(
+            r#"
+            return C_ActionBar.HasOverrideActionBar(), C_ActionBar.GetOverrideBarIndex()
+            "#,
+        )
+        .unwrap();
+
+    assert!(has_override_bar);
+    assert_eq!(override_bar_index, Some(14));
 }
 
 #[test]
@@ -86,7 +95,8 @@ fn vehicle_bar_index_reads_state() {
         state.vehicle_bar_index = 7;
     }
 
-    let vehicle_bar_index: Option<i32> = env.eval("return C_ActionBar.GetVehicleBarIndex()").unwrap();
+    let vehicle_bar_index: Option<i32> =
+        env.eval("return C_ActionBar.GetVehicleBarIndex()").unwrap();
 
     assert_eq!(vehicle_bar_index, Some(7));
 }

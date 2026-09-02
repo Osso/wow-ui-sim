@@ -7,7 +7,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn zone_ability_dir() -> PathBuf {
@@ -18,7 +19,12 @@ fn zone_ability_toc() -> PathBuf {
     zone_ability_dir().join("Blizzard_ZoneAbility_Mainline.toc")
 }
 
-const REQUIRED_DEPS: &[&str] = &["Blizzard_UIPanels_Game", "Blizzard_ActionBarController"];
+const REQUIRED_DEPS: &[&str] = &[
+    "Blizzard_UIPanels_Game",
+    "Blizzard_ActionBarController",
+    "Blizzard_ActionBar",
+    "Blizzard_PingUI",
+];
 
 const BODY_FILES: &[&str] = &["ZoneAbility.lua", "ZoneAbility.xml"];
 
@@ -123,13 +129,10 @@ fn toc_declares_eager_load_with_two_required_deps() {
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
-        "Blizzard_ZoneAbility declares `## Dependencies: Blizzard_UIPanels_Game, \
-         Blizzard_ActionBarController` (singular plural `Dependencies` key, two values). \
-         Blizzard_UIPanels_Game ships `ExtraAbilityContainer` (the Shared/ExtraAbilityContainer.lua \
-         frame that ZoneAbility:UpdateDisplayedZoneAbilities calls AddFrame/RemoveFrame on at \
-         lua:170/174), and Blizzard_ActionBarController provides `ActionButtonUtil` (used at \
-         lua:120 to detect whether a zone-ability spell is already on a player action bar so the \
-         ZoneAbilityFrame can suppress its own draw — avoiding duplicate buttons)"
+        "Blizzard_ZoneAbility declares four dependencies in source order: \
+         Blizzard_UIPanels_Game, Blizzard_ActionBarController, Blizzard_ActionBar, and \
+         Blizzard_PingUI. The ZoneAbility frame depends on the panel host, action-bar \
+         controller and button surface, plus the Ping UI integration"
     );
 
     assert!(toc.optional_deps().is_empty());
@@ -203,7 +206,7 @@ fn toc_raw_bytes_pin_directives() {
         "## Title: Blizzard_ZoneAbility",
         "## Author: Blizzard Entertainment",
         "## DefaultState: enabled",
-        "## Dependencies: Blizzard_UIPanels_Game, Blizzard_ActionBarController",
+        "## Dependencies: Blizzard_UIPanels_Game, Blizzard_ActionBarController, Blizzard_ActionBar, Blizzard_PingUI",
         "## AllowLoad: game",
         "## AllowLoadGameType: mainline",
         "ZoneAbility.lua",
@@ -254,10 +257,8 @@ fn dep_directories_exist_on_disk() {
         let dep_dir = blizzard_ui_dir().join(dep);
         assert!(
             dep_dir.is_dir(),
-            "Required dep `{dep}` must exist at `Interface/BlizzardUI/{dep}/` — both deps are \
-             eager-loaded core addons (DefaultState: enabled). Blizzard_UIPanels_Game ships the \
-             ExtraAbilityContainer host frame; Blizzard_ActionBarController provides \
-             ActionButtonUtil for action-bar slot inspection"
+            "Required dep `{dep}` must exist at `Interface/BlizzardUI/{dep}/` — one of the \
+             four eager-loaded dependencies declared by the active retail TOC"
         );
     }
 }

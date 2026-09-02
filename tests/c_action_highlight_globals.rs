@@ -15,15 +15,21 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
-fn action_highlight_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/action_highlights.rs").exists(),
-        "action-highlight globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/action_highlights.rs").exists(),
-        "action-highlight globals should stay classified as real modeled Lua globals",
-    );
+fn clearing_an_unbound_slot_preserves_other_new_action_marks() {
+    let env = env();
+    let (cleared, retained): (Option<bool>, Option<bool>) = env
+        .eval(
+            r#"
+            MarkNewActionHighlight(4)
+            MarkNewActionHighlight(9)
+            ClearNewActionHighlight(4, false)
+            return GetNewActionHighlightMark(4), GetNewActionHighlightMark(9)
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(cleared, None);
+    assert_eq!(retained, Some(true));
 }
 
 #[test]

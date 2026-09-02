@@ -19,7 +19,7 @@ fn token_ui_toc() -> PathBuf {
     token_ui_dir().join("Blizzard_WowTokenUI.toc")
 }
 
-const REQUIRED_DEPS: &[&str] = &["Blizzard_SharedXML", "Blizzard_UIParent"];
+const REQUIRED_DEPS: &[&str] = &["Blizzard_SharedXML"];
 
 const BODY_FILES: &[&str] = &["Blizzard_WowTokenUI.xml", "Blizzard_WowTokenUIInsecure.xml"];
 
@@ -111,12 +111,9 @@ fn toc_declares_secure_environment_with_two_required_deps() {
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
-        "Blizzard_WowTokenUI declares `## RequiredDep: Blizzard_SharedXML, Blizzard_UIParent` \
-         (singular `RequiredDep` key with a comma-list of 2 deps). Both deps are eagerly \
-         loaded core addons that must be present before the secure-env first-pass loads — \
-         Blizzard_SharedXML provides the DefaultPanelTemplate the redemption frame inherits, \
-         Blizzard_UIParent provides UIParent (the parent of both named non-virtual frames) \
-         plus UIErrorsFrame which the insecure RedeemFailed handler messages on token errors"
+        "Blizzard_WowTokenUI declares exactly `## RequiredDep: Blizzard_SharedXML`. The \
+         secure-environment addon has one explicit loader dependency: Blizzard_SharedXML, \
+         which supplies shared UI templates before the token XML files load"
     );
 
     assert!(
@@ -194,7 +191,7 @@ fn toc_raw_bytes_pin_directives() {
 
     for directive in [
         "## Title: Blizzard WoW Token UI",
-        "## RequiredDep: Blizzard_SharedXML, Blizzard_UIParent",
+        "## RequiredDep: Blizzard_SharedXML",
         "## UseSecureEnvironment: 1",
         "Blizzard_WowTokenUI.xml",
         "Blizzard_WowTokenUIInsecure.xml",
@@ -250,7 +247,7 @@ fn dep_directories_exist_on_disk() {
         assert!(
             dep_dir.is_dir(),
             "Required dep `{dep}` directory must exist at \
-             `Interface/BlizzardUI/{dep}/` — both deps are eagerly loaded core addons"
+             `Interface/BlizzardUI/{dep}/` — the token UI's sole declared dependency"
         );
     }
 }
