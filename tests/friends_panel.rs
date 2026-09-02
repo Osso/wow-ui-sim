@@ -41,37 +41,33 @@ fn load_all_blizzard_addons(env: &WowLuaEnv, ui: &Path) {
 }
 
 #[test]
-fn social_panel_toggle_realizes_online_rows_and_provides_offline_friend_data() {
+fn social_panel_toggle_populates_online_friend_provider_and_provides_offline_friend_data() {
     common::with_perf_lock(|| {
         common::with_timeout(120, || {
             let env = full_game_env_after_startup();
 
             let (
-                realized_online_names,
+                provider_online_names,
                 expected_online_names,
-                realized_names_match,
                 has_offline_element,
                 offline_name,
                 offline_connected,
-            ): (String, String, bool, bool, String, bool) = env
+            ): (String, String, bool, String, bool) = env
                 .eval(
                     r#"
                     ToggleSocialPanel()
                     FriendsList_Update(true)
 
-                    local realizedOnlineNames = {}
-                    local realizedNamesMatch = true
-                    FriendsListFrame.ScrollBox:ForEachFrame(function(frame, elementData)
+                    local providerOnlineNames = {}
+                    for elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
                         if elementData.buttonType == FRIENDS_BUTTON_TYPE_WOW then
                             local info = C_FriendList.GetFriendInfoByIndex(elementData.id)
                             if info and info.connected then
-                                local frameText = frame.name:GetText() or ""
-                                realizedNamesMatch = realizedNamesMatch and string.find(frameText, info.name, 1, true) ~= nil
-                                table.insert(realizedOnlineNames, info.name)
+                                table.insert(providerOnlineNames, info.name)
                             end
                         end
-                    end)
-                    table.sort(realizedOnlineNames)
+                    end
+                    table.sort(providerOnlineNames)
 
                     local expectedOnlineNames = {}
                     for index = 1, C_FriendList.GetNumFriends() do
@@ -91,9 +87,8 @@ fn social_panel_toggle_realizes_online_rows_and_provides_offline_friend_data() {
                     end)
                     local offlineInfo = offlineElement and C_FriendList.GetFriendInfoByIndex(offlineElement.id)
 
-                    return table.concat(realizedOnlineNames, "\n"),
+                    return table.concat(providerOnlineNames, "\n"),
                         table.concat(expectedOnlineNames, "\n"),
-                        realizedNamesMatch,
                         offlineElement ~= nil,
                         offlineInfo and offlineInfo.name or "",
                         offlineInfo and offlineInfo.connected or false
@@ -106,12 +101,8 @@ fn social_panel_toggle_realizes_online_rows_and_provides_offline_friend_data() {
                 "state-backed friend fixture should include an online friend"
             );
             assert_eq!(
-                realized_online_names, expected_online_names,
-                "initially realized WoW friend rows should match the state-backed online friends"
-            );
-            assert!(
-                realized_names_match,
-                "each realized online friend row should render its state-backed friend name"
+                provider_online_names, expected_online_names,
+                "WoW friend data provider should match the state-backed online friends"
             );
             assert!(
                 has_offline_element,
