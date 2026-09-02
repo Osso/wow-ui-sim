@@ -88,6 +88,7 @@ fn setup_env() -> WowLuaEnv {
     }
 
     install_professions_book_bootstrap(&env, &ui);
+    install_encounter_journal_bootstrap(&env, &ui);
     env.apply_post_load_workarounds();
     install_fixture_globals(&env);
     fire_startup_events(&env);
@@ -110,6 +111,25 @@ if not ok then error("run ProfessionsBook bootstrap: " .. tostring(runtime_error
     );
     env.exec(&loader)
         .expect("ProfessionsBook bootstrap should publish ToggleProfessionsBook");
+}
+
+fn install_encounter_journal_bootstrap(env: &WowLuaEnv, ui: &Path) {
+    let bootstrap_path =
+        ui.join("Blizzard_EncounterJournal/Blizzard_EncounterJournal_Bootstrap.lua");
+    let source = std::fs::read_to_string(&bootstrap_path).unwrap_or_else(|error| {
+        panic!(
+            "EncounterJournal bootstrap source {} should be readable: {error}",
+            bootstrap_path.display()
+        )
+    });
+    let loader = format!(
+        r#"local chunk, compile_error = loadstring([==[{source}]==], "@Blizzard_EncounterJournal/Blizzard_EncounterJournal_Bootstrap.lua")
+if not chunk then error("compile EncounterJournal bootstrap: " .. tostring(compile_error)) end
+local ok, runtime_error = pcall(chunk, "Blizzard_EncounterJournal", {{}})
+if not ok then error("run EncounterJournal bootstrap: " .. tostring(runtime_error)) end"#,
+    );
+    env.exec(&loader)
+        .expect("EncounterJournal bootstrap should publish ToggleEncounterJournal");
 }
 
 fn install_fixture_globals(env: &WowLuaEnv) {
