@@ -22,6 +22,7 @@ fn macro_ui_toc() -> PathBuf {
 }
 
 const MACRO_UI_TOC_FILES: &[&str] = &[
+    "Blizzard_MacroUI_Bootstrap.lua",
     "Blizzard_MacroDefine.lua",
     "Blizzard_MacroScrollFrame.xml",
     "Blizzard_MacroUI.xml",
@@ -121,7 +122,7 @@ fn blizzard_macro_ui_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_macro_ui_toc_declares_load_on_demand_with_no_dependencies() {
+fn blizzard_macro_ui_toc_declares_load_on_demand_with_plunderstorm_optional_dep() {
     let toc = TocFile::from_file(&macro_ui_toc()).expect("Blizzard_MacroUI TOC parses");
     assert!(
         toc.is_load_on_demand(),
@@ -144,7 +145,11 @@ fn blizzard_macro_ui_toc_declares_load_on_demand_with_no_dependencies() {
          TooltipBackdropTemplate / UIPanelButtonTemplate / PanelTopTabButtonTemplate / \
          ScrollBoxSelectorTemplate) is supplied by Blizzard_SharedXML which is itself eager-loaded"
     );
-    assert!(toc.optional_deps().is_empty());
+    assert_eq!(
+        toc.optional_deps(),
+        vec!["Blizzard_Plunderstorm".to_string()],
+        "Blizzard_MacroUI declares `## OptionalDeps: Blizzard_Plunderstorm`"
+    );
     assert!(
         toc.saved_variables().is_empty(),
         "Zero saved variables. Macro state lives in the engine-side macro tables (account vs \
@@ -184,7 +189,8 @@ fn blizzard_macro_ui_toc_declares_mainline_only_with_default_game_screen() {
 }
 
 #[test]
-fn blizzard_macro_ui_toc_raw_bytes_declare_load_on_demand_mainline_with_no_deps() {
+fn blizzard_macro_ui_toc_raw_bytes_declare_load_on_demand_mainline_with_plunderstorm_optional_dep()
+{
     let raw = std::fs::read_to_string(macro_ui_toc()).expect("Blizzard_MacroUI TOC reads");
     assert!(
         raw.contains("## LoadOnDemand: 1"),
@@ -199,8 +205,12 @@ fn blizzard_macro_ui_toc_raw_bytes_declare_load_on_demand_mainline_with_no_deps(
          the legacy macro UI through a separate addon path"
     );
     assert!(
-        !raw.contains("## Dependencies"),
-        "TOC must NOT declare `## Dependencies:` — the macro editor is self-contained"
+        !raw.contains("## Dependencies:"),
+        "TOC must NOT declare required `## Dependencies:`"
+    );
+    assert!(
+        raw.contains("## OptionalDeps: Blizzard_Plunderstorm"),
+        "TOC must declare Blizzard_Plunderstorm as an optional dependency"
     );
     assert!(
         !raw.contains("## AllowLoad:"),
@@ -215,7 +225,7 @@ fn blizzard_macro_ui_toc_raw_bytes_declare_load_on_demand_mainline_with_no_deps(
 }
 
 #[test]
-fn blizzard_macro_ui_toc_lists_five_files_in_dependency_order() {
+fn blizzard_macro_ui_toc_lists_bootstrap_then_five_ui_files_in_dependency_order() {
     let toc = TocFile::from_file(&macro_ui_toc()).expect("Blizzard_MacroUI TOC parses");
     assert_eq!(
         toc.files
@@ -223,32 +233,21 @@ fn blizzard_macro_ui_toc_lists_five_files_in_dependency_order() {
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
         MACRO_UI_TOC_FILES,
-        "TOC body must list exactly 5 files in this order — Blizzard_MacroDefine.lua first \
-         (publishes the 4 MACRO_SCROLL_BAR_OFFSET_* + MACRO_TAB2_WIDTH layout constants \
-         consumed by MacroFrameMixin:OnLoad), then 3 XML files (Blizzard_MacroScrollFrame.xml \
-         defines the MacroFrameScrollFrameTemplate virtual; Blizzard_MacroUI.xml instantiates \
-         the MacroFrame + MacroButtonTemplate via `<Script file=\"Blizzard_MacroUI.lua\"/>`; \
-         Blizzard_MacroIconSelector.xml instantiates MacroPopupFrame via `<Script \
-         file=\"Blizzard_MacroIconSelector.lua\"/>`), then Localization.lua last (per-locale \
-         `localize` callback that resizes MacroFrameCharLimitText / MacroFrameEnterMacroText / \
-         the IconSelectorPopupNameMiddle texture for koKR / zhCN / zhTW). The 2 mixin .lua \
-         files (Blizzard_MacroUI.lua + Blizzard_MacroIconSelector.lua) are NOT listed in the \
-         TOC body — they are pulled in via `<Script file=...>` tags at the top of each XML"
+        "TOC body must list the bootstrap, MacroDefine.lua, three XML files, then \
+         Localization.lua. The bootstrap publishes MacroFrame_LoadUI/ShowMacroFrame before \
+         the on-demand UI body, while XML Script directives load the mixin Lua files"
     );
 }
 
 #[test]
-fn blizzard_macro_ui_directory_holds_eight_entries_one_toc_four_lua_three_xml() {
+fn blizzard_macro_ui_directory_holds_nine_entries_with_bootstrap() {
     let entries = std::fs::read_dir(macro_ui_dir())
         .expect("Blizzard_MacroUI directory reads")
         .count();
     assert_eq!(
-        entries, 8,
-        "Directory must hold exactly 8 entries — the bare TOC + 4 .lua (Blizzard_MacroDefine \
-         constants, Blizzard_MacroUI mixin / free fns, Blizzard_MacroIconSelector mixin, \
-         Localization) + 3 .xml (MacroScrollFrame template, MacroUI frame instantiation, \
-         MacroIconSelector popup instantiation). Any extra entry suggests the addon has been \
-         extended in source without the test keeping pace"
+        entries, 9,
+        "Directory must hold exactly 9 entries — the bare TOC, Bootstrap.lua, four remaining \
+         Lua files, and three XML files"
     );
 }
 

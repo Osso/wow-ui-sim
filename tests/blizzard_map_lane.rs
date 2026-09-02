@@ -68,7 +68,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 const LANE_ADDONS: &[&str] = &[
@@ -240,14 +241,10 @@ fn lane_dep_edges_classify_each_addons_load_floor() {
             "Blizzard_MapCanvas".to_string(),
             "Blizzard_SharedMapDataProviders".to_string(),
             "Blizzard_ObjectiveTracker".to_string(),
+            "Blizzard_ColorPickerFrame".to_string(),
         ],
-        "BattlefieldMap RequiredDep is SPACE-SEPARATED in the source TOC \
-         (`## RequiredDep: Blizzard_MapCanvas Blizzard_SharedMapDataProviders \
-         Blizzard_ObjectiveTracker`) — no commas. The simulator's split_metadata_list helper \
-         (src/toc.rs:119-129) handles both forms: comma-separated takes priority, but a list \
-         without commas falls through to `split_whitespace`. If this regresses, BattlefieldMap \
-         would parse a single 3-name dep token and the loader would fail to find that as a \
-         single addon name"
+        "Retail BattlefieldMap_Mainline.toc uses one space-separated RequiredDep line for \
+         MapCanvas, SharedMapDataProviders, ObjectiveTracker, and ColorPickerFrame"
     );
 }
 
@@ -274,22 +271,20 @@ fn world_map_ships_only_a_mainline_toc_so_classic_clients_could_not_load_it() {
 }
 
 #[test]
-fn battlefield_map_uses_space_separated_required_dep_form() {
+fn battlefield_map_mainline_toc_uses_space_separated_required_dep_form() {
     let toc_path = blizzard_ui_dir()
         .join("Blizzard_BattlefieldMap")
-        .join("Blizzard_BattlefieldMap.toc");
+        .join("Blizzard_BattlefieldMap_Mainline.toc");
     let raw =
         std::fs::read_to_string(&toc_path).unwrap_or_else(|err| panic!("read {toc_path:?}: {err}"));
 
     assert!(
         raw.contains(
             "## RequiredDep: Blizzard_MapCanvas Blizzard_SharedMapDataProviders \
-             Blizzard_ObjectiveTracker"
+             Blizzard_ObjectiveTracker Blizzard_ColorPickerFrame"
         ),
-        "BattlefieldMap.toc must continue to use the SPACE-SEPARATED `RequiredDep:` form. \
-         If Blizzard normalizes this to commas in a future update, the simulator's parser \
-         still handles both, but this test pins the current source-of-truth form so the \
-         space-separated path stays exercised by lane coverage. Raw TOC bytes:\n{raw}"
+        "BattlefieldMap_Mainline.toc must use the current space-separated RequiredDep form. \
+         Raw TOC bytes:\n{raw}"
     );
 }
 

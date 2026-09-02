@@ -23,7 +23,7 @@ fn mail_frame_toc() -> PathBuf {
 
 const MAIL_FRAME_TOC_FILES: &[&str] = &["MailFrame.lua", "MailFrame.xml", "Localization.lua"];
 
-const MAIL_FRAME_DEPENDENCIES: &[&str] = &["Blizzard_UIParent", "Blizzard_FriendsFrame"];
+const MAIL_FRAME_DEPENDENCIES: &[&str] = &["Blizzard_FriendsFrame"];
 
 const MAIL_LAYOUT_CONSTANTS: &[(&str, i64)] = &[
     ("INBOXITEMS_TO_DISPLAY", 7),
@@ -176,10 +176,7 @@ fn blizzard_mail_frame_toc_declares_default_state_enabled_with_allow_load_game()
     assert_eq!(
         toc.dependencies(),
         MAIL_FRAME_DEPENDENCIES,
-        "TOC declares `## Dependencies: Blizzard_UIParent, Blizzard_FriendsFrame` — UIParent \
-         provides the parent Frame + UIPanelWindows registry, FriendsFrame ships the \
-         `FriendsFrameTabTemplate` consumed by MailFrameTab1/Tab2 (XML inheritance contract \
-         that breaks at parse-time if FriendsFrame is unloaded)"
+        "Retail TOC declares `## Dependencies: Blizzard_FriendsFrame`"
     );
     assert!(toc.optional_deps().is_empty());
     assert!(

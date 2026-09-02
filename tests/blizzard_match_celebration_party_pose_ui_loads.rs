@@ -25,6 +25,7 @@ fn party_pose_toc() -> PathBuf {
 }
 
 const MATCH_CELEBRATION_TOC_FILES: &[&str] = &[
+    "Blizzard_MatchCelebrationPartyPoseUI_Bootstrap.lua",
     "Blizzard_MatchCelebrationPartyPoseUI.lua",
     "Blizzard_MatchCelebrationPartyPoseUI.xml",
 ];
@@ -61,7 +62,7 @@ fn blizzard_match_celebration_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_match_celebration_toc_declares_lod_with_partypose_required_dep() {
+fn blizzard_match_celebration_toc_declares_lod_with_current_dependencies() {
     let toc = TocFile::from_file(&match_celebration_toc())
         .expect("Blizzard_MatchCelebrationPartyPoseUI TOC should parse");
     assert!(
@@ -76,13 +77,13 @@ fn blizzard_match_celebration_toc_declares_lod_with_partypose_required_dep() {
     assert!(!toc.is_secure_env());
     assert_eq!(
         toc.dependencies(),
-        vec!["Blizzard_PartyPoseUI".to_string()],
-        "Blizzard_MatchCelebrationPartyPoseUI declares `## RequiredDep: Blizzard_PartyPoseUI` — \
-         `RequiredDep` resolves through the same `dependencies()` accessor as `Dependencies` \
-         (src/toc.rs:209-214). Blizzard_PartyPoseUI provides the PartyPoseMixin parent \
-         MatchCelebrationPartyPoseMixin extends via CreateFromMixins, the PartyPoseFrameTemplate \
-         the named frame inherits, the PartyPoseModelFrameTemplate the ModelScene child inherits, \
-         and the PartyPoseUtil.AddDismissClickHandler helper the OnLoad override calls"
+        vec![
+            "Blizzard_PartyPoseUI".to_string(),
+            "Blizzard_LFGUtil".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+        ],
+        "Retail TOC declares RequiredDep Blizzard_PartyPoseUI and Blizzard_LFGUtil, followed by \
+         Dependencies Blizzard_GameMenuEsc"
     );
     assert!(
         toc.optional_deps().is_empty(),
@@ -135,7 +136,7 @@ fn blizzard_match_celebration_toc_omits_game_type_and_allow_load_keys() {
 }
 
 #[test]
-fn blizzard_match_celebration_toc_lists_lua_then_xml_in_order() {
+fn blizzard_match_celebration_toc_lists_bootstrap_lua_then_xml_in_order() {
     let toc = TocFile::from_file(&match_celebration_toc())
         .expect("Blizzard_MatchCelebrationPartyPoseUI TOC should parse");
     assert_eq!(
@@ -144,27 +145,20 @@ fn blizzard_match_celebration_toc_lists_lua_then_xml_in_order() {
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
         MATCH_CELEBRATION_TOC_FILES,
-        "TOC body must list lua FIRST then xml — the lua file declares \
-         MatchCelebrationPartyPoseMixin = CreateFromMixins(PartyPoseMixin) at file scope (line 1) \
-         and MatchCelebrationExtraButtonMixin = {{}} (line 64) before any XML-instantiated \
-         frame's `mixin=\"MatchCelebrationPartyPoseMixin\"` or \
-         `mixin=\"MatchCelebrationExtraButtonMixin\"` attribute tries to resolve the mixin \
-         table via `_G`. The XML follows so the MatchCelebrationPartyPoseFrame frame can be \
-         created with both mixins already present"
+        "TOC body must list the load helper bootstrap, then Lua before XML. The bootstrap \
+         publishes MatchCelebrationPartyPose_LoadUI; the Lua file publishes mixins before the \
+         XML-instantiated frame resolves them"
     );
 }
 
 #[test]
-fn blizzard_match_celebration_directory_holds_three_entries() {
+fn blizzard_match_celebration_directory_holds_four_entries_with_bootstrap() {
     let entries = std::fs::read_dir(match_celebration_dir())
         .expect("Blizzard_MatchCelebrationPartyPoseUI directory should read")
         .count();
     assert_eq!(
-        entries, 3,
-        "Directory must hold exactly 3 entries (1 TOC + 1 lua + 1 xml; no flavor subdirectory, \
-         no Localization.lua — the only string the SetLeaveButtonText handler references is \
-         INSTANCE_LEAVE which comes from the global locale table, and CLOSE which is the \
-         fallback for partyPoseInfo.extraButtonText)"
+        entries, 4,
+        "Directory must hold exactly 4 entries: TOC, bootstrap, Lua, and XML"
     );
 }
 

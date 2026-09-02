@@ -146,7 +146,7 @@ fn blizzard_micro_menu_find_toc_resolves_mainline_variant() {
 }
 
 #[test]
-fn blizzard_micro_menu_toc_declares_eager_game_screen_load_no_deps() {
+fn blizzard_micro_menu_toc_declares_eager_game_screen_load_with_communities_dependency() {
     let toc = TocFile::from_file(&micro_menu_toc()).expect("Blizzard_MicroMenu TOC parses");
     assert!(
         !toc.is_load_on_demand(),
@@ -160,9 +160,10 @@ fn blizzard_micro_menu_toc_declares_eager_game_screen_load_no_deps() {
         !toc.is_game_type_restricted(),
         "Blizzard_MicroMenu declares `## AllowLoadGameType: mainline` but          src/toc.rs:299 treats `mainline` / `standard` as the unrestricted retail game type,          so `is_game_type_restricted()` returns false"
     );
-    assert!(
-        toc.dependencies().is_empty(),
-        "Blizzard_MicroMenu declares NO `## Dependencies:` — all required surfaces          (GridLayoutFrame, EditModeMicroMenuSystemTemplate, QuickKeybindButtonTemplate,          C_GameRules, DirtiableMixin, etc.) are provided by addons that are loaded earlier in          the panel stack or are Rust-native stubs, not declared as TOC dependencies"
+    assert_eq!(
+        toc.dependencies(),
+        vec!["Blizzard_Communities".to_string()],
+        "Retail TOC declares `## Dependencies: Blizzard_Communities`"
     );
     assert!(
         toc.saved_variables().is_empty(),

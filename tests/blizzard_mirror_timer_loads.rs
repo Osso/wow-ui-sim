@@ -18,10 +18,10 @@ fn mirror_timer_dir() -> PathBuf {
 }
 
 fn mirror_timer_toc() -> PathBuf {
-    mirror_timer_dir().join("Blizzard_MirrorTimer.toc")
+    mirror_timer_dir().join("Blizzard_MirrorTimer_Mainline.toc")
 }
 
-const MIRROR_TIMER_TOC_FILES: &[&str] = &["MirrorTimer.lua", "MirrorTimer.xml"];
+const MIRROR_TIMER_TOC_FILES: &[&str] = &["Mainline/MirrorTimer.lua", "Mainline/MirrorTimer.xml"];
 
 const MIRROR_TIMER_ATLAS_KEYS: &[(&str, &str)] = &[
     ("EXHAUSTION", "ui-castingbar-filling-standard"),
@@ -84,16 +84,14 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn blizzard_mirror_timer_find_toc_resolves_bare_variant() {
+fn blizzard_mirror_timer_find_toc_resolves_mainline_variant() {
     let resolved =
         find_toc_file(&mirror_timer_dir()).expect("Blizzard_MirrorTimer TOC should resolve");
     assert_eq!(
         resolved,
         mirror_timer_toc(),
-        "Blizzard_MirrorTimer ships exactly one bare TOC (no `_Mainline.toc` / `_Classic.toc` \
-         variants — the timer-bar surface is mainline-only and Classic clients use their profile \
-         action-bar layout). `find_toc_file` falls through the `_Mainline.toc` lookup \
-         and resolves to the bare TOC"
+        "Blizzard_MirrorTimer ships Mainline and Classic TOC variants; retail resolution \
+         selects Blizzard_MirrorTimer_Mainline.toc"
     );
 }
 
@@ -185,9 +183,8 @@ fn blizzard_mirror_timer_toc_lists_two_files_one_lua_one_xml() {
         .collect();
     assert_eq!(
         listed, MIRROR_TIMER_TOC_FILES,
-        "TOC body must list exactly 2 files in declaration order: MirrorTimer.lua then \
-         MirrorTimer.xml. The addon is one of the smallest in the Blizzard tree — a single \
-         lua/xml pair at the addon root with no flavor-suffixed subdirectories"
+        "Retail Mainline TOC must list Mainline/MirrorTimer.lua then \
+         Mainline/MirrorTimer.xml"
     );
 }
 
