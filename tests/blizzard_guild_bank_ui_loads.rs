@@ -96,27 +96,15 @@ fn blizzard_guild_bank_ui_toc_declares_lod_with_no_dependencies() {
 }
 
 #[test]
-fn blizzard_guild_bank_ui_toc_declares_no_allow_load_directive() {
+fn blizzard_guild_bank_ui_mainline_toc_declares_game_screen_mainline_gating() {
     let toc_text = std::fs::read_to_string(guild_bank_toc()).expect("GuildBankUI TOC should read");
-    assert!(
-        !toc_text.contains("## AllowLoad:"),
-        "Blizzard_GuildBankUI omits `## AllowLoad:` entirely — LoadOnDemand keeps it out of \
-         every screen auto-discovery pass regardless of screen, so no AllowLoad gating is \
-         needed"
-    );
-    assert!(
-        !toc_text.contains("## AllowLoadGameType:"),
-        "Blizzard_GuildBankUI omits `## AllowLoadGameType:` — the guild-bank UI is reused \
-         across mainline and classic flavors (guild banks exist in both)"
-    );
-    assert!(
-        toc_text.contains("## LoadOnDemand: 1"),
-        "Blizzard_GuildBankUI raw TOC must contain `## LoadOnDemand: 1`"
-    );
+    assert!(toc_text.contains("## AllowLoad: game"));
+    assert!(toc_text.contains("## AllowLoadGameType: mainline"));
+    assert!(toc_text.contains("## LoadOnDemand: 1"));
 }
 
 #[test]
-fn blizzard_guild_bank_ui_toc_lists_xml_first_then_localization() {
+fn blizzard_guild_bank_ui_toc_lists_bootstrap_xml_then_localization() {
     let toc = TocFile::from_file(&guild_bank_toc()).expect("GuildBankUI TOC should parse");
     let files: Vec<String> = toc
         .files
@@ -126,18 +114,17 @@ fn blizzard_guild_bank_ui_toc_lists_xml_first_then_localization() {
     assert_eq!(
         files,
         vec![
-            "Blizzard_GuildBankUI.xml".to_string(),
+            "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
+            "Mainline/Blizzard_GuildBankUI.xml".to_string(),
             "Localization.lua".to_string(),
         ],
-        "Blizzard_GuildBankUI TOC body lists exactly 2 files: Blizzard_GuildBankUI.xml first \
-         (which itself loads Blizzard_GuildBankUI.lua via `<Script file=\"...\"/>`), then \
-         Localization.lua. Note: the .lua file is NOT enumerated at the TOC level — the XML \
-         pulls it in"
+        "Blizzard_GuildBankUI Mainline TOC lists its bootstrap, Mainline XML, and Localization \
+         in published order. The XML loads its Lua sibling through `<Script file=\"...\"/>`."
     );
 }
 
 #[test]
-fn blizzard_guild_bank_ui_directory_ships_four_entries() {
+fn blizzard_guild_bank_ui_directory_ships_eight_entries() {
     let dir = guild_bank_dir();
     let mut entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("Blizzard_GuildBankUI directory should exist")
@@ -148,13 +135,17 @@ fn blizzard_guild_bank_ui_directory_ships_four_entries() {
     assert_eq!(
         entries,
         vec![
-            "Blizzard_GuildBankUI.lua".to_string(),
-            "Blizzard_GuildBankUI.toc".to_string(),
-            "Blizzard_GuildBankUI.xml".to_string(),
+            "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
+            "Blizzard_GuildBankUI_Classic.toc".to_string(),
+            "Blizzard_GuildBankUI_Mainline.toc".to_string(),
+            "Blizzard_GuildBankUI_Mists.toc".to_string(),
             "Localization.lua".to_string(),
+            "Mainline".to_string(),
+            "Mists".to_string(),
+            "TBC".to_string(),
         ],
-        "Blizzard_GuildBankUI directory ships exactly 4 entries (TOC + Lua + XML + \
-         Localization), no flavor subdirectory"
+        "Blizzard_GuildBankUI ships its bootstrap, three flavor TOCs, Localization, and \
+         Mainline/Mists/TBC source directories"
     );
 }
 

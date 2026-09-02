@@ -40,7 +40,7 @@ fn blizzard_house_editor_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_house_editor_toc_declares_lod_with_five_dependencies() {
+fn blizzard_house_editor_toc_declares_lod_with_seven_dependencies() {
     let toc = TocFile::from_file(&house_editor_toc()).expect("HouseEditor TOC should parse");
     assert!(
         toc.is_load_on_demand(),
@@ -66,17 +66,11 @@ fn blizzard_house_editor_toc_declares_lod_with_five_dependencies() {
             "Blizzard_HousingMarketCart".to_string(),
             "Blizzard_CatalogShopSharedTemplates".to_string(),
             "Blizzard_HousingControls".to_string(),
+            "Blizzard_HousingBlueprint".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
         ],
-        "Blizzard_HouseEditor declares exactly 5 `## Dependencies:` in this comma-separated \
-         order — Blizzard_HousingTemplates (provides the shared housing widget templates the \
-         editor's mode frames inherit), Blizzard_CustomizationUI (provides the \
-         TopLevelParentScaleFrameTemplate inheritance chain that HouseEditorFrame inherits via \
-         line 3 of Blizzard_HouseEditor.xml), Blizzard_HousingMarketCart (provides \
-         HousingMarketCartFrameTemplate that the MarketShoppingCartFrame child inherits), \
-         Blizzard_CatalogShopSharedTemplates (provides the Catalog shop tooltip / preview \
-         widgets the storage panel and dye picker consume), Blizzard_HousingControls (provides \
-         the SIMPLE_CHECKOUT_CLOSED + HOUSE_EDITOR_MODE_CHANGED + HOUSING_DECOR_SELECT_RESPONSE \
-         event source and HouseEditor.HouseStorageSetShown EventRegistry topic)"
+        "Blizzard_HouseEditor declares seven `## Dependencies:` in published order, adding \
+         Blizzard_HousingBlueprint and Blizzard_GameMenuEsc after Blizzard_HousingControls."
     );
     assert!(
         toc.saved_variables().is_empty(),
@@ -117,7 +111,7 @@ fn blizzard_house_editor_toc_is_retail_only_and_omits_allow_load() {
 }
 
 #[test]
-fn blizzard_house_editor_toc_lists_thirty_three_files() {
+fn blizzard_house_editor_toc_lists_thirty_five_files() {
     let toc = TocFile::from_file(&house_editor_toc()).expect("HouseEditor TOC should parse");
     let files: Vec<String> = toc
         .files
@@ -126,13 +120,9 @@ fn blizzard_house_editor_toc_lists_thirty_three_files() {
         .collect();
     assert_eq!(
         files.len(),
-        33,
-        "Blizzard_HouseEditor TOC body lists exactly 33 source files (16 Lua/XML pairs + the \
-         Blizzard_HouseEditorRegistration.lua tail) covering 6 mode frames (BasicDecor / \
-         Customize / Cleanup / Layout / ExpertDecor / ExteriorCustomization), the dye + room \
-         component templates, the layout-mode pin, the exterior option templates, the \
-         exterior-fixture point, the mode buttons + storage frame + placed-decor list, plus the \
-         umbrella HouseEditor.lua / .xml + Registration tail. Got: {:?}",
+        35,
+        "Blizzard_HouseEditor TOC body lists exactly 35 source files in the active retail \
+         cache. Got: {:?}",
         files
     );
     assert_eq!(
@@ -152,7 +142,7 @@ fn blizzard_house_editor_toc_lists_thirty_three_files() {
 }
 
 #[test]
-fn blizzard_house_editor_directory_holds_thirty_four_entries() {
+fn blizzard_house_editor_directory_holds_thirty_six_entries() {
     let dir = house_editor_dir();
     let entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("Blizzard_HouseEditor directory should exist")
@@ -161,11 +151,9 @@ fn blizzard_house_editor_directory_holds_thirty_four_entries() {
         .collect();
     assert_eq!(
         entries.len(),
-        34,
-        "Blizzard_HouseEditor directory ships exactly 34 entries: 33 source files referenced by \
-         the TOC + 1 TOC file. No flavor subdirectory and no Localization.lua — strings are \
-         pulled from the global locale table maintained by the housing dependency chain. \
-         Got: {entries:?}"
+        36,
+        "Blizzard_HouseEditor directory ships exactly 36 entries: 35 source files referenced by \
+         the TOC plus its TOC file. Got: {entries:?}"
     );
     assert!(
         entries.contains(&"Blizzard_HouseEditor.toc".to_string()),

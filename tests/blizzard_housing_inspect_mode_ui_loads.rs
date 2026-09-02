@@ -55,7 +55,7 @@ fn blizzard_housing_inspect_mode_ui_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_housing_inspect_mode_ui_toc_declares_lod_with_one_dependency() {
+fn blizzard_housing_inspect_mode_ui_toc_declares_lod_with_two_dependencies() {
     let toc = TocFile::from_file(&inspect_toc()).expect("InspectModeUI TOC should parse");
     assert!(
         toc.is_load_on_demand(),
@@ -68,10 +68,12 @@ fn blizzard_housing_inspect_mode_ui_toc_declares_lod_with_one_dependency() {
     assert!(!toc.is_secure_env());
     assert_eq!(
         toc.dependencies(),
-        vec!["Blizzard_HouseEditor".to_string()],
-        "Single `## Dependencies:` entry: Blizzard_HouseEditor (provides the EventRegistry topic \
-         `HouseEditor.StateUpdated` that the InspectMode manager subscribes to so it can exit \
-         inspect mode whenever the house editor activates — they are mutually exclusive modes)"
+        vec![
+            "Blizzard_HouseEditor".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+        ],
+        "Blizzard_HousingInspectModeUI declares Blizzard_HouseEditor and Blizzard_GameMenuEsc \
+         in published dependency order."
     );
 }
 

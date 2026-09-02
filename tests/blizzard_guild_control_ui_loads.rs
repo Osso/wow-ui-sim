@@ -99,7 +99,7 @@ fn blizzard_guild_control_ui_toc_declares_game_screen_mainline_plus_classic() {
 }
 
 #[test]
-fn blizzard_guild_control_ui_toc_lists_lua_xml_and_localization() {
+fn blizzard_guild_control_ui_toc_lists_bootstrap_lua_xml_and_localization() {
     let toc = TocFile::from_file(&guild_control_toc()).expect("GuildControlUI TOC should parse");
     let files: Vec<String> = toc
         .files
@@ -109,19 +109,18 @@ fn blizzard_guild_control_ui_toc_lists_lua_xml_and_localization() {
     assert_eq!(
         files,
         vec![
+            "Blizzard_GuildControlUI_Bootstrap.lua".to_string(),
             "Blizzard_GuildControlUI.lua".to_string(),
             "Blizzard_GuildControlUI.xml".to_string(),
             "Localization.lua".to_string(),
         ],
-        "Blizzard_GuildControlUI TOC body lists exactly 3 files in order: Lua first (publishes \
-         constants + 17 helpers + GUILD_OFFICER_PERMISSION_STRINGS table — must precede the \
-         XML which references them via `<Scripts><OnLoad function=\"...\"/>` bindings), then \
-         XML, then Localization.lua"
+        "Blizzard_GuildControlUI TOC lists its bootstrap, Lua, XML, and Localization in \
+         published order."
     );
 }
 
 #[test]
-fn blizzard_guild_control_ui_directory_ships_four_entries() {
+fn blizzard_guild_control_ui_directory_ships_five_entries() {
     let dir = guild_control_dir();
     let mut entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("Blizzard_GuildControlUI directory should exist")
@@ -135,10 +134,10 @@ fn blizzard_guild_control_ui_directory_ships_four_entries() {
             "Blizzard_GuildControlUI.lua".to_string(),
             "Blizzard_GuildControlUI.toc".to_string(),
             "Blizzard_GuildControlUI.xml".to_string(),
+            "Blizzard_GuildControlUI_Bootstrap.lua".to_string(),
             "Localization.lua".to_string(),
         ],
-        "Blizzard_GuildControlUI directory ships exactly 4 entries (TOC + Lua + XML + \
-         Localization), no flavor subdirectory"
+        "Blizzard_GuildControlUI directory ships its bootstrap, TOC, Lua, XML, and Localization."
     );
 }
 

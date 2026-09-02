@@ -59,7 +59,7 @@ fn blizzard_help_frame_find_toc_resolves_bare_variant() {
 }
 
 #[test]
-fn blizzard_help_frame_toc_declares_non_lod_with_three_dependencies() {
+fn blizzard_help_frame_toc_declares_non_lod_with_four_dependencies() {
     let toc = TocFile::from_file(&help_frame_toc()).expect("HelpFrame TOC should parse");
     assert!(
         !toc.is_load_on_demand(),
@@ -81,17 +81,14 @@ fn blizzard_help_frame_toc_declares_non_lod_with_three_dependencies() {
     assert_eq!(
         toc.dependencies(),
         vec![
+            "Blizzard_MicroMenu".to_string(),
             "Blizzard_ActionBar".to_string(),
             "Blizzard_StaticPopup_Game".to_string(),
-            "Blizzard_UIParent".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
         ],
-        "Blizzard_HelpFrame declares exactly 3 `## Dependencies:` in this order — \
-         Blizzard_ActionBar (provides CharacterMicroButton which the HelpOpenWebTicketButton \
-         re-parents itself to), Blizzard_StaticPopup_Game (provides StaticPopup_Show / \
-         StaticPopupSpecial_Show / StaticPopupSpecial_Hide which the EXTERNAL_LINK + \
-         WEB_PROXY_FAILED + WEB_ERROR + HELP_TICKET_QUEUE_DISABLED popups + ReportCheatingDialog \
-         all consume), and Blizzard_UIParent (provides UIParent_UpdateTopFramePositions which \
-         TicketStatusFrame_OnShow/OnHide call to reflow the top-of-screen frame strip)"
+        "Blizzard_HelpFrame declares four `## Dependencies:` in published order: \
+         Blizzard_MicroMenu, Blizzard_ActionBar, Blizzard_StaticPopup_Game, and \
+         Blizzard_GameMenuEsc."
     );
     assert!(
         toc.saved_variables().is_empty(),

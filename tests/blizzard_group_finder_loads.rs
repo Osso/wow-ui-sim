@@ -68,7 +68,7 @@ fn blizzard_group_finder_find_toc_resolves_mainline_variant() {
 }
 
 #[test]
-fn blizzard_group_finder_mainline_toc_declares_three_deps_and_game_screen_gating() {
+fn blizzard_group_finder_mainline_toc_declares_six_deps_and_game_screen_gating() {
     let toc = TocFile::from_file(&group_finder_mainline_toc()).expect("Mainline TOC should parse");
     assert!(
         !toc.is_load_on_demand(),
@@ -95,12 +95,13 @@ fn blizzard_group_finder_mainline_toc_declares_three_deps_and_game_screen_gating
             "Blizzard_EditMode".to_string(),
             "Blizzard_GameTooltip".to_string(),
             "Blizzard_UIPanelTemplates".to_string(),
+            "Blizzard_RaidWarning".to_string(),
+            "Blizzard_LFGUtil".to_string(),
+            "Blizzard_FrameXMLUtil".to_string(),
         ],
-        "Blizzard_GroupFinder Mainline must declare exactly three `## Dependencies:` in \
-         order: Blizzard_EditMode (PVEFrame inherits PortraitFrameTemplate which the EditMode \
-         layout system manages), Blizzard_GameTooltip (LFG tooltip surfaces), \
-         Blizzard_UIPanelTemplates (UIPanelButtonTemplate, NineSliceUtil, scroll templates \
-         consumed by the LFG list views). Got: {deps:?}"
+        "Blizzard_GroupFinder Mainline declares six `## Dependencies:` in published order: \
+         Blizzard_EditMode, Blizzard_GameTooltip, Blizzard_UIPanelTemplates, \
+         Blizzard_RaidWarning, Blizzard_LFGUtil, and Blizzard_FrameXMLUtil. Got: {deps:?}"
     );
 
     let saved_vars: Vec<String> = toc.saved_variables();

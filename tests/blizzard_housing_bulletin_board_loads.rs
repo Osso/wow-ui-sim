@@ -117,7 +117,7 @@ fn blizzard_housing_bulletin_board_toc_is_retail_only_and_omits_allow_load() {
 }
 
 #[test]
-fn blizzard_housing_bulletin_board_toc_lists_three_files() {
+fn blizzard_housing_bulletin_board_toc_lists_bootstrap_then_three_files() {
     let toc =
         TocFile::from_file(&bulletin_board_toc()).expect("HousingBulletinBoard TOC should parse");
     let files: Vec<String> = toc
@@ -128,24 +128,18 @@ fn blizzard_housing_bulletin_board_toc_lists_three_files() {
     assert_eq!(
         files,
         vec![
+            "Blizzard_HousingBulletinBoard_Bootstrap.lua".to_string(),
             "Blizzard_HousingBulletinBoard.lua".to_string(),
             "Blizzard_HousingBulletinBoard.xml".to_string(),
             "Blizzard_HousingBulletinBoardRegistration.lua".to_string(),
         ],
-        "Blizzard_HousingBulletinBoard TOC body lists exactly 3 source files in this exact \
-         order: Blizzard_HousingBulletinBoard.lua (publishes 8 mixins + 5 StaticPopupDialogs + 2 \
-         module-level event tables + the global free function \
-         HousingBulletinBoardRosterColumnDisplay_OnClick + the local \
-         NeighborhoodInviteErrorTypeStrings table keyed on Enum.NeighborhoodInviteResult), \
-         Blizzard_HousingBulletinBoard.xml (5 virtual templates + 3 named non-virtual frames), \
-         Blizzard_HousingBulletinBoardRegistration.lua (10-line tail registering both \
-         HousingBulletinBoardFrame at pushable=1 and HousingInviteResidentFrame at pushable=3 \
-         with `area=\"left\"` — must run AFTER the XML instantiates both named frames)"
+        "Blizzard_HousingBulletinBoard TOC lists its bootstrap, Lua, XML, and registration \
+         tail in published order."
     );
 }
 
 #[test]
-fn blizzard_housing_bulletin_board_directory_holds_four_entries() {
+fn blizzard_housing_bulletin_board_directory_holds_five_entries() {
     let dir = bulletin_board_dir();
     let entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("Blizzard_HousingBulletinBoard directory should exist")
@@ -154,13 +148,9 @@ fn blizzard_housing_bulletin_board_directory_holds_four_entries() {
         .collect();
     assert_eq!(
         entries.len(),
-        4,
-        "Blizzard_HousingBulletinBoard directory ships exactly 4 entries: 3 source files \
-         referenced by the TOC + 1 TOC file. No flavor subdirectory and no Localization.lua — \
-         the strings (HOUSING_BULLETINBOARD_*, NEIGHBORHOOD_ROSTER_COLUMN_*, \
-         HOUSING_NEIGHBORHOOD_INVITE_ERR_*, HOUSING_NEIGHBORHOOD_SETTINGS_*, \
-         HOUSING_BULLETIN_*) are pulled from the global locale table maintained by the housing \
-         dependency chain. Got: {entries:?}"
+        5,
+        "Blizzard_HousingBulletinBoard directory ships its bootstrap, three TOC-listed source \
+         files, and TOC. Got: {entries:?}"
     );
     assert!(
         entries.contains(&"Blizzard_HousingBulletinBoard.toc".to_string()),

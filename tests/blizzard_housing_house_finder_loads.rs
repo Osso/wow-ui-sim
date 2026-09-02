@@ -96,7 +96,7 @@ fn blizzard_housing_house_finder_toc_is_retail_only_and_omits_allow_load() {
 }
 
 #[test]
-fn blizzard_housing_house_finder_toc_lists_five_files_in_order() {
+fn blizzard_housing_house_finder_toc_lists_bootstrap_then_five_files_in_order() {
     let toc = TocFile::from_file(&finder_toc()).expect("HousingHouseFinder TOC should parse");
     let files: Vec<String> = toc
         .files
@@ -106,23 +106,19 @@ fn blizzard_housing_house_finder_toc_lists_five_files_in_order() {
     assert_eq!(
         files,
         vec![
+            "Blizzard_HousingHouseFinder_Bootstrap.lua".to_string(),
             "HouseFinderMapDataProvider.lua".to_string(),
             "HouseFinderMapDataProvider.xml".to_string(),
             "Blizzard_HousingHouseFinder.lua".to_string(),
             "Blizzard_HousingHouseFinder.xml".to_string(),
             "Blizzard_HousingHouseFinderRegistration.lua".to_string(),
         ],
-        "TOC body lists exactly 5 source files in this exact order — the data-provider .lua + \
-         .xml load FIRST so that HouseFinderMapDataProviderMixin / HouseFinderPlotForSalePinMixin \
-         / HouseFinderFriendsPlotPinMixin / SelectedPlotTooltipMixin are defined before the \
-         main panel .lua / .xml reference them via the embedded MapCanvas; the Registration tail \
-         loads LAST so that the HouseFinderFrame `_G` reference is published when \
-         RegisterUIPanel runs"
+        "TOC body lists its bootstrap then five source files in published order."
     );
 }
 
 #[test]
-fn blizzard_housing_house_finder_directory_holds_six_entries() {
+fn blizzard_housing_house_finder_directory_holds_seven_entries() {
     let dir = finder_dir();
     let entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("Blizzard_HousingHouseFinder directory should exist")
@@ -131,11 +127,11 @@ fn blizzard_housing_house_finder_directory_holds_six_entries() {
         .collect();
     assert_eq!(
         entries.len(),
-        6,
-        "Directory ships exactly 6 entries (5 source files + 1 TOC, no flavor subdirectory). \
-         Got: {entries:?}"
+        7,
+        "Directory ships exactly 7 entries (bootstrap + 5 source files + TOC). Got: {entries:?}"
     );
     assert!(entries.contains(&"Blizzard_HousingHouseFinder.toc".to_string()));
+    assert!(entries.contains(&"Blizzard_HousingHouseFinder_Bootstrap.lua".to_string()));
     assert!(entries.contains(&"Blizzard_HousingHouseFinder.lua".to_string()));
     assert!(entries.contains(&"Blizzard_HousingHouseFinder.xml".to_string()));
     assert!(entries.contains(&"Blizzard_HousingHouseFinderRegistration.lua".to_string()));
