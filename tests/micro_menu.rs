@@ -5,7 +5,7 @@
 
 use crate::common;
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
@@ -40,6 +40,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_StoreUI",
     "Blizzard_Communities",
     "Blizzard_GameMenu",
+    "Blizzard_ClassMenu",
     "Blizzard_MicroMenu",
     "Blizzard_EditMode",
     "Blizzard_GarrisonBase",
@@ -86,10 +87,33 @@ fn setup_env() -> WowLuaEnv {
             .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
     }
 
+    install_professions_book_bootstrap(&env, &ui);
     env.apply_post_load_workarounds();
     install_fixture_globals(&env);
     fire_startup_events(&env);
     env
+}
+
+fn install_professions_book_bootstrap(env: &WowLuaEnv, ui: &Path) {
+    let bootstrap_path = ui.join("Blizzard_ProfessionsBook/Blizzard_ProfessionsBook_Bootstrap.lua");
+    let source = std::fs::read_to_string(&bootstrap_path).unwrap_or_else(|error| {
+        panic!(
+            "ProfessionsBook bootstrap source {} should be readable: {error}",
+            bootstrap_path.display()
+        )
+    });
+    let escaped_source = source
+        .replace('\\', "\\\\")
+        .replace('"', "\\\"")
+        .replace('\n', "\\n");
+    let loader = format!(
+        r#"local chunk, compile_error = loadstring("{escaped_source}", "@Blizzard_ProfessionsBook/Blizzard_ProfessionsBook_Bootstrap.lua")
+if not chunk then error("compile ProfessionsBook bootstrap: " .. tostring(compile_error)) end
+local ok, runtime_error = pcall(chunk, "Blizzard_ProfessionsBook", {{}})
+if not ok then error("run ProfessionsBook bootstrap: " .. tostring(runtime_error)) end"#,
+    );
+    env.exec(&loader)
+        .expect("ProfessionsBook bootstrap should publish ToggleProfessionsBook");
 }
 
 fn install_fixture_globals(env: &WowLuaEnv) {
@@ -588,10 +612,12 @@ fn micro_menu_achievement_button_loads_and_opens_panel() {
         "AchievementFrame should be shown after clicking AchievementMicroButton"
     );
 
-    let background = texture_path(&env, "AchievementFrame.Background");
+    let background_atlas: String = env
+        .eval("return AchievementFrame.Background:GetAtlas() or ''")
+        .expect("AchievementFrame background atlas should be readable");
     assert_eq!(
-        background, r"Interface\AchievementFrame\UI-Achievement-AchievementBackground",
-        "AchievementFrame background texture should be assigned"
+        background_atlas, "UI-Background-Rock-Brown",
+        "AchievementFrame background should use its current atlas"
     );
 
     let categories_bg = texture_path(&env, "AchievementFrameCategoriesBG");
