@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn tutorials_dir() -> PathBuf {
@@ -25,7 +26,11 @@ const GLUE_SCREENS: &[ScreenKind] = &[
     ScreenKind::CharacterCreate,
 ];
 
-const TOC_REQUIRED_DEPS: &[&str] = &["Blizzard_TutorialManager", "Blizzard_UIFrameManager"];
+const TOC_REQUIRED_DEPS: &[&str] = &[
+    "middleclass",
+    "Blizzard_TutorialManager",
+    "Blizzard_UIFrameManager",
+];
 
 const MODULE_TABLES: &[&str] = &[
     "GameTutorials",
@@ -121,7 +126,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 
 #[test]
-fn toc_is_eager_with_two_required_deps() {
+fn toc_is_eager_with_three_required_deps() {
     let toc = TocFile::from_file(&tutorials_toc()).expect("TOC parses");
 
     assert!(
@@ -190,11 +195,12 @@ fn allow_load_game_type_standard_is_not_restricted() {
 }
 
 #[test]
-fn toc_raw_bytes_pin_four_directives_and_fifteen_body_files() {
+fn toc_raw_bytes_pin_five_directives_and_fifteen_body_files() {
     let raw = std::fs::read_to_string(tutorials_toc()).expect("TOC reads utf-8");
 
     let expected_lines = [
         "## Title: Blizzard_Tutorials",
+        "## Dep: middleclass",
         "## Dep: Blizzard_TutorialManager",
         "## Dep: Blizzard_UIFrameManager",
         "## AllowLoadGameType: standard",

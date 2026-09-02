@@ -40,6 +40,7 @@ const BODY_FILES: &[&str] = &[
     "Blizzard_Shared_StoreButtonMixin.lua",
     "Blizzard_Shared_StoreUITemplates.xml",
     "Blizzard_Shared_ProductCardTemplates.xml",
+    "Blizzard_Shared_StoreUIToggle.lua",
     "Blizzard_Shared_StoreUI.xml",
     "Blizzard_Shared_StoreUIInsecure.lua",
     "Shared_Localization.lua",
@@ -91,7 +92,9 @@ fn toc_dependencies_include_shared_and_screen_scoped_addons() {
         deps,
         vec![
             "Blizzard_SharedXML".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
             "Blizzard_SimpleCheckout".to_string(),
+            "Blizzard_CatalogShop".to_string(),
             "Blizzard_GlueParent".to_string(),
             "Blizzard_FrameXMLBase".to_string(),
         ],
@@ -101,14 +104,13 @@ fn toc_dependencies_include_shared_and_screen_scoped_addons() {
 }
 
 #[test]
-fn toc_declares_no_optional_dependencies() {
+fn toc_declares_plunderstorm_as_optional_dependency() {
     let toc = TocFile::from_file(&store_ui_toc()).expect("TOC parses");
 
-    assert!(
-        toc.optional_deps().is_empty(),
-        "Current StoreUI TOC declares every dependency through `## Dep:`. \
-         Got optional dependencies: {:?}",
-        toc.optional_deps()
+    assert_eq!(
+        toc.optional_deps(),
+        vec!["Blizzard_Plunderstorm".to_string()],
+        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as StoreUI's optional dependency"
     );
 }
 
@@ -170,9 +172,12 @@ fn toc_raw_bytes_pin_current_metadata_directives() {
         "## Title: Blizzard_StoreUI",
         "## AllowLoad: Both",
         "## Dep: Blizzard_SharedXML",
+        "## Dep: Blizzard_GameMenuEsc",
         "## Dep: Blizzard_SimpleCheckout",
+        "## Dep: Blizzard_CatalogShop",
         "## Dep: Blizzard_GlueParent [AllowLoad glue]",
         "## Dep: Blizzard_FrameXMLBase [AllowLoad game]",
+        "## OptionalDeps: Blizzard_Plunderstorm",
         "## UseSecureEnvironment: 1",
     ];
 
@@ -192,7 +197,7 @@ fn toc_raw_bytes_pin_current_metadata_directives() {
 }
 
 #[test]
-fn retail_body_orders_six_selected_entries_terminating_in_localization() {
+fn retail_body_orders_seven_selected_entries_terminating_in_localization() {
     let toc = TocFile::from_file(&store_ui_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -204,9 +209,8 @@ fn retail_body_orders_six_selected_entries_terminating_in_localization() {
     assert_eq!(
         body.len(),
         BODY_FILES.len(),
-        "Retail parsing selects six mainline-gated entries: StoreButtonMixin \
-         → three XML files → StoreUIInsecure → Shared_Localization. Got: \
-         {body:?}"
+        "Retail parsing selects seven mainline-gated entries, including \
+         Blizzard_Shared_StoreUIToggle.lua. Got: {body:?}"
     );
 
     for (i, want) in BODY_FILES.iter().enumerate() {

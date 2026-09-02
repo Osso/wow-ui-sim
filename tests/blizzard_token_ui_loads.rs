@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn token_ui_dir() -> PathBuf {
@@ -238,7 +239,7 @@ fn present_in_game_screen_eager_discovery_only() {
 }
 
 #[test]
-fn token_frame_load_ui_global_published_by_uiparent_at_boot() {
+fn token_frame_load_ui_is_absent_and_wow_token_ui_owns_secure_token_flow() {
     let env = fresh_game_env();
     let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
     for (name, toc_path) in &addons {
@@ -253,12 +254,35 @@ fn token_frame_load_ui_global_published_by_uiparent_at_boot() {
         .eval("return type(TokenFrame_LoadUI)")
         .expect("TokenFrame_LoadUI probe");
     assert_eq!(
-        kind, "function",
-        "Blizzard_UIParent/Shared/UIParent.lua:304 publishes \
-         `TokenFrame_LoadUI` as a wrapper around \
-         UIParentLoadAddOn(\"Blizzard_TokenUI\") at boot — exists \
-         BEFORE TokenUI itself loads, so any caller can demand the \
-         token-frame UI on demand without race conditions"
+        kind, "nil",
+        "Retail 12.1.0.69497 no longer publishes the legacy TokenFrame_LoadUI global"
+    );
+
+    let secure_toc_path = blizzard_ui_dir().join("Blizzard_WowTokenUI/Blizzard_WowTokenUI.toc");
+    let secure_toc =
+        TocFile::from_file(&secure_toc_path).expect("Blizzard_WowTokenUI secure TOC should parse");
+    assert!(
+        secure_toc.is_secure_env(),
+        "Retail token redemption flow belongs to Blizzard_WowTokenUI, which declares \
+         UseSecureEnvironment: 1"
+    );
+    assert_eq!(
+        secure_toc.dependencies(),
+        vec!["Blizzard_SharedXML".to_string()],
+        "Current Blizzard_WowTokenUI declares Blizzard_SharedXML as its required dependency"
+    );
+    let secure_body: Vec<String> = secure_toc
+        .files
+        .iter()
+        .map(|path| path.to_string_lossy().to_string())
+        .collect();
+    assert_eq!(
+        secure_body,
+        vec![
+            "Blizzard_WowTokenUI.xml".to_string(),
+            "Blizzard_WowTokenUIInsecure.xml".to_string(),
+        ],
+        "Current secure token addon owns the token flow through its secure and insecure XML entrypoints"
     );
 }
 

@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn subscription_interstitial_dir() -> PathBuf {
@@ -129,21 +130,20 @@ fn allow_load_absent_restricts_to_game_screen_only() {
 }
 
 #[test]
-fn toc_raw_bytes_pin_three_metadata_directives() {
+fn toc_raw_bytes_pin_metadata_and_bootstrap_xml_body() {
     let raw = std::fs::read_to_string(subscription_interstitial_toc()).expect("TOC reads utf-8");
 
     let expected_directives = [
         "## Title: Blizzard Subscription Interstitial UI",
         "## LoadOnDemand: 1",
+        "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua [Bootstrap]",
         "Blizzard_SubscriptionInterstitialUI.xml",
     ];
 
     for directive in expected_directives {
         assert!(
             raw.contains(directive),
-            "Raw TOC must pin `{directive}` — minimal 3-line TOC: \
-             space-separated display title + LoD flag + 1 body file (XML \
-             which itself <Script file=...> includes the matching .lua)"
+            "Raw TOC must pin current SubscriptionInterstitial metadata and body entry `{directive}`"
         );
     }
 
@@ -157,7 +157,7 @@ fn toc_raw_bytes_pin_three_metadata_directives() {
 }
 
 #[test]
-fn body_resolves_to_single_xml_entry() {
+fn body_resolves_bootstrap_then_xml_entry() {
     let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -168,9 +168,12 @@ fn body_resolves_to_single_xml_entry() {
 
     assert_eq!(
         body,
-        vec!["Blizzard_SubscriptionInterstitialUI.xml".to_string()],
-        "Single body entry — XML chains the matching .lua via \
-         <Script file=...>. Got: {body:?}"
+        vec![
+            "Blizzard_SubscriptionInterstitialUI_Bootstrap.lua".to_string(),
+            "Blizzard_SubscriptionInterstitialUI.xml".to_string(),
+        ],
+        "Bootstrap loads before the XML, which chains the matching .lua via <Script file=...>. \
+         Got: {body:?}"
     );
 }
 

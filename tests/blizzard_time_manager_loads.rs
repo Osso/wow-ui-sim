@@ -8,7 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn time_manager_dir() -> PathBuf {
@@ -99,7 +100,7 @@ fn find_toc_file_resolves_mainline_flavor_toc() {
 }
 
 #[test]
-fn toc_is_load_on_demand_with_no_dependencies() {
+fn toc_is_load_on_demand_with_current_dependencies() {
     let toc = TocFile::from_file(&time_manager_toc()).expect("TOC parses");
 
     assert!(
@@ -109,8 +110,20 @@ fn toc_is_load_on_demand_with_no_dependencies() {
          calls UIParentLoadAddOn) or runs /tm /timer /stopwatch slash \
          commands"
     );
-    assert!(toc.dependencies().is_empty());
-    assert!(toc.optional_deps().is_empty());
+    assert_eq!(
+        toc.dependencies(),
+        vec![
+            "Blizzard_FrameXMLUtil".to_string(),
+            "Blizzard_RaidWarning".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+        ],
+        "Retail 12.1.0.69497 declares TimeManager dependencies in published order"
+    );
+    assert_eq!(
+        toc.optional_deps(),
+        vec!["Blizzard_Plunderstorm".to_string()],
+        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as the optional dependency"
+    );
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
     assert!(
@@ -168,16 +181,19 @@ fn allow_load_game_restricts_to_game_screen_only() {
 }
 
 #[test]
-fn toc_raw_bytes_pin_six_metadata_directives() {
+fn toc_raw_bytes_pin_current_metadata_directives_and_bootstrap() {
     let raw = std::fs::read_to_string(time_manager_toc()).expect("TOC reads utf-8");
 
     let expected_directives = [
         "## Title: Blizzard Time Manager",
         "## Author: Blizzard Entertainment",
         "## LoadOnDemand: 1",
+        "## Dependencies: Blizzard_FrameXMLUtil, Blizzard_RaidWarning, Blizzard_GameMenuEsc",
+        "## OptionalDeps: Blizzard_Plunderstorm",
         "## SavedVariablesPerCharacter: BlizzardStopwatchOptions",
         "## AllowLoad: game",
         "## AllowLoadGameType: mainline",
+        "Blizzard_TimeManager_Bootstrap.lua [Bootstrap]",
         "Mainline\\Blizzard_TimeManager.lua",
         "Mainline\\Blizzard_TimeManager.xml",
         "Mainline\\Localization.lua",
@@ -186,22 +202,19 @@ fn toc_raw_bytes_pin_six_metadata_directives() {
     for directive in expected_directives {
         assert!(
             raw.contains(directive),
-            "Raw TOC must pin `{directive}` — 6 metadata directives + \
-             3 body files (Mainline-prefixed lua, xml, Localization)"
+            "Raw TOC must pin current TimeManager metadata and body entry `{directive}`"
         );
     }
 
     assert!(!raw.contains("## SavedVariables:"));
-    assert!(!raw.contains("## Dependencies"));
     assert!(!raw.contains("## RequiredDep"));
-    assert!(!raw.contains("## OptionalDep"));
     assert!(!raw.contains("## UseSecureEnvironment"));
     assert!(!raw.contains("## LoadFirst"));
     assert!(!raw.contains("## DefaultState"));
 }
 
 #[test]
-fn body_resolves_three_entries_with_normalized_slashes() {
+fn body_resolves_bootstrap_and_three_entries_with_normalized_slashes() {
     let toc = TocFile::from_file(&time_manager_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -211,6 +224,7 @@ fn body_resolves_three_entries_with_normalized_slashes() {
         .collect();
 
     let expected = vec![
+        "Blizzard_TimeManager_Bootstrap.lua".to_string(),
         "Mainline/Blizzard_TimeManager.lua".to_string(),
         "Mainline/Blizzard_TimeManager.xml".to_string(),
         "Mainline/Localization.lua".to_string(),
@@ -218,24 +232,24 @@ fn body_resolves_three_entries_with_normalized_slashes() {
 
     assert_eq!(
         body, expected,
-        "Body must resolve to 3 entries in declared order (lua, xml, \
-         Localization) with backslashes normalized to forward slashes \
-         (toc.rs test_parse_backslash_paths). Got: {body:?}"
+        "Body must resolve to the bootstrap followed by the three declared Mainline entries. \
+         Got: {body:?}"
     );
 }
 
 #[test]
-fn absent_from_every_screen_eager_discovery() {
+fn appears_in_game_discovery_via_blizzard_game_implicit_dependency() {
     for screen in ALL_FOUR_SCREENS {
         let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), *screen);
         let found = addons
             .iter()
             .any(|(name, _)| name == "Blizzard_TimeManager");
-        assert!(
-            !found,
-            "Blizzard_TimeManager must be absent from {screen:?} eager \
-             discovery — `## LoadOnDemand: 1` excludes LoD addons \
-             from the eager sweep at src/loader/mod.rs"
+        assert_eq!(
+            found,
+            *screen == ScreenKind::Game,
+            "TimeManager should appear only for {screen:?}: Blizzard_Game pulls this LoD addon \
+             through the current implicit startup dependency while AllowLoad: game excludes \
+             glue screens"
         );
     }
 }

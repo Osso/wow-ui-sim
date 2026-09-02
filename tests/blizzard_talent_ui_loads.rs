@@ -5,7 +5,8 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn talent_ui_dir() -> PathBuf {
@@ -105,6 +106,8 @@ fn mists_toc_raw_bytes_pin_three_metadata_directives() {
         "## Title: Blizzard Talent UI",
         "## LoadOnDemand: 1",
         "## Dependencies: Blizzard_HelpPlate",
+        "Blizzard_TalentUI_Bootstrap.lua [Bootstrap]",
+        "Mists\\Blizzard_TalentUI_Bootstrap.lua [Bootstrap]",
         "Classic\\Blizzard_TalentUI_Shared.lua",
         "Classic\\Blizzard_TalentUI_Shared.xml",
         "Mists\\Blizzard_TalentUI.lua",
@@ -115,9 +118,8 @@ fn mists_toc_raw_bytes_pin_three_metadata_directives() {
     for directive in expected_directives {
         assert!(
             raw.contains(directive),
-            "Raw TOC must pin `{directive}` — 3 metadata directives + \
-             5 body entries (2 Classic-shared + 2 Mists-flavor + 1 \
-             Classic localization stub) using backslash path syntax"
+            "Raw TOC must pin `{directive}` — current body includes root and Mists bootstraps \
+             before the five legacy source entries"
         );
     }
 
@@ -131,7 +133,7 @@ fn mists_toc_raw_bytes_pin_three_metadata_directives() {
 }
 
 #[test]
-fn body_resolves_five_entries_with_normalized_slashes() {
+fn body_resolves_two_bootstraps_and_five_entries_with_normalized_slashes() {
     let toc = TocFile::from_file(&talent_ui_mists_toc()).expect("TOC parses");
 
     let body: Vec<String> = toc
@@ -141,6 +143,8 @@ fn body_resolves_five_entries_with_normalized_slashes() {
         .collect();
 
     let expected = vec![
+        "Blizzard_TalentUI_Bootstrap.lua".to_string(),
+        "Mists/Blizzard_TalentUI_Bootstrap.lua".to_string(),
         "Classic/Blizzard_TalentUI_Shared.lua".to_string(),
         "Classic/Blizzard_TalentUI_Shared.xml".to_string(),
         "Mists/Blizzard_TalentUI.lua".to_string(),
@@ -150,9 +154,8 @@ fn body_resolves_five_entries_with_normalized_slashes() {
 
     assert_eq!(
         body, expected,
-        "Body must resolve to 5 entries in declared order with \
-         backslashes normalized to forward slashes (toc.rs \
-         test_parse_backslash_paths covers this). Got: {body:?}"
+        "Body must resolve to two bootstraps followed by five legacy source entries in declared \
+         order. Got: {body:?}"
     );
 }
 
