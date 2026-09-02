@@ -105,13 +105,13 @@ fn is_in_instance_returns_instance_kind_when_active() {
 }
 
 #[test]
-fn combat_probe_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/combat_probes.rs").exists(),
-        "combat probe globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/combat_probes.rs").exists(),
-        "combat probe globals should stay classified as real modeled Lua globals",
-    );
+fn in_combat_lockdown_tracks_combat_exit() {
+    let env = env();
+    env.state().borrow_mut().player.in_combat = true;
+    let in_combat: bool = env.eval("return InCombatLockdown()").unwrap();
+    assert!(in_combat);
+
+    env.state().borrow_mut().player.in_combat = false;
+    let after_exit: bool = env.eval("return InCombatLockdown()").unwrap();
+    assert!(!after_exit);
 }

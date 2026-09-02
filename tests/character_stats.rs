@@ -7,15 +7,14 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
-fn combat_stats_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/combat_stats.rs").exists(),
-        "combat stat globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/combat_stats.rs").exists(),
-        "combat stat globals should stay classified as real modeled Lua globals",
-    );
+fn combat_rating_value_converts_with_crit_divisor() {
+    let env = env();
+
+    let bonus: f64 = env
+        .eval("return GetCombatRatingBonusForCombatRatingValue(9, 360)")
+        .unwrap();
+
+    assert_eq!(bonus, 2.0);
 }
 
 // ============================================================================

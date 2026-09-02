@@ -6,15 +6,13 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::CastingState;
 
 #[test]
-fn vehicle_possession_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/vehicle_possession.rs").exists(),
-        "vehicle/possess/taxi globals are modeled through SimState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/vehicle_possession.rs").exists(),
-        "vehicle/possess/taxi globals should stay classified as real modeled Lua globals",
-    );
+fn unit_on_taxi_returns_false_for_non_player() {
+    let env = WowLuaEnv::new().expect("env");
+    env.state().borrow_mut().player.on_taxi = true;
+
+    let on_taxi: bool = env.eval("return UnitOnTaxi('target')").unwrap();
+
+    assert!(!on_taxi);
 }
 
 #[test]

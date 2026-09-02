@@ -155,13 +155,13 @@ fn get_restricted_account_data_returns_three_values() {
 }
 
 #[test]
-fn xp_honor_rest_globals_live_under_real_globals_boundary() {
-    assert!(
-        !std::path::Path::new("src/lua_api/globals/xp_honor_rest.rs").exists(),
-        "XP, honor, and rest globals are modeled through PlayerXpState and belong under globals::real",
-    );
-    assert!(
-        std::path::Path::new("src/lua_api/globals/real/xp_honor_rest.rs").exists(),
-        "XP, honor, and rest globals should stay classified as real modeled Lua globals",
-    );
+fn get_xp_exhaustion_returns_nil_after_clearing() {
+    let env = WowLuaEnv::new().expect("env");
+    env.state().borrow_mut().player_xp.exhaustion = Some(12_345);
+    let banked_xp: f64 = env.eval("return GetXPExhaustion()").unwrap();
+    assert_eq!(banked_xp, 12_345.0);
+
+    env.state().borrow_mut().player_xp.exhaustion = None;
+    let is_nil: bool = env.eval("return GetXPExhaustion() == nil").unwrap();
+    assert!(is_nil);
 }

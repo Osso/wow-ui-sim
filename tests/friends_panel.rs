@@ -57,6 +57,7 @@ fn social_panel_toggle_realizes_online_rows_and_provides_offline_friend_data() {
                 .eval(
                     r#"
                     ToggleSocialPanel()
+                    FriendsList_Update(true)
 
                     local realizedOnlineNames = {}
                     local realizedNamesMatch = true

@@ -54,6 +54,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_ActionBar",
     "Blizzard_AutoComplete",
     "Blizzard_StaticPopup_Game",
+    "Blizzard_MacroUI",
     "Blizzard_GameMenu",
     "Blizzard_HelpFrame",
 ];
