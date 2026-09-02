@@ -10,7 +10,7 @@
 //! Lane focus areas (per the PLAN.md task):
 //!     1. STARTUP SHAPE — what must exist before XML loads (engine-created
 //!        UIParent / WorldFrame, panel-positioning attributes), the LoadFirst
-//!        ordering of FrameXML, the LoadWith inline-pull of UIParentPanelManager.
+//!        ordering of FrameXML, and UIParentPanelManager's required dependencies.
 //!     2. PANEL LOADING — the ShowUIPanel / HideUIPanel / GetUIPanel / SetUIPanelAttribute /
 //!        UpdateUIPanelPositions globals, the UIPanelWindows registry, and
 //!        RegisterUIPanel (the current panel-registration entry point).
@@ -25,9 +25,8 @@
 //!     FrameXMLBase   (AllowLoad: Game, deps: Blizzard_SharedXML, Blizzard_SharedXMLGame)
 //!         ├── FrameXMLUtil   (AllowLoad: Game, singular `## Dep:` form for
 //!         │                   SharedXMLGame / Colors / StaticPopup)
-//!         └── UIParent       (AllowLoad: game, AllowLoadGameType: mainline,
-//!                              deps: FrameXMLBase, ObjectAPI, Colors)
-//!             └── UIParentPanelManager   (deps: UIParent, LoadWith: UIParent,
+//!         └── UIParent       (AllowLoad: game, deps: SharedXMLBase)
+//!             └── UIParentPanelManager   (deps: ManagedFrameSystem, GameMenuEsc,
 //!                                          AllowLoadGameType: mainline,
 //!                                          3 files w/ [AllowLoadEnvironment Global])
 //!                 └── FrameXML   (LoadFirst: 1, AllowLoad: Game, MANY deps
@@ -92,9 +91,8 @@ fn each_lane_addon_directory_resolves_with_a_toc() {
         );
         assert!(
             find_toc_file(&dir).is_some(),
-            "Lane addon `{name}` must ship a resolvable TOC file. UIParent / FrameXML / \
-             UIParentPanelManager use `_Mainline.toc` variants; FrameXMLUtil uses a single \
-             `Blizzard_FrameXMLUtil.toc`. find_toc_file resolves either form"
+            "Lane addon `{name}` must ship a resolvable active-profile TOC file. \
+             find_toc_file resolves the current bare TOCs and profile variants"
         );
     }
 }
@@ -227,19 +225,14 @@ fn frame_xml_uses_load_first_to_run_before_other_eager_addons() {
 }
 
 #[test]
-fn ui_parent_panel_manager_pulls_alongside_ui_parent_via_load_with() {
+fn ui_parent_panel_manager_declares_current_dependencies_without_load_with() {
     let panel_manager = parse_lane_toc("Blizzard_UIParentPanelManager");
 
     let load_with = panel_manager.load_with();
-    assert_eq!(
-        load_with,
-        vec!["Blizzard_UIParent".to_string()],
-        "UIParentPanelManager carries `## LoadWith: Blizzard_UIParent` — when UIParent loads, \
-         the panel manager loads INLINE in the same load-pass rather than waiting for the \
-         dep-graph sweep to reach it. This is structurally redundant with the explicit \
-         Dependencies edge for the simulator's eager-discovery path (both names are non-LoD, \
-         so both are pulled either way), while still preserving the current source's inline \
-         load-with relationship. Got: {load_with:?}"
+    assert!(
+        load_with.is_empty(),
+        "UIParentPanelManager no longer carries `## LoadWith`; its current required deps are \
+         Blizzard_ManagedFrameSystem and Blizzard_GameMenuEsc. Got LoadWith: {load_with:?}"
     );
 
     for other in &[
@@ -251,9 +244,9 @@ fn ui_parent_panel_manager_pulls_alongside_ui_parent_via_load_with() {
         let toc = parse_lane_toc(other);
         assert!(
             toc.load_with().is_empty(),
-            "`{other}` MUST NOT carry LoadWith — UIParentPanelManager is the only LoadWith \
-             user in this lane. Adding LoadWith elsewhere would create an inline-pull cascade \
-             that bypasses the topological dep sort"
+            "`{other}` MUST NOT carry LoadWith — current retail lane TOCs do not use \
+             LoadWith. Adding it would create an inline-pull cascade that bypasses the \
+             topological dep sort"
         );
     }
 }
@@ -327,27 +320,8 @@ fn ui_parent_lane_addons_restrict_to_game_screen_only() {
 }
 
 #[test]
-fn ui_parent_and_panel_manager_are_mainline_only_via_allow_load_game_type() {
-    let uiparent = parse_lane_toc("Blizzard_UIParent");
+fn ui_parent_panel_manager_is_mainline_only_via_allow_load_game_type() {
     let panel_manager = parse_lane_toc("Blizzard_UIParentPanelManager");
-
-    let raw_uiparent =
-        std::fs::read_to_string(lane_toc("Blizzard_UIParent")).expect("UIParent TOC reads");
-    assert!(
-        raw_uiparent.contains("## AllowLoadGameType: mainline"),
-        "UIParent_Mainline.toc must carry `## AllowLoadGameType: mainline` (Mists has its own \
-         _Mists.toc variant). The simulator's variant-resolver picks _Mainline.toc by default; \
-         without the gate, a Mists run could mis-resolve to this TOC"
-    );
-    assert!(
-        !uiparent.is_game_type_restricted(),
-        "INVERSE-RESTRICTION SEMANTICS — `is_game_type_restricted()` returns false when \
-         AllowLoadGameType lists `mainline` or `standard`, true otherwise (src/toc.rs:294-302). \
-         UIParent's `## AllowLoadGameType: mainline` is meaningful as a marker but does NOT \
-         flip the restriction flag, because mainline IS the default. Tests asserting `true` \
-         here would break — the directive is documentary on mainline, gating only on \
-         non-mainline gametypes (plunderstorm / classic / etc.)"
-    );
 
     let raw_panel = std::fs::read_to_string(lane_toc("Blizzard_UIParentPanelManager"))
         .expect("UIParentPanelManager TOC reads");
@@ -357,7 +331,7 @@ fn ui_parent_and_panel_manager_are_mainline_only_via_allow_load_game_type() {
     );
     assert!(
         !panel_manager.is_game_type_restricted(),
-        "UIParentPanelManager mirrors UIParent's mainline gating with the same inverse semantics"
+        "UIParentPanelManager's mainline gate uses the inverse restriction semantics"
     );
 }
 
