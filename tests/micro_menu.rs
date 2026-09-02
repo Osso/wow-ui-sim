@@ -122,6 +122,11 @@ fn install_fixture_globals(env: &WowLuaEnv) {
         function CanShowAchievementUI()
             return true
         end
+
+        Kiosk = Kiosk or {}
+        function Kiosk.IsEnabled()
+            return false
+        end
         "#,
     )
     .expect("failed to install micro-menu fixture globals");
