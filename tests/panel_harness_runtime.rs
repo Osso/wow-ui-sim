@@ -37,6 +37,11 @@ const PANEL_HARNESS_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
     ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
     (
+        "Blizzard_ManagedFrameSystem",
+        "Blizzard_ManagedFrameSystem_Mainline.toc",
+    ),
+    ("Blizzard_GameMenuEsc", "Blizzard_GameMenuEsc.toc"),
+    (
         "Blizzard_UIParentPanelManager",
         "Blizzard_UIParentPanelManager_Mainline.toc",
     ),
@@ -57,6 +62,7 @@ const PANEL_HARNESS_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
     ("Blizzard_StaticPopup", "Blizzard_StaticPopup.toc"),
     ("Blizzard_TimeManager", "Blizzard_TimeManager_Mainline.toc"),
+    ("Blizzard_TimerunningUtil", "Blizzard_TimerunningUtil.toc"),
     ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
     ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
     ("Blizzard_FrameXML", "Blizzard_FrameXML.toc"),
@@ -549,6 +555,8 @@ fn adventure_journal_dungeon_action_opens_lfd_without_recursing() {
     env.set_screen_size(1024.0, 768.0);
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     load_panel_harness(&env);
+    load_blizzard_addon(&env, "Blizzard_RaidWarning", "Blizzard_RaidWarning.toc");
+    load_blizzard_addon(&env, "Blizzard_LFGUtil", "Blizzard_LFGUtil_Mainline.toc");
     load_blizzard_addon(
         &env,
         "Blizzard_GroupFinder",
