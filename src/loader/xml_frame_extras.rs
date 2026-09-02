@@ -315,7 +315,7 @@ fn append_texture_tex_coords_property(
     }
 }
 
-/// Initialize tables expected by action bar OnLoad handlers.
+/// Normalize action-bar button collections before Blizzard lifecycle handlers run.
 /// Only runs Lua when the frame has a `numButtons` KeyValue (rare).
 pub(crate) fn init_action_bar_tables(
     env: &LoaderEnv<'_>,
@@ -330,7 +330,7 @@ pub(crate) fn init_action_bar_tables(
     }
     let code = format!(
         r#"do local f = {}
-        if f and not f.actionButtons then
+        if f and type(f.actionButtons) ~= "table" then
             f.actionButtons = {{}}
         end end"#,
         lua_global_ref(name)
