@@ -42,7 +42,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn blizzard_declension_frame_toc_declares_uiparent_dep_and_mainline_only() {
+fn blizzard_declension_frame_toc_has_no_dependencies_and_is_mainline_only() {
     let toc = TocFile::from_file(&declension_frame_toc())
         .expect("Blizzard_DeclensionFrame_Mainline TOC should parse");
     assert!(
@@ -57,10 +57,9 @@ fn blizzard_declension_frame_toc_declares_uiparent_dep_and_mainline_only() {
     );
     let deps = toc.dependencies();
     assert!(
-        deps.contains(&"Blizzard_UIParent".to_string()),
-        "Blizzard_DeclensionFrame should declare `## Dependencies: Blizzard_UIParent` so it \
-         loads after UIParent is created (the locale-override addons will reparent their \
-         declension dialog to UIParent), got {deps:?}"
+        deps.is_empty(),
+        "Blizzard_DeclensionFrame has no dependency metadata in retail 12.1.0.69497; its \
+         mainline files are locale-override placeholders. Got: {deps:?}"
     );
 
     let toc_text = std::fs::read_to_string(declension_frame_toc())
@@ -85,10 +84,9 @@ fn blizzard_declension_frame_appears_in_game_discovery() {
         .any(|(name, _)| name == "Blizzard_DeclensionFrame");
     assert!(
         in_game,
-        "Blizzard_DeclensionFrame (non-LOD with `## Dependencies: Blizzard_UIParent` + \
-         `## AllowLoad: game` + `## AllowLoadGameType: mainline`) should appear in Game-screen \
-         auto-discovery so the locale-specific overrides (ruRU / koKR / zhCN — handled by \
-         locale-tagged Lua/XML files in real WoW) have a base addon to attach to"
+        "Blizzard_DeclensionFrame is non-LOD with `## AllowLoad: game` and \
+         `## AllowLoadGameType: mainline`, so its locale-override placeholders should appear in \
+         Game-screen auto-discovery"
     );
 }
 

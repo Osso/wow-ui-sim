@@ -42,7 +42,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn blizzard_durability_frame_toc_declares_two_dependencies_and_default_enabled() {
+fn blizzard_durability_frame_toc_declares_three_dependencies_and_default_enabled() {
     let toc = TocFile::from_file(&durability_frame_toc())
         .expect("Blizzard_DurabilityFrame TOC should parse");
     assert!(
@@ -67,11 +67,10 @@ fn blizzard_durability_frame_toc_declares_two_dependencies_and_default_enabled()
         vec![
             "Blizzard_Minimap".to_string(),
             "Blizzard_EditMode".to_string(),
+            "Blizzard_ManagedFrameSystem".to_string(),
         ],
-        "Blizzard_DurabilityFrame must declare exactly two `## Dependencies:` in order: \
-         Blizzard_Minimap (provides UIParent_ManageFramePositions positioning hooks) and \
-         Blizzard_EditMode (provides EditModeDurabilityFrameSystemTemplate the XML \
-         inherits). Got: {deps:?}"
+        "Retail 12.1.0.69497 declares Minimap, EditMode, and ManagedFrameSystem in this \
+         order for the durability HUD. Got: {deps:?}"
     );
 
     let toc_text = std::fs::read_to_string(durability_frame_toc())

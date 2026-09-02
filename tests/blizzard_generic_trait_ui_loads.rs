@@ -97,18 +97,15 @@ fn blizzard_generic_trait_ui_toc_declares_lod_with_single_shared_talent_dep() {
 }
 
 #[test]
-fn blizzard_generic_trait_ui_toc_lists_two_lua_files_plus_one_xml() {
+fn blizzard_generic_trait_ui_toc_lists_bootstrap_two_lua_files_and_one_xml() {
     let toc_text = std::fs::read_to_string(generic_trait_ui_toc())
         .expect("Blizzard_GenericTraitUI TOC should read");
     let lua_count = toc_text.matches(".lua").count();
     let xml_count = toc_text.matches(".xml").count();
     assert_eq!(
-        lua_count, 2,
-        "Blizzard_GenericTraitUI TOC enumerates exactly 2 .lua files: \
-         Blizzard_GenericTraitUtil.lua (publishes the GenericTraitUtil namespace with the 5 \
-         layout-info accessors) and Blizzard_GenericTraitFrame.lua (publishes \
-         GenericTraitFrameMixin + GenericTraitFrameCurrencyFrameMixin and the \
-         UIPanelWindows[\"GenericTraitFrame\"] registration). Got: {lua_count}"
+        lua_count, 3,
+        "Retail 12.1.0.69497 lists the bootstrap, Blizzard_GenericTraitUtil.lua, and \
+         Blizzard_GenericTraitFrame.lua. Got: {lua_count}"
     );
     assert_eq!(
         xml_count, 1,
@@ -119,9 +116,13 @@ fn blizzard_generic_trait_ui_toc_lists_two_lua_files_plus_one_xml() {
          children). Got: {xml_count}"
     );
     assert!(
+        toc_text.contains("Blizzard_GenericTraitUI_Bootstrap.lua [Bootstrap]"),
+        "Retail 12.1.0.69497 lists the GenericTrait bootstrap before its regular files"
+    );
+    assert!(
         toc_text.contains("Blizzard_GenericTraitUtil.lua"),
-        "TOC must list the Util .lua first — its GenericTraitUtil namespace is consumed at \
-         line 119 of Blizzard_GenericTraitFrame.lua \
+        "TOC must list the Util .lua after the bootstrap and before GenericTraitFrame.lua — \
+         its GenericTraitUtil namespace is consumed at line 119 of Blizzard_GenericTraitFrame.lua \
          (`GenericTraitUtil.GetFrameLayoutInfo(treeID)`) and at the XML KeyValue \
          `getEdgeTemplateType=GenericTraitUtil.GetEdgeTemplateType` (line 5 of \
          Blizzard_GenericTraitFrame.xml), so file order matters"

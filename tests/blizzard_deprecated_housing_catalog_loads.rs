@@ -5,17 +5,11 @@ use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
-use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
     )))
-}
-
-fn deprecated_housing_catalog_toc() -> PathBuf {
-    blizzard_ui_dir()
-        .join("Blizzard_DeprecatedHousingCatalog/Blizzard_DeprecatedHousingCatalog.toc")
 }
 
 fn load_full_game_ui() -> WowLuaEnv {
@@ -43,62 +37,25 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn blizzard_deprecated_housing_catalog_toc_is_minimal_with_no_flags_or_deps() {
-    let toc = TocFile::from_file(&deprecated_housing_catalog_toc())
-        .expect("Blizzard_DeprecatedHousingCatalog TOC should parse");
+fn blizzard_deprecated_housing_catalog_is_absent_from_retail_source() {
     assert!(
-        !toc.is_load_on_demand(),
-        "Blizzard_DeprecatedHousingCatalog declares `## LoadOnDemand: 0` — the in-place \
-         C_HousingCatalog / C_HousingBasicMode method overrides + Enum.HousingCatalogEntry\
-         Subtype seeding must install before any housing-frame addon Lua executes that \
-         calls them"
-    );
-    assert!(
-        !toc.is_secure_env(),
-        "Blizzard_DeprecatedHousingCatalog does not declare UseSecureEnvironment"
-    );
-    assert!(
-        toc.dependencies().is_empty(),
-        "Blizzard_DeprecatedHousingCatalog declares NO dependencies — the shim relies on \
-         the always-loaded C_HousingCatalog / C_HousingBasicMode namespaces \
-         (src/lua_api/env_init/runtime_surface_bootstrap.lua:8940 and :9180)"
-    );
-
-    let toc_text = std::fs::read_to_string(deprecated_housing_catalog_toc())
-        .expect("Blizzard_DeprecatedHousingCatalog TOC should read");
-    assert!(
-        !toc_text.contains("## AllowLoad:"),
-        "Blizzard_DeprecatedHousingCatalog omits `## AllowLoad:` — defaults to Game-screen-\
-         only (src/toc.rs:311), matching the legacy housing-catalog in-game-only API surface"
-    );
-    assert!(
-        !toc_text.contains("## AllowLoadGameType:"),
-        "Blizzard_DeprecatedHousingCatalog omits `## AllowLoadGameType:` so the shim installs \
-         on every game type without restriction"
+        !blizzard_ui_dir()
+            .join("Blizzard_DeprecatedHousingCatalog")
+            .exists(),
+        "Retail 12.1.0.69497 no longer ships Blizzard_DeprecatedHousingCatalog"
     );
 }
 
 #[test]
-fn blizzard_deprecated_housing_catalog_appears_in_game_discovery_only() {
-    let game_addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
-    let in_game = game_addons
-        .iter()
-        .any(|(name, _)| name == "Blizzard_DeprecatedHousingCatalog");
-    assert!(
-        in_game,
-        "Blizzard_DeprecatedHousingCatalog (no AllowLoad flag, defaults to Game-only) \
-         should appear in Game-screen auto-discovery"
-    );
-
-    let login_addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Login);
-    let in_login = login_addons
-        .iter()
-        .any(|(name, _)| name == "Blizzard_DeprecatedHousingCatalog");
-    assert!(
-        !in_login,
-        "Blizzard_DeprecatedHousingCatalog should NOT appear on the Login / glue screens — \
-         housing is an in-game concept"
-    );
+fn blizzard_deprecated_housing_catalog_is_absent_from_discovery() {
+    for screen in [ScreenKind::Game, ScreenKind::Login] {
+        assert!(
+            !discover_blizzard_addons_for_screen(&blizzard_ui_dir(), screen)
+                .iter()
+                .any(|(name, _)| name == "Blizzard_DeprecatedHousingCatalog"),
+            "Retail 12.1.0.69497 must not discover removed Blizzard_DeprecatedHousingCatalog"
+        );
+    }
 }
 
 prefork_full_ui_case! {
@@ -308,26 +265,11 @@ fn blizzard_deprecated_housing_catalog_load_deprecation_fallbacks_cvar_is_defaul
 }
 
 #[test]
-fn blizzard_deprecated_housing_catalog_has_no_xml_or_other_assets() {
-    let dir = blizzard_ui_dir().join("Blizzard_DeprecatedHousingCatalog");
-    let entries: Vec<String> = std::fs::read_dir(&dir)
-        .expect("Blizzard_DeprecatedHousingCatalog dir should read")
-        .flatten()
-        .filter_map(|e| e.file_name().into_string().ok())
-        .collect();
-
-    let has_xml = entries.iter().any(|n| n.ends_with(".xml"));
+fn blizzard_deprecated_housing_catalog_directory_is_absent() {
     assert!(
-        !has_xml,
-        "Blizzard_DeprecatedHousingCatalog has NO XML files — pure Lua deprecation-shim \
-         definitions only. Got entries: {entries:?}"
-    );
-
-    let has_runtime_shims = entries.iter().any(|n| n == "Deprecated_HousingCatalog.lua");
-    assert!(
-        has_runtime_shims,
-        "Blizzard_DeprecatedHousingCatalog should ship `Deprecated_HousingCatalog.lua` (the \
-         runtime shim that wraps C_HousingCatalog / C_HousingBasicMode methods to bridge \
-         the 12.0.5 entryID → entryVariantID API split)"
+        !blizzard_ui_dir()
+            .join("Blizzard_DeprecatedHousingCatalog")
+            .exists(),
+        "Retail 12.1.0.69497 no longer ships the Blizzard_DeprecatedHousingCatalog directory"
     );
 }

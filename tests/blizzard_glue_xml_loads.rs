@@ -66,7 +66,7 @@ fn blizzard_glue_xml_find_toc_resolves_mainline_variant() {
 }
 
 #[test]
-fn blizzard_glue_xml_mainline_toc_declares_load_first_glue_with_ten_deps() {
+fn blizzard_glue_xml_mainline_toc_declares_load_first_glue_with_eleven_deps() {
     let toc = TocFile::from_file(&glue_xml_mainline_toc())
         .expect("Blizzard_GlueXML_Mainline TOC should parse");
     assert!(
@@ -102,15 +102,10 @@ fn blizzard_glue_xml_mainline_toc_declares_load_first_glue_with_ten_deps() {
             "Blizzard_HelpPlate".to_string(),
             "Blizzard_GlueMenuFrame".to_string(),
             "Blizzard_CharacterSelectNavBar".to_string(),
+            "Blizzard_Narration".to_string(),
         ],
-        "Blizzard_GlueXML_Mainline declares exactly 10 deps in this exact order: \
-         Blizzard_StaticPopup_Glue (StaticPopup_Show consumed by login + character-services \
-         flows), Blizzard_LoginWarningDialogs (legacy warning dialogs), Blizzard_TimerunningUtil \
-         (timerunning character creation helpers), Blizzard_Menu (dropdown / context menu \
-         primitives), Blizzard_MoneyFrame (currency display widget), \
-         Blizzard_MatchmakingQueueDisplay (queue status display), Blizzard_GlueCollections \
-         (warband-scene picker), Blizzard_HelpPlate (help-plate tutorial overlay), \
-         Blizzard_GlueMenuFrame (ESC menu), Blizzard_CharacterSelectNavBar (top-of-screen nav)"
+        "Retail 12.1.0.69497 declares eleven GlueXML dependencies in published order, \
+         including Blizzard_Narration last"
     );
 }
 
@@ -217,12 +212,10 @@ fn blizzard_glue_xml_mists_toc_declares_mists_game_type_only() {
             "Blizzard_LoginWarningDialogs".to_string(),
             "Blizzard_HelpPlate".to_string(),
             "Blizzard_GlueMenuFrame".to_string(),
+            "Blizzard_Narration".to_string(),
         ],
-        "Blizzard_GlueXML_Mists declares only 4 deps — the Mists classic flavor strips the \
-         retail-only deps Blizzard_TimerunningUtil / Blizzard_Menu / Blizzard_MoneyFrame / \
-         Blizzard_MatchmakingQueueDisplay / Blizzard_GlueCollections / \
-         Blizzard_CharacterSelectNavBar (those addons either don't ship on Classic or use a \
-         different name on the Mists branch)"
+        "Retail 12.1.0.69497 declares five Mists GlueXML dependencies, including \
+         Blizzard_Narration last"
     );
 }
 

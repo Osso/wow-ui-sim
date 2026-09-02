@@ -211,13 +211,14 @@ fn blizzard_deprecated_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLu
 }
 
 #[test]
-fn blizzard_deprecated_has_no_xml_or_other_assets() {
+fn blizzard_deprecated_toc_lists_current_profile_scoped_shims() {
     let dir = blizzard_ui_dir().join("Blizzard_Deprecated");
-    let entries: Vec<String> = std::fs::read_dir(&dir)
+    let mut entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("Blizzard_Deprecated dir should read")
         .flatten()
         .filter_map(|e| e.file_name().into_string().ok())
         .collect();
+    entries.sort();
 
     let has_xml = entries.iter().any(|n| n.ends_with(".xml"));
     assert!(
@@ -226,21 +227,36 @@ fn blizzard_deprecated_has_no_xml_or_other_assets() {
          {entries:?}"
     );
 
-    let has_transition_guide = entries
-        .iter()
-        .any(|n| n == "11_0_0_SpellBookAPITransitionGuide.lua");
-    assert!(
-        has_transition_guide,
-        "Blizzard_Deprecated should ship `11_0_0_SpellBookAPITransitionGuide.lua` — a fully \
-         comment-wrapped (`--[[ ... --]]`) developer-facing migration cheat-sheet listing the \
-         GetSpell* / IsPassiveSpell / IsHelpfulSpell legacy globals and their new \
-         C_Spell.* / C_SpellBook.* equivalents. Has no executable code"
+    assert_eq!(
+        entries,
+        vec![
+            "11_0_0_SpellBookAPITransitionGuide.lua",
+            "Blizzard_Deprecated.toc",
+            "Classic",
+            "Mainline",
+            "Shared",
+        ],
+        "Retail 12.1.0.69497 ships the transition guide, TOC, and three profile-scoped source \
+         directories"
     );
 
-    let has_runtime_shims = entries.iter().any(|n| n == "Deprecated_12_0_1.lua");
-    assert!(
-        has_runtime_shims,
-        "Blizzard_Deprecated should ship `Deprecated_12_0_1.lua` with the runtime shim \
-         definitions"
+    let toc = TocFile::from_file(&deprecated_toc()).expect("Blizzard_Deprecated TOC should parse");
+    let files: Vec<String> = toc
+        .files
+        .iter()
+        .map(|path| path.to_string_lossy().replace('\\', "/"))
+        .collect();
+    assert_eq!(
+        files,
+        vec![
+            "Classic/Deprecated_1_15_8.lua",
+            "Classic/Deprecated_2_5_5.lua",
+            "Mainline/Deprecated_12_0_1.lua",
+            "Mainline/Deprecated_12_0_5.lua",
+            "Mainline/Deprecated_12_0_7.lua",
+            "Mainline/Deprecated_12_1_0.lua",
+            "Shared/Deprecated_12_1_0.lua",
+        ],
+        "Retail 12.1.0.69497 scopes deprecated shims by profile and shared 12.1 support"
     );
 }

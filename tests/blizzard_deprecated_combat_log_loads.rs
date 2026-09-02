@@ -42,7 +42,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn blizzard_deprecated_combat_log_toc_is_minimal_with_no_flags_or_deps() {
+fn blizzard_deprecated_combat_log_toc_has_combat_log_base_dependency() {
     let toc = TocFile::from_file(&deprecated_combat_log_toc())
         .expect("Blizzard_DeprecatedCombatLog TOC should parse");
     assert!(
@@ -55,14 +55,11 @@ fn blizzard_deprecated_combat_log_toc_is_minimal_with_no_flags_or_deps() {
         !toc.is_secure_env(),
         "Blizzard_DeprecatedCombatLog does not declare UseSecureEnvironment"
     );
-    assert!(
-        toc.dependencies().is_empty(),
-        "Blizzard_DeprecatedCombatLog declares NO explicit dependencies despite referencing \
-         CombatLogUtil (Blizzard_CombatLogBase/CombatLogUtil.lua) for the \
-         GetRaidTargetIcon / GetColorByEventType / GetColorBySchool / GetColorByUnitType / \
-         GenerateDamageResultString / GetUnitIcon / GetPowerTypeString / GetSpellSchoolString \
-         aliases — alphabetical addon load order has Blizzard_CombatLogBase load before \
-         Blizzard_DeprecatedCombatLog so CombatLogUtil exists at module-eval time"
+    assert_eq!(
+        toc.dependencies(),
+        vec!["Blizzard_CombatLogBase".to_string()],
+        "Retail 12.1.0.69497 declares `## Dependencies: Blizzard_CombatLogBase`, which \
+         provides CombatLogUtil before Deprecated_CombatLog.lua installs its aliases"
     );
 
     let toc_text = std::fs::read_to_string(deprecated_combat_log_toc())

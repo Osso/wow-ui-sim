@@ -10,7 +10,6 @@ use wow_ui_sim::toc::TocFile;
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be synced")
-
 }
 
 fn edit_mode_toc() -> PathBuf {
@@ -42,7 +41,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn blizzard_edit_mode_toc_declares_three_dependencies_and_no_optional_flags() {
+fn blizzard_edit_mode_toc_declares_five_dependencies() {
     let toc = TocFile::from_file(&edit_mode_toc()).expect("Blizzard_EditMode TOC should parse");
     assert!(
         !toc.is_load_on_demand(),
@@ -68,14 +67,14 @@ fn blizzard_edit_mode_toc_declares_three_dependencies_and_no_optional_flags() {
     assert_eq!(
         deps,
         vec![
-            "Blizzard_UIParent".to_string(),
             "Blizzard_UIPanelTemplates".to_string(),
             "Blizzard_HelpPlate".to_string(),
+            "Blizzard_ManagedFrameSystem".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
+            "Blizzard_UIParentUtil".to_string(),
         ],
-        "Blizzard_EditMode must declare exactly three `## Dependencies:` in order: \
-         Blizzard_UIParent (UIParent singleton + ManageFramePositions), \
-         Blizzard_UIPanelTemplates (UIPanelButtonTemplate inherited by EditModeDialogButton), \
-         Blizzard_HelpPlate (tutorial / help-overlay surface). Got: {deps:?}"
+        "Retail 12.1.0.69497 declares five EditMode dependencies in published order. \
+         Got: {deps:?}"
     );
 }
 
@@ -106,34 +105,30 @@ fn blizzard_edit_mode_appears_in_game_discovery_only() {
 }
 
 #[test]
-fn blizzard_edit_mode_loads_after_three_declared_dependencies() {
+fn blizzard_edit_mode_loads_after_five_declared_dependencies() {
     let game_addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
     let edit_mode_idx = game_addons
         .iter()
-        .position(|(name, _)| name == "Blizzard_EditMode");
-    let uiparent_idx = game_addons
-        .iter()
-        .position(|(name, _)| name == "Blizzard_UIParent");
-    let panel_templates_idx = game_addons
-        .iter()
-        .position(|(name, _)| name == "Blizzard_UIPanelTemplates");
-    let help_plate_idx = game_addons
-        .iter()
-        .position(|(name, _)| name == "Blizzard_HelpPlate");
+        .position(|(name, _)| name == "Blizzard_EditMode")
+        .expect("Blizzard_EditMode should be discovered");
 
-    let edit_mode_idx = edit_mode_idx.expect("Blizzard_EditMode should be discovered");
-    let uiparent_idx = uiparent_idx.expect("Blizzard_UIParent should be discovered");
-    let panel_templates_idx =
-        panel_templates_idx.expect("Blizzard_UIPanelTemplates should be discovered");
-    let help_plate_idx = help_plate_idx.expect("Blizzard_HelpPlate should be discovered");
-    assert!(
-        uiparent_idx < edit_mode_idx
-            && panel_templates_idx < edit_mode_idx
-            && help_plate_idx < edit_mode_idx,
-        "Blizzard_EditMode must load AFTER all three deps. Got indices: \
-         UIParent={uiparent_idx}, UIPanelTemplates={panel_templates_idx}, \
-         HelpPlate={help_plate_idx}, EditMode={edit_mode_idx}"
-    );
+    for dependency in [
+        "Blizzard_UIPanelTemplates",
+        "Blizzard_HelpPlate",
+        "Blizzard_ManagedFrameSystem",
+        "Blizzard_GameMenuEsc",
+        "Blizzard_UIParentUtil",
+    ] {
+        let dependency_idx = game_addons
+            .iter()
+            .position(|(name, _)| name == dependency)
+            .unwrap_or_else(|| panic!("{dependency} should be discovered"));
+        assert!(
+            dependency_idx < edit_mode_idx,
+            "Blizzard_EditMode must load after {dependency}; indices: \
+             {dependency}={dependency_idx}, EditMode={edit_mode_idx}"
+        );
+    }
 }
 
 prefork_full_ui_case! {

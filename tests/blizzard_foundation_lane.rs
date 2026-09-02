@@ -25,7 +25,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 const LANE_ADDONS_BASE_TO_CONSUMER: &[&str] = &[
@@ -97,12 +98,14 @@ fn lane_dep_edges_pin_canonical_chain() {
 
     let shared_deps = shared.dependencies();
     let expected_shared_deps = [
+        "Blizzard_ProjectConstants",
         "Blizzard_Fonts_Shared",
         "Blizzard_SharedXMLBase",
         "Blizzard_PrintHandler",
         "Blizzard_Menu",
         "Blizzard_Colors",
         "Blizzard_HelpPlate",
+        "Blizzard_Narration",
     ];
     assert_eq!(
         shared_deps,
@@ -110,11 +113,8 @@ fn lane_dep_edges_pin_canonical_chain() {
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
-        "SharedXML pins 6 deps via the multi-value `## Dependencies:` form (comma-separated). \
-         Order matters because the loader applies them sequentially: Fonts must publish \
-         FONT_OBJECT globals before SharedXML's NumberFontNormal references them, SharedXMLBase \
-         must publish Mixin/Pools/CallbackRegistry before SharedXML's UIButtonTemplate consumes \
-         them, etc. Got: {shared_deps:?}"
+        "Retail 12.1.0.69497 pins 8 SharedXML dependencies in published order, including \
+         ProjectConstants first and Narration last. Got: {shared_deps:?}"
     );
 
     let panels_deps = panels.dependencies();

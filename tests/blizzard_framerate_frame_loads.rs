@@ -14,7 +14,7 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 fn framerate_frame_toc() -> PathBuf {
-    blizzard_ui_dir().join("Blizzard_FramerateFrame/Blizzard_FramerateFrame.toc")
+    blizzard_ui_dir().join("Blizzard_FramerateFrame/Blizzard_FramerateFrame_Mainline.toc")
 }
 
 fn load_full_game_ui() -> WowLuaEnv {

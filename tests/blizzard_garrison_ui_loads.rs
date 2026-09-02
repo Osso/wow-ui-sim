@@ -138,17 +138,15 @@ fn blizzard_garrison_ui_toc_declares_lod_required_deps_game_only_mainline() {
     assert_eq!(
         deps,
         vec![
+            "Blizzard_GarrisonBase".to_string(),
             "Blizzard_GarrisonTemplates".to_string(),
             "Blizzard_AdventureMap".to_string(),
             "Blizzard_Colors".to_string(),
             "Blizzard_HelpPlate".to_string(),
+            "Blizzard_FrameXMLUtil".to_string(),
+            "Blizzard_GameMenuEsc".to_string(),
         ],
-        "`## RequiredDep: Blizzard_GarrisonTemplates, Blizzard_AdventureMap, \
-         Blizzard_Colors, Blizzard_HelpPlate` — GarrisonTemplates supplies the virtual \
-         mission/follower/covenant template surface (LoadOnDemand=1, must be pulled \
-         in explicitly), AdventureMap supplies the AdventureMapMixin used by \
-         BFA/Covenant mission frames (LoadOnDemand=1), Colors provides the quality + \
-         font colors, HelpPlate provides the tutorial popup overlay. Got: {:?}",
+        "Retail 12.1.0.69497 declares seven RequiredDep entries in published order. Got: {:?}",
         deps
     );
 }
@@ -171,16 +169,18 @@ fn blizzard_garrison_ui_toc_declares_allow_load_game_and_mainline() {
 }
 
 #[test]
-fn blizzard_garrison_ui_toc_lists_thirty_one_mainline_files_plus_localization() {
+fn blizzard_garrison_ui_toc_lists_thirty_two_mainline_files_plus_localization() {
     let toc_text =
         std::fs::read_to_string(garrison_ui_toc()).expect("Blizzard_GarrisonUI TOC should read");
     let mainline_count = toc_text.matches("Mainline\\").count();
     assert_eq!(
-        mainline_count, 31,
-        "Blizzard_GarrisonUI TOC enumerates exactly 31 `Mainline\\\\*` entries — 15 .lua \
-         files (Building / Mission / Shipyard / LandingPage / Capacitive / Monument / \
-         Recruiter / OrderHallMission / BFAMission / 5x Adventures* / CovenantMission) \
-         + 15 paired .xml files + Localization.lua. Got: {mainline_count}"
+        mainline_count, 32,
+        "Retail 12.1.0.69497 enumerates 32 `Mainline\\\\*` entries: the bootstrap Lua, \
+         15 Lua/XML pairs, and Localization.lua. Got: {mainline_count}"
+    );
+    assert!(
+        toc_text.contains("Mainline\\Blizzard_GarrisonUI_Bootstrap.lua [Bootstrap]"),
+        "Retail 12.1.0.69497 loads Blizzard_GarrisonUI_Bootstrap.lua before the main UI files"
     );
     assert!(
         toc_text.contains("Mainline\\Localization.lua"),
@@ -304,19 +304,14 @@ fn blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load() {
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_garrison_ui_does_not_publish_snapshot_only_hide_wrappers() {
-    let symbols = [
-        "HideGarrisonMissionFrames",
-        "HideGarrisonShipyardFrame",
-    ];
+    let symbols = ["HideGarrisonMissionFrames", "HideGarrisonShipyardFrame"];
     assert_directory_omits_symbols(&garrison_ui_dir(), &symbols);
 
     let env = load_full_game_ui_with_lod_deps();
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let wrappers_are_absent: (bool, bool) = env
-        .eval(
-            "return HideGarrisonMissionFrames == nil, HideGarrisonShipyardFrame == nil",
-        )
+        .eval("return HideGarrisonMissionFrames == nil, HideGarrisonShipyardFrame == nil")
         .expect("garrison hide wrapper visibility should be queryable");
     assert_eq!(wrappers_are_absent, (true, true));
 }

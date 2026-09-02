@@ -64,7 +64,7 @@ fn blizzard_garrison_base_resolves_single_unsuffixed_toc() {
 }
 
 #[test]
-fn blizzard_garrison_base_toc_declares_two_deps_and_no_load_flags() {
+fn blizzard_garrison_base_toc_declares_colors_dependency_and_no_load_flags() {
     let toc = TocFile::from_file(&garrison_base_toc()).expect("Blizzard_GarrisonBase TOC parse");
 
     assert!(
@@ -96,15 +96,8 @@ fn blizzard_garrison_base_toc_declares_two_deps_and_no_load_flags() {
     let deps = toc.dependencies();
     assert_eq!(
         deps,
-        vec![
-            "Blizzard_UIParent".to_string(),
-            "Blizzard_Colors".to_string(),
-        ],
-        "`## Dependencies: Blizzard_UIParent, Blizzard_Colors` — UIParent provides the \
-         TooltipBackdropTemplate that every floating tooltip inherits, plus the \
-         SOUNDKIT global referenced in GarrisonFollowerOptions[FollowerType_6_0_*]; \
-         Colors provides the quality-color palette used by \
-         GarrisonFollowerPortraitMixin:SetQuality. Got: {:?}",
+        vec!["Blizzard_Colors".to_string()],
+        "Retail 12.1.0.69497 declares only `## Dependencies: Blizzard_Colors`. Got: {:?}",
         deps
     );
 
