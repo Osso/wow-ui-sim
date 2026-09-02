@@ -488,10 +488,10 @@ Three forms are supported:
 
 Templates can specify `inherit="prepend"` or `inherit="append"` on script handlers:
 
-- **prepend**: Existing inherited handler runs first, then new handler
-- **append**: New handler runs first, then existing inherited handler
+- **prepend**: New handler runs first, then existing handler
+- **append**: Existing handler runs first, then new handler
 
-The values describe the inherited handler's position. Both are wrapped in `pcall()` so errors in one don't prevent the other from running. The chained handler replaces the old one via `SetScript()`.
+Both are wrapped in `pcall()` so errors in one don't prevent the other from running. The chained handler replaces the old one via `SetScript()`.
 
 ## Architecture Diagram
 

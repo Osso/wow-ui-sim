@@ -129,8 +129,8 @@ Source: `src/loader/helpers.rs:385-402, 440-450`
 
 | Attribute | Behavior |
 |-----------|----------|
-| `inherit="prepend"` | Old inherited handler runs first, then new handler (both wrapped in pcall) |
-| `inherit="append"` | New handler runs first, then old inherited handler (both wrapped in pcall) |
+| `inherit="prepend"` | New handler runs first, then old handler (both wrapped in pcall) |
+| `inherit="append"` | Old handler runs first, then new handler |
 | (none) | New handler **replaces** old handler entirely |
 
 Source: `src/loader/helpers.rs:385-402`
