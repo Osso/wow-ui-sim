@@ -329,12 +329,12 @@ pub(crate) fn init_action_bar_tables(
         return;
     }
     let code = format!(
-        r#"do local f = {}
+        r#"do local f = {frame}
         local actionButtons = f and f.actionButtons
         if f and not pcall(next, actionButtons) then
             f.actionButtons = {{}}
         end end"#,
-        lua_global_ref(name)
+        frame = lua_global_ref(name),
     );
     let _ = env.exec(&code);
 }
