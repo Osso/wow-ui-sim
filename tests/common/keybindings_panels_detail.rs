@@ -73,6 +73,7 @@ pub(crate) fn setup_env() -> common::LockedEnv {
             common::load_required_blizzard_addon(&env, &ui, addon_name);
             env.apply_runtime_addon_load_workarounds(addon_name);
         }
+        common::load_click_binding_bootstrap(&env, &ui);
 
         load_token_ui(&env);
         env.apply_post_load_workarounds();

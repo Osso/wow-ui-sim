@@ -73,6 +73,7 @@ pub fn setup_env() -> WowLuaEnv {
 
     seed_addon_search_paths(&env);
     load_panel_addons(&env);
+    crate::common::load_click_binding_bootstrap(&env, &blizzard_ui_dir());
     install_lua_harness_stubs(&env);
 
     env.apply_post_load_workarounds();

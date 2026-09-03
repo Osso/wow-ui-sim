@@ -192,6 +192,15 @@ pub fn load_required_blizzard_addon(env: &WowLuaEnv, ui: &Path, addon_name: &str
     });
 }
 
+/// Load only the current Click Binding public publisher, keeping its LoD frame unloaded.
+pub fn load_click_binding_bootstrap(env: &WowLuaEnv, ui: &Path) {
+    let path = ui.join("Blizzard_ClickBindingUI/Blizzard_ClickBindingUI_Bootstrap.lua");
+    let source = std::fs::read_to_string(&path)
+        .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
+    env.exec(&source)
+        .unwrap_or_else(|error| panic!("failed to load {}: {error}", path.display()));
+}
+
 /// Helper to load Blizzard_SharedXML templates for tests that need them.
 /// Returns the environment with templates loaded.
 pub fn env_with_shared_xml() -> WowLuaEnv {

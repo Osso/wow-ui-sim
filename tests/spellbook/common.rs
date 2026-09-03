@@ -30,6 +30,7 @@ pub fn setup_full_ui() -> WowLuaEnv {
             eprintln!("[load {name}] FAILED: {e}");
         }
     }
+    crate::common::load_click_binding_bootstrap(&env, &ui);
     env.apply_post_load_workarounds();
     fire_startup_sequence(&env);
     env
