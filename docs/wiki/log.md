@@ -1,3 +1,7 @@
+## [2026-09-03] audit | Document Settings panel opening API
+
+Audited commit `6a19aac5b`. Updated [[lua-api]] and the maintained Lua API reference: `C_SettingsUtil.OpenSettingsPanel(categoryID, scrollTarget)` forwards to `SettingsPanelMixin.OpenToCategory(SettingsPanel, categoryID, scrollTarget)`, defaults an absent category ID to `0`, returns no values, and does nothing when either required surface is absent. The temporary Settings defaults are additive-only: they preserve existing category IDs and `Settings.OpenToCategory`. `C_SettingsUtil.NotifySettingsLoaded` and category/element scrolling beyond forwarding remain unsupported. No new page, index update, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
 ## [2026-09-02] investigation | Preserve duplicate named region bindings
 
 Documented commit `601cde499`: duplicate sibling Texture/FontString regions with the same parent now keep the first `_G` binding while retaining both objects. Current `Blizzard_GMChatUI.xml` relies on this for its second `GMChatTabBG` texture to anchor to the first; last-writer replacement had produced a self-anchor error and aborted XML before `GMChatStatusFrame`, breaking Behavioral Messaging. Added [[duplicate-named-region-binding]], updated [[global-frame-index]], and recorded the related retail 12.1 Tiered Entrance enum, Transmog startup root, and `HasAccessConstraints` contracts in [[patch-12-1-api-audit]] and [[addon-loading]].

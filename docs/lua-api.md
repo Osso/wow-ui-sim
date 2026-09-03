@@ -44,6 +44,10 @@ The retail 12.1 compatibility table publishes 70 strings under `profile-retail` 
 
 Retail 12.1 removes public `GetInventorySlotInfo`. Current `Blizzard_TransmogShared` calls `C_PaperDollInfo.GetInventorySlotInfo` directly, so no loader-scoped legacy-global exception remains; see [[transmog-inventory-slot-scope]] for the retired stale-source workaround.
 
+### Settings panel opening
+
+`C_SettingsUtil.OpenSettingsPanel(categoryID, scrollTarget)` forwards to `SettingsPanelMixin.OpenToCategory(SettingsPanel, categoryID, scrollTarget)`. An absent category ID becomes `0`; it returns no values and is a no-op if `SettingsPanel` or that mixin method is unavailable. The temporary Settings defaults add only missing category IDs and `Settings.OpenToCategory`, preserving Blizzard-provided members. `C_SettingsUtil.NotifySettingsLoaded` and category/element scrolling behavior beyond forwarding the supplied target remain unsupported.
+
 ### Temporary pet-battle runtime
 
 `src/lua_api/workarounds/temporary/pet_battle_runtime_state.rs` seeds sample allied and enemy pets for compatibility. `C_PetBattles.GetBreedQuality(owner, petIndex)` returns seeded `Enum.BattlePetBreedQuality.Rare` (`3`) or numeric fallback `0` for an absent pet, allowing current `PetBattleFrame` OnLoad rarity rendering. It does not model pet ownership, breeding, capture, combat outcomes, or live battle data.
@@ -417,4 +421,5 @@ Applied after addon loading via `env.apply_post_load_workarounds()`:
 | `globals/c_stubs_api.rs` | C_* namespace stubs |
 | `animation/` | Animation types, ticking |
 | `workarounds/mod.rs` | Post-load workaround ordering |
-| `workarounds/temporary/settings_surface_defaults.rs` | Replacement SettingsPanel/Settings reconciliation |
+| `workarounds/temporary/settings_surface_defaults.rs` | Additive-only Settings defaults and replacement SettingsPanel/Settings reconciliation |
+| `c_api/c_settings_util.rs` | `C_SettingsUtil.OpenSettingsPanel` forwarding surface |
