@@ -293,6 +293,28 @@ fn test_frame_literal_mixins_block_applies_mixins() {
             assert(LiteralAuraContainer.inboundApplied == nil, "inbound delegate should not write to public partition")
             assert(forbidden.inboundApplied == true, "inbound delegate should run with forbidden self")
             assert(forbidden.privateApplied == true, "second literal mixin method should run on forbidden partition")
+
+            local publicMixin = { directPublic = function() end }
+            local secureMixin = { directSecure = function() end }
+            __secureMixinMethods = {
+                [publicMixin] = { applyPublic = function(self) self.publicApplied = true end },
+            }
+            __secureenv.__secureMixinMethods = {
+                [secureMixin] = { applySecure = function(self) self.secureApplied = true end },
+            }
+
+            local composite = CreateFromMixins(publicMixin, secureMixin)
+            assert(type(composite.applyPublic) == "function", "public secure registry methods should materialize into composite mixins")
+            assert(type(composite.applySecure) == "function", "secure registry methods should materialize into composite mixins")
+            assert(composite.directPublic == nil and composite.directSecure == nil, "direct entries added after secure materialization should stay excluded")
+
+            local staticFrame = CreateFrame("Frame", "LiteralSecureStaticMixinFrame", UIParent)
+            __wow_apply_xml_mixin(staticFrame, publicMixin)
+            __wow_apply_xml_mixin(staticFrame, secureMixin)
+            staticFrame:applyPublic()
+            staticFrame:applySecure()
+            assert(staticFrame.publicApplied == true and staticFrame.secureApplied == true, "static XML mixin application should resolve both secure registries")
+            assert(staticFrame.directPublic == nil and staticFrame.directSecure == nil, "static XML mixin application should exclude direct entries")
         "#,
         )
         .unwrap();

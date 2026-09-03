@@ -1,7 +1,26 @@
+local function __wow_resolve_secure_mixin_methods(mixin)
+  if type(mixin) ~= "table" then
+    return mixin
+  end
+
+  local function methods_from(registry)
+    if type(registry) ~= "table" then
+      return nil
+    end
+    local methods = rawget(registry, mixin)
+    return type(methods) == "table" and methods or nil
+  end
+
+  local secureRegistry = type(__secureenv) == "table"
+    and rawget(__secureenv, "__secureMixinMethods")
+  local publicRegistry = rawget(_G, "__secureMixinMethods")
+  return methods_from(secureRegistry) or methods_from(publicRegistry) or mixin
+end
+
 if Mixin == nil then
   function Mixin(object, ...)
     for i = 1, select("#", ...) do
-      local mixin = select(i, ...)
+      local mixin = __wow_resolve_secure_mixin_methods(select(i, ...))
       if type(mixin) == "table" then
         for k, v in pairs(mixin) do
           object[k] = v
@@ -160,7 +179,7 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
   local inboundName = inboundPartition
   local wrapInbound = inboundName ~= nil and inboundName ~= ""
 
-  for key, value in pairs(mixin) do
+  for key, value in pairs(__wow_resolve_secure_mixin_methods(mixin)) do
     local applied = value
     if type(value) == "function" and (wrapInbound or secureDelegates == true) then
       local fn = value
