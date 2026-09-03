@@ -18,6 +18,10 @@ use wow_ui_sim::loader::load_addon;
 fn show_macro_frame_loads_and_populates_selector() {
     test_timeout! {
         let env = setup_env();
+        env.exec(
+            "Constants.MacroConsts = { MAX_ACCOUNT_MACROS = 120, MAX_CHARACTER_MACROS = 30 }",
+        )
+        .expect("failed to seed retail MacroConsts");
         let result: String = env.eval(r#"
             if not ShowMacroFrame then
                 return "missing_show_macro_frame"
@@ -523,6 +527,16 @@ fn professions_frame_xml_pages_are_parent_keyed() {
 fn loss_of_control_frame_shows_seeded_overlay_on_added_event() {
     test_timeout! {
         let env = setup_env();
+        let loss_of_control_enabled: bool = env
+            .eval(
+                "Constants.LossOfControlConsts = { LOSS_OF_CONTROL_ACTIVE_INDEX = 1 }; \
+                 RegisterCVar('lossOfControl', '0'); return SetCVar('lossOfControl', '1')",
+            )
+            .expect("failed to register and enable loss-of-control events");
+        assert!(
+            loss_of_control_enabled,
+            "lossOfControl CVar should accept the enabled value"
+        );
         let _ = env.fire_event_with_args(
             "LOSS_OF_CONTROL_ADDED",
             &[

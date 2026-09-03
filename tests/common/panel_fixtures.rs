@@ -72,8 +72,21 @@ pub fn setup_env() -> WowLuaEnv {
     env.set_screen_size(1024.0, 768.0);
 
     seed_addon_search_paths(&env);
+    let ui = blizzard_ui_dir();
     load_panel_addons(&env);
-    crate::common::load_click_binding_bootstrap(&env, &blizzard_ui_dir());
+    crate::common::load_click_binding_bootstrap(&env, &ui);
+    crate::common::load_blizzard_addon_bootstrap(
+        &env,
+        &ui,
+        "Blizzard_MacroUI",
+        "Blizzard_MacroUI_Bootstrap.lua",
+    );
+    crate::common::load_blizzard_addon_bootstrap(
+        &env,
+        &ui,
+        "Blizzard_CooldownBroadcaster",
+        "Blizzard_CooldownBroadcaster_Bootstrap.lua",
+    );
     install_lua_harness_stubs(&env);
 
     env.apply_post_load_workarounds();
@@ -94,67 +107,45 @@ pub fn load_panel_addons(env: &WowLuaEnv) {
 }
 
 pub fn install_lua_harness_stubs(env: &WowLuaEnv) {
-    install_uiparent_load_addon_seam(env);
+    install_load_addon_with_error_handling_seam(env);
     install_action_button_util_stub(env);
     install_multi_action_bar_grid_stubs(env);
 }
 
-/// Wrap `UIParentLoadAddOn` so the LoD panel tests don't drag in
-/// `Blizzard_CooldownBroadcaster` by default (the addon's `ADDON_LOADED` /
-/// `PLAYER_ENTERING_WORLD` handlers reach for `C_ChatInfo` / `C_Spell`
-/// surface the panel tests don't bring up). The previous version returned
-/// `false` straight from the wrapper, which silently bypassed the failure
-/// bookkeeping the real Blizzard impl performs (`FailedAddOnLoad[name] =
-/// true` plus the dialog message), and removed any dedicated seam for
-/// future tests that *do* want to exercise `CooldownBroadcaster_LoadUI`
-/// end-to-end.
-///
-/// The seam:
-///
-/// * keeps the default skip behaviour for the broadcaster, so every
-///   currently-passing test stays passing;
-/// * routes ALL non-broadcaster `UIParentLoadAddOn` calls through the
-///   original implementation untouched (no other addon is affected);
-/// * mirrors the failure bookkeeping the real `UIParentLoadAddOn`
-///   performs by populating both a global `FailedAddOnLoad` table and a
-///   harness-visible `__test_uiparent_load_addon_failures` log so tests
-///   can assert on the failure record;
-/// * exposes a `__test_skip_cooldown_broadcaster_load` opt-out flag so a
-///   dedicated coverage test can flip it to `false` and run
-///   `CooldownBroadcaster_LoadUI()` against the real addon load path.
-pub fn install_uiparent_load_addon_seam(env: &WowLuaEnv) {
+/// Intercept only the current `LoadAddOnWithErrorHandling` path that the
+/// Cooldown Broadcaster bootstrap publisher calls. The real helper keeps its
+/// failure table private, so this fixture records the same one-failure-per-addon
+/// bookkeeping in an observable table while leaving every other addon call alone.
+pub fn install_load_addon_with_error_handling_seam(env: &WowLuaEnv) {
     env.exec(
         r#"
-        __test_uiparent_load_addon_failures = __test_uiparent_load_addon_failures or {}
+        __test_load_addon_with_error_handling_failures =
+            __test_load_addon_with_error_handling_failures or {}
+        __test_skipped_addon_loads = __test_skipped_addon_loads or {}
         if __test_skip_cooldown_broadcaster_load == nil then
             __test_skip_cooldown_broadcaster_load = true
         end
 
-        if type(UIParentLoadAddOn) == "function" and not __test_original_uiparent_load_addon then
-            __test_original_uiparent_load_addon = UIParentLoadAddOn
-            UIParentLoadAddOn = function(name)
-                if name == "Blizzard_CooldownBroadcaster" and __test_skip_cooldown_broadcaster_load then
-                    -- Mirror the real Blizzard_UIParent failure bookkeeping:
-                    -- record the failure into FailedAddOnLoad (the global
-                    -- name the test seam can observe — Blizzard's local-of-
-                    -- the-same-name is not reachable from outside) and log
-                    -- the {name, reason} into a harness-visible array so
-                    -- tests can assert the broadcaster was indeed skipped.
-                    FailedAddOnLoad = FailedAddOnLoad or {}
-                    if not FailedAddOnLoad[name] then
-                        FailedAddOnLoad[name] = true
-                        __test_uiparent_load_addon_failures[
-                            #__test_uiparent_load_addon_failures + 1
+        if type(LoadAddOnWithErrorHandling) == "function"
+            and not __test_original_load_addon_with_error_handling then
+            __test_original_load_addon_with_error_handling = LoadAddOnWithErrorHandling
+            LoadAddOnWithErrorHandling = function(name)
+                if name == "Blizzard_CooldownBroadcaster"
+                    and __test_skip_cooldown_broadcaster_load then
+                    if not __test_skipped_addon_loads[name] then
+                        __test_skipped_addon_loads[name] = true
+                        __test_load_addon_with_error_handling_failures[
+                            #__test_load_addon_with_error_handling_failures + 1
                         ] = { name = name, reason = "DISABLED_FOR_TESTS" }
                     end
                     return false
                 end
-                return __test_original_uiparent_load_addon(name)
+                return __test_original_load_addon_with_error_handling(name)
             end
         end
         "#,
     )
-    .expect("failed to install UIParentLoadAddOn harness seam");
+    .expect("failed to install LoadAddOnWithErrorHandling harness seam");
 }
 
 /// Install the `ActionButtonUtil` namespace used by `Blizzard_SpellSearch`
@@ -422,7 +413,7 @@ const _: () = {
     let _ = seed_addon_search_paths as EnvFn;
     let _ = load_panel_addons as EnvFn;
     let _ = install_lua_harness_stubs as EnvFn;
-    let _ = install_uiparent_load_addon_seam as EnvFn;
+    let _ = install_load_addon_with_error_handling_seam as EnvFn;
     let _ = install_action_button_util_stub as EnvFn;
     let _ = fire_startup_events as EnvFn;
     let _ = clear_recorded_lua_errors as EnvFn;

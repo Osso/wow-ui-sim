@@ -192,13 +192,33 @@ pub fn load_required_blizzard_addon(env: &WowLuaEnv, ui: &Path, addon_name: &str
     });
 }
 
-/// Load only the current Click Binding public publisher, keeping its LoD frame unloaded.
-pub fn load_click_binding_bootstrap(env: &WowLuaEnv, ui: &Path) {
-    let path = ui.join("Blizzard_ClickBindingUI/Blizzard_ClickBindingUI_Bootstrap.lua");
+/// Load one Blizzard addon's public bootstrap publisher without loading its LoD UI.
+pub fn load_blizzard_addon_bootstrap(
+    env: &WowLuaEnv,
+    ui: &Path,
+    addon_name: &str,
+    bootstrap_file: &str,
+) {
+    let path = ui.join(addon_name).join(bootstrap_file);
     let source = std::fs::read_to_string(&path)
         .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
-    env.exec(&source)
+    let addon_table = env
+        .create_addon_table()
+        .unwrap_or_else(|error| panic!("failed to create addon table for {addon_name}: {error}"));
+    let chunk_name = path.display().to_string();
+    env.loader_env()
+        .exec_with_varargs(&source, &chunk_name, addon_name, addon_table)
         .unwrap_or_else(|error| panic!("failed to load {}: {error}", path.display()));
+}
+
+/// Load only the current Click Binding public publisher, keeping its LoD frame unloaded.
+pub fn load_click_binding_bootstrap(env: &WowLuaEnv, ui: &Path) {
+    load_blizzard_addon_bootstrap(
+        env,
+        ui,
+        "Blizzard_ClickBindingUI",
+        "Blizzard_ClickBindingUI_Bootstrap.lua",
+    );
 }
 
 /// Helper to load Blizzard_SharedXML templates for tests that need them.

@@ -6,9 +6,8 @@
 //! * The `ActionButtonUtil` fixture defaults to `NotMissing` AND can drive
 //!   every `ActionBarActionStatus` through `SpellSearchUtil` via the
 //!   per-id override tables.
-//! * The `UIParentLoadAddOn` seam mirrors Blizzard's failure bookkeeping
-//!   when the broadcaster is skipped, dedupes per name, and passes
-//!   unrelated names through untouched.
+//! * The `LoadAddOnWithErrorHandling` seam mirrors broadcaster failure
+//!   bookkeeping, dedupes per name, and passes unrelated names through.
 //! * The `__test_skip_cooldown_broadcaster_load` opt-out flag wires up a
 //!   live path to exercise the real `CooldownBroadcaster_LoadUI` (kept
 //!   `#[ignore]`d because the broadcaster's runtime deps aren't brought
@@ -104,53 +103,38 @@ fn action_button_util_fixture_drives_all_action_bar_statuses() {
     }
 }
 
-/// Verifies the `UIParentLoadAddOn` harness seam: the default broadcaster
-/// skip path mirrors Blizzard's failure bookkeeping (FailedAddOnLoad
-/// table + a harness-visible failure log) instead of silently swallowing
-/// the call, and unrelated `UIParentLoadAddOn` calls still flow through
-/// to the real implementation untouched.
+/// Verifies the `LoadAddOnWithErrorHandling` harness seam: the broadcaster
+/// publisher reaches the scoped skip path, records one observable failure, and
+/// unrelated names still reach Blizzard's real loader helper.
 #[test]
-fn uiparent_load_addon_seam_records_broadcaster_failure() {
+fn load_addon_with_error_handling_seam_records_broadcaster_failure() {
     test_timeout! {
         let env = setup_env();
         let result: String = env.eval(r#"
-            -- Calling CooldownBroadcaster_LoadUI must hit the seam, return
-            -- false, and book the failure into BOTH FailedAddOnLoad and the
-            -- harness-visible log. The real Blizzard impl marks the addon in
-            -- its file-local FailedAddOnLoad to dedupe the dialog message;
-            -- the seam mirrors that on a global of the same name so the
-            -- test can observe it.
             if type(CooldownBroadcaster_LoadUI) ~= "function" then
                 return "missing_cooldown_broadcaster_loadui"
             end
             CooldownBroadcaster_LoadUI()
 
-            if not FailedAddOnLoad or not FailedAddOnLoad["Blizzard_CooldownBroadcaster"] then
-                return "FailedAddOnLoad_not_marked"
-            end
-            if type(__test_uiparent_load_addon_failures) ~= "table"
-               or #__test_uiparent_load_addon_failures < 1 then
+            if type(__test_load_addon_with_error_handling_failures) ~= "table"
+               or #__test_load_addon_with_error_handling_failures < 1 then
                 return "harness_log_empty"
             end
-            local last = __test_uiparent_load_addon_failures[#__test_uiparent_load_addon_failures]
+            local last = __test_load_addon_with_error_handling_failures[
+                #__test_load_addon_with_error_handling_failures
+            ]
             if last.name ~= "Blizzard_CooldownBroadcaster" or last.reason ~= "DISABLED_FOR_TESTS" then
                 return "harness_log_wrong_entry:" .. tostring(last.name) .. "/" .. tostring(last.reason)
             end
 
-            -- Re-firing must NOT push another entry (matches Blizzard's
-            -- "show the dialog once per name" behaviour).
-            local before = #__test_uiparent_load_addon_failures
+            local before = #__test_load_addon_with_error_handling_failures
             CooldownBroadcaster_LoadUI()
-            if #__test_uiparent_load_addon_failures ~= before then
+            if #__test_load_addon_with_error_handling_failures ~= before then
                 return "harness_log_duplicated_entry"
             end
 
-            -- Unrelated names must still flow through to the real
-            -- UIParentLoadAddOn (here we just verify the wrapper doesn't
-            -- short-circuit them — the real call's loaded/failed result
-            -- depends on what the sim provides for that addon).
             local already_loaded_addon = "Blizzard_SharedXMLBase"
-            local loaded = UIParentLoadAddOn(already_loaded_addon)
+            local loaded = LoadAddOnWithErrorHandling(already_loaded_addon)
             if loaded == nil then
                 return "wrapper_swallowed_unrelated_addon"
             end
@@ -159,21 +143,16 @@ fn uiparent_load_addon_seam_records_broadcaster_failure() {
         "#).unwrap();
         assert_eq!(
             result, "ok",
-            "UIParentLoadAddOn seam should preserve failure bookkeeping and pass-through: {result}"
+            "LoadAddOnWithErrorHandling seam should preserve broadcaster bookkeeping and pass-through: {result}"
         );
     }
 }
 
 /// Dedicated coverage path for `CooldownBroadcaster_LoadUI` against the
 /// real `Blizzard_CooldownBroadcaster` addon load. Off by default
-/// (`#[ignore]`) because the broadcaster's `ADDON_LOADED` /
-/// `PLAYER_ENTERING_WORLD` handlers reach for `C_ChatInfo` / `C_Spell`
-/// surface the panel tests don't bring up — this test exists so the seam
-/// has a documented opt-in: flip `__test_skip_cooldown_broadcaster_load`
-/// to `false` BEFORE the wrapper is installed (or before the broadcaster
-/// loader is invoked) and run the loader against the real path. Run with
-/// `cargo test --test test_showuipanel_lod -- --ignored
-/// cooldown_broadcaster_loadui_can_be_exercised_when_opt_in`.
+/// (`#[ignore]`) because its runtime dependencies are outside this panel
+/// fixture. Set `__test_skip_cooldown_broadcaster_load` to `false` before
+/// invoking its current bootstrap publisher to exercise the real path.
 #[test]
 #[ignore = "opt-in coverage for real CooldownBroadcaster load — needs C_ChatInfo/C_Spell surface"]
 fn cooldown_broadcaster_loadui_can_be_exercised_when_opt_in() {
@@ -194,11 +173,8 @@ fn cooldown_broadcaster_loadui_can_be_exercised_when_opt_in() {
             CooldownBroadcaster_LoadUI()
 
             -- Either the addon loaded (CooldownBroadcasterFrame is set) OR
-            -- the load failed for a real reason (recorded in
-            -- FailedAddOnLoad). What we MUST NOT see is the harness
-            -- DISABLED_FOR_TESTS marker — that would mean the opt-in seam
-            -- failed to deactivate.
-            for _, entry in ipairs(__test_uiparent_load_addon_failures or {}) do
+            -- the real load failed. The scoped skip marker must be absent.
+            for _, entry in ipairs(__test_load_addon_with_error_handling_failures or {}) do
                 if entry.name == "Blizzard_CooldownBroadcaster"
                    and entry.reason == "DISABLED_FOR_TESTS" then
                     return "seam_failed_to_deactivate"
