@@ -414,7 +414,10 @@ fn test_secure_env_toc_annotations_are_exhaustive() {
 
     let expected = vec![
         "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
+        "Blizzard_CooldownViewer/CooldownViewerSecure.lua".to_string(),
         "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
+        "Blizzard_UnitFrame/Shared/TargetFrameAuraButton.lua".to_string(),
+        "Blizzard_UnitFrame/Shared/TargetFrameAuraContainer.lua".to_string(),
     ];
     assert_eq!(
         secure_files, expected,
@@ -448,7 +451,15 @@ fn test_secure_env_annotated_files_load_cleanly() {
         let noisy_secure = warnings
             .iter()
             .filter(|w| {
-                w.contains("ChatFrameFiltersSecure.lua") || w.contains("RestrictedEnvironment.lua")
+                [
+                    "ChatFrameFiltersSecure.lua",
+                    "CooldownViewerSecure.lua",
+                    "RestrictedEnvironment.lua",
+                    "TargetFrameAuraButton.lua",
+                    "TargetFrameAuraContainer.lua",
+                ]
+                .iter()
+                .any(|file| w.contains(file))
             })
             .cloned()
             .collect::<Vec<_>>();
@@ -480,19 +491,44 @@ fn test_secure_env_annotated_files_load_cleanly() {
         );
 
         // Downstream surfaces exposed by secure files.
-        let (restricted_scope_ty, secure_filters_delegate_ty): (String, String) = env
+        let (
+            restricted_scope_ty,
+            secure_filters_delegate_ty,
+            cooldown_aura_map_ty,
+            cooldown_aura_map_value,
+            target_aura_container_ty,
+            aura_container_set_max_buffs_ty,
+            aura_button_icon_ty,
+        ): (String, String, String, String, String, String, String) = env
             .eval(
                 r#"
                 -- RESTRICTED_FUNCTIONS_SCOPE lands on the addon table, not _G,
                 -- so we probe the scope via a known descendent global that
                 -- Blizzard_RestrictedAddOnEnvironment registers once loaded.
+                local auraMap = EssentialCooldownViewer.auraInstanceIDToItemFramesMap
+                auraMap[42] = "secure-map-value"
+                local targetAuras = TargetFrame.TargetFrameContent
+                    .TargetFrameContentContextual.Auras
+                local auraButton = CreateFrame(
+                    "AuraButton", nil, UIParent, "TargetFrameAuraButtonTemplate"
+                )
                 return type(CallRestrictedClosure),
-                       type(SecureTypes and SecureTypes.CreateSecureArray)
+                       type(SecureTypes and SecureTypes.CreateSecureArray),
+                       type(auraMap),
+                       type(auraMap[42]),
+                       type(targetAuras),
+                       type(targetAuras.SetMaxBuffs),
+                       type(auraButton.GetIcon)
                 "#,
             )
             .expect("secure surface should be introspectable");
         assert_eq!(restricted_scope_ty, "function");
         assert_eq!(secure_filters_delegate_ty, "function");
+        assert_eq!(cooldown_aura_map_ty, "table");
+        assert_eq!(cooldown_aura_map_value, "string");
+        assert_eq!(target_aura_container_ty, "table");
+        assert_eq!(aura_container_set_max_buffs_ty, "function");
+        assert_eq!(aura_button_icon_ty, "function");
     }
 }
 
@@ -581,33 +617,55 @@ fn test_widget_container_mixin_applied() {
 }
 
 #[test]
-fn test_uiparent_onshow_loads_account_store_without_nil_error() {
+fn test_load_addon_with_error_handling_loads_account_store_and_preserves_surface() {
     test_timeout! {
         let env = load_all_addons();
 
-        let (ok, loaded_after, account_store_exists, err): (bool, bool, bool, Option<String>) = env
+        let (
+            ok,
+            loaded_after,
+            account_store_frame_ty,
+            account_store_mixin_ty,
+            set_storefront_ty,
+            set_fullscreen_ty,
+            err,
+        ): (bool, bool, String, String, String, String, Option<String>) = env
             .eval(
                 r#"
                 local ok, err = pcall(function()
-                    UIParent.firstTimeLoaded = nil
-                    UIParent_OnShow(UIParent)
+                    LoadAddOnWithErrorHandling("Blizzard_AccountStore")
                 end)
                 return ok,
                     C_AddOns.IsAddOnLoaded("Blizzard_AccountStore"),
-                    AccountStoreFrame ~= nil,
+                    type(AccountStoreFrame),
+                    type(AccountStoreMixin),
+                    type(AccountStoreFrame and AccountStoreFrame.SetStoreFrontID),
+                    type(AccountStoreFrame and AccountStoreFrame.SetFullscreenMode),
                     ok and nil or tostring(err)
                 "#,
             )
-            .expect("UIParent_OnShow should be callable");
+            .expect("LoadAddOnWithErrorHandling should be callable");
 
-        assert!(ok, "UIParent_OnShow should not error: {:?}", err);
+        assert!(ok, "LoadAddOnWithErrorHandling should not error: {:?}", err);
         assert!(
             loaded_after,
-            "UIParent_OnShow should load Blizzard_AccountStore via C_AddOns.LoadAddOn"
+            "LoadAddOnWithErrorHandling should mark Blizzard_AccountStore loaded"
         );
-        assert!(
-            account_store_exists,
-            "AccountStoreFrame should exist after UIParent_OnShow addon load"
+        assert_eq!(
+            account_store_frame_ty, "table",
+            "AccountStoreFrame should exist after runtime load"
+        );
+        assert_eq!(
+            account_store_mixin_ty, "table",
+            "AccountStoreMixin should exist after runtime load"
+        );
+        assert_eq!(
+            set_storefront_ty, "function",
+            "AccountStoreFrame should preserve SetStoreFrontID after runtime load"
+        );
+        assert_eq!(
+            set_fullscreen_ty, "function",
+            "AccountStoreFrame should preserve SetFullscreenMode after runtime load"
         );
     }
 }
