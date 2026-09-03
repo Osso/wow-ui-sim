@@ -308,6 +308,27 @@ fn blizzard_private_auras_ui_is_addon_loaded_after_game_screen_boot(env: &WowLua
 }
 }
 
+#[test]
+fn blizzard_private_auras_ui_reads_raid_warning_util_from_secure_replay() {
+    let env = load_full_game_ui();
+    let raid_warning_util_is_available: bool = env
+        .eval(
+            "local util = rawget(__secureenv, 'RaidWarningUtil'); \
+             return type(util) == 'table' \
+                and type(util.MessageType) == 'table' \
+                and type(util.MessageType.BossEmote) == 'number' \
+                and type(util.UpdateCenterScreenAnchors) == 'function'",
+        )
+        .expect("secure RaidWarningUtil probe should succeed");
+
+    assert!(
+        raid_warning_util_is_available,
+        "Blizzard_PrivateAurasUI must read Blizzard_RaidWarning's RaidWarningUtil through \
+         __secureenv; its secure XML references RaidWarningUtil.MessageTypes while its TOC \
+         declares Blizzard_RaidWarning as a hard dependency"
+    );
+}
+
 prefork_full_ui_case! {
 fn blizzard_private_auras_ui_publishes_five_mixins_into_secure_env(env: &WowLuaEnv) {
 
