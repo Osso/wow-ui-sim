@@ -5,7 +5,6 @@
 use crate::common;
 
 use std::path::PathBuf;
-use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -23,77 +22,58 @@ fn load_player_spells(env: &WowLuaEnv) {
     assert!(loaded, "Blizzard_PlayerSpells should load: {reason:?}");
 }
 
-/// Blizzard addons needed for the panel system (dependency order).
-const PANEL_ADDONS: &[(&str, &str)] = &[
-    ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-    ("Blizzard_Colors", "Blizzard_Colors.toc"),
-    ("Blizzard_SharedXML", "Blizzard_SharedXML.toc"),
-    (
-        "Blizzard_SharedXMLGame",
-        "Blizzard_SharedXMLGame.toc",
-    ),
-    (
-        "Blizzard_UIPanelTemplates",
-        "Blizzard_UIPanelTemplates_Mainline.toc",
-    ),
-    (
-        "Blizzard_FrameXMLBase",
-        "Blizzard_FrameXMLBase_Mainline.toc",
-    ),
-    ("Blizzard_FrameEffects", "Blizzard_FrameEffects.toc"),
-    ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
-    ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
-    ("Blizzard_HelpPlate", "Blizzard_HelpPlate.toc"),
-    (
-        "Blizzard_AccessibilityTemplates",
-        "Blizzard_AccessibilityTemplates.toc",
-    ),
-    ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
-    ("Blizzard_UIParent", "Blizzard_UIParent.toc"),
-    ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
-    ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
-    ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
-    ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
-    ("Blizzard_GameMenuEsc", "Blizzard_GameMenuEsc.toc"),
-    ("Blizzard_Communities", "Blizzard_Communities_Mainline.toc"),
-    ("Blizzard_StoreUI", "Blizzard_StoreUI.toc"),
-    ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
-    ("Blizzard_ManagedFrameSystem", "Blizzard_ManagedFrameSystem_Mainline.toc"),
-    ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
-    ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
-    ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
-    ("Blizzard_StaticPopup_Game", "Blizzard_StaticPopup_Game.toc"),
-    ("Blizzard_TransmogShared", "Blizzard_TransmogShared.toc"),
-    (
-        "Blizzard_UIParentPanelManager",
-        "Blizzard_UIParentPanelManager_Mainline.toc",
-    ),
-    (
-        "Blizzard_Settings_Shared",
-        "Blizzard_Settings_Shared.toc",
-    ),
-    (
-        "Blizzard_SettingsDefinitions_Shared",
-        "Blizzard_SettingsDefinitions_Shared.toc",
-    ),
-    (
-        "Blizzard_SettingsDefinitions_Frame",
-        "Blizzard_SettingsDefinitions_Frame.toc",
-    ),
-    (
-        "Blizzard_FrameXMLUtil",
-        "Blizzard_FrameXMLUtil.toc",
-    ),
-    ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
-    ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
-    ("Blizzard_FrameXML", "Blizzard_FrameXML.toc"),
-    (
-        "Blizzard_UIPanels_Game",
-        "Blizzard_UIPanels_Game_Mainline.toc",
-    ),
-    ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
-    ("Blizzard_UnitFrame", "Blizzard_UnitFrame_Mainline.toc"),
-    ("Blizzard_TokenUI", "Blizzard_TokenUI.toc"),
+/// Eager panel publishers in dependency order. `load_required_blizzard_addon`
+/// resolves the active profile TOC and fails immediately for missing/invalid loads.
+const PANEL_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_Colors",
+    "Blizzard_SharedXML",
+    "Blizzard_Menu",
+    "Blizzard_SharedXMLGame",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXMLBase",
+    "Blizzard_FrameEffects",
+    "Blizzard_LoadLocale",
+    "Blizzard_Fonts_Shared",
+    "Blizzard_HelpPlate",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_ObjectAPI",
+    "Blizzard_UIParent",
+    "Blizzard_TextStatusBar",
+    "Blizzard_MoneyFrame",
+    "Blizzard_POIButton",
+    "Blizzard_Flyout",
+    "Blizzard_GameMenuEsc",
+    "Blizzard_UIParentUtil",
+    "Blizzard_Game",
+    "Blizzard_ChatFrameBase",
+    "Blizzard_ChatFrame",
+    "Blizzard_GuildControlUI",
+    "Blizzard_TimerunningUtil",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_Communities",
+    "Blizzard_StoreUI",
+    "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_EditMode",
+    "Blizzard_GarrisonBase",
+    "Blizzard_GameTooltip",
+    "Blizzard_StaticPopup_Game",
+    "Blizzard_TransmogShared",
+    "Blizzard_UIParentPanelManager",
+    "Blizzard_Settings_Shared",
+    "Blizzard_SettingsDefinitions_Shared",
+    "Blizzard_SettingsDefinitions_Frame",
+    "Blizzard_ItemButton",
+    "Blizzard_QuickKeybind",
+    "Blizzard_FrameXML",
+    "Blizzard_UIPanels_Game",
+    "Blizzard_ActionBar",
+    "Blizzard_UnitFrame",
+    "Blizzard_TokenUI",
+    "Blizzard_HousingTemplates",
+    "Blizzard_HousingModelPreview",
+    "Blizzard_HousingBlueprint",
 ];
 
 fn setup_env() -> WowLuaEnv {
@@ -106,21 +86,30 @@ fn setup_env() -> WowLuaEnv {
     }
 
     let ui = blizzard_ui_dir();
-    for (name, toc) in PANEL_ADDONS {
-        let toc_path = ui.join(name).join(toc);
-        if !toc_path.exists() {
-            continue;
-        }
-        if let Err(e) = load_addon(&env.loader_env(), &toc_path) {
-            eprintln!("[load {name}] FAILED: {e}");
-        }
+    for addon_name in PANEL_ADDONS {
+        common::load_required_blizzard_addon(&env, &ui, addon_name);
     }
+    load_lod_bootstrap(&env, &ui, "Blizzard_Collections");
+    load_lod_bootstrap(&env, &ui, "Blizzard_Professions");
 
     env.apply_post_load_workarounds();
     env.exec(r#"CHARACTERFRAME_SUBFRAMES = { "PaperDollFrame", "ReputationFrame", "TokenFrame" }"#)
         .expect("character subframe fixture should restore cleanup-pruned constant");
     fire_startup_events(&env);
     env
+}
+
+fn load_lod_bootstrap(env: &WowLuaEnv, ui: &std::path::Path, addon_name: &str) {
+    let path = ui.join(addon_name).join(format!("{addon_name}_Bootstrap.lua"));
+    let source = std::fs::read_to_string(&path)
+        .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
+    let source = source.replacen(
+        "local AddonName = ...;",
+        &format!("local AddonName = {addon_name:?};"),
+        1,
+    );
+    env.exec(&source)
+        .unwrap_or_else(|error| panic!("failed to load {}: {error}", path.display()));
 }
 
 fn fire_startup_events(env: &WowLuaEnv) {
