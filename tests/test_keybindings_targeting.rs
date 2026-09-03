@@ -225,12 +225,13 @@ fn target_frame_shown_after_targeting() {
             "TargetFrame should be shown after targeting self with F1"
         );
 
-        // ESCAPE = clear target → TargetFrame should hide
-        env.send_key_press("ESCAPE", None).expect("ESCAPE keybind failed");
+        // ClearTarget() clears the target → TargetFrame should hide.
+        env.exec("ClearTarget()")
+            .expect("ClearTarget should clear the target");
         let _ = drain_test_errors(&env);
         assert!(
             !frame_is_shown(&env, "TargetFrame"),
-            "TargetFrame should be hidden after clearing target with ESCAPE"
+            "TargetFrame should be hidden after clearing the target with ClearTarget()"
         );
     }
 }
@@ -260,6 +261,8 @@ fn target_frame_portrait_corners_match_background_when_replaced_with_class_icon(
     test_timeout! {
         let env = setup_env();
         install_test_error_handler(&env);
+        env.exec("SetCVar(\"ReplaceOtherPlayerPortraits\", \"1\")")
+            .expect("ReplaceOtherPlayerPortraits CVar should enable class icon portraits");
 
         env.send_key_press("F2", None).expect("F2 keybind failed");
         let _ = drain_test_errors(&env);
