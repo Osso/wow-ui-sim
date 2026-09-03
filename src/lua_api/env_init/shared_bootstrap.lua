@@ -1,4 +1,22 @@
-local __wow_public_globals = _G
+local function __wow_public_global_path(path)
+  local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
+  if first == nil then
+    return nil
+  end
+
+  local value = getglobal(first)
+  if rest == "" then
+    return value
+  end
+
+  for segment in string.gmatch(rest, "[^%.]+") do
+    if type(value) ~= "table" then
+      return nil
+    end
+    value = rawget(value, segment)
+  end
+  return value
+end
 
 local function __wow_resolve_secure_mixin_methods(mixin)
   if type(mixin) ~= "table" then
@@ -13,10 +31,10 @@ local function __wow_resolve_secure_mixin_methods(mixin)
     return type(methods) == "table" and methods or nil
   end
 
-  local secureenv = rawget(__wow_public_globals, "__secureenv")
+  local secureenv = __wow_public_global_path("__secureenv")
   local secureRegistry = type(secureenv) == "table"
     and rawget(secureenv, "__secureMixinMethods")
-  local publicRegistry = rawget(__wow_public_globals, "__secureMixinMethods")
+  local publicRegistry = __wow_public_global_path("__secureMixinMethods")
   return methods_from(secureRegistry) or methods_from(publicRegistry) or mixin
 end
 
@@ -32,7 +50,7 @@ local function __wow_xml_lookup_path(root, path)
 end
 
 function __wow_xml_lookup_local(path)
-  local addonTable = rawget(__wow_public_globals, "__wow_loading_addon_table")
+  local addonTable = __wow_public_global_path("__wow_loading_addon_table")
   return __wow_xml_lookup_path(addonTable, path)
 end
 
@@ -42,12 +60,12 @@ function __wow_resolve_xml_mixin(path)
     return addonLocal
   end
 
-  local global = __wow_xml_lookup_path(__wow_public_globals, path)
+  local global = __wow_public_global_path(path)
   if global ~= nil then
     return global
   end
 
-  local secureenv = rawget(__wow_public_globals, "__secureenv")
+  local secureenv = __wow_public_global_path("__secureenv")
   return __wow_xml_lookup_path(secureenv, path)
 end
 

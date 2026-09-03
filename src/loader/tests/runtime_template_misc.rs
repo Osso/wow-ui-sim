@@ -284,6 +284,12 @@ fn test_frame_literal_mixins_block_applies_mixins() {
                     self.addonLocalLoaded = true
                 end
             </Script>
+            <Script>
+                TargetFrameInstanceMixin = {}
+                function TargetFrameInstanceMixin:OnLoad()
+                    self.slotBackedLoaded = true
+                end
+            </Script>
             <ScopedModifier scriptsUseGivenEnv="true">
                 <Script>
                     local _, addon = ...
@@ -293,6 +299,14 @@ fn test_frame_literal_mixins_block_applies_mixins() {
                     setfenv(__wow_resolve_xml_mixin, scoped)
                 </Script>
                 <Frame name="AddonLocalDirectMixinFrame" parent="UIParent" mixin="AddonLocalDirectMixin">
+                    <KeyValues>
+                        <KeyValue key="usesSlowXmlPath" value="true" type="boolean"/>
+                    </KeyValues>
+                    <Scripts>
+                        <OnLoad method="OnLoad"/>
+                    </Scripts>
+                </Frame>
+                <Frame name="SlotBackedDirectMixinFrame" parent="UIParent" mixin="TargetFrameInstanceMixin">
                     <KeyValues>
                         <KeyValue key="usesSlowXmlPath" value="true" type="boolean"/>
                     </KeyValues>
@@ -342,6 +356,7 @@ fn test_frame_literal_mixins_block_applies_mixins() {
 
             assert(rawget(_G, "AddonLocalDirectMixin") == nil, "addon-local mixin should not leak into the public globals")
             assert(AddonLocalDirectMixinFrame.addonLocalLoaded == true, "static XML should resolve an ordinary direct mixin from the loading addon table before lifecycle dispatch")
+            assert(SlotBackedDirectMixinFrame.slotBackedLoaded == true, "static XML should resolve a slot-backed public mixin after resolver functions receive a scoped fenv")
         "#,
         )
         .unwrap();
