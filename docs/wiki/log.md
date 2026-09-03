@@ -6,6 +6,10 @@ Documented commit `601cde499`: duplicate sibling Texture/FontString regions with
 
 Audited commit `d18654fa0`. Updated [[patch-12-1-api-audit]]: generated `Enum.HousingPetBehaviorType` publishes `Stationary=0` and `Wander=1` with metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`; `Enum.HouseEditorPlayerType` publishes `None=0`, `Owner=1`, and `Visitor=2` with metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Current `Blizzard_HouseEditor` uses pet behavior for menu options; `Blizzard_HousingControls` uses player type for visibility and owner/visitor selection. Housing service behavior remains best-effort modeled. No new page, index update, spec, manifest, `PLAN.md`, vendor/cache/Blizzard, or protected-file change was warranted.
 
+## [2026-09-03] audit | Document RaidWarning secure replay
+
+Audited commits `702fe2b49` and `7a11ef3c8`. Updated [[addon-loading]] and the maintained addon-loading pipeline: `Blizzard_RaidWarning` is explicitly replayed into `__secureenv` because secure `Blizzard_PrivateAurasUI` resolves its declared dependency's `RaidWarningUtil` there for `RaidWarningUtil.MessageType` access. Focused coverage: `tests/blizzard_private_auras_ui_loads.rs::blizzard_private_auras_ui_reads_raid_warning_util_and_publishes_mixins_into_secure_env`. No new page, index, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
 ## [2026-09-01] audit | Document FrameXMLUtil secure replay
 
 Audited commit `93761fdb4`. Updated [[addon-loading]] and the maintained addon-loading pipeline: secure `Blizzard_AuraContainer` needs `AuraUtil.DefaultAuraCompare` and `AuraUtil.UnitFrameDebuffComparator`, so `Blizzard_FrameXMLUtil` is explicitly replayed into `__secureenv`. Public-only loading left secureenv stale, aborting TargetFrame aura initialization before `FocusFrame` creation. Focused coverage: `loader::tests::lua_loading::blizzard_frame_xml_util_replays_aura_comparators_into_secure_environment`. No new page, index update, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
