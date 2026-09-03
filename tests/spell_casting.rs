@@ -393,7 +393,7 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
             "unlocked startup cast bar should stay under the frame manager"
         );
         assert_eq!(
-            parent_after_post_event, "UIParentBottomManagedFrameContainer",
+            parent_after_post_event, "BottomManagedFrameContainer",
             "unlocked startup cast bar should remain frame-manager parented"
         );
 

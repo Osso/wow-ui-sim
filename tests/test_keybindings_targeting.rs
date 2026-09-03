@@ -75,29 +75,35 @@ fn target_portrait_rect(env: &WowLuaEnv, width: f32, height: f32) -> (f32, f32, 
         .widgets
         .get_id_by_name("TargetFrame")
         .expect("TargetFrame should exist");
+    let target_container_id = state
+        .widgets
+        .get(target_frame_id)
+        .and_then(|frame| frame.children_keys.get("TargetFrameContainer"))
+        .copied()
+        .expect("TargetFrameContainer should exist");
     let portrait_id = state
         .widgets
-        .iter_ids()
-        .find(|&id| {
-            let Some(frame) = state.widgets.get(id) else {
-                return false;
-            };
-            render_order_support::is_descendant_of(&state.widgets, id, target_frame_id)
-                && frame.texture.as_deref().is_some_and(|texture| {
-                    texture.eq_ignore_ascii_case("Interface\\TargetingFrame\\UI-Classes-Circles")
-                })
-                && !frame.mask_textures.is_empty()
-        })
-        .expect("TargetFrame portrait texture should exist");
+        .get(target_container_id)
+        .and_then(|frame| frame.children_keys.get("Portrait"))
+        .copied()
+        .expect("TargetFrameContainer.Portrait should exist");
+    let portrait = state
+        .widgets
+        .get(portrait_id)
+        .expect("TargetFrameContainer.Portrait should remain registered");
+    assert!(
+        !portrait.mask_textures.is_empty(),
+        "TargetFrameContainer.Portrait should use the retail CircleMask"
+    );
     let rect = wow_ui_sim::iced_app::compute_frame_rect(&state.widgets, portrait_id, width, height);
     (rect.x, rect.y, rect.width, rect.height)
 }
 
 const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-    ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
-    ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
-    ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame_Mainline.toc"),
+    ("Blizzard_Colors", "Blizzard_Colors.toc"),
+    ("Blizzard_SharedXML", "Blizzard_SharedXML.toc"),
+    ("Blizzard_SharedXMLGame", "Blizzard_SharedXMLGame.toc"),
     (
         "Blizzard_UIPanelTemplates",
         "Blizzard_UIPanelTemplates_Mainline.toc",
@@ -115,13 +121,15 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
         "Blizzard_AccessibilityTemplates.toc",
     ),
     ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
-    ("Blizzard_UIParent", "Blizzard_UIParent_Mainline.toc"),
+    ("Blizzard_UIParent", "Blizzard_UIParent.toc"),
     ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
     ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
     ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
     ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
-    ("Blizzard_StoreUI", "Blizzard_StoreUI_Mainline.toc"),
+    ("Blizzard_StoreUI", "Blizzard_StoreUI.toc"),
     ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
+    ("Blizzard_GameMenuEsc", "Blizzard_GameMenuEsc.toc"),
+    ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
     ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
     ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
     ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
@@ -144,7 +152,7 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
     ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
     ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
-    ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
+    ("Blizzard_FrameXML", "Blizzard_FrameXML.toc"),
     (
         "Blizzard_UIPanels_Game",
         "Blizzard_UIPanels_Game_Mainline.toc",
@@ -173,14 +181,14 @@ fn setup_env() -> common::LockedEnv {
 
         for (name, toc) in BLIZZARD_ADDONS {
             let toc_path = ui.join(name).join(toc);
-            if !toc_path.exists() {
-                continue;
-            }
-            if let Err(e) = load_addon(&env.loader_env(), &toc_path) {
-                eprintln!("[load {name}] FAILED: {e}");
-            } else {
-                env.apply_runtime_addon_load_workarounds(name);
-            }
+            assert!(
+                toc_path.exists(),
+                "declared Blizzard fixture TOC should exist: {}",
+                toc_path.display()
+            );
+            load_addon(&env.loader_env(), &toc_path)
+                .unwrap_or_else(|error| panic!("failed to load {name}: {error}"));
+            env.apply_runtime_addon_load_workarounds(name);
         }
         env.apply_post_load_workarounds();
         fire_startup_events(&env);
