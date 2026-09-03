@@ -499,7 +499,23 @@ fn test_secure_env_annotated_files_load_cleanly() {
             target_aura_container_ty,
             aura_container_set_max_buffs_ty,
             aura_button_icon_ty,
-        ): (String, String, String, String, String, String, String) = env
+            public_buff_aura_group_ty,
+            public_debuff_aura_group_ty,
+            forbidden_buff_aura_group_ty,
+            forbidden_debuff_aura_group_ty,
+        ): (
+            String,
+            String,
+            String,
+            String,
+            String,
+            String,
+            String,
+            String,
+            String,
+            String,
+            String,
+        ) = env
             .eval(
                 r#"
                 -- RESTRICTED_FUNCTIONS_SCOPE lands on the addon table, not _G,
@@ -509,6 +525,7 @@ fn test_secure_env_annotated_files_load_cleanly() {
                 auraMap[42] = "secure-map-value"
                 local targetAuras = TargetFrame.TargetFrameContent
                     .TargetFrameContentContextual.Auras
+                local forbiddenTargetAuras = GetForbiddenObjectTable(targetAuras)
                 local auraButton = CreateFrame(
                     "AuraButton", nil, UIParent, "TargetFrameAuraButtonTemplate"
                 )
@@ -518,7 +535,11 @@ fn test_secure_env_annotated_files_load_cleanly() {
                        type(auraMap[42]),
                        type(targetAuras),
                        type(targetAuras.SetMaxBuffs),
-                       type(auraButton.GetIcon)
+                       type(auraButton.GetIcon),
+                       type(targetAuras.buffAuraGroup),
+                       type(targetAuras.debuffAuraGroup),
+                       type(forbiddenTargetAuras.buffAuraGroup),
+                       type(forbiddenTargetAuras.debuffAuraGroup)
                 "#,
             )
             .expect("secure surface should be introspectable");
@@ -529,6 +550,10 @@ fn test_secure_env_annotated_files_load_cleanly() {
         assert_eq!(target_aura_container_ty, "table");
         assert_eq!(aura_container_set_max_buffs_ty, "function");
         assert_eq!(aura_button_icon_ty, "function");
+        assert_eq!(public_buff_aura_group_ty, "nil");
+        assert_eq!(public_debuff_aura_group_ty, "nil");
+        assert_eq!(forbidden_buff_aura_group_ty, "table");
+        assert_eq!(forbidden_debuff_aura_group_ty, "table");
     }
 }
 

@@ -28,7 +28,12 @@ if CreateAndInitFromMixin == nil then
   end
 end
 
-local __wow_forbidden_object_tables = setmetatable({}, { __mode = "k" })
+local __wow_registry = debug.getregistry()
+local __wow_forbidden_object_tables = __wow_registry["__wow_forbidden_object_tables"]
+if __wow_forbidden_object_tables == nil then
+  __wow_forbidden_object_tables = setmetatable({}, { __mode = "k" })
+  __wow_registry["__wow_forbidden_object_tables"] = __wow_forbidden_object_tables
+end
 
 local function __wow_frame_fields(object)
   local ok, env = pcall(debug.getfenv, object)
