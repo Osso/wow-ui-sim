@@ -131,26 +131,41 @@ fn animated_shine_onupdate_still_updates_active_shines() {
     test_timeout! {
         let env = load_settled_game_ui();
 
-        let (update_calls, last_elapsed): (i32, f64) = env
+        env.exec(
+            r#"
+            local shine = CreateFrame("Frame", "AnimatedShineProbe", UIParent)
+            shine:SetSize(100, 100)
+            shine:Show()
+            Mixin(shine, AnimatedShineMixin)
+
+            for index = 1, 4 do
+                local texture = shine:CreateTexture(nil, "ARTWORK")
+                texture:SetSize(10, 10)
+                shine["Shine" .. index] = texture
+            end
+
+            shine:Start()
+            "#,
+        )
+        .unwrap();
+
+        env.fire_on_update(0.016).unwrap();
+
+        let (timer, point, relative_point, x, y): (f64, String, String, f64, f64) = env
             .eval(
                 r#"
-                local shine = { updateCalls = 0, lastElapsed = 0 }
-                function shine:Update(elapsed)
-                    self.updateCalls = self.updateCalls + 1
-                    self.lastElapsed = elapsed
-                end
-
-                local originalShines = SHINES_TO_ANIMATE
-                SHINES_TO_ANIMATE = { shine }
-                AnimatedShine_OnUpdate(0.016)
-                SHINES_TO_ANIMATE = originalShines
-
-                return shine.updateCalls, shine.lastElapsed
+                local point, _, relativePoint, x, y = AnimatedShineProbe.Shine1:GetPoint()
+                return AnimatedShineProbe.timer, point, relativePoint, x, y
                 "#,
             )
             .unwrap();
 
-        assert_eq!(update_calls, 1, "active shine should still receive Update");
-        assert_eq!(last_elapsed, 0.016, "active shine should receive the elapsed tick");
+        assert!((timer - 0.016).abs() < f64::EPSILON, "active shine should consume elapsed time");
+        assert_eq!(point, "CENTER", "active shine should update its anchor point");
+        assert_eq!(relative_point, "TOPLEFT", "active shine should follow the first animation path");
+        assert!(x > 0.0, "active shine should move along its first animation path");
+        assert_eq!(y, 0.0, "first animation path should not offset vertically");
+
+        env.exec("AnimatedShineProbe:Stop()").unwrap();
     }
 }
