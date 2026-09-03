@@ -147,7 +147,7 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ),
     (
         "Blizzard_SettingsDefinitions_Frame",
-        "Blizzard_SettingsDefinitions_Frame_Mainline.toc",
+        "Blizzard_SettingsDefinitions_Frame.toc",
     ),
     ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
     ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
