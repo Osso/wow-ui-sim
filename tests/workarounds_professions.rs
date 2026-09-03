@@ -26,6 +26,7 @@ fn full_game_env() -> WowLuaEnv {
     }
 
     load_all_blizzard_addons(&env);
+    load_professions_bootstrap_publishers(&env);
     settle_env(&env);
 
     env
@@ -37,6 +38,19 @@ fn load_all_blizzard_addons(env: &WowLuaEnv) {
         if let Err(err) = load_addon(&env.loader_env(), toc_path) {
             panic!("[load {name}] FAILED: {err}");
         }
+    }
+}
+
+fn load_professions_bootstrap_publishers(env: &WowLuaEnv) {
+    let ui = blizzard_ui_dir();
+    for (addon_name, bootstrap_file) in [
+        ("Blizzard_Professions", "Blizzard_Professions_Bootstrap.lua"),
+        (
+            "Blizzard_ProfessionsBook",
+            "Blizzard_ProfessionsBook_Bootstrap.lua",
+        ),
+    ] {
+        crate::common::load_blizzard_addon_bootstrap(env, &ui, addon_name, bootstrap_file);
     }
 }
 
