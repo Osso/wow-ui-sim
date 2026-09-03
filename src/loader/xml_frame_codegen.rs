@@ -196,7 +196,7 @@ fn append_single_mixin_code(lua_code: &mut String, mixin: &FrameMixin) {
     let lookup = match mixin.source.as_deref() {
         Some("secure") => format!("(__secureenv and rawget(__secureenv, \"{name}\")) or {name}"),
         Some("local") => format!("__wow_xml_lookup_local(\"{}\")", escape_lua_string(name)),
-        _ => format!("{name} or (__secureenv and rawget(__secureenv, \"{name}\"))"),
+        _ => format!("__wow_resolve_xml_mixin(\"{}\")", escape_lua_string(name)),
     };
     let target_partition = lua_option_string(mixin.target_partition.as_deref());
     let inbound_partition = lua_option_string(mixin.inbound_partition.as_deref());

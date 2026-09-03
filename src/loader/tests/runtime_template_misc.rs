@@ -277,6 +277,18 @@ fn test_frame_literal_mixins_block_applies_mixins() {
                     </Mixins>
                 </Frame>
             </ScopedModifier>
+            <Script>
+                local _, addon = ...
+                addon.AddonLocalDirectMixin = {}
+                function addon.AddonLocalDirectMixin:OnLoad()
+                    self.addonLocalLoaded = true
+                end
+            </Script>
+            <Frame name="AddonLocalDirectMixinFrame" parent="UIParent" mixin="AddonLocalDirectMixin">
+                <Scripts>
+                    <OnLoad method="OnLoad"/>
+                </Scripts>
+            </Frame>
         </Ui>
         "#,
     );
@@ -315,6 +327,9 @@ fn test_frame_literal_mixins_block_applies_mixins() {
             staticFrame:applySecure()
             assert(staticFrame.publicApplied == true and staticFrame.secureApplied == true, "static XML mixin application should resolve both secure registries")
             assert(staticFrame.directPublic == nil and staticFrame.directSecure == nil, "static XML mixin application should exclude direct entries")
+
+            assert(rawget(_G, "AddonLocalDirectMixin") == nil, "addon-local mixin should not leak into the public globals")
+            assert(AddonLocalDirectMixinFrame.addonLocalLoaded == true, "static XML should resolve an ordinary direct mixin from the loading addon table before lifecycle dispatch")
         "#,
         )
         .unwrap();

@@ -17,6 +17,35 @@ local function __wow_resolve_secure_mixin_methods(mixin)
   return methods_from(secureRegistry) or methods_from(publicRegistry) or mixin
 end
 
+local function __wow_xml_lookup_path(root, path)
+  local value = root
+  for segment in string.gmatch(path, "[^%.]+") do
+    if type(value) ~= "table" then
+      return nil
+    end
+    value = rawget(value, segment)
+  end
+  return value
+end
+
+function __wow_xml_lookup_local(path)
+  return __wow_xml_lookup_path(rawget(_G, "__wow_loading_addon_table"), path)
+end
+
+function __wow_resolve_xml_mixin(path)
+  local addonLocal = __wow_xml_lookup_local(path)
+  if addonLocal ~= nil then
+    return addonLocal
+  end
+
+  local global = __wow_xml_lookup_path(_G, path)
+  if global ~= nil then
+    return global
+  end
+
+  return __wow_xml_lookup_path(__secureenv, path)
+end
+
 if Mixin == nil then
   function Mixin(object, ...)
     for i = 1, select("#", ...) do

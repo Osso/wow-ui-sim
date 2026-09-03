@@ -181,7 +181,7 @@ pub(crate) fn apply_frame_mixin_with_partitions(
     let mixin_val = match source {
         Some("secure") => resolve_secure_or_scoped_global_path(state, mixin_name),
         Some("local") => resolve_local_template_path(state, mixin_name),
-        _ => resolve_scoped_or_global_path(state, mixin_name),
+        _ => resolve_default_mixin_path(state, mixin_name),
     };
     if source == Some("secure")
         || target_partition.is_some()
@@ -256,6 +256,21 @@ fn optional_string_val(state: &mut LuaState, value: Option<&str>) -> Val {
     value
         .map(|value| create_string(state, value))
         .unwrap_or(Val::Nil)
+}
+
+fn resolve_default_mixin_path(state: &mut LuaState, path: &str) -> Val {
+    let addon_local = resolve_local_template_path(state, path);
+    if addon_local != Val::Nil {
+        return addon_local;
+    }
+
+    let scoped_or_global = resolve_scoped_or_global_path(state, path);
+    if scoped_or_global != Val::Nil {
+        return scoped_or_global;
+    }
+
+    let secureenv = registry_get(state, "__secureenv");
+    resolve_table_path(state, secureenv, path)
 }
 
 fn resolve_scoped_or_global_path(state: &mut LuaState, path: &str) -> Val {
