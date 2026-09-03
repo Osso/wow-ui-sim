@@ -180,6 +180,14 @@ fn setup_env() -> common::LockedEnv {
         }
 
         for (name, toc) in BLIZZARD_ADDONS {
+            if *name == "Blizzard_UnitFrame" {
+                common::load_blizzard_addon_bootstrap(
+                    &env,
+                    &ui,
+                    name,
+                    "Mainline/TargetFrame.lua",
+                );
+            }
             let toc_path = ui.join(name).join(toc);
             assert!(
                 toc_path.exists(),
