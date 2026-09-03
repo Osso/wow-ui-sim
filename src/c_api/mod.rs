@@ -43,6 +43,7 @@ pub mod c_player_interaction_manager;
 pub mod c_pvp;
 pub mod c_quest_hub;
 pub mod c_report_system;
+pub mod c_settings_util;
 pub mod c_social;
 pub mod c_spec;
 pub mod c_spell;

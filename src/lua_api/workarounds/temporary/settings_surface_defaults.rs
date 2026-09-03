@@ -194,8 +194,12 @@ do
 
     local interfaceCategory = ensure_category(1, "Interface")
     local audioCategory = ensure_category(2, "Audio")
-    rawset(Settings, "INTERFACE_CATEGORY_ID", interfaceCategory:GetID())
-    rawset(Settings, "AUDIO_CATEGORY_ID", audioCategory:GetID())
+    if rawget(Settings, "INTERFACE_CATEGORY_ID") == nil then
+        rawset(Settings, "INTERFACE_CATEGORY_ID", interfaceCategory:GetID())
+    end
+    if rawget(Settings, "AUDIO_CATEGORY_ID") == nil then
+        rawset(Settings, "AUDIO_CATEGORY_ID", audioCategory:GetID())
+    end
 
     local function get_fallback_category(id)
         id = tonumber(id)
@@ -324,29 +328,31 @@ do
 
         ensure_layout(interfaceCategory)
 
-        function Settings.OpenToCategory(categoryID)
-            local panel = rawget(_G, "SettingsPanel") or settingsPanel
-            if type(panel.OpenToCategory) == "function" then
-                local openedSuccessfully, opened = pcall(panel.OpenToCategory, panel, categoryID)
-                if openedSuccessfully and opened then
-                    return panel:GetCurrentCategory()
+        if rawget(Settings, "OpenToCategory") == nil then
+            function Settings.OpenToCategory(categoryID)
+                local panel = rawget(_G, "SettingsPanel") or settingsPanel
+                if type(panel.OpenToCategory) == "function" then
+                    local openedSuccessfully, opened = pcall(panel.OpenToCategory, panel, categoryID)
+                    if openedSuccessfully and opened then
+                        return panel:GetCurrentCategory()
+                    end
                 end
-            end
 
-            local category = get_fallback_category(categoryID)
-            if category == nil then
-                return nil
+                local category = get_fallback_category(categoryID)
+                if category == nil then
+                    return nil
+                end
+                rawset(panel, "_currentCategory", category)
+                if type(panel.SetShown) == "function" then
+                    pcall(panel.SetShown, panel, true)
+                end
+                if type(panel.Show) == "function" then
+                    pcall(panel.Show, panel)
+                end
+                hide_inactive_category_frames(category)
+                set_category_frame_shown(category, true)
+                return category
             end
-            rawset(panel, "_currentCategory", category)
-            if type(panel.SetShown) == "function" then
-                pcall(panel.SetShown, panel, true)
-            end
-            if type(panel.Show) == "function" then
-                pcall(panel.Show, panel)
-            end
-            hide_inactive_category_frames(category)
-            set_category_frame_shown(category, true)
-            return category
         end
     end
 
@@ -518,6 +524,34 @@ mod tests {
             .expect("replacement Settings panel probe should run");
 
         assert_eq!(result, (true, 7));
+    }
+
+    #[test]
+    fn preserves_existing_settings_category_id_and_open_function() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        env.exec(
+            r#"
+            Settings.INTERFACE_CATEGORY_ID = 701
+            Settings.OpenToCategory = function(category_id)
+                return "retail:" .. tostring(category_id)
+            end
+            rawset(Settings, "__wow_settings_surface_panel", nil)
+            "#,
+        )
+        .expect("fixture should install real Settings members");
+
+        apply_again(&env);
+
+        let result: (i32, String) = env
+            .eval(
+                r#"
+                return Settings.INTERFACE_CATEGORY_ID,
+                       Settings.OpenToCategory(Settings.INTERFACE_CATEGORY_ID)
+                "#,
+            )
+            .expect("Settings preservation probe should run");
+
+        assert_eq!(result, (701, "retail:701".to_string()));
     }
 
     #[test]

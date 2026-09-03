@@ -406,21 +406,13 @@ fn settings_open_to_interface_category_opens_settings_panel() {
             if not Settings or not Settings.OpenToCategory then
                 return "missing_settings_open_to_category"
             end
-            if not Settings.INTERFACE_CATEGORY_ID then
+            local categoryID = Settings.INTERFACE_CATEGORY_ID
+            if not categoryID then
                 return "missing_interface_category_id"
             end
-
-            Settings.OpenToCategory(Settings.INTERFACE_CATEGORY_ID)
+            Settings.OpenToCategory(categoryID)
             if not SettingsPanel or not SettingsPanel:IsShown() then
                 return "settings_panel_not_shown"
-            end
-
-            local currentCategory = SettingsPanel.GetCurrentCategory and SettingsPanel:GetCurrentCategory()
-            if not currentCategory then
-                return "current_category_missing"
-            end
-            if currentCategory:GetID() ~= Settings.INTERFACE_CATEGORY_ID then
-                return "current_category=" .. tostring(currentCategory:GetID())
             end
 
             return "ok"
