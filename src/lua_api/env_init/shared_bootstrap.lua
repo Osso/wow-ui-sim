@@ -1,3 +1,5 @@
+local __wow_public_globals = _G
+
 local function __wow_resolve_secure_mixin_methods(mixin)
   if type(mixin) ~= "table" then
     return mixin
@@ -11,9 +13,10 @@ local function __wow_resolve_secure_mixin_methods(mixin)
     return type(methods) == "table" and methods or nil
   end
 
-  local secureRegistry = type(__secureenv) == "table"
-    and rawget(__secureenv, "__secureMixinMethods")
-  local publicRegistry = rawget(_G, "__secureMixinMethods")
+  local secureenv = rawget(__wow_public_globals, "__secureenv")
+  local secureRegistry = type(secureenv) == "table"
+    and rawget(secureenv, "__secureMixinMethods")
+  local publicRegistry = rawget(__wow_public_globals, "__secureMixinMethods")
   return methods_from(secureRegistry) or methods_from(publicRegistry) or mixin
 end
 
@@ -29,7 +32,8 @@ local function __wow_xml_lookup_path(root, path)
 end
 
 function __wow_xml_lookup_local(path)
-  return __wow_xml_lookup_path(rawget(_G, "__wow_loading_addon_table"), path)
+  local addonTable = rawget(__wow_public_globals, "__wow_loading_addon_table")
+  return __wow_xml_lookup_path(addonTable, path)
 end
 
 function __wow_resolve_xml_mixin(path)
@@ -38,12 +42,13 @@ function __wow_resolve_xml_mixin(path)
     return addonLocal
   end
 
-  local global = __wow_xml_lookup_path(_G, path)
+  local global = __wow_xml_lookup_path(__wow_public_globals, path)
   if global ~= nil then
     return global
   end
 
-  return __wow_xml_lookup_path(__secureenv, path)
+  local secureenv = rawget(__wow_public_globals, "__secureenv")
+  return __wow_xml_lookup_path(secureenv, path)
 end
 
 if Mixin == nil then
