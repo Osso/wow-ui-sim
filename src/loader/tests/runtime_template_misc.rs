@@ -290,14 +290,10 @@ fn test_frame_literal_mixins_block_applies_mixins() {
                     self.slotBackedLoaded = true
                 end
             </Script>
+            <Script>
+                __wow_resolve_xml_mixin = nil
+            </Script>
             <ScopedModifier scriptsUseGivenEnv="true">
-                <Script>
-                    local _, addon = ...
-                    local scoped = setmetatable({}, { __index = addon })
-                    scoped._G = scoped
-                    setfenv(__wow_xml_lookup_local, scoped)
-                    setfenv(__wow_resolve_xml_mixin, scoped)
-                </Script>
                 <Frame name="AddonLocalDirectMixinFrame" parent="UIParent" mixin="AddonLocalDirectMixin">
                     <KeyValues>
                         <KeyValue key="usesSlowXmlPath" value="true" type="boolean"/>
