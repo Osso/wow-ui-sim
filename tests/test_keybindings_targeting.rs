@@ -139,7 +139,7 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
     ),
     (
         "Blizzard_Settings_Shared",
-        "Blizzard_Settings_Shared_Mainline.toc",
+        "Blizzard_Settings_Shared.toc",
     ),
     (
         "Blizzard_SettingsDefinitions_Shared",
