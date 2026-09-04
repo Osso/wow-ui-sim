@@ -14,7 +14,7 @@ The addon starts a new capture at each load. The file flushed by `/reload` conta
 
 ## Evidence and comparison
 
-Captures include build/interface, physical and UI screen dimensions, scale/CVars, active Edit Mode information, raw frame rectangles and anchors, parent names, warning/debuff and combat state, player class, and loaded non-Blizzard addons. Samples cover login, world entry, delayed settling, and the manual command. Missing frames, inaccessible values, and API errors must remain distinguishable from real zero/nil values.
+Captures include build/interface, physical and UI screen dimensions, scale/CVars, active Edit Mode information, raw frame rectangles and anchors, parent names, warning/debuff and combat state, player class, and loaded non-Blizzard addons. Edit Mode capture includes the active layout index and selected RaidWarning/ObjectiveTracker system anchors. Samples cover login, world entry, delayed settling, and the manual command. Missing frames use `present=false`; secret values use `<secret>` with an error marker; inaccessible reads retain explicit errors. These are not real zero/nil values.
 
 `GetRect()` uses **left/bottom/width/height in UI coordinates**, not screenshot top-left pixels. Preserve these raw values; interpret screen conversion and effective scale before comparison.
 

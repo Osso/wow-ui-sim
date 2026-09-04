@@ -11,26 +11,32 @@ local frameNames = {
 }
 
 local function recordError(target, key, value)
-    target.errors[key] = tostring(value)
+    local ok, secret = pcall(issecretvalue, value)
+    target.errors[key] = ok and not secret and tostring(value) or "<unreadable error>"
 end
 
 local function secretValue(target, key, value)
     if type(issecretvalue) ~= "function" then
         recordError(target, key .. "Secret", "issecretvalue is unavailable")
-        return false
+        return true, "<unavailable>"
     end
 
     local ok, secret = pcall(issecretvalue, value)
     if not ok then
         recordError(target, key .. "Secret", secret)
-        return false
+        return true, "<unavailable>"
     end
-    return secret and true or false
+    if secret then
+        target.errors[key] = "secret value"
+        return true, "<secret>"
+    end
+    return false
 end
 
 local function scalar(target, key, value)
-    if secretValue(target, key, value) then
-        return nil, true
+    local restricted, marker = secretValue(target, key, value)
+    if restricted then
+        return marker, true
     end
 
     local valueType = type(value)
@@ -65,7 +71,7 @@ local function frameName(target, key, frame)
     return callScalar(target, key, frame.GetName, frame)
 end
 
-local function capturePoint(sample, frameRecord, frame, index)
+local function capturePoint(frameRecord, frame, index)
     local pointRecord = { index = index, errors = {} }
     local ok, point, relative, relativePoint, x, y = pcall(frame.GetPoint, frame, index)
     if not ok then
@@ -102,7 +108,12 @@ local function captureFrame(sample, name)
 
     frameRecord.present = true
     frameRecord.actualName = frameName(frameRecord, "name", frame)
-    frameRecord.parent = frameName(frameRecord, "parent", callScalar(frameRecord, "getParent", frame.GetParent, frame))
+    local parentOk, parent = pcall(frame.GetParent, frame)
+    if parentOk then
+        frameRecord.parent = frameName(frameRecord, "parent", parent)
+    else
+        recordError(frameRecord, "getParent", parent)
+    end
     frameRecord.shown = callScalar(frameRecord, "shown", frame.IsShown, frame)
     frameRecord.scale = callScalar(frameRecord, "scale", frame.GetScale, frame)
     frameRecord.effectiveScale = callScalar(frameRecord, "effectiveScale", frame.GetEffectiveScale, frame)
@@ -123,7 +134,7 @@ local function captureFrame(sample, name)
     if type(pointCount) == "number" then
         frameRecord.points = {}
         for index = 1, pointCount do
-            frameRecord.points[index] = capturePoint(sample, frameRecord, frame, index)
+            frameRecord.points[index] = capturePoint(frameRecord, frame, index)
         end
     end
 
@@ -149,6 +160,39 @@ local function captureBuild(sample)
     }
 end
 
+local function captureSystemAnchors(target, systems)
+    target.systemAnchors = {}
+    if secretValue(target, "systems", systems) then
+        return
+    end
+    if type(systems) ~= "table" then
+        recordError(target, "systems", "layout systems are unavailable")
+        return
+    end
+    target.systemCount = #systems
+    for _, systemInfo in ipairs(systems) do
+        local record = { errors = {} }
+        if not secretValue(record, "systemInfo", systemInfo) then
+            record.system = scalar(record, "system", systemInfo.system)
+            record.systemIndex = scalar(record, "systemIndex", systemInfo.systemIndex)
+            if record.system == Enum.EditModeSystem.RaidWarning
+                or record.system == Enum.EditModeSystem.ObjectiveTracker then
+                local anchor = systemInfo.anchorInfo
+                if not secretValue(record, "anchorInfo", anchor) and type(anchor) == "table" then
+                    record.anchorInfo = {}
+                    for _, key in ipairs({ "point", "relativeTo", "relativePoint", "offsetX", "offsetY" }) do
+                        record.anchorInfo[key] = scalar(record, key, anchor[key])
+                    end
+                end
+                target.systemAnchors[#target.systemAnchors + 1] = record
+            end
+        end
+        if next(record.errors) then
+            target.errors["system" .. tostring(record.system)] = record.errors
+        end
+    end
+end
+
 local function captureEditMode(sample)
     sample.editMode = { errors = {} }
     local manager = rawget(_G, "EditModeManagerFrame")
@@ -164,6 +208,9 @@ local function captureEditMode(sample)
 
     sample.editMode.present = true
     sample.editMode.active = callScalar(sample.editMode, "active", manager.IsEditModeActive, manager)
+    sample.editMode.activeLayout = callScalar(sample.editMode, "activeLayout", function()
+        return C_EditMode.GetLayouts().activeLayout
+    end)
     local ok, layout = pcall(manager.GetActiveLayoutInfo, manager)
     if not ok then
         recordError(sample.editMode, "getActiveLayoutInfo", layout)
@@ -182,7 +229,7 @@ local function captureEditMode(sample)
     sample.editMode.layoutPresent = true
     sample.editMode.layoutName = scalar(sample.editMode, "layoutName", layout.layoutName)
     sample.editMode.layoutType = scalar(sample.editMode, "layoutType", layout.layoutType)
-    sample.editMode.systemCount = scalar(sample.editMode, "systemCount", #layout.systems)
+    captureSystemAnchors(sample.editMode, layout.systems)
 end
 
 local function captureNonBlizzardAddons(sample)
@@ -206,7 +253,7 @@ local function captureNonBlizzardAddons(sample)
         else
             info.name = scalar(info, "name", name)
             local loaded = callScalar(info, "loaded", addons.IsAddOnLoaded, index)
-            if loaded and type(info.name) == "string" and not info.name:match("^Blizzard_") then
+            if loaded == true and type(info.name) == "string" and not info.name:match("^Blizzard_") then
                 table.insert(sample.loadedNonBlizzardAddons, info.name)
             end
         end
@@ -231,8 +278,14 @@ local function captureRaidState(sample)
         recordError(sample.raidWarning, "getLowestMessage", lowest)
         return
     end
-    sample.raidWarning.lowestMessage = frameName(sample.raidWarning, "lowestMessage", lowest)
-    sample.raidWarning.lowestMessagePresent = lowest ~= nil
+    local restricted, marker = secretValue(sample.raidWarning, "lowestMessage", lowest)
+    if restricted then
+        sample.raidWarning.lowestMessage = marker
+        sample.raidWarning.lowestMessagePresent = marker
+    else
+        sample.raidWarning.lowestMessage = frameName(sample.raidWarning, "lowestMessage", lowest)
+        sample.raidWarning.lowestMessagePresent = lowest ~= nil
+    end
 end
 
 local function captureSample(kind, label)
@@ -245,6 +298,7 @@ local function captureSample(kind, label)
     FramePositionProbeDB.samples[#FramePositionProbeDB.samples + 1] = sample
 
     sample.time = callScalar(sample, "time", GetTime)
+    sample.capturedAt = callScalar(sample, "capturedAt", date, "%Y-%m-%dT%H:%M:%S")
     sample.inCombat = callScalar(sample, "inCombat", InCombatLockdown)
     sample.playerClass = { errors = {} }
     if type(UnitClass) == "function" then
@@ -282,11 +336,17 @@ local function captureSample(kind, label)
     }
 
     captureBuild(sample)
-    captureEditMode(sample)
-    captureRaidState(sample)
-    captureNonBlizzardAddons(sample)
+    for key, capture in pairs({ editMode = captureEditMode, raidWarning = captureRaidState, addons = captureNonBlizzardAddons }) do
+        local ok, errorMessage = pcall(capture, sample)
+        if not ok then
+            recordError(sample, key, errorMessage)
+        end
+    end
     for _, name in ipairs(frameNames) do
-        captureFrame(sample, name)
+        local ok, errorMessage = pcall(captureFrame, sample, name)
+        if not ok then
+            recordError(sample, name, errorMessage)
+        end
     end
 end
 
@@ -316,6 +376,7 @@ local function onEvent(_, event)
 end
 
 FramePositionProbeDB = {
+    schemaVersion = 1,
     addonName = addonName,
     errors = {},
     samples = {},
