@@ -2126,6 +2126,37 @@
       "notes": "Classified as vendor-present best-effort behavior with the current upstream invocation defect documented and tested; no guessed simulator correction is added.",
       "load_addon": null
     },
+    {
+      "id": "added:GetTimeStringFromSeconds",
+      "symbol": "GetTimeStringFromSeconds",
+      "change": "added",
+      "status": "best-effort",
+      "resolution": "cross-flavor",
+      "owner": "Blizzard_UIParent",
+      "evidence": [
+        {
+          "kind": "source",
+          "reference": "data/blizzard-ui-files/ptr.txt",
+          "summary": "Classified as snapshot cross-flavor contamination: the only PTR definition is in `Mists/UIParent.lua`, loaded exclusively by `Blizzard_UIParent_Mists.toc`; PTR tests verify absence during initialization, post-load compatibility, and settled mainline startup.",
+          "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
+        }
+      ],
+      "tests": [
+        "tests/blizzard_ui_parent_loads.rs::ptr_mainline_excludes_mists_time_string_helper"
+      ],
+      "assertions": [
+        {
+          "flavor": "ptr",
+          "phase": "initialization",
+          "expected": "absent",
+          "expected_type": null
+        }
+      ],
+      "commit": "1b917a586",
+      "approval_id": null,
+      "notes": "Classified as snapshot cross-flavor contamination: the only PTR definition is in `Mists/UIParent.lua`, loaded exclusively by `Blizzard_UIParent_Mists.toc`; PTR tests verify absence during initialization, post-load compatibility, and settled mainline startup.",
+      "load_addon": null
+    },
         {
       "id": "added:GetUIPanelLayoutAttribute",
       "symbol": "GetUIPanelLayoutAttribute",
