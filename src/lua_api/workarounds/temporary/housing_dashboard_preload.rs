@@ -181,9 +181,10 @@ mod tests {
                 NeighborhoodType = { Public = 0 },
             }
             C_Housing = {}
+            callbacks = {}
             C_Timer = {
                 After = function(_, callback)
-                    callback()
+                    table.insert(callbacks, callback)
                 end,
             }
             C_AddOns = {
@@ -219,6 +220,25 @@ mod tests {
 
         patch(&env.loader_env());
 
+        let (events_before_owned_house_tick, owned_house_callbacks): (i64, i64) = env
+            .eval(
+                r#"
+                C_Housing.GetPlayerOwnedHouses()
+                return #eventLog, #callbacks
+                "#,
+            )
+            .expect("owned house request should schedule its response");
+        assert_eq!(events_before_owned_house_tick, 0);
+        assert_eq!(owned_house_callbacks, 1);
+
+        env.exec(
+            r#"
+            callbacks[1]()
+            eventLog = {}
+            "#,
+        )
+        .expect("owned house response should dispatch after timer callback");
+
         let (
             bought_house_complete,
             map_id,
@@ -251,6 +271,7 @@ mod tests {
             .eval(
                 r#"
                 local started = C_Housing.StartTutorial()
+                callbacks[2]()
                 return HousingTutorialUtil.BoughtHouseQuestComplete(),
                     C_Housing.GetUIMapIDForNeighborhood("wow-ui-sim-neighborhood-umber-grove"),
                     C_Housing.GetNeighborhoodTextureSuffix("wow-ui-sim-neighborhood-dawnmeadow"),
@@ -281,49 +302,5 @@ mod tests {
         assert!(!loaded_house_finder);
         assert_eq!(neighborhood_events, 2);
         assert_eq!(event_count, 2);
-    }
-
-    #[test]
-    fn delays_owned_house_event_until_timer_callback() {
-        let env = WowLuaEnv::new().expect("env should initialize");
-        env.exec(
-            r#"
-            C_Housing = {}
-            callbacks = {}
-            C_Timer = {
-                After = function(_, callback)
-                    table.insert(callbacks, callback)
-                end,
-            }
-            events = {}
-            function FireEvent(eventName, ...)
-                table.insert(events, { eventName, ... })
-            end
-            "#,
-        )
-        .expect("housing timer test surface should install");
-
-        patch(&env.loader_env());
-
-        let (events_before_tick, callbacks_scheduled): (i64, i64) = env
-            .eval(
-                r#"
-                C_Housing.GetPlayerOwnedHouses()
-                return #events, #callbacks
-                "#,
-            )
-            .expect("owned house request should schedule its response");
-        assert_eq!(events_before_tick, 0);
-        assert_eq!(callbacks_scheduled, 1);
-
-        let events_after_tick: i64 = env
-            .eval(
-                r#"
-                callbacks[1]()
-                return #events
-                "#,
-            )
-            .expect("owned house response should dispatch after timer callback");
-        assert_eq!(events_after_tick, 1);
     }
 }
