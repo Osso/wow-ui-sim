@@ -1,3 +1,7 @@
+## [2026-09-04] performance | Record targeted startup prefork migration
+
+Audited commit `a6924a8c9`. Six completed-startup player, action-bar, dropdown, and chat-config behaviors moved into the full-retail prefork parent; implementer evidence records 6/6 passing, 8,366 integration cases, 2,011 prefork cases, and zero overlap. Pre-start channel-checkbox instrumentation remains ordinary integration. Updated [[prefork-test-harness]], its index summary, and the prefork spec; independent verification remains pending. No test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
 ## [2026-09-04] performance | Verify Collection/Escape prefork migration
 
 Independent verification for commit `2c0441c22` recorded 7/7 passing, 8,372 integration cases, 2,005 prefork cases, and zero overlap. The 14.840s-to-5.799s runtime change is directional only because power mode changed after the baseline. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
