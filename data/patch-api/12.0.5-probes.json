@@ -5,7 +5,7 @@
     "flavor": "retail",
     "build": "12.0.5",
     "cache_manifest": "data/blizzard-ui-files/retail.txt",
-    "cache_hash": "42abf0ff8118e6be4d41ed321f6a0e7daeb83234928e451f33851d14a488b5ef"
+    "cache_hash": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd"
   },
   "source": {
     "path": "data/patch-api/sources/12.0.5-probes.json",

@@ -540,7 +540,7 @@ This remains a bounded evidence-backed slice, not a compatibility or completion 
 
 ### Provenance and limits
 
-The wowless snapshot history is the historical source for this audit. The active retail cache manifest recorded in `data/patch-api/12.0.0.json` (`data/blizzard-ui-files/retail.txt`, hash `42abf0ff8118e6be4d41ed321f6a0e7daeb83234928e451f33851d14a488b5ef`) is only validation-environment metadata; it is not historical 12.0.0 source provenance.
+The wowless snapshot history is the historical source for this audit. The active retail cache manifest recorded in `data/patch-api/12.0.0.json` (`data/blizzard-ui-files/retail.txt`, hash `aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd`) is only validation-environment metadata; it is not historical 12.0.0 source provenance.
 
 The register does not claim:
 
