@@ -1,3 +1,7 @@
+## [2026-09-04] verification | Accept scoped causal replay and baseline fixes
+
+Independent acceptance passed: 28/28 default frame cases, 12/12 display/replay/probe cases, 55/55 affected ObjectiveTracker/EditMode cases, and 2,011/2,011 prefork cases. Build/checks are warning-free and startup Lua errors are `[]`. Inventory is 8,372 integration plus 2,011 prefork names, zero overlap. Reused unchanged broad proof; no full-suite replay for documentation. Source-build and one-unit tolerance limits remain explicit in [[frame-position-baseline-drift]].
+
 ## [2026-09-04] verification | Reconcile frame baseline with causal evidence
 
 Updated the raid-anchor size/position and managed-container name using the live capture and causal replay, and replaced the artificial tracker height with Blizzard's native default parent-height contract. Added explicit state/anchor/parent checks; retained all 28 test names and existing tolerances. Independent display/replay/probe coverage passed 12/12; standalone baseline verification follows. See [[frame-position-baseline-drift]].

@@ -28,19 +28,20 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 - `src/lua_api/workarounds/temporary/post_event_frame_layout.rs` — remaining unrelated frame repairs; no ObjectiveTracker repair remains.
 - `src/startup.rs` — startup orchestration; no duplicate headless tracker-height clamp remains.
 
-## Evidence
+## Tests asserting this spec
 
 - `tests/screen_mode.rs` — existing canvas contracts, captured physical/UI metrics, resize, and invalid-input behavior; 9/9 passed for commit `b8d098059`.
 - `tests/frame_position_replay.rs` — captured-configuration replay remains within the existing one-UI-unit tolerance after commit `c6a452dfc`; focused display/replay/probe verification passed 12/12. This is selected-frame causal replay, not bitwise-exact UI parity: the empty right managed container is width `0` in simulation versus about `1` live.
 
+- `tests/frame_positions.rs` — 28/28 named default-canvas cases pass with state/parent checks and unchanged tolerances.
+
 ## Known gaps (current cycle)
 
-- [ ] Verify the revised 28-case standalone `frame_positions` baseline.
-- [ ] Establish source/build parity or explain differences between cache `12.1.0.69497` and live capture `12.1.0.69587`.
-- [ ] Do not infer whole-UI or 78-addon parity from this selected-frame replay.
+No failing check remains in the bounded input/replay scope. Cache `12.1.0.69497` and live capture `12.1.0.69587` are not claimed byte-identical; source extraction could not establish that identity. Selected-frame comparisons retain their one-UI-unit tolerance.
 
 ## Out of scope
 
 - Changing existing GUI/headless canvas callers in this input-model slice.
 - Inferring operating-system DPI or changing `GetScreenDPIScale` without evidence.
 - Assigning measured frame rectangles or anchors as simulator setup values.
+- Whole-client, all-addon, or byte-identical-source parity claims.
