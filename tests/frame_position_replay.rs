@@ -58,31 +58,42 @@ fn load_captured_configuration() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create replay environment");
     env.set_display_size(3440.0, 1440.0)
         .expect("set physical display input");
+    load_captured_layout(&env);
+    load_replay_addons(&env);
+    env.apply_post_load_workarounds();
+    env.exec("SetCVar('uiScale', '0.79999995231628'); SetCVar('useUiScale', '1')")
+        .expect("apply captured scale before login events");
+    settle_captured_startup(&env);
+    env
+}
+
+fn load_captured_layout(env: &WowLuaEnv) {
     let cache = ACCOUNT_CACHE.trim_end_matches('\n');
     env.exec(&format!(
         "C_EditMode.__LoadCache([=[{cache}]=] .. string.char(0), nil, 1, 'Ultrawide')"
     ))
     .expect("load captured account layout input");
+}
 
+fn load_replay_addons(env: &WowLuaEnv) {
     let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!("CARGO_MANIFEST_DIR")));
     env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
     for (name, path) in discover_blizzard_addons(&ui) {
         load_addon(&env.loader_env(), &path)
             .unwrap_or_else(|error| panic!("load {name}: {error}"));
     }
-    env.apply_post_load_workarounds();
-    env.exec("SetCVar('uiScale', '0.79999995231628'); SetCVar('useUiScale', '1')")
-        .expect("apply captured scale before login events");
-    fire_startup_events(&env);
+}
+
+fn settle_captured_startup(env: &WowLuaEnv) {
+    fire_startup_events(env);
     env.apply_post_event_workarounds();
     env.state().borrow_mut().widgets.rebuild_anchor_index();
-    process_pending_timers(&env);
-    fire_one_on_update_tick(&env);
+    process_pending_timers(env);
+    fire_one_on_update_tick(env);
     std::thread::sleep(std::time::Duration::from_secs(2));
     for _ in 0..3 {
         env.state().borrow_mut().ensure_layout_rects();
-        fire_one_on_update_tick(&env);
-        process_pending_timers(&env);
+        fire_one_on_update_tick(env);
+        process_pending_timers(env);
     }
-    env
 }
