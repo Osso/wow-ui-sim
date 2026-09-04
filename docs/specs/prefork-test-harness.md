@@ -85,6 +85,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] Verify commit `2995da11d` after moving eight equivalent `chat_frame::test_chat_*` cases: 8/8 pass, integration lists 8,385 cases, prefork lists 1,992, and overlap is zero. The 13.1985s-to-6.326s runtime change is directional only because power mode changed. Keep `test_chat_editbox_click_type_and_submit` and `test_chat_editbox_text_color_after_activation` in ordinary integration because complete startup changes their asserted initial channel and edit-box color.
 - [x] Verify commit `465acd9da` after moving the two equivalent GroupFinder post-start behaviors: 2/2 pass, integration lists 8,383 cases, prefork lists 1,994, and overlap is zero. The 4.224s integration baseline versus 6.245s standalone prefork run does not establish a speedup because shared preload is included.
 - [x] Verify commit `279bbb8d5` after moving four equivalent WorldMap/GameMenu behaviors: 4/4 pass, integration lists 8,379 cases, prefork lists 1,998, and overlap is zero. The 4.325s integration baseline versus 5.703s standalone prefork run includes shared preload and does not establish a speedup.
+- [ ] Verify commit `2c0441c22` after moving seven equivalent Collection/Escape behaviors: five Wardrobe surface/interaction cases plus Collections Journal and Adventure Guide Escape-close cases. Implementer evidence reports 7/7 pass, integration 8,372, prefork 2,005, zero overlap, and 14.840s to 6.878s; do not treat that timing as verified until independent proof completes.
 
 ### Failure handling
 

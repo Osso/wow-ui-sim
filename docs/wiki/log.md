@@ -1,3 +1,7 @@
+## [2026-09-04] performance | Record Collection/Escape prefork migration
+
+Audited commit `2c0441c22`. Recorded seven one-for-one `prefork_full_ui` migrations in `startup_collection_regressions`: five Wardrobe surface/interaction behaviors plus Escape-close behavior for Collections Journal and Adventure Guide. Implementer evidence is 7/7 passing, 8,372 integration cases, 2,005 prefork cases, zero overlap, and 14.840s versus 6.878s. Independent verification is pending; the timing is not yet accepted as performance proof. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
 ## [2026-09-04] performance | Verify WorldMap/GameMenu prefork migration
 
 Independent verification for commit `279bbb8d5` recorded 4/4 migrated behaviors passing, 8,379 integration cases, 1,998 prefork cases, and zero overlap. The standalone prefork run took 5.703 seconds versus a 4.325-second integration baseline because it includes shared preload; it does not establish a speedup. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
