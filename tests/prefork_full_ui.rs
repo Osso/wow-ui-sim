@@ -5,7 +5,7 @@ compile_error!("prefork_full_ui is Linux-only");
 mod prefork;
 #[path = "common/prefork_full_ui_preload.rs"]
 mod prefork_full_ui_preload;
-#[path = "common/workload_gate.rs"]
+#[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
@@ -236,7 +236,7 @@ fn main() -> ExitCode {
         ..Config::default()
     };
     let full_ui_cases = full_ui_cases();
-    prefork_workload_gate::with_lock(prefork_workload_gate::Mode::Shared, || {
+    prefork_workload_gate::with_shared_lock(|| {
         prefork::run_with_setup(&full_ui_cases, config, || {
             run_conformance_subprocess()?;
             prefork_full_ui_preload::preload_full_game_ui()
