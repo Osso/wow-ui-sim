@@ -12,12 +12,13 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 
 ### Captured layout replay
 
-- [x] Reproduce the captured Ultrawide configuration's selected frame anchors/rectangles from physical size, scale, and EditMode cache inputs, without assigning measured outputs. Default-only layout repairs must not replace custom EditMode anchors or height.
+- [x] Reproduce selected frames from the captured physical `3440×1440` display, effective scale `0.8`, and raw saved `Ultrawide` EditMode cache through normal Blizzard startup, without assigning measured outputs. Default-only layout repairs must not replace custom EditMode anchors or height.
+- [x] Keep the post-event ObjectiveTracker repair default-only and remove duplicate headless height assignment, so saved custom anchors and height remain Blizzard-driven.
 
 ## How it works
 
 - [Layout system](../layout-system.md)
-- [Live frame-position investigation](../wiki/investigations/frame-position-baseline-drift.md)
+- [Live frame-position investigation](../wiki/investigations/frame-position-baseline-drift.md) — causal replay diagnosis and parity limits
 
 ## Implementation inventory
 
@@ -27,14 +28,16 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 - `src/lua_api/workarounds/temporary/post_event_frame_layout.rs` — default-only ObjectiveTracker repair, leaving custom layout state to Blizzard.
 - `src/startup.rs` — startup orchestration without a duplicate unconditional tracker-height override.
 
-## Tests asserting this spec
+## Evidence
 
-- `tests/screen_mode.rs` — existing canvas contracts, captured physical/UI metrics, resize, and invalid-input behavior.
-- `tests/frame_position_replay.rs` — captured configuration replay through real Blizzard startup.
+- `tests/screen_mode.rs` — existing canvas contracts, captured physical/UI metrics, resize, and invalid-input behavior; 9/9 passed for commit `b8d098059`.
+- `tests/frame_position_replay.rs` — one captured-configuration replay passed for commit `1e79fca4f`, using the existing one-UI-unit tolerance. This is selected-frame causal replay, not bitwise-exact UI parity: the empty right managed container is width `0` in simulation versus about `1` live.
 
 ## Known gaps (current cycle)
 
-- [ ] Independently verify replay and reconcile the two legacy frame-position expectations using that evidence.
+- [ ] Independently audit and reconcile the two legacy `frame_positions` expectations using replay evidence.
+- [ ] Establish source/build parity or explain differences between cache `12.1.0.69497` and live capture `12.1.0.69587`.
+- [ ] Do not infer whole-UI or 78-addon parity from this selected-frame replay.
 
 ## Out of scope
 

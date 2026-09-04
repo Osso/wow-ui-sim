@@ -1,10 +1,14 @@
+## [2026-09-04] investigation | Document causal frame-position replay
+
+Updated [[frame-position-baseline-drift]] and [display metrics](../specs/display-metrics.md) for commits `b8d098059` and `1e79fca4f`: normal startup replays the live physical `3440×1440` display, scale `0.8`, and raw saved `Ultrawide` EditMode cache without assigning captured frame outputs. Display API proof is 9/9; selected replay is 1/1 within one UI unit after removing a duplicate default-only ObjectiveTracker height override. Legacy assertions remain unchanged; cache `12.1.0.69497` versus live `12.1.0.69587`, non-bitwise container width, and whole-UI/78-addon parity remain open.
+
 ## [2026-09-04] system | Separate physical display from base canvas
 
 [[layout-system]] now records literal base-canvas fields (`screen_width`/`screen_height`) apart from physical pixel fields (`physical_screen_width`/`physical_screen_height`). [Display metrics](../specs/display-metrics.md) defines the explicit one-to-one canvas setter and PixelUtil 768-height physical-display setter; GUI/headless callers are unchanged.
 
 ## [2026-09-04] investigation | Add read-only live frame-position probe
 
-Added [FramePositionProbe](../addons/FramePositionProbe/README.md) for [[frame-position-baseline-drift]]. Its six-sample retail `12.1.0.69587` capture provides valid custom display, scale, Ultrawide EditMode, and addon inputs for causal replay, not output values to copy. It has not yet been reproduced against the `1600×1200` fixture/cache build. Assertions remain unchanged.
+Added [FramePositionProbe](../addons/FramePositionProbe/README.md) for [[frame-position-baseline-drift]]. Its six-sample retail `12.1.0.69587` capture provides valid custom display, scale, Ultrawide EditMode, and addon inputs for causal replay, not output values to copy. The capture remains valid supporting evidence; assertions remain unchanged.
 
 ## [2026-09-04] investigation | Record current retail frame-position baseline drift
 

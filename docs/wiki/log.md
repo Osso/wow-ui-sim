@@ -1,3 +1,9 @@
+## [2026-09-04] documentation | Record causal frame-position replay
+
+Audited commits `b8d098059` and `1e79fca4f`. Updated [[frame-position-baseline-drift]], [display metrics](../specs/display-metrics.md), and the index: normal Blizzard startup replays physical `3440×1440`, scale `0.8`, and the raw saved `Ultrawide` EditMode cache without assigning recorded anchors or rectangles. `screen_mode` proof is 9/9; one selected-frame replay passes within the existing one-UI-unit tolerance after the default-only post-event ObjectiveTracker repair replaced the duplicate unconditional headless height assignment.
+
+The evidence is deliberately bounded: simulated empty right-managed-container width `0` differs from live approximately `1` within tolerance; this is not bitwise-exact frame parity. Cache build `12.1.0.69497` differs from captured retail `12.1.0.69587`; neither whole-UI nor 78-addon parity is claimed. The capture remains valid, and legacy `frame_positions` assertions remain unchanged pending independent audit. No test, source, cache, or remote action was performed for this documentation update.
+
 ## [2026-09-04] documentation | Record physical display and causal replay boundary
 
 Documented commit `b8d098059`: literal `screen_width`/`screen_height` are base-canvas layout dimensions, separate from physical-pixel `physical_screen_width`/`physical_screen_height`. `set_screen_size` retains deliberate one-to-one behavior; [`display-metrics.md`](../specs/display-metrics.md) records that `set_display_size` derives the base canvas from Blizzard PixelUtil's 768-unit reference while effective frame scale remains separate. No GUI/headless caller change is claimed.
