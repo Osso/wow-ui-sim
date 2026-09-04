@@ -79,6 +79,11 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] Record sampled process-tree RSS separately: it rises from 1,196,596 KiB to 1,523,432 KiB because RSS counts shared copy-on-write pages in both parent and child, while PSS apportions them.
 - [x] Prove workload-gate shared-reader overlap, exclusive exclusion, same-process exclusive serialization, release after error/panic/process exit, and acquisition before timeout measurement.
 
+### Subsequent behavior migrations
+
+- [x] Move 17 additional normal complete-retail-startup behaviors: six `Blizzard_AddOnList` surface cases, five micro-menu/game-menu cases, and six CharacterFrame `ShowUIPanel`/`HideUIPanel` cases. Independent verification records 8,393 integration cases, 1,984 prefork cases, zero overlap, and 17/17 passing.
+- [ ] Verify commit `2995da11d` after moving eight equivalent `chat_frame::test_chat_*` cases. Keep `test_chat_editbox_click_type_and_submit` and `test_chat_editbox_text_color_after_activation` in ordinary integration because complete startup changes their asserted initial channel and edit-box color.
+
 ### Failure handling
 
 - [x] Catch panics and report panic text as structured failure data.
