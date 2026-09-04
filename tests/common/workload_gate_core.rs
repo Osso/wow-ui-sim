@@ -90,11 +90,7 @@ fn acquire_local(exclusive: bool) -> LocalPermit {
 }
 
 fn workload_description(exclusive: bool) -> &'static str {
-    if exclusive {
-        "exclusive"
-    } else {
-        "shared"
-    }
+    if exclusive { "exclusive" } else { "shared" }
 }
 
 #[cfg(target_os = "linux")]
