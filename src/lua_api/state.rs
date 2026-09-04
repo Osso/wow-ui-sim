@@ -56,6 +56,8 @@ macro_rules! build_empty_sim_state {
             anim_frame_to_anim: $collections.anim_frame_to_anim,
             screen_width: $runtime.screen_width,
             screen_height: $runtime.screen_height,
+            physical_screen_width: $runtime.screen_width,
+            physical_screen_height: $runtime.screen_height,
             screen_kind: $runtime.screen_kind,
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,

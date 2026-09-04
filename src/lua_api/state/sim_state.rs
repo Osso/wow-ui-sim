@@ -40,8 +40,11 @@ pub struct SimState {
     pub next_anim_group_id: u64,
     pub anim_frame_to_group: HashMap<u64, u64>,
     pub anim_frame_to_anim: HashMap<u64, (u64, usize)>,
+    /// Base layout canvas dimensions, before UIParent scale.
     pub screen_width: f32,
     pub screen_height: f32,
+    pub physical_screen_width: f32,
+    pub physical_screen_height: f32,
     pub screen_kind: ScreenKind,
     pub is_logged_in: bool,
     pub post_event_workarounds_applied: bool,

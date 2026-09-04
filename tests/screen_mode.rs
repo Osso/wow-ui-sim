@@ -163,3 +163,52 @@ fn screen_size_globals_report_ui_units_after_ui_parent_scale() {
     assert_eq!(physical_width, 1024);
     assert_eq!(physical_height, 768);
 }
+
+#[test]
+fn physical_display_input_matches_captured_wow_ui_dimensions() {
+    let env = WowLuaEnv::new().expect("create environment");
+    env.set_display_size(3440.0, 1440.0)
+        .expect("set captured physical display");
+    env.exec(
+        r#"
+        assert(SetCVar("uiScale", "0.79999995231628"))
+        assert(SetCVar("useUiScale", "1"))
+        local pw, ph = GetPhysicalScreenSize()
+        assert(pw == 3440 and ph == 1440)
+        assert(math.abs(GetScreenWidth() - 2293.333251953125) < 0.001,
+               "physical pixels must not be used as base UI canvas units")
+        assert(math.abs(GetScreenHeight() - 960.0001220703125) < 0.001)
+        local left, bottom, width, height = UIParent:GetRect()
+        assert(left == 0 and bottom == 0)
+        assert(math.abs(width - 2293.333251953125) < 0.001)
+        assert(math.abs(height - 960.0001220703125) < 0.001)
+        assert(math.abs(UIParent:GetEffectiveScale() - 0.7999999523162842) < 0.00001)
+        assert(math.abs(ConvertPixelsToUI(1440, 0.8) - 960) < 0.001)
+        "#,
+    )
+    .expect("physical display and UI units must match the live capture");
+
+    env.set_display_size(1920.0, 1080.0)
+        .expect("resize physical display");
+    env.exec(
+        r#"
+        local width, height = GetPhysicalScreenSize()
+        assert(width == 1920 and height == 1080)
+        assert(math.abs(GetScreenWidth() - 1706.6667) < 0.001)
+        assert(math.abs(GetScreenHeight() - 960) < 0.001)
+        "#,
+    )
+    .expect("display resize must retain scale and update aspect ratio");
+}
+
+#[test]
+fn invalid_physical_display_dimensions_leave_screen_state_unchanged() {
+    let env = WowLuaEnv::new().expect("create environment");
+    for dimensions in [(0.0, 1440.0), (3440.0, 0.0), (f32::NAN, 1440.0), (3440.0, f32::INFINITY)] {
+        assert!(env.set_display_size(dimensions.0, dimensions.1).is_err());
+    }
+    let metrics: (f64, f64, f64, f64) = env
+        .eval("return GetScreenWidth(), GetScreenHeight(), GetPhysicalScreenSize()")
+        .expect("read unchanged screen metrics");
+    assert_eq!(metrics, (1024.0, 768.0, 1024.0, 768.0));
+}

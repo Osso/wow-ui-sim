@@ -16,6 +16,8 @@ use std::rc::Rc;
 use std::time::{Duration, Instant};
 
 const RECENT_FRAME_WINDOW_SIZE: usize = 60;
+// Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
+const UI_REFERENCE_HEIGHT: f32 = 768.0;
 const EDIT_MODE_LAYOUTS_INFO_LUA: &str = r#"
     local source = (EditModeManagerFrame and EditModeManagerFrame.layoutInfo) or C_EditMode.GetLayouts()
     if type(source) ~= "table" then
@@ -77,24 +79,52 @@ impl WowLuaEnv {
     }
 
     pub(crate) fn install_initial_screen_size_globals(&self) {
-        let (screen_width, screen_height) = {
-            let state = self.state.borrow();
-            (state.screen_width, state.screen_height)
-        };
-        install_screen_size_globals(self, screen_width, screen_height);
+        install_screen_size_globals(self);
     }
 
-    /// Update screen dimensions in SimState and resize UIParent/WorldFrame to match.
+    /// Set an explicit one-to-one layout canvas and physical output size.
     pub fn set_screen_size(&self, width: f32, height: f32) {
+        self.apply_screen_dimensions((width, height), (width, height));
+    }
+
+    /// Set physical display pixels using WoW's 768-unit base UI canvas.
+    /// UIParent scale is applied separately by the existing frame/CVar model.
+    pub fn set_display_size(&self, width: f32, height: f32) -> Result<()> {
+        let valid = [width, height]
+            .into_iter()
+            .all(|dimension| dimension.is_finite() && dimension > 0.0);
+        if !valid {
+            return Err(crate::Error::Other(
+                "display dimensions must be finite and positive".into(),
+            ));
+        }
+        let canvas_width = width / height * UI_REFERENCE_HEIGHT;
+        if !canvas_width.is_finite() {
+            return Err(crate::Error::Other(
+                "display aspect ratio exceeds UI canvas range".into(),
+            ));
+        }
+        self.apply_screen_dimensions((canvas_width, UI_REFERENCE_HEIGHT), (width, height));
+        Ok(())
+    }
+
+    fn apply_screen_dimensions(&self, canvas: (f32, f32), physical: (f32, f32)) {
+        let (width, height) = canvas;
         {
             let mut state = self.state.borrow_mut();
             state.screen_width = width;
             state.screen_height = height;
+            state.physical_screen_width = physical.0;
+            state.physical_screen_height = physical.1;
             state.invalidate_strata_buckets();
             state.widgets.clear_all_layout_rects();
             update_screen_widgets_for_dimensions(&mut state, width, height);
         }
-        install_screen_size_globals(self, width, height);
+        install_screen_size_globals(self);
+        self.notify_screen_size_changed();
+    }
+
+    fn notify_screen_size_changed(&self) {
         // Retail fires these as an ordered pair on every display/scale
         // recalculation (resize, scale slider, resolution change) — never one
         // alone. Ground truth: docs/wiki/investigations/display-size-ui-scale-events.md
@@ -354,7 +384,16 @@ fn update_screen_widgets_for_dimensions(state: &mut SimState, width: f32, height
     }
 }
 
-fn install_screen_size_globals(env: &WowLuaEnv, width: f32, height: f32) {
+fn install_screen_size_globals(env: &WowLuaEnv) {
+    let (width, height, physical_width, physical_height) = {
+        let state = env.state.borrow();
+        (
+            state.screen_width,
+            state.screen_height,
+            state.physical_screen_width,
+            state.physical_screen_height,
+        )
+    };
     let _ = env.exec(&format!(
         r#"
         function GetScreenWidth()
@@ -368,7 +407,7 @@ fn install_screen_size_globals(env: &WowLuaEnv, width: f32, height: f32) {
         end
 
         function GetPhysicalScreenSize()
-            return {width}, {height}
+            return {physical_width}, {physical_height}
         end
 
         function GetScreenDPIScale()
@@ -376,7 +415,7 @@ fn install_screen_size_globals(env: &WowLuaEnv, width: f32, height: f32) {
         end
 
         function ConvertPixelsToUI(pixels, scale)
-            return pixels / (scale or 1)
+            return pixels * {UI_REFERENCE_HEIGHT} / ({physical_height} * scale)
         end
         "#
     ));
