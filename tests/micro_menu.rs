@@ -275,29 +275,28 @@ fn professions_primary_spell_button_nameframe_texture(
     env.eval::<String>(&code).unwrap_or_default()
 }
 
-#[test]
-fn micro_menu_character_button_opens_character_frame() {
-    let env = setup_env();
+prefork_full_ui_case! {
+fn micro_menu_character_button_opens_character_frame(env: &WowLuaEnv) {
     click_button(&env, "CharacterMicroButton").expect("CharacterMicroButton click failed");
     assert!(
         frame_is_shown(&env, "CharacterFrame"),
         "CharacterFrame should be shown after clicking CharacterMicroButton"
     );
 }
+}
 
-#[test]
-fn micro_menu_game_menu_button_opens_game_menu() {
-    let env = setup_env();
+prefork_full_ui_case! {
+fn micro_menu_game_menu_button_opens_game_menu(env: &WowLuaEnv) {
     click_button(&env, "MainMenuMicroButton").expect("MainMenuMicroButton click failed");
     assert!(
         frame_is_shown(&env, "GameMenuFrame"),
         "GameMenuFrame should be shown after clicking MainMenuMicroButton"
     );
 }
+}
 
-#[test]
-fn micro_menu_buttons_have_sized_atlas_textures() {
-    let env = setup_env();
+prefork_full_ui_case! {
+fn micro_menu_buttons_have_sized_atlas_textures(env: &WowLuaEnv) {
     let (profession_w, profession_h, spells_w, spells_h, menu_w, menu_h): (
         f64,
         f64,
@@ -334,10 +333,10 @@ fn micro_menu_buttons_have_sized_atlas_textures() {
         "MainMenuMicroButton normal texture should fill the button"
     );
 }
+}
 
-#[test]
-fn micro_menu_buttons_restore_normal_texture_after_hover() {
-    let env = setup_env();
+prefork_full_ui_case! {
+fn micro_menu_buttons_restore_normal_texture_after_hover(env: &WowLuaEnv) {
     let failures: String = env
         .eval(
             r#"
@@ -383,6 +382,7 @@ fn micro_menu_buttons_restore_normal_texture_after_hover() {
         failures, "",
         "micro buttons that hide their normal texture on hover should restore it on leave"
     );
+}
 }
 
 #[test]
@@ -669,9 +669,8 @@ fn micro_menu_ej_button_loads_and_opens_panel() {
     );
 }
 
-#[test]
-fn game_menu_buttons_display_text() {
-    let env = setup_env();
+prefork_full_ui_case! {
+fn game_menu_buttons_display_text(env: &WowLuaEnv) {
     click_button(&env, "MainMenuMicroButton").expect("MainMenuMicroButton click failed");
     assert!(
         frame_is_shown(&env, "GameMenuFrame"),
@@ -722,6 +721,7 @@ fn game_menu_buttons_display_text() {
             button_texts
         );
     }
+}
 }
 
 #[test]

@@ -3,6 +3,7 @@
 use crate::common::blizzard_addon_harness::{
     with_blizzard_addon_glue_smoke_shape, with_blizzard_addon_startup_shape,
 };
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ROOT: &str = "Blizzard_AddOnList";
 const GLUE_PARENT_ROOT: &str = "Blizzard_GlueParent";
@@ -73,13 +74,12 @@ type AddonListSurfaceProbe = (
     bool,
 );
 
-#[test]
-fn addon_list_frame_matches_game_xml_surface() {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+prefork_full_ui_case! {
+fn addon_list_frame_matches_game_xml_surface(env: &WowLuaEnv) {
         let surface = probe_addon_list_surface(env, "UIParent");
 
         assert_addon_list_surface(surface, "UIParent");
-    });
+    }
 }
 
 #[test]
@@ -117,16 +117,15 @@ fn addon_dialog_frame_matches_xml_surface() {
     });
 }
 
-#[test]
-fn addon_list_virtual_templates_expose_parent_keys() {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+prefork_full_ui_case! {
+fn addon_list_virtual_templates_expose_parent_keys(env: &WowLuaEnv) {
         create_template_probe_frames(env);
 
         assert_template_button(env, ENTRY_TEMPLATE_PROBE);
         assert_template_children(env, ENTRY_TEMPLATE_PROBE, ENTRY_TEMPLATE_CHILDREN);
         assert_template_button(env, CATEGORY_TEMPLATE_PROBE);
         assert_template_children(env, CATEGORY_TEMPLATE_PROBE, CATEGORY_TEMPLATE_CHILDREN);
-    });
+    }
 }
 
 struct ParentKeyChild {

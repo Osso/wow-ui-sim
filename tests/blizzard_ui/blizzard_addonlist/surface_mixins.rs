@@ -1,6 +1,7 @@
 //! Public mixin methods for `Blizzard_AddOnList`.
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ROOT: &str = "Blizzard_AddOnList";
 const ADDON_LIST_MIXIN_METHODS: &[&str] = &[
@@ -19,11 +20,10 @@ const ADDON_LIST_ENTRY_MIXIN_METHODS: &[&str] = &["OnLoad", "SetEnabledDependenc
 const ADDON_CATEGORY_COLLAPSE_EXPAND_MIXIN_METHODS: &[&str] =
     &["SetTreeNode", "OnClick", "ToggleState", "UpdateState"];
 
-#[test]
-fn addon_list_mixin_exposes_plan_methods() {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+prefork_full_ui_case! {
+fn addon_list_mixin_exposes_plan_methods(env: &WowLuaEnv) {
         assert_mixin_methods(env, "AddonListMixin", ADDON_LIST_MIXIN_METHODS);
-    });
+    }
 }
 
 #[test]

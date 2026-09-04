@@ -209,10 +209,8 @@ fn key_blizzard_panels_registered() {
     }
 }
 
-#[test]
-fn show_ui_panel_shows_frame() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn show_ui_panel_shows_frame(env: &WowLuaEnv) {
         let result: bool = env.eval(r#"
             if not CharacterFrame then return false end
             -- Should start hidden
@@ -224,10 +222,8 @@ fn show_ui_panel_shows_frame() {
     }
 }
 
-#[test]
-fn show_ui_panel_anchors_character_frame_to_ui_parent() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn show_ui_panel_anchors_character_frame_to_ui_parent(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -275,10 +271,8 @@ fn show_ui_panel_anchors_character_frame_to_ui_parent() {
     }
 }
 
-#[test]
-fn show_ui_panel_positions_character_frame_at_expected_rect() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn show_ui_panel_positions_character_frame_at_expected_rect(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -320,10 +314,8 @@ fn show_ui_panel_positions_character_frame_at_expected_rect() {
     }
 }
 
-#[test]
-fn show_ui_panel_locks_character_frame_layout() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn show_ui_panel_locks_character_frame_layout(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -498,10 +490,8 @@ fn show_ui_panel_locks_character_frame_layout() {
     }
 }
 
-#[test]
-fn show_ui_panel_reanchors_character_frame_after_reopen() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn show_ui_panel_reanchors_character_frame_after_reopen(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -553,10 +543,8 @@ fn show_ui_panel_reanchors_character_frame_after_reopen() {
     }
 }
 
-#[test]
-fn hide_ui_panel_hides_frame() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn hide_ui_panel_hides_frame(env: &WowLuaEnv) {
         let result: bool = env.eval(r#"
             if not CharacterFrame then return false end
             ShowUIPanel(CharacterFrame)

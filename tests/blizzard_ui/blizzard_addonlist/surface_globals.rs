@@ -1,6 +1,5 @@
 //! Public globals for `Blizzard_AddOnList`.
 
-use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ROOT: &str = "Blizzard_AddOnList";
@@ -37,9 +36,8 @@ const MIXIN_TABLES: &[&str] = &[
 ];
 const INHERITED_NODE_METHODS: &[&str] = &["OnClick", "SetEnabledAll"];
 
-#[test]
-fn addon_list_publishes_module_constants() {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+prefork_full_ui_case! {
+fn addon_list_publishes_module_constants(env: &WowLuaEnv) {
         let (button_height, max_displayed, collapsed_type): (i32, i32, String) = env
             .eval(
                 r#"
@@ -62,12 +60,11 @@ fn addon_list_publishes_module_constants() {
             collapsed_type, "table",
             "`g_addonCategoriesCollapsed` must be available as a table"
         );
-    });
+    }
 }
 
-#[test]
-fn addon_list_publishes_global_functions() {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+prefork_full_ui_case! {
+fn addon_list_publishes_global_functions(env: &WowLuaEnv) {
         for global_name in GLOBAL_FUNCTIONS {
             let actual_type = global_type(env, global_name);
 
@@ -76,12 +73,11 @@ fn addon_list_publishes_global_functions() {
                 "`{global_name}` must be published as a global function"
             );
         }
-    });
+    }
 }
 
-#[test]
-fn addon_list_publishes_mixin_tables() {
-    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+prefork_full_ui_case! {
+fn addon_list_publishes_mixin_tables(env: &WowLuaEnv) {
         for global_name in MIXIN_TABLES {
             let actual_type = global_type(env, global_name);
 
@@ -95,7 +91,7 @@ fn addon_list_publishes_mixin_tables() {
             assert_node_method_inherited(env, "AddonListCategoryMixin", method_name);
             assert_node_method_inherited(env, "AddonListEntryMixin", method_name);
         }
-    });
+    }
 }
 
 fn global_type(env: &WowLuaEnv, global_name: &str) -> String {
