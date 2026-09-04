@@ -31,11 +31,11 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 ## Evidence
 
 - `tests/screen_mode.rs` — existing canvas contracts, captured physical/UI metrics, resize, and invalid-input behavior; 9/9 passed for commit `b8d098059`.
-- `tests/frame_position_replay.rs` — captured-configuration replay remains within the existing one-UI-unit tolerance after commit `c6a452dfc`. Final focused 12-case verification is pending. This is selected-frame causal replay, not bitwise-exact UI parity: the empty right managed container is width `0` in simulation versus about `1` live.
+- `tests/frame_position_replay.rs` — captured-configuration replay remains within the existing one-UI-unit tolerance after commit `c6a452dfc`; focused display/replay/probe verification passed 12/12. This is selected-frame causal replay, not bitwise-exact UI parity: the empty right managed container is width `0` in simulation versus about `1` live.
 
 ## Known gaps (current cycle)
 
-- [ ] Independently audit and reconcile the two legacy `frame_positions` expectations using replay evidence.
+- [ ] Verify the revised 28-case standalone `frame_positions` baseline.
 - [ ] Establish source/build parity or explain differences between cache `12.1.0.69497` and live capture `12.1.0.69587`.
 - [ ] Do not infer whole-UI or 78-addon parity from this selected-frame replay.
 
