@@ -1,0 +1,8 @@
+## Interface: 120100
+## Title: Frame Position Probe
+## Notes: Read-only frame-layout evidence capture.
+## Author: Alessio
+## Version: 0.1.0
+## SavedVariables: FramePositionProbeDB
+
+FramePositionProbe.lua
