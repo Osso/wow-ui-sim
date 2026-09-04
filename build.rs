@@ -1,10 +1,10 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use quote::ToTokens;
 use syn::{
-    FnArg, Item, ItemFn, ItemMacro, MacroDelimiter, Pat, PathArguments, ReturnType, Type,
-    Visibility,
+    Expr, FnArg, Item, ItemFn, ItemMacro, ItemMod, Lit, MacroDelimiter, Pat, PathArguments,
+    ReturnType, Type, Visibility,
 };
 
 fn main() {
@@ -83,6 +83,12 @@ struct PreforkFullUiMarker {
     function_name: String,
 }
 
+#[derive(Debug, Clone, Eq, Ord, PartialEq, PartialOrd)]
+struct PreforkFullUiSource {
+    path: PathBuf,
+    module_path: String,
+}
+
 fn generate_prefork_full_ui_registry() {
     let manifest_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").expect("manifest dir"));
     let tests_dir = manifest_dir.join("tests");
@@ -95,18 +101,83 @@ fn generate_prefork_full_ui_registry() {
     std::fs::write(registry_path, contents).expect("write prefork full-UI registry");
 }
 
-fn discover_prefork_full_ui_sources(tests_dir: &Path) -> Vec<PathBuf> {
-    let top_level_sources = discover_top_level_test_modules(tests_dir);
-    let mut sources = Vec::new();
-    for source_path in top_level_sources {
+fn discover_prefork_full_ui_sources(tests_dir: &Path) -> Vec<PreforkFullUiSource> {
+    let mut sources = BTreeSet::new();
+    for source_path in discover_top_level_test_modules(tests_dir) {
         let module_directory = source_path.with_extension("");
-        sources.push(source_path);
+        let mut sibling_sources = vec![source_path];
         if module_directory.is_dir() {
-            sources.extend(discover_rust_sources(&module_directory));
+            sibling_sources.extend(discover_rust_sources(&module_directory));
+        }
+
+        for sibling_path in sibling_sources {
+            let module_path = module_path_for_test_source(tests_dir, &sibling_path);
+            insert_prefork_full_ui_source(&mut sources, sibling_path, module_path);
         }
     }
-    sources.sort();
-    sources
+    sources.into_iter().collect()
+}
+
+fn insert_prefork_full_ui_source(
+    sources: &mut BTreeSet<PreforkFullUiSource>,
+    source_path: PathBuf,
+    module_path: String,
+) {
+    let source = PreforkFullUiSource {
+        path: source_path,
+        module_path,
+    };
+    if !sources.insert(source.clone()) {
+        return;
+    }
+
+    let contents = std::fs::read_to_string(&source.path)
+        .unwrap_or_else(|error| panic!("read {}: {error}", source.path.display()));
+    for (child_path, child_module_name) in path_declared_modules(&source.path, &contents) {
+        let child_module_path = format!("{}::{child_module_name}", source.module_path);
+        insert_prefork_full_ui_source(sources, child_path, child_module_path);
+    }
+}
+
+fn path_declared_modules(source_path: &Path, source: &str) -> Vec<(PathBuf, String)> {
+    let file = syn::parse_file(source).unwrap_or_else(|error| {
+        panic!(
+            "parse candidate prefork full-UI source {}: {error}",
+            source_path.display()
+        )
+    });
+
+    file.items
+        .iter()
+        .filter_map(|item| match item {
+            Item::Mod(item_mod) => path_declared_module(source_path, item_mod),
+            _ => None,
+        })
+        .collect()
+}
+
+fn path_declared_module(source_path: &Path, item_mod: &ItemMod) -> Option<(PathBuf, String)> {
+    let path = item_mod.attrs.iter().find_map(path_attribute_value)?;
+    let parent = source_path
+        .parent()
+        .expect("test source must have a parent directory");
+    Some((parent.join(path), item_mod.ident.to_string()))
+}
+
+fn path_attribute_value(attribute: &syn::Attribute) -> Option<String> {
+    if !attribute.path().is_ident("path") {
+        return None;
+    }
+    let syn::Meta::NameValue(name_value) = &attribute.meta else {
+        return None;
+    };
+    let Expr::Lit(expression) = &name_value.value else {
+        return None;
+    };
+    let Lit::Str(path) = &expression.lit else {
+        return None;
+    };
+    Some(path.value())
 }
 
 fn discover_rust_sources(directory: &Path) -> Vec<PathBuf> {
@@ -125,28 +196,27 @@ fn discover_rust_sources(directory: &Path) -> Vec<PathBuf> {
 }
 
 fn collect_prefork_full_ui_cases(
-    tests_dir: &Path,
-    source_files: Vec<PathBuf>,
+    _tests_dir: &Path,
+    source_files: Vec<PreforkFullUiSource>,
 ) -> Vec<PreforkFullUiCase> {
     let mut cases = Vec::new();
     let mut sources_by_case_name = BTreeMap::new();
-    for source_path in source_files {
-        println!("cargo:rerun-if-changed={}", source_path.display());
-        let source = std::fs::read_to_string(&source_path)
-            .unwrap_or_else(|error| panic!("read {}: {error}", source_path.display()));
-        if !source.contains("prefork_full_ui_case") {
+    for source in source_files {
+        println!("cargo:rerun-if-changed={}", source.path.display());
+        let contents = std::fs::read_to_string(&source.path)
+            .unwrap_or_else(|error| panic!("read {}: {error}", source.path.display()));
+        if !contents.contains("prefork_full_ui_case") {
             continue;
         }
-        let module_path = module_path_for_test_source(tests_dir, &source_path);
-        for marker in parse_prefork_full_ui_markers(&source_path, &source) {
-            let full_name = format!("{module_path}::{}", marker.function_name);
-            reject_duplicate_prefork_case(&mut sources_by_case_name, &full_name, &source_path);
+        for marker in parse_prefork_full_ui_markers(&source.path, &contents) {
+            let full_name = format!("{}::{}", source.module_path, marker.function_name);
+            reject_duplicate_prefork_case(&mut sources_by_case_name, &full_name, &source.path);
             cases.push(PreforkFullUiCase {
                 attributes: marker.attributes,
                 full_name,
-                module_path: module_path.clone(),
+                module_path: source.module_path.clone(),
                 function_name: marker.function_name,
-                source_path: source_path.clone(),
+                source_path: source.path.clone(),
             });
         }
     }

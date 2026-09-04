@@ -9,13 +9,13 @@ use crate::common;
 mod load;
 
 #[path = "blizzard_ui/blizzard_addonlist/surface_globals.rs"]
-mod surface_globals;
+pub(crate) mod surface_globals;
 
 #[path = "blizzard_ui/blizzard_addonlist/surface_frames.rs"]
-mod surface_frames;
+pub(crate) mod surface_frames;
 
 #[path = "blizzard_ui/blizzard_addonlist/surface_mixins.rs"]
-mod surface_mixins;
+pub(crate) mod surface_mixins;
 
 #[path = "blizzard_ui/blizzard_addonlist/surface_events.rs"]
 mod surface_events;

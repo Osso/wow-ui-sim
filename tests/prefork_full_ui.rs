@@ -85,6 +85,10 @@ const CONFORMANCE_CASES: &[Case<ConformanceState>] = &[
         generated_registry_lists_nested_marker_case,
     ),
     Case::new(
+        "conformance::generated_registry_lists_path_declared_marker_case",
+        generated_registry_lists_path_declared_marker_case,
+    ),
+    Case::new(
         "conformance::generated_registry_lists_foundation_batch",
         generated_registry_lists_foundation_batch,
     ),
@@ -622,6 +626,24 @@ fn generated_registry_lists_nested_marker_case(state: &ConformanceState) {
         .env_remove(TREE_CHILD_MODE_ENV)
         .output()
         .expect("list generated prefork registry case");
+
+    assert_success(&output);
+    assert_eq!(
+        stdout(&output),
+        format!("{CASE_NAME}: test\n\n1 test, 0 benchmarks\n")
+    );
+}
+
+fn generated_registry_lists_path_declared_marker_case(state: &ConformanceState) {
+    const CASE_NAME: &str =
+        "blizzard_ui_blizzard_addonlist::surface_globals::addon_list_publishes_module_constants";
+    let output = Command::new(&state.executable)
+        .args(["--list", CASE_NAME, "--exact"])
+        .env_remove(CONFORMANCE_MODE_ENV)
+        .env_remove(DRIVER_MODE_ENV)
+        .env_remove(TREE_CHILD_MODE_ENV)
+        .output()
+        .expect("list generated path-declared prefork registry case");
 
     assert_success(&output);
     assert_eq!(
