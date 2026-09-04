@@ -55,8 +55,28 @@ fn consume_escape(chars: &mut std::iter::Peekable<std::str::Chars>, result: &mut
         }
         'c' => {
             chars.next();
-            for _ in 0..8 {
+            // Two color forms: the classic `|cAARRGGBB` and the named
+            // `|cn<colorName>:` the client uses for item quality. Consuming a
+            // fixed eight characters from a named code eats past its colon and
+            // into whatever escape follows it.
+            if chars.peek() == Some(&'n') {
                 chars.next();
+                // A named code ends at its colon. Stop at a `|` too: a color
+                // name cannot contain one, so a code missing its colon costs
+                // the code rather than the rest of the string.
+                while let Some(&ch) = chars.peek() {
+                    if ch == '|' {
+                        break;
+                    }
+                    chars.next();
+                    if ch == ':' {
+                        break;
+                    }
+                }
+            } else {
+                for _ in 0..8 {
+                    chars.next();
+                }
             }
             true
         }

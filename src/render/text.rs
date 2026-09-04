@@ -187,6 +187,26 @@ mod tests {
     }
 
     #[test]
+    fn strips_named_color_code() {
+        assert_eq!(strip_wow_markup("|cnIQ3:Rare|r item"), "Rare item");
+    }
+
+    #[test]
+    fn strips_named_color_before_hyperlink() {
+        assert_eq!(
+            strip_wow_markup(
+                "Use |cnIQ3:|Hitem:202046::::::::80:70:::::::::|h[Lucky Tortollan Charm]|h|r now"
+            ),
+            "Use [Lucky Tortollan Charm] now"
+        );
+    }
+
+    #[test]
+    fn named_color_without_colon_stops_at_the_next_escape() {
+        assert_eq!(strip_wow_markup("|cnBroken|r tail"), " tail");
+    }
+
+    #[test]
     fn converts_wow_newline_escape() {
         assert_eq!(strip_wow_markup("First|nSecond"), "First\nSecond");
     }

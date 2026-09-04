@@ -201,8 +201,24 @@ fn skip_wow_escape(chars: &mut std::iter::Peekable<std::str::Chars>) {
         }
         Some('c') => {
             chars.next();
-            for _ in 0..8 {
+            if chars.peek() == Some(&'n') {
                 chars.next();
+                // A named code ends at its colon. Stop at a `|` too: a color
+                // name cannot contain one, so a code missing its colon costs
+                // the code rather than the rest of the string.
+                while let Some(&ch) = chars.peek() {
+                    if ch == '|' {
+                        break;
+                    }
+                    chars.next();
+                    if ch == ':' {
+                        break;
+                    }
+                }
+            } else {
+                for _ in 0..8 {
+                    chars.next();
+                }
             }
         }
         Some('r') => {
@@ -286,5 +302,20 @@ mod tests {
         let display_name = resolve_display_name(&widgets, widgets.get(id).unwrap(), id);
 
         assert_eq!(display_name, "\"|cffff3333明天启程 |r...\"");
+    }
+
+    #[test]
+    fn strip_wow_escapes_handles_named_color_before_hyperlink() {
+        assert_eq!(
+            super::strip_wow_escapes(
+                "Use |cnIQ3:|Hitem:202046::::::::80:70:::::::::|h[Lucky Tortollan Charm]|h|r now"
+            ),
+            "Use [Lucky Tortollan Charm] now"
+        );
+    }
+
+    #[test]
+    fn strip_wow_escapes_named_color_without_colon_stops_at_the_next_escape() {
+        assert_eq!(super::strip_wow_escapes("|cnBroken|r tail"), "tail");
     }
 }
