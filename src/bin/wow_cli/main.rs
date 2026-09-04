@@ -30,6 +30,7 @@ mod gen_spells_power;
 mod gen_traits;
 mod gen_traits_emit;
 mod gen_traits_load;
+mod gen_ui_maps;
 mod gen_zones;
 mod global_slot_coverage;
 mod startup_intern_stats;
@@ -271,6 +272,8 @@ enum GenerateTarget {
     Traits,
     /// Generate data/zones.rs from AreaTable CSV
     Zones,
+    /// Generate data/ui_maps.rs from UiMap CSV
+    UiMaps,
     /// Generate data/map_art.rs from UiMap* DB2 CSVs
     MapArt,
     /// Generate data/quest_ui_map.rs from QuestPOIBlob CSV
@@ -363,6 +366,7 @@ fn run_generator(target: GenerateTarget) {
         GenerateTarget::Manifest => gen_manifest::run(),
         GenerateTarget::Traits => gen_traits::run(),
         GenerateTarget::Zones => gen_zones::run(),
+        GenerateTarget::UiMaps => gen_ui_maps::run(),
         GenerateTarget::MapArt => gen_map_art::run(),
         GenerateTarget::QuestPoi => gen_quest_poi::run(),
         GenerateTarget::EncounterJournal => gen_encounter_journal::run(),

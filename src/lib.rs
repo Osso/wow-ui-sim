@@ -98,6 +98,8 @@ pub mod texture;
 pub mod toc;
 #[path = "../data/traits.rs"]
 pub mod traits;
+#[path = "../data/ui_maps.rs"]
+pub mod ui_maps;
 pub mod widget;
 #[cfg(any(
     feature = "client-wrath",
