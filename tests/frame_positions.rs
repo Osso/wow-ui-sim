@@ -1,4 +1,6 @@
-//! Regression test: verify key frame positions match the origin/master baseline.
+//! Regression test: verify key frame positions in the default startup canvas.
+//! Raid-warning geometry and managed-container identity are grounded in the
+//! live capture and causal replay documented in frame-position-baseline-drift.md.
 //!
 //! Loads all Blizzard addons at 1600x1200, fires startup events (same sequence
 //! as the dump-tree/screenshot headless path), then checks that important UI
@@ -113,7 +115,7 @@ const POSITION_TESTS: &[TestCase] = &[
     // HUD elements
     ("minimap",                    "Minimap",                       1391.0,   44.0,  198.0, 198.0, 1.0),
     ("minimap_cluster",            "MinimapCluster",                1360.0,    0.0,  240.0, 252.0, 1.0),
-    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 836.5, 1.0),
+    ("objective_tracker",          "ObjectiveTrackerFrame",         1335.0,  260.0,  260.0, 847.5, 1.0),
     ("bags_bar",                   "BagsBar",                       1386.0, 1104.0,  208.0,  47.0, 1.0),
     ("micro_button_bags_bar",      "MicroButtonAndBagsBar",         1362.0, 1114.0,  232.0,  80.0, 1.0),
     ("micro_menu",                 "MicroMenu",                     1265.0, 1154.0,  329.0,  40.0, 1.0),
@@ -129,12 +131,12 @@ const POSITION_TESTS: &[TestCase] = &[
     ("status_tracking_bar",        "StatusTrackingBarManager",       514.0, 1166.0,  571.0,  34.0, 1.0),
     // Overlay / warning frames
     ("ui_errors_frame",            "UIErrorsFrame",                  544.0,  122.0,  512.0,  60.0, 1.0),
-    ("raid_boss_emote_anchor",     "PrivateRaidBossEmoteFrameAnchor",544.0,  252.0,  512.0,  80.0, 1.0),
+    ("raid_boss_emote_anchor",     "PrivateRaidBossEmoteFrameAnchor",400.0,  182.0,  800.0,  80.0, 1.0),
     ("critical_encounter_warnings","CriticalEncounterWarnings",      500.0,   40.0,  600.0,  48.0, 1.0),
     ("medium_encounter_warnings",  "MediumEncounterWarnings",        525.0,   90.0,  550.0,  36.0, 1.0),
     ("minor_encounter_warnings",   "MinorEncounterWarnings",         550.0,  130.0,  500.0,  36.0, 1.0),
     // Managed containers
-    ("right_managed_container",    "UIParentRightManagedFrameContainer", 1335.0, 260.0, 260.0, 847.0, 1.0),
+    ("right_managed_container",    "RightManagedFrameContainer",     1335.0, 260.0, 260.0, 847.0, 1.0),
     // Casting bar (hidden — no active cast; attached to PlayerFrame via PlayerFrame_AttachCastBar)
     ("casting_bar",                "PlayerCastingBarFrame",              696.0,  594.5,  208.0,  11.0, 1.0),
 ];
@@ -153,12 +155,40 @@ fn check_action_button(env: &WowLuaEnv) {
     );
 }
 
+fn assert_layout_state(env: &WowLuaEnv, test: &str) {
+    let assertion = match test {
+        "raid_boss_emote_anchor" => {
+            r#"
+            assert(UIParent:GetEffectiveScale() == 1)
+            assert(RaidWarningFrame:GetLowestMessage() == nil)
+            assert(not DeadlyDebuffFrame:IsShown())
+            local point, relative, relativePoint, x, y = PrivateRaidBossEmoteFrameAnchor:GetPoint(1)
+            assert(point == "TOP" and relative == RaidWarningFrame and relativePoint == "TOP")
+            assert(x == 0 and y == 0)
+        "#
+        }
+        "objective_tracker" => {
+            r#"
+            assert(ObjectiveTrackerFrame:IsInDefaultPosition())
+            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer)
+            local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
+            assert(relative == RightManagedFrameContainer and offsetY == 0)
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001)
+        "#
+        }
+        _ => return,
+    };
+    env.exec(assertion)
+        .unwrap_or_else(|error| panic!("{test} fixture state: {error}"));
+}
+
 fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
     let mut passed = 0;
     let mut failed = 0;
 
     for (name, frame, ex, ey, ew, eh, ea) in POSITION_TESTS {
         let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            assert_layout_state(env, name);
             assert_frame_rect(env, frame, *ex, *ey, *ew, *eh, *ea);
         }));
         report_result(&result, name, &mut passed, &mut failed);

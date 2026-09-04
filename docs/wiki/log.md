@@ -1,3 +1,7 @@
+## [2026-09-04] verification | Reconcile frame baseline with causal evidence
+
+Updated the raid-anchor size/position and managed-container name using the live capture and causal replay, and replaced the artificial tracker height with Blizzard's native default parent-height contract. Added explicit state/anchor/parent checks; retained all 28 test names and existing tolerances. Independent display/replay/probe coverage passed 12/12; standalone baseline verification follows. See [[frame-position-baseline-drift]].
+
 ## [2026-09-04] documentation | Retire ObjectiveTracker geometry repairs
 
 Updated [[frame-position-baseline-drift]], [display metrics](../specs/display-metrics.md), [[layout-system]], and the index for `c6a452dfc` after `b8d098059`/`1e79fca4f`. All ObjectiveTracker repair code is removed from `post_event_frame_layout.rs`; the duplicate headless height clamp is removed from `startup.rs`. Native Blizzard/EditMode layout now owns tracker anchors and height for default and custom layouts.

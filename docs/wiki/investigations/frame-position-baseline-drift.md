@@ -1,6 +1,6 @@
 # Frame-position baseline drift
 
-At the `tests/frame_positions.rs` full-startup fixture (1600×1200), two checks disagree with the current retail cache. They are reproducible and source-consistent, but not validated against a matching real client; no assertion or simulator behavior changed.
+The default `tests/frame_positions.rs` canvas (1600×1200) exposed obsolete raid-warning geometry and a renamed managed container. A live capture and causal replay also exposed simulator overrides that discarded custom ObjectiveTracker configuration. Those overrides are retired; the baseline now checks the supported geometry and native default-height relationship.
 
 ## Exact fixture evidence
 
@@ -16,21 +16,21 @@ The fixture loads all discovered Blizzard addons, runs normal startup plus post-
 
 The custom `Ultrawide` layout, physical `3440×1440` display, UI `2293.333×960`, effective scale about `0.8`, and relevant non-Blizzard addons are valid causal replay inputs, not grounds to discard the capture. The simulator now replays the live physical display, scale, and raw saved `Ultrawide` EditMode cache through normal Blizzard startup; it does not assign any measured frame rectangle or anchor as setup output. Commit `b8d098059` supplies the distinct physical-display input model, and its display API coverage passes 9/9.
 
-The initial replay exposed simulator-owned `ObjectiveTrackerFrame` geometry rather than a reason to reject the capture: a post-event repair supplied the wrong anchor, and startup retained height `836.5` through a duplicate headless clamp. Commit `1e79fca4f` first limited the post-event repair; commit `c6a452dfc` removes every ObjectiveTracker repair from `post_event_frame_layout.rs` and the duplicate startup clamp. Native Blizzard/EditMode layout now owns tracker geometry for default and custom layouts. The captured replay remains within the existing one-UI-unit tolerance; final focused 12-case verification is pending. Its empty right-managed container is width `0` versus approximately `1` live, which is within that tolerance; this is not bitwise-exact frame parity.
+The initial replay exposed simulator-owned `ObjectiveTrackerFrame` geometry rather than a reason to reject the capture: a post-event repair supplied the wrong anchor, and startup retained height `836.5` through a duplicate headless clamp. Commit `1e79fca4f` first limited the post-event repair; commit `c6a452dfc` removes every ObjectiveTracker repair from `post_event_frame_layout.rs` and the duplicate startup clamp. Native Blizzard/EditMode layout now owns tracker geometry for default and custom layouts. The captured replay remains within the existing one-UI-unit tolerance; independent focused verification passed all 12 display/replay/probe cases. Its empty right-managed container is width `0` versus approximately `1` live, which is within that tolerance; this is not bitwise-exact frame parity.
 
 ## Boundary
 
 The old baseline is a simulator expectation, not a matching real-client capture. Current-source consistency, repeated simulator runs, and the causal replay do not establish whole-UI parity: the capture had 78 non-Blizzard addons, while replay covers selected layout inputs and frames only. Nor does it establish byte-identical fixture parity: the simulator cache is `12.1.0.69497` and the capture is retail `12.1.0.69587`. RaidWarning can still reanchor for messages, debuffs, and Edit Mode; managed-container layout depends on visible managed frames. The earlier CLI cache-import probe used a different parent/layout and is not comparable.
 
-The capture remains valid evidence and the default `tests/frame_positions.rs` expectations remain unchanged pending an independent audit. The legacy ObjectiveTracker expectation now observes native height `847.5`, rather than the former artificial `836.5`; the original raid-anchor geometry and old-container-name failures remain. Before changing any assertion, reconcile it against this causal replay and explain any remaining source/build difference. A default-fixture mismatch alone is not a reason to discard the capture.
+The default-canvas expectations use the bounded contracts supported by this replay: an empty-warning raid anchor is 800×80 at RaidWarningFrame.TOP (400,182 on the 1600×1200 canvas), and the container is named RightManagedFrameContainer. ObjectiveTracker's default height is 847.5, from its parent height plus anchor offset in Blizzard's UpdateHeight, not the removed 836.5 clamp. Additional checks assert the empty-warning state, anchor relationship, default positioning, parent, and native height relationship. Test names and geometry/alpha tolerances are unchanged. This does not claim whole-client or byte-identical-build parity.
 
 ## Sources
 
 - [tests/frame_positions.rs](../../../tests/frame_positions.rs) — exact shared fixture and failing baseline assertions
 - [FramePositionProbe](../../addons/FramePositionProbe/README.md) — read-only capture protocol
 - [display-metrics.md](../../specs/display-metrics.md) — physical-display and base-canvas replay contract and proof boundary
-- `docs/local/private/probes/FramePositionProbe-2026-09-04T211127Z.lua` (gitignored) — non-parity retail capture; SHA-256 `c12586fbaa0c9203dad07089df827975c45cdc5fb3562606be365ef306c19b72`
-- [post_event_frame_layout.rs](../../../src/lua_api/workarounds/temporary/post_event_frame_layout.rs) — adjacent old-name workaround
+- `docs/local/private/probes/FramePositionProbe-2026-09-04T211127Z.lua` (gitignored) — live retail capture; SHA-256 `c12586fbaa0c9203dad07089df827975c45cdc5fb3562606be365ef306c19b72`
+- [post_event_frame_layout.rs](../../../src/lua_api/workarounds/temporary/post_event_frame_layout.rs) — remaining unrelated repairs after retiring ObjectiveTracker overrides
 - `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RaidWarning/RaidWarning.xml` — current size and XML anchors
 - `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RaidWarning/RaidWarningUtil.lua` — dynamic anchor choices
 - `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ManagedFrameSystem/Shared/ManagedFrameSystem.lua` — current right-container role
