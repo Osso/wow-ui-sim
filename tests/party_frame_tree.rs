@@ -18,44 +18,14 @@
 
 use crate::common;
 
-use std::path::PathBuf;
-
 use wow_ui_sim::dump::build_tree;
-use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::startup::settle_headless_startup;
-
-fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
-        "CARGO_MANIFEST_DIR"
-    )))
-}
 
 const PARTY_FRAME_SELECTION_SIZE: &str = "120x244";
 
-fn load_settled_game_ui() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Game);
-    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
-
-    let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
-    for (name, toc_path) in &addons {
-        load_addon(&env.loader_env(), toc_path)
-            .unwrap_or_else(|err| panic!("Failed to load Blizzard addon {name}: {err}"));
-    }
-
-    env.apply_post_load_workarounds();
-    settle_headless_startup(&env);
-    env
-}
-
 /// PartyFrame itself has the shape `master` produces.
-#[test]
-fn party_frame_has_master_reference_shape() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_frame_has_master_reference_shape(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -89,13 +59,11 @@ fn party_frame_has_master_reference_shape() {
             x as i32, 22,
             "PartyFrame left edge must be x=22 (got x={x})",
         );
-    }
+}
 }
 
-#[test]
-fn party_member_frame_hover_shows_unit_tooltip() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_member_frame_hover_shows_unit_tooltip(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(1)").unwrap();
         env.exec(
             r#"
@@ -141,14 +109,12 @@ fn party_member_frame_hover_shows_unit_tooltip() {
             "true|6|Thrynn|party1|Player-0000-00000002",
             "PartyFrame.MemberFrame1 hover should show a unit tooltip for party1"
         );
-    }
+}
 }
 
 /// All four member frames populate with the 63px vertical stride master uses.
-#[test]
-fn party_frame_member_frames_render_at_master_offsets() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_frame_member_frames_render_at_master_offsets(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -212,13 +178,11 @@ fn party_frame_member_frames_render_at_master_offsets() {
                 baseline_y,
             );
         }
-    }
+}
 }
 
-#[test]
-fn player_and_party_portraits_use_current_class_texture_identity() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn player_and_party_portraits_use_current_class_texture_identity(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -266,13 +230,11 @@ fn player_and_party_portraits_use_current_class_texture_identity() {
             party_texture, "237669",
             "party1 portrait should expose the current class-circle texture fileDataID"
         );
-    }
+}
 }
 
-#[test]
-fn party_frame_member_name_uses_master_font_size() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_frame_member_name_uses_master_font_size(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -305,16 +267,14 @@ fn party_frame_member_name_uses_master_font_size() {
             font_size, 10.0,
             "party member names should inherit GameFontNormalSmall size, got {font_size} with flags {flags}",
         );
-    }
+}
 }
 
 /// Structural sanity: the four decorative templates master emits
 /// (Selection + Background + Selection.MouseOverHighlight.Center) are
 /// present on the branch too.
-#[test]
-fn party_frame_has_background_and_selection_children() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_frame_has_background_and_selection_children(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -354,13 +314,11 @@ fn party_frame_has_background_and_selection_children() {
             background_w as i32, 144,
             "PartyFrame.Background width mismatch (got {background_w})",
         );
-    }
+}
 }
 
-#[test]
-fn party_frame_selection_tracks_parent_size_in_registry() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_frame_selection_tracks_parent_size_in_registry(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -433,13 +391,11 @@ fn party_frame_selection_tracks_parent_size_in_registry() {
             party_rect.height as i32,
             "PartyFrame.Selection cached height must track PartyFrame height (selection={selection_rect:?}, party={party_rect:?})",
         );
-    }
+}
 }
 
-#[test]
-fn party_frame_dump_tree_excludes_builtin_ghost_frame() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_frame_dump_tree_excludes_builtin_ghost_frame(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -483,13 +439,11 @@ fn party_frame_dump_tree_excludes_builtin_ghost_frame() {
             "visible PartyFrame root must be owned by Blizzard_UnitFrame, got:\n{}",
             party_roots[0],
         );
-    }
+}
 }
 
-#[test]
-fn party_frame_member_frame1_uses_semantic_child_names() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn party_frame_member_frame1_uses_semantic_child_names(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
         env.exec(
             r#"
@@ -591,5 +545,5 @@ fn party_frame_member_frame1_uses_semantic_child_names() {
                 "MemberFrame1.PowerBarAlt must expose semantic child `{expected}`, got:\n{dump}",
             );
         }
-    }
+}
 }
