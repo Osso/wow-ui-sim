@@ -12,7 +12,7 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 
 ### Captured layout replay
 
-- [x] Reproduce selected frames from the captured physical `3440×1440` display, effective scale `0.8`, and raw saved `Ultrawide` EditMode cache through normal Blizzard startup, without assigning measured outputs. Default-only layout repairs must not replace custom EditMode anchors or height.
+- [x] Reproduce selected frames from the captured physical `3440×1440` display, effective scale `0.8`, and raw saved `Ultrawide` EditMode cache through normal Blizzard startup, without assigning measured outputs. Simulator startup repairs must not replace Blizzard-owned ObjectiveTracker anchors or height in either default or custom layouts.
 - [x] Keep the post-event ObjectiveTracker repair default-only and remove duplicate headless height assignment, so saved custom anchors and height remain Blizzard-driven.
 
 ## How it works
@@ -25,7 +25,7 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 - `src/lua_api/env_runtime.rs` — explicit canvas/display setters and screen globals.
 - `src/lua_api/state/sim_state.rs` — literal `screen_width`/`screen_height` base-canvas fields and separate `physical_screen_width`/`physical_screen_height` pixel fields.
 - `src/lua_api/state.rs` — initial one-to-one dimensions.
-- `src/lua_api/workarounds/temporary/post_event_frame_layout.rs` — default-only ObjectiveTracker repair, leaving custom layout state to Blizzard.
+- `src/lua_api/workarounds/temporary/post_event_frame_layout.rs` — remaining unrelated frame repairs; ObjectiveTracker overrides are retired.
 - `src/startup.rs` — startup orchestration without a duplicate unconditional tracker-height override.
 
 ## Evidence
