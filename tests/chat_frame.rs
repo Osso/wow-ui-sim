@@ -396,10 +396,8 @@ fn test_chat_editbox_click_type_and_submit() {
     }
 }
 
-#[test]
-fn test_chat_message_contains_timestamp() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_message_contains_timestamp(env: &WowLuaEnv) {
 
         // Enable timestamps (default CVar is "none")
         env.exec(r#"SetCVar("showTimestamps", "%H:%M ")"#).unwrap();
@@ -431,7 +429,7 @@ fn test_chat_message_contains_timestamp() {
             has_time,
             "Chat message should start with HH:MM timestamp, got: {msg:.40}"
         );
-    }
+}
 }
 
 #[test]
@@ -462,10 +460,8 @@ fn test_chat_editbox_text_color_after_activation() {
     }
 }
 
-#[test]
-fn test_chat_background_uses_default_black_tint_and_alpha() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_background_uses_default_black_tint_and_alpha(env: &WowLuaEnv) {
         let _ = env.fire_event("UPDATE_CHAT_WINDOWS");
 
         let (r, g, b, a): (f64, f64, f64, f64) = env
@@ -487,14 +483,12 @@ fn test_chat_background_uses_default_black_tint_and_alpha() {
             (alpha - 0.25).abs() < 0.01,
             "ChatFrame1Background alpha should be 0.25 after startup, got {alpha}"
         );
-    }
+}
 }
 
 #[cfg(feature = "gui")]
-#[test]
-fn test_chat_background_batch_uses_chat_frame_bounds_and_alpha_tint() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_background_batch_uses_chat_frame_bounds_and_alpha_tint(env: &WowLuaEnv) {
         let _ = env.fire_event("UPDATE_CHAT_WINDOWS");
 
         let (background_rect, chat_rect, background_parent_name) = {
@@ -573,13 +567,11 @@ fn test_chat_background_batch_uses_chat_frame_bounds_and_alpha_tint() {
             "Chat background quad should render at alpha 0.25, got {:?}",
             background_vertex.color
         );
-    }
+}
 }
 
-#[test]
-fn test_chat_frame2_starts_disabled() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_frame2_starts_disabled(env: &WowLuaEnv) {
 
         let (shown, frame_shown, tab_shown): (bool, bool, bool) = env
             .eval(
@@ -595,13 +587,11 @@ fn test_chat_frame2_starts_disabled() {
         assert!(!shown, "GetChatWindowInfo(2) should report chat window 2 hidden");
         assert!(!frame_shown, "ChatFrame2 should start hidden");
         assert!(!tab_shown, "ChatFrame2Tab should start hidden");
-    }
+}
 }
 
-#[test]
-fn test_chat_frame2_can_be_enabled_explicitly() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_frame2_can_be_enabled_explicitly(env: &WowLuaEnv) {
 
         env.exec(
             r#"
@@ -630,13 +620,11 @@ fn test_chat_frame2_can_be_enabled_explicitly() {
         assert!(shown, "GetChatWindowInfo(2) should report chat window 2 visible after enabling it");
         assert!(frame_shown, "ChatFrame2 should become visible after enabling it");
         assert!(tab_shown, "ChatFrame2Tab should become visible after enabling it");
-    }
+}
 }
 
-#[test]
-fn test_chat_window_name_round_trips_through_info() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_window_name_round_trips_through_info(env: &WowLuaEnv) {
 
         let name: String = env
             .eval(
@@ -648,13 +636,11 @@ fn test_chat_window_name_round_trips_through_info() {
             .expect("chat window name eval failed");
 
         assert_eq!(name, "Pet Battle");
-    }
+}
 }
 
-#[test]
-fn test_chat_window_docked_state_round_trips_through_info() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_window_docked_state_round_trips_through_info(env: &WowLuaEnv) {
 
         let (docked, undocked): (bool, bool) = env
             .eval(
@@ -670,13 +656,11 @@ fn test_chat_window_docked_state_round_trips_through_info() {
 
         assert!(docked, "GetChatWindowInfo(5) should report docked after docking");
         assert!(!undocked, "GetChatWindowInfo(5) should report undocked after clearing dock");
-    }
+}
 }
 
-#[test]
-fn test_chat_voice_button_uses_template_sized_centered_icon() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_voice_button_uses_template_sized_centered_icon(env: &WowLuaEnv) {
         let surface = read_chat_voice_button_surface(&env);
 
         assert!(
@@ -716,5 +700,5 @@ fn test_chat_voice_button_uses_template_sized_centered_icon() {
             surface.offset_x,
             surface.offset_y
         );
-    }
+}
 }
