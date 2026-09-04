@@ -8,9 +8,6 @@ use crate::loader::LoadTiming;
 use crate::loader::error::LoadError;
 use crate::lua_api::LoaderEnv;
 use crate::lua_api::frame::methods::forbidden_aspects;
-use crate::lua_api::globals::create_frame::{
-    apply_frame_mixin_with_partitions, apply_frame_mixins,
-};
 use crate::lua_api::methods::{create_string, frame_ref, table_get, table_set};
 use rilua::Val;
 
@@ -57,7 +54,6 @@ pub(super) fn setup_frame(
     timing.frame_exec_lua_time += exec_start.elapsed();
     let props_start = Instant::now();
     let frame_id = created_frame_id(env, setup.name)?;
-    apply_static_frame_mixins(env, frame_id, setup.frame)?;
     ensure_parent_refs_registered(env, &setup, frame_id)?;
     apply_xml_properties_direct(env, frame_id, setup.frame, setup.inherits, setup.parent);
     apply_intrinsic_property(env, setup.intrinsic_base, frame_id);
@@ -73,41 +69,6 @@ pub(super) fn created_frame_id(env: &LoaderEnv<'_>, name: &str) -> Result<u64, L
         .widgets
         .get_id_by_name(name)
         .ok_or_else(|| LoadError::Lua(format!("Failed to locate created frame {name}")))
-}
-
-fn apply_static_frame_mixins(
-    env: &LoaderEnv<'_>,
-    frame_id: u64,
-    frame: &crate::xml::FrameXml,
-) -> Result<(), LoadError> {
-    env.with_state(|state| {
-        apply_static_frame_mixins_to_state(state, frame_id, frame)
-            .map_err(|error| crate::Error::Other(error.to_string()))
-    })
-    .map_err(|error| LoadError::Lua(error.to_string()))
-}
-
-fn apply_static_frame_mixins_to_state(
-    state: &mut rilua::vm::state::LuaState,
-    frame_id: u64,
-    frame: &crate::xml::FrameXml,
-) -> rilua::LuaResult<()> {
-    apply_frame_mixins(state, frame_id, frame.combined_mixin().as_deref())?;
-    let Some(mixins) = frame.mixins() else {
-        return Ok(());
-    };
-    for mixin in &mixins.entries {
-        apply_frame_mixin_with_partitions(
-            state,
-            frame_id,
-            &mixin.key,
-            mixin.source.as_deref(),
-            mixin.target_partition.as_deref(),
-            mixin.inbound_partition.as_deref(),
-            mixin.secure_delegates.unwrap_or(false),
-        )?;
-    }
-    Ok(())
 }
 
 fn ensure_parent_refs_registered(
@@ -447,8 +408,23 @@ fn apply_fast_frame_mixins_and_scripts(
     setup: &SetupFrame<'_>,
     frame_id: u64,
 ) -> Result<(), crate::Error> {
-    apply_static_frame_mixins_to_state(state, frame_id, setup.frame)
-        .map_err(|error| crate::Error::Other(error.to_string()))?;
+    crate::lua_api::globals::create_frame::apply_frame_mixins(
+        state,
+        frame_id,
+        setup.frame.combined_mixin().as_deref(),
+    )
+    .map_err(|error| crate::Error::Other(error.to_string()))?;
+    if let Some(mixins) = setup.frame.mixins() {
+        for mixin in &mixins.entries {
+            crate::lua_api::globals::create_frame::apply_frame_mixin(
+                state,
+                frame_id,
+                &mixin.key,
+                mixin.source.as_deref(),
+            )
+            .map_err(|error| crate::Error::Other(error.to_string()))?;
+        }
+    }
 
     if let Some(scripts) = setup.frame.scripts() {
         crate::lua_api::globals::create_frame::apply_template_scripts(state, frame_id, scripts)

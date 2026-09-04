@@ -4,7 +4,6 @@
 //! instantiate a frame: CreateFrame call, parentKey, mixins, KeyValues,
 //! attributes, and script handlers.
 
-#[cfg(test)]
 use rustc_hash::FxHashSet;
 
 use super::helpers::{
@@ -32,6 +31,7 @@ pub(super) fn build_frame_lua_code(
         parent_ref_expr,
     );
     append_parent_key_code(&mut lua_code, frame, inherits, parent, parent_ref_expr);
+    append_mixins_code(&mut lua_code, frame, inherits);
     if !key_values_initialized_during_create {
         append_key_values_code(&mut lua_code, frame, inherits);
     }
@@ -173,7 +173,39 @@ fn resolve_inherited_string(
     })
 }
 
-#[cfg(test)]
+/// Append Mixin() calls for the frame's own (direct) mixins only.
+///
+/// Template-inherited mixins are already applied inside CreateFrame by
+/// `apply_templates_from_registry` → `apply_single_template` → `apply_mixin`,
+/// so we only need the frame's own mixin attribute here.
+fn append_mixins_code(lua_code: &mut String, frame: &crate::xml::FrameXml, _inherits: &str) {
+    // Only direct mixins — template mixins are applied during CreateFrame.
+    for mixin in collect_frame_mixins(frame) {
+        append_single_mixin_code(lua_code, &mixin);
+    }
+}
+
+fn lua_option_string(value: Option<&str>) -> String {
+    value
+        .map(|value| format!("\"{}\"", escape_lua_string(value)))
+        .unwrap_or_else(|| "nil".to_string())
+}
+
+fn append_single_mixin_code(lua_code: &mut String, mixin: &FrameMixin) {
+    let name = &mixin.name;
+    let lookup = match mixin.source.as_deref() {
+        Some("secure") => format!("(__secureenv and rawget(__secureenv, \"{name}\")) or {name}"),
+        Some("local") => format!("__wow_xml_lookup_local(\"{}\")", escape_lua_string(name)),
+        _ => format!("__wow_resolve_xml_mixin(\"{}\")", escape_lua_string(name)),
+    };
+    let target_partition = lua_option_string(mixin.target_partition.as_deref());
+    let inbound_partition = lua_option_string(mixin.inbound_partition.as_deref());
+    let secure_delegates = mixin.secure_delegates.unwrap_or(false);
+    lua_code.push_str(&format!(
+        "\n        do local m = {lookup} if m then __wow_apply_xml_mixin(frame, m, {target_partition}, {inbound_partition}, {secure_delegates}) end end"
+    ));
+}
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 struct FrameMixin {
     name: String,
@@ -183,7 +215,6 @@ struct FrameMixin {
     secure_delegates: Option<bool>,
 }
 
-#[cfg(test)]
 fn collect_frame_mixins(frame: &crate::xml::FrameXml) -> Vec<FrameMixin> {
     let mut mixins = Vec::new();
     let mut seen = FxHashSet::default();
@@ -192,7 +223,6 @@ fn collect_frame_mixins(frame: &crate::xml::FrameXml) -> Vec<FrameMixin> {
     mixins
 }
 
-#[cfg(test)]
 fn append_attr_mixins(
     mixins: &mut Vec<FrameMixin>,
     seen: &mut FxHashSet<String>,
@@ -211,7 +241,6 @@ fn append_attr_mixins(
     }
 }
 
-#[cfg(test)]
 fn append_block_mixins(
     mixins: &mut Vec<FrameMixin>,
     seen: &mut FxHashSet<String>,
@@ -232,7 +261,6 @@ fn append_block_mixins(
 }
 
 /// Parse a comma-separated mixin attribute and append unique entries.
-#[cfg(test)]
 fn collect_mixins_from_attr(mixin_attr: Option<&str>) -> Vec<String> {
     let Some(mixin) = mixin_attr else {
         return Vec::new();

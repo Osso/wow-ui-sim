@@ -195,7 +195,7 @@ pub(crate) fn apply_frame_mixin_with_partitions(
             target_partition,
             inbound_partition,
             secure_delegates,
-        )?;
+        );
         return Ok(());
     }
 
@@ -237,9 +237,11 @@ fn apply_xml_mixin_helper(
     target_partition: Option<&str>,
     inbound_partition: Option<&str>,
     secure_delegates: bool,
-) -> LuaResult<()> {
+) {
     let helper = resolve_global_path(state, "__wow_apply_xml_mixin");
-    let frame = frame_ref(state, frame_id)?;
+    let Ok(frame) = frame_ref(state, frame_id) else {
+        return;
+    };
     let args = [
         frame,
         mixin_val,
@@ -247,7 +249,7 @@ fn apply_xml_mixin_helper(
         optional_string_val(state, inbound_partition),
         Val::Bool(secure_delegates),
     ];
-    call_function_state(state, helper, &args).map(|_| ())
+    let _ = call_function_state(state, helper, &args);
 }
 
 fn optional_string_val(state: &mut LuaState, value: Option<&str>) -> Val {

@@ -14,9 +14,7 @@ pub mod helpers_shared;
 mod simple_window;
 mod template_chain;
 
-pub(crate) use helpers::{
-    append_parent_array_entry, apply_frame_mixin_with_partitions, apply_frame_mixins,
-};
+pub(crate) use helpers::{append_parent_array_entry, apply_frame_mixin, apply_frame_mixins};
 pub(crate) use helpers_shared::{
     apply_parent_sub, create_frame_instance, mark_frame_uses_forbidden_object_table,
 };
