@@ -1,6 +1,6 @@
-## [2026-09-04] investigation | Add read-only live frame-position probe
+## [2026-09-04] investigation | Record non-parity live frame-position capture
 
-Added [FramePositionProbe](../../addons/FramePositionProbe/README.md), a SavedVariables probe for build/interface, screen and effective scales, Edit Mode state, selected anchors, raw frame rects/points/parents, warning/debuff state, combat, class, and loaded non-Blizzard addons. It records login, world-entry, delayed, and manual samples without mutating Blizzard layout. No live capture exists; desktop `12.1.0.69587` differs from cache `12.1.0.69497`, so any capture must satisfy documented parity before it can revise an assertion.
+Updated [[frame-position-baseline-drift]] with six error-free `FramePositionProbe` samples from retail `12.1.0.69587`: current private-raid anchor relationship/size and current right-container naming are present under no raid messages and hidden deadly debuffs. The capture used scaled 3440×1440 Ultrawide layout with 78 non-Blizzard addons, versus the simulator's 1600×1200 scale-1 fixture and `12.1.0.69497` cache. Delayed samples share one timestamp. It is diagnostic, not assertion-changing parity evidence.
 
 ## [2026-09-04] investigation | Record frame-position baseline drift
 

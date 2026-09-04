@@ -1,6 +1,6 @@
 ## [2026-09-04] investigation | Add read-only live frame-position probe
 
-Added [FramePositionProbe](../addons/FramePositionProbe/README.md) for [[frame-position-baseline-drift]]. It records raw frame anchors/rects, build, scales, Edit Mode, warning/debuff state, and non-Blizzard addons without mutating client layout. No live capture exists yet; the desktop client must match the simulator fixture before either assertion changes.
+Added [FramePositionProbe](../addons/FramePositionProbe/README.md) for [[frame-position-baseline-drift]]. Its six-sample retail `12.1.0.69587` capture confirms current naming and raw raid-anchor relationships, but it used a scaled 3440×1440 custom-layout client with 78 non-Blizzard addons, not the `1600×1200` fixture/cache build. Assertions remain unchanged.
 
 ## [2026-09-04] investigation | Record current retail frame-position baseline drift
 
