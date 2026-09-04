@@ -6,7 +6,8 @@ use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 /// Eager panel publishers in dependency order. `Blizzard_Menu` must precede
@@ -35,6 +36,8 @@ const PANEL_ADDONS: &[&str] = &[
     "Blizzard_EditMode",
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_GameMenuEsc",
     "Blizzard_UIParentPanelManager",
     "Blizzard_Settings_Shared",
     "Blizzard_SettingsDefinitions_Shared",
@@ -61,11 +64,28 @@ fn setup_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     for addon_name in PANEL_ADDONS {
         common::load_required_blizzard_addon(&env, &ui, addon_name);
+        if *addon_name == "Blizzard_UIParentPanelManager" {
+            load_ui_parent_panel_manager_global_pass(&env, &ui);
+        }
     }
 
     env.apply_post_load_workarounds();
     fire_startup_events(&env);
     env
+}
+
+/// Load the TOC entries marked `[AllowLoadEnvironment Global]` after the
+/// manager's normal `UIPanelWindows.lua` pass. The regular fixture loader
+/// correctly excludes those entries from its normal environment pass.
+fn load_ui_parent_panel_manager_global_pass(env: &WowLuaEnv, ui: &std::path::Path) {
+    for file in [
+        "Shared/UIPanelLayoutFrame.lua",
+        "Shared/UIParentPanelManager.lua",
+        "Mainline/UIParentPanelManagerOverrides.lua",
+        "Shared/UpdateUIPanelPositions.lua",
+    ] {
+        common::load_blizzard_addon_bootstrap(env, ui, "Blizzard_UIParentPanelManager", file);
+    }
 }
 
 fn fire_startup_events(env: &WowLuaEnv) {
