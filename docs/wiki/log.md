@@ -2,6 +2,10 @@
 
 Commit `887ea5ca7` moves shared lock mechanics into `tests/common/workload_gate_core.rs`, which `prefork_full_ui` imports directly. The ordinary `workload_gate.rs` wrapper retains shared/exclusive mode APIs for timeout and performance callers, preserving conformance coverage while avoiding standalone-prefork dead-code warnings. Commit `1422c3f6f` updates locked transitive `binrw` and `binrw_derive` from 0.15.1 to 0.15.2 for the unchanged CASC dependency graph, removing the E0365 private macro re-export future-incompatibility warning. Final warning-free verification remains pending.
 
+## [2026-09-04] system | Split prefork workload-gate surface
+
+`prefork_full_ui` now imports the shared-only workload-gate core, while ordinary integration helpers retain their `Shared`/`Exclusive` wrapper. This removes target-specific dead-code warnings without dummy use or weakened locking: the same process-local `RwLock`, cross-process `flock`, timeout ordering, and five workload-gate conformance contracts remain intact.
+
 ## [2026-09-04] audit | Refresh panel-pulse evidence after prefork migration
 
 Refreshed the `AttributeDispatchProbe.PanelPulse` source hash in `12.0.5-probes.json` after migration commit `e7c1b8576` changed the containing test file. The referenced panel-pulse test name, assertions, and audit status are unchanged. See [[prefork-test-harness]].
