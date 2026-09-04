@@ -23,7 +23,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const PARTY_FRAME_SELECTION_SIZE: &str = "120x244";
 
-/// PartyFrame itself has the shape `master` produces.
+// PartyFrame itself has the shape `master` produces.
 prefork_full_ui_case! {
 fn party_frame_has_master_reference_shape(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
@@ -112,7 +112,7 @@ fn party_member_frame_hover_shows_unit_tooltip(env: &WowLuaEnv) {
 }
 }
 
-/// All four member frames populate with the 63px vertical stride master uses.
+// All four member frames populate with the 63px vertical stride master uses.
 prefork_full_ui_case! {
 fn party_frame_member_frames_render_at_master_offsets(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
@@ -270,9 +270,9 @@ fn party_frame_member_name_uses_master_font_size(env: &WowLuaEnv) {
 }
 }
 
-/// Structural sanity: the four decorative templates master emits
-/// (Selection + Background + Selection.MouseOverHighlight.Center) are
-/// present on the branch too.
+// Structural sanity: the four decorative templates master emits
+// (Selection + Background + Selection.MouseOverHighlight.Center) are
+// present on the branch too.
 prefork_full_ui_case! {
 fn party_frame_has_background_and_selection_children(env: &WowLuaEnv) {
         env.exec("A_Admin.SetPartySize(4)").unwrap();
