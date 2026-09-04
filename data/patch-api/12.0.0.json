@@ -18745,7 +18745,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish EscapeLuaFormatString.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
@@ -18774,7 +18774,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish EscapeLuaPatterns.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
@@ -18803,7 +18803,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model publishes EscapeQuotedCodes and doubles pipe characters in the returned string.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         },
         {
           "kind": "test",
@@ -18840,7 +18840,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish FloorToNearestString.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
@@ -18869,7 +18869,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish RemoveContiguousSpaces.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
@@ -18898,7 +18898,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish RoundToNearestString.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
@@ -18927,7 +18927,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish StripHyperlinks.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
@@ -18956,7 +18956,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish TruncateWhenZero.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
@@ -18985,7 +18985,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish WrapString.",
-          "source_hash": "2537bee76e605ec5de21ce13a33f81707d0395b1246ea3e13b12cdb8062edfcb"
+          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
         }
       ],
       "tests": [],
