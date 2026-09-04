@@ -23,8 +23,15 @@ if type(C_Housing) == "table" then
     end
 
     set_default("GetPlayerOwnedHouses", function()
-        if type(FireEvent) == "function" then
-            FireEvent("PLAYER_HOUSE_LIST_UPDATED", {})
+        local function dispatchOwnedHouses()
+            if type(FireEvent) == "function" then
+                FireEvent("PLAYER_HOUSE_LIST_UPDATED", {})
+            end
+        end
+        if type(C_Timer) == "table" and type(C_Timer.After) == "function" then
+            C_Timer.After(0, dispatchOwnedHouses)
+        else
+            dispatchOwnedHouses()
         end
     end)
 
@@ -274,5 +281,49 @@ mod tests {
         assert!(!loaded_house_finder);
         assert_eq!(neighborhood_events, 2);
         assert_eq!(event_count, 2);
+    }
+
+    #[test]
+    fn delays_owned_house_event_until_timer_callback() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        env.exec(
+            r#"
+            C_Housing = {}
+            callbacks = {}
+            C_Timer = {
+                After = function(_, callback)
+                    table.insert(callbacks, callback)
+                end,
+            }
+            events = {}
+            function FireEvent(eventName, ...)
+                table.insert(events, { eventName, ... })
+            end
+            "#,
+        )
+        .expect("housing timer test surface should install");
+
+        patch(&env.loader_env());
+
+        let (events_before_tick, callbacks_scheduled): (i64, i64) = env
+            .eval(
+                r#"
+                C_Housing.GetPlayerOwnedHouses()
+                return #events, #callbacks
+                "#,
+            )
+            .expect("owned house request should schedule its response");
+        assert_eq!(events_before_tick, 0);
+        assert_eq!(callbacks_scheduled, 1);
+
+        let events_after_tick: i64 = env
+            .eval(
+                r#"
+                callbacks[1]()
+                return #events
+                "#,
+            )
+            .expect("owned house response should dispatch after timer callback");
+        assert_eq!(events_after_tick, 1);
     }
 }

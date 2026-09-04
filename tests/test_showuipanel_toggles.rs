@@ -100,7 +100,9 @@ fn setup_env() -> WowLuaEnv {
 }
 
 fn load_lod_bootstrap(env: &WowLuaEnv, ui: &std::path::Path, addon_name: &str) {
-    let path = ui.join(addon_name).join(format!("{addon_name}_Bootstrap.lua"));
+    let path = ui
+        .join(addon_name)
+        .join(format!("{addon_name}_Bootstrap.lua"));
     let source = std::fs::read_to_string(&path)
         .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
     let source = source.replacen(
@@ -705,23 +707,31 @@ fn housing_dashboard_loads_and_opens_panel() {
                     if not ok then
                         return "show_failed:" .. tostring(err)
                     end
-                    if not HousingDashboardFrame:IsShown() then
-                        return "panel_not_shown"
-                    end
+                    return HousingDashboardFrame:IsShown() and "shown" or "panel_not_shown"
+                "#,
+            )
+            .unwrap();
+        assert_eq!(
+            result, "shown",
+            "Housing dashboard should load and open via ShowUIPanel: {result}"
+        );
+
+        env.process_timers()
+            .expect("owned house response timer should process");
+        let result: String = env
+            .eval(
+                r#"
                     if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then
                         return "spinner_still_shown"
                     end
-                    if not HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame:IsShown() then
-                        return "no_houses_dashboard_not_shown"
-                    end
-
-                    return "ok"
+                    return HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame:IsShown()
+                        and "ok" or "no_houses_dashboard_not_shown"
                 "#,
             )
             .unwrap();
         assert_eq!(
             result, "ok",
-            "Housing dashboard should load and open via ShowUIPanel: {result}"
+            "Housing dashboard should show its empty state after the owned-house response: {result}"
         );
     }
 }
