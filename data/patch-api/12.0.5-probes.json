@@ -80,7 +80,7 @@
           "kind": "test",
           "reference": "tests/test_showuipanel.rs::repeated_show_ui_panel_pulse_closes_active_panel_stack",
           "summary": "Sequential center-panel shows replace the first panel, and CloseAllWindows hides the active second panel.",
-          "source_hash": "3a3963fee0625d789b7f574fb42ab3bb8d6a1f6956d4ee2a08b0ffec17f69735"
+          "source_hash": "a0a16a0b58eb364b2c0e35f64c1801f6cf4ddf49ef9a6e6a86bb5b0332c9d3d0"
         }
       ],
       "tests": [
