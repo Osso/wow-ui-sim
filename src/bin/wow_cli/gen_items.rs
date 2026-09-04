@@ -74,6 +74,7 @@ fn collect_required_item_ids() -> BTreeSet<u32> {
     }
 
     ids.extend(EXISTING_ITEM_FIXTURE_IDS);
+    ids.extend(ADDON_COMPAT_ITEM_IDS);
 
     if let Ok(journal_items) = collect_required_encounter_journal_items(&wow_data_dir()) {
         ids.extend(journal_items);
@@ -83,6 +84,9 @@ fn collect_required_item_ids() -> BTreeSet<u32> {
     if let Ok(src) = std::fs::read_to_string("src/lua_api/state.rs") {
         collect_number_literals_after(&src, "item_id: ", &mut ids);
     }
+
+    // Everything that teleports: toys and items with a teleport use effect.
+    ids.extend(super::gen_teleport_selection::collect(&wow_data_dir()).items);
 
     // Baseline items always needed
     ids.insert(6948); // Hearthstone (test)
@@ -113,6 +117,17 @@ const EXISTING_ITEM_FIXTURE_IDS: &[u32] = &[
     // the file adds targeted journal coverage without pruning older fixtures.
     159, 4540, 6948, 7005, 122245, 210934, 210935, 211988, 211989, 211990, 211991, 211992, 211993,
     211994, 211995, 211996, 215135, 218715, 225748, 229181, 230637, 236914,
+];
+
+/// Items addons name at file load that the teleport rule cannot see: their
+/// use effect opens a portal object or runs a script instead of teleporting.
+const ADDON_COMPAT_ITEM_IDS: &[u32] = &[
+    // QuickRoute/Data/TeleportItems.lua
+    37863,  // Direbrew's Remote (portal object)
+    52251,  // Jaina's Locket (portal object)
+    128353, // Admiral's Compass (scripted shipyard teleport)
+    129276, // Beginner's Guide to Dimensional Rifting (dummy effect)
+    140493, // Adept's Guide to Dimensional Rifting (dummy effect)
 ];
 
 const REQUIRED_ENCOUNTER_JOURNAL_TIER_IDS: &[u32] = &[
@@ -232,9 +247,39 @@ fn build_icon_map(
         }
     }
 
+    // Item.csv carries every item's icon, equippable or not; it fills what
+    // the appearance tables (equippables only) and the overrides left open.
+    add_item_table_icons(wow_data, required_ids, &mut icon_map)?;
+
     add_spell_name_icon_fallbacks(wow_data, required_ids, &mut icon_map)?;
 
     Ok(icon_map)
+}
+
+/// Item.csv: `ID` -> `IconFileDataID`, for the required items still without an icon.
+fn add_item_table_icons(
+    wow_data: &Path,
+    required_ids: &BTreeSet<u32>,
+    icon_map: &mut HashMap<u32, u32>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let path = wow_data.join("Item.csv");
+    if !path.exists() {
+        println!("Item.csv missing, icons from Item.csv skipped");
+        return Ok(());
+    }
+    let records = open_records(&path)?;
+    let mut iter = records.iter();
+    let header = iter.next().ok_or("empty Item.csv")?;
+    let idx = header_index(header);
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let item_id = parse_u32(field(&fields, &idx, "ID"));
+        let icon = parse_u32(field(&fields, &idx, "IconFileDataID"));
+        if icon != 0 && required_ids.contains(&item_id) {
+            icon_map.entry(item_id).or_insert(icon);
+        }
+    }
+    Ok(())
 }
 
 fn required_item_icon_overrides() -> &'static [(u32, u32)] {
@@ -414,6 +459,22 @@ fn resolve_item_icons(
     Ok(icon_map)
 }
 
+/// The ItemSparse columns `parse_item_row` and `format_item_info` read. The
+/// array columns are exempt: `array_field` accepts either spelling and a
+/// missing one is indistinguishable from an empty value.
+const ITEM_SPARSE_REQUIRED_COLUMNS: &[&str] = &[
+    "ID",
+    "Display_lang",
+    "ExpansionID",
+    "Stackable",
+    "SellPrice",
+    "ItemLevel",
+    "Bonding",
+    "RequiredLevel",
+    "InventoryType",
+    "OverallQualityID",
+];
+
 fn build_item_map(
     out: &mut File,
     reader: BufReader<File>,
@@ -426,12 +487,27 @@ fn build_item_map(
     let mut count = 0u32;
     let mut skipped = 0u32;
 
-    for (i, line) in reader.lines().enumerate() {
+    let mut columns: Option<HashMap<String, usize>> = None;
+    for line in reader.lines() {
         let line = line?;
-        if i == 0 {
+        let Some(idx) = columns.as_ref() else {
+            // Columns by name: wago exports reorder them between builds, and
+            // positional indices then read the wrong field without a sound.
+            let idx = header_index(&line);
+            // Every scalar column a row is read through, not just the ones
+            // that decide whether the row is kept: `field()` answers "" for a
+            // column that is not there, so a rename would quietly emit the
+            // default for every item -- the same silent wrong value that
+            // positional indices produced.
+            for required in ITEM_SPARSE_REQUIRED_COLUMNS {
+                if !idx.contains_key(*required) {
+                    return Err(format!("ItemSparse.csv has no {required} column").into());
+                }
+            }
+            columns = Some(idx);
             continue;
-        }
-        match parse_item_row(&line, icon_map) {
+        };
+        match parse_item_row(&line, idx, icon_map) {
             Some((id, value)) if required_ids.contains(&id) => {
                 builder.entry(id, &value);
                 emitted_ids.insert(id);
@@ -478,32 +554,38 @@ fn fallback_item_search_rows(
     Ok(rows)
 }
 
-fn parse_item_row(line: &str, icon_map: &HashMap<u32, u32>) -> Option<(u32, String)> {
+fn parse_item_row(
+    line: &str,
+    idx: &HashMap<String, usize>,
+    icon_map: &HashMap<u32, u32>,
+) -> Option<(u32, String)> {
     let fields = parse_csv_line(line);
-    if fields.len() < 102 {
-        return None;
-    }
-    let id: u32 = fields[0].parse().ok()?;
-    let name = &fields[6];
+    let id: u32 = field(&fields, idx, "ID").parse().ok()?;
+    let name = field(&fields, idx, "Display_lang");
     if name.is_empty() {
         return None;
     }
     let icon_file_data_id = icon_map.get(&id).copied().unwrap_or(0);
-    Some((id, format_item_info(&fields, name, icon_file_data_id)))
+    Some((id, format_item_info(&fields, idx, name, icon_file_data_id)))
 }
 
-fn format_item_info(fields: &[String], name: &str, icon_file_data_id: u32) -> String {
+fn format_item_info(
+    fields: &[String],
+    idx: &HashMap<String, usize>,
+    name: &str,
+    icon_file_data_id: u32,
+) -> String {
     let escaped_name = escape_str(name);
-    let expansion_id: u8 = fields[7].parse().unwrap_or(0);
-    let stackable: u32 = fields[46].parse().unwrap_or(1);
-    let sell_price: u32 = fields[50].parse().unwrap_or(0);
-    let item_level: u16 = fields[83].parse().unwrap_or(0);
-    let bonding: u8 = fields[94].parse().unwrap_or(0);
-    let required_level: u16 = fields[99].parse().unwrap_or(0);
-    let inventory_type: u8 = fields[100].parse().unwrap_or(0);
-    let quality: u8 = fields[101].parse().unwrap_or(0);
-    let stat_percent_editor = parse_stat_percent_editor(fields);
-    let stat_modifier_bonus_stat = parse_stat_modifier_bonus_stat(fields);
+    let expansion_id: u8 = field(fields, idx, "ExpansionID").parse().unwrap_or(0);
+    let stackable: u32 = field(fields, idx, "Stackable").parse().unwrap_or(1);
+    let sell_price: u32 = field(fields, idx, "SellPrice").parse().unwrap_or(0);
+    let item_level: u16 = field(fields, idx, "ItemLevel").parse().unwrap_or(0);
+    let bonding: u8 = field(fields, idx, "Bonding").parse().unwrap_or(0);
+    let required_level: u16 = field(fields, idx, "RequiredLevel").parse().unwrap_or(0);
+    let inventory_type: u8 = field(fields, idx, "InventoryType").parse().unwrap_or(0);
+    let quality: u8 = field(fields, idx, "OverallQualityID").parse().unwrap_or(0);
+    let stat_percent_editor = parse_stat_percent_editor(fields, idx);
+    let stat_modifier_bonus_stat = parse_stat_modifier_bonus_stat(fields, idx);
 
     let stat_percent_editor = format_u16_array(&stat_percent_editor);
     let stat_modifier_bonus_stat = format_i16_array(&stat_modifier_bonus_stat);
@@ -532,12 +614,32 @@ fn format_search_item_info(fields: &[String], idx: &HashMap<String, usize>) -> S
     )
 }
 
-fn parse_stat_percent_editor(fields: &[String]) -> [u16; 10] {
-    std::array::from_fn(|index| fields[26 + index].parse::<u16>().unwrap_or(0))
+/// An array column, spelled `Name_0` in current wago exports and `Name[0]` in older ones.
+fn array_field<'a>(fields: &'a [String], idx: &HashMap<String, usize>, base: &str, index: usize) -> &'a str {
+    let underscore = format!("{base}_{index}");
+    let bracket = format!("{base}[{index}]");
+    let value = field(fields, idx, &underscore);
+    if value.is_empty() {
+        field(fields, idx, &bracket)
+    } else {
+        value
+    }
 }
 
-fn parse_stat_modifier_bonus_stat(fields: &[String]) -> [i16; 10] {
-    std::array::from_fn(|index| fields[36 + index].parse::<i16>().unwrap_or(-1))
+fn parse_stat_percent_editor(fields: &[String], idx: &HashMap<String, usize>) -> [u16; 10] {
+    std::array::from_fn(|index| {
+        array_field(fields, idx, "StatPercentEditor", index)
+            .parse::<u16>()
+            .unwrap_or(0)
+    })
+}
+
+fn parse_stat_modifier_bonus_stat(fields: &[String], idx: &HashMap<String, usize>) -> [i16; 10] {
+    std::array::from_fn(|index| {
+        array_field(fields, idx, "StatModifier_bonusStat", index)
+            .parse::<i16>()
+            .unwrap_or(-1)
+    })
 }
 
 fn format_array<T: std::fmt::Display>(values: &[T]) -> String {

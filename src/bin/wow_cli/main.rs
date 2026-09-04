@@ -27,6 +27,7 @@ mod gen_map_art;
 mod gen_quest_poi;
 mod gen_spells;
 mod gen_spells_power;
+mod gen_teleport_selection;
 mod gen_traits;
 mod gen_traits_emit;
 mod gen_traits_load;
