@@ -74,6 +74,41 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_mainline_excludes_mists_time_string_helper() {
+    let mainline_toc =
+        std::fs::read_to_string(ui_parent_dir().join("Blizzard_UIParent_Mainline.toc"))
+            .expect("mainline TOC should read");
+    let mists_toc = std::fs::read_to_string(ui_parent_dir().join("Blizzard_UIParent_Mists.toc"))
+        .expect("mists TOC should read");
+    assert!(!mainline_toc.contains("Mists\\UIParent.lua"));
+    assert!(mists_toc.contains("Mists\\UIParent.lua"));
+
+    let env = fresh_game_env();
+    let assert_helper_absent = |stage: &str| {
+        let helper_is_absent: bool = env
+            .eval("return GetTimeStringFromSeconds == nil")
+            .expect("time string helper visibility should be queryable");
+        assert!(
+            helper_is_absent,
+            "Mists-only GetTimeStringFromSeconds leaked into PTR mainline during {stage}"
+        );
+    };
+    assert_helper_absent("environment initialization");
+
+    let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
+    for (name, toc_path) in &addons {
+        load_addon(&env.loader_env(), toc_path)
+            .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
+    }
+    env.apply_post_load_workarounds();
+    assert_helper_absent("Blizzard loading or post-load compatibility");
+
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    assert_helper_absent("settled startup");
+}
+
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&ui_parent_dir()).expect("UIParent TOC resolves");
