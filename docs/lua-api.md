@@ -326,12 +326,15 @@ anim:SetFromAlpha() / SetToAlpha() / SetDuration()
 | C_EditMode | `c_editmode_api.rs` | GetLayouts |
 | C_CatalogShop | `c_catalog_shop.rs` | GetVCProductInfos -> fresh empty table |
 | C_ChromieTime | `c_chromie_time.rs` | Empty expansion-option queries; CloseUI/SelectChromieTimeOption no-ops (retail/PTR) |
+| C_StringUtil | `c_string_util.rs` | Retail-family `EscapeLuaFormatString` doubles `%`; `EscapeLuaPatterns` escapes Lua pattern characters; `WrapString` joins optional affixes only for nonempty infix |
 | C_Quest | `c_quest_api.rs` | IsQuestFlaggedCompleted -> false |
 | C_AchievementInfo | `c_stubs_api.rs` | GetRewardItemID, GetAchievementInfo (nil) |
 | C_ClassTalents | `c_stubs_api.rs` | GetActiveConfigID (nil) |
 | C_Guild | `c_stubs_api.rs` | GetNumMembers (0), IsInGuild (false) |
 | C_LFGList | `c_stubs_api.rs` | GetActiveEntryInfo (nil) |
 | C_Mail, C_Stable, C_Tutorial, C_ActionBar | `c_stubs_api.rs` | All return stub values |
+
+**C_StringUtil boundary** — `EscapeLuaFormatString(text)` replaces every `%` with `%%`. `EscapeLuaPatterns(text)` prefixes each Lua pattern character (`^`, `$`, `(`, `)`, `%`, `.`, `[`, `]`, `*`, `+`, `-`, `?`) with `%`. `WrapString(infix, prefix, suffix)` treats missing optional affixes as empty strings and returns `""` for an empty infix. These helpers are published only for the retail client family. Local `StringUtilDocumentation.lua` establishes signatures and transformations; it is not live-client error, taint, or secret-value evidence.
 
 ---
 
@@ -427,3 +430,4 @@ Applied after addon loading via `env.apply_post_load_workarounds()`:
 | `workarounds/mod.rs` | Post-load workaround ordering |
 | `workarounds/temporary/settings_surface_defaults.rs` | Additive-only Settings defaults and replacement SettingsPanel/Settings reconciliation |
 | `c_api/c_settings_util.rs` | `C_SettingsUtil.OpenSettingsPanel` forwarding surface |
+| `c_api/c_string_util.rs` | Retail-family C_StringUtil escaping and wrapping helpers |

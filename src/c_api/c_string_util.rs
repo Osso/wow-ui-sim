@@ -1,6 +1,7 @@
 //! C_StringUtil: string escaping helpers used by Blizzard diagnostics.
 
-use crate::lua_api::methods::{create_string, create_table, val_to_string};
+use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::methods::{create_string, create_string_bytes, create_table, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -18,6 +19,26 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "EscapeQuotedCodes",
         c_string_util_escape_quoted_codes,
     )?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        table_set_rust_fn_static(
+            state,
+            c_string_util_ref,
+            "EscapeLuaFormatString",
+            c_string_util_escape_lua_format_string,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            c_string_util_ref,
+            "EscapeLuaPatterns",
+            c_string_util_escape_lua_patterns,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            c_string_util_ref,
+            "WrapString",
+            c_string_util_wrap_string,
+        )?;
+    }
     set_global_val(state, "C_StringUtil", c_string_util);
     Ok(())
 }
@@ -31,4 +52,75 @@ pub fn c_string_util_escape_quoted_codes(state: &mut LuaState) -> LuaResult<u32>
     let escaped_value = create_string(state, &escaped);
     state.push(escaped_value);
     Ok(1)
+}
+
+pub fn c_string_util_escape_lua_format_string(state: &mut LuaState) -> LuaResult<u32> {
+    transform_string_bytes(state, escape_lua_format_string)
+}
+
+pub fn c_string_util_escape_lua_patterns(state: &mut LuaState) -> LuaResult<u32> {
+    transform_string_bytes(state, escape_lua_patterns)
+}
+
+pub fn c_string_util_wrap_string(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(infix) = string_bytes(state, 1) else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    if infix.is_empty() {
+        let empty_value = create_string_bytes(state, b"");
+        state.push(empty_value);
+        return Ok(1);
+    }
+
+    let prefix = string_bytes(state, 2).unwrap_or_default();
+    let suffix = string_bytes(state, 3).unwrap_or_default();
+    let mut wrapped = Vec::with_capacity(prefix.len() + infix.len() + suffix.len());
+    wrapped.extend(prefix);
+    wrapped.extend(infix);
+    wrapped.extend(suffix);
+    let wrapped_value = create_string_bytes(state, &wrapped);
+    state.push(wrapped_value);
+    Ok(1)
+}
+
+fn transform_string_bytes(state: &mut LuaState, transform: fn(&[u8]) -> Vec<u8>) -> LuaResult<u32> {
+    let Some(input) = string_bytes(state, 1) else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let transformed = transform(&input);
+    let transformed_value = create_string_bytes(state, &transformed);
+    state.push(transformed_value);
+    Ok(1)
+}
+
+fn string_bytes(state: &LuaState, index: i32) -> Option<Vec<u8>> {
+    let Val::Str(string_ref) = stack_val(state, index) else {
+        return None;
+    };
+    state
+        .gc
+        .string_arena
+        .get(string_ref)
+        .map(|string| string.data().to_vec())
+}
+
+fn escape_lua_format_string(input: &[u8]) -> Vec<u8> {
+    escape_ascii_characters(input, &[b'%'])
+}
+
+fn escape_lua_patterns(input: &[u8]) -> Vec<u8> {
+    escape_ascii_characters(input, b"^$()%.[]*+-?")
+}
+
+fn escape_ascii_characters(input: &[u8], characters: &[u8]) -> Vec<u8> {
+    let mut escaped = Vec::with_capacity(input.len());
+    for &byte in input {
+        if characters.contains(&byte) {
+            escaped.push(b'%');
+        }
+        escaped.push(byte);
+    }
+    escaped
 }

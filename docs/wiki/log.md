@@ -1,3 +1,7 @@
+## [2026-09-04] audit | Document C_StringUtil escaping helpers
+
+Updated [[lua-api]] and the maintained Lua API reference for retail-family `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString`: `%` escaping, all Lua pattern-character escaping, and empty-infix/optional-affix wrapping. Local `StringUtilDocumentation.lua` establishes signatures and transformations only; live-client error, taint, and secret-value behavior remain unproven. The three 12.0.0 audit rows remain evidence-required.
+
 ## [2026-09-04] performance | Verify targeted startup prefork migration
 
 Independent verification for commit `a6924a8c9` recorded 6/6 completed-startup player, action-bar, dropdown, and chat-config behaviors passing, 8,366 integration cases, 2,011 prefork cases, zero overlap, and union 10,377. Pre-start channel-checkbox instrumentation remains ordinary integration. Six concurrent integration processes took 12.5426s versus one prefork process at 8.4078s (33.0% directional because methodology differs). `cargo fmt --check` and `cargo check` passed; the protected hash matched. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.

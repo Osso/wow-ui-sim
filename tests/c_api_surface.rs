@@ -8,6 +8,49 @@ fn env() -> WowLuaEnv {
 
 #[cfg(any(feature = "profile-retail", feature = "client-ptr"))]
 #[test]
+fn c_string_util_escapes_bytes_and_wraps_nonempty_infixes() {
+    let env = env();
+    env.eval::<()>(
+        r#"
+        local util = C_StringUtil
+        assert(util.EscapeLuaFormatString("100% ready %% %s") == "100%% ready %%%% %%s")
+        assert(util.EscapeLuaFormatString("café\0%") == "café\0%%")
+        assert(util.EscapeLuaFormatString("") == "")
+        assert(util.EscapeLuaPatterns("^$()%.[]*+-?") == "%^%$%(%)%%%.%[%]%*%+%-%?")
+        assert(util.EscapeLuaPatterns("plain text") == "plain text")
+        assert(util.EscapeLuaPatterns("") == "")
+
+        local raw = string.char(255, 0, 37, 94)
+        assert(util.EscapeLuaFormatString(raw) == string.char(255, 0, 37, 37, 94))
+        assert(util.EscapeLuaPatterns(raw) == string.char(255, 0, 37, 37, 37, 94))
+        assert(util.WrapString(raw, "[", "]") == "[" .. raw .. "]")
+        assert(util.WrapString("middle", raw, raw) == raw .. "middle" .. raw)
+        assert(util.WrapString("middle") == "middle")
+        assert(util.WrapString("middle", "[") == "[middle")
+        assert(util.WrapString("middle", nil, "]") == "middle]")
+        assert(util.WrapString("middle", "[", "]") == "[middle]")
+        assert(util.WrapString("", "[", "]") == "")
+        "#,
+    )
+    .expect("C_StringUtil must escape exact bytes and wrap only nonempty infixes");
+}
+
+#[cfg(not(any(feature = "profile-retail", feature = "client-ptr")))]
+#[test]
+fn non_retail_profiles_do_not_publish_retail_string_helpers() {
+    env()
+        .eval::<()>(
+            r#"
+            assert(rawget(C_StringUtil, "EscapeLuaFormatString") == nil)
+            assert(rawget(C_StringUtil, "EscapeLuaPatterns") == nil)
+            assert(rawget(C_StringUtil, "WrapString") == nil)
+            "#,
+        )
+        .expect("classic profiles must not publish retail string helpers");
+}
+
+#[cfg(any(feature = "profile-retail", feature = "client-ptr"))]
+#[test]
 fn c_loot_history_empty_state_has_retail_shapes() {
     let env = env();
     let result: (bool, bool, bool, bool, bool, bool, bool, bool, bool, bool) = env

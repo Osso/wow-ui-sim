@@ -18744,16 +18744,24 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish EscapeLuaFormatString.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Retail/PTR implementation doubles percent bytes and preserves other Lua string bytes, including NUL and invalid UTF-8.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_api_surface.rs",
+          "summary": "Current retail integration test asserts exact escaping, optional affixes, empty strings, UTF-8, embedded NUL, and raw bytes. Not live-client or historical-epoch proof.",
+          "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes"
+      ],
       "assertions": [],
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_StringUtil model does not publish the function; authoritative semantics or a correct implementation are required, and no approval can close the row."
+      "notes": "Implemented documented byte transformations with current-retail regression coverage. Exact retail 12.0.0 epoch behavior, invalid-argument/coercion behavior, and secret-value handling remain unproven; row remains evidence-required."
     },
     {
       "id": "added:C_StringUtil.EscapeLuaPatterns",
@@ -18773,16 +18781,24 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish EscapeLuaPatterns.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Retail/PTR implementation escapes Lua pattern metacharacters with percent bytes and preserves other Lua string bytes, including NUL and invalid UTF-8.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_api_surface.rs",
+          "summary": "Current retail integration test asserts exact escaping, optional affixes, empty strings, UTF-8, embedded NUL, and raw bytes. Not live-client or historical-epoch proof.",
+          "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes"
+      ],
       "assertions": [],
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_StringUtil model does not publish the function; authoritative semantics or a correct implementation are required, and no approval can close the row."
+      "notes": "Implemented documented byte transformations with current-retail regression coverage. Exact retail 12.0.0 epoch behavior, invalid-argument/coercion behavior, and secret-value handling remain unproven; row remains evidence-required."
     },
     {
       "id": "added:C_StringUtil.EscapeQuotedCodes",
@@ -18803,7 +18819,7 @@
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
           "summary": "Current C_StringUtil model publishes EscapeQuotedCodes and doubles pipe characters in the returned string.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
         },
         {
           "kind": "test",
@@ -18839,8 +18855,8 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish FloorToNearestString.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Current C_StringUtil model does not publish FloorToNearestString.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
         }
       ],
       "tests": [],
@@ -18868,8 +18884,8 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish RemoveContiguousSpaces.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Current C_StringUtil model does not publish RemoveContiguousSpaces.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
         }
       ],
       "tests": [],
@@ -18897,8 +18913,8 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish RoundToNearestString.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Current C_StringUtil model does not publish RoundToNearestString.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
         }
       ],
       "tests": [],
@@ -18926,8 +18942,8 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish StripHyperlinks.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Current C_StringUtil model does not publish StripHyperlinks.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
         }
       ],
       "tests": [],
@@ -18955,8 +18971,8 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish TruncateWhenZero.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Current C_StringUtil model does not publish TruncateWhenZero.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
         }
       ],
       "tests": [],
@@ -18984,16 +19000,24 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_string_util.rs",
-          "summary": "Current C_StringUtil model exposes only EscapeQuotedCodes; it does not publish WrapString.",
-          "source_hash": "edfcac2cb9881821d59e69c7103a1a97dcc564706a60487cb9be2b21909ac28b"
+          "summary": "Retail/PTR implementation wraps nonempty infixes with optional affixes, preserves Lua string bytes, and returns an empty string for an empty infix.",
+          "source_hash": "d91e84e267f6f80d70ceafe0b0d1c04f069ee07ce696ae0ddb077cd6aad23772"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_api_surface.rs",
+          "summary": "Current retail integration test asserts exact escaping, optional affixes, empty strings, UTF-8, embedded NUL, and raw bytes. Not live-client or historical-epoch proof.",
+          "source_hash": "11e1005f01e92f66a083ddcb52f6fdcf4b8cdb2d268258c772efb64bf6703e17"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes"
+      ],
       "assertions": [],
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current C_StringUtil model does not publish the function; authoritative semantics or a correct implementation are required, and no approval can close the row."
+      "notes": "Implemented documented byte transformations with current-retail regression coverage. Exact retail 12.0.0 epoch behavior, invalid-argument/coercion behavior, and secret-value handling remain unproven; row remains evidence-required."
     },
     {
       "id": "added:C_TaskQuest.GetQuestUIWidgetSetByType",
