@@ -43,6 +43,12 @@ Layout branches on `anchors.len()` (`src/iced_app/layout.rs`):
 
 `SetAllPoints(relativeTo)` sets TOPLEFT+BOTTOMRIGHT anchors to fill the target frame, clearing previous anchors.
 
+## Display Metrics
+
+`SimState.screen_width` and `screen_height` are literal base-canvas dimensions used by layout, before `UIParent` scale. `physical_screen_width` and `physical_screen_height` are separate physical display pixels returned by `GetPhysicalScreenSize`.
+
+`set_screen_size(width, height)` deliberately sets both pairs one-to-one. `set_display_size(width, height)` retains physical pixels and derives the base canvas from Blizzard PixelUtil's 768-unit reference height. Frame effective scale remains independent of both inputs.
+
 ## Coordinate System
 
 | Context | Origin | Y direction |
@@ -52,15 +58,17 @@ Layout branches on `anchors.len()` (`src/iced_app/layout.rs`):
 
 Conversion at `methods_core.rs:144`: `bottom = screen_height - rect.y - rect.height`. Y-offset sign convention: positive Y in `SetPoint` moves frame UP, which means `target_y = anchor_y - y_offset` in layout computation.
 
-Special case: `UIParent` (id=1 or name="UIParent") always fills the screen.
+Special case: `UIParent` (id=1 or name="UIParent") always fills the base canvas.
 
 ## Sources
 
 - [layout-system.md](../../layout-system.md) — anchor data structures, resolution algorithms, Lua API
 - [anchor-resolution.md](../../anchor-resolution.md) — resolution functions with code examples
+- [display-metrics.md](../../specs/display-metrics.md) — physical-display and base-canvas contract
 
 ## See Also
 
 - [[widget-system]] — Frame struct that stores anchors and sizes
 - [[lua-api]] — SetPoint, ClearAllPoints, GetRect method implementations
 - [[rendering-pipeline]] — consumes LayoutRect to emit quads
+- [[frame-position-baseline-drift]] — causal replay needs both display metrics and EditMode inputs

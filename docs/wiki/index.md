@@ -1,6 +1,10 @@
+## [2026-09-04] system | Separate physical display from base canvas
+
+[[layout-system]] now records literal base-canvas fields (`screen_width`/`screen_height`) apart from physical pixel fields (`physical_screen_width`/`physical_screen_height`). [Display metrics](../specs/display-metrics.md) defines the explicit one-to-one canvas setter and PixelUtil 768-height physical-display setter; GUI/headless callers are unchanged.
+
 ## [2026-09-04] investigation | Add read-only live frame-position probe
 
-Added [FramePositionProbe](../addons/FramePositionProbe/README.md) for [[frame-position-baseline-drift]]. Its six-sample retail `12.1.0.69587` capture confirms current naming and raw raid-anchor relationships, but it used a scaled 3440×1440 custom-layout client with 78 non-Blizzard addons, not the `1600×1200` fixture/cache build. Assertions remain unchanged.
+Added [FramePositionProbe](../addons/FramePositionProbe/README.md) for [[frame-position-baseline-drift]]. Its six-sample retail `12.1.0.69587` capture provides valid custom display, scale, Ultrawide EditMode, and addon inputs for causal replay, not output values to copy. It has not yet been reproduced against the `1600×1200` fixture/cache build. Assertions remain unchanged.
 
 ## [2026-09-04] investigation | Record current retail frame-position baseline drift
 

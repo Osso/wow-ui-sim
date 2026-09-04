@@ -1,6 +1,6 @@
 # Display metrics
 
-The simulator distinguishes physical display pixels from its base layout canvas. `WowLuaEnv` owns these inputs in `src/lua_api/env_runtime.rs`; see [layout coordinates](../layout-system.md) for frame resolution.
+The simulator distinguishes physical display pixels from its base layout canvas. `WowLuaEnv` owns these inputs in `src/lua_api/env_runtime.rs`; see [layout coordinates](../layout-system.md) and [[layout-system]] for frame resolution.
 
 ## What it must do
 
@@ -18,7 +18,7 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 ## Implementation inventory
 
 - `src/lua_api/env_runtime.rs` — explicit canvas/display setters and screen globals.
-- `src/lua_api/state/sim_state.rs` — separate physical dimensions and base canvas dimensions.
+- `src/lua_api/state/sim_state.rs` — literal `screen_width`/`screen_height` base-canvas fields and separate `physical_screen_width`/`physical_screen_height` pixel fields.
 - `src/lua_api/state.rs` — initial one-to-one dimensions.
 
 ## Tests asserting this spec

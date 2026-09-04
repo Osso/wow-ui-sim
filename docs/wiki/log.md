@@ -1,3 +1,9 @@
+## [2026-09-04] documentation | Record physical display and causal replay boundary
+
+Documented commit `b8d098059`: literal `screen_width`/`screen_height` are base-canvas layout dimensions, separate from physical-pixel `physical_screen_width`/`physical_screen_height`. `set_screen_size` retains deliberate one-to-one behavior; [`display-metrics.md`](../specs/display-metrics.md) records that `set_display_size` derives the base canvas from Blizzard PixelUtil's 768-unit reference while effective frame scale remains separate. No GUI/headless caller change is claimed.
+
+Corrected [[frame-position-baseline-drift]]: the custom live display, scale, Ultrawide EditMode, and relevant addon state are valid causal replay inputs. Their mismatch with the default fixture means replay is incomplete, not that the capture is invalid. `frame_positions` assertions remain unchanged.
+
 ## [2026-09-04] investigation | Record non-parity live frame-position capture
 
 Updated [[frame-position-baseline-drift]] with six error-free `FramePositionProbe` samples from retail `12.1.0.69587`: current private-raid anchor relationship/size and current right-container naming are present under no raid messages and hidden deadly debuffs. The capture used scaled 3440×1440 Ultrawide layout with 78 non-Blizzard addons, versus the simulator's 1600×1200 scale-1 fixture and `12.1.0.69497` cache. Delayed samples share one timestamp. It is diagnostic, not assertion-changing parity evidence.
