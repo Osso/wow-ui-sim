@@ -1,6 +1,10 @@
-## [2026-09-04] documentation | Record pending GroupFinder prefork migration
+## [2026-09-04] documentation | Record pending WorldMap/GameMenu prefork migration
 
-Audited commit `465acd9da`. Recorded two post-start GroupFinder behaviors moved one-for-one into the existing full-retail prefork parent: queue-frame `PartyBackfill` parent-key bindings and `LFGBackfillCover_Update` against real backfill frames. Implementer accounting is 8,383 integration and 1,994 prefork cases; independent verification remains pending. The 4.224s integration baseline and 6.26s standalone prefork run do not establish a runtime improvement because the latter includes shared preload. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+Audited commit `279bbb8d5`. Recorded four one-for-one migrations into the existing full-retail prefork parent: WorldMap events-tab click/zone switching, `QuestLogFrame:ValidateTabs()` event visibility, and Escape open/close toggles for `GameMenuFrame`. Independent verification remains pending. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] performance | Verify GroupFinder prefork migration
+
+Audited commit `465acd9da`. Independent verification recorded 2/2 post-start GroupFinder behaviors passing, 8,383 integration cases, 1,994 prefork cases, and zero overlap. The standalone prefork run took 6.245 seconds versus a 4.224-second integration baseline because it includes shared preload; it does not establish a speedup. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
 
 ## [2026-09-04] performance | Move equivalent chat-frame startup tests to prefork
 
