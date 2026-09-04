@@ -1,6 +1,6 @@
-## [2026-09-04] investigation | Document causal frame-position replay
+## [2026-09-04] investigation | Retire ObjectiveTracker geometry repairs
 
-Updated [[frame-position-baseline-drift]] and [display metrics](../specs/display-metrics.md) for commits `b8d098059` and `1e79fca4f`: normal startup replays the live physical `3440×1440` display, scale `0.8`, and raw saved `Ultrawide` EditMode cache without assigning captured frame outputs. Display API proof is 9/9; selected replay is 1/1 within one UI unit after removing a duplicate default-only ObjectiveTracker height override. Legacy assertions remain unchanged; cache `12.1.0.69497` versus live `12.1.0.69587`, non-bitwise container width, and whole-UI/78-addon parity remain open.
+Updated [[frame-position-baseline-drift]], [display metrics](../specs/display-metrics.md), and [[layout-system]] for `c6a452dfc` after `b8d098059`/`1e79fca4f`: all ObjectiveTracker repair code is removed from post-event layout and startup. Native Blizzard/EditMode layout owns default and custom tracker geometry. Captured replay remains within one UI unit; final focused 12-case verification is pending. Legacy assertions remain unchanged; cache `12.1.0.69497` versus live `12.1.0.69587`, non-bitwise container width, and whole-UI/78-addon parity remain open.
 
 ## [2026-09-04] system | Separate physical display from base canvas
 

@@ -13,7 +13,7 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 ### Captured layout replay
 
 - [x] Reproduce selected frames from the captured physical `3440×1440` display, effective scale `0.8`, and raw saved `Ultrawide` EditMode cache through normal Blizzard startup, without assigning measured outputs. Simulator startup repairs must not replace Blizzard-owned ObjectiveTracker anchors or height in either default or custom layouts.
-- [x] Keep the post-event ObjectiveTracker repair default-only and remove duplicate headless height assignment, so saved custom anchors and height remain Blizzard-driven.
+- [x] Remove every ObjectiveTracker anchor/height repair from post-event layout and startup. Native Blizzard/EditMode layout owns tracker geometry for both default and custom layouts.
 
 ## How it works
 
@@ -25,13 +25,13 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 - `src/lua_api/env_runtime.rs` — explicit canvas/display setters and screen globals.
 - `src/lua_api/state/sim_state.rs` — literal `screen_width`/`screen_height` base-canvas fields and separate `physical_screen_width`/`physical_screen_height` pixel fields.
 - `src/lua_api/state.rs` — initial one-to-one dimensions.
-- `src/lua_api/workarounds/temporary/post_event_frame_layout.rs` — remaining unrelated frame repairs; ObjectiveTracker overrides are retired.
-- `src/startup.rs` — startup orchestration without a duplicate unconditional tracker-height override.
+- `src/lua_api/workarounds/temporary/post_event_frame_layout.rs` — remaining unrelated frame repairs; no ObjectiveTracker repair remains.
+- `src/startup.rs` — startup orchestration; no duplicate headless tracker-height clamp remains.
 
 ## Evidence
 
 - `tests/screen_mode.rs` — existing canvas contracts, captured physical/UI metrics, resize, and invalid-input behavior; 9/9 passed for commit `b8d098059`.
-- `tests/frame_position_replay.rs` — one captured-configuration replay passed for commit `1e79fca4f`, using the existing one-UI-unit tolerance. This is selected-frame causal replay, not bitwise-exact UI parity: the empty right managed container is width `0` in simulation versus about `1` live.
+- `tests/frame_position_replay.rs` — captured-configuration replay remains within the existing one-UI-unit tolerance after commit `c6a452dfc`. Final focused 12-case verification is pending. This is selected-frame causal replay, not bitwise-exact UI parity: the empty right managed container is width `0` in simulation versus about `1` live.
 
 ## Known gaps (current cycle)
 

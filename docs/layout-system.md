@@ -244,7 +244,7 @@ If both edges aren't defined and frame has no explicit size, width/height = 0. Z
 
 `SimState.screen_width` and `screen_height` are literal base-canvas dimensions used for layout. `physical_screen_width` and `physical_screen_height` are separate display pixels returned by `GetPhysicalScreenSize`.
 
-`WowLuaEnv::set_screen_size(width, height)` intentionally sets canvas and physical dimensions one-to-one. `set_display_size(width, height)` retains physical pixels and derives the canvas using Blizzard PixelUtil's 768-unit reference height. Effective frame scale is separate from both. See [display metrics](specs/display-metrics.md) and [[layout-system]].
+`WowLuaEnv::set_screen_size(width, height)` intentionally sets canvas and physical dimensions one-to-one. `set_display_size(width, height)` retains physical pixels and derives the canvas using Blizzard PixelUtil's 768-unit reference height. Effective frame scale is separate from both. Display and EditMode inputs feed native Blizzard layout; simulator startup does not repair ObjectiveTracker anchors or height. See [display metrics](specs/display-metrics.md) and [[layout-system]].
 
 ### Scale Factor
 Effective scale is the product of frame's scale and all parent scales (`methods_core.rs:111-123`).
