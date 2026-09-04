@@ -1,3 +1,7 @@
+## [2026-09-04] maintenance | Split prefork workload locking and refresh CASC dependency lock
+
+Documented the shared-only `workload_gate_core` imported by the standalone prefork target; ordinary timeout/performance helpers retain exclusive locking. Documented the `binrw`/`binrw_derive` 0.15.2 lock refresh for the unchanged CASC dependency graph, fixing the Rust E0365 future-incompatibility warning.
+
 ## [2026-09-04] audit | Document C_StringUtil escaping helpers
 
 Updated [[lua-api]] and the maintained Lua API reference for retail-family `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString`: `%` escaping, all Lua pattern-character escaping, and empty-infix/optional-affix wrapping. Local `StringUtilDocumentation.lua` establishes signatures and transformations only; live-client error, taint, and secret-value behavior remain unproven. The three 12.0.0 audit rows remain evidence-required.

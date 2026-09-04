@@ -50,6 +50,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - `src/render/font.rs` — CASC tier for fonts (`casc_enabled`, `try_casc_font_bytes`) and known core-font encoding-key fallback for CASC cache misses
 - `examples/casc_smoke.rs` — verification harness for textures + fonts
 - `Cargo.toml` — `casc` feature gate (`dep:asset-resolver`, `dep:cascette-client-storage`, `dep:cascette-crypto`), default-on
+- `Cargo.lock` — pins transitive `binrw`/`binrw_derive` 0.15.2 for the CASC dependency graph; the update fixes Rust E0365 private macro re-export warnings without changing the pinned CASC source revisions
 
 ## Tests asserting this spec
 
