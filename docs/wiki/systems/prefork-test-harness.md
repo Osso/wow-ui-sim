@@ -28,27 +28,13 @@ The target enters parent-bypass mode, then builds one 1024x768 default-retail ga
 
 After startup succeeds, enabled-cache sealing verifies that cache state was not initialized or populated, marks that state initialized with empty values/index, and records `pack.bin` existence without reading its contents. Disabled caching skips sealing as a successful no-op. The immutable parent snapshot backs each registered case, one child per case, with 120-second timeouts and read-only bytecode-cache child setup. Timeout handling still cleans up the whole child process tree. The initial nine-case benchmark below predates the registry expansion.
 
-The final eligibility audit records exactly 1,951 tests in the dedicated default-retail prefork target: 1,942 marker-generated full-environment cases and 9 manual/nested prefork cases. The ordinary startup-like scan found 304 remaining tests and zero eligible cases for the finalized shared parent. Final audit artifacts are `/tmp/prefork-final-eligibility.json` and `/tmp/prefork-final-registry-list.txt`; see [Final eligibility classification](#final-eligibility-classification) for rationale without duplicating all 304 rows.
+The current behavior-based eligibility audit records exactly 1,960 tests in the dedicated default-retail prefork target: 1,951 marker-generated full-environment cases and 9 manual/nested prefork cases. Nine settled `party_frame_tree` behaviors moved one-for-one from ordinary integration because their contract is normal complete retail startup plus child-local party-state mutation. The ordinary startup-like scan now has 295 remaining tests and zero eligible cases for the finalized shared parent. Final audit artifacts are `/tmp/prefork-final-eligibility.json` and `/tmp/prefork-final-registry-list.txt`; see [Final eligibility classification](#final-eligibility-classification) for exclusions.
 
 ## Final eligibility classification
 
-The 304 ordinary startup-like tests are all excluded, with exact counts from `/tmp/prefork-final-eligibility.json`:
+The 295 remaining ordinary startup-like tests are all excluded. Their contracts require one of: dependency/load-order/absence, pre-start setup, lifecycle control, partial fixtures, alternate screens, custom rendering, thread-sensitive seams, profile-specific behavior, post-drop global state, or version-specific behavior.
 
-| Category | Count | Rationale |
-|---|---:|---|
-| Pre-start custom fixture | 75 | Extra addon/state setup occurs before post-load workarounds or startup; the finalized parent is not equivalent. |
-| Non-equivalent lifecycle | 9 | Custom load omits or reorders startup lifecycle steps relative to the finalized parent. |
-| Partial/custom fixture | 113 | Curated addon/panel fixture, custom state/events, rendering, or locking differs from normal eager startup. |
-| Partial domain fixture | 13 | Curated addon graph and seeded domain state differ from normal startup. |
-| Partial template fixture | 3 | Minimal inline-template environment has no Blizzard startup. |
-| Partial thread-sensitive fixture | 55 | Custom keybinding/panel fixture seams, events, or environment locking differ from normal preload. |
-| Alternate screen | 15 | Glue Login/CharacterSelect/CharacterCreate startup is not the normal Game-screen parent. |
-| Render custom fixture | 12 | Render-sensitive fixture uses a custom startup lifecycle. |
-| Profile-specific | 7 | PTR/Mists-specific coverage remains ordinary libtest. |
-| Post-drop global state | 1 | Assertion depends on process-global state after dropping the environment. |
-| Version-specific | 1 | Patch-version-gated coverage remains ordinary libtest. |
-
-The exclusion boundary is deliberate: 75 pre-start cases and 9 lifecycle cases cannot use the finalized parent snapshot, while 211 partial/custom/glue/render/thread-sensitive setup-family cases are not normal-retail startup. The remaining 9 cases are profile-specific (7), post-drop global-state (1), or version-specific (1). Counts sum to 304; `eligible_remaining` is zero.
+The exclusion boundary remains deliberate: dependency/load-order/absence, pre-start, lifecycle, partial-fixture, alternate-screen, render-sensitive, thread-sensitive, profile-specific, post-drop, and version-specific contracts cannot use the finalized parent snapshot. `eligible_remaining` remains zero.
 
 Earlier SpellSearch, explicit, housing, and generic post-start batches use borrowed-environment child setup only where their load ordering matches the finalized parent contract. `Blizzard_SharedMapDataProviders` remains excluded because its nine-case fixture loads before post-load workarounds and omits startup events. Two PTR-only GuildBank/ItemUpgrade tests remain ordinary libtest with profile-specific full startup.
 
@@ -56,7 +42,7 @@ Warm-cache conformance remains in a fresh subprocess with an isolated XDG cache 
 
 ## Measured result
 
-The committed parent-bypass target passed the initial nine migrated cases with one worker in 10.12 seconds, down 56.9% from the retained 23.49-second pre-migration serial baseline. `/usr/bin/time` process maximum RSS fell from 1,190,600 KiB to 788,236 KiB (33.8%), and sampled process-tree PSS fell from 1,189,511 KiB to 1,040,276 KiB (12.5%). Parent-only peak PSS was 768,995 KiB; the one-child phase produced the whole-tree PSS peak.
+The committed parent-bypass target passed the initial nine migrated cases with one worker in 10.12 seconds, down 56.9% from the retained 23.49-second pre-migration serial baseline. A later nine-case `party_frame_tree` migration reduced a comparable exact batch from 36.4509 seconds in ordinary integration to 11.9914 seconds in prefork (67.1%). `/usr/bin/time` process maximum RSS fell from 1,190,600 KiB to 788,236 KiB (33.8%), and sampled process-tree PSS fell from 1,189,511 KiB to 1,040,276 KiB (12.5%). Parent-only peak PSS was 768,995 KiB; the one-child phase produced the whole-tree PSS peak.
 
 Sampled process-tree RSS rose from 1,196,596 KiB to 1,523,432 KiB. This metric double-counts copy-on-write pages mapped by both parent and child; PSS is the aggregate host-footprint comparison because it apportions shared pages. The benchmark used the same nine-case filter and `--test-threads=1`, with `/usr/bin/time -v` plus 20 ms `/proc/*/smaps_rollup` sampling.
 

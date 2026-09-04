@@ -52,10 +52,10 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 
 ### Final coverage and eligibility
 
-- [x] List exactly 1,951 cases in the dedicated default-retail prefork target: 1,942 marker-generated full-environment cases and 9 manual/nested prefork cases.
-- [x] Audit all 304 remaining ordinary startup-like tests and confirm zero eligible cases remain for the finalized shared parent preload.
-- [x] Classify exclusions exactly: 15 alternate-screen; 9 non-equivalent lifecycle; 113 partial custom; 13 partial domain; 3 partial template; 55 partial thread-sensitive; 1 post-drop global state; 75 pre-start custom; 7 profile-specific; 12 render custom; and 1 version-specific.
-- [x] Preserve exclusion rationale: the finalized parent is incompatible with the 75 pre-start and 9 lifecycle cases, while the remaining partial/custom, alternate-screen, render-sensitive, and thread-sensitive cases are not normal-retail startup; the five migrated timeout-wrapped cases now run as prefork children with the same 120-second timeout and process-tree cleanup.
+- [x] List exactly 1,960 cases in the dedicated default-retail prefork target: 1,951 marker-generated full-environment cases and 9 manual/nested prefork cases.
+- [x] Audit all 295 remaining ordinary startup-like tests and confirm zero eligible cases remain for the finalized shared parent preload.
+- [x] Classify exclusions as dependency/load-order/absence, pre-start, lifecycle, partial-fixture, alternate-screen, render-sensitive, thread-sensitive, profile-specific, post-drop, or version-specific; none is equivalent to normal complete retail startup.
+- [x] Preserve exclusion rationale: the finalized parent is incompatible with pre-start and lifecycle cases, while partial/custom, alternate-screen, render-sensitive, and thread-sensitive cases are not normal-retail startup; migrated cases retain the same 120-second child timeout and process-tree cleanup.
 
 ### Bytecode-cache child contract
 
@@ -72,6 +72,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 
 - [x] Preserve the initial nine migrated behaviors with parent bypass enabled.
 - [x] Reduce serial wall time from 23.49 seconds to 10.12 seconds (56.9%).
+- [x] Move nine settled `party_frame_tree` behaviors one-for-one from integration to the existing full-retail prefork parent, reducing the comparable exact batch from 36.4509 seconds to 11.9914 seconds (67.1%).
 - [x] Reduce `/usr/bin/time` process maximum RSS from 1,190,600 KiB to 788,236 KiB (33.8%) and sampled process-tree PSS from 1,189,511 KiB to 1,040,276 KiB (12.5%).
 - [x] Record sampled process-tree RSS separately: it rises from 1,196,596 KiB to 1,523,432 KiB because RSS counts shared copy-on-write pages in both parent and child, while PSS apportions them.
 - [x] Prove workload-gate shared-reader overlap, exclusive exclusion, same-process exclusive serialization, release after error/panic/process exit, and acquisition before timeout measurement.

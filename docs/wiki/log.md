@@ -1,3 +1,7 @@
+## [2026-09-04] performance | Move settled party-frame behaviors to prefork
+
+Audited commits `4d307e395` and `2e60fe026`. Updated [[prefork-test-harness]] and the prefork harness spec: nine `party_frame_tree` cases moved one-for-one from ordinary integration into the existing full-retail prefork parent because they assert only settled normal-startup state plus child-local party mutation. The prefork target now lists 1,960 cases (1,951 generated marker cases and 9 manual/nested); integration lists 8,417; the behavior-based ordinary-startup scan has 295 remaining cases and zero eligible. The comparable exact batch fell from 36.4509 seconds to 11.9914 seconds (67.1%). Index updated; no new page, code, test, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
 ## [2026-09-04] audit | Document deferred Housing dashboard response
 
 Audited commit `9756f71a3`. Updated [[lua-api]] and the maintained Lua API reference: the temporary `C_Housing.GetPlayerOwnedHouses` bridge schedules `PLAYER_HOUSE_LIST_UPDATED` with an empty table through `C_Timer.After(0)`, so the Housing dashboard observes its empty-owned-house response only after a timer tick. Owned-house service state, failures, and response-payload semantics remain unmodeled; retire the bridge when a housing service model owns the request. No spec, new page, index, vendor/cache/Blizzard, `PLAN.md`, or protected-file change was warranted.
