@@ -6,14 +6,11 @@ mod keybindings_panels_detail;
 #[path = "common/token_ui_fixtures.rs"]
 mod token_ui_fixtures;
 
-use keybindings_panels_detail::{
-    drain_test_errors, frame_is_shown, install_test_error_handler, setup_env,
-};
+use keybindings_panels_detail::{drain_test_errors, frame_is_shown, install_test_error_handler};
+use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[test]
-fn world_map_events_tab_click_and_zone_switch_without_errors() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn world_map_events_tab_click_and_zone_switch_without_errors(env: &WowLuaEnv) {
         install_test_error_handler(&env);
 
         env.send_key_press("M", None).expect("M keybind failed");
@@ -78,13 +75,11 @@ fn world_map_events_tab_click_and_zone_switch_without_errors() {
             "ok",
             "World map events tab flow should open, switch to events, change zone, and close: {result}"
         );
-    }
+}
 }
 
-#[test]
-fn quest_log_validate_tabs_shows_events_tab_when_scheduler_can_show_events() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn quest_log_validate_tabs_shows_events_tab_when_scheduler_can_show_events(env: &WowLuaEnv) {
         install_test_error_handler(&env);
 
         env.send_key_press("M", None).expect("M keybind failed");
@@ -129,27 +124,23 @@ fn quest_log_validate_tabs_shows_events_tab_when_scheduler_can_show_events() {
             "ok",
             "Quest log ValidateTabs should show the Events tab when C_EventScheduler.CanShowEvents() is true: {result}"
         );
-    }
+}
 }
 
 // ── ESCAPE → toggle GameMenuFrame ───────────────────────────────────────
 
-#[test]
-fn keybind_escape_opens_game_menu() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn keybind_escape_opens_game_menu(env: &WowLuaEnv) {
         env.send_key_press("ESCAPE", None).expect("ESCAPE keybind failed");
         assert!(
             frame_is_shown(&env, "GameMenuFrame"),
             "GameMenuFrame should be shown after pressing ESCAPE"
         );
-    }
+}
 }
 
-#[test]
-fn keybind_escape_closes_game_menu() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn keybind_escape_closes_game_menu(env: &WowLuaEnv) {
         env.send_key_press("ESCAPE", None).expect("first ESCAPE failed");
         assert!(frame_is_shown(&env, "GameMenuFrame"));
         env.send_key_press("ESCAPE", None).expect("second ESCAPE failed");
@@ -157,5 +148,5 @@ fn keybind_escape_closes_game_menu() {
             !frame_is_shown(&env, "GameMenuFrame"),
             "GameMenuFrame should be hidden after second ESCAPE"
         );
-    }
+}
 }
