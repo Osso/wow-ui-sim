@@ -546,10 +546,6 @@ fn normalize_headless_frame_positions(env: &WowLuaEnv) {
             CompactPartyFrame:SetSize(98, 234)
         end
 
-        if ObjectiveTrackerFrame then
-            ObjectiveTrackerFrame:SetHeight(836.5)
-        end
-
         if PlayerCastingBarFrame then
             PlayerCastingBarFrame:SetAlpha(1)
         end

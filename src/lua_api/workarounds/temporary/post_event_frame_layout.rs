@@ -7,15 +7,16 @@
 use crate::lua_api::WowLuaEnv;
 
 const POST_EVENT_FRAME_LAYOUT_WORKAROUND_LUA: &str = r#"
-local function reanchor_objective_tracker(frame)
-    local height = 836.5
-    if UIParentRightManagedFrameContainer and UIParentRightManagedFrameContainer.GetTop then
-        height = math.min(height, UIParentRightManagedFrameContainer:GetTop() or height)
+local function reanchor_default_objective_tracker(frame)
+    if not frame:IsInDefaultPosition() then
+        return
     end
+    local container = GetRightManagedFrameContainer()
+    local height = math.min(836.5, container:GetTop())
     frame:ClearAllPoints()
     frame:SetPoint(
         "TOPRIGHT",
-        UIParentRightManagedFrameContainer,
+        container,
         "TOPRIGHT",
         0,
         0
@@ -39,7 +40,7 @@ if ObjectiveTrackerFrame then
     if ObjectiveTrackerFrame.UpdateHeight then
         pcall(ObjectiveTrackerFrame.UpdateHeight, ObjectiveTrackerFrame)
     end
-    reanchor_objective_tracker(ObjectiveTrackerFrame)
+    reanchor_default_objective_tracker(ObjectiveTrackerFrame)
 end
 if not rawget(_G, "__wow_objective_tracker_resize_event_frame")
     and CreateFrame
@@ -48,7 +49,7 @@ if not rawget(_G, "__wow_objective_tracker_resize_event_frame")
     resizeEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
     resizeEventFrame:RegisterEvent("UI_SCALE_CHANGED")
     resizeEventFrame:SetScript("OnEvent", function()
-        reanchor_objective_tracker(ObjectiveTrackerFrame)
+        reanchor_default_objective_tracker(ObjectiveTrackerFrame)
     end)
     rawset(_G, "__wow_objective_tracker_resize_event_frame", resizeEventFrame)
 end
@@ -65,7 +66,7 @@ if not rawget(_G, "__wow_objective_tracker_update_height_wrapper")
     function ObjectiveTrackerContainerMixin:UpdateHeight()
         originalUpdateHeight(self)
         if self == ObjectiveTrackerFrame then
-            reanchor_objective_tracker(self)
+            reanchor_default_objective_tracker(self)
         end
     end
     rawset(_G, "__wow_objective_tracker_update_height_wrapper", true)
