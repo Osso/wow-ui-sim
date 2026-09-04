@@ -84,7 +84,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] Move 17 additional normal complete-retail-startup behaviors: six `Blizzard_AddOnList` surface cases, five micro-menu/game-menu cases, and six CharacterFrame `ShowUIPanel`/`HideUIPanel` cases. Independent verification records 8,393 integration cases, 1,984 prefork cases, zero overlap, and 17/17 passing.
 - [x] Verify commit `2995da11d` after moving eight equivalent `chat_frame::test_chat_*` cases: 8/8 pass, integration lists 8,385 cases, prefork lists 1,992, and overlap is zero. The 13.1985s-to-6.326s runtime change is directional only because power mode changed. Keep `test_chat_editbox_click_type_and_submit` and `test_chat_editbox_text_color_after_activation` in ordinary integration because complete startup changes their asserted initial channel and edit-box color.
 - [x] Verify commit `465acd9da` after moving the two equivalent GroupFinder post-start behaviors: 2/2 pass, integration lists 8,383 cases, prefork lists 1,994, and overlap is zero. The 4.224s integration baseline versus 6.245s standalone prefork run does not establish a speedup because shared preload is included.
-- [ ] Verify commit `279bbb8d5` after moving four equivalent WorldMap/GameMenu behaviors: events-tab interaction, `ValidateTabs` event visibility, and Escape open/close toggles.
+- [x] Verify commit `279bbb8d5` after moving four equivalent WorldMap/GameMenu behaviors: 4/4 pass, integration lists 8,379 cases, prefork lists 1,998, and overlap is zero. The 4.325s integration baseline versus 5.703s standalone prefork run includes shared preload and does not establish a speedup.
 
 ### Failure handling
 

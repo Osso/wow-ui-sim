@@ -1,6 +1,6 @@
-## [2026-09-04] documentation | Record pending WorldMap/GameMenu prefork migration
+## [2026-09-04] performance | Verify WorldMap/GameMenu prefork migration
 
-Audited commit `279bbb8d5`. Recorded four one-for-one migrations into the existing full-retail prefork parent: WorldMap events-tab click/zone switching, `QuestLogFrame:ValidateTabs()` event visibility, and Escape open/close toggles for `GameMenuFrame`. Independent verification remains pending. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+Independent verification for commit `279bbb8d5` recorded 4/4 migrated behaviors passing, 8,379 integration cases, 1,998 prefork cases, and zero overlap. The standalone prefork run took 5.703 seconds versus a 4.325-second integration baseline because it includes shared preload; it does not establish a speedup. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
 
 ## [2026-09-04] performance | Verify GroupFinder prefork migration
 
