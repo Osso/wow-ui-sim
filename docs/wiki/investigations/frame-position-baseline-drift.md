@@ -19,6 +19,7 @@ Before changing assertions, capture a matching retail client at the same build, 
 ## Sources
 
 - [tests/frame_positions.rs](../../../tests/frame_positions.rs) — exact shared fixture and failing baseline assertions
+- [FramePositionProbe](../../addons/FramePositionProbe/README.md) — read-only live capture protocol; no capture is recorded yet
 - [post_event_frame_layout.rs](../../../src/lua_api/workarounds/temporary/post_event_frame_layout.rs) — adjacent old-name workaround
 - `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RaidWarning/RaidWarning.xml` — current size and XML anchors
 - `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RaidWarning/RaidWarningUtil.lua` — dynamic anchor choices

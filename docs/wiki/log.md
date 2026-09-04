@@ -1,3 +1,7 @@
+## [2026-09-04] investigation | Add read-only live frame-position probe
+
+Added [FramePositionProbe](../../addons/FramePositionProbe/README.md), a SavedVariables probe for build/interface, screen and effective scales, Edit Mode state, selected anchors, raw frame rects/points/parents, warning/debuff state, combat, class, and loaded non-Blizzard addons. It records login, world-entry, delayed, and manual samples without mutating Blizzard layout. No live capture exists; desktop `12.1.0.69587` differs from cache `12.1.0.69497`, so any capture must satisfy documented parity before it can revise an assertion.
+
 ## [2026-09-04] investigation | Record frame-position baseline drift
 
 Recorded the two `frame_positions` failures without changing assertions: the exact 1600×1200 fixture reproducibly produces `PrivateRaidBossEmoteFrameAnchor` `(400,182,800×80)` from current RaidWarning XML/default no-message anchoring, and current `RightManagedFrameContainer` `(1335,260,260×847.5)` while the old `UIParentRightManagedFrameContainer` name is absent. No matching live-client capture exists, so current-source consistency is not retail validation. See [[frame-position-baseline-drift]].
