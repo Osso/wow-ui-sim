@@ -1,3 +1,7 @@
+## [2026-09-04] investigation | Record current retail frame-position baseline drift
+
+Added [[frame-position-baseline-drift]]: the exact `frame_positions` fixture reproducibly reports the current cached RaidWarning XML geometry and current right-managed-container role, while the old baseline has no matching live-client capture. No assertion or simulator behavior changed.
+
 ## [2026-09-04] maintenance | Split prefork workload locking and refresh CASC dependency lock
 
 Documented the shared-only `workload_gate_core` imported by the standalone prefork target; ordinary timeout/performance helpers retain exclusive locking. Documented the `binrw`/`binrw_derive` 0.15.2 lock refresh for the unchanged CASC dependency graph, fixing the Rust E0365 future-incompatibility warning.

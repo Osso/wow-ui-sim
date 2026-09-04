@@ -1,3 +1,7 @@
+## [2026-09-04] investigation | Record frame-position baseline drift
+
+Recorded the two `frame_positions` failures without changing assertions: the exact 1600×1200 fixture reproducibly produces `PrivateRaidBossEmoteFrameAnchor` `(400,182,800×80)` from current RaidWarning XML/default no-message anchoring, and current `RightManagedFrameContainer` `(1335,260,260×847.5)` while the old `UIParentRightManagedFrameContainer` name is absent. No matching live-client capture exists, so current-source consistency is not retail validation. See [[frame-position-baseline-drift]].
+
 ## [2026-09-04] maintenance | Split prefork workload locking and refresh CASC dependency lock
 
 Commit `887ea5ca7` moves shared lock mechanics into `tests/common/workload_gate_core.rs`, which `prefork_full_ui` imports directly. The ordinary `workload_gate.rs` wrapper retains shared/exclusive mode APIs for timeout and performance callers, preserving conformance coverage while avoiding standalone-prefork dead-code warnings. Commit `1422c3f6f` updates locked transitive `binrw` and `binrw_derive` from 0.15.1 to 0.15.2 for the unchanged CASC dependency graph, removing the E0365 private macro re-export future-incompatibility warning. Final warning-free verification remains pending.
