@@ -80,7 +80,7 @@
           "kind": "test",
           "reference": "tests/test_showuipanel.rs::repeated_show_ui_panel_pulse_closes_active_panel_stack",
           "summary": "Sequential center-panel shows replace the first panel, and CloseAllWindows hides the active second panel.",
-          "source_hash": "13c1179779758e949b1d4ce4c3f7f7932dbb48c83098d9404f4e21569cd548a2"
+          "source_hash": "3a3963fee0625d789b7f574fb42ab3bb8d6a1f6956d4ee2a08b0ffec17f69735"
         }
       ],
       "tests": [
@@ -273,7 +273,7 @@
           "kind": "test",
           "reference": "tests/blizzard_debug_tools_loads.rs::devtools_dump_captures_frame_array_metadata",
           "summary": "Frame array insertion, slot retrieval, DevTools_Dump return shape, and emitted metadata are directly regression-tested.",
-          "source_hash": "faa4c0cae51e448f92edd56afab785c86a51a796193a130fbafbd338c95c572f"
+          "source_hash": "476a5ce352d55aacd6c871beffcee4b308bd01ce4210d9e7f8dc1a8b2069c77c"
         }
       ],
       "tests": [
@@ -741,7 +741,7 @@
           "kind": "test",
           "reference": "tests/methods_texture.rs::test_set_atlas_unknown",
           "summary": "An unknown atlas name remains observable without fabricating a texture path.",
-          "source_hash": "419c30bfd97df89dbc9bb960de00690f769d6ab60e35354a3da9938a0e78361c"
+          "source_hash": "18ba440b317bc2353a5ece206929eda1b6012145f0d4e015d5ec45000bbe3d36"
         }
       ],
       "tests": [
@@ -767,7 +767,7 @@
           "kind": "test",
           "reference": "tests/methods_texture.rs::test_set_texture_known_path_returns_fdid_and_no_args_clear",
           "summary": "Known texture path resolution to retained FDID 130828 is directly regression-tested.",
-          "source_hash": "419c30bfd97df89dbc9bb960de00690f769d6ab60e35354a3da9938a0e78361c"
+          "source_hash": "18ba440b317bc2353a5ece206929eda1b6012145f0d4e015d5ec45000bbe3d36"
         }
       ],
       "tests": [
@@ -791,7 +791,7 @@
           "kind": "test",
           "reference": "tests/methods_texture.rs::test_set_texture_known_path_returns_fdid_and_no_args_clear",
           "summary": "Nil and no-argument texture clearing are directly regression-tested.",
-          "source_hash": "419c30bfd97df89dbc9bb960de00690f769d6ab60e35354a3da9938a0e78361c"
+          "source_hash": "18ba440b317bc2353a5ece206929eda1b6012145f0d4e015d5ec45000bbe3d36"
         }
       ],
       "tests": [

@@ -120,7 +120,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact retail private identity is unknown.",
-          "source_hash": "06ededeb014c3d8ece61b07add887c576ba7bcdb443b6906cd9369b89203cad7"
+          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
         }
       ],
       "tests": [],
@@ -142,7 +142,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact public-key access restrictions are unknown.",
-          "source_hash": "06ededeb014c3d8ece61b07add887c576ba7bcdb443b6906cd9369b89203cad7"
+          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
         }
       ],
       "tests": [],
@@ -164,7 +164,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact private/forbidden child traversal visibility is unknown.",
-          "source_hash": "06ededeb014c3d8ece61b07add887c576ba7bcdb443b6906cd9369b89203cad7"
+          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
         }
       ],
       "tests": [],
@@ -186,7 +186,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact private/forbidden hook and taint boundaries are unknown.",
-          "source_hash": "06ededeb014c3d8ece61b07add887c576ba7bcdb443b6906cd9369b89203cad7"
+          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
         }
       ],
       "tests": [],
@@ -208,7 +208,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact private script storage and access behavior are unknown.",
-          "source_hash": "06ededeb014c3d8ece61b07add887c576ba7bcdb443b6906cd9369b89203cad7"
+          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
         }
       ],
       "tests": [],
@@ -230,7 +230,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact secure delegate receiver and taint enforcement are unknown.",
-          "source_hash": "06ededeb014c3d8ece61b07add887c576ba7bcdb443b6906cd9369b89203cad7"
+          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
         }
       ],
       "tests": [],
@@ -646,7 +646,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity",
           "summary": "A binding retained through a Lua table remains usable after the original local reference is released and garbage collection runs.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -670,7 +670,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity",
           "summary": "Factory calls return distinct Lua tables whose identity and methods remain stable while referenced.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -716,7 +716,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_duration_objects_and_text_binding",
           "summary": "Duration binding formatting methods preserve the documented compatibility-table values.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -740,7 +740,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Duration binding color-curve methods exist and preserve compatible state.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -764,7 +764,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_duration_objects_and_text_binding",
           "summary": "Duration binding FontString assignment and update-facing methods preserve the documented compatibility contract.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -788,7 +788,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_discord_state_surface",
           "summary": "Discord authorization and refresh operations update and expose local compatibility state.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -812,7 +812,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_discord_state_surface",
           "summary": "Discord guild link, unlink, settings, and lobby operations update local compatibility state.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -836,7 +836,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_discord_state_surface",
           "summary": "Discord server and channel getters return the seeded local compatibility payloads.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -860,7 +860,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_inside_owned_state_and_reset",
           "summary": "Owned-house and plot queries plus ResetHouse follow the local housing state model.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -884,7 +884,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_blueprint_best_effort_state",
           "summary": "Blueprint export, validation, import, rename, delete, and request calls follow the local housing blueprint model.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -908,7 +908,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_blueprint_availability_state",
           "summary": "Housing blueprint availability helpers return configurable local result codes.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -932,7 +932,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_editor_decor_layout_state",
           "summary": "Housing editor, decor, room, budget, and layout calls read or update the local housing state model.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -956,7 +956,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Verified friend invites create one deduplicated local pending invite and expose modeled invite fields.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -980,13 +980,13 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Title-friend custom names, tags, feature probes, and friend metadata use local compatibility state.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_battle_net_presence_state",
           "summary": "Appear-offline intent is recorded in local Battle.net presence state.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -1011,7 +1011,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_battle_net_presence_state",
           "summary": "Title-friend unit invite eligibility returns the documented deterministic unsupported-state result.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -1035,7 +1035,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Encounter Journal base and valid difficulty helpers return the generated-data compatibility guesses.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [
@@ -1059,7 +1059,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_spell_cooldown_payload",
           "summary": "Seeded and inactive spell cooldown queries return the modeled start, duration, enabled, active, and rate fields.",
-          "source_hash": "6e1194d6dafbe3c8f7c259a40ef4830229dace40ca9f59927517097cfb46ee2a"
+          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
         }
       ],
       "tests": [
@@ -1083,7 +1083,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_pet_and_lfg_payloads",
           "summary": "Seeded and unknown species queries verify the modeled 12.1 pet information fields and nil boundary.",
-          "source_hash": "6e1194d6dafbe3c8f7c259a40ef4830229dace40ca9f59927517097cfb46ee2a"
+          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
         }
       ],
       "tests": [
@@ -1107,7 +1107,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_pet_and_lfg_payloads",
           "summary": "Seeded and unknown search-result queries verify the modeled LFG identity, activity, size, GUID, and censored fields.",
-          "source_hash": "6e1194d6dafbe3c8f7c259a40ef4830229dace40ca9f59927517097cfb46ee2a"
+          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
         }
       ],
       "tests": [
@@ -1131,7 +1131,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_player_choice_payload_and_mutator_intent",
           "summary": "Default and seeded PlayerChoice queries expose the generated nested payload shape while response, reroll, and close calls record local intent.",
-          "source_hash": "6e1194d6dafbe3c8f7c259a40ef4830229dace40ca9f59927517097cfb46ee2a"
+          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
         }
       ],
       "tests": [
@@ -1155,7 +1155,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_tiered_entrance_payloads",
           "summary": "Seeded and default C_DelvesUI TieredEntrance queries expose the documented tier and nested reward fields.",
-          "source_hash": "6e1194d6dafbe3c8f7c259a40ef4830229dace40ca9f59927517097cfb46ee2a"
+          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
         }
       ],
       "tests": [
@@ -1247,7 +1247,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_strict_removed_symbols_are_hidden",
           "summary": "Strictly removed 12.1 symbols are absent from addon-facing globals after startup.",
-          "source_hash": "eb0b0446e6ceddfa2e926901c0a5c117b788512839dc31147d94b26536a5957c"
+          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
       "tests": [

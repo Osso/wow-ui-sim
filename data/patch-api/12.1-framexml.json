@@ -868,7 +868,7 @@
           "kind": "runtime",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "Delegates to existing C_UnitAuras group-buff preference state; focused 12.1 bridge test.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -899,7 +899,7 @@
           "kind": "runtime",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "Delegates to existing C_UnitAuras group-buff preference state; focused 12.1 bridge test.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -930,7 +930,7 @@
           "kind": "runtime",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "Delegates to existing C_UnitAuras group-buff preference state; focused 12.1 bridge test.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -961,7 +961,7 @@
           "kind": "runtime",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "Delegates to existing C_UnitAuras group-buff preference state; focused 12.1 bridge test.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -1172,7 +1172,7 @@
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "12.1 post-load dynamic delegate to the authoritative vendor global; preserves arguments, both return values, and later hotfix replacement.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -1203,7 +1203,7 @@
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "12.1 post-load dynamic delegate to the authoritative vendor global; preserves arguments, both return values, and later hotfix replacement.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -1234,7 +1234,7 @@
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "12.1 post-load dynamic delegate to the authoritative vendor global; preserves arguments, both return values, and later hotfix replacement.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -1265,7 +1265,7 @@
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "12.1 post-load dynamic delegate to the authoritative vendor global; focused test covers `(10, 15)`, two-return fidelity, and hot-swap behavior.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -1296,7 +1296,7 @@
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "12.1 post-load dynamic delegate to the authoritative vendor global; preserves arguments, both return values, and later hotfix replacement.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -3309,7 +3309,7 @@
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.lua",
           "summary": "12.1 wrapper in `src/ptr/compat_bootstrap.lua`; focused delegation test in `global_functions.rs`.",
-          "source_hash": "0b9ccc6800daa2fc46905495613a44b4262ec63c5be701aa3d9c7c48be393dd8"
+          "source_hash": "e312751dda5b87f87c367ebf83b20f91e942c341bbb35bdcbb9a5b0a28344c2c"
         }
       ],
       "tests": [
@@ -3400,7 +3400,7 @@
           "kind": "runtime",
           "reference": "tests/blizzard_macro_ui_loads.rs",
           "summary": "PTR lifecycle test proves the eager UIParent no-op placeholder is present and harmless, then explicit Blizzard_MacroUI loading replaces it with the MacroFrame:SaveMacro delegate.",
-          "source_hash": "596a5fb3149bea5d14873b0ac0e201895a5cef9d03b1e1202095d061a63e52ce"
+          "source_hash": "49dd6ebf2e2283d3985b81158d9a228ca6b33ed72dd18f366fc053aa8b5f9888"
         }
       ],
       "tests": [
@@ -6045,7 +6045,7 @@
           "kind": "runtime",
           "reference": "tests/blizzard_macro_ui_loads.rs",
           "summary": "PTR lifecycle test proves the eager UIParent no-op placeholder is present and harmless, then explicit Blizzard_MacroUI loading replaces it with the MacroFrame:SaveMacro delegate.",
-          "source_hash": "596a5fb3149bea5d14873b0ac0e201895a5cef9d03b1e1202095d061a63e52ce"
+          "source_hash": "49dd6ebf2e2283d3985b81158d9a228ca6b33ed72dd18f366fc053aa8b5f9888"
         }
       ],
       "tests": [
