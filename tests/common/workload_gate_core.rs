@@ -10,12 +10,6 @@ use std::sync::{OnceLock, RwLock, RwLockReadGuard, RwLockWriteGuard};
 
 const LOCK_FILE_NAME: &str = "wow-ui-sim-test-workloads.lock";
 
-#[derive(Clone, Copy)]
-pub(crate) enum LockMode {
-    Shared,
-    Exclusive,
-}
-
 #[cfg(target_os = "linux")]
 pub(crate) struct Permit {
     _local: LocalPermit,
@@ -35,30 +29,38 @@ enum LocalPermit {
 #[cfg(not(target_os = "linux"))]
 pub(crate) struct Permit;
 
-pub(crate) fn acquire_at(path: &Path, mode: LockMode) -> io::Result<Permit> {
-    acquire_at_mode(path, mode)
+pub(crate) fn acquire_at(path: &Path, exclusive: bool) -> io::Result<Permit> {
+    acquire_at_mode(path, exclusive)
+}
+
+pub(crate) fn default_lock_path() -> PathBuf {
+    std::env::temp_dir().join(LOCK_FILE_NAME)
 }
 
 pub(crate) fn with_shared_lock<T>(body: impl FnOnce() -> T) -> T {
     let path = default_lock_path();
-    with_lock_at(&path, LockMode::Shared, body)
+    with_lock_at(&path, false, body)
 }
 
-pub(crate) fn with_lock_at<T>(path: &Path, mode: LockMode, body: impl FnOnce() -> T) -> T {
-    let _permit = acquire_at_mode(path, mode)
-        .unwrap_or_else(|error| panic!("acquire {} workload gate: {error}", mode.description()));
+pub(crate) fn with_lock_at<T>(path: &Path, exclusive: bool, body: impl FnOnce() -> T) -> T {
+    let _permit = acquire_at(path, exclusive).unwrap_or_else(|error| {
+        panic!(
+            "acquire {} workload gate: {error}",
+            workload_description(exclusive)
+        )
+    });
     body()
 }
 
 #[cfg(target_os = "linux")]
-fn acquire_at_mode(path: &Path, mode: LockMode) -> io::Result<Permit> {
-    let local = acquire_local(mode);
+fn acquire_at_mode(path: &Path, exclusive: bool) -> io::Result<Permit> {
+    let local = acquire_local(exclusive);
     let file = OpenOptions::new()
         .read(true)
         .write(true)
         .create(true)
         .open(path)?;
-    lock(&file, mode)?;
+    lock(&file, exclusive)?;
     Ok(Permit {
         _local: local,
         _file: file,
@@ -66,51 +68,44 @@ fn acquire_at_mode(path: &Path, mode: LockMode) -> io::Result<Permit> {
 }
 
 #[cfg(not(target_os = "linux"))]
-fn acquire_at_mode(_path: &Path, _mode: LockMode) -> io::Result<Permit> {
+fn acquire_at_mode(_path: &Path, _exclusive: bool) -> io::Result<Permit> {
     Ok(Permit)
 }
 
-pub(crate) fn default_lock_path() -> PathBuf {
-    std::env::temp_dir().join(LOCK_FILE_NAME)
-}
-
 #[cfg(target_os = "linux")]
-fn acquire_local(mode: LockMode) -> LocalPermit {
+fn acquire_local(exclusive: bool) -> LocalPermit {
     static LOCAL_GATE: OnceLock<RwLock<()>> = OnceLock::new();
     let gate = LOCAL_GATE.get_or_init(|| RwLock::new(()));
-    match mode {
-        LockMode::Shared => LocalPermit::Shared {
-            _guard: gate.read().unwrap_or_else(|poisoned| poisoned.into_inner()),
-        },
-        LockMode::Exclusive => LocalPermit::Exclusive {
+    if exclusive {
+        LocalPermit::Exclusive {
             _guard: gate
                 .write()
                 .unwrap_or_else(|poisoned| poisoned.into_inner()),
-        },
+        }
+    } else {
+        LocalPermit::Shared {
+            _guard: gate.read().unwrap_or_else(|poisoned| poisoned.into_inner()),
+        }
     }
 }
 
-impl LockMode {
-    #[cfg(target_os = "linux")]
-    fn operation(self) -> libc::c_int {
-        match self {
-            Self::Shared => libc::LOCK_SH,
-            Self::Exclusive => libc::LOCK_EX,
-        }
-    }
-
-    fn description(self) -> &'static str {
-        match self {
-            Self::Shared => "shared",
-            Self::Exclusive => "exclusive",
-        }
+fn workload_description(exclusive: bool) -> &'static str {
+    if exclusive {
+        "exclusive"
+    } else {
+        "shared"
     }
 }
 
 #[cfg(target_os = "linux")]
-fn lock(file: &File, mode: LockMode) -> io::Result<()> {
+fn lock(file: &File, exclusive: bool) -> io::Result<()> {
+    let operation = if exclusive {
+        libc::LOCK_EX
+    } else {
+        libc::LOCK_SH
+    };
     loop {
-        let result = unsafe { libc::flock(file.as_raw_fd(), mode.operation()) };
+        let result = unsafe { libc::flock(file.as_raw_fd(), operation) };
         if result == 0 {
             return Ok(());
         }

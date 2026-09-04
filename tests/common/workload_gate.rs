@@ -1,8 +1,8 @@
 use std::io;
 use std::path::Path;
 
+use super::workload_gate_core;
 pub(crate) use super::workload_gate_core::Permit;
-use super::workload_gate_core::{self, LockMode};
 
 #[derive(Clone, Copy)]
 pub(crate) enum Mode {
@@ -16,7 +16,7 @@ pub(crate) fn acquire(mode: Mode) -> io::Result<Permit> {
 }
 
 pub(crate) fn acquire_at(path: &Path, mode: Mode) -> io::Result<Permit> {
-    workload_gate_core::acquire_at(path, mode.core_mode())
+    workload_gate_core::acquire_at(path, mode.is_exclusive())
 }
 
 pub(crate) fn with_lock<T>(mode: Mode, body: impl FnOnce() -> T) -> T {
@@ -25,14 +25,11 @@ pub(crate) fn with_lock<T>(mode: Mode, body: impl FnOnce() -> T) -> T {
 }
 
 pub(crate) fn with_lock_at<T>(path: &Path, mode: Mode, body: impl FnOnce() -> T) -> T {
-    workload_gate_core::with_lock_at(path, mode.core_mode(), body)
+    workload_gate_core::with_lock_at(path, mode.is_exclusive(), body)
 }
 
 impl Mode {
-    fn core_mode(self) -> LockMode {
-        match self {
-            Self::Shared => LockMode::Shared,
-            Self::Exclusive => LockMode::Exclusive,
-        }
+    fn is_exclusive(self) -> bool {
+        matches!(self, Self::Exclusive)
     }
 }
