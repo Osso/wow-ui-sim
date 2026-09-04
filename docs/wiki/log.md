@@ -1,3 +1,7 @@
+## [2026-09-04] audit | Document deferred Housing dashboard response
+
+Audited commit `9756f71a3`. Updated [[lua-api]] and the maintained Lua API reference: the temporary `C_Housing.GetPlayerOwnedHouses` bridge schedules `PLAYER_HOUSE_LIST_UPDATED` with an empty table through `C_Timer.After(0)`, so the Housing dashboard observes its empty-owned-house response only after a timer tick. Owned-house service state, failures, and response-payload semantics remain unmodeled; retire the bridge when a housing service model owns the request. No spec, new page, index, vendor/cache/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
 ## [2026-09-03] audit | Document Settings panel opening API
 
 Audited commit `6a19aac5b`. Updated [[lua-api]] and the maintained Lua API reference: `C_SettingsUtil.OpenSettingsPanel(categoryID, scrollTarget)` forwards to `SettingsPanelMixin.OpenToCategory(SettingsPanel, categoryID, scrollTarget)`, defaults an absent category ID to `0`, returns no values, and does nothing when either required surface is absent. The temporary Settings defaults are additive-only: they preserve existing category IDs and `Settings.OpenToCategory`. `C_SettingsUtil.NotifySettingsLoaded` and category/element scrolling beyond forwarding remain unsupported. No new page, index update, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
