@@ -378,7 +378,7 @@ fn cursor_hovered_item_globals_are_callable() {
 }
 
 #[path = "startup_targeted_regressions/late.rs"]
-mod late;
+pub(crate) mod late;
 
 #[path = "startup_targeted_regressions/damage_meter.rs"]
 mod damage_meter;

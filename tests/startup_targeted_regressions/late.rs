@@ -4,10 +4,8 @@ use tempfile::tempdir;
 use wow_ui_sim::loader::load_addon_with_saved_vars;
 use wow_ui_sim::saved_variables::SavedVariablesManager;
 
-#[test]
-fn startup_player_life_bar_matches_player_health() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_player_life_bar_matches_player_health(env: &WowLuaEnv) {
         let result: (
             Option<f64>,
             Option<f64>,
@@ -77,10 +75,8 @@ fn startup_player_life_bar_matches_player_health() {
     }
 }
 
-#[test]
-fn startup_player_buffs_show_duration_text() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_player_buffs_show_duration_text(env: &WowLuaEnv) {
         let result: (i32, i32, Option<String>) = env
             .eval(
                 r#"
@@ -131,10 +127,8 @@ fn startup_player_buffs_show_duration_text() {
     }
 }
 
-#[test]
-fn startup_keeps_action_bar_deprecation_fallbacks_non_recursive() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_keeps_action_bar_deprecation_fallbacks_non_recursive(env: &WowLuaEnv) {
         let result: (bool, bool, bool, bool) = env
             .eval(
                 r#"
@@ -257,10 +251,8 @@ fn damage_meter_saved_variables_default_with_empty_saved_vars_storage() {
     }
 }
 
-#[test]
-fn startup_legacy_dropdown_check_regions_remain_textures() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_legacy_dropdown_check_regions_remain_textures(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r##"
@@ -291,10 +283,8 @@ fn startup_legacy_dropdown_check_regions_remain_textures() {
     }
 }
 
-#[test]
-fn startup_chat_config_dynamic_wide_checkboxes_keep_checkbutton_parent_key() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_chat_config_dynamic_wide_checkboxes_keep_checkbutton_parent_key(env: &WowLuaEnv) {
         let result: (bool, bool, bool, bool, bool) = env
             .eval(
                 r##"
@@ -321,10 +311,8 @@ fn startup_chat_config_dynamic_wide_checkboxes_keep_checkbutton_parent_key() {
     }
 }
 
-#[test]
-fn chat_config_create_checkboxes_does_not_emit_checkbutton_error() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn chat_config_create_checkboxes_does_not_emit_checkbutton_error(env: &WowLuaEnv) {
         let before = env.state().borrow().lua_errors.len();
         env.exec(
             r##"
