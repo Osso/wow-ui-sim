@@ -1,46 +1,7 @@
-use std::path::{Path, PathBuf};
-
-use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::startup::{fire_one_on_update_tick, fire_startup_events, process_pending_timers};
 
-fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
-        "CARGO_MANIFEST_DIR"
-    )))
-}
-
-fn full_game_env_after_startup() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1600.0, 1200.0);
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
-
-    load_all_blizzard_addons(&env, &blizzard_ui_dir());
-    env.apply_post_load_workarounds();
-    fire_startup_events(&env);
-    env.apply_post_event_workarounds();
-    env.state().borrow_mut().widgets.rebuild_anchor_index();
-    process_pending_timers(&env);
-    fire_one_on_update_tick(&env);
-
-    env
-}
-
-fn load_all_blizzard_addons(env: &WowLuaEnv, ui: &Path) {
-    for (name, toc_path) in &discover_blizzard_addons(ui) {
-        if let Err(err) = load_addon(&env.loader_env(), toc_path) {
-            panic!("[load {name}] FAILED: {err}");
-        }
-    }
-}
-
-#[test]
-fn groupfinder_queue_frames_keep_party_backfill_parent_keys_after_startup() {
-    let env = full_game_env_after_startup();
+prefork_full_ui_case! {
+fn groupfinder_queue_frames_keep_party_backfill_parent_keys_after_startup(env: &WowLuaEnv) {
 
     let result: String = env
         .eval(
@@ -78,10 +39,10 @@ fn groupfinder_queue_frames_keep_party_backfill_parent_keys_after_startup() {
         "queue frames should expose PartyBackfill via the parentKey Lua field after startup"
     );
 }
+}
 
-#[test]
-fn groupfinder_backfill_update_uses_real_party_backfill_frames_after_startup() {
-    let env = full_game_env_after_startup();
+prefork_full_ui_case! {
+fn groupfinder_backfill_update_uses_real_party_backfill_frames_after_startup(env: &WowLuaEnv) {
 
     let result: String = env
         .eval(
@@ -118,4 +79,5 @@ fn groupfinder_backfill_update_uses_real_party_backfill_frames_after_startup() {
         result, "ok",
         "real LFGBackfillCover_Update calls should work without the removed nil-self workaround"
     );
+}
 }
