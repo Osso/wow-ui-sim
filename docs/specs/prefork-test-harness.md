@@ -82,7 +82,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 ### Subsequent behavior migrations
 
 - [x] Move 17 additional normal complete-retail-startup behaviors: six `Blizzard_AddOnList` surface cases, five micro-menu/game-menu cases, and six CharacterFrame `ShowUIPanel`/`HideUIPanel` cases. Independent verification records 8,393 integration cases, 1,984 prefork cases, zero overlap, and 17/17 passing.
-- [ ] Verify commit `2995da11d` after moving eight equivalent `chat_frame::test_chat_*` cases. Keep `test_chat_editbox_click_type_and_submit` and `test_chat_editbox_text_color_after_activation` in ordinary integration because complete startup changes their asserted initial channel and edit-box color.
+- [x] Verify commit `2995da11d` after moving eight equivalent `chat_frame::test_chat_*` cases: 8/8 pass, integration lists 8,385 cases, prefork lists 1,992, and overlap is zero. The 13.1985s-to-6.326s runtime change is directional only because power mode changed. Keep `test_chat_editbox_click_type_and_submit` and `test_chat_editbox_text_color_after_activation` in ordinary integration because complete startup changes their asserted initial channel and edit-box color.
 
 ### Failure handling
 
