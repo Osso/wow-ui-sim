@@ -45,7 +45,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] After successful startup, when bytecode caching is enabled, seal the bypassed cache as empty and initialized so read-only children cannot reload the disk pack; preserve whether `pack.bin` exists, return a successful zero-byte release outcome, and fail if cache state was initialized or populated before sealing. Disabled caching returns a successful no-op.
 - [x] Fail setup explicitly with addon context on addon-load, `ADDON_LOADED`, EnvironmentCleanup restoration, startup Lua, bootstrap-GC, or bytecode-cache sealing errors instead of continuing with a partial parent snapshot.
 - [x] Run registered full-UI cases as immutable `fn(&WowLuaEnv)` children with a 120-second child timeout and read-only bytecode-cache child setup.
-- [x] Define migrated cases with the explicit `prefork_full_ui_case!` marker; `build.rs` parses marker items with `syn`, renders the registry with `quote`, and assigns stable `<module>::<function>` names. Patch-manifest test references accept these generated marker cases alongside ordinary `#[test]` functions.
+- [x] Define migrated cases with the explicit `prefork_full_ui_case!` marker; `build.rs` parses marker items with `syn`, recursively follows literal `#[path = "..."] mod` children, renders the registry with `quote`, and assigns stable `<module>::<function>` names. Patch-manifest test references accept these generated marker cases alongside ordinary `#[test]` functions.
 - [x] Include the generated integration module tree in the prefork target so mixed modules compile once while unmarked tests remain under libtest.
 - [x] Prove nested-module discovery and inherited startup state with `prefork_full_ui_nested::fixture::preloaded_parent_has_normal_game_startup`.
 - [x] Register the generated default-retail full-UI registry with stable `<module>::<function>` names and retain 9 manual/nested prefork cases.
@@ -96,7 +96,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 ## Implementation inventory
 
 - `Cargo.toml` — declares the dedicated Linux prefork conformance target contract.
-- `build.rs` — keeps the custom target root out of the generated integration harness and builds the stable marker registry with `syn`/`quote`.
+- `build.rs` — keeps the custom target root out of the generated integration harness and builds the stable marker registry with `syn`/`quote`, including literal `#[path]` child modules.
 - `tests/common/prefork.rs` — reusable eager and lazy-state test-only runner APIs and execution behavior.
 - `tests/common/prefork_full_ui_preload.rs` — target-only normal retail game-screen preload and migrated-case helpers.
 - `tests/prefork_full_ui.rs` — custom target entry point, real-case registry, fixture cases, and behavioral conformance checks.
