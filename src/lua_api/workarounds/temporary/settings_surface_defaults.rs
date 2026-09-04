@@ -498,10 +498,6 @@ mod tests {
             Settings = {
                 INTERFACE_CATEGORY_ID = 1,
                 AUDIO_CATEGORY_ID = 2,
-                GetCategory = function()
-                    return nil
-                end,
-                OpenToCategory = function() end,
             }
             SettingsPanel = CreateFrame("Frame", "ReplacementSettingsPanel", UIParent)
             SettingsPanel:Hide()
