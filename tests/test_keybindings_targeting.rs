@@ -164,6 +164,10 @@ const BLIZZARD_ADDONS: &[(&str, &str)] = &[
         "Blizzard_ActionBarController",
         "Blizzard_ActionBarController.toc",
     ),
+    ("Blizzard_RaidWarning", "Blizzard_RaidWarning.toc"),
+    ("Blizzard_VisualAlerts", "Blizzard_VisualAlerts.toc"),
+    ("Blizzard_PrivateAurasUI", "Blizzard_PrivateAurasUI.toc"),
+    ("Blizzard_AuraContainer", "Blizzard_AuraContainer.toc"),
     ("Blizzard_UnitFrame", "Blizzard_UnitFrame_Mainline.toc"),
 ];
 
