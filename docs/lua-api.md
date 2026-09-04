@@ -334,7 +334,7 @@ anim:SetFromAlpha() / SetToAlpha() / SetDuration()
 | C_LFGList | `c_stubs_api.rs` | GetActiveEntryInfo (nil) |
 | C_Mail, C_Stable, C_Tutorial, C_ActionBar | `c_stubs_api.rs` | All return stub values |
 
-**C_StringUtil boundary** — `EscapeLuaFormatString(text)` replaces every `%` with `%%`. `EscapeLuaPatterns(text)` prefixes each Lua pattern character (`^`, `$`, `(`, `)`, `%`, `.`, `[`, `]`, `*`, `+`, `-`, `?`) with `%`. `WrapString(infix, prefix, suffix)` treats missing optional affixes as empty strings and returns `""` for an empty infix. These helpers are published only for the retail client family. Local `StringUtilDocumentation.lua` establishes signatures and transformations; it is not live-client error, taint, or secret-value evidence.
+**C_StringUtil boundary** — `EscapeLuaFormatString(text)` replaces every `%` with `%%`. `EscapeLuaPatterns(text)` prefixes each Lua pattern character (`^`, `$`, `(`, `)`, `%`, `.`, `[`, `]`, `*`, `+`, `-`, `?`) with `%`. `WrapString(infix, prefix, suffix)` treats missing optional affixes as empty strings and returns `""` for an empty infix. These helpers are published on retail and PTR and preserve other Lua string bytes, including NUL and invalid UTF-8. Local `StringUtilDocumentation.lua` establishes signatures and transformations; it is not live-client error, taint, or secret-value evidence.
 
 ---
 
