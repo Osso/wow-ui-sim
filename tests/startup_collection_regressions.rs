@@ -55,10 +55,8 @@ fn load_and_startup_env() -> WowLuaEnv {
     env
 }
 
-#[test]
-fn startup_wardrobe_tab_has_transmog_locations() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_wardrobe_tab_has_transmog_locations(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -84,13 +82,11 @@ fn startup_wardrobe_tab_has_transmog_locations() {
             .expect("wardrobe transmog location probe should run");
 
         assert_eq!(result, "ok");
-    }
+}
 }
 
-#[test]
-fn startup_wardrobe_can_switch_from_armor_to_weapon_slot() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_wardrobe_can_switch_from_armor_to_weapon_slot(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -133,13 +129,11 @@ fn startup_wardrobe_can_switch_from_armor_to_weapon_slot() {
             .expect("wardrobe armor-to-weapon slot switch probe should run");
 
         assert_eq!(result, "ok");
-    }
+}
 }
 
-#[test]
-fn startup_wardrobe_head_appearances_are_displayable() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_wardrobe_head_appearances_are_displayable(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -176,13 +170,11 @@ fn startup_wardrobe_head_appearances_are_displayable() {
             .expect("wardrobe displayability probe should run");
 
         assert_eq!(result, "ok");
-    }
+}
 }
 
-#[test]
-fn startup_wardrobe_filter_dropdown_click_toggles_not_collected() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_wardrobe_filter_dropdown_click_toggles_not_collected(env: &WowLuaEnv) {
         let setup_result: String = env
             .eval(
                 r#"
@@ -276,13 +268,11 @@ fn startup_wardrobe_filter_dropdown_click_toggles_not_collected() {
             .expect("wardrobe filter dropdown probe should run");
 
         assert_eq!(result, "ok");
-    }
+}
 }
 
-#[test]
-fn startup_wardrobe_class_dropdown_uses_localized_radio_rows() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_wardrobe_class_dropdown_uses_localized_radio_rows(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -349,13 +339,11 @@ fn startup_wardrobe_class_dropdown_uses_localized_radio_rows() {
             .expect("wardrobe class dropdown probe should run");
 
         assert_eq!(result, "ok");
-    }
+}
 }
 
-#[test]
-fn startup_collections_journal_closes_on_escape() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_collections_journal_closes_on_escape(env: &WowLuaEnv) {
 
         env.exec("ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_APPEARANCES)")
             .expect("collections journal should open");
@@ -376,13 +364,11 @@ fn startup_collections_journal_closes_on_escape() {
             closed_without_menu,
             "Escape should close CollectionsJournal through the UIPanel close path"
         );
-    }
+}
 }
 
-#[test]
-fn startup_adventure_guide_closes_on_escape() {
-    test_timeout! {
-        let env = load_and_startup_env();
+prefork_full_ui_case! {
+fn startup_adventure_guide_closes_on_escape(env: &WowLuaEnv) {
 
         env.exec("ToggleEncounterJournal()")
             .expect("adventure guide should open");
@@ -403,5 +389,5 @@ fn startup_adventure_guide_closes_on_escape() {
             closed_without_menu,
             "Escape should close EncounterJournal through the UIPanel close path"
         );
-    }
+}
 }
