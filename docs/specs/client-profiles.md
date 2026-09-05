@@ -7,7 +7,8 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - [x] The public `client-retail` bundle selects the retail profile and current retail 12.1.0 API epoch (`120100`).
 - [x] Retail API epoch features remain cumulative, so 12.1.0 includes the modeled 12.0.0, 12.0.5, and 12.0.7 surfaces.
 - [x] Historical retail epochs remain selectable through `profile-retail` without enabling the current-retail bundle.
-- [x] `client-ptr` remains a distinct profile/cache while selecting the 12.1.0 API epoch.
+- [x] `client-ptr` remains a distinct profile/cache while selecting the cumulative 12.1.5 API epoch (`120105`).
+- [x] PTR CASC resolves the official `wowxptr` product; 12.1.5.69594 uses BuildConfig `4a9973f37906f8cfb344f8a9fe6777e0` and Gethe `ptr2` source commit `49b69918fcdc77e109813281e4f537d45ec7dcbf`.
 - [x] Same-epoch profiles may have source-proven post-startup removals: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while PTR hides it after startup.
 - [x] Default-retail Lua initialization publishes the probe-backed retail 12.1 global-string contract.
 
@@ -18,8 +19,9 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 
 ## Implementation inventory
 
-- `Cargo.toml` — cumulative retail epoch features and public client bundles.
+- `Cargo.toml` — cumulative retail epoch features and public client bundles; `retail-12-1-5` extends `retail-12-1-0` for PTR.
 - `src/client_profile.rs` — active profile/epoch selection and interface constants.
+- `src/asset_resolver_config.rs` — profile-to-CASC-product mapping (`client-ptr` uses `wowxptr`).
 - `src/ptr/strict_removals.lua` — PTR-only post-startup removals, including `C_RecruitAFriend.IsEnabled`.
 - `src/lua_api/globals/strings/mod.rs` — epoch-gated retail string registration.
 - `src/lua_api/globals/strings/string_data/more_strings.rs` — probe-backed retail 12.1 values.
@@ -37,6 +39,6 @@ None.
 
 ## Out of scope
 
-- Changing PTR, classic-profile, or historical retail cache selection.
+- Changing PTR or classic-profile cache selection, manifests, generators, or cache contents.
 - Removing historical retail API epochs.
 - Modifying Blizzard UI cache files or committed source manifests as part of the channel promotion.

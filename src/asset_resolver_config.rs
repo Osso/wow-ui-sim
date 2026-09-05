@@ -26,7 +26,7 @@ pub(crate) fn configure_casc_product_env() {
 #[cfg(feature = "casc")]
 pub(crate) fn active_profile_casc_product() -> &'static str {
     match crate::client_profile::ACTIVE {
-        crate::client_profile::ClientProfile::Ptr => "wowt",
+        crate::client_profile::ClientProfile::Ptr => "wowxptr",
         crate::client_profile::ClientProfile::Wrath
         | crate::client_profile::ClientProfile::Mists => "wow_classic",
         crate::client_profile::ClientProfile::Era
@@ -68,8 +68,8 @@ mod tests {
 
     #[test]
     #[cfg(feature = "client-ptr")]
-    fn ptr_profile_selects_wowt_product() {
-        assert_eq!(super::active_profile_casc_product(), "wowt");
+    fn ptr_profile_selects_wowxptr_product() {
+        assert_eq!(super::active_profile_casc_product(), "wowxptr");
     }
 }
 

@@ -22,6 +22,7 @@ pub enum RetailApiEpoch {
     Retail12_0_5,
     Retail12_0_7,
     Retail12_1_0,
+    Retail12_1_5,
 }
 
 impl RetailApiEpoch {
@@ -31,20 +32,39 @@ impl RetailApiEpoch {
             RetailApiEpoch::Retail12_0_5 => 120005,
             RetailApiEpoch::Retail12_0_7 => 120007,
             RetailApiEpoch::Retail12_1_0 => 120100,
+            RetailApiEpoch::Retail12_1_5 => 120105,
         }
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "retail-12-1-5")]
+pub const ACTIVE_RETAIL_API_EPOCH: RetailApiEpoch = RetailApiEpoch::Retail12_1_5;
+
+#[cfg(all(not(feature = "retail-12-1-5"), feature = "retail-12-1-0"))]
 pub const ACTIVE_RETAIL_API_EPOCH: RetailApiEpoch = RetailApiEpoch::Retail12_1_0;
 
-#[cfg(all(not(feature = "retail-12-1-0"), feature = "retail-12-0-7"))]
+#[cfg(all(
+    not(feature = "retail-12-1-5"),
+    not(feature = "retail-12-1-0"),
+    feature = "retail-12-0-7"
+))]
 pub const ACTIVE_RETAIL_API_EPOCH: RetailApiEpoch = RetailApiEpoch::Retail12_0_7;
 
-#[cfg(all(not(feature = "retail-12-0-7"), feature = "retail-12-0-5"))]
+#[cfg(all(
+    not(feature = "retail-12-1-5"),
+    not(feature = "retail-12-1-0"),
+    not(feature = "retail-12-0-7"),
+    feature = "retail-12-0-5"
+))]
 pub const ACTIVE_RETAIL_API_EPOCH: RetailApiEpoch = RetailApiEpoch::Retail12_0_5;
 
-#[cfg(all(not(feature = "retail-12-0-5"), feature = "retail-12-0-0"))]
+#[cfg(all(
+    not(feature = "retail-12-1-5"),
+    not(feature = "retail-12-1-0"),
+    not(feature = "retail-12-0-7"),
+    not(feature = "retail-12-0-5"),
+    feature = "retail-12-0-0"
+))]
 pub const ACTIVE_RETAIL_API_EPOCH: RetailApiEpoch = RetailApiEpoch::Retail12_0_0;
 
 #[cfg(not(feature = "retail-12-0-0"))]
@@ -190,15 +210,16 @@ compile_error!(
     "Exactly one profile marker must be enabled: profile-retail (normally via client-retail), client-ptr, client-wrath, client-mists, client-era, or client-anniversary"
 );
 
-#[cfg(all(feature = "client-ptr", not(feature = "retail-12-1-0")))]
-compile_error!("client-ptr must enable the retail-12-1-0 API epoch");
+#[cfg(all(feature = "client-ptr", not(feature = "retail-12-1-5")))]
+compile_error!("client-ptr must enable the retail-12-1-5 API epoch");
 
 #[cfg(all(
     any(
         feature = "retail-12-0-0",
         feature = "retail-12-0-5",
         feature = "retail-12-0-7",
-        feature = "retail-12-1-0"
+        feature = "retail-12-1-0",
+        feature = "retail-12-1-5"
     ),
     not(any(feature = "profile-retail", feature = "client-ptr"))
 ))]
@@ -271,6 +292,7 @@ mod tests {
             (RetailApiEpoch::Retail12_0_5, 120005),
             (RetailApiEpoch::Retail12_0_7, 120007),
             (RetailApiEpoch::Retail12_1_0, 120100),
+            (RetailApiEpoch::Retail12_1_5, 120105),
         ];
 
         for (epoch, interface_version) in expected {
@@ -301,8 +323,12 @@ mod tests {
     }
 
     #[test]
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-0"))]
-    fn retail_client_can_point_at_patch_12_1_api_epoch() {
+    #[cfg(all(
+        feature = "profile-retail",
+        feature = "retail-12-1-0",
+        not(feature = "retail-12-1-5")
+    ))]
+    fn retail_client_can_point_at_patch_12_1_0_api_epoch() {
         assert_eq!(ACTIVE, ClientProfile::Retail);
         assert_eq!(ACTIVE_INTERFACE_VERSION, 120100);
         assert_eq!(RETAIL_API_INTERFACE_VERSION, 120100);
@@ -310,10 +336,11 @@ mod tests {
 
     #[test]
     #[cfg(feature = "client-ptr")]
-    fn ptr_client_points_at_patch_12_1_api_epoch() {
+    fn ptr_client_points_at_patch_12_1_5_api_epoch() {
         assert!(cfg!(feature = "retail-12-0-7"));
         assert!(cfg!(feature = "retail-12-1-0"));
-        assert_eq!(ACTIVE_INTERFACE_VERSION, 120100);
+        assert!(cfg!(feature = "retail-12-1-5"));
+        assert_eq!(ACTIVE_INTERFACE_VERSION, 120105);
     }
 
     #[test]
@@ -349,7 +376,7 @@ mod tests {
     #[cfg(feature = "client-ptr")]
     fn ptr_uses_12_1_interface_and_cache_scope() {
         assert_eq!(ACTIVE, ClientProfile::Ptr);
-        assert_eq!(ACTIVE.interface_version(), 120100);
+        assert_eq!(ACTIVE.interface_version(), 120105);
         assert_eq!(ACTIVE.cache_subdir(), "ptr");
     }
 }
