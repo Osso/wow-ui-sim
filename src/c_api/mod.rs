@@ -65,6 +65,7 @@ pub mod legacy_spell_book;
 #[cfg(feature = "client-mists")]
 mod mists_talents;
 pub mod permanent_shims;
+#[cfg(feature = "retail-12-1-5")]
 pub mod timed_signal_map;
 
 mod helpers;

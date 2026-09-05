@@ -18,6 +18,27 @@ use std::time::{Duration, Instant};
 const RECENT_FRAME_WINDOW_SIZE: usize = 60;
 // Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
 const UI_REFERENCE_HEIGHT: f32 = 768.0;
+
+#[cfg(feature = "retail-12-1-5")]
+fn next_timer_or_signal_delay(timer_delay: Option<Duration>, state: &SimState) -> Option<Duration> {
+    match (
+        timer_delay,
+        crate::c_api::timed_signal_map::next_signal_delay(state),
+    ) {
+        (Some(timer), Some(signal)) => Some(timer.min(signal)),
+        (Some(delay), None) | (None, Some(delay)) => Some(delay),
+        (None, None) => None,
+    }
+}
+
+#[cfg(not(feature = "retail-12-1-5"))]
+fn next_timer_or_signal_delay(
+    timer_delay: Option<Duration>,
+    _state: &SimState,
+) -> Option<Duration> {
+    timer_delay
+}
+
 const EDIT_MODE_LAYOUTS_INFO_LUA: &str = r#"
     local source = (EditModeManagerFrame and EditModeManagerFrame.layoutInfo) or C_EditMode.GetLayouts()
     if type(source) ~= "table" then
@@ -207,6 +228,17 @@ impl WowLuaEnv {
 
     /// Run ready timers and return how many callbacks fired.
     pub fn process_timers(&self) -> Result<usize> {
+        let signal_fired = self.process_due_timed_signals();
+
+        let now = Instant::now();
+        let timers = take_pending_timers(self);
+        let (timer_fired, requeue) = process_timer_queue(self, timers, now);
+        self.state.borrow_mut().rilua_timers = requeue;
+        Ok(signal_fired + timer_fired)
+    }
+
+    #[cfg(feature = "retail-12-1-5")]
+    fn process_due_timed_signals(&self) -> usize {
         let due_signals = {
             let mut state = self.state.borrow_mut();
             crate::c_api::timed_signal_map::take_due_signals(&mut state)
@@ -224,12 +256,12 @@ impl WowLuaEnv {
                 fired += 1;
             }
         }
+        fired
+    }
 
-        let now = Instant::now();
-        let timers = take_pending_timers(self);
-        let (timer_fired, requeue) = process_timer_queue(self, timers, now);
-        self.state.borrow_mut().rilua_timers = requeue;
-        Ok(fired + timer_fired)
+    #[cfg(not(feature = "retail-12-1-5"))]
+    fn process_due_timed_signals(&self) -> usize {
+        0
     }
 
     /// Fire OnUpdate handlers for all frames that have them registered.
@@ -306,14 +338,7 @@ impl WowLuaEnv {
             .filter(|timer| !timer.cancelled)
             .map(|timer| timer.fire_at.saturating_duration_since(now))
             .min();
-        match (
-            timer_delay,
-            crate::c_api::timed_signal_map::next_signal_delay(&state),
-        ) {
-            (Some(timer), Some(signal)) => Some(timer.min(signal)),
-            (Some(delay), None) | (None, Some(delay)) => Some(delay),
-            (None, None) => None,
-        }
+        next_timer_or_signal_delay(timer_delay, &state)
     }
 
     /// Dump all frame positions for debugging.
