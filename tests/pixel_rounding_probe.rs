@@ -15,6 +15,10 @@ fn pixel_rounding_probe_records_read_only_cases_and_capture_errors() {
         GetPhysicalScreenWidth = nil
         GetPhysicalScreenHeight = nil
         GetPhysicalScreenSize = function() return 3440, 1440 end
+        InClickBindingMode = function() return false end
+        C_AddOns.IsAddOnLoaded = function(name)
+            return name == "Blizzard_Collections", true
+        end
         InCombatLockdown = function() return false end
         C_Timer.After = function(_, callback) callback() end
         local originalCreateFrame = CreateFrame
@@ -38,6 +42,10 @@ fn pixel_rounding_probe_records_read_only_cases_and_capture_errors() {
         assert(sample.build.build == "69594" and sample.build.interface == 120105)
         assert(sample.build.matchesExpectedBuild == true)
         assert(sample.physicalScreen.width == 3440 and sample.physicalScreen.height == 1440)
+        assert(sample.bootstrap.clickBindingModeType == "function")
+        assert(sample.bootstrap.Blizzard_ClickBindingUI.loaded == false)
+        assert(sample.bootstrap.Blizzard_ClickBindingUI.finished == true)
+        assert(sample.bootstrap.Blizzard_Collections.loaded == true)
         assert(#sample.cases == 12, "compact rounding case matrix")
         assert(sample.cases[1].label == "default")
         assert(sample.cases[2].label == "bottomleft-fractional")

@@ -258,6 +258,25 @@ local function captureCases(sample)
     end)
 end
 
+local function captureBootstrapState()
+    local record = {
+        clickBindingModeType = type(InClickBindingMode),
+        collectionsToggleType = type(ToggleCollectionsJournal),
+    }
+    for _, name in ipairs({ "Blizzard_ClickBindingUI", "Blizzard_Collections" }) do
+        local addon = {}
+        local ok, loaded, finished = pcall(C_AddOns.IsAddOnLoaded, name)
+        if ok then
+            addon.loaded = value(addon, "loaded", function() return loaded end)
+            addon.finished = value(addon, "finished", function() return finished end)
+        else
+            recordError(addon, "loadState", loaded)
+        end
+        record[name] = addon
+    end
+    return record
+end
+
 local function capture(label, settled)
     local sample = { label = label, errors = {}, cases = {} }
     PixelRoundingProbeDB.samples[#PixelRoundingProbeDB.samples + 1] = sample
@@ -279,6 +298,7 @@ local function capture(label, settled)
         recordError(sample, "physicalScreenSize", physicalWidth)
     end
     sample.uiParent = captureObject(UIParent, "frame")
+    sample.bootstrap = captureBootstrapState()
     if settled then
         for _, caseLabel in ipairs(caseOrder) do
             local case = { label = caseLabel, id = caseLabel, errors = {} }
