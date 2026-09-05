@@ -1,3 +1,7 @@
+## [2026-09-05] investigation | Record PTR passive bootstrap observations
+
+Updated [[ptr-pixel-rounding-probe]] and the probe README for commit `0c05c89c1`: each existing pixel-rounding capture passively records `Blizzard_ClickBindingUI` and `Blizzard_Collections` loaded/finished state plus `InClickBindingMode` and `ToggleCollectionsJournal` presence. It loads no addon, invokes no panel helper, adds no command, and does not establish native LoadOnDemand semantics. PTR panel smoke reports `GetBuildInfo()` `12.1.5` / `69594` / `120105`, a missing Spellbook `InClickBindingMode`, and sequential Collections visibility symptoms; live SavedVariables capture remains pending. The staged Lua SHA-256 is `dd4066abad6849d99185879239754192bf405602983736b368a7e7d8640dd53a`. The normal TOC-order finding for `[Bootstrap]` entries remains unchanged.
+
 ## [2026-09-05] system | Report pinned PTR runtime identity
 
 Documented commit `7c8b8b8d9`: under `client-ptr`, `GetBuildInfo()` derives `12.1.5` / `69594` from the pinned PTR metadata and returns active interface `120105`; retail remains `12.1.0` / `120100`. Its date and remaining slots are temporary defaults, so this is not a complete live-client API claim. Updated [[lua-api]], [[client-profiles]], and the index. No code, cache, test, network, or `PLAN.md` action occurred in this documentation commit.

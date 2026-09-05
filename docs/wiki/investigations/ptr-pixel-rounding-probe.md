@@ -12,7 +12,13 @@ The settled sample re-reads the same hidden objects on the next timer tick. Repe
 
 Commit `5a5b7a187` replaced invented one-value physical-width/height globals with WoW's documented two-result `GetPhysicalScreenSize()`. An actual VM protocol probe first failed with only that documented API exposed, then passed after the correction; this validates the capture interface, not native rounding geometry.
 
-The addon is staged at `C:\World of Warcraft\_xptr_\Interface\AddOns\PixelRoundingProbe`. Local and staged SHA-256 values match for `PixelRoundingProbe.lua` (`e9cb08416dfc4b859c67ab31f0c938dd5016c5f9e1b06cebc9679d09c408e44b`) and `.toc` (`cfcd6f3fcb2990c29179115c78cf3dc39e6d767c312a7f359edac59455bfc86c`). The active desktop executable is `C:\World of Warcraft\_xptr_\WowT.exe`; its `.build.info` has `wowxptr` version `12.1.5.69594`, build key `4a9973f37906f8cfb344f8a9fe6777e0`.
+The addon is staged at `C:\World of Warcraft\_xptr_\Interface\AddOns\PixelRoundingProbe`. Local and staged SHA-256 values match for `PixelRoundingProbe.lua` (`dd4066abad6849d99185879239754192bf405602983736b368a7e7d8640dd53a`) and `.toc` (`cfcd6f3fcb2990c29179115c78cf3dc39e6d767c312a7f359edac59455bfc86c`). The active desktop executable is `C:\World of Warcraft\_xptr_\WowT.exe`; its `.build.info` has `wowxptr` version `12.1.5.69594`, build key `4a9973f37906f8cfb344f8a9fe6777e0`.
+
+## Passive bootstrap observations
+
+Every sample now reads, without loading or invoking either addon, the `loaded` and `finished` results from `C_AddOns.IsAddOnLoaded` for `Blizzard_ClickBindingUI` and `Blizzard_Collections`. It also records the types of the bootstrap-defined `InClickBindingMode` and the Collections toggle entry point `ToggleCollectionsJournal`.
+
+This accompanies, but does not resolve, PTR panel-smoke evidence: the reported `GetBuildInfo()` identity is `12.1.5` / `69594` / `120105`; Spellbook encountered a nil `InClickBindingMode`; and Collections changed visibility through its sequential normal-toggle path. The capture must not be used to infer native LoadOnDemand behavior. In particular, it authorizes neither a separate bootstrap pass nor any departure from the July 1 finding that `[Bootstrap]` TOC entries execute in normal TOC order.
 
 ## Unresolved native behavior
 
@@ -29,7 +35,8 @@ Do not infer native geometry until a capture has `matchesExpectedBuild = true`, 
 - `/tmp/pi-pixel-protocol-{red,green}.*` — reproduction and corrected settled-capture protocol
 - `/tmp/pi-pixel-probe-installed-hashes.*` — earlier staging hash comparison
 - `/tmp/pi-pixel-physical-{red,green}.*` — documented physical-screen API RED/GREEN
-- `/tmp/pi-pixel-probe-physical-installed-hashes.stdout.log` — corrected staged hash comparison
+- `/tmp/pi-pixel-probe-physical-installed-hashes.stdout.log` — earlier corrected staged hash comparison
+- `/tmp/pi-pixel-bootstrap-installed-hashes.stdout.log` — current passive-bootstrap probe staging hashes
 
 ## See Also
 

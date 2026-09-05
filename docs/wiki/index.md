@@ -1,6 +1,6 @@
 ## [2026-09-05] investigation | Stage PTR pixel-rounding evidence probe
 
-[[ptr-pixel-rounding-probe]] records the bounded read-only `PixelRoundingProbe` protocol for desktop `wowxptr` `12.1.5.69594`: hidden owned objects only, persistent next-tick resampling, documented `GetPhysicalScreenSize()` capture, and verified `_xptr_` staging hashes. Native source does not establish whether `SetRoundLayoutToNearestPixel` rounds offsets or final edges; no simulator behavior claim is made before live SavedVariables capture.
+[[ptr-pixel-rounding-probe]] records the bounded read-only `PixelRoundingProbe` protocol for desktop `wowxptr` `12.1.5.69594`: hidden owned objects only, persistent next-tick resampling, physical-screen capture, and verified `_xptr_` staging hashes. Samples now passively record ClickBinding/Collections load completion and helper presence without loading addons; this does not establish native LoD semantics or alter normal `[Bootstrap]` TOC order. Native rounding remains unproven pending PTR SavedVariables capture.
 
 ## [2026-09-05] audit | Publish 12.1 compatibility strings on PTR
 
@@ -484,7 +484,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[chatframe-scrollbar-anchor-reapply]] | Inherited child anchor reapply used the child name for `$parent...` substitution, pushing `ChatFrame1` scrollbar descendants off-screen |
 | [[crafting-cast-bar]] | `C_TradeSkillUI.CraftRecipe` updated inventory but did not start player casting or fire `UNIT_SPELLCAST_START`, so Blizzard's professions overlay cast bar had no backing spellbar state |
 | [[display-size-ui-scale-events]] | Live probe proved retail fires `DISPLAY_SIZE_CHANGED` → `UI_SCALE_CHANGED` as an ordered pair on every display/scale change (resize, slider, maximize, resolution) — never one alone; sim resize path and inverted test fixed |
-| [[ptr-pixel-rounding-probe]] | Staged read-only `wowxptr` 12.1.5 pixel-rounding probe; native anchor-versus-final-edge rounding remains unproven pending PTR SavedVariables capture |
+| [[ptr-pixel-rounding-probe]] | Staged read-only `wowxptr` 12.1.5 pixel-rounding probe with passive ClickBinding/Collections bootstrap observations; native LoD and anchor-versus-final-edge rounding remain unproven pending PTR SavedVariables capture |
 | [[hero-spec-dialog-anchors]] | LIGHTSMITH/TEMPLAR selection dialog: layer-children batched out of XML order + runtime templates skipped named-anchor re-resolution, dropping panel content to spec-frame edge |
 | [[hero-spec-icon-bug]] | Retired — 5 layers of evidence confirm icon renders correctly |
 | [[xml-scale-attribute]] | XML `scale` attribute was silently dropped (no `FrameXml` field); hero talents `scale="0.85"` never applied, node buttons overflowed the fixed 284×362 backplate |
