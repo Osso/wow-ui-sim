@@ -7,10 +7,12 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
 
+from tools import gen_blizzard_ui_content_index
 from tools.gen_blizzard_ui_content_index import (
     PINNED_GETHE_REVISION,
     PINNED_VERSION,
@@ -20,18 +22,12 @@ from tools.gen_blizzard_ui_content_index import (
 
 
 def write_config(path: Path, fields: dict[str, str]) -> None:
-    path.write_text(
-        "\n".join(f"{key} = {value}" for key, value in fields.items()) + "\n"
-    )
+    path.write_text("\n".join(f"{key} = {value}" for key, value in fields.items()) + "\n")
 
 
 def write_download(path: Path, encoding_key: bytes) -> None:
     path.write_bytes(
-        b"DL\x01\x10\x00"
-        + (1).to_bytes(4, "big")
-        + b"\x00\x00"
-        + encoding_key
-        + b"\0" * 6
+        b"DL\x01\x10\0" + (1).to_bytes(4, "big") + b"\0\0" + encoding_key + b"\0" * 6
     )
 
 
@@ -45,13 +41,42 @@ def write_archive_index(index_dir: Path, encoding_key: bytes) -> str:
     return archive_key
 
 
-def write_tvfs(
-    path: Path, fdid: int, content_key: bytes, encoding_prefix: bytes
-) -> None:
+def write_tvfs(path: Path, fdid: int, content_key: bytes, encoding_prefix: bytes) -> None:
     path_name = f"{fdid:08X}{content_key.hex().upper()}".encode()
     path_table = bytes([len(path_name)]) + path_name + b"\xff" + (0).to_bytes(4, "big")
     vfs_table = b"\x01" + struct.pack(">II", 0, 123) + b"\0"
     cft_table = encoding_prefix + b"\0" * (20 - len(encoding_prefix)) + content_key
+    header = (
+        b"TVFS\x01\x2e\x09\x09"
+        + (1).to_bytes(4, "big")
+        + struct.pack(
+            ">6I",
+            46,
+            len(path_table),
+            46 + len(path_table),
+            len(vfs_table),
+            46 + len(path_table) + len(vfs_table),
+            len(cft_table),
+        )
+        + b"\0\x01"
+        + b"\0" * 8
+    )
+    path.write_bytes(header + path_table + vfs_table + cft_table)
+
+
+def write_root_tvfs(path: Path, content_keys: list[bytes]) -> None:
+    path_table = b"".join(
+        bytes([40])
+        + f"{index:08X}{content_key.hex().upper()}".encode()
+        + b"\xff"
+        + (index * 10).to_bytes(4, "big")
+        for index, content_key in enumerate(content_keys)
+    )
+    vfs_table = b"".join(
+        b"\x01" + struct.pack(">II", 0, 1) + bytes([index * 20])
+        for index in range(len(content_keys))
+    )
+    cft_table = b"\0" * (20 * len(content_keys))
     header = (
         b"TVFS\x01\x2e\x09\x09"
         + (1).to_bytes(4, "big")
@@ -80,52 +105,64 @@ class ContentIndexTests(unittest.TestCase):
         (source / "Example.lua").write_bytes(payload)
         content_key = hashlib.md5(payload.replace(b"\n", b"\r\n")).digest()
         encoding_key = bytes.fromhex("00112233445566778899aabbccddeeff")
+        index_dir = prefix.with_name(prefix.name + "-archive-indices")
+        index_dir.mkdir()
+        archive_key = write_archive_index(index_dir, encoding_key)
+        cdn_path = prefix.with_name(prefix.name + "-cdn-config.txt")
+        write_config(cdn_path, {"archives": archive_key})
+        (root / "listfile.csv").write_text("42;interface/addons/example.lua\n")
+        neutral_path = prefix.with_name(prefix.name + "-vfs-neutral.bin")
+        write_tvfs(neutral_path, 42, content_key, encoding_key[:9])
+        en_us_path = prefix.with_name(prefix.name + "-vfs-enUS.bin")
+        write_tvfs(en_us_path, 44, hashlib.md5(b"locale").digest(), b"\0" * 9)
+        root_path = prefix.with_name(prefix.name + "-vfs-root.bin")
+        write_root_tvfs(
+            root_path,
+            [
+                hashlib.md5(neutral_path.read_bytes()).digest(),
+                hashlib.md5(en_us_path.read_bytes()).digest(),
+            ],
+        )
+        download_path = prefix.with_name(prefix.name + "-download.bin")
+        write_download(download_path, encoding_key)
         write_config(
             prefix.with_name(prefix.name + "-build-config.txt"),
             {
                 "build-name": "WOW-69594patch12.1.5_XPTR",
                 "build-uid": "wowxptr",
                 "install": "06feedbc851542370f3d2081fce81e19 21c1e5624dd78f5487c97caea43bf035",
+                "download": hashlib.md5(download_path.read_bytes()).hexdigest(),
+                "vfs-root": hashlib.md5(root_path.read_bytes()).hexdigest(),
             },
         )
-        index_dir = prefix.with_name(prefix.name + "-archive-indices")
-        index_dir.mkdir()
-        archive_key = write_archive_index(index_dir, encoding_key)
-        write_config(
-            prefix.with_name(prefix.name + "-cdn-config.txt"), {"archives": archive_key}
-        )
-        (root / "listfile.csv").write_text("42;interface/addons/example.lua\n")
-        write_tvfs(
-            prefix.with_name(prefix.name + "-vfs-neutral.bin"),
-            42,
-            content_key,
-            encoding_key[:9],
-        )
-        write_tvfs(
-            prefix.with_name(prefix.name + "-vfs-root.bin"),
-            43,
-            hashlib.md5(b"root").digest(),
-            b"\0" * 9,
-        )
-        write_tvfs(
-            prefix.with_name(prefix.name + "-vfs-enUS.bin"),
-            44,
-            hashlib.md5(b"locale").digest(),
-            b"\0" * 9,
-        )
-        write_download(prefix.with_name(prefix.name + "-download.bin"), encoding_key)
         return prefix, source, root / "index.json"
+
+    def fixture_keys(self, prefix: Path) -> tuple[str, str]:
+        return (
+            hashlib.md5(prefix.with_name(prefix.name + "-build-config.txt").read_bytes()).hexdigest(),
+            hashlib.md5(prefix.with_name(prefix.name + "-cdn-config.txt").read_bytes()).hexdigest(),
+        )
+
+    def build_fixture_index(
+        self, prefix: Path, source: Path, keys: tuple[str, str] | None = None
+    ) -> dict[str, object]:
+        build_key, cdn_key = keys or self.fixture_keys(prefix)
+        with mock.patch.object(gen_blizzard_ui_content_index, "PINNED_BUILD_KEY", build_key), mock.patch.object(
+            gen_blizzard_ui_content_index, "PINNED_CDN_KEY", cdn_key
+        ):
+            return build_content_index(prefix, source, prefix.parent / "listfile.csv")
 
     def test_builds_deterministic_pinned_record_from_crlf_source_match(self) -> None:
         prefix, source, output = self.make_fixture()
-        index = build_content_index(prefix, source, prefix.parent / "listfile.csv")
+        index = self.build_fixture_index(prefix, source)
 
         self.assertEqual(index["schema"], 1)
         self.assertEqual(index["gethe_revision"], PINNED_GETHE_REVISION)
         self.assertEqual(index["version"], PINNED_VERSION)
         self.assertEqual(index["product"], "wowxptr")
-        self.assertEqual(index["build_key"], "4a9973f37906f8cfb344f8a9fe6777e0")
-        self.assertEqual(index["cdn_key"], "3aa83893a3ce9b722a5f51328ad9a552")
+        build_key, cdn_key = self.fixture_keys(prefix)
+        self.assertEqual(index["build_key"], build_key)
+        self.assertEqual(index["cdn_key"], cdn_key)
         self.assertEqual(index["install_key"], "06feedbc851542370f3d2081fce81e19")
         self.assertEqual(
             index["files"][0],
@@ -147,22 +184,36 @@ class ContentIndexTests(unittest.TestCase):
     def test_uses_unique_content_key_when_listfile_lacks_new_file_data_id(self) -> None:
         prefix, source, _ = self.make_fixture()
         (prefix.parent / "listfile.csv").write_text("")
-
-        index = build_content_index(prefix, source, prefix.parent / "listfile.csv")
-
+        index = self.build_fixture_index(prefix, source)
         self.assertEqual(index["files"][0]["path"], "Example.lua")
 
     def test_finds_checkout_root_from_addons_directory(self) -> None:
-        root = Path("/tmp/pinned")
-        self.assertEqual(source_checkout_dir(root / "Interface" / "AddOns"), root)
+        self.assertEqual(source_checkout_dir(Path("/tmp/pinned/Interface/AddOns")), Path("/tmp/pinned"))
+
+    def test_rejects_tampered_pinned_metadata_inputs(self) -> None:
+        suffixes = (
+            "build-config.txt",
+            "cdn-config.txt",
+            "vfs-root.bin",
+            "vfs-neutral.bin",
+            "vfs-enUS.bin",
+            "download.bin",
+        )
+        for suffix in suffixes:
+            with self.subTest(suffix=suffix):
+                prefix, source, _ = self.make_fixture()
+                keys = self.fixture_keys(prefix)
+                metadata = prefix.with_name(f"{prefix.name}-{suffix}")
+                metadata.write_bytes(metadata.read_bytes() + b"tampered")
+                with self.assertRaisesRegex(ValueError, "pinned|metadata"):
+                    self.build_fixture_index(prefix, source, keys)
 
     def test_rejects_missing_archive_location(self) -> None:
         prefix, source, _ = self.make_fixture()
         for file in prefix.with_name(prefix.name + "-archive-indices").iterdir():
             file.unlink()
-
         with self.assertRaisesRegex(ValueError, "missing archive location"):
-            build_content_index(prefix, source, prefix.parent / "listfile.csv")
+            self.build_fixture_index(prefix, source)
 
     def test_rejects_archive_index_with_wrong_footer_hash(self) -> None:
         prefix, source, _ = self.make_fixture()
@@ -170,9 +221,8 @@ class ContentIndexTests(unittest.TestCase):
         raw = bytearray(index_file.read_bytes())
         raw[-1] ^= 1
         index_file.write_bytes(raw)
-
         with self.assertRaisesRegex(ValueError, "archive index hash mismatch"):
-            build_content_index(prefix, source, prefix.parent / "listfile.csv")
+            self.build_fixture_index(prefix, source)
 
 
 if __name__ == "__main__":

@@ -37,6 +37,25 @@ def metadata_path(prefix: Path, suffix: str) -> Path:
     return prefix.with_name(f"{prefix.name}-{suffix}")
 
 
+def md5_file(path: Path) -> str:
+    return hashlib.md5(path.read_bytes()).hexdigest()
+
+
+def verify_pinned_file(path: Path, expected_key: str, description: str) -> None:
+    actual_key = md5_file(path)
+    if actual_key != expected_key:
+        raise ValueError(
+            f"pinned {description} key mismatch: expected {expected_key}, got {actual_key}"
+        )
+
+
+def config_content_key(config: dict[str, str], field: str) -> str:
+    content_key = config.get(field, "").split(maxsplit=1)[0]
+    if len(content_key) != 32 or not all(character in "0123456789abcdef" for character in content_key):
+        raise ValueError(f"build metadata has no {field} content key")
+    return content_key
+
+
 def parse_tvfs_entries(path: Path) -> list[dict[str, int | str]]:
     raw = path.read_bytes()
     if raw[:4] != b"TVFS":
@@ -78,6 +97,9 @@ def parse_tvfs_entries(path: Path) -> list[dict[str, int | str]]:
                     visit(offset, nested_end, current)
                     offset = nested_end
                 else:
+                    if len(current) != 40:
+                        prefix = initial_prefix
+                        continue
                     vfs_entry = vfs_offset + reference
                     spans = raw[vfs_entry]
                     if spans != 1:
@@ -92,8 +114,6 @@ def parse_tvfs_entries(path: Path) -> list[dict[str, int | str]]:
                     )
                     cft_entry = cft_offset + cft_relative
                     encoding_prefix = raw[cft_entry : cft_entry + key_size]
-                    if len(current) != 40:
-                        raise ValueError(f"unsupported TVFS generic name: {current}")
                     entries.append(
                         {
                             "file_data_id": int(current[:8], 16),
@@ -217,6 +237,34 @@ def verify_pinned_source(source_dir: Path) -> None:
         )
 
 
+def verify_pinned_metadata(prefix: Path) -> tuple[dict[str, str], dict[str, str]]:
+    build_config_path = metadata_path(prefix, "build-config.txt")
+    cdn_config_path = metadata_path(prefix, "cdn-config.txt")
+    verify_pinned_file(build_config_path, PINNED_BUILD_KEY, "build config")
+    verify_pinned_file(cdn_config_path, PINNED_CDN_KEY, "CDN config")
+    build = read_config(build_config_path)
+    cdn = read_config(cdn_config_path)
+    if (
+        build.get("build-name") != "WOW-69594patch12.1.5_XPTR"
+        or build.get("build-uid") != "wowxptr"
+    ):
+        raise ValueError("metadata is not the pinned wowxptr 12.1.5 build")
+
+    root_path = metadata_path(prefix, "vfs-root.bin")
+    verify_pinned_file(root_path, config_content_key(build, "vfs-root"), "TVFS root")
+    root_data = root_path.read_bytes()
+    for suffix in ("vfs-neutral.bin", "vfs-enUS.bin"):
+        leaf_path = metadata_path(prefix, suffix)
+        leaf_key = bytes.fromhex(md5_file(leaf_path))
+        encoded_leaf_key = leaf_key.hex().upper().encode("ascii")
+        if leaf_key not in root_data and encoded_leaf_key not in root_data:
+            raise ValueError(f"pinned TVFS root does not reference {suffix}")
+
+    download_path = metadata_path(prefix, "download.bin")
+    verify_pinned_file(download_path, config_content_key(build, "download"), "download manifest")
+    return build, cdn
+
+
 def build_content_index(
     prefix: Path,
     source_dir: Path,
@@ -226,15 +274,7 @@ def build_content_index(
 ) -> dict[str, object]:
     if verify_source:
         verify_pinned_source(source_dir)
-    build_config_path = metadata_path(prefix, "build-config.txt")
-    cdn_config_path = metadata_path(prefix, "cdn-config.txt")
-    build = read_config(build_config_path)
-    cdn = read_config(cdn_config_path)
-    if (
-        build.get("build-name") != "WOW-69594patch12.1.5_XPTR"
-        or build.get("build-uid") != "wowxptr"
-    ):
-        raise ValueError("metadata is not the pinned wowxptr 12.1.5 build")
+    build, cdn = verify_pinned_metadata(prefix)
     archives = cdn.get("archives", "").split()
     if not archives:
         raise ValueError("CDN config has no archives")

@@ -8,7 +8,7 @@
 - Blizzard `wowxptr` build config, CDN config, decoded neutral/enUS TVFS files, download manifest, and verified archive indexes.
 - `data/wow-ui-sim-listfile.csv` for FileDataID-to-path mapping. New IDs fall back only when one source path has the verified content key.
 
-The generator verifies the exact Gethe revision/version, `WOW-69594patch12.1.5_XPTR`, `wowxptr`, TVFS content keys, download encoding keys, archive-index footer hashes, and complete source coverage.
+The generator verifies MD5 identity of the downloaded build/CDN configs, root TVFS, neutral/enUS leaf TVFS files referenced by that root, and download manifest before parsing them. It then verifies the exact Gethe revision/version, `WOW-69594patch12.1.5_XPTR`, `wowxptr`, TVFS content keys, download encoding keys, archive-index footer hashes, and complete source coverage.
 
 ## Regenerate
 
