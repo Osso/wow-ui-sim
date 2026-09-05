@@ -80,23 +80,33 @@ fn download_from_url(client: &Client, entry: &ContentEntry, url: &str) -> crate:
         if status == StatusCode::PARTIAL_CONTENT {
             return read_range(entry, response, end);
         }
-        let transient = status == StatusCode::REQUEST_TIMEOUT
-            || status == StatusCode::TOO_MANY_REQUESTS
-            || status.is_server_error();
-        if !transient || attempt == 2 {
-            return Err(error(entry, format!("HTTP {status}; expected 206")));
-        }
-        let retry_after = response
-            .headers()
-            .get(header::RETRY_AFTER)
-            .map(|value| value.to_str())
-            .transpose()
-            .map_err(|cause| error(entry, cause))?;
-        let delay = retry_delay(retry_after, attempt)?;
-        eprintln!("Retrying {} after HTTP {status} in {delay:?}", entry.path);
-        std::thread::sleep(delay);
+        wait_before_response_retry(entry, &response, attempt)?;
     }
     unreachable!("each final HTTP attempt returns")
+}
+
+fn wait_before_response_retry(
+    entry: &ContentEntry,
+    response: &reqwest::blocking::Response,
+    attempt: u32,
+) -> crate::Result<()> {
+    let status = response.status();
+    let transient = status == StatusCode::REQUEST_TIMEOUT
+        || status == StatusCode::TOO_MANY_REQUESTS
+        || status.is_server_error();
+    if !transient || attempt == 2 {
+        return Err(error(entry, format!("HTTP {status}; expected 206")));
+    }
+    let retry_after = response
+        .headers()
+        .get(header::RETRY_AFTER)
+        .map(|value| value.to_str())
+        .transpose()
+        .map_err(|cause| error(entry, cause))?;
+    let delay = retry_delay(retry_after, attempt)?;
+    eprintln!("Retrying {} after HTTP {status} in {delay:?}", entry.path);
+    std::thread::sleep(delay);
+    Ok(())
 }
 
 fn retry_delay(retry_after: Option<&str>, attempt: u32) -> crate::Result<Duration> {
