@@ -1,3 +1,7 @@
+## [2026-09-05] investigation | Stage PTR pixel-rounding evidence probe
+
+Audited `e958786cb` and `15ca6bd2c`: [PixelRoundingProbe](../addons/PixelRoundingProbe/README.md) is staged in the desktop `_xptr_` addon directory, with local/staged Lua and TOC SHA-256 matches. The active desktop `WowT.exe` is `wowxptr` `12.1.5.69594` / build key `4a9973f37906f8cfb344f8a9fe6777e0`. The probe only creates hidden anonymous frames and regions, and its settled sample resamples the same objects rather than recreating cases. No SavedVariables capture exists yet. PTR source establishes the native flag API and pixel conversion used by deprecated helpers, but not whether the flag rounds anchor offsets or final edges; no simulator behavior claim is made. See [[ptr-pixel-rounding-probe]].
+
 ## [2026-09-05] audit | Publish 12.1 compatibility strings on PTR
 
 Audited commit `4cd6de091`: the complete 70-entry 12.1 compatibility table now registers under cumulative `retail-12-1-0`, including PTR, instead of requiring `profile-retail`. Pinned PTR startup had exposed missing ChatFrame and Social UI strings; the existing focused test reproduced a missing ChatFrame format string before the gate change. The retail `12.1.0.69497` live probe still proves only the 32 exact globals retained under `profile-retail`; no PTR locale/value, service, or startup-success claim is made. Updated [[patch-12-1-api-audit]], [[lua-api]], [the maintained Lua API reference](../lua-api.md), and the index. No code, test, network, or `PLAN.md` action occurred in this documentation audit.

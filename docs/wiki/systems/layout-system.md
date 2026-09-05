@@ -72,3 +72,4 @@ Special case: `UIParent` (id=1 or name="UIParent") always fills the base canvas.
 - [[lua-api]] — SetPoint, ClearAllPoints, GetRect method implementations
 - [[rendering-pipeline]] — consumes LayoutRect to emit quads
 - [[frame-position-baseline-drift]] — causal replay needs both display metrics and EditMode inputs
+- [[ptr-pixel-rounding-probe]] — PTR native pixel-rounding semantics await live evidence
