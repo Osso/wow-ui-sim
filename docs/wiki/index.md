@@ -1,6 +1,6 @@
 ## [2026-09-05] investigation | Stage PTR pixel-rounding evidence probe
 
-[[ptr-pixel-rounding-probe]] records the bounded read-only `PixelRoundingProbe` protocol for desktop `wowxptr` `12.1.5.69594`: hidden owned objects only, persistent next-tick resampling, and verified `_xptr_` staging hashes. Native source does not establish whether `SetRoundLayoutToNearestPixel` rounds offsets or final edges; no simulator behavior claim is made before live SavedVariables capture.
+[[ptr-pixel-rounding-probe]] records the bounded read-only `PixelRoundingProbe` protocol for desktop `wowxptr` `12.1.5.69594`: hidden owned objects only, persistent next-tick resampling, documented `GetPhysicalScreenSize()` capture, and verified `_xptr_` staging hashes. Native source does not establish whether `SetRoundLayoutToNearestPixel` rounds offsets or final edges; no simulator behavior claim is made before live SavedVariables capture.
 
 ## [2026-09-05] audit | Publish 12.1 compatibility strings on PTR
 

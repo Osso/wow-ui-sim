@@ -1,3 +1,7 @@
+## [2026-09-05] audit | Correct PTR pixel probe physical-screen capture
+
+Audited commit `5a5b7a187`: `PixelRoundingProbe` now captures display pixels through the documented two-result `GetPhysicalScreenSize()` API, replacing nonexistent width/height globals. An actual simulator VM probe failed before that correction and passed afterward; this validates the capture protocol only. The corrected Lua SHA-256 is `e9cb08416dfc4b859c67ab31f0c938dd5016c5f9e1b06cebc9679d09c408e44b`, matching the staged `_xptr_` file; the TOC hash remains `cfcd6f3fcb2990c29179115c78cf3dc39e6d767c312a7f359edac59455bfc86c`. No PTR SavedVariables capture exists, so native anchor-versus-final-edge rounding remains unknown. See [[ptr-pixel-rounding-probe]].
+
 ## [2026-09-05] investigation | Stage PTR pixel-rounding evidence probe
 
 Audited `e958786cb` and `15ca6bd2c`: [PixelRoundingProbe](../addons/PixelRoundingProbe/README.md) is staged in the desktop `_xptr_` addon directory, with local/staged Lua and TOC SHA-256 matches. The active desktop `WowT.exe` is `wowxptr` `12.1.5.69594` / build key `4a9973f37906f8cfb344f8a9fe6777e0`. The probe only creates hidden anonymous frames and regions, and its settled sample resamples the same objects rather than recreating cases. No SavedVariables capture exists yet. PTR source establishes the native flag API and pixel conversion used by deprecated helpers, but not whether the flag rounds anchor offsets or final edges; no simulator behavior claim is made. See [[ptr-pixel-rounding-probe]].
