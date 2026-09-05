@@ -12,8 +12,9 @@ fn pixel_rounding_probe_records_read_only_cases_and_capture_errors() {
     env.exec(
         r#"
         GetBuildInfo = function() return "12.1.5", "69594", "Sep 5 2026", 120105 end
-        GetPhysicalScreenWidth = function() return 3440 end
-        GetPhysicalScreenHeight = function() return 1440 end
+        GetPhysicalScreenWidth = nil
+        GetPhysicalScreenHeight = nil
+        GetPhysicalScreenSize = function() return 3440, 1440 end
         InCombatLockdown = function() return false end
         C_Timer.After = function(_, callback) callback() end
         local originalCreateFrame = CreateFrame

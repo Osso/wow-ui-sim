@@ -270,10 +270,14 @@ local function capture(label, settled)
         expectedBuild = EXPECTED_BUILD,
         matchesExpectedBuild = build == EXPECTED_BUILD,
     }
-    sample.physicalScreen = {
-        width = value(sample, "physicalWidth", GetPhysicalScreenWidth),
-        height = value(sample, "physicalHeight", GetPhysicalScreenHeight),
-    }
+    sample.physicalScreen = {}
+    local physicalOK, physicalWidth, physicalHeight = pcall(GetPhysicalScreenSize)
+    if physicalOK then
+        sample.physicalScreen.width = value(sample, "physicalWidth", function() return physicalWidth end)
+        sample.physicalScreen.height = value(sample, "physicalHeight", function() return physicalHeight end)
+    else
+        recordError(sample, "physicalScreenSize", physicalWidth)
+    end
     sample.uiParent = captureObject(UIParent, "frame")
     if settled then
         for _, caseLabel in ipairs(caseOrder) do
