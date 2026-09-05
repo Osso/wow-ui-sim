@@ -1,3 +1,7 @@
+## [2026-09-05] system | Advance PTR profile epoch to 12.1.5
+
+Documented commit `c8826d9f5`: `client-ptr` now selects cumulative `retail-12-1-5` / interface `120105` and the `wowxptr` CASC product; `client-retail` remains `retail-12-1-0` / `120100`. No PTR2 manifest, runtime cache, or startup proof exists yet. Updated [[client-profiles]] and its index summary; no source, cache, test, network, or `PLAN.md` action occurred.
+
 ## [2026-09-04] verification | Accept scoped causal replay and baseline fixes
 
 Independent acceptance passed: 28/28 default frame cases, 12/12 display/replay/probe cases, 55/55 affected ObjectiveTracker/EditMode cases, and 2,011/2,011 prefork cases. Build/checks are warning-free and startup Lua errors are `[]`. Inventory is 8,372 integration plus 2,011 prefork names, zero overlap. Reused unchanged broad proof; no full-suite replay for documentation. Source-build and one-unit tolerance limits remain explicit in [[frame-position-baseline-drift]].

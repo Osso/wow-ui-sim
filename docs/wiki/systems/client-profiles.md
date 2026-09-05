@@ -4,7 +4,7 @@ The simulator targets six WoW client profiles concurrently — retail, PTR, wrat
 
 ## Active profile selection
 
-`src/client_profile.rs` defines `enum ClientProfile { Retail, Ptr, Wrath, Mists, Era, Anniversary }` and a single `pub const ACTIVE: ClientProfile` resolved by cfg-blocks against the enabled profile marker. Retail uses the internal `profile-retail` feature; public `client-retail` is the current-retail bundle and enables `profile-retail` plus cumulative `retail-12-1-0`. A `compile_error!` block enforces exactly one client profile marker.
+`src/client_profile.rs` defines `enum ClientProfile { Retail, Ptr, Wrath, Mists, Era, Anniversary }` and a single `pub const ACTIVE: ClientProfile` resolved by cfg-blocks against the enabled profile marker. Retail uses the internal `profile-retail` feature; public `client-retail` remains the retail 12.1.0 bundle, while `client-ptr` selects the cumulative 12.1.5 epoch. A `compile_error!` block enforces exactly one client profile marker.
 
 Feature ↔ profile ↔ vendor source ↔ TOC suffix:
 
@@ -12,13 +12,13 @@ Feature ↔ profile ↔ vendor source ↔ TOC suffix:
 |----------------------|-------------|--------------|-------------------|--------------------|
 | `client-retail`      | Retail      | `retail`     | `retail-12-1-0` (`120100`) | `_Mainline` |
 | `profile-retail`     | Retail      | `retail`     | selected by enabled epoch | `_Mainline` |
-| `client-ptr`         | Ptr         | `ptr`        | `retail-12-1-0` (`120100`) | `_Mainline` |
+| `client-ptr`         | Ptr         | `ptr`        | `retail-12-1-5` (`120105`) | `_Mainline` |
 | `client-wrath`       | Wrath       | `wrath`      | `38001`          | `_Wrath`           |
 | `client-mists`       | Mists       | `mists`      | `50504`          | `_Mists`           |
 | `client-era`         | Era         | `era`        | `11507`          | `_Vanilla`         |
 | `client-anniversary` | Anniversary | `anniversary`| `11507`          | `_Vanilla`         |
 
-Retail-family epoch features are cumulative: `retail-12-0-5` includes `retail-12-0-0`, `retail-12-0-7` includes earlier 12.0 epochs, and `retail-12-1-0` includes `retail-12-0-7`. `client-retail` and `client-ptr` currently enable `retail-12-1-0`; `profile-retail` selects the retail cache without forcing an epoch. `RetailApiEpoch` and `ACTIVE_RETAIL_API_EPOCH` resolve the highest enabled cumulative retail epoch. API surfaces, CVars, enums, events, XML elements, and frame methods introduced by patch notes should gate on the epoch feature rather than on the channel feature. Strict removals follow the same rule unless source evidence proves a profile-specific retirement: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while `src/ptr/strict_removals.lua` hides it from PTR addons after startup. Profile-specific runtime behavior gates use `profile-retail` so historical retail tests retain retail semantics. Channel/vendor behavior stays profile-gated: PTR CASC product `wowt`, `_ptr_` install paths, and `data/blizzard-ui-files/ptr.txt` remain `client-ptr` concerns.
+Retail-family epoch features are cumulative: `retail-12-0-5` includes `retail-12-0-0`, `retail-12-0-7` includes earlier 12.0 epochs, `retail-12-1-0` includes `retail-12-0-7`, and `retail-12-1-5` includes `retail-12-1-0`. `client-retail` remains at `retail-12-1-0`/`120100`; `client-ptr` selects `retail-12-1-5`/`120105`; `profile-retail` selects the retail cache without forcing an epoch. `RetailApiEpoch` and `ACTIVE_RETAIL_API_EPOCH` resolve the highest enabled cumulative retail epoch. API surfaces, CVars, enums, events, XML elements, and frame methods introduced by patch notes should gate on the epoch feature rather than on the channel feature. Strict removals follow the same rule unless source evidence proves a profile-specific retirement: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while `src/ptr/strict_removals.lua` hides it from PTR addons after startup. Profile-specific runtime behavior gates use `profile-retail` so historical retail tests retain retail semantics. Channel/vendor behavior stays profile-gated: PTR CASC product `wowxptr`, `_ptr_` install paths, and `data/blizzard-ui-files/ptr.txt` remain `client-ptr` concerns. This profile promotion does not yet prove a 12.1.5 source cache or startup.
 
 Helper functions/constants in `src/client_profile.rs`:
 
@@ -39,19 +39,20 @@ retail-12-0-0 = []
 retail-12-0-5 = ["retail-12-0-0"]
 retail-12-0-7 = ["retail-12-0-5"]
 retail-12-1-0 = ["retail-12-0-7"]
+retail-12-1-5 = ["retail-12-1-0"]
 
 profile-retail = []
 client-retail = ["profile-retail", "retail-12-1-0"]
-client-ptr = ["retail-12-1-0"]
+client-ptr = ["retail-12-1-5"]
 ```
 
 Rules:
 
-- `profile-retail` and the other profile markers select runtime profile: cache subdir, CASC product, install flavor, and TOC profile. `client-retail` is the public current-retail bundle; it enables `profile-retail` and `retail-12-1-0`. `client-ptr` remains a separate PTR profile/cache while selecting the same 12.1.0 API epoch.
+- `profile-retail` and the other profile markers select runtime profile: cache subdir, CASC product, install flavor, and TOC profile. `client-retail` is the public retail 12.1.0 bundle; it enables `profile-retail` and `retail-12-1-0`. `client-ptr` remains a separate PTR profile/cache and selects `retail-12-1-5`.
 - `retail-*` features select mainline API epoch: C_* additions, globals/removals, events, CVars, XML elements, frame methods, and patch-note compatibility bootstraps. `RetailApiEpoch` / `ACTIVE_RETAIL_API_EPOCH` select the highest enabled cumulative epoch.
 - Historical retail 12.0.0 audit tests use `cargo test --no-default-features --features profile-retail,retail-12-0-0`; profile-specific runtime behavior must gate on `profile-retail`, not `client-retail`.
-- Patch features are cumulative. Gate additions with `#[cfg(feature = "retail-12-1-0")]`; gate removals/lifetimes with `#[cfg(all(feature = "retail-12-0-0", not(feature = "retail-12-1-0")))]` or the smallest applicable lower epoch.
-- Do not gate patch-note API deltas on `client-ptr` by default. Retail and PTR channels may select the same API epoch while retaining separate profile/cache behavior; historical tests should select `profile-retail` with the required epoch explicitly. Add a profile-gated strict removal only when the cached channel source proves that channel-specific contract, as with PTR-only removal of `C_RecruitAFriend.IsEnabled`.
+- Patch features are cumulative. Gate additions with the smallest applicable epoch, for example `#[cfg(feature = "retail-12-1-5")]`; gate removals/lifetimes with the corresponding lower/upper epoch boundary.
+- Do not gate patch-note API deltas on `client-ptr` by default. Retail and PTR epochs are cumulative while retaining separate profile/cache behavior; historical tests should select `profile-retail` with the required epoch explicitly. Add a profile-gated strict removal only when the cached channel source proves that channel-specific contract, as with PTR-only removal of `C_RecruitAFriend.IsEnabled`.
 
 ## Runtime Cache
 
@@ -63,7 +64,7 @@ Runtime Blizzard UI files live under the user cache:
 
 Populate it with `wow-cli casc sync-blizzard-ui` or the compatibility wrapper `scripts/setup-blizzard-ui.sh`. Do not use `Interface/BlizzardUI/` or repo-local `vendor/wow-ui-source-*` checkouts for runtime loading.
 
-Each profile uses its own committed manifest in `data/blizzard-ui-files/<profile>.txt`. PTR uses the `wowt` CASC product and the `ptr.txt` manifest; retail uses the `wow` CASC product and `retail.txt`. The retail manifest mirrors the complete Gethe `live` AddOns tree, including both `Classic/` and `Mainline/` family variants where the live tree contains them. The manifest is a source inventory, not the retail runtime's final TOC selection: retail `[Family]` substitution resolves to `Mainline`, while profile-aware TOC and game-type filtering governs which discovered addons load. Other profile manifests remain profile-specific.
+Each profile uses its own committed manifest in `data/blizzard-ui-files/<profile>.txt`. PTR is configured for the `wowxptr` CASC product and the `ptr.txt` manifest; retail uses the `wow` CASC product and `retail.txt`. The retail manifest mirrors the complete Gethe `live` AddOns tree, including both `Classic/` and `Mainline/` family variants where the live tree contains them. The manifest is a source inventory, not the retail runtime's final TOC selection: retail `[Family]` substitution resolves to `Mainline`, while profile-aware TOC and game-type filtering governs which discovered addons load. Other profile manifests remain profile-specific. As of the profile-only 12.1.5 update, PTR content acquisition, manifest refresh, and startup verification are still pending.
 
 Local install discovery uses the active profile's WoW flavor directory. PTR reads addons, WTF, and BlizzardInterfaceArt from `_ptr_`; retail continues to use `_retail_` with optional `_beta_` addon fallback.
 
@@ -133,6 +134,7 @@ Captured in `docs/baselines/`:
 
 - `Cargo.toml` — mutually-exclusive `client-*` profile features and cumulative `retail-*` API epoch features
 - `src/client_profile.rs` — enum, `ACTIVE` const, profile path helpers, active API interface constants
+- `src/asset_resolver_config.rs` — profile-to-CASC-product mapping
 - `src/loader/mod.rs` — `find_toc_file`, `active_profile_toc_suffix`, `other_profile_toc_suffixes`
 - `src/toc/mod.rs` — `is_allowed_game_type`, `family_subdir`, `TocFile::is_game_type_restricted`
 - `src/lib.rs` — `pub mod wrath`/`mists`/`era` cfg gates
@@ -147,4 +149,5 @@ Captured in `docs/baselines/`:
 - [[addon-loading]] — TOC discovery, addon load order, SavedVariables (now profile-aware)
 - [[taint-system]] — `runtime_surface_bootstrap.lua` runs before each profile's compat bootstrap
 - [[lua-api]] — frame methods registered globally vs profile-conditional
+- [Client profile spec](../../specs/client-profiles.md) — supported bundle contract and current gaps
 - [[event-system]] — strict-vs-permissive event validator gating
