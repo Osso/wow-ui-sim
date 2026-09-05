@@ -434,6 +434,8 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
             Val::Table(c_timer_ref),
             &state.gc.string_arena,
         )?;
+    #[cfg(feature = "retail-12-1-5")]
+    crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
 
     Ok(())
 }

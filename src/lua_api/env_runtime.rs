@@ -207,11 +207,29 @@ impl WowLuaEnv {
 
     /// Run ready timers and return how many callbacks fired.
     pub fn process_timers(&self) -> Result<usize> {
+        let due_signals = {
+            let mut state = self.state.borrow_mut();
+            crate::c_api::timed_signal_map::take_due_signals(&mut state)
+        };
+        let mut fired = 0;
+        for signal in due_signals {
+            if let Some(callback) = self.timer_callback(signal.id) {
+                self.fire_timer_callback(
+                    signal.owner_addon,
+                    callback,
+                    signal.id,
+                    false,
+                    Some(Val::Num(signal.key as f64)),
+                );
+                fired += 1;
+            }
+        }
+
         let now = Instant::now();
         let timers = take_pending_timers(self);
-        let (fired, requeue) = process_timer_queue(self, timers, now);
+        let (timer_fired, requeue) = process_timer_queue(self, timers, now);
         self.state.borrow_mut().rilua_timers = requeue;
-        Ok(fired)
+        Ok(fired + timer_fired)
     }
 
     /// Fire OnUpdate handlers for all frames that have them registered.
@@ -282,12 +300,20 @@ impl WowLuaEnv {
     pub fn next_timer_delay(&self) -> Option<Duration> {
         let state = self.state.borrow();
         let now = Instant::now();
-        state
+        let timer_delay = state
             .rilua_timers
             .iter()
             .filter(|timer| !timer.cancelled)
             .map(|timer| timer.fire_at.saturating_duration_since(now))
-            .min()
+            .min();
+        match (
+            timer_delay,
+            crate::c_api::timed_signal_map::next_signal_delay(&state),
+        ) {
+            (Some(timer), Some(signal)) => Some(timer.min(signal)),
+            (Some(delay), None) | (None, Some(delay)) => Some(delay),
+            (None, None) => None,
+        }
     }
 
     /// Dump all frame positions for debugging.
