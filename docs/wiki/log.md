@@ -1,3 +1,7 @@
+## [2026-09-05] audit | Document PTR 12.1.5 Lua math extensions
+
+Documented commit `129c3a3e6`: `retail-12-1-5` publishes the eleven native `math` extensions required by PTR `Blizzard_SharedXMLBase/MathUtil.lua`. The grouped PTR test proves normal numeric behavior, extrapolation, half-away-from-zero rounding, and equal-endpoint wrapping. Generated API documentation supplies signatures/transformation descriptions; reversed or other degenerate ranges and secret-value propagation remain unproven. Updated [[lua-api]] and [the maintained Lua API reference](../lua-api.md); no test, source, cache, network, or `PLAN.md` action occurred.
+
 ## [2026-09-05] system | Advance PTR profile epoch to 12.1.5
 
 Documented commit `c8826d9f5`: `client-ptr` now selects cumulative `retail-12-1-5` / interface `120105` and the `wowxptr` CASC product; `client-retail` remains `retail-12-1-0` / `120100`. No PTR2 manifest, runtime cache, or startup proof exists yet. Updated [[client-profiles]] and its index summary; no source, cache, test, network, or `PLAN.md` action occurred.

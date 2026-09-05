@@ -336,6 +336,10 @@ anim:SetFromAlpha() / SetToAlpha() / SetDuration()
 
 **C_StringUtil boundary** — `EscapeLuaFormatString(text)` replaces every `%` with `%%`. `EscapeLuaPatterns(text)` prefixes each Lua pattern character (`^`, `$`, `(`, `)`, `%`, `.`, `[`, `]`, `*`, `+`, `-`, `?`) with `%`. `WrapString(infix, prefix, suffix)` treats missing optional affixes as empty strings and returns `""` for an empty infix. These helpers are published on retail and PTR and preserve other Lua string bytes, including NUL and invalid UTF-8. Local `StringUtilDocumentation.lua` establishes signatures and transformations; it is not live-client error, taint, or secret-value evidence.
 
+### PTR 12.1.5 math extensions
+
+Under `retail-12-1-5` only, native `math.clamp`, `isfinite`, `isinf`, `isnan`, `lerp`, `normalize`, `remap`, `round`, `saturate`, `sign`, and `wrap` are registered before `Blizzard_SharedXMLBase/MathUtil.lua` aliases them. Behavioral coverage proves normal numeric results, extrapolating `lerp`/`remap`, half-away-from-zero rounding at positive and negative decimal places, and `[minimum, maximum)` wrapping with equal endpoints returning `minimum`. The API documentation establishes signatures and these documented transformations; live-client behavior for reversed or other degenerate ranges and secret-value propagation is not captured.
+
 ---
 
 ## Enums & Constants

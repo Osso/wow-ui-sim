@@ -22,6 +22,10 @@ Enum initialization seeds known `Enum.*` values into existing child tables rathe
 
 Retail 12.1 removes public `_G.GetInventorySlotInfo`; current `Blizzard_TransmogShared` calls `C_PaperDollInfo.GetInventorySlotInfo` directly. No loader-scoped legacy-global compatibility remains. See [[transmog-inventory-slot-scope]] for the retired stale-source workaround.
 
+### PTR 12.1.5 Lua math extensions
+
+`retail-12-1-5` registers native `math.clamp`, `isfinite`, `isinf`, `isnan`, `lerp`, `normalize`, `remap`, `round`, `saturate`, `sign`, and `wrap` before `Blizzard_SharedXMLBase/MathUtil.lua` assigns compatibility aliases. The grouped PTR audit covers ordinary numeric behavior, extrapolation, half-away-from-zero `round`, and `[minimum, maximum)` `wrap`, including equal endpoints. `LuaMathExtensionsDocumentation.lua` establishes signatures and stated transformations. Reversed/other degenerate ranges and secret-value propagation lack live-client evidence.
+
 ## FrameHandle Userdata (`src/lua_api/frame/handle.rs`)
 
 ```rust
@@ -123,6 +127,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [housing_dashboard_preload.rs](../../../src/lua_api/workarounds/temporary/housing_dashboard_preload.rs) — deferred empty owned-house response bridge
 - [c_settings_util.rs](../../../src/c_api/c_settings_util.rs) — `C_SettingsUtil.OpenSettingsPanel` forwarding boundary
 - [c_string_util.rs](../../../src/c_api/c_string_util.rs) — C_StringUtil helper implementation
+- [math_extensions.rs](../../../src/lua_api/globals/real/math_extensions.rs) — PTR 12.1.5 native math registration
+- [LuaMathExtensionsDocumentation.lua](../../../.cache/wow-ui-sim/wow-ui-source-git/ptr2/Interface/AddOns/Blizzard_APIDocumentationGenerated/LuaMathExtensionsDocumentation.lua) — pinned PTR signatures and documented transformations
 - [c_chromie_time.rs](../../../src/c_api/c_chromie_time.rs) — retail/PTR empty-state C_ChromieTime surface
 - [c_container.rs](../../../src/c_api/item_spell/c_container.rs) — state-backed bag-slot flags and backpack queries
 - [guild_info.rs](../../../src/lua_api/globals/guild_info.rs) — C_GuildInfo namespace registration and state-backed management methods
@@ -165,6 +171,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [kiosk_namespace_defaults.rs](../../../src/lua_api/workarounds/temporary/kiosk_namespace_defaults.rs) — inert Kiosk defaults
 - [targeting_verbs.rs](../../../src/lua_api/globals/targeting_verbs.rs) — state-backed targeting globals, including `ClearTarget()`'s boolean result
 - [panel_toggle_verbs.rs](../../../src/lua_api/globals/panel_toggle_verbs.rs) — profile-scoped panel toggles, including retail `ToggleGuildFrame()` ownership
+- [math_extensions.rs](../../../src/lua_api/globals/real/math_extensions.rs) — PTR 12.1.5 native `math` extensions
+- [Lua math extensions spec](../../specs/lua-math-extensions.md) — version gate, tested behavior, and evidence limits
 - [panel_toggle_verbs.rs tests](../../../tests/panel_toggle_verbs.rs) — bare-environment retail/non-retail registration proof
 - [targeting_verbs.rs](../../../tests/targeting_verbs.rs) — targeting global behavior proofs
 - [test_showuipanel_toggles.rs](../../../tests/test_showuipanel_toggles.rs) — retail `Blizzard_Communities` load and guild-panel toggle proof
@@ -179,3 +187,4 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [[event-system]] — fire_event, SetScript, OnUpdate tick mechanism
 - [[widget-system]] — Frame struct backing each FrameHandle
 - [[texture-atlas]] — texture path resolution, atlas identity, and rendering consumers
+- [[client-profiles]] — cumulative `retail-12-1-5` feature selection for PTR

@@ -328,6 +328,11 @@ The six retail 12.0.0 `Enum.EncounterTimelineEventSource.*` and `Enum.EncounterT
 
 # Wiki Index
 
+## [2026-09-05] API | PTR 12.1.5 Lua math extensions
+
+[[lua-api]] records the `retail-12-1-5`-gated native `math` functions required by PTR `MathUtil.lua`, their grouped behavioral coverage, and the unproven invalid-range/secret-value limits. See [Lua math extensions](../specs/lua-math-extensions.md).
+
+
 The 19 retail 12.0.0 TooltipDataLineType, TransmogOutfitDisplayType, and TransmogOutfitEntryFlags rows are best-effort/behavioral: TooltipDataLineType adds SpellPassive=43 and SpellDescription=44 with metadata MaxValue=44 and NumValues=45; TransmogOutfitDisplayType is Unassigned=0, Assigned=1, Equipped=2, Hidden=3 with metadata MinValue=0, MaxValue=3, NumValues=4; TransmogOutfitEntryFlags is AutomaticallyAwardedOnLogin=1, UseOverrideName=2, OnlyAvailableDuringEvent=4, SortedToTopOfList=8, UseOverrideCostModifier=16 with metadata MinValue=1, MaxValue=16, NumValues=5. Focused proof is commit 891617e4c via the three exact family startup tests; assertions cover complete member sets, Lua numeric types, no extras, and metadata. Root cause: shared fallback data reflected a later enum shape while the retail-12-0-0 override now publishes the exact authoritative 12.0.0 family. Claims are bounded to startup publication and exact values/types/metadata; enum semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1467 best-effort, 982 evidence-required, 2 exception-requested, and 959 untriaged** (3410 rows).
 
 The five retail 12.0.0 `Enum.NeighborhoodInitiativeNeighborhoodTypes.*` and `Enum.NeighborhoodInitiativeNeighborhoodTypesMeta.*` rows are best-effort/behavioral: `NiNeighborhoodTypeSingleton=0`, `NiNeighborhoodTypePool=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is at d02a9a8c94b7d2966b0f319f9f570fe4f23d2bff; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/metadata; Neighborhood initiative selection, assignment, behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1429 best-effort, 982 evidence-required, 2 exception-requested, and 997 untriaged** (3410 rows).
