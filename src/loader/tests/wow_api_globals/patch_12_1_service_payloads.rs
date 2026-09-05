@@ -332,6 +332,25 @@ fn test_patch_12_1_cooldown_viewer_sound_enum() {
 
 #[cfg(feature = "retail-12-1-5")]
 #[test]
+fn test_patch_12_1_5_get_build_info_uses_pinned_ptr_identity() {
+    let env = WowLuaEnv::new().unwrap();
+    let result: String = env
+        .eval(
+            r#"
+            local version, build, _, interface = GetBuildInfo()
+            if version ~= "12.1.5" then return "version:" .. tostring(version) end
+            if build ~= "69594" then return "build:" .. tostring(build) end
+            if interface ~= 120105 then return "interface:" .. tostring(interface) end
+            return "ok"
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result, "ok");
+}
+
+#[cfg(feature = "retail-12-1-5")]
+#[test]
 fn test_patch_12_1_5_curio_rarity_includes_epic_tier_2() {
     let env = WowLuaEnv::new().unwrap();
     let result: String = env

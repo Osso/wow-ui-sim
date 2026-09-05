@@ -7,6 +7,12 @@ use std::sync::OnceLock;
 
 const INDEX: &str = include_str!("../../data/blizzard-ui-builds/ptr.json");
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct ClientIdentity {
+    pub version: String,
+    pub build: String,
+}
+
 #[derive(Deserialize)]
 struct Build {
     schema: u32,
@@ -34,6 +40,19 @@ fn build() -> crate::Result<&'static Build> {
         })
         .as_ref()
         .map_err(|cause| crate::Error::Other(cause.clone()))
+}
+
+pub(crate) fn client_identity() -> crate::Result<ClientIdentity> {
+    let version_and_build = &build()?.version;
+    let (version, build) = version_and_build.rsplit_once('.').ok_or_else(|| {
+        crate::Error::Other(format!(
+            "PTR version has no build suffix: {version_and_build}"
+        ))
+    })?;
+    Ok(ClientIdentity {
+        version: version.to_owned(),
+        build: build.to_owned(),
+    })
 }
 
 pub(super) fn provenance() -> crate::Result<CacheProvenance> {

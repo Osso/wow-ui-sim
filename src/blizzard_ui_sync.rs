@@ -45,6 +45,10 @@ pub fn default_cache_addons_path() -> crate::Result<PathBuf> {
         .ok_or_else(|| crate::Error::Other("could not determine user cache directory".to_string()))
 }
 
+pub(crate) fn ptr_client_identity() -> crate::Result<pinned::ClientIdentity> {
+    pinned::client_identity()
+}
+
 pub fn cached_blizzard_ui_addons_path() -> Option<PathBuf> {
     let path = default_cache_addons_path().ok()?;
     let is_complete = path.join(COMPLETE_MARKER).is_file();

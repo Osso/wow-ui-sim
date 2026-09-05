@@ -4,20 +4,29 @@
 //! They are compatibility defaults until the simulator has a real client/session
 //! metadata model.
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(all(not(feature = "client-ptr"), feature = "retail-12-1-0"))]
 const CLIENT_VERSION: &str = "12.1.0";
-#[cfg(not(feature = "retail-12-1-0"))]
+#[cfg(all(not(feature = "client-ptr"), not(feature = "retail-12-1-0")))]
 const CLIENT_VERSION: &str = "12.0.7";
 
-#[cfg(feature = "retail-12-1-0")]
-const CLIENT_INTERFACE: u32 = 120100;
-#[cfg(not(feature = "retail-12-1-0"))]
-const CLIENT_INTERFACE: u32 = 120007;
+#[cfg(not(feature = "client-ptr"))]
+const RETAIL_BUILD: &str = "68256";
+
+fn client_identity() -> crate::Result<(String, String)> {
+    #[cfg(feature = "client-ptr")]
+    {
+        let identity = crate::blizzard_ui_sync::ptr_client_identity()?;
+        return Ok((identity.version, identity.build));
+    }
+
+    #[cfg(not(feature = "client-ptr"))]
+    Ok((CLIENT_VERSION.to_owned(), RETAIL_BUILD.to_owned()))
+}
 
 const CLIENT_INFO_DEFAULTS_LUA: &str = r#"
 if GetBuildInfo == nil then
   function GetBuildInfo()
-    return "__WOW_CLIENT_VERSION__", "68256", "Jun 17 2026", __WOW_CLIENT_INTERFACE__, "", " "
+    return "__WOW_CLIENT_VERSION__", "__WOW_CLIENT_BUILD__", "Jun 17 2026", __WOW_CLIENT_INTERFACE__, "", " "
   end
 end
 
@@ -200,9 +209,14 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    let (version, build) = client_identity()?;
     let code = CLIENT_INFO_DEFAULTS_LUA
-        .replace("__WOW_CLIENT_VERSION__", CLIENT_VERSION)
-        .replace("__WOW_CLIENT_INTERFACE__", &CLIENT_INTERFACE.to_string());
+        .replace("__WOW_CLIENT_VERSION__", &version)
+        .replace("__WOW_CLIENT_BUILD__", &build)
+        .replace(
+            "__WOW_CLIENT_INTERFACE__",
+            &crate::client_profile::ACTIVE_INTERFACE_VERSION.to_string(),
+        );
     lua.exec(&code)?;
     Ok(())
 }
@@ -215,12 +229,12 @@ mod tests {
     fn installs_client_info_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let expected_version = super::CLIENT_VERSION;
-        let expected_interface = super::CLIENT_INTERFACE;
+        let (expected_version, expected_build) = super::client_identity().unwrap();
+        let expected_interface = crate::client_profile::ACTIVE_INTERFACE_VERSION;
         let script = format!(
             r#"
                 local version, build, date, interface = GetBuildInfo()
-                if version ~= "{}" or build ~= "68256" or date ~= "Jun 17 2026" or interface ~= {} then
+                if version ~= "{}" or build ~= "{}" or date ~= "Jun 17 2026" or interface ~= {} then
                   return "build"
                 end
                 if GetRealmName() ~= "SimulatedRealm" or GetNormalizedRealmName() ~= "SimulatedRealm" then return "realm" end
@@ -251,7 +265,7 @@ mod tests {
                 if GetWebTicket() ~= nil then return "web_ticket" end
                 return "ok"
                 "#,
-            expected_version, expected_interface
+            expected_version, expected_build, expected_interface
         );
         let result: String = env
             .eval(&script)
