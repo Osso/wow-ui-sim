@@ -191,6 +191,15 @@ if Enum.ExpansionLandingPageTypeMeta then
     Enum.ExpansionLandingPageTypeMeta.NumValues = nil
 end
 "#;
+#[cfg(feature = "retail-12-1-5")]
+const RETAIL_12_1_5_ENUM_OVERRIDES_LUA: &str = r#"
+Enum.CurioRarityMeta = {
+    MaxValue = 5,
+    MinValue = 1,
+    NumValues = 5,
+}
+"#;
+
 const MISSING_CONSTANTS_LUA: &str = include_str!("../globals/enum_data/missing_constants.lua");
 const CONSTANTS_VALUES_LUA: &str = include_str!("../globals/enum_data/constants_values.lua");
 const COMPAT_CONSTANTS_LUA: &str = include_str!("../globals/enum_data/compat_constants.lua");
@@ -218,6 +227,8 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         }
     }
     lua.exec(MISSING_ENUMS_LUA)?;
+    #[cfg(feature = "retail-12-1-5")]
+    lua.exec(RETAIL_12_1_5_ENUM_OVERRIDES_LUA)?;
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
         lua.exec(RETAIL_12_0_0_ENUM_OVERRIDES_LUA)?;
     }

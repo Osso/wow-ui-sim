@@ -995,9 +995,22 @@ pub const CURRENCY_FILTER_TYPE: SeqEnumDef = (
 // Delves Enums
 // ============================================================================
 
+#[cfg(not(feature = "retail-12-1-5"))]
 pub const CURIO_RARITY: EnumDef = (
     "CurioRarity",
     &[("Common", 1), ("Uncommon", 2), ("Rare", 3), ("Epic", 4)],
+);
+
+#[cfg(feature = "retail-12-1-5")]
+pub const CURIO_RARITY: EnumDef = (
+    "CurioRarity",
+    &[
+        ("Common", 1),
+        ("Uncommon", 2),
+        ("Rare", 3),
+        ("Epic", 4),
+        ("EpicTier2", 5),
+    ],
 );
 
 // ============================================================================

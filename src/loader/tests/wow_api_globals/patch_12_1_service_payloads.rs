@@ -330,6 +330,33 @@ fn test_patch_12_1_cooldown_viewer_sound_enum() {
     assert_eq!(result, "ok");
 }
 
+#[cfg(feature = "retail-12-1-5")]
+#[test]
+fn test_patch_12_1_5_curio_rarity_includes_epic_tier_2() {
+    let env = WowLuaEnv::new().unwrap();
+    let result: String = env
+        .eval(
+            r#"
+            local rarity = Enum.CurioRarity
+            local metadata = Enum.CurioRarityMeta
+            if rarity.Common ~= 1 or rarity.Uncommon ~= 2 or rarity.Rare ~= 3 then return "base-values" end
+            if rarity.Epic ~= 4 or rarity.EpicTier2 ~= 5 then return "epic-tier-2" end
+            if metadata.MinValue ~= 1 or metadata.MaxValue ~= 5 or metadata.NumValues ~= 5 then return "metadata" end
+            local qualityByRarity = {
+                [rarity.Common] = Enum.ItemQuality.Common,
+                [rarity.Uncommon] = Enum.ItemQuality.Uncommon,
+                [rarity.Rare] = Enum.ItemQuality.Rare,
+                [rarity.Epic] = Enum.ItemQuality.Epic,
+                [rarity.EpicTier2] = Enum.ItemQuality.Epic,
+            }
+            return qualityByRarity[5] == Enum.ItemQuality.Epic and "ok" or "vendor-map"
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result, "ok");
+}
+
 #[cfg(feature = "retail-12-1-0")]
 #[test]
 fn test_patch_12_1_chat_frame_sound_help_strings() {
