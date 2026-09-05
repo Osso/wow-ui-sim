@@ -1,3 +1,7 @@
+## [2026-09-05] audit | Publish 12.1 compatibility strings on PTR
+
+Commit `4cd6de091` moves the complete 70-entry 12.1 compatibility string table from retail-profile-only registration to the cumulative `retail-12-1-0` epoch. PTR now receives the Social UI labels and ChatFrame combat-audio strings its pinned source consumes; the 32 live-probed exact globals remain retail-profile-only. Source-backed PTR startup exposed the missing registration; no live PTR string-value, locale, or service-state claim is added. See [[patch-12-1-api-audit]] and [[lua-api]].
+
 ## [2026-09-05] system | Pin PTR 12.1.5 Blizzard UI source
 
 Commit `766e27344` adds a 4,025-file immutable `wowxptr` CDN content index for build `12.1.5.69594`, pinned to Gethe `ptr2` revision `49b69918…`. It rejects stale `wowt` provenance and validates exact CDN ranges, BLTE, and decoded bytes; it does not use Gethe as content fallback. First synchronization completed, but initial startup records 109 distinct Lua errors, so compatibility is not accepted. See [[client-profiles]] and [[casc-asset-cache]].
