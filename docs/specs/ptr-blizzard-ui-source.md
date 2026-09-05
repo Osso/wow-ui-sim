@@ -8,8 +8,8 @@ PTR 12.1.5.69594 uses an immutable Blizzard CDN content index, independent of th
 - [x] Verify encoded BLTE identity and decoded content size/hash before accepting source bytes.
 - [x] Require exact HTTP partial-content ranges; reject full-archive or wrong-range responses.
 - [x] Retry transient HTTP failures with bounded backoff and respect `Retry-After`.
-- [ ] Synchronize every pinned source entry, write completion only after all entries succeed, and reuse only hash-matching files.
-- [ ] Load PTR startup and representative panels against this cache; a version label alone is not compatibility proof.
+- [x] Synchronize all 4,025 pinned source entries, write completion only after all entries succeed, and reuse only hash-matching files.
+- [ ] Load PTR startup and representative panels against this cache; initial startup recorded 109 distinct Lua-error entries, so a version label and completed cache are not compatibility proof.
 
 ## How it works
 
@@ -32,7 +32,7 @@ PTR 12.1.5.69594 uses an immutable Blizzard CDN content index, independent of th
 
 ## Known gaps (current cycle)
 
-- [ ] Full CDN synchronization and startup/panel acceptance pending.
+- [ ] Reduce the 109-entry initial PTR Lua-error baseline, then prove startup and representative panels.
 
 ## Out of scope
 

@@ -1,3 +1,7 @@
+## [2026-09-05] system | Pin PTR 12.1.5 Blizzard UI source
+
+Audited commit `766e27344`: `wow-cli casc sync-blizzard-ui` synchronized all 4,025 PTR source entries from a committed immutable `wowxptr` CDN content index for build `12.1.5.69594`, with Gethe `ptr2` revision `49b69918…` used for source-path provenance only. Cache validation rejects stale `wowt` identity and checks archive range, BLTE encoding key, and decoded content key; no local-product relabeling or Gethe-content fallback exists. The first `lua-errors` capture contains 109 distinct entries, so startup and panel compatibility remain open. Updated [[client-profiles]], [[casc-asset-cache]], the client-profile/PTR-source specs, and the patch-update procedure; no code, cache, test, network, or `PLAN.md` action occurred in this documentation commit.
+
 ## [2026-09-05] audit | Document PTR 12.1.5 Lua math extensions
 
 Documented commit `129c3a3e6`: `retail-12-1-5` publishes the eleven native `math` extensions required by PTR `Blizzard_SharedXMLBase/MathUtil.lua`. The grouped PTR test proves normal numeric behavior, extrapolation, half-away-from-zero rounding, and equal-endpoint wrapping. Generated API documentation supplies signatures/transformation descriptions; reversed or other degenerate ranges and secret-value propagation remain unproven. Updated [[lua-api]] and [the maintained Lua API reference](../lua-api.md); no test, source, cache, network, or `PLAN.md` action occurred.

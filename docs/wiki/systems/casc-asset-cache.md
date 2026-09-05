@@ -71,9 +71,11 @@ The BLP byte cache is roughly **10× faster** than re-extracting steady-state, a
 
 `data/blizzard-ui-files/<profile>.txt` manifests list the Blizzard UI source files for each supported profile. The retail manifest mirrors the complete Gethe `live` AddOns tree, including `Classic/` and `Mainline/` family variants; this preserves source inventory even though retail runtime `[Family]` substitution selects `Mainline`. `wow-cli casc sync-blizzard-ui` resolves each active-profile manifest entry as `Interface/AddOns/<entry>`, extracts it from the active CASC product into `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns`, and preserves Blizzard's original addon/file casing on disk. The bundled limited listfile is generated from the union of those profile manifests plus tracked `data/listfile-overrides.csv` rows for paths missing from the upstream community listfile or requiring canonical display casing.
 
-Local install archives are tried first through `asset-resolver`. If the active product root/encoding metadata resolves an FDID but the local streaming install lacks that archive chunk, sync downloads the missing authoritative CASC blob from Blizzard's CDN by encoding key via the public `Osso/casc-extract` library. CDN archive indexes persist under `~/.cache/casc-extract/<product>-<build>/indices`.
+Retail/Classic sync tries local install archives first through `asset-resolver`. If active root/encoding metadata resolves an FDID but the local streaming install lacks that archive chunk, it downloads the authoritative CASC blob by encoding key through `Osso/casc-extract`.
 
-The GUI startup path uses the cache only. If the completion marker is missing, startup syncs the manifest from CASC and rechecks the cache. The old `Interface/BlizzardUI` symlink and `vendor/wow-ui-source` checkout are not part of runtime discovery.
+PTR 12.1.5 is intentionally separate: no matching local `wowxptr` install exists. Its committed `data/blizzard-ui-builds/ptr.json` maps the exact `wowxptr` build/config and Gethe `ptr2` revision to CDN archive ranges. Sync validates each range's BLTE encoding key and decoded content key before writing it. This is a build-specific source-acquisition route, not generic TVFS support; it neither labels local `wowt` content as PTR nor falls back to Gethe file bytes.
+
+The GUI startup path uses the cache only. If the completion marker is missing, startup syncs the manifest and rechecks the cache. PTR additionally requires exact pinned provenance, so a stale cache with required files is rejected. The old `Interface/BlizzardUI` symlink and `vendor/wow-ui-source` checkout are not part of runtime discovery.
 
 ### Bundled limited listfile
 

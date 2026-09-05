@@ -16,10 +16,10 @@ The generator verifies the exact Gethe revision/version, `WOW-69594patch12.1.5_X
 python3 tools/gen_blizzard_ui_content_index.py \
   --metadata-prefix /tmp/pi-ptr125 \
   --source-dir ~/.cache/wow-ui-sim/wow-ui-source-git/ptr2/Interface/AddOns \
-  --output data/blizzard-ui-content-index/ptr-12.1.5.69594.json
+  --output data/blizzard-ui-builds/ptr.json
 ```
 
-The output schema is versioned and has top-level `product`, `version`, `build_key`, `cdn_key`, `install_key`, `gethe_revision`, and per-file path, FileDataID, content/encoding keys, archive, range offset, and size.
+The committed output is `data/blizzard-ui-builds/ptr.json`. Its versioned schema has top-level `product`, `version`, `build_key`, `cdn_key`, `install_key`, `gethe_revision`, and per-file path, FileDataID, content/encoding keys, archive, range offset, and size.
 
 ## Tests
 

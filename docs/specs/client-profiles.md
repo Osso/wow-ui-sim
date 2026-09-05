@@ -35,10 +35,10 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 
 ## Known gaps (current cycle)
 
-None.
+- [ ] PTR 12.1.5 source synchronization completes from the pinned Blizzard CDN index, but initial startup has 109 distinct Lua-error entries; profile selection is not startup acceptance.
+- [ ] Representative PTR panel interactions remain unproven.
 
 ## Out of scope
 
-- Changing PTR or classic-profile cache selection, manifests, generators, or cache contents.
 - Removing historical retail API epochs.
-- Modifying Blizzard UI cache files or committed source manifests as part of the channel promotion.
+- Generalizing the pinned PTR 12.1.5 content-index route into a universal TVFS resolver without a new requirement.

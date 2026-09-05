@@ -18,7 +18,7 @@ Feature ↔ profile ↔ vendor source ↔ TOC suffix:
 | `client-era`         | Era         | `era`        | `11507`          | `_Vanilla`         |
 | `client-anniversary` | Anniversary | `anniversary`| `11507`          | `_Vanilla`         |
 
-Retail-family epoch features are cumulative: `retail-12-0-5` includes `retail-12-0-0`, `retail-12-0-7` includes earlier 12.0 epochs, `retail-12-1-0` includes `retail-12-0-7`, and `retail-12-1-5` includes `retail-12-1-0`. `client-retail` remains at `retail-12-1-0`/`120100`; `client-ptr` selects `retail-12-1-5`/`120105`; `profile-retail` selects the retail cache without forcing an epoch. `RetailApiEpoch` and `ACTIVE_RETAIL_API_EPOCH` resolve the highest enabled cumulative retail epoch. API surfaces, CVars, enums, events, XML elements, and frame methods introduced by patch notes should gate on the epoch feature rather than on the channel feature. Strict removals follow the same rule unless source evidence proves a profile-specific retirement: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while `src/ptr/strict_removals.lua` hides it from PTR addons after startup. Profile-specific runtime behavior gates use `profile-retail` so historical retail tests retain retail semantics. Channel/vendor behavior stays profile-gated: PTR CASC product `wowxptr`, `_ptr_` install paths, and `data/blizzard-ui-files/ptr.txt` remain `client-ptr` concerns. This profile promotion does not yet prove a 12.1.5 source cache or startup.
+Retail-family epoch features are cumulative: `retail-12-0-5` includes `retail-12-0-0`, `retail-12-0-7` includes earlier 12.0 epochs, `retail-12-1-0` includes `retail-12-0-7`, and `retail-12-1-5` includes `retail-12-1-0`. `client-retail` remains at `retail-12-1-0`/`120100`; `client-ptr` selects `retail-12-1-5`/`120105`; `profile-retail` selects the retail cache without forcing an epoch. `RetailApiEpoch` and `ACTIVE_RETAIL_API_EPOCH` resolve the highest enabled cumulative retail epoch. API surfaces, CVars, enums, events, XML elements, and frame methods introduced by patch notes should gate on the epoch feature rather than on the channel feature. Strict removals follow the same rule unless source evidence proves a profile-specific retirement: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while `src/ptr/strict_removals.lua` hides it from PTR addons after startup. Profile-specific runtime behavior gates use `profile-retail` so historical retail tests retain retail semantics. Channel/vendor behavior stays profile-gated: PTR CASC product `wowxptr`, `_ptr_` install paths, and `data/blizzard-ui-files/ptr.txt` remain `client-ptr` concerns. PTR 12.1.5 now has a completed 4,025-file source cache from immutable `wowxptr` CDN ranges pinned by build/config and Gethe-revision provenance. Initial `lua-errors` recorded 109 distinct entries, so startup and panel compatibility remain unproven.
 
 Helper functions/constants in `src/client_profile.rs`:
 
@@ -64,7 +64,7 @@ Runtime Blizzard UI files live under the user cache:
 
 Populate it with `wow-cli casc sync-blizzard-ui` or the compatibility wrapper `scripts/setup-blizzard-ui.sh`. Do not use `Interface/BlizzardUI/` or repo-local `vendor/wow-ui-source-*` checkouts for runtime loading.
 
-Each profile uses its own committed manifest in `data/blizzard-ui-files/<profile>.txt`. PTR is configured for the `wowxptr` CASC product and the `ptr.txt` manifest; retail uses the `wow` CASC product and `retail.txt`. The retail manifest mirrors the complete Gethe `live` AddOns tree, including both `Classic/` and `Mainline/` family variants where the live tree contains them. The manifest is a source inventory, not the retail runtime's final TOC selection: retail `[Family]` substitution resolves to `Mainline`, while profile-aware TOC and game-type filtering governs which discovered addons load. Other profile manifests remain profile-specific. As of the profile-only 12.1.5 update, PTR content acquisition, manifest refresh, and startup verification are still pending.
+Each profile uses its own committed manifest in `data/blizzard-ui-files/<profile>.txt`. PTR is configured for the `wowxptr` CASC product and the `ptr.txt` manifest; retail uses the `wow` CASC product and `retail.txt`. The retail manifest mirrors the complete Gethe `live` AddOns tree, including both `Classic/` and `Mainline/` family variants where the live tree contains them. The manifest is a source inventory, not the retail runtime's final TOC selection: retail `[Family]` substitution resolves to `Mainline`, while profile-aware TOC and game-type filtering governs which discovered addons load. Other profile manifests remain profile-specific. PTR 12.1.5 reads `data/blizzard-ui-builds/ptr.json`: a generated, committed CDN range index that validates encoded BLTE and decoded content keys. It does not relabel local `wowt` data or fall back to Gethe bytes. The first full cache synchronization extracted 4,025 files; the resulting 109-entry Lua-error baseline is a compatibility gap, not a source-acquisition failure.
 
 Local install discovery uses the active profile's WoW flavor directory. PTR reads addons, WTF, and BlizzardInterfaceArt from `_ptr_`; retail continues to use `_retail_` with optional `_beta_` addon fallback.
 
@@ -143,6 +143,9 @@ Captured in `docs/baselines/`:
 - `src/event/valid_events.rs` — strict vs permissive event validator dispatch
 - `scripts/setup-blizzard-ui.sh`, `scripts/init-worktree.sh` — vendor pinning
 - `.github/workflows/{test,addon-harness}.yml` — CI matrix
+- `src/blizzard_ui_sync/{pinned,pinned_download}.rs` — immutable PTR CDN sync and validation
+- `data/blizzard-ui-builds/ptr.json` — PTR 12.1.5 build/content identity
+- [PTR source spec](../../specs/ptr-blizzard-ui-source.md) — cache and startup proof boundary
 
 ## See Also
 
@@ -150,4 +153,5 @@ Captured in `docs/baselines/`:
 - [[taint-system]] — `runtime_surface_bootstrap.lua` runs before each profile's compat bootstrap
 - [[lua-api]] — frame methods registered globally vs profile-conditional
 - [Client profile spec](../../specs/client-profiles.md) — supported bundle contract and current gaps
+- [PTR CDN content index](../../ptr-cdn-content-index.md) — offline regeneration contract
 - [[event-system]] — strict-vs-permissive event validator gating

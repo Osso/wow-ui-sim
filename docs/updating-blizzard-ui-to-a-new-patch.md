@@ -16,7 +16,7 @@ resolution.
 | Data | Source | Where it lives |
 |------|--------|----------------|
 | Per-profile file **list** (`retail.txt`, …) | Gethe branch tree | `data/blizzard-ui-files/<profile>.txt` |
-| File **content** | local WoW CASC (by FDID) | extracted to `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns` |
+| File **content** | local WoW CASC for retail/Classic; pinned Blizzard CDN ranges for PTR 12.1.5 | extracted to `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns` |
 | `path → FDID` map | community listfile + authoritative overrides | `data/wow-ui-sim-listfile.csv` (generated) |
 | Extra or canonicalized paths | hand-maintained overrides | `data/listfile-overrides.csv` |
 
@@ -25,7 +25,7 @@ Profile → Gethe branch:
 | Profile | Branch |
 |---------|--------|
 | retail | `live` |
-| ptr | `ptr` |
+| ptr | `ptr2` (pinned at `49b69918fcdc77e109813281e4f537d45ec7dcbf` for 12.1.5.69594) |
 | mists | `classic` (current Classic = Mists of Pandaria) |
 | era | `classic_era` |
 | anniversary | `classic_anniversary` |
@@ -58,8 +58,10 @@ python3 tools/gen_blizzard_ui_manifest.py                 # all profiles
 python3 tools/gen_blizzard_ui_manifest.py retail --no-refresh   # reuse existing cache
 ```
 
-Sanity-check the version it reports matches the installed client build
-(`.build.info` in the WoW install → the active `wow` entry's `Version`).
+For retail/Classic, sanity-check the reported version against the installed client build
+(`.build.info` → active product `Version`). PTR 12.1.5 is different: its committed
+`data/blizzard-ui-builds/ptr.json` pins the official `wowxptr` build/config identity
+and Gethe revision because this machine has no matching local PTR install.
 
 ### 3. Regenerate the bundled limited listfile
 
@@ -80,10 +82,12 @@ does not change output ordering.
 ### 4. Rebuild and validate the sync
 
 The manifests and limited listfile are `include_str!`'d at compile time, so
-rebuild before syncing. The rebuilt sync compares its active profile, CASC product,
-active `.build.info` identity, and compiled manifest hash with cache provenance. A
-mismatch automatically removes only that profile's `AddOns` cache before extraction;
-do not delete the cache manually.
+rebuild before syncing. Retail/Classic sync compares its active profile, CASC product,
+active `.build.info` identity, and compiled manifest hash with cache provenance. PTR
+12.1.5 instead compares its pinned `wowxptr` build/config, Gethe revision, manifest,
+and content-index hashes; it downloads exact CDN archive ranges and verifies both BLTE
+and decoded-content keys. A mismatch automatically removes only that profile's
+`AddOns` cache before extraction; do not delete the cache manually.
 
 ```bash
 cargo build --bin wow-cli
@@ -91,8 +95,11 @@ cargo build --bin wow-cli
 python3 scripts/test-retail-casc-isolation.py
 ```
 
-A pass means every manifest entry resolves against the installed retail CASC.
-The isolation script reports the exact list of any `missing or unusable` entries.
+A pass means every retail manifest entry resolves against installed retail CASC.
+For PTR 12.1.5, `wow-cli casc sync-blizzard-ui` must report the complete pinned entry
+count; then run `lua-errors` and capture its baseline. The cache alone is not startup
+acceptance. The isolation script reports the exact list of any retail `missing or
+unusable` entries.
 
 ### 5. Resolve residual misses
 
@@ -131,7 +138,8 @@ wow-sim --no-addons --no-saved-vars lua-errors 2>/dev/null > docs/baselines/reta
 
 Commit the manifest(s), `data/wow-ui-sim-listfile.csv`, any
 `data/listfile-overrides.csv` additions, guard/list updates, and the refreshed
-baseline together — they are one logical patch bump.
+baseline together — they are one logical patch bump. PTR 12.1.5 also commits its
+regenerated `data/blizzard-ui-builds/ptr.json`; see [PTR CDN content index](ptr-cdn-content-index.md).
 
 ## Notes
 
