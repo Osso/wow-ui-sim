@@ -26,6 +26,10 @@ Retail 12.1 removes public `_G.GetInventorySlotInfo`; current `Blizzard_Transmog
 
 `retail-12-1-5` registers native `math.clamp`, `isfinite`, `isinf`, `isnan`, `lerp`, `normalize`, `remap`, `round`, `saturate`, `sign`, and `wrap` before `Blizzard_SharedXMLBase/MathUtil.lua` assigns compatibility aliases. The grouped PTR audit covers ordinary numeric behavior, extrapolation, half-away-from-zero `round`, and `[minimum, maximum)` `wrap`, including equal endpoints. `LuaMathExtensionsDocumentation.lua` establishes signatures and stated transformations. Reversed/other degenerate ranges and secret-value propagation lack live-client evidence.
 
+### PTR 12.1.5 runtime identity
+
+Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from the pinned PTR build metadata and returns `12.1.5`, `69594`, and interface `120105`. The date and remaining return slots are temporary simulator defaults, so this documents identity selection rather than a fully live-client-proven `GetBuildInfo()` contract. Retail remains `12.1.0` / `120100`.
+
 ## FrameHandle Userdata (`src/lua_api/frame/handle.rs`)
 
 ```rust
@@ -172,6 +176,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [targeting_verbs.rs](../../../src/lua_api/globals/targeting_verbs.rs) — state-backed targeting globals, including `ClearTarget()`'s boolean result
 - [panel_toggle_verbs.rs](../../../src/lua_api/globals/panel_toggle_verbs.rs) — profile-scoped panel toggles, including retail `ToggleGuildFrame()` ownership
 - [math_extensions.rs](../../../src/lua_api/globals/real/math_extensions.rs) — PTR 12.1.5 native `math` extensions
+- [env_runtime.rs](../../../src/lua_api/env_runtime.rs) — `GetBuildInfo()` runtime identity registration
+- [client_profile.rs](../../../src/client_profile.rs) — active PTR interface and pinned build metadata
 - [Lua math extensions spec](../../specs/lua-math-extensions.md) — version gate, tested behavior, and evidence limits
 - [panel_toggle_verbs.rs tests](../../../tests/panel_toggle_verbs.rs) — bare-environment retail/non-retail registration proof
 - [targeting_verbs.rs](../../../tests/targeting_verbs.rs) — targeting global behavior proofs

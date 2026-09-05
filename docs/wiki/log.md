@@ -1,3 +1,7 @@
+## [2026-09-05] system | Report pinned PTR runtime identity
+
+Documented commit `7c8b8b8d9`: under `client-ptr`, `GetBuildInfo()` derives `12.1.5` / `69594` from the pinned PTR metadata and returns active interface `120105`; retail remains `12.1.0` / `120100`. Its date and remaining slots are temporary defaults, so this is not a complete live-client API claim. Updated [[lua-api]], [[client-profiles]], and the index. No code, cache, test, network, or `PLAN.md` action occurred in this documentation commit.
+
 ## [2026-09-05] audit | Correct PTR pixel probe physical-screen capture
 
 Audited commit `5a5b7a187`: `PixelRoundingProbe` now captures display pixels through the documented two-result `GetPhysicalScreenSize()` API, replacing nonexistent width/height globals. An actual simulator VM probe failed before that correction and passed afterward; this validates the capture protocol only. The corrected Lua SHA-256 is `e9cb08416dfc4b859c67ab31f0c938dd5016c5f9e1b06cebc9679d09c408e44b`, matching the staged `_xptr_` file; the TOC hash remains `cfcd6f3fcb2990c29179115c78cf3dc39e6d767c312a7f359edac59455bfc86c`. No PTR SavedVariables capture exists, so native anchor-versus-final-edge rounding remains unknown. See [[ptr-pixel-rounding-probe]].
