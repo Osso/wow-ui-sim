@@ -130,7 +130,7 @@ const FLOAT_DEFS: &[&[crate::lua_api::globals::strings::string_data::FloatDef]] 
 
 const STRING_DEFS: &[&[crate::lua_api::globals::strings::string_data::StringDef]] = &[
     string_data::FONT_COLOR_CODE_STRINGS,
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-0"))]
+    #[cfg(feature = "retail-12-1-0")]
     string_data::RETAIL_12_1_GLOBAL_STRINGS,
 ];
 
