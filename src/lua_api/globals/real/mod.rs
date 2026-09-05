@@ -16,6 +16,7 @@ pub mod guild_logo;
 pub mod item_legacy;
 pub mod locale_info;
 pub mod loot_method;
+pub mod math_extensions;
 pub mod modifier_keys;
 pub mod mouse_probes;
 pub mod net_stats;

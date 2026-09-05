@@ -25,6 +25,8 @@ mod guild_control;
 mod input_util;
 #[path = "patch_12_1/interface_util.rs"]
 mod interface_util;
+#[path = "patch_12_1/math_extensions.rs"]
+mod math_extensions;
 #[path = "patch_12_1/narration.rs"]
 mod narration;
 #[path = "patch_12_1/player_choice.rs"]
