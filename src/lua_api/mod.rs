@@ -51,6 +51,7 @@ pub mod workarounds;
 pub(crate) mod workarounds_editmode;
 
 // Re-export public types
+#[cfg(feature = "retail-12-1-5")]
 pub(crate) use env::WowLuaAppData;
 pub use env::WowLuaEnv;
 pub use globals::global_frames::hide_runtime_hidden_frames;
