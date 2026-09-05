@@ -214,7 +214,7 @@ patch_string_format
 ### Build identity
 **File:** `src/lua_api/workarounds/temporary/client_info_defaults.rs`
 
-PTR `GetBuildInfo()` derives `12.1.5` / `69594` from the committed pinned `wowxptr` index and returns active interface `120105`; retail keeps its existing version/build path. The date and trailing slots remain temporary defaults, not verified PTR identity.
+Only PTR `GetBuildInfo()` derives `12.1.5` / `69594` from the committed pinned `wowxptr` index and returns interface `120105`. Non-PTR builds retain temporary defaults: interface `120100` with `retail-12-1-0`, otherwise `120007`. The date and trailing slots remain temporary defaults, not verified PTR identity.
 
 ### Build options
 **File:** `src/lua_api/globals/utility_system_spell/mod.rs`

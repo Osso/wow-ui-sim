@@ -4,7 +4,7 @@ Updated [[ptr-pixel-rounding-probe]] and the probe README for commit `0c05c89c1`
 
 ## [2026-09-05] system | Report pinned PTR runtime identity
 
-Documented commit `7c8b8b8d9`: under `client-ptr`, `GetBuildInfo()` derives `12.1.5` / `69594` from the pinned PTR metadata and returns active interface `120105`; retail remains `12.1.0` / `120100`. Its date and remaining slots are temporary defaults, so this is not a complete live-client API claim. Updated [[lua-api]], [[client-profiles]], and the index. No code, cache, test, network, or `PLAN.md` action occurred in this documentation commit.
+Documented commit `7c8b8b8d9`: under `client-ptr`, `GetBuildInfo()` derives `12.1.5` / `69594` from pinned PTR metadata and returns interface `120105`. Non-PTR temporary defaults remain interface `120100` with `retail-12-1-0`, otherwise `120007`; this preservation does not claim historical client identity correctness. Its date and remaining slots are temporary defaults, so this is not a complete live-client API claim. Updated [[lua-api]], [[client-profiles]], and the index. No code, cache, test, network, or `PLAN.md` action occurred in this documentation commit.
 
 ## [2026-09-05] audit | Correct PTR pixel probe physical-screen capture
 
