@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Build the pinned PTR 12.1.5 Blizzard CDN content index from offline metadata."""
 
 from __future__ import annotations
