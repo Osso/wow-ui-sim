@@ -7,6 +7,7 @@ use std::sync::OnceLock;
 
 const INDEX: &str = include_str!("../../data/blizzard-ui-builds/ptr.json");
 
+#[cfg(feature = "client-ptr")]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(crate) struct ClientIdentity {
     pub version: String,
@@ -42,6 +43,7 @@ fn build() -> crate::Result<&'static Build> {
         .map_err(|cause| crate::Error::Other(cause.clone()))
 }
 
+#[cfg(feature = "client-ptr")]
 pub(crate) fn client_identity() -> crate::Result<ClientIdentity> {
     let version_and_build = &build()?.version;
     let (version, build) = version_and_build.rsplit_once('.').ok_or_else(|| {

@@ -12,6 +12,14 @@ const CLIENT_VERSION: &str = "12.0.7";
 #[cfg(not(feature = "client-ptr"))]
 const RETAIL_BUILD: &str = "68256";
 
+const CLIENT_INTERFACE: u32 = if cfg!(feature = "client-ptr") {
+    crate::client_profile::ACTIVE_INTERFACE_VERSION
+} else if cfg!(feature = "retail-12-1-0") {
+    120100
+} else {
+    120007
+};
+
 fn client_identity() -> crate::Result<(String, String)> {
     #[cfg(feature = "client-ptr")]
     {
@@ -213,10 +221,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let code = CLIENT_INFO_DEFAULTS_LUA
         .replace("__WOW_CLIENT_VERSION__", &version)
         .replace("__WOW_CLIENT_BUILD__", &build)
-        .replace(
-            "__WOW_CLIENT_INTERFACE__",
-            &crate::client_profile::ACTIVE_INTERFACE_VERSION.to_string(),
-        );
+        .replace("__WOW_CLIENT_INTERFACE__", &CLIENT_INTERFACE.to_string());
     lua.exec(&code)?;
     Ok(())
 }
@@ -230,7 +235,7 @@ mod tests {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let (expected_version, expected_build) = super::client_identity().unwrap();
-        let expected_interface = crate::client_profile::ACTIVE_INTERFACE_VERSION;
+        let expected_interface = super::CLIENT_INTERFACE;
         let script = format!(
             r#"
                 local version, build, date, interface = GetBuildInfo()

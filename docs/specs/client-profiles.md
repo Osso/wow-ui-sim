@@ -9,6 +9,7 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - [x] Historical retail epochs remain selectable through `profile-retail` without enabling the current-retail bundle.
 - [x] `client-ptr` remains a distinct profile/cache while selecting the cumulative 12.1.5 API epoch (`120105`).
 - [x] PTR CASC resolves the official `wowxptr` product; 12.1.5.69594 uses BuildConfig `4a9973f37906f8cfb344f8a9fe6777e0` and Gethe `ptr2` source commit `49b69918fcdc77e109813281e4f537d45ec7dcbf`.
+- [x] PTR `GetBuildInfo()` publishes `12.1.5`, build `69594`, and interface `120105` from the pinned source identity; retail retains its prior identity.
 - [x] PTR 12.1.5 publishes `Enum.CurioRarity.EpicTier2 = 5` and metadata through 5; earlier retail epochs retain the four-value contract.
 - [x] Same-epoch profiles may have source-proven post-startup removals: retail 12.1 keeps `C_RecruitAFriend.IsEnabled`, while PTR hides it after startup.
 - [x] Default-retail Lua initialization publishes the probe-backed retail 12.1 global-string contract.
@@ -23,6 +24,8 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - `Cargo.toml` — cumulative retail epoch features and public client bundles; `retail-12-1-5` extends `retail-12-1-0` for PTR.
 - `src/client_profile.rs` — active profile/epoch selection and interface constants.
 - `src/asset_resolver_config.rs` — profile-to-CASC-product mapping (`client-ptr` uses `wowxptr`).
+- `src/blizzard_ui_sync/pinned.rs` — reads the pinned PTR version/build identity.
+- `src/lua_api/workarounds/temporary/client_info_defaults.rs` — exposes the modeled `GetBuildInfo()` identity.
 - `src/ptr/strict_removals.lua` — PTR-only post-startup removals, including `C_RecruitAFriend.IsEnabled`.
 - `src/lua_api/globals/strings/mod.rs` — epoch-gated retail string registration.
 - `src/lua_api/globals/enum_data/addon_system.rs` and `src/lua_api/env_init/enums.rs` — CurioRarity values and profile-specific metadata.
@@ -34,12 +37,13 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 - `src/loader/tests/wow_api_globals/startup_globals.rs` — post-startup strict-removal contract, including PTR-only `C_RecruitAFriend.IsEnabled` removal.
 - `tests/blizzard_recruit_a_friend_loads.rs` — retail `C_RecruitAFriend.IsEnabled` availability and behavior.
 - `src/lua_api/globals/register.rs` — exact retail 12.1 string values and intentional nil globals.
-- `src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs` — PTR 12.1.5 CurioRarity contract and vendor mapping.
+- `src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs` — PTR 12.1.5 CurioRarity, vendor mapping, and build-identity contracts.
 
 ## Known gaps (current cycle)
 
-- [ ] PTR 12.1.5 source synchronization completes from the pinned Blizzard CDN index, but initial startup has 109 distinct Lua-error entries; profile selection is not startup acceptance.
+- [ ] PTR 12.1.5 source synchronization completes from the pinned Blizzard CDN index, but the current startup baseline has six pixel-rounding error records; profile selection is not startup acceptance.
 - [ ] Representative PTR panel interactions remain unproven.
+- [ ] PTR `GetBuildInfo()` date and trailing return slots remain temporary defaults until the live PTR capture establishes their contract.
 
 ## Out of scope
 

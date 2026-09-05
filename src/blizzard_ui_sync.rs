@@ -45,6 +45,7 @@ pub fn default_cache_addons_path() -> crate::Result<PathBuf> {
         .ok_or_else(|| crate::Error::Other("could not determine user cache directory".to_string()))
 }
 
+#[cfg(feature = "client-ptr")]
 pub(crate) fn ptr_client_identity() -> crate::Result<pinned::ClientIdentity> {
     pinned::client_identity()
 }
