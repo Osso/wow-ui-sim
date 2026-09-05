@@ -1,5 +1,8 @@
 //! CASC-backed Blizzard UI source synchronization.
 
+mod pinned;
+#[cfg(feature = "casc")]
+mod pinned_download;
 mod profile_cache;
 
 use self::profile_cache::{cache_entry_is_usable, required_profile_cache_entries};
@@ -45,7 +48,10 @@ pub fn default_cache_addons_path() -> crate::Result<PathBuf> {
 pub fn cached_blizzard_ui_addons_path() -> Option<PathBuf> {
     let path = default_cache_addons_path().ok()?;
     let is_complete = path.join(COMPLETE_MARKER).is_file();
-    (is_complete && cache_has_required_profile_files(&path)).then_some(path)
+    let identity_matches = crate::client_profile::ACTIVE
+        != crate::client_profile::ClientProfile::Ptr
+        || pinned::cache_matches(&path);
+    (is_complete && identity_matches && cache_has_required_profile_files(&path)).then_some(path)
 }
 
 fn cache_has_required_profile_files(root: &Path) -> bool {
@@ -61,6 +67,9 @@ pub fn sync_blizzard_ui() -> crate::Result<SyncSummary> {
 }
 
 pub fn sync_blizzard_ui_to(root: &Path) -> crate::Result<SyncSummary> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        return pinned::sync_to(root);
+    }
     let expected_provenance = expected_cache_provenance()?;
     invalidate_cache_if_provenance_mismatched(root, &expected_provenance)?;
     sync_blizzard_ui_entries(root, sync_manifest_entries(), &expected_provenance)
@@ -165,6 +174,9 @@ struct BuildIdentity {
 }
 
 fn expected_cache_provenance() -> crate::Result<CacheProvenance> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        return pinned::provenance();
+    }
     #[cfg(feature = "casc")]
     {
         let install_root =

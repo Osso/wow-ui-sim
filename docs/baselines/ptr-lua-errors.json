@@ -1,0 +1,438 @@
+[
+  {
+    "message": "@Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerUtil.lua: Interface/AddOns/Blizzard_SharedXMLBase/TimerUtil.lua:17: attempt to index local 'signalMap' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerUtil.lua: Interface/AddOns/Blizzard_SharedXMLBase/TimerUtil.lua:17: attempt to index local 'signalMap' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerGroups.lua: .../Blizzard_AuraContainer/Blizzard_AuraContainerGroups.lua:565: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerGroups.lua: .../Blizzard_AuraContainer/Blizzard_AuraContainerGroups.lua:565: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerFrameProviders.lua: ...d_AuraContainer/Blizzard_AuraContainerFrameProviders.lua:18: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerFrameProviders.lua: ...d_AuraContainer/Blizzard_AuraContainerFrameProviders.lua:18: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerSlots.lua: ...s/Blizzard_AuraContainer/Blizzard_AuraContainerSlots.lua:441: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerSlots.lua: ...s/Blizzard_AuraContainer/Blizzard_AuraContainerSlots.lua:441: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerEnchantments.lua: ...ard_AuraContainer/Blizzard_AuraContainerEnchantments.lua:415: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerEnchantments.lua: ...ard_AuraContainer/Blizzard_AuraContainerEnchantments.lua:415: attempt to index global 'AuraContainerUtil' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] SettingsPanel: Interface/AddOns/Blizzard_SharedXML/ButtonGroup.lua:165: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] SettingsPanel: Interface/AddOns/Blizzard_SharedXML/ButtonGroup.lua:165: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: Not all BattleNetFriendTags have a label defined in battleNetFriendTagToLabel!\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n[Interface/AddOns/Blizzard_SharedXMLBase/ErrorUtil.lua]:19: in function 'assertsafe'\n[Interface/AddOns/Blizzard_SocialUIShared/SocialUIUtil.lua]:16: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ChatFrame1: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ChatFrame1: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ChatFrameMenuButton: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ChatFrameMenuButton: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua: ...ddOns/Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua:652: attempt to index global 'SLASH_CAA_HELP_SAY_COMBAT_START_SOUND' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua: ...ddOns/Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua:652: attempt to index global 'SLASH_CAA_HELP_SAY_COMBAT_START_SOUND' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] GearManagerPopupFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] GearManagerPopupFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] MerchantFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] MerchantFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ContainerFrame1: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ContainerFrame1: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ContainerFrame2: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ContainerFrame2: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ContainerFrame3: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ContainerFrame3: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ContainerFrame4: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ContainerFrame4: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ContainerFrame5: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ContainerFrame5: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ContainerFrame6: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ContainerFrame6: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ContainerFrameCombinedBags: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ContainerFrameCombinedBags: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] QuestMapFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] QuestMapFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ?: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 5
+  },
+  {
+    "message": "Lua Error: [OnLoad] ?: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 5
+  },
+  {
+    "message": "[OnLoad] GuildControlUIRankBankFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] GuildControlUIRankBankFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] GuildControlUIRankSettingsFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] GuildControlUIRankSettingsFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] GuildControlUI: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] GuildControlUI: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] : attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] : attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CommunitiesTicketManagerDialog: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CommunitiesTicketManagerDialog: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] TimeManagerFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] TimeManagerFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CombatLogQuickButtonFrame_Custom: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CombatLogQuickButtonFrame_Custom: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] FriendsTabHeader: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] FriendsTabHeader: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] WhoFrameDropdown: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] WhoFrameDropdown: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CooldownViewerSettings: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CooldownViewerSettings: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] DamageMeter: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] DamageMeter: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.lua: table index is nil\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.lua: table index is nil\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_HousingTutorials/Blizzard_HousingTutorialsMisc.lua: Interface/AddOns/Blizzard_Tutorials/BagTutorialUtil.lua:24: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_HousingTutorials/Blizzard_HousingTutorialsMisc.lua: Interface/AddOns/Blizzard_Tutorials/BagTutorialUtil.lua:24: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] MacroPopupFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] MacroPopupFrame: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] MainMenuBarBackpackButton: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] MainMenuBarBackpackButton: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CharacterBag0Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CharacterBag0Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CharacterBag1Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CharacterBag1Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CharacterBag2Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CharacterBag2Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CharacterBag3Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CharacterBag3Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] CharacterReagentBag0Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] CharacterReagentBag0Slot: ...d_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua:18: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ClassNameplateManaBarFrame: Interface/AddOns/Blizzard_SharedXML/PixelUtil.lua:63: attempt to call local '(for generator)' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ClassNameplateManaBarFrame: Interface/AddOns/Blizzard_SharedXML/PixelUtil.lua:63: attempt to call local '(for generator)' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ClassNameplateEbonMightBarFrame: Interface/AddOns/Blizzard_SharedXML/PixelUtil.lua:63: attempt to call local '(for generator)' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ClassNameplateEbonMightBarFrame: Interface/AddOns/Blizzard_SharedXML/PixelUtil.lua:63: attempt to call local '(for generator)' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] ClassNameplateBrewmasterBarFrame: Interface/AddOns/Blizzard_SharedXML/PixelUtil.lua:63: attempt to call local '(for generator)' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] ClassNameplateBrewmasterBarFrame: Interface/AddOns/Blizzard_SharedXML/PixelUtil.lua:63: attempt to call local '(for generator)' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function <(string):10>\n\t[C]: in function 'securecallfunction'\n\tInterface/AddOns/Blizzard_SharedXMLBase/SecureTypes.lua:150: in function 'Contains'\n\tInterface/AddOns/Blizzard_SharedXMLBase/SecureTypes.lua:126: in function 'UniqueInsert'\n\tInterface/AddOns/Blizzard_Menu/Menu.lua:444: in function <Interface/AddOns/Blizzard_Menu/Menu.lua:443>\n\t(tail call): ?\n\tInterface/AddOns/Blizzard_Menu/MenuTemplates.lua:303: in function 'CreateButton'\n\tInterface/AddOns/Blizzard_Menu/MenuUtil.lua:212: in function 'inserter'\n\tInterface/AddOns/Blizzard_Menu/MenuUtil.lua:87: in function 'CreateButton'\n\t.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:75: in function 'CreateButtonWithShortcut'\n\t...\n\t.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:155: in function 'Reinitialize'\n\t.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:170: in function <.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:169>\n\t(tail call): ?\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: in function 'Show'\n\t(string):14: in main chunk",
+    "count": 5
+  },
+  {
+    "message": "Lua Error: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function <(string):10>\n\t[C]: in function 'securecallfunction'\n\tInterface/AddOns/Blizzard_SharedXMLBase/SecureTypes.lua:150: in function 'Contains'\n\tInterface/AddOns/Blizzard_SharedXMLBase/SecureTypes.lua:126: in function 'UniqueInsert'\n\tInterface/AddOns/Blizzard_Menu/Menu.lua:444: in function <Interface/AddOns/Blizzard_Menu/Menu.lua:443>\n\t(tail call): ?\n\tInterface/AddOns/Blizzard_Menu/MenuTemplates.lua:303: in function 'CreateButton'\n\tInterface/AddOns/Blizzard_Menu/MenuUtil.lua:212: in function 'inserter'\n\tInterface/AddOns/Blizzard_Menu/MenuUtil.lua:87: in function 'CreateButton'\n\t.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:75: in function 'CreateButtonWithShortcut'\n\t...\n\t.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:155: in function 'Reinitialize'\n\t.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:170: in function <.../Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:169>\n\t(tail call): ?\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: in function 'Show'\n\t(string):14: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function 'Show'\n=(string):14: in main chunk",
+    "count": 5
+  },
+  {
+    "message": "[OnEvent] frame=#2827 addon=Blizzard_AccessibilityTemplates source==(string):533: ..._ObjectiveTracker/Blizzard_ObjectiveTrackerContainer.lua:145: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t..._ObjectiveTracker/Blizzard_ObjectiveTrackerContainer.lua:145: in function 'HasModule'\n\t..._ObjectiveTracker/Blizzard_ObjectiveTrackerContainer.lua:117: in function 'AddModule'\n\t...rd_ObjectiveTracker/Blizzard_ObjectiveTrackerManager.lua:58: in function 'SetModuleContainer'\n\t...rd_ObjectiveTracker/Blizzard_ObjectiveTrackerManager.lua:211: in function <...rd_ObjectiveTracker/Blizzard_ObjectiveTrackerManager.lua:190>\n\t(tail call): ?\n\t(string):583: in function <(string):533>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=#2827 addon=Blizzard_AccessibilityTemplates source==(string):533: ..._ObjectiveTracker/Blizzard_ObjectiveTrackerContainer.lua:145: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t..._ObjectiveTracker/Blizzard_ObjectiveTrackerContainer.lua:145: in function 'HasModule'\n\t..._ObjectiveTracker/Blizzard_ObjectiveTrackerContainer.lua:117: in function 'AddModule'\n\t...rd_ObjectiveTracker/Blizzard_ObjectiveTrackerManager.lua:58: in function 'SetModuleContainer'\n\t...rd_ObjectiveTracker/Blizzard_ObjectiveTrackerManager.lua:211: in function <...rd_ObjectiveTracker/Blizzard_ObjectiveTrackerManager.lua:190>\n\t(tail call): ?\n\t(string):583: in function <(string):533>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=ExpansionLandingPageMinimapButton addon=Blizzard_Minimap source=@Interface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:908: Interface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:909: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\tInterface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:909: in function <Interface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:908>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=ExpansionLandingPageMinimapButton addon=Blizzard_Minimap source=@Interface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:908: Interface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:909: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\tInterface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:909: in function <Interface/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:908>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=StatusTrackingBarManager addon=Blizzard_ActionBar source=@generated/template-method-handler-no-global-slots/5de218f5d7de49f4:3: ...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: in function 'UpdateBarsShown'\n\t...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:46: in function <...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:36>\n\t(tail call): ?\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=StatusTrackingBarManager addon=Blizzard_ActionBar source=@generated/template-method-handler-no-global-slots/5de218f5d7de49f4:3: ...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: in function 'UpdateBarsShown'\n\t...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:46: in function <...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:36>\n\t(tail call): ?\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=#30426 addon=Blizzard_Game source=@Interface/AddOns/Blizzard_Game/Shared/EventRouting.lua:4: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:159: in function 'EnableMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1744: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:180: in function 'UpdateMicroButtons'\n\t...face/AddOns/Blizzard_Game/Shared/EventImplementation.lua:302: in function 'HandlePlayerEnteringWorld'\n\t...ce/AddOns/Blizzard_Game/Mainline/EventImplementation.lua:770: in function 'HandlePlayerEnteringWorld'\n\tInterface/AddOns/Blizzard_Game/Shared/EventRouting.lua:62: in function 'handler'\n\tInterface/AddOns/Blizzard_Game/Shared/EventRouting.lua:7: in function <Interface/AddOns/Blizzard_Game/Shared/EventRouting.lua:4>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=#30426 addon=Blizzard_Game source=@Interface/AddOns/Blizzard_Game/Shared/EventRouting.lua:4: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:159: in function 'EnableMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1744: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:180: in function 'UpdateMicroButtons'\n\t...face/AddOns/Blizzard_Game/Shared/EventImplementation.lua:302: in function 'HandlePlayerEnteringWorld'\n\t...ce/AddOns/Blizzard_Game/Mainline/EventImplementation.lua:770: in function 'HandlePlayerEnteringWorld'\n\tInterface/AddOns/Blizzard_Game/Shared/EventRouting.lua:62: in function 'handler'\n\tInterface/AddOns/Blizzard_Game/Shared/EventRouting.lua:7: in function <Interface/AddOns/Blizzard_Game/Shared/EventRouting.lua:4>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=OverrideActionBarExpBar addon=Blizzard_OverrideActionBar source=@generated/loader-exec-no-global-slots/7f18da37d71a97af:17: ...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: in function 'UpdateBarsShown'\n\tgenerated/loader-exec-no-global-slots/7f18da37d71a97af:21: in function <generated/loader-exec-no-global-slots/7f18da37d71a97af:17>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=OverrideActionBarExpBar addon=Blizzard_OverrideActionBar source=@generated/loader-exec-no-global-slots/7f18da37d71a97af:17: ...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...dOns/Blizzard_ActionBar/Shared/StatusTrackingManager.lua:97: in function 'UpdateBarsShown'\n\tgenerated/loader-exec-no-global-slots/7f18da37d71a97af:21: in function <generated/loader-exec-no-global-slots/7f18da37d71a97af:17>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=LFDMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1308: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:183: in function 'UpdateMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1315: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1308>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 2
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=LFDMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1308: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:183: in function 'UpdateMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1315: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1308>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 2
+  },
+  {
+    "message": "[OnEvent] frame=ExpansionLandingPage addon=Blizzard_ExpansionLandingPage source=@generated/template-method-handler-no-global-slots/5de218f5d7de49f4:3: ...d_ExpansionLandingPage/Blizzard_ExpansionLandingPage.lua:30: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...d_ExpansionLandingPage/Blizzard_ExpansionLandingPage.lua:30: in function <...d_ExpansionLandingPage/Blizzard_ExpansionLandingPage.lua:29>\n\t(tail call): ?\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=ExpansionLandingPage addon=Blizzard_ExpansionLandingPage source=@generated/template-method-handler-no-global-slots/5de218f5d7de49f4:3: ...d_ExpansionLandingPage/Blizzard_ExpansionLandingPage.lua:30: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...d_ExpansionLandingPage/Blizzard_ExpansionLandingPage.lua:30: in function <...d_ExpansionLandingPage/Blizzard_ExpansionLandingPage.lua:29>\n\t(tail call): ?\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=EJMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1539: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:183: in function 'UpdateMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1543: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1539>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=EJMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1539: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:183: in function 'UpdateMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1543: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1539>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=StoreMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1677: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:183: in function 'UpdateMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1684: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1677>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=StoreMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1677: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'TableIsEmpty'\n\t...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1656: in function 'CanEnterEditMode'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1906: in function 'UpdateNotificationIcon'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1886: in function 'UpdateMicroButton'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:183: in function 'UpdateMicroButtons'\n\t.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1684: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1677>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=ChatFrame1 addon=Blizzard_ChatFrameBase source=@Interface/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:145: ...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2029: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2029: in function 'FCFDock_HasDockedChatFrame'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1968: in function 'FCFDock_AddChatFrame'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1468: in function 'FCF_DockFrame'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:361: in function 'FloatingChatFrame_Update'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:149: in function <...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:145>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=ChatFrame1 addon=Blizzard_ChatFrameBase source=@Interface/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:145: ...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2029: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'tContains'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2029: in function 'FCFDock_HasDockedChatFrame'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1968: in function 'FCFDock_AddChatFrame'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1468: in function 'FCF_DockFrame'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:361: in function 'FloatingChatFrame_Update'\n\t...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:149: in function <...ns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:145>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  }
+]

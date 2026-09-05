@@ -6,7 +6,7 @@ Gethe branch's `Interface/AddOns` tree — no filtering. A Gethe branch already
 is the per-client dump, so the branch tree maps 1:1 to a profile manifest:
 
     retail      -> live
-    ptr         -> ptr
+    ptr         -> ptr2
     mists       -> classic          (current Classic is Mists of Pandaria)
     era         -> classic_era
     anniversary -> classic_anniversary
@@ -34,7 +34,7 @@ GETHE_REMOTE = "https://github.com/Gethe/wow-ui-source.git"
 # profile manifest name -> Gethe branch
 PROFILE_BRANCH = {
     "retail": "live",
-    "ptr": "ptr",
+    "ptr": "ptr2",
     "mists": "classic",
     "era": "classic_era",
     "anniversary": "classic_anniversary",
