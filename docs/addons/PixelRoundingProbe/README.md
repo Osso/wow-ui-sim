@@ -10,6 +10,6 @@ Read-only evidence capture for PTR `12.1.5.69594` pixel-layout behavior. It crea
 4. Run `/reload` or log out to flush SavedVariables.
 5. Retrieve `_xptr_/WTF/Account/<ACCOUNT>/SavedVariables/PixelRoundingProbe.lua`.
 
-Each capture records build/interface identity, physical display dimensions, UIParent geometry and effective scale, raw points/rectangles/scales, native rounding getter/setter results, and per-operation errors. Cases distinguish fractional bottom-left and center anchors, two-anchor stretch, small negative offsets, object and parent scaling, toggling before/after geometry assignment, and texture/font-string behavior.
+The settled sample resamples the same hidden objects on the following timer tick; repeated runs reuse the bounded case pool. Each capture records build/interface identity, physical display dimensions, UIParent and per-case parent geometry, `GetSize`/width/height, points/rectangles/scales, native rounding getter/setter results, and per-operation errors. Anonymous anchor targets use stable case labels. Cases distinguish fractional bottom-left and center anchors, two-anchor stretch, small negative offsets, object and parent scaling, toggling before/after geometry assignment, and texture/font-string behavior.
 
 Do not infer behavior from an addon that reports a different build: `matchesExpectedBuild` must be true for `69594`. Preserve raw values; the probe intentionally does not calculate expected rounded geometry.

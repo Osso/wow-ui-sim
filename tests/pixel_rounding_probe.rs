@@ -16,6 +16,12 @@ fn pixel_rounding_probe_records_read_only_cases_and_capture_errors() {
         GetPhysicalScreenHeight = function() return 1440 end
         InCombatLockdown = function() return false end
         C_Timer.After = function(_, callback) callback() end
+        local originalCreateFrame = CreateFrame
+        CreateFrame = function(...)
+            local frame = originalCreateFrame(...)
+            frame.SetRoundLayoutToNearestPixel = false
+            return frame
+        end
         "#,
     )
     .expect("install probe fixture");
@@ -45,7 +51,7 @@ fn pixel_rounding_probe_records_read_only_cases_and_capture_errors() {
         assert(sample.cases[9].beforeFlag ~= nil)
         assert(sample.cases[11].parentAfter ~= nil)
         assert(sample.cases[12].texture and sample.cases[12].fontString)
-        assert(sample.cases[1].after.errors.setRoundLayout == nil)
+        assert(not (sample.cases[1].after.errors and sample.cases[1].after.errors.setRoundLayout))
         assert(sample.cases[8].errors.setRoundLayout, "unavailable native method is recorded")
         local function serializable(value)
             local kind = type(value)
@@ -83,6 +89,47 @@ fn pixel_rounding_probe_skips_combat_without_changing_frames() {
         "#,
     )
     .expect("combat diagnostic assertions");
+}
+
+#[test]
+fn pixel_rounding_probe_resamples_same_objects_without_leaking_roots() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.exec(
+        r#"
+        probeQueue = {}
+        C_Timer.After = function(_, callback) probeQueue[#probeQueue + 1] = callback end
+        InCombatLockdown = function() return false end
+        probeOriginalWidth, probeOriginalHeight = UIParent:GetSize()
+        "#,
+    )
+    .unwrap();
+    load_probe_source(&env);
+    env.exec(
+        r#"
+        SlashCmdList.PIXELROUNDINGPROBE('deferred')
+        probeQueue[1]()
+        local childCount = UIParent:GetNumChildren()
+        local children = {UIParent:GetChildren()}
+        local target = select(1, children[#children]:GetChildren())
+        assert(target, "probe's last case has its own hidden frame")
+        target:SetWidth(177.25)
+        local changedWidth = target:GetWidth()
+        probeQueue[2]()
+        assert(UIParent:GetNumChildren() == childCount, "settled capture must reuse the same objects")
+        local first = PixelRoundingProbeDB.samples[1]
+        local settled = PixelRoundingProbeDB.samples[2]
+        assert(first.cases[12].after.width ~= changedWidth)
+        assert(settled.cases[12].after.width == changedWidth, "capture observes intervening geometry change")
+        assert(settled.cases[12].after.points[1].relativeTo == "regions-round-layout:parent")
+        assert(settled.cases[12].parent and settled.cases[12].after.size)
+        SlashCmdList.PIXELROUNDINGPROBE('repeat')
+        probeQueue[3]()
+        probeQueue[4]()
+        assert(UIParent:GetNumChildren() == childCount, "repeat capture must not leak roots")
+        local width, height = UIParent:GetSize()
+        assert(width == probeOriginalWidth and height == probeOriginalHeight, "existing UI geometry unchanged")
+        "#,
+    ).expect("deferred capture protocol");
 }
 
 fn load_probe_source(env: &WowLuaEnv) {
