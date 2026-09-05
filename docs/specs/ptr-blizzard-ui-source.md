@@ -9,7 +9,7 @@ PTR 12.1.5.69594 uses an immutable Blizzard CDN content index, independent of th
 - [x] Require exact HTTP partial-content ranges; reject full-archive or wrong-range responses.
 - [x] Retry transient HTTP failures with bounded backoff and respect `Retry-After`.
 - [x] Synchronize all 4,025 pinned source entries, write completion only after all entries succeed, and reuse only hash-matching files.
-- [ ] Load PTR startup and representative panels against this cache; initial startup recorded 109 distinct Lua-error entries, so a version label and completed cache are not compatibility proof.
+- [ ] Load PTR startup and representative panels against this cache; the current baseline has six unresolved pixel-rounding error records, so a completed cache is not compatibility proof.
 
 ## How it works
 
@@ -32,7 +32,9 @@ PTR 12.1.5.69594 uses an immutable Blizzard CDN content index, independent of th
 
 ## Known gaps (current cycle)
 
-- [ ] Reduce the 109-entry initial PTR Lua-error baseline, then prove startup and representative panels.
+- [ ] Resolve native pixel-rounding behavior from the selected [live PTR probe](../addons/PixelRoundingProbe/README.md), then prove startup and representative panels. Three ClassNameplate initializers account for the remaining six records, down from 109 after the math/table/timer/string/Curio fixes.
+
+Independent source verification matched all 4,025 cache files to pinned size/content keys and reproduced the content-index JSON semantically. This establishes source integrity, not complete PTR compatibility.
 
 ## Out of scope
 
