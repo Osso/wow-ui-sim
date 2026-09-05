@@ -1,0 +1,8 @@
+## Interface: 120105
+## Title: Pixel Rounding Probe
+## Notes: Read-only PTR pixel-layout evidence capture.
+## Author: Alessio
+## Version: 0.1.0
+## SavedVariables: PixelRoundingProbeDB
+
+PixelRoundingProbe.lua
