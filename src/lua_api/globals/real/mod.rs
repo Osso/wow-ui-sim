@@ -29,6 +29,7 @@ pub mod specialization_helpers;
 pub mod specialization_legacy;
 pub mod spell_flyout_legacy;
 pub mod spell_tabs;
+pub mod table_extensions;
 pub mod timerunning;
 pub mod ui_widget_container;
 pub mod vehicle_possession;

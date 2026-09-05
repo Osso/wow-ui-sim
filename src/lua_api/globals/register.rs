@@ -85,6 +85,8 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::real::frame_level_helpers::register_all(lua)?;
     #[cfg(feature = "retail-12-1-5")]
     super::real::math_extensions::register_all(lua)?;
+    #[cfg(feature = "retail-12-1-5")]
+    super::real::table_extensions::register_all(lua)?;
     super::real::net_stats::register_all(lua)?;
     super::store_frame::register_all(lua)?;
     Ok(())
