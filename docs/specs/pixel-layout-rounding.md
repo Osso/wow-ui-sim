@@ -4,11 +4,11 @@ PTR 12.1.5 native `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPix
 
 ## What it must do
 
-- [ ] Expose the native boolean setter/getter under the cumulative `retail-12-1-5` epoch, defaulting to false independently for Frame, Texture, and FontString objects.
-- [ ] Preserve requested dimensions and anchor offsets while resolving rounded explicit dimensions and offsets using `768 / (physical display height × effective region scale)`. `GetPoint` retains requested offsets; disabling rounding restores fractional layout.
-- [ ] Match captured bottom-left, center, two-anchor stretch, object-scale, parent-scale/reposition, Texture all-points, and explicit FontString cases. Do not round inherited target geometry or stretch-derived dimensions a second time.
-- [ ] Return coherent rounded dimensions through `GetRect`, `GetSize`, `GetWidth`, and `GetHeight`, with the same results when enabled before or after geometry assignment and on subsequent timer ticks.
-- [ ] Invalidate layout after flag, scale, parent geometry, or physical display changes. Resize expectations follow the source PixelUtil conversion; resize was not exercised by the live capture.
+- [x] Expose the native boolean setter/getter under the cumulative `retail-12-1-5` epoch, defaulting to false independently for Frame, Texture, and FontString objects.
+- [x] Preserve requested dimensions and anchor offsets while resolving rounded explicit dimensions and offsets using `768 / (physical display height × effective region scale)`. `GetPoint` retains requested offsets; disabling rounding restores fractional layout.
+- [x] Match captured bottom-left, center, two-anchor stretch, object-scale, parent-scale/reposition, Texture all-points, and explicit FontString cases. Do not round inherited target geometry or stretch-derived dimensions a second time.
+- [x] Return coherent rounded dimensions through `GetRect`, `GetSize`, `GetWidth`, and `GetHeight`, with the same results when enabled before or after geometry assignment and on subsequent timer ticks.
+- [x] Invalidate layout after flag, scale, parent geometry, or physical display changes. Resize expectations follow the source PixelUtil conversion; resize was not exercised by the live capture.
 
 ## How it works
 
@@ -30,8 +30,8 @@ PTR 12.1.5 native `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPix
 
 ## Known gaps (current cycle)
 
-- [ ] Commit `07cce4a63` native methods and shared layout computation require replay and independent verification.
-- [ ] PTR startup and representative panel acceptance remain open.
+- [ ] Rendered output, hit testing, clipping, animations, arbitrary layout graphs, half-pixel ties, and untested widget types remain outside the captured proof.
+- [ ] PTR representative panel acceptance remains open: Spellbook emits ClickBinding errors despite visibility markers.
 
 ## Out of scope
 
