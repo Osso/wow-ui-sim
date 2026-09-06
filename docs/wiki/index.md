@@ -1,6 +1,10 @@
+## [2026-09-06] investigation | Receive PTR pixel-rounding capture
+
+[[ptr-pixel-rounding-probe]] records the received ignored private PTR `12.1.5.69594` capture: six error-free samples with 12 cases each at `3440×1440`, raw SavedVariables SHA-256 `1383e92e76920adf718e0beafbeeff55fe1dc78134735f66177b73374a3a23bf`, and desktop/local equality. The rounding flag defaults false and changes geometry without changing raw anchors; immediate and settled readings match only for captured cases. ClickBinding/Collections helpers exist while both respective addons report `loaded=false`, `finished=false`; the user reports no personal addons, but the probe does not inventory them. General rounding and LoadOnDemand/bootstrap ordering remain under investigation.
+
 ## [2026-09-05] investigation | Stage PTR pixel-rounding evidence probe
 
-[[ptr-pixel-rounding-probe]] records the bounded read-only `PixelRoundingProbe` protocol for desktop `wowxptr` `12.1.5.69594`: hidden owned objects only, persistent next-tick resampling, physical-screen capture, and verified `_xptr_` staging hashes. Samples now passively record ClickBinding/Collections load completion and helper presence without loading addons; this does not establish native LoD semantics or alter normal `[Bootstrap]` TOC order. Native rounding remains unproven pending PTR SavedVariables capture.
+[[ptr-pixel-rounding-probe]] records the bounded read-only `PixelRoundingProbe` protocol for desktop `wowxptr` `12.1.5.69594`: hidden owned objects only, persistent next-tick resampling, physical-screen capture, and verified `_xptr_` staging hashes. Samples passively record ClickBinding/Collections load completion and helper presence without loading addons; this does not establish native LoD semantics or alter normal `[Bootstrap]` TOC order. This staging entry predates the received capture above.
 
 ## [2026-09-05] audit | Publish 12.1 compatibility strings on PTR
 

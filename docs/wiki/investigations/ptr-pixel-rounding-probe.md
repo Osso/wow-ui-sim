@@ -14,17 +14,25 @@ Commit `5a5b7a187` replaced invented one-value physical-width/height globals wit
 
 The addon is staged at `C:\World of Warcraft\_xptr_\Interface\AddOns\PixelRoundingProbe`. Local and staged SHA-256 values match for `PixelRoundingProbe.lua` (`dd4066abad6849d99185879239754192bf405602983736b368a7e7d8640dd53a`) and `.toc` (`cfcd6f3fcb2990c29179115c78cf3dc39e6d767c312a7f359edac59455bfc86c`). The active desktop executable is `C:\World of Warcraft\_xptr_\WowT.exe`; its `.build.info` has `wowxptr` version `12.1.5.69594`, build key `4a9973f37906f8cfb344f8a9fe6777e0`.
 
+## Received capture
+
+The ignored private capture files are `docs/local/private/probes/PixelRoundingProbe-2026-09-06.lua` and `.json`. The raw SavedVariables Lua hash is `1383e92e76920adf718e0beafbeeff55fe1dc78134735f66177b73374a3a23bf`; local and desktop copies matched.
+
+All six samples report `12.1.5` / `69594` / `120105`, `matchesExpectedBuild=true`, and physical `3440×1440`. Each has 12 cases and no captured operation errors. The getter defaults to `false`; enabling the flag changes measured geometry and disabling it restores the measured unrounded geometry. Raw point offsets remain unchanged. The immediate and settled samples match for these captured cases; this is not proof for untested layouts.
+
+The region cases show independently queryable/settable flags on Texture and FontString objects. Their captured geometry confirms that the flag is not state-only, but does not yet establish a general implementation rule for final-edge versus anchor-offset rounding, all widget types, or every scale/layout combination.
+
 ## Passive bootstrap observations
 
 Every sample now reads, without loading or invoking either addon, the `loaded` and `finished` results from `C_AddOns.IsAddOnLoaded` for `Blizzard_ClickBindingUI` and `Blizzard_Collections`. It also records the types of the bootstrap-defined `InClickBindingMode` and the Collections toggle entry point `ToggleCollectionsJournal`.
 
-This accompanies, but does not resolve, PTR panel-smoke evidence: the reported `GetBuildInfo()` identity is `12.1.5` / `69594` / `120105`; Spellbook encountered a nil `InClickBindingMode`; and Collections changed visibility through its sequential normal-toggle path. The capture must not be used to infer native LoadOnDemand behavior. In particular, it authorizes neither a separate bootstrap pass nor any departure from the July 1 finding that `[Bootstrap]` TOC entries execute in normal TOC order.
+In every received sample, `InClickBindingMode` and `ToggleCollectionsJournal` are functions while `Blizzard_ClickBindingUI` and `Blizzard_Collections` respectively report `loaded=false`, `finished=false`. The user reports the PTR ran without personal addons; the probe does not inventory addons, so that report is supporting context rather than a capture field. These observations do not establish native LoadOnDemand semantics or explain the earlier Spellbook/Collections behavior. In particular, they authorize neither a separate bootstrap pass nor any departure from the July 1 finding that `[Bootstrap]` entries execute in normal TOC order.
 
 ## Unresolved native behavior
 
 PTR `PixelUtil.lua` gives the UI-unit-to-physical-pixel conversion used by its deprecated helpers. The newer native flag replaces those helpers, but its source contract only declares a boolean setter/getter. It does not establish the rounding point in anchor resolution, whether regions follow identical layout rules, or scale-change behavior.
 
-Do not infer native geometry until a capture has `matchesExpectedBuild = true`, is flushed through `/reload` or logout, and is retrieved from PTR SavedVariables. Preserve raw values; do not turn the probe's cases into simulator expectations before comparing them.
+The capture meets the required build and flush/retrieval boundary. Preserve raw values; do not turn the bounded cases into general simulator expectations before deriving and testing a rule.
 
 ## Sources
 
@@ -37,6 +45,7 @@ Do not infer native geometry until a capture has `matchesExpectedBuild = true`, 
 - `/tmp/pi-pixel-physical-{red,green}.*` — documented physical-screen API RED/GREEN
 - `/tmp/pi-pixel-probe-physical-installed-hashes.stdout.log` — earlier corrected staged hash comparison
 - `/tmp/pi-pixel-bootstrap-installed-hashes.stdout.log` — current passive-bootstrap probe staging hashes
+- `docs/local/private/probes/PixelRoundingProbe-2026-09-06.{lua,json}` — ignored received raw capture and parsed representation
 
 ## See Also
 
