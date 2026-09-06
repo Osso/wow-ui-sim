@@ -42,6 +42,7 @@ macro_rules! frame_defaults {
             anim_offset_y: 0.0,
             scale: 1.0,
             ignore_parent_scale: false,
+            round_layout_to_nearest_pixel: false,
             effective_scale: 1.0,
             mouse_enabled: false,
             mouse_wheel_enabled: false,

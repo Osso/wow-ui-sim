@@ -15,7 +15,7 @@ use std::time::Instant;
 macro_rules! build_empty_sim_state {
     ($collections:ident, $runtime:ident) => {
         Self {
-            widgets: WidgetRegistry::default(),
+            widgets: WidgetRegistry::with_physical_height($runtime.screen_height),
             events: EventQueue::default(),
             scripts: ScriptRegistry::default(),
             cvars: CVarStorage::new(),

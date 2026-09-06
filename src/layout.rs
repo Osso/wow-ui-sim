@@ -73,7 +73,6 @@ fn resolve_multi_anchor_edges(
     registry: &WidgetRegistry,
     frame: &crate::widget::Frame,
     parent_rect: LayoutRect,
-    eff_scale: f32,
     screen_width: f32,
     screen_height: f32,
     cache: &mut LayoutCache,
@@ -86,7 +85,7 @@ fn resolve_multi_anchor_edges(
             registry,
             anchor,
             parent_rect,
-            eff_scale,
+            frame,
             screen_width,
             screen_height,
             cache,
@@ -126,7 +125,7 @@ fn resolve_multi_anchor_target(
     registry: &WidgetRegistry,
     anchor: &crate::widget::Anchor,
     parent_rect: LayoutRect,
-    eff_scale: f32,
+    frame: &crate::widget::Frame,
     screen_width: f32,
     screen_height: f32,
     cache: &mut LayoutCache,
@@ -139,14 +138,15 @@ fn resolve_multi_anchor_target(
         screen_height,
         cache,
     );
-    let target = resolve_anchor_target(anchor, relative_rect, eff_scale);
+    let target = resolve_anchor_target(registry, frame, anchor, relative_rect);
     set_anchor_target(targets, anchor.point, target);
 }
 
 fn resolve_anchor_target(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
     anchor: &crate::widget::Anchor,
     relative_rect: LayoutRect,
-    eff_scale: f32,
 ) -> (f32, f32) {
     let (anchor_x, anchor_y) = anchor_position(
         anchor.relative_point,
@@ -156,8 +156,8 @@ fn resolve_anchor_target(
         relative_rect.height,
     );
     (
-        anchor_x + anchor.x_offset * eff_scale,
-        anchor_y - anchor.y_offset * eff_scale,
+        anchor_x + registry.round_layout_value(frame, anchor.x_offset) * frame.effective_scale,
+        anchor_y - registry.round_layout_value(frame, anchor.y_offset) * frame.effective_scale,
     )
 }
 
@@ -213,6 +213,7 @@ fn target_y(target: Option<(f32, f32)>) -> Option<f32> {
 }
 
 fn compute_rect_from_edges(
+    registry: &WidgetRegistry,
     edges: AnchorEdges,
     frame: &crate::widget::Frame,
     parent_rect: LayoutRect,
@@ -222,7 +223,7 @@ fn compute_rect_from_edges(
         edges.left_x,
         edges.right_x,
         edges.center_x,
-        frame.width,
+        registry.round_layout_value(frame, frame.width),
         scale,
         parent_rect.x,
         parent_rect.width,
@@ -231,7 +232,7 @@ fn compute_rect_from_edges(
         edges.top_y,
         edges.bottom_y,
         edges.center_y,
-        frame.height,
+        registry.round_layout_value(frame, frame.height),
         scale,
         parent_rect.y,
         parent_rect.height,
@@ -304,8 +305,8 @@ fn resolve_single_anchor(
     cache: &mut LayoutCache,
 ) -> LayoutRect {
     let anchor = &frame.anchors[0];
-    let width = frame.width * eff_scale;
-    let height = frame.height * eff_scale;
+    let width = registry.round_layout_value(frame, frame.width) * eff_scale;
+    let height = registry.round_layout_value(frame, frame.height) * eff_scale;
 
     let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
         compute_frame_rect_cached(registry, rel_id as u64, screen_width, screen_height, cache).rect
@@ -313,16 +314,7 @@ fn resolve_single_anchor(
         parent_rect
     };
 
-    let (anchor_x, anchor_y) = anchor_position(
-        anchor.relative_point,
-        relative_rect.x,
-        relative_rect.y,
-        relative_rect.width,
-        relative_rect.height,
-    );
-
-    let target_x = anchor_x + anchor.x_offset * eff_scale;
-    let target_y = anchor_y - anchor.y_offset * eff_scale;
+    let (target_x, target_y) = resolve_anchor_target(registry, frame, anchor, relative_rect);
 
     let (frame_x, frame_y) =
         frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
@@ -481,12 +473,11 @@ fn resolve_frame_layout_rect(
             registry,
             frame,
             parent_rect,
-            scale,
             screen_width,
             screen_height,
             cache,
         );
-        return compute_rect_from_edges(edges, frame, parent_rect, scale);
+        return compute_rect_from_edges(registry, edges, frame, parent_rect, scale);
     }
     resolve_single_anchor(
         registry,
@@ -505,8 +496,8 @@ fn anchorless_rect(
     parent_rect: LayoutRect,
     scale: f32,
 ) -> LayoutRect {
-    let width = frame.width * scale;
-    let height = frame.height * scale;
+    let width = registry.round_layout_value(frame, frame.width) * scale;
+    let height = registry.round_layout_value(frame, frame.height) * scale;
     if width == 0.0 && height == 0.0 && is_statusbar_bar_child(registry, frame) {
         return parent_rect;
     }

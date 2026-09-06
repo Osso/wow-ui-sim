@@ -90,6 +90,8 @@ pub struct Frame {
     pub scale: f32,
     /// Whether this frame ignores its parent's effective scale.
     pub ignore_parent_scale: bool,
+    /// Round requested dimensions and anchor offsets during layout, retaining raw inputs.
+    pub round_layout_to_nearest_pixel: bool,
     /// Effective scale (product of all ancestor scales × own scale).
     /// Updated eagerly when scale changes or frame is reparented.
     pub effective_scale: f32,

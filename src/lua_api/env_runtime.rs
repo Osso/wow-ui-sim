@@ -138,7 +138,7 @@ impl WowLuaEnv {
             state.physical_screen_width = physical.0;
             state.physical_screen_height = physical.1;
             state.invalidate_strata_buckets();
-            state.widgets.clear_all_layout_rects();
+            state.widgets.set_layout_physical_height(physical.1);
             update_screen_widgets_for_dimensions(&mut state, width, height);
         }
         install_screen_size_globals(self);

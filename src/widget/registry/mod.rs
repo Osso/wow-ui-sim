@@ -1,6 +1,7 @@
 //! Global widget registry for tracking all widgets.
 
 mod anchor;
+mod pixel_scale;
 mod storage;
 
 use super::Frame;
@@ -24,6 +25,7 @@ pub struct RenderDirtyBatch {
 /// Registry of all widgets in the UI.
 #[derive(Debug, Default)]
 pub struct WidgetRegistry {
+    layout_pixel_scale: pixel_scale::LayoutPixelScale,
     /// Widgets by ID.
     pub(super) widgets: FxHashMap<u64, Frame>,
     /// Widget IDs by name.
@@ -62,6 +64,7 @@ impl WidgetRegistry {
 
     pub fn new() -> Self {
         Self {
+            layout_pixel_scale: pixel_scale::LayoutPixelScale::default(),
             widgets: FxHashMap::with_capacity_and_hasher(
                 Self::INITIAL_CAPACITY,
                 Default::default(),
