@@ -141,6 +141,193 @@ fn pixel_rounding_probe_resamples_same_objects_without_leaking_roots() {
     ).expect("deferred capture protocol");
 }
 
+#[cfg(feature = "retail-12-1-5")]
+#[test]
+fn ptr_native_round_layout_matches_captured_fractional_geometry() {
+    let env = ptr_pixel_rounding_environment();
+    env.exec(
+        r#"
+        local tolerance = 0.0002
+        local function close(actual, expected, label)
+            assert(math.abs(actual - expected) <= tolerance,
+                string.format("%s: expected %.9f, got %.9f", label, expected, actual))
+        end
+        local function rect(frame)
+            local left, bottom, width, height = frame:GetRect()
+            return left, bottom, width, height
+        end
+        local parent = CreateFrame("Frame", nil, UIParent)
+        parent:Hide()
+        parent:SetSize(301.25, 179.75)
+        parent:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 123.375, 87.625)
+
+        local frame = CreateFrame("Frame", nil, parent)
+        frame:Hide()
+        assert(frame:GetRoundLayoutToNearestPixel() == false, "default round-layout flag")
+        frame:SetSize(101.375, 40.625)
+        frame:SetPoint("BOTTOMLEFT", parent, "BOTTOMLEFT", 0.375, -0.625)
+        local left, bottom, width, height = rect(frame)
+        close(left, 123.75, "unrounded left")
+        close(bottom, 87, "unrounded bottom")
+        close(width, 101.375, "unrounded width")
+        close(height, 40.625, "unrounded height")
+
+        frame:SetRoundLayoutToNearestPixel(true)
+        assert(frame:GetRoundLayoutToNearestPixel() == true, "round-layout flag")
+        left, bottom, width, height = rect(frame)
+        close(left, 123.375, "rounded left")
+        close(bottom, 86.825, "rounded bottom")
+        close(width, 101.6, "rounded width")
+        close(height, 40.8, "rounded height")
+        local _, _, _, x, y = frame:GetPoint(1)
+        close(x, 0.375, "raw anchor x")
+        close(y, -0.625, "raw anchor y")
+
+        frame:SetRoundLayoutToNearestPixel(false)
+        left, bottom, width, height = rect(frame)
+        close(left, 123.75, "toggle-off left")
+        close(bottom, 87, "toggle-off bottom")
+        close(width, 101.375, "toggle-off width")
+        close(height, 40.625, "toggle-off height")
+
+        local cases = {
+            { scale = 0.8, left = 154.21875, bottom = 108.53125, width = 101, height = 41 },
+            { scale = 1, left = 123.375, bottom = 86.825, width = 101.6, height = 40.8 },
+            { scale = 1.25, left = 99.34, bottom = 69.46, width = 101.12, height = 40.32 },
+        }
+        for _, case in ipairs(cases) do
+            frame:SetScale(case.scale)
+            frame:SetRoundLayoutToNearestPixel(true)
+            left, bottom, width, height = rect(frame)
+            close(left, case.left, "scale left " .. case.scale)
+            close(bottom, case.bottom, "scale bottom " .. case.scale)
+            close(width, case.width, "scale width " .. case.scale)
+            close(height, case.height, "scale height " .. case.scale)
+        end
+
+        frame:SetScale(1)
+        frame:ClearAllPoints()
+        frame:SetPoint("CENTER", parent, "CENTER", -0.375, 0.625)
+        left, bottom, width, height = rect(frame)
+        close(left, 223.2, "center left")
+        close(bottom, 157.9, "center bottom")
+        close(width, 101.6, "center width")
+        close(height, 40.8, "center height")
+
+        frame:ClearAllPoints()
+        frame:SetPoint("BOTTOMLEFT", parent, "BOTTOMLEFT", 0.375, -0.625)
+        frame:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -0.875, 0.125)
+        left, bottom, width, height = rect(frame)
+        close(left, 123.375, "stretch left")
+        close(bottom, 86.825, "stretch bottom")
+        close(width, 300.45, "stretch width")
+        close(height, 180.55, "stretch height")
+
+        frame:ClearAllPoints()
+        frame:SetScale(1)
+        frame:SetSize(101.375, 40.625)
+        frame:SetPoint("BOTTOMLEFT", parent, "BOTTOMLEFT", 0.375, -0.625)
+        parent:SetScale(1.25)
+        parent:ClearAllPoints()
+        parent:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 123.875, 87.125)
+        left, bottom, width, height = rect(frame)
+        close(left, 124.515, "parent scale left")
+        close(bottom, 86.485, "parent scale bottom")
+        close(width, 101.12, "parent scale width")
+        close(height, 40.32, "parent scale height")
+
+        local texture = frame:CreateTexture(nil, "ARTWORK")
+        texture:SetAllPoints(frame)
+        texture:SetRoundLayoutToNearestPixel(true)
+        assert(texture:GetRoundLayoutToNearestPixel() == true, "texture flag")
+        left, bottom, width, height = rect(texture)
+        close(left, 124.515, "texture left")
+        close(bottom, 86.485, "texture bottom")
+        close(width, 101.12, "texture width")
+        close(height, 40.32, "texture height")
+
+        local font = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        font:SetPoint("CENTER", frame, "CENTER", -0.375, 0.625)
+        font:SetSize(33.375, 14.625)
+        font:SetText("Probe")
+        font:SetRoundLayoutToNearestPixel(true)
+        assert(font:GetRoundLayoutToNearestPixel() == true, "font flag")
+        local _, _, fontWidth, fontHeight = rect(font)
+        close(fontWidth, 33.6, "font width")
+        close(fontHeight, 14.4, "font height")
+
+        local timed = CreateFrame("Frame", nil, parent)
+        timed:Hide()
+        timed:SetRoundLayoutToNearestPixel(true)
+        timed:SetSize(101.375, 40.625)
+        timed:SetPoint("BOTTOMLEFT", parent, "BOTTOMLEFT", 0.375, -0.625)
+        local timedLeft, timedBottom, timedWidth, timedHeight = rect(timed)
+        C_Timer.After(0, function()
+            local afterLeft, afterBottom, afterWidth, afterHeight = rect(timed)
+            close(afterLeft, timedLeft, "next-tick left")
+            close(afterBottom, timedBottom, "next-tick bottom")
+            close(afterWidth, timedWidth, "next-tick width")
+            close(afterHeight, timedHeight, "next-tick height")
+            pixelRoundingNextTickObserved = true
+        end)
+        "#,
+    )
+    .expect("source-derived PTR round-layout capture assertions");
+    assert_eq!(env.process_timers().expect("process next-tick query"), 1);
+    assert!(env
+        .eval::<bool>("return pixelRoundingNextTickObserved")
+        .expect("read next-tick result"));
+}
+
+#[cfg(feature = "retail-12-1-5")]
+#[test]
+fn ptr_native_round_layout_reacts_to_display_resize() {
+    let env = ptr_pixel_rounding_environment();
+    env.exec(
+        r#"
+        local tolerance = 0.0002
+        local function close(actual, expected, label)
+            assert(math.abs(actual - expected) <= tolerance,
+                string.format("%s: expected %.9f, got %.9f", label, expected, actual))
+        end
+        local frame = CreateFrame("Frame", nil, UIParent)
+        frame:Hide()
+        frame:SetSize(101.375, 40.625)
+        frame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0.375, -0.625)
+        frame:SetRoundLayoutToNearestPixel(true)
+        local _, _, width, height = frame:GetRect()
+        close(width, 101.6, "1440px display width")
+        close(height, 40.8, "1440px display height")
+        "#,
+    )
+    .expect("initial source-derived pixel conversion assertions");
+    env.set_display_size(3440.0, 768.0)
+        .expect("resize physical display");
+    env.exec(
+        r#"
+        -- Source-derived: PixelUtil.GetNearestPixelSize uses 768 / physicalHeight.
+        local tolerance = 0.0002
+        local frame = select(1, UIParent:GetChildren())
+        local _, _, width, height = frame:GetRect()
+        assert(math.abs(width - 101.375) <= tolerance,
+            string.format("768px display width: expected %.9f, got %.9f", 101.375, width))
+        assert(math.abs(height - 40.625) <= tolerance,
+            string.format("768px display height: expected %.9f, got %.9f", 40.625, height))
+        "#,
+    )
+    .expect("display resize invalidates rounded layout");
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn ptr_pixel_rounding_environment() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.set_display_size(3440.0, 1440.0)
+        .expect("set captured physical display");
+    env.exec("UIParent:SetScale(0.6666666865348816)")
+        .expect("set captured UIParent scale");
+    env
+}
+
 fn load_probe_source(env: &WowLuaEnv) {
     let source = fs::read_to_string(Path::new(ADDON_SOURCE))
         .unwrap_or_else(|error| panic!("read {ADDON_SOURCE}: {error}"));
