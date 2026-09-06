@@ -236,15 +236,26 @@ fn ptr_native_round_layout_matches_captured_fractional_geometry() {
         close(width, 101.12, "parent scale width")
         close(height, 40.32, "parent scale height")
 
+        parent:SetScale(1)
+        parent:ClearAllPoints()
+        parent:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 123.375, 87.625)
+        frame:SetRoundLayoutToNearestPixel(false)
+        frame:ClearAllPoints()
+        frame:SetSize(101.375, 40.625)
+        frame:SetPoint("BOTTOMLEFT", parent, "BOTTOMLEFT", 0.375, -0.625)
+
         local texture = frame:CreateTexture(nil, "ARTWORK")
         texture:SetAllPoints(frame)
         texture:SetRoundLayoutToNearestPixel(true)
         assert(texture:GetRoundLayoutToNearestPixel() == true, "texture flag")
         left, bottom, width, height = rect(texture)
-        close(left, 124.515, "texture left")
-        close(bottom, 86.485, "texture bottom")
-        close(width, 101.12, "texture width")
-        close(height, 40.32, "texture height")
+        close(left, 123.75, "texture left")
+        close(bottom, 87, "texture bottom")
+        close(width, 101.375, "texture width")
+        close(height, 40.625, "texture height")
+        local textureWidth, textureHeight = texture:GetSize()
+        close(textureWidth, 101.375, "texture GetSize width")
+        close(textureHeight, 40.625, "texture GetSize height")
 
         local font = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
         font:SetPoint("CENTER", frame, "CENTER", -0.375, 0.625)
@@ -252,9 +263,15 @@ fn ptr_native_round_layout_matches_captured_fractional_geometry() {
         font:SetText("Probe")
         font:SetRoundLayoutToNearestPixel(true)
         assert(font:GetRoundLayoutToNearestPixel() == true, "font flag")
-        local _, _, fontWidth, fontHeight = rect(font)
+        local fontLeft, fontBottom, fontWidth, fontHeight = rect(font)
+        close(fontLeft, 157.6375, "font left")
+        close(fontBottom, 100.9125, "font bottom")
         close(fontWidth, 33.6, "font width")
         close(fontHeight, 14.4, "font height")
+        close(font:GetWidth(), 33.6, "font GetWidth")
+        local fontSizeWidth, fontSizeHeight = font:GetSize()
+        close(fontSizeWidth, 33.6, "font GetSize width")
+        close(fontSizeHeight, 14.4, "font GetSize height")
 
         local timed = CreateFrame("Frame", nil, parent)
         timed:Hide()
@@ -295,9 +312,14 @@ fn ptr_native_round_layout_reacts_to_display_resize() {
         frame:SetSize(101.375, 40.625)
         frame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0.375, -0.625)
         frame:SetRoundLayoutToNearestPixel(true)
+        pixelRoundingResizeFrame = frame
         local _, _, width, height = frame:GetRect()
         close(width, 101.6, "1440px display width")
         close(height, 40.8, "1440px display height")
+        close(frame:GetWidth(), 101.6, "1440px display GetWidth")
+        local sizeWidth, sizeHeight = frame:GetSize()
+        close(sizeWidth, 101.6, "1440px display GetSize width")
+        close(sizeHeight, 40.8, "1440px display GetSize height")
         "#,
     )
     .expect("initial source-derived pixel conversion assertions");
@@ -307,12 +329,17 @@ fn ptr_native_round_layout_reacts_to_display_resize() {
         r#"
         -- Source-derived: PixelUtil.GetNearestPixelSize uses 768 / physicalHeight.
         local tolerance = 0.0002
-        local frame = select(1, UIParent:GetChildren())
+        local frame = pixelRoundingResizeFrame
         local _, _, width, height = frame:GetRect()
-        assert(math.abs(width - 101.375) <= tolerance,
-            string.format("768px display width: expected %.9f, got %.9f", 101.375, width))
-        assert(math.abs(height - 40.625) <= tolerance,
-            string.format("768px display height: expected %.9f, got %.9f", 40.625, height))
+        assert(math.abs(width - 102) <= tolerance,
+            string.format("768px display width: expected %.9f, got %.9f", 102, width))
+        assert(math.abs(height - 40.5) <= tolerance,
+            string.format("768px display height: expected %.9f, got %.9f", 40.5, height))
+        assert(math.abs(frame:GetWidth() - 102) <= tolerance,
+            string.format("768px display GetWidth: expected %.9f, got %.9f", 102, frame:GetWidth()))
+        local sizeWidth, sizeHeight = frame:GetSize()
+        assert(math.abs(sizeWidth - 102) <= tolerance and math.abs(sizeHeight - 40.5) <= tolerance,
+            string.format("768px display GetSize: expected %.9f x %.9f, got %.9f x %.9f", 102, 40.5, sizeWidth, sizeHeight))
         "#,
     )
     .expect("display resize invalidates rounded layout");
