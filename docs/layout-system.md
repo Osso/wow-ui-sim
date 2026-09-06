@@ -41,6 +41,10 @@ pub anchors: Vec<Anchor>,  // Multiple anchors per frame allowed
 
 Multiple anchors on a single frame enable multi-point positioning (e.g., TopLeft AND BottomRight to stretch fill), flexible layout where different anchor points can conflict, and edge constraint resolution.
 
+### PTR pixel-layout rounding
+
+For the cumulative `retail-12-1-5` native flag, shared resolution rounds a flagged region's requested explicit dimensions and anchor offsets before applying the normal scale-aware anchor algorithm. It retains stored values, so `GetPoint()` reports the requested offsets. Its quantum is `768 / (physical display height × effective region scale)`, derived from `PixelUtil.lua`; relative target geometry and a size derived from two anchors are not re-rounded. `WidgetRegistry` caches the physical conversion, initialized with state and refreshed by the existing display-dimension setter. See [[ptr-pixel-rounding-probe]] for captured bounds and proof status.
+
 ### LayoutRect Struct
 **File:** `src/lua_api/layout.rs:6-12`
 

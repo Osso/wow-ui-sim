@@ -1,3 +1,7 @@
+## [2026-09-06] system | Model bounded PTR pixel-layout rounding
+
+Commit `07cce4a63` adds the `retail-12-1-5` native rounding flag to shared layout. Source-backed requested-size/offset rounding matches 264 coordinates from the received PTR capture within `0.00002595186236931113` UI units; tests remain under verification. See [[ptr-pixel-rounding-probe]] and [pixel layout rounding](../specs/pixel-layout-rounding.md).
+
 ## [2026-09-06] investigation | Receive PTR pixel-rounding capture
 
 [[ptr-pixel-rounding-probe]] records the received ignored private PTR `12.1.5.69594` capture: six error-free samples with 12 cases each at `3440×1440`, raw SavedVariables SHA-256 `1383e92e76920adf718e0beafbeeff55fe1dc78134735f66177b73374a3a23bf`, and desktop/local equality. The rounding flag defaults false and changes geometry without changing raw anchors; immediate and settled readings match only for captured cases. ClickBinding/Collections helpers exist while both respective addons report `loaded=false`, `finished=false`; the user reports no personal addons, but the probe does not inventory them. General rounding and LoadOnDemand/bootstrap ordering remain under investigation.

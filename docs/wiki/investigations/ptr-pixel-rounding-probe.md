@@ -1,6 +1,6 @@
 # PTR pixel-rounding probe
 
-PTR `12.1.5.69594` exposes `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPixel`, but source alone does not establish whether native layout rounds anchor offsets, final edges, or another intermediate. The simulator does not implement these methods yet.
+PTR `12.1.5.69594` exposes `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPixel`. Commit `07cce4a63` models the bounded source-and-capture-backed layout rule; replay and independent verification remain pending.
 
 ## Capture status
 
@@ -20,7 +20,7 @@ The ignored private capture files are `docs/local/private/probes/PixelRoundingPr
 
 All six samples report `12.1.5` / `69594` / `120105`, `matchesExpectedBuild=true`, and physical `3440×1440`. Each has 12 cases and no captured operation errors. The getter defaults to `false`; enabling the flag changes measured geometry and disabling it restores the measured unrounded geometry. Raw point offsets remain unchanged. The immediate and settled samples match for these captured cases; this is not proof for untested layouts.
 
-The region cases show independently queryable/settable flags on Texture and FontString objects. Their captured geometry confirms that the flag is not state-only, but does not yet establish a general implementation rule for final-edge versus anchor-offset rounding, all widget types, or every scale/layout combination.
+The region cases show independently queryable/settable flags on Texture and FontString objects. Their captured geometry confirms that the flag is not state-only, but does not establish behavior for all widget types or every scale/layout combination.
 
 ## Passive bootstrap observations
 
@@ -28,11 +28,15 @@ Every sample now reads, without loading or invoking either addon, the `loaded` a
 
 In every received sample, `InClickBindingMode` and `ToggleCollectionsJournal` are functions while `Blizzard_ClickBindingUI` and `Blizzard_Collections` respectively report `loaded=false`, `finished=false`. The user reports the PTR ran without personal addons; the probe does not inventory addons, so that report is supporting context rather than a capture field. These observations do not establish native LoadOnDemand semantics or explain the earlier Spellbook/Collections behavior. In particular, they authorize neither a separate bootstrap pass nor any departure from the July 1 finding that `[Bootstrap]` entries execute in normal TOC order.
 
-## Unresolved native behavior
+## Derived bounded layout rule
 
-PTR `PixelUtil.lua` gives the UI-unit-to-physical-pixel conversion used by its deprecated helpers. The newer native flag replaces those helpers, but its source contract only declares a boolean setter/getter. It does not establish the rounding point in anchor resolution, whether regions follow identical layout rules, or scale-change behavior.
+PTR `PixelUtil.lua` says the native flag automatically applies the same adjustment as its deprecated `SetSize` and `SetPoint` helpers. Those helpers round each requested size or offset with quantum `768 / (physical display height × effective region scale)`.
 
-The capture meets the required build and flush/retrieval boundary. Preserve raw values; do not turn the bounded cases into general simulator expectations before deriving and testing a rule.
+A main-process replay checked all 66 nonempty captured `after` rectangles (264 coordinates). It rounded requested sizes and offsets at that quantum, converted relative targets with the parent/object effective-scale ratio, retained raw anchor values, and did not re-round stretch-derived dimensions. The maximum residual was `0.00002595186236931113` UI units. The captured rounded left edge `123.375` corresponds to `154.21875` physical pixels in the tested conversion, ruling out global final-edge snapping for that example.
+
+Commit `07cce4a63` stores a per-region false-default flag, exposes the epoch-gated native methods, applies that bounded rule only during shared layout resolution, and caches the physical conversion in `WidgetRegistry`, updated by the existing display setter. It does not rewrite raw sizes or anchors. Tests are in verification; no passing simulator claim is made here.
+
+The capture meets the required build and flush/retrieval boundary. It does not prove visible rendering, hit testing, clipping, animation, all widget types, tie behavior, or arbitrary layout graphs.
 
 ## Sources
 

@@ -5,8 +5,8 @@ PTR 12.1.5 native `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPix
 ## What it must do
 
 - [ ] Expose the native boolean setter/getter under the cumulative `retail-12-1-5` epoch, defaulting to false independently for Frame, Texture, and FontString objects.
-- [ ] Preserve requested dimensions and anchor offsets while resolving rounded explicit dimensions and offsets using the physical display height and effective region scale. `GetPoint` retains requested offsets; disabling rounding restores fractional layout.
-- [ ] Match captured bottom-left, center, two-anchor stretch, object-scale, parent-scale/reposition, Texture all-points, and explicit FontString cases. Do not snap inherited target geometry or stretch-derived dimensions a second time.
+- [ ] Preserve requested dimensions and anchor offsets while resolving rounded explicit dimensions and offsets using `768 / (physical display height × effective region scale)`. `GetPoint` retains requested offsets; disabling rounding restores fractional layout.
+- [ ] Match captured bottom-left, center, two-anchor stretch, object-scale, parent-scale/reposition, Texture all-points, and explicit FontString cases. Do not round inherited target geometry or stretch-derived dimensions a second time.
 - [ ] Return coherent rounded dimensions through `GetRect`, `GetSize`, `GetWidth`, and `GetHeight`, with the same results when enabled before or after geometry assignment and on subsequent timer ticks.
 - [ ] Invalidate layout after flag, scale, parent geometry, or physical display changes. Resize expectations follow the source PixelUtil conversion; resize was not exercised by the live capture.
 
@@ -20,7 +20,7 @@ PTR 12.1.5 native `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPix
 
 - `src/widget/frame.rs`, `frame_defaults.rs` — per-region flag, initially false.
 - `src/widget/registry/pixel_scale.rs`, `registry/mod.rs` — cached physical conversion for shared layout.
-- `src/layout.rs` — rounded requested sizes/offsets before anchor resolution.
+- `src/layout.rs` — applies the flag to requested sizes and offsets while retaining raw anchor state.
 - `src/lua_api/frame/methods/core_state/{round_layout,mod,helpers}.rs` — epoch-gated methods and size queries.
 - `src/lua_api/{state,env_runtime}.rs` — initialize/update physical conversion with display state.
 
@@ -30,7 +30,7 @@ PTR 12.1.5 native `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPix
 
 ## Known gaps (current cycle)
 
-- [ ] Native methods and shared layout computation require replay and independent verification.
+- [ ] Commit `07cce4a63` native methods and shared layout computation require replay and independent verification.
 - [ ] PTR startup and representative panel acceptance remain open.
 
 ## Out of scope
