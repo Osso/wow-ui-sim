@@ -90,7 +90,10 @@ fn test_c_item_unknown_positive_item_ids_have_synthetic_cached_data() {
         .eval("return C_Item.DoesItemExistByID(224116), C_Item.IsItemDataCachedByID(224116)")
         .unwrap();
 
-    assert!(exists, "synthetic item data should make positive item IDs exist");
+    assert!(
+        exists,
+        "synthetic item data should make positive item IDs exist"
+    );
     assert!(cached, "synthetic item data should already be cached");
 }
 
@@ -289,8 +292,47 @@ fn test_c_item_get_item_sub_class_info_armor() {
 #[test]
 fn test_c_item_get_item_sub_class_info_valid_auction_subclass_fallback() {
     let env = env();
-    let name: String = env.eval("return C_Item.GetItemSubClassInfo(0, 11)").unwrap();
+    let name: String = env
+        .eval("return C_Item.GetItemSubClassInfo(0, 11)")
+        .unwrap();
     assert_eq!(name, "Combat Curio");
+}
+
+#[test]
+fn test_c_item_get_item_sub_class_info_profession() {
+    let env = env();
+    let names = [
+        "Blacksmithing",
+        "Leatherworking",
+        "Alchemy",
+        "Herbalism",
+        "Cooking",
+        "Mining",
+        "Tailoring",
+        "Engineering",
+        "Enchanting",
+        "Fishing",
+        "Skinning",
+        "Jewelcrafting",
+        "Inscription",
+        "Archaeology",
+    ];
+    for (subclass, expected) in names.iter().enumerate() {
+        let actual: (String, bool) = env
+            .eval(&format!(
+                "return C_Item.GetItemSubClassInfo(19, {subclass})"
+            ))
+            .unwrap();
+        assert_eq!(
+            actual,
+            (expected.to_string(), false),
+            "profession subclass {subclass}"
+        );
+    }
+    let missing: Option<String> = env
+        .eval("return C_Item.GetItemSubClassInfo(19, 14)")
+        .unwrap();
+    assert_eq!(missing, None);
 }
 
 #[test]
@@ -299,6 +341,7 @@ fn test_c_item_get_item_sub_class_info_syndicator_search_bootstrap_labels() {
     let mismatches: String = env
         .eval(
             r#"
+            assert(GetLocale() == "enUS", "Syndicator's manual keyword assertion is locale-specific")
             local checks = {
                 {9, {
                     "leatherworking", "tailoring", "engineering", "blacksmithing",
@@ -320,6 +363,11 @@ fn test_c_item_get_item_sub_class_info_syndicator_search_bootstrap_labels() {
                     "combat curio", [0] = "explosives and devices",
                 }},
                 {15, {[5] = "mount"}},
+                {19, {
+                    [0] = "blacksmithing", "leatherworking", "alchemy", "herbalism",
+                    "cooking", "mining", "tailoring", "engineering", "enchanting",
+                    "fishing", "skinning", "jewelcrafting", "inscription", "archaeology",
+                }},
                 {20, {
                     [0] = "decor", "housing dye", "room", "room customization",
                     "exterior customization", "service item",
@@ -330,6 +378,13 @@ fn test_c_item_get_item_sub_class_info_syndicator_search_bootstrap_labels() {
                 local classID, subclasses = classChecks[1], classChecks[2]
                 for subclassID, expected in pairs(subclasses) do
                     local actual = C_Item.GetItemSubClassInfo(classID, subclassID)
+                    if classID == 19 then
+                        assert(actual ~= nil, "profession keyword must exist")
+                        if actual:lower() ~= expected then
+                            -- Syndicator AddKeywordManual rejects differing English keywords.
+                            assert(GetLocale() ~= "enUS", actual:lower(), expected)
+                        end
+                    end
                     if actual and actual:lower() ~= expected then
                         table.insert(mismatches, classID .. ":" .. subclassID .. ":" .. actual .. ":" .. expected)
                     end
