@@ -1,5 +1,6 @@
 //! `lua-errors` subcommand: load UI, collect Lua errors, output unique errors as JSON.
 
+use crate::lua_api::script_helpers::call_error_handler;
 use crate::lua_api::{SimState, WowLuaEnv};
 use crate::startup::{collect_lua_error_startup, run_lua_error_update_ticks};
 use std::collections::BTreeMap;
@@ -65,7 +66,7 @@ pub fn run_lua_errors(
             if io and io.stdout and io.stdout.flush then io.stdout:flush() end"
         );
         if let Err(e) = env.exec_maybe_secure(&probe_code, exec_lua_secure) {
-            eprintln!("[exec-lua] error: {e}");
+            call_error_handler(&mut env.rilua_mut(), &format!("[exec-lua] error: {e}"));
         }
         run_lua_error_update_ticks(env);
     }
