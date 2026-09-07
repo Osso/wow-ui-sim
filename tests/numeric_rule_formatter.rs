@@ -9,6 +9,9 @@ fn numeric_rule_formatter_formats_resource_bar_countdown_and_rounding_modes() {
         r#"
         local rounding = Enum.NumericRuleFormatRounding
         assert(rounding.Nearest == 0 and rounding.Up == 1 and rounding.Down == 2)
+        local metadata = EnumMeta.NumericRuleFormatRounding
+        assert(metadata.MinValue == 0 and metadata.MaxValue == 2 and metadata.NumValues == 3)
+        assert(__secureenv.Enum.NumericRuleFormatRounding.Up == 1)
         local formatter = C_StringUtil.CreateNumericRuleFormatter()
         assert(type(formatter) == 'userdata')
         formatter:SetBreakpoints({{threshold = 0, step = 1, rounding = rounding.Up, format = '%.0f'}})
@@ -167,6 +170,14 @@ fn numeric_rule_formatter_rejects_invalid_rules_without_replacing_valid_state() 
             assert(not pcall(formatter.SetBreakpoints, formatter, {rule}))
             assert(formatter:FormatNumber(25) == '25', 'invalid replacement keeps existing configuration')
         end
+        -- Explicit model limitations, not claims about undocumented native edge policies.
+        assert(not pcall(formatter.AddBreakpoint, formatter, {threshold = 0, format = '%.0f'}))
+        formatter:ClearBreakpoints()
+        assert(not pcall(formatter.FormatNumber, formatter, 25))
+        formatter:SetBreakpoints({{threshold = 10, format = '%.0f'}})
+        assert(not pcall(formatter.FormatNumber, formatter, 9))
+        formatter:SetBreakpoints({{threshold = 0, step = 1, format = '%.0f'}})
+        assert(not pcall(formatter.FormatNumber, formatter, 1.5))
         "#,
     )
     .expect("invalid formatting configuration is explicit and transactional");
