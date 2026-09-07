@@ -57,6 +57,22 @@ fn forbidden_partition_does_not_turn_ordinary_tables_into_frame_parents() {
 
 #[cfg(feature = "retail-12-1-0")]
 #[test]
+fn forbidden_partition_transfer_preserves_ordinary_frame_fields() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec_maybe_secure(r#"
+        local function inspect(frame)
+            assert(frame.Child and frame.value == 17, 'ordinary frame fields lost crossing environments')
+        end
+        SwapToGlobalEnvironment()
+        local frame = CreateFrame('Frame')
+        frame.Child = CreateFrame('Frame', nil, frame)
+        frame.value = 17
+        inspect(frame)
+    "#, true).expect("unpartitioned frames retain their public fields");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
 fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() {
     crate::common::with_timeout(90, || {
         crate::common::blizzard_addon_harness::with_blizzard_addon_closure(

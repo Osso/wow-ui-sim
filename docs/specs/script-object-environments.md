@@ -5,7 +5,7 @@ Retail-family secure Blizzard functions use a distinct object-table partition fo
 ## What it must do
 
 - [ ] Preserve native frame identity in the forbidden partition, so native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
-- [ ] Convert direct frame arguments and results when Lua closures cross between the public and secure environments. Ordinary tables and nested data are not recursively rewritten.
+- [ ] Convert direct references to XML-partitioned frames when Lua closures cross between the public and secure environments. Ordinary frames retain their public fields; ordinary tables and nested data are not recursively rewritten. Native parent queries return the partition appropriate to their Lua caller.
 - [ ] Keep explicit native `GetObjectTable` results public for outbound addon initializers.
 - [ ] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
 - [ ] Run AuraContainer provider creation and inbound child ownership validation without publishing private methods or invoking public overrides of private methods.

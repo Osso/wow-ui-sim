@@ -29,6 +29,8 @@ pub(super) fn get_parent(state: &mut LuaState) -> LuaResult<u32> {
     match parent_id {
         Some(pid) => {
             let val = frame_global_or_ref(state, pid)?;
+            #[cfg(feature = "retail-12-1-0")]
+            let val = crate::lua_api::script_object_transfer::project_parent_return(state, val)?;
             state.push(val);
             Ok(1)
         }

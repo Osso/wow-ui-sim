@@ -50,24 +50,51 @@ fn transfer_script_objects(
 }
 
 fn project_forbidden(state: &mut LuaState, value: Val) -> LuaResult<Val> {
-    if native_frame_id_from_val(state, value).is_none() {
+    if native_frame_id_from_val(state, value).is_none()
+        || raw_field(state, value, b"__wowUseForbiddenObjectTable") != Val::Bool(true)
+    {
         return Ok(value);
     }
     let constructor = registry_get(state, FORBIDDEN_CONSTRUCTOR);
     call_function_state(state, constructor, &[value])
 }
 
-fn project_public(state: &mut LuaState, value: Val) -> Val {
+pub(crate) fn project_parent_return(state: &mut LuaState, value: Val) -> LuaResult<Val> {
+    let secure = registry_get(state, "__secureenv");
+    let caller = state.call_stack[..=state.ci]
+        .iter()
+        .rev()
+        .find_map(|frame| {
+            let Val::Function(function) = state.stack_get(frame.func) else {
+                return None;
+            };
+            match state.gc.closures.get(function) {
+                Some(rilua::vm::closure::Closure::Lua(closure)) => Some(Val::Table(closure.env)),
+                _ => None,
+            }
+        });
+    if caller == Some(secure) {
+        project_forbidden(state, value)
+    } else {
+        Ok(value)
+    }
+}
+
+fn raw_field(state: &mut LuaState, value: Val, name: &'static [u8]) -> Val {
     let Val::Table(table) = value else {
-        return value;
+        return Val::Nil;
     };
-    let key = state.gc.intern_string_static(b"__wowPublicObject");
-    let public = state
+    let key = state.gc.intern_string_static(name);
+    state
         .gc
         .tables
         .get(table)
         .map(|entry| entry.get(Val::Str(key), &state.gc.string_arena))
-        .unwrap_or(Val::Nil);
+        .unwrap_or(Val::Nil)
+}
+
+fn project_public(state: &mut LuaState, value: Val) -> Val {
+    let public = raw_field(state, value, b"__wowPublicObject");
     if native_frame_id_from_val(state, public).is_none() {
         return value;
     }
