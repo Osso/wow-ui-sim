@@ -322,6 +322,18 @@ fn collect_visible_unit_auras(
         .collect()
 }
 
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn collect_filtered_unit_auras(
+    state: &mut LuaState,
+    unit: &str,
+    filter: &str,
+) -> Vec<AuraInfo> {
+    collect_visible_unit_auras(state, unit, filter_from_str(filter))
+        .into_iter()
+        .filter(|aura| aura_matches_filter_string(aura, filter))
+        .collect()
+}
+
 fn provider_switched(state: &mut LuaState) -> bool {
     let ns = ensure_c_unit_auras(state);
     matches!(table_get(state, ns, "_providerSwitched"), Val::Bool(true))

@@ -12,6 +12,8 @@ pub mod c_arrow_callout_manager;
 pub mod c_artifact_relic_forge_ui;
 pub mod c_artifact_ui;
 pub mod c_auto_complete;
+#[cfg(feature = "retail-12-1-0")]
+pub mod c_aura_container_util;
 pub mod c_azerite_empowered_item;
 pub mod c_azerite_essence;
 pub mod c_azerite_item;
@@ -55,6 +57,8 @@ mod c_string_util_decimal;
 pub mod c_summon_info;
 pub mod c_texture;
 pub mod c_ui_file_asset;
+#[cfg(feature = "retail-12-1-0")]
+pub mod c_unit_auras;
 pub mod c_widget;
 pub mod c_wow_token_public;
 pub mod c_wowtoken_secure;
@@ -84,6 +88,8 @@ use rilua::vm::state::LuaState;
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_loot_history::register_c_loot_history(state)?;
+    #[cfg(feature = "retail-12-1-0")]
+    c_aura_container_util::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;
     register_auxiliary_utility_tables(state)

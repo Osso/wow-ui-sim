@@ -241,6 +241,7 @@ pub(crate) fn init_enum_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         let state = lua.state_mut();
         let enum_table = ensure_global_table(state, "Enum");
         ensure_on_update_mode_enum(state, enum_table);
+        crate::c_api::c_unit_auras::register_sound_trigger_enum(state, enum_table);
     }
     lua.exec(
         r#"
