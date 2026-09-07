@@ -30,13 +30,13 @@ In every received sample, `InClickBindingMode` and `ToggleCollectionsJournal` ar
 
 ## Bootstrap timing capture
 
-The ignored capture `docs/local/private/probes/BootstrapOrderProbe-2026-09-07.lua` has raw SHA-256 `7f8fe830a9937bb7d4b1989b3097661cf3c8492bd11607f2cc8d3a3b1a8d34b1`; desktop and local copies matched. Its nine records identify `12.1.5` / `69594` / `120105`, all match the expected build, and contain no probe errors.
+The completed ignored capture `docs/local/private/probes/BootstrapOrderProbe-2026-09-07-durable.lua` is 8,004 bytes with raw SHA-256 `5f21fe45373f1d2fbe3a645c7dd7f66b3c740925158dbc2f985039008c2af889`. Its 13 records identify `12.1.5` / `69594` / `120105`, all match the expected build, contain no probe errors, and set `complete=true`. This supersedes the incomplete nine-record startup capture; the original stale disk file's cause remains unknown.
 
-Observed startup sequence: `A:eager`, `B:bootstrap`, `C:eager`, `D:before`, `D:bootstrap`, `D:after`, `PLAYER_LOGIN`, then two snapshots. This establishes that the tested LoD bootstrap executes during startup while B is otherwise unloaded, and that the eager D TOC preserves its literal `Before.lua → Bootstrap.lua [Bootstrap] → Normal.lua` order. In particular, this capture does not support a global bootstrap pre-pass before eager A.
+Observed startup sequence: `A:eager`, `B:bootstrap`, `C:eager`, `D:before`, `D:bootstrap`, `D:after`, `PLAYER_LOGIN`. B executes its bootstrap once at startup with `loaded=true, finished=false`, then returns to `false,false`. Eager D preserves literal `Before.lua → Bootstrap.lua [Bootstrap] → Normal.lua` order. The fixture does not support a global bootstrap pre-pass before eager A.
 
-B reports `loaded=true, finished=false` only while its bootstrap executes; it is `false,false` in every later record. ClickBinding and Collections are `false,false` in every record while both helper globals are functions. This confirms startup bootstrap publication for the tested LoD shape, but does not determine the full eligibility/dependency rules for Blizzard addons.
+The first explicit B load records `load:before → B:before → B:after → load:after`. B does not re-execute its bootstrap; it is `true,false` while normal B files run, then `true,true` after successful completion. The second explicit load records only its `load:before` and successful `load:after`, executing no B files. ClickBinding and Collections remain `false,false` while both helpers are functions in every record.
 
-The requested `/boprobe load` calls were absent: there are no B `before`/`after` records or `load:before`/`load:after` brackets. Explicit-load file order and whether a bootstrap file re-executes remain unknown. The capture does not authorize a generic bootstrap pass or change ordinary TOC-order behavior.
+This establishes the tested third-party LoD bootstrap lifecycle and full-load behavior. It does not establish simulator bootstrap eligibility, dependency processing, private-environment or SavedVariables handling, nor authorize a generic bootstrap pre-pass or a change to ordinary TOC order. No simulator loader fix has been made from this capture.
 
 ## Derived bounded layout rule
 
@@ -53,7 +53,7 @@ The capture meets the required build and flush/retrieval boundary. It does not p
 ## Sources
 
 - [PixelRoundingProbe](../../addons/PixelRoundingProbe/README.md) — rounding capture protocol and staging target
-- [BootstrapOrderProbe](../../addons/BootstrapOrderProbe_A/README.md) — pending bootstrap timing/re-execution capture protocol
+- [BootstrapOrderProbe](../../addons/BootstrapOrderProbe_A/README.md) — completed bootstrap timing/re-execution capture protocol
 - [pixel_rounding_probe.rs](../../../tests/pixel_rounding_probe.rs) — same-object settled-capture and read-only-state regression coverage
 - `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_SharedXML/PixelUtil.lua` — source pixel conversion and recursive native-flag caller
 - `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_APIDocumentationGenerated/SimpleScriptRegionAPIDocumentation.lua` — native setter/getter declarations

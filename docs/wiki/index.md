@@ -1,6 +1,6 @@
-## [2026-09-07] investigation | Capture PTR LoD bootstrap startup order
+## [2026-09-07] investigation | Capture PTR LoD bootstrap lifecycle
 
-[[ptr-pixel-rounding-probe]] records the hash-matched `BootstrapOrderProbe` PTR `12.1.5.69594` capture: B's LoD bootstrap runs at startup but returns to `loaded=false, finished=false`; eager D runs `Before → [Bootstrap] → Normal` in literal TOC order. The capture rules out a pre-pass before eager A for this fixture, but lacks the requested explicit B loads, so re-execution and explicit-load order remain open.
+[[ptr-pixel-rounding-probe]] records the complete hash-matched `BootstrapOrderProbe` PTR `12.1.5.69594` capture: B's LoD bootstrap runs once at startup and returns to `loaded=false, finished=false`; eager D runs `Before → [Bootstrap] → Normal` in literal TOC order. First explicit B loading runs only `Before → Normal`, reaching `true,true`; a second load runs no B files. This fixture rules out a pre-pass before eager A, but does not establish loader eligibility, dependency, private-environment, or SavedVariables policy.
 
 ## [2026-09-06] system | Model bounded PTR pixel-layout rounding
 
