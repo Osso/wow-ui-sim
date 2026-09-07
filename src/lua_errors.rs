@@ -28,7 +28,7 @@ pub fn run_lua_errors(
     saved_stdout: Option<i32>,
     exec_lua: Option<&str>,
     exec_lua_secure: bool,
-) {
+) -> bool {
     // Suppress stderr during startup events (errors are collected in SimState)
     let saved_stderr = suppress_stderr();
 
@@ -77,6 +77,7 @@ pub fn run_lua_errors(
     let errors = collect_unique_errors(env);
     let json = serde_json::to_string_pretty(&errors).expect("JSON serialization failed");
     println!("{json}");
+    errors.is_empty()
 }
 
 fn print_errors_by_addon_if_requested(env: &WowLuaEnv) {

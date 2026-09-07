@@ -537,12 +537,15 @@ fn dispatch_dump_tree(dispatch: CommandDispatch) {
 }
 
 fn run_lua_errors(dispatch: &CommandDispatch) {
-    wow_ui_sim::lua_errors::run_lua_errors(
+    let clean = wow_ui_sim::lua_errors::run_lua_errors(
         &dispatch.env,
         dispatch.saved_stdout,
         dispatch.exec_lua.as_deref(),
         dispatch.exec_lua_secure,
     );
+    if !clean {
+        std::process::exit(1);
+    }
 }
 
 fn run_self_test(dispatch: &CommandDispatch, max_ticks: u32, categories: Option<&str>) {
