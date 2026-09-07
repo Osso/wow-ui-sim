@@ -14,9 +14,13 @@ The capture lacks the requested `/boprobe load` calls, so B explicit-load orderi
 
 1. Enable **all four** probe addons in PTR, keeping personal addons disabled; `/reload`.
 2. Run `/boprobe load` twice.
-3. `/reload` to flush, then retrieve `_xptr_/WTF/Account/<ACCOUNT>/SavedVariables/BootstrapOrderProbe_A.lua` before another reload/logout overwrites the saved capture.
+3. `/reload` to flush, then retrieve `_xptr_/WTF/Account/<ACCOUNT>/SavedVariables/BootstrapOrderProbe_A.lua`. Later reloads without commands preserve the capture.
 
-Only A declares `BootstrapOrderProbeDB`. An unsaved working table collects early events; A publishes it at its `ADDON_LOADED`, after SavedVariables restoration. Each new Lua session starts a fresh working table. No old-session records are merged. The final reload starts a new in-memory session but writes the completed session to disk first.
+Only A declares `BootstrapOrderProbeDB`. Each Lua session has its own working collector. At `ADDON_LOADED`, restored load results are retained; startup-only data is replaced with the new collector. Each explicit `load:after` publishes after its return/error payload is attached, without relying on the saved table still aliasing the collector.
+
+Two completed load attempts mark a capture `complete`, including attempts returning errors. A newer single-attempt capture is saved as `pendingCapture` beside the previous completed capture; the second attempt replaces it with the new completed capture. A partial capture is retained across reloads when no completed capture exists. Results from different sessions are never merged.
+
+Regression tests reproduce completed-capture loss across fresh-VM save/restore/reload cycles and detached-table publication. These design flaws do not establish the cause of the original unchanged desktop file.
 
 Ordered event tags identify each source file, counts identify bootstrap re-execution, and `load:before`/`load:after` bracket each explicit B load with return/error data. Every record captures build identity, B/ClickBinding/Collections loaded+finished flags, and helper types. Reject captures where `matchesExpectedBuild` is false. Passive addon-query failures are recorded under `errors`.
 

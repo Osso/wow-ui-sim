@@ -12,6 +12,7 @@ SlashCmdList.BOOTSTRAPORDERPROBE = function(message)
         else
             event.loadResult.error = tostring(ok)
         end
+        BootstrapOrderProbePublish()
     else
         BootstrapOrderProbeRecord("snapshot")
     end

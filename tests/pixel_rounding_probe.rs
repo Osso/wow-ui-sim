@@ -435,6 +435,88 @@ fn bootstrap_probe_records_explicit_load_and_repeat_without_loading_blizzard() {
     "#).unwrap();
 }
 
+#[test]
+fn bootstrap_probe_completed_capture_survives_two_reloads_and_replacement() {
+    let first = bootstrap_capture_session(None);
+    first.exec("SlashCmdList.BOOTSTRAPORDERPROBE('load'); SlashCmdList.BOOTSTRAPORDERPROBE('load')").unwrap();
+    let saved = save_bootstrap_capture(&first);
+    let second = bootstrap_capture_session(Some(&saved));
+    assert_eq!(save_bootstrap_capture(&second), saved, "first reload discarded completed capture");
+    let third = bootstrap_capture_session(Some(&save_bootstrap_capture(&second)));
+    assert_eq!(save_bootstrap_capture(&third), saved, "second reload discarded completed capture");
+    third.exec(r#"
+        local completed = BootstrapOrderProbeDB
+        C_AddOns.LoadAddOn = function() return false, 'TEST_FAILURE' end
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        assert(BootstrapOrderProbeDB == completed, 'partial capture replaced completed capture')
+        local pending = completed.pendingCapture
+        assert(pending.counts['load:after'] == 1)
+        assert(pending.events[#pending.events].loadResult.reason == 'TEST_FAILURE')
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        assert(BootstrapOrderProbeDB ~= completed, 'new completed capture not published')
+        assert(BootstrapOrderProbeDB.complete)
+        assert(BootstrapOrderProbeDB.counts['load:after'] == 2)
+        assert(BootstrapOrderProbeDB.events[#BootstrapOrderProbeDB.events].loadResult.ok == false)
+    "#).unwrap();
+    let replaced = save_bootstrap_capture(&third);
+    assert_eq!(save_bootstrap_capture(&bootstrap_capture_session(Some(&replaced))), replaced);
+}
+
+#[test]
+fn bootstrap_probe_publishes_detached_results_and_preserves_partial_errors() {
+    let env = bootstrap_capture_session(None);
+    env.exec(r#"
+        BootstrapOrderProbeDB = { events = {}, counts = {}, expectedBuild = '69594' }
+        C_AddOns.LoadAddOn = function() error('detached load failure') end
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        local saved = BootstrapOrderProbeDB
+        assert(saved.counts['load:after'] == 1, 'load result remained in detached collector')
+        local result = saved.events[#saved.events].loadResult
+        assert(result.success == false and string.find(result.error, 'detached load failure', 1, true))
+        assert(not saved.complete, 'one attempt is not a completed two-load capture')
+    "#).unwrap();
+    let partial = save_bootstrap_capture(&env);
+    let reloaded = bootstrap_capture_session(Some(&partial));
+    assert_eq!(save_bootstrap_capture(&reloaded), partial, "reload discarded partial load error");
+}
+
+fn bootstrap_capture_session(saved: Option<&str>) -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        GetBuildInfo = function() return '12.1.5', '69594', 'Aug 28 2026', 120105 end
+        C_AddOns.IsAddOnLoaded = function() return false, false end
+        C_AddOns.LoadAddOn = function(name)
+            assert(name == 'BootstrapOrderProbe_B', 'only load probe B')
+            return true
+        end
+    "#).unwrap();
+    load_bootstrap_file(&env, "B", "Bootstrap.lua");
+    load_bootstrap_file(&env, "A", "A.lua");
+    if let Some(saved) = saved {
+        env.exec(&format!("BootstrapOrderProbeDB = {saved}")).unwrap();
+    }
+    env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("BootstrapOrderProbe_A")]).unwrap();
+    load_bootstrap_file(&env, "C", "C.lua");
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env
+}
+
+fn save_bootstrap_capture(env: &WowLuaEnv) -> String {
+    env.eval(r#"
+        local function serialize(value)
+            if type(value) == 'string' then return string.format('%q', value) end
+            if type(value) ~= 'table' then return tostring(value) end
+            local fields = {}
+            for key, child in pairs(value) do
+                fields[#fields + 1] = '[' .. serialize(key) .. ']=' .. serialize(child)
+            end
+            table.sort(fields)
+            return '{' .. table.concat(fields, ',') .. '}'
+        end
+        return serialize(BootstrapOrderProbeDB)
+    "#).unwrap()
+}
+
 fn load_bootstrap_file(env: &WowLuaEnv, addon: &str, file: &str) {
     let path = format!("docs/addons/BootstrapOrderProbe_{addon}/{file}");
     let source = fs::read_to_string(&path).unwrap();

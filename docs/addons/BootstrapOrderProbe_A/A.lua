@@ -27,13 +27,30 @@ if not BootstrapOrderProbeRecord then
 end
 BootstrapOrderProbeRecord("A:eager")
 
--- Only A declares SavedVariables. Publish after its saved table has been restored.
+local function loadCount(capture)
+    return capture and capture.counts and capture.counts["load:after"] or 0
+end
+
+-- Publish only after the result payload is attached, even if the saved table was detached.
+function BootstrapOrderProbePublish()
+    local session = BootstrapOrderProbeSession
+    session.complete = loadCount(session) >= 2
+    if loadCount(BootstrapOrderProbeDB) >= 2 and not session.complete then
+        BootstrapOrderProbeDB.pendingCapture = session
+    else
+        BootstrapOrderProbeDB = session
+    end
+end
+
+-- Retain saved load results across reloads; startup-only data remains replaceable.
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PLAYER_LOGIN")
 frame:SetScript("OnEvent", function(_, event, name)
     if event == "ADDON_LOADED" and name == "BootstrapOrderProbe_A" then
-        BootstrapOrderProbeDB = BootstrapOrderProbeSession
+        if loadCount(BootstrapOrderProbeDB) == 0 then
+            BootstrapOrderProbeDB = BootstrapOrderProbeSession
+        end
     elseif event == "PLAYER_LOGIN" then
         BootstrapOrderProbeRecord("PLAYER_LOGIN")
     end
