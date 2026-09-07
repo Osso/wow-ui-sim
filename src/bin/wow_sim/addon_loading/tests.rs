@@ -35,6 +35,57 @@ fn write_addon_with_lua(root: &Path, name: &str, metadata: &str, lua: &str) -> P
     toc_path
 }
 
+#[cfg(feature = "retail-12-1-5")]
+#[test]
+fn startup_bootstrap_runs_inline_without_full_load_or_event() {
+    let temp = tempfile::tempdir().unwrap();
+    write_addon_with_lua(
+        temp.path(),
+        "A",
+        "",
+        "order = {'A'}; loadedEvents = {}; local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) loadedEvents[name] = true end)",
+    );
+    write_addon_with_toc(
+        temp.path(),
+        "B",
+        &format!(
+            "## Interface: {}\n## LoadOnDemand: 1\nbefore.lua\nbootstrap.lua [Bootstrap]\nmain.lua\n",
+            wow_ui_sim::toc::ACTIVE_INTERFACE_VERSION
+        ),
+    );
+    std::fs::write(temp.path().join("B/bootstrap.lua"), "table.insert(order, 'B:bootstrap'); duringLoaded, duringFinished = C_AddOns.IsAddOnLoaded('B')").unwrap();
+    std::fs::write(
+        temp.path().join("B/before.lua"),
+        "error('normal file ran at startup')",
+    )
+    .unwrap();
+    std::fs::write(
+        temp.path().join("B/main.lua"),
+        "error('normal file ran at startup')",
+    )
+    .unwrap();
+    write_addon_with_lua(temp.path(), "C", "", "table.insert(order, 'C')");
+    let mut addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    wow_ui_sim::loader::sort_addons_by_dependencies(&mut addons);
+    let env = WowLuaEnv::new().unwrap();
+    load_discovered_addons(&env, &addons, &mut None, None, &mut LoadStats::default());
+    env.exec("assert(table.concat(order, ',') == 'A,B:bootstrap,C', table.concat(order, ',')); assert(duringLoaded and not duringFinished); local loaded, finished = C_AddOns.IsAddOnLoaded('B'); assert(not loaded and not finished); assert(not loadedEvents.B); assert(loadedEvents.C)").unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+
+    let disabled_env = WowLuaEnv::new().unwrap();
+    let disabled = HashMap::from([("B".to_string(), false)]);
+    load_discovered_addons(
+        &disabled_env,
+        &addons,
+        &mut None,
+        Some(&disabled),
+        &mut LoadStats::default(),
+    );
+    disabled_env
+        .exec("assert(table.concat(order, ',') == 'A,C'); assert(not loadedEvents.B)")
+        .unwrap();
+}
+
 #[test]
 fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
     let temp = tempfile::tempdir().expect("tempdir");

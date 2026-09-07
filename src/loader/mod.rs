@@ -14,6 +14,7 @@ mod load_addon_trace;
 pub(crate) mod lua_file;
 pub(crate) mod precompiled;
 pub(crate) mod stack_taint;
+mod startup_addons;
 mod xml_file;
 mod xml_fontstring;
 mod xml_frame;
@@ -42,6 +43,10 @@ use addon_order::{topological_sort_addons, topological_sort_addons_with_extra_de
 pub use error::LoadError;
 pub(crate) use load_addon_trace::{
     LoadAddonTraceOrigin, enter_xml_load_addon_context, runtime_load_addon_origin, trace_load_addon,
+};
+pub use startup_addons::{
+    StartupAddon, StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen,
+    load_startup_addon, startup_bootstrap_eligible,
 };
 pub use xml_frame::create_frame_from_xml;
 pub use xml_frame::{fast_create_frame_profile_body_report, fast_create_frame_profile_report};
@@ -501,6 +506,14 @@ pub(crate) fn trace_load_result_diagnostics(
 /// Load an addon from a parsed TOC.
 pub fn load_addon_from_toc(env: &LoaderEnv<'_>, toc: &TocFile) -> Result<LoadResult, LoadError> {
     addon::load_addon_internal(env, toc, None)
+}
+
+/// Execute only startup bootstrap files without marking the addon fully loaded.
+pub fn load_addon_bootstrap_from_toc(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+) -> Result<LoadResult, LoadError> {
+    addon::load_addon_bootstrap_internal(env, toc)
 }
 
 /// Load an addon from a parsed TOC with saved variables support.

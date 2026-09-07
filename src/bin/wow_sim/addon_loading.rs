@@ -4,8 +4,8 @@ use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use wow_ui_sim::client_profile;
 use wow_ui_sim::loader::{
-    LoadResult, LoadTiming, discover_blizzard_addons_for_screen, load_addon,
-    load_addon_with_saved_vars,
+    LoadResult, LoadTiming, StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen,
+    load_startup_addon, startup_bootstrap_eligible,
 };
 use wow_ui_sim::logging;
 use wow_ui_sim::lua_api::state::LuaErrorRecord;
@@ -74,18 +74,27 @@ pub fn load_blizzard_addons(
             env,
             "FrameXML",
             &framexml_toc,
+            StartupAddonLoadKind::Full,
             saved_vars,
             verbose,
             &mut total_timing,
         );
     }
 
-    let addons = discover_blizzard_addons_for_screen(&addons_dir, screen);
+    let addons = discover_blizzard_startup_addons_for_screen(&addons_dir, screen);
     logging::println_elapsed(&format!("Loading {} Blizzard addons...", addons.len()));
 
-    for (name, toc_path) in &addons {
-        load_one_blizzard_addon(env, name, toc_path, saved_vars, verbose, &mut total_timing);
-        if name == "Blizzard_EnvironmentCleanup" {
+    for addon in &addons {
+        load_one_blizzard_addon(
+            env,
+            &addon.name,
+            &addon.toc_path,
+            addon.kind,
+            saved_vars,
+            verbose,
+            &mut total_timing,
+        );
+        if addon.name == "Blizzard_EnvironmentCleanup" {
             env.restore_post_cleanup_globals();
         }
     }
@@ -117,16 +126,14 @@ fn load_one_blizzard_addon(
     env: &WowLuaEnv,
     name: &str,
     toc_path: &Path,
+    kind: StartupAddonLoadKind,
     saved_vars: &mut Option<SavedVariablesManager>,
     verbose: bool,
     timing: &mut LoadTiming,
 ) {
-    let result = match saved_vars {
-        Some(saved_vars) => load_addon_with_saved_vars(&env.loader_env(), toc_path, saved_vars),
-        None => load_addon(&env.loader_env(), toc_path),
-    };
+    let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
     match result {
-        Ok(r) => record_blizzard_addon_success(env, name, verbose, timing, r),
+        Ok(r) => record_blizzard_addon_success(env, name, kind, verbose, timing, r),
         Err(e) => println!("{} failed: {}", name, e),
     }
 }
@@ -134,13 +141,16 @@ fn load_one_blizzard_addon(
 fn record_blizzard_addon_success(
     env: &WowLuaEnv,
     name: &str,
+    kind: StartupAddonLoadKind,
     verbose: bool,
     timing: &mut LoadTiming,
     result: LoadResult,
 ) {
     print_verbose_blizzard_status(name, verbose, &result);
     print_load_diagnostics(&result);
-    fire_addon_loaded(env, name);
+    if kind == StartupAddonLoadKind::Full {
+        fire_addon_loaded(env, name);
+    }
     timing.accumulate(&result.timing);
 }
 
@@ -362,7 +372,7 @@ fn loadable_toc_path(path: &Path, screen: ScreenKind) -> Option<PathBuf> {
     let supported_game_type = !toc.is_ptr_only() && !toc.is_game_type_restricted();
     let supported_interface = load_out_of_date_addons()
         || toc.supports_interface_version(wow_ui_sim::toc::ACTIVE_INTERFACE_VERSION);
-    let startup_loadable = !toc.is_load_on_demand();
+    let startup_loadable = !toc.is_load_on_demand() || startup_bootstrap_eligible(&toc);
     (supports_screen && supported_game_type && supported_interface && startup_loadable)
         .then_some(toc_path)
 }
@@ -515,17 +525,18 @@ fn load_registered_single_addon(
             return;
         }
     };
-    if toc.is_load_on_demand() {
-        return;
-    }
-    let result = match saved_vars.as_mut() {
-        Some(sv) => load_addon_with_saved_vars(&env.loader_env(), toc_path, sv),
-        None => load_addon(&env.loader_env(), toc_path),
+    let kind = if startup_bootstrap_eligible(&toc) {
+        StartupAddonLoadKind::BootstrapOnly
+    } else {
+        StartupAddonLoadKind::Full
     };
+    let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
     match result {
         Ok(r) => {
-            mark_addon_loaded(env, name, &r);
-            fire_addon_loaded(env, name);
+            if kind == StartupAddonLoadKind::Full {
+                mark_addon_loaded(env, name, &r);
+                fire_addon_loaded(env, name);
+            }
             record_addon_success(name, &r, stats);
         }
         Err(e) => {
@@ -541,7 +552,7 @@ fn should_load_registered_addon(env: &WowLuaEnv, name: &str) -> bool {
         .addons
         .iter()
         .find(|addon| addon.folder_name == name)
-        .is_some_and(|addon| addon.enabled && !addon.loaded && !addon.load_on_demand)
+        .is_some_and(|addon| addon.enabled && !addon.loaded)
 }
 
 fn missing_required_dependency_error(env: &WowLuaEnv, name: &str) -> Option<String> {

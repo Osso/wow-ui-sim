@@ -45,7 +45,15 @@ pub(super) fn load_required_blizzard_dependencies_for_addons(
         if is_addon_loaded(env, &name) {
             continue;
         }
-        load_one_blizzard_addon(env, &name, &toc_path, saved_vars, verbose, &mut timing);
+        load_one_blizzard_addon(
+            env,
+            &name,
+            &toc_path,
+            super::StartupAddonLoadKind::Full,
+            saved_vars,
+            verbose,
+            &mut timing,
+        );
     }
 }
 
