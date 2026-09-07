@@ -131,6 +131,81 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
 }
 
 #[test]
+fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
+    let temp = tempfile::tempdir().unwrap();
+    write_addon_with_lua(temp.path(), "Healthy", "", "healthyLoaded = true");
+    write_addon_with_lua(temp.path(), "FileBroken", "", "error('file failure')");
+    write_addon_with_lua(
+        temp.path(),
+        "EventBroken",
+        "",
+        "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) if name == 'EventBroken' then error('event failure') end end)",
+    );
+    write_addon_with_lua(
+        temp.path(),
+        "NestedChild",
+        "## LoadOnDemand: 1\n",
+        "error('nested failure')",
+    );
+    write_addon_with_lua(
+        temp.path(),
+        "NestedCaller",
+        "",
+        "assert(C_AddOns.LoadAddOn('NestedChild'))",
+    );
+    write_addon_with_lua(
+        temp.path(),
+        "MissingDependency",
+        "## Dependencies: Absent\n",
+        "error('must not execute')",
+    );
+    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
+    let mut stats = LoadStats::default();
+    load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
+
+    let state = env.state().borrow();
+    let recorded: HashSet<_> = state
+        .lua_error_records
+        .iter()
+        .filter_map(|record| record.addon_name.as_deref())
+        .collect();
+    assert!(recorded.contains("FileBroken"), "{recorded:?}");
+    assert!(recorded.contains("EventBroken"), "{recorded:?}");
+    assert!(recorded.contains("NestedChild"), "{recorded:?}");
+    assert!(recorded.contains("MissingDependency"), "{recorded:?}");
+    for name in [
+        "Healthy",
+        "FileBroken",
+        "EventBroken",
+        "NestedCaller",
+        "NestedChild",
+    ] {
+        assert!(
+            state
+                .addons
+                .iter()
+                .any(|addon| addon.folder_name == name && addon.loaded),
+            "loaded state must be preserved for {name}"
+        );
+    }
+    assert!(
+        !state
+            .addons
+            .iter()
+            .find(|addon| addon.folder_name == "MissingDependency")
+            .unwrap()
+            .loaded
+    );
+    assert_eq!(stats.success_count, 4);
+    assert_eq!(
+        stats.fail_count, 4,
+        "file, callback, nested child, and missing dependency must not report one failure"
+    );
+}
+
+#[test]
 fn earlier_addon_can_see_later_addon_metadata_before_later_loads() {
     let temp = tempfile::tempdir().expect("tempdir");
     let early_toc = write_addon_with_lua(
