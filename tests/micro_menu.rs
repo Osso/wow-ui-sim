@@ -654,18 +654,46 @@ fn micro_menu_achievement_button_loads_and_opens_panel() {
     );
 }
 
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn micro_menu_ej_button_loads_and_opens_panel() {
-    let env = setup_env();
+    let code = r#"
+        local loaded, finished = C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal')
+        assert(not loaded and not finished, 'journal must remain on demand before click')
+        assert(not EncounterJournal, 'startup must not create the full journal')
+        local button = assert(EJMicroButton, 'journal micro button must exist')
+        local onClick = assert(button:GetScript('OnClick'), 'journal OnClick must exist')
+        onClick(button, 'LeftButton', false)
+        assert(EncounterJournal and EncounterJournal:IsShown(), 'journal must open on click')
+        loaded, finished = C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal')
+        assert(loaded and finished, 'click must complete the on-demand load')
+        onClick(button, 'LeftButton', false)
+        assert(not EncounterJournal:IsShown(), 'second click must close the journal')
+        print('MICRO_MENU_EJ_CLICK_COMPLETE')
+    "#;
+    let output = std::process::Command::new("timeout")
+        .args([
+            "90",
+            env!("CARGO_BIN_EXE_wow-sim"),
+            "--no-addons",
+            "--no-saved-vars",
+            "--exec-lua",
+            code,
+            "lua-errors",
+        ])
+        .current_dir(env!("CARGO_MANIFEST_DIR"))
+        .output()
+        .expect("run journal click through normal startup without injected bootstrap helpers");
+    let stdout = String::from_utf8(output.stdout).expect("UTF-8 journal click output");
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert_eq!(output.status.code(), Some(0), "{stdout}\n{stderr}");
+    let json = stdout
+        .strip_prefix("MICRO_MENU_EJ_CLICK_COMPLETE\n")
+        .unwrap_or_else(|| panic!("journal click did not complete: {stdout}\n{stderr}"));
+    let errors: Vec<serde_json::Value> = serde_json::from_str(json).expect("Lua-error JSON");
     assert!(
-        !frame_exists(&env, "EncounterJournal"),
-        "EncounterJournal should not exist before click"
-    );
-    // Click may error in post-show setup; we only care that the frame is shown
-    let _ = click_button(&env, "EJMicroButton");
-    assert!(
-        frame_is_shown(&env, "EncounterJournal"),
-        "EncounterJournal should be shown after clicking EJMicroButton"
+        errors.is_empty(),
+        "journal click recorded Lua errors: {errors:?}"
     );
 }
 

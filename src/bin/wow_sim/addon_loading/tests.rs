@@ -35,7 +35,7 @@ fn write_addon_with_lua(root: &Path, name: &str, metadata: &str, lua: &str) -> P
     toc_path
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn startup_bootstrap_runs_inline_without_full_load_or_event() {
     let temp = tempfile::tempdir().unwrap();
