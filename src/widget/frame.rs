@@ -522,6 +522,9 @@ pub struct Frame {
     /// Whether this frame marks script-visible values as secret.
     pub prevent_secret_values: bool,
 
+    /// Secret-aspect bits explicitly added to this object, independent of derived state.
+    pub explicit_secret_aspects: u32,
+
     /// ID of the frame that owns this tooltip (set via `SetOwner`).
     ///
     /// `None` when the tooltip is not bound to any frame. Blizzard code

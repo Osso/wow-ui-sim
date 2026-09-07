@@ -315,6 +315,10 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     FORBIDDEN_ASPECT,
     #[cfg(feature = "retail-12-1-0")]
     FORBIDDEN_ASPECT_META,
+    #[cfg(feature = "retail-12-1-0")]
+    CUSTOM_AURA_BUTTON_UPDATE_MODE,
+    #[cfg(feature = "retail-12-1-0")]
+    CUSTOM_AURA_BUTTON_UPDATE_MODE_META,
     CREATION_CLASS_DISABLED_REASON,
     CREATION_RACE_DISABLED_REASON,
     VAS_QUEUE_STATUS,

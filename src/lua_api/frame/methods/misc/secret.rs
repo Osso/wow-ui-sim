@@ -1,13 +1,22 @@
 //! Secret, protected, and anchoring restriction methods.
+//!
+//! Explicit masks track declarations; they do not implement per-aspect secret
+//! return tagging or context-dependent enforcement.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(feature = "retail-12-1-0")]
+use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
+const OBJECT_SECRET_ASPECT: u32 = 1;
+
 pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(state, mt, "AddSecretAspect", add_secret_aspect)?;
     table_set_rust_fn_static(state, mt, "HasAnySecretAspect", has_any_secret_aspect)?;
     table_set_rust_fn_static(state, mt, "HasSecretAspect", has_secret_aspect)?;
     table_set_rust_fn_static(state, mt, "HasSecretValues", has_secret_values)?;
@@ -29,35 +38,44 @@ pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     Ok(())
 }
 
+#[cfg(feature = "retail-12-1-0")]
+pub fn add_secret_aspect(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let aspect = u32::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    let frame = sim
+        .widgets
+        .get_mut(id)
+        .ok_or_else(|| runtime_error("invalid frame"))?;
+    frame.explicit_secret_aspects |= aspect;
+    Ok(0)
+}
+
 pub fn has_any_secret_aspect(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let val = {
-        let sim = borrow_state(state)?;
-        frame_has_secret_values(&sim.widgets, id) || frame_is_anchoring_restricted(&sim.widgets, id)
-    };
+    let val = frame_secret_aspects(&borrow_state(state)?.widgets, id) != 0;
     state.push(Val::Bool(val));
     Ok(1)
 }
 
 pub fn has_secret_aspect(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let aspect_num: Option<i64> = match stack_val(state, 2) {
-        Val::Num(n) => Some(n as i64),
+    let aspect = match stack_val(state, 2) {
+        Val::Num(n) => u32::try_from(n as i64).ok(),
         _ => None,
     };
-    let result = {
-        let sim = borrow_state(state)?;
-        let has_any = frame_has_secret_values(&sim.widgets, id)
-            || frame_is_anchoring_restricted(&sim.widgets, id);
-        aspect_num.is_some_and(|v| v == 1 && has_any)
-    };
+    let mask = frame_secret_aspects(&borrow_state(state)?.widgets, id);
+    let result = aspect.is_some_and(|aspect| mask & aspect != 0);
     state.push(Val::Bool(result));
     Ok(1)
 }
 
 pub fn has_secret_values(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let val = { frame_has_secret_values(&borrow_state(state)?.widgets, id) };
+    let val = borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.prevent_secret_values || frame.explicit_secret_aspects != 0);
     state.push(Val::Bool(val));
     Ok(1)
 }
@@ -111,6 +129,18 @@ pub fn set_prevent_secret_values(state: &mut LuaState) -> LuaResult<u32> {
         frame.prevent_secret_values = prevent;
     }
     Ok(0)
+}
+
+fn frame_secret_aspects(widgets: &crate::widget::WidgetRegistry, id: u64) -> u32 {
+    let Some(frame) = widgets.get(id) else {
+        return 0;
+    };
+    let derived = if frame.prevent_secret_values || frame.forbidden || frame.is_protected {
+        OBJECT_SECRET_ASPECT
+    } else {
+        0
+    };
+    frame.explicit_secret_aspects | derived
 }
 
 fn frame_has_secret_values(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {

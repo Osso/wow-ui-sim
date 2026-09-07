@@ -265,6 +265,7 @@ macro_rules! frame_defaults {
             access_restrictions: 0,
             is_protected: false,
             prevent_secret_values: false,
+            explicit_secret_aspects: 0,
             tooltip_owner_id: None,
             blocking_loads_requested: false,
             vertex_offsets: None,

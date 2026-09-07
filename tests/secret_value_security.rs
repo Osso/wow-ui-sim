@@ -87,6 +87,16 @@ fn explicit_secret_aspects_accumulate_without_affecting_other_frames() {
 #[test]
 fn explicit_secret_aspects_union_with_existing_derived_state() {
     let env = env();
+    env.exec("SecretAspectProtectedFrame = CreateFrame('Frame', 'SecretAspectProtectedFrame')")
+        .expect("create protected-state fixture");
+    {
+        let mut state = env.state().borrow_mut();
+        let id = state
+            .widgets
+            .get_id_by_name("SecretAspectProtectedFrame")
+            .unwrap();
+        state.widgets.get_mut(id).unwrap().is_protected = true;
+    }
     env.exec(
         r#"
         local frame = CreateFrame("Frame")
@@ -100,7 +110,7 @@ fn explicit_secret_aspects_union_with_existing_derived_state() {
         assert(frame:HasSecretAspect(8) and frame:HasSecretValues())
         assert(not frame:IsAnchoringSecret())
 
-        local protected = CreateFrame("Frame", nil, UIParent, "SecureFrameTemplate")
+        local protected = SecretAspectProtectedFrame
         assert(protected:IsProtected())
         assert(protected:HasSecretAspect(1) and protected:HasAnySecretAspect())
         assert(not protected:HasSecretValues())
