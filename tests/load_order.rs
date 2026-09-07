@@ -468,6 +468,7 @@ fn lod_bootstrap_lifecycle_publishes_once_before_full_load() {
     let directory = tempfile::tempdir().unwrap();
     let toc = write_bootstrap_lifecycle_addon(directory.path(), "BootstrapLifecycleB", true);
     let env = bootstrap_lifecycle_environment();
+    env.state().borrow_mut().addon_base_paths = vec![directory.path().to_path_buf()];
     let result = wow_ui_sim::loader::load_addon_bootstrap_from_toc(&env.loader_env(), &toc)
         .expect("load bootstrap files");
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
@@ -486,7 +487,8 @@ fn lod_bootstrap_lifecycle_publishes_once_before_full_load() {
     )
     .expect("bootstrap-only lifecycle");
 
-    load_bootstrap_lifecycle_full(&env, &toc);
+    env.exec("assert(C_AddOns.LoadAddOn('BootstrapLifecycleB'))")
+        .expect("runtime full load after bootstrap");
     env.exec(
         r#"
         assert(table.concat(bootstrapEvents, ',') ==
@@ -500,7 +502,8 @@ fn lod_bootstrap_lifecycle_publishes_once_before_full_load() {
         "#,
     )
     .expect("full loading after bootstrap");
-    load_bootstrap_lifecycle_full(&env, &toc);
+    env.exec("assert(C_AddOns.LoadAddOn('BootstrapLifecycleB'))")
+        .expect("repeated runtime full load");
     env.exec("assert(#bootstrapEvents == 3 and bootstrapCount == 1, 'repeated full loading runs no files')")
         .expect("repeated full load is inert");
 }
@@ -573,7 +576,11 @@ fn write_bootstrap_lifecycle_addon(
 ) -> wow_ui_sim::toc::TocFile {
     let directory = root.join(name);
     std::fs::create_dir(&directory).unwrap();
-    let metadata = if load_on_demand { "## LoadOnDemand: 1\n" } else { "" };
+    let metadata = if load_on_demand {
+        "## LoadOnDemand: 1\n"
+    } else {
+        ""
+    };
     let toc_path = directory.join(format!("{name}.toc"));
     std::fs::write(
         &toc_path,
