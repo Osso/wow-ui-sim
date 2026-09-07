@@ -192,6 +192,11 @@ fn test_blizzard_addon_load_order_snapshot() {
         let addons = discover_blizzard_addons(&ui);
         let names: Vec<&str> = addons.iter().map(|(n, _)| n.as_str()).collect();
 
+        #[cfg(feature = "client-ptr")]
+        let expected: Vec<&str> = include_str!("fixtures/ptr-12-1-5-eager-load-order.txt")
+            .lines()
+            .collect();
+        #[cfg(not(feature = "client-ptr"))]
         #[rustfmt::skip]
         let expected: &[&str] = &[
             "Blizzard_ProjectConstants",
