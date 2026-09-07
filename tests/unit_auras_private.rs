@@ -4,6 +4,45 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn unit_aura_blocked_supports_registered_and_unit_filtered_dispatch() {
+    let env = env();
+    env.exec(
+        r#"
+        blockedAll, blockedPlayer = {}, {}
+        local all = CreateFrame('Frame')
+        all:RegisterEvent('UNIT_AURA_BLOCKED')
+        all:SetScript('OnEvent', function(_, event, unit, auraID)
+            blockedAll[#blockedAll + 1] = { event, unit, auraID }
+        end)
+        local player = CreateFrame('Frame')
+        player:RegisterUnitEvent('UNIT_AURA_BLOCKED', 'player')
+        player:SetScript('OnEvent', function(_, event, unit, auraID)
+            blockedPlayer[#blockedPlayer + 1] = { event, unit, auraID }
+        end)
+        assert(not pcall(all.RegisterEvent, all, 'WOWLESS_NOPE'))
+    "#,
+    )
+    .expect("register the documented aura-blocked event");
+    for (unit, aura_id) in [("player", 92345.0), ("target", 92346.0)] {
+        env.fire_event_with_args(
+            "UNIT_AURA_BLOCKED",
+            &[env.lua_string(unit), rilua::Val::Num(aura_id)],
+        )
+        .expect("dispatch aura-blocked payload");
+    }
+    env.exec(
+        r#"
+        assert(#blockedAll == 2 and #blockedPlayer == 1)
+        assert(blockedPlayer[1][1] == 'UNIT_AURA_BLOCKED')
+        assert(blockedPlayer[1][2] == 'player' and blockedPlayer[1][3] == 92345)
+        assert(blockedAll[2][2] == 'target' and blockedAll[2][3] == 92346)
+    "#,
+    )
+    .expect("preserve payload and unit filtering");
+}
+
 #[test]
 fn private_aura_anchor_callbacks_and_state_are_tracked() {
     let env = env();
