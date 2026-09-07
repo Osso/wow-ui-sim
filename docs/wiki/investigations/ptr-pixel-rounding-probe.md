@@ -36,6 +36,8 @@ A main-process replay checked all 66 nonempty captured `after` rectangles (264 c
 
 Commit `07cce4a63` stores a per-region false-default flag, exposes the epoch-gated native methods, applies that bounded rule only during shared layout resolution, and caches the physical conversion in `WidgetRegistry`, updated by the existing display setter. It does not rewrite raw sizes or anchors. The grouped PTR replay passed all five tests: the two source-derived live-layout cases plus three existing probe-protocol cases.
 
+Default-profile preservation verification at `fd6256059` passed 18 grouped tests (three probe, nine display, six layout) and the previously blocked client-info test (1/1). Default `cargo check` completed with zero warnings; formatting proof remains valid. Logs: `/tmp/pi-ptr125-default-regressions.{integration,client-info}.*` and `/tmp/pi-ptr125-round-layout-default-check.*`. These are bounded regressions, not whole-profile acceptance.
+
 The capture meets the required build and flush/retrieval boundary. It does not prove visible rendering, hit testing, clipping, animation, all widget types, tie behavior, or arbitrary layout graphs.
 
 ## Sources
