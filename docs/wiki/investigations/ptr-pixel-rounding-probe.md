@@ -36,7 +36,7 @@ Observed startup sequence: `A:eager`, `B:bootstrap`, `C:eager`, `D:before`, `D:b
 
 The first explicit B load records `load:before → B:before → B:after → load:after`. B does not re-execute its bootstrap; it is `true,false` while normal B files run, then `true,true` after successful completion. The second explicit load records only its `load:before` and successful `load:after`, executing no B files. ClickBinding and Collections remain `false,false` while both helpers are functions in every record.
 
-This establishes the tested third-party LoD bootstrap lifecycle and full-load behavior. It does not establish simulator bootstrap eligibility, dependency processing, private-environment or SavedVariables handling, nor authorize a generic bootstrap pre-pass or a change to ordinary TOC order. No simulator loader fix has been made from this capture.
+This establishes the tested third-party LoD bootstrap lifecycle and full-load behavior. It does not establish generic dependency rules, private-environment identity, or SavedVariables visibility during bootstrap. Commits `b0a5f70cd` and `0aece501e` add a PTR-gated ordered Blizzard startup path: `StartupAddonLoadKind::BootstrapOnly` selects annotated files without marking the addon fully loaded; later full loading skips them. Existing eager discovery remains unchanged. Tests are still running, so no runtime/panel acceptance claim is made.
 
 ## Derived bounded layout rule
 

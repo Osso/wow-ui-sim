@@ -1,6 +1,10 @@
+## [2026-09-07] system | Model ordered PTR LoD bootstrap loading
+
+Commits `b0a5f70cd` and `0aece501e` add PTR `retail-12-1-5` `StartupAddonLoadKind::BootstrapOnly` nodes to the ordinary dependency-ordered Blizzard startup stream. Eligible LoD TOCs execute annotated files without becoming fully loaded; later full loads skip those files. Eager TOC order and non-PTR discovery remain unchanged. Tests are pending. See [[addon-loading]] and [[ptr-pixel-rounding-probe]].
+
 ## [2026-09-07] investigation | Capture PTR LoD bootstrap lifecycle
 
-[[ptr-pixel-rounding-probe]] records the complete hash-matched `BootstrapOrderProbe` PTR `12.1.5.69594` capture: B's LoD bootstrap runs once at startup and returns to `loaded=false, finished=false`; eager D runs `Before → [Bootstrap] → Normal` in literal TOC order. First explicit B loading runs only `Before → Normal`, reaching `true,true`; a second load runs no B files. This fixture rules out a pre-pass before eager A, but does not establish loader eligibility, dependency, private-environment, or SavedVariables policy.
+[[ptr-pixel-rounding-probe]] records the complete hash-matched `BootstrapOrderProbe` PTR `12.1.5.69594` capture: B's LoD bootstrap runs once at startup and returns to `loaded=false, finished=false`; eager D runs `Before → [Bootstrap] → Normal` in literal TOC order. First explicit B loading runs only `Before → Normal`, reaching `true,true`; a second load runs no B files. This fixture rules out a pre-pass before eager A, but does not establish generic dependency, private-environment, or SavedVariables policy.
 
 ## [2026-09-06] system | Model bounded PTR pixel-layout rounding
 

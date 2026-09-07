@@ -1565,6 +1565,10 @@ Classified exactly 115 added `C_TransmogOutfitInfo` API, structure, and structur
 
 # Wiki Log
 
+## 2026-09-07
+
+- Added the PTR ordered LoD bootstrap startup model to [systems/addon-loading](systems/addon-loading.md): eligible LoadOnDemand addons run only annotated bootstrap files in the ordinary startup dependency order, while full loading remains separate.
+
 ## [2026-08-29] audit | Document secure nil-symbol publication and synthetic attribution fixes
 
 Audited commits `2da0dc1de` and `584b84c9e`. Updated [[addon-loading]] and [[lua-api]] plus the maintained addon-loading/Lua API references: same-addon nil-symbol reconciliation now records and resolves public and secure publications separately by stable addon index; secure assignments and secure frame exports cannot resolve public misses; precompiled lifecycle dispatch uses raw `_G.self` snapshot/restore; and post-cleanup `C_StoreSecure` restoration reads raw `_G` state to avoid attributing simulator bootstrap lookups to Blizzard code. No new page or spec was warranted; `docs/wiki/index.md` required no catalog change.\n\n## [2026-08-29] audit | Document state-backed C_GuildInfo management methods
