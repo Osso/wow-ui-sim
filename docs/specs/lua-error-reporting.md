@@ -11,9 +11,11 @@ The `lua-errors` command in `src/lua_errors.rs` reports uncaught failures collec
 
 ### Addon load summary
 
-- [ ] `Failed` counts the unique union of failed addon load transactions and addons attributed uncaught Lua errors during the loading batch, including nested loads and `ADDON_LOADED` callbacks.
-- [ ] `Load failures` counts failed load transactions separately; `Loaded with Lua errors` counts attributed addons whose runtime loaded state is true. An addon present in both failure sources is counted once in `Failed`.
-- [ ] Preserve runtime loaded flags and the existing `Loaded` transaction count. Nested loaded addons can contribute Lua failures without being separate top-level load transactions. Earlier errors outside the batch do not inflate its summary; later startup errors remain covered by the final CLI error report.
+- [x] `Failed` counts the unique union of failed addon load transactions and addons attributed uncaught Lua errors during the loading batch, including nested loads and `ADDON_LOADED` callbacks.
+- [x] `Load failures` counts failed load transactions separately; `Loaded with Lua errors` counts attributed addons whose runtime loaded state is true. An addon present in both failure sources is counted once in `Failed`.
+- [x] Preserve runtime loaded flags and the existing `Loaded` transaction count. Nested loaded addons can contribute Lua failures without being separate top-level load transactions.
+
+Summary accounting reads attributed error records added during the loading batch. Later startup errors remain covered by the final CLI error report.
 
 ## How it works
 
@@ -36,7 +38,7 @@ The `lua-errors` command in `src/lua_errors.rs` reports uncaught failures collec
 ## Known gaps (current cycle)
 
 - [ ] Grouped Rust tests await compilation after the observed disk-space blocker. Direct current-binary probes establish the uncaught `--exec-lua` RED: exit 0 with `[]`, despite an exception.
-- [ ] Full user-addon startup acceptance remains open; summary accounting has a focused regression pending GREEN. A clean isolated fixture is not evidence that personal addons work.
+- [ ] Full user-addon startup acceptance remains open. Summary accounting's focused regression passed 1/1 at `58e3a2d2e`, after reproducing the incorrect count. A clean isolated fixture is not evidence that personal addons work.
 
 ## Out of scope
 
