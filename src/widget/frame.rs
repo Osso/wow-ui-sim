@@ -512,6 +512,9 @@ pub struct Frame {
     /// Forbidden frames are exposed as proxy tables in _G with a "Forbidden" metatable.
     pub forbidden: bool,
 
+    /// Conditional access restrictions applied to this object, independent of forbidden state.
+    pub access_restrictions: u32,
+
     /// Whether this frame is protected (inherits SecureFrameTemplate).
     /// Protected frames can use secure handler execution (SecureHandlerExecute, SetFrameRef, etc.).
     pub is_protected: bool,

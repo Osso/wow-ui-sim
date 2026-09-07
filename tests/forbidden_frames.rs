@@ -89,7 +89,7 @@ fn test_forbidden_scrollbar_track_has_thumb() {
 }
 
 #[test]
-fn has_access_constraints_reports_forbidden_frames_only() {
+fn has_access_constraints_reports_forbidden_frames_without_restrictions() {
     let env = env_with_shared_xml();
     env.exec("local normal = CreateFrame('Frame', 'AccessConstraintNormal', UIParent)")
         .unwrap();
@@ -108,6 +108,63 @@ fn has_access_constraints_reports_forbidden_frames_only() {
         .unwrap();
 
     assert_eq!(result, ("boolean".to_string(), false, true));
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn access_restrictions_accumulate_masks_and_support_filtered_queries() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local frame = CreateFrame('Frame')
+        local auraRestriction = Enum.ScriptObjectAccessRestriction.DenyTaintedAccessWhenAurasAreSecret
+        assert(auraRestriction == 1)
+        assert(frame:GetAccessRestrictions() == 0)
+        assert(not frame:HasAnyAccessRestrictions())
+        assert(not frame:HasAnyAccessRestrictions(nil))
+        assert(not frame:HasAccessConstraints())
+
+        frame:AddAccessRestrictions(auraRestriction)
+        frame:AddAccessRestrictions(4)
+        frame:AddAccessRestrictions(auraRestriction)
+        frame:AddAccessRestrictions(0)
+        assert(frame:GetAccessRestrictions() == 5, 'additions accumulate rather than replace')
+        assert(frame:HasAnyAccessRestrictions())
+        assert(frame:HasAnyAccessRestrictions(nil))
+        assert(frame:HasAnyAccessRestrictions(auraRestriction))
+        assert(frame:HasAnyAccessRestrictions(6), 'any intersecting bit matches')
+        assert(not frame:HasAnyAccessRestrictions(2))
+        assert(not frame:HasAnyAccessRestrictions(0))
+        assert(frame:HasAccessConstraints())
+        assert(not frame:IsForbidden(), 'conditional restrictions do not mark the frame forbidden')
+    "#).expect("restriction masks and optional query masks");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn access_restrictions_are_per_frame_and_combine_with_forbidden_state() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local parent = CreateFrame('Frame')
+        local child = CreateFrame('Frame', nil, parent)
+        local sibling = CreateFrame('Frame', nil, parent)
+        local mask = Enum.ScriptObjectAccessRestriction.DenyTaintedAccessWhenAurasAreSecret
+        parent:AddAccessRestrictions(mask)
+        assert(parent:GetAccessRestrictions() == mask)
+        assert(child:GetAccessRestrictions() == 0 and sibling:GetAccessRestrictions() == 0)
+        assert(not child:HasAccessConstraints() and not sibling:HasAccessConstraints())
+
+        child:SetForbidden()
+        assert(child:IsForbidden() and child:HasAccessConstraints())
+        assert(not child:HasAnyAccessRestrictions())
+        assert(child:GetAccessRestrictions() == 0)
+        child:AddAccessRestrictions(mask)
+        assert(child:IsForbidden() and child:HasAccessConstraints())
+        assert(child:HasAnyAccessRestrictions(mask))
+        assert(sibling:GetAccessRestrictions() == 0 and not sibling:HasAccessConstraints())
+    "#,
+    )
+    .expect("frame isolation and forbidden/restriction union");
 }
 
 #[test]

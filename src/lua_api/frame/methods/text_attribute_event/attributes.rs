@@ -504,7 +504,7 @@ pub(super) fn has_access_constraints(state: &mut LuaState) -> LuaResult<u32> {
     let has_access_constraints = sim
         .widgets
         .get(id)
-        .map(|frame| frame.forbidden)
+        .map(|frame| frame.forbidden || frame.access_restrictions != 0)
         .unwrap_or(false);
     drop(sim);
     state.push(Val::Bool(has_access_constraints));

@@ -262,6 +262,7 @@ macro_rules! frame_defaults {
 
             default_parent: false,
             forbidden: false,
+            access_restrictions: 0,
             is_protected: false,
             prevent_secret_values: false,
             tooltip_owner_id: None,
