@@ -118,6 +118,34 @@ fn numeric_rule_formatter_copies_its_configuration_and_replaces_or_clears_rules(
 }
 
 #[test]
+fn numeric_rule_formatter_updates_duration_binding_text() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold = 0, step = 1, rounding = Enum.NumericRuleFormatRounding.Up, format = '%.0f'}})
+        local parent = CreateFrame('Frame')
+        local label = parent:CreateFontString()
+        local binding = DurationUtil.CreateDurationTextBinding(1.2, label)
+        binding:SetFormatter(formatter)
+        assert(binding:GetFormattedText() == '2')
+        binding:UpdateFontString()
+        assert(label:GetText() == '2')
+        binding:SetDuration(8.2)
+        binding:UpdateFontString()
+        assert(label:GetText() == '9')
+        local copy = formatter:Copy()
+        copy:SetBreakpoints({{threshold = 0, step = 1, rounding = Enum.NumericRuleFormatRounding.Down, format = '%.0f'}})
+        binding:SetFormatter(copy)
+        assert(binding:GetFormattedText() == '8')
+        binding:SetFormatter({Format = function(_, value) return 'custom:' .. value end})
+        assert(binding:GetFormattedText() == 'custom:8.2', 'custom table formatter contract is unchanged')
+        "#,
+    )
+    .expect("native formatter feeds the duration binding consumer");
+}
+
+#[test]
 fn numeric_rule_formatter_rejects_invalid_rules_without_replacing_valid_state() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
