@@ -67,6 +67,8 @@ For known WoW texture paths resolved by the bundled texture manifest, `Texture:G
 
 **Build options** — retail 12.1 `GetBuildOption("RestrictedAuraAPI")` returns `true`, selecting current forbidden aura templates; unknown options return `nil`.
 
+**Aura instance enumeration** — `C_UnitAuras.GetUnitAuraInstanceIDs` returns filtered, optionally sorted/limited IDs from existing public aura state; `C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs` returns copied IDs from the private list. The matched-filter boolean belongs to Blizzard's source wrapper (public true, private false), not either native return tuple. `UnitAuraSoundTrigger` and metadata are initialized before secure-environment copying. See [contract and native sources](../../specs/unit-aura-instance-enumeration.md); five focused behavioral tests pass, without claiming new aura acquisition or secret-access policy.
+
 **CreateFrame** — Parses type/name/parent/template, registers frame, links parent-child, inherits strata/level, creates widget type defaults, applies templates, returns FrameHandle.
 
 **CreateWindow** — Returns a frame-backed `SimpleWindow` for Blizzard external-tool panels. The second argument initializes topmost state; `SetWindowSize`/`SetMinSize` enforce dimensions, `IsTopmost`/`SetTopmost` expose the modeled flag, and `Close` hides the frame. `SetTitle` and `SetFocus` are callable no-ops; popup-style, position, and focus persistence are not modeled. Owner frames use `SetWindow`/`GetWindow` and ordinary anchoring.

@@ -1,3 +1,7 @@
+## [2026-09-07] system | Enumerate modeled aura instances
+
+[[lua-api]] links the [aura enumeration contract](../specs/unit-aura-instance-enumeration.md): public/private ID arrays use existing state instead of nil results, matched-filter flags stay in Blizzard's source wrappers, and `UnitAuraSoundTrigger` exists before secure copying. Five focused tests pass; full-addon integration remains separate.
+
 ## [2026-09-07] investigation | Restore retail Encounter Journal bootstrap publication
 
 [[addon-loading]] records the reproduced retail MicroMenu line 1635 nil call: `CanShowEncounterJournal` was omitted by the PTR-only startup gate. The existing ordered bootstrap path now begins at `retail-12-1-0`; an actual-click process regression replaces fixture-injected bootstrap coverage. GREEN verification is pending.

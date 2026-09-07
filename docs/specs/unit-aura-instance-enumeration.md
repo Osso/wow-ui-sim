@@ -4,10 +4,10 @@ Retail 12.1 aura containers enumerate public and private aura instance IDs befor
 
 ## What it must do
 
-- [ ] `C_UnitAuras.GetUnitAuraInstanceIDs(unit, filter, maxCount?, sortRule?, sortDirection?)` returns one numeric-ID array, including an empty array for unknown units. It follows current aura state, polarity/player filters, blocked-aura visibility, documented sorting, and result limits.
-- [ ] `C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs(unit)` returns a fresh ID array from the existing private-aura list, without applying public filters.
-- [ ] Preserve Blizzard source-wrapper semantics: public enumeration returns `hasMatchedFilterString=true`; private enumeration returns `false`. This boolean is not an additional native API return value.
-- [ ] Publish `Enum.UnitAuraSoundTrigger` (`Added=0`, `ApplicationsIncreased=1`, `Removed=2`) and matching metadata before the secure environment copies enums.
+- [x] `C_UnitAuras.GetUnitAuraInstanceIDs(unit, filter, maxCount?, sortRule?, sortDirection?)` returns one numeric-ID array, including an empty array for unknown units. It follows current aura state, polarity/player filters, blocked-aura visibility, documented sorting, and result limits.
+- [x] `C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs(unit)` returns a fresh ID array from the existing private-aura list, without applying public filters.
+- [x] Preserve Blizzard source-wrapper semantics: public enumeration returns `hasMatchedFilterString=true`; private enumeration returns `false`. This boolean is not an additional native API return value.
+- [x] Publish `Enum.UnitAuraSoundTrigger` (`Added=0`, `ApplicationsIncreased=1`, `Removed=2`) and matching metadata before the secure environment copies enums.
 
 ## How it works
 
@@ -27,7 +27,7 @@ Retail 12.1 aura containers enumerate public and private aura instance IDs befor
 
 ## Known gaps (current cycle)
 
-- [ ] Focused verification pending.
+Focused development tests passed 5/5 after implementation `31b0e0f95`; logs `/tmp/pi-aura-instance-ids-green-fixed-build.*`. Full-addon acceptance and independent final checks remain with the integration task.
 
 ## Out of scope
 

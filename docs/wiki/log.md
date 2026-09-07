@@ -1,3 +1,7 @@
+## [2026-09-07] system | Model public/private aura ID enumeration
+
+`31b0e0f95` replaces missing instance-ID queries consumed by ManagedAuraContainer with existing public filter/block and private-list data. Native `GetUnitAuraInstanceIDs` returns one array; source-wrapper matched-filter flags remain true for public and false for private. Added the native three-value sound-trigger enum before secure copying. RED 5/5 failures became GREEN 5/5. See [[lua-api]] and [the contract](../specs/unit-aura-instance-enumeration.md).
+
 ## [2026-09-07] investigation | Correct retail MicroMenu bootstrap gate
 
 Audited retail EncounterJournal TOC/bootstrap and reproduced the real `EJMicroButton` OnClick failure at line 1635 without fixture helper injection. Broadened the ordered bootstrap gate from `retail-12-1-5` to `retail-12-1-0`, leaving Classic selection unchanged. The regression now requires runtime LoD completion, two real clicks, visible/closed state, and empty error JSON. Source preparation is complete; GREEN awaits a build slot. See [[addon-loading]].
