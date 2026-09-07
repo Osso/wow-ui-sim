@@ -146,17 +146,27 @@ pub(super) fn load_addon_bootstrap_internal(
         EnvironmentPass::Bootstrap,
         &mut result,
     );
-    append_nil_symbol_diagnostics(env, guard.addon_index(), &toc.name, start, &mut result);
-    append_pending_nested_addon_diagnostics(env, guard.addon_index(), &mut result);
+    finish_bootstrap_load(env, guard.addon_index(), &toc.name, start, &mut result);
+    Ok(result)
+}
+
+fn finish_bootstrap_load(
+    env: &LoaderEnv<'_>,
+    addon_index: u16,
+    addon_name: &str,
+    access_start: usize,
+    result: &mut LoadResult,
+) {
+    append_nil_symbol_diagnostics(env, addon_index, addon_name, access_start, result);
+    append_pending_nested_addon_diagnostics(env, addon_index, result);
     if let Some(addon) = env
         .state()
         .borrow_mut()
         .addons
-        .get_mut(guard.addon_index() as usize)
+        .get_mut(addon_index as usize)
     {
         addon.bootstrap_loaded = true;
     }
-    Ok(result)
 }
 
 fn empty_load_result(toc: &TocFile) -> LoadResult {
@@ -471,14 +481,9 @@ fn load_addon_files(
     let bootstrap_loaded = bootstrap_has_loaded(env, folder_name);
 
     for (index, (file_rel, file)) in toc.files.iter().zip(toc.file_paths()).enumerate() {
-        let is_bootstrap = toc.file_is_bootstrap(index);
-        let loads_file = match pass {
-            EnvironmentPass::Bootstrap => is_bootstrap,
-            EnvironmentPass::Normal | EnvironmentPass::SecureReplay => {
-                !is_bootstrap || !bootstrap_loaded
-            }
-        };
-        if !loads_file || should_skip_addon_file(toc, file_rel) {
+        if !loads_file_in_bootstrap_phase(pass, toc.file_is_bootstrap(index), bootstrap_loaded)
+            || should_skip_addon_file(toc, file_rel)
+        {
             continue;
         }
         if matches!(pass, EnvironmentPass::SecureReplay) && toc.file_use_secure_env(index).is_some()
@@ -502,6 +507,19 @@ fn load_addon_files(
             println!("  loading file {}", file_rel.display());
         }
         load_addon_file(env, &file_ctx, result, &resolved_file, pass);
+    }
+}
+
+fn loads_file_in_bootstrap_phase(
+    pass: EnvironmentPass,
+    is_bootstrap: bool,
+    bootstrap_loaded: bool,
+) -> bool {
+    match pass {
+        EnvironmentPass::Bootstrap => is_bootstrap,
+        EnvironmentPass::Normal | EnvironmentPass::SecureReplay => {
+            !is_bootstrap || !bootstrap_loaded
+        }
     }
 }
 

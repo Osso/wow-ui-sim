@@ -55,12 +55,7 @@ fn insert_bootstrap_nodes(
 ) -> HashSet<String> {
     let bootstrap_names: HashSet<String> = pool
         .iter()
-        .filter(|(name, (_, toc))| {
-            name.starts_with("Blizzard_")
-                && !is_addon_excluded_for_active_profile(name)
-                && !excluded_addons_for_screen(screen).contains(&name.as_str())
-                && startup_bootstrap_eligible(toc)
-        })
+        .filter(|(name, (_, toc))| is_eligible_bootstrap_root(name, toc, screen))
         .map(|(name, _)| name.clone())
         .collect();
     for name in &bootstrap_names {
@@ -69,6 +64,16 @@ fn insert_bootstrap_nodes(
         }
     }
     bootstrap_names
+}
+
+fn is_eligible_bootstrap_root(name: &str, toc: &TocFile, screen: ScreenKind) -> bool {
+    if !name.starts_with("Blizzard_") || is_addon_excluded_for_active_profile(name) {
+        return false;
+    }
+    if excluded_addons_for_screen(screen).contains(&name) {
+        return false;
+    }
+    startup_bootstrap_eligible(toc)
 }
 
 pub fn load_startup_addon(
