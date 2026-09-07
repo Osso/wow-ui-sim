@@ -1,6 +1,6 @@
-## [2026-09-07] investigation | Stage PTR bootstrap timing probe
+## [2026-09-07] investigation | Capture PTR LoD bootstrap startup order
 
-[[ptr-pixel-rounding-probe]] now links the staged opt-in [BootstrapOrderProbe](../addons/BootstrapOrderProbe_A/README.md) suite from commit `61c434961`. It records eager/LoD file order and explicit LoD re-load counts while only passively observing ClickBinding and Collections. A native capture is pending; this does not establish bootstrap timing, permit a generic pre-pass, or alter normal TOC order.
+[[ptr-pixel-rounding-probe]] records the hash-matched `BootstrapOrderProbe` PTR `12.1.5.69594` capture: B's LoD bootstrap runs at startup but returns to `loaded=false, finished=false`; eager D runs `Before → [Bootstrap] → Normal` in literal TOC order. The capture rules out a pre-pass before eager A for this fixture, but lacks the requested explicit B loads, so re-execution and explicit-load order remain open.
 
 ## [2026-09-06] system | Model bounded PTR pixel-layout rounding
 

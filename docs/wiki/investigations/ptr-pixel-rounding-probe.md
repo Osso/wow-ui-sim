@@ -28,9 +28,15 @@ Every sample now reads, without loading or invoking either addon, the `loaded` a
 
 In every received sample, `InClickBindingMode` and `ToggleCollectionsJournal` are functions while `Blizzard_ClickBindingUI` and `Blizzard_Collections` respectively report `loaded=false`, `finished=false`. The user reports the PTR ran without personal addons; the probe does not inventory addons, so that report is supporting context rather than a capture field. These observations do not establish native LoadOnDemand semantics or explain the earlier Spellbook/Collections behavior. In particular, they authorize neither a separate bootstrap pass nor any departure from the July 1 finding that `[Bootstrap]` entries execute in normal TOC order.
 
-## Bootstrap timing follow-up
+## Bootstrap timing capture
 
-Commit `61c434961` adds the opt-in [BootstrapOrderProbe suite](../../addons/BootstrapOrderProbe_A/README.md), staged through its existing desktop deployment script. Its A/C/D eager and B LoadOnDemand addons record file order, B bootstrap counts before and after two explicit B loads, build identity, and passive ClickBinding/Collections state. The pending capture is intended to establish timing and re-execution boundaries only. It does not establish a native order, authorize a generic bootstrap pass, or change the normal TOC-order finding.
+The ignored capture `docs/local/private/probes/BootstrapOrderProbe-2026-09-07.lua` has raw SHA-256 `7f8fe830a9937bb7d4b1989b3097661cf3c8492bd11607f2cc8d3a3b1a8d34b1`; desktop and local copies matched. Its nine records identify `12.1.5` / `69594` / `120105`, all match the expected build, and contain no probe errors.
+
+Observed startup sequence: `A:eager`, `B:bootstrap`, `C:eager`, `D:before`, `D:bootstrap`, `D:after`, `PLAYER_LOGIN`, then two snapshots. This establishes that the tested LoD bootstrap executes during startup while B is otherwise unloaded, and that the eager D TOC preserves its literal `Before.lua → Bootstrap.lua [Bootstrap] → Normal.lua` order. In particular, this capture does not support a global bootstrap pre-pass before eager A.
+
+B reports `loaded=true, finished=false` only while its bootstrap executes; it is `false,false` in every later record. ClickBinding and Collections are `false,false` in every record while both helper globals are functions. This confirms startup bootstrap publication for the tested LoD shape, but does not determine the full eligibility/dependency rules for Blizzard addons.
+
+The requested `/boprobe load` calls were absent: there are no B `before`/`after` records or `load:before`/`load:after` brackets. Explicit-load file order and whether a bootstrap file re-executes remain unknown. The capture does not authorize a generic bootstrap pass or change ordinary TOC-order behavior.
 
 ## Derived bounded layout rule
 

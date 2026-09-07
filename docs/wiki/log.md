@@ -1,6 +1,6 @@
-## [2026-09-07] investigation | Stage PTR bootstrap timing probe
+## [2026-09-07] investigation | Capture PTR LoD bootstrap startup order
 
-Commit `61c434961` updates the A/B/C/D BootstrapOrderProbe suite and stages it through `docs/addons/BootstrapOrderProbe_A/deploy.sh`. The opt-in PTR capture records eager/LoD file order, B bootstrap counts across two explicit B loads, build identity, and passive ClickBinding/Collections state. It does not establish native bootstrap timing, authorize a generic pre-pass, or alter normal TOC ordering. See [[ptr-pixel-rounding-probe]] and the [probe instructions](../addons/BootstrapOrderProbe_A/README.md).
+Retrieved ignored `BootstrapOrderProbe-2026-09-07.lua`; its raw SHA-256 `7f8fe830a9937bb7d4b1989b3097661cf3c8492bd11607f2cc8d3a3b1a8d34b1` matched the desktop copy. All nine error-free records identify `12.1.5` / `69594` / `120105`: `A:eager → B:bootstrap → C:eager → D:before → D:bootstrap → D:after → PLAYER_LOGIN → snapshot → snapshot`. B is `loaded=true, finished=false` only in its bootstrap record and `false,false` elsewhere; ClickBinding/Collections stay `false,false` while helpers are functions. The D fixture confirms its ordinary `Before → [Bootstrap] → Normal` TOC order, and B after A rules out a global pre-pass before eager A for this fixture. Missing `/boprobe load` brackets leave explicit-load ordering and bootstrap re-execution open. Updated [[ptr-pixel-rounding-probe]] and [probe instructions](../addons/BootstrapOrderProbe_A/README.md); no loader behavior changed.
 
 ## [2026-09-06] system | Model bounded PTR pixel-layout rounding
 
