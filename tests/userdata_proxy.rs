@@ -81,6 +81,57 @@ fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() 
     });
 }
 
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated() {
+    crate::common::with_timeout(90, || {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+            &["Blizzard_AuraContainer"],
+            &[],
+            |env, _| {
+                env.exec(
+                    r#"
+                    local initializedButton, initializedCooldown
+                    local publicDisplayCalls = 0
+                    local function initialize(button)
+                        initializedButton = button
+                        assert(button.UpdateAuraDisplay == nil,
+                            "public initializer must not receive the private method surface")
+                        assert(GetForbiddenObjectTable(button) ~= button,
+                            "public and private tables remain distinct")
+                        initializedCooldown = CreateFrame("Cooldown", nil, button)
+                        button:SetDurationCooldown(initializedCooldown)
+                        button.UpdateAuraDisplay = function()
+                            publicDisplayCalls = publicDisplayCalls + 1
+                            error("secure provider used an addon-supplied display method")
+                        end
+                    end
+                    local container = CreateFrame("AuraContainer", nil, UIParent, "CustomAuraContainerTemplate")
+                    local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
+                        GetForbiddenObjectTable(container),
+                        { batchSize = 1, initializeFrame = initialize }
+                    )
+                    local child = provider:AcquireFrame()
+                    assert(publicDisplayCalls == 0,
+                        "secure display update must not consult the public override")
+                    assert(child == initializedButton,
+                        "public caller receives the same public view as the initializer")
+                    assert(initializedCooldown:GetParent() == child)
+                    assert(child:GetParent() == container)
+                    local private = GetForbiddenObjectTable(child)
+                    assert(private ~= child)
+                    assert(type(private.UpdateAuraDisplay) == "function")
+                    assert(private.UpdateAuraDisplay ~= child.UpdateAuraDisplay,
+                        "public assignment must not replace the private implementation")
+                    assert(provider:GetOwnedFrame(1) == child)
+                    "#,
+                )
+                .expect("real aura provider preserves partitions across outbound initialization");
+            },
+        );
+    });
+}
+
 // ============================================================================
 // AbbreviateConfig
 // ============================================================================
