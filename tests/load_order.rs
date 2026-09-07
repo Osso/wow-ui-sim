@@ -460,3 +460,143 @@ fn test_paperdoll_onload_exists_for_bag_buttons() {
         );
     }
 }
+
+/// PTR 69594: bootstrap publication is not full addon completion, and later
+/// explicit loading skips the already executed bootstrap file.
+#[test]
+fn lod_bootstrap_lifecycle_publishes_once_before_full_load() {
+    let directory = tempfile::tempdir().unwrap();
+    let toc = write_bootstrap_lifecycle_addon(directory.path(), "BootstrapLifecycleB", true);
+    let env = bootstrap_lifecycle_environment();
+    let result = wow_ui_sim::loader::load_addon_bootstrap_from_toc(&env.loader_env(), &toc)
+        .expect("load bootstrap files");
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    env.exec(
+        r#"
+        assert(type(BootstrapExport) == 'function', 'bootstrap must publish its exported function')
+        assert(BootstrapExport() == 42)
+        assert(table.concat(bootstrapEvents, ',') == 'BootstrapLifecycleB:bootstrap',
+            'bootstrap-only load must not execute normal files')
+        assert(bootstrapCount == 1)
+        assert(bootstrapStates[1].loaded == true and bootstrapStates[1].finished == false,
+            'bootstrap file observes an active, unfinished load')
+        local loaded, finished = C_AddOns.IsAddOnLoaded('BootstrapLifecycleB')
+        assert(loaded == false and finished == false, 'bootstrap publication is not full loading')
+        "#,
+    )
+    .expect("bootstrap-only lifecycle");
+
+    load_bootstrap_lifecycle_full(&env, &toc);
+    env.exec(
+        r#"
+        assert(table.concat(bootstrapEvents, ',') ==
+            'BootstrapLifecycleB:bootstrap,BootstrapLifecycleB:before,BootstrapLifecycleB:after')
+        assert(bootstrapCount == 1, 'full loading must not execute bootstrap twice')
+        for index = 2, 3 do
+            assert(bootstrapStates[index].loaded == true and bootstrapStates[index].finished == false)
+        end
+        local loaded, finished = C_AddOns.IsAddOnLoaded('BootstrapLifecycleB')
+        assert(loaded == true and finished == true, 'full load completes the addon')
+        "#,
+    )
+    .expect("full loading after bootstrap");
+    load_bootstrap_lifecycle_full(&env, &toc);
+    env.exec("assert(#bootstrapEvents == 3 and bootstrapCount == 1, 'repeated full loading runs no files')")
+        .expect("repeated full load is inert");
+}
+
+/// This exercises ordered loader operations, not discovery or startup wiring.
+#[test]
+fn lod_bootstrap_lifecycle_preserves_mixed_stream_order() {
+    let directory = tempfile::tempdir().unwrap();
+    let eager_a = write_bootstrap_lifecycle_addon(directory.path(), "BootstrapLifecycleA", false);
+    let lazy_b = write_bootstrap_lifecycle_addon(directory.path(), "BootstrapLifecycleB", true);
+    let eager_c = write_bootstrap_lifecycle_addon(directory.path(), "BootstrapLifecycleC", false);
+    let env = bootstrap_lifecycle_environment();
+    load_bootstrap_lifecycle_full(&env, &eager_a);
+    let result = wow_ui_sim::loader::load_addon_bootstrap_from_toc(&env.loader_env(), &lazy_b)
+        .expect("load interleaved bootstrap");
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    load_bootstrap_lifecycle_full(&env, &eager_c);
+    env.exec(
+        r#"
+        assert(table.concat(bootstrapEvents, ',') ==
+            'BootstrapLifecycleA:before,BootstrapLifecycleA:bootstrap,BootstrapLifecycleA:after,' ..
+            'BootstrapLifecycleB:bootstrap,' ..
+            'BootstrapLifecycleC:before,BootstrapLifecycleC:bootstrap,BootstrapLifecycleC:after',
+            'bootstrap runs between eager addons, without a global pre-pass')
+        local loaded, finished = C_AddOns.IsAddOnLoaded('BootstrapLifecycleB')
+        assert(loaded == false and finished == false)
+        "#,
+    )
+    .expect("mixed stream execution order");
+}
+
+#[test]
+fn lod_bootstrap_lifecycle_eager_files_keep_literal_toc_order() {
+    let directory = tempfile::tempdir().unwrap();
+    let toc = write_bootstrap_lifecycle_addon(directory.path(), "BootstrapLifecycleD", false);
+    let env = bootstrap_lifecycle_environment();
+    load_bootstrap_lifecycle_full(&env, &toc);
+    env.exec(
+        r#"
+        assert(table.concat(bootstrapEvents, ',') ==
+            'BootstrapLifecycleD:before,BootstrapLifecycleD:bootstrap,BootstrapLifecycleD:after')
+        assert(bootstrapCount == 1)
+        local loaded, finished = C_AddOns.IsAddOnLoaded('BootstrapLifecycleD')
+        assert(loaded == true and finished == true)
+        "#,
+    )
+    .expect("eager addon preserves annotated file position");
+}
+
+fn bootstrap_lifecycle_environment() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create bootstrap lifecycle environment");
+    env.exec(
+        r#"
+        bootstrapEvents, bootstrapStates, bootstrapCount = {}, {}, 0
+        function RecordBootstrapLifecycle(addon, stage)
+            local loaded, finished = C_AddOns.IsAddOnLoaded(addon)
+            table.insert(bootstrapEvents, addon .. ':' .. stage)
+            table.insert(bootstrapStates, { loaded = loaded, finished = finished })
+        end
+        "#,
+    )
+    .expect("install event recorder");
+    env
+}
+
+fn write_bootstrap_lifecycle_addon(
+    root: &std::path::Path,
+    name: &str,
+    load_on_demand: bool,
+) -> wow_ui_sim::toc::TocFile {
+    let directory = root.join(name);
+    std::fs::create_dir(&directory).unwrap();
+    let metadata = if load_on_demand { "## LoadOnDemand: 1\n" } else { "" };
+    let toc_path = directory.join(format!("{name}.toc"));
+    std::fs::write(
+        &toc_path,
+        format!("## Title: {name}\n{metadata}Before.lua\nBootstrap.lua [Bootstrap]\nAfter.lua\n"),
+    )
+    .unwrap();
+    for (file, stage) in [("Before.lua", "before"), ("After.lua", "after")] {
+        std::fs::write(
+            directory.join(file),
+            format!("local addon = ...; RecordBootstrapLifecycle(addon, '{stage}')"),
+        )
+        .unwrap();
+    }
+    std::fs::write(
+        directory.join("Bootstrap.lua"),
+        "local addon = ...; RecordBootstrapLifecycle(addon, 'bootstrap'); bootstrapCount = bootstrapCount + 1; function BootstrapExport() return 42 end",
+    )
+    .unwrap();
+    wow_ui_sim::toc::TocFile::from_file(&toc_path).expect("parse concrete fixture TOC")
+}
+
+fn load_bootstrap_lifecycle_full(env: &WowLuaEnv, toc: &wow_ui_sim::toc::TocFile) {
+    let result = wow_ui_sim::loader::load_addon_from_toc(&env.loader_env(), toc)
+        .expect("load complete fixture addon");
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+}
