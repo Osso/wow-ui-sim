@@ -5,8 +5,7 @@ fn env() -> WowLuaEnv {
 }
 
 #[cfg(feature = "retail-12-1-0")]
-#[test]
-fn unit_aura_blocked_supports_registered_and_unit_filtered_dispatch() {
+fn blocked_event_env() -> WowLuaEnv {
     let env = env();
     env.exec(
         r#"
@@ -25,6 +24,13 @@ fn unit_aura_blocked_supports_registered_and_unit_filtered_dispatch() {
     "#,
     )
     .expect("register the documented aura-blocked event");
+    env
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn unit_aura_blocked_supports_registered_and_unit_filtered_dispatch() {
+    let env = blocked_event_env();
     for (unit, aura_id) in [("player", 92345.0), ("target", 92346.0)] {
         env.fire_event_with_args(
             "UNIT_AURA_BLOCKED",
@@ -32,6 +38,44 @@ fn unit_aura_blocked_supports_registered_and_unit_filtered_dispatch() {
         )
         .expect("dispatch aura-blocked payload");
     }
+    assert_blocked_event_delivery(&env);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn native_unit_event_dispatch_respects_unit_filter() {
+    let env = env();
+    env.exec(
+        r#"
+        local allEvents, playerEvents, targetEvents = {}, {}, {}
+        local function record(events)
+            return function(_, event, unit, spellID)
+                events[#events + 1] = { event, unit, spellID }
+            end
+        end
+        local all = CreateFrame('Frame')
+        all:RegisterEvent('UNIT_SPELLCAST_START')
+        all:SetScript('OnEvent', record(allEvents))
+        local player = CreateFrame('Frame')
+        player:RegisterUnitEvent('UNIT_SPELLCAST_START', 'player')
+        player:SetScript('OnEvent', record(playerEvents))
+        local target = CreateFrame('Frame')
+        target:RegisterUnitEvent('UNIT_SPELLCAST_START', 'target')
+        target:SetScript('OnEvent', record(targetEvents))
+        local current = C_SpecializationInfo.GetSpecialization()
+        assert(C_SpecializationInfo.SetSpecialization(current == 1 and 2 or 1))
+        assert(#allEvents == 1 and #playerEvents == 1 and #targetEvents == 0)
+        for _, events in ipairs({ allEvents, playerEvents }) do
+            assert(events[1][1] == 'UNIT_SPELLCAST_START')
+            assert(events[1][2] == 'player' and events[1][3] == 200749)
+        end
+    "#,
+    )
+    .expect("native specialization cast preserves payload and unit filtering");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn assert_blocked_event_delivery(env: &WowLuaEnv) {
     env.exec(
         r#"
         assert(#blockedAll == 2 and #blockedPlayer == 1)

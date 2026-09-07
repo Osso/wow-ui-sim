@@ -7,7 +7,8 @@ use crate::lua_api::methods::{
     call_function as call_rilua_function, create_string, frame_ref, val_to_string,
 };
 use crate::lua_api::script_helpers::{
-    call_error_handler, get_event_listeners, get_script, protected_lua_pcall_state,
+    call_error_handler, event_matches_unit_filter, get_event_listeners, get_script,
+    protected_lua_pcall_state,
 };
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::cell::RefCell;
@@ -394,6 +395,9 @@ impl WowLuaEnv {
         }
         let trace_label = self.event_trace_label(widget_id, event);
         let mut lua = self.lua.borrow_mut();
+        if !event_matches_unit_filter(lua.state(), widget_id, event, args)? {
+            return Ok(());
+        }
         let handler = self.on_event_handler(&mut lua, widget_id);
         let Some(handler) = handler else {
             return Ok(());

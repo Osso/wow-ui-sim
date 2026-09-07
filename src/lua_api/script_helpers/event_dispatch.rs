@@ -25,27 +25,63 @@ pub fn get_event_listeners(state: &mut LuaState, event: &str) -> Vec<u64> {
     result
 }
 
+pub(crate) fn event_matches_unit_filter(
+    state: &LuaState,
+    widget_id: u64,
+    event_name: &str,
+    args: &[Val],
+) -> rilua::LuaResult<bool> {
+    let sim = borrow_state(state)?;
+    let filter = sim
+        .widgets
+        .get(widget_id)
+        .and_then(|frame| frame.registered_unit_events.get(event_name));
+    Ok(filter.is_none_or(|unit| {
+        args.first()
+            .and_then(|value| val_to_string(state, *value))
+            .as_deref()
+            == Some(unit.as_str())
+    }))
+}
+
 pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Val]) {
     for widget_id in get_event_listeners(state, event_name) {
-        let handlers = get_scripts_for_dispatch(state, widget_id, "OnEvent");
-        if handlers.is_empty() {
+        match event_matches_unit_filter(state, widget_id, event_name, args) {
+            Ok(true) => {}
+            Ok(false) => continue,
+            Err(error) => {
+                call_error_handler_state(state, &error.to_string());
+                return;
+            }
+        }
+        dispatch_named_event_handlers(state, widget_id, event_name, args);
+    }
+}
+
+fn dispatch_named_event_handlers(
+    state: &mut LuaState,
+    widget_id: u64,
+    event_name: &str,
+    args: &[Val],
+) {
+    let handlers = get_scripts_for_dispatch(state, widget_id, "OnEvent");
+    if handlers.is_empty() {
+        return;
+    }
+    let Ok(frame) = frame_ref(state, widget_id) else {
+        return;
+    };
+    let event_name_val = create_string(state, event_name);
+    let mut call_args = Vec::with_capacity(args.len() + 2);
+    call_args.push(frame);
+    call_args.push(event_name_val);
+    call_args.extend_from_slice(args);
+    for handler in handlers {
+        if !matches!(handler, Val::Function(_)) {
             continue;
         }
-        let Ok(frame) = frame_ref(state, widget_id) else {
-            continue;
-        };
-        let event_name_val = create_string(state, event_name);
-        let mut call_args = Vec::with_capacity(args.len() + 2);
-        call_args.push(frame);
-        call_args.push(event_name_val);
-        call_args.extend_from_slice(args);
-        for handler in handlers {
-            if !matches!(handler, Val::Function(_)) {
-                continue;
-            }
-            if let Err(error) = protected_lua_pcall_state(state, handler, &call_args) {
-                call_error_handler_state(state, &error);
-            }
+        if let Err(error) = protected_lua_pcall_state(state, handler, &call_args) {
+            call_error_handler_state(state, &error);
         }
     }
 }
