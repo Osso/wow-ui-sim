@@ -139,7 +139,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
         temp.path(),
         "EventBroken",
         "",
-        "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) if name == 'EventBroken' then error('event failure') end end)",
+        "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) if name == 'EventBroken' or name == 'NestedCaller' then error('event failure') end end)",
     );
     write_addon_with_lua(
         temp.path(),
@@ -202,6 +202,10 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     assert_eq!(
         stats.fail_count, 4,
         "file, callback, nested child, and missing dependency must not report one failure"
+    );
+    assert_eq!(
+        format_load_outcomes(addons.len(), &stats),
+        "Loaded: 4/5 addons\nFailed: 4\nLoad failures: 1\nLoaded with Lua errors: 3"
     );
 }
 

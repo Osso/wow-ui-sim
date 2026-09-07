@@ -393,6 +393,9 @@ struct LoadStats {
     total_timing: LoadTiming,
     success_count: usize,
     fail_count: usize,
+    load_failed_addons: HashSet<String>,
+    lua_error_addons: HashSet<String>,
+    loaded_with_lua_errors: usize,
     addon_timings: Vec<AddonTiming>,
 }
 
@@ -447,10 +450,30 @@ fn load_discovered_addons(
     enable_overrides: Option<&HashMap<String, bool>>,
     stats: &mut LoadStats,
 ) {
+    let first_error = env.state().borrow().lua_error_records.len();
     register_discovered_addons(env, addons, enable_overrides);
     for (name, toc_path) in addons {
         load_registered_single_addon(env, name, toc_path, saved_vars, stats);
     }
+    record_lua_failure_addons(env, first_error, stats);
+}
+
+fn record_lua_failure_addons(env: &WowLuaEnv, first_error: usize, stats: &mut LoadStats) {
+    let state = env.state().borrow();
+    stats.lua_error_addons.extend(
+        state.lua_error_records[first_error..]
+            .iter()
+            .filter_map(|record| record.addon_name.clone()),
+    );
+    stats.fail_count = stats
+        .load_failed_addons
+        .union(&stats.lua_error_addons)
+        .count();
+    stats.loaded_with_lua_errors = state
+        .addons
+        .iter()
+        .filter(|addon| addon.loaded && stats.lua_error_addons.contains(&addon.folder_name))
+        .count();
 }
 
 fn register_discovered_addons(
@@ -512,7 +535,7 @@ fn load_registered_single_addon(
 
     if let Some(message) = missing_required_dependency_error(env, name) {
         record_addon_load_error(env, name, message);
-        stats.fail_count += 1;
+        stats.load_failed_addons.insert(name.to_string());
         return;
     }
 
@@ -521,7 +544,7 @@ fn load_registered_single_addon(
         Ok(toc) => toc,
         Err(e) => {
             println!("✗ {} failed: {}", name, e);
-            stats.fail_count += 1;
+            stats.load_failed_addons.insert(name.to_string());
             return;
         }
     };
@@ -541,7 +564,7 @@ fn load_registered_single_addon(
         }
         Err(e) => {
             println!("✗ {} failed: {}", name, e);
-            stats.fail_count += 1;
+            stats.load_failed_addons.insert(name.to_string());
         }
     }
 }
@@ -649,10 +672,20 @@ fn print_verbose_addon_status(name: &str, r: &LoadResult) {
     );
 }
 
+fn format_load_outcomes(addon_count: usize, stats: &LoadStats) -> String {
+    format!(
+        "Loaded: {}/{} addons\nFailed: {}\nLoad failures: {}\nLoaded with Lua errors: {}",
+        stats.success_count,
+        addon_count,
+        stats.fail_count,
+        stats.load_failed_addons.len(),
+        stats.loaded_with_lua_errors,
+    )
+}
+
 fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
     println!("\n=== Summary ===");
-    println!("Loaded: {}/{} addons", stats.success_count, addons.len());
-    println!("Failed: {}", stats.fail_count);
+    println!("{}", format_load_outcomes(addons.len(), stats));
     println!(
         "Total: {} Lua files, {} XML files, {} warnings",
         stats.total_lua, stats.total_xml, stats.total_warnings
