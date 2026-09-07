@@ -10,6 +10,105 @@ use keybindings_panels_detail::{
     drain_test_errors, frame_is_shown, install_test_error_handler, setup_env,
 };
 
+// These regressions use the ordered startup loader, not setup_env's injected
+// ClickBinding bootstrap, so Escape runs against production panel bookkeeping.
+#[test]
+fn specialization_escape_after_micro_button_and_tab_click_closes_panel() {
+    test_timeout! {
+        let env = setup_specialization_escape_env();
+        env.exec(r#"
+            local button = PlayerSpellsMicroButton
+            assert(button and button:IsVisible(), "player-spells microbutton is visible")
+            button:GetScript("OnClick")(button, "LeftButton", false)
+            assert(PlayerSpellsFrame:IsShown(), "microbutton opens PlayerSpells")
+            local tab = PlayerSpellsFrame:GetTabButton(PlayerSpellsFrame.specTabID)
+            assert(tab and tab:IsVisible(), "specialization tab is visible")
+            tab:GetScript("OnClick")(tab, "LeftButton", false)
+        "#).expect("open specialization through actual button scripts");
+        assert_specialization_escape_closes_panel(&env);
+    }
+}
+
+#[test]
+fn specialization_escape_after_direct_open_closes_panel() {
+    test_timeout! {
+        let env = setup_specialization_escape_env();
+        env.exec("PlayerSpellsUtil.OpenToClassSpecializationsTab()")
+            .expect("open specialization through the public helper");
+        assert_specialization_escape_closes_panel(&env);
+    }
+}
+
+fn setup_specialization_escape_env() -> common::LockedEnv {
+    common::lock_env(|| {
+        use wow_ui_sim::screen::ScreenKind;
+        let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("create specialization environment");
+        env.set_screen_size(1600.0, 1200.0);
+        let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("synced UI source");
+        env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+        env.gc_stop();
+        load_ordered_specialization_addons(&env, &ui);
+        env.sync_string_metatable_to_global_string();
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        env.gc_restart_after_bootstrap()
+            .expect("restart runtime GC");
+        wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
+        wow_ui_sim::startup::run_extra_update_ticks(&env, 10);
+        env
+    })
+}
+
+fn load_ordered_specialization_addons(env: &wow_ui_sim::lua_api::WowLuaEnv, ui: &std::path::Path) {
+    use wow_ui_sim::loader::{
+        StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen, load_startup_addon,
+    };
+    for addon in
+        discover_blizzard_startup_addons_for_screen(ui, wow_ui_sim::screen::ScreenKind::Game)
+    {
+        load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .unwrap_or_else(|error| panic!("load {}: {error}", addon.name));
+        if addon.kind == StartupAddonLoadKind::Full {
+            env.fire_event_with_args("ADDON_LOADED", &[env.lua_string(&addon.name)])
+                .expect("dispatch addon completion");
+        }
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+}
+
+fn assert_specialization_escape_closes_panel(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    wow_ui_sim::startup::run_extra_update_ticks(env, 10);
+    env.exec(
+        r#"
+        assert(PlayerSpellsFrame:IsShown(), "PlayerSpells remains open after update ticks")
+        assert(PlayerSpellsFrame.SpecFrame:IsVisible(), "specialization content is visible")
+        assert(not GameMenuFrame:IsShown(), "menu is initially closed")
+        assert(GetUIPanel("left") == PlayerSpellsFrame or GetUIPanel("center") == PlayerSpellsFrame,
+            "PlayerSpells is tracked as an active UIPanel")
+    "#,
+    )
+    .expect("specialization state before keyboard input");
+    env.send_key_press("ESCAPE", None)
+        .expect("dispatch real Escape input");
+    wow_ui_sim::startup::run_extra_update_ticks(env, 10);
+    env.exec(
+        r#"
+        assert(not PlayerSpellsFrame:IsShown(), "Escape closes PlayerSpells")
+        assert(not PlayerSpellsFrame.SpecFrame:IsVisible(), "specialization content is hidden")
+        assert(not GameMenuFrame:IsShown(), "Escape must not also open GameMenu")
+    "#,
+    )
+    .expect("specialization state after keyboard input");
+    let state = env.state().borrow();
+    assert!(
+        state.lua_errors.is_empty(),
+        "Lua errors: {:?}",
+        state.lua_errors
+    );
+}
+
 // ── S → Spellbook panel opens without errors ─────────────────────────────
 
 #[test]
