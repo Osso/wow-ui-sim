@@ -1,9 +1,9 @@
-## Interface: 120005
+## Interface: 120105
 ## Title: Bootstrap Order Probe D Non-LoD
-## Notes: Non-LoD addon with a [Bootstrap] file
+## Notes: PTR 69594 mixed eager bootstrap order
 ## Author: Alessio
-## Version: 0.1.0
-## SavedVariables: BootstrapOrderProbeDB
+## Version: 0.2.0
 
+Before.lua
 Bootstrap.lua [Bootstrap]
 Normal.lua

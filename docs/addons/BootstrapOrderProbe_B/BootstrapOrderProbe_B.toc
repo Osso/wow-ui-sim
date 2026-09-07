@@ -1,10 +1,10 @@
-## Interface: 120005
+## Interface: 120105
 ## Title: Bootstrap Order Probe B LoD
-## Notes: LoadOnDemand addon with a [Bootstrap] file
+## Notes: PTR 69594 mixed LoD bootstrap order
 ## Author: Alessio
-## Version: 0.1.0
+## Version: 0.2.0
 ## LoadOnDemand: 1
-## SavedVariables: BootstrapOrderProbeDB
 
+Before.lua
 Bootstrap.lua [Bootstrap]
 Normal.lua

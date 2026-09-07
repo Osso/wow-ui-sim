@@ -1,8 +1,7 @@
-## Interface: 120005
+## Interface: 120105
 ## Title: Bootstrap Order Probe C
-## Notes: Last eager addon for [Bootstrap] ordering probe
+## Notes: PTR 69594 eager observation and explicit probe-only loading
 ## Author: Alessio
-## Version: 0.1.0
-## SavedVariables: BootstrapOrderProbeDB
+## Version: 0.2.0
 
 C.lua

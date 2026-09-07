@@ -1,36 +1,20 @@
-BootstrapOrderProbeDB = BootstrapOrderProbeDB or {}
-BootstrapOrderProbeDB.events = BootstrapOrderProbeDB.events or {}
-
-local function record(label)
-    table.insert(BootstrapOrderProbeDB.events, label)
-    print("[BootstrapOrderProbe] " .. label)
-end
-
-record("C eager file")
-
+BootstrapOrderProbeRecord("C:eager")
 SLASH_BOOTSTRAPORDERPROBE1 = "/boprobe"
-SlashCmdList.BOOTSTRAPORDERPROBE = function(msg)
-    msg = msg or ""
-    if msg == "load" then
-        local ok, reason = C_AddOns.LoadAddOn("BootstrapOrderProbe_B")
-        record("LoadAddOn B returned " .. tostring(ok) .. " " .. tostring(reason))
-    elseif msg == "reset" then
-        BootstrapOrderProbeDB.events = {}
-        print("[BootstrapOrderProbe] reset")
-        return
+SlashCmdList.BOOTSTRAPORDERPROBE = function(message)
+    if message == "load" then
+        BootstrapOrderProbeRecord("load:before")
+        local success, ok, reason = pcall(C_AddOns.LoadAddOn, "BootstrapOrderProbe_B")
+        local event = BootstrapOrderProbeRecord("load:after")
+        event.loadResult = { success = success }
+        if success then
+            event.loadResult.ok = ok
+            event.loadResult.reason = reason and tostring(reason) or nil
+        else
+            event.loadResult.error = tostring(ok)
+        end
+    else
+        BootstrapOrderProbeRecord("snapshot")
     end
-
-    print("[BootstrapOrderProbe] IsAddOnLoaded(B)=", C_AddOns.IsAddOnLoaded("BootstrapOrderProbe_B"))
-    print("[BootstrapOrderProbe] B bootstrap seen=", BootstrapOrderProbe_B_BootstrapSeen, "normal seen=", BootstrapOrderProbe_B_NormalSeen)
-    print("[BootstrapOrderProbe] order=", table.concat(BootstrapOrderProbeDB.events, " -> "))
+    print("[BootstrapOrderProbe] current session events: " .. #BootstrapOrderProbeSession.events)
+    print("[BootstrapOrderProbe] /boprobe load twice, then /reload to save")
 end
-
-local frame = CreateFrame("Frame")
-frame:RegisterEvent("PLAYER_LOGIN")
-frame:SetScript("OnEvent", function()
-    record("PLAYER_LOGIN")
-    print("[BootstrapOrderProbe] IsAddOnLoaded(B)=", C_AddOns.IsAddOnLoaded("BootstrapOrderProbe_B"))
-    print("[BootstrapOrderProbe] B bootstrap seen=", BootstrapOrderProbe_B_BootstrapSeen, "normal seen=", BootstrapOrderProbe_B_NormalSeen)
-    print("[BootstrapOrderProbe] order=", table.concat(BootstrapOrderProbeDB.events, " -> "))
-    print("[BootstrapOrderProbe] commands: /boprobe, /boprobe load, /boprobe reset")
-end)

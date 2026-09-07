@@ -355,6 +355,92 @@ fn ptr_pixel_rounding_environment() -> WowLuaEnv {
     env
 }
 
+#[test]
+fn bootstrap_probe_preserves_session_order_across_saved_variable_restore() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        GetBuildInfo = function() return "12.1.5", "69594", "Aug 28 2026", 120105 end
+        C_AddOns.IsAddOnLoaded = function() return false, false end
+        InClickBindingMode = function() return false end
+        C_AddOns.LoadAddOn = function(name)
+            assert(name == "BootstrapOrderProbe_B", "must not load Blizzard addons")
+            return true
+        end
+    "#).unwrap();
+    load_bootstrap_file(&env, "B", "Bootstrap.lua");
+    load_bootstrap_file(&env, "A", "A.lua");
+    env.exec("BootstrapOrderProbeDB = { events = { 'stale' } }").unwrap();
+    env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("BootstrapOrderProbe_A")]).unwrap();
+    env.exec("assert(BootstrapOrderProbeDB.events[1].tag == 'B:bootstrap', 'restored data replaced current session')").unwrap();
+    load_bootstrap_file(&env, "C", "C.lua");
+    load_bootstrap_file(&env, "D", "Before.lua");
+    load_bootstrap_file(&env, "D", "Bootstrap.lua");
+    load_bootstrap_file(&env, "D", "Normal.lua");
+    env.exec(r#"
+        local db = BootstrapOrderProbeDB
+        assert(db.events[1].tag == "B:bootstrap", "retain bootstrap before A")
+        assert(db.events[2].tag == "A:eager", "discard restored stale records")
+        assert(db.events[1].build.matchesExpectedBuild)
+        assert(db.events[1].addons.Blizzard_ClickBindingUI.loaded == false)
+        assert(db.events[1].helpers.clickBinding == "function")
+        assert(db.events[4].tag == "D:before")
+        assert(db.events[5].tag == "D:bootstrap")
+        assert(db.events[6].tag == "D:after")
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        assert(db.counts['B:bootstrap'] == 1)
+        assert(db.counts['load:before'] == 2 and db.counts['load:after'] == 2)
+        assert(db.events[#db.events].loadResult.ok == true)
+    "#).unwrap();
+}
+
+#[test]
+fn bootstrap_probe_records_explicit_load_and_repeat_without_loading_blizzard() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        GetBuildInfo = function() return "12.1.5", "99999", "unknown", 120105 end
+        probeLoaded = false
+        C_AddOns.IsAddOnLoaded = function(name) return name == "BootstrapOrderProbe_B" and probeLoaded, probeLoaded end
+        C_AddOns.LoadAddOn = function(name)
+            assert(name == "BootstrapOrderProbe_B")
+            if not probeLoaded then
+                probeBefore(); probeBootstrap(); probeAfter()
+                probeLoaded = true
+            end
+            return true
+        end
+    "#).unwrap();
+    for (function, file) in [("probeBefore", "Before.lua"), ("probeBootstrap", "Bootstrap.lua"), ("probeAfter", "Normal.lua")] {
+        let source = fs::read_to_string(format!("docs/addons/BootstrapOrderProbe_B/{file}")).unwrap();
+        env.exec(&format!("function {function}()\n{source}\nend")).unwrap();
+    }
+    load_bootstrap_file(&env, "A", "A.lua");
+    env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("BootstrapOrderProbe_A")]).unwrap();
+    load_bootstrap_file(&env, "C", "C.lua");
+    env.exec(r#"
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        local db = BootstrapOrderProbeDB
+        assert(not db.events[1].build.matchesExpectedBuild)
+        assert(db.events[3].tag == 'load:before')
+        assert(not db.events[3].addons.BootstrapOrderProbe_B.loaded)
+        assert(db.events[4].tag == 'B:before' and db.events[5].tag == 'B:bootstrap' and db.events[6].tag == 'B:after')
+        assert(db.events[7].addons.BootstrapOrderProbe_B.loaded)
+        assert(db.events[9].loadResult.success and db.events[9].loadResult.ok)
+        assert(db.counts['B:before'] == 1 and db.counts['B:bootstrap'] == 1 and db.counts['B:after'] == 1)
+        C_AddOns.LoadAddOn = function() error('load failed') end
+        SlashCmdList.BOOTSTRAPORDERPROBE('load')
+        assert(not db.events[#db.events].loadResult.success)
+        assert(string.find(db.events[#db.events].loadResult.error, 'load failed', 1, true))
+    "#).unwrap();
+}
+
+fn load_bootstrap_file(env: &WowLuaEnv, addon: &str, file: &str) {
+    let path = format!("docs/addons/BootstrapOrderProbe_{addon}/{file}");
+    let source = fs::read_to_string(&path).unwrap();
+    env.exec(&source).unwrap();
+}
+
 fn load_probe_source(env: &WowLuaEnv) {
     let source = fs::read_to_string(Path::new(ADDON_SOURCE))
         .unwrap_or_else(|error| panic!("read {ADDON_SOURCE}: {error}"));

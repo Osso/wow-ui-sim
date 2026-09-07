@@ -1,8 +1,8 @@
-## Interface: 120005
+## Interface: 120105
 ## Title: Bootstrap Order Probe A
-## Notes: First eager addon for [Bootstrap] ordering probe
+## Notes: PTR 69594 eager recorder and session SavedVariables owner
 ## Author: Alessio
-## Version: 0.1.0
+## Version: 0.2.0
 ## SavedVariables: BootstrapOrderProbeDB
 
 A.lua
