@@ -1,0 +1,17 @@
+{
+  "table": "CurrencyTypes",
+  "provider": "Wago.tools DB2 CSV",
+  "build": "12.1.0.69497",
+  "source_sha256": "ba492bb64c255de227e693bbca421561c2c6806cfba514861685723a8c210d35",
+  "source_bytes": 210175,
+  "source_rows": 1523,
+  "generator": "src/bin/wow_cli/gen_currencies.rs",
+  "command": "wow-cli generate currencies",
+  "output": "data/currencies.rs",
+  "regression_fixture": "tests/fixtures/currency-types-12.1.0.69497.json",
+  "previous_source_sha256": "c7e55944b8acb11660f6e51d57001a47a775d4e6ebc3fdf80a966663f1a8e414",
+  "previous_rows": 1490,
+  "added_rows": 33,
+  "removed_rows": 0,
+  "changed_existing_generated_ids": [3363, 3418, 3420, 3513]
+}

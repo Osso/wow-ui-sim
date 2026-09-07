@@ -1,0 +1,92 @@
+[
+  {
+    "id": 3508,
+    "name": "Salty Pet Charms",
+    "description": "Earned from battling and defeating Korel and associates in pet battles. You can find korel in your neighborhood.",
+    "icon": 803763,
+    "max_quantity": 2000,
+    "max_weekly_quantity": 0,
+    "quality": 2,
+    "transfer_percentage": 100.0
+  },
+  {
+    "id": 3442,
+    "name": "Adventurer Mistcrest",
+    "description": "Used to upgrade Adventurer equipment in Midnight Season 2 up to item levels 269-282. \nWhen used for crafting, sets the item level of the resulting item to 266-279 based on Quality.\n\nEarned from the following activities:\n- Repeatable Outdoor Events\n- Tier 4 Delves",
+    "icon": 7734054,
+    "max_quantity": 100,
+    "max_weekly_quantity": 0,
+    "quality": 3,
+    "transfer_percentage": null
+  },
+  {
+    "id": 3443,
+    "name": "Veteran Mistcrest",
+    "description": "Used to upgrade Veteran equipment in Midnight Season 2 up to item levels 282-295.  \nWhen used for crafting, sets the item level of the resulting item to 279-292 based on Quality.\n\nEarned from the following activities:\n- Repeatable Outdoor Events\n- Raid Finder The Venomous Abyss\n- Heroic Season Dungeons\n- Delves (Tiers 5 to 6)\n- Trovehunter's Bounty (Tiers 4 to 5)",
+    "icon": 7734062,
+    "max_quantity": 100,
+    "max_weekly_quantity": 0,
+    "quality": 4,
+    "transfer_percentage": null
+  },
+  {
+    "id": 3444,
+    "name": "Champion Mistcrest",
+    "description": "Used to upgrade Champion equipment in Midnight Season 2 up to item levels 295-308. \n\nEarned from the following activities:\n- Weekly Outdoor Events\n- Normal The Venomous Abyss\n- Mythic Season Dungeons\n- Mythic Keystone Dungeons (+2 to +3)\n- Delves (Tiers 7 to 10)\n- Trovehunter's Bounty (Tiers 6 to 7)",
+    "icon": 7734056,
+    "max_quantity": 100,
+    "max_weekly_quantity": 0,
+    "quality": 4,
+    "transfer_percentage": null
+  },
+  {
+    "id": 3445,
+    "name": "Hero Mistcrest",
+    "description": "Used to upgrade Hero equipment in Midnight Season 2 up to item levels 308-321.  \n\nWhen used for crafting, sets the item level of the resulting item to 305-318 based on Quality.\n\nEarned from the following activities:\n- Heroic The Venomous Abyss\n- Mythic Keystone Dungeons (+4 to +8)\n- Delves (Tier 11)\n- Trovehunter's Bounty (Tiers 8 and up)",
+    "icon": 7734058,
+    "max_quantity": 100,
+    "max_weekly_quantity": 0,
+    "quality": 4,
+    "transfer_percentage": null
+  },
+  {
+    "id": 3446,
+    "name": "Myth Mistcrest",
+    "description": "Used to upgrade Myth equipment in Midnight Season 2 up to item levels 321-334.  \n\nWhen used for crafting, sets the item level of the resulting item to 318-331 based on Quality.\n\nEarned from the following activities:\n- Mythic The Venomous Abyss\n- Mythic Keystone Dungeons (+9 and up)",
+    "icon": 7734060,
+    "max_quantity": 100,
+    "max_weekly_quantity": 0,
+    "quality": 4,
+    "transfer_percentage": null
+  },
+  {
+    "id": 3465,
+    "name": "Venomblight Manaflux",
+    "description": "Charge the Catalyst with Venomblight Manaflux to imbue armor with incredible power. The resulting armor will inherit the secondary stats of the original equipment. Slowly accumulates every two weeks.\n\nAlso earnable from the following activities after unlocking the Season 2 Catalyst Unbound Feat of Strength:\n- Mythic Keystone Dungeons\n- Midnight Season 2 Raid Bosses\n- Bountiful Delves\n- Rated PvP Arenas and Battlegrounds",
+    "icon": 4622293,
+    "max_quantity": 8,
+    "max_weekly_quantity": 0,
+    "quality": 4,
+    "transfer_percentage": null
+  },
+  {
+    "id": 3509,
+    "name": "Tidal Spark Dust",
+    "description": "Magical residue obtained alongside Sparks of Tides. Used to track how many Sparks of Tides you have obtained so far in Midnight Season 2.\n\nIf you fall behind on Sparks during the season, completing max-level content such as Delves, Mythic Plus, Raids, Instanced PvP, and some outdoor events may help you catch up.",
+    "icon": 5929576,
+    "max_quantity": 3,
+    "max_weekly_quantity": 0,
+    "quality": 4,
+    "transfer_percentage": null
+  },
+  {
+    "id": 3546,
+    "name": "Coiled Filament",
+    "description": "Coagulated morsels siphoned from potent venom. These can be exchanged with Second Mate Sluggs for rewards.",
+    "icon": 7551416,
+    "max_quantity": 0,
+    "max_weekly_quantity": 0,
+    "quality": 2,
+    "transfer_percentage": 100.0
+  }
+]

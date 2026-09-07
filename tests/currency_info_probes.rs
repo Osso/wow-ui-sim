@@ -66,7 +66,8 @@ fn get_currency_info_covers_saved_instances_currency_ids() {
                 3316, 3376, 3377, 3379, 3385, 3392, 3400, 3373, 3393,
                 3405, 3256, 3257, 3258, 3259, 3260, 3261, 3262, 3263,
                 3264, 3265, 3266, 3028, 3310, 3212, 3378, 3383, 3341,
-                3343, 3345, 3347, 3418,
+                3343, 3345, 3347, 3418, 3508, 3442, 3443, 3444,
+                3445, 3446, 3448, 3465, 3509, 3546,
             }
             for _, id in ipairs(ids) do
                 local info = C_CurrencyInfo.GetCurrencyInfo(id)
@@ -74,6 +75,9 @@ fn get_currency_info_covers_saved_instances_currency_ids() {
                     return "missing:" .. tostring(id)
                 end
             end
+            table.sort(ids, function(a, b)
+                return C_CurrencyInfo.GetCurrencyInfo(a).name < C_CurrencyInfo.GetCurrencyInfo(b).name
+            end)
             return "ok"
             "#,
         )
@@ -82,6 +86,55 @@ fn get_currency_info_covers_saved_instances_currency_ids() {
         result, "ok",
         "SavedInstances currency sort needs every tracked currency to expose a name: {result}"
     );
+}
+
+#[derive(serde::Deserialize)]
+struct ExpectedCurrencyMetadata {
+    id: i32,
+    name: String,
+    description: String,
+    icon: i32,
+    max_quantity: i32,
+    max_weekly_quantity: i32,
+    quality: i32,
+    transfer_percentage: Option<f64>,
+}
+
+#[test]
+fn get_currency_info_matches_new_saved_instances_currency_metadata() {
+    let env = env();
+    let expected: Vec<ExpectedCurrencyMetadata> =
+        serde_json::from_str(include_str!("fixtures/currency-types-12.1.0.69497.json"))
+            .expect("parse pinned CurrencyTypes rows");
+    for row in expected {
+        let actual: (String, String, i32, i32, i32, i32, Option<f64>, i32) = env
+            .eval(&format!(
+                r#"
+                local info = C_CurrencyInfo.GetCurrencyInfo({})
+                assert(info, "missing currency {}")
+                assert(info.currencyID == {})
+                return info.name, info.description, info.iconFileID, info.maxQuantity,
+                       info.maxWeeklyQuantity, info.quality, info.transferPercentage, info.quantity
+                "#,
+                row.id, row.id, row.id
+            ))
+            .unwrap_or_else(|error| panic!("currency {}: {error}", row.id));
+        assert_eq!(
+            actual,
+            (
+                row.name,
+                row.description,
+                row.icon,
+                row.max_quantity,
+                row.max_weekly_quantity,
+                row.quality,
+                row.transfer_percentage,
+                0,
+            ),
+            "currency {} must retain its pinned DB2 metadata",
+            row.id
+        );
+    }
 }
 
 #[test]
@@ -121,15 +174,8 @@ fn get_currency_info_exposes_all_retail_fields() {
 #[test]
 fn get_basic_currency_info_returns_display_info_for_saved_instances_hover() {
     let env = env();
-    let (name, description, icon, quality, display, actual): (
-        String,
-        String,
-        i32,
-        i32,
-        i32,
-        i32,
-    ) = env
-        .eval(
+    let (name, description, icon, quality, display, actual): (String, String, i32, i32, i32, i32) =
+        env.eval(
             r#"
             local info = C_CurrencyInfo.GetBasicCurrencyInfo(2245, 17)
             return info.name,
