@@ -125,6 +125,9 @@ fn metadata_key_allows_repeats(key: &str) -> bool {
 /// `@toc-version-*@` packager tokens — the `#@debug@` block in the TOC
 /// provides the real fallback version for source-form TOC files.
 fn insert_metadata(metadata: &mut HashMap<String, String>, rest: &str) {
+    if !is_allowed_game_type(rest) {
+        return;
+    }
     let Some((key, value)) = rest.split_once(':') else {
         return;
     };
