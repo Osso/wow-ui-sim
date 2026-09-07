@@ -1,3 +1,7 @@
+## [2026-09-07] investigation | Stage PTR bootstrap timing probe
+
+Commit `61c434961` updates the A/B/C/D BootstrapOrderProbe suite and stages it through `docs/addons/BootstrapOrderProbe_A/deploy.sh`. The opt-in PTR capture records eager/LoD file order, B bootstrap counts across two explicit B loads, build identity, and passive ClickBinding/Collections state. It does not establish native bootstrap timing, authorize a generic pre-pass, or alter normal TOC ordering. See [[ptr-pixel-rounding-probe]] and the [probe instructions](../addons/BootstrapOrderProbe_A/README.md).
+
 ## [2026-09-06] system | Model bounded PTR pixel-layout rounding
 
 Commit `07cce4a63` adds the `retail-12-1-5` per-region native flag and applies source-backed rounding in shared layout: requested explicit dimensions and anchor offsets are rounded with `768 / (physical height × effective scale)`, while stored anchor values, relative target geometry, and stretch-derived dimensions remain unmodified. A replay of 66 nonempty live capture rectangles (264 coordinates) has maximum residual `0.00002595186236931113`; the tested rounded left edge remains fractional in physical pixels, ruling out global final-edge snapping for that case. The registry cache is refreshed by the existing display setter. Tests remain under verification; startup and bootstrap gaps remain open. See [[ptr-pixel-rounding-probe]] and [pixel layout rounding](../specs/pixel-layout-rounding.md).

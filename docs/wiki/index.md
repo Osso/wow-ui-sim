@@ -1,3 +1,7 @@
+## [2026-09-07] investigation | Stage PTR bootstrap timing probe
+
+[[ptr-pixel-rounding-probe]] now links the staged opt-in [BootstrapOrderProbe](../addons/BootstrapOrderProbe_A/README.md) suite from commit `61c434961`. It records eager/LoD file order and explicit LoD re-load counts while only passively observing ClickBinding and Collections. A native capture is pending; this does not establish bootstrap timing, permit a generic pre-pass, or alter normal TOC order.
+
 ## [2026-09-06] system | Model bounded PTR pixel-layout rounding
 
 Commit `07cce4a63` adds the `retail-12-1-5` native rounding flag to shared layout. Source-backed requested-size/offset rounding matches 264 coordinates from the received PTR capture within `0.00002595186236931113` UI units; tests remain under verification. See [[ptr-pixel-rounding-probe]] and [pixel layout rounding](../specs/pixel-layout-rounding.md).

@@ -28,6 +28,10 @@ Every sample now reads, without loading or invoking either addon, the `loaded` a
 
 In every received sample, `InClickBindingMode` and `ToggleCollectionsJournal` are functions while `Blizzard_ClickBindingUI` and `Blizzard_Collections` respectively report `loaded=false`, `finished=false`. The user reports the PTR ran without personal addons; the probe does not inventory addons, so that report is supporting context rather than a capture field. These observations do not establish native LoadOnDemand semantics or explain the earlier Spellbook/Collections behavior. In particular, they authorize neither a separate bootstrap pass nor any departure from the July 1 finding that `[Bootstrap]` entries execute in normal TOC order.
 
+## Bootstrap timing follow-up
+
+Commit `61c434961` adds the opt-in [BootstrapOrderProbe suite](../../addons/BootstrapOrderProbe_A/README.md), staged through its existing desktop deployment script. Its A/C/D eager and B LoadOnDemand addons record file order, B bootstrap counts before and after two explicit B loads, build identity, and passive ClickBinding/Collections state. The pending capture is intended to establish timing and re-execution boundaries only. It does not establish a native order, authorize a generic bootstrap pass, or change the normal TOC-order finding.
+
 ## Derived bounded layout rule
 
 PTR `PixelUtil.lua` says the native flag automatically applies the same adjustment as its deprecated `SetSize` and `SetPoint` helpers. Those helpers round each requested size or offset with quantum `768 / (physical display height × effective region scale)`.
@@ -42,7 +46,8 @@ The capture meets the required build and flush/retrieval boundary. It does not p
 
 ## Sources
 
-- [PixelRoundingProbe](../../addons/PixelRoundingProbe/README.md) — capture protocol and staging target
+- [PixelRoundingProbe](../../addons/PixelRoundingProbe/README.md) — rounding capture protocol and staging target
+- [BootstrapOrderProbe](../../addons/BootstrapOrderProbe_A/README.md) — pending bootstrap timing/re-execution capture protocol
 - [pixel_rounding_probe.rs](../../../tests/pixel_rounding_probe.rs) — same-object settled-capture and read-only-state regression coverage
 - `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_SharedXML/PixelUtil.lua` — source pixel conversion and recursive native-flag caller
 - `~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_APIDocumentationGenerated/SimpleScriptRegionAPIDocumentation.lua` — native setter/getter declarations
