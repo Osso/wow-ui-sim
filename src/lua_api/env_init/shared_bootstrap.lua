@@ -130,6 +130,10 @@ local function __wow_public_set(object, key, value)
 end
 
 function GetForbiddenObjectTable(object)
+  local public = type(object) == "table" and rawget(object, "__wowPublicObject")
+  if public and __wow_forbidden_object_tables[public] == object then
+    return object
+  end
   if __wow_frame_fields(object) == nil then
     return object
   end
