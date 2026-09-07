@@ -23,7 +23,7 @@ PTR 12.1.5 startup executes annotated files from eligible LoadOnDemand addons wi
 
 ## Tests asserting this spec
 
-- `tests/load_order.rs` — bootstrap lifecycle and normal eager TOC ordering.
+- `tests/load_order.rs` — bootstrap lifecycle through runtime `C_AddOns.LoadAddOn`, eager TOC ordering, and exact per-profile discovery snapshots. Retail's 219-addon order excludes the Classic-only `Blizzard_FrameXML` dependencies on UnitPopup and MirrorTimer; their transitive prerequisites consequently move later. PTR's 211-addon fixture is pinned separately.
 - Startup loader binary tests — actual scan/load boundary, ordering, and disabled-addon filtering.
 
 ## Known gaps (current cycle)
