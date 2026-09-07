@@ -1,6 +1,6 @@
 # PTR pixel-rounding probe
 
-PTR `12.1.5.69594` exposes `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPixel`. Commit `07cce4a63` models the bounded source-and-capture-backed layout rule; replay and independent verification remain pending.
+PTR `12.1.5.69594` exposes `SetRoundLayoutToNearestPixel` and `GetRoundLayoutToNearestPixel`. The bounded source-and-capture-backed rule, ordered LoD bootstrap behavior, parser metadata filtering, selected startup/panel coverage, and retail preservation passed the September 7 bounded acceptance at `53b741bc32f053df31eba14db9f78ee589de6416`; see `/tmp/pi-ptr125-final-acceptance.md`.
 
 ## Capture status
 
@@ -36,7 +36,7 @@ Observed startup sequence: `A:eager`, `B:bootstrap`, `C:eager`, `D:before`, `D:b
 
 The first explicit B load records `load:before → B:before → B:after → load:after`. B does not re-execute its bootstrap; it is `true,false` while normal B files run, then `true,true` after successful completion. The second explicit load records only its `load:before` and successful `load:after`, executing no B files. ClickBinding and Collections remain `false,false` while both helpers are functions in every record.
 
-This establishes the tested third-party LoD bootstrap lifecycle and full-load behavior. It does not establish generic dependency rules, private-environment identity, or SavedVariables visibility during bootstrap. Commits `b0a5f70cd` and `0aece501e` add a PTR-gated ordered Blizzard startup path: `StartupAddonLoadKind::BootstrapOnly` selects annotated files without marking the addon fully loaded; later full loading skips them. Existing eager discovery remains unchanged. Tests are still running, so no runtime/panel acceptance claim is made.
+This establishes the tested third-party LoD bootstrap lifecycle and full-load behavior. It does not establish generic dependency rules, private-environment identity, or SavedVariables visibility during bootstrap. Commits `b0a5f70cd` and `0aece501e` add a PTR-gated ordered startup path: `StartupAddonLoadKind::BootstrapOnly` selects annotated files without marking the addon fully loaded; later full loading skips them. The acceptance suite covers selected parser, discovery, startup, lifecycle, and panel boundaries; it does not claim all profiles or bootstrap-private-state parity.
 
 ## Derived bounded layout rule
 
@@ -44,7 +44,7 @@ PTR `PixelUtil.lua` says the native flag automatically applies the same adjustme
 
 A main-process replay checked all 66 nonempty captured `after` rectangles (264 coordinates). It rounded requested sizes and offsets at that quantum, converted relative targets with the parent/object effective-scale ratio, retained raw anchor values, and did not re-round stretch-derived dimensions. The maximum residual was `0.00002595186236931113` UI units. The captured rounded left edge `123.375` corresponds to `154.21875` physical pixels in the tested conversion, ruling out global final-edge snapping for that example.
 
-Commit `07cce4a63` stores a per-region false-default flag, exposes the epoch-gated native methods, applies that bounded rule only during shared layout resolution, and caches the physical conversion in `WidgetRegistry`, updated by the existing display setter. It does not rewrite raw sizes or anchors. The grouped PTR replay passed all five tests: the two source-derived live-layout cases plus three existing probe-protocol cases.
+Commit `07cce4a63` stores a per-region false-default flag, exposes the epoch-gated native methods, applies that bounded rule only during shared layout resolution, and caches the physical conversion in `WidgetRegistry`, updated by the existing display setter. It does not rewrite raw sizes or anchors. The grouped PTR replay passed all five tests: the two source-derived live-layout cases plus three existing probe-protocol cases. Visible pixel/glyph output, clipping, animation, arbitrary layout graphs, and exact rounding ties remain outside this proof.
 
 Default-profile preservation verification at `fd6256059` passed 18 grouped tests (three probe, nine display, six layout) and the previously blocked client-info test (1/1). Default `cargo check` completed with zero warnings; formatting proof remains valid. Logs: `/tmp/pi-ptr125-default-regressions.{integration,client-info}.*` and `/tmp/pi-ptr125-round-layout-default-check.*`. These are bounded regressions, not whole-profile acceptance.
 

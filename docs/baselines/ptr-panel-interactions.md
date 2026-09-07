@@ -21,6 +21,10 @@ All six transitions passed in one process; the trailing Lua error array was `[]`
 
 Artifacts: `/tmp/pi-ptr125-metadata-{build,startup,panels}.{stdout,stderr}.log`; script `/tmp/pi-ptr125-panels-smoke.lua`. The earlier six ClassNameplate startup errors and Spellbook ClickBinding errors no longer occur in this sequence. [The committed startup baseline](ptr-lua-errors.json) is empty.
 
+## Final bounded verification
+
+`/tmp/pi-ptr125-final-acceptance.md` records acceptance at `53b741bc32f053df31eba14db9f78ee589de6416`: 27 selected PTR integration cases and five PTR binary cases passed; default coverage is 24 selected integration cases and four binary cases, with one ignored dump helper. `cargo check` and `cargo fmt --check` completed with zero warnings. The default snapshot exact test was rerun after its metadata-driven order correction.
+
 ## Limits
 
-This is headless runtime interaction coverage, not visual parity or proof that every panel/API works. Personal addons and SavedVariables were disabled for these runs; existing simulator EditMode cache selection remains part of startup. GetBuildInfo date/trailing slots remain compatibility defaults. Native rounding has separate [captured geometry coverage](../specs/pixel-layout-rounding.md). Private-table identity and SavedVariables timing across bootstrap/full loads remain unprobed. Final regression-check results belong in the proof ledger until completed.
+This is headless runtime interaction coverage, not visual parity or proof that every panel/API works. Personal addons and SavedVariables were disabled for these runs; existing simulator EditMode cache selection remains part of startup. GetBuildInfo date/trailing slots remain compatibility defaults. Native rounding has separate [captured geometry coverage](../specs/pixel-layout-rounding.md). Private-table identity and SavedVariables timing across bootstrap/full loads remain unprobed. This bounded scope does not execute classic profiles, the full project suite, or establish full API coverage.

@@ -1,6 +1,10 @@
+## [2026-09-07] acceptance | Bound PTR 12.1.5 source, loader, rounding, and panel coverage
+
+`53b741bc3` completes the bounded PTR acceptance: selected parser/discovery/lifecycle tests, native rounding fixtures, clean PTR startup, six panel transitions, and default preservation pass. It is not full-project, full-API, visual, or all-profile acceptance. See [[ptr-pixel-rounding-probe]], [PTR panel interactions](../baselines/ptr-panel-interactions.md), and [bootstrap loading](../specs/addon-bootstrap-loading.md).
+
 ## [2026-09-07] system | Model ordered PTR LoD bootstrap loading
 
-Commits `b0a5f70cd` and `0aece501e` add PTR `retail-12-1-5` `StartupAddonLoadKind::BootstrapOnly` nodes to the ordinary dependency-ordered Blizzard startup stream. Eligible LoD TOCs execute annotated files without becoming fully loaded; later full loads skip those files. Eager TOC order and non-PTR discovery remain unchanged. Tests are pending. See [[addon-loading]] and [[ptr-pixel-rounding-probe]].
+Commits `b0a5f70cd` and `0aece501e` add PTR `retail-12-1-5` `StartupAddonLoadKind::BootstrapOnly` nodes to the ordinary dependency-ordered Blizzard startup stream. Eligible LoD TOCs execute annotated files without becoming fully loaded; later full loads skip those files. Eager TOC order and non-PTR discovery remain unchanged. Selected tests pass. See [[addon-loading]] and [[ptr-pixel-rounding-probe]].
 
 ## [2026-09-07] investigation | Capture PTR LoD bootstrap lifecycle
 

@@ -4,11 +4,11 @@ PTR 12.1.5 startup executes annotated files from eligible LoadOnDemand addons wi
 
 ## What it must do
 
-- [ ] Visit eligible PTR bootstrap-only addons in the normal dependency-ordered startup stream, not a global bootstrap pre-pass. Preserve enabled/profile/screen eligibility.
-- [ ] Keep eager addon files in literal TOC order, including normal files before and after `[Bootstrap]` entries.
-- [ ] Execute only annotated files during a LoD bootstrap operation. Expose `IsAddOnLoaded` as `true,false` during execution and `false,false` afterward.
-- [ ] On the first subsequent full load, execute remaining files in TOC order without repeating completed bootstrap files; report `true,true` after completion.
-- [ ] On repeated full loads, execute no files again. Preserve existing non-PTR startup selection.
+- [x] Visit eligible PTR bootstrap-only addons in the normal dependency-ordered startup stream, not a global bootstrap pre-pass. Preserve enabled/profile/screen eligibility.
+- [x] Keep eager addon files in literal TOC order, including normal files before and after `[Bootstrap]` entries.
+- [x] Execute only annotated files during a LoD bootstrap operation. Expose `IsAddOnLoaded` as `true,false` during execution and `false,false` afterward.
+- [x] On the first subsequent full load, execute remaining files in TOC order without repeating completed bootstrap files; report `true,true` after completion.
+- [x] On repeated full loads, execute no files again. Preserve existing non-PTR startup selection.
 
 ## How it works
 
@@ -28,7 +28,6 @@ PTR 12.1.5 startup executes annotated files from eligible LoadOnDemand addons wi
 
 ## Known gaps (current cycle)
 
-- [ ] Runtime startup and Spellbook interaction require fresh verification after loader integration; tests are still running.
 - [ ] Private-table identity and SavedVariables visibility during bootstrap have not been live-probed; no parity claim is made for those boundaries.
 
 ## Out of scope

@@ -1,3 +1,7 @@
+## [2026-09-07] acceptance | Complete bounded PTR 12.1.5 proof
+
+`53b741bc3` closes the documented bounded PTR scope: selected parser/discovery/bootstrap lifecycle tests, native rounding fixtures, clean PTR startup, six representative panel transitions, and default preservation pass. It does not claim full API, all profiles, full-suite, visual/rasterization, bootstrap-private-state, or temporary identity-slot coverage. See [[ptr-pixel-rounding-probe]], [PTR panel interactions](../baselines/ptr-panel-interactions.md), and [bootstrap loading](../specs/addon-bootstrap-loading.md).
+
 ## [2026-09-07] investigation | Capture PTR LoD bootstrap lifecycle
 
 Retrieved ignored `BootstrapOrderProbe-2026-09-07-durable.lua`; its 8,004-byte raw SHA-256 `5f21fe45373f1d2fbe3a645c7dd7f66b3c740925158dbc2f985039008c2af889` identifies a complete 13-record `12.1.5` / `69594` / `120105` capture with no errors. B bootstrap runs once at startup (`true,false`), then returns to `false,false`; D preserves `Before → [Bootstrap] → Normal`. The first explicit B load runs `Before → Normal` without re-running bootstrap and ends `true,true`; the second executes no B files. ClickBinding/Collections stay false/false while helpers are functions. This replaces the incomplete startup capture; its stale disk-file cause remains unknown. Updated [[ptr-pixel-rounding-probe]] and [probe instructions](../addons/BootstrapOrderProbe_A/README.md); no loader behavior changed.
