@@ -41,19 +41,20 @@ pub(crate) struct LoadingAddonGuard {
 #[derive(Clone, Copy)]
 enum EnvironmentPass {
     Normal,
+    Bootstrap,
     SecureReplay,
 }
 
 impl EnvironmentPass {
     fn use_secure_env(self, ctx: &AddonContext<'_>) -> bool {
         match self {
-            Self::Normal => ctx.use_secure_env,
+            Self::Normal | Self::Bootstrap => ctx.use_secure_env,
             Self::SecureReplay => true,
         }
     }
 
     fn loads_xml(self) -> bool {
-        matches!(self, Self::Normal)
+        matches!(self, Self::Normal | Self::Bootstrap)
     }
 }
 
@@ -121,6 +122,63 @@ impl<'a> AddonContext<'a> {
     }
 }
 
+pub(super) fn load_addon_bootstrap_internal(
+    env: &LoaderEnv<'_>,
+    toc: &TocFile,
+) -> Result<LoadResult, LoadError> {
+    let folder_name = toc
+        .addon_dir
+        .file_name()
+        .and_then(|name| name.to_str())
+        .unwrap_or(&toc.name);
+    let mut result = empty_load_result(toc);
+    if !toc.has_bootstrap_files() || bootstrap_has_loaded(env, folder_name) {
+        return Ok(result);
+    }
+    let guard = begin_addon_load(env, folder_name, toc);
+    let ctx = build_addon_context(env, toc, folder_name)?;
+    let start = env.state().borrow().nil_symbol_accesses.len();
+    load_addon_files(
+        env,
+        toc,
+        folder_name,
+        &ctx,
+        EnvironmentPass::Bootstrap,
+        &mut result,
+    );
+    append_nil_symbol_diagnostics(env, guard.addon_index(), &toc.name, start, &mut result);
+    append_pending_nested_addon_diagnostics(env, guard.addon_index(), &mut result);
+    if let Some(addon) = env
+        .state()
+        .borrow_mut()
+        .addons
+        .get_mut(guard.addon_index() as usize)
+    {
+        addon.bootstrap_loaded = true;
+    }
+    Ok(result)
+}
+
+fn empty_load_result(toc: &TocFile) -> LoadResult {
+    LoadResult {
+        name: toc.name.clone(),
+        lua_files: 0,
+        xml_files: 0,
+        timing: LoadTiming::default(),
+        warnings: Vec::new(),
+        nil_symbol_observations: Vec::new(),
+        missing_requirements: Vec::new(),
+    }
+}
+
+fn bootstrap_has_loaded(env: &LoaderEnv<'_>, folder_name: &str) -> bool {
+    env.state()
+        .borrow()
+        .addons
+        .iter()
+        .any(|addon| addon.folder_name == folder_name && (addon.bootstrap_loaded || addon.loaded))
+}
+
 /// Internal addon loading with optional saved variables.
 pub fn load_addon_internal(
     env: &LoaderEnv<'_>,
@@ -133,15 +191,7 @@ pub fn load_addon_internal(
         .and_then(|n| n.to_str())
         .unwrap_or(&toc.name);
 
-    let mut result = LoadResult {
-        name: toc.name.clone(),
-        lua_files: 0,
-        xml_files: 0,
-        timing: LoadTiming::default(),
-        warnings: Vec::new(),
-        nil_symbol_observations: Vec::new(),
-        missing_requirements: Vec::new(),
-    };
+    let mut result = empty_load_result(toc);
     let already_loaded = env
         .state()
         .borrow()
@@ -418,9 +468,17 @@ fn load_addon_files(
     result: &mut LoadResult,
 ) {
     let overlay_dir = Path::new("Interface/AddOns").join(folder_name);
+    let bootstrap_loaded = bootstrap_has_loaded(env, folder_name);
 
     for (index, (file_rel, file)) in toc.files.iter().zip(toc.file_paths()).enumerate() {
-        if should_skip_addon_file(toc, file_rel) {
+        let is_bootstrap = toc.file_is_bootstrap(index);
+        let loads_file = match pass {
+            EnvironmentPass::Bootstrap => is_bootstrap,
+            EnvironmentPass::Normal | EnvironmentPass::SecureReplay => {
+                !is_bootstrap || !bootstrap_loaded
+            }
+        };
+        if !loads_file || should_skip_addon_file(toc, file_rel) {
             continue;
         }
         if matches!(pass, EnvironmentPass::SecureReplay) && toc.file_use_secure_env(index).is_some()
