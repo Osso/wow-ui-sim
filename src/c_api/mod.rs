@@ -68,6 +68,8 @@ pub mod item_spell;
 pub mod legacy_spell_book;
 #[cfg(feature = "client-mists")]
 mod mists_talents;
+#[cfg(feature = "retail-12-1-0")]
+mod numeric_rule_formatter;
 pub mod permanent_shims;
 #[cfg(feature = "retail-12-1-5")]
 pub mod timed_signal_map;

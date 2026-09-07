@@ -75,7 +75,9 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
         function binding:GetFontString() return self.fontString end
         function binding:GetFormattedText()
             local text = duration_value_to_text(self.duration)
-            if type(self.formatter) == "function" then
+            if type(self.formatter) == "userdata" and type(self.formatter.FormatNumber) == "function" then
+                text = self.formatter:FormatNumber(tonumber(text))
+            elseif type(self.formatter) == "function" then
                 local ok, value = pcall(self.formatter, self.duration)
                 if ok and value ~= nil then text = tostring(value) end
             elseif type(self.formatter) == "table" and type(self.formatter.Format) == "function" then

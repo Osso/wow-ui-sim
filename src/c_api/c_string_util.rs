@@ -39,6 +39,8 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
             c_string_util_wrap_string,
         )?;
     }
+    #[cfg(feature = "retail-12-1-0")]
+    super::numeric_rule_formatter::register(state, c_string_util_ref)?;
     set_global_val(state, "C_StringUtil", c_string_util);
     Ok(())
 }
