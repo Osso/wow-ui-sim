@@ -13,7 +13,7 @@ pub struct StartupAddon {
 }
 
 pub fn startup_bootstrap_eligible(toc: &TocFile) -> bool {
-    cfg!(feature = "retail-12-1-5") && toc.is_load_on_demand() && toc.has_bootstrap_files()
+    cfg!(feature = "retail-12-1-0") && toc.is_load_on_demand() && toc.has_bootstrap_files()
 }
 
 /// Keep bootstrap-only addons in the ordinary dependency-ordered startup stream.

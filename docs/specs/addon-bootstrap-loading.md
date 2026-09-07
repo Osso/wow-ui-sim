@@ -1,14 +1,14 @@
 # Addon bootstrap loading
 
-PTR 12.1.5 startup executes annotated files from eligible LoadOnDemand addons without completing their full load. The [live bootstrap capture](../addons/BootstrapOrderProbe_A/README.md) establishes ordering and repeated-load behavior for build 69594.
+Retail 12.1 and cumulative PTR startup execute annotated files from eligible LoadOnDemand addons without completing their full load. The [live bootstrap capture](../addons/BootstrapOrderProbe_A/README.md) establishes ordering and repeated-load behavior for build 69594.
 
 ## What it must do
 
-- [x] Visit eligible PTR bootstrap-only addons in the normal dependency-ordered startup stream, not a global bootstrap pre-pass. Preserve enabled/profile/screen eligibility.
+- [ ] Visit eligible retail 12.1 and PTR bootstrap-only addons in the normal dependency-ordered startup stream, not a global bootstrap pre-pass. Preserve enabled/profile/screen eligibility; the retail gate extension awaits GREEN verification.
 - [x] Keep eager addon files in literal TOC order, including normal files before and after `[Bootstrap]` entries.
 - [x] Execute only annotated files during a LoD bootstrap operation. Expose `IsAddOnLoaded` as `true,false` during execution and `false,false` afterward.
 - [x] On the first subsequent full load, execute remaining files in TOC order without repeating completed bootstrap files; report `true,true` after completion.
-- [x] On repeated full loads, execute no files again. Preserve existing non-PTR startup selection.
+- [x] On repeated full loads, execute no files again. Classic startup selection remains outside the retail epoch gate.
 
 ## How it works
 
@@ -18,13 +18,14 @@ PTR 12.1.5 startup executes annotated files from eligible LoadOnDemand addons wi
 ## Implementation inventory
 
 - `src/loader/addon.rs` — bootstrap file selection and completion separate from full loading.
-- `src/loader/mod.rs`, `startup_addons.rs` — `StartupAddon` records and PTR-gated `Full`/`BootstrapOnly` ordered discovery.
+- `src/loader/mod.rs`, `startup_addons.rs` — `StartupAddon` records and `retail-12-1-0`-gated `Full`/`BootstrapOnly` ordered discovery.
 - `src/bin/wow_sim/addon_loading.rs` — startup dispatch, timing, and `ADDON_LOADED` delivery only for full loads.
 
 ## Tests asserting this spec
 
 - `tests/load_order.rs` — bootstrap lifecycle through runtime `C_AddOns.LoadAddOn`, eager TOC ordering, and exact per-profile discovery snapshots. Retail's 219-addon order excludes the Classic-only `Blizzard_FrameXML` dependencies on UnitPopup and MirrorTimer; their transitive prerequisites consequently move later. PTR's 211-addon fixture is pinned separately.
-- Startup loader binary tests — actual scan/load boundary, ordering, and disabled-addon filtering.
+- Startup loader binary tests — actual scan/load boundary, ordering, and disabled-addon filtering under retail 12.1 and PTR.
+- `tests/micro_menu.rs::micro_menu_ej_button_loads_and_opens_panel` — process-level startup and actual Encounter Journal OnClick twice, with no injected bootstrap helper, completed LoD state, open/close assertions, and empty Lua-error JSON.
 
 ## Known gaps (current cycle)
 

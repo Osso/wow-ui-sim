@@ -1,3 +1,7 @@
+## [2026-09-07] investigation | Correct retail MicroMenu bootstrap gate
+
+Audited retail EncounterJournal TOC/bootstrap and reproduced the real `EJMicroButton` OnClick failure at line 1635 without fixture helper injection. Broadened the ordered bootstrap gate from `retail-12-1-5` to `retail-12-1-0`, leaving Classic selection unchanged. The regression now requires runtime LoD completion, two real clicks, visible/closed state, and empty error JSON. Source preparation is complete; GREEN awaits a build slot. See [[addon-loading]].
+
 ## [2026-09-07] acceptance | Complete bounded PTR 12.1.5 proof
 
 `53b741bc3` closes the documented bounded PTR scope: selected parser/discovery/bootstrap lifecycle tests, native rounding fixtures, clean PTR startup, six representative panel transitions, and default preservation pass. It does not claim full API, all profiles, full-suite, visual/rasterization, bootstrap-private-state, or temporary identity-slot coverage. See [[ptr-pixel-rounding-probe]], [PTR panel interactions](../baselines/ptr-panel-interactions.md), and [bootstrap loading](../specs/addon-bootstrap-loading.md).

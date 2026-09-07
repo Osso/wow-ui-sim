@@ -1,3 +1,7 @@
+## [2026-09-07] investigation | Restore retail Encounter Journal bootstrap publication
+
+[[addon-loading]] records the reproduced retail MicroMenu line 1635 nil call: `CanShowEncounterJournal` was omitted by the PTR-only startup gate. The existing ordered bootstrap path now begins at `retail-12-1-0`; an actual-click process regression replaces fixture-injected bootstrap coverage. GREEN verification is pending.
+
 ## [2026-09-07] acceptance | Bound PTR 12.1.5 source, loader, rounding, and panel coverage
 
 `53b741bc3` completes the bounded PTR acceptance: selected parser/discovery/lifecycle tests, native rounding fixtures, clean PTR startup, six panel transitions, and default preservation pass. It is not full-project, full-API, visual, or all-profile acceptance. See [[ptr-pixel-rounding-probe]], [PTR panel interactions](../baselines/ptr-panel-interactions.md), and [bootstrap loading](../specs/addon-bootstrap-loading.md).
