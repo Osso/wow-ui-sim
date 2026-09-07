@@ -66,7 +66,7 @@ fn project_public(state: &mut LuaState, value: Val) -> Val {
         .gc
         .tables
         .get(table)
-        .map(|entry| entry.raw_get(Val::Str(key), &state.gc.string_arena))
+        .map(|entry| entry.get(Val::Str(key), &state.gc.string_arena))
         .unwrap_or(Val::Nil);
     if native_frame_id_from_val(state, public).is_none() {
         return value;
@@ -78,7 +78,7 @@ fn project_public(state: &mut LuaState, value: Val) -> Val {
         .gc
         .tables
         .get(tables)
-        .map(|entries| entries.raw_get(public, &state.gc.string_arena));
+        .map(|entries| entries.get(public, &state.gc.string_arena));
     if registered == Some(value) {
         public
     } else {
