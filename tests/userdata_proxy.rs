@@ -9,6 +9,78 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[test]
+fn forbidden_partition_preserves_native_parent_identity() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local parent = CreateFrame("Frame", nil, UIParent)
+        parent:SetSize(120, 40)
+        local forbidden = GetForbiddenObjectTable(parent)
+        forbidden.privateValue = "hidden"
+        assert(parent.privateValue == nil, "partition fields remain private")
+
+        local child = CreateFrame("Frame", nil, forbidden)
+        assert(child:GetParent() == parent, "partition identifies the same native parent")
+        assert(parent:GetNumChildren() == 1)
+        assert(select(1, parent:GetChildren()) == child)
+
+        local setWidth = parent.SetWidth
+        setWidth(forbidden, 72)
+        assert(parent:GetWidth() == 72, "native methods accept the partition identity")
+        child:SetParent(UIParent)
+        child:SetParent(forbidden)
+        assert(child:GetParent() == parent)
+        assert(GetForbiddenObjectTable(parent).privateValue == "hidden")
+        "#,
+    )
+    .expect("forbidden partition remains the same native frame");
+}
+
+#[test]
+fn forbidden_partition_does_not_turn_ordinary_tables_into_frame_parents() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local parent = CreateFrame("Frame", nil, UIParent)
+        for _, ordinary in ipairs({ {}, { __wowPublicObject = parent }, { [0] = 123 } }) do
+            local accepted, err = pcall(CreateFrame, "Frame", nil, ordinary)
+            assert(not accepted and string.find(err, "parent must be a frame", 1, true))
+            accepted, err = pcall(CreateFrame, "Frame", nil, GetForbiddenObjectTable(ordinary))
+            assert(not accepted and string.find(err, "parent must be a frame", 1, true))
+        end
+        assert(parent:GetNumChildren() == 0)
+        "#,
+    )
+    .expect("ordinary tables cannot impersonate native parents");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() {
+    crate::common::with_timeout(90, || {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+            &["Blizzard_AuraContainer"],
+            &[],
+            |env, _| {
+                env.exec(
+                    r#"
+                    local container = CreateFrame("AuraContainer", nil, UIParent, "CustomAuraContainerTemplate")
+                    local forbidden = GetForbiddenObjectTable(container)
+                    local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(forbidden, { batchSize = 1 })
+                    local child = provider:AcquireFrame()
+                    assert(child:GetParent() == container)
+                    assert(provider:GetOwnedFrameCount() == 1)
+                    assert(provider:GetOwnedFrame(1) == child)
+                    assert(provider:IsFrameActive(child))
+                    "#,
+                )
+                .expect("real aura provider accepts its forbidden container as native parent");
+            },
+        );
+    });
+}
+
 // ============================================================================
 // AbbreviateConfig
 // ============================================================================
