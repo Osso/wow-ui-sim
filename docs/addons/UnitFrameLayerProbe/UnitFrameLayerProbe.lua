@@ -1,5 +1,5 @@
-local ADDON = ...
-local VERSION, SCHEMA, MAX_CAPTURES, MAX_PARENTS = "1.0.0", 1, 30, 16
+local ADDON, Probe = ...
+local VERSION, SCHEMA, MAX_CAPTURES, MAX_PARENTS = "1.1.0", 1, 30, 16
 
 local paths = {
     "UIParent", "PlayerFrame", "PlayerFrame.noPortraitMode", "PlayerFrame.bbfName",
@@ -92,9 +92,7 @@ local function snapshot(object)
     return result, parent
 end
 
-local function captureObject(path)
-    local object, lookup = resolve(path)
-    if lookup.status ~= "ok" then return lookup end
+local function captureFrame(object)
     local result, parent = snapshot(object)
     local chain = { entries = {} }
     result.parents = chain
@@ -109,6 +107,12 @@ local function captureObject(path)
     chain.status = current.methods.GetParent.status
     if chain.status == "ok" then chain.status = "root" end
     return result
+end
+
+local function captureObject(path)
+    local object, lookup = resolve(path)
+    if lookup.status ~= "ok" then return lookup end
+    return captureFrame(object)
 end
 
 local function database()
@@ -202,7 +206,13 @@ local function checkLoadedBook()
 end
 
 SLASH_UNITFRAMELAYERPROBE1 = "/unitlayerprobe"
-SlashCmdList.UNITFRAMELAYERPROBE = function() capture("manual") end
+SlashCmdList.UNITFRAMELAYERPROBE = function(command)
+    command = command:match("^%s*(.-)%s*$"):lower()
+    if command == "test" then Probe.startControls()
+    elseif command == "cancel" then Probe.cancelControls()
+    elseif command == "" then capture("manual")
+    else print("[UnitFrameLayerProbe] Use /unitlayerprobe, /unitlayerprobe test, or /unitlayerprobe cancel.") end
+end
 local listener = CreateFrame("Frame")
 listener:RegisterEvent("ADDON_LOADED")
 listener:RegisterEvent("PLAYER_LOGIN")
@@ -216,4 +226,10 @@ listener:SetScript("OnEvent", function(_, event, name)
         checkLoadedBook()
     end
 end)
+Probe.version = VERSION
+Probe.database = database
+Probe.captureFrame = captureFrame
+Probe.callGlobal = callGlobal
+Probe.callMethod = callMethod
+Probe.errorText = errorText
 checkLoadedBook()

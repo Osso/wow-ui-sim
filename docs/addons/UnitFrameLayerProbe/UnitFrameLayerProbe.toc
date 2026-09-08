@@ -2,6 +2,7 @@
 ## Title: UnitFrameLayerProbe
 ## Notes: Read-only unit-frame and SpellBook layering observations
 ## Author: Alessio Deiana
-## Version: 1.0.0
+## Version: 1.1.0
 ## SavedVariables: UnitFrameLayerProbeDB
 UnitFrameLayerProbe.lua
+Controls.lua

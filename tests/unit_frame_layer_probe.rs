@@ -127,7 +127,7 @@ fn unit_layer_probe_manual_and_login_preserve_observed_frame_state() {
         FlushLayerTimers()
         SlashCmdList.UNITFRAMELAYERPROBE('')
         local db = UnitFrameLayerProbeDB
-        assert(db.schemaVersion == 1 and db.probeVersion == '1.0.0')
+        assert(db.schemaVersion == 1 and db.probeVersion == '1.1.0')
         assert(#db.captures == 2)
         assert(db.captures[1].reason == 'PLAYER_LOGIN')
         local c = db.captures[2]
@@ -379,6 +379,10 @@ fn unit_layer_controls_capture_three_phases_and_clean_only_owned_fixtures() {
             assert(blue.methods.GetParent.values[1].identity == tostring(UIParent))
             assert(p.frames['case'..i..'.label'].methods.GetParent.values[1].identity == tostring(UIParent))
         end
+        assert(p.frames['case5.red'].methods.GetObjectType.values[1].value == 'GameTooltip')
+        assert(p.tooltipOwner.values[1].identity == p.frames['case5.blue'].object.identity)
+        assert(p.frames['case5.red'].methods.GetParent.values[1].identity == tostring(UIParent))
+        assert(p.frames.header.methods.GetParent.values[1].identity == tostring(UIParent))
         assert(LayerFrameState() == controlBefore)
         AdvanceControls(2)
         assert(#controlShots == 1, 'advanced without screenshot completion')
@@ -393,7 +397,13 @@ fn unit_layer_controls_capture_three_phases_and_clean_only_owned_fixtures() {
         r#"
         local run = UnitFrameLayerProbeDB.controlRuns[1]
         assert(run.status == 'complete' and #run.phases == 3)
-        for _, p in ipairs(run.phases) do assert(p.screenshot.status == 'succeeded') end
+        for _, p in ipairs(run.phases) do
+            assert(p.screenshot.status == 'succeeded')
+            assert(p.frames['case5.red'].methods.IsShown.values[1].value == true)
+            assert(p.tooltipOwner.values[1].identity == p.frames['case5.blue'].object.identity)
+        end
+        assert(controlShots[2].at - controlShots[1].at >= 1.1)
+        assert(controlShots[3].at - controlShots[2].at >= 1.1)
         AssertControlsClean()
         assert(LayerFrameState() == controlBefore)
         assert(SerializeLayerValue(UnitFrameLayerProbeDB.captures) == controlHistory)

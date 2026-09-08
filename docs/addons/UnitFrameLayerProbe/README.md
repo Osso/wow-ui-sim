@@ -1,7 +1,8 @@
 # UnitFrameLayerProbe
 
-Read-only capture of unit-frame/SpellBook layering. It records raw getter results;
-it does not decide which frame should render above another.
+Read-only observations of existing unit-frame/SpellBook layering, plus optional
+owned comparison fixtures. It records raw getter results and screenshots;
+it does not decide which color should render above another.
 
 ## Installation and capture
 
@@ -26,6 +27,48 @@ The TOC lists retail `120100` and PTR `120105` using the comma-separated Interfa
 convention used by installed addons (for example Baganator) and supported by
 `src/toc/tests.rs::test_multiple_interface_versions`. Select the intended client;
 this does not claim compatibility with every build or other client profiles.
+
+## Controlled comparison: `/unitlayerprobe test`
+
+Close SpellBook and other menus first. The probe does not close them for you.
+Run `/unitlayerprobe test`; do not move or interact with the comparison rectangles
+while the three screenshots are being taken. `/unitlayerprobe cancel` stops a run.
+
+Five labeled comparisons use overlapping opaque red/blue rectangles:
+
+1. LOW top-level parent with a HIGH red child, versus a MEDIUM blue top-level panel.
+2. Independent HIGH red frame versus MEDIUM blue panel.
+3. Independent DIALOG red frame versus MEDIUM blue panel.
+4. Independent plain TOOLTIP red frame versus MEDIUM blue panel.
+5. An owned named `GameTooltip` using `GameTooltipTemplate`, owned by a MEDIUM blue
+   panel (`ANCHOR_NONE`), versus that panel. It has short text and red artwork;
+   owner identity is captured, and it is shown again after panel hide/show.
+
+Roots and labels attach directly to UIParent except the intentional LOW-parent
+case. There is no shared high-strata stage. Existing GameTooltip, SpellBook,
+unit frames, menus and settings are never changed.
+
+Each comparison is observed in three phases: **created** (actual getter values,
+not assumed unraised), **panel-hide-show**, and **panel-raise**. Each phase records
+raw frame/raised levels, strata, fixed/toplevel flags, parent chains, geometry,
+alpha/scale, build and screenshot request/completion times. The on-screen header
+contains the run number, phase and server timestamp. Native screenshots, not the
+protocol tests, establish which color wins the overlap.
+
+The next phase waits for `SCREENSHOT_SUCCEEDED`, then at least 1.1 seconds to avoid
+native screenshot filename collisions. `Screenshot()` receives no filename;
+collect the three files from the client's normal `Screenshots` directory and
+match their visible headers to `UnitFrameLayerProbeDB.controlRuns`. Run `/reload`
+after completion to flush the data. Screenshot failure, a 10-second timeout,
+cancel, or a setup/call error hides, clears anchors and detaches owned fixtures.
+Native frames cannot be destroyed: hidden allocations remain until UI reload.
+
+Control history is separate from original observations and limited to **three
+runs** (three phases each), including failed/cancelled attempts. Once capped,
+no more fixtures are allocated; archive/remove the SavedVariables file with the
+client exited before starting a new series. A screenshot outstanding at cancel
+or timeout blocks a new run until its completion/failure event arrives, or UI
+reload; events have no request IDs, so late events must not advance another run.
 
 ## Captures
 
@@ -75,13 +118,18 @@ Object identity strings can correlate captures within one session, not across re
 
 ## Read-only scope and tests
 
-The probe creates its own event listener and adds observation hooks only. It never
-forces LoadAddOn, shows/hides, moves, raises, reparents, sets strata/levels, or changes
-settings on observed UI objects. It does not reset data on login or auto-overwrite
+The original observation mode creates its own event listener and observation
+hooks. Neither mode forces LoadAddOn, shows/hides, moves, raises, reparents, sets
+strata/levels, or changes settings on existing observed UI objects. Control mode
+configures and later hides/detaches only its own fixtures. It does not reset data on login or auto-overwrite
 completed captures.
 
 `tests/unit_frame_layer_probe.rs` runs in the existing grouped `integration` target.
 It covers late/already-loaded hooks, manual/login capture, unchanged observed frame
 properties, optional getter errors/nil values, serialized fresh-VM reload retention
-and the capture cap. These are simulator protocol tests, **not native layering
+and the capture cap. Controlled tests load the actual TOC files with one shared
+addon namespace and mock screenshot events/timers. They assert phase order, raw
+observations, independent parenting, cleanup on success/failure/timeout/cancel,
+late-event isolation and bounded/history-preserving behavior—not native color
+ordering. These are simulator protocol tests, **not native layering
 measurements**. Main integration owns final checks and any later deployment.
