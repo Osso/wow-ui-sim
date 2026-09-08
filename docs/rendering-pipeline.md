@@ -298,7 +298,7 @@ higher- or lower-level sibling.
 `toplevel="true"` uses a separate monotonic active show-order sequence. Showing a
 top-level frame assigns the next sequence value; hiding removes it, and showing it
 again assigns a newer value. This is intentionally separate from `raise_order`.
-After normal per-strata emission, IDs belonging to a top-level frame are grouped by their nearest top-level ancestor while walking through intermediate strata. This applies even before that owner has a positive active show-order value. Each group is emitted contiguously at the owner's raw strata, with the owner anchored first. Thus a `HIGH` child of an unraised `LOW` top-level parent remains in the LOW group behind independent `MEDIUM`; an independent `HIGH`, `DIALOG`, plain `TOOLTIP`, or actual `GameTooltip` retains its own higher-strata group. Top-level visibility changes rebuild the affected bucket grouping; ordinary shows may use the incremental repair path. `UIParent` and `WorldFrame` remain strata-root boundaries.
+After normal per-strata emission, IDs belonging to a top-level frame are grouped by their nearest top-level ancestor while walking through intermediate strata. This applies even before that owner has a positive active show-order value. Each group is emitted contiguously at the owner's raw strata, with the owner anchored first. Thus a `HIGH` child of an unraised `LOW` top-level parent remains in the LOW group behind independent `MEDIUM`; an independent `HIGH`, `DIALOG`, plain `TOOLTIP`, or actual `GameTooltip` retains its own higher-strata group. Top-level visibility changes rebuild the affected bucket grouping; ordinary shows may use the incremental repair path. A `SetParent` change also invalidates the cached grouping and hit eligibility even if the moved frame's raw strata is unchanged, so a stale prior owner cannot determine its draw or input rank. `UIParent` and `WorldFrame` remain strata-root boundaries.
 
 This boundary comes from the controlled retail 12.1.0.69587 capture at physical 1440-pixel display height, not a 768-unit logical canvas: case 1 is blue and cases 2–5 red in created, hide/show, and Raise phases (`/tmp/pi-native-control-pixels.json`). Raw raised values are transition observations, not global z-index values.
 
@@ -322,7 +322,7 @@ Within ordinary content, the effective order remains:
 
 ### Hit-Test Building (lines 31-63)
 
-Filter visible, mouse-enabled, non-excluded frames. Hit ordering must consume the flattened render buckets rather than reconstruct raw strata/level order, so grouped descendants cannot steal input through an independent panel. Input wiring is pending integration.
+Filter visible, mouse-enabled, non-excluded frames. Hit ordering consumes flattened render-bucket rank rather than reconstructing raw strata/level order, so grouped descendants cannot steal input through an independent panel. The rank persists through coalesced Hide→Show and is invalidated when reparenting changes owner groups.
 
 ### Query (lines 512-524)
 

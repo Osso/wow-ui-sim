@@ -24,13 +24,17 @@ The controlled capture then records every control at physical 1440-pixel display
 
 [UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) supplied five opaque red/blue comparisons across three phases: a HIGH child under LOW parent, independent HIGH, independent DIALOG, plain TOOLTIP, and owned `GameTooltip` versus MEDIUM. Screenshot-success gating, a 1.1-second interphase delay, cancellation/timeout cleanup, late-event isolation, and bounded control history define the capture protocol. The native run completed with `cleanupErrors=0`; development protocol coverage remains 9/9.
 
-`f5d9ff91f` implements owner-strata grouping and the native-compatible raised-level getter boundary without changing raw strata or raw frame levels. Targeted GREEN is still pending because hit-grid input ordering must consume the flattened render buckets. No full-scene GUI or readability acceptance is claimed.
+`f5d9ff91f` implements owner-strata grouping and the native-compatible raised-level getter boundary without changing raw strata or raw frame levels. `4e89f895a` makes flattened render-bucket rank the hit-test ordering source of truth; `a9ef47c06` retains that rank through coalesced Hide→Show. `2d3693f30` invalidates stale owner groups and hit eligibility when `SetParent` changes a frame's parent without changing its raw strata.
+
+The actual retail-addon/SavedVariables scene is captured privately at `/tmp/pi-layering-fixed-fullscene.webp` with execution record `/tmp/pi-layering-fixed-fullscene.json`: BetterBlizzFrames no-portrait remains enabled; `PlayerFrame.noPortraitMode` is still raw `HIGH`/level `2`, while `PlayerSpellsFrame` remains raw `MEDIUM`/level `1`; the unit overlay visibly renders behind SpellBook. Colored spell icons remain visible, and real Clicked tooltip identity for spell `45524` succeeds. This is visual acceptance evidence, not a claim that every focused test has rerun together.
 
 ## Sources
 
 - `/tmp/pi-unit-controls-native.lua` — authoritative controlled native capture
 - `docs/local/private/probes/UnitFrameLayerProbe-controls-2026-09-08.lua` — ignored archive of that capture
 - `/tmp/pi-native-control-pixels.json` — authoritative screenshot pixel classification
+- `/tmp/pi-layering-fixed-fullscene.webp` — private actual-addon/SavedVariables visual proof
+- `/tmp/pi-layering-fixed-fullscene.json` — private scene state and tooltip execution record
 - [UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) — controlled capture protocol
 
 ## See Also

@@ -6,11 +6,11 @@ Top-level frame subtrees render in their top-level owner's strata group without 
 
 - [x] Keep a HIGH child of an unraised LOW top-level parent behind an independent MEDIUM panel, including after that panel is shown or raised.
 - [x] Preserve independent HIGH, DIALOG, plain TOOLTIP and UIParent-parented GameTooltip controls above MEDIUM panels. Tooltip ownership is not parenting or raised-level inheritance.
-- [ ] Retain local strata, frame-level and region order inside an owner group; emit its visible members once after child hide/show changes.
-- [ ] Stop group and raised-level ancestry at UIParent and WorldFrame.
-- [ ] Keep newly enabled top-level frames at raised level zero. Hide/Show and explicit Raise on a shown top-level frame advance the existing monotonic order; descendants share the active ancestor's value.
-- [ ] Preserve raw strata/levels and ordinary non-top-level Raise/Lower behavior, including raised level zero.
-- [ ] Keep the real SpellBook paper above the reproduced BetterBlizzFrames HIGH no-portrait overlay while preserving both frames' raw state.
+- [x] Retain local strata, frame-level and region order inside an owner group; emit its visible members once after child hide/show changes.
+- [x] Stop group and raised-level ancestry at UIParent and WorldFrame.
+- [x] Keep newly enabled top-level frames at raised level zero. Hide/Show and explicit Raise on a shown top-level frame advance the existing monotonic order; descendants share the active ancestor's value.
+- [x] Preserve raw strata/levels and ordinary non-top-level Raise/Lower behavior, including raised level zero.
+- [x] Keep the real SpellBook paper above the reproduced BetterBlizzFrames HIGH no-portrait overlay while preserving both frames' raw state.
 
 ## How it works
 
@@ -22,6 +22,8 @@ Top-level frame subtrees render in their top-level owner's strata group without 
 - `src/lua_api/state_render.rs` — raw buckets, top-level ownership, visibility and raised transitions.
 - `src/lua_api/state_render_groups.rs` — assemble owner-strata groups while retaining their local ordering.
 - `src/lua_api/frame/methods/misc/frame_level.rs` — parent-derived GetRaisedFrameLevel.
+- `src/iced_app/frame_collect.rs`, `hit_grid.rs`, `update_helpers.rs`, `update_runtime.rs` — flattened render-bucket rank drives hit order.
+- `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs` — `SetParent` invalidates stale owner groups and hit eligibility.
 
 ## Tests asserting this spec
 
@@ -29,15 +31,17 @@ Top-level frame subtrees render in their top-level owner's strata group without 
 - `tests/spellbook.rs` — actual Blizzard panel and reproduced addon overlay render boundary.
 - `src/lua_api/state_render_tests.rs` — existing active show-order, nested selection and ordinary Raise boundaries.
 - `tests/frame_level.rs` — existing ordinary Raise/Lower and raw-level behavior.
+- `src/iced_app/render_hit_grid_tests.rs` — incremental reparenting retains render-consistent hit order without resize.
 
 ## Native evidence
 
 The 2026-09-08 retail `12.1.0.69587` controlled capture at physical 1440-pixel display height (`/tmp/pi-unit-controls-native.lua`, archived ignored at `docs/local/private/probes/UnitFrameLayerProbe-controls-2026-09-08.lua`) classifies case 1 BLUE and cases 2–5 RED in created, panel-hide-show, and panel-raise screenshots (`/tmp/pi-native-control-pixels.json`). The created MEDIUM controls report raised `0`; after hide/show they report `33..37`, and after explicit Raise `38..42`; LOW parent and red controls remain `0`. These values are observed transition ordinals, not constants or global ordering keys.
 
-## Known gaps (current cycle)
+## Evidence and remaining verification
 
-- [ ] `f5d9ff91f` core grouping and `GetRaisedFrameLevel()` behavior require targeted GREEN after input wiring.
-- [ ] Hit-grid integration, readability review, and full-scene GUI acceptance remain pending.
+Core integration coverage passed 13 cases. Input-focused coverage previously passed 28/29 cases; the sole stale-group reparent case then passed separately after `2d3693f30`. These are not a combined all-green rerun.
+
+Private actual-addon/SavedVariables proof `/tmp/pi-layering-fixed-fullscene.webp` and `/tmp/pi-layering-fixed-fullscene.json` shows the BetterBlizzFrames overlay behind SpellBook while raw state remains `HIGH`/level `2` versus `MEDIUM`/level `1`; colored spell icons remain visible and Clicked preserves tooltip spell ID `45524`. Final combined verification and readability remain pending.
 
 ## Out of scope
 
