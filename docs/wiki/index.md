@@ -1,3 +1,7 @@
+## [2026-09-08] system | Query data-backed spell aura secrecy
+
+[[lua-api]] links the [base aura-secrecy contract](../specs/spell-aura-secrecy.md): pinned native attributes drive `C_Secrets.GetSpellAuraSecrecy`; the ambiguous dual-flag spell is reported rather than guessed. Four focused Rust tests and four generator tests pass; full-addon verification remains separate.
+
 ## [2026-09-07] system | Enumerate modeled aura instances
 
 [[lua-api]] links the [aura enumeration contract](../specs/unit-aura-instance-enumeration.md): public/private ID arrays use existing state instead of nil results, matched-filter flags stay in Blizzard's source wrappers, and `UnitAuraSoundTrigger` exists before secure copying. Five focused tests pass; full-addon integration remains separate.

@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Return `NeverSecret` (0) for `AURA_NEVER_SECRET`, `AlwaysSecret` (1) for `AURA_ALWAYS_SECRET`, and `ContextuallySecret` (2) when neither attribute is present.
-- [ ] Reuse `C_Spell`'s existing numeric, numeric-string, and case-insensitive modeled-name resolver. Numeric identifiers retain that resolver's pass-through behavior; unresolved identifiers retain its nil result. Native unknown-identifier behavior has not been separately verified.
-- [ ] Make the namespace available before secure-environment copying; retain the existing native-valued `Enum.SecrecyLevel` and metadata in both environments.
-- [ ] Reject conflicting attributes explicitly rather than choosing undocumented precedence or affecting unrelated spells.
-- [ ] Drive Blizzard's `CanApplyIdentityCandidateFilters` never-secret exemption using actual spell data.
+- [x] Return `NeverSecret` (0) for `AURA_NEVER_SECRET`, `AlwaysSecret` (1) for `AURA_ALWAYS_SECRET`, and `ContextuallySecret` (2) when neither attribute is present.
+- [x] Reuse `C_Spell`'s existing numeric, numeric-string, and case-insensitive modeled-name resolver. Numeric identifiers retain that resolver's pass-through behavior; unresolved identifiers retain its nil result. Native unknown-identifier behavior has not been separately verified.
+- [x] Make the namespace available before secure-environment copying; retain the existing native-valued `Enum.SecrecyLevel` and metadata in both environments.
+- [x] Reject conflicting attributes explicitly rather than choosing undocumented precedence or affecting unrelated spells.
+- [x] Drive Blizzard's `CanApplyIdentityCandidateFilters` never-secret exemption using actual spell data.
 
 ## How it works
 
@@ -37,7 +37,7 @@ python3 tools/gen_spell_aura_secrecy.py --input /tmp/pi-SpellMisc-12.1.0.69497.c
 
 ## Known gaps
 
-- [ ] Focused Rust GREEN verification pending.
+Focused proof at `721836971`: four Rust tests passed, including the actual secure Blizzard filter. Four generator tests passed; regeneration produced byte-identical Rust and provenance files. No broad check, other-profile run, or full-addon acceptance is claimed by this slice.
 - Spell `1317008`, base row `863018`, carries both aura flags. Neither the supplied flag definitions nor the API documentation establishes precedence. Querying it raises an explicit ambiguity error. It is absent from the current compact spell metadata and local name export, but that absence is not used to discard its native attributes.
 - Invalid/unknown-identifier native semantics remain unverified; this slice introduces no separate resolver or fallback classification policy.
 

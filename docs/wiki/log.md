@@ -1,3 +1,7 @@
+## [2026-09-08] system | Model base spell aura secrecy
+
+`721836971` adds a generated sparse native-attribute lookup for `C_Secrets.GetSpellAuraSecrecy`. Existing name/ID resolution and secrecy enum metadata are retained; contradictory flags yield an explicit query error. RED 4/4 missing-namespace failures became GREEN 4/4, including Blizzard's identity-candidate filter. Generator tests pass 4/4 and pinned regeneration is byte-identical. See [[lua-api]] and [the contract](../specs/spell-aura-secrecy.md); no combat secrecy policy or full-addon acceptance is claimed.
+
 ## [2026-09-07] system | Model public/private aura ID enumeration
 
 `31b0e0f95` replaces missing instance-ID queries consumed by ManagedAuraContainer with existing public filter/block and private-list data. Native `GetUnitAuraInstanceIDs` returns one array; source-wrapper matched-filter flags remain true for public and false for private. Added the native three-value sound-trigger enum before secure copying. RED 5/5 failures became GREEN 5/5. See [[lua-api]] and [the contract](../specs/unit-aura-instance-enumeration.md).
