@@ -14,11 +14,11 @@ fn tooltip_spell_identity_survives_missing_local_metadata() {
             local getters = {
                 C_TooltipInfo.GetSpellByID(id),
                 C_TooltipInfo.GetSpell(id),
-                C_TooltipInfo.GetHyperlink("spell:" .. id),
+                C_TooltipInfo.GetHyperlink("|Hspell:" .. id .. "|h[Spell]|h"),
                 C_TooltipInfo.GetMountBySpellID(id),
             }
             for _, data in ipairs(getters) do
-                assert(data.type == Enum.TooltipDataType.Spell)
+                assert(data.type == Enum.TooltipDataType.Spell, "wrong tooltip type for spell " .. id)
                 assert(data.id == id, "spell tooltip lost supplied identity " .. id)
             end
         end
