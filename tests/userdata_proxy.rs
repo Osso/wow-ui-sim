@@ -446,7 +446,7 @@ fn heal_prediction_tostring() {
 // ============================================================================
 
 #[test]
-fn curve_object_is_table_with_methods() {
+fn curve_object_is_userdata_with_methods() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, has_add, has_eval): (String, bool, bool) = env
         .eval(
@@ -458,7 +458,7 @@ fn curve_object_is_table_with_methods() {
         "#,
         )
         .unwrap();
-    assert_eq!(typ, "table");
+    assert_eq!(typ, "userdata");
     assert!(has_add);
     assert!(has_eval);
 }
@@ -480,7 +480,7 @@ fn curve_object_add_and_evaluate() {
 }
 
 #[test]
-fn curve_object_copy_returns_table() {
+fn curve_object_copy_returns_userdata() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, count): (String, i64) = env
         .eval(
@@ -493,7 +493,7 @@ fn curve_object_copy_returns_table() {
         "#,
         )
         .unwrap();
-    assert_eq!(typ, "table");
+    assert_eq!(typ, "userdata");
     assert_eq!(count, 2);
 }
 
@@ -527,7 +527,7 @@ fn curve_object_tostring() {
 }
 
 #[test]
-fn color_curve_object_is_table() {
+fn color_curve_object_is_userdata() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, has_eval): (String, bool) = env
         .eval(
@@ -538,22 +538,53 @@ fn color_curve_object_is_table() {
         "#,
         )
         .unwrap();
-    assert_eq!(typ, "table");
+    assert_eq!(typ, "userdata");
     assert!(has_eval);
 }
 
 #[test]
-fn color_curve_copy_returns_table() {
+fn curve_objects_keep_native_identity_through_securecopy() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local scalar = C_CurveUtil.CreateCurve()
+        scalar:AddPoint(0, 10)
+        scalar:AddPoint(1, 20)
+        local color = C_CurveUtil.CreateColorCurve()
+        color:AddPoint(0, CreateColor(1, 0, 0, 0.2))
+        color:AddPoint(1, CreateColor(0, 0, 1, 1))
+        local options = {scalar=scalar, textColor={curve=color}}
+        local copied = securecopy(options)
+        assert(copied ~= options and copied.textColor ~= options.textColor)
+        assert(copied.scalar == scalar and copied.textColor.curve == color)
+        assert(copied.scalar:Evaluate(0.5) == 15)
+        local r,g,b,a = copied.textColor.curve:Evaluate(0.5):GetRGBA()
+        assert(r == 0.5 and g == 0 and b == 0.5 and math.abs(a - 0.6) < 0.00001)
+        local independent = color:Copy()
+        assert(independent ~= color and type(independent) == 'userdata')
+        color:ClearPoints()
+        assert(independent:GetPointCount() == 2 and color:GetPointCount() == 0)
+        r,g,b,a = independent:Evaluate(0.5):GetRGBA()
+        assert(r == 0.5 and b == 0.5 and math.abs(a - 0.6) < 0.00001)
+        assert(not pcall(C_AuraContainerUtil.ProcessCustomAuraButtonDurationTextOptions,
+            {textColor={curve={Evaluate=function() end, Copy=function() end}}}))
+    "#,
+    )
+    .expect("securecopy retains curve handles and copied curves retain independent values");
+}
+
+#[test]
+fn color_curve_copy_returns_userdata() {
     let env = WowLuaEnv::new().unwrap();
     let typ: String = env
         .eval(
             r#"
             local cc = C_CurveUtil.CreateColorCurve()
-            cc:AddPoint(0, 1)
+            cc:AddPoint(0, CreateColor(1, 0, 0, 1))
             local copy = cc:Copy()
             return type(copy)
         "#,
         )
         .unwrap();
-    assert_eq!(typ, "table");
+    assert_eq!(typ, "userdata");
 }
