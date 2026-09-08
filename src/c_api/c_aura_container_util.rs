@@ -91,6 +91,8 @@ const TEXTURE_SLICE: &[Field] = &[
     ("drawLayerSublevel", Number, Presence::Number(0.0)),
 ];
 const APPLICATION_BAR: &[Field] = &[
+    #[cfg(feature = "retail-12-1-5")]
+    ("minApplications", Number, Presence::Number(0.0)),
     ("maxApplications", Number, Required),
     ("interpolation", Enum(1), Optional),
 ];
