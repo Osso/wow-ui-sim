@@ -19,6 +19,7 @@ mod global_functions;
 mod housing_event_dispatch;
 mod housing_result;
 mod item_collection_secret_aspects;
+mod patch_12_1_5_bag_forbidden_enums;
 
 macro_rules! active_retail_12_0_0_test_modules {
     ($($module:item)*) => {
