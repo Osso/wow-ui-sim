@@ -12,7 +12,7 @@ Retail-family secure Blizzard functions use a distinct object-table partition fo
 
 ## How it works
 
-- `rilua` optional environment-transfer hook, pinned to `f1eab545d3536cec8a64a3e1491ee9e06dd1b091`.
+- `rilua` optional environment-transfer hook, pinned to `b6387563c8cd7882194cec368e626ebc72a17b81`.
 - `src/lua_api/script_object_transfer.rs` registers a host conversion callback after secure-environment creation. Canonical registry mappings identify partitions, not user-controlled backlink fields alone.
 - `src/lua_api/env_init/shared_bootstrap.lua` constructs and interns forbidden tables.
 
