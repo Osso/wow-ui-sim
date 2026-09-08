@@ -121,11 +121,11 @@ impl HitGrid {
         self.rects.get(&id).is_some_and(|r| r.contains(pos))
     }
 
-    /// Remove a frame from the grid.
+    /// Remove hit geometry without changing the frame's current render rank.
     ///
-    /// Uses the stored rect to find which cells contained the frame.
+    /// Render membership changes only when the batch refreshes bucket order.
+    /// Keeping the rank permits a coalesced Hide/Show to reinsert the frame.
     pub fn remove(&mut self, id: u64) {
-        self.keys.remove(&id);
         let Some(rect) = self.rects.remove(&id) else {
             return;
         };

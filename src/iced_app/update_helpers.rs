@@ -94,6 +94,59 @@ fn hittable_rect(
     ))
 }
 
+#[cfg(test)]
+mod tests {
+    use super::apply_hit_grid_batch;
+    use crate::iced_app::frame_collect::collect_hittable_frames;
+    use crate::iced_app::hit_grid::HitGrid;
+    use crate::iced_app::strata_emit::build_hittable_rects;
+    use crate::lua_api::WowLuaEnv;
+    use iced::Point;
+
+    #[test]
+    fn coalesced_hide_show_preserves_final_hit_order_without_rebuilding_grid() {
+        let env = WowLuaEnv::new().unwrap();
+        env.set_screen_size(800.0, 600.0);
+        env.exec(
+            r#"
+            BatchBottom = CreateFrame("Button", "BatchBottom", UIParent)
+            BatchBottom:SetSize(100, 100)
+            BatchBottom:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+            BatchBottom:EnableMouse(true)
+            BatchTop = CreateFrame("Button", "BatchTop", UIParent)
+            BatchTop:SetAllPoints(BatchBottom)
+            BatchTop:EnableMouse(true)
+            "#,
+        )
+        .unwrap();
+        let mut state = env.state().borrow_mut();
+        state.ensure_layout_rects();
+        let bottom = state.widgets.get_id_by_name("BatchBottom").unwrap();
+        let top = state.widgets.get_id_by_name("BatchTop").unwrap();
+        let buckets = vec![vec![bottom, top]];
+        let collected = collect_hittable_frames(&state.widgets, &buckets);
+        let rectangles = build_hittable_rects(&collected, &state.widgets);
+        let mut incremental = HitGrid::new(rectangles.clone(), 800.0, 600.0);
+        let rebuilt = HitGrid::new(rectangles, 800.0, 600.0);
+        let point = Point::new(100.0, 100.0);
+        assert_eq!(incremental.topmost_matching_at(point, |_| true), Some(top));
+
+        apply_hit_grid_batch(
+            &mut incremental,
+            &state.widgets,
+            &buckets,
+            [top],
+            &[(top, false), (top, true)],
+        );
+        assert_eq!(
+            incremental.topmost_matching_at(point, |_| true),
+            rebuilt.topmost_matching_at(point, |_| true),
+            "coalesced visibility notifications must retain final visible membership",
+        );
+        assert_eq!(incremental.topmost_matching_at(point, |_| true), Some(top));
+    }
+}
+
 /// Check if a frame is a CheckButton that should be auto-toggled (not an action bar button).
 pub(super) fn is_toggleable_checkbutton(state: &crate::lua_api::SimState, frame_id: u64) -> bool {
     let is_checkbutton = state
