@@ -184,10 +184,20 @@ fn lua_error_cli_final_summary_includes_post_load_events_and_updates() {
     assert!(loading.contains("Failed during loading: 0\n"));
     assert!(final_summary.contains("Status: FAILED\n"));
     assert!(final_summary.contains("Lua errors: 3 unique, 3 occurrence(s)\n"));
-    assert!(final_summary.contains("Attributed owners: 2\n"));
-    assert!(final_summary.contains("  LuaErrorCliFixture: 2 occurrence(s)\n"));
-    assert!(final_summary.contains("  __BuiltIn: 1 occurrence(s)\n"));
-    assert!(final_summary.contains("Unattributed Lua errors: 0 occurrence(s)\n"));
+    assert!(
+        final_summary.contains("Attributed owners: 1\n"),
+        "{final_summary}"
+    );
+    assert!(
+        final_summary.contains("  LuaErrorCliFixture: 2 occurrence(s)\n"),
+        "{final_summary}"
+    );
+    // The dispatch label __BuiltIn does not supply an addon owner for this exec-created frame.
+    assert!(!final_summary.contains("  __BuiltIn:"), "{final_summary}");
+    assert!(
+        final_summary.contains("Unattributed Lua errors: 1 occurrence(s)\n"),
+        "{final_summary}"
+    );
 }
 
 #[test]
