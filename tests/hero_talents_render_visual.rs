@@ -425,6 +425,20 @@ fn hero_spec_icon_full_ui_render_matches_isolated_crop_render() {
 
 #[test]
 fn hero_spec_icon_mask_clips_corners_but_preserves_center_pixels() {
+    assert_mask_preserves_icon_pixels(r"Interface\\Masks\\CircleMask");
+}
+
+#[test]
+fn active_spellbook_mask_preserves_black_rgb_opaque_alpha_center() {
+    assert_mask_preserves_icon_pixels(r"Interface\\Spellbook\\SpellBookElementsIconMask");
+}
+
+#[test]
+fn passive_spellbook_mask_preserves_white_rgb_opaque_alpha_center() {
+    assert_mask_preserves_icon_pixels(r"Interface\\TalentFrame\\TalentsMaskNodeCircle");
+}
+
+fn assert_mask_preserves_icon_pixels(mask_path: &str) {
     if common::try_create_gpu_device().is_none() {
         eprintln!("Skipping GPU masking test: no adapter available");
         return;
@@ -432,7 +446,7 @@ fn hero_spec_icon_mask_clips_corners_but_preserves_center_pixels() {
 
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(128.0, 128.0);
-    env.exec(
+    env.exec(&format!(
         r#"
         local frame = CreateFrame("Frame", "MaskPixelHarness", UIParent)
         frame:SetSize(64, 64)
@@ -444,11 +458,11 @@ fn hero_spec_icon_mask_clips_corners_but_preserves_center_pixels() {
 
         local mask = frame:CreateMaskTexture("MaskPixelHarnessMask", "ARTWORK")
         mask:SetAllPoints()
-        mask:SetTexture("Interface\\Masks\\CircleMask")
+        mask:SetTexture("{mask_path}")
 
         icon:AddMaskTexture(mask)
     "#,
-    )
+    ))
     .expect("failed to build mask pixel harness");
 
     let icon_id = {
