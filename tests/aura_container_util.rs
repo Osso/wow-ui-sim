@@ -3,6 +3,32 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
+fn aura_stealable_filter_enum_and_options_match_native_contract() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local function check()
+            local filter = Enum.CustomAuraButtonDispelTypeStealableFilter
+            assert(type(filter) == 'table', 'native stealable filter enum missing')
+            assert(filter.Stealable == 0 and filter.NotStealable == 1)
+            local count = 0
+            for _ in pairs(filter) do count = count + 1 end
+            assert(count == 2)
+            local meta = Enum.CustomAuraButtonDispelTypeStealableFilterMeta
+            assert(meta.MinValue == 0 and meta.MaxValue == 1 and meta.NumValues == 2)
+            for _, value in ipairs({ filter.Stealable, filter.NotStealable }) do
+                local input = { showWhenHelpful = true, stealableFilter = value }
+                local output = C_AuraContainerUtil.ProcessCustomAuraButtonDispelTypeTextureOptions(input)
+                assert(output ~= input and output.stealableFilter == value)
+                assert(output.showWhenHelpful == true)
+            end
+        end
+        check()
+        setfenv(check, __secureenv)
+        check()
+    "#).unwrap();
+}
+
+#[test]
 fn aura_option_defaults_are_available_in_public_and_secure_environments() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
