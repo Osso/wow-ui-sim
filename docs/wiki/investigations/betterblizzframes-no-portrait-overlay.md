@@ -12,7 +12,7 @@ Saved configuration enables `BetterBlizzFramesDB.noPortraitModes`. BetterBlizzFr
 
 Mask correction `939efe88d` changed alpha sampling only. It did not change frame strata, levels, parentage, or render order.
 
-The last known-good state is unknown. The user reports real WoW keeps the overlay below SpellBook, but raw native values have not yet been captured. No overlap correction or addon-setting change has been applied.
+The last known-good state is unknown. The received raw native values are recorded below; controlled native comparisons have not yet been captured. No overlap correction or addon-setting change has been applied.
 
 ## Native capture
 
