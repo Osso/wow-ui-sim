@@ -37,11 +37,11 @@ Top-level frame subtrees render in their top-level owner's strata group without 
 
 The 2026-09-08 retail `12.1.0.69587` controlled capture at physical 1440-pixel display height (`/tmp/pi-unit-controls-native.lua`, archived ignored at `docs/local/private/probes/UnitFrameLayerProbe-controls-2026-09-08.lua`) classifies case 1 BLUE and cases 2–5 RED in created, panel-hide-show, and panel-raise screenshots (`/tmp/pi-native-control-pixels.json`). The created MEDIUM controls report raised `0`; after hide/show they report `33..37`, and after explicit Raise `38..42`; LOW parent and red controls remain `0`. These values are observed transition ordinals, not constants or global ordering keys.
 
-## Evidence and remaining verification
+## Verification
 
-Core integration coverage passed 13 cases. Input-focused coverage previously passed 28/29 cases; the sole stale-group reparent case then passed separately after `2d3693f30`. These are not a combined all-green rerun.
+Independent affected coverage passed 48 library and 32 integration cases at `2d3693f30`, with one existing diagnostic ignored. After readability-only refactors, stable `ffc125710` passed formatting, `cargo check`, 10 affected library cases and 13 affected integration cases. Those 23 are intersecting rechecks, not additional distinct tests. See `/tmp/pi-toplevel-final-verification.md`.
 
-Private actual-addon/SavedVariables proof `/tmp/pi-layering-fixed-fullscene.webp` and `/tmp/pi-layering-fixed-fullscene.json` shows the BetterBlizzFrames overlay behind SpellBook while raw state remains `HIGH`/level `2` versus `MEDIUM`/level `1`; colored spell icons remain visible and Clicked preserves tooltip spell ID `45524`. Final combined verification and readability remain pending.
+Private actual-addon/SavedVariables proof `/tmp/pi-layering-fixed-fullscene.webp` and `/tmp/pi-layering-fixed-fullscene.json` shows the BetterBlizzFrames overlay behind SpellBook while raw state remains `HIGH`/level `2` versus `MEDIUM`/level `1`; colored spell icons remain visible and Clicked preserves tooltip spell ID `45524`. Independent verification inspected the images and confirmed the overlay remains visible/alpha 1 in the model and still emits its texture in the LOW owner bucket; it was not hidden. Readability findings were resolved and rechecked. Default binaries were rebuilt.
 
 ## Out of scope
 

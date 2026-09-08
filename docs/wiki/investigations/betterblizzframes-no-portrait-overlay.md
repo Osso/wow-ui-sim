@@ -26,7 +26,7 @@ The controlled capture then records every control at physical 1440-pixel display
 
 `f5d9ff91f` implements owner-strata grouping and the native-compatible raised-level getter boundary without changing raw strata or raw frame levels. `4e89f895a` makes flattened render-bucket rank the hit-test ordering source of truth; `a9ef47c06` retains that rank through coalesced Hide→Show. `2d3693f30` invalidates stale owner groups and hit eligibility when `SetParent` changes a frame's parent without changing its raw strata.
 
-The actual retail-addon/SavedVariables scene is captured privately at `/tmp/pi-layering-fixed-fullscene.webp` with execution record `/tmp/pi-layering-fixed-fullscene.json`: BetterBlizzFrames no-portrait remains enabled; `PlayerFrame.noPortraitMode` is still raw `HIGH`/level `2`, while `PlayerSpellsFrame` remains raw `MEDIUM`/level `1`; the unit overlay visibly renders behind SpellBook. Colored spell icons remain visible, and real Clicked tooltip identity for spell `45524` succeeds. This is visual acceptance evidence, not a claim that every focused test has rerun together.
+The actual retail-addon/SavedVariables scene is captured privately at `/tmp/pi-layering-fixed-fullscene.webp` with execution record `/tmp/pi-layering-fixed-fullscene.json`: BetterBlizzFrames no-portrait remains enabled; `PlayerFrame.noPortraitMode` is still raw `HIGH`/level `2`, while `PlayerSpellsFrame` remains raw `MEDIUM`/level `1`; the unit overlay visibly renders behind SpellBook. Colored spell icons remain visible, and real Clicked tooltip identity for spell `45524` succeeds. The overlay remains visible with alpha 1 and its texture still emits in the LOW owner bucket, beneath the paper. Independent verification passed 48 library and 32 integration cases; after readability-only refactors, stable `ffc125710` passed formatting/checks and the intersecting 10 library plus 13 integration cases. The earlier full batch was not repeated. See `/tmp/pi-toplevel-final-verification.md` for exact scopes and remaining limits.
 
 ## Sources
 
@@ -35,6 +35,7 @@ The actual retail-addon/SavedVariables scene is captured privately at `/tmp/pi-l
 - `/tmp/pi-native-control-pixels.json` — authoritative screenshot pixel classification
 - `/tmp/pi-layering-fixed-fullscene.webp` — private actual-addon/SavedVariables visual proof
 - `/tmp/pi-layering-fixed-fullscene.json` — private scene state and tooltip execution record
+- `/tmp/pi-toplevel-final-verification.md` — independent final checks, visual audit and limits
 - [UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) — controlled capture protocol
 
 ## See Also
