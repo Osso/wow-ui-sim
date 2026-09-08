@@ -1,3 +1,7 @@
+## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
+
+[[betterblizzframes-no-portrait-overlay]] records the observed `Uther` overlay: saved BetterBlizzFrames no-portrait mode creates a `HIGH`-strata child above the `MEDIUM` SpellBook. The mask correction did not alter ordering; no simulator or user-setting change is justified without approval.
+
 ## [2026-09-08] acceptance | Actual addon startup and accepted PlayerSpells interaction
 
 Actual retail addons and SavedVariables now produce `[]`, exit 0, and final `CLEAN` with zero unique/occurrence Lua errors in `/tmp/pi-accepted-final-startup.*`; three loader warnings remain. The user accepted the 1906-unit GUI canvas: native Escape closes specialization without GameMenu, and SpellBook has 43 visible rows with 41 valid entries in `/tmp/pi-gui-accepted-panels.json`. The narrower 1266-unit panel-fit overflow remains unsupported. See [[playerspells-runtime-load]], [Lua error reporting](../specs/lua-error-reporting.md), and [talents panel](../specs/talents-panel.md).
