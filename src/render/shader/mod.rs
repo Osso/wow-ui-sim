@@ -21,7 +21,6 @@ pub use primitive::{GpuBcTextureData, GpuTextureData, WowUiPrimitive, load_textu
 pub use program::WowUiProgram;
 pub use quad::FLAG_CIRCLE_CLIP;
 pub use quad::FLAG_DESATURATE;
-pub use quad::FLAG_MASK_ALPHA_COVERAGE;
 pub use quad::{BlendMode, FrameQuadSnapshot, QuadBatch, QuadVertex, TextureRequest};
 pub(crate) use quad_batch_extras::ThreeSlicePathParams;
 pub use quad_nine_slice::NineSliceTextures;

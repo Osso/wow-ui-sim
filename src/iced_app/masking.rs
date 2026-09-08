@@ -54,7 +54,6 @@ pub fn apply_mask_path(
         path: mask_path.to_string(),
         screen_rect: icon_bounds,
         tex_coords: (0.0, 1.0, 0.0, 1.0),
-        coverage: mask_coverage_for_path(mask_path),
     };
     apply_mask_to_quads(batch, vert_before, mask_info);
     batch.mask_texture_requests.push(TextureRequest::new(
@@ -68,13 +67,6 @@ struct MaskInfo {
     path: String,
     screen_rect: Rectangle,
     tex_coords: (f32, f32, f32, f32),
-    coverage: MaskCoverage,
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum MaskCoverage {
-    RgbIntensity,
-    Alpha,
 }
 
 fn resolve_mask_info(
@@ -92,19 +84,10 @@ fn resolve_mask_info(
         return None;
     }
     Some(MaskInfo {
-        coverage: mask_coverage_for_path(&path),
         path,
         screen_rect: mask_screen,
         tex_coords: mask_frame.tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0)),
     })
-}
-
-fn mask_coverage_for_path(path: &str) -> MaskCoverage {
-    let normalized = path.replace('\\', "/").to_ascii_lowercase();
-    if normalized.contains("alphamask") || normalized.contains("uiactionbariconframemask") {
-        return MaskCoverage::Alpha;
-    }
-    MaskCoverage::RgbIntensity
 }
 
 fn truncate_masked_vertices(batch: &mut QuadBatch, vert_before: usize) {
@@ -128,7 +111,6 @@ fn apply_mask_to_quads(batch: &mut QuadBatch, vert_before: usize, mask_info: Mas
         apply_mask_to_quad(
             &mut batch.vertices[i..end],
             mask_info.screen_rect,
-            mask_info.coverage,
             tl,
             tr,
             tt,
@@ -140,7 +122,6 @@ fn apply_mask_to_quads(batch: &mut QuadBatch, vert_before: usize, mask_info: Mas
 fn apply_mask_to_quad(
     vertices: &mut [crate::render::shader::QuadVertex],
     mask_screen: Rectangle,
-    coverage: MaskCoverage,
     tl: f32,
     tr: f32,
     tt: f32,
@@ -156,9 +137,6 @@ fn apply_mask_to_quad(
     for (index, vertex) in vertices.iter_mut().enumerate() {
         vertex.mask_tex_index = -2;
         vertex.mask_tex_coords = mask_uvs[index];
-        if coverage == MaskCoverage::Alpha {
-            vertex.flags |= crate::render::shader::FLAG_MASK_ALPHA_COVERAGE;
-        }
     }
 }
 
@@ -379,35 +357,6 @@ mod tests {
                 .vertices
                 .iter()
                 .all(|vertex| vertex.mask_tex_index == -2)
-        );
-    }
-
-    #[test]
-    fn action_button_icon_masks_use_alpha_channel_coverage() {
-        let mut batch = QuadBatch::new();
-        let bounds = Rectangle::new(iced::Point::new(0.0, 0.0), iced::Size::new(20.0, 20.0));
-        batch.vertices.extend(quad(bounds));
-        batch.indices.extend([0, 1, 2, 0, 2, 3]);
-
-        let mut registry = WidgetRegistry::new();
-        let mut mask = Frame::default();
-        mask.id = 1;
-        mask.texture = Some(r"Interface\hud\uiactionbariconframemask".to_string());
-        mask.layout_rect = Some(crate::LayoutRect {
-            x: 0.0,
-            y: 0.0,
-            width: 20.0 / UI_SCALE,
-            height: 20.0 / UI_SCALE,
-        });
-        registry.register(mask);
-
-        apply_mask_texture(&mut batch, 0, bounds, &[1], &registry);
-
-        assert!(
-            batch.vertices.iter().all(|vertex| {
-                (vertex.flags & crate::render::shader::FLAG_MASK_ALPHA_COVERAGE) != 0
-            }),
-            "action-bar icon masks store coverage in alpha; RGB intensity would hide black visible regions"
         );
     }
 }
