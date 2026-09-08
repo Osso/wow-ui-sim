@@ -51,6 +51,31 @@ fn duration_binding_assign_preserves_receiver_and_configuration_handles() {
 }
 
 #[test]
+fn duration_binding_survives_secure_option_copy_without_losing_handle_identity() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local source = C_DurationUtil.CreateDurationTextBinding()
+        local label = CreateFrame('Frame'):CreateFontString()
+        source:SetFontString(label)
+        source:SetDuration(7)
+        local options = {binding=source, textFormat={formatString='%s', components={}}}
+        local copied = securecopy(options)
+        assert(copied ~= options and copied.textFormat ~= options.textFormat)
+        assert(copied.binding == source, 'securecopy preserves the binding handle')
+        local processed = C_AuraContainerUtil.ProcessCustomAuraButtonDurationTextOptions(copied)
+        local receiver = C_DurationUtil.CreateDurationTextBinding()
+        receiver:Assign(processed.binding)
+        assert(receiver:GetFontString() == label)
+        receiver:UpdateFontString()
+        assert(label:GetText() == '7')
+        assert(not pcall(receiver.Assign, receiver, {__wowDurationTextBinding=true}))
+        "#,
+    )
+    .expect("secure option copying preserves native binding identity and rejects forged tables");
+}
+
+#[test]
 fn duration_binding_copy_updates_text_with_independent_configuration() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

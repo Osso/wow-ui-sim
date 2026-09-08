@@ -1,4 +1,4 @@
-//! Table-backed duration text bindings exposed by C_DurationUtil.
+//! Userdata duration text binding handles exposed by C_DurationUtil.
 //!
 //! Configuration copying is modeled here. Existing formatting, clock, and
 //! update behavior is retained; this does not establish native timing or
@@ -58,7 +58,7 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
         "textColorCurve", "textColorProperty",
     }
     local function require_binding(value)
-        if type(value) ~= "table" or not bindings[value] then
+        if type(value) ~= "userdata" or not bindings[value] then
             error("DurationTextBinding expected", 3)
         end
     end
@@ -77,7 +77,7 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
         return copy
     end
     local function create_duration_text_binding(duration, fontString)
-        local binding = {
+        local configuration = {
             duration = duration ~= nil and duration or create_duration_value(0),
             fontString = fontString,
             enabled = true,
@@ -90,6 +90,11 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
             textFormatComponents = nil,
             clock = create_duration_clock(0),
         }
+        -- Native handles survive securecopy(options); configuration tables do not.
+        local binding = newproxy(true)
+        local metatable = getmetatable(binding)
+        metatable.__index = configuration
+        metatable.__newindex = configuration
         bindings[binding] = true
         function binding:Assign(other)
             require_binding(self)

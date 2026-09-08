@@ -1,6 +1,6 @@
 # Duration text binding configuration
 
-`C_DurationUtil.CreateDurationTextBinding` uses the existing table-backed binding model in `src/c_api/duration_text_binding.rs`. This change adds the documented `Assign` and `Copy` operations without changing constructor, formatting, clock, or update scheduling behavior. See [the 12.0.7 API audit](../wiki/investigations/patch-12-0-7-api-audit.md) for existing compatibility limits.
+`C_DurationUtil.CreateDurationTextBinding` creates userdata handles backed by configuration in `src/c_api/duration_text_binding.rs`. The pinned `DurationTextBindingObjectAPIDocumentation.lua` declares `ObjectType = "Userdata"`. Documented `Assign` and `Copy` operations retain existing constructor, formatting, clock, and update scheduling behavior. See [the 12.0.7 API audit](../wiki/investigations/patch-12-0-7-api-audit.md) for existing compatibility limits.
 
 ## What it must do
 
@@ -8,7 +8,7 @@
 - [ ] `Copy()` returns a distinct binding with independent configuration. Duration, font-string, clock, formatter, and color-curve object handles remain shared references.
 - [ ] Copy format-component containers and records while retaining formatter handles. Later source component mutations must not alter the assigned or copied binding.
 - [ ] Copy absent values as absent, clearing prior receiver configuration. Preserve enabled state, interval, modifier, expired/zero text, and color-curve property.
-- [ ] Support Blizzard `CustomAuraButton:SetDurationText(..., {binding=...})` without replacing the source binding's display target.
+- [ ] Support Blizzard `CustomAuraButton:SetDurationText(..., {binding=...})` without replacing the source binding's display target. Its `securecopy(options)` must copy ordinary option tables while retaining the binding handle; copied or forged tables are not binding objects.
 
 ## How it works
 
@@ -23,13 +23,13 @@
 
 ## Tests asserting this spec
 
-- `tests/duration_text_binding_copy.rs` — five behavioral cases, including the actual aura initializer.
+- `tests/duration_text_binding_copy.rs` — six behavioral cases, including secure option copying and the actual aura initializer.
 - `tests/numeric_rule_formatter.rs` — existing formatter-to-font-string binding behavior.
 
 ## Known gaps (current cycle)
 
-- [ ] GREEN verification of the five assignment/copy cases is pending; their missing-method RED is recorded in `/tmp/pi-final-aura-primitives-current-red.*`.
+- [ ] Parent-owned GREEN verification remains pending. Four assignment/copy cases passed, while the actual aura initializer failed after `securecopy` lost table-backed binding identity (`/tmp/pi-aura-three-models-green.*`).
 
 ## Out of scope
 
-This retains the existing table-backed representation and best-effort formatting behavior. It does not establish native userdata representation, exact clocks, automatic scheduling, expiration policy, color-curve evaluation, or secret-value enforcement. No new behavior is claimed for those domains.
+This retains existing best-effort formatting behavior. It does not establish complete native userdata behavior, exact clocks, automatic scheduling, expiration policy, color-curve evaluation, or secret-value enforcement. No new behavior is claimed for those domains.
