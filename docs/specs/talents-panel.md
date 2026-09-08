@@ -10,6 +10,7 @@ The Blizzard talents UI loaded from `Interface/BlizzardUI/Blizzard_PlayerSpells/
 - [ ] Talents panel loads without Lua errors with `--no-addons` (Blizzard UI only)
 - [ ] Opening the panel via `/run TogglePlayerSpells()` (or equivalent) does not raise a Lua error
 - [ ] Closing the panel does not leak frames or leave dangling pool entries
+- [x] With the actual addon/SavedVariables configuration at the user-accepted 1906-unit canvas, native GUI Escape closes specialization without opening GameMenu.
 
 ### Taint / security model
 
@@ -54,9 +55,15 @@ The Blizzard talents UI loaded from `Interface/BlizzardUI/Blizzard_PlayerSpells/
 
 ## Known gaps (current cycle)
 
+- [ ] At the narrower 1266-unit canvas, PlayerSpells exceeds the 1186-unit center-panel capacity. Blizzard clears its center slot, so Escape opens GameMenu; this configuration remains unsupported.
 - [ ] Hero talents subtree not yet rendered
 - [ ] PvP talent variants untested in CI
 - [ ] Taint model bug: `Pools.AddObject` rejects talent frames as tainted (see PLAN.md root cause analysis)
+
+## Evidence
+
+- `/tmp/pi-gui-escape-wide.json` — real addon/SavedVariables GUI proof at the accepted 1906-unit canvas.
+- `/tmp/pi-gui-escape-fit-hook.json` — narrow-canvas fit failure; observes BlizzMove and EnhanceQoLMover fit callbacks without assigning sole cause.
 
 ## Out of scope
 

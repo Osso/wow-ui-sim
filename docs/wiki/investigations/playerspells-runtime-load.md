@@ -37,10 +37,23 @@ The global `ToggleSpellBook()` path must not treat a successful Lua call as proo
 
 The fix checks whether `PlayerSpellsFrame` reached the expected toggled visibility after the helper call. If not, `ToggleSpellBook()` uses its existing `open_panels`/frame-visibility fallback. Real full-UI helper behavior remains Blizzard-owned; the fallback covers only the helper no-op or failure path.
 
+## Addon-configured Escape viewport (2026-09-08)
+
+The user accepted the wider simulator window as the Escape acceptance viewport. With the real retail addon path and SavedVariables, resizing the owned Niri tile to 1920 pixels produced a 1906-unit canvas. `PlayerSpellsFrame` then fit the center panel (`1294.4` panel width), remained registered, and one native GUI `ESCAPE` IPC request left PlayerSpells, specialization, and GameMenu all hidden.
+
+At the narrower 1266-unit canvas, PlayerSpells exceeds the 1186-unit center capacity. Blizzard `UpdateUIPanelPositions` clears the center slot at `UIParentPanelManager.lua:663`; Escape consequently has no panel to close and opens GameMenu. This remains unfixed. The observed callbacks include BlizzMove and EnhanceQoLMover scale-fit hooks; evidence does not establish either as the sole cause. No addon settings or vendor Lua were changed.
+
 ## Sources
 
 - `/tmp/CharacterPlayerSpellsProbe-live-2026-08-28.lua` — live retail SavedVariables capture; SHA-256 `40dcf028acd5605d675810abbfc9eb8aa63147425ed5f8bb8b3b54b78c997595`
+- `/tmp/pi-gui-escape-wide.json` — actual addon/SavedVariables GUI proof at the accepted wider viewport
+- `/tmp/pi-gui-escape-fit-hook.json` — narrow-canvas fit and callback diagnostics
 - [test_showuipanel_toggles.rs](../../../tests/test_showuipanel_toggles.rs) — commit `38bc75892` fixture using dependency-aware `C_AddOns.LoadAddOn`
 - [panel_toggle_verbs.rs](../../../src/lua_api/globals/panel_toggle_verbs.rs) — SpellBook helper/fallback decision
 - [panel_toggle_verbs.rs tests](../../../tests/panel_toggle_verbs.rs) — bare-environment regression coverage
 - [player_spells_onload_backfill.rs](../../../src/lua_api/workarounds/temporary/player_spells_onload_backfill.rs) — temporary helper bootstrap
+
+## See Also
+
+- [[layout-system]] — canvas dimensions affect Blizzard panel fit
+- [[lua-api]] — runtime panel and input surface
