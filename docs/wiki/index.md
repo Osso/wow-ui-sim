@@ -1,3 +1,7 @@
+## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
+
+[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. All rows start evidence-required/unsafe pending occurrence-specific proof; this is source coverage, not runtime acceptance.
+
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 
 [[betterblizzframes-no-portrait-overlay]] records controlled retail owner-group evidence and actual-addon visual proof. `f5d9ff91f` groups descendants at owner strata while preserving raw state; `4e89f895a`/`a9ef47c06` make render-bucket rank input SSOT through coalesced visibility; `2d3693f30` invalidates cached groups on reparenting. Private `/tmp/pi-layering-fixed-fullscene.webp` and `.json` show BetterBlizzFrames' raw `HIGH`/level `2` overlay behind raw `MEDIUM`/level `1` SpellBook, with icons and Clicked tooltip spell `45524` intact. Core 13-case and reparent follow-up pass; a combined all-green rerun and readability remain pending.
