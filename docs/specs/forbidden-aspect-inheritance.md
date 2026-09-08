@@ -4,6 +4,8 @@ Frames and regions retain owned forbidden aspects and separate hierarchy/layout 
 
 ## What it must do
 
+- [ ] Publish `Enum.ScriptObjectPropagationPath` (`Hierarchy=0`, `Layout=1`) and its metadata before frame methods are called.
+
 - [ ] Resolve every XML aspect name through the active enum, report unknown names, and apply the same declarations to literal XML and runtime template instances.
 - [ ] Merge declarations with inherited state. A nonempty mask implies `SetToDefaults`.
 - [ ] Propagate `UntrustedScriptExecution`, `UntrustedLayoutScriptExecution`, and `AlwaysPropagateInput` through parent ownership; only `UntrustedLayoutScriptExecution` propagates through layout dependencies by default.

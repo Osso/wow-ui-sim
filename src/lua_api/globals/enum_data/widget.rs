@@ -83,6 +83,18 @@ pub const VALUE_ADDED_SERVICE_TYPE: EnumDef = (
 );
 
 #[cfg(feature = "retail-12-1-0")]
+pub const SCRIPT_OBJECT_PROPAGATION_PATH: EnumDef = (
+    "ScriptObjectPropagationPath",
+    &[("Hierarchy", 0), ("Layout", 1)],
+);
+
+#[cfg(feature = "retail-12-1-0")]
+pub const SCRIPT_OBJECT_PROPAGATION_PATH_META: EnumDef = (
+    "ScriptObjectPropagationPathMeta",
+    &[("MinValue", 0), ("MaxValue", 1), ("NumValues", 2)],
+);
+
+#[cfg(feature = "retail-12-1-0")]
 pub const FORBIDDEN_ASPECT: EnumDef = (
     "ForbiddenAspect",
     &[

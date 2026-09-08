@@ -312,6 +312,10 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     CHARACTER_CREATE_TYPE,
     VALUE_ADDED_SERVICE_TYPE,
     #[cfg(feature = "retail-12-1-0")]
+    SCRIPT_OBJECT_PROPAGATION_PATH,
+    #[cfg(feature = "retail-12-1-0")]
+    SCRIPT_OBJECT_PROPAGATION_PATH_META,
+    #[cfg(feature = "retail-12-1-0")]
     FORBIDDEN_ASPECT,
     #[cfg(feature = "retail-12-1-0")]
     FORBIDDEN_ASPECT_META,

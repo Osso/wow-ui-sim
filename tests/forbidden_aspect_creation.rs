@@ -15,6 +15,9 @@ fn native_children_inherit_only_hierarchy_aspects_at_creation() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
         local e, path = Enum.ForbiddenAspect, Enum.ScriptObjectPropagationPath
+        assert(path.Hierarchy == 0 and path.Layout == 1, 'native propagation path values')
+        local meta = Enum.ScriptObjectPropagationPathMeta
+        assert(meta.MinValue == 0 and meta.MaxValue == 1 and meta.NumValues == 2)
         local parent = CreateFrame('Frame')
         parent:AddForbiddenAspects(bit.bor(e.UntrustedScriptExecution, e.UntrustedLayoutScriptExecution, e.AlwaysPropagateInput))
         assert(parent:GetInheritableForbiddenAspects(path.Hierarchy) == 44, 'hierarchy path is enum value zero')
