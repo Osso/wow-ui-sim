@@ -5,6 +5,8 @@ use std::collections::{HashMap, HashSet};
 use super::state::SimState;
 #[path = "state_render_buckets.rs"]
 mod state_render_buckets;
+#[path = "state_render_groups.rs"]
+mod state_render_groups;
 #[path = "state_render_repairs.rs"]
 mod state_render_repairs;
 use state_render_buckets::{
@@ -69,7 +71,7 @@ impl SimState {
             }
             self.move_raised_toplevel_segments_after_regular(bucket);
         }
-        buckets
+        self.regroup_toplevel_subtrees(buckets)
     }
 
     fn move_raised_toplevel_segments_after_regular(&self, bucket: &mut Vec<u64>) {
@@ -93,7 +95,7 @@ impl SimState {
         let mut owner_cache = HashMap::<u64, Option<(u64, u64)>>::new();
 
         for id in bucket.drain(..) {
-            match self.nearest_active_toplevel_owner(id, &mut owner_cache) {
+            match self.nearest_toplevel_owner(id, &mut owner_cache, true) {
                 Some((owner_id, show_order)) => append_raised_toplevel_id(
                     &mut segments,
                     &mut segment_indices,
@@ -107,10 +109,11 @@ impl SimState {
         (regular_ids, segments)
     }
 
-    fn nearest_active_toplevel_owner(
+    fn nearest_toplevel_owner(
         &self,
         id: u64,
         cache: &mut HashMap<u64, Option<(u64, u64)>>,
+        raised_only: bool,
     ) -> Option<(u64, u64)> {
         if let Some(owner) = cache.get(&id) {
             return *owner;
@@ -125,11 +128,22 @@ impl SimState {
             if let Some(owner) = cache.get(&frame_id) {
                 break *owner;
             }
-            if let Some(&show_order) = self.active_toplevel_show_orders.get(&frame_id) {
-                break Some((frame_id, show_order));
-            }
+            let Some(frame) = self.widgets.get(frame_id) else {
+                break None;
+            };
             path.push(frame_id);
-            current_id = self.widgets.get(frame_id).and_then(|frame| frame.parent_id);
+            if is_strata_root_boundary(frame) {
+                break None;
+            }
+            let order = self
+                .active_toplevel_show_orders
+                .get(&frame_id)
+                .copied()
+                .unwrap_or(0);
+            if frame.toplevel && (!raised_only || order > 0) {
+                break Some((frame_id, order));
+            }
+            current_id = frame.parent_id;
         };
 
         for frame_id in path {
@@ -434,14 +448,11 @@ impl SimState {
             return;
         };
         let was_toplevel = frame.toplevel;
-        let is_shown = frame.visible;
         frame.toplevel = toplevel;
 
-        let order_changed = if toplevel && is_shown {
-            self.ensure_toplevel_show_order(id)
-        } else {
-            self.active_toplevel_show_orders.remove(&id).is_some()
-        };
+        // Enabling the flag does not raise an already-shown frame. Native
+        // created controls retain zero until Hide/Show or explicit Raise.
+        let order_changed = !toplevel && self.active_toplevel_show_orders.remove(&id).is_some();
         if was_toplevel != toplevel || order_changed {
             self.pending_hit_grid_changes.push((id, true));
             self.invalidate_strata_buckets();
@@ -475,9 +486,10 @@ impl SimState {
         }
         self.widgets.propagate_effective_alpha(id, parent_eff);
         if visible {
-            // Top-level show order crosses raw frame levels, so its complete
-            // cross-strata segment requires a full bucket regroup.
+            // A grouped subtree spans local strata. A same-strata splice
+            // cannot rebuild its complete owner-anchored segment.
             if toplevel_order_changed
+                || self.toplevel_ancestors(id).next().is_some()
                 || (!self.try_repair_strata_buckets_after_show(id)
                     && !self.try_append_tooltip_root_after_show(id))
             {
@@ -498,14 +510,6 @@ impl SimState {
             return true;
         }
         self.active_toplevel_show_orders.remove(&id).is_some()
-    }
-
-    fn ensure_toplevel_show_order(&mut self, id: u64) -> bool {
-        if self.active_toplevel_show_orders.contains_key(&id) {
-            return false;
-        }
-        self.assign_next_toplevel_show_order(id);
-        true
     }
 
     fn assign_next_toplevel_show_order(&mut self, id: u64) {
@@ -630,16 +634,36 @@ impl SimState {
         frame.frame_strata
     }
 
-    /// Raise a frame above same-level siblings in the same strata.
-    ///
-    /// `Raise()` does not mutate `frame_level`, and retail does not let a lower
-    /// raw frame level jump above a higher one. `raise_order` is only a
-    /// same-level tie-breaker.
+    fn toplevel_ancestors(&self, id: u64) -> impl Iterator<Item = &crate::widget::Frame> {
+        std::iter::successors(self.widgets.get(id), |frame| {
+            frame.parent_id.and_then(|parent| self.widgets.get(parent))
+        })
+        .take_while(|frame| !is_strata_root_boundary(frame))
+        .filter(|frame| frame.toplevel)
+    }
+
+    /// Raised level belongs to the active top-level ancestor, not tooltip owner.
+    pub(crate) fn raised_frame_level(&self, id: u64) -> u64 {
+        self.toplevel_ancestors(id)
+            .find_map(|frame| self.active_toplevel_show_orders.get(&frame.id).copied())
+            .unwrap_or(0)
+    }
+
+    /// Raise within the existing raw level, or advance a shown top-level group.
+    /// Neither operation changes the frame's raw strata or frame level.
     pub fn raise_frame(&mut self, id: u64) {
-        let (parent_id, strata, level) = match self.widgets.get(id) {
-            Some(f) => (f.parent_id, f.frame_strata, f.frame_level),
+        let (parent_id, strata, level, raised_group) = match self.widgets.get(id) {
+            Some(f) => (
+                f.parent_id,
+                f.frame_strata,
+                f.frame_level,
+                f.toplevel && f.visible,
+            ),
             None => return,
         };
+        if raised_group {
+            self.assign_next_toplevel_show_order(id);
+        }
         let sibling_max_order = self
             .sibling_raise_order_range(id, parent_id, strata, level)
             .1;

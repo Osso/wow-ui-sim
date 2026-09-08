@@ -104,6 +104,22 @@ fn native_controls_keep_unraised_and_raised_groups_in_owner_strata() {
 }
 
 #[test]
+fn screen_roots_do_not_capture_independent_render_groups() {
+    let env = create_controls();
+    env.exec(
+        "UIParent:SetToplevel(true); UIParent:Raise(); \
+         WorldFrame:SetToplevel(true); WorldFrame:Raise()",
+    )
+    .unwrap();
+    assert_control_order(&env);
+    env.exec(
+        "assert(NativeLayerRed2:GetRaisedFrameLevel() == 0); \
+         assert(NativeLayerRed5:GetRaisedFrameLevel() == 0)",
+    )
+    .unwrap();
+}
+
+#[test]
 fn enabling_toplevel_on_created_frames_does_not_allocate_raised_level() {
     let env = create_controls();
     env.exec(

@@ -44,7 +44,7 @@ fn medium_bucket(state: &mut SimState) -> Vec<u64> {
 }
 
 #[test]
-fn raised_toplevel_root_keeps_same_strata_descendant_roots_in_one_segment() {
+fn raised_toplevel_root_keeps_cross_strata_descendants_in_one_segment() {
     let mut state = SimState::default();
 
     let mut ui_parent = test_frame(1, WidgetType::Frame, None, true);
@@ -57,6 +57,7 @@ fn raised_toplevel_root_keeps_same_strata_descendant_roots_in_one_segment() {
     state.widgets.register(panel_root);
     state.widgets.add_child(1, 10);
     state.set_frame_toplevel(10, true);
+    state.raise_frame(10);
 
     let mut low_wrapper = test_frame(11, WidgetType::Frame, Some(10), true);
     low_wrapper.frame_strata = FrameStrata::Low;
@@ -77,7 +78,7 @@ fn raised_toplevel_root_keeps_same_strata_descendant_roots_in_one_segment() {
     independent_root.frame_level = 7;
     state.widgets.register(independent_root);
 
-    assert_eq!(medium_bucket(&mut state), vec![20, 10, 12, 13]);
+    assert_eq!(medium_bucket(&mut state), vec![20, 11, 10, 12, 13]);
 }
 
 #[test]
@@ -110,12 +111,14 @@ fn repeated_toplevel_hide_show_moves_latest_panel_segment_to_top() {
     state.widgets.register(first_panel);
     state.widgets.add_child(1, 40);
     state.set_frame_toplevel(40, true);
+    state.raise_frame(40);
 
     let mut second_panel = test_frame(41, WidgetType::Frame, Some(1), true);
     second_panel.frame_level = 1;
     state.widgets.register(second_panel);
     state.widgets.add_child(1, 41);
     state.set_frame_toplevel(41, true);
+    state.raise_frame(41);
 
     let mut regular = test_frame(42, WidgetType::Frame, Some(1), true);
     regular.frame_level = 7;
@@ -151,16 +154,18 @@ fn nearest_active_toplevel_ancestor_owns_nested_segment() {
     state.widgets.register(inner);
     state.widgets.add_child(51, 52);
     state.set_frame_toplevel(52, true);
+    state.raise_frame(52);
 
     register_child(&mut state, 53, WidgetType::Frame, 52, true);
     state.set_frame_toplevel(50, true);
+    state.raise_frame(50);
 
     let mut regular = test_frame(54, WidgetType::Frame, Some(1), true);
     regular.frame_level = 7;
     state.widgets.register(regular);
     state.widgets.add_child(1, 54);
 
-    assert_eq!(medium_bucket(&mut state), vec![54, 52, 53, 50]);
+    assert_eq!(medium_bucket(&mut state), vec![54, 52, 53, 51, 50]);
 }
 
 #[test]
