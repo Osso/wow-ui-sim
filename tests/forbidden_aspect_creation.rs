@@ -64,8 +64,11 @@ fn xml_aspects_use_active_enum_values_and_merge_inherited_state() {
       </ForbiddenAspects><Frames><Frame parentKey="Child"><ForbiddenAspects>
         <ForbiddenAspect aspect="ScriptedInput"/>
       </ForbiddenAspects></Frame></Frames></Frame>
-      <Frame name="ExplicitLayout"><ForbiddenAspects>
-        <ForbiddenAspect aspect="ScriptedInput" inheritance="Layout"/>
+      <Frame name="HierarchyOnly"><ForbiddenAspects>
+        <ForbiddenAspect aspect="UntrustedScriptExecution"/>
+      </ForbiddenAspects></Frame>
+      <Frame name="HierarchyAndLayout"><ForbiddenAspects>
+        <ForbiddenAspect aspect="UntrustedLayoutScriptExecution"/>
       </ForbiddenAspects></Frame>
       <Frame name="AllLiteral" inherits="AllAspectTemplate"/>
     </Ui>"#,
@@ -77,8 +80,10 @@ fn xml_aspects_use_active_enum_values_and_merge_inherited_state() {
         local runtime = CreateFrame('Frame', nil, UIParent, 'AllAspectTemplate')
         assert(runtime:GetForbiddenAspects() == 2047, 'runtime templates apply the same aspects')
         assert(AspectParent.Child:GetForbiddenAspects() == 109, 'own XML aspects retain inherited 44 and implied bit 1')
-        assert(ExplicitLayout:GetInheritableForbiddenAspects(path.Hierarchy) == 0)
-        assert(ExplicitLayout:GetInheritableForbiddenAspects(path.Layout) == 64)
+        assert(HierarchyOnly:GetInheritableForbiddenAspects(path.Hierarchy) == 4)
+        assert(HierarchyOnly:GetInheritableForbiddenAspects(path.Layout) == 0)
+        assert(HierarchyAndLayout:GetInheritableForbiddenAspects(path.Hierarchy) == 8)
+        assert(HierarchyAndLayout:GetInheritableForbiddenAspects(path.Layout) == 8)
     "#).expect("XML and runtime template mapping match native enum values");
 }
 
