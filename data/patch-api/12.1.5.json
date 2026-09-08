@@ -6084,24 +6084,46 @@
       "id": "added:table.getcountinfo",
       "symbol": "table.getcountinfo",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/table_util.rs",
+          "summary": "PTR-gated table-library registration publishes getcountinfo and reuses the simulator table-entry counter.",
+          "source_hash": "226aea77b634b492e55fea7400171a8b0e409ef1173e00f8c23c743a213ddc50"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_getcountinfo_counts_mixed_and_empty_tables",
+          "summary": "Focused PTR test proves ordinary mixed and empty-table counts plus exactly three returns. Proof commit f0ae4a96a: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_table_count_info -- --nocapture (4 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_table_count_info -- --nocapture (3 passed, 0 failed).",
+          "source_hash": "47e03566b88a4be9a84596542e055852e3b41ad0ab3ed86c700c391e0a27cd53"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_getcountinfo_is_absent_before_ptr",
+          "summary": "Focused earlier-retail test proves getcountinfo remains absent; the same module proves table.count retains one return.",
+          "source_hash": "47e03566b88a4be9a84596542e055852e3b41ad0ab3ed86c700c391e0a27cd53"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_getcountinfo_counts_mixed_and_empty_tables",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_getcountinfo_is_absent_before_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_count_retains_single_return"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "f0ae4a96a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "PTR proof publishes getcountinfo only on PTR; mixed and empty ordinary tables return exactly (numEntries, numPositiveIntegerKeys, maxPositiveIntegerKey), and table.count retains exactly one total-count return. Secret-key/taint propagation and untested key edge semantics remain unclaimed."
     },
     {
       "id": "added:table.indexof",
@@ -10557,24 +10579,45 @@
       "id": "changed:table.create",
       "symbol": "table.create",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/table_util.rs",
+          "summary": "table.create rejects a missing required arraySizeHint while preserving optional nodeSizeHint handling.",
+          "source_hash": "226aea77b634b492e55fea7400171a8b0e409ef1173e00f8c23c743a213ddc50"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_create_requires_array_hint",
+          "summary": "Focused test proves table.create() raises when its required first hint is omitted. Proof commit f0ae4a96a: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_table_count_info -- --nocapture (4 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_table_count_info -- --nocapture (3 passed, 0 failed).",
+          "source_hash": "47e03566b88a4be9a84596542e055852e3b41ad0ab3ed86c700c391e0a27cd53"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_create_valid_hints_return_empty_tables",
+          "summary": "Focused test proves valid one- and two-hint calls return empty tables.",
+          "source_hash": "47e03566b88a4be9a84596542e055852e3b41ad0ab3ed86c700c391e0a27cd53"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_create_requires_array_hint",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_count_info.rs::table_create_valid_hints_return_empty_tables"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "f0ae4a96a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Proof rejects a missing required arraySizeHint and shows valid one- and two-hint calls return empty tables. Capacity observability, invalid numeric edge behavior, secret/taint semantics, and frozen-table APIs remain unclaimed."
     },
     {
       "id": "changed:table.freeze",
@@ -10641,7 +10684,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/table_util.rs",
           "summary": "Profile-gated registration omits FindIndexedMismatch only for retail-12-1-5 and preserves the existing implementation for earlier profiles.",
-          "source_hash": "726d07d79f841ac95ac810175ce074de48a814d73a9b8f4822ab311dac071f83"
+          "source_hash": "226aea77b634b492e55fea7400171a8b0e409ef1173e00f8c23c743a213ddc50"
         },
         {
           "kind": "test",

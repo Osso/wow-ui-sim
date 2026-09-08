@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 25 best-effort and 424 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 27 best-effort and 422 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -16,7 +16,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 
 | Surface | Current evidence | Disposition | Missing proof |
 |---|---|---|---|
-| PTR table extensions | Commit `1d11c0176`; 8 focused tests cover lookup, counting, emptiness, removal, keys, and values | 8 best-effort / behavioral | Secret-key/value propagation, invalid arguments, sparse edge cases, and native error semantics |
+| PTR table contracts | Commits `1d11c0176` and `f0ae4a96a`; focused tests cover extensions plus `getcountinfo` and required `create` hints | 10 best-effort / behavioral | Secret-key/value propagation, invalid arguments, sparse edge cases, capacity observability, and native error semantics |
 | `C_Intl` and `LuaLocaleContext` | Generated signatures only; no simulator namespace or locale object | evidence-required / unsafe | Unicode normalization, segmentation, collation, formatting, locale state, nil/error cases, and taint/secret semantics |
 | `C_Weather`, `Enum.WeatherType`, `WEATHER_CHANGED` | Generated declarations only; no weather model or event producer | evidence-required / unsafe | Native weather values, intensity, event timing/payload, and state transitions |
 | New enums and metadata | Numeric generated values are available | evidence-required / unsafe | PTR-only publication tests and preservation on earlier profiles |
@@ -26,9 +26,8 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 ## Confirmed High-Priority Gaps
 
 - Missing publication: `CreateFrameWithOptions`, `C_Intl`, `C_Weather`, new locale/weather enums, and `WEATHER_CHANGED`.
-- Contract mismatches: generic pre-PTR `table.count` still exposes the legacy three-value count-info shape while the PTR override is now focused-tested; `table.create` accepts a missing required size; `string.trim` remains a separate 12.0.0 mismatch rather than a 12.1.5 occurrence.
-- Missing additive helpers: documented string and frozen-table extensions, selected `C_ActionBar`, `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, aura-option normalization, and script-bucket throttle limits.
-- Profile-aware removal required: `C_TableUtil.FindIndexedMismatch` must be absent on PTR without regressing earlier profiles.
+- Remaining table gaps: `table.freeze` and `table.isfrozen` need a frozen-table state model; `string.trim` remains a separate 12.0.0 mismatch rather than a 12.1.5 occurrence.
+- Missing additive helpers: documented string extensions, selected `C_ActionBar`, `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, aura-option normalization, and script-bucket throttle limits.
 - Native evidence remains required for weather values, Training Grounds IDs, active LFG state, castbar token behavior, Unicode/locale semantics, and protected/security behavior.
 
 ## Implementation Order

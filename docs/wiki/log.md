@@ -1,6 +1,6 @@
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
-Added [[patch-12-1-5-api-audit]], [[patch-12-1-5-occurrence-inventory]], `data/patch-api/12.1.5.json`, and the generated checklist for the pinned 449-row `12.1.0.69587` → `12.1.5.69594` documentation delta. Commit `1d11c0176` provides eight focused PTR table-extension tests, moving those rows to best-effort behavioral proof; Commit `240c662d0` credits 11 math rows, `ac3ac03ac` credits five PTR enum-publication rows, and `ac40ca2cd` removes PTR publication of `C_TableUtil.FindIndexedMismatch`, bringing totals to 25 best-effort and 424 evidence-required; none are untriaged.
+Added [[patch-12-1-5-api-audit]], [[patch-12-1-5-occurrence-inventory]], `data/patch-api/12.1.5.json`, and the generated checklist for the pinned 449-row `12.1.0.69587` → `12.1.5.69594` documentation delta. Commit `1d11c0176` provides eight focused PTR table-extension tests, moving those rows to best-effort behavioral proof; Commit `240c662d0` credits 11 math rows, `ac3ac03ac` credits five PTR enum-publication rows, `ac40ca2cd` removes PTR publication of `C_TableUtil.FindIndexedMismatch`, and `f0ae4a96a` credits `table.getcountinfo` and `table.create`, bringing totals to 27 best-effort and 422 evidence-required; none are untriaged.
 
 ## [2026-09-08] investigation | Native unit-frame layering establishes owner groups
 

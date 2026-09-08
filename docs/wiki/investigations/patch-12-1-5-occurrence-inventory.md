@@ -8,7 +8,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5.69594` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 25 best-effort, 424 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 27 best-effort, 422 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
@@ -268,7 +268,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `string.rtrim` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `string.startswith` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `table.contains` | best-effort | global-api | added | Searches array and hash values, including false and table identity; secret-value/key and invalid-input semantics remain unclaimed. |
-| `table.getcountinfo` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
+| `table.getcountinfo` | best-effort | global-api | added | PTR proof publishes getcountinfo only on PTR; mixed and empty ordinary tables return exactly (numEntries, numPositiveIntegerKeys, maxPositiveIntegerKey), and table.count retains exactly one total-count return. Secret-key/taint propagation and untested key edge semantics remain unclaimed. |
 | `table.indexof` | best-effort | global-api | added | First 1-based match in the contiguous array prefix, nil on absence/first gap; sparse, invalid-input, and security semantics remain unclaimed. |
 | `table.isempty` | best-effort | global-api | added | Reports empty/non-empty across array and hash insertion/removal; secret-key propagation and invalid-input semantics remain unclaimed. |
 | `table.keys` | best-effort | global-api | added | Returns a separate dense array containing all tested key types without claiming iteration order; secret-key propagation and invalid-input semantics remain unclaimed. |
@@ -457,7 +457,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `UnitChannelInfoResult` | evidence-required | structure | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `UnitChannelInfoResult.castBarID` | evidence-required | structure-field | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `table.count` | best-effort | global-api | changed | PTR override returns exactly one total non-nil entry count; secret-key propagation and invalid-input semantics remain unclaimed. |
-| `table.create` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `table.create` | best-effort | global-api | changed | Proof rejects a missing required arraySizeHint and shows valid one- and two-hint calls return empty tables. Capacity observability, invalid numeric edge behavior, secret/taint semantics, and frozen-table APIs remain unclaimed. |
 | `table.freeze` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `table.isfrozen` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_TableUtil.FindIndexedMismatch` | best-effort | global-api | removed | PTR proof omits FindIndexedMismatch; earlier retail preserves function publication and mismatch result 2. Proof excludes other comparator edge cases, secret/taint behavior, and sibling C_TableUtil functions. |

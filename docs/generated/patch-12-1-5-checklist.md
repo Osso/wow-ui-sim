@@ -253,7 +253,7 @@
 253. [evidence-required] `added:string.rtrim` — unsafe
 254. [evidence-required] `added:string.startswith` — unsafe
 255. [best-effort] `added:table.contains` — behavioral
-256. [evidence-required] `added:table.getcountinfo` — unsafe
+256. [best-effort] `added:table.getcountinfo` — behavioral
 257. [best-effort] `added:table.indexof` — behavioral
 258. [best-effort] `added:table.isempty` — behavioral
 259. [best-effort] `added:table.keys` — behavioral
@@ -442,7 +442,7 @@
 442. [evidence-required] `changed:UnitChannelInfoResult` — unsafe
 443. [evidence-required] `changed:UnitChannelInfoResult.castBarID` — unsafe
 444. [best-effort] `changed:table.count` — behavioral
-445. [evidence-required] `changed:table.create` — unsafe
+445. [best-effort] `changed:table.create` — behavioral
 446. [evidence-required] `changed:table.freeze` — unsafe
 447. [evidence-required] `changed:table.isfrozen` — unsafe
 448. [best-effort] `removed:C_TableUtil.FindIndexedMismatch` — behavioral
