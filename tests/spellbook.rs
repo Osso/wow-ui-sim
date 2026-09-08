@@ -117,7 +117,8 @@ fn native_raised_spellbook_paper_renders_after_high_strata_unit_overlay() {
             .map(|(quad, _)| (quad * 4) as u32).collect();
         assert_eq!(markers.len(), 1, "actual unit overlay must emit one marker quad");
         let paper_request = batch.texture_requests.iter().find(|request|
-            request.path == *paper_path && bounds_match_rect(quad_bounds(&batch, request), paper_rect)
+            request.path.split("@crop:").next() == Some(paper_path.as_str())
+                && bounds_match_rect(quad_bounds(&batch, request), paper_rect)
         ).expect("actual book paper must emit its textured quad");
         let overlay_draw = batch.indices.iter().position(|&vertex| vertex == markers[0]).unwrap();
         let paper_draw = batch.indices.iter().position(|&vertex| vertex == paper_request.vertex_start).unwrap();
