@@ -96,7 +96,8 @@ fn load_probe(env: &WowLuaEnv) {
         &fs::read_to_string(toc_path).unwrap(),
     );
     let addon = env.create_addon_table().unwrap();
-    for path in toc.files {
+    for file in toc.files {
+        let path = Path::new(PROBE_DIR).join(file);
         let source = fs::read_to_string(&path).unwrap();
         env.loader_env()
             .exec_with_varargs(
