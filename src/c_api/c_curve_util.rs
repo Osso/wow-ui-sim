@@ -101,6 +101,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
+#[cfg(feature = "retail-12-1-0")]
 pub(crate) fn is_curve_object(
     state: &mut rilua::vm::state::LuaState,
     value: rilua::Val,

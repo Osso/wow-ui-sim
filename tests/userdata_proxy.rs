@@ -543,6 +543,7 @@ fn color_curve_object_is_userdata() {
 }
 
 #[test]
+#[cfg(feature = "retail-12-1-0")]
 fn curve_objects_keep_native_identity_through_securecopy() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
