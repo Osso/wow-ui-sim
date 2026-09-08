@@ -205,7 +205,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     );
     assert_eq!(
         format_load_outcomes(addons.len(), &stats),
-        "Loaded: 4/5 addons\nFailed: 4\nLoad failures: 1\nLoaded with Lua errors: 3"
+        "Loaded: 4/5 addons\nFailed during loading: 4\nLoad failures: 1\nLoaded with Lua errors during loading: 3"
     );
 }
 

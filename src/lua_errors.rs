@@ -76,9 +76,40 @@ pub fn run_lua_errors(
     print_errors_by_addon_if_requested(env);
 
     let errors = collect_unique_errors(env);
+    for line in final_error_summary_lines(&env.state().borrow(), &errors) {
+        eprintln!("{line}");
+    }
     let json = serde_json::to_string_pretty(&errors).expect("JSON serialization failed");
     println!("{json}");
     errors.is_empty()
+}
+
+fn final_error_summary_lines(state: &SimState, errors: &[LuaError]) -> Vec<String> {
+    let occurrences: usize = errors.iter().map(|error| error.count).sum();
+    let mut owners: BTreeMap<Option<&str>, usize> = BTreeMap::new();
+    for record in &state.lua_error_records {
+        *owners.entry(record.addon_name.as_deref()).or_default() += 1;
+    }
+    let unattributed = owners.remove(&None).unwrap_or_default();
+    let status = if errors.is_empty() { "CLEAN" } else { "FAILED" };
+    let mut lines = vec![
+        String::from("=== Final observed Lua error summary ==="),
+        format!("Status: {status}"),
+        format!(
+            "Lua errors: {} unique, {occurrences} occurrence(s)",
+            errors.len()
+        ),
+        format!("Attributed owners: {}", owners.len()),
+    ];
+    lines.extend(
+        owners.into_iter().filter_map(|(owner, count)| {
+            owner.map(|name| format!("  {name}: {count} occurrence(s)"))
+        }),
+    );
+    lines.push(format!(
+        "Unattributed Lua errors: {unattributed} occurrence(s)"
+    ));
+    lines
 }
 
 fn print_errors_by_addon_if_requested(env: &WowLuaEnv) {

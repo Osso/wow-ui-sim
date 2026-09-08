@@ -119,6 +119,75 @@ fn lua_error_cli_clean_addon_and_handled_errors_exit_successfully() {
     let errors = parse_errors(&output, true);
     assert_eq!(output.status.code(), Some(0), "{output:?}");
     assert!(errors.is_empty(), "{errors:?}");
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("=== Final observed Lua error summary ===\nStatus: CLEAN\n"));
+    assert!(stderr.contains("Lua errors: 0 unique, 0 occurrence(s)\n"));
+    assert!(stderr.contains("Attributed owners: 0\n"));
+    assert!(stderr.contains("Unattributed Lua errors: 0 occurrence(s)\n"));
+}
+
+#[test]
+fn lua_error_cli_final_summary_includes_post_load_events_and_updates() {
+    let directory = isolated_addon_root();
+    let root = directory.path().join("AddOns");
+    write_addon(
+        &root,
+        FIXTURE,
+        "",
+        &[(
+            "deferred.lua",
+            r#"
+            seterrorhandler(function() end)
+            local frame = CreateFrame('Frame')
+            frame:RegisterEvent('PLAYER_LOGIN')
+            frame:SetScript('OnEvent', function(self)
+                self:SetScript('OnUpdate', function(updateFrame)
+                    updateFrame:SetScript('OnUpdate', nil)
+                    error('CLI_STARTUP_UPDATE_FAILURE')
+                end)
+                error('CLI_POST_LOAD_EVENT_FAILURE')
+            end)
+            "#,
+        )],
+    );
+    let output = run_cli(
+        &root,
+        false,
+        r#"
+        local frame = CreateFrame('Frame')
+        frame:SetScript('OnUpdate', function(self)
+            self:SetScript('OnUpdate', nil)
+            error('CLI_EXEC_UPDATE_FAILURE')
+        end)
+        "#,
+    );
+    let errors = parse_errors(&output, false);
+    assert_eq!(output.status.code(), Some(1), "{output:?}");
+    assert_eq!(errors.len(), 3, "{errors:?}");
+    for marker in [
+        "CLI_POST_LOAD_EVENT_FAILURE",
+        "CLI_STARTUP_UPDATE_FAILURE",
+        "CLI_EXEC_UPDATE_FAILURE",
+    ] {
+        assert!(
+            errors.iter().any(|error| {
+                error["message"].as_str().unwrap().contains(marker) && error["count"] == 1
+            }),
+            "missing single occurrence of {marker}: {errors:?}"
+        );
+    }
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    let (loading, final_summary) = stderr
+        .split_once("=== Final observed Lua error summary ===")
+        .unwrap_or_else(|| panic!("missing final summary: {stderr}"));
+    assert!(loading.contains("=== Addon loading summary (before startup events) ==="));
+    assert!(loading.contains("Failed during loading: 0\n"));
+    assert!(final_summary.contains("Status: FAILED\n"));
+    assert!(final_summary.contains("Lua errors: 3 unique, 3 occurrence(s)\n"));
+    assert!(final_summary.contains("Attributed owners: 2\n"));
+    assert!(final_summary.contains("  LuaErrorCliFixture: 2 occurrence(s)\n"));
+    assert!(final_summary.contains("  __BuiltIn: 1 occurrence(s)\n"));
+    assert!(final_summary.contains("Unattributed Lua errors: 0 occurrence(s)\n"));
 }
 
 #[test]
@@ -146,6 +215,10 @@ fn lua_error_cli_uncaught_exec_error_is_json_failure() {
         "uncaught exec failure must be collected once: {errors:?}"
     );
     assert_eq!(matching[0]["count"], 1);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("=== Final observed Lua error summary ===\nStatus: FAILED\n"));
+    assert!(stderr.contains("Lua errors: 1 unique, 1 occurrence(s)\n"));
+    assert!(stderr.contains("Unattributed Lua errors: 1 occurrence(s)\n"));
 }
 
 fn isolated_addon_root() -> TempDir {

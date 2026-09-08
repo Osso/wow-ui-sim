@@ -674,7 +674,7 @@ fn print_verbose_addon_status(name: &str, r: &LoadResult) {
 
 fn format_load_outcomes(addon_count: usize, stats: &LoadStats) -> String {
     format!(
-        "Loaded: {}/{} addons\nFailed: {}\nLoad failures: {}\nLoaded with Lua errors: {}",
+        "Loaded: {}/{} addons\nFailed during loading: {}\nLoad failures: {}\nLoaded with Lua errors during loading: {}",
         stats.success_count,
         addon_count,
         stats.fail_count,
@@ -684,7 +684,7 @@ fn format_load_outcomes(addon_count: usize, stats: &LoadStats) -> String {
 }
 
 fn print_load_summary(addons: &[(String, PathBuf)], stats: &LoadStats) {
-    println!("\n=== Summary ===");
+    println!("\n=== Addon loading summary (before startup events) ===");
     println!("{}", format_load_outcomes(addons.len(), stats));
     println!(
         "Total: {} Lua files, {} XML files, {} warnings",

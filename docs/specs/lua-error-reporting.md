@@ -11,11 +11,18 @@ The `lua-errors` command in `src/lua_errors.rs` reports uncaught failures collec
 
 ### Addon load summary
 
-- [x] `Failed` counts the unique union of failed addon load transactions and addons attributed uncaught Lua errors during the loading batch, including nested loads and `ADDON_LOADED` callbacks.
-- [x] `Load failures` counts failed load transactions separately; `Loaded with Lua errors` counts attributed addons whose runtime loaded state is true. An addon present in both failure sources is counted once in `Failed`.
+- [x] `Failed during loading` counts the unique union of failed addon load transactions and addons attributed uncaught Lua errors during the loading batch, including nested loads and `ADDON_LOADED` callbacks.
+- [x] `Load failures` counts failed load transactions separately; `Loaded with Lua errors during loading` counts attributed addons whose runtime loaded state is true. An addon present in both failure sources is counted once in `Failed`.
 - [x] Preserve runtime loaded flags and the existing `Loaded` transaction count. Nested loaded addons can contribute Lua failures without being separate top-level load transactions.
 
-Summary accounting reads attributed error records added during the loading batch. Later startup errors remain covered by the final CLI error report.
+The loading summary is explicitly labeled `before startup events`; its counts cover only records added during the loading batch, not later `PLAYER_LOGIN`, update ticks, or `--exec-lua` failures.
+
+### Final observed Lua error summary
+
+- [x] Always print a final summary to stderr after startup events, update ticks, and optional `--exec-lua` plus its follow-up ticks.
+- [x] Report `CLEAN` or `FAILED`, unique JSON error count, and total JSON occurrence count without changing JSON stdout or exit status.
+- [x] Count existing attributed owner names and their occurrences separately from unattributed occurrences. Synthetic owners such as `__BuiltIn` remain owners, not third-party addons; do not infer ownership from the last loaded addon.
+- [x] Keep loading-transaction outcomes separate from final observed Lua errors; this does not redefine load accounting.
 
 ## How it works
 
@@ -24,20 +31,20 @@ Summary accounting reads attributed error records added during the loading batch
 
 ## Implementation inventory
 
-- `src/lua_errors.rs` — startup execution, post-startup probe error reporting, JSON generation, and clean/error result.
+- `src/lua_errors.rs` — startup execution, post-startup probe error reporting, final stderr summary, JSON generation, and clean/error result.
 - `src/bin/wow_sim/main.rs` — maps the clean/error result to process status.
 - `src/bin/wow_sim/addon_loading.rs` — unique-addon failure accounting and distinct summary labels.
 - `src/lua_api/script_helpers.rs` — canonical error sink and Lua error handler invocation.
 
 ## Tests asserting this spec
 
-- `tests/lua_error_cli.rs` — three bounded process invocations using the Cargo-built simulator: combined addon failures, clean addon with handled exceptions, and uncaught post-startup execution failure. Temporary first-priority addon fixtures disable merged external addon names without changing installed addons. A stdout marker proves the intended addon reached the end of loading.
+- `tests/lua_error_cli.rs` — four bounded process invocations using the Cargo-built simulator: combined addon failures, clean addon with handled exceptions, uncaught exec failure, and loading-success followed by event/startup-update/exec-update errors. Final-summary assertions cover clean/error status, counts, explicit owners, and unattributed errors. The deferred fixture installs its own no-op error handler to isolate canonical failures from secondary Blizzard error-UI messages. Temporary first-priority fixtures disable merged external addon names without changing installed addons; existing load markers remain intact.
 
 - `src/bin/wow_sim/addon_loading/tests.rs` — actual scan/load fixture with file errors, repeated event errors, a nested LoD error, and a missing dependency; asserts loaded state and exact summary output.
 
 ## Known gaps (current cycle)
 
-- [ ] Grouped Rust tests await compilation after the observed disk-space blocker. Direct current-binary probes establish the uncaught `--exec-lua` RED: exit 0 with `[]`, despite an exception.
+- [ ] Final-summary targeted GREEN and independent verification pending. Valid process RED `/tmp/pi-lua-summary-chronology-postload-red.*` collects three event/update errors and exits 1 but has no final summary; clean/exec cases also fail missing-summary assertions in `/tmp/pi-lua-summary-chronology-red.*`.
 - [ ] Full user-addon startup acceptance remains open. Summary accounting's focused regression passed 1/1 at `58e3a2d2e`, after reproducing the incorrect count. A clean isolated fixture is not evidence that personal addons work.
 
 ## Out of scope
