@@ -14,18 +14,24 @@ Mask correction `939efe88d` changed alpha sampling only. It did not change frame
 
 The last known-good state is unknown. The user reports real WoW keeps the overlay below SpellBook, but raw native values have not yet been captured. No overlap correction or addon-setting change has been applied.
 
-## Native capture probe
+## Native capture
 
-[UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) is a read-only kit for the native comparison. It appends up to 30 SavedVariables captures across reloads from login, SpellBook show/hide, and `/unitlayerprobe`; it records raw frame strata/levels/fixed flags, parent chains, geometry, visibility, display metrics, and limited relevant addon/config state. It does not open panels, move frames, alter strata, or change settings.
+The received retail `12.1.0.69587` / interface `120100` capture records `PlayerFrame.noPortraitMode` as `HIGH`, raw frame level `2`, raised frame level `0`; `PlayerSpellsFrame` is `MEDIUM`, raw level `1`, raised level `18→20`, and its `SpellBookFrame` shares the raised `18→20` state. Relevant frames report `HasFixedFrameStrata() == false`. This confirms the original native `HIGH`/`0` versus `MEDIUM`/`18→20` observation, but does not establish a general render-order policy or global z-index interpretation for raised levels.
 
-Local probe protocol coverage has retained GREEN evidence across five cases, including hook installation, manual/login capture, raw missing/error observations, unchanged observed frame properties, reload retention, and the capture cap. Independent verification is pending. The kit is not installed or deployed by this repository.
+## Controlled native comparison
+
+[UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) adds five opaque red/blue comparisons across three phases: a HIGH child under LOW parent, independent HIGH, independent DIALOG, plain TOOLTIP, and owned `GameTooltip` versus MEDIUM. Screenshot-success gating, a 1.1-second interphase delay, cancellation/timeout cleanup, late-event isolation, and bounded control history define the capture protocol; development protocol coverage is 9/9. Native screenshots—not simulator protocol tests—will determine each overlap result.
+
+Commits `e5f4a96ae` and `e811240d0` installed the unchanged five-file control kit to desktop retail main. `/tmp/pi-unit-controls-desktop-install.json` records an exact 5/5 SHA-256 match. Native capture is pending; independent verification `2741` is pending. No simulator ordering change or overlap fix is claimed.
 
 ## Sources
 
 - `BetterBlizzFrames/retail/modules/noPortrait.lua:548-550`
 - `/tmp/pi-unit-overlap-evidence.md`
 - `/tmp/pi-clipboard-a6471921-93e0-4db8-ba3c-b3a872ce6d2b.png`
-- [UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) — requested native raw-value capture kit
+- `docs/local/private/probes/UnitFrameLayerProbe-2026-09-08.lua` — original raw native capture
+- `/tmp/pi-unit-controls-desktop-install.json` — controlled-kit desktop hash record
+- [UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) — controlled capture protocol
 
 ## See Also
 
