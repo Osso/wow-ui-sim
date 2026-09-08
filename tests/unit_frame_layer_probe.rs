@@ -46,9 +46,14 @@ fn fixture() -> WowLuaEnv {
             layerLoaded = true
             PlayerSpellsFrame = CreateFrame('Frame', 'LayerSpells', UIParent)
             PlayerSpellsFrame:SetSize(800, 600)
+            PlayerSpellsFrame:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOMLEFT', 60, 80)
             PlayerSpellsFrame:SetFrameStrata('MEDIUM')
             PlayerSpellsFrame.SpellBookFrame = CreateFrame('Frame', nil, PlayerSpellsFrame)
             PlayerSpellsFrame.SpellBookFrame:SetSize(300, 200)
+            PlayerSpellsFrame.SpellBookFrame:SetPoint('BOTTOMLEFT', PlayerSpellsFrame, 'BOTTOMLEFT', 10, 10)
+            layerExistingShows, layerExistingHides = 0, 0
+            PlayerSpellsFrame.SpellBookFrame:SetScript('OnShow', function() layerExistingShows = layerExistingShows + 1 end)
+            PlayerSpellsFrame.SpellBookFrame:SetScript('OnHide', function() layerExistingHides = layerExistingHides + 1 end)
             PlayerSpellsFrame.SpellBookFrame:Hide()
         end
         function SerializeLayerValue(value)
@@ -69,8 +74,11 @@ fn fixture() -> WowLuaEnv {
         function LayerFrameState()
             local f = PlayerFrame
             local c = f.noPortraitMode
+            local left, bottom, width, height = f:GetRect()
+            local point, relative, relativePoint, x, y = f:GetPoint()
             return SerializeLayerValue({f:GetFrameStrata(), f:GetFrameLevel(), f:GetAlpha(),
-                f:GetScale(), f:IsShown(), f:GetRect(), tostring(f:GetParent()),
+                f:GetScale(), f:IsShown(), left, bottom, width, height, tostring(f:GetParent()),
+                point, tostring(relative), relativePoint, x, y,
                 c:GetFrameStrata(), c:GetFrameLevel(), c:GetAlpha(), c:GetScale(),
                 c:IsShown(), tostring(c:GetParent()), PlayerFrame.bbfName:GetText()})
         end
@@ -141,6 +149,7 @@ fn unit_layer_probe_hooks_late_spellbook_once_and_observes_settled_state() {
         local book = PlayerSpellsFrame.SpellBookFrame
         book:Show()
         assert(#layerTimers == 1, 'duplicate or non-deferred OnShow hook')
+        assert(layerExistingShows == 1, 'probe replaced the existing OnShow handler')
         book:SetSize(450, 250)
         FlushLayerTimers()
         local c = UnitFrameLayerProbeDB.captures[1]
@@ -148,6 +157,7 @@ fn unit_layer_probe_hooks_late_spellbook_once_and_observes_settled_state() {
         assert(c.frames['PlayerSpellsFrame.SpellBookFrame'].methods.GetRect.values[3].value == 450)
         book:Hide()
         assert(#layerTimers == 1, 'duplicate OnHide hook')
+        assert(layerExistingHides == 2, 'probe replaced the existing OnHide handler')
         FlushLayerTimers()
         assert(#UnitFrameLayerProbeDB.captures == 2)
         assert(UnitFrameLayerProbeDB.captures[2].reason == 'SpellBook.OnHide')
@@ -249,4 +259,25 @@ fn unit_layer_probe_preserves_serialized_captures_across_reload_and_at_cap() {
         "#,
         )
         .unwrap();
+    let capped: String = reloaded
+        .eval("return SerializeLayerValue(UnitFrameLayerProbeDB)")
+        .unwrap();
+    let captures: String = reloaded
+        .eval("return SerializeLayerValue(UnitFrameLayerProbeDB.captures)")
+        .unwrap();
+    let third = fixture();
+    load_probe(&third);
+    third
+        .exec(&format!("UnitFrameLayerProbeDB = {capped}"))
+        .unwrap();
+    loaded_event(&third, "UnitFrameLayerProbe");
+    third.fire_event("PLAYER_LOGIN").unwrap();
+    third.exec("FlushLayerTimers()").unwrap();
+    assert_eq!(
+        captures,
+        third
+            .eval::<String>("return SerializeLayerValue(UnitFrameLayerProbeDB.captures)")
+            .unwrap()
+    );
+    third.exec("assert(UnitFrameLayerProbeDB.nextSequence == 31 and UnitFrameLayerProbeDB.skippedCaptures == 8)").unwrap();
 }

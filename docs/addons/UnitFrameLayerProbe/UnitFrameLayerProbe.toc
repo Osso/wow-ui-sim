@@ -1,0 +1,7 @@
+## Interface: 120100, 120105
+## Title: UnitFrameLayerProbe
+## Notes: Read-only unit-frame and SpellBook layering observations
+## Author: Alessio Deiana
+## Version: 1.0.0
+## SavedVariables: UnitFrameLayerProbeDB
+UnitFrameLayerProbe.lua
