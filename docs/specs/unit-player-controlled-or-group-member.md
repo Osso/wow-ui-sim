@@ -20,11 +20,11 @@
 
 ## Tests asserting this spec
 
-`tests/unit_player_controlled_or_group_member.rs`: concrete token families, invalid indices/nonfamily tokens, empty roster independence, and actual secure Blizzard aura filtering.
+`tests/unit_player_controlled_or_group_member.rs`: concrete token families, invalid indices/nonfamily tokens, empty roster independence, and actual secure Blizzard aura filtering. Targeted run at `d80464a81`: 3/3 passed after all three failed on the missing global; logs `/tmp/pi-unit-controlled-{red,green}.{stdout,stderr}.log`.
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted RED/GREEN and independent integration verification pending.
+- [ ] Independent integration verification pending; targeted RED/GREEN completed.
 
 ## Out of scope
 
