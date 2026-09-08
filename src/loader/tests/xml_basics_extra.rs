@@ -669,7 +669,7 @@ fn test_patch_12_1_xml_on_update_mode_and_forbidden_aspects() {
         r#"
         return FlagsUtil.IsSet(
             Patch121AuraButton:GetForbiddenAspects(),
-            Enum.ForbiddenScriptObjectAspect.UntrustedScriptExecution
+            Enum.ForbiddenAspect.UntrustedScriptExecution
         )
         "#,
         "XML ForbiddenAspects should initialize the forbidden bitmask",
@@ -687,12 +687,12 @@ fn test_patch_12_1_xml_forbidden_aspect_inheritance_modes() {
         r#"<Ui>
             <Frame name="Patch121ParentOnlyForbidden" parent="UIParent">
                 <ForbiddenAspects>
-                    <ForbiddenAspect aspect="UntrustedScriptExecution" inheritance="Parent"/>
+                    <ForbiddenAspect aspect="UntrustedScriptExecution"/>
                 </ForbiddenAspects>
             </Frame>
             <Frame name="Patch121LayoutOnlyForbidden" parent="UIParent">
                 <ForbiddenAspects>
-                    <ForbiddenAspect aspect="ScriptedInput" inheritance="Layout"/>
+                    <ForbiddenAspect aspect="UntrustedLayoutScriptExecution"/>
                 </ForbiddenAspects>
             </Frame>
         </Ui>"#,
@@ -702,11 +702,11 @@ fn test_patch_12_1_xml_forbidden_aspect_inheritance_modes() {
         .env
         .eval(
             r#"
-            local parentMask = Patch121ParentOnlyForbidden:GetInheritableForbiddenAspects(Enum.ForbiddenAspectInheritance.Parent)
-            local parentLayoutMask = Patch121ParentOnlyForbidden:GetInheritableForbiddenAspects(Enum.ForbiddenAspectInheritance.Layout)
-            local layoutMask = Patch121LayoutOnlyForbidden:GetInheritableForbiddenAspects(Enum.ForbiddenAspectInheritance.Layout)
-            local layoutParentMask = Patch121LayoutOnlyForbidden:GetInheritableForbiddenAspects(Enum.ForbiddenAspectInheritance.Parent)
-            return parentMask ~= 0 and parentLayoutMask == 0 and layoutMask ~= 0 and layoutParentMask == 0
+            local parentMask = Patch121ParentOnlyForbidden:GetInheritableForbiddenAspects(Enum.ScriptObjectPropagationPath.Hierarchy)
+            local parentLayoutMask = Patch121ParentOnlyForbidden:GetInheritableForbiddenAspects(Enum.ScriptObjectPropagationPath.Layout)
+            local layoutMask = Patch121LayoutOnlyForbidden:GetInheritableForbiddenAspects(Enum.ScriptObjectPropagationPath.Layout)
+            local layoutParentMask = Patch121LayoutOnlyForbidden:GetInheritableForbiddenAspects(Enum.ScriptObjectPropagationPath.Hierarchy)
+            return parentMask == 4 and parentLayoutMask == 0 and layoutMask == 8 and layoutParentMask == 8
             "#,
         )
         .unwrap();

@@ -262,6 +262,9 @@ macro_rules! frame_defaults {
 
             default_parent: false,
             forbidden: false,
+            forbidden_aspects: 0,
+            inheritable_forbidden_aspects_parent: 0,
+            inheritable_forbidden_aspects_layout: 0,
             access_restrictions: 0,
             is_protected: false,
             prevent_secret_values: false,

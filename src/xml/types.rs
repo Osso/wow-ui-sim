@@ -513,8 +513,6 @@ pub struct ForbiddenAspectsXml {
 pub struct ForbiddenAspectXml {
     #[serde(rename = "@aspect")]
     pub aspect: String,
-    #[serde(rename = "@inheritance")]
-    pub inheritance: Option<String>,
 }
 
 /// Child elements that can appear inside a Frame.

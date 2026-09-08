@@ -106,9 +106,12 @@ impl WidgetRegistry {
     }
 
     /// Register a new widget.
-    pub fn register(&mut self, widget: Frame) -> u64 {
+    pub fn register(&mut self, mut widget: Frame) -> u64 {
         let id = widget.id;
         let is_new = !self.widgets.contains_key(&id);
+        if is_new {
+            self.inherit_creation_forbidden_aspects(&mut widget);
+        }
         // Debug: check for re-registration that would lose children
         if let Some(existing) = self.widgets.get(&id)
             && !existing.children.is_empty()
@@ -139,6 +142,22 @@ impl WidgetRegistry {
             self.ordered_ids.push(id);
         }
         id
+    }
+
+    fn inherit_creation_forbidden_aspects(&self, widget: &mut Frame) {
+        // Native SetToDefaults is implied by every nonempty forbidden mask.
+        const SET_TO_DEFAULTS: u64 = 1;
+        let Some(parent) = widget.parent_id.and_then(|id| self.widgets.get(&id)) else {
+            return;
+        };
+        let inherited = parent.inheritable_forbidden_aspects_parent;
+        if inherited == 0 {
+            return;
+        }
+        widget.forbidden_aspects |= inherited | SET_TO_DEFAULTS;
+        widget.inheritable_forbidden_aspects_parent |= inherited;
+        widget.inheritable_forbidden_aspects_layout |=
+            inherited & parent.inheritable_forbidden_aspects_layout;
     }
 
     pub fn register_preserving_existing_name(&mut self, widget: Frame) -> u64 {

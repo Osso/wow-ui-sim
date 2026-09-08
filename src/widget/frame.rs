@@ -511,6 +511,12 @@ pub struct Frame {
     /// Whether this frame is forbidden (secure-restricted, e.g. created inside ScopedModifier forbidden="true").
     /// Forbidden frames are exposed as proxy tables in _G with a "Forbidden" metatable.
     pub forbidden: bool,
+    /// Owned native forbidden aspects, including inherited and implied aspects.
+    pub forbidden_aspects: u64,
+    /// Owned aspects that propagate through parent-child relationships.
+    pub inheritable_forbidden_aspects_parent: u64,
+    /// Owned aspects that propagate through anchor dependencies.
+    pub inheritable_forbidden_aspects_layout: u64,
 
     /// Conditional access restrictions applied to this object, independent of forbidden state.
     pub access_restrictions: u32,

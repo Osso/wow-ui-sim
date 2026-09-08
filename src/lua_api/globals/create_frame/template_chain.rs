@@ -127,6 +127,9 @@ fn apply_runtime_template_overrides(
     match overrides {
         RuntimeTemplateOverrides::None => Ok(()),
         RuntimeTemplateOverrides::Frame(frame) => {
+            crate::lua_api::frame::methods::forbidden_aspects::apply_xml_forbidden_aspects(
+                state, frame_id, frame,
+            )?;
             apply_template_partition_marker(state, frame_id, frame);
             apply_template_key_values(state, frame_id, frame.all_key_values());
             Ok(())
@@ -228,6 +231,13 @@ fn apply_chain_entries(
     frame_id: u64,
     chain: &[Arc<crate::xml::TemplateEntry>],
 ) -> LuaResult<()> {
+    for entry in chain {
+        crate::lua_api::frame::methods::forbidden_aspects::apply_xml_forbidden_aspects(
+            state,
+            frame_id,
+            &entry.frame,
+        )?;
+    }
     for entry in chain {
         runtime::ensure_runtime_button_texture_slots(state, frame_id, &entry.frame)?;
         apply_template_partition_marker(state, frame_id, &entry.frame);

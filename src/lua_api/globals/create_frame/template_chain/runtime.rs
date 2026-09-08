@@ -407,6 +407,9 @@ fn apply_child_template_properties(
     if let Some(intrinsic) = intrinsic {
         crate::lua_api::globals::template::set_intrinsic(state, child_id, intrinsic);
     }
+    crate::lua_api::frame::methods::forbidden_aspects::apply_xml_forbidden_aspects(
+        state, child_id, frame,
+    )?;
     super::apply_template_partition_marker(state, child_id, frame);
     crate::lua_api::globals::create_frame::apply_frame_mixins(
         state,

@@ -55,7 +55,7 @@ pub(super) fn setup_frame(
     let props_start = Instant::now();
     let frame_id = created_frame_id(env, setup.name)?;
     ensure_parent_refs_registered(env, &setup, frame_id)?;
-    apply_xml_properties_direct(env, frame_id, setup.frame, setup.inherits, setup.parent);
+    apply_xml_properties_direct(env, frame_id, setup.frame, setup.inherits, setup.parent)?;
     apply_intrinsic_property(env, setup.intrinsic_base, frame_id);
     timing.frame_apply_props_time += props_start.elapsed();
     timing.xml_frame_setup_time += setup_start.elapsed();
@@ -441,7 +441,7 @@ fn apply_xml_properties_direct(
     frame: &crate::xml::FrameXml,
     inherits: &str,
     parent: &str,
-) {
+) -> Result<(), LoadError> {
     use crate::lua_api::globals::template::direct;
     let state = env.state();
     direct::apply_xml_size(state, frame_id, frame, inherits);
@@ -465,7 +465,7 @@ fn apply_xml_properties_direct(
     direct::apply_xml_letters(state, frame_id, frame, inherits);
     direct::apply_xml_slider_orientation(state, frame_id, frame, inherits);
     apply_xml_on_update_mode(env, frame_id, frame);
-    apply_xml_forbidden_aspects(env, frame_id, frame);
+    apply_xml_forbidden_aspects(env, frame_id, frame)
 }
 
 fn apply_xml_on_update_mode(env: &LoaderEnv<'_>, frame_id: u64, frame: &crate::xml::FrameXml) {
@@ -487,62 +487,19 @@ fn apply_xml_on_update_mode(env: &LoaderEnv<'_>, frame_id: u64, frame: &crate::x
     });
 }
 
-fn apply_xml_forbidden_aspects(env: &LoaderEnv<'_>, frame_id: u64, frame: &crate::xml::FrameXml) {
-    let Some(forbidden_aspects) = frame.forbidden_aspects() else {
-        return;
-    };
-    let mut mask = 0_u64;
-    let mut parent_mask = 0_u64;
-    let mut layout_mask = 0_u64;
-    for aspect in &forbidden_aspects.aspects {
-        let aspect_mask = forbidden_aspect_mask(&aspect.aspect);
-        mask |= aspect_mask;
-        let inheritance = forbidden_aspect_inheritance_mask(aspect.inheritance.as_deref());
-        if inheritance & forbidden_aspects::INHERITANCE_PARENT != 0 {
-            parent_mask |= aspect_mask;
+fn apply_xml_forbidden_aspects(
+    env: &LoaderEnv<'_>,
+    frame_id: u64,
+    frame: &crate::xml::FrameXml,
+) -> Result<(), LoadError> {
+    env.with_state(|state| {
+        let result = forbidden_aspects::apply_xml_forbidden_aspects(state, frame_id, frame);
+        if let Err(error) = &result {
+            crate::lua_api::script_helpers::call_error_handler_state(state, &error.to_string());
         }
-        if inheritance & forbidden_aspects::INHERITANCE_LAYOUT != 0 {
-            layout_mask |= aspect_mask;
-        }
-    }
-    if mask == 0 {
-        return;
-    }
-    let _ = env.with_state(|state| {
-        forbidden_aspects::set_forbidden_aspects(state, frame_id, mask);
-        forbidden_aspects::set_inheritable_forbidden_aspects(
-            state,
-            frame_id,
-            parent_mask,
-            layout_mask,
-        );
-        Ok::<(), crate::Error>(())
-    });
-}
-
-fn forbidden_aspect_inheritance_mask(inheritance: Option<&str>) -> u64 {
-    let Some(inheritance) = inheritance else {
-        return forbidden_aspects::INHERITANCE_PARENT | forbidden_aspects::INHERITANCE_LAYOUT;
-    };
-    inheritance
-        .split([',', ' ', '|'])
-        .fold(0_u64, |mask, value| match value {
-            "Parent" => mask | forbidden_aspects::INHERITANCE_PARENT,
-            "Layout" => mask | forbidden_aspects::INHERITANCE_LAYOUT,
-            _ => mask,
-        })
-}
-
-fn forbidden_aspect_mask(aspect: &str) -> u64 {
-    match aspect {
-        "UntrustedScriptExecution" => 1,
-        "UntrustedLayoutScriptExecution" => 2,
-        "EventRegistrations" => 4,
-        "AlwaysPropagateInput" => 8,
-        "ScriptedInput" => 16,
-        "QueryFocus" => 32,
-        _ => 0,
-    }
+        result
+    })
+    .map_err(|error| LoadError::Lua(error.to_string()))
 }
 
 /// Set the `intrinsic` property on intrinsic frames (e.g. frame.intrinsic = "DropdownButton").

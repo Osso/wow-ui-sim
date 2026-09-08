@@ -89,7 +89,7 @@ fn test_patch_12_1_frame_texture_statusbar_method_surface() {
         .eval(
             r#"
             local frame = CreateFrame("Frame")
-            frame:AddForbiddenAspects(Enum.ForbiddenScriptObjectAspect.UntrustedScriptExecution)
+            frame:AddForbiddenAspects(Enum.ForbiddenAspect.UntrustedScriptExecution)
             frame:SetRolesets("combat", "healer")
             frame:SetOnUpdateMode(Enum.OnUpdateMode.RunAlways)
 
@@ -140,10 +140,10 @@ fn test_patch_12_1_frame_texture_statusbar_method_surface() {
         .eval(
             r#"
             local frame = CreateFrame("Frame")
-            frame:AddForbiddenAspects(Enum.ForbiddenScriptObjectAspect.UntrustedScriptExecution)
+            frame:AddForbiddenAspects(Enum.ForbiddenAspect.UntrustedScriptExecution)
             return type(frame:GetForbiddenAspects()),
-                type(frame:GetInheritableForbiddenAspects(Enum.ForbiddenAspectInheritance.Parent)),
-                FlagsUtil.IsSet(frame:GetForbiddenAspects(), Enum.ForbiddenScriptObjectAspect.UntrustedScriptExecution)
+                type(frame:GetInheritableForbiddenAspects(Enum.ScriptObjectPropagationPath.Hierarchy)),
+                FlagsUtil.IsSet(frame:GetForbiddenAspects(), Enum.ForbiddenAspect.UntrustedScriptExecution)
             "#,
         )
         .unwrap();
@@ -220,7 +220,7 @@ fn test_patch_12_1_forbidden_aspects_block_parent_and_layout_gain() {
     let (parent_blocked, parent_allowed, layout_blocked, layout_allowed): (bool, bool, bool, bool) = env
         .eval(
             r#"
-            local aspect = Enum.ForbiddenScriptObjectAspect.UntrustedScriptExecution
+            local aspect = Enum.ForbiddenAspect.UntrustedLayoutScriptExecution
             local parent = CreateFrame("Frame")
             parent:AddForbiddenAspects(aspect)
 
