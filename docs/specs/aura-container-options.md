@@ -5,6 +5,7 @@
 ## What it must do
 
 - [ ] Register all nine processors before the secure environment is copied, under the cumulative `retail-12-1-0` epoch.
+- [ ] Publish `Enum.CustomAuraButtonDispelTypeStealableFilter` (`Stealable=0`, `NotStealable=1`) and its `Meta` (`MinValue=0`, `MaxValue=1`, `NumValues=2`) in public and secure environments at that epoch, matching `AuraContainerSharedDocumentation.lua`. Dispel-texture option processing must preserve either value, including zero.
 - [ ] Require tables for tooltip backdrop, nine-slice, texture-slice, and application-bar options; accept nil for application-count, dispel-text, dispel-texture, duration-bar, and duration-text options.
 - [ ] Return new structures and nested maps/arrays containing recognized fields; do not mutate input structures or return the input table unchanged.
 - [ ] Validate required fields, primitive types, documented enum values, string-keyed maps, and duration-format component arrays. Preserve false and zero rather than replacing them with defaults.
@@ -26,7 +27,8 @@ The module's local field lists describe only these documented structures. Primit
 
 ## Tests asserting this spec
 
-- `tests/aura_container_util.rs` — six grouped tests for defaults, public/secure availability, nested tooltip structures/colors, dispel maps, duration components/object identity, invalid values, and the real CustomAuraButton initializer.
+- `tests/aura_container_util.rs::aura_stealable_filter_enum_and_options_match_native_contract` — exact enum membership/metadata and both option values through public/secure processors; reproduces BetterBlizzFrames `auras.lua:796` missing-enum boundary.
+- `tests/aura_container_util.rs` — grouped tests for defaults, public/secure availability, nested tooltip structures/colors, dispel maps, duration components/object identity, invalid values, and the real CustomAuraButton initializer.
 
 ## Known gaps (current cycle)
 
