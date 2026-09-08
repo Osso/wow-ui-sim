@@ -120,36 +120,63 @@ impl SimState {
         }
 
         let mut path = Vec::new();
+        let owner = self.walk_toplevel_owner(id, cache, raised_only, &mut path);
+        Self::cache_toplevel_path(cache, path, owner);
+        owner
+    }
+
+    fn walk_toplevel_owner(
+        &self,
+        id: u64,
+        cache: &HashMap<u64, Option<(u64, u64)>>,
+        raised_only: bool,
+        path: &mut Vec<u64>,
+    ) -> Option<(u64, u64)> {
         let mut current_id = Some(id);
-        let owner = loop {
-            let Some(frame_id) = current_id else {
-                break None;
-            };
+        while let Some(frame_id) = current_id {
             if let Some(owner) = cache.get(&frame_id) {
-                break *owner;
+                return *owner;
             }
-            let Some(frame) = self.widgets.get(frame_id) else {
-                break None;
-            };
+            let frame = self.widgets.get(frame_id)?;
             path.push(frame_id);
             if is_strata_root_boundary(frame) {
-                break None;
+                return None;
             }
             let order = self
                 .active_toplevel_show_orders
                 .get(&frame_id)
                 .copied()
                 .unwrap_or(0);
-            if frame.toplevel && (!raised_only || order > 0) {
-                break Some((frame_id, order));
+            if Self::is_eligible_toplevel_owner(frame, order, raised_only) {
+                return Some((frame_id, order));
             }
             current_id = frame.parent_id;
-        };
+        }
+        None
+    }
 
+    fn is_eligible_toplevel_owner(
+        frame: &crate::widget::Frame,
+        order: u64,
+        raised_only: bool,
+    ) -> bool {
+        if !frame.toplevel {
+            return false;
+        }
+        if raised_only {
+            return order > 0;
+        }
+        true
+    }
+
+    fn cache_toplevel_path(
+        cache: &mut HashMap<u64, Option<(u64, u64)>>,
+        path: Vec<u64>,
+        owner: Option<(u64, u64)>,
+    ) {
         for frame_id in path {
             cache.insert(frame_id, owner);
         }
-        owner
     }
 
     fn frame_belongs_in_strata_bucket(&self, id: u64, frame: &crate::widget::Frame) -> bool {
@@ -452,7 +479,11 @@ impl SimState {
 
         // Enabling the flag does not raise an already-shown frame. Native
         // created controls retain zero until Hide/Show or explicit Raise.
-        let order_changed = !toplevel && self.active_toplevel_show_orders.remove(&id).is_some();
+        let order_changed = if toplevel {
+            false
+        } else {
+            self.active_toplevel_show_orders.remove(&id).is_some()
+        };
         if was_toplevel != toplevel || order_changed {
             self.pending_hit_grid_changes.push((id, true));
             self.invalidate_strata_buckets();
