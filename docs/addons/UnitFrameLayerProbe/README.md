@@ -5,8 +5,11 @@ it does not decide which frame should render above another.
 
 ## Installation and capture
 
-This directory is a probe kit, **not a deployment**. No client installation or
-live capture is performed by the repository tests.
+Repository tests do not install the probe or perform native captures.
+Run `python3 docs/addons/UnitFrameLayerProbe/deploy.sh` from the repository root
+to install through the `desktop` SSH alias into
+`C:/World of Warcraft/_retail_/Interface/AddOns/UnitFrameLayerProbe/`.
+The installer does not enable the addon or change game settings.
 
 1. Copy this directory to the intended client's `Interface/AddOns/UnitFrameLayerProbe/`.
 2. Enable **UnitFrameLayerProbe** on that client's AddOns screen, retaining the addon
