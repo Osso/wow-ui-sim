@@ -97,6 +97,8 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
 fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::unit_probes::register_all(lua)?;
     super::unit_misc::register_all(lua)?;
+    #[cfg(feature = "retail-12-1-0")]
+    super::real::unit_relationships::register_all(lua)?;
     super::inventory_slot::register_all(lua)?;
     super::zone_text::register_all(lua)?;
     super::real::modifier_keys::register_all(lua)?;

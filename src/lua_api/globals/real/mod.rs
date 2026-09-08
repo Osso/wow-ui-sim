@@ -32,6 +32,8 @@ pub mod spell_tabs;
 pub mod table_extensions;
 pub mod timerunning;
 pub mod ui_widget_container;
+#[cfg(feature = "retail-12-1-0")]
+pub mod unit_relationships;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;
 pub mod xp_honor_rest;
