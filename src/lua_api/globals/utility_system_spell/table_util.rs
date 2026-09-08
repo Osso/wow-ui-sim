@@ -100,9 +100,15 @@ pub fn table_util_find_indexed_mismatch(state: &mut LuaState) -> LuaResult<u32> 
     Ok(1)
 }
 
-/// table.create(arrayCapacity?, hashCapacity?) — return an empty preallocated table.
+/// table.create(arrayCapacity, hashCapacity?) — return an empty preallocated table.
 pub fn table_create(state: &mut LuaState) -> LuaResult<u32> {
-    let array_capacity = table_capacity(stack_val(state, 1));
+    let array_hint = stack_val(state, 1);
+    if matches!(array_hint, Val::Nil) {
+        return Err(rilua::runtime_error(
+            "bad argument #1 to 'create' (number expected, got nil)",
+        ));
+    }
+    let array_capacity = table_capacity(array_hint);
     let hash_capacity = table_capacity(stack_val(state, 2));
     let table_ref = state
         .gc
@@ -137,6 +143,18 @@ pub fn table_count(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(counts.array_nodes as f64));
     state.push(Val::Num(counts.max_array_index as f64));
     Ok(3)
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn table_getcountinfo(state: &mut LuaState) -> LuaResult<u32> {
+    let input = stack_val(state, 1);
+    if !matches!(input, Val::Table(_)) {
+        return Err(rilua::runtime_error(format!(
+            "bad argument #1 to 'getcountinfo' (table expected, got {})",
+            input.type_name()
+        )));
+    }
+    table_count(state)
 }
 
 fn table_count_nil_error() -> LuaError {
@@ -275,5 +293,7 @@ fn register_table_library_extensions(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     };
     table_set_rust_fn_static(state, table_ref, "count", table_count)?;
+    #[cfg(feature = "retail-12-1-5")]
+    table_set_rust_fn_static(state, table_ref, "getcountinfo", table_getcountinfo)?;
     table_set_rust_fn_static(state, table_ref, "create", table_create)
 }
