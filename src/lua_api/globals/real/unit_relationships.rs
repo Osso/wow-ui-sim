@@ -11,11 +11,14 @@ fn is_controlled_or_group_token(unit: &str) -> bool {
     }
     for (prefix, maximum) in [("partypet", 4), ("raidpet", 40), ("party", 4), ("raid", 40)] {
         if let Some(suffix) = unit.strip_prefix(prefix) {
-            return !suffix.starts_with('0')
-                && suffix.bytes().all(|byte| byte.is_ascii_digit())
-                && suffix
-                    .parse::<u8>()
-                    .is_ok_and(|index| (1..=maximum).contains(&index));
+            let is_lexical_index =
+                !suffix.starts_with('0') && suffix.bytes().all(|byte| byte.is_ascii_digit());
+            if !is_lexical_index {
+                return false;
+            }
+            return suffix
+                .parse::<u8>()
+                .is_ok_and(|index| (1..=maximum).contains(&index));
         }
     }
     false

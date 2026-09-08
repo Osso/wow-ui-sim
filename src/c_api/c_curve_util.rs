@@ -5,15 +5,60 @@ local objects = setmetatable({}, {__mode='k'})
 debug.getregistry().__wow_curve_objects = objects
 local nextId = 0
 
-local function make_factory(kind, isColor)
-    local methods = {}
-    local prototype = newproxy(true)
-    local mt = getmetatable(prototype)
-    local function state(object)
-        local value = objects[object]
-        if not value or value.kind ~= kind then error(kind .. ' expected', 3) end
-        return value
+local function copy_value(value, isColor)
+    if not isColor then return value end
+    return CreateColor(value.r, value.g, value.b, value.a)
+end
+
+local function interpolate(left, right, fraction, isColor)
+    if not isColor then return left + (right - left) * fraction end
+    return CreateColor(
+        left.r + (right.r - left.r) * fraction,
+        left.g + (right.g - left.g) * fraction,
+        left.b + (right.b - left.b) * fraction,
+        left.a + (right.a - left.a) * fraction)
+end
+
+local function evaluate_color_step(points, target)
+    if target < points[1].x then error('Color curve lower extrapolation is not modeled', 2) end
+    local value = points[1].y
+    for index = 2, #points do
+        if target < points[index].x then break end
+        value = points[index].y
     end
+    return copy_value(value, true)
+end
+
+local function evaluate_linear(points, target, isColor)
+    for index = 1, #points - 1 do
+        local left, right = points[index], points[index + 1]
+        if target <= right.x then
+            local dx = right.x - left.x
+            if dx == 0 then return copy_value(right.y, isColor) end
+            return interpolate(left.y, right.y, (target - left.x) / dx, isColor)
+        end
+    end
+    return copy_value(points[#points].y, isColor)
+end
+
+local function evaluate_curve(s, x, isColor)
+    local points = s.points
+    if #points == 0 then
+        if isColor then return CreateColor(0, 0, 0, 0) end
+        return 0
+    end
+    if #points == 1 then return copy_value(points[1].y, isColor) end
+    local target = x or 0
+    if isColor and s.curveType == 1 then
+        return evaluate_color_step(points, target)
+    end
+    if isColor and s.curveType ~= 0 then error('Color curve interpolation type is not modeled', 2) end
+    if isColor and target < points[1].x then error('Color curve lower extrapolation is not modeled', 2) end
+    return evaluate_linear(points, target, isColor)
+end
+
+local function install_object_access(prototype, methods, state)
+    local mt = getmetatable(prototype)
     mt.__index = function(object, key)
         return methods[key] or state(object).fields[key]
     end
@@ -23,19 +68,12 @@ local function make_factory(kind, isColor)
     end
     mt.__tostring = function(object) return state(object).label end
     mt.__metatable = false
-    local function create()
-        nextId = nextId + 1
-        local object = newproxy(prototype)
-        objects[object] = {kind=kind, label=kind .. ':' .. nextId, fields={}, points={}, curveType=0}
-        return object
-    end
-    local function copy_value(value)
-        if not isColor then return value end
-        return CreateColor(value.r, value.g, value.b, value.a)
-    end
+end
+
+local function install_curve_methods(methods, state, create, isColor)
     function methods:AddPoint(x, y)
         local s = state(self)
-        s.points[#s.points + 1] = {x=x or 0, y=copy_value(y or 0)}
+        s.points[#s.points + 1] = {x=x or 0, y=copy_value(y or 0, isColor)}
     end
     function methods:ClearPoints() state(self).points = {} end
     function methods:SetType(value) state(self).curveType = value or 0 end
@@ -46,48 +84,31 @@ local function make_factory(kind, isColor)
         local copy = state(result)
         copy.curveType = s.curveType
         for index, point in ipairs(s.points) do
-            copy.points[index] = {x=point.x, y=copy_value(point.y)}
+            copy.points[index] = {x=point.x, y=copy_value(point.y, isColor)}
         end
         return result
     end
-    local function interpolate(left, right, fraction)
-        if not isColor then return left + (right - left) * fraction end
-        return CreateColor(
-            left.r + (right.r - left.r) * fraction,
-            left.g + (right.g - left.g) * fraction,
-            left.b + (right.b - left.b) * fraction,
-            left.a + (right.a - left.a) * fraction)
-    end
     function methods:Evaluate(x)
-        local s = state(self)
-        local points = s.points
-        if #points == 0 then
-            if isColor then return CreateColor(0, 0, 0, 0) end
-            return 0
-        end
-        if #points == 1 then return copy_value(points[1].y) end
-        local target = x or 0
-        if isColor and s.curveType == 1 then
-            if target < points[1].x then error('Color curve lower extrapolation is not modeled', 2) end
-            local value = points[1].y
-            for index = 2, #points do
-                if target < points[index].x then break end
-                value = points[index].y
-            end
-            return copy_value(value)
-        end
-        if isColor and s.curveType ~= 0 then error('Color curve interpolation type is not modeled', 2) end
-        if isColor and target < points[1].x then error('Color curve lower extrapolation is not modeled', 2) end
-        for index = 1, #points - 1 do
-            local left, right = points[index], points[index + 1]
-            if target <= right.x then
-                local dx = right.x - left.x
-                if dx == 0 then return copy_value(right.y) end
-                return interpolate(left.y, right.y, (target - left.x) / dx)
-            end
-        end
-        return copy_value(points[#points].y)
+        return evaluate_curve(state(self), x, isColor)
     end
+end
+
+local function make_factory(kind, isColor)
+    local methods = {}
+    local prototype = newproxy(true)
+    local function state(object)
+        local value = objects[object]
+        if not value or value.kind ~= kind then error(kind .. ' expected', 3) end
+        return value
+    end
+    local function create()
+        nextId = nextId + 1
+        local object = newproxy(prototype)
+        objects[object] = {kind=kind, label=kind .. ':' .. nextId, fields={}, points={}, curveType=0}
+        return object
+    end
+    install_object_access(prototype, methods, state)
+    install_curve_methods(methods, state, create, isColor)
     return create
 end
 
