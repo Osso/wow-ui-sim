@@ -1,6 +1,6 @@
 # Patch 12.1.5 Occurrence Inventory
 
-Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation delta. Every row starts conservatively as evidence-required until occurrence-specific behavioral or provenance proof supports a narrower disposition.
+Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation delta. Rows remain evidence-required until occurrence-specific behavioral or provenance proof supports a narrower disposition.
 
 ## Content
 
@@ -8,7 +8,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5.69594` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 0 best-effort, 449 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 8 best-effort, 441 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
@@ -267,14 +267,14 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `string.ltrim` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `string.rtrim` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `string.startswith` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `table.contains` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
+| `table.contains` | best-effort | global-api | added | Searches array and hash values, including false and table identity; secret-value/key and invalid-input semantics remain unclaimed. |
 | `table.getcountinfo` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `table.indexof` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `table.isempty` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `table.keys` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `table.removeunordered` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `table.removevalue` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `table.values` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
+| `table.indexof` | best-effort | global-api | added | First 1-based match in the contiguous array prefix, nil on absence/first gap; sparse, invalid-input, and security semantics remain unclaimed. |
+| `table.isempty` | best-effort | global-api | added | Reports empty/non-empty across array and hash insertion/removal; secret-key propagation and invalid-input semantics remain unclaimed. |
+| `table.keys` | best-effort | global-api | added | Returns a separate dense array containing all tested key types without claiming iteration order; secret-key propagation and invalid-input semantics remain unclaimed. |
+| `table.removeunordered` | best-effort | global-api | added | Removes an explicit or omitted array index by swapping the last value, returns the removed value, and preserves hash entries for tested cases; sparse/security semantics remain unclaimed. |
+| `table.removevalue` | best-effort | global-api | added | Removes all matching contiguous array values, preserves retained order and hash entries, and returns the count; sparse/nil/security semantics remain unclaimed. |
+| `table.values` | best-effort | global-api | added | Returns a separate dense array containing all tested values and duplicates without claiming iteration order; secret-value propagation and invalid-input semantics remain unclaimed. |
 | `C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions` | evidence-required | structure | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_EncounterTimeline.AddEditModeEvents` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_EncounterTimeline.EncounterTimelineEventFilter` | evidence-required | structure | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
@@ -456,7 +456,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `UnitChannelInfo` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `UnitChannelInfoResult` | evidence-required | structure | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `UnitChannelInfoResult.castBarID` | evidence-required | structure-field | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
-| `table.count` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `table.count` | best-effort | global-api | changed | PTR override returns exactly one total non-nil entry count; secret-key propagation and invalid-input semantics remain unclaimed. |
 | `table.create` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `table.freeze` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `table.isfrozen` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |

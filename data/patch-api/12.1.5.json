@@ -5865,24 +5865,38 @@
       "id": "added:table.contains",
       "symbol": "table.contains",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::contains_searches_array_and_hash_values",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::contains_searches_array_and_hash_values"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Searches array and hash values, including false and table identity; secret-value/key and invalid-input semantics remain unclaimed."
     },
     {
       "id": "added:table.getcountinfo",
@@ -5911,139 +5925,223 @@
       "id": "added:table.indexof",
       "symbol": "table.indexof",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::indexof_returns_first_contiguous_match",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::indexof_returns_first_contiguous_match"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "First 1-based match in the contiguous array prefix, nil on absence/first gap; sparse, invalid-input, and security semantics remain unclaimed."
     },
     {
       "id": "added:table.isempty",
       "symbol": "table.isempty",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::isempty_tracks_entry_insertion_and_removal",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::isempty_tracks_entry_insertion_and_removal"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Reports empty/non-empty across array and hash insertion/removal; secret-key propagation and invalid-input semantics remain unclaimed."
     },
     {
       "id": "added:table.keys",
       "symbol": "table.keys",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::keys_returns_dense_array_of_all_keys_without_order_assumptions",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::keys_returns_dense_array_of_all_keys_without_order_assumptions"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Returns a separate dense array containing all tested key types without claiming iteration order; secret-key propagation and invalid-input semantics remain unclaimed."
     },
     {
       "id": "added:table.removeunordered",
       "symbol": "table.removeunordered",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::removeunordered_swaps_last_value_and_returns_removed_value",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::removeunordered_swaps_last_value_and_returns_removed_value"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Removes an explicit or omitted array index by swapping the last value, returns the removed value, and preserves hash entries for tested cases; sparse/security semantics remain unclaimed."
     },
     {
       "id": "added:table.removevalue",
       "symbol": "table.removevalue",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::removevalue_removes_all_array_matches_and_preserves_order",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::removevalue_removes_all_array_matches_and_preserves_order"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Removes all matching contiguous array values, preserves retained order and hash entries, and returns the count; sparse/nil/security semantics remain unclaimed."
     },
     {
       "id": "added:table.values",
       "symbol": "table.values",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::values_returns_dense_array_preserving_duplicate_values",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::values_returns_dense_array_preserving_duplicate_values"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Returns a separate dense array containing all tested values and duplicates without claiming iteration order; secret-value propagation and invalid-input semantics remain unclaimed."
     },
     {
       "id": "changed:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions",
@@ -10212,24 +10310,38 @@
       "id": "changed:table.count",
       "symbol": "table.count",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "PTR-gated native table extension implementation publishes and executes this function.",
+          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::count_returns_exactly_one_total",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row.",
+          "source_hash": "3a9c45efb538a6fc0961a75ec9986854a9560f63919db394bf85467b51015db7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_extensions.rs::count_returns_exactly_one_total"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "1d11c0176",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR override returns exactly one total non-nil entry count; secret-key propagation and invalid-input semantics remain unclaimed."
     },
     {
       "id": "changed:table.create",

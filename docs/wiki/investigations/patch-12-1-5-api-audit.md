@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Initial classification is deliberately conservative: all 449 rows are evidence-required until focused proof supports implementation, best-effort compatibility, removal, or provenance-only resolution.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 8 best-effort and 441 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -12,21 +12,22 @@ PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12
 
 The source boundary is immediate generated `*Documentation.lua` files. It excludes FrameXML-only helpers, CVars, GlobalStrings, patch-note behavior, runtime values, and intermediate builds. Documentation prose is ignored; ordered arguments, returns, fields, defaults, security metadata, and symbolic enum/constant expressions are retained.
 
-## Initial Coverage Matrix
+## Coverage Matrix
 
-| Surface | Current evidence | Initial disposition | Missing proof |
+| Surface | Current evidence | Disposition | Missing proof |
 |---|---|---|---|
+| PTR table extensions | Commit `1d11c0176`; 8 focused tests cover lookup, counting, emptiness, removal, keys, and values | 8 best-effort / behavioral | Secret-key/value propagation, invalid arguments, sparse edge cases, and native error semantics |
 | `C_Intl` and `LuaLocaleContext` | Generated signatures only; no simulator namespace or locale object | evidence-required / unsafe | Unicode normalization, segmentation, collation, formatting, locale state, nil/error cases, and taint/secret semantics |
 | `C_Weather`, `Enum.WeatherType`, `WEATHER_CHANGED` | Generated declarations only; no weather model or event producer | evidence-required / unsafe | Native weather values, intensity, event timing/payload, and state transitions |
 | New enums and metadata | Numeric generated values are available | evidence-required / unsafe | PTR-only publication tests and preservation on earlier profiles |
-| Existing timed-signal, rounding, math, string, and table work | Prior focused tests exist for selected contracts | evidence-required pending row linkage | Exact occurrence-to-test/commit evidence and explicit limits |
+| Existing timed-signal, rounding, and math work | Prior focused tests or implementations exist for selected contracts | evidence-required pending row linkage | Exact occurrence-to-test/commit evidence and explicit limits |
 | Removed declarations | Two generated removals | evidence-required / unsafe | PTR absence and excluded-profile preservation |
 
 ## Confirmed High-Priority Gaps
 
 - Missing publication: `CreateFrameWithOptions`, `C_Intl`, `C_Weather`, new locale/weather enums, and `WEATHER_CHANGED`.
-- Contract mismatches: `table.count` currently exposes the three-value count-info shape; `table.create` accepts a missing required size; `string.trim` is only a mismatched alias.
-- Missing additive helpers: documented string/table extensions, selected `C_ActionBar`, `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, aura-option normalization, and script-bucket throttle limits.
+- Contract mismatches: generic pre-PTR `table.count` still exposes the legacy three-value count-info shape while the PTR override is now focused-tested; `table.create` accepts a missing required size; `string.trim` remains a separate 12.0.0 mismatch rather than a 12.1.5 occurrence.
+- Missing additive helpers: documented string and frozen-table extensions, selected `C_ActionBar`, `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, aura-option normalization, and script-bucket throttle limits.
 - Profile-aware removal required: `C_TableUtil.FindIndexedMismatch` must be absent on PTR without regressing earlier profiles.
 - Native evidence remains required for weather values, Training Grounds IDs, active LFG state, castbar token behavior, Unicode/locale semantics, and protected/security behavior.
 

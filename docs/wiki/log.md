@@ -1,6 +1,6 @@
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
-Added [[patch-12-1-5-api-audit]], [[patch-12-1-5-occurrence-inventory]], `data/patch-api/12.1.5.json`, and the generated checklist for the pinned 449-row `12.1.0.69587` → `12.1.5.69594` documentation delta. Initial disposition is 449 evidence-required/unsafe rows and zero untriaged rows; focused behavior upgrades remain separate.
+Added [[patch-12-1-5-api-audit]], [[patch-12-1-5-occurrence-inventory]], `data/patch-api/12.1.5.json`, and the generated checklist for the pinned 449-row `12.1.0.69587` → `12.1.5.69594` documentation delta. Commit `1d11c0176` provides eight focused PTR table-extension tests, moving those rows to best-effort behavioral proof; 441 rows remain evidence-required and none are untriaged.
 
 ## [2026-09-08] investigation | Native unit-frame layering establishes owner groups
 
