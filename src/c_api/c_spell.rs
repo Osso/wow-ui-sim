@@ -514,7 +514,7 @@ fn is_known_spell_for_usability(state: &mut LuaState, spell_id: u32) -> bool {
         .unwrap_or(false)
 }
 
-fn numeric_spell_id(state: &LuaState, index: i32) -> Option<u32> {
+pub(super) fn numeric_spell_id(state: &LuaState, index: i32) -> Option<u32> {
     let value = stack_val(state, index);
     match value {
         Val::Num(n) if n.is_finite() && n >= 0.0 => Some(n as u32),

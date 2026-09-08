@@ -45,6 +45,8 @@ pub mod c_player_interaction_manager;
 pub mod c_pvp;
 pub mod c_quest_hub;
 pub mod c_report_system;
+#[cfg(feature = "retail-12-1-0")]
+pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
 pub mod c_spec;
@@ -92,6 +94,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_loot_history::register_c_loot_history(state)?;
     #[cfg(feature = "retail-12-1-0")]
     c_aura_container_util::register(state)?;
+    #[cfg(feature = "retail-12-1-0")]
+    c_secrets::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;
     register_auxiliary_utility_tables(state)

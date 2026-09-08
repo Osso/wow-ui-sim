@@ -1,0 +1,16 @@
+{
+  "build": "12.1.0.69497",
+  "spell_misc_url": "https://wago.tools/db2/SpellMisc/csv?build=12.1.0.69497",
+  "spell_misc_sha256": "3ef1315badafd00ceec0640b6859831893cba47a428bdbf869f2ecf0682ce4fa",
+  "definitions_repository": "https://github.com/wowdev/WoWDBDefs",
+  "definitions_tree_sha": "d0cc6370847f0c6ae3bfb970ad9520be253276f5",
+  "definitions_path": "meta/flags/SpellAttributes15.dbdf",
+  "definitions_blob_sha": "e795815431e9eddcf4223a0f580ce01d3d64d891",
+  "difficulty_id": 0,
+  "flagged_spells": 76,
+  "always_only": 7,
+  "never_only": 68,
+  "ambiguous_spell_ids": [
+    1317008
+  ]
+}
