@@ -248,6 +248,12 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
+pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64, id: u32) -> Val {
+    let tooltip = empty_tooltip(state, tooltip_type);
+    table_set(state, tooltip, "id", Val::Num(id as f64));
+    tooltip
+}
+
 pub(super) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
     match quality {
         0 => (0.62, 0.62, 0.62),
@@ -547,7 +553,7 @@ pub(super) fn tooltip_for_item_id(state: &mut LuaState, item_id: u32) -> Val {
     let Some(item) = items::get_item(item_id) else {
         return empty_tooltip(state, TOOLTIP_TYPE_ITEM);
     };
-    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_ITEM);
+    let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     populate_item_tooltip_lines(state, tooltip, item);
     tooltip
 }

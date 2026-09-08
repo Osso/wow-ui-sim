@@ -2,7 +2,10 @@ use super::super::{
     LINE_TYPE_ITEM_NAME, LINE_TYPE_SPELL_DESCRIPTION, LINE_TYPE_SPELL_NAME, TOOLTIP_TYPE_ITEM,
     TOOLTIP_TYPE_SPELL, TOOLTIP_TYPE_UNIT_AURA,
 };
-use super::builders::{empty_tooltip, item_quality_color, push_tooltip_line, tooltip_for_item_id};
+use super::builders::{
+    create_identified_tooltip, empty_tooltip, item_quality_color, push_tooltip_line,
+    tooltip_for_item_id,
+};
 use crate::lua_api::game_data;
 use crate::lua_api::globals::spell_api;
 use crate::lua_api::methods::{borrow_state, table_get, table_set};
@@ -196,13 +199,12 @@ fn push_spell_tooltip_lines(state: &mut LuaState, lines: Val, spell_id: u32, spe
 }
 
 pub(super) fn tooltip_for_spell_id(state: &mut LuaState, spell_id: u32) -> Val {
+    let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_SPELL, spell_id);
     let Some(spell) = spells::get_spell(spell_id) else {
-        return empty_tooltip(state, TOOLTIP_TYPE_SPELL);
+        return tooltip;
     };
-    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_SPELL);
     let lines = table_get(state, tooltip, "lines");
     push_spell_tooltip_lines(state, lines, spell_id, spell.name);
-    table_set(state, tooltip, "id", Val::Num(spell_id as f64));
     set_spell_tooltip_width_hint(state, tooltip);
     tooltip
 }
@@ -238,7 +240,7 @@ pub(super) fn tooltip_for_toy_item_id(state: &mut LuaState, item_id: u32) -> Val
         return empty_tooltip(state, TOOLTIP_TYPE_ITEM);
     };
 
-    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_ITEM);
+    let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     let lines = table_get(state, tooltip, "lines");
     push_tooltip_line(
         state,
@@ -257,7 +259,7 @@ pub(super) fn tooltip_for_mount_spell_id(state: &mut LuaState, spell_id: u32) ->
         return tooltip_for_spell_id(state, spell_id);
     }
     let Some(mount_name) = find_mount_name_for_spell(state, spell_id) else {
-        return empty_tooltip(state, TOOLTIP_TYPE_SPELL);
+        return create_identified_tooltip(state, TOOLTIP_TYPE_SPELL, spell_id);
     };
     build_mount_tooltip(state, spell_id, &mount_name)
 }
@@ -273,7 +275,7 @@ fn find_mount_name_for_spell(state: &mut LuaState, spell_id: u32) -> Option<Stri
 }
 
 fn build_mount_tooltip(state: &mut LuaState, spell_id: u32, mount_name: &str) -> Val {
-    let tooltip = empty_tooltip(state, TOOLTIP_TYPE_SPELL);
+    let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_SPELL, spell_id);
     let lines = table_get(state, tooltip, "lines");
     push_tooltip_line(
         state,
@@ -293,7 +295,6 @@ fn build_mount_tooltip(state: &mut LuaState, spell_id: u32, mount_name: &str) ->
         None,
         true,
     );
-    table_set(state, tooltip, "id", Val::Num(spell_id as f64));
     set_spell_tooltip_width_hint(state, tooltip);
     tooltip
 }
