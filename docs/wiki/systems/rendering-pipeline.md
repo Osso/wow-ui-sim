@@ -29,7 +29,7 @@ Prepare phase: resize power-of-two buffers if needed, upload vertices and indice
 
 ## WGSL Shaders (`src/render/shader/quad.wgsl`)
 
-Fragment shader samples the five-tier RGBA atlas, glyph atlas, or BC1/BC3 compressed atlas according to `tex_index`; `tex_index < 0` uses vertex color directly (solid or unresolved quads). All colors are premultiplied: `color = vec4f(rgb * a, a)`. Additive quads zero output alpha. UV coords are clamped to `[0, 0.9999]` to prevent edge bleeding. No mipmapping (`textureSampleLevel(..., 0.0)`). Mask coverage is applied after sampling, using alpha coverage for alpha-backed masks and RGB intensity for masks that encode coverage in RGB.
+Fragment shader samples the five-tier RGBA atlas, glyph atlas, or BC1/BC3 compressed atlas according to `tex_index`; `tex_index < 0` uses vertex color directly (solid or unresolved quads). All colors are premultiplied: `color = vec4f(rgb * a, a)`. Additive quads zero output alpha. UV coords are clamped to `[0, 0.9999]` to prevent edge bleeding. No mipmapping (`textureSampleLevel(..., 0.0)`). Mask coverage is applied after sampling through mask alpha. Simulator mask paths do not use RGB as clipping coverage because valid opaque regions may be black in RGB.
 
 ## Tiered Texture Atlas (`src/render/shader/atlas.rs`)
 

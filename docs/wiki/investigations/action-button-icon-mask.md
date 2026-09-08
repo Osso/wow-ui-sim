@@ -11,18 +11,13 @@ The recurring symptom is a main action bar with visible button chrome and hotkey
 - `ActionButton1.icon:GetTexture()` returns the same icon path.
 - `ActionButton1Icon` is visible in `dump-tree`, has a 40x40 layout rect, and has `Interface\hud\uiactionbariconframemask` attached as a mask.
 
-The failing layer is mask coverage. Commit `b3d613347` fixed minimap clipping by making the shader multiply output alpha by mask RGB intensity as well as mask alpha. That is correct for opaque black/white masks such as `UIMinimapMask`, where black means hidden and white means visible. It is wrong for action button icon masks, where the alpha channel carries the coverage and RGB can be black in visible regions. Multiplying by RGB turns the icon fully transparent.
+The failing layer is mask coverage. The older renderer used RGB intensity for selected paths, even though action-button visible regions can be black in RGB with opaque alpha. Multiplying by RGB turns the icon fully transparent.
 
 ## Fix Pattern
 
 Do not remove `ActionButton1.icon` masks and do not patch `UpdateButtonArt`; those only hide the real problem.
 
-Use per-mask coverage mode:
-
-- RGB intensity coverage for opaque black/white masks such as minimap masks.
-- Alpha coverage for alpha masks, including `Interface\hud\uiactionbariconframemask` and paths containing `AlphaMask`.
-
-The renderer sets `FLAG_MASK_ALPHA_COVERAGE` on vertices whose mask path is alpha-backed. The WGSL shader samples `mask_color.a` for those vertices and keeps RGB-intensity sampling for the minimap path.
+Use alpha coverage for simulator mask paths. `939efe88d` removed the filename-selected coverage mode and `FLAG_MASK_ALPHA_COVERAGE`; WGSL now multiplies output alpha by `mask_color.a` for every resolved mask. This also fixes active SpellBook square icons, whose mask has an opaque black center.
 
 ## Reproduction
 
@@ -52,12 +47,13 @@ After the fix, the same filtered screenshot renders spell icons with masks still
 
 ## Sources
 
-- [masking.rs](../../../src/iced_app/masking.rs) — per-path mask coverage mode and action-button alpha-mask regression test.
-- [quad.wgsl](../../../src/render/shader/quad.wgsl) — shader branch for alpha-backed mask coverage.
+- [masking.rs](../../../src/iced_app/masking.rs) — UV application without filename-derived coverage mode.
+- [quad.wgsl](../../../src/render/shader/quad.wgsl) — alpha-only mask coverage.
+- `/tmp/pi-spell-mask-pixels-{red,green}.*` — pixel proof for action-style, SpellBook, and CircleMask assets.
 - Blizzard UI cache: `~/.cache/wow-ui-sim/blizzard-ui/Blizzard_ActionBar/Mainline/ActionButtonTemplate.xml` — `UI-HUD-ActionBar-IconFrame-Mask` mask on action button icons.
 
 ## See Also
 
-- [[minimap-map-ring-alignment]] — the minimap mask fix that required RGB-intensity mask support.
+- [[minimap-map-ring-alignment]] — earlier minimap masking investigation; its former RGB-coverage claim is superseded.
 - [[action-bar-spell-icons]] — earlier action-bar icon rendering failures in draw order and XML texture fields.
 - [[texture-atlas]] — texture and atlas loading pipeline used by icon and mask textures.

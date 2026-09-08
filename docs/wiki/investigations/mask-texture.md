@@ -1,6 +1,6 @@
 # Mask Texture
 
-WoW uses MaskTextures to clip child textures to shapes (rounded squares, circles, etc.) using mask coverage. Depending on the asset, coverage comes from the mask alpha channel or RGB intensity.
+WoW `MaskTexture` clips child textures through mask alpha. Visible regions may have black RGB, so RGB is not clipping coverage.
 
 ## How It Works
 
@@ -8,7 +8,7 @@ WoW uses MaskTextures to clip child textures to shapes (rounded squares, circles
 2. `<MaskedTextures>` block calls `icon:AddMaskTexture(mask)` on each referenced child
 3. During rendering, the masked texture's quads carry `mask_tex_index` and `mask_tex_coords` vertex attributes
 4. Primitive preparation resolves the mask path from the RGBA atlas first, then the BC1/BC3 atlas, and remaps UVs into the resolved slot
-5. The fragment shader applies the selected mask coverage mode — where effective coverage is zero, the pixel is fully transparent
+5. The fragment shader multiplies output alpha by mask alpha — where mask alpha is zero, the pixel is fully transparent
 
 ## Atlas Resolution and UV Computation
 
@@ -45,14 +45,21 @@ For 30×30 small buttons, `SmallActionButtonMixin_OnLoad` explicitly sets IconMa
 
 - `src/iced_app/masking.rs` — mask UV computation
 - `src/render/shader/primitive.rs` — deferred RGBA/BC mask resolution and UV remapping
-- `src/render/shader/quad.wgsl` — fragment shader mask sampling
+- `src/render/shader/quad.wgsl` — alpha-only fragment mask sampling
 - `src/loader/xml_texture.rs` — XML MaskTexture creation
+
+## 2026-09-08: SpellBook square-mask correction
+
+`spellbook-item-spellicon-mask` has an opaque black center (`RGBA 0,0,0,255`). The former filename-derived RGB/alpha split sampled RGB for this path, making valid active spell icons transparent. `939efe88d` removes that split: all simulator mask paths now use alpha coverage. The rendered-pixel regression covers this square spellbook mask, the passive `talents-node-circle-mask`, and legacy `CircleMask`: opaque centers preserve the source icon; transparent corners reveal the background.
 
 ## Sources
 
 - [mask-texture-system.md](../../mask-texture-system.md) — full system description
+- `/tmp/pi-spell-icon-mask-evidence.json` — live row/mask evidence and supplied screenshot hash
+- `/tmp/pi-spell-mask-pixels-{red,green}.*` — rendered-pixel RED/GREEN proof
 
 ## See Also
 
+- [[action-button-icon-mask]] — earlier instance of black-RGB alpha coverage
 - [[action-bar-spell-icons]] — concrete use of IconMask on action buttons
 - [[talent-sheen]] — sheen animation uses MaskTexture for button shape clipping

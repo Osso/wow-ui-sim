@@ -2,7 +2,7 @@
 
 ## Overview
 
-WoW uses MaskTextures to clip child textures to specific shapes (rounded squares, circles, etc.). Mask coverage may be encoded in the mask's alpha channel or RGB intensity, depending on the asset.
+WoW `MaskTexture` coverage is sampled from alpha. Visible mask regions may have black RGB, so RGB must not participate in clipping.
 
 **Key files:**
 - `src/iced_app/masking.rs` - Mask UV computation and GPU application
@@ -48,7 +48,7 @@ Each quad vertex carries:
 
 Mask paths are deferred like ordinary texture paths. During primitive preparation, the renderer resolves each mask from the RGBA atlas first, then the BC1/BC3 atlas, and remaps its UVs into the selected slot. If no atlas entry resolves, the pending index becomes `-1` and the mask is skipped. This BC-aware path is required for CircleMask-style compressed masks; previously a BC-only mask was cleared as unresolved.
 
-The fragment shader samples the resolved binding and applies mask coverage to output alpha. Alpha-backed masks use the mask alpha channel; masks using RGB intensity multiply by the mask's RGB coverage as well. Where effective mask coverage is zero, the pixel is fully transparent.
+The fragment shader samples the resolved binding and multiplies output alpha by mask alpha. Where mask alpha is zero, the pixel is fully transparent; RGB does not affect clipping.
 
 ---
 
