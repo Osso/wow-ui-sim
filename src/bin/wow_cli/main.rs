@@ -24,6 +24,7 @@ mod gen_global_strings;
 mod gen_items;
 mod gen_manifest;
 mod gen_map_art;
+mod gen_patch_api_docs;
 mod gen_quest_poi;
 mod gen_spells;
 mod gen_spells_power;
@@ -255,6 +256,8 @@ struct AuditApiArgs {
 
 #[derive(Subcommand)]
 enum GenerateTarget {
+    /// Compare pinned generated Blizzard API documentation snapshots
+    PatchApiDocs(gen_patch_api_docs::Options),
     /// Generate data/spells.rs from SpellName/Spell/SpellMisc CSVs
     Spells,
     /// Generate data/items.rs from ItemSparse CSV
@@ -355,6 +358,7 @@ fn handle_extract_textures_command(addons: PathBuf, interface: PathBuf, output: 
 
 fn run_generator(target: GenerateTarget) {
     let result = match target {
+        GenerateTarget::PatchApiDocs(options) => gen_patch_api_docs::run(options),
         GenerateTarget::Spells => gen_spells::run(),
         GenerateTarget::Items => gen_items::run(),
         GenerateTarget::Atlas => gen_atlas::run(),

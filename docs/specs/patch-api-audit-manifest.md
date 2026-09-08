@@ -400,6 +400,36 @@ Patch API audits use a checked-in JSON register for every patch-list occurrence.
 - [ ] Generate real runtime observations for every resolved row during focused/profile test execution.
 - [x] Discover and validate 12.0.0, 12.0.5, and 12.0.7 manifests without patch-specific Rust changes. Generic source validation accepts categorized occurrence registers plus an optional `changed` array and `changed_count`; older added/removed-only manifests default that count to zero.
 
+## Pinned API documentation register generation
+
+`wow-cli generate patch-api-docs` produces source occurrences, not conformance claims. Implementation: `src/bin/wow_cli/gen_patch_api_docs/`; behavioral fixtures: `src/bin/wow_cli/gen_patch_api_docs/tests.rs`.
+
+- [x] Read two commit objects with `git ls-tree` and `git show`, resolve full commit IDs, and record numeric `version.txt` version/build identity independently of working-tree edits.
+- [x] Evaluate only immediate `Interface/AddOns/Blizzard_APIDocumentationGenerated/*Documentation.lua` files in fresh, isolated rilua VMs. Capture `APIDocumentation:AddDocumentationTable`; retain symbolic `Enum.*.*` and `Constants.*.*` references, including addition/subtraction, without guessing numeric values. No system Lua, Python package, simulator startup, source download, or source mutation is required.
+- [x] Emit global/namespaced functions, literal events, script-object parent/method records with generated `API` suffix removed, structures/fields, enum metadata/members, constants, callback types, and predicates. Preserve argument/return/field ordering and type/default/security metadata; reject duplicate identities and unsupported declaration types.
+- [x] Ignore `Documentation` recursively and source-file placement/formatting. Resolve function namespace overrides into identity rather than payload, so moving `string.trim` to a `string` documentation system is not a contract change. Parent structure/enum records retain ordered fields alongside individual member records.
+- [x] Emit deterministic UTF-8 pretty JSON plus one trailing newline using `patch-api-source-register/v1`: patch, category/direction counts, full endpoint metadata, sorted file lists, source-set hashes, method, limitations, and nullable before/after payloads. Sort occurrences by added, changed, removed, then symbol; identity is direction plus symbol.
+
+### Source-set hash contract
+
+For each endpoint, sort source paths by UTF-8 bytes. Feed SHA-256, for each file in order: unsigned 64-bit big-endian path byte length, path bytes, unsigned 64-bit big-endian blob byte length, then exact Git blob bytes. No separators or newline conversion. `version.txt` identifies the endpoint but is not part of the documentation source-set hash. Source hashes therefore change on file relocation or formatting even when semantic occurrences do not.
+
+### 12.1.5 source boundary and command
+
+The checked-in `data/patch-api/sources/12.1.5-register.json` compares Gethe `12.1.0.69587` (`a89e9d0ceb7f6cd31e8fc5ca7df1a338ac0b1b58`, 612 files) with `12.1.5.69594` (`49b69918fcdc77e109813281e4f537d45ec7dcbf`, 622 files). It contains **262 added, 185 changed, and 2 removed occurrences (449 total)**. This endpoint documentation delta does not establish first introduction, runtime behavior, intermediate changes, FrameXML helper changes, or unavailable CVar/GlobalString contracts. Documentation-only prose is excluded; a documented type/security change remains an occurrence even if runtime behavior is unchanged.
+
+```text
+cargo build --bin wow-cli
+./target/debug/wow-cli generate patch-api-docs \
+  --repository /home/osso/.cache/wow-ui-sim/wow-ui-source-git/ptr2 \
+  --base-commit a89e9d0ceb7f6cd31e8fc5ca7df1a338ac0b1b58 \
+  --target-commit 49b69918fcdc77e109813281e4f537d45ec7dcbf \
+  --patch 12.1.5 \
+  --output data/patch-api/sources/12.1.5-register.json
+```
+
+This milestone creates no 12.1.5 machine audit manifest, checklist, inventory, or runtime acceptance claim. Focused development tests: `cargo test --bin wow-cli gen_patch_api_docs::tests -- --nocapture`.
+
 ## Completion contract
 
 `--complete` requires an observation artifact for the exact manifest bytes. Behavioral rows are proven by their repository-validated test evidence and intentionally require no Lua-path observation. Evidence-required unsafe/impossible rows may likewise omit observations when item-specific evidence concerns provenance or another non-Lua boundary, but they always block completion. Exception-requested rows retain their approval or allowlisted scope requirements. `approval_id` and `scope_exception` are mutually exclusive. Scope exceptions are repository-validated against the allowlisted rule, reference, and required `AGENTS.md` intentional-gaps/no-3D text. It rejects:
@@ -421,6 +451,8 @@ The validator does not infer semantic behavior from a symbol name. Runtime obser
 - `src/bin/wow_cli/audit_api/patch_manifest.rs` — generic added/changed/removed schema, typed assertion validation, portable/Git-tracked evidence validation, current-checkout hash validation, canonical checklist drift, completion gates, actual Lua-state observation primitive, initialization generator, observation comparison, and rendering.
 - `src/bin/wow_cli/audit_api/patch_source_index.rs` — per-file direct-publication candidates, dynamic-publication ambiguity records, all-source tree indexing, and active-profile TOC/XML reachability indexing.
 - `tools/gen_patch_12_0_0_register.py` — reproducible wowless-history generator for the neutral 12.0.0 source register.
+- `src/bin/wow_cli/gen_patch_api_docs/{mod,snapshot,evaluate,records}.rs` — generic pinned-documentation CLI, Git snapshot ingestion/hashing, isolated rilua capture, and semantic occurrence extraction.
+- `src/bin/wow_cli/gen_patch_api_docs/tests.rs` — synthetic Git repositories asserting generator contracts; `data/patch-api/sources/12.1.5-register.json` is the pinned endpoint output.
 - `data/patch-api/sources/12.0.0-register.json` — 3410-occurrence wowless snapshot register: 2554 added, 313 changed, 543 removed; the current manifest has 881 best-effort, 784 evidence-required, 2 exception-requested, and 1743 untriaged rows, including 32 best-effort `Constants.CAAConstants` startup publication/type/value rows, 98 best-effort account-state enum startup publication/type/value rows, 94 evidence-required removed account-state enum aliases, five evidence-required same-value removed enum names paired with five best-effort current replacements, and 10 untriaged curve metadata rows, the 12-row C_Spell evidence-required slice, the bounded C_TradeSkillUI slice, the 12-row C_CombatAudioAlert evidence-required slice, the 19-row C_EncounterWarnings evidence-required slice, and the 23-row C_TransmogCollection evidence-required slice plus 70 strict-removal best-effort rows proven by committed full-LoD rawget tests. The bounded three-row 12.0.0 housing placement/cart gap classifies `C_HousingBasicMode.SetFreePlaceEnabled`, `C_HousingBasicMode.StartPlacingPreviewDecor`, and `C_HousingCatalog.DeletePreviewCartDecor` as evidence-required/unsafe; all are published no-ops without mutable free-placement state, preview placement/decor/bundle state, or observable cart deletion, and validation, repeated/unknown calls, requests/events, persistence, reset/isolation, and lifecycle remain unmodeled. The bounded three-row 12.0.0 exterior mutation/debug slice classifies `C_HouseExterior.GetSelectedFixtureDebugInfo`, `SetHouseExteriorSize`, and `SetHouseExteriorType` as evidence-required/unsafe: the debug API retains only a name without signature/returns and lacks selected-fixture debug state, while both setters are published no-ops that do not update getter-visible selected state, validate values, resolve names, persist, refresh, reset/isolate, or model lifecycle.
 - The bounded 12.0.0 miscellaneous payload-field slice classifies eight ExpansionDisplayInfo, LuaColorCurvePoint, PrivateAuraIconInfo, and SpellCooldownInfo fields as evidence-required/unsafe. Current behavior is absent, nil-only, generic, or placeholder-backed and does not establish exact contracts, state/security, or consumer semantics; tests remain empty with null commit, approval, and scope exception.
 - The bounded two-row `C_HouseExterior` slice classifies `GetHouseExteriorTypeOptions` as best-effort/behavioral only for focused callable publication, one returned table, `selectedExteriorType` 1, and tested `Cottage`/1 plus `Manor`/2 options; metadata, mutation, persistence, refresh, validation, and lifecycle semantics remain unclaimed. `GetHoveredFixtureDebugInfo` is evidence-required/unsafe because only its API name is retained, its signature and returns are unknown, and the nil fallback has no hovered-fixture debug state.
