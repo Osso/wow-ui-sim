@@ -35,7 +35,10 @@ mod hit_grid_tests {
         let original_point = Point::new(30.0, 30.0);
         let moved_point = Point::new(330.0, 30.0);
         let initial_target = app.hit_test_mouse_button(original_point, "LeftButton", false);
-        assert!(initial_target.is_some(), "button should start at original rect");
+        assert!(
+            initial_target.is_some(),
+            "button should start at original rect"
+        );
 
         app.env
             .borrow()
@@ -199,6 +202,152 @@ mod hit_grid_tests {
 
         assert_eq!(rect.width, 19.0);
         assert_eq!(rect.height, 18.0);
+    }
+
+    #[test]
+    fn incremental_hit_order_tracks_raised_render_segments_and_unchanged_siblings() {
+        let app = build_test_app();
+        app.env
+            .borrow()
+            .exec(
+                r#"
+            local function panel(name, level)
+                local f = CreateFrame("Button", name, UIParent)
+                f:SetSize(100, 100)
+                f:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+                f:SetFrameStrata("MEDIUM")
+                f:SetFrameLevel(level)
+                f:SetToplevel(true)
+                f:EnableMouse(true)
+                f:Hide()
+                return f
+            end
+            HitOrderFirst = panel("HitOrderFirst", 1)
+            for i = 1, 6 do
+                local region = HitOrderFirst:CreateTexture(nil, "ARTWORK")
+                region:SetAllPoints()
+            end
+            HitOrderFirst:SetAlpha(0)
+            HitOrderFirst:Show()
+            HitOrderSecond = panel("HitOrderSecond", 10)
+            HitOrderSecond:Show()
+        "#,
+            )
+            .unwrap();
+        let size = Size::new(800.0, 600.0);
+        app.mark_all_strata_dirty();
+        app.rebuild_dirty_strata(size, app.strata_dirty.get());
+        let first = hit_order_frame_id(&app, "HitOrderFirst");
+        let second = hit_order_frame_id(&app, "HitOrderSecond");
+        let point = Point::new(100.0, 100.0);
+        assert_eq!(
+            app.hit_test_mouse_button(point, "LeftButton", false),
+            Some(second)
+        );
+
+        app.env
+            .borrow()
+            .exec("HitOrderFirst:Hide(); HitOrderFirst:Show()")
+            .unwrap();
+        app.apply_hit_grid_changes();
+        assert_rendered_after(&app, first, second);
+        assert_eq!(
+            app.hit_test_mouse_button(point, "LeftButton", false),
+            Some(first),
+            "incremental insertion must rekey unchanged siblings after group ordinals shift",
+        );
+        *app.cached_hittable.borrow_mut() = None;
+        app.mark_all_strata_dirty();
+        app.rebuild_dirty_strata(size, app.strata_dirty.get());
+        assert_eq!(
+            app.hit_test_mouse_button(point, "LeftButton", false),
+            Some(first)
+        );
+    }
+
+    #[test]
+    fn incremental_hit_order_tracks_reparented_high_child_without_resize() {
+        let app = build_test_app();
+        app.env
+            .borrow()
+            .exec(
+                r#"
+            HitGroupLow = CreateFrame("Frame", "HitGroupLow", UIParent)
+            HitGroupLow:SetSize(100, 100)
+            HitGroupLow:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+            HitGroupLow:SetFrameStrata("LOW")
+            HitGroupLow:SetToplevel(true)
+            HitGroupChild = CreateFrame("Button", "HitGroupChild", HitGroupLow)
+            HitGroupChild:SetAllPoints(HitGroupLow)
+            HitGroupChild:SetFrameStrata("HIGH")
+            HitGroupChild:EnableMouse(true)
+            HitGroupPanel = CreateFrame("Button", "HitGroupPanel", UIParent)
+            HitGroupPanel:SetAllPoints(HitGroupLow)
+            HitGroupPanel:SetFrameStrata("MEDIUM")
+            HitGroupPanel:EnableMouse(true)
+        "#,
+            )
+            .unwrap();
+        let size = Size::new(800.0, 600.0);
+        app.mark_all_strata_dirty();
+        app.rebuild_dirty_strata(size, app.strata_dirty.get());
+        let child = hit_order_frame_id(&app, "HitGroupChild");
+        let panel = hit_order_frame_id(&app, "HitGroupPanel");
+        let point = Point::new(100.0, 100.0);
+        assert_rendered_after(&app, panel, child);
+        assert_eq!(
+            app.hit_test_mouse_button(point, "LeftButton", false),
+            Some(panel)
+        );
+
+        app.env
+            .borrow()
+            .exec("HitGroupChild:SetParent(UIParent); HitGroupChild:SetFrameStrata('HIGH')")
+            .unwrap();
+        app.apply_hit_grid_changes();
+        assert_rendered_after(&app, child, panel);
+        assert_eq!(
+            app.hit_test_mouse_button(point, "LeftButton", false),
+            Some(child)
+        );
+        app.env
+            .borrow()
+            .exec("HitGroupChild:SetParent(HitGroupLow); HitGroupChild:SetFrameStrata('HIGH')")
+            .unwrap();
+        app.apply_hit_grid_changes();
+        assert_rendered_after(&app, panel, child);
+        assert_eq!(
+            app.hit_test_mouse_button(point, "LeftButton", false),
+            Some(panel)
+        );
+    }
+
+    fn hit_order_frame_id(app: &App, name: &str) -> u64 {
+        app.env
+            .borrow()
+            .state()
+            .borrow()
+            .widgets
+            .get_id_by_name(name)
+            .unwrap()
+    }
+
+    fn assert_rendered_after(app: &App, top: u64, bottom: u64) {
+        let env = app.env.borrow();
+        let mut state = env.state().borrow_mut();
+        let order: Vec<_> = state
+            .get_strata_buckets()
+            .unwrap()
+            .iter()
+            .flatten()
+            .copied()
+            .collect();
+        let top_index = order.iter().position(|&id| id == top).unwrap();
+        let bottom_index = order.iter().position(|&id| id == bottom).unwrap();
+        assert!(
+            top_index > bottom_index,
+            "render order must establish the expected hit winner"
+        );
     }
 
     fn move_alpha_zero_button(app: &App) {

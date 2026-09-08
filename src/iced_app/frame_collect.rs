@@ -380,6 +380,70 @@ mod tests {
     }
 
     #[test]
+    fn hittable_order_follows_render_buckets_not_raw_child_strata() {
+        use crate::widget::FrameStrata;
+
+        let mut registry = WidgetRegistry::new();
+        let root = register_hittable_frame(&mut registry, "UIParent", 0);
+        let low = register_ordered_hit_child(&mut registry, root, "LowGroup", FrameStrata::Low);
+        registry.get_mut(low).unwrap().toplevel = true;
+        let child = register_ordered_hit_child(&mut registry, low, "HighChild", FrameStrata::High);
+        let panel = register_ordered_hit_child(&mut registry, root, "Panel", FrameStrata::Medium);
+        let independent =
+            register_ordered_hit_child(&mut registry, root, "IndependentHigh", FrameStrata::High);
+        registry.get_mut(panel).unwrap().alpha = 0.0;
+        registry.get_mut(panel).unwrap().effective_alpha = 0.0;
+
+        let buckets = vec![vec![root, low, child], vec![panel], vec![independent]];
+        let collected = super::collect_hittable_frames(&registry, &buckets);
+        let ids: Vec<_> = collected.hittable.iter().map(|entry| entry.0).collect();
+        assert_eq!(ids, [low, child, panel, independent]);
+        let rects = crate::iced_app::strata_emit::build_hittable_rects(&collected, &registry);
+        let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 100.0, 100.0);
+        let point = iced::Point::new(5.0, 5.0);
+        assert_eq!(grid.topmost_matching_at(point, |_| true), Some(independent));
+        assert_eq!(
+            grid.topmost_matching_at(point, |id| id != independent),
+            Some(panel),
+            "transparent MEDIUM panel must win over its lower group's HIGH child",
+        );
+    }
+
+    #[test]
+    fn hittable_collection_does_not_invent_order_for_frames_outside_buckets() {
+        use crate::widget::FrameStrata;
+
+        let mut registry = WidgetRegistry::new();
+        let root = register_hittable_frame(&mut registry, "UIParent", 0);
+        let panel = register_ordered_hit_child(&mut registry, root, "Panel", FrameStrata::Medium);
+        register_ordered_hit_child(&mut registry, root, "NotInBuckets", FrameStrata::High);
+        let collected = super::collect_hittable_frames(&registry, &[vec![root, panel]]);
+        let ids: Vec<_> = collected.hittable.iter().map(|entry| entry.0).collect();
+        assert_eq!(ids, [panel]);
+    }
+
+    fn register_ordered_hit_child(
+        registry: &mut WidgetRegistry,
+        parent: u64,
+        name: &str,
+        strata: crate::widget::FrameStrata,
+    ) -> u64 {
+        let id = register_hittable_frame(registry, name, 0);
+        let frame = registry.get_mut(id).unwrap();
+        frame.parent_id = Some(parent);
+        frame.frame_strata = strata;
+        frame.set_point(
+            AnchorPoint::TopLeft,
+            Some(parent as usize),
+            AnchorPoint::TopLeft,
+            0.0,
+            0.0,
+        );
+        registry.add_child(parent, id);
+        id
+    }
+
+    #[test]
     fn later_created_regions_sort_after_earlier_regions_in_same_layer() {
         let mut registry = WidgetRegistry::new();
 
