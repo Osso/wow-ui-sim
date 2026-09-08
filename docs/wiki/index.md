@@ -1,6 +1,6 @@
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 
-[[betterblizzframes-no-portrait-overlay]] records the observed `Uther` overlay: saved BetterBlizzFrames no-portrait mode creates a `HIGH`-strata child above the `MEDIUM` SpellBook. The mask correction did not alter ordering; no simulator or user-setting change is justified without approval.
+[[betterblizzframes-no-portrait-overlay]] records the observed `Uther` overlay: saved BetterBlizzFrames no-portrait mode creates a `HIGH`-strata child above the `MEDIUM` SpellBook. The mask correction did not alter ordering. Regression timing and native-client parity remain unestablished; no overlap correction or setting change has been applied.
 
 ## [2026-09-08] acceptance | Actual addon startup and accepted PlayerSpells interaction
 
