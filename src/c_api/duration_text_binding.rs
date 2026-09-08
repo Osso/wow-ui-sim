@@ -1,10 +1,10 @@
-//! Temporary inert defaults for remaining additive 12.0.7 API names.
+//! Table-backed duration text bindings exposed by C_DurationUtil.
 //!
-//! This bridge is now limited to the larger duration text-binding compatibility
-//! object. Exact duration formatting and secret-value behavior remains
-//! documented as paused until live client probes pin it down.
+//! Configuration copying is modeled here. Existing formatting, clock, and
+//! update behavior is retained; this does not establish native timing or
+//! secret-value parity.
 
-const PATCH_12_0_7_INERT_DEFAULTS_LUA: &str = r#"
+const DURATION_TEXT_BINDING_LUA: &str = r#"
 if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
     local function ensure_namespace(name)
         _G[name] = _G[name] or __wow_namespace()
@@ -51,6 +51,31 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
         end
         return "0"
     end
+    local bindings = setmetatable({}, { __mode = "k" })
+    local configurationFields = {
+        "duration", "fontString", "enabled", "updateInterval", "timeModifier",
+        "expiredText", "zeroDurationText", "formatter", "textFormat", "clock",
+        "textColorCurve", "textColorProperty",
+    }
+    local function require_binding(value)
+        if type(value) ~= "table" or not bindings[value] then
+            error("DurationTextBinding expected", 3)
+        end
+    end
+    local function copy_component(component)
+        if type(component) ~= "table" then return component end
+        local copy = {}
+        for key, value in pairs(component) do copy[key] = value end
+        return copy
+    end
+    local function copy_components(components)
+        if type(components) ~= "table" then return components end
+        local copy = {}
+        for key, component in pairs(components) do
+            copy[key] = copy_component(component)
+        end
+        return copy
+    end
     local function create_duration_text_binding(duration, fontString)
         local binding = {
             duration = duration ~= nil and duration or create_duration_value(0),
@@ -65,6 +90,20 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
             textFormatComponents = nil,
             clock = create_duration_clock(0),
         }
+        bindings[binding] = true
+        function binding:Assign(other)
+            require_binding(self)
+            require_binding(other)
+            local components = copy_components(other.textFormatComponents)
+            for _, field in ipairs(configurationFields) do self[field] = other[field] end
+            self.textFormatComponents = components
+        end
+        function binding:Copy()
+            require_binding(self)
+            local copy = create_duration_text_binding()
+            copy:Assign(self)
+            return copy
+        end
         function binding:CanFormatText() return true end
         function binding:CanUpdateFontString() return self.fontString ~= nil and type(self.fontString.SetText) == "function" end
         function binding:Disable() self:SetEnabled(false) end
@@ -129,10 +168,16 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
             end
         end
         if isPatch121 then
-            function binding:ClearTextColorCurve() self.textColorCurve = nil end
+            function binding:ClearTextColorCurve()
+                self.textColorCurve = nil
+                self.textColorProperty = nil
+            end
             function binding:GetFormattedTextColor() return 1, 1, 1, 1 end
-            function binding:GetTextColorCurve() return self.textColorCurve end
-            function binding:SetTextColorCurve(curve) self.textColorCurve = curve end
+            function binding:GetTextColorCurve() return self.textColorCurve, self.textColorProperty end
+            function binding:SetTextColorCurve(curve, property)
+                self.textColorCurve = curve
+                self.textColorProperty = property
+            end
         end
         return binding
     end
@@ -140,7 +185,7 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120007 then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(PATCH_12_0_7_INERT_DEFAULTS_LUA)?;
+pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
+    lua.exec(DURATION_TEXT_BINDING_LUA)?;
     Ok(())
 }

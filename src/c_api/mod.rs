@@ -65,6 +65,7 @@ pub mod c_widget;
 pub mod c_wow_token_public;
 pub mod c_wowtoken_secure;
 pub mod c_xml_util;
+pub(crate) mod duration_text_binding;
 pub mod item_spell;
 #[cfg(feature = "client-mists")]
 pub mod legacy_spell_book;

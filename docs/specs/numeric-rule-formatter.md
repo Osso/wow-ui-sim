@@ -21,7 +21,7 @@ The model keeps owned Rust rule/component data sorted by threshold. Lookup uses 
 - `src/c_api/numeric_rule_formatter/config.rs` — configuration parsing, validation and copied readback.
 - `src/c_api/numeric_rule_formatter/model.rs` — transformations and numeric format validation.
 - `src/c_api/c_string_util.rs`, `src/c_api/mod.rs` — registration, including repeated utility bootstrap registration.
-- `src/lua_api/workarounds/temporary/patch_12_0_7_inert_defaults.rs` — explicit native formatter branch in the existing duration-binding implementation; native errors propagate rather than reverting to unformatted text.
+- `src/c_api/duration_text_binding.rs` — explicit native formatter branch in the existing duration-binding implementation; native errors propagate rather than reverting to unformatted text.
 
 ## Tests asserting this spec
 

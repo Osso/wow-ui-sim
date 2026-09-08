@@ -54,7 +54,7 @@ Key implementation locations:
 - `src/lua_api/globals/missing_surface/encounter_events.rs` — Rust-backed `C_EncounterTimeline.GetEventColor` bridge over the existing encounter-event color state.
 - `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — shared formatting helpers, including `GetMoneyString` and the gated `GameTooltip_AddMoneyLine` best-effort helper.
 - `src/lua_api/workarounds/temporary/performance_metric_defaults.rs` — shared CPU/framerate/download metric defaults, including 12.0.7 CPU usage probes.
-- `src/lua_api/workarounds/temporary/patch_12_0_7_inert_defaults.rs` — remaining version-gated 12.0.7 default: the documented best-effort `CreateDurationTextBinding` compatibility object.
+- `src/c_api/duration_text_binding.rs` — table-backed `CreateDurationTextBinding` model, including [configuration assignment/copy](../../specs/duration-text-binding.md); existing best-effort formatting limits remain.
 - `src/lua_api/workarounds/mod.rs`, `src/lua_api/workarounds/temporary/mod.rs` — bootstrap registration.
 - `src/event/valid_events.rs` — 12.0.7 event registration gate.
 - `src/loader/tests/wow_api_globals/startup_globals.rs` — regression test for safe 12.0.7 global bridges.
@@ -164,7 +164,7 @@ If the exact-behavior work resumes, create live PTR probe addons for restricted-
 - `src/c_api/c_party_info.rs`, `src/lua_api/globals/group_verbs.rs`, `src/lua_api/state/support_types.rs` — modeled ready-check behavior.
 - `src/c_api/c_ui_file_asset.rs` — best-effort UI file-asset lookup.
 - `src/cvars.rs` — recovered exact 12.0.7 profile CVar additions/removals/default override.
-- `src/lua_api/workarounds/temporary/patch_12_0_7_inert_defaults.rs` — remaining documented best-effort 12.0.7 duration text-binding compatibility object.
+- `src/c_api/duration_text_binding.rs` — duration text-binding model and configuration copying; formatting remains best-effort as documented.
 - `src/c_api/c_ping_secure.rs` — Rust-backed secure pending callback storage globals.
 - `src/lua_api/globals/missing_surface/encounter_events.rs` — Rust-backed encounter timeline color bridge.
 - `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — shared money formatting and tooltip money-line helper.
