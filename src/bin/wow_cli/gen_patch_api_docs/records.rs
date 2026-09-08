@@ -61,18 +61,12 @@ pub(super) fn insert_document(records: &mut Records, document: Value) -> Result<
         return Err("unsupported documentation root".into());
     }
     let namespace = document["Namespace"].as_str().unwrap_or("");
-    let object = match document.get("Type") {
-        None => None,
-        Some(Value::String(kind)) if kind == "System" => None,
-        Some(Value::String(kind)) if kind == "ScriptObject" => {
-            let raw = name(&document, "Name")?;
-            let object = raw.strip_suffix("API").unwrap_or(&raw).to_owned();
-            let mut parent = without(&document, &["Functions", "Events", "Tables", "Predicates"]);
-            parent["Name"] = Value::String(object.clone());
-            insert(records, object.clone(), "script-object", parent)?;
-            Some(object)
+    let object = match script_object_record(&document)? {
+        Some((symbol, parent)) => {
+            insert(records, symbol.clone(), "script-object", parent)?;
+            Some(symbol)
         }
-        kind => return Err(format!("unsupported documentation declaration type: {kind:?}").into()),
+        None => None,
     };
     insert_functions(records, &document, namespace, object.as_deref())?;
     for event in list(&document, "Events")? {
@@ -92,6 +86,21 @@ pub(super) fn insert_document(records: &mut Records, document: Value) -> Result<
         )?;
     }
     Ok(())
+}
+
+fn script_object_record(document: &Value) -> Result<Option<(String, Value)>> {
+    match document.get("Type") {
+        None => Ok(None),
+        Some(Value::String(kind)) if kind == "System" => Ok(None),
+        Some(Value::String(kind)) if kind == "ScriptObject" => {
+            let raw = name(document, "Name")?;
+            let symbol = raw.strip_suffix("API").unwrap_or(&raw).to_owned();
+            let mut parent = without(document, &["Functions", "Events", "Tables", "Predicates"]);
+            parent["Name"] = Value::String(symbol.clone());
+            Ok(Some((symbol, parent)))
+        }
+        kind => Err(format!("unsupported documentation declaration type: {kind:?}").into()),
+    }
 }
 
 fn require_type(value: &Value, allowed: &[&str]) -> Result<()> {
@@ -124,38 +133,46 @@ fn insert_functions(
     Ok(())
 }
 
-fn insert_table(records: &mut Records, table: &Value, namespace: &str) -> Result<()> {
-    let kind = name(table, "Type")?;
-    let table_name = name(table, "Name")?;
-    let (symbol, category, children, child_category) = match kind.as_str() {
-        "Structure" => (
-            qualify(namespace, &table_name),
+fn table_shape(
+    kind: &str,
+    namespace: &str,
+    table_name: &str,
+) -> Result<(String, &'static str, &'static str, &'static str)> {
+    match kind {
+        "Structure" => Ok((
+            qualify(namespace, table_name),
             "structure",
             "Fields",
             "field",
-        ),
-        "Enumeration" => (
+        )),
+        "Enumeration" => Ok((
             format!("Enum.{table_name}"),
             "enum",
             "Fields",
             "enum-member",
-        ),
-        "Constants" => (
+        )),
+        "Constants" => Ok((
             format!("Constants.{table_name}"),
             "constants",
             "Values",
             "constant",
-        ),
-        "CallbackType" => {
-            return insert(
-                records,
-                qualify(namespace, &table_name),
-                "callback",
-                table.clone(),
-            );
-        }
-        _ => return Err(format!("unsupported table declaration type: {kind}").into()),
-    };
+        )),
+        _ => Err(format!("unsupported table declaration type: {kind}").into()),
+    }
+}
+
+fn insert_table(records: &mut Records, table: &Value, namespace: &str) -> Result<()> {
+    let kind = name(table, "Type")?;
+    let table_name = name(table, "Name")?;
+    if kind == "CallbackType" {
+        return insert(
+            records,
+            qualify(namespace, &table_name),
+            "callback",
+            table.clone(),
+        );
+    }
+    let (symbol, category, children, child_category) = table_shape(&kind, namespace, &table_name)?;
     // Parent records retain metadata and ordered fields, alongside member records.
     insert(records, symbol.clone(), category, table.clone())?;
     for field in list(table, children)? {
