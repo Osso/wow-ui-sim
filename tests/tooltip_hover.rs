@@ -11,6 +11,59 @@ use tooltip_hover_helpers::{open_character_panel, refresh_buff_frame};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
+fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {
+    let env = setup_full_env();
+    let button_id = {
+        let mut state = env.state().borrow_mut();
+        state.action_bars.insert(5, 45524);
+        let id = state.widgets.get_id_by_name("ActionButton5").unwrap();
+        state.hovered_frame = Some(id);
+        id
+    };
+    env.exec(
+        r#"
+        ActionButton5.action = 5
+        ActionButton5:Show()
+        ClickedStylePostcall = { calls = 0 }
+        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip)
+            if tooltip:IsForbidden() or tooltip.GetSpell == nil then return end
+            local name, spellId = tooltip:GetSpell()
+            if spellId == nil or issecretvalue(spellId) then return end
+            ClickedStylePostcall.calls = ClickedStylePostcall.calls + 1
+            ClickedStylePostcall.id = spellId
+            ClickedStylePostcall.name = name
+            tooltip:AddLine("Bound to test key")
+        end)
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().lua_errors.clear();
+
+    env.fire_script_handler(button_id, "OnEnter", vec![])
+        .expect("actual ActionButton OnEnter should finish");
+
+    env.exec(
+        r#"
+        assert(ClickedStylePostcall.calls > 0, "spell postcall never completed")
+        assert(ClickedStylePostcall.id == 45524, "postcall lost action spell identity")
+        assert(ClickedStylePostcall.name == C_Spell.GetSpellName(45524))
+        assert(GameTooltip:GetPrimaryTooltipData().id == 45524)
+        assert(GameTooltip:IsShown())
+        local found = false
+        for i = 1, GameTooltip:NumLines() do
+            if GameTooltip:GetLeftLine(i):GetText() == "Bound to test key" then found = true end
+        end
+        assert(found, "postcall could not append its binding line")
+        "#,
+    )
+    .expect("native TooltipDataHandler and GetSpell preserve action identity for addon postcalls");
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "hover must not record a swallowed postcall error"
+    );
+}
+
+#[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
 
