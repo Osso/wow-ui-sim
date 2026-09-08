@@ -12,7 +12,7 @@ The `lua-errors` command in `src/lua_errors.rs` reports uncaught failures collec
 ### Addon load summary
 
 - [x] `Failed during loading` counts the unique union of failed addon load transactions and addons attributed uncaught Lua errors during the loading batch, including nested loads and `ADDON_LOADED` callbacks.
-- [x] `Load failures` counts failed load transactions separately; `Loaded with Lua errors during loading` counts attributed addons whose runtime loaded state is true. An addon present in both failure sources is counted once in `Failed`.
+- [x] `Load failures` counts failed load transactions separately; `Loaded with Lua errors during loading` counts attributed addons whose runtime loaded state is true. An addon present in both failure sources is counted once in `Failed during loading`.
 - [x] Preserve runtime loaded flags and the existing `Loaded` transaction count. Nested loaded addons can contribute Lua failures without being separate top-level load transactions.
 
 The loading summary is explicitly labeled `before startup events`; its counts cover only records added during the loading batch, not later `PLAYER_LOGIN`, update ticks, or `--exec-lua` failures.
@@ -44,7 +44,7 @@ The loading summary is explicitly labeled `before startup events`; its counts co
 
 ## Known gaps (current cycle)
 
-- [ ] Final-summary targeted GREEN and independent verification pending. Valid process RED `/tmp/pi-lua-summary-chronology-postload-red.*` collects three event/update errors and exits 1 but has no final summary; clean/exec cases also fail missing-summary assertions in `/tmp/pi-lua-summary-chronology-red.*`.
+- [ ] Independent final-summary verification remains with integration. Targeted coverage is four CLI process cases plus one load-summary case: three unchanged CLI cases and the load-summary case pass in `/tmp/pi-lua-summary-chronology-green.*`; the corrected post-load case passes in `/tmp/pi-lua-summary-chronology-postload-green.*` at `9500ac1bf`. The combined run itself was not all-green: its post-load test initially mistook the display-only `__BuiltIn` label for recorded ownership. Reporting continues to use canonical metadata, leaving that exec-created frame unattributed. Valid RED `/tmp/pi-lua-summary-chronology-postload-red.*` collects three errors and exits 1 but lacks the final summary.
 - [ ] Full user-addon startup acceptance remains open. Summary accounting's focused regression passed 1/1 at `58e3a2d2e`, after reproducing the incorrect count. A clean isolated fixture is not evidence that personal addons work.
 
 ## Out of scope
