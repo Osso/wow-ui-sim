@@ -63,6 +63,10 @@ pub(super) fn set_parent(state: &mut LuaState) -> LuaResult<u32> {
     let old_parent_id = sim.widgets.get(id).and_then(|frame| frame.parent_id);
     let retarget_all_points = should_retarget_parent_fill_anchors(&sim.widgets, id, old_parent_id);
     super::super::methods_hierarchy::reparent_widget(&mut sim.widgets, id, new_parent_id);
+    if old_parent_id != new_parent_id {
+        sim.invalidate_strata_buckets();
+        sim.queue_hit_grid_eligibility_change(id);
+    }
     if retarget_all_points {
         retarget_parent_fill_anchors(&mut sim.widgets, id, new_parent_id);
     }
