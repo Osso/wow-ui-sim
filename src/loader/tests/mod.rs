@@ -459,7 +459,7 @@ fn test_hit_rect_insets_shrinks_hittable_rect() {
     let collected = CollectedFrames {
         hittable: vec![(
             id,
-            (crate::widget::FrameStrata::Medium, 1, 0, id),
+            0,
             LayoutRect {
                 x: 100.0,
                 y: 50.0,
