@@ -4,6 +4,7 @@
 use crate::c_api::{ensure_namespace, global_val};
 use crate::lua_api::methods::{
     call_function_state, create_string, create_table, table_get, table_set, table_set_num,
+    table_set_static,
 };
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -148,9 +149,47 @@ const DURATION_TEXT: &[Field] = &[
     ("textColor", Structure(TEXT_COLOR), Optional),
 ];
 
+fn register_duration_property_enum(state: &mut LuaState) -> LuaResult<()> {
+    let enums = ensure_namespace(state, "Enum")?;
+    let values = create_table(state);
+    for (index, name) in [
+        "RemainingDuration",
+        "RemainingPercent",
+        "ElapsedDuration",
+        "ElapsedPercent",
+        "TotalDuration",
+        "StartTime",
+        "EndTime",
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        table_set_static(state, values, name, Val::Num(index as f64));
+    }
+    table_set_static(
+        state,
+        Val::Table(enums),
+        "DurationTextBindingProperty",
+        values,
+    );
+    let metadata = create_table(state);
+    for (name, value) in [("MinValue", 0.0), ("MaxValue", 6.0), ("NumValues", 7.0)] {
+        table_set_static(state, metadata, name, Val::Num(value));
+    }
+    let enum_meta = ensure_namespace(state, "EnumMeta")?;
+    table_set_static(
+        state,
+        Val::Table(enum_meta),
+        "DurationTextBindingProperty",
+        metadata,
+    );
+    Ok(())
+}
+
 macro_rules! processors {
     ($($function:ident => ($name:literal, $fields:ident, $nilable:literal)),+ $(,)?) => {
         pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+            register_duration_property_enum(state)?;
             let namespace = ensure_namespace(state, "C_AuraContainerUtil")?;
             $(table_set_rust_fn_static(state, namespace, $name, $function)?;)+
             Ok(())
