@@ -332,6 +332,7 @@ mod hit_grid_tests {
             .unwrap()
     }
 
+    #[track_caller]
     fn assert_rendered_after(app: &App, top: u64, bottom: u64) {
         let env = app.env.borrow();
         let mut state = env.state().borrow_mut();
@@ -346,7 +347,7 @@ mod hit_grid_tests {
         let bottom_index = order.iter().position(|&id| id == bottom).unwrap();
         assert!(
             top_index > bottom_index,
-            "render order must establish the expected hit winner"
+            "render order must establish the expected hit winner: top={top} at {top_index}, bottom={bottom} at {bottom_index}"
         );
     }
 
