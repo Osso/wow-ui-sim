@@ -37,7 +37,7 @@ python3 tools/gen_spell_aura_secrecy.py --input /tmp/pi-SpellMisc-12.1.0.69497.c
 
 ## Known gaps
 
-Focused proof at `721836971`: four Rust tests passed, including the actual secure Blizzard filter. Four generator tests passed; regeneration produced byte-identical Rust and provenance files. No broad check, other-profile run, or full-addon acceptance is claimed by this slice.
+Focused proof at `721836971`: four Rust tests passed, including the actual secure Blizzard filter. Four generator tests passed; regeneration produced byte-identical Rust and provenance files. Actual addon/SavedVariables startup later returned `[]`, exit 0 (`/tmp/pi-accepted-final-startup.*`), but this remains neither a broad check nor another-profile proof.
 - Spell `1317008`, base row `863018`, carries both aura flags. Neither the supplied flag definitions nor the API documentation establishes precedence. Querying it raises an explicit ambiguity error. It is absent from the current compact spell metadata and local name export, but that absence is not used to discard its native attributes.
 - Invalid/unknown-identifier native semantics remain unverified; this slice introduces no separate resolver or fallback classification policy.
 

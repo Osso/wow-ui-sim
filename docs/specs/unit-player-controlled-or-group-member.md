@@ -24,7 +24,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Independent integration verification pending; targeted RED/GREEN completed.
+- Targeted RED/GREEN passed 3/3. Actual addon/SavedVariables startup later returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`; this does not add UnitExists, ownership, or secret-argument semantics.
 
 ## Out of scope
 

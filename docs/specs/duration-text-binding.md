@@ -30,7 +30,7 @@
 
 Focused proof at `92675f08d`: all six assignment/copy cases passed in `/tmp/pi-aura-followup-green.*`, including the actual `CustomAuraButton` initializer and secure-option copy. The earlier failed table-backed identity boundary is retained in `/tmp/pi-aura-three-models-green.*`; the source-backed userdata handle fixes it without accepting forgeable table markers.
 
-Full addon/SavedVariables acceptance remains open. Later startup failures are missing `Enum.CustomAuraButtonDispelTypeStealableFilter` and `UnitIsPlayerControlledOrGroupMember`, separate in-progress boundaries.
+Actual addon/SavedVariables startup returned `[]`, exit 0 after the separate dispel-filter, controlled-player token, and curve-userdata fixes (`/tmp/pi-accepted-final-startup.*`). This binding slice does not make broader native-fidelity claims.
 
 ## Out of scope
 

@@ -31,7 +31,7 @@ Frames and regions retain owned forbidden aspects and separate hierarchy/layout 
 ## Known gaps
 
 - This slice does not introduce a policy for dynamically propagating subsequently added restrictions over existing parent/anchor graphs.
-- Full addon/SavedVariables acceptance remains open. The subsequent actual run still reports missing `Enum.CustomAuraButtonDispelTypeStealableFilter` and `UnitIsPlayerControlledOrGroupMember`; those are separate in-progress boundaries, not forbidden-aspect failures.
+- Actual addon/SavedVariables startup returned `[]`, exit 0 after separate dispel-filter, controlled-player token, and curve-userdata fixes (`/tmp/pi-accepted-final-startup.*`). That integration result does not extend this slice to dynamic propagation.
 
 ## Native sources
 

@@ -12,7 +12,7 @@
 
 `tests/userdata_proxy.rs` covers handle types, copying, secure option identity, numeric and color interpolation, and forged-table rejection. `tests/duration_text_binding_copy.rs` exercises the real `CustomAuraButton` provider initializer and its internal `securecopy(options)` before assigning a duration color curve.
 
-The test-only commit reproduces the actual processor rejection, not merely a type mismatch. Targeted GREEN and full-addon integration are separate proof stages.
+The test-only commit reproduces the actual processor rejection, not merely a type mismatch. Targeted GREEN passed 9/9 in `/tmp/pi-curve-userdata-green.*`; actual addon/SavedVariables startup then returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`.
 
 ## Remaining limits
 

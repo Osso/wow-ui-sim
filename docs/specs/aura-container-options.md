@@ -4,8 +4,8 @@
 
 ## What it must do
 
-- [ ] Register all nine processors before the secure environment is copied, under the cumulative `retail-12-1-0` epoch.
-- [ ] Publish `Enum.CustomAuraButtonDispelTypeStealableFilter` (`Stealable=0`, `NotStealable=1`) and its `Meta` (`MinValue=0`, `MaxValue=1`, `NumValues=2`) in public and secure environments at that epoch, matching `AuraContainerSharedDocumentation.lua`. Dispel-texture option processing must preserve either value, including zero.
+- [x] Register all nine processors before the secure environment is copied, under the cumulative `retail-12-1-0` epoch.
+- [x] Publish `Enum.CustomAuraButtonDispelTypeStealableFilter` (`Stealable=0`, `NotStealable=1`) and its `Meta` (`MinValue=0`, `MaxValue=1`, `NumValues=2`) in public and secure environments at that epoch, matching `AuraContainerSharedDocumentation.lua`. Dispel-texture option processing preserves either value, including zero.
 - [ ] Require tables for tooltip backdrop, nine-slice, texture-slice, and application-bar options; accept nil for application-count, dispel-text, dispel-texture, duration-bar, and duration-text options.
 - [ ] Return new structures and nested maps/arrays containing recognized fields; do not mutate input structures or return the input table unchanged.
 - [ ] Validate required fields, primitive types, documented enum values, string-keyed maps, and duration-format component arrays. Preserve false and zero rather than replacing them with defaults.
@@ -32,10 +32,10 @@ The module's local field lists describe only these documented structures. Primit
 
 ## Known gaps (current cycle)
 
-- [ ] Cargo execution is awaiting the authorized build slot; the newly added tests have not run.
-- [ ] The duration formatter test depends on the separately implemented `C_StringUtil.CreateNumericRuleFormatter` object.
+- Targeted enum/options proof passed 1/1 in `/tmp/pi-aura-stealable-enum-green.*`; related duration/curve identity has separate coverage.
+- Actual addon/SavedVariables startup returned `[]`, exit 0 in `/tmp/pi-accepted-final-startup.*`; it still records three loader warnings, so this is not a zero-warning claim.
 
-The existing full-addon failure at `Blizzard_CustomAuraButton.lua:61` is the production RED boundary (`/tmp/pi-addon-fixes-full-current.stdout.log`). This implementation does not establish exact native error wording, secret-argument enforcement, or opaque userdata identity validation beyond the object interfaces available in the simulator.
+This implementation does not establish exact native error wording or secret-argument enforcement.
 
 ## Out of scope
 

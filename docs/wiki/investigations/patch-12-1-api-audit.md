@@ -56,6 +56,7 @@ The 12.1 compatibility work is currently captured by these commits:
 - `721836971` — classifies base spell aura secrecy through generated native `SpellMisc.Attributes_15` flags, reusing `C_Spell` identifier resolution. Contradictory flags remain explicit query errors; no combat secrecy policy is inferred.
 - `ee05355ae` and `d12cfead4` — resolve XML forbidden-aspect names through active enums, publish native `ScriptObjectPropagationPath`, and apply creation-time hierarchy/layout masks to literal/runtime XML and new children.
 - `d1d65a92f` and `92675f08d` — move duration bindings into `c_api` as source-backed userdata, model `Assign`/`Copy`, and preserve a validated handle through `securecopy(options)` without accepting copied tables as bindings.
+- `8567a1590`, `d80464a81`, and `bb4d17af9` — publish the native aura dispel-filter enum, classify documented controlled-player/group token families, and replace table curve proxies with userdata preserved by `securecopy`. Actual addon/SavedVariables startup subsequently returns `[]`, exit 0; conditional aura secrecy and unsupported curve modes remain bounded.
 
 ### Live enUS GlobalStrings slice
 

@@ -62,7 +62,7 @@ The Blizzard talents UI loaded from `Interface/BlizzardUI/Blizzard_PlayerSpells/
 
 ## Evidence
 
-- `/tmp/pi-gui-escape-wide.json` — real addon/SavedVariables GUI proof at the accepted 1906-unit canvas.
+- `/tmp/pi-gui-accepted-panels.json` — current real addon/SavedVariables GUI proof at the accepted 1906-unit canvas: native Escape closes specialization without showing GameMenu; SpellBook has 43 visible rows and 41 valid spells.
 - `/tmp/pi-gui-escape-fit-hook.json` — narrow-canvas fit failure; observes BlizzMove and EnhanceQoLMover fit callbacks without assigning sole cause.
 
 ## Out of scope

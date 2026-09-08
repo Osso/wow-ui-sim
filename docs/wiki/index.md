@@ -1,10 +1,10 @@
-## [2026-09-08] investigation | Bound aura-model proof; full addon startup remains open
+## [2026-09-08] acceptance | Actual addon startup and accepted PlayerSpells interaction
 
-`721836971`, `ee05355ae`, `d12cfead4`, `d1d65a92f`, and `92675f08d` add data-backed base secrecy, creation-time forbidden-aspect propagation, and userdata duration-binding copy semantics. Focused proof is secrecy 4/4 in `/tmp/pi-aura-three-models-green.*`, then forbidden 4/4 and duration 6/6 in `/tmp/pi-aura-followup-green.*`. Actual SavedVariables-enabled startup still fails on the missing dispel-filter enum and `UnitIsPlayerControlledOrGroupMember`; those fixes remain in progress. GUI Escape tracing separately proves a panel-fit overflow (`/tmp/pi-gui-escape-fit-hook.json`), with two fit callbacks observed; it does not attribute cause to either callback. See [[patch-12-1-api-audit]], [[lua-api]], [aura options](../specs/aura-container-options.md), [duration binding](../specs/duration-text-binding.md), and [forbidden aspects](../specs/forbidden-aspect-inheritance.md).
+Actual retail addons and SavedVariables now produce `[]`, exit 0, and final `CLEAN` with zero unique/occurrence Lua errors in `/tmp/pi-accepted-final-startup.*`; three loader warnings remain. The user accepted the 1906-unit GUI canvas: native Escape closes specialization without GameMenu, and SpellBook has 43 visible rows with 41 valid entries in `/tmp/pi-gui-accepted-panels.json`. The narrower 1266-unit panel-fit overflow remains unsupported. See [[playerspells-runtime-load]], [Lua error reporting](../specs/lua-error-reporting.md), and [talents panel](../specs/talents-panel.md).
 
-## [2026-09-08] system | Query data-backed spell aura secrecy
+## [2026-09-08] system | Complete bounded aura compatibility surfaces
 
-[[lua-api]] links the [base aura-secrecy contract](../specs/spell-aura-secrecy.md): pinned native attributes drive `C_Secrets.GetSpellAuraSecrecy`; the ambiguous dual-flag spell is reported rather than guessed. Four focused Rust tests and four generator tests pass; full-addon verification remains separate.
+`721836971`, `ee05355ae`, `d12cfead4`, `92675f08d`, `8567a1590`, `d80464a81`, and `bb4d17af9` add data-backed base secrecy, creation-time forbidden-aspect propagation, duration/curve userdata identity through `securecopy`, the dispel filter enum, and controlled-player token classification. Focused proofs remain bounded; conditional secrecy, dynamic aspect propagation, and unsupported curve modes are explicit limits. See [[patch-12-1-api-audit]], [[lua-api]], [aura options](../specs/aura-container-options.md), [duration binding](../specs/duration-text-binding.md), [curve objects](../specs/curve-objects.md), and [forbidden aspects](../specs/forbidden-aspect-inheritance.md).
 
 ## [2026-09-07] system | Enumerate modeled aura instances
 
