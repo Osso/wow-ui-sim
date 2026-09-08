@@ -1,6 +1,7 @@
 use std::fs;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::saved_variables::SavedVariablesManager;
 
 const SOURCE: &str = "docs/addons/UnitFrameLayerProbe/UnitFrameLayerProbe.lua";
 
@@ -221,22 +222,34 @@ fn unit_layer_probe_records_missing_errors_and_nil_returns_without_inference() {
     .unwrap();
 }
 
+fn save_global(env: &WowLuaEnv, name: &str) -> String {
+    let dir = tempfile::tempdir().unwrap();
+    let mut manager = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+    env.loader_env()
+        .with_state(|state| {
+            manager.init_for_addon(state, "UnitFrameLayerProbe", &[name.to_string()], &[])?;
+            manager.save_addon(state, "UnitFrameLayerProbe")
+        })
+        .unwrap();
+    fs::read_to_string(dir.path().join("UnitFrameLayerProbe.lua")).unwrap()
+}
+
+fn save_capture_snapshot(env: &WowLuaEnv, expression: &str) -> String {
+    env.exec(&format!("LayerCaptureSnapshot = {expression}"))
+        .unwrap();
+    save_global(env, "LayerCaptureSnapshot")
+}
+
 #[test]
 fn unit_layer_probe_preserves_serialized_captures_across_reload_and_at_cap() {
     let env = fixture();
     load_probe(&env);
     env.exec("SlashCmdList.UNITFRAMELAYERPROBE('')").unwrap();
-    let saved: String = env
-        .eval("return SerializeLayerValue(UnitFrameLayerProbeDB)")
-        .unwrap();
-    let first: String = env
-        .eval("return SerializeLayerValue(UnitFrameLayerProbeDB.captures[1])")
-        .unwrap();
+    let saved = save_global(&env, "UnitFrameLayerProbeDB");
+    let first = save_capture_snapshot(&env, "UnitFrameLayerProbeDB.captures[1]");
     let reloaded = fixture();
     load_probe(&reloaded);
-    reloaded
-        .exec(&format!("UnitFrameLayerProbeDB = {saved}"))
-        .unwrap();
+    reloaded.exec(&saved).unwrap();
     loaded_event(&reloaded, "UnitFrameLayerProbe");
     reloaded.fire_event("PLAYER_LOGIN").unwrap();
     reloaded
@@ -244,9 +257,7 @@ fn unit_layer_probe_preserves_serialized_captures_across_reload_and_at_cap() {
         .unwrap();
     assert_eq!(
         first,
-        reloaded
-            .eval::<String>("return SerializeLayerValue(UnitFrameLayerProbeDB.captures[1])")
-            .unwrap()
+        save_capture_snapshot(&reloaded, "UnitFrameLayerProbeDB.captures[1]")
     );
     reloaded
         .exec(
@@ -259,25 +270,17 @@ fn unit_layer_probe_preserves_serialized_captures_across_reload_and_at_cap() {
         "#,
         )
         .unwrap();
-    let capped: String = reloaded
-        .eval("return SerializeLayerValue(UnitFrameLayerProbeDB)")
-        .unwrap();
-    let captures: String = reloaded
-        .eval("return SerializeLayerValue(UnitFrameLayerProbeDB.captures)")
-        .unwrap();
+    let capped = save_global(&reloaded, "UnitFrameLayerProbeDB");
+    let captures = save_capture_snapshot(&reloaded, "UnitFrameLayerProbeDB.captures");
     let third = fixture();
     load_probe(&third);
-    third
-        .exec(&format!("UnitFrameLayerProbeDB = {capped}"))
-        .unwrap();
+    third.exec(&capped).unwrap();
     loaded_event(&third, "UnitFrameLayerProbe");
     third.fire_event("PLAYER_LOGIN").unwrap();
     third.exec("FlushLayerTimers()").unwrap();
     assert_eq!(
         captures,
-        third
-            .eval::<String>("return SerializeLayerValue(UnitFrameLayerProbeDB.captures)")
-            .unwrap()
+        save_capture_snapshot(&third, "UnitFrameLayerProbeDB.captures")
     );
     third.exec("assert(UnitFrameLayerProbeDB.nextSequence == 31 and UnitFrameLayerProbeDB.skippedCaptures == 8)").unwrap();
 }
