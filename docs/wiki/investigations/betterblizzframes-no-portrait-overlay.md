@@ -22,7 +22,7 @@ The received retail `12.1.0.69587` / interface `120100` capture records `PlayerF
 
 [UnitFrameLayerProbe](../../addons/UnitFrameLayerProbe/README.md) adds five opaque red/blue comparisons across three phases: a HIGH child under LOW parent, independent HIGH, independent DIALOG, plain TOOLTIP, and owned `GameTooltip` versus MEDIUM. Screenshot-success gating, a 1.1-second interphase delay, cancellation/timeout cleanup, late-event isolation, and bounded control history define the capture protocol; development protocol coverage is 9/9. Native screenshots—not simulator protocol tests—will determine each overlap result.
 
-Commits `e5f4a96ae` and `e811240d0` installed the unchanged five-file control kit to desktop retail main. `/tmp/pi-unit-controls-desktop-install.json` records an exact 5/5 SHA-256 match. Native capture is pending; independent verification `2741` is pending. No simulator ordering change or overlap fix is claimed.
+Commits `e5f4a96ae` and `e811240d0` installed the unchanged five-file control kit to desktop retail main. `/tmp/pi-unit-controls-desktop-install.json` records an exact 5/5 SHA-256 match. Native capture is pending. Independent protocol verification passed: retained 9/9 tests, formatting/syntax, read-only boundaries, and 5/5 installed hashes (`/tmp/pi-unit-controls-verification.md`). Native `cleanupErrors` still require inspection after the run. No simulator ordering change or overlap fix is claimed.
 
 ## Sources
 
