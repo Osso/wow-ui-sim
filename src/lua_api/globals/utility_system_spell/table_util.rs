@@ -242,12 +242,20 @@ pub fn register_table_util(state: &mut LuaState) -> LuaResult<()> {
     register_table_library_extensions(state)?;
 
     let table_ref = state.gc.alloc_table(Table::new());
+    #[cfg(not(feature = "retail-12-1-5"))]
     table_set_rust_fn_static(
         state,
         table_ref,
         "FindIndexedMismatch",
         table_util_find_indexed_mismatch,
     )?;
+    #[cfg(feature = "retail-12-1-5")]
+    {
+        use crate::lua_api::methods::table_set_static;
+        let removed = Val::Table(state.gc.alloc_table(Table::new()));
+        table_set_static(state, removed, "FindIndexedMismatch", Val::Bool(true));
+        table_set_static(state, Val::Table(table_ref), "__wow_removed_keys", removed);
+    }
     let key_ref = state.gc.intern_string(b"C_TableUtil");
     let global_ref = state.global;
     if let Some(global) = state.gc.tables.get_mut(global_ref) {
