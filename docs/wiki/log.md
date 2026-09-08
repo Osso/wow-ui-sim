@@ -1,3 +1,7 @@
+## [2026-09-08] audit | Reconcile bounded aura-model proofs with full-addon blockers
+
+Updated [spell aura secrecy](../specs/spell-aura-secrecy.md), [forbidden-aspect inheritance](../specs/forbidden-aspect-inheritance.md), [duration binding](../specs/duration-text-binding.md), [[lua-api]], and [[patch-12-1-api-audit]] for commits `721836971`, `ee05355ae`, `d12cfead4`, `d1d65a92f`, and `92675f08d`. Focused proof is secrecy 4/4 in `/tmp/pi-aura-three-models-green.*`; forbidden 4/4 and duration 6/6 in `/tmp/pi-aura-followup-green.*`. Actual SavedVariables-enabled startup still fails on `Enum.CustomAuraButtonDispelTypeStealableFilter` and `UnitIsPlayerControlledOrGroupMember`, so no full-addon acceptance is recorded. GUI tracing proves panel-fit overflow and observes two fit callbacks in `/tmp/pi-gui-escape-fit-hook.json`; it does not assign sole causation to either hook.
+
 ## [2026-09-08] system | Model base spell aura secrecy
 
 `721836971` adds a generated sparse native-attribute lookup for `C_Secrets.GetSpellAuraSecrecy`. Existing name/ID resolution and secrecy enum metadata are retained; contradictory flags yield an explicit query error. RED 4/4 missing-namespace failures became GREEN 4/4, including Blizzard's identity-candidate filter. Generator tests pass 4/4 and pinned regeneration is byte-identical. See [[lua-api]] and [the contract](../specs/spell-aura-secrecy.md); no combat secrecy policy or full-addon acceptance is claimed.

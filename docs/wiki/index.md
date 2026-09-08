@@ -1,3 +1,7 @@
+## [2026-09-08] investigation | Bound aura-model proof; full addon startup remains open
+
+`721836971`, `ee05355ae`, `d12cfead4`, `d1d65a92f`, and `92675f08d` add data-backed base secrecy, creation-time forbidden-aspect propagation, and userdata duration-binding copy semantics. Focused proof is secrecy 4/4 in `/tmp/pi-aura-three-models-green.*`, then forbidden 4/4 and duration 6/6 in `/tmp/pi-aura-followup-green.*`. Actual SavedVariables-enabled startup still fails on the missing dispel-filter enum and `UnitIsPlayerControlledOrGroupMember`; those fixes remain in progress. GUI Escape tracing separately proves a panel-fit overflow (`/tmp/pi-gui-escape-fit-hook.json`), with two fit callbacks observed; it does not attribute cause to either callback. See [[patch-12-1-api-audit]], [[lua-api]], [aura options](../specs/aura-container-options.md), [duration binding](../specs/duration-text-binding.md), and [forbidden aspects](../specs/forbidden-aspect-inheritance.md).
+
 ## [2026-09-08] system | Query data-backed spell aura secrecy
 
 [[lua-api]] links the [base aura-secrecy contract](../specs/spell-aura-secrecy.md): pinned native attributes drive `C_Secrets.GetSpellAuraSecrecy`; the ambiguous dual-flag spell is reported rather than guessed. Four focused Rust tests and four generator tests pass; full-addon verification remains separate.

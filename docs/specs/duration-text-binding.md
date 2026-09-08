@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] `Assign(other)` validates both binding objects before mutation, copies configuration into the receiver, and returns no values. Self-assignment preserves configuration and identity.
-- [ ] `Copy()` returns a distinct binding with independent configuration. Duration, font-string, clock, formatter, and color-curve object handles remain shared references.
-- [ ] Copy format-component containers and records while retaining formatter handles. Later source component mutations must not alter the assigned or copied binding.
-- [ ] Copy absent values as absent, clearing prior receiver configuration. Preserve enabled state, interval, modifier, expired/zero text, and color-curve property.
-- [ ] Support Blizzard `CustomAuraButton:SetDurationText(..., {binding=...})` without replacing the source binding's display target. Its `securecopy(options)` must copy ordinary option tables while retaining the binding handle; copied or forged tables are not binding objects.
+- [x] `Assign(other)` validates both binding objects before mutation, copies configuration into the receiver, and returns no values. Self-assignment preserves configuration and identity.
+- [x] `Copy()` returns a distinct binding with independent configuration. Duration, font-string, clock, formatter, and color-curve object handles remain shared references.
+- [x] Copy format-component containers and records while retaining formatter handles. Later source component mutations must not alter the assigned or copied binding.
+- [x] Copy absent values as absent, clearing prior receiver configuration. Preserve enabled state, interval, modifier, expired/zero text, and color-curve property.
+- [x] Support Blizzard `CustomAuraButton:SetDurationText(..., {binding=...})` without replacing the source binding's display target. Its `securecopy(options)` must copy ordinary option tables while retaining the binding handle; copied or forged tables are not binding objects.
 
 ## How it works
 
@@ -28,7 +28,9 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Parent-owned GREEN verification remains pending. Four assignment/copy cases passed, while the actual aura initializer failed after `securecopy` lost table-backed binding identity (`/tmp/pi-aura-three-models-green.*`).
+Focused proof at `92675f08d`: all six assignment/copy cases passed in `/tmp/pi-aura-followup-green.*`, including the actual `CustomAuraButton` initializer and secure-option copy. The earlier failed table-backed identity boundary is retained in `/tmp/pi-aura-three-models-green.*`; the source-backed userdata handle fixes it without accepting forgeable table markers.
+
+Full addon/SavedVariables acceptance remains open. Later startup failures are missing `Enum.CustomAuraButtonDispelTypeStealableFilter` and `UnitIsPlayerControlledOrGroupMember`, separate in-progress boundaries.
 
 ## Out of scope
 

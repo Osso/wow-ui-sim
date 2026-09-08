@@ -4,13 +4,12 @@ Frames and regions retain owned forbidden aspects and separate hierarchy/layout 
 
 ## What it must do
 
-- [ ] Publish `Enum.ScriptObjectPropagationPath` (`Hierarchy=0`, `Layout=1`) and its metadata before frame methods are called.
-
-- [ ] Resolve every XML aspect name through the active enum, report unknown names, and apply the same declarations to literal XML and runtime template instances.
-- [ ] Merge declarations with inherited state. A nonempty mask implies `SetToDefaults`.
-- [ ] Propagate `UntrustedScriptExecution`, `UntrustedLayoutScriptExecution`, and `AlwaysPropagateInput` through parent ownership; only `UntrustedLayoutScriptExecution` propagates through layout dependencies by default.
-- [ ] Give newly registered children their parent's hierarchy-inheritable aspects before Lua observes the child, including textures, font strings, lines, mask textures, and native default children.
-- [ ] Preserve denial of later `SetParent`/`SetPoint` operations that would acquire unowned propagating restrictions from a foreign object.
+- [x] Publish `Enum.ScriptObjectPropagationPath` (`Hierarchy=0`, `Layout=1`) and its metadata before frame methods are called.
+- [x] Resolve every XML aspect name through the active enum, report unknown names, and apply the same declarations to literal XML and runtime template instances.
+- [x] Merge declarations with inherited state. A nonempty mask implies `SetToDefaults`.
+- [x] Propagate `UntrustedScriptExecution`, `UntrustedLayoutScriptExecution`, and `AlwaysPropagateInput` through parent ownership; only `UntrustedLayoutScriptExecution` propagates through layout dependencies by default.
+- [x] Give newly registered children their parent's hierarchy-inheritable aspects before Lua observes the child, including textures, font strings, lines, mask textures, and native default children.
+- [x] Preserve denial of later `SetParent`/`SetPoint` operations that would acquire unowned propagating restrictions from a foreign object.
 
 ## How it works
 
@@ -27,12 +26,12 @@ Frames and regions retain owned forbidden aspects and separate hierarchy/layout 
 
 ## Tests asserting this spec
 
-`tests/forbidden_aspect_creation.rs` reproduces BetterBlizzFrames' icon/cooldown/overlay/border creation order, validates masks and native child paths, and rejects foreign anchor/parent gains. Existing loader tests use the native enum and propagation paths rather than obsolete aliases.
+`tests/forbidden_aspect_creation.rs` reproduces BetterBlizzFrames' icon/cooldown/overlay/border creation order, validates masks and native child paths, and rejects foreign anchor/parent gains. Existing loader tests use the native enum and propagation paths rather than obsolete aliases. Focused proof at `d12cfead4` / `ee05355ae`: four forbidden-aspect cases passed in `/tmp/pi-aura-followup-green.*`.
 
 ## Known gaps
 
-- [ ] Focused GREEN verification is pending the coordinator's Cargo slot.
 - This slice does not introduce a policy for dynamically propagating subsequently added restrictions over existing parent/anchor graphs.
+- Full addon/SavedVariables acceptance remains open. The subsequent actual run still reports missing `Enum.CustomAuraButtonDispelTypeStealableFilter` and `UnitIsPlayerControlledOrGroupMember`; those are separate in-progress boundaries, not forbidden-aspect failures.
 
 ## Native sources
 
