@@ -52,11 +52,15 @@ For 30×30 small buttons, `SmallActionButtonMixin_OnLoad` explicitly sets IconMa
 
 `spellbook-item-spellicon-mask` has an opaque black center (`RGBA 0,0,0,255`). The former filename-derived RGB/alpha split sampled RGB for this path, making valid active spell icons transparent. `939efe88d` removes that split: all simulator mask paths now use alpha coverage. The rendered-pixel regression covers this square spellbook mask, the passive `talents-node-circle-mask`, and legacy `CircleMask`: opaque centers preserve the source icon; transparent corners reveal the background.
 
+Actual addon/SavedVariables GUI proof shows 35 active and six passive icons with visible artwork, not merely populated rows. Independent verification passed fmt/check, nine focused geometry/BC/minimap/spellbook regressions, and reviewed the three passing GPU pixel cases. The user's existing process was left untouched; the rebuilt binary requires relaunch.
+
 ## Sources
 
 - [mask-texture-system.md](../../mask-texture-system.md) — full system description
 - `/tmp/pi-spell-icon-mask-evidence.json` — live row/mask evidence and supplied screenshot hash
 - `/tmp/pi-spell-mask-pixels-{red,green}.*` — rendered-pixel RED/GREEN proof
+- `/tmp/pi-spell-icons-after.webp` and `/tmp/pi-spell-icons-gui.json` — actual GUI visual/state proof
+- `/tmp/pi-spell-icons-verification.md` — independent bounded verification
 
 ## See Also
 
