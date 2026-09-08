@@ -8,7 +8,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5.69594` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 19 best-effort, 430 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 24 best-effort, 425 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
@@ -163,8 +163,8 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `Enum.DateTimeStyle.Medium` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.DateTimeStyle.None` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.DateTimeStyle.Short` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.ForbiddenAspect.AddAnimations` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.ForbiddenAspect.QueryAnimationProgress` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
+| `Enum.ForbiddenAspect.AddAnimations` | best-effort | enum-member | added | PTR proof publishes AddAnimations = 4096; earlier retail preserves its absence. Proof is limited to enum publication and earlier-retail preservation; forbidden-aspect behavior, protected-frame rules, taint, and security enforcement remain unclaimed. |
+| `Enum.ForbiddenAspect.QueryAnimationProgress` | best-effort | enum-member | added | PTR proof publishes QueryAnimationProgress = 2048; earlier retail preserves its absence. Proof is limited to enum publication and earlier-retail preservation; forbidden-aspect behavior, protected-frame rules, taint, and security enforcement remain unclaimed. |
 | `Enum.FragmentID.AuthMirrorState` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.HousingResult.MessageTooLong` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.LocaleTransform` | evidence-required | enum | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
@@ -298,10 +298,10 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `C_EncounterTimeline.GetTrackMaxEventDuration` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_EncounterWarnings.EncounterWarningInfo` | evidence-required | structure | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_EncounterWarnings.EncounterWarningInfo.duration` | evidence-required | structure-field | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
-| `Enum.BagFlag` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `Enum.BagFlag` | best-effort | enum | changed | PTR proof publishes MinValue 1, MaxValue 134217728, and NumValues 27 while omitting IgnoreSoulbound; earlier retail preserves IgnoreSoulbound = 4194304 and NumValues 28. Proof is limited to enum publication/metadata and earlier-retail preservation; bag semantics, consumers, secret/taint propagation, and security behavior remain unclaimed. |
 | `Enum.BonusStatIndex` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `Enum.CurioRarity` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
-| `Enum.ForbiddenAspect` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `Enum.ForbiddenAspect` | best-effort | enum | changed | PTR proof publishes QueryAnimationProgress = 2048, AddAnimations = 4096, MinValue 1, MaxValue 4096, and NumValues 13; earlier retail preserves both member absences with MaxValue 1024 and NumValues 11. Proof is limited to enum publication/metadata and earlier-retail preservation; forbidden-aspect behavior, protected-frame rules, taint, and security enforcement remain unclaimed. |
 | `Enum.FragmentID` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `Enum.FragmentID.Actor` | evidence-required | enum-member | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `Enum.FragmentID.CgObject` | evidence-required | enum-member | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
@@ -461,7 +461,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `table.freeze` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `table.isfrozen` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_TableUtil.FindIndexedMismatch` | evidence-required | global-api | removed | Evidence required: generated documentation removes the declaration; PTR absence and preservation on earlier profiles require focused proof. |
-| `Enum.BagFlag.IgnoreSoulbound` | evidence-required | enum-member | removed | Evidence required: generated documentation removes the declaration; PTR absence and preservation on earlier profiles require focused proof. |
+| `Enum.BagFlag.IgnoreSoulbound` | best-effort | enum-member | removed | PTR proof omits IgnoreSoulbound; earlier retail preserves IgnoreSoulbound = 4194304. Proof is limited to enum publication and earlier-retail preservation; bag semantics, consumers, secret/taint propagation, and security behavior remain unclaimed. |
 
 ## Sources
 

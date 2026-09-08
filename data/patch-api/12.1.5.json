@@ -3473,47 +3473,75 @@
       "id": "added:Enum.ForbiddenAspect.AddAnimations",
       "symbol": "Enum.ForbiddenAspect.AddAnimations",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_init/enums.rs",
+          "source_hash": "5d30fca9ca354b0b77f96be625a7256911a1ccb9d126dcfb4be10afa57458ce1",
+          "summary": "Profile-gated enum registration adds AddAnimations only for retail-12-1-5."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_forbidden_aspect_publication",
+          "source_hash": "e33456866f4037ba90ac38f40a0cb8f8c5aa6a44fd085b2634a3600ca25ae6e3",
+          "summary": "Focused PTR and earlier-retail tests verify the exact bounded member publication/preservation stated in this row. Proof commit ac3ac03ac: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed)."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_forbidden_aspect_publication"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ac3ac03ac",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "PTR proof publishes AddAnimations = 4096; earlier retail preserves its absence. Proof is limited to enum publication and earlier-retail preservation; forbidden-aspect behavior, protected-frame rules, taint, and security enforcement remain unclaimed."
     },
     {
       "id": "added:Enum.ForbiddenAspect.QueryAnimationProgress",
       "symbol": "Enum.ForbiddenAspect.QueryAnimationProgress",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_init/enums.rs",
+          "source_hash": "5d30fca9ca354b0b77f96be625a7256911a1ccb9d126dcfb4be10afa57458ce1",
+          "summary": "Profile-gated enum registration adds QueryAnimationProgress only for retail-12-1-5."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_forbidden_aspect_publication",
+          "source_hash": "e33456866f4037ba90ac38f40a0cb8f8c5aa6a44fd085b2634a3600ca25ae6e3",
+          "summary": "Focused PTR and earlier-retail tests verify the exact bounded member publication/preservation stated in this row. Proof commit ac3ac03ac: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed)."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_forbidden_aspect_publication"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ac3ac03ac",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "PTR proof publishes QueryAnimationProgress = 2048; earlier retail preserves its absence. Proof is limited to enum publication and earlier-retail preservation; forbidden-aspect behavior, protected-frame rules, taint, and security enforcement remain unclaimed."
     },
     {
       "id": "added:Enum.FragmentID.AuthMirrorState",
@@ -6830,24 +6858,38 @@
       "id": "changed:Enum.BagFlag",
       "symbol": "Enum.BagFlag",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_init/enums.rs",
+          "source_hash": "5d30fca9ca354b0b77f96be625a7256911a1ccb9d126dcfb4be10afa57458ce1",
+          "summary": "Profile-gated enum registration removes IgnoreSoulbound and adjusts BagFlag metadata only for retail-12-1-5."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_bag_flag_publication",
+          "source_hash": "e33456866f4037ba90ac38f40a0cb8f8c5aa6a44fd085b2634a3600ca25ae6e3",
+          "summary": "Focused PTR and earlier-retail tests verify the exact bounded enum publication and metadata stated in this row. Proof commit ac3ac03ac: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed)."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_bag_flag_publication"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ac3ac03ac",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes MinValue 1, MaxValue 134217728, and NumValues 27 while omitting IgnoreSoulbound; earlier retail preserves IgnoreSoulbound = 4194304 and NumValues 28. Proof is limited to enum publication/metadata and earlier-retail preservation; bag semantics, consumers, secret/taint propagation, and security behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.BonusStatIndex",
@@ -6899,24 +6941,38 @@
       "id": "changed:Enum.ForbiddenAspect",
       "symbol": "Enum.ForbiddenAspect",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_init/enums.rs",
+          "source_hash": "5d30fca9ca354b0b77f96be625a7256911a1ccb9d126dcfb4be10afa57458ce1",
+          "summary": "Profile-gated enum registration adds QueryAnimationProgress and AddAnimations with PTR metadata only for retail-12-1-5."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_forbidden_aspect_publication",
+          "source_hash": "e33456866f4037ba90ac38f40a0cb8f8c5aa6a44fd085b2634a3600ca25ae6e3",
+          "summary": "Focused PTR and earlier-retail tests verify the exact bounded enum publication and metadata stated in this row. Proof commit ac3ac03ac: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed)."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_forbidden_aspect_publication"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ac3ac03ac",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes QueryAnimationProgress = 2048, AddAnimations = 4096, MinValue 1, MaxValue 4096, and NumValues 13; earlier retail preserves both member absences with MaxValue 1024 and NumValues 11. Proof is limited to enum publication/metadata and earlier-retail preservation; forbidden-aspect behavior, protected-frame rules, taint, and security enforcement remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID",
@@ -10593,24 +10649,38 @@
       "id": "removed:Enum.BagFlag.IgnoreSoulbound",
       "symbol": "Enum.BagFlag.IgnoreSoulbound",
       "change": "removed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this removed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact removed enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_init/enums.rs",
+          "source_hash": "5d30fca9ca354b0b77f96be625a7256911a1ccb9d126dcfb4be10afa57458ce1",
+          "summary": "Profile-gated enum registration removes IgnoreSoulbound only for retail-12-1-5."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_bag_flag_publication",
+          "source_hash": "e33456866f4037ba90ac38f40a0cb8f8c5aa6a44fd085b2634a3600ca25ae6e3",
+          "summary": "Focused PTR and earlier-retail tests verify the exact bounded member absence/preservation stated in this row. Proof commit ac3ac03ac: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_bag_forbidden_enums -- --nocapture (2 passed, 0 failed)."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_bag_forbidden_enums.rs::patch_12_1_5_bag_flag_publication"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ac3ac03ac",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation removes the declaration; PTR absence and preservation on earlier profiles require focused proof."
+      "notes": "PTR proof omits IgnoreSoulbound; earlier retail preserves IgnoreSoulbound = 4194304. Proof is limited to enum publication and earlier-retail preservation; bag semantics, consumers, secret/taint propagation, and security behavior remain unclaimed."
     }
   ]
 }

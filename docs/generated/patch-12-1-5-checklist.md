@@ -148,8 +148,8 @@
 148. [evidence-required] `added:Enum.DateTimeStyle.Medium` — unsafe
 149. [evidence-required] `added:Enum.DateTimeStyle.None` — unsafe
 150. [evidence-required] `added:Enum.DateTimeStyle.Short` — unsafe
-151. [evidence-required] `added:Enum.ForbiddenAspect.AddAnimations` — unsafe
-152. [evidence-required] `added:Enum.ForbiddenAspect.QueryAnimationProgress` — unsafe
+151. [best-effort] `added:Enum.ForbiddenAspect.AddAnimations` — behavioral
+152. [best-effort] `added:Enum.ForbiddenAspect.QueryAnimationProgress` — behavioral
 153. [evidence-required] `added:Enum.FragmentID.AuthMirrorState` — unsafe
 154. [evidence-required] `added:Enum.HousingResult.MessageTooLong` — unsafe
 155. [evidence-required] `added:Enum.LocaleTransform` — unsafe
@@ -283,10 +283,10 @@
 283. [evidence-required] `changed:C_EncounterTimeline.GetTrackMaxEventDuration` — unsafe
 284. [evidence-required] `changed:C_EncounterWarnings.EncounterWarningInfo` — unsafe
 285. [evidence-required] `changed:C_EncounterWarnings.EncounterWarningInfo.duration` — unsafe
-286. [evidence-required] `changed:Enum.BagFlag` — unsafe
+286. [best-effort] `changed:Enum.BagFlag` — behavioral
 287. [evidence-required] `changed:Enum.BonusStatIndex` — unsafe
 288. [evidence-required] `changed:Enum.CurioRarity` — unsafe
-289. [evidence-required] `changed:Enum.ForbiddenAspect` — unsafe
+289. [best-effort] `changed:Enum.ForbiddenAspect` — behavioral
 290. [evidence-required] `changed:Enum.FragmentID` — unsafe
 291. [evidence-required] `changed:Enum.FragmentID.Actor` — unsafe
 292. [evidence-required] `changed:Enum.FragmentID.CgObject` — unsafe
@@ -446,4 +446,4 @@
 446. [evidence-required] `changed:table.freeze` — unsafe
 447. [evidence-required] `changed:table.isfrozen` — unsafe
 448. [evidence-required] `removed:C_TableUtil.FindIndexedMismatch` — unsafe
-449. [evidence-required] `removed:Enum.BagFlag.IgnoreSoulbound` — unsafe
+449. [best-effort] `removed:Enum.BagFlag.IgnoreSoulbound` — behavioral
