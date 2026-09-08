@@ -445,5 +445,5 @@
 445. [evidence-required] `changed:table.create` — unsafe
 446. [evidence-required] `changed:table.freeze` — unsafe
 447. [evidence-required] `changed:table.isfrozen` — unsafe
-448. [evidence-required] `removed:C_TableUtil.FindIndexedMismatch` — unsafe
+448. [best-effort] `removed:C_TableUtil.FindIndexedMismatch` — behavioral
 449. [best-effort] `removed:Enum.BagFlag.IgnoreSoulbound` — behavioral

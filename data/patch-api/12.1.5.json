@@ -10626,8 +10626,8 @@
       "id": "removed:C_TableUtil.FindIndexedMismatch",
       "symbol": "C_TableUtil.FindIndexedMismatch",
       "change": "removed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
@@ -10636,14 +10636,28 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this removed function occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/table_util.rs",
+          "summary": "Profile-gated registration omits FindIndexedMismatch only for retail-12-1-5 and preserves the existing implementation for earlier profiles.",
+          "source_hash": "726d07d79f841ac95ac810175ce074de48a814d73a9b8f4822ab311dac071f83"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_util_removal.rs::patch_12_1_5_table_util_removal",
+          "summary": "Focused PTR and earlier-retail tests verify PTR absence, earlier-retail function publication, and preserved mismatch result 2. Proof commit ac40ca2cd: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_table_util_removal -- --nocapture (1 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_table_util_removal -- --nocapture (1 passed, 0 failed).",
+          "source_hash": "0f32dd3bd76cf3d2c35605d1c4c1457b9bd25068f43eac5dbb6ed9d20046834a"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_util_removal.rs::patch_12_1_5_table_util_removal"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ac40ca2cd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation removes the declaration; PTR absence and preservation on earlier profiles require focused proof."
+      "notes": "PTR proof omits FindIndexedMismatch; earlier retail preserves function publication and the concrete mismatch result 2. Proof excludes other comparator edge cases, secret/taint behavior, and sibling C_TableUtil functions."
     },
     {
       "id": "removed:Enum.BagFlag.IgnoreSoulbound",
