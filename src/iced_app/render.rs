@@ -15,7 +15,7 @@ use super::app::App;
 use super::frame_collect::collect_hittable_frames;
 use super::state::CanvasMessage;
 use super::strata_emit::build_hittable_rects;
-use super::update_helpers::apply_subtree_hit_grid_change;
+use super::update_helpers::apply_hit_grid_batch;
 
 #[path = "render_draw_frame.rs"]
 mod draw_frame;
@@ -261,12 +261,8 @@ impl App {
             &state,
             &mut font_sys,
         );
-        if !self.repair_hit_grid_after_layout_changes(&state, &layout_roots) {
-            *self.cached_hittable.borrow_mut() = None;
-        }
-        self.rebuild_hit_grid_if_needed(&state, &strata_buckets, size);
         drop(state);
-        self.store_rebuilt_strata_buckets(&env, strata_buckets);
+        self.update_hit_grid_after_render(&env, strata_buckets, layout_roots, size);
         self.refresh_pending_texture_requests_for_rebuilt_strata(effective_dirty);
         effective_dirty
     }
@@ -458,23 +454,22 @@ impl App {
     }
 
     fn finish_without_strata_rebuild(&self, size: Size) -> u16 {
-        self.rebuild_hit_grid_after_layout_only_change(size);
         self.apply_hit_grid_changes();
+        self.initialize_missing_hit_grid(size);
         0
     }
 
-    fn rebuild_hit_grid_after_layout_only_change(&self, size: Size) {
-        let env = self.env.borrow();
-        let mut state = env.state().borrow_mut();
-        if !state.widgets.has_pending_layout_work() {
+    fn initialize_missing_hit_grid(&self, size: Size) {
+        if self.cached_hittable.borrow().is_some() {
             return;
         }
-
+        let env = self.env.borrow();
+        let mut state = env.state().borrow_mut();
         state.ensure_layout_rects();
-        let Some(strata_buckets) = state.get_strata_buckets().cloned() else {
-            return;
-        };
-        *self.cached_hittable.borrow_mut() = None;
+        let strata_buckets = state
+            .get_strata_buckets()
+            .expect("hit-grid initialization requires render buckets")
+            .clone();
         self.rebuild_hit_grid_if_needed(&state, &strata_buckets, size);
     }
 
@@ -517,13 +512,27 @@ impl App {
         );
     }
 
-    fn store_rebuilt_strata_buckets(
+    fn update_hit_grid_after_render(
         &self,
         env: &crate::lua_api::WowLuaEnv,
         strata_buckets: Vec<Vec<u64>>,
+        layout_roots: Vec<u64>,
+        size: Size,
     ) {
-        self.apply_hit_grid_changes();
-        env.state().borrow_mut().strata_buckets = Some(strata_buckets);
+        let mut state = env.state().borrow_mut();
+        let hit_roots = state.widgets.drain_hit_grid_dirty();
+        let changes = std::mem::take(&mut state.pending_hit_grid_changes);
+        if let Some(grid) = self.cached_hittable.borrow_mut().as_mut() {
+            apply_hit_grid_batch(
+                grid,
+                &state.widgets,
+                &strata_buckets,
+                hit_roots.into_iter().chain(layout_roots),
+                &changes,
+            );
+        }
+        self.rebuild_hit_grid_if_needed(&state, &strata_buckets, size);
+        state.strata_buckets = Some(strata_buckets);
     }
 
     /// Resolve layout rects and build strata buckets, logging slow phases.
@@ -548,28 +557,6 @@ impl App {
             );
         }
         (state.strata_buckets.take().unwrap(), layout_roots)
-    }
-
-    fn repair_hit_grid_after_layout_changes(
-        &self,
-        state: &crate::lua_api::SimState,
-        layout_roots: &[u64],
-    ) -> bool {
-        if layout_roots.is_empty() {
-            return true;
-        }
-        const MAX_INCREMENTAL_HIT_GRID_LAYOUT_ROOTS: usize = 512;
-        if layout_roots.len() > MAX_INCREMENTAL_HIT_GRID_LAYOUT_ROOTS {
-            return false;
-        }
-        let mut grid_ref = self.cached_hittable.borrow_mut();
-        let Some(grid) = grid_ref.as_mut() else {
-            return false;
-        };
-        for &root_id in layout_roots {
-            apply_subtree_hit_grid_change(grid, &state.widgets, root_id, true);
-        }
-        true
     }
 
     fn rebuild_hit_grid_if_needed(

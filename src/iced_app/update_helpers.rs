@@ -18,8 +18,25 @@ where
     Some(merged)
 }
 
-/// Walk a subtree and insert/remove hittable frames from the grid.
-pub(super) fn apply_subtree_hit_grid_change(
+/// Apply one batch using the same order consumed by the renderer.
+pub(super) fn apply_hit_grid_batch(
+    grid: &mut super::hit_grid::HitGrid,
+    registry: &crate::widget::WidgetRegistry,
+    strata_buckets: &[Vec<u64>],
+    geometry_roots: impl IntoIterator<Item = u64>,
+    visibility_changes: &[(u64, bool)],
+) {
+    grid.update_render_order(strata_buckets);
+    for root in geometry_roots {
+        apply_subtree_hit_grid_change(grid, registry, root, true);
+    }
+    for &(root, visible) in visibility_changes {
+        apply_subtree_hit_grid_change(grid, registry, root, visible);
+    }
+}
+
+/// Walk a subtree using ranks refreshed by the batch owner.
+fn apply_subtree_hit_grid_change(
     grid: &mut super::hit_grid::HitGrid,
     registry: &crate::widget::WidgetRegistry,
     root_id: u64,
@@ -28,12 +45,14 @@ pub(super) fn apply_subtree_hit_grid_change(
     let mut stack = vec![root_id];
     while let Some(id) = stack.pop() {
         let Some(f) = registry.get(id) else { continue };
-        if became_visible {
-            grid.remove(id);
-            if let Some(rect) = hittable_rect(registry, id, f) {
-                let key = (f.frame_strata, f.frame_level, f.raise_order, id);
-                grid.insert(id, rect, key);
-            }
+        let hit = became_visible
+            .then(|| {
+                grid.render_order_key(id)
+                    .zip(hittable_rect(registry, id, f))
+            })
+            .flatten();
+        if let Some((key, rect)) = hit {
+            grid.insert(id, rect, key);
         } else {
             grid.remove(id);
         }

@@ -310,7 +310,7 @@ mod tests {
     }
 
     fn grid_for_all_frames(registry: &WidgetRegistry) -> HitGrid {
-        let frames = registry
+        let mut frames: Vec<_> = registry
             .iter_ids()
             .filter_map(|id| {
                 let frame = registry.get(id)?;
@@ -325,7 +325,13 @@ mod tests {
                 ))
             })
             .collect();
-        HitGrid::new(frames, 200.0, 200.0)
+        frames.sort_by_key(|entry| entry.2);
+        let ordered = frames
+            .into_iter()
+            .enumerate()
+            .map(|(rank, (id, rect, _))| (id, rect, rank))
+            .collect();
+        HitGrid::new(ordered, 200.0, 200.0)
     }
 
     #[test]

@@ -4,7 +4,7 @@ use std::sync::LazyLock;
 
 use rustc_hash::FxHashSet;
 
-use crate::widget::{FrameStrata, WidgetType};
+use crate::widget::WidgetType;
 
 /// Frame names excluded from hit testing (full-screen or non-interactive overlays).
 pub const HIT_TEST_EXCLUDED: &[&str] = &[
@@ -20,15 +20,15 @@ pub const HIT_TEST_EXCLUDED: &[&str] = &[
 static HIT_TEST_EXCLUDED_NAMES: LazyLock<FxHashSet<&'static str>> =
     LazyLock::new(|| HIT_TEST_EXCLUDED.iter().copied().collect());
 
-/// Render-order key for hit testing: `(strata, frame_level, raise_order, id)`.
-pub type HitOrderKey = (FrameStrata, i32, i32, u64);
+/// Frame position in the flattened, low-to-high render buckets.
+pub type HitOrderKey = usize;
 
 /// Result of collecting frames for hit testing.
 ///
 /// Rects are in unscaled WoW coordinates (caller applies UI_SCALE).
 pub struct CollectedFrames {
     /// Frames eligible for hit testing with their render-order key, sorted
-    /// by strata/level/raise-order/id (low to high).
+    /// by the renderer's bucket order (low to high).
     pub hittable: Vec<(u64, HitOrderKey, crate::LayoutRect)>,
 }
 
@@ -143,55 +143,34 @@ pub fn intra_strata_sort_key(
 
 /// Build a hit-test list from the widget registry.
 ///
-/// Returns visible, mouse-enabled frames sorted by strata/level/id,
+/// Returns visible, mouse-enabled frames in the supplied render order,
 /// excluding non-interactive overlays.
 /// Alpha is intentionally ignored: in WoW, transparent mouse-enabled
 /// frames still receive mouse events.
 pub fn collect_hittable_frames(
     registry: &crate::widget::WidgetRegistry,
-    _strata_buckets: &[Vec<u64>],
+    strata_buckets: &[Vec<u64>],
 ) -> CollectedFrames {
-    let mut hittable: Vec<HittableFrameEntry> = registry
-        .iter_ids()
-        .filter_map(|id| hittable_frame_entry(registry, id))
+    let hittable = strata_buckets
+        .iter()
+        .flatten()
+        .enumerate()
+        .filter_map(|(rank, &id)| hittable_frame_rect(registry, id).map(|rect| (id, rank, rect)))
         .collect();
-
-    hittable.sort_by(|a, b| {
-        a.1.cmp(&b.1)
-            .then_with(|| a.2.cmp(&b.2))
-            .then_with(|| a.3.cmp(&b.3))
-            .then_with(|| a.0.cmp(&b.0))
-    });
-
-    CollectedFrames {
-        hittable: hittable
-            .into_iter()
-            .map(|(id, strata, level, raise_order, r)| (id, (strata, level, raise_order, id), r))
-            .collect(),
-    }
+    CollectedFrames { hittable }
 }
 
-type HittableFrameEntry = (u64, FrameStrata, i32, i32, crate::LayoutRect);
-
-fn hittable_frame_entry(
+fn hittable_frame_rect(
     registry: &crate::widget::WidgetRegistry,
     id: u64,
-) -> Option<HittableFrameEntry> {
+) -> Option<crate::LayoutRect> {
     let frame = registry.get(id)?;
     if !crate::layout::frame_has_render_layout(registry, id) {
         return None;
     }
     let rect = frame.layout_rect?;
 
-    is_frame_hittable(registry, id, frame).then(|| {
-        (
-            id,
-            frame.frame_strata,
-            frame.frame_level,
-            frame.raise_order,
-            rect,
-        )
-    })
+    is_frame_hittable(registry, id, frame).then_some(rect)
 }
 
 fn is_frame_hittable(

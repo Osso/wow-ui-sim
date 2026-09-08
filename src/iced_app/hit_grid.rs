@@ -20,7 +20,7 @@ pub struct HitGrid {
     cells: Vec<Vec<u64>>,
     /// Rectangle for each hittable frame, keyed by frame ID.
     rects: HashMap<u64, Rectangle>,
-    /// Render-order key per frame; keeps incremental inserts ordered.
+    /// Current render-bucket ranks, including frames not currently hittable.
     keys: HashMap<u64, HitOrderKey>,
     cols: usize,
     rows: usize,
@@ -29,7 +29,7 @@ pub struct HitGrid {
 impl HitGrid {
     /// Build a grid from the sorted hittable list.
     ///
-    /// `hittable` must be sorted lowest-strata-first (same order as
+    /// `hittable` must be sorted lowest-render-rank-first (same order as
     /// `build_hittable_rects` produces), so reverse iteration yields the
     /// topmost frame.
     pub fn new(hittable: Vec<(u64, Rectangle, HitOrderKey)>, screen_w: f32, screen_h: f32) -> Self {
@@ -67,6 +67,38 @@ impl HitGrid {
         for cell in &mut self.cells {
             cell.sort_by_key(|id| keys.get(id).copied());
         }
+    }
+
+    /// Refresh ranks once per update batch without rebuilding spatial cells.
+    /// Frames no longer present in the render order are removed from hit testing.
+    pub fn update_render_order(&mut self, strata_buckets: &[Vec<u64>]) {
+        let next_keys: HashMap<_, _> = strata_buckets
+            .iter()
+            .flatten()
+            .enumerate()
+            .map(|(rank, &id)| (id, rank))
+            .collect();
+        let order_changed = self
+            .rects
+            .keys()
+            .any(|id| self.keys.get(id) != next_keys.get(id));
+        let removed: Vec<_> = self
+            .rects
+            .keys()
+            .filter(|id| !next_keys.contains_key(*id))
+            .copied()
+            .collect();
+        for id in removed {
+            self.remove(id);
+        }
+        self.keys = next_keys;
+        if order_changed {
+            self.sort_cells();
+        }
+    }
+
+    pub fn render_order_key(&self, id: u64) -> Option<HitOrderKey> {
+        self.keys.get(&id).copied()
     }
 
     /// Find the topmost frame containing `pos` that also matches `predicate`.
@@ -188,7 +220,7 @@ mod tests {
         hittable
             .iter()
             .enumerate()
-            .map(|(i, &(id, r))| (id, r, (crate::widget::FrameStrata::Medium, i as i32, 0, id)))
+            .map(|(rank, &(id, r))| (id, r, rank))
             .collect()
     }
 
@@ -291,11 +323,7 @@ mod tests {
 
         // Re-insert the bottom frame with its original (lowest) key.
         grid.remove(1);
-        grid.insert(
-            1,
-            rect(0.0, 0.0, 200.0, 200.0),
-            (crate::widget::FrameStrata::Medium, 0, 0, 1),
-        );
+        grid.insert(1, rect(0.0, 0.0, 200.0, 200.0), 0);
 
         assert_eq!(
             grid.topmost_matching_at(Point::new(60.0, 60.0), |_| true),
@@ -305,11 +333,7 @@ mod tests {
 
         // A frame inserted with a HIGHER key still wins.
         grid.remove(2);
-        grid.insert(
-            2,
-            rect(50.0, 50.0, 100.0, 100.0),
-            (crate::widget::FrameStrata::Medium, 1, 0, 2),
-        );
+        grid.insert(2, rect(50.0, 50.0, 100.0, 100.0), 1);
         assert_eq!(
             grid.topmost_matching_at(Point::new(60.0, 60.0), |_| true),
             Some(2)
@@ -319,7 +343,7 @@ mod tests {
     #[test]
     fn reinserting_same_id_replaces_stale_cells() {
         let mut grid = HitGrid::new(vec![], 128.0, 128.0);
-        let key = (crate::widget::FrameStrata::Medium, 0, 0, 1);
+        let key = 0;
 
         grid.insert(1, rect(10.0, 10.0, 20.0, 20.0), key);
         grid.insert(1, rect(90.0, 90.0, 20.0, 20.0), key);

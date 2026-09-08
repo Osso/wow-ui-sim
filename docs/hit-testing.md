@@ -8,22 +8,24 @@ Hit testing runs on every mouse event (move, click, scroll). It takes a screen-s
 
 ## Hittable Frame Collection
 
-During the quad batch build (`render.rs` → `build_quad_batch`), the system collects all frames eligible for hit testing as a side output of `collect_sorted_frames()` in `frame_collect.rs`.
+`frame_collect.rs::collect_hittable_frames()` filters the renderer's flattened strata buckets. Bucket position is the hit-order key; collection does not independently sort raw frame strata or levels.
 
 A frame is **hittable** when all four conditions are met:
 
-1. `frame.visible == true`
-2. `frame.effective_alpha > 0` — ancestor chain is visible (a frame with `visible=true` under a hidden parent has `effective_alpha=0` and is excluded)
-3. `frame.mouse_enabled == true` (set via `EnableMouse(true)` in Lua or `enableMouse="true"` in XML)
-4. Not in `HIT_TEST_EXCLUDED` — a hardcoded list of full-screen non-interactive overlays: `UIParent`, `WorldFrame`, `Minimap`, `ChatFrame1`, `EventToastManagerFrame`, `EditModeManagerFrame`
+1. The frame and its ancestors are shown.
+2. The frame has a resolved rectangle and valid render-layout ancestry.
+3. Mouse input is enabled, or the widget is an EditBox.
+4. Its name is not in `HIT_TEST_EXCLUDED`, the explicit non-interactive overlay list.
 
-The hittable list is sorted by `(frame_strata, frame_level, raise_order, id)` — lowest first. `raise_order` only breaks ties between siblings at the same raw frame level; explicit `Raise()`/`Lower()` cannot cross raw levels. Iterating in **reverse** yields the topmost frame. The render bucket's active top-level show-order grouping is separate from this hit-test list, which is collected by `src/iced_app/frame_collect.rs`.
+Alpha is deliberately ignored: transparent mouse-enabled frames still accept input.
+
+Iterating the list in **reverse** yields the topmost eligible frame. Parent-owned render groups, ordinary frame-level ordering and top-level raising come from the same buckets used to draw the scene. No raw-order fallback is used for frames absent from those buckets.
 
 ## Spatial Grid
 
-The sorted hittable list is fed into a `HitGrid` (64px cell spatial index) stored in `App::cached_hittable`. The grid divides screen space into cells and records which frames overlap each cell, preserving strata/level order within each cell. It also stores a `HashMap<u64, Rectangle>` for O(1) rect lookups by frame ID.
+The ordered hittable list feeds a `HitGrid` (64px cells) stored in `App::cached_hittable`. Each cell stores overlapping frame IDs in render-rank order; a rectangle map supports direct lookup.
 
-The grid is rebuilt on every quad batch rebuild and **not** cleared on layout invalidation to avoid losing hover state between frames.
+Once per input-update batch, current bucket ranks replace cached keys, frames no longer in the order are removed, and changed cell ordering is refreshed. Geometry/visibility changes then update affected subtrees using those same ranks. Unchanged siblings are rekeyed too, since inserting or moving a render group changes their ordinal positions. The grid retains its spatial cells rather than rebuilding for order or layout updates; initial construction and screen-size changes still construct a grid.
 
 ### Grid Construction
 
@@ -40,7 +42,7 @@ The grid is rebuilt on every quad batch rebuild and **not** cleared on layout in
 
 ### Phase 1: Find topmost frame (grid lookup)
 
-Computes which cell contains `pos`, then iterates that cell's frames in **reverse** (highest strata/level first). Returns the first frame whose rectangle contains the point. This is O(1) cell lookup + O(k) scan where k is the number of frames in that cell (typically 10–30).
+Computes which cell contains `pos`, then iterates that cell's frames in **reverse** (highest render rank first). Returns the first frame whose rectangle contains the point. This is O(1) cell lookup + O(k) scan where k is the number of frames in that cell (typically 10–30).
 
 ### Phase 2: Drill down to deepest child
 

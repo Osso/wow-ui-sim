@@ -9,7 +9,7 @@ use super::update::{
     TickStageTimings, log_slow_tick, request_redraw_task, should_drop_stale_timer_tick,
 };
 use super::update_helpers::{
-    apply_subtree_hit_grid_change, get_checked_attribute, is_toggleable_checkbutton,
+    apply_hit_grid_batch, get_checked_attribute, is_toggleable_checkbutton,
 };
 
 struct TimerTickOutcome {
@@ -192,22 +192,21 @@ impl App {
         if changes.is_empty() && layout_roots.is_empty() && hit_grid_roots.is_empty() {
             return;
         }
-        drop(state);
-
         let mut grid_ref = self.cached_hittable.borrow_mut();
         let Some(grid) = grid_ref.as_mut() else {
             return;
         };
-        let state = env.state().borrow();
-        for root_id in hit_grid_roots {
-            apply_subtree_hit_grid_change(grid, &state.widgets, root_id, true);
-        }
-        for root_id in layout_roots {
-            apply_subtree_hit_grid_change(grid, &state.widgets, root_id, true);
-        }
-        for (root_id, became_visible) in changes {
-            apply_subtree_hit_grid_change(grid, &state.widgets, root_id, became_visible);
-        }
+        let buckets = state
+            .get_strata_buckets()
+            .expect("hit-grid updates require current render buckets")
+            .clone();
+        apply_hit_grid_batch(
+            grid,
+            &state.widgets,
+            &buckets,
+            hit_grid_roots.into_iter().chain(layout_roots),
+            &changes,
+        );
     }
 
     pub(super) fn is_frame_enabled(&self, frame_id: u64) -> bool {
