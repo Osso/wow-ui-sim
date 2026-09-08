@@ -70,7 +70,7 @@ fn create_native_raised_spellbook_fixture() -> WowLuaEnv {
 fn native_raised_spellbook_shares_positive_level_without_raising_unit_overlay() {
     test_timeout! {
         let env = create_native_raised_spellbook_fixture();
-        let (unit, overlay, panel, book): (u32, u32, u32, u32) = env.eval(
+        let (unit, overlay, panel, book): (i32, i32, i32, i32) = env.eval(
             "return PlayerFrame:GetRaisedFrameLevel(), PlayerFrame.noPortraitMode:GetRaisedFrameLevel(), \
              PlayerSpellsFrame:GetRaisedFrameLevel(), PlayerSpellsFrame.SpellBookFrame:GetRaisedFrameLevel()",
         ).unwrap();
