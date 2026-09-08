@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 addon_dir = Path(__file__).resolve().parent
-for filename in ("UnitFrameLayerProbe.toc", "UnitFrameLayerProbe.lua"):
+for filename in ("UnitFrameLayerProbe.toc", "UnitFrameLayerProbe.lua", "Controls.lua"):
     if not (addon_dir / filename).is_file():
         raise SystemExit(f"Missing probe file: {addon_dir / filename}")
 os.execvp("scp", [
