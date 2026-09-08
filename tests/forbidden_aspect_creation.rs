@@ -28,6 +28,10 @@ fn native_children_inherit_only_hierarchy_aspects_at_creation() {
         end
         local grandchild = frame:CreateTexture()
         assert(grandchild:GetForbiddenAspects() == 45, 'hierarchy inheritance remains transitive')
+        local slider = CreateFrame('Slider', nil, parent)
+        local editBox = CreateFrame('EditBox', nil, parent)
+        assert(slider.Low:GetForbiddenAspects() == 45 and slider.ThumbTexture:GetForbiddenAspects() == 45)
+        assert(editBox.Text:GetForbiddenAspects() == 45, 'native default regions inherit before lookup')
         parent:AddForbiddenAspects(e.RemoveSecretAspects)
         assert(bit.band(parent:GetInheritableForbiddenAspects(path.Layout), e.RemoveSecretAspects) == 0)
         assert(bit.band(frame:GetForbiddenAspects(), e.RemoveSecretAspects) == 0, 'non-inheritable additions stay local')
