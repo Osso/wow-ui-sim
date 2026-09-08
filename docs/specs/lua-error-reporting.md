@@ -45,7 +45,7 @@ The loading summary is explicitly labeled `before startup events`; its counts co
 ## Known gaps (current cycle)
 
 - Targeted coverage is four CLI process cases plus one load-summary case: three unchanged CLI cases and the load-summary case pass in `/tmp/pi-lua-summary-chronology-green.*`; the corrected post-load case passes in `/tmp/pi-lua-summary-chronology-postload-green.*` at `9500ac1bf`. The combined run itself was not all-green: its post-load test initially mistook the display-only `__BuiltIn` label for recorded ownership. Reporting continues to use canonical metadata, leaving that exec-created frame unattributed. Valid RED `/tmp/pi-lua-summary-chronology-postload-red.*` collects three errors and exits 1 but lacks the final summary.
-- Actual user-addon/SavedVariables startup at `9500ac1bf` returns `[]`, exit 0 and final `CLEAN` with zero unique and zero occurrences (`/tmp/pi-accepted-final-startup.*`). It records three loader warnings, so this is not a zero-warning claim. Independent final Cargo checks remain in progress.
+- Actual user-addon/SavedVariables startup at `9500ac1bf` returns `[]`, exit 0 and final `CLEAN` with zero unique and zero occurrences (`/tmp/pi-accepted-final-startup.*`). It records three loader warnings, so this is not a zero-warning claim. Final bounded verification passed `cargo fmt --check`, default `cargo check`, 63 focused default integration tests, two library tests, and 26 PTR integration tests with one existing ignored snapshot helper (`/tmp/pi-final-addon-verification.md`). This does not claim a whole-project suite or PTR personal-addon acceptance.
 
 ## Out of scope
 

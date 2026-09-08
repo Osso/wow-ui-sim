@@ -43,11 +43,15 @@ The user accepted the wider simulator window as the Escape acceptance viewport. 
 
 At the narrower 1266-unit canvas, PlayerSpells exceeds the 1186-unit center capacity. Blizzard `UpdateUIPanelPositions` clears the center slot at `UIParentPanelManager.lua:663`; Escape consequently has no panel to close and opens GameMenu. This remains unfixed. The observed callbacks include BlizzMove and EnhanceQoLMover scale-fit hooks; evidence does not establish either as the sole cause. No addon settings or vendor Lua were changed. Current actual startup at the accepted viewport returns `[]`, exit 0; three loader warnings remain, so this is not a zero-warning claim.
 
+Final bounded verification passed `cargo fmt --check`, default `cargo check`, 63 focused default integration tests, two legacy forbidden-aspect library tests, and 26 PTR integration tests with one existing ignored snapshot-regeneration helper. A separate PTR no-addon/no-SavedVariables `lua-errors` run returned `[]`, exit 0. These checks preserve the relevant PTR boundaries; they do not prove PTR personal-addon startup or complete unsupported aura, secrecy, formatter, and curve semantics.
+
 ## Sources
 
 - `/tmp/CharacterPlayerSpellsProbe-live-2026-08-28.lua` — live retail SavedVariables capture; SHA-256 `40dcf028acd5605d675810abbfc9eb8aa63147425ed5f8bb8b3b54b78c997595`
 - `/tmp/pi-gui-accepted-panels.json` — current actual addon/SavedVariables GUI proof at the accepted wider viewport: native Escape closes specialization and SpellBook has 43 visible rows with 41 valid spells
 - `/tmp/pi-gui-escape-fit-hook.json` — narrow-canvas fit and callback diagnostics
+- `/tmp/pi-final-addon-verification.md` — final bounded default/PTR check matrix and limits
+- `/tmp/pi-final-ptr-startup.*` — no-addon/no-SavedVariables PTR startup `[]`, exit 0
 - [test_showuipanel_toggles.rs](../../../tests/test_showuipanel_toggles.rs) — commit `38bc75892` fixture using dependency-aware `C_AddOns.LoadAddOn`
 - [panel_toggle_verbs.rs](../../../src/lua_api/globals/panel_toggle_verbs.rs) — SpellBook helper/fallback decision
 - [panel_toggle_verbs.rs tests](../../../tests/panel_toggle_verbs.rs) — bare-environment regression coverage
