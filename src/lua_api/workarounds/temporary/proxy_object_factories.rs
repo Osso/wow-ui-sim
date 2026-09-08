@@ -1,16 +1,9 @@
 //! Temporary Lua proxy-object factories for unmodeled C API userdata-like objects.
 //!
-//! `C_CurveUtil` and `C_FunctionContainers` should eventually be backed by real
-//! simulator-side object types. Until then, keep the table-shaped Lua
-//! compatibility objects in the workaround layer instead of central runtime
-//! bootstrap.
+//! Remaining unmodeled proxy surfaces stay isolated here; modeled curves live
+//! in `c_api::c_curve_util`.
 
 const PROXY_OBJECT_FACTORIES_LUA: &str = r#"
-C_CurveUtil = C_CurveUtil or __wow_namespace({
-  CreateCurve = nil,
-  CreateColorCurve = nil,
-})
-
 C_FunctionContainers = C_FunctionContainers or __wow_namespace({
   CreateCallback = nil,
 })
@@ -111,18 +104,6 @@ local function __wow_make_proxy_object(prefix, methods, initial_state)
   })
 end
 
-local function __wow_clone_proxy_points(points)
-  local copy = {}
-  for index = 1, #(points or {}) do
-    local point = points[index]
-    copy[index] = {
-      x = point.x,
-      y = point.y,
-    }
-  end
-  return copy
-end
-
 local function __wow_copy_proxy_table(source)
   local copy = {}
   if type(source) ~= "table" then
@@ -132,81 +113,6 @@ local function __wow_copy_proxy_table(source)
     copy[key] = value
   end
   return copy
-end
-
-local function __wow_curve_methods(prefix)
-  local methods = {}
-
-  function methods:AddPoint(x, y)
-    self.points[#self.points + 1] = { x = x or 0, y = y or 0 }
-  end
-
-  function methods:ClearPoints()
-    self.points = {}
-  end
-
-  function methods:SetType(curveType)
-    self.curveType = curveType or 0
-  end
-
-  function methods:GetPointCount()
-    return #self.points
-  end
-
-  function methods:Evaluate(x)
-    local points = self.points
-    if #points == 0 then
-      return 0
-    end
-    if #points == 1 then
-      return points[1].y
-    end
-
-    local target = x or 0
-    for index = 1, #points - 1 do
-      local left = points[index]
-      local right = points[index + 1]
-      if target <= right.x then
-        local dx = right.x - left.x
-        if dx == 0 then
-          return right.y
-        end
-        local fraction = (target - left.x) / dx
-        return left.y + (right.y - left.y) * fraction
-      end
-    end
-
-    return points[#points].y
-  end
-
-  function methods:Copy()
-    return __wow_make_proxy_object(prefix, methods, {
-      points = __wow_clone_proxy_points(self.points),
-      curveType = self.curveType,
-    })
-  end
-
-  return methods
-end
-
-if rawget(C_CurveUtil, "CreateCurve") == nil then
-  local curveMethods = __wow_curve_methods("LuaCurveObject")
-  function C_CurveUtil.CreateCurve()
-    return __wow_make_proxy_object("LuaCurveObject", curveMethods, {
-      points = {},
-      curveType = 0,
-    })
-  end
-end
-
-if rawget(C_CurveUtil, "CreateColorCurve") == nil then
-  local colorCurveMethods = __wow_curve_methods("LuaColorCurveObject")
-  function C_CurveUtil.CreateColorCurve()
-    return __wow_make_proxy_object("LuaColorCurveObject", colorCurveMethods, {
-      points = {},
-      curveType = 0,
-    })
-  end
 end
 
 if rawget(C_StringUtil, "CreateSecondsFormatter") == nil then

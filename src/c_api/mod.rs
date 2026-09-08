@@ -24,6 +24,7 @@ pub mod c_character_services;
 pub mod c_chat_bubbles;
 pub mod c_chromie_time;
 pub mod c_cursor;
+pub mod c_curve_util;
 pub mod c_death_recap;
 pub mod c_discord;
 pub mod c_glue;

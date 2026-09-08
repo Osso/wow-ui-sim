@@ -305,6 +305,11 @@ fn validate_object_reference(
     if !matches!(value, Val::Table(_) | Val::Userdata(_)) {
         return Err(invalid(path, name));
     }
+    if matches!(name, "LuaCurveObject" | "LuaColorCurveObject")
+        && !super::c_curve_util::is_curve_object(state, value, name)
+    {
+        return Err(invalid(path, name));
+    }
     for method in methods {
         let key = create_string(state, method);
         if !matches!(state.gettable(value, key)?, Val::Function(_)) {
