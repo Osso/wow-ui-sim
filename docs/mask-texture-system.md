@@ -128,3 +128,9 @@ The action bar icon rendering chain:
 
 5. **NormalTexture** (46x45, button state border)
    - Renders on top as the frame's standard border
+
+---
+
+## Ordering boundary
+
+Mask coverage changes only fragment visibility within an already emitted quad. The alpha-only correction in `939efe88d` did not alter frame strata, parentage, raw frame levels, owner grouping, or hit order. The BetterBlizzFrames no-portrait/SpellBook overlap is instead an owner-strata render-group boundary: a `HIGH` child remains in its `LOW` top-level owner's group behind independent `MEDIUM`. See [top-level render groups](specs/toplevel-render-groups.md) and the [native investigation](wiki/investigations/betterblizzframes-no-portrait-overlay.md).

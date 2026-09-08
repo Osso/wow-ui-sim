@@ -298,14 +298,9 @@ higher- or lower-level sibling.
 `toplevel="true"` uses a separate monotonic active show-order sequence. Showing a
 top-level frame assigns the next sequence value; hiding removes it, and showing it
 again assigns a newer value. This is intentionally separate from `raise_order`.
-After normal per-strata emission, IDs belonging to an active top-level frame are
-grouped by their nearest active top-level ancestor while walking through any
-intermediate strata. Each group is emitted contiguously in show order, with its
-owning frame anchored first. Thus a panel and its cross-strata descendants cannot
-be split around an independently rooted frame merely because their raw levels differ.
-Top-level visibility changes rebuild the affected bucket grouping; ordinary shows
-may use the incremental repair path. `UIParent` and `WorldFrame` remain strata-root
-boundaries.
+After normal per-strata emission, IDs belonging to a top-level frame are grouped by their nearest top-level ancestor while walking through intermediate strata. This applies even before that owner has a positive active show-order value. Each group is emitted contiguously at the owner's raw strata, with the owner anchored first. Thus a `HIGH` child of an unraised `LOW` top-level parent remains in the LOW group behind independent `MEDIUM`; an independent `HIGH`, `DIALOG`, plain `TOOLTIP`, or actual `GameTooltip` retains its own higher-strata group. Top-level visibility changes rebuild the affected bucket grouping; ordinary shows may use the incremental repair path. `UIParent` and `WorldFrame` remain strata-root boundaries.
+
+This boundary comes from the controlled retail 12.1.0.69587 capture at physical 1440-pixel display height, not a 768-unit logical canvas: case 1 is blue and cases 2–5 red in created, hide/show, and Raise phases (`/tmp/pi-native-control-pixels.json`). Raw raised values are transition observations, not global z-index values.
 
 Within ordinary content, the effective order remains:
 
@@ -327,11 +322,11 @@ Within ordinary content, the effective order remains:
 
 ### Hit-Test Building (lines 31-63)
 
-Filter visible, mouse-enabled, non-excluded frames. Sort by strata/level. Cache lazily, invalidated on layout changes.
+Filter visible, mouse-enabled, non-excluded frames. Hit ordering must consume the flattened render buckets rather than reconstruct raw strata/level order, so grouped descendants cannot steal input through an independent panel. Input wiring is pending integration.
 
 ### Query (lines 512-524)
 
-Iterate in reverse (highest strata first). Return first frame containing the point.
+Iterate in reverse render order. Return first frame containing the point.
 
 ---
 

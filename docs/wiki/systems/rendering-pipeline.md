@@ -52,15 +52,9 @@ cross raw frame levels. Regions remain grouped with their owning frame and then
 use draw-layer order (`BACKGROUND < BORDER < ARTWORK < OVERLAY < HIGHLIGHT`)
 within that frame's render group.
 
-Top-level panels use a separate monotonic active show-order sequence. Showing a
-`toplevel="true"` frame assigns the next sequence value; hiding removes its active
-entry, and showing it again assigns a newer value. After ordinary per-strata
-emission, every ID under an active top-level frame is assigned to its nearest
-active top-level ancestor, even when intermediate parents use other strata. Each
-owner's IDs are then emitted as one contiguous segment in show order, with the
-owner first. Top-level visibility changes invalidate the bucket for a full regroup;
-ordinary child shows can use incremental repair. `UIParent` and `WorldFrame` are
-strata-root boundaries.
+Top-level panels use a separate monotonic active show-order sequence. Showing a `toplevel="true"` frame assigns the next sequence value; hiding removes its active entry, and showing it again assigns a newer value. Every ID below a top-level owner is grouped with that owner even when the owner is unraised and intermediate parents use other strata. Each owner's IDs emit as one contiguous segment at its owner strata, with the owner first. Therefore a `HIGH` child remains behind an independent `MEDIUM` panel when its top-level owner is `LOW`, while independent `HIGH`, `DIALOG`, plain `TOOLTIP`, and actual `GameTooltip` remain above `MEDIUM`. Top-level visibility changes invalidate the bucket for a full regroup; ordinary child shows can use incremental repair. `UIParent` and `WorldFrame` are strata-root boundaries.
+
+The controlled retail 12.1.0.69587 capture classifies this at physical 1440-pixel display height: case 1 BLUE, cases 2–5 RED in created, hide/show, and Raise phases. Raised getter values record local transition state, not a global z-index.
 
 Strata order: `WORLD < BACKGROUND < LOW < MEDIUM < HIGH < DIALOG < FULLSCREEN < FULLSCREEN_DIALOG < TOOLTIP`.
 
@@ -70,7 +64,7 @@ Strata order: `WORLD < BACKGROUND < LOW < MEDIUM < HIGH < DIALOG < FULLSCREEN < 
 
 ## Hit Testing (`src/iced_app/frame_collect.rs`, `src/iced_app/hit_grid.rs`, `src/iced_app/view.rs`)
 
-`frame_collect` owns the shared `HitOrderKey` and collects visible, mouse-enabled frames in render order. The GUI-only `hit_grid` module imports that key for spatial indexing; headless builds do not compile the grid or its GUI dependency tree. Queries iterate in reverse (highest strata first), returning the first frame containing the cursor point. Several system frames (UIParent, Minimap, WorldFrame, chat frames) are excluded.
+`frame_collect` owns the shared `HitOrderKey`. Input must derive its spatial order from flattened render buckets, not a second raw strata/level sort, so a grouped child cannot steal input through a panel rendered above it. The GUI-only `hit_grid` module imports that key for spatial indexing; headless builds do not compile the grid or its GUI dependency tree. That input wiring remains pending integration. Several system frames (UIParent, Minimap, WorldFrame, chat frames) are excluded.
 
 ## Performance
 
@@ -91,6 +85,8 @@ The headless path is implemented in `src/render/headless.rs` and uses the same W
 - [state_render.rs](../../../src/lua_api/state_render.rs) — per-strata buckets, active top-level show order, nearest-owner grouping, and visibility invalidation
 - [state_render_tests.rs](../../../src/lua_api/state_render_tests.rs) — cross-strata top-level grouping, repeated show ordering, and same-level Raise/Lower boundaries
 - [world_map_voice_button_order.rs](../../../tests/world_map_voice_button_order.rs) — live-like top-level overlap regression
+- [top-level render groups](../../specs/toplevel-render-groups.md) — native controlled matrix and pending integration status
+- [[betterblizzframes-no-portrait-overlay]] — root cause and private native evidence
 
 ## See Also
 

@@ -1,6 +1,6 @@
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 
-[[betterblizzframes-no-portrait-overlay]] records the observed `Uther` overlay and original native `HIGH`/raised `0` no-portrait versus `MEDIUM`/raised `18→20` PlayerSpells capture. `e5f4a96ae`/`e811240d0` installed the five-comparison, three-phase controlled kit; `/tmp/pi-unit-controls-desktop-install.json` confirms 5/5 hashes. Independent protocol verification passed (`/tmp/pi-unit-controls-verification.md`); screenshot-gated native capture remains pending. General ordering policy is unknown; no overlap correction is claimed.
+[[betterblizzframes-no-portrait-overlay]] records the controlled retail native result: a `HIGH` child stays in its `LOW` top-level owner group behind independent `MEDIUM` (blue case 1); independent `HIGH`, `DIALOG`, plain `TOOLTIP`, and actual `GameTooltip` remain above (red cases 2–5), in created, hide/show, and Raise phases. Evidence is `/tmp/pi-unit-controls-native.lua`, ignored archive `UnitFrameLayerProbe-controls-2026-09-08.lua`, and `/tmp/pi-native-control-pixels.json`, at physical 1440-pixel display height. `f5d9ff91f` implements core grouping/getter behavior; input wiring, targeted GREEN, readability, and GUI acceptance remain pending.
 
 ## [2026-09-08] acceptance | Actual addon startup and accepted PlayerSpells interaction
 
