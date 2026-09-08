@@ -5497,254 +5497,408 @@
       "id": "added:math.clamp",
       "symbol": "math.clamp",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::clamp_bounds_ordinary_numbers",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::clamp_bounds_ordinary_numbers"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Clamps -2, 4, and 12 to the interval [0, 10]. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.isfinite",
       "symbol": "math.isfinite",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::isfinite_classifies_numbers",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::isfinite_classifies_numbers"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Classifies zero and -1.5 as finite, and both infinities and NaN as non-finite. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.isinf",
       "symbol": "math.isinf",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::isinf_classifies_both_infinities",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::isinf_classifies_both_infinities"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Classifies both infinities as infinite, and 12 and NaN as not infinite. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.isnan",
       "symbol": "math.isnan",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::isnan_distinguishes_nan_from_numbers",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::isnan_distinguishes_nan_from_numbers"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Distinguishes NaN from zero, -2.5, and positive infinity. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.lerp",
       "symbol": "math.lerp",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::lerp_interpolates_endpoints_and_fraction",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::lerp_interpolates_endpoints_and_fraction"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Interpolates 10 to 20 at amounts 0, 1, and 0.25. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.normalize",
       "symbol": "math.normalize",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::normalize_maps_interval_to_unit_range",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::normalize_maps_interval_to_unit_range"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Maps 10, 20, and 15 in [10, 20] to 0, 1, and 0.5. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.remap",
       "symbol": "math.remap",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::remap_maps_between_numeric_intervals",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::remap_maps_between_numeric_intervals"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Maps 0, 10, and 5 from [0, 10] to 100, 200, and 150 in [100, 200]. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.round",
       "symbol": "math.round",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::round_supports_default_and_decimal_precision",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::round_supports_default_and_decimal_precision"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Rounds positive and negative half values with default and one-decimal precision, and 124 at precision -1. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.saturate",
       "symbol": "math.saturate",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::saturate_clamps_to_unit_interval",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::saturate_clamps_to_unit_interval"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Clamps -2, 0.25, and 2 to 0, 0.25, and 1. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.sign",
       "symbol": "math.sign",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::sign_reports_negative_zero_and_positive_numbers",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::sign_reports_negative_zero_and_positive_numbers"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Returns -1, 0, and 1 for -3, 0, and 7. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:math.wrap",
       "symbol": "math.wrap",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added function contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/math_extensions.rs",
+          "summary": "PTR-gated native math extension implementation publishes and executes this function.",
+          "source_hash": "a3a56c0a29ac091b15ade1b4988f26786651a27d49f2c775c3f25c3c957da970"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::wrap_maps_values_into_nonzero_interval",
+          "summary": "Focused PTR test exercises the bounded observable behavior stated in this row. Proof commit 240c662d0: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_math_extensions -- --nocapture (11 passed, 0 failed).",
+          "source_hash": "f8d16593c7f39f5917eaa052d6d9ccd39213ce0d040afa0a5b127a0424d8e9f3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_math_extensions.rs::wrap_maps_values_into_nonzero_interval"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "240c662d0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Wraps 7, 17, and 3 into [5, 15] as 7, 7, and 13. Asserts exactly one return value. Proof is limited to these numeric cases; native invalid-input/error behavior, untested numeric edges (including NaN outside classification functions), secret-value propagation, taint, and security semantics remain unclaimed."
     },
     {
       "id": "added:string.contains",
