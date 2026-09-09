@@ -1,4 +1,11 @@
+#[cfg(not(feature = "client-ptr"))]
 const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = include_str!("compat_bootstrap.lua");
+#[cfg(feature = "client-ptr")]
+const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
+    include_str!("fragment_id.lua"),
+    "\n",
+    include_str!("compat_bootstrap.lua"),
+);
 const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua");
 
 pub fn init(lua: &mut rilua::Lua) -> crate::Result<()> {
