@@ -247,11 +247,11 @@
 247. [best-effort] `added:math.saturate` — behavioral
 248. [best-effort] `added:math.sign` — behavioral
 249. [best-effort] `added:math.wrap` — behavioral
-250. [evidence-required] `added:string.contains` — unsafe
-251. [evidence-required] `added:string.endswith` — unsafe
-252. [evidence-required] `added:string.ltrim` — unsafe
-253. [evidence-required] `added:string.rtrim` — unsafe
-254. [evidence-required] `added:string.startswith` — unsafe
+250. [best-effort] `added:string.contains` — behavioral
+251. [best-effort] `added:string.endswith` — behavioral
+252. [best-effort] `added:string.ltrim` — behavioral
+253. [best-effort] `added:string.rtrim` — behavioral
+254. [best-effort] `added:string.startswith` — behavioral
 255. [best-effort] `added:table.contains` — behavioral
 256. [best-effort] `added:table.getcountinfo` — behavioral
 257. [best-effort] `added:table.indexof` — behavioral

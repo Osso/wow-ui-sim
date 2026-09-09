@@ -9576,116 +9576,221 @@
       "id": "added:string.contains",
       "symbol": "string.contains",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added string function signature, boolean return type, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/string_extensions.rs",
+          "summary": "PTR-only Rust registration implements byte-oriented string operations without Unicode decoding or Lua pattern expansion.",
+          "source_hash": "99ba803929eff9becc2b8f6e6f1d3b95e8dbebf530aa47f1969aa2821be72c23"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_matching",
+          "summary": "Focused PTR proof covers literal, case-sensitive contains on ordinary, empty, NUL, and invalid UTF-8 byte strings; earlier-retail proof covers method absence.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies all five added string methods remain absent.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_matching",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "65704757d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish only byte-preserving literal, case-sensitive matching for ordinary Lua strings, including empty input/needle and embedded NUL or invalid UTF-8 bytes; focused earlier-retail tests establish absence. This does not confirm Unicode, locale, coercion, AllowedWhenUntainted, taint, secret, protected, forbidden, invalid-input, string-view identity/lifetime, or native-edge semantics."
     },
     {
       "id": "added:string.endswith",
       "symbol": "string.endswith",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added string function signature, boolean return type, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/string_extensions.rs",
+          "summary": "PTR-only Rust registration implements byte-oriented string operations without Unicode decoding or Lua pattern expansion.",
+          "source_hash": "99ba803929eff9becc2b8f6e6f1d3b95e8dbebf530aa47f1969aa2821be72c23"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_matching",
+          "summary": "Focused PTR proof covers literal, case-sensitive suffix matching on ordinary, empty, NUL, and invalid UTF-8 byte strings; earlier-retail proof covers method absence.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies all five added string methods remain absent.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_matching",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "65704757d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish only byte-preserving literal, case-sensitive matching for ordinary Lua strings, including empty input/needle and embedded NUL or invalid UTF-8 bytes; focused earlier-retail tests establish absence. This does not confirm Unicode, locale, coercion, AllowedWhenUntainted, taint, secret, protected, forbidden, invalid-input, string-view identity/lifetime, or native-edge semantics."
     },
     {
       "id": "added:string.ltrim",
       "symbol": "string.ltrim",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added string function signature, stringView return type, documented characters default, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/string_extensions.rs",
+          "summary": "PTR-only Rust registration implements byte-oriented string operations without Unicode decoding or Lua pattern expansion.",
+          "source_hash": "99ba803929eff9becc2b8f6e6f1d3b95e8dbebf530aa47f1969aa2821be72c23"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_trimming",
+          "summary": "Focused PTR proof covers left-only byte-set trimming, the documented omitted characters default, empty explicit set, and NUL/invalid UTF-8 preservation; earlier-retail proof covers method absence.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies all five added string methods remain absent.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_trimming",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "65704757d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish only byte-preserving one-sided byte-set trimming: omitted characters use the source default space/carriage-return/line-feed/tab, an empty explicit set removes nothing, and embedded NUL or invalid UTF-8 bytes are preserved; focused earlier-retail tests establish absence. The byte-set and explicit-nil conventions are simulator assumptions, not native confirmation; Unicode, locale, coercion, AllowedWhenUntainted, taint, secret, protected, forbidden, invalid-input, string-view identity/lifetime, and native-edge semantics remain unproven."
     },
     {
       "id": "added:string.rtrim",
       "symbol": "string.rtrim",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added string function signature, stringView return type, documented characters default, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/string_extensions.rs",
+          "summary": "PTR-only Rust registration implements byte-oriented string operations without Unicode decoding or Lua pattern expansion.",
+          "source_hash": "99ba803929eff9becc2b8f6e6f1d3b95e8dbebf530aa47f1969aa2821be72c23"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_trimming",
+          "summary": "Focused PTR proof covers right-only byte-set trimming, the documented omitted characters default, empty explicit set, and NUL/invalid UTF-8 preservation; earlier-retail proof covers method absence.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies all five added string methods remain absent.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_trimming",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "65704757d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish only byte-preserving one-sided byte-set trimming: omitted characters use the source default space/carriage-return/line-feed/tab, an empty explicit set removes nothing, and embedded NUL or invalid UTF-8 bytes are preserved; focused earlier-retail tests establish absence. The byte-set and explicit-nil conventions are simulator assumptions, not native confirmation; Unicode, locale, coercion, AllowedWhenUntainted, taint, secret, protected, forbidden, invalid-input, string-view identity/lifetime, and native-edge semantics remain unproven."
     },
     {
       "id": "added:string.startswith",
       "symbol": "string.startswith",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added string function signature, boolean return type, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/string_extensions.rs",
+          "summary": "PTR-only Rust registration implements byte-oriented string operations without Unicode decoding or Lua pattern expansion.",
+          "source_hash": "99ba803929eff9becc2b8f6e6f1d3b95e8dbebf530aa47f1969aa2821be72c23"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_matching",
+          "summary": "Focused PTR proof covers literal, case-sensitive prefix matching on ordinary, empty, NUL, and invalid UTF-8 byte strings; earlier-retail proof covers method absence.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies all five added string methods remain absent.",
+          "source_hash": "21cb299e918816f36c93bdbb93582b072579ed0811a623c0795e2c8a972e4385"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_matching",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_string_extensions.rs::patch_12_1_5_string_extensions_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "65704757d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish only byte-preserving literal, case-sensitive matching for ordinary Lua strings, including empty input/needle and embedded NUL or invalid UTF-8 bytes; focused earlier-retail tests establish absence. This does not confirm Unicode, locale, coercion, AllowedWhenUntainted, taint, secret, protected, forbidden, invalid-input, string-view identity/lifetime, or native-edge semantics."
     },
     {
       "id": "added:table.contains",

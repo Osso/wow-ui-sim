@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 275 best-effort and 174 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 280 best-effort and 169 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -17,6 +17,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | Surface | Current evidence | Disposition | Missing proof |
 |---|---|---|---|
 | PTR table contracts | Commits `1d11c0176` and `f0ae4a96a`; focused tests cover extensions plus `getcountinfo` and required `create` hints | 10 best-effort / behavioral | Secret-key/value propagation, invalid arguments, sparse edge cases, capacity observability, and native error semantics |
+| PTR string extensions | Commit `65704757d` with focused PTR byte-preserving literal/case matching and one-sided byte-set trimming tests, plus earlier-retail absence proof | 5 best-effort / simulator behavioral rows | Byte-set/literal/case/explicit-nil choices are simulator assumptions; Unicode, locale, coercion, `AllowedWhenUntainted`, security, and native semantics remain unproven |
 | `C_Intl` and `LuaLocaleContext` algorithms | Generated signatures only; no simulator namespace or locale object | evidence-required / unsafe | Unicode normalization, segmentation, collation, formatting, locale state, nil/error cases, and taint/secret semantics |
 | PTR locale option enums | Commit `50958d938` with focused client-profile exact-map/metadata and earlier-retail absence proof for `BreakType`, `CollationStrength`, `CurrencyNameStyle`, `DateTimeStyle`, `LocaleTransform`, `NormalizationForm`, `NumberStyle`, and `PluralType` | 45 best-effort / behavioral rows | `C_Intl`, Unicode, locale algorithms, formatting/collation/normalization behavior, coercion, and security/native semantics |
 | `Enum.WeatherType` | Commits `286d0d3f7` and `17c085065` with focused PTR exact-map/metadata and earlier-retail absence tests | 6 best-effort / behavioral rows | Weather state, events, intensity, rendering, coercion, security, and native semantics |
@@ -41,7 +42,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 
 - Missing publication/modeling: `C_Intl` and stateful action, PvP, LFG, and aura APIs. `C_Weather` has a bounded PTR simulator-owned state model; native weather values, transitions, intensity behavior, and event timing remain unresolved. `CreateFrameWithOptions` has a bounded PTR simulator adapter; native lifecycle and validation remain unresolved.
 - Remaining table gaps: `table.freeze` and `table.isfrozen` need a frozen-table state model; `string.trim` remains a separate 12.0.0 mismatch rather than a 12.1.5 occurrence.
-- Missing additive helpers: documented string extensions, selected `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, remaining aura-option normalization, and script-bucket throttle limits.
+- Missing additive helpers: selected `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, remaining aura-option normalization, and script-bucket throttle limits.
 - Native evidence remains required for weather values, Training Grounds IDs, active LFG state, castbar token behavior, Unicode/locale semantics, and protected/security behavior.
 
 ## Implementation Order

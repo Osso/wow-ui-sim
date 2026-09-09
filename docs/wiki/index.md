@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR string extension simulator behavior
+
+`65704757d` and `a11406477` add PTR-only byte-oriented `string.contains`, `startswith`, `endswith`, `ltrim`, and `rtrim`. Focused tests cover literal/case matching, empty values, documented omitted trim defaults, one-sided byte-set trimming, NUL and invalid UTF-8 preservation, and earlier-retail absence. Byte-set/literal/case/explicit-nil choices are simulator assumptions; Unicode, locale, coercion, security, and native semantics remain unresolved. See [[patch-12-1-5-api-audit]] and [PTR Lua string extensions](../specs/lua-string-extensions.md).
+
 ## [2026-09-09] audit | Credit PTR macro action tooltip query
 
 `80d312c5a`, `e53298cce`, and `96c186c1c` model `C_ActionBar.IsMacroActionWithShowTooltip` through the narrow [`action_macros`](../../src/c_api/action_macros.rs) C API boundary. Focused PTR tests cover assigned macro bodies, edits, slot moves/replacement/clear, deletion/ID reuse, and directive-recognition assumptions; retail suppresses fallback publication. [[patch-12-1-5-api-audit]] credits modeled behavior only: directive parsing and validation are simulator assumptions, while token/conditional resolution and security remain unresolved.
