@@ -10,6 +10,8 @@ const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
     "\n",
     include_str!("player_data_flags.lua"),
     "\n",
+    include_str!("intl_enums.lua"),
+    "\n",
     include_str!("compat_bootstrap.lua"),
 );
 const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua");
