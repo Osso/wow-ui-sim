@@ -1,5 +1,5 @@
-//! Publication only. Retail intentionally retains its actual 45-member layout,
-//! which predates the pinned 50-member 12.1.0 baseline; PTR follows the 52-member target.
+//! Publication only. Current retail has 47 members but stale 0/43/44 metadata.
+//! Preserve that observed drift; PTR follows the pinned 52-member target.
 
 use crate::lua_api::WowLuaEnv;
 
@@ -28,7 +28,7 @@ fn expected_members() -> Vec<(String, i64)> {
             })
             .collect();
     }
-    let names = "None Blank UnitName GemSocket AzeriteEssenceSlot AzeriteEssencePower LearnableSpell UnitThreat QuestObjective AzeriteItemPowerDescription RuneforgeLegendaryPowerDescription SellPrice ProfessionCraftingQuality SpellName CurrencyTotal ItemEnchantmentPermanent UnitOwner QuestTitle QuestPlayer NestedBlock ItemBinding RestrictedRaceClass RestrictedFaction RestrictedSkill RestrictedPvPMedal RestrictedReputation RestrictedSpellKnown RestrictedLevel EquipSlot ItemName Separator ToyName ToyText ToyEffect ToyDuration RestrictedArena RestrictedBg ToyFlavorText ToyDescription ToySource GemSocketEnchantment ItemLevel ItemUpgradeLevel SpellPassive SpellDescription";
+    let names = "None Blank UnitName GemSocket AzeriteEssenceSlot AzeriteEssencePower LearnableSpell UnitThreat QuestObjective AzeriteItemPowerDescription RuneforgeLegendaryPowerDescription SellPrice ProfessionCraftingQuality SpellName CurrencyTotal ItemEnchantmentPermanent UnitOwner QuestTitle QuestPlayer NestedBlock ItemBinding EquipSlot ItemName Separator ToyName ToyText ToyEffect ToyDuration ToyDescription ToySource GemSocketEnchantment ItemLevel ItemUpgradeLevel SpellPassive SpellDescription ItemQuality TradeTimeRemaining FlavorText ItemSpellTriggerLearn LearnTransmogSet LearnTransmogIllusion ErrorLine DisabledLine UsageRequirement ItemSpellTriggerOnUse ItemSpellTriggerOnEquip ItemSpellTriggerOnProc";
     names
         .split_whitespace()
         .enumerate()
@@ -53,14 +53,14 @@ fn assert_publication(env: &WowLuaEnv, expected: &[(String, i64)]) {
     "#,
         )
         .unwrap();
+    let metadata = if cfg!(feature = "client-ptr") {
+        (0, 51, 52)
+    } else {
+        (0, 43, 44)
+    };
     assert_eq!(
         actual,
-        (
-            expected.len() as i64,
-            0,
-            expected.len() as i64 - 1,
-            expected.len() as i64
-        )
+        (expected.len() as i64, metadata.0, metadata.1, metadata.2)
     );
     if cfg!(feature = "client-ptr") {
         env.exec(r#"
