@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 269 best-effort and 180 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 274 best-effort and 175 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -21,7 +21,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | PTR locale option enums | Commit `50958d938` with focused client-profile exact-map/metadata and earlier-retail absence proof for `BreakType`, `CollationStrength`, `CurrencyNameStyle`, `DateTimeStyle`, `LocaleTransform`, `NormalizationForm`, `NumberStyle`, and `PluralType` | 45 best-effort / behavioral rows | `C_Intl`, Unicode, locale algorithms, formatting/collation/normalization behavior, coercion, and security/native semantics |
 | `Enum.WeatherType` | Commits `286d0d3f7` and `17c085065` with focused PTR exact-map/metadata and earlier-retail absence tests | 6 best-effort / behavioral rows | Weather state, events, intensity, rendering, coercion, security, and native semantics |
 | Player-data flag enums | Commit `96b91aa4b` with focused PTR exact one-member maps/metadata and earlier-retail absence tests | 4 best-effort / behavioral rows | Player-data, logging, gameplay, consumers, coercion, security, and native semantics |
-| `C_Weather`, `WEATHER_CHANGED` | Generated declarations only; no weather model or event producer | evidence-required / unsafe | Native weather values, intensity, event timing/payload, and state transitions |
+| `C_Weather`, `WeatherInfo`, `WEATHER_CHANGED` | Commits `c77963250`, `42457f475`, and `b4943dcf6`; focused PTR simulator-state/snapshot and explicit event-injection tests plus earlier-retail absence | 5 best-effort / simulator behavioral rows | Native weather values, initial intensity/range, automatic transitions, event timing/payload, rendering, and security semantics |
 | `Enum.FragmentID` and metadata | Commit `5e5e46dd9` with focused PTR and earlier-retail exact-table tests | 45 best-effort / behavioral rows | Gameplay meaning, consumers, validation, coercion, and security/native semantics |
 | Cooldown threshold publication | Commit `88c705aa7` with focused PTR and earlier-retail numeric threshold tests | 3 best-effort / behavioral rows | Native defaults, rendering/display effects, units/conversion, type/coercion, and security/native semantics |
 | Caster-name aura options | Commit `894333d48` with focused PTR default/boolean normalization and earlier-retail absence proof | 4 best-effort / behavioral rows | Caster-name rendering, realm formatting, class-color display, coercion, and security/native semantics |
@@ -38,7 +38,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 
 ## Confirmed High-Priority Gaps
 
-- Missing publication/modeling: `C_Intl`, `C_Weather`, `WEATHER_CHANGED`, and stateful action, PvP, LFG, and aura APIs. `CreateFrameWithOptions` has a bounded PTR simulator adapter; native lifecycle and validation remain unresolved.
+- Missing publication/modeling: `C_Intl` and stateful action, PvP, LFG, and aura APIs. `C_Weather` has a bounded PTR simulator-owned state model; native weather values, transitions, intensity behavior, and event timing remain unresolved. `CreateFrameWithOptions` has a bounded PTR simulator adapter; native lifecycle and validation remain unresolved.
 - Remaining table gaps: `table.freeze` and `table.isfrozen` need a frozen-table state model; `string.trim` remains a separate 12.0.0 mismatch rather than a 12.1.5 occurrence.
 - Missing additive helpers: documented string extensions, selected `C_ActionBar`, `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, remaining aura-option normalization, and script-bucket throttle limits.
 - Native evidence remains required for weather values, Training Grounds IDs, active LFG state, castbar token behavior, Unicode/locale semantics, and protected/security behavior.

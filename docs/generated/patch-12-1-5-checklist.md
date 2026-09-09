@@ -36,10 +36,10 @@
 36. [evidence-required] `added:C_PvP.IsTrainingGroundsBG` — unsafe
 37. [best-effort] `added:C_Timer.NewTimedSignalMap` — behavioral
 38. [evidence-required] `added:C_UnitAuras.GetAuraCasterGUID` — unsafe
-39. [evidence-required] `added:C_Weather.GetCurrentWeather` — unsafe
-40. [evidence-required] `added:C_Weather.WeatherInfo` — unsafe
-41. [evidence-required] `added:C_Weather.WeatherInfo.intensity` — unsafe
-42. [evidence-required] `added:C_Weather.WeatherInfo.type` — unsafe
+39. [best-effort] `added:C_Weather.GetCurrentWeather` — behavioral
+40. [best-effort] `added:C_Weather.WeatherInfo` — behavioral
+41. [best-effort] `added:C_Weather.WeatherInfo.intensity` — behavioral
+42. [best-effort] `added:C_Weather.WeatherInfo.type` — behavioral
 43. [evidence-required] `added:CharacterProperties` — unsafe
 44. [evidence-required] `added:CharacterProperties.blockCode` — unsafe
 45. [evidence-required] `added:CharacterProperties.codePoint` — unsafe
@@ -235,7 +235,7 @@
 235. [evidence-required] `added:TimedSignalMapEntry` — unsafe
 236. [evidence-required] `added:TimedSignalMapEntry.key` — unsafe
 237. [evidence-required] `added:TimedSignalMapEntry.time` — unsafe
-238. [evidence-required] `added:WEATHER_CHANGED` — unsafe
+238. [best-effort] `added:WEATHER_CHANGED` — behavioral
 239. [best-effort] `added:math.clamp` — behavioral
 240. [best-effort] `added:math.isfinite` — behavioral
 241. [best-effort] `added:math.isinf` — behavioral

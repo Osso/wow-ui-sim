@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR weather simulator proof
+
+`c77963250`, `42457f475`, and `b4943dcf6` resolve five rows as bounded simulator behavior: `C_Weather.GetCurrentWeather`, `WeatherInfo`, its `type` and `intensity` fields, and `WEATHER_CHANGED`. PTR tests cover fresh snapshots, controlled mutation, explicit zero-argument event injection after mutation, and earlier-retail namespace absence. Clear/zero initialization, validation, intensity range, event timing/payload, automatic transitions, rendering, security, and native behavior remain assumptions or unclaimed. Totals: 274 best-effort, 175 evidence-required, and 0 untriaged rows. See [[weather-state]] and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-09] audit | Credit PTR CreateFrameWithOptions adapter
 
 `e6712ab29` resolves the constructor, `CreateFrameOptions`, and seven fields as 9 best-effort/behavioral rows. Focused PTR proof covers declared structured allocation, ordered templates, explicit hidden/forbidden flags, and documented simulator validation/lifecycle choices; earlier retail keeps the constructor and argument structure absent. The [CreateFrameWithOptions spec](../specs/create-frame-with-options.md) labels lifecycle and validation choices as assumptions, not native conformance. Security, coercion, global structure publication, reentrancy, and native edges remain unresolved. Totals: 269 best-effort, 180 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].

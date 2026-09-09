@@ -1029,93 +1029,149 @@
       "id": "added:C_Weather.GetCurrentWeather",
       "symbol": "C_Weather.GetCurrentWeather",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added weather occurrence and its declared return or field contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_weather.rs",
+          "summary": "PTR-only C_Weather registration returns fresh simulator-owned weather snapshots and preserves earlier-retail namespace absence. Clear/zero initial state and admin validation are simulator assumptions, not native weather conformance.",
+          "source_hash": "ee19e7cd08f578f4a501ddf6c82837471e2f19b5ad08037200d7901491122a42"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs",
+          "summary": "Focused PTR and earlier-retail tests prove simulator snapshots, controlled state mutation, returned field values, and namespace absence. They do not establish native intensity defaults, ranges, or timing. Proof commits c77963250, 42457f475, and b4943dcf6.",
+          "source_hash": "285c9dbdf81be6201ef3007f16287240376ae0f082676b4af74bea01adbca1fd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "c77963250",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR publication of C_Weather.GetCurrentWeather and a fresh table snapshot with non-nil numeric type/intensity fields from simulator-owned state; earlier retail preserves C_Weather absence. Clear/zero initialization, snapshot identity, admin mutation, validation, intensity range, automatic transitions, rendering, coercion, secret/taint/protected behavior, and native-edge semantics are simulator choices or unclaimed, not native conformance."
     },
     {
       "id": "added:C_Weather.WeatherInfo",
       "symbol": "C_Weather.WeatherInfo",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added weather occurrence and its declared return or field contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_weather.rs",
+          "summary": "PTR-only C_Weather registration returns fresh simulator-owned weather snapshots and preserves earlier-retail namespace absence. Clear/zero initial state and admin validation are simulator assumptions, not native weather conformance.",
+          "source_hash": "ee19e7cd08f578f4a501ddf6c82837471e2f19b5ad08037200d7901491122a42"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs",
+          "summary": "Focused PTR and earlier-retail tests prove simulator snapshots, controlled state mutation, returned field values, and namespace absence. They do not establish native intensity defaults, ranges, or timing. Proof commits c77963250, 42457f475, and b4943dcf6.",
+          "source_hash": "285c9dbdf81be6201ef3007f16287240376ae0f082676b4af74bea01adbca1fd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "c77963250",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish the returned simulator snapshot shape with non-nil type and intensity fields; WeatherInfo is not fabricated as a global constructor. Earlier retail preserves the absent namespace/surface. The documented Clear default supports field declaration only; returned Clear/zero initialization is a simulator assumption. Native structure construction, identity, weather state, timing, security, and native-edge semantics remain unclaimed."
     },
     {
       "id": "added:C_Weather.WeatherInfo.intensity",
       "symbol": "C_Weather.WeatherInfo.intensity",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added weather occurrence and its declared return or field contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_weather.rs",
+          "summary": "PTR-only C_Weather registration returns fresh simulator-owned weather snapshots and preserves earlier-retail namespace absence. Clear/zero initial state and admin validation are simulator assumptions, not native weather conformance.",
+          "source_hash": "ee19e7cd08f578f4a501ddf6c82837471e2f19b5ad08037200d7901491122a42"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs",
+          "summary": "Focused PTR and earlier-retail tests prove simulator snapshots, controlled state mutation, returned field values, and namespace absence. They do not establish native intensity defaults, ranges, or timing. Proof commits c77963250, 42457f475, and b4943dcf6.",
+          "source_hash": "285c9dbdf81be6201ef3007f16287240376ae0f082676b4af74bea01adbca1fd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "c77963250",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish the returned snapshot intensity field is numeric and tracks controlled simulator state; earlier retail preserves absence of the weather surface. The source specifies no intensity default; simulator initial zero, validation, and accepted finite range are assumptions rather than native conformance. Timing, coercion, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:C_Weather.WeatherInfo.type",
       "symbol": "C_Weather.WeatherInfo.type",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added weather occurrence and its declared return or field contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_weather.rs",
+          "summary": "PTR-only C_Weather registration returns fresh simulator-owned weather snapshots and preserves earlier-retail namespace absence. Clear/zero initial state and admin validation are simulator assumptions, not native weather conformance.",
+          "source_hash": "ee19e7cd08f578f4a501ddf6c82837471e2f19b5ad08037200d7901491122a42"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs",
+          "summary": "Focused PTR and earlier-retail tests prove simulator snapshots, controlled state mutation, returned field values, and namespace absence. They do not establish native intensity defaults, ranges, or timing. Proof commits c77963250, 42457f475, and b4943dcf6.",
+          "source_hash": "285c9dbdf81be6201ef3007f16287240376ae0f082676b4af74bea01adbca1fd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "c77963250",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish the returned snapshot type field is numeric and tracks controlled simulator WeatherType state; earlier retail preserves absence of the weather surface. The documented Clear default supports the field contract, while initial Clear is a simulator assumption. Native weather selection, coercion, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CharacterProperties",
@@ -7328,7 +7384,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -7378,7 +7434,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -7451,7 +7507,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TooltipDataLineType.UnitCriteriaProgress",
@@ -7494,7 +7550,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TransmogIllusionFlags.HiddenIllusion",
@@ -9054,24 +9110,38 @@
       "id": "added:WEATHER_CHANGED",
       "symbol": "WEATHER_CHANGED",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added event occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records WEATHER_CHANGED as an added unique event without payload or timing details.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/event/valid_events.rs",
+          "summary": "PTR event registration accepts WEATHER_CHANGED; this establishes simulator registerability, not native dispatch timing or payload.",
+          "source_hash": "bf8102afeab2caafa0b89cbdc74452631a8ea68ef7b24b2d482410e2b54de4ed"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs",
+          "summary": "Focused PTR test proves explicit simulator A_Admin.FireEvent injection delivers WEATHER_CHANGED with zero arguments after controlled state mutation; it does not establish native transition dispatch. Proof commits c77963250, 42457f475, and b4943dcf6.",
+          "source_hash": "285c9dbdf81be6201ef3007f16287240376ae0f082676b4af74bea01adbca1fd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "c77963250",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR tests establish only simulator event registration and explicit A_Admin.FireEvent injection: zero injected arguments and already-mutated simulator weather state are observed by a handler. A_Admin.SetWeather does not automatically dispatch. Native WEATHER_CHANGED payload, timing, transition source, security, and native behavior remain unclaimed."
     },
     {
       "id": "added:math.clamp",
@@ -14689,7 +14759,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
