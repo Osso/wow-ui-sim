@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR ICU titlecasing
+
+`0081d03f0` and `bd3d6a330` credit `C_Intl.ToTitle` and `LuaLocaleContext.ToTitle` for PTR-only modeled ICU 2.1.1 per-word titlecasing on valid UTF-8, punctuation/spacing preservation, focused locale cases, and earlier-retail absence. Word segmentation, default ICU options, malformed-input/`MayReturnNothing` behavior, locale translation, Unicode version, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR Unicode titlecasing](../specs/intl-titlecase.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU titlecasing
+
+[PTR Unicode titlecasing](../specs/intl-titlecase.md) records per-word ICU segmentation/titlecasing, dependency pins, focused proof, and the native-conformance boundary.
+
 ## [2026-09-09] audit | Credit PTR ICU casing
 
 `f94a5be6d` credits the six PTR global/context casing declarations for focused ICU 2.1.1 lower, upper, and full-fold behavior on valid UTF-8 plus earlier-retail absence. Locale identifier translation, invalid-input errors, Unicode-version equivalence, embedded-NUL, coercion, security, and native semantics remain simulator assumptions or unresolved. See [PTR Unicode casing](../specs/intl-casing.md) and [[patch-12-1-5-api-audit]].

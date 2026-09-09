@@ -408,7 +408,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "6a04696123a1345d02512e5868298c39b91d1a0c7b7e905b0a3f524e1ab9ba70",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
           "summary": "Focused PTR tests establish C_Intl locale-independent ICU 2.1.1 default full case-folding for valid UTF-8 and earlier-retail absence."
         },
         {
@@ -420,13 +420,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -742,13 +742,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -842,13 +842,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -954,7 +954,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "6a04696123a1345d02512e5868298c39b91d1a0c7b7e905b0a3f524e1ab9ba70",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
           "summary": "Focused PTR tests establish C_Intl locale-aware ICU 2.1.1 lowercase behavior for valid UTF-8, including current-locale selection and earlier-retail absence."
         },
         {
@@ -966,13 +966,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -995,24 +995,56 @@
       "id": "added:C_Intl.ToTitle",
       "symbol": "C_Intl.ToTitle",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added titlecase declaration, required cstring argument, MayReturnNothing return contract, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/casing.rs",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "summary": "PTR-only ICU 2.1.1 titlecasing applies the modeled per-word titlecase path to valid UTF-8 global and locale-context input."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
+          "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
+          "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_titlecase.rs",
+          "source_hash": "52f4631cc754fbc11461d86c7d2af97cc9385068bed71a8acf279c52a1163a72",
+          "summary": "Focused PTR tests cover global and context titlecasing across mixed case, punctuation, spacing, Turkish and Dutch locale cases, malformed UTF-8 policy, and earlier-retail absence. Proof commits 0081d03f0 and bd3d6a330."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_titlecase.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0081d03f0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR C_Intl.ToTitle publication and modeled ICU 2.1.1 per-word titlecasing for valid UTF-8. Per-word segmentation, default titlecase options, locale-tag translation, malformed-input errors, MayReturnNothing conditions, Unicode-version equivalence, cstring embedded-NUL, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge semantics remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:C_Intl.ToUpper",
@@ -1032,7 +1064,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "6a04696123a1345d02512e5868298c39b91d1a0c7b7e905b0a3f524e1ab9ba70",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
           "summary": "Focused PTR tests establish C_Intl locale-aware ICU 2.1.1 uppercase behavior for valid UTF-8, including current-locale selection and earlier-retail absence."
         },
         {
@@ -1044,13 +1076,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -8274,7 +8306,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "6a04696123a1345d02512e5868298c39b91d1a0c7b7e905b0a3f524e1ab9ba70",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
           "summary": "Focused PTR tests establish locale-context ICU 2.1.1 default full case-folding for valid UTF-8 independent of the stored locale identifier."
         },
         {
@@ -8286,13 +8318,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -8701,7 +8733,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "6a04696123a1345d02512e5868298c39b91d1a0c7b7e905b0a3f524e1ab9ba70",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
           "summary": "Focused PTR tests establish locale-context ICU 2.1.1 lowercase behavior for valid UTF-8 using independently stored locale identifiers."
         },
         {
@@ -8713,13 +8745,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -8742,24 +8774,56 @@
       "id": "added:LuaLocaleContext.ToTitle",
       "symbol": "LuaLocaleContext.ToTitle",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added titlecase declaration, required cstring argument, MayReturnNothing return contract, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/casing.rs",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "summary": "PTR-only ICU 2.1.1 titlecasing applies the modeled per-word titlecase path to valid UTF-8 global and locale-context input."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
+          "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
+          "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_titlecase.rs",
+          "source_hash": "52f4631cc754fbc11461d86c7d2af97cc9385068bed71a8acf279c52a1163a72",
+          "summary": "Focused PTR tests cover global and context titlecasing across mixed case, punctuation, spacing, Turkish and Dutch locale cases, malformed UTF-8 policy, and earlier-retail absence. Proof commits 0081d03f0 and bd3d6a330."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_titlecase.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0081d03f0",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR LuaLocaleContext.ToTitle publication and modeled ICU 2.1.1 per-word titlecasing for valid UTF-8 using independently stored locale identifiers. Per-word segmentation, default titlecase options, locale-tag translation, malformed-input errors, MayReturnNothing conditions, Unicode-version equivalence, cstring embedded-NUL, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge semantics remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.ToUpper",
@@ -8779,7 +8843,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "6a04696123a1345d02512e5868298c39b91d1a0c7b7e905b0a3f524e1ab9ba70",
+          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
           "summary": "Focused PTR tests establish locale-context ICU 2.1.1 uppercase behavior for valid UTF-8 using independently stored locale identifiers."
         },
         {
@@ -8791,13 +8855,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "36d1dfcf9a5fd938b0747f97b75f473b1d6dacfbca34264b45d93c8518aae6bd",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "69d7c243a85210e3a17a9c1de64a65f4e6f615148107ce2eb14ed118905dda2a",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {

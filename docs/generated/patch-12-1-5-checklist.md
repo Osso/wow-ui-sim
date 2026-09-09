@@ -27,7 +27,7 @@
 27. [evidence-required] `added:C_Intl.ParseNumber` — unsafe
 28. [evidence-required] `added:C_Intl.SelectPlural` — unsafe
 29. [best-effort] `added:C_Intl.ToLower` — behavioral
-30. [evidence-required] `added:C_Intl.ToTitle` — unsafe
+30. [best-effort] `added:C_Intl.ToTitle` — behavioral
 31. [best-effort] `added:C_Intl.ToUpper` — behavioral
 32. [evidence-required] `added:C_Intl.TransformLocale` — unsafe
 33. [evidence-required] `added:C_Intl.Transliterate` — unsafe
@@ -210,7 +210,7 @@
 210. [evidence-required] `added:LuaLocaleContext.SelectPlural` — unsafe
 211. [best-effort] `added:LuaLocaleContext.SetLocale` — behavioral
 212. [best-effort] `added:LuaLocaleContext.ToLower` — behavioral
-213. [evidence-required] `added:LuaLocaleContext.ToTitle` — unsafe
+213. [best-effort] `added:LuaLocaleContext.ToTitle` — behavioral
 214. [best-effort] `added:LuaLocaleContext.ToUpper` — behavioral
 215. [evidence-required] `added:LuaLocaleContext.TransformLocale` — unsafe
 216. [evidence-required] `added:RequiresTimedSignalMapAccess` — unsafe
