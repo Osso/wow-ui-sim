@@ -32,20 +32,6 @@ fn read_form(state: &LuaState) -> LuaResult<Form> {
     }
 }
 
-fn read_text(state: &LuaState) -> LuaResult<String> {
-    let Val::Str(reference) = stack_val(state, 1) else {
-        return Err(runtime_error("normalization text must be a string"));
-    };
-    let bytes = state
-        .gc
-        .string_arena
-        .get(reference)
-        .ok_or_else(|| runtime_error("normalization text has been collected"))?;
-    std::str::from_utf8(bytes.data())
-        .map(str::to_owned)
-        .map_err(|_| runtime_error("normalization text must be valid UTF-8"))
-}
-
 fn normalize_text(text: &str, form: Form) -> String {
     match form {
         Form::Nfc => ComposingNormalizerBorrowed::new_nfc()
@@ -73,7 +59,7 @@ fn text_is_normalized(text: &str, form: Form) -> bool {
 }
 
 fn normalize(state: &mut LuaState) -> LuaResult<u32> {
-    let text = read_text(state)?;
+    let text = super::text::read_text(state, 1, "normalization")?;
     let form = read_form(state)?;
     let result = normalize_text(&text, form);
     let value = state.gc.intern_string(result.as_bytes());
@@ -82,7 +68,7 @@ fn normalize(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_normalized(state: &mut LuaState) -> LuaResult<u32> {
-    let text = read_text(state)?;
+    let text = super::text::read_text(state, 1, "normalization")?;
     let form = read_form(state)?;
     state.push(Val::Bool(text_is_normalized(&text, form)));
     Ok(1)

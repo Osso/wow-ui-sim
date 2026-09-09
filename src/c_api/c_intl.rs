@@ -1,6 +1,8 @@
 //! Locale storage and PTR Unicode normalization; no locale formatting algorithms.
 #[cfg(feature = "retail-12-1-5")]
 mod normalization;
+#[cfg(feature = "retail-12-1-5")]
+mod text;
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
@@ -35,6 +37,7 @@ mod storage {
         let namespace = crate::c_api::ensure_namespace(state, "C_Intl")?;
         table_set_rust_fn_static(state, namespace, "CreateLocaleContext", create)?;
         table_set_rust_fn_static(state, namespace, "GetCurrentLocale", current_locale)?;
+        table_set_rust_fn_static(state, namespace, "Length", length)?;
         super::normalization::register(state, namespace)
     }
 
@@ -64,6 +67,7 @@ mod storage {
         let metatable = rilua::stdlib::new_metatable(state, "LuaLocaleContext")?;
         table_set_rust_fn_static(state, metatable, "GetLocale", get_locale)?;
         table_set_rust_fn_static(state, metatable, "SetLocale", set_locale)?;
+        table_set_rust_fn_static(state, metatable, "Length", context_length)?;
         table_set_static(
             state,
             Val::Table(metatable),
@@ -106,6 +110,15 @@ mod storage {
         }
         state.push(Val::Bool(valid));
         Ok(1)
+    }
+
+    fn length(state: &mut LuaState) -> LuaResult<u32> {
+        super::text::push_length(state, 1)
+    }
+
+    fn context_length(state: &mut LuaState) -> LuaResult<u32> {
+        context(state)?;
+        super::text::push_length(state, 2)
     }
 
     fn current_locale(state: &mut LuaState) -> LuaResult<u32> {

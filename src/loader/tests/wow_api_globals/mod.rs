@@ -31,6 +31,8 @@ mod patch_12_1_5_fragment_id_enums;
 mod patch_12_1_5_housing_result_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_enums;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_intl_length;
 mod patch_12_1_5_intl_normalization;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_locale_context;
