@@ -106,16 +106,16 @@ fn finite_arg(state: &mut LuaState, index: i32) -> LuaResult<f64> {
 }
 
 fn validate(timing: Timing) -> LuaResult<Timing> {
-    if timing.base < 0.0
-        || !timing.base.is_finite()
-        || timing.rate <= 0.0
-        || !timing.rate.is_finite()
-    {
+    let duration_is_valid = timing.base.is_finite() && timing.base >= 0.0;
+    let rate_is_valid = timing.rate.is_finite() && timing.rate > 0.0;
+    if !duration_is_valid || !rate_is_valid {
         return Err(rilua::runtime_error(
             "duration must be nonnegative and rate must be positive and finite",
         ));
     }
-    if !timing.start.is_finite() || !timing.span().is_finite() || !timing.end().is_finite() {
+    let endpoints_are_finite =
+        timing.start.is_finite() && timing.span().is_finite() && timing.end().is_finite();
+    if !endpoints_are_finite {
         return Err(rilua::runtime_error("duration endpoints must be finite"));
     }
     Ok(timing)

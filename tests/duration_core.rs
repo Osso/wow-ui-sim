@@ -83,4 +83,3 @@ fn duration_core_default_clock_and_instances() {
         assert(d:GetElapsedDuration() >= 10)
     "#).unwrap();
 }
-
