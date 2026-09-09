@@ -11,6 +11,16 @@ fn cooldown_consumes_real_duration_proxy_and_updates() {
         cd:SetCooldownFromDurationObject(d)
         local start, total = cd:GetCooldownTimes()
         assert(start == 10 and total == 10)
+        CooldownDurationProbe = d
+    "#).unwrap();
+    {
+        let state = env.state().borrow();
+        let id = state.widgets.get_id_by_name("DurationProxyCooldown").unwrap();
+        assert_eq!(state.widgets.get(id).unwrap().cooldown_mod_rate, 2.0);
+    }
+    env.exec(r#"
+        local d = CooldownDurationProbe
+        local cd = DurationProxyCooldown
         d:SetTimeFromStart(30, 12, 3)
         cd:SetCooldownFromDurationObject(d)
         start, total = cd:GetCooldownTimes()
