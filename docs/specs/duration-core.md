@@ -4,12 +4,12 @@ Ordinary clock-driven duration state for the existing Lua table proxy in `src/lu
 
 ## What it must do
 
-- [ ] Preserve table-proxy identity, hidden metatable, method names, and current profile publication; instances hold independent timing state.
-- [ ] Configure start/base-duration/rate with `SetTimeFromStart`; configure the equivalent interval from its end with `SetTimeFromEnd`; configure an unmodified interval with `SetTimeSpan`.
-- [ ] Query endpoints, total, elapsed, remaining, rate, and zero/activity status consistently while a bound manual clock advances or rewinds.
-- [ ] Use simulator elapsed time (the `GetTime` time source) for an unbound clock and `C_DurationUtil.GetCurrentTime`.
-- [ ] Reset timing/rate without changing the selected clock; `SetToDefaults` also clears that clock binding.
-- [ ] Reject nonfinite endpoints/durations/rates, negative durations, reversed spans, nonpositive rates, and overflowed derived intervals before changing timing state.
+- [x] Preserve table-proxy identity, hidden metatable, method names, and current profile publication; instances hold independent timing state.
+- [x] Configure start/base-duration/rate with `SetTimeFromStart`; configure the equivalent interval from its end with `SetTimeFromEnd`; configure an unmodified interval with `SetTimeSpan`.
+- [x] Query endpoints, total, elapsed, remaining, rate, and zero/activity status consistently while a bound manual clock advances or rewinds.
+- [x] Use simulator elapsed time (the `GetTime` time source) for an unbound clock and `C_DurationUtil.GetCurrentTime`.
+- [x] Reset timing/rate without changing the selected clock; `SetToDefaults` also clears that clock binding.
+- [x] Reject tested nonfinite endpoints/durations, negative durations, reversed spans, and zero rates before changing timing state. Additional overflow/nonfinite-rate rejection is implemented but not separately proven.
 
 ### Chosen formulas — native-unverified
 
@@ -36,10 +36,14 @@ Store start `s`, base duration `D >= 0`, and finite rate `r > 0`. Real span `T =
 - `tests/duration_core.rs`: manual progression/rewind, rate modifiers, end/span configuration, reset, atomic validation, default time source, independent instances.
 - Existing `tests/cooldown_widget.rs` and duration-text-binding tests: bounded consumer regression checks; these do not establish native core formulas.
 
+Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
+
 ## Known gaps (current cycle)
 
 - [ ] Native rate/modifier, endpoint, zero-state, reset, validation, and clock-binding semantics require real-client evidence.
 - [ ] Cooldown `SetCooldownFromDurationObject` reads methods with raw table lookup; the duration proxy supplies them through `__index`. Real-proxy consumption fails although standalone timing queries work. Consumer correction belongs to a separate slice.
+
+- [ ] Existing `test_patch_12_1_duration_binding_reference_lifetime_and_identity` expects a table from the separate duration-text-binding factory and fails with `type`; the core preserves its own table identity. Existing AuraContainer binding integration fails with `expected forbidden object reference`. Neither consumer boundary is changed here.
 
 ## Out of scope
 
