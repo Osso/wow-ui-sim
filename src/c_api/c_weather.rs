@@ -5,9 +5,9 @@ use rilua::vm::state::LuaState;
 #[cfg(feature = "retail-12-1-5")]
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table_with_fields};
 #[cfg(feature = "retail-12-1-5")]
-use crate::lua_bridge::{runtime_error, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 #[cfg(feature = "retail-12-1-5")]
-use rilua::Val;
+use rilua::{Val, runtime_error};
 
 /// Clear/zero is the simulator's initial state, not an observed native default.
 #[cfg(feature = "retail-12-1-5")]
@@ -26,7 +26,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 #[cfg(not(feature = "retail-12-1-5"))]
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let absent = super::ensure_namespace(state, "__wow_absent_namespaces")?;
-    crate::lua_bridge::table_set_static(
+    crate::lua_api::methods::table_set_static(
         state,
         rilua::Val::Table(absent),
         "C_Weather",
