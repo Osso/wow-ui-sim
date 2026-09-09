@@ -4,10 +4,10 @@ PTR `C_Intl.TransformLocale(transform)` and `LuaLocaleContext:TransformLocale(tr
 
 ## What it must do
 
-- [ ] Support all eight LocaleTransform values using ICU canonicalization and likely-subtag expansion/minimization.
-- [ ] Preserve opaque context identifiers and extensions during canonicalization/expansion/minimization; emit BCP-47 serialization.
-- [ ] Return language/script/region/variants; missing optional components return empty strings.
-- [ ] Preserve earlier-retail absence and reject malformed identifiers/invalid operations without fallback.
+- [x] Support all eight LocaleTransform values using ICU canonicalization and likely-subtag expansion/minimization.
+- [x] Preserve opaque context identifiers and extensions during canonicalization/expansion/minimization; emit BCP-47 serialization.
+- [x] Return language/script/region/variants; missing optional components return empty strings.
+- [x] Preserve earlier-retail absence and reject malformed identifiers/invalid operations without fallback.
 
 ### Simulator assumptions
 
@@ -26,6 +26,7 @@ Four-letter alphabetic WoW tags are translated to language-region only during tr
 ## Tests asserting this spec
 
 - `src/loader/tests/wow_api_globals/patch_12_1_5_intl_transform.rs`
+- Focused `intl_` library suite: 14 PTR and 7 retail tests passed after `15a52023b`; logs `/tmp/intl-transform-green-{ptr,retail}.log`.
 
 ## Known gaps (current cycle)
 
