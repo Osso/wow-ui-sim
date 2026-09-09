@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR FragmentID publication
+
+Commit `5e5e46dd9` resolves 45 exact `Enum.FragmentID` rows as best-effort/behavioral: the changed parent enum, added `AuthMirrorState`, and 43 shifted members. Focused PTR proof derives and verifies the exact 78-member table plus `FragmentIDMeta` before and after the post-load bootstrap; focused earlier-retail proof preserves the exact prior table and metadata. Claims exclude gameplay meaning, consumers, validation, coercion, security/taint/secret/protected/forbidden behavior, invalid inputs, and native edges. Totals: 74 best-effort, 375 evidence-required, and 0 untriaged rows.
+
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
 Added [[patch-12-1-5-api-audit]], [[patch-12-1-5-occurrence-inventory]], `data/patch-api/12.1.5.json`, and the generated checklist for the pinned 449-row `12.1.0.69587` → `12.1.5.69594` documentation delta. Commit `1d11c0176` provides eight focused PTR table-extension tests, moving those rows to best-effort behavioral proof; Commit `240c662d0` credits 11 math rows, `ac3ac03ac` credits five PTR enum-publication rows, `ac40ca2cd` removes PTR publication of `C_TableUtil.FindIndexedMismatch`, and `f0ae4a96a` credits `table.getcountinfo` and `table.create`, bringing totals to 27 best-effort and 422 evidence-required; none are untriaged.

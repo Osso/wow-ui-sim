@@ -3568,24 +3568,51 @@
       "id": "added:Enum.FragmentID.AuthMirrorState",
       "symbol": "Enum.FragmentID.AuthMirrorState",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "PTR proof publishes AuthMirrorState = 1 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail omits AuthMirrorState. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.HousingResult.MessageTooLong",
@@ -7042,1013 +7069,2201 @@
       "id": "changed:Enum.FragmentID",
       "symbol": "Enum.FragmentID",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes the exact 78-member FragmentID table with MinValue 0, MaxValue 255, and NumValues 78 before and after post-load bootstrap; earlier retail preserves its exact prior table and metadata, including FMapObject = 256 and FWorldStateListenerData = 257. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.Actor",
       "symbol": "Enum.FragmentID.Actor",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes Actor = 16 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves Actor = 15. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.CgObject",
       "symbol": "Enum.FragmentID.CgObject",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes CgObject = 3 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves CgObject = 2. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.ClientObservablesData",
       "symbol": "Enum.FragmentID.ClientObservablesData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes ClientObservablesData = 7 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves ClientObservablesData = 6. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.DeferredMessages",
       "symbol": "Enum.FragmentID.DeferredMessages",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes DeferredMessages = 10 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves DeferredMessages = 9. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.EntityPosition",
       "symbol": "Enum.FragmentID.EntityPosition",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes EntityPosition = 2 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves EntityPosition = 1. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingDecor",
       "symbol": "Enum.FragmentID.FHousingDecor",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingDecor = 21 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingDecor = 20. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingDecorActor",
       "symbol": "Enum.FragmentID.FHousingDecorActor",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingDecorActor = 29 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingDecorActor = 28. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingDecorProxy",
       "symbol": "Enum.FragmentID.FHousingDecorProxy",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingDecorProxy = 27 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingDecorProxy = 26. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingFixture",
       "symbol": "Enum.FragmentID.FHousingFixture",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingFixture = 35 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingFixture = 34. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingHouseDecorSet",
       "symbol": "Enum.FragmentID.FHousingHouseDecorSet",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingHouseDecorSet = 25 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingHouseDecorSet = 24. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingHouseFixtureSet",
       "symbol": "Enum.FragmentID.FHousingHouseFixtureSet",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingHouseFixtureSet = 36 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingHouseFixtureSet = 35. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingHouseRoomSet",
       "symbol": "Enum.FragmentID.FHousingHouseRoomSet",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingHouseRoomSet = 26 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingHouseRoomSet = 25. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingPlayerHouse",
       "symbol": "Enum.FragmentID.FHousingPlayerHouse",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingPlayerHouse = 24 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingPlayerHouse = 23. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingPlotAreaTrigger",
       "symbol": "Enum.FragmentID.FHousingPlotAreaTrigger",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingPlotAreaTrigger = 30 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingPlotAreaTrigger = 29. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingRoom",
       "symbol": "Enum.FragmentID.FHousingRoom",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingRoom = 22 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingRoom = 21. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingRoomComponentMesh",
       "symbol": "Enum.FragmentID.FHousingRoomComponentMesh",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingRoomComponentMesh = 23 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingRoomComponentMesh = 22. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FHousingStorageMirrorData",
       "symbol": "Enum.FragmentID.FHousingStorageMirrorData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FHousingStorageMirrorData = 34 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FHousingStorageMirrorData = 33. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FJamHousingCornerstone",
       "symbol": "Enum.FragmentID.FJamHousingCornerstone",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FJamHousingCornerstone = 28 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FJamHousingCornerstone = 27. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FLootObjectList",
       "symbol": "Enum.FragmentID.FLootObjectList",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FLootObjectList = 13 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FLootObjectList = 12. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FMapObject",
       "symbol": "Enum.FragmentID.FMapObject",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FMapObject = 44 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FMapObject = 43. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FMeshObjectData",
       "symbol": "Enum.FragmentID.FMeshObjectData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FMeshObjectData = 20 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FMeshObjectData = 19. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FMirroredPositionData",
       "symbol": "Enum.FragmentID.FMirroredPositionData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FMirroredPositionData = 32 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FMirroredPositionData = 31. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FNeighborhoodMirrorData",
       "symbol": "Enum.FragmentID.FNeighborhoodMirrorData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FNeighborhoodMirrorData = 31 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FNeighborhoodMirrorData = 30. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FNeighborhoodStateData",
       "symbol": "Enum.FragmentID.FNeighborhoodStateData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FNeighborhoodStateData = 39 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FNeighborhoodStateData = 38. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPathingDoor",
       "symbol": "Enum.FragmentID.FPathingDoor",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPathingDoor = 42 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPathingDoor = 41. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPathingDynamicLinks",
       "symbol": "Enum.FragmentID.FPathingDynamicLinks",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPathingDynamicLinks = 41 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPathingDynamicLinks = 40. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPersistableJamServers",
       "symbol": "Enum.FragmentID.FPersistableJamServers",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPersistableJamServers = 11 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPersistableJamServers = 10. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPhaseShiftData",
       "symbol": "Enum.FragmentID.FPhaseShiftData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPhaseShiftData = 17 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPhaseShiftData = 16. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPlayerHouseInfo",
       "symbol": "Enum.FragmentID.FPlayerHouseInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPlayerHouseInfo = 33 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPlayerHouseInfo = 32. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPlayerInitiativeInfo",
       "symbol": "Enum.FragmentID.FPlayerInitiativeInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPlayerInitiativeInfo = 38 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPlayerInitiativeInfo = 37. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPlayerJamServers",
       "symbol": "Enum.FragmentID.FPlayerJamServers",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPlayerJamServers = 12 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPlayerJamServers = 11. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FPlayerOwnershipLink",
       "symbol": "Enum.FragmentID.FPlayerOwnershipLink",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FPlayerOwnershipLink = 14 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FPlayerOwnershipLink = 13. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FTransportLink",
       "symbol": "Enum.FragmentID.FTransportLink",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FTransportLink = 6 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FTransportLink = 5. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FUnitAIGroupLink",
       "symbol": "Enum.FragmentID.FUnitAIGroupLink",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FUnitAIGroupLink = 40 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FUnitAIGroupLink = 39. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FUnitAreaTriggerLink",
       "symbol": "Enum.FragmentID.FUnitAreaTriggerLink",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FUnitAreaTriggerLink = 15 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FUnitAreaTriggerLink = 14. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FVendor",
       "symbol": "Enum.FragmentID.FVendor",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FVendor = 18 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FVendor = 17. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.FWorldStateListenerData",
       "symbol": "Enum.FragmentID.FWorldStateListenerData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes FWorldStateListenerData = 43 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves FWorldStateListenerData = 42. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.HeartbeatData",
       "symbol": "Enum.FragmentID.HeartbeatData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes HeartbeatData = 5 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves HeartbeatData = 4. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.JamDispatcher",
       "symbol": "Enum.FragmentID.JamDispatcher",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes JamDispatcher = 4 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves JamDispatcher = 3. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.MirroredObjectC",
       "symbol": "Enum.FragmentID.MirroredObjectC",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes MirroredObjectC = 19 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves MirroredObjectC = 18. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.Timer",
       "symbol": "Enum.FragmentID.Timer",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes Timer = 37 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves Timer = 36. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.TimerQueues",
       "symbol": "Enum.FragmentID.TimerQueues",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes TimerQueues = 8 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves TimerQueues = 7. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.FragmentID.TransferSuspensionData",
       "symbol": "Enum.FragmentID.TransferSuspensionData",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact enum occurrence contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/fragment_id.lua",
+          "source_hash": "f734fc53f55c8c86e705699ed47512dabfc9bc4bc4bc90693c08211592cf4e1f",
+          "summary": "PTR-only Lua publication replaces FragmentID with the exact 78-member target map and FragmentIDMeta values."
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "source_hash": "843e7253c48c71eef1533a2ee99d42d946a470245fc3fc4339a0e074f36fc0bd",
+          "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused PTR proof derives the 78-member target table from the frozen register and verifies exact table publication plus FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail",
+          "source_hash": "06917cc6a3881841290a3ef3384e1accd95d5f737545254f14e02843058fe99a",
+          "summary": "Focused earlier-retail proof verifies the exact prior table and FragmentIDMeta before and after post-load bootstrap. Proof commit 5e5e46dd9."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_fragment_id_enums.rs::patch_12_1_5_fragment_id_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5e5e46dd9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR proof publishes TransferSuspensionData = 9 in the exact 78-member FragmentID table before and after post-load bootstrap; earlier retail preserves TransferSuspensionData = 8. Proof is limited to exact Lua enum publication, numeric values, PTR gating, earlier-retail preservation, and metadata; gameplay meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult",

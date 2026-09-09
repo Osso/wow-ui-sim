@@ -1,6 +1,6 @@
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
-[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commit `1d11c0176` upgrades eight PTR table-extension rows to best-effort behavioral proof; Commit `240c662d0` credits 11 math rows, `ac3ac03ac` credits five PTR enum-publication rows, `ac40ca2cd` removes PTR publication of `C_TableUtil.FindIndexedMismatch`, and `f0ae4a96a` credits `table.getcountinfo` and `table.create`, bringing totals to 27 best-effort and 422 evidence-required; this is not runtime acceptance.
+[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commit `5e5e46dd9` credits the exact PTR-only `Enum.FragmentID` table, shifted member values, and metadata while preserving earlier retail; totals are 74 best-effort and 375 evidence-required. This is not runtime acceptance.
 
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 
