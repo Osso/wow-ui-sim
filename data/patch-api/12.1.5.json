@@ -4899,18 +4899,18 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
           "summary": "Focused PTR proof verifies Common = 1, Uncommon = 2, Rare = 3, Epic = 4, EpicTier2 = 5, and CurioRarity metadata 1/5/5. Proof commit 867bcc8ea.",
-          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
+          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
         },
         {
           "kind": "test",
-          "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_curio_rarity.rs::test_patch_12_1_5_curio_rarity_preserves_retail",
           "summary": "Focused earlier-retail proof verifies the four-value base map, EpicTier2 absence, count 4, and CurioRarity metadata 1/4/4. Proof commit 867bcc8ea.",
-          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
+          "source_hash": "27c54aefeacb059958e5ff31082275b0b8702c8ce1da065c4c102d732033dd0c"
         }
       ],
       "tests": [
         "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
-        "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail"
+        "src/loader/tests/wow_api_globals/patch_12_1_5_curio_rarity.rs::test_patch_12_1_5_curio_rarity_preserves_retail"
       ],
       "assertions": [],
       "commit": "867bcc8ea",
@@ -8767,18 +8767,18 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
           "summary": "Focused PTR proof verifies Common = 1, Uncommon = 2, Rare = 3, Epic = 4, EpicTier2 = 5, and CurioRarity metadata 1/5/5. Proof commit 867bcc8ea.",
-          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
+          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
         },
         {
           "kind": "test",
-          "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_curio_rarity.rs::test_patch_12_1_5_curio_rarity_preserves_retail",
           "summary": "Focused earlier-retail proof verifies the four-value base map, EpicTier2 absence, count 4, and CurioRarity metadata 1/4/4. Proof commit 867bcc8ea.",
-          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
+          "source_hash": "27c54aefeacb059958e5ff31082275b0b8702c8ce1da065c4c102d732033dd0c"
         }
       ],
       "tests": [
         "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
-        "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail"
+        "src/loader/tests/wow_api_globals/patch_12_1_5_curio_rarity.rs::test_patch_12_1_5_curio_rarity_preserves_retail"
       ],
       "assertions": [],
       "commit": "867bcc8ea",
