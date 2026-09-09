@@ -1,3 +1,15 @@
+## [2026-09-09] audit | Credit PTR duration core simulator behavior
+
+`9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` credit manual-clock advance/rewind and duration start/end plus elapsed/remaining/total queries as bounded simulator behavior. [[duration-core]] preserves native timing, type identity, security, and forbidden behavior as unresolved.
+
+## [2026-09-09] system | Model bounded duration core
+
+`9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` model ordinary clock-driven `LuaDurationObject` state and repair ordinary cooldown duration-proxy consumption through Lua indexing. [[duration-core]] separates simulator formulas from unproven native timing and security behavior.
+
+## [2026-09-09] audit | Credit PTR duration core behavior
+
+Seven changed duration rows are now bounded best-effort simulator behavior: manual advance/rewind plus start/end configuration and elapsed/remaining/total queries. Focused duration-core tests cover ordinary state; native `Seconds`, rate/modifier, clock/reset/zero, coercion, secret, protected, and forbidden behavior remains unclaimed.
+
 ## [2026-09-09] audit | Credit PTR region rounding controls
 
 `fd2ab64d6` supplies client-retail method-absence coverage for Frame, Texture, and FontString; existing `pixel_rounding_probe` capture replay establishes the PTR flag/default/dirty-layout and captured geometry behavior. `SimpleScriptRegion.GetRoundLayoutToNearestPixel` and `.SetRoundLayoutToNearestPixel` are best-effort simulator behavior only. Protected/secret enforcement, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native edges remain unresolved.

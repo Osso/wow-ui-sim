@@ -1,3 +1,15 @@
+## [2026-09-09] audit | Credit PTR duration core simulator behavior
+
+`9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` credit seven changed duration rows for manual-clock advance/rewind plus ordinary start/end configuration and elapsed/remaining/total queries. [[duration-core]] documents the modeled formulas and cooldown proxy boundary; native timing, type identity, security, and forbidden behavior remain unclaimed.
+
+## [2026-09-09] system | Model bounded duration core
+
+`9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` model ordinary clock-driven `LuaDurationObject` state and make cooldown duration-proxy transfer work through Lua indexing. [[duration-core]] records simulator formulas and remaining unproven timing, security, binding, and forbidden-object boundaries.
+
+## [2026-09-09] audit | Credit PTR duration core behavior
+
+[[patch-12-1-5-api-audit]] credits seven changed duration rows for focused manual/default-clock progression, rewind, endpoint, reset, and validation behavior. The `Seconds` migration, rate/modifier formulas, default clock, reset, zero state, validation, and native security semantics remain simulator assumptions or unclaimed.
+
 ## [2026-09-09] audit | Credit PTR region rounding controls
 
 `fd2ab64d6` adds earlier-retail absence proof for `GetRoundLayoutToNearestPixel` and `SetRoundLayoutToNearestPixel`; existing capture-replay tests prove the PTR per-region flag, dirty layout updates, and received geometry fixture for Frame, Texture, and FontString. [[patch-12-1-5-api-audit]] credits simulator behavior only: protected/secret enforcement, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native edges remain unclaimed. See [pixel layout rounding](../specs/pixel-layout-rounding.md) and [[ptr-pixel-rounding-probe]].

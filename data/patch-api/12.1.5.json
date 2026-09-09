@@ -15087,7 +15087,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "5b7900952fe48df6bf569f9e46a3533664cb9c8cbea78d0e6673e3a5daaad3cd",
+          "source_hash": "2a694056d4dfda28ade2a6de19454bdd719b84fac588ffa417eae942f6a7946a",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -15130,7 +15130,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "5b7900952fe48df6bf569f9e46a3533664cb9c8cbea78d0e6673e3a5daaad3cd",
+          "source_hash": "2a694056d4dfda28ade2a6de19454bdd719b84fac588ffa417eae942f6a7946a",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -15334,7 +15334,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "5b7900952fe48df6bf569f9e46a3533664cb9c8cbea78d0e6673e3a5daaad3cd",
+          "source_hash": "2a694056d4dfda28ade2a6de19454bdd719b84fac588ffa417eae942f6a7946a",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -15386,162 +15386,302 @@
       "id": "changed:LuaDurationManualClock.AdvanceTime",
       "symbol": "LuaDurationManualClock.AdvanceTime",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed duration contract and legacy duration type to Seconds migration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
+          "source_hash": "d1bb130d03d58e3bda486512b70cd68cac07e79849741a3ce16583cdf654be10"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
+          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+          "summary": "Focused manual-clock proof advances a bound clock and observes duration state before, during, after, and after rewind. Proof commit 5149f5d46.",
+          "source_hash": "bbe5f67d37ecab36421d42f4a1703802a5d42866e9709e8e74a28961e5476bd5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5149f5d46",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator proof covers clock-driven numeric state and the documented profile publication. Rate/modifier formulas, default-clock behavior, reset, zero-state, validation, Seconds/FrameTime identity, secret/taint/protected/forbidden behavior, coercion, invalid inputs, and native-edge semantics remain simulator assumptions or unclaimed unless directly covered by the duration-core spec and tests."
     },
     {
       "id": "changed:LuaDurationManualClock.RewindTime",
       "symbol": "LuaDurationManualClock.RewindTime",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed duration contract and legacy duration type to Seconds migration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
+          "source_hash": "d1bb130d03d58e3bda486512b70cd68cac07e79849741a3ce16583cdf654be10"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
+          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+          "summary": "Focused manual-clock proof rewinds a bound clock and observes duration state return to active. Proof commit 5149f5d46.",
+          "source_hash": "bbe5f67d37ecab36421d42f4a1703802a5d42866e9709e8e74a28961e5476bd5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5149f5d46",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator proof covers clock-driven numeric state and the documented profile publication. Rate/modifier formulas, default-clock behavior, reset, zero-state, validation, Seconds/FrameTime identity, secret/taint/protected/forbidden behavior, coercion, invalid inputs, and native-edge semantics remain simulator assumptions or unclaimed unless directly covered by the duration-core spec and tests."
     },
     {
       "id": "changed:LuaDurationObject.GetElapsedDuration",
       "symbol": "LuaDurationObject.GetElapsedDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed duration contract and legacy duration type to Seconds migration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
+          "source_hash": "d1bb130d03d58e3bda486512b70cd68cac07e79849741a3ce16583cdf654be10"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
+          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+          "summary": "Focused duration proof observes elapsed duration across manual-clock progression and rewind. Proof commit 5149f5d46.",
+          "source_hash": "bbe5f67d37ecab36421d42f4a1703802a5d42866e9709e8e74a28961e5476bd5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5149f5d46",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator proof covers clock-driven numeric state and the documented profile publication. Rate/modifier formulas, default-clock behavior, reset, zero-state, validation, Seconds/FrameTime identity, secret/taint/protected/forbidden behavior, coercion, invalid inputs, and native-edge semantics remain simulator assumptions or unclaimed unless directly covered by the duration-core spec and tests."
     },
     {
       "id": "changed:LuaDurationObject.GetRemainingDuration",
       "symbol": "LuaDurationObject.GetRemainingDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed duration contract and legacy duration type to Seconds migration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
+          "source_hash": "d1bb130d03d58e3bda486512b70cd68cac07e79849741a3ce16583cdf654be10"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
+          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+          "summary": "Focused duration proof observes remaining duration across manual-clock progression and rewind. Proof commit 5149f5d46.",
+          "source_hash": "bbe5f67d37ecab36421d42f4a1703802a5d42866e9709e8e74a28961e5476bd5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5149f5d46",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator proof covers clock-driven numeric state and the documented profile publication. Rate/modifier formulas, default-clock behavior, reset, zero-state, validation, Seconds/FrameTime identity, secret/taint/protected/forbidden behavior, coercion, invalid inputs, and native-edge semantics remain simulator assumptions or unclaimed unless directly covered by the duration-core spec and tests."
     },
     {
       "id": "changed:LuaDurationObject.GetTotalDuration",
       "symbol": "LuaDurationObject.GetTotalDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed duration contract and legacy duration type to Seconds migration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
+          "source_hash": "d1bb130d03d58e3bda486512b70cd68cac07e79849741a3ce16583cdf654be10"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
+          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+          "summary": "Focused duration proof observes total duration and the modeled BaseTime modifier. Proof commit 5149f5d46.",
+          "source_hash": "bbe5f67d37ecab36421d42f4a1703802a5d42866e9709e8e74a28961e5476bd5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5149f5d46",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator proof covers clock-driven numeric state and the documented profile publication. Rate/modifier formulas, default-clock behavior, reset, zero-state, validation, Seconds/FrameTime identity, secret/taint/protected/forbidden behavior, coercion, invalid inputs, and native-edge semantics remain simulator assumptions or unclaimed unless directly covered by the duration-core spec and tests."
     },
     {
       "id": "changed:LuaDurationObject.SetTimeFromEnd",
       "symbol": "LuaDurationObject.SetTimeFromEnd",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed duration contract and legacy duration type to Seconds migration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
+          "source_hash": "d1bb130d03d58e3bda486512b70cd68cac07e79849741a3ce16583cdf654be10"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
+          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+          "summary": "Focused duration proof configures an interval from its end and observes endpoints, remaining time, reset, and validation atomicity. Proof commit 5149f5d46.",
+          "source_hash": "bbe5f67d37ecab36421d42f4a1703802a5d42866e9709e8e74a28961e5476bd5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5149f5d46",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator proof covers clock-driven numeric state and the documented profile publication. Rate/modifier formulas, default-clock behavior, reset, zero-state, validation, Seconds/FrameTime identity, secret/taint/protected/forbidden behavior, coercion, invalid inputs, and native-edge semantics remain simulator assumptions or unclaimed unless directly covered by the duration-core spec and tests."
     },
     {
       "id": "changed:LuaDurationObject.SetTimeFromStart",
       "symbol": "LuaDurationObject.SetTimeFromStart",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed duration contract and legacy duration type to Seconds migration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
+          "source_hash": "d1bb130d03d58e3bda486512b70cd68cac07e79849741a3ce16583cdf654be10"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
+          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+          "summary": "Focused duration proof configures start, duration, and rate and observes endpoints plus state queries. Proof commit 5149f5d46.",
+          "source_hash": "bbe5f67d37ecab36421d42f4a1703802a5d42866e9709e8e74a28961e5476bd5"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "5149f5d46",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator proof covers clock-driven numeric state and the documented profile publication. Rate/modifier formulas, default-clock behavior, reset, zero-state, validation, Seconds/FrameTime identity, secret/taint/protected/forbidden behavior, coercion, invalid inputs, and native-edge semantics remain simulator assumptions or unclaimed unless directly covered by the duration-core spec and tests."
     },
     {
       "id": "changed:SecondsFormatter.CanApproximate",

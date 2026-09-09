@@ -41,9 +41,8 @@ Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR a
 ## Known gaps (current cycle)
 
 - [ ] Native rate/modifier, endpoint, zero-state, reset, validation, and clock-binding semantics require real-client evidence.
-- [ ] Cooldown `SetCooldownFromDurationObject` reads methods with raw table lookup; the duration proxy supplies them through `__index`. Real-proxy consumption fails although standalone timing queries work. Consumer correction belongs to a separate slice.
-
-- [ ] Existing `test_patch_12_1_duration_binding_reference_lifetime_and_identity` expects a table from the separate duration-text-binding factory and fails with `type`; the core preserves its own table identity. Existing AuraContainer binding integration fails with `expected forbidden object reference`. Neither consumer boundary is changed here.
+- [ ] `SetCooldownFromDurationObject` now resolves duration-proxy methods through Lua indexing and ordinary proxy transfer/reset behavior is covered. Its new PTR protected-function contract, secret handling, `clearIfZero = false`, and forbidden-object behavior remain unproven.
+- [ ] Existing `test_patch_12_1_duration_binding_reference_lifetime_and_identity` expects a table from the separate duration-text-binding factory and fails with `type`; the core preserves its own table identity. Existing AuraContainer binding integration fails with `expected forbidden object reference`. These are separate consumer boundaries; this slice establishes no cause beyond their observed failures.
 
 ## Out of scope
 
