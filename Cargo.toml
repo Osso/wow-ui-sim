@@ -17,6 +17,8 @@ icu_locale_core = { version = "=2.1.1", default-features = false, features = ["a
 icu_locale = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
 icu_collator = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
 icu_normalizer = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+icu_plurals = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+fixed_decimal = { version = "=0.7.0", features = ["ryu"] }
 icu_segmenter = { version = "=2.1.1", default-features = false, features = ["compiled_data", "auto"] }
 # mlua removed — rilua is the sole Lua VM
 rilua = { git = "https://github.com/Osso/rilua.git", rev = "b6387563c8cd7882194cec368e626ebc72a17b81" }

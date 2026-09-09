@@ -41,6 +41,8 @@ mod patch_12_1_5_intl_enums;
 mod patch_12_1_5_intl_length;
 mod patch_12_1_5_intl_normalization;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_intl_plurals;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_titlecase;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_transform;

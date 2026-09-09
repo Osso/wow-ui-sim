@@ -8,6 +8,8 @@ mod collation;
 #[cfg(feature = "retail-12-1-5")]
 mod normalization;
 #[cfg(feature = "retail-12-1-5")]
+mod plurals;
+#[cfg(feature = "retail-12-1-5")]
 mod text;
 #[cfg(feature = "retail-12-1-5")]
 mod transform;
@@ -65,7 +67,8 @@ mod storage {
         super::casing::register(state, namespace)?;
         super::breaks::register(state, namespace)?;
         super::transform::register(state, namespace)?;
-        super::collation::register(state, namespace)
+        super::collation::register(state, namespace)?;
+        super::plurals::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
@@ -99,6 +102,7 @@ mod storage {
         super::breaks::register_context(state, metatable)?;
         super::transform::register_context(state, metatable)?;
         super::collation::register_context(state, metatable)?;
+        super::plurals::register_context(state, metatable)?;
         table_set_static(
             state,
             Val::Table(metatable),
