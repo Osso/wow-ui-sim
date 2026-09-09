@@ -509,6 +509,19 @@ fn put_action_in_slot(state: &mut LuaState) -> LuaResult<u32> {
     let Some(target) = stack_slot_at(state, 2) else {
         return push_bool(state, false);
     };
+    if !transfer_action_between_slots(state, source, target)? {
+        return push_bool(state, false);
+    }
+    fire_named_event_state(state, "ACTIONBAR_SLOT_CHANGED", &[Val::Num(source as f64)]);
+    fire_named_event_state(state, "ACTIONBAR_SLOT_CHANGED", &[Val::Num(target as f64)]);
+    push_bool(state, true)
+}
+
+fn transfer_action_between_slots(
+    state: &mut LuaState,
+    source: u32,
+    target: u32,
+) -> LuaResult<bool> {
     let moved_spell = {
         let mut sim = borrow_state_mut(state)?;
         sim.action_bars.remove(&source)
@@ -526,24 +539,26 @@ fn put_action_in_slot(state: &mut LuaState) -> LuaResult<u32> {
         sim.equipped_gear_outfit_action_slots.remove(&target);
     } else if let Some(outfit_id) = moved_outfit {
         let mut sim = borrow_state_mut(state)?;
-        let is_equipped_gear = sim.equipped_gear_outfit_action_slots.remove(&source);
-        crate::c_api::action_macros::clear_slot(&mut sim, target);
-        sim.action_outfits.insert(target, outfit_id);
-        if is_equipped_gear {
-            sim.equipped_gear_outfit_action_slots.insert(target);
-        } else {
-            sim.equipped_gear_outfit_action_slots.remove(&target);
-        }
+        transfer_outfit_action(&mut sim, source, target, outfit_id);
     } else if let Some(id) = moved_macro {
         let mut sim = borrow_state_mut(state)?;
         crate::c_api::action_macros::assign_macro(&mut sim, target, id)?;
         sim.equipped_gear_outfit_action_slots.remove(&source);
     } else {
-        return push_bool(state, false);
+        return Ok(false);
     }
-    fire_named_event_state(state, "ACTIONBAR_SLOT_CHANGED", &[Val::Num(source as f64)]);
-    fire_named_event_state(state, "ACTIONBAR_SLOT_CHANGED", &[Val::Num(target as f64)]);
-    push_bool(state, true)
+    Ok(true)
+}
+
+fn transfer_outfit_action(sim: &mut SimState, source: u32, target: u32, outfit_id: i64) {
+    let is_equipped_gear = sim.equipped_gear_outfit_action_slots.remove(&source);
+    crate::c_api::action_macros::clear_slot(sim, target);
+    sim.action_outfits.insert(target, outfit_id);
+    if is_equipped_gear {
+        sim.equipped_gear_outfit_action_slots.insert(target);
+    } else {
+        sim.equipped_gear_outfit_action_slots.remove(&target);
+    }
 }
 
 /// `C_ActionBar.ForceUpdateAction(slot)` — fires `ACTIONBAR_SLOT_CHANGED`
