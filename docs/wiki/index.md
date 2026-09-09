@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR locale scalar length
+
+`d491728e1` resolves `C_Intl.Length` and `LuaLocaleContext.Length` as bounded PTR simulator behavior. Focused tests count valid UTF-8 Unicode scalars independently of stored locale, reject malformed input and invalid receivers, and preserve earlier-retail absence. Scalar units and errors are simulator assumptions; byte, grapheme, UTF-16, cstring/NUL, security, and native behavior remain unclaimed. See [PTR text length](../specs/intl-length.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR locale scalar length
+
+[PTR text length](../specs/intl-length.md) records the shared strict UTF-8 path, locale-independent scalar-count model, profile boundary, and native-conformance exclusions.
+
 ## [2026-09-09] audit | Credit PTR ICU normalization
 
 `33ff9c993` resolves `C_Intl.Normalize` and `C_Intl.IsNormalized` as bounded PTR simulator behavior. ICU 2.1.1 covers tested NFC/NFD/NFKC/NFKD normalization and predicates for valid UTF-8; invalid input and one-result handling are simulator policy. Native Unicode version, cstring, security, coercion, and edge behavior remain unclaimed. See [[intl-normalization]] and [[patch-12-1-5-api-audit]].

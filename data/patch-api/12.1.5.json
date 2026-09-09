@@ -326,7 +326,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a"
         },
         {
           "kind": "test",
@@ -616,7 +616,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a"
         },
         {
           "kind": "test",
@@ -698,13 +698,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/normalization.rs",
-          "source_hash": "5e7424a066cc580e1326bdf89d4171d3545ccba724d293ff426d640f73e46ba9",
+          "source_hash": "d8a812830d6334f37d15e87abbf4f7e30a383a7852a659cb9661b7a5ec393728",
           "summary": "PTR C_Intl normalization validates UTF-8 and a four-form numeric selector, then delegates NFC/NFD/NFKC/NFKD operations and predicates to ICU normalizers."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb",
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -739,24 +739,46 @@
       "id": "added:C_Intl.Length",
       "symbol": "C_Intl.Length",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added C_Intl.Length declaration, cstring argument, numeric return, MayReturnNothing, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/text.rs",
+          "summary": "Shared text handling validates UTF-8 and pushes the Rust Unicode scalar count without converting the count through locale state.",
+          "source_hash": "f55bd879cb701e1292f7bee2ae8bc1b19d3e69881ca82a6e8d7c966ebd853bf7"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs",
+          "summary": "Focused PTR and earlier-retail tests cover publication, scalar counts for ASCII, composed/decomposed accents, emoji and ZWJ input, invalid UTF-8/nonstring and receiver errors, return arity, context independence, and absence. Proof commit d491728e1.",
+          "source_hash": "2dffcb94969b0ab553d4e7d62f3dd6727c77517d01cbfec60dd205105da7a424"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs::intl_length_counts_scalars_independent_of_locale",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs::intl_length_rejects_invalid_text_and_receivers",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs::intl_length_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "d491728e1",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR C_Intl.Length scalar-count behavior independent of locale, with strict UTF-8 and string validation. Unicode scalar counting and explicit errors are simulator assumptions; byte, grapheme, UTF-16, cstring/NUL, MayReturnNothing, secret/taint, coercion, and native-edge semantics remain unclaimed."
     },
     {
       "id": "added:C_Intl.Normalize",
@@ -776,13 +798,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/normalization.rs",
-          "source_hash": "5e7424a066cc580e1326bdf89d4171d3545ccba724d293ff426d640f73e46ba9",
+          "source_hash": "d8a812830d6334f37d15e87abbf4f7e30a383a7852a659cb9661b7a5ec393728",
           "summary": "PTR C_Intl normalization validates UTF-8 and a four-form numeric selector, then delegates NFC/NFD/NFKC/NFKD operations and predicates to ICU normalizers."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb",
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -8051,7 +8073,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a"
         },
         {
           "kind": "test",
@@ -8341,7 +8363,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a"
         },
         {
           "kind": "test",
@@ -8386,24 +8408,46 @@
       "id": "added:LuaLocaleContext.Length",
       "symbol": "LuaLocaleContext.Length",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added LuaLocaleContext.Length declaration, cstring argument, numeric return, MayReturnNothing, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/text.rs",
+          "summary": "Shared text handling validates UTF-8 and pushes the Rust Unicode scalar count without converting the count through locale state.",
+          "source_hash": "f55bd879cb701e1292f7bee2ae8bc1b19d3e69881ca82a6e8d7c966ebd853bf7"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs",
+          "summary": "Focused PTR and earlier-retail tests cover publication, scalar counts for ASCII, composed/decomposed accents, emoji and ZWJ input, invalid UTF-8/nonstring and receiver errors, return arity, context independence, and absence. Proof commit d491728e1.",
+          "source_hash": "2dffcb94969b0ab553d4e7d62f3dd6727c77517d01cbfec60dd205105da7a424"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs::intl_length_counts_scalars_independent_of_locale",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs::intl_length_rejects_invalid_text_and_receivers",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_length.rs::intl_length_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "d491728e1",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR LuaLocaleContext.Length scalar-count behavior independent of stored locale and validate its userdata receiver. Unicode scalar counting and explicit errors are simulator assumptions; byte, grapheme, UTF-16, cstring/NUL, MayReturnNothing, secret/taint, coercion, and native-edge semantics remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.ParseCurrency",
@@ -8493,7 +8537,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
+          "source_hash": "3a4ff2667fe772a7a57e33ac20796dc51a68c6bcedc40d4cbf1c629a5fa0d48a"
         },
         {
           "kind": "test",

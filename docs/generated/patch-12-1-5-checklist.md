@@ -21,7 +21,7 @@
 21. [evidence-required] `added:C_Intl.GetDisplayName` — unsafe
 22. [evidence-required] `added:C_Intl.GetSortKey` — unsafe
 23. [best-effort] `added:C_Intl.IsNormalized` — behavioral
-24. [evidence-required] `added:C_Intl.Length` — unsafe
+24. [best-effort] `added:C_Intl.Length` — behavioral
 25. [best-effort] `added:C_Intl.Normalize` — behavioral
 26. [evidence-required] `added:C_Intl.ParseCurrency` — unsafe
 27. [evidence-required] `added:C_Intl.ParseNumber` — unsafe
@@ -204,7 +204,7 @@
 204. [evidence-required] `added:LuaLocaleContext.GetDisplayName` — unsafe
 205. [best-effort] `added:LuaLocaleContext.GetLocale` — behavioral
 206. [evidence-required] `added:LuaLocaleContext.GetSortKey` — unsafe
-207. [evidence-required] `added:LuaLocaleContext.Length` — unsafe
+207. [best-effort] `added:LuaLocaleContext.Length` — behavioral
 208. [evidence-required] `added:LuaLocaleContext.ParseCurrency` — unsafe
 209. [evidence-required] `added:LuaLocaleContext.ParseNumber` — unsafe
 210. [evidence-required] `added:LuaLocaleContext.SelectPlural` — unsafe
