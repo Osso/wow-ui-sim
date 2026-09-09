@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] Publish `C_Intl.ToTitle(text)` and `context:ToTitle(text)` only on PTR. Both take required `cstring` text and return one string on modeled success.
-- [ ] Use the current global locale or receiver's stored locale; context mutation affects later calls without changing other contexts.
-- [ ] Titlecase each ICU word separately, lowercasing its remaining cased letters with ICU default titlecase options; copy non-word segments verbatim, preserving punctuation and whitespace.
-- [ ] Handle multiword mixed case, Turkish dotted I, Dutch IJ, and expanding Unicode mappings rather than uppercasing only the first character.
-- [ ] Preserve empty input and reject malformed UTF-8, nonstrings, invalid receivers, and malformed locale identifiers using existing casing policy.
-- [ ] Preserve earlier-retail absence and existing normalization, scalar length, context storage, and lower/upper/fold behavior.
+- [x] Publish `C_Intl.ToTitle(text)` and `context:ToTitle(text)` only on PTR. Both take required `cstring` text and return one string on modeled success.
+- [x] Use the current global locale or receiver's stored locale; context mutation affects later calls without changing other contexts.
+- [x] Titlecase each ICU word separately, lowercasing its remaining cased letters with ICU default titlecase options; copy non-word segments verbatim, preserving punctuation and whitespace.
+- [x] Handle multiword mixed case, Turkish dotted I, Dutch IJ, and expanding Unicode mappings rather than uppercasing only the first character.
+- [x] Preserve empty input and reject malformed UTF-8, nonstrings, invalid receivers, and malformed locale identifiers using existing casing policy.
+- [x] Preserve earlier-retail absence and existing normalization, scalar length, context storage, and lower/upper/fold behavior.
 
 ## How it works
 
@@ -26,6 +26,7 @@
 
 - `src/loader/tests/wow_api_globals/patch_12_1_5_intl_titlecase.rs`
 - Existing `intl_` grouped library tests cover regressions.
+- At `0081d03f0`, `cargo test --lib --offline --no-default-features --features sound,gui,client-ptr intl_ -- --nocapture` passed 10 tests; the corresponding `client-retail` run passed 5. RED first failed both PTR titlecase tests with `ToTitle missing`.
 
 ## Known gaps (current cycle)
 
