@@ -32,6 +32,8 @@ mod patch_12_1_5_housing_result_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_enums;
 mod patch_12_1_5_player_data_flag_enums;
+#[cfg(feature = "client-retail")]
+mod patch_12_1_5_round_layout;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_string_extensions;
 mod patch_12_1_5_table_count_info;
