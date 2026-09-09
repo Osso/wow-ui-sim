@@ -6,7 +6,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn timed_signal_map_replaces_cancels_and_dispatches_due_key() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
-        r#"
+        r##"
         signal_calls = {}
         signal_map = C_Timer.NewTimedSignalMap(function(...)
             assert(select("#", ...) == 1)
@@ -24,7 +24,7 @@ fn timed_signal_map_replaces_cancels_and_dispatches_due_key() {
         signal_map:SignalAfter(3, 100)
         signal_map:CancelAllSignals()
         signal_map:SignalAt(7, 0)
-        "#,
+        "##,
     )
     .unwrap();
 
