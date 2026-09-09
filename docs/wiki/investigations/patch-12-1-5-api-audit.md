@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 153 best-effort and 296 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 198 best-effort and 251 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -17,7 +17,8 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | Surface | Current evidence | Disposition | Missing proof |
 |---|---|---|---|
 | PTR table contracts | Commits `1d11c0176` and `f0ae4a96a`; focused tests cover extensions plus `getcountinfo` and required `create` hints | 10 best-effort / behavioral | Secret-key/value propagation, invalid arguments, sparse edge cases, capacity observability, and native error semantics |
-| `C_Intl` and `LuaLocaleContext` | Generated signatures only; no simulator namespace or locale object | evidence-required / unsafe | Unicode normalization, segmentation, collation, formatting, locale state, nil/error cases, and taint/secret semantics |
+| `C_Intl` and `LuaLocaleContext` algorithms | Generated signatures only; no simulator namespace or locale object | evidence-required / unsafe | Unicode normalization, segmentation, collation, formatting, locale state, nil/error cases, and taint/secret semantics |
+| PTR locale option enums | Commit `50958d938` with focused client-profile exact-map/metadata and earlier-retail absence proof for `BreakType`, `CollationStrength`, `CurrencyNameStyle`, `DateTimeStyle`, `LocaleTransform`, `NormalizationForm`, `NumberStyle`, and `PluralType` | 45 best-effort / behavioral rows | `C_Intl`, Unicode, locale algorithms, formatting/collation/normalization behavior, coercion, and security/native semantics |
 | `Enum.WeatherType` | Commits `286d0d3f7` and `17c085065` with focused PTR exact-map/metadata and earlier-retail absence tests | 6 best-effort / behavioral rows | Weather state, events, intensity, rendering, coercion, security, and native semantics |
 | Player-data flag enums | Commit `96b91aa4b` with focused PTR exact one-member maps/metadata and earlier-retail absence tests | 4 best-effort / behavioral rows | Player-data, logging, gameplay, consumers, coercion, security, and native semantics |
 | `C_Weather`, `WEATHER_CHANGED` | Generated declarations only; no weather model or event producer | evidence-required / unsafe | Native weather values, intensity, event timing/payload, and state transitions |
