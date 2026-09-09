@@ -22,10 +22,19 @@ fn action_macro_tooltip_tracks_edits_and_directive_boundaries() {
         end
         EditMacro(id, nil, nil, "#showtooltip")
         assert(C_ActionBar.IsMacroActionWithShowTooltip(201))
+        PickupMacro(id)
+        RunMacro(id)
         DeleteMacro(id)
         assert(not HasAction(201))
         assert(C_ActionBar.IsMacroActionWithShowTooltip(201) == false)
+        local replacement = CreateMacro("Replacement", "icon", "/say no directive")
+        assert(replacement == id)
+        assert(not HasAction(201))
+        A_Admin.SetMacroActionSlot(201, replacement)
+        assert(C_ActionBar.IsMacroActionWithShowTooltip(201) == false)
     "##).unwrap();
+    assert!(env.state().borrow().cursor_item.is_none());
+    assert!(env.state().borrow().running_macro.is_none());
 }
 
 #[cfg(feature = "client-ptr")]
@@ -73,6 +82,9 @@ fn action_macro_tooltip_slot_mutations_clear_old_associations() {
 #[test]
 fn action_macro_tooltip_query_absent_on_retail() {
     let env = WowLuaEnv::new().unwrap();
+    env.exec("assert(C_ActionBar.IsMacroActionWithShowTooltip == nil)")
+        .unwrap();
+    wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     env.exec("assert(C_ActionBar.IsMacroActionWithShowTooltip == nil)")
         .unwrap();
 }
