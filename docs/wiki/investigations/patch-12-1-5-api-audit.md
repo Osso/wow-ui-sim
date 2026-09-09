@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 201 best-effort and 248 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 203 best-effort and 246 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -28,6 +28,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | `Enum.BonusStatIndex` reserved range | Commit `bc786d5e5` with focused PTR exact-range and earlier-retail preservation tests | 60 best-effort / behavioral rows | Stat/gameplay meaning, consumers, validation, coercion, and security/native semantics |
 | `Enum.CurioRarity` | Commit `867bcc8ea` with focused PTR and earlier-retail exact-map/metadata tests | 2 best-effort / behavioral rows | ItemQuality mapping, Curio/gameplay meaning, consumers, coercion, and security/native semantics |
 | `Enum.TieredEntranceType` | Commit `16a89f7b2` with focused PTR and earlier-retail exact-map/metadata tests | 3 best-effort / behavioral rows | Placeholder meaning, consumers, validation, coercion, and security/native semantics |
+| `Enum.TransmogIllusionFlags` | Commit `abcd763cb` with focused PTR exact-map/metadata and actual earlier-retail drift-preservation tests | 2 best-effort / numeric publication rows | Pinned base expects `1/2/4` and `1/4/3`; actual earlier retail intentionally remains `1/2` and `1/2/2`, so this is not base-conformance proof. Gameplay, security, and native semantics remain unclaimed |
 | Other new enums and metadata | Numeric generated values are available | evidence-required / unsafe | PTR-only publication tests and preservation on earlier profiles |
 | Existing timed-signal, rounding, and math work | Prior focused tests or implementations exist for selected contracts | evidence-required pending row linkage | Exact occurrence-to-test/commit evidence and explicit limits |
 | Removed declarations | Two generated removals | evidence-required / unsafe | PTR absence and excluded-profile preservation |

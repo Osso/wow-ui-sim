@@ -182,7 +182,7 @@
 182. [best-effort] `added:Enum.TieredEntranceType.Placeholder_6` — behavioral
 183. [evidence-required] `added:Enum.TooltipDataLineType.AuraCaster` — unsafe
 184. [evidence-required] `added:Enum.TooltipDataLineType.UnitCriteriaProgress` — unsafe
-185. [evidence-required] `added:Enum.TransmogIllusionFlags.HiddenIllusion` — unsafe
+185. [best-effort] `added:Enum.TransmogIllusionFlags.HiddenIllusion` — behavioral
 186. [best-effort] `added:Enum.WeatherType` — behavioral
 187. [best-effort] `added:Enum.WeatherType.Clear` — behavioral
 188. [best-effort] `added:Enum.WeatherType.Miscellaneous` — behavioral
@@ -375,7 +375,7 @@
 375. [evidence-required] `changed:Enum.HousingResult.UnlockOperationFailed` — unsafe
 376. [best-effort] `changed:Enum.TieredEntranceType` — behavioral
 377. [evidence-required] `changed:Enum.TooltipDataLineType` — unsafe
-378. [evidence-required] `changed:Enum.TransmogIllusionFlags` — unsafe
+378. [best-effort] `changed:Enum.TransmogIllusionFlags` — behavioral
 379. [evidence-required] `changed:FrameAPICooldown.Clear` — unsafe
 380. [best-effort] `changed:FrameAPICooldown.GetCountdownAbbrevThreshold` — behavioral
 381. [best-effort] `changed:FrameAPICooldown.GetCountdownMillisecondsThreshold` — behavioral
