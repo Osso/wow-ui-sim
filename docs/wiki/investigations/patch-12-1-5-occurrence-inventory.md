@@ -8,7 +8,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 143 best-effort, 306 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 149 best-effort, 300 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
@@ -198,12 +198,12 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `Enum.TooltipDataLineType.AuraCaster` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.TooltipDataLineType.UnitCriteriaProgress` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.TransmogIllusionFlags.HiddenIllusion` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.WeatherType` | evidence-required | enum | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.WeatherType.Clear` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.WeatherType.Miscellaneous` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.WeatherType.Rain` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.WeatherType.Sandstorm` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.WeatherType.Snow` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
+| `Enum.WeatherType` | best-effort | enum | added | Focused PTR and earlier-retail proof establishes only the PTR-only WeatherType Lua enum publication: exact five numeric members, metadata MinValue/MaxValue/NumValues = 0/4/5, and earlier-retail absence before and after post-load bootstrap. Weather state, events, intensity, rendering, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
+| `Enum.WeatherType.Clear` | best-effort | enum-member | added | Focused PTR and earlier-retail proof establishes only the PTR-only WeatherType Clear = 0 numeric publication within the exact five-member table and metadata 0/4/5; earlier retail omits the enum before and after post-load bootstrap. Weather state, events, intensity, rendering, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
+| `Enum.WeatherType.Miscellaneous` | best-effort | enum-member | added | Focused PTR and earlier-retail proof establishes only the PTR-only WeatherType Miscellaneous = 4 numeric publication within the exact five-member table and metadata 0/4/5; earlier retail omits the enum before and after post-load bootstrap. Weather state, events, intensity, rendering, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
+| `Enum.WeatherType.Rain` | best-effort | enum-member | added | Focused PTR and earlier-retail proof establishes only the PTR-only WeatherType Rain = 1 numeric publication within the exact five-member table and metadata 0/4/5; earlier retail omits the enum before and after post-load bootstrap. Weather state, events, intensity, rendering, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
+| `Enum.WeatherType.Sandstorm` | best-effort | enum-member | added | Focused PTR and earlier-retail proof establishes only the PTR-only WeatherType Sandstorm = 3 numeric publication within the exact five-member table and metadata 0/4/5; earlier retail omits the enum before and after post-load bootstrap. Weather state, events, intensity, rendering, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
+| `Enum.WeatherType.Snow` | best-effort | enum-member | added | Focused PTR and earlier-retail proof establishes only the PTR-only WeatherType Snow = 2 numeric publication within the exact five-member table and metadata 0/4/5; earlier retail omits the enum before and after post-load bootstrap. Weather state, events, intensity, rendering, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
 | `GetScriptBucketThrottleLimits` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `LuaLocaleContext` | evidence-required | script-object | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `LuaLocaleContext.CompareStrings` | evidence-required | script-object-method | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
@@ -462,12 +462,3 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `table.isfrozen` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_TableUtil.FindIndexedMismatch` | best-effort | global-api | removed | PTR proof omits FindIndexedMismatch; earlier retail preserves function publication and the concrete mismatch result 2. Proof excludes other comparator edge cases, secret/taint behavior, and sibling C_TableUtil functions. |
 | `Enum.BagFlag.IgnoreSoulbound` | best-effort | enum-member | removed | PTR proof omits IgnoreSoulbound; earlier retail preserves IgnoreSoulbound = 4194304. Proof is limited to enum publication and earlier-retail preservation; bag semantics, consumers, secret/taint propagation, and security behavior remain unclaimed. |
-
-## Sources
-
-- [`data/patch-api/12.1.5.json`](../../../data/patch-api/12.1.5.json) — machine audit manifest.
-- [`data/patch-api/sources/12.1.5-register.json`](../../../data/patch-api/sources/12.1.5-register.json) — frozen normalized source occurrence register.
-
-## See Also
-
-- [[patch-12-1-5-api-audit]] — audit scope and current gaps.

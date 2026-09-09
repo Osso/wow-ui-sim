@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR WeatherType publication
+
+`286d0d3f7` and `17c085065` resolve six added `Enum.WeatherType` rows as best-effort/behavioral: parent `Enum.WeatherType` and `Clear=0`, `Rain=1`, `Snow=2`, `Sandstorm=3`, and `Miscellaneous=4`. Focused PTR proof verifies the exact five-member map and metadata `0/4/5` before and after post-load bootstrap; focused earlier-retail proof preserves enum and metadata absence. Weather state, events, intensity, rendering, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 149 best-effort, 300 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
 ## [2026-09-09] audit | Credit PTR CurioRarity publication
 
 `867bcc8ea` resolves `Enum.CurioRarity` and `Enum.CurioRarity.EpicTier2` as best-effort/behavioral. Focused PTR proof preserves Common/Uncommon/Rare/Epic values `1/2/3/4`, adds `EpicTier2 = 5`, and verifies metadata `1/5/5`; focused earlier-retail proof preserves the four-value map, `EpicTier2` absence, and metadata `1/4/4`. ItemQuality mapping, Curio/gameplay meaning, consumers, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 143 best-effort, 306 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
