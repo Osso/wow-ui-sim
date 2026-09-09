@@ -242,6 +242,7 @@ macro_rules! frame_defaults {
             cooldown_edge_scale: 1.0,
             cooldown_use_circular_edge: false,
             cooldown_countdown_abbrev_threshold_seconds: 0.0,
+            cooldown_countdown_milliseconds_threshold_seconds: 0.0,
             cooldown_min_countdown_duration_ms: 0.0,
             cooldown_use_aura_display_time: false,
             cooldown_edge_color: Color::rgb(1.0, 1.0, 1.0),

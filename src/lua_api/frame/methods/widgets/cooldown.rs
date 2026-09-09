@@ -436,6 +436,40 @@ pub(super) fn set_countdown_abbrev_threshold(state: &mut LuaState) -> LuaResult<
     Ok(0)
 }
 
+pub(super) fn get_countdown_abbrev_threshold(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let sim = borrow_state(state)?;
+    let threshold = sim
+        .widgets
+        .get(id)
+        .map(|f| f.cooldown_countdown_abbrev_threshold_seconds)
+        .unwrap_or(0.0);
+    drop(sim);
+    threshold.into_stack(state)
+}
+
+pub(super) fn set_countdown_milliseconds_threshold(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let threshold = val_to_f64(stack_val(state, 2));
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(f) = sim.widgets.get_mut(id) {
+        f.cooldown_countdown_milliseconds_threshold_seconds = threshold;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_countdown_milliseconds_threshold(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let sim = borrow_state(state)?;
+    let threshold = sim
+        .widgets
+        .get(id)
+        .map(|f| f.cooldown_countdown_milliseconds_threshold_seconds)
+        .unwrap_or(0.0);
+    drop(sim);
+    threshold.into_stack(state)
+}
+
 pub(super) fn set_swipe_texture(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let path = opt_string(state, 2);
@@ -662,6 +696,18 @@ const COOLDOWN_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     (
         "SetCountdownAbbrevThreshold",
         set_countdown_abbrev_threshold,
+    ),
+    (
+        "GetCountdownAbbrevThreshold",
+        get_countdown_abbrev_threshold,
+    ),
+    (
+        "SetCountdownMillisecondsThreshold",
+        set_countdown_milliseconds_threshold,
+    ),
+    (
+        "GetCountdownMillisecondsThreshold",
+        get_countdown_milliseconds_threshold,
     ),
     // Edge scaling
     ("SetEdgeScale", set_edge_scale),

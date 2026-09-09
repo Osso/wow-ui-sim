@@ -474,6 +474,8 @@ pub struct Frame {
     pub cooldown_use_circular_edge: bool,
     /// Threshold in seconds at which countdown text switches to abbreviated output.
     pub cooldown_countdown_abbrev_threshold_seconds: f64,
+    /// Stored milliseconds-display threshold in seconds; no rendering behavior modeled.
+    pub cooldown_countdown_milliseconds_threshold_seconds: f64,
     /// Minimum countdown duration before text should show, in milliseconds.
     pub cooldown_min_countdown_duration_ms: f64,
     /// Whether countdown text should use aura-style display rules.
