@@ -1,10 +1,14 @@
+## [2026-09-09] audit | Credit PTR TimedSignalMap behavior
+
+`3bff28497`, `1be3abaa0`, `45b39beed`, and `ad23581f2` credit ordinary PTR publication and simulator behavior for `C_Timer.NewTimedSignalMap`, the `TimedSignalMap` userdata, eight methods, and its callback. Earlier retail suppresses the namespace fallback factory. [[patch-12-1-5-api-audit]] keeps access preconditions, entry structures, empty-map behavior, FrameTime identity, and security contracts unresolved.
+
 ## [2026-09-09] audit | Credit PTR HousingResult publication
 
 `e6ea692ba`/`950b8fb28` publish the exact 113-value PTR `HousingResult` map and preserve the 112-value earlier-retail map. [[patch-12-1-5-api-audit]] records numeric proof only; housing behavior remains unresolved.
 
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
-[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, `867bcc8ea`, `286d0d3f7`, `96b91aa4b`, `50958d938`, `16a89f7b2`, and `abcd763cb` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, `Enum.CurioRarity`, `Enum.WeatherType`, player-data flag enums, eight locale option enum maps, the `Enum.TieredEntranceType` target map, the PTR `Enum.TransmogIllusionFlags` 1/2/4/8 map while deliberately preserving earlier-retail 1/2 drift, and the PTR `Enum.TooltipDataLineType` 52-member map while deliberately preserving actual earlier-retail 47-member/0/43/44 drift; totals are 206 best-effort and 243 evidence-required. This is not runtime acceptance.
+[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, `867bcc8ea`, `286d0d3f7`, `96b91aa4b`, `50958d938`, `16a89f7b2`, and `abcd763cb` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, `Enum.CurioRarity`, `Enum.WeatherType`, player-data flag enums, eight locale option enum maps, the `Enum.TieredEntranceType` target map, the PTR `Enum.TransmogIllusionFlags` 1/2/4/8 map while deliberately preserving earlier-retail 1/2 drift, the PTR `Enum.TooltipDataLineType` 52-member map while deliberately preserving actual earlier-retail 47-member/0/43/44 drift, the exact PTR `HousingResult` 113-member map, and bounded TimedSignalMap behavior; totals are 260 best-effort and 189 evidence-required. This is not runtime acceptance.
 
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 

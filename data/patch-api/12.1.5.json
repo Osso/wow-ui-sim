@@ -956,24 +956,51 @@
       "id": "added:C_Timer.NewTimedSignalMap",
       "symbol": "C_Timer.NewTimedSignalMap",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_replaces_cancels_and_dispatches_due_key. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/timer_layout.rs",
+          "summary": "Non-PTR C_Timer registration marks NewTimedSignalMap removed so namespace fallback does not fabricate the PTR-only factory.",
+          "source_hash": "6189fe1da6eecee9ab3132237eb633aeab2ac6bfd247b1ab284917ae783342c6"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_timed_signal_map.rs::timed_signal_map_factory_remains_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies raw and ordinary C_Timer.NewTimedSignalMap lookup remain nil before and after post-load bootstrap.",
+          "source_hash": "9e971acd7994c8f309e8e0c0daca54a5b22d95db7f84a9336ddb0c21f41697bd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_timed_signal_map.rs::timed_signal_map_factory_remains_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:C_UnitAuras.GetAuraCasterGUID",
@@ -8260,231 +8287,384 @@
       "id": "added:TimedSignalMap",
       "symbol": "TimedSignalMap",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added script-object occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_replaces_cancels_and_dispatches_due_key. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/timer_layout.rs",
+          "summary": "Non-PTR C_Timer registration marks NewTimedSignalMap removed so namespace fallback does not fabricate the PTR-only factory.",
+          "source_hash": "6189fe1da6eecee9ab3132237eb633aeab2ac6bfd247b1ab284917ae783342c6"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_timed_signal_map.rs::timed_signal_map_factory_remains_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies raw and ordinary C_Timer.NewTimedSignalMap lookup remain nil before and after post-load bootstrap.",
+          "source_hash": "9e971acd7994c8f309e8e0c0daca54a5b22d95db7f84a9336ddb0c21f41697bd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_timed_signal_map.rs::timed_signal_map_factory_remains_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.CancelAllSignals",
       "symbol": "TimedSignalMap.CancelAllSignals",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_cancels_all_pending_callbacks",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_cancels_all_pending_callbacks. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_cancels_all_pending_callbacks"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.CancelSignal",
       "symbol": "TimedSignalMap.CancelSignal",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_replaces_cancels_and_dispatches_due_key. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.GetNextSignal",
       "symbol": "TimedSignalMap.GetNextSignal",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_replaces_cancels_and_dispatches_due_key. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.GetSignalCount",
       "symbol": "TimedSignalMap.GetSignalCount",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_replaces_cancels_and_dispatches_due_key. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.GetSignalTime",
       "symbol": "TimedSignalMap.GetSignalTime",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_reports_present_key_and_exact_time",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_reports_present_key_and_exact_time. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_reports_present_key_and_exact_time"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.HasSignal",
       "symbol": "TimedSignalMap.HasSignal",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_reports_present_key_and_exact_time",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_reports_present_key_and_exact_time. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_reports_present_key_and_exact_time"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.SignalAfter",
       "symbol": "TimedSignalMap.SignalAfter",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_cancels_all_pending_callbacks",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_cancels_all_pending_callbacks. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_cancels_all_pending_callbacks"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMap.SignalAt",
       "symbol": "TimedSignalMap.SignalAt",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_reports_present_key_and_exact_time",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_reports_present_key_and_exact_time. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_reports_present_key_and_exact_time"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMapCallback",
       "symbol": "TimedSignalMapCallback",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "callback",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added callback occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added TimedSignalMap factory, script-object methods, and callback contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/timed_signal_map.rs",
+          "summary": "PTR-gated native TimedSignalMap userdata registers the factory and eight credited methods with keyed simulator signal state.",
+          "source_hash": "830786832acdb276dc4aa02d8665bb42ac725fbc2c44940bb955f9055e901a94"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key",
+          "summary": "Focused PTR simulator proof covers the ordinary behavior exercised by timed_signal_map_replaces_cancels_and_dispatches_due_key. Proof commits 3bff28497, 1be3abaa0, 45b39beed, and ad23581f2.",
+          "source_hash": "16b9a892d700750f0131bbd4d6a364a3b37526cd587e92f5db9d2df0eed27547"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/timed_signal_map.rs::timed_signal_map_replaces_cancels_and_dispatches_due_key"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ad23581f2",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused simulator proof establishes PTR-only TimedSignalMap ordinary publication and the tested keyed scheduling behavior only: factory returns userdata, callback receives one numeric key when a due signal dispatches, and the credited methods schedule, replace, query, and cancel signals as asserted. Earlier retail keeps C_Timer.NewTimedSignalMap absent through the existing removed-key namespace mechanism. This does not establish RequiresTimedSignalMapAccess, empty-map GetNextSignal behavior, TimedSignalMapEntry publication, FrameTime identity, coercion, invalid-input behavior, secret, taint, protected, forbidden, or native-edge semantics."
     },
     {
       "id": "added:TimedSignalMapEntry",
