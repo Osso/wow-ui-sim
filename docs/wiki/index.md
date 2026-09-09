@@ -64,6 +64,10 @@
 
 `3bff28497`, `1be3abaa0`, `45b39beed`, and `ad23581f2` credit ordinary PTR publication and simulator behavior for `C_Timer.NewTimedSignalMap`, the `TimedSignalMap` userdata, eight methods, and its callback. Earlier retail suppresses the namespace fallback factory. [[patch-12-1-5-api-audit]] keeps access preconditions, entry structures, empty-map behavior, FrameTime identity, and security contracts unresolved.
 
+## [2026-09-09] audit | Credit PTR FindBreaks behavior
+
+`d86f5c177`, `2744e14ba`, and `e30cf16b0` model PTR ICU grapheme, word, sentence, and line byte boundaries for global and locale-context `FindBreaks`. [[patch-12-1-5-api-audit]] records zero-indexing, endpoints, and locale handling as simulator assumptions.
+
 ## [2026-09-09] audit | Credit PTR HousingResult publication
 
 `e6ea692ba`/`950b8fb28` publish the exact 113-value PTR `HousingResult` map and preserve the 112-value earlier-retail map. [[patch-12-1-5-api-audit]] records numeric proof only; housing behavior remains unresolved.

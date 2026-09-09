@@ -6,7 +6,7 @@
 6. [best-effort] `added:C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions` — behavioral
 7. [evidence-required] `added:C_Intl.CompareStrings` — unsafe
 8. [best-effort] `added:C_Intl.CreateLocaleContext` — behavioral
-9. [evidence-required] `added:C_Intl.FindBreaks` — unsafe
+9. [best-effort] `added:C_Intl.FindBreaks` — behavioral
 10. [evidence-required] `added:C_Intl.FindStringMatches` — unsafe
 11. [best-effort] `added:C_Intl.FoldCase` — behavioral
 12. [evidence-required] `added:C_Intl.FormatCurrency` — unsafe
@@ -192,7 +192,7 @@
 192. [evidence-required] `added:GetScriptBucketThrottleLimits` — unsafe
 193. [best-effort] `added:LuaLocaleContext` — behavioral
 194. [evidence-required] `added:LuaLocaleContext.CompareStrings` — unsafe
-195. [evidence-required] `added:LuaLocaleContext.FindBreaks` — unsafe
+195. [best-effort] `added:LuaLocaleContext.FindBreaks` — behavioral
 196. [evidence-required] `added:LuaLocaleContext.FindStringMatches` — unsafe
 197. [best-effort] `added:LuaLocaleContext.FoldCase` — behavioral
 198. [evidence-required] `added:LuaLocaleContext.FormatCurrency` — unsafe

@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR FindBreaks behavior
+
+`d86f5c177`, `2744e14ba`, and `e30cf16b0` credit `C_Intl.FindBreaks` and `LuaLocaleContext.FindBreaks` for focused PTR ICU 2.1.1 grapheme, word, sentence, and line UTF-8 byte-boundary tables plus earlier-retail absence. Zero-based endpoints, empty-input handling, locale-independent segmentation, validation, optional returns, Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR Intl breaks](../specs/intl-breaks.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-09] audit | Credit PTR ICU titlecasing
 
 `0081d03f0` and `bd3d6a330` credit `C_Intl.ToTitle` and `LuaLocaleContext.ToTitle` for PTR-only modeled ICU 2.1.1 per-word titlecasing on valid UTF-8, punctuation/spacing preservation, focused locale cases, and earlier-retail absence. Word segmentation, default ICU options, malformed-input/`MayReturnNothing` behavior, locale translation, Unicode version, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR Unicode titlecasing](../specs/intl-titlecase.md) and [[patch-12-1-5-api-audit]].

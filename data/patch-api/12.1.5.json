@@ -326,7 +326,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612"
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d"
         },
         {
           "kind": "test",
@@ -348,24 +348,56 @@
       "id": "added:C_Intl.FindBreaks",
       "symbol": "C_Intl.FindBreaks",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added FindBreaks declaration, required cstring and BreakType arguments, table<byteOffsets> return, MayReturnNothing, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/breaks.rs",
+          "source_hash": "3636f73c37802bed3ba6db3796f8785e49d49cdb2f43253c01089c413d95681f",
+          "summary": "PTR ICU 2.1.1 segmentation validates UTF-8, supports all four BreakType selectors, and returns fresh numeric UTF-8 byte-offset tables for global and locale-context calls."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
+          "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
+          "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
+          "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_breaks.rs",
+          "source_hash": "2e504bbc79f51653e441de8f65c1c57a2d425a97d47802b53993683e9e40d2a7",
+          "summary": "Focused PTR and earlier-retail tests cover all four modes, multibyte, combining, emoji, empty input, validation, fresh result tables, context behavior, and earlier-retail absence. Proof commits d86f5c177, 2744e14ba, and e30cf16b0."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_breaks.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "d86f5c177",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR C_Intl.FindBreaks publication and modeled ICU 2.1.1 grapheme, word, sentence, and line boundaries for valid UTF-8 as fresh numeric byte-offset tables. Zero-based offsets including zero and the final byte length, empty-input handling, locale-independent segmentation, and explicit invalid-input errors are simulator assumptions. MayReturnNothing conditions, locale-specific behavior, Unicode-version equivalence, embedded-NUL cstring semantics, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:C_Intl.FindStringMatches",
@@ -414,7 +446,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -648,7 +680,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612"
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d"
         },
         {
           "kind": "test",
@@ -736,7 +768,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -786,7 +818,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612"
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d"
         },
         {
           "kind": "source",
@@ -836,7 +868,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -960,7 +992,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1015,7 +1047,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -1070,7 +1102,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -8201,7 +8233,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612"
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d"
         },
         {
           "kind": "test",
@@ -8246,24 +8278,56 @@
       "id": "added:LuaLocaleContext.FindBreaks",
       "symbol": "LuaLocaleContext.FindBreaks",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added FindBreaks declaration, required cstring and BreakType arguments, table<byteOffsets> return, MayReturnNothing, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/breaks.rs",
+          "source_hash": "3636f73c37802bed3ba6db3796f8785e49d49cdb2f43253c01089c413d95681f",
+          "summary": "PTR ICU 2.1.1 segmentation validates UTF-8, supports all four BreakType selectors, and returns fresh numeric UTF-8 byte-offset tables for global and locale-context calls."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
+          "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "6f02c982f59a09f9bd40688a385d41e1a3419c947dd51b8a75df5f615376c919",
+          "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "60de6ae0323c66b82be1e38fea212e515f94abfe0f3205b6039cdd95be1836c1",
+          "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_breaks.rs",
+          "source_hash": "2e504bbc79f51653e441de8f65c1c57a2d425a97d47802b53993683e9e40d2a7",
+          "summary": "Focused PTR and earlier-retail tests cover all four modes, multibyte, combining, emoji, empty input, validation, fresh result tables, context behavior, and earlier-retail absence. Proof commits d86f5c177, 2744e14ba, and e30cf16b0."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_breaks.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "d86f5c177",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR LuaLocaleContext.FindBreaks publication and modeled ICU 2.1.1 grapheme, word, sentence, and line boundaries for valid UTF-8 as fresh numeric byte-offset tables without mutating opaque context locale storage. Zero-based offsets including zero and the final byte length, empty-input handling, locale-independent segmentation, and explicit invalid-input errors are simulator assumptions. MayReturnNothing conditions, locale-specific behavior, Unicode-version equivalence, embedded-NUL cstring semantics, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.FindStringMatches",
@@ -8312,7 +8376,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -8523,7 +8587,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612"
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d"
         },
         {
           "kind": "test",
@@ -8583,7 +8647,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612"
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d"
         },
         {
           "kind": "source",
@@ -8697,7 +8761,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612"
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d"
         },
         {
           "kind": "test",
@@ -8739,7 +8803,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -8794,7 +8858,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -8849,7 +8913,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "e483d1064793a76256cf2d34566a735968ed948e0e78288278332fdaad88f612",
+          "source_hash": "5be969b0fe68d8c9b6979c5e5aa7d1061c8f4e37ecf775408785de6c6c35ff3d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
