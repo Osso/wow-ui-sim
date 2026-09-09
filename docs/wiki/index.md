@@ -1,6 +1,6 @@
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
-[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, and `bc786d5e5` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, and the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication; totals are 141 best-effort and 308 evidence-required. This is not runtime acceptance.
+[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, and `867bcc8ea` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, and `Enum.CurioRarity`; totals are 143 best-effort and 306 evidence-required. This is not runtime acceptance.
 
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 

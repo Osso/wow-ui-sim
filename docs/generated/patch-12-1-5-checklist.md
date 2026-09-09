@@ -135,7 +135,7 @@
 135. [evidence-required] `added:Enum.CollationStrength.Quaternary` — unsafe
 136. [evidence-required] `added:Enum.CollationStrength.Secondary` — unsafe
 137. [evidence-required] `added:Enum.CollationStrength.Tertiary` — unsafe
-138. [evidence-required] `added:Enum.CurioRarity.EpicTier2` — unsafe
+138. [best-effort] `added:Enum.CurioRarity.EpicTier2` — behavioral
 139. [evidence-required] `added:Enum.CurrencyNameStyle` — unsafe
 140. [evidence-required] `added:Enum.CurrencyNameStyle.FormalSymbol` — unsafe
 141. [evidence-required] `added:Enum.CurrencyNameStyle.Long` — unsafe
@@ -285,7 +285,7 @@
 285. [evidence-required] `changed:C_EncounterWarnings.EncounterWarningInfo.duration` — unsafe
 286. [best-effort] `changed:Enum.BagFlag` — behavioral
 287. [best-effort] `changed:Enum.BonusStatIndex` — behavioral
-288. [evidence-required] `changed:Enum.CurioRarity` — unsafe
+288. [best-effort] `changed:Enum.CurioRarity` — behavioral
 289. [best-effort] `changed:Enum.ForbiddenAspect` — behavioral
 290. [best-effort] `changed:Enum.FragmentID` — behavioral
 291. [best-effort] `changed:Enum.FragmentID.Actor` — behavioral

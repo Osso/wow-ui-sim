@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR CurioRarity publication
+
+`867bcc8ea` resolves `Enum.CurioRarity` and `Enum.CurioRarity.EpicTier2` as best-effort/behavioral. Focused PTR proof preserves Common/Uncommon/Rare/Epic values `1/2/3/4`, adds `EpicTier2 = 5`, and verifies metadata `1/5/5`; focused earlier-retail proof preserves the four-value map, `EpicTier2` absence, and metadata `1/4/4`. ItemQuality mapping, Curio/gameplay meaning, consumers, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 143 best-effort, 306 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
 ## [2026-09-09] audit | Credit PTR BonusStatIndex reserved-range publication
 
 `bc786d5e5` resolves 60 exact `Enum.BonusStatIndex` rows as best-effort/behavioral: the changed parent and `Reserved_83` through `Reserved_141`. Focused PTR proof preserves values 0–82, publishes every reserved value and metadata `0/141/142` before and after post-load bootstrap; focused earlier-retail proof preserves `0/82/83` and absence of every reserved addition. Stat/gameplay meaning, consumers, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 141 best-effort, 308 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].

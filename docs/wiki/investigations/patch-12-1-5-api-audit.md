@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 141 best-effort and 308 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 143 best-effort and 306 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -23,6 +23,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | Cooldown threshold publication | Commit `88c705aa7` with focused PTR and earlier-retail numeric threshold tests | 3 best-effort / behavioral rows | Native defaults, rendering/display effects, units/conversion, type/coercion, and security/native semantics |
 | Caster-name aura options | Commit `894333d48` with focused PTR default/boolean normalization and earlier-retail absence proof | 4 best-effort / behavioral rows | Caster-name rendering, realm formatting, class-color display, coercion, and security/native semantics |
 | `Enum.BonusStatIndex` reserved range | Commit `bc786d5e5` with focused PTR exact-range and earlier-retail preservation tests | 60 best-effort / behavioral rows | Stat/gameplay meaning, consumers, validation, coercion, and security/native semantics |
+| `Enum.CurioRarity` | Commit `867bcc8ea` with focused PTR and earlier-retail exact-map/metadata tests | 2 best-effort / behavioral rows | ItemQuality mapping, Curio/gameplay meaning, consumers, coercion, and security/native semantics |
 | Other new enums and metadata | Numeric generated values are available | evidence-required / unsafe | PTR-only publication tests and preservation on earlier profiles |
 | Existing timed-signal, rounding, and math work | Prior focused tests or implementations exist for selected contracts | evidence-required pending row linkage | Exact occurrence-to-test/commit evidence and explicit limits |
 | Removed declarations | Two generated removals | evidence-required / unsafe | PTR absence and excluded-profile preservation |

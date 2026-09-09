@@ -4872,24 +4872,51 @@
       "id": "added:Enum.CurioRarity.EpicTier2",
       "symbol": "Enum.CurioRarity.EpicTier2",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the CurioRarity base and target numeric maps, EpicTier2 addition, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated CurioRarity publication retains the four base numeric values outside retail-12-1-5 and adds EpicTier2 = 5 for retail-12-1-5.",
+          "source_hash": "d27196fa5b2749f537f58953cc1de4313f1cc30f6044d1abdbcc92e4ebd79789"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_init/enums.rs",
+          "summary": "The retail-12-1-5 enum override publishes CurioRarity metadata MinValue = 1, MaxValue = 5, and NumValues = 5 while earlier profiles retain base metadata.",
+          "source_hash": "5d30fca9ca354b0b77f96be625a7256911a1ccb9d126dcfb4be10afa57458ce1"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
+          "summary": "Focused PTR proof verifies Common = 1, Uncommon = 2, Rare = 3, Epic = 4, EpicTier2 = 5, and CurioRarity metadata 1/5/5. Proof commit 867bcc8ea.",
+          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies the four-value base map, EpicTier2 absence, count 4, and CurioRarity metadata 1/4/4. Proof commit 867bcc8ea.",
+          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
+        "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "867bcc8ea",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated CurioRarity numeric publication: Common/Uncommon/Rare/Epic remain 1/2/3/4, PTR adds EpicTier2 = 5 and metadata 1/5/5, and earlier retail retains four values, EpicTier2 absence, and metadata 1/4/4. ItemQuality mapping, Curio/gameplay meaning, consumers, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.CurrencyNameStyle",
@@ -8713,24 +8740,51 @@
       "id": "changed:Enum.CurioRarity",
       "symbol": "Enum.CurioRarity",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the CurioRarity base and target numeric maps, EpicTier2 addition, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated CurioRarity publication retains the four base numeric values outside retail-12-1-5 and adds EpicTier2 = 5 for retail-12-1-5.",
+          "source_hash": "d27196fa5b2749f537f58953cc1de4313f1cc30f6044d1abdbcc92e4ebd79789"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_init/enums.rs",
+          "summary": "The retail-12-1-5 enum override publishes CurioRarity metadata MinValue = 1, MaxValue = 5, and NumValues = 5 while earlier profiles retain base metadata.",
+          "source_hash": "5d30fca9ca354b0b77f96be625a7256911a1ccb9d126dcfb4be10afa57458ce1"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
+          "summary": "Focused PTR proof verifies Common = 1, Uncommon = 2, Rare = 3, Epic = 4, EpicTier2 = 5, and CurioRarity metadata 1/5/5. Proof commit 867bcc8ea.",
+          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies the four-value base map, EpicTier2 absence, count 4, and CurioRarity metadata 1/4/4. Proof commit 867bcc8ea.",
+          "source_hash": "16c8c22499735a8d26c2b25c087a77d2fcb8cfc838a48c31a64fa363a5c2aa9d"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_includes_epic_tier_2",
+        "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_5_curio_rarity_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "867bcc8ea",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated CurioRarity numeric publication: Common/Uncommon/Rare/Epic remain 1/2/3/4, PTR adds EpicTier2 = 5 and metadata 1/5/5, and earlier retail retains four values, EpicTier2 absence, and metadata 1/4/4. ItemQuality mapping, Curio/gameplay meaning, consumers, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.ForbiddenAspect",
