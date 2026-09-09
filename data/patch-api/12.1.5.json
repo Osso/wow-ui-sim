@@ -1305,208 +1305,523 @@
       "id": "added:CreateFrameOptions",
       "symbol": "CreateFrameOptions",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added structure occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/template_chain.rs",
+          "source_hash": "50740236877b4604556daa952c47ab4cced67b7e25ae2d4378add76b180dc3dd",
+          "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_identity_and_types` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_template_order_and_lifecycle` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_explicit_flags_override_template_visibility",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_explicit_flags_override_template_visibility` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_rejects_malformed_fields_before_creation",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_rejects_malformed_fields_before_creation` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_explicit_flags_override_template_visibility",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_rejects_malformed_fields_before_creation",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameOptions.forbidden",
       "symbol": "CreateFrameOptions.forbidden",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/template_chain.rs",
+          "source_hash": "50740236877b4604556daa952c47ab4cced67b7e25ae2d4378add76b180dc3dd",
+          "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_template_order_and_lifecycle` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameOptions.frameType",
       "symbol": "CreateFrameOptions.frameType",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_identity_and_types` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameOptions.hidden",
       "symbol": "CreateFrameOptions.hidden",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/template_chain.rs",
+          "source_hash": "50740236877b4604556daa952c47ab4cced67b7e25ae2d4378add76b180dc3dd",
+          "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_explicit_flags_override_template_visibility",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_explicit_flags_override_template_visibility` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_explicit_flags_override_template_visibility",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameOptions.id",
       "symbol": "CreateFrameOptions.id",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_identity_and_types` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameOptions.inherits",
       "symbol": "CreateFrameOptions.inherits",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/template_chain.rs",
+          "source_hash": "50740236877b4604556daa952c47ab4cced67b7e25ae2d4378add76b180dc3dd",
+          "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_template_order_and_lifecycle` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameOptions.name",
       "symbol": "CreateFrameOptions.name",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_identity_and_types` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameOptions.parent",
       "symbol": "CreateFrameOptions.parent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_identity_and_types` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateFrameWithOptions",
       "symbol": "CreateFrameWithOptions",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added CreateFrameWithOptions declaration and exact CreateFrameOptions field contracts."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/options.rs",
+          "source_hash": "9c9106efcc31ee6cfdbce4ab01b23ecb5640f15989283d418bff8c1d797e0004",
+          "summary": "PTR-gated adapter decodes the documented structured fields and applies explicit simulator validation/default choices before shared frame allocation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/mod.rs",
+          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/create_frame/template_chain.rs",
+          "source_hash": "50740236877b4604556daa952c47ab4cced67b7e25ae2d4378add76b180dc3dd",
+          "summary": "Options-only template application reapplies explicit flags before template OnLoad using the existing runtime template chain."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_identity_and_types` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_template_order_and_lifecycle` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_explicit_flags_override_template_visibility",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_explicit_flags_override_template_visibility` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_rejects_malformed_fields_before_creation",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused PTR proof `create_frame_options_rejects_malformed_fields_before_creation` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api",
+          "source_hash": "415d92b0f077833e20b710b68acd324c44485dbe2c4f0cc9872ad9f347cd2010",
+          "summary": "Focused earlier-retail proof `create_frame_options_preserves_retail_absence_and_positional_api` covers this adapter surface. Proof commit e6712ab29; lifecycle and validation assertions are simulator assumptions explicitly documented in docs/specs/create-frame-with-options.md."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_identity_and_types",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_template_order_and_lifecycle",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_explicit_flags_override_template_visibility",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_rejects_malformed_fields_before_creation",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs::create_frame_options_preserves_retail_absence_and_positional_api"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e6712ab29",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only the PTR-only CreateFrameWithOptions adapter: structured frame creation reuses simulator positional allocation, declared fields, ordered template application, simulator lifecycle/visibility choices, and profile absence. Validation and lifecycle choices are documented simulator assumptions, not native evidence. CreateFrameOptions is an argument structure, not a Lua global. Native coercion/error text, unknown keys, reentrancy, global enumeration, secret, taint, protected, forbidden-aspect, security, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:CreateRegionParams",
