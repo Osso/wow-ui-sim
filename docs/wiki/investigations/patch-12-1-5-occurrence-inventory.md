@@ -8,13 +8,13 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5.69594` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 27 best-effort, 422 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 29 best-effort, 420 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
 |---|---|---|---|---|
 | `C_ActionBar.IsMacroActionWithShowTooltip` | evidence-required | global-api | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications` | evidence-required | structure-field | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
+| `C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications` | best-effort | structure-field | added | PTR-only processing proof returns numeric minApplications = 0 when omitted and preserves an explicit numeric value; earlier retail omits the field. The same tests retain supplied maxApplications and interpolation values. Rendering, application-count semantics, coercion, secrecy, invalid-input, and native edge behavior remain unclaimed. |
 | `C_AuraContainerUtil.CustomAuraButtonCasterNameOptions` | evidence-required | structure | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName` | evidence-required | structure-field | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors` | evidence-required | structure-field | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
@@ -275,7 +275,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `table.removeunordered` | best-effort | global-api | added | Removes an explicit or omitted array index by swapping the last value, returns the removed value, and preserves hash entries for tested cases; sparse/security semantics remain unclaimed. |
 | `table.removevalue` | best-effort | global-api | added | Removes all matching contiguous array values, preserves retained order and hash entries, and returns the count; sparse/nil/security semantics remain unclaimed. |
 | `table.values` | best-effort | global-api | added | Returns a separate dense array containing all tested values and duplicates without claiming iteration order; secret-value propagation and invalid-input semantics remain unclaimed. |
-| `C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions` | evidence-required | structure | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions` | best-effort | structure | changed | PTR-only processing proof returns numeric minApplications = 0 when omitted and preserves an explicit numeric value; earlier retail omits the field. The same tests retain supplied maxApplications and interpolation values. Rendering, application-count semantics, coercion, secrecy, invalid-input, and native edge behavior remain unclaimed. |
 | `C_EncounterTimeline.AddEditModeEvents` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_EncounterTimeline.EncounterTimelineEventFilter` | evidence-required | structure | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_EncounterTimeline.EncounterTimelineEventFilter.maxEventDuration` | evidence-required | structure-field | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |

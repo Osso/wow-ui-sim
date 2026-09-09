@@ -1,5 +1,5 @@
 1. [evidence-required] `added:C_ActionBar.IsMacroActionWithShowTooltip` — unsafe
-2. [evidence-required] `added:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications` — unsafe
+2. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications` — behavioral
 3. [evidence-required] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions` — unsafe
 4. [evidence-required] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName` — unsafe
 5. [evidence-required] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors` — unsafe
@@ -260,7 +260,7 @@
 260. [best-effort] `added:table.removeunordered` — behavioral
 261. [best-effort] `added:table.removevalue` — behavioral
 262. [best-effort] `added:table.values` — behavioral
-263. [evidence-required] `changed:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions` — unsafe
+263. [best-effort] `changed:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions` — behavioral
 264. [evidence-required] `changed:C_EncounterTimeline.AddEditModeEvents` — unsafe
 265. [evidence-required] `changed:C_EncounterTimeline.EncounterTimelineEventFilter` — unsafe
 266. [evidence-required] `changed:C_EncounterTimeline.EncounterTimelineEventFilter.maxEventDuration` — unsafe

@@ -46,24 +46,45 @@
       "id": "added:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications",
       "symbol": "C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact structure and added minApplications field delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_aura_container_util.rs",
+          "summary": "PTR-gated application-bar option normalization adds minApplications with numeric default 0 while preserving existing maxApplications and interpolation processing.",
+          "source_hash": "a8ca4c4f4c35273ee53619c158a021910170190be729f52dc3b8f267db23e46e"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_default",
+          "summary": "Focused PTR and earlier-retail test proves omitted minApplications normalizes to numeric 0 only on PTR, earlier retail omits it, and maxApplications/interpolation remain 5/1. Proof commit 336e1903d: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_aura_application_options -- --nocapture (2 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_aura_application_options -- --nocapture (2 passed, 0 failed).",
+          "source_hash": "9bae9512b37ff955472d9b88ad06a282249e60ce3eeee95da3495878e7a66e14"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_explicit",
+          "summary": "Focused PTR and earlier-retail test proves an explicit numeric minApplications value is preserved only on PTR and maxApplications/interpolation remain 7/0.",
+          "source_hash": "9bae9512b37ff955472d9b88ad06a282249e60ce3eeee95da3495878e7a66e14"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_default",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_explicit"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "336e1903d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "PTR-only processing proof returns numeric minApplications = 0 when omitted and preserves an explicit numeric value; earlier retail omits the field. The same tests retain supplied maxApplications and interpolation values. Rendering, application-count semantics, coercion, secrecy, invalid-input, and native edge behavior remain unclaimed."
     },
     {
       "id": "added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions",
@@ -6351,24 +6372,45 @@
       "id": "changed:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions",
       "symbol": "C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact structure and added minApplications field delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_aura_container_util.rs",
+          "summary": "PTR-gated application-bar option normalization adds minApplications with numeric default 0 while preserving existing maxApplications and interpolation processing.",
+          "source_hash": "a8ca4c4f4c35273ee53619c158a021910170190be729f52dc3b8f267db23e46e"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_default",
+          "summary": "Focused PTR and earlier-retail test proves omitted minApplications normalizes to numeric 0 only on PTR, earlier retail omits it, and maxApplications/interpolation remain 5/1. Proof commit 336e1903d: cargo test --lib --no-default-features --features gui,client-ptr patch_12_1_5_aura_application_options -- --nocapture (2 passed, 0 failed); cargo test --lib --no-default-features --features gui,client-retail patch_12_1_5_aura_application_options -- --nocapture (2 passed, 0 failed).",
+          "source_hash": "9bae9512b37ff955472d9b88ad06a282249e60ce3eeee95da3495878e7a66e14"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_explicit",
+          "summary": "Focused PTR and earlier-retail test proves an explicit numeric minApplications value is preserved only on PTR and maxApplications/interpolation remain 7/0.",
+          "source_hash": "9bae9512b37ff955472d9b88ad06a282249e60ce3eeee95da3495878e7a66e14"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_default",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_application_options.rs::patch_12_1_5_aura_application_options_explicit"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "336e1903d",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "PTR-only processing proof returns numeric minApplications = 0 when omitted and preserves an explicit numeric value; earlier retail omits the field. The same tests retain supplied maxApplications and interpolation values. Rendering, application-count semantics, coercion, secrecy, invalid-input, and native edge behavior remain unclaimed."
     },
     {
       "id": "changed:C_EncounterTimeline.AddEditModeEvents",
