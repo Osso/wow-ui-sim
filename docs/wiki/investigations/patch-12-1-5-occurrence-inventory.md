@@ -8,7 +8,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 198 best-effort, 251 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 201 best-effort, 248 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
@@ -193,8 +193,8 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `Enum.PluralType` | best-effort | enum | added | Focused client-profile proof establishes only PTR-only Enum.PluralType Lua enum publication: the complete 2-member numeric map and metadata MinValue/MaxValue/NumValues = 0/1/2 before and after post-load bootstrap; earlier retail omits the enum and metadata. C_Intl, Unicode, locale algorithms, formatting/collation/normalization behavior, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge semantics remain unclaimed. |
 | `Enum.PluralType.Cardinal` | best-effort | enum-member | added | Focused client-profile proof establishes only PTR-only Enum.PluralType.Cardinal = 0 numeric publication within its complete 2-member table and metadata 0/1/2 before and after post-load bootstrap; earlier retail omits the enum and metadata. C_Intl, Unicode, locale algorithms, formatting/collation/normalization behavior, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge semantics remain unclaimed. |
 | `Enum.PluralType.Ordinal` | best-effort | enum-member | added | Focused client-profile proof establishes only PTR-only Enum.PluralType.Ordinal = 1 numeric publication within its complete 2-member table and metadata 0/1/2 before and after post-load bootstrap; earlier retail omits the enum and metadata. C_Intl, Unicode, locale algorithms, formatting/collation/normalization behavior, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge semantics remain unclaimed. |
-| `Enum.TieredEntranceType.Placeholder_5` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
-| `Enum.TieredEntranceType.Placeholder_6` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
+| `Enum.TieredEntranceType.Placeholder_5` | best-effort | enum-member | added | Focused PTR and earlier-retail proof establishes only profile-gated TieredEntranceType.Placeholder_5 = 5 numeric publication within the complete seven-member target table and metadata 0/6/7; earlier retail retains the five-member base table, both additions absent, and metadata 0/4/5. Placeholder meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
+| `Enum.TieredEntranceType.Placeholder_6` | best-effort | enum-member | added | Focused PTR and earlier-retail proof establishes only profile-gated TieredEntranceType.Placeholder_6 = 6 numeric publication within the complete seven-member target table and metadata 0/6/7; earlier retail retains the five-member base table, both additions absent, and metadata 0/4/5. Placeholder meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
 | `Enum.TooltipDataLineType.AuraCaster` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.TooltipDataLineType.UnitCriteriaProgress` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
 | `Enum.TransmogIllusionFlags.HiddenIllusion` | evidence-required | enum-member | added | Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof. |
@@ -388,7 +388,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `Enum.HousingResult.UncollectedRoomMaterial` | evidence-required | enum-member | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `Enum.HousingResult.UncollectedRoomTheme` | evidence-required | enum-member | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `Enum.HousingResult.UnlockOperationFailed` | evidence-required | enum-member | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
-| `Enum.TieredEntranceType` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `Enum.TieredEntranceType` | best-effort | enum | changed | Focused PTR and earlier-retail proof establishes only profile-gated TieredEntranceType numeric publication: Invalid/Delve/Sites/WorldTier/Lairs remain 0/1/2/3/4, PTR adds Placeholder_5 = 5 and Placeholder_6 = 6 with metadata 0/6/7, and earlier retail retains five values, both additions absent, and metadata 0/4/5. Placeholder meaning, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed. |
 | `Enum.TooltipDataLineType` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `Enum.TransmogIllusionFlags` | evidence-required | enum | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `FrameAPICooldown.Clear` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
@@ -462,14 +462,3 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `table.isfrozen` | evidence-required | global-api | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `C_TableUtil.FindIndexedMismatch` | best-effort | global-api | removed | PTR proof omits FindIndexedMismatch; earlier retail preserves function publication and the concrete mismatch result 2. Proof excludes other comparator edge cases, secret/taint behavior, and sibling C_TableUtil functions. |
 | `Enum.BagFlag.IgnoreSoulbound` | best-effort | enum-member | removed | PTR proof omits IgnoreSoulbound; earlier retail preserves IgnoreSoulbound = 4194304. Proof is limited to enum publication and earlier-retail preservation; bag semantics, consumers, secret/taint propagation, and security behavior remain unclaimed. |
-
-## Sources
-
-- [`data/patch-api/sources/12.1.5-register.json`](../../../data/patch-api/sources/12.1.5-register.json) — frozen normalized source occurrence register.
-- [`data/patch-api/12.1.5.json`](../../../data/patch-api/12.1.5.json) — machine audit manifest.
-- [Patch API audit manifest specification](../../specs/patch-api-audit-manifest.md) — generator and evidence contract.
-
-## See Also
-
-- [[patch-12-1-5-api-audit]] — bounded audit status and proof limits.
-- [[client-profiles]] — PTR profile publication.
