@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR ICU collation
+
+`974e38888` credits global and locale-context `CompareStrings` and `GetSortKey` for focused PTR ICU 2.1.1 five-strength comparison, binary-key ordering, locale-context mutation, validation, and earlier-retail absence. Signs, raw key bytes, locale parsing, errors, `MayReturnNothing`, Unicode/CLDR equivalence, security, and native semantics remain assumptions or unresolved. See [PTR Intl collation](../specs/intl-collation.md), [[intl-collation]], and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU collation
+
+[[intl-collation]] records the ICU collation dependency, binary-key model, locale-context behavior, proof, and native-conformance boundary.
+
 ## [2026-09-09] audit | Credit PTR ICU locale transforms
 
 `15a52023b` and `1b287e67e` credit `C_Intl.TransformLocale` and `LuaLocaleContext.TransformLocale` for PTR-only modeled ICU 2.1.1 canonicalization, likely-subtag transforms, component extraction, syntactic parent reduction, context independence, invalid-input behavior, and earlier-retail absence. WoW-tag translation, serialization, empty components, variant order, parent policy, `MayReturnNothing`, CLDR/Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR locale transforms](../specs/intl-locale-transform.md) and [[patch-12-1-5-api-audit]].

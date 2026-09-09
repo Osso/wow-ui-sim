@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR ICU collation
+
+`974e38888` credits global and locale-context `CompareStrings` and `GetSortKey` for focused PTR ICU 2.1.1 five-strength comparison, binary-key ordering, locale-context mutation, validation, and earlier-retail absence. Signs, raw key bytes, locale parsing, errors, `MayReturnNothing`, Unicode/CLDR equivalence, security, and native semantics remain assumptions or unresolved. See [PTR Intl collation](../specs/intl-collation.md), [[intl-collation]], and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU collation
+
+[[intl-collation]] records the ICU collation dependency, binary-key model, locale-context behavior, proof, and native-conformance boundary.
+
 ## [2026-09-09] audit | Credit PTR ICU locale transforms
 
 `15a52023b` and `1b287e67e` credit `C_Intl.TransformLocale` and `LuaLocaleContext.TransformLocale` for PTR-only modeled ICU 2.1.1 canonicalization, likely-subtag transforms, component extraction, syntactic parent reduction, context independence, invalid-input behavior, and earlier-retail absence. WoW-tag translation, serialization, empty components, variant order, parent policy, `MayReturnNothing`, CLDR/Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR locale transforms](../specs/intl-locale-transform.md) and [[patch-12-1-5-api-audit]].
@@ -82,7 +90,7 @@
 
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
-[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, `867bcc8ea`, `286d0d3f7`, `96b91aa4b`, `50958d938`, `16a89f7b2`, and `abcd763cb` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, `Enum.CurioRarity`, `Enum.WeatherType`, player-data flag enums, eight locale option enum maps, the `Enum.TieredEntranceType` target map, the PTR `Enum.TransmogIllusionFlags` 1/2/4/8 map while deliberately preserving earlier-retail 1/2 drift, the PTR `Enum.TooltipDataLineType` 52-member map while deliberately preserving actual earlier-retail 47-member/0/43/44 drift, the exact PTR `HousingResult` 113-member map, bounded TimedSignalMap behavior, and bounded weather simulator proof; totals are 294 best-effort and 155 evidence-required. This is not runtime acceptance.
+[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, `867bcc8ea`, `286d0d3f7`, `96b91aa4b`, `50958d938`, `16a89f7b2`, and `abcd763cb` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, `Enum.CurioRarity`, `Enum.WeatherType`, player-data flag enums, eight locale option enum maps, the `Enum.TieredEntranceType` target map, the PTR `Enum.TransmogIllusionFlags` 1/2/4/8 map while deliberately preserving earlier-retail 1/2 drift, the PTR `Enum.TooltipDataLineType` 52-member map while deliberately preserving actual earlier-retail 47-member/0/43/44 drift, the exact PTR `HousingResult` 113-member map, bounded TimedSignalMap behavior, and bounded weather simulator proof; totals are 314 best-effort and 135 evidence-required. This is not runtime acceptance.
 
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 

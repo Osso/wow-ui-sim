@@ -4,7 +4,7 @@
 4. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName` — behavioral
 5. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors` — behavioral
 6. [best-effort] `added:C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions` — behavioral
-7. [evidence-required] `added:C_Intl.CompareStrings` — unsafe
+7. [best-effort] `added:C_Intl.CompareStrings` — behavioral
 8. [best-effort] `added:C_Intl.CreateLocaleContext` — behavioral
 9. [best-effort] `added:C_Intl.FindBreaks` — behavioral
 10. [evidence-required] `added:C_Intl.FindStringMatches` — unsafe
@@ -19,7 +19,7 @@
 19. [evidence-required] `added:C_Intl.GetCurrencyName` — unsafe
 20. [best-effort] `added:C_Intl.GetCurrentLocale` — behavioral
 21. [evidence-required] `added:C_Intl.GetDisplayName` — unsafe
-22. [evidence-required] `added:C_Intl.GetSortKey` — unsafe
+22. [best-effort] `added:C_Intl.GetSortKey` — behavioral
 23. [best-effort] `added:C_Intl.IsNormalized` — behavioral
 24. [best-effort] `added:C_Intl.Length` — behavioral
 25. [best-effort] `added:C_Intl.Normalize` — behavioral
@@ -191,7 +191,7 @@
 191. [best-effort] `added:Enum.WeatherType.Snow` — behavioral
 192. [evidence-required] `added:GetScriptBucketThrottleLimits` — unsafe
 193. [best-effort] `added:LuaLocaleContext` — behavioral
-194. [evidence-required] `added:LuaLocaleContext.CompareStrings` — unsafe
+194. [best-effort] `added:LuaLocaleContext.CompareStrings` — behavioral
 195. [best-effort] `added:LuaLocaleContext.FindBreaks` — behavioral
 196. [evidence-required] `added:LuaLocaleContext.FindStringMatches` — unsafe
 197. [best-effort] `added:LuaLocaleContext.FoldCase` — behavioral
@@ -203,7 +203,7 @@
 203. [evidence-required] `added:LuaLocaleContext.GetCurrencyName` — unsafe
 204. [evidence-required] `added:LuaLocaleContext.GetDisplayName` — unsafe
 205. [best-effort] `added:LuaLocaleContext.GetLocale` — behavioral
-206. [evidence-required] `added:LuaLocaleContext.GetSortKey` — unsafe
+206. [best-effort] `added:LuaLocaleContext.GetSortKey` — behavioral
 207. [best-effort] `added:LuaLocaleContext.Length` — behavioral
 208. [evidence-required] `added:LuaLocaleContext.ParseCurrency` — unsafe
 209. [evidence-required] `added:LuaLocaleContext.ParseNumber` — unsafe
