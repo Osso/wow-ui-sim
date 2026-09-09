@@ -9,6 +9,8 @@ const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
     "\n",
     include_str!("fragment_id.lua"),
     "\n",
+    include_str!("transmog_illusion_flags.lua"),
+    "\n",
     include_str!("bonus_stat_index.lua"),
     "\n",
     include_str!("weather_type.lua"),
