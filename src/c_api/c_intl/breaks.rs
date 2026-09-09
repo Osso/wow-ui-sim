@@ -39,10 +39,12 @@ fn segment(text: &str, mode: Val) -> LuaResult<Vec<usize>> {
 fn find_breaks(state: &mut LuaState, text_index: i32) -> LuaResult<u32> {
     let text = super::text::read_text(state, text_index, "segmentation")?;
     let offsets = segment(&text, stack_val(state, text_index + 1))?;
-    let result = create_table(state);
+    let Val::Table(result) = create_table(state) else {
+        unreachable!("create_table returns a table");
+    };
     for (index, offset) in offsets.into_iter().enumerate() {
         table_set_num(state, result, (index + 1) as f64, Val::Num(offset as f64));
     }
-    state.push(result);
+    state.push(Val::Table(result));
     Ok(1)
 }
