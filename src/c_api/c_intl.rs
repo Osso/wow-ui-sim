@@ -28,6 +28,21 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 pub(crate) use storage::register;
 
 #[cfg(feature = "retail-12-1-5")]
+fn parse_locale(bytes: &[u8], operation: &str) -> LuaResult<icu_locale_core::Locale> {
+    let is_wow_tag = bytes.len() == 4 && bytes.iter().all(u8::is_ascii_alphabetic);
+    let tag = if is_wow_tag {
+        [bytes[..2].to_vec(), vec![b'-'], bytes[2..].to_vec()].concat()
+    } else {
+        bytes.to_vec()
+    };
+    icu_locale_core::Locale::try_from_utf8(&tag).map_err(|_| {
+        rilua::runtime_error(format!(
+            "{operation} locale must be a valid ICU locale identifier"
+        ))
+    })
+}
+
+#[cfg(feature = "retail-12-1-5")]
 mod storage {
     use super::*;
     use crate::lua_api::methods::{call_function_state, table_set_static};

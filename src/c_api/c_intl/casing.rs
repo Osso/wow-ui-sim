@@ -1,9 +1,9 @@
 //! ICU casing with parsed locale identifiers; folding uses Unicode default mappings.
 use icu_casemap::{CaseMapper, TitlecaseMapper};
-use icu_locale_core::{LanguageIdentifier, Locale};
+use icu_locale_core::LanguageIdentifier;
 use icu_segmenter::WordSegmenter;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaResult, Val};
 
 use crate::lua_bridge::table_set_rust_fn_static;
 
@@ -45,25 +45,13 @@ pub(super) fn register_context(state: &mut LuaState, metatable: GcRef<Table>) ->
     })
 }
 
-fn parse_locale(bytes: &[u8]) -> LuaResult<LanguageIdentifier> {
-    let is_wow_tag = bytes.len() == 4 && bytes.iter().all(u8::is_ascii_alphabetic);
-    let tag = if is_wow_tag {
-        [bytes[..2].to_vec(), vec![b'-'], bytes[2..].to_vec()].concat()
-    } else {
-        bytes.to_vec()
-    };
-    Locale::try_from_utf8(&tag)
-        .map(|locale| locale.id)
-        .map_err(|_| runtime_error("casing locale must be a valid ICU locale identifier"))
-}
-
 fn apply_global(state: &mut LuaState, operation: Operation) -> LuaResult<u32> {
     let text = super::text::read_text(state, 1, "casing")?;
     let result = match operation {
         Operation::Fold => CaseMapper::new().fold_string(&text).into_owned(),
         _ => {
             let bytes = super::storage::current_locale_bytes(state)?;
-            map_case(&text, operation, &parse_locale(&bytes)?)
+            map_case(&text, operation, &super::parse_locale(&bytes, "casing")?.id)
         }
     };
     push_result(state, &result)
@@ -74,7 +62,7 @@ fn apply_context(state: &mut LuaState, operation: Operation) -> LuaResult<u32> {
     let text = super::text::read_text(state, 2, "casing")?;
     let result = match operation {
         Operation::Fold => CaseMapper::new().fold_string(&text).into_owned(),
-        _ => map_case(&text, operation, &parse_locale(&bytes)?),
+        _ => map_case(&text, operation, &super::parse_locale(&bytes, "casing")?.id),
     };
     push_result(state, &result)
 }

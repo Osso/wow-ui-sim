@@ -14,17 +14,6 @@ pub(super) fn register_context(state: &mut LuaState, metatable: GcRef<Table>) ->
     table_set_rust_fn_static(state, metatable, "TransformLocale", context)
 }
 
-fn parse_locale(bytes: &[u8]) -> LuaResult<Locale> {
-    let wow_tag = bytes.len() == 4 && bytes.iter().all(u8::is_ascii_alphabetic);
-    let tag = if wow_tag {
-        [bytes[..2].to_vec(), vec![b'-'], bytes[2..].to_vec()].concat()
-    } else {
-        bytes.to_vec()
-    };
-    Locale::try_from_utf8(&tag)
-        .map_err(|_| runtime_error("transform locale must be a valid ICU locale identifier"))
-}
-
 fn global(state: &mut LuaState) -> LuaResult<u32> {
     let bytes = super::storage::current_locale_bytes(state)?;
     apply(state, &bytes, 1)
@@ -36,7 +25,7 @@ fn context(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn apply(state: &mut LuaState, bytes: &[u8], index: i32) -> LuaResult<u32> {
-    let locale = parse_locale(bytes)?;
+    let locale = super::parse_locale(bytes, "transform")?;
     let result = transform(locale, stack_val(state, index))?;
     let value = state.gc.intern_string(result.as_bytes());
     state.push(Val::Str(value));
