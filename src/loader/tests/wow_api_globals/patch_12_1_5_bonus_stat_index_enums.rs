@@ -3,6 +3,12 @@
 use crate::lua_api::WowLuaEnv;
 
 fn assert_bonus_stat_publication(env: &WowLuaEnv, ptr: bool) {
+    assert_pinned_base_members(env);
+    assert_complete_reserved_range(env, ptr);
+    assert_metadata_and_member_count(env, ptr);
+}
+
+fn assert_pinned_base_members(env: &WowLuaEnv) {
     let register: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../data/patch-api/sources/12.1.5-register.json"
     ))
@@ -23,6 +29,9 @@ fn assert_bonus_stat_publication(env: &WowLuaEnv, ptr: bool) {
             .unwrap();
         assert_eq!(actual, expected, "preserved member {name}");
     }
+}
+
+fn assert_complete_reserved_range(env: &WowLuaEnv, ptr: bool) {
     env.exec(&format!(
         r#"
         for value = 83, 141 do
@@ -35,6 +44,9 @@ fn assert_bonus_stat_publication(env: &WowLuaEnv, ptr: bool) {
         "#
     ))
     .expect("complete reserved range publication");
+}
+
+fn assert_metadata_and_member_count(env: &WowLuaEnv, ptr: bool) {
     let actual: (i32, i32, i32, i32) = env
         .eval(
             r#"
