@@ -30,6 +30,8 @@ mod patch_12_1_5_create_frame_options;
 mod patch_12_1_5_fragment_id_enums;
 mod patch_12_1_5_housing_result_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_intl_casing;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_length;

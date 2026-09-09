@@ -1,4 +1,6 @@
-//! Locale storage and PTR Unicode normalization; no locale formatting algorithms.
+//! Locale storage and PTR Unicode text operations; no locale formatting algorithms.
+#[cfg(feature = "retail-12-1-5")]
+mod casing;
 #[cfg(feature = "retail-12-1-5")]
 mod normalization;
 #[cfg(feature = "retail-12-1-5")]
@@ -38,7 +40,8 @@ mod storage {
         table_set_rust_fn_static(state, namespace, "CreateLocaleContext", create)?;
         table_set_rust_fn_static(state, namespace, "GetCurrentLocale", current_locale)?;
         table_set_rust_fn_static(state, namespace, "Length", length)?;
-        super::normalization::register(state, namespace)
+        super::normalization::register(state, namespace)?;
+        super::casing::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
@@ -68,6 +71,7 @@ mod storage {
         table_set_rust_fn_static(state, metatable, "GetLocale", get_locale)?;
         table_set_rust_fn_static(state, metatable, "SetLocale", set_locale)?;
         table_set_rust_fn_static(state, metatable, "Length", context_length)?;
+        super::casing::register_context(state, metatable)?;
         table_set_static(
             state,
             Val::Table(metatable),
@@ -94,8 +98,12 @@ mod storage {
             .ok_or_else(|| runtime_error("incompatible locale context receiver"))
     }
 
+    pub(super) fn context_locale_bytes(state: &mut LuaState) -> LuaResult<Vec<u8>> {
+        Ok(context(state)?.locale.clone())
+    }
+
     fn get_locale(state: &mut LuaState) -> LuaResult<u32> {
-        let locale = context(state)?.locale.clone();
+        let locale = context_locale_bytes(state)?;
         let value = state.gc.intern_string(&locale);
         state.push(Val::Str(value));
         Ok(1)
@@ -121,13 +129,24 @@ mod storage {
         super::text::push_length(state, 2)
     }
 
-    fn current_locale(state: &mut LuaState) -> LuaResult<u32> {
+    pub(super) fn current_locale_bytes(state: &mut LuaState) -> LuaResult<Vec<u8>> {
         let getter = crate::c_api::global_val(state, "GetLocale");
         let result = call_function_state(state, getter, &[])?;
-        let value @ Val::Str(_) = result else {
+        let Val::Str(reference) = result else {
             return Err(runtime_error("GetLocale must return a string"));
         };
-        state.push(value);
+        state
+            .gc
+            .string_arena
+            .get(reference)
+            .map(|value| value.data().to_vec())
+            .ok_or_else(|| runtime_error("current locale string has been collected"))
+    }
+
+    fn current_locale(state: &mut LuaState) -> LuaResult<u32> {
+        let locale = current_locale_bytes(state)?;
+        let value = state.gc.intern_string(&locale);
+        state.push(Val::Str(value));
         Ok(1)
     }
 }
