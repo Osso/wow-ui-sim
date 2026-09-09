@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR region rounding controls
+
+`fd2ab64d6` adds earlier-retail absence proof for `GetRoundLayoutToNearestPixel` and `SetRoundLayoutToNearestPixel`; existing capture-replay tests prove the PTR per-region flag, dirty layout updates, and received geometry fixture for Frame, Texture, and FontString. [[patch-12-1-5-api-audit]] credits simulator behavior only: protected/secret enforcement, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native edges remain unclaimed. See [pixel layout rounding](../specs/pixel-layout-rounding.md) and [[ptr-pixel-rounding-probe]].
+
 ## [2026-09-09] audit | Credit PTR string extension simulator behavior
 
 `65704757d` and `a11406477` add PTR-only byte-oriented `string.contains`, `startswith`, `endswith`, `ltrim`, and `rtrim`. Focused tests cover literal/case matching, empty values, documented omitted trim defaults, one-sided byte-set trimming, NUL and invalid UTF-8 preservation, and earlier-retail absence. Byte-set/literal/case/explicit-nil choices are simulator assumptions; Unicode, locale, coercion, security, and native semantics remain unresolved. See [[patch-12-1-5-api-audit]] and [PTR Lua string extensions](../specs/lua-string-extensions.md).

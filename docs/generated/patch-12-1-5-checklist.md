@@ -220,8 +220,8 @@
 220. [evidence-required] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondNormal` — unsafe
 221. [evidence-required] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondRestricted` — unsafe
 222. [evidence-required] `added:SecretWhenLuaTableHasSecretKeys` — unsafe
-223. [evidence-required] `added:SimpleScriptRegion.GetRoundLayoutToNearestPixel` — unsafe
-224. [evidence-required] `added:SimpleScriptRegion.SetRoundLayoutToNearestPixel` — unsafe
+223. [best-effort] `added:SimpleScriptRegion.GetRoundLayoutToNearestPixel` — behavioral
+224. [best-effort] `added:SimpleScriptRegion.SetRoundLayoutToNearestPixel` — behavioral
 225. [best-effort] `added:TimedSignalMap` — behavioral
 226. [best-effort] `added:TimedSignalMap.CancelAllSignals` — behavioral
 227. [best-effort] `added:TimedSignalMap.CancelSignal` — behavioral

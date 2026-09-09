@@ -8634,47 +8634,89 @@
       "id": "added:SimpleScriptRegion.GetRoundLayoutToNearestPixel",
       "symbol": "SimpleScriptRegion.GetRoundLayoutToNearestPixel",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added SimpleScriptRegion method and its exact signature/security metadata.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/core_state/round_layout.rs",
+          "summary": "The retail-12-1-5 frame metatable registration stores and reads the per-region rounding flag and marks the rectangle dirty after setter updates.",
+          "source_hash": "2f7a1b8ed89c126a589df1e759f7f7d53f7149b5ccc1c806f87c4003e9b86851"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/pixel_rounding_probe.rs::ptr_native_round_layout_matches_captured_fractional_geometry",
+          "summary": "Focused PTR capture-replay proof verifies default/updated flags and Frame, Texture, and FontString layout behavior against the received rounding fixture.",
+          "source_hash": "a023a87b30b5b1864c5e2e44f14ddfc79b30804c96e6398b7b6a2ad88079044d"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_round_layout.rs::round_layout_methods_remain_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies both methods remain absent on Frame, Texture, and FontString before and after post-load bootstrap while existing region methods still work. Proof commit fd2ab64d6.",
+          "source_hash": "16f630e2514c2c3a6b30bbde3e81dbbf37995b92a7828280eef7916f7d37c9a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/pixel_rounding_probe.rs::ptr_native_round_layout_matches_captured_fractional_geometry",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_round_layout.rs::round_layout_methods_remain_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "fd2ab64d6",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR capture-replay proof verifies Frame, Texture, and FontString default false and getter round trips the per-region flag; enabling it marks layout dirty and the captured requested geometry resolves through the simulator rounding model. Earlier retail keeps the getter absent before and after post-load bootstrap. The captured geometry supports the documented simulator rounding model; protected, secret, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:SimpleScriptRegion.SetRoundLayoutToNearestPixel",
       "symbol": "SimpleScriptRegion.SetRoundLayoutToNearestPixel",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added SimpleScriptRegion method and its exact signature/security metadata.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/core_state/round_layout.rs",
+          "summary": "The retail-12-1-5 frame metatable registration stores and reads the per-region rounding flag and marks the rectangle dirty after setter updates.",
+          "source_hash": "2f7a1b8ed89c126a589df1e759f7f7d53f7149b5ccc1c806f87c4003e9b86851"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/pixel_rounding_probe.rs::ptr_native_round_layout_matches_captured_fractional_geometry",
+          "summary": "Focused PTR capture-replay proof verifies default/updated flags and Frame, Texture, and FontString layout behavior against the received rounding fixture.",
+          "source_hash": "a023a87b30b5b1864c5e2e44f14ddfc79b30804c96e6398b7b6a2ad88079044d"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_round_layout.rs::round_layout_methods_remain_absent_on_retail",
+          "summary": "Focused earlier-retail proof verifies both methods remain absent on Frame, Texture, and FontString before and after post-load bootstrap while existing region methods still work. Proof commit fd2ab64d6.",
+          "source_hash": "16f630e2514c2c3a6b30bbde3e81dbbf37995b92a7828280eef7916f7d37c9a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/pixel_rounding_probe.rs::ptr_native_round_layout_matches_captured_fractional_geometry",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_round_layout.rs::round_layout_methods_remain_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "fd2ab64d6",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR capture-replay proof verifies Frame, Texture, and FontString setter publication, default false, dirty/layout updates, toggle-off restoration, and captured geometry behavior; earlier retail keeps the setter absent before and after post-load bootstrap. The setter is documented protected with secret arguments disallowed, but those enforcement contracts, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:TimedSignalMap",

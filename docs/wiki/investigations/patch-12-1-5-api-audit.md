@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 280 best-effort and 169 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 282 best-effort and 167 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -21,6 +21,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | `C_Intl` and `LuaLocaleContext` algorithms | Generated signatures only; no simulator namespace or locale object | evidence-required / unsafe | Unicode normalization, segmentation, collation, formatting, locale state, nil/error cases, and taint/secret semantics |
 | PTR locale option enums | Commit `50958d938` with focused client-profile exact-map/metadata and earlier-retail absence proof for `BreakType`, `CollationStrength`, `CurrencyNameStyle`, `DateTimeStyle`, `LocaleTransform`, `NormalizationForm`, `NumberStyle`, and `PluralType` | 45 best-effort / behavioral rows | `C_Intl`, Unicode, locale algorithms, formatting/collation/normalization behavior, coercion, and security/native semantics |
 | `Enum.WeatherType` | Commits `286d0d3f7` and `17c085065` with focused PTR exact-map/metadata and earlier-retail absence tests | 6 best-effort / behavioral rows | Weather state, events, intensity, rendering, coercion, security, and native semantics |
+| `SimpleScriptRegion` rounding controls | Commit `fd2ab64d6` adds earlier-retail Frame/Texture/FontString absence proof; existing PTR capture replay proves flag/default, dirty-layout, and captured geometry behavior | 2 best-effort / behavioral rows | Protected and secret enforcement, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native-edge behavior |
 | Player-data flag enums | Commit `96b91aa4b` with focused PTR exact one-member maps/metadata and earlier-retail absence tests | 4 best-effort / behavioral rows | Player-data, logging, gameplay, consumers, coercion, security, and native semantics |
 | `C_Weather`, `WeatherInfo`, `WEATHER_CHANGED` | Commits `c77963250`, `42457f475`, and `b4943dcf6`; focused PTR simulator-state/snapshot and explicit event-injection tests plus earlier-retail absence | 5 best-effort / simulator behavioral rows | Native weather values, initial intensity/range, automatic transitions, event timing/payload, rendering, and security semantics |
 | `C_ActionBar.IsMacroActionWithShowTooltip` | Commits `80d312c5a`, `e53298cce`, and `96c186c1c`; focused PTR macro-body, assignment/edit/move/replacement/deletion tests and earlier-retail absence | 1 best-effort / modeled behavioral row | Directive case/line/token parsing and validation are simulator assumptions; macro conditional/token resolution, secret/taint/protected behavior, and native valid-slot semantics remain unproven |

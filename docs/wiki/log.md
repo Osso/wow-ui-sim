@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR region rounding controls
+
+`fd2ab64d6` supplies client-retail method-absence coverage for Frame, Texture, and FontString; existing `pixel_rounding_probe` capture replay establishes the PTR flag/default/dirty-layout and captured geometry behavior. `SimpleScriptRegion.GetRoundLayoutToNearestPixel` and `.SetRoundLayoutToNearestPixel` are best-effort simulator behavior only. Protected/secret enforcement, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native edges remain unresolved.
+
 ## [2026-09-09] audit | Credit PTR string extension simulator behavior
 
 `65704757d` implements five added PTR string methods; `a11406477` records the bounded source/test contract. Focused PTR proof covers byte-preserving literal/case matching, empty inputs and needles, one-sided byte-set trimming, the documented omitted trim default, and NUL/invalid UTF-8 bytes. Earlier retail omits all five methods. Byte-set/literal/case/explicit-nil choices are simulator assumptions; Unicode, locale, coercion, `AllowedWhenUntainted`, taint, secret, protected, forbidden, invalid-input, string-view identity/lifetime, and native-edge semantics remain unclaimed. Totals: 280 best-effort, 169 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [PTR Lua string extensions](../specs/lua-string-extensions.md).
