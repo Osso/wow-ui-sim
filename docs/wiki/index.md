@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR HousingResult publication
+
+`e6ea692ba`/`950b8fb28` publish the exact 113-value PTR `HousingResult` map and preserve the 112-value earlier-retail map. [[patch-12-1-5-api-audit]] records numeric proof only; housing behavior remains unresolved.
+
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
 [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, `867bcc8ea`, `286d0d3f7`, `96b91aa4b`, `50958d938`, `16a89f7b2`, and `abcd763cb` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, `Enum.CurioRarity`, `Enum.WeatherType`, player-data flag enums, eight locale option enum maps, the `Enum.TieredEntranceType` target map, the PTR `Enum.TransmogIllusionFlags` 1/2/4/8 map while deliberately preserving earlier-retail 1/2 drift, and the PTR `Enum.TooltipDataLineType` 52-member map while deliberately preserving actual earlier-retail 47-member/0/43/44 drift; totals are 206 best-effort and 243 evidence-required. This is not runtime acceptance.

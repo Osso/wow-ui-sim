@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 206 best-effort and 243 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 249 best-effort and 200 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -30,6 +30,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | `Enum.TieredEntranceType` | Commit `16a89f7b2` with focused PTR and earlier-retail exact-map/metadata tests | 3 best-effort / behavioral rows | Placeholder meaning, consumers, validation, coercion, and security/native semantics |
 | `Enum.TransmogIllusionFlags` | Commit `abcd763cb` with focused PTR exact-map/metadata and actual earlier-retail drift-preservation tests | 2 best-effort / numeric publication rows | Pinned base expects `1/2/4` and `1/4/3`; actual earlier retail intentionally remains `1/2` and `1/2/2`, so this is not base-conformance proof. Gameplay, security, and native semantics remain unclaimed |
 | `Enum.TooltipDataLineType` | Commits `bb72d4031` and `28330eedd` with focused profile publication test | 3 best-effort / numeric publication rows | PTR publishes the exact 52-member target and metadata `0/51/52`; actual earlier retail intentionally retains 47 members with stale `0/43/44` metadata before/after bootstrap, not the pinned 50-member base. This is not base-conformance proof; tooltip rendering, gameplay, security, and native semantics remain unclaimed |
+| `Enum.HousingResult` | Commits `e6ea692ba` and `950b8fb28` with focused profile exact-map/metadata tests | 43 best-effort / numeric publication rows | PTR publishes the exact 113-member target with `MessageTooLong = 71`, 41 shifted values, and metadata `0/112/113`; earlier retail retains the exact 112-member base table and metadata `0/111/112` before/after bootstrap. Housing gameplay, security, and native semantics remain unclaimed |
 | Other new enums and metadata | Numeric generated values are available | evidence-required / unsafe | PTR-only publication tests and preservation on earlier profiles |
 | Existing timed-signal, rounding, and math work | Prior focused tests or implementations exist for selected contracts | evidence-required pending row linkage | Exact occurrence-to-test/commit evidence and explicit limits |
 | Removed declarations | Two generated removals | evidence-required / unsafe | PTR absence and excluded-profile preservation |

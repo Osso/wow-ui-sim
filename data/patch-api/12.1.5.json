@@ -5107,7 +5107,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/enum_data/addon_system.rs",
           "summary": "Profile-gated CurioRarity publication retains the four base numeric values outside retail-12-1-5 and adds EpicTier2 = 5 for retail-12-1-5.",
-          "source_hash": "d27196fa5b2749f537f58953cc1de4313f1cc30f6044d1abdbcc92e4ebd79789"
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
         },
         {
           "kind": "source",
@@ -5782,24 +5782,45 @@
       "id": "added:Enum.HousingResult.MessageTooLong",
       "symbol": "Enum.HousingResult.MessageTooLong",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MessageTooLong = 71 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail omits MessageTooLong within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.LocaleTransform",
@@ -10039,7 +10060,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/enum_data/addon_system.rs",
           "summary": "Profile-gated CurioRarity publication retains the four base numeric values outside retail-12-1-5 and adds EpicTier2 = 5 for retail-12-1-5.",
-          "source_hash": "d27196fa5b2749f537f58953cc1de4313f1cc30f6044d1abdbcc92e4ebd79789"
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
         },
         {
           "kind": "source",
@@ -12311,967 +12332,1849 @@
       "id": "changed:Enum.HousingResult",
       "symbol": "Enum.HousingResult",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult numeric publication: PTR publishes the exact 113-member target table with MessageTooLong = 71, shifts every prior member from MissingCoreFixture through UnlockOperationFailed by one, and metadata 0/112/113; earlier retail retains the exact 112-member pinned base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.MissingCoreFixture",
       "symbol": "Enum.HousingResult.MissingCoreFixture",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MissingCoreFixture = 72 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.MissingCoreFixture = 71 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.MissingDye",
       "symbol": "Enum.HousingResult.MissingDye",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MissingDye = 73 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.MissingDye = 72 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.MissingExpansionAccess",
       "symbol": "Enum.HousingResult.MissingExpansionAccess",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MissingExpansionAccess = 74 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.MissingExpansionAccess = 73 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.MissingFactionMap",
       "symbol": "Enum.HousingResult.MissingFactionMap",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MissingFactionMap = 75 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.MissingFactionMap = 74 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.MissingPrivateNeighborhoodInvite",
       "symbol": "Enum.HousingResult.MissingPrivateNeighborhoodInvite",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MissingPrivateNeighborhoodInvite = 76 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.MissingPrivateNeighborhoodInvite = 75 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.MoreHouseSlotsNeeded",
       "symbol": "Enum.HousingResult.MoreHouseSlotsNeeded",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MoreHouseSlotsNeeded = 77 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.MoreHouseSlotsNeeded = 76 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.MoreSignaturesNeeded",
       "symbol": "Enum.HousingResult.MoreSignaturesNeeded",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.MoreSignaturesNeeded = 78 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.MoreSignaturesNeeded = 77 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.NeighborhoodNotFound",
       "symbol": "Enum.HousingResult.NeighborhoodNotFound",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.NeighborhoodNotFound = 79 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.NeighborhoodNotFound = 78 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.NoNeighborhoodOwnershipRequests",
       "symbol": "Enum.HousingResult.NoNeighborhoodOwnershipRequests",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.NoNeighborhoodOwnershipRequests = 80 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.NoNeighborhoodOwnershipRequests = 79 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.NotInDecorEditMode",
       "symbol": "Enum.HousingResult.NotInDecorEditMode",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.NotInDecorEditMode = 81 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.NotInDecorEditMode = 80 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.NotInFixtureEditMode",
       "symbol": "Enum.HousingResult.NotInFixtureEditMode",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.NotInFixtureEditMode = 82 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.NotInFixtureEditMode = 81 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.NotInLayoutEditMode",
       "symbol": "Enum.HousingResult.NotInLayoutEditMode",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.NotInLayoutEditMode = 83 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.NotInLayoutEditMode = 82 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.NotInsideHouse",
       "symbol": "Enum.HousingResult.NotInsideHouse",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.NotInsideHouse = 84 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.NotInsideHouse = 83 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.NotOnOwnedPlot",
       "symbol": "Enum.HousingResult.NotOnOwnedPlot",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.NotOnOwnedPlot = 85 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.NotOnOwnedPlot = 84 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.OperationAborted",
       "symbol": "Enum.HousingResult.OperationAborted",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.OperationAborted = 86 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.OperationAborted = 85 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.OwnerNotInGuild",
       "symbol": "Enum.HousingResult.OwnerNotInGuild",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.OwnerNotInGuild = 87 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.OwnerNotInGuild = 86 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PermissionDenied",
       "symbol": "Enum.HousingResult.PermissionDenied",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PermissionDenied = 88 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PermissionDenied = 87 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PlacementTargetInvalid",
       "symbol": "Enum.HousingResult.PlacementTargetInvalid",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PlacementTargetInvalid = 89 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PlacementTargetInvalid = 88 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PlayerNotFound",
       "symbol": "Enum.HousingResult.PlayerNotFound",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PlayerNotFound = 90 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PlayerNotFound = 89 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PlayerNotInInstance",
       "symbol": "Enum.HousingResult.PlayerNotInInstance",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PlayerNotInInstance = 91 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PlayerNotInInstance = 90 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PlotNotFound",
       "symbol": "Enum.HousingResult.PlotNotFound",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PlotNotFound = 92 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PlotNotFound = 91 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PlotNotVacant",
       "symbol": "Enum.HousingResult.PlotNotVacant",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PlotNotVacant = 93 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PlotNotVacant = 92 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PlotReservationCooldown",
       "symbol": "Enum.HousingResult.PlotReservationCooldown",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PlotReservationCooldown = 94 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PlotReservationCooldown = 93 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.PlotReserved",
       "symbol": "Enum.HousingResult.PlotReserved",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.PlotReserved = 95 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.PlotReserved = 94 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.RoomNotFound",
       "symbol": "Enum.HousingResult.RoomNotFound",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.RoomNotFound = 96 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.RoomNotFound = 95 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.RoomPlacementOutOfBounds",
       "symbol": "Enum.HousingResult.RoomPlacementOutOfBounds",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.RoomPlacementOutOfBounds = 97 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.RoomPlacementOutOfBounds = 96 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.RoomUpdateFailed",
       "symbol": "Enum.HousingResult.RoomUpdateFailed",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.RoomUpdateFailed = 98 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.RoomUpdateFailed = 97 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.RpcFailure",
       "symbol": "Enum.HousingResult.RpcFailure",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.RpcFailure = 99 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.RpcFailure = 98 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.ServiceNotAvailable",
       "symbol": "Enum.HousingResult.ServiceNotAvailable",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.ServiceNotAvailable = 100 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.ServiceNotAvailable = 99 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.StaticDataNotFound",
       "symbol": "Enum.HousingResult.StaticDataNotFound",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.StaticDataNotFound = 101 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.StaticDataNotFound = 100 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.TimeoutLimit",
       "symbol": "Enum.HousingResult.TimeoutLimit",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.TimeoutLimit = 102 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.TimeoutLimit = 101 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.TimerunningNotAllowed",
       "symbol": "Enum.HousingResult.TimerunningNotAllowed",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.TimerunningNotAllowed = 103 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.TimerunningNotAllowed = 102 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.TokenRequired",
       "symbol": "Enum.HousingResult.TokenRequired",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.TokenRequired = 104 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.TokenRequired = 103 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.TooManyRequests",
       "symbol": "Enum.HousingResult.TooManyRequests",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.TooManyRequests = 105 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.TooManyRequests = 104 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.TransactionFailure",
       "symbol": "Enum.HousingResult.TransactionFailure",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.TransactionFailure = 106 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.TransactionFailure = 105 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.UncollectedExteriorFixture",
       "symbol": "Enum.HousingResult.UncollectedExteriorFixture",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.UncollectedExteriorFixture = 107 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.UncollectedExteriorFixture = 106 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.UncollectedHouseType",
       "symbol": "Enum.HousingResult.UncollectedHouseType",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.UncollectedHouseType = 108 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.UncollectedHouseType = 107 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.UncollectedRoom",
       "symbol": "Enum.HousingResult.UncollectedRoom",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.UncollectedRoom = 109 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.UncollectedRoom = 108 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.UncollectedRoomMaterial",
       "symbol": "Enum.HousingResult.UncollectedRoomMaterial",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.UncollectedRoomMaterial = 110 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.UncollectedRoomMaterial = 109 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.UncollectedRoomTheme",
       "symbol": "Enum.HousingResult.UncollectedRoomTheme",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.UncollectedRoomTheme = 111 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.UncollectedRoomTheme = 110 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.HousingResult.UnlockOperationFailed",
       "symbol": "Enum.HousingResult.UnlockOperationFailed",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the complete HousingResult base and target numeric maps, MessageTooLong insertion, shifted values, and metadata delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/enum_data/addon_system.rs",
+          "summary": "Profile-gated enum publication retains the exact 112-member base map on earlier retail and publishes the exact 113-member PTR target map and metadata.",
+          "source_hash": "d49dfea48d72ecb81359335e8f2d3d0198f0200c9fae0eb5d19c1b6946ecfe57"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+          "summary": "Focused PTR proof verifies every target HousingResult member and metadata 0/112/113 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail",
+          "summary": "Focused earlier-retail proof verifies every base HousingResult member, MessageTooLong absence, and metadata 0/111/112 before and after post-load bootstrap. Proof commits e6ea692ba and 950b8fb28.",
+          "source_hash": "c8a39adf172ab1a494aceab39299b57c2922f1ef87c3d93f9177e657fa869013"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_housing_result_enums.rs::patch_12_1_5_housing_result_enums_preserves_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "950b8fb28",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only profile-gated HousingResult.UnlockOperationFailed = 112 numeric publication within the exact 113-member target table and metadata 0/112/113; earlier retail retains HousingResult.UnlockOperationFailed = 111 within the exact 112-member base table and metadata 0/111/112 before and after post-load bootstrap. Housing gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "changed:Enum.TieredEntranceType",
