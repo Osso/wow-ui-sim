@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR BonusStatIndex reserved-range publication
+
+`bc786d5e5` resolves 60 exact `Enum.BonusStatIndex` rows as best-effort/behavioral: the changed parent and `Reserved_83` through `Reserved_141`. Focused PTR proof preserves values 0–82, publishes every reserved value and metadata `0/141/142` before and after post-load bootstrap; focused earlier-retail proof preserves `0/82/83` and absence of every reserved addition. Stat/gameplay meaning, consumers, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 141 best-effort, 308 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
 ## [2026-09-09] audit | Credit PTR caster-name aura option normalization
 
 `894333d48` resolves four added `C_AuraContainerUtil` rows as best-effort/behavioral: `CustomAuraButtonCasterNameOptions`, `showRealmName`, `useClassColors`, and `ProcessCustomAuraButtonCasterNameOptions`. Focused PTR proof covers processor publication, nil/omitted/empty defaults to `false`, and all explicit boolean combinations; earlier-retail proof preserves processor absence. Rendering, realm formatting, class-color display, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 81 best-effort, 368 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
