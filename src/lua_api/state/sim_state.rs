@@ -72,6 +72,7 @@ pub struct SimState {
     pub account_store_items: HashMap<i64, AccountStoreItemInfo>,
     pub action_bars: HashMap<u32, u32>,
     pub action_outfits: HashMap<u32, i64>,
+    pub action_macros: HashMap<u32, u32>,
     pub equipped_gear_outfit_action_slots: HashSet<u32>,
     pub assisted_combat: AssistedCombatState,
     pub action_bar_page: u32,

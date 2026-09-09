@@ -25,14 +25,6 @@ if GetMacroBody == nil then
         return body
     end
 end
-if CreateMacro == nil then
-    function CreateMacro(_name, _icon, _body, perCharacter)
-        return perCharacter and 121 or 1
-    end
-end
-if DeleteMacro == nil then
-    function DeleteMacro(_indexOrName) end
-end
 if CursorHasMacro == nil then
     function CursorHasMacro() return false end
 end

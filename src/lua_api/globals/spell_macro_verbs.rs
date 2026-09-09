@@ -234,7 +234,58 @@ fn edit_macro(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// Allocates the first unused slot in the simulator's account/character range.
+fn create_macro(state: &mut LuaState) -> LuaResult<u32> {
+    let name = String::from_stack(state, 1)?;
+    let icon = String::from_stack(state, 2)?;
+    let body = String::from_stack(state, 3)?;
+    let per_character = Option::<bool>::from_stack(state, 4)?.unwrap_or(false);
+    if name.is_empty() {
+        return Err(rilua::runtime_error("macro name must not be empty"));
+    }
+    let range = if per_character { 120..138 } else { 0..120 };
+    let id = {
+        let mut sim = borrow_state_mut(state)?;
+        let slot = range
+            .into_iter()
+            .find(|&slot| {
+                sim.macros
+                    .get(slot)
+                    .is_none_or(|entry| entry.name.is_empty())
+            })
+            .ok_or_else(|| rilua::runtime_error("macro storage is full"))?;
+        let length = sim.macros.len().max(slot + 1);
+        sim.macros.resize_with(length, MacroInfo::default);
+        sim.macros[slot] = MacroInfo { name, icon, body };
+        slot + 1
+    };
+    state.push(Val::Num(id as f64));
+    Ok(1)
+}
+
+/// Keep IDs stable; deletion clears associations rather than renumbering slots.
+fn delete_macro(state: &mut LuaState) -> LuaResult<u32> {
+    let macros = borrow_state_mut(state)?.macros.clone();
+    let Some(slot) = resolve_macro_slot(state, 1, &macros).filter(|&slot| slot < macros.len())
+    else {
+        return Ok(0);
+    };
+    let id = (slot + 1) as u32;
+    let mut sim = borrow_state_mut(state)?;
+    sim.macros[slot] = MacroInfo::default();
+    sim.action_macros.retain(|_, value| *value != id);
+    if sim.running_macro == Some(id) {
+        sim.running_macro = None;
+    }
+    if matches!(sim.cursor_item, Some(CursorInfo::Macro { macro_index }) if macro_index == id) {
+        sim.cursor_item = None;
+    }
+    Ok(0)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    LuaApiMut::register_function(lua, "CreateMacro", create_macro)?;
+    LuaApiMut::register_function(lua, "DeleteMacro", delete_macro)?;
     LuaApiMut::register_function(lua, "PickupSpell", pickup_spell)?;
     LuaApiMut::register_function(lua, "PickupTalent", pickup_talent)?;
     LuaApiMut::register_function(lua, "PickupPvpTalent", pickup_pvp_talent)?;

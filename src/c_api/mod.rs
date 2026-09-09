@@ -3,6 +3,7 @@
 //! Real/state-backed surfaces live at the root of this module. Intentionally
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
+pub mod action_macros;
 pub mod c_account_services;
 pub mod c_addon_profiler;
 pub mod c_addons;

@@ -290,6 +290,10 @@ fn register_photo_sharing(b: TableBuilder) -> LuaResult<TableBuilder> {
 fn register_inventory_and_mail(b: TableBuilder) -> LuaResult<TableBuilder> {
     let b = b
         .set_function("SetActionSlot", set_action_slot)?
+        .set_function(
+            "SetMacroActionSlot",
+            crate::c_api::action_macros::set_macro_action_slot,
+        )?
         .set_function("SetPetActionSlot", set_pet_action_slot)?
         .set_function("ClearActionSlot", clear_action_slot)?
         .set_function("ClearActionBars", clear_action_bars)?

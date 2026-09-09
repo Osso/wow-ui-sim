@@ -83,6 +83,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     register_pet_slot_methods(state, table_ref)?;
     register_stateful_methods(state, table_ref)?;
     register_slot_mutation_methods(state, table_ref)?;
+    crate::c_api::action_macros::register(state, table_ref)?;
     Ok(())
 }
 

@@ -18,9 +18,8 @@ pub(super) fn set_action_slot(state: &mut LuaState) -> LuaResult<u32> {
     let slot = u32::from_stack(state, 1)?;
     let spell_id = u32::from_stack(state, 2)?;
     let mut state = borrow_state_mut(state)?;
+    crate::c_api::action_macros::clear_slot(&mut state, slot);
     state.action_bars.insert(slot, spell_id);
-    state.action_outfits.remove(&slot);
-    state.equipped_gear_outfit_action_slots.remove(&slot);
     Ok(0)
 }
 
@@ -62,14 +61,13 @@ pub(super) fn set_pet_action_slot(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn clear_action_slot(state: &mut LuaState) -> LuaResult<u32> {
     let slot = u32::from_stack(state, 1)?;
     let mut state = borrow_state_mut(state)?;
-    state.action_bars.remove(&slot);
-    state.action_outfits.remove(&slot);
-    state.equipped_gear_outfit_action_slots.remove(&slot);
+    crate::c_api::action_macros::clear_slot(&mut state, slot);
     Ok(0)
 }
 
 pub(super) fn clear_action_bars(state: &mut LuaState) -> LuaResult<u32> {
     let mut state = borrow_state_mut(state)?;
+    state.action_macros.clear();
     state.action_bars.clear();
     state.action_outfits.clear();
     state.equipped_gear_outfit_action_slots.clear();

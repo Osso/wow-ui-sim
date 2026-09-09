@@ -180,15 +180,17 @@ fn pickup_action(state: &mut LuaState) -> LuaResult<u32> {
     let Ok(mut st) = borrow_state_mut(state) else {
         return Ok(0);
     };
-    let Some(spell_id) = st.action_bars.get(&slot).copied() else {
+    let cursor = if let Some(&macro_index) = st.action_macros.get(&slot) {
+        CursorInfo::Macro { macro_index }
+    } else if let Some(&spell_id) = st.action_bars.get(&slot) {
+        CursorInfo::Action { slot, spell_id }
+    } else {
         return Ok(0);
     };
     if !ignore_removal {
-        st.action_bars.remove(&slot);
-        st.action_outfits.remove(&slot);
-        st.equipped_gear_outfit_action_slots.remove(&slot);
+        crate::c_api::action_macros::clear_slot(&mut st, slot);
     }
-    st.cursor_item = Some(CursorInfo::Action { slot, spell_id });
+    st.cursor_item = Some(cursor);
     drop(st);
     if !ignore_removal {
         fire_actionbar_slot_changed(state);
@@ -200,7 +202,9 @@ fn pickup_action(state: &mut LuaState) -> LuaResult<u32> {
 
 fn has_action(state: &mut LuaState) -> LuaResult<u32> {
     let has = stack_u32(state, 1).is_some_and(|slot| {
-        action_spell_id(state, slot).is_some() || action_outfit_id(state, slot).is_some()
+        action_spell_id(state, slot).is_some()
+            || action_outfit_id(state, slot).is_some()
+            || borrow_state(state).is_ok_and(|sim| sim.action_macros.contains_key(&slot))
     });
     state.push(Val::Bool(has));
     Ok(1)
@@ -230,6 +234,15 @@ fn get_action_info(state: &mut LuaState) -> LuaResult<u32> {
         let kind = create_string(state, "outfit");
         state.push(kind);
         state.push(Val::Num(outfit_id as f64));
+        state.push(Val::Nil);
+        return Ok(3);
+    }
+    let macro_id =
+        slot.and_then(|slot| borrow_state(state).ok()?.action_macros.get(&slot).copied());
+    if let Some(id) = macro_id {
+        let kind = create_string(state, "macro");
+        state.push(kind);
+        state.push(Val::Num(id as f64));
         state.push(Val::Nil);
         return Ok(3);
     }
@@ -392,18 +405,22 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
     let Some(cursor) = st.cursor_item.clone() else {
         return Ok(0);
     };
-    let spell_id = match cursor {
+    match cursor {
+        CursorInfo::Macro { macro_index } => {
+            crate::c_api::action_macros::assign_macro(&mut st, slot, macro_index)?;
+        }
         CursorInfo::Action { spell_id, .. }
         | CursorInfo::Spell { spell_id }
-        | CursorInfo::PetAction { spell_id, .. } => spell_id,
-        CursorInfo::Talent { talent_id, .. } => talent_id,
-        CursorInfo::Item { .. } | CursorInfo::Macro { .. } | CursorInfo::Money { .. } => {
-            return Ok(0);
+        | CursorInfo::PetAction { spell_id, .. } => {
+            crate::c_api::action_macros::clear_slot(&mut st, slot);
+            st.action_bars.insert(slot, spell_id);
         }
-    };
-    st.action_bars.insert(slot, spell_id);
-    st.action_outfits.remove(&slot);
-    st.equipped_gear_outfit_action_slots.remove(&slot);
+        CursorInfo::Talent { talent_id, .. } => {
+            crate::c_api::action_macros::clear_slot(&mut st, slot);
+            st.action_bars.insert(slot, talent_id);
+        }
+        CursorInfo::Item { .. } | CursorInfo::Money { .. } => return Ok(0),
+    }
     st.cursor_item = None;
     drop(st);
     fire_actionbar_slot_changed(state);

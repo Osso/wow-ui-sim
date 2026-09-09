@@ -411,7 +411,9 @@ fn has_action(state: &mut LuaState) -> LuaResult<u32> {
     let has_action = {
         let sim = borrow_state(state)?;
         slot.is_some_and(|slot| {
-            sim.action_bars.contains_key(&slot) || sim.action_outfits.contains_key(&slot)
+            sim.action_bars.contains_key(&slot)
+                || sim.action_outfits.contains_key(&slot)
+                || sim.action_macros.contains_key(&slot)
         })
     };
     state.push(Val::Bool(has_action));
@@ -440,7 +442,9 @@ fn is_usable_action(state: &mut LuaState) -> LuaResult<u32> {
     let usable = {
         let sim = borrow_state(state)?;
         slot.is_some_and(|slot| {
-            sim.action_bars.contains_key(&slot) || sim.action_outfits.contains_key(&slot)
+            sim.action_bars.contains_key(&slot)
+                || sim.action_outfits.contains_key(&slot)
+                || sim.action_macros.contains_key(&slot)
         })
     };
     state.push(Val::Bool(usable));
@@ -513,22 +517,27 @@ fn put_action_in_slot(state: &mut LuaState) -> LuaResult<u32> {
         let mut sim = borrow_state_mut(state)?;
         sim.action_outfits.remove(&source)
     };
+    let moved_macro = borrow_state_mut(state)?.action_macros.remove(&source);
     if let Some(spell_id) = moved_spell {
         let mut sim = borrow_state_mut(state)?;
+        crate::c_api::action_macros::clear_slot(&mut sim, target);
         sim.action_bars.insert(target, spell_id);
-        sim.action_outfits.remove(&target);
         sim.equipped_gear_outfit_action_slots.remove(&source);
         sim.equipped_gear_outfit_action_slots.remove(&target);
     } else if let Some(outfit_id) = moved_outfit {
         let mut sim = borrow_state_mut(state)?;
         let is_equipped_gear = sim.equipped_gear_outfit_action_slots.remove(&source);
-        sim.action_bars.remove(&target);
+        crate::c_api::action_macros::clear_slot(&mut sim, target);
         sim.action_outfits.insert(target, outfit_id);
         if is_equipped_gear {
             sim.equipped_gear_outfit_action_slots.insert(target);
         } else {
             sim.equipped_gear_outfit_action_slots.remove(&target);
         }
+    } else if let Some(id) = moved_macro {
+        let mut sim = borrow_state_mut(state)?;
+        crate::c_api::action_macros::assign_macro(&mut sim, target, id)?;
+        sim.equipped_gear_outfit_action_slots.remove(&source);
     } else {
         return push_bool(state, false);
     }
