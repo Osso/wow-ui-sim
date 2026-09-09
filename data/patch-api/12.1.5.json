@@ -326,7 +326,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774"
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177"
         },
         {
           "kind": "test",
@@ -368,7 +368,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -440,13 +440,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "Focused PTR tests establish C_Intl locale-independent ICU 2.1.1 default full case-folding for valid UTF-8 and earlier-retail absence."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -680,7 +680,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774"
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177"
         },
         {
           "kind": "test",
@@ -768,7 +768,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -818,7 +818,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774"
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177"
         },
         {
           "kind": "source",
@@ -868,7 +868,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -986,13 +986,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "Focused PTR tests establish C_Intl locale-aware ICU 2.1.1 lowercase behavior for valid UTF-8, including current-locale selection and earlier-retail absence."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1041,13 +1041,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "PTR-only ICU 2.1.1 titlecasing applies the modeled per-word titlecase path to valid UTF-8 global and locale-context input."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -1096,13 +1096,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "Focused PTR tests establish C_Intl locale-aware ICU 2.1.1 uppercase behavior for valid UTF-8, including current-locale selection and earlier-retail absence."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1151,13 +1151,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/transform.rs",
-          "source_hash": "386a566248092cd8377b0d7d3127d2075425f2f4676a101a11974f8e23e302df",
+          "source_hash": "7f91d08bb7b13ea6a25e5d507c345a061842b582b5494221ce00ec58fcff5147",
           "summary": "PTR ICU 2.1.1 transforms canonicalize, maximize, minimize, and extract language, script, region, variants, or a modeled syntactic parent without mutating stored locale identifiers."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -8265,7 +8265,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774"
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177"
         },
         {
           "kind": "test",
@@ -8330,7 +8330,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -8402,13 +8402,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "Focused PTR tests establish locale-context ICU 2.1.1 default full case-folding for valid UTF-8 independent of the stored locale identifier."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -8619,7 +8619,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774"
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177"
         },
         {
           "kind": "test",
@@ -8679,7 +8679,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774"
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177"
         },
         {
           "kind": "source",
@@ -8793,7 +8793,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774"
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177"
         },
         {
           "kind": "test",
@@ -8829,13 +8829,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "Focused PTR tests establish locale-context ICU 2.1.1 lowercase behavior for valid UTF-8 using independently stored locale identifiers."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -8884,13 +8884,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "PTR-only ICU 2.1.1 titlecasing applies the modeled per-word titlecase path to valid UTF-8 global and locale-context input."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -8939,13 +8939,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/casing.rs",
-          "source_hash": "191244bbfa6085f41e58c599e7cb6f33d6bbf16d2395f2a95f4b75e231fa2dbf",
+          "source_hash": "d6107ca659bb599214798da86315e375e496d648470892c611b088a0c6ce6ad2",
           "summary": "Focused PTR tests establish locale-context ICU 2.1.1 uppercase behavior for valid UTF-8 using independently stored locale identifiers."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -8994,13 +8994,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl/transform.rs",
-          "source_hash": "386a566248092cd8377b0d7d3127d2075425f2f4676a101a11974f8e23e302df",
+          "source_hash": "7f91d08bb7b13ea6a25e5d507c345a061842b582b5494221ce00ec58fcff5147",
           "summary": "PTR ICU 2.1.1 transforms canonicalize, maximize, minimize, and extract language, script, region, variants, or a modeled syntactic parent without mutating stored locale identifiers."
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "8b5d36437bab912988ac127bf7c9b91932cad892f5c0eaaf156b8c7a4bac9774",
+          "source_hash": "6c8dedc881306c9acf96fe361b2f0240836dc425b441ede7fcfce9c5406ba177",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
