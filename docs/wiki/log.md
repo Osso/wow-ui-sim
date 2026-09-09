@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit cooldown threshold publication
+
+Commit `88c705aa7` resolves three changed `FrameAPICooldown` threshold rows as best-effort/behavioral: `GetCountdownAbbrevThreshold`, `SetCountdownMillisecondsThreshold`, and `GetCountdownMillisecondsThreshold`. Focused PTR and earlier-retail tests prove method publication, simulator-default numeric storage, literal numeric round trips, independent cooldown-frame state, and preserved abbreviation setter behavior. The generated `DurationSecondsPrimitive` → `Seconds` aliases do not establish native defaults, rendering/display effects, units/conversion, type/coercion, security/taint/secret/protected/forbidden behavior, invalid inputs, or native edges. Totals: 77 best-effort, 372 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
 ## [2026-09-09] audit | Credit PTR FragmentID publication
 
 Commit `5e5e46dd9` resolves 45 exact `Enum.FragmentID` rows as best-effort/behavioral: the changed parent enum, added `AuthMirrorState`, and 43 shifted members. Focused PTR proof derives and verifies the exact 78-member table plus `FragmentIDMeta` before and after the post-load bootstrap; focused earlier-retail proof preserves the exact prior table and metadata. Claims exclude gameplay meaning, consumers, validation, coercion, security/taint/secret/protected/forbidden behavior, invalid inputs, and native edges. Totals: 74 best-effort, 375 evidence-required, and 0 untriaged rows.

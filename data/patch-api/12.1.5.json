@@ -10327,47 +10327,87 @@
       "id": "changed:FrameAPICooldown.GetCountdownAbbrevThreshold",
       "symbol": "FrameAPICooldown.GetCountdownAbbrevThreshold",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact legacy numeric type alias to Seconds contract delta."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "5b7900952fe48df6bf569f9e46a3533664cb9c8cbea78d0e6673e3a5daaad3cd",
+          "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
+        },
+        {
+          "kind": "source",
+          "reference": "src/widget/frame_defaults.rs",
+          "source_hash": "8569cfa152df21891867ad7d83926f388c72b2539d0524f736e1dbde1c8124fc",
+          "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_cooldown_thresholds.rs::cooldown_threshold_abbrev_default_and_round_trip",
+          "source_hash": "ce3af4fba8f6db26135c52678d0d11ea279e4377efbb63b1faaca27026f5227f",
+          "summary": "Focused PTR and earlier-retail proof publishes GetCountdownAbbrevThreshold, reads the simulator-default numeric 0, and preserves SetCountdownAbbrevThreshold round trips for 5.25 and 0. Proof commit 88c705aa7."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_cooldown_thresholds.rs::cooldown_threshold_abbrev_default_and_round_trip"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88c705aa7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes GetCountdownAbbrevThreshold publication plus simulator per-frame numeric default/storage round trips, while preserving SetCountdownAbbrevThreshold behavior. The generated delta is a legacy numeric type alias to Seconds; this does not establish native defaults, countdown rendering/display effects, units or conversion, type identity/coercion, secret, taint, protected, forbidden, invalid-input, or native-edge behavior."
     },
     {
       "id": "changed:FrameAPICooldown.GetCountdownMillisecondsThreshold",
       "symbol": "FrameAPICooldown.GetCountdownMillisecondsThreshold",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact legacy numeric type alias to Seconds contract delta."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "5b7900952fe48df6bf569f9e46a3533664cb9c8cbea78d0e6673e3a5daaad3cd",
+          "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
+        },
+        {
+          "kind": "source",
+          "reference": "src/widget/frame_defaults.rs",
+          "source_hash": "8569cfa152df21891867ad7d83926f388c72b2539d0524f736e1dbde1c8124fc",
+          "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_cooldown_thresholds.rs::cooldown_threshold_milliseconds_default_and_round_trip",
+          "source_hash": "ce3af4fba8f6db26135c52678d0d11ea279e4377efbb63b1faaca27026f5227f",
+          "summary": "Focused PTR and earlier-retail proof publishes GetCountdownMillisecondsThreshold, reads the simulator-default numeric 0, and verifies per-frame literal numeric storage with independent cooldown state. Proof commit 88c705aa7."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_cooldown_thresholds.rs::cooldown_threshold_milliseconds_default_and_round_trip"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88c705aa7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes GetCountdownMillisecondsThreshold publication plus simulator per-frame numeric default/storage round trips and independent frame state. The generated delta is a legacy numeric type alias to Seconds; this does not establish native defaults, countdown rendering/display effects, units or conversion, type identity/coercion, secret, taint, protected, forbidden, invalid-input, or native-edge behavior."
     },
     {
       "id": "changed:FrameAPICooldown.GetMinimumCountdownDuration",
@@ -10534,24 +10574,44 @@
       "id": "changed:FrameAPICooldown.SetCountdownMillisecondsThreshold",
       "symbol": "FrameAPICooldown.SetCountdownMillisecondsThreshold",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact legacy numeric type alias to Seconds contract delta."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "5b7900952fe48df6bf569f9e46a3533664cb9c8cbea78d0e6673e3a5daaad3cd",
+          "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
+        },
+        {
+          "kind": "source",
+          "reference": "src/widget/frame_defaults.rs",
+          "source_hash": "8569cfa152df21891867ad7d83926f388c72b2539d0524f736e1dbde1c8124fc",
+          "summary": "Cooldown frame defaults initialize threshold storage to numeric 0 in the simulator; this is simulator state, not a native-default claim."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_cooldown_thresholds.rs::cooldown_threshold_milliseconds_default_and_round_trip",
+          "source_hash": "ce3af4fba8f6db26135c52678d0d11ea279e4377efbb63b1faaca27026f5227f",
+          "summary": "Focused PTR and earlier-retail proof publishes SetCountdownMillisecondsThreshold and verifies literal numeric storage through GetCountdownMillisecondsThreshold, including independent cooldown frame state. Proof commit 88c705aa7."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_cooldown_thresholds.rs::cooldown_threshold_milliseconds_default_and_round_trip"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "88c705aa7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes SetCountdownMillisecondsThreshold publication plus simulator per-frame literal numeric storage through its paired getter and independent frame state. The generated delta is a legacy numeric type alias to Seconds; this does not establish native defaults, countdown rendering/display effects, units or conversion, type identity/coercion, secret, taint, protected, forbidden, invalid-input, or native-edge behavior."
     },
     {
       "id": "changed:FrameAPICooldown.SetMinimumCountdownDuration",

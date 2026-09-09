@@ -377,8 +377,8 @@
 377. [evidence-required] `changed:Enum.TooltipDataLineType` — unsafe
 378. [evidence-required] `changed:Enum.TransmogIllusionFlags` — unsafe
 379. [evidence-required] `changed:FrameAPICooldown.Clear` — unsafe
-380. [evidence-required] `changed:FrameAPICooldown.GetCountdownAbbrevThreshold` — unsafe
-381. [evidence-required] `changed:FrameAPICooldown.GetCountdownMillisecondsThreshold` — unsafe
+380. [best-effort] `changed:FrameAPICooldown.GetCountdownAbbrevThreshold` — behavioral
+381. [best-effort] `changed:FrameAPICooldown.GetCountdownMillisecondsThreshold` — behavioral
 382. [evidence-required] `changed:FrameAPICooldown.GetMinimumCountdownDuration` — unsafe
 383. [evidence-required] `changed:FrameAPICooldown.SetCooldown` — unsafe
 384. [evidence-required] `changed:FrameAPICooldown.SetCooldownDuration` — unsafe
@@ -386,7 +386,7 @@
 386. [evidence-required] `changed:FrameAPICooldown.SetCooldownFromExpirationTime` — unsafe
 387. [evidence-required] `changed:FrameAPICooldown.SetCooldownUNIX` — unsafe
 388. [evidence-required] `changed:FrameAPICooldown.SetCountdownAbbrevThreshold` — unsafe
-389. [evidence-required] `changed:FrameAPICooldown.SetCountdownMillisecondsThreshold` — unsafe
+389. [best-effort] `changed:FrameAPICooldown.SetCountdownMillisecondsThreshold` — behavioral
 390. [evidence-required] `changed:FrameAPICooldown.SetMinimumCountdownDuration` — unsafe
 391. [evidence-required] `changed:LuaDurationManualClock.AdvanceTime` — unsafe
 392. [evidence-required] `changed:LuaDurationManualClock.RewindTime` — unsafe
