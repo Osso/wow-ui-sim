@@ -23,11 +23,11 @@ mod patch_12_1_5_aura_application_options;
 mod patch_12_1_5_aura_caster_name_options;
 mod patch_12_1_5_bag_forbidden_enums;
 mod patch_12_1_5_bonus_stat_index_enums;
-#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
-mod patch_12_1_5_intl_enums;
 mod patch_12_1_5_cooldown_thresholds;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_fragment_id_enums;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_intl_enums;
 mod patch_12_1_5_player_data_flag_enums;
 mod patch_12_1_5_table_count_info;
 mod patch_12_1_5_table_util_removal;
