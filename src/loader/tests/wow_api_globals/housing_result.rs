@@ -77,6 +77,8 @@ const RETAIL_12_1_HOUSING_RESULT_NAMES: &[&str] = &[
     "MaxPetDecorReached",
     "MaxPreviewDecorReached",
     "MaxStorageDecorReached",
+    #[cfg(feature = "retail-12-1-5")]
+    "MessageTooLong",
     "MissingCoreFixture",
     "MissingDye",
     "MissingExpansionAccess",
@@ -287,18 +289,20 @@ fn test_patch_12_1_housing_result_values() {
                     return name .. ":value=" .. tostring(namespace[name])
                 end
             end
-            if table.count(namespace) ~= 112 then return "count" end
-            if metadata.MinValue ~= 0 or metadata.MaxValue ~= 111 or metadata.NumValues ~= 112 then
+            if table.count(namespace) ~= {expected_count} then return "count" end
+            if metadata.MinValue ~= 0 or metadata.MaxValue ~= {expected_max} or metadata.NumValues ~= {expected_count} then
                 return "metadata"
             end
             return "ok"
         "#,
         expected_lua = expected_lua,
+        expected_count = RETAIL_12_1_HOUSING_RESULT_NAMES.len(),
+        expected_max = RETAIL_12_1_HOUSING_RESULT_NAMES.len() - 1,
     );
     let result: String = env.eval(&script).unwrap();
     assert_eq!(
         result, "ok",
-        "HousingResult did not match the 12.1 source register"
+        "HousingResult did not match the active profile source register"
     );
 }
 

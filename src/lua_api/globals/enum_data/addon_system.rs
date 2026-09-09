@@ -630,6 +630,8 @@ pub const HOUSING_RESULT: SeqEnumDef = (
         "MaxPetDecorReached",
         "MaxPreviewDecorReached",
         "MaxStorageDecorReached",
+        #[cfg(feature = "retail-12-1-5")]
+        "MessageTooLong",
         "MissingCoreFixture",
         "MissingDye",
         "MissingExpansionAccess",
@@ -677,7 +679,11 @@ pub const HOUSING_RESULT: SeqEnumDef = (
 #[cfg(feature = "retail-12-1-0")]
 pub const HOUSING_RESULT_META: EnumDef = (
     "HousingResultMeta",
-    &[("MinValue", 0), ("MaxValue", 111), ("NumValues", 112)],
+    &[
+        ("MinValue", 0),
+        ("MaxValue", HOUSING_RESULT.1.len() as i64 - 1),
+        ("NumValues", HOUSING_RESULT.1.len() as i64),
+    ],
 );
 
 #[cfg(feature = "retail-12-1-0")]
