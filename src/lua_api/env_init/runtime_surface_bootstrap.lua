@@ -1516,6 +1516,10 @@ __global_mt.__index = function(t, key)
   if value ~= nil then
     return value
   end
+  local absentNamespaces = rawget(t, "__wow_absent_namespaces")
+  if type(absentNamespaces) == "table" and rawget(absentNamespaces, key) then
+    return nil
+  end
   if __wow_preserve_nil_global(key) then
     return nil
   end

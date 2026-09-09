@@ -159,6 +159,8 @@ fn register_world(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_zone_and_economy(b: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(feature = "retail-12-1-5")]
+    let b = b.set_function("SetWeather", crate::c_api::c_weather::set_weather)?;
     b.set_function("SetZone", set_zone)?
         .set_function("SetSubZone", set_sub_zone)?
         .set_function("SetBindLocation", set_bind_location)?

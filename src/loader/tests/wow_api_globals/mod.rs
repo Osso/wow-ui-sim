@@ -40,6 +40,8 @@ mod patch_12_1_5_timed_signal_map;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_tooltip_line_enums;
 mod patch_12_1_5_transmog_illusion_flags;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_weather;
 mod patch_12_1_5_weather_type_enums;
 
 macro_rules! active_retail_12_0_0_test_modules {

@@ -38,6 +38,10 @@ pub fn is_registerable_event(name: &str) -> bool {
 
 #[cfg(feature = "retail-12-0-0")]
 pub fn is_registerable_event(name: &str) -> bool {
+    #[cfg(feature = "retail-12-1-5")]
+    if name == "WEATHER_CHANGED" {
+        return true;
+    }
     #[cfg(feature = "retail-12-1-0")]
     if PATCH_12_1_REMOVED_REGISTERABLE_EVENTS
         .binary_search(&name)

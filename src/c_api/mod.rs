@@ -62,6 +62,7 @@ pub mod c_texture;
 pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-1-0")]
 pub mod c_unit_auras;
+pub(crate) mod c_weather;
 pub mod c_widget;
 pub mod c_wow_token_public;
 pub mod c_wowtoken_secure;
@@ -94,6 +95,7 @@ use rilua::vm::state::LuaState;
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_loot_history::register_c_loot_history(state)?;
+    c_weather::register(state)?;
     #[cfg(feature = "retail-12-1-0")]
     c_aura_container_util::register(state)?;
     #[cfg(feature = "retail-12-1-0")]

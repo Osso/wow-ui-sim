@@ -17,6 +17,8 @@ macro_rules! build_empty_sim_state {
         Self {
             widgets: WidgetRegistry::with_physical_height($runtime.screen_height),
             events: EventQueue::default(),
+            #[cfg(feature = "retail-12-1-5")]
+            weather: crate::c_api::c_weather::WeatherState::default(),
             scripts: ScriptRegistry::default(),
             cvars: CVarStorage::new(),
             console_output: $collections.console_output,
