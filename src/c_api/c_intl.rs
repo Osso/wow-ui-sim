@@ -7,6 +7,8 @@ mod casing;
 mod normalization;
 #[cfg(feature = "retail-12-1-5")]
 mod text;
+#[cfg(feature = "retail-12-1-5")]
+mod transform;
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
@@ -44,7 +46,8 @@ mod storage {
         table_set_rust_fn_static(state, namespace, "Length", length)?;
         super::normalization::register(state, namespace)?;
         super::casing::register(state, namespace)?;
-        super::breaks::register(state, namespace)
+        super::breaks::register(state, namespace)?;
+        super::transform::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
@@ -76,6 +79,7 @@ mod storage {
         table_set_rust_fn_static(state, metatable, "Length", context_length)?;
         super::casing::register_context(state, metatable)?;
         super::breaks::register_context(state, metatable)?;
+        super::transform::register_context(state, metatable)?;
         table_set_static(
             state,
             Val::Table(metatable),

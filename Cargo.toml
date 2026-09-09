@@ -14,6 +14,7 @@ members = [".", "xtask"]
 [dependencies]
 icu_casemap = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
 icu_locale_core = { version = "=2.1.1", default-features = false, features = ["alloc"] }
+icu_locale = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
 icu_normalizer = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
 icu_segmenter = { version = "=2.1.1", default-features = false, features = ["compiled_data", "auto"] }
 # mlua removed — rilua is the sole Lua VM

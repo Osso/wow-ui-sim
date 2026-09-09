@@ -7565,6 +7565,7 @@ dependencies = [
  "iced_runtime",
  "iced_wgpu",
  "icu_casemap",
+ "icu_locale",
  "icu_locale_core",
  "icu_normalizer",
  "icu_segmenter",
