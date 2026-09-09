@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR locale-context storage
+
+`61bf36927` resolves five locale-context declarations as bounded simulator behavior: PTR exposes opaque userdata contexts with independent byte identifiers, `GetLocale`/`SetLocale`, and current-locale consistency; earlier retail omits `C_Intl` and no global type table is published. Identifier validation and setter-success rules are explicit simulator assumptions. See [[locale-context-storage]], [opaque locale contexts](../specs/intl-locale-context.md), and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model opaque PTR locale contexts
+
+[[locale-context-storage]] records the C API boundary, profile registration, state isolation, and exclusions for locale parsing, canonicalization, Unicode, formatting, and security semantics.
+
 ## [2026-09-09] audit | Credit PTR duration core simulator behavior
 
 `9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` credit manual-clock advance/rewind and duration start/end plus elapsed/remaining/total queries as bounded simulator behavior. [[duration-core]] preserves native timing, type identity, security, and forbidden behavior as unresolved.

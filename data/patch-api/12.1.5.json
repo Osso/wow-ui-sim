@@ -311,24 +311,38 @@
       "id": "added:C_Intl.CreateLocaleContext",
       "symbol": "C_Intl.CreateLocaleContext",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added locale-context declaration and its exact signature or script-object contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
+          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
+          "summary": "Focused PTR tests establish C_Intl.CreateLocaleContext publication, independent opaque userdata contexts, verbatim locale storage, atomic failed setter behavior, and earlier-retail C_Intl absence. Identifier validation is a simulator assumption, not native locale conformance. Proof commit 61bf36927.",
+          "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR CreateLocaleContext publication and independent opaque locale-context userdata: tested identifiers are stored verbatim, successful SetLocale mutates only its receiver, invalid simulator identifiers fail atomically, and earlier retail preserves C_Intl absence. Identifier validation, success/failure details, secret/taint behavior, canonicalization, BCP/ICU semantics, and native edges remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:C_Intl.FindBreaks",
@@ -587,24 +601,38 @@
       "id": "added:C_Intl.GetCurrentLocale",
       "symbol": "C_Intl.GetCurrentLocale",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added locale-context declaration and its exact signature or script-object contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
+          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
+          "summary": "Focused PTR tests establish C_Intl.GetCurrentLocale publication and equality with the existing GetLocale value; earlier retail preserves C_Intl absence. It does not model locale selection or canonicalization. Proof commit 61bf36927.",
+          "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCurrentLocale publication and consistency with the existing GetLocale value; context mutation does not change that value, and earlier retail preserves C_Intl absence. Locale selection, canonicalization, BCP/ICU semantics, secret/taint behavior, and native edges remain unclaimed."
     },
     {
       "id": "added:C_Intl.GetDisplayName",
@@ -7944,24 +7972,38 @@
       "id": "added:LuaLocaleContext",
       "symbol": "LuaLocaleContext",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added script-object occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added locale-context declaration and its exact signature or script-object contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
+          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
+          "summary": "Focused PTR tests establish the returned object is independent userdata with opaque locale storage; no LuaLocaleContext global type table is published. Earlier retail preserves C_Intl and global-type absence. Proof commit 61bf36927.",
+          "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish LuaLocaleContext as returned opaque userdata with independent storage and no global LuaLocaleContext type table; earlier retail preserves both C_Intl and global-type absence. Other context methods, canonicalization, identifier semantics, security, and native edges remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.CompareStrings",
@@ -8220,24 +8262,38 @@
       "id": "added:LuaLocaleContext.GetLocale",
       "symbol": "LuaLocaleContext.GetLocale",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added locale-context declaration and its exact signature or script-object contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
+          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
+          "summary": "Focused PTR tests establish GetLocale returns each context\u2019s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
+          "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish GetLocale returns each context\u2019s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.GetSortKey",
@@ -8358,24 +8414,38 @@
       "id": "added:LuaLocaleContext.SetLocale",
       "symbol": "LuaLocaleContext.SetLocale",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added locale-context declaration and its exact signature or script-object contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
+          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
+          "summary": "Focused PTR tests establish SetLocale updates one context on successful simulator validation and returns false without mutation on invalid identifiers; earlier retail preserves absence. Proof commit 61bf36927.",
+          "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish SetLocale returns true after successful simulator validation and false without mutation for tested invalid identifiers, while preserving independent contexts and earlier-retail absence. Validation rules, canonicalization, secret/taint behavior, and native edges are simulator assumptions or unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.ToLower",

@@ -5,7 +5,7 @@
 5. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors` — behavioral
 6. [best-effort] `added:C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions` — behavioral
 7. [evidence-required] `added:C_Intl.CompareStrings` — unsafe
-8. [evidence-required] `added:C_Intl.CreateLocaleContext` — unsafe
+8. [best-effort] `added:C_Intl.CreateLocaleContext` — behavioral
 9. [evidence-required] `added:C_Intl.FindBreaks` — unsafe
 10. [evidence-required] `added:C_Intl.FindStringMatches` — unsafe
 11. [evidence-required] `added:C_Intl.FoldCase` — unsafe
@@ -17,7 +17,7 @@
 17. [evidence-required] `added:C_Intl.GetCharacterProperties` — unsafe
 18. [evidence-required] `added:C_Intl.GetCurrencyFractionDigits` — unsafe
 19. [evidence-required] `added:C_Intl.GetCurrencyName` — unsafe
-20. [evidence-required] `added:C_Intl.GetCurrentLocale` — unsafe
+20. [best-effort] `added:C_Intl.GetCurrentLocale` — behavioral
 21. [evidence-required] `added:C_Intl.GetDisplayName` — unsafe
 22. [evidence-required] `added:C_Intl.GetSortKey` — unsafe
 23. [evidence-required] `added:C_Intl.IsNormalized` — unsafe
@@ -190,7 +190,7 @@
 190. [best-effort] `added:Enum.WeatherType.Sandstorm` — behavioral
 191. [best-effort] `added:Enum.WeatherType.Snow` — behavioral
 192. [evidence-required] `added:GetScriptBucketThrottleLimits` — unsafe
-193. [evidence-required] `added:LuaLocaleContext` — unsafe
+193. [best-effort] `added:LuaLocaleContext` — behavioral
 194. [evidence-required] `added:LuaLocaleContext.CompareStrings` — unsafe
 195. [evidence-required] `added:LuaLocaleContext.FindBreaks` — unsafe
 196. [evidence-required] `added:LuaLocaleContext.FindStringMatches` — unsafe
@@ -202,13 +202,13 @@
 202. [evidence-required] `added:LuaLocaleContext.FormatTime` — unsafe
 203. [evidence-required] `added:LuaLocaleContext.GetCurrencyName` — unsafe
 204. [evidence-required] `added:LuaLocaleContext.GetDisplayName` — unsafe
-205. [evidence-required] `added:LuaLocaleContext.GetLocale` — unsafe
+205. [best-effort] `added:LuaLocaleContext.GetLocale` — behavioral
 206. [evidence-required] `added:LuaLocaleContext.GetSortKey` — unsafe
 207. [evidence-required] `added:LuaLocaleContext.Length` — unsafe
 208. [evidence-required] `added:LuaLocaleContext.ParseCurrency` — unsafe
 209. [evidence-required] `added:LuaLocaleContext.ParseNumber` — unsafe
 210. [evidence-required] `added:LuaLocaleContext.SelectPlural` — unsafe
-211. [evidence-required] `added:LuaLocaleContext.SetLocale` — unsafe
+211. [best-effort] `added:LuaLocaleContext.SetLocale` — behavioral
 212. [evidence-required] `added:LuaLocaleContext.ToLower` — unsafe
 213. [evidence-required] `added:LuaLocaleContext.ToTitle` — unsafe
 214. [evidence-required] `added:LuaLocaleContext.ToUpper` — unsafe

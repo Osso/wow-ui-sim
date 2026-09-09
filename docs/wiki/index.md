@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR locale-context storage
+
+`61bf36927` credits `C_Intl.CreateLocaleContext`, `GetCurrentLocale`, `LuaLocaleContext`, `GetLocale`, and `SetLocale` as bounded PTR opaque-userdata behavior. Identifiers stay uninterpreted; validation and setter-success rules are simulator assumptions. Unicode, canonicalization, formatting, security, and other context methods remain unresolved. See [[locale-context-storage]] and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model opaque PTR locale contexts
+
+[[locale-context-storage]] records independent opaque userdata identifiers, context mutation, current-locale consistency, and earlier-retail absence. It does not model BCP validation, ICU, Unicode, or formatting.
+
 ## [2026-09-09] audit | Credit PTR duration core simulator behavior
 
 `9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` credit seven changed duration rows for manual-clock advance/rewind plus ordinary start/end configuration and elapsed/remaining/total queries. [[duration-core]] documents the modeled formulas and cooldown proxy boundary; native timing, type identity, security, and forbidden behavior remain unclaimed.
@@ -36,7 +44,7 @@
 
 ## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
 
-[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, `867bcc8ea`, `286d0d3f7`, `96b91aa4b`, `50958d938`, `16a89f7b2`, and `abcd763cb` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, `Enum.CurioRarity`, `Enum.WeatherType`, player-data flag enums, eight locale option enum maps, the `Enum.TieredEntranceType` target map, the PTR `Enum.TransmogIllusionFlags` 1/2/4/8 map while deliberately preserving earlier-retail 1/2 drift, the PTR `Enum.TooltipDataLineType` 52-member map while deliberately preserving actual earlier-retail 47-member/0/43/44 drift, the exact PTR `HousingResult` 113-member map, bounded TimedSignalMap behavior, and bounded weather simulator proof; totals are 274 best-effort and 175 evidence-required. This is not runtime acceptance.
+[[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]] bind Gethe `12.1.0.69587` to `12.1.5.69594` through a 449-row semantic generated-documentation register: 262 added, 185 changed, and two removed occurrences. Commits `5e5e46dd9`, `88c705aa7`, `894333d48`, `bc786d5e5`, `867bcc8ea`, `286d0d3f7`, `96b91aa4b`, `50958d938`, `16a89f7b2`, and `abcd763cb` credit exact PTR-only `Enum.FragmentID`, bounded cooldown-threshold storage, caster-name option normalization, the complete `Enum.BonusStatIndex.Reserved_83`–`Reserved_141` publication, `Enum.CurioRarity`, `Enum.WeatherType`, player-data flag enums, eight locale option enum maps, the `Enum.TieredEntranceType` target map, the PTR `Enum.TransmogIllusionFlags` 1/2/4/8 map while deliberately preserving earlier-retail 1/2 drift, the PTR `Enum.TooltipDataLineType` 52-member map while deliberately preserving actual earlier-retail 47-member/0/43/44 drift, the exact PTR `HousingResult` 113-member map, bounded TimedSignalMap behavior, and bounded weather simulator proof; totals are 294 best-effort and 155 evidence-required. This is not runtime acceptance.
 
 ## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
 
