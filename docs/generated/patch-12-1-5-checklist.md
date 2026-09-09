@@ -20,9 +20,9 @@
 20. [best-effort] `added:C_Intl.GetCurrentLocale` — behavioral
 21. [evidence-required] `added:C_Intl.GetDisplayName` — unsafe
 22. [evidence-required] `added:C_Intl.GetSortKey` — unsafe
-23. [evidence-required] `added:C_Intl.IsNormalized` — unsafe
+23. [best-effort] `added:C_Intl.IsNormalized` — behavioral
 24. [evidence-required] `added:C_Intl.Length` — unsafe
-25. [evidence-required] `added:C_Intl.Normalize` — unsafe
+25. [best-effort] `added:C_Intl.Normalize` — behavioral
 26. [evidence-required] `added:C_Intl.ParseCurrency` — unsafe
 27. [evidence-required] `added:C_Intl.ParseNumber` — unsafe
 28. [evidence-required] `added:C_Intl.SelectPlural` — unsafe

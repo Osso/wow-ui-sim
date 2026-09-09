@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR ICU normalization
+
+`33ff9c993` credits `C_Intl.Normalize` and `C_Intl.IsNormalized` for PTR-only ICU 2.1.1 NFC/NFD/NFKC/NFKD behavior on valid UTF-8, predicate consistency, and earlier-retail absence. Invalid UTF-8/form errors and one-result Normalize handling are explicit simulator policy; native failure behavior, Unicode version, cstring embedded-NUL, coercion, and security remain unresolved. See [[intl-normalization]] and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU normalization
+
+Added [[intl-normalization]] with C API registration, ICU dependency pin, test coverage, and source-versus-simulator boundaries.
+
 ## [2026-09-09] audit | Credit PTR locale-context storage
 
 `61bf36927` resolves five locale-context declarations as bounded simulator behavior: PTR exposes opaque userdata contexts with independent byte identifiers, `GetLocale`/`SetLocale`, and current-locale consistency; earlier retail omits `C_Intl` and no global type table is published. Identifier validation and setter-success rules are explicit simulator assumptions. See [[locale-context-storage]], [opaque locale contexts](../specs/intl-locale-context.md), and [[patch-12-1-5-api-audit]].

@@ -326,7 +326,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
         },
         {
           "kind": "test",
@@ -616,7 +616,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
         },
         {
           "kind": "test",
@@ -684,24 +684,56 @@
       "id": "added:C_Intl.IsNormalized",
       "symbol": "C_Intl.IsNormalized",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added C_Intl normalization declaration, required cstring and NormalizationForm arguments, return contract, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/normalization.rs",
+          "source_hash": "5e7424a066cc580e1326bdf89d4171d3545ccba724d293ff426d640f73e46ba9",
+          "summary": "PTR C_Intl normalization validates UTF-8 and a four-form numeric selector, then delegates NFC/NFD/NFKC/NFKD operations and predicates to ICU normalizers."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb",
+          "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "b05dc01fd1d11ed1fb19f3c969b3b758ab9fb3d6738a26d9f00b603d4d1f7ff1",
+          "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "de80c12d50be5e9f03f10c6cf1bc08692ddfd72c616f08c6e90a412ddb658abd",
+          "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_normalization.rs",
+          "source_hash": "d9bf409d5bfe45a5c01a99ca93cefb85c0f85afccaa4fa820cf9076048c66be1",
+          "summary": "Focused PTR tests cover all four forms, canonical combining order, Hangul composition/decomposition, compatibility ligature decomposition, idempotence, empty input, predicate consistency, and chosen invalid-input errors; earlier-retail tests preserve C_Intl absence. Proof commit 33ff9c993."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_normalization.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "33ff9c993",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR IsNormalized publication and four-form ICU 2.1.1 predicate consistency for valid UTF-8 input. The simulator rejects invalid UTF-8, invalid form selectors, and wrong Lua types. Invalid-input behavior, Unicode data-version equivalence, embedded-NUL cstring semantics, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:C_Intl.Length",
@@ -730,24 +762,56 @@
       "id": "added:C_Intl.Normalize",
       "symbol": "C_Intl.Normalize",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added C_Intl normalization declaration, required cstring and NormalizationForm arguments, return contract, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/normalization.rs",
+          "source_hash": "5e7424a066cc580e1326bdf89d4171d3545ccba724d293ff426d640f73e46ba9",
+          "summary": "PTR C_Intl normalization validates UTF-8 and a four-form numeric selector, then delegates NFC/NFD/NFKC/NFKD operations and predicates to ICU normalizers."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb",
+          "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "b05dc01fd1d11ed1fb19f3c969b3b758ab9fb3d6738a26d9f00b603d4d1f7ff1",
+          "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "de80c12d50be5e9f03f10c6cf1bc08692ddfd72c616f08c6e90a412ddb658abd",
+          "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_normalization.rs",
+          "source_hash": "d9bf409d5bfe45a5c01a99ca93cefb85c0f85afccaa4fa820cf9076048c66be1",
+          "summary": "Focused PTR tests cover all four forms, canonical combining order, Hangul composition/decomposition, compatibility ligature decomposition, idempotence, empty input, predicate consistency, and chosen invalid-input errors; earlier-retail tests preserve C_Intl absence. Proof commit 33ff9c993."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_normalization.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "33ff9c993",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR Normalize publication and four-form ICU 2.1.1 normalization for valid UTF-8 input. The simulator rejects invalid UTF-8, invalid form selectors, and wrong Lua types; Normalize returns one string for accepted input despite the source MayReturnNothing annotation. Invalid-input/no-return behavior, Unicode data-version equivalence, embedded-NUL cstring semantics, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:C_Intl.ParseCurrency",
@@ -7987,7 +8051,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
         },
         {
           "kind": "test",
@@ -8277,7 +8341,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
         },
         {
           "kind": "test",
@@ -8429,7 +8493,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "92c7d0d75f7593d85656a8846dfd9c43b6303216ff8bc1955ae421647283ba21"
+          "source_hash": "4f7199916e676ec7c7f87c8cce88e1daf16668f9274c9bf2e64d4ddaa63a5fcb"
         },
         {
           "kind": "test",
