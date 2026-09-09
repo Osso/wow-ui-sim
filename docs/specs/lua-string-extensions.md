@@ -6,12 +6,12 @@ Five PTR-only string methods provide byte-oriented matching and one-sided trimmi
 
 The byte-set, case-sensitive, literal-matching semantics below are **simulator assumptions requested for this implementation**, not independently observed native behavior. The register establishes two required `stringView` matching arguments and one boolean return; trims accept `str` plus `characters` with default ` \r\n\t` and return one `stringView`.
 
-- [ ] PTR publishes `string.contains`, `startswith`, `endswith`, `ltrim`, and `rtrim`; earlier retail omits them.
-- [ ] Matching operates literally and case-sensitively on arbitrary bytes. Empty needles match, including empty inputs; nonempty needles do not match empty inputs.
-- [ ] Trimming removes only consecutive bytes belonging to the supplied byte set from the selected edge; the opposite edge remains unchanged. Empty sets remove nothing.
-- [ ] Omitted trim characters use exactly space, carriage return, line feed, and tab, not vertical tab or form feed. Explicit nil uses the same default as a simulator convention.
-- [ ] NUL and invalid UTF-8 survive matching and trimming unchanged; no text decoding or Lua pattern expansion occurs.
-- [ ] Existing `string.trim` and global `strtrim` behavior remains unchanged.
+- [x] PTR publishes `string.contains`, `startswith`, `endswith`, `ltrim`, and `rtrim`; earlier retail omits them.
+- [x] Matching operates literally and case-sensitively on arbitrary bytes. Empty needles match, including empty inputs; nonempty needles do not match empty inputs.
+- [x] Trimming removes only consecutive bytes belonging to the supplied byte set from the selected edge; the opposite edge remains unchanged. Empty sets remove nothing.
+- [x] Omitted trim characters use exactly space, carriage return, line feed, and tab, not vertical tab or form feed.
+- [x] NUL and invalid UTF-8 survive matching and trimming unchanged; no text decoding or Lua pattern expansion occurs.
+- [x] Existing `string.trim` and global `strtrim` behavior remains unchanged.
 
 ## How it works
 
@@ -30,7 +30,8 @@ The byte-set, case-sensitive, literal-matching semantics below are **simulator a
 
 ## Known gaps (current cycle)
 
-- [ ] Confirm modeled byte-set, case, literal, empty-needle, and nil-default semantics against native PTR observations.
+- [ ] Confirm modeled byte-set, case, literal, and empty-needle semantics against native PTR observations.
+- [ ] Explicit nil currently uses the omitted trim default; this simulator convention lacks focused/native proof.
 - [ ] Validate the pinned `AllowedWhenUntainted` security contract independently.
 
 ## Out of scope
