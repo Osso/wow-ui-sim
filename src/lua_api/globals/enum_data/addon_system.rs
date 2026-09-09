@@ -681,8 +681,8 @@ pub const HOUSING_RESULT_META: EnumDef = (
     "HousingResultMeta",
     &[
         ("MinValue", 0),
-        ("MaxValue", HOUSING_RESULT.1.len() as i64 - 1),
-        ("NumValues", HOUSING_RESULT.1.len() as i64),
+        ("MaxValue", HOUSING_RESULT.1.len() as i32 - 1),
+        ("NumValues", HOUSING_RESULT.1.len() as i32),
     ],
 );
 
