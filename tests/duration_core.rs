@@ -54,6 +54,7 @@ fn duration_core_end_span_reset_and_validation() {
         assert(d:IsZero() and d:GetTotalDuration() == 0 and d:GetModRate() == 1)
         assert(d:GetStartTime() == 0 and d:GetEndTime() == 0)
         assert(d:GetClock() == c and d:GetClockTime() == 12)
+        assert(not d:HasStarted() and not d:HasExpired() and not d:IsActive())
         d:SetTimeFromStart(10, 0)
         assert(d:IsZero() and d:GetRemainingDuration() == 0 and not d:IsActive())
         d:SetToDefaults()

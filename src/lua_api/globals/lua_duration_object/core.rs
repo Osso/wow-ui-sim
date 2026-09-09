@@ -208,8 +208,12 @@ fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
         Query::Rate => Val::Num(timing.rate),
         Query::Clock => Val::Num(clock_time(state, object)?),
         Query::Zero => Val::Bool(timing.base == 0.0),
-        Query::Started => Val::Bool(clock_time(state, object)? >= timing.start),
-        Query::Expired => Val::Bool(clock_time(state, object)? >= timing.end()),
+        Query::Started => {
+            Val::Bool(timing.base > 0.0 && clock_time(state, object)? >= timing.start)
+        }
+        Query::Expired => {
+            Val::Bool(timing.base > 0.0 && clock_time(state, object)? >= timing.end())
+        }
         Query::Active => {
             let now = clock_time(state, object)?;
             Val::Bool(timing.base > 0.0 && now >= timing.start && now < timing.end())
