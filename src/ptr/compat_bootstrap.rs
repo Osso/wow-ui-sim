@@ -20,6 +20,8 @@ const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
     include_str!("intl_enums.lua"),
     "\n",
     include_str!("compat_bootstrap.lua"),
+    "\n",
+    include_str!("tooltip_data_line_type.lua"),
 );
 const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua");
 
