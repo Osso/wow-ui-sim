@@ -436,6 +436,18 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
         )?;
     #[cfg(feature = "retail-12-1-5")]
     crate::c_api::timed_signal_map::register_c_timer_timed_signal_map(state)?;
+    #[cfg(not(feature = "retail-12-1-5"))]
+    {
+        // Keep namespace lookup from fabricating the PTR-only factory.
+        let removed = crate::lua_bridge::create_table(state);
+        crate::lua_bridge::table_set_static(state, removed, "NewTimedSignalMap", Val::Bool(true));
+        crate::lua_bridge::table_set_static(
+            state,
+            Val::Table(c_timer_ref),
+            "__wow_removed_keys",
+            removed,
+        );
+    }
 
     Ok(())
 }
