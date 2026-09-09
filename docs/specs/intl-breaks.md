@@ -4,12 +4,12 @@ PTR `C_Intl.FindBreaks` and `LuaLocaleContext:FindBreaks` return Unicode break b
 
 ## What it must do
 
-- [ ] Accept required UTF-8 text and BreakType 0–3; return one fresh numeric array of byte offsets.
-- [ ] Support grapheme clusters, words, sentences, and line breaks with existing ICU 2.1.1 compiled data.
-- [ ] Preserve multibyte byte offsets, combining sequences and emoji boundaries.
-- [ ] Validate context receivers without interpreting or changing their opaque locale identifiers.
-- [ ] Reject malformed UTF-8, nonstrings, and invalid break types without mutation.
-- [ ] Keep the APIs absent on earlier retail and preserve existing Intl behavior.
+- [x] Accept required UTF-8 text and BreakType 0–3; return one fresh numeric array of byte offsets.
+- [x] Support grapheme clusters, words, sentences, and line breaks with existing ICU 2.1.1 compiled data.
+- [x] Preserve multibyte byte offsets, combining sequences and emoji boundaries.
+- [x] Validate context receivers without interpreting or changing their opaque locale identifiers.
+- [x] Reject malformed UTF-8, nonstrings, and invalid break types without mutation.
+- [x] Keep the APIs absent on earlier retail and preserve existing Intl behavior.
 
 Simulator assumptions, not native conformance: offsets are zero-based UTF-8 byte boundaries including zero and the final byte length. Empty input follows ICU's single zero boundary. All contexts use locale-independent default segmentation. Valid input returns a table; native `MayReturnNothing` conditions remain unknown.
 
