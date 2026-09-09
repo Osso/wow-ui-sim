@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR ICU locale transforms
+
+`15a52023b` and `1b287e67e` credit `C_Intl.TransformLocale` and `LuaLocaleContext.TransformLocale` for PTR-only modeled ICU 2.1.1 canonicalization, likely-subtag transforms, component extraction, syntactic parent reduction, context independence, invalid-input behavior, and earlier-retail absence. WoW-tag translation, serialization, empty components, variant order, parent policy, `MayReturnNothing`, CLDR/Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR locale transforms](../specs/intl-locale-transform.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR locale transforms
+
+[PTR locale transforms](../specs/intl-locale-transform.md) records the ICU dependency pin, return-only context behavior, selector coverage, and simulator/native boundary.
+
 ## [2026-09-09] audit | Credit PTR ICU titlecasing
 
 `0081d03f0` and `bd3d6a330` credit `C_Intl.ToTitle` and `LuaLocaleContext.ToTitle` for PTR-only modeled ICU 2.1.1 per-word titlecasing on valid UTF-8, punctuation/spacing preservation, focused locale cases, and earlier-retail absence. Word segmentation, default ICU options, malformed-input/`MayReturnNothing` behavior, locale translation, Unicode version, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR Unicode titlecasing](../specs/intl-titlecase.md) and [[patch-12-1-5-api-audit]].

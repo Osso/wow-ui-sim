@@ -29,7 +29,7 @@
 29. [best-effort] `added:C_Intl.ToLower` — behavioral
 30. [best-effort] `added:C_Intl.ToTitle` — behavioral
 31. [best-effort] `added:C_Intl.ToUpper` — behavioral
-32. [evidence-required] `added:C_Intl.TransformLocale` — unsafe
+32. [best-effort] `added:C_Intl.TransformLocale` — behavioral
 33. [evidence-required] `added:C_Intl.Transliterate` — unsafe
 34. [evidence-required] `added:C_LFGInfo.GetActiveLFGDungeonName` — unsafe
 35. [evidence-required] `added:C_PvP.IsTrainingGroundsArena` — unsafe
@@ -212,7 +212,7 @@
 212. [best-effort] `added:LuaLocaleContext.ToLower` — behavioral
 213. [best-effort] `added:LuaLocaleContext.ToTitle` — behavioral
 214. [best-effort] `added:LuaLocaleContext.ToUpper` — behavioral
-215. [evidence-required] `added:LuaLocaleContext.TransformLocale` — unsafe
+215. [best-effort] `added:LuaLocaleContext.TransformLocale` — behavioral
 216. [evidence-required] `added:RequiresTimedSignalMapAccess` — unsafe
 217. [evidence-required] `added:ScriptBucketThrottleLimits` — unsafe
 218. [evidence-required] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstNormal` — unsafe

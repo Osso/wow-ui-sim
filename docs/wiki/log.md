@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR ICU locale transforms
+
+`15a52023b` and `1b287e67e` credit `C_Intl.TransformLocale` and `LuaLocaleContext.TransformLocale` for PTR-only modeled ICU 2.1.1 canonicalization, likely-subtag transforms, component extraction, syntactic parent reduction, context independence, invalid-input behavior, and earlier-retail absence. WoW-tag translation, serialization, empty components, variant order, parent policy, `MayReturnNothing`, CLDR/Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR locale transforms](../specs/intl-locale-transform.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR locale transforms
+
+[PTR locale transforms](../specs/intl-locale-transform.md) records the ICU dependency pin, return-only context behavior, selector coverage, and simulator/native boundary.
+
 ## [2026-09-09] audit | Credit PTR FindBreaks behavior
 
 `d86f5c177`, `2744e14ba`, and `e30cf16b0` credit `C_Intl.FindBreaks` and `LuaLocaleContext.FindBreaks` for focused PTR ICU 2.1.1 grapheme, word, sentence, and line UTF-8 byte-boundary tables plus earlier-retail absence. Zero-based endpoints, empty-input handling, locale-independent segmentation, validation, optional returns, Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR Intl breaks](../specs/intl-breaks.md) and [[patch-12-1-5-api-audit]].
