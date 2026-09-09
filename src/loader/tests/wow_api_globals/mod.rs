@@ -26,6 +26,7 @@ mod patch_12_1_5_bonus_stat_index_enums;
 mod patch_12_1_5_cooldown_thresholds;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_fragment_id_enums;
+mod patch_12_1_5_player_data_flag_enums;
 mod patch_12_1_5_table_count_info;
 mod patch_12_1_5_table_util_removal;
 mod patch_12_1_5_weather_type_enums;
