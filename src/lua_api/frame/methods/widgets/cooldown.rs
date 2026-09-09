@@ -529,15 +529,25 @@ pub(super) fn get_countdown_font_string(state: &mut LuaState) -> LuaResult<u32> 
     }
 }
 
+fn call_duration_method(state: &mut LuaState, object: Val, name: &str) -> LuaResult<Val> {
+    let key = Val::Str(state.gc.intern_string(name.as_bytes()));
+    let method = state.gettable(object, key)?;
+    call_function_state(state, method, &[object])
+}
+
+fn read_duration_number(state: &mut LuaState, object: Val, name: &str) -> LuaResult<f64> {
+    match call_duration_method(state, object, name)? {
+        Val::Num(value) => Ok(value),
+        _ => Err(rilua::runtime_error(format!("{name} must return a number"))),
+    }
+}
+
 pub(super) fn set_from_duration_object(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let duration_object = stack_val(state, 2);
-    let zero = {
-        let is_zero = table_get(state, duration_object, "IsZero");
-        matches!(
-            call_function_state(state, is_zero, &[duration_object]),
-            Ok(Val::Bool(true))
-        )
+    let zero = match call_duration_method(state, duration_object, "IsZero")? {
+        Val::Bool(value) => value,
+        _ => return Err(rilua::runtime_error("IsZero must return a boolean")),
     };
     if zero {
         if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut_visual(id) {
@@ -546,21 +556,9 @@ pub(super) fn set_from_duration_object(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
 
-    let start = table_get(state, duration_object, "GetStartTime");
-    let duration = table_get(state, duration_object, "GetTotalDuration");
-    let mod_rate = table_get(state, duration_object, "GetModRate");
-    let start = match call_function_state(state, start, &[duration_object]) {
-        Ok(Val::Num(value)) => value,
-        _ => 0.0,
-    };
-    let duration = match call_function_state(state, duration, &[duration_object]) {
-        Ok(Val::Num(value)) => value,
-        _ => 0.0,
-    };
-    let mod_rate = match call_function_state(state, mod_rate, &[duration_object]) {
-        Ok(Val::Num(value)) => value,
-        _ => 1.0,
-    };
+    let start = read_duration_number(state, duration_object, "GetStartTime")?;
+    let duration = read_duration_number(state, duration_object, "GetTotalDuration")?;
+    let mod_rate = read_duration_number(state, duration_object, "GetModRate")?;
     let mut sim = borrow_state_mut(state)?;
     let Some(frame) = sim.widgets.get_mut_visual(id) else {
         return Ok(0);

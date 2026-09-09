@@ -2,6 +2,69 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::widget::Color;
 
 #[test]
+fn cooldown_consumes_real_duration_proxy_and_updates() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local d = C_DurationUtil.CreateDuration()
+        local cd = CreateFrame('Cooldown', 'DurationProxyCooldown')
+        d:SetTimeFromStart(10, 20, 2)
+        cd:SetCooldownFromDurationObject(d)
+        local start, total = cd:GetCooldownTimes()
+        assert(start == 10 and total == 10)
+        d:SetTimeFromStart(30, 12, 3)
+        cd:SetCooldownFromDurationObject(d)
+        start, total = cd:GetCooldownTimes()
+        assert(start == 30 and total == 4)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("DurationProxyCooldown").unwrap();
+    assert_eq!(state.widgets.get(id).unwrap().cooldown_mod_rate, 3.0);
+    drop(state);
+    env.exec(r#"
+        local d = C_DurationUtil.CreateDuration()
+        DurationProxyCooldown:SetCooldownFromDurationObject(d)
+        local start, total = DurationProxyCooldown:GetCooldownTimes()
+        assert(start == 0 and total == 0)
+        d:SetTimeFromStart(10, 20, 2)
+        DurationProxyCooldown:SetCooldownFromDurationObject(d)
+        d:Reset()
+        DurationProxyCooldown:SetCooldownFromDurationObject(d)
+        start, total = DurationProxyCooldown:GetCooldownTimes()
+        assert(start == 0 and total == 0)
+    "#).unwrap();
+}
+
+#[test]
+fn cooldown_duration_method_errors_propagate() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local cd = CreateFrame('Cooldown')
+        for _, name in ipairs({'IsZero', 'GetStartTime', 'GetTotalDuration', 'GetModRate'}) do
+            for _, lookupError in ipairs({false, true}) do
+                cd:SetCooldown(7, 9, 2)
+                local methods = {
+                    IsZero = function() return false end,
+                    GetStartTime = function() return 10 end,
+                    GetTotalDuration = function() return 20 end,
+                    GetModRate = function() return 2 end,
+                }
+                local proxy = setmetatable({}, {__index = function(_, key)
+                    if key == name then
+                        if lookupError then error('lookup:' .. name) end
+                        return function() error('call:' .. name) end
+                    end
+                    return methods[key]
+                end})
+                local ok, message = pcall(cd.SetCooldownFromDurationObject, cd, proxy)
+                assert(not ok and string.find(message, name, 1, true))
+                local start, total = cd:GetCooldownTimes()
+                assert(start == 7 and total == 9)
+            end
+        end
+    "#).unwrap();
+}
+
+#[test]
 fn cooldown_set_tex_coord_range_persists_vector_bounds() {
     let env = WowLuaEnv::new().unwrap();
 
