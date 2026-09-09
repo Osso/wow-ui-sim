@@ -182,9 +182,6 @@ fn parse_create_frame_args(state: &mut LuaState) -> LuaResult<CreateFrameArgs> {
     let arg_count = state.top.saturating_sub(state.base);
     let arg2 = stack_val(state, 2);
     let arg3 = stack_val(state, 3);
-    let arg4 = stack_val(state, 4);
-    let arg5 = stack_val(state, 5);
-    let arg6 = stack_val(state, 6);
     let name = if matches!(arg2, Val::Str(_)) || matches!(arg2, Val::Nil) {
         Option::<String>::from_stack(state, 2)?
     } else {
@@ -196,9 +193,9 @@ fn parse_create_frame_args(state: &mut LuaState) -> LuaResult<CreateFrameArgs> {
         Val::Nil
     };
     let default_parent_allowed = arg_count >= 2 && matches!(arg2, Val::Str(_) | Val::Nil);
-    let inherits = val_to_string(state, arg4);
-    let id = parse_frame_id(arg5);
-    let template_initializer = parse_template_initializer(state, arg6)?;
+    let inherits = val_to_string(state, stack_val(state, 4));
+    let id = parse_frame_id(stack_val(state, 5));
+    let template_initializer = parse_template_initializer(state, stack_val(state, 6))?;
     let widget_type = resolve_runtime_widget_type(&frame_type)?;
     Ok(CreateFrameArgs {
         frame_type,
