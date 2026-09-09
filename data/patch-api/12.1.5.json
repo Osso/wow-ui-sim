@@ -1325,7 +1325,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1402,7 +1402,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1458,7 +1458,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1508,7 +1508,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1564,7 +1564,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1614,7 +1614,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1670,7 +1670,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1720,7 +1720,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
@@ -1770,7 +1770,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/create_frame/mod.rs",
-          "source_hash": "101ee717b2fc2c64e5c20e5d543fc00cc5c9acc2e91e7f416f9cc6be5ce7d8db",
+          "source_hash": "7569a19c2782177ccbb344453f59b4139ca2112aaea0f68c33e2bfe1da57dc90",
           "summary": "Shared allocator applies options flags, template handlers, and initial show dispatch using documented simulator lifecycle assumptions."
         },
         {
