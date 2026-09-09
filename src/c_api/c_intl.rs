@@ -1,5 +1,7 @@
 //! Locale storage and PTR Unicode text operations; no locale formatting algorithms.
 #[cfg(feature = "retail-12-1-5")]
+mod breaks;
+#[cfg(feature = "retail-12-1-5")]
 mod casing;
 #[cfg(feature = "retail-12-1-5")]
 mod normalization;
@@ -41,7 +43,8 @@ mod storage {
         table_set_rust_fn_static(state, namespace, "GetCurrentLocale", current_locale)?;
         table_set_rust_fn_static(state, namespace, "Length", length)?;
         super::normalization::register(state, namespace)?;
-        super::casing::register(state, namespace)
+        super::casing::register(state, namespace)?;
+        super::breaks::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
@@ -72,6 +75,7 @@ mod storage {
         table_set_rust_fn_static(state, metatable, "SetLocale", set_locale)?;
         table_set_rust_fn_static(state, metatable, "Length", context_length)?;
         super::casing::register_context(state, metatable)?;
+        super::breaks::register_context(state, metatable)?;
         table_set_static(
             state,
             Val::Table(metatable),
