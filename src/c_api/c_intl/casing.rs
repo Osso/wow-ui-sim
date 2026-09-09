@@ -1,6 +1,7 @@
 //! ICU casing with parsed locale identifiers; folding uses Unicode default mappings.
-use icu_casemap::CaseMapper;
+use icu_casemap::{CaseMapper, TitlecaseMapper};
 use icu_locale_core::{LanguageIdentifier, Locale};
+use icu_segmenter::WordSegmenter;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -11,6 +12,7 @@ enum Operation {
     Lower,
     Upper,
     Fold,
+    Title,
 }
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
@@ -19,6 +21,9 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     })?;
     table_set_rust_fn_static(state, namespace, "ToUpper", |s| {
         apply_global(s, Operation::Upper)
+    })?;
+    table_set_rust_fn_static(state, namespace, "ToTitle", |s| {
+        apply_global(s, Operation::Title)
     })?;
     table_set_rust_fn_static(state, namespace, "FoldCase", |s| {
         apply_global(s, Operation::Fold)
@@ -31,6 +36,9 @@ pub(super) fn register_context(state: &mut LuaState, metatable: GcRef<Table>) ->
     })?;
     table_set_rust_fn_static(state, metatable, "ToUpper", |s| {
         apply_context(s, Operation::Upper)
+    })?;
+    table_set_rust_fn_static(state, metatable, "ToTitle", |s| {
+        apply_context(s, Operation::Title)
     })?;
     table_set_rust_fn_static(state, metatable, "FoldCase", |s| {
         apply_context(s, Operation::Fold)
@@ -77,7 +85,29 @@ fn map_case(text: &str, operation: Operation, locale: &LanguageIdentifier) -> St
         Operation::Lower => mapper.lowercase_to_string(text, locale).into_owned(),
         Operation::Upper => mapper.uppercase_to_string(text, locale).into_owned(),
         Operation::Fold => mapper.fold_string(text).into_owned(),
+        Operation::Title => titlecase_words(text, locale),
     }
+}
+
+fn titlecase_words(text: &str, locale: &LanguageIdentifier) -> String {
+    let segmenter = WordSegmenter::new_auto(Default::default());
+    let mapper = TitlecaseMapper::new();
+    let mut result = String::with_capacity(text.len());
+    let mut start = 0;
+    for (end, word_type) in segmenter.segment_str(text).iter_with_word_type() {
+        let segment = &text[start..end];
+        if word_type.is_word_like() {
+            result.push_str(&mapper.titlecase_segment_to_string(
+                segment,
+                locale,
+                Default::default(),
+            ));
+        } else {
+            result.push_str(segment);
+        }
+        start = end;
+    }
+    result
 }
 
 fn push_result(state: &mut LuaState, text: &str) -> LuaResult<u32> {

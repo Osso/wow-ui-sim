@@ -37,6 +37,8 @@ mod patch_12_1_5_intl_enums;
 mod patch_12_1_5_intl_length;
 mod patch_12_1_5_intl_normalization;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_intl_titlecase;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_locale_context;
 mod patch_12_1_5_player_data_flag_enums;
 #[cfg(feature = "client-retail")]

@@ -15,6 +15,7 @@ members = [".", "xtask"]
 icu_casemap = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
 icu_locale_core = { version = "=2.1.1", default-features = false, features = ["alloc"] }
 icu_normalizer = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+icu_segmenter = { version = "=2.1.1", default-features = false, features = ["compiled_data", "auto"] }
 # mlua removed — rilua is the sole Lua VM
 rilua = { git = "https://github.com/Osso/rilua.git", rev = "b6387563c8cd7882194cec368e626ebc72a17b81" }
 quick-xml = { version = "0.37", features = ["serialize"] }
