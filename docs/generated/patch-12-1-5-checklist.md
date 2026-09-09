@@ -1,4 +1,4 @@
-1. [evidence-required] `added:C_ActionBar.IsMacroActionWithShowTooltip` — unsafe
+1. [best-effort] `added:C_ActionBar.IsMacroActionWithShowTooltip` — behavioral
 2. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications` — behavioral
 3. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions` — behavioral
 4. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName` — behavioral

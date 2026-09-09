@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR macro action tooltip query
+
+`80d312c5a`, `e53298cce`, and `96c186c1c` model `C_ActionBar.IsMacroActionWithShowTooltip` through the narrow [`action_macros`](../../src/c_api/action_macros.rs) C API boundary. Focused PTR tests cover assigned macro bodies, edits, slot moves/replacement/clear, deletion/ID reuse, and directive-recognition assumptions; retail suppresses fallback publication. [[patch-12-1-5-api-audit]] credits modeled behavior only: directive parsing and validation are simulator assumptions, while token/conditional resolution and security remain unresolved.
+
 ## [2026-09-09] system | Model bounded PTR weather state
 
 `c77963250`, `42457f475`, and `b4943dcf6` add simulator-owned PTR weather snapshots, controlled admin mutation, explicit event injection, and earlier-retail absence. [[weather-state]] records the assumed Clear/zero initial state and limits: native intensity, transition, payload, timing, rendering, and security behavior remain unresolved.

@@ -37,7 +37,7 @@ The PTR `C_ActionBar.IsMacroActionWithShowTooltip(actionID)` query reads the bod
 
 ## Known gaps (current cycle)
 
-- [ ] Native directive parsing, validation, secret/taint access and valid-slot boundaries remain unverified.
+- [ ] Native directive parsing, validation, secret/taint access and valid-slot boundaries remain unverified. The existing tests exercise positive slots, a nonexistent macro ID, and slot zero; empty-name macro assignment remains an untested simulator rule.
 - [ ] Existing macro UI info/count fixtures and macro execution do not model full native macro storage or execution.
 
 ## Out of scope

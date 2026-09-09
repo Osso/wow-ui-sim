@@ -23,24 +23,46 @@
       "id": "added:C_ActionBar.IsMacroActionWithShowTooltip",
       "symbol": "C_ActionBar.IsMacroActionWithShowTooltip",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added C_ActionBar query, its luaIndex argument, bool return, valid-action-slot predicate, and untainted secret-argument annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/action_macros.rs",
+          "summary": "The narrow C API backing module owns PTR-only query registration and macro-slot associations; it reads the currently assigned MacroInfo body and uses documented simulator directive recognition assumptions.",
+          "source_hash": "dc0824be16486515ba61aa10e65086618a5df3e686e7810107f94d6542b74ce4"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/action_bar_api/registration.rs",
+          "summary": "C_ActionBar registration delegates only this modeled query to the c_api action-macro boundary; earlier profiles mark the fallback namespace key removed.",
+          "source_hash": "1fce6600c8fe9ab8c0330e799c5c14dfdd4ce0c0ffc84fc6ff21b982ad2337cc"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/action_macro_tooltip.rs",
+          "summary": "Focused PTR and earlier-retail tests cover assigned macro bodies, edits, slot moves/replacements/clears, deletion and ID reuse, directive recognition assumptions, validation cases, and namespace absence. Proof commits 80d312c5a, e53298cce, and 96c186c1c.",
+          "source_hash": "dcc90fe58b3e128d3e4e53c3eafc8095163a5ec415716c8ccf1da34aaeddbb3a"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/action_macro_tooltip.rs::action_macro_tooltip_tracks_edits_and_directive_boundaries",
+        "tests/action_macro_tooltip.rs::action_macro_tooltip_slot_mutations_clear_old_associations",
+        "tests/action_macro_tooltip.rs::action_macro_tooltip_query_absent_on_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "80d312c5a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests establish modeled publication and ordinary simulator behavior: the query reads the assigned current macro body; assignment, edits, moves, replacement, deletion, and ID reuse update the result; nonmacro or unassigned slots return false; and earlier-retail lookup remains absent. Case, line, token-boundary recognition and positive-slot/nonexistent-ID validation are explicit simulator assumptions, not native macro parsing or valid-slot conformance. Macro conditional/token resolution, secret/taint/protected behavior, invalid-input coercion, macro execution, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications",
@@ -7384,7 +7406,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -7434,7 +7456,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -7507,7 +7529,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TooltipDataLineType.UnitCriteriaProgress",
@@ -7550,7 +7572,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TransmogIllusionFlags.HiddenIllusion",
@@ -14759,7 +14781,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {

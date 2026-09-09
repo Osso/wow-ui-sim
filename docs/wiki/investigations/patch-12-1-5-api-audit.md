@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 274 best-effort and 175 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 275 best-effort and 174 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -22,6 +22,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | `Enum.WeatherType` | Commits `286d0d3f7` and `17c085065` with focused PTR exact-map/metadata and earlier-retail absence tests | 6 best-effort / behavioral rows | Weather state, events, intensity, rendering, coercion, security, and native semantics |
 | Player-data flag enums | Commit `96b91aa4b` with focused PTR exact one-member maps/metadata and earlier-retail absence tests | 4 best-effort / behavioral rows | Player-data, logging, gameplay, consumers, coercion, security, and native semantics |
 | `C_Weather`, `WeatherInfo`, `WEATHER_CHANGED` | Commits `c77963250`, `42457f475`, and `b4943dcf6`; focused PTR simulator-state/snapshot and explicit event-injection tests plus earlier-retail absence | 5 best-effort / simulator behavioral rows | Native weather values, initial intensity/range, automatic transitions, event timing/payload, rendering, and security semantics |
+| `C_ActionBar.IsMacroActionWithShowTooltip` | Commits `80d312c5a`, `e53298cce`, and `96c186c1c`; focused PTR macro-body, assignment/edit/move/replacement/deletion tests and earlier-retail absence | 1 best-effort / modeled behavioral row | Directive case/line/token parsing and validation are simulator assumptions; macro conditional/token resolution, secret/taint/protected behavior, and native valid-slot semantics remain unproven |
 | `Enum.FragmentID` and metadata | Commit `5e5e46dd9` with focused PTR and earlier-retail exact-table tests | 45 best-effort / behavioral rows | Gameplay meaning, consumers, validation, coercion, and security/native semantics |
 | Cooldown threshold publication | Commit `88c705aa7` with focused PTR and earlier-retail numeric threshold tests | 3 best-effort / behavioral rows | Native defaults, rendering/display effects, units/conversion, type/coercion, and security/native semantics |
 | Caster-name aura options | Commit `894333d48` with focused PTR default/boolean normalization and earlier-retail absence proof | 4 best-effort / behavioral rows | Caster-name rendering, realm formatting, class-color display, coercion, and security/native semantics |
@@ -40,7 +41,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 
 - Missing publication/modeling: `C_Intl` and stateful action, PvP, LFG, and aura APIs. `C_Weather` has a bounded PTR simulator-owned state model; native weather values, transitions, intensity behavior, and event timing remain unresolved. `CreateFrameWithOptions` has a bounded PTR simulator adapter; native lifecycle and validation remain unresolved.
 - Remaining table gaps: `table.freeze` and `table.isfrozen` need a frozen-table state model; `string.trim` remains a separate 12.0.0 mismatch rather than a 12.1.5 occurrence.
-- Missing additive helpers: documented string extensions, selected `C_ActionBar`, `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, remaining aura-option normalization, and script-bucket throttle limits.
+- Missing additive helpers: documented string extensions, selected `C_PvP`, `C_LFGInfo`, `C_UnitAuras`, remaining aura-option normalization, and script-bucket throttle limits.
 - Native evidence remains required for weather values, Training Grounds IDs, active LFG state, castbar token behavior, Unicode/locale semantics, and protected/security behavior.
 
 ## Implementation Order
