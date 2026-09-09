@@ -171,10 +171,10 @@
 171. [evidence-required] `added:Enum.NumberStyle.Decimal` — unsafe
 172. [evidence-required] `added:Enum.NumberStyle.Integer` — unsafe
 173. [evidence-required] `added:Enum.NumberStyle.Percent` — unsafe
-174. [evidence-required] `added:Enum.PlayerDataElementAccountFlags` — unsafe
-175. [evidence-required] `added:Enum.PlayerDataElementAccountFlags.Log` — unsafe
-176. [evidence-required] `added:Enum.PlayerDataElementCharacterFlags` — unsafe
-177. [evidence-required] `added:Enum.PlayerDataElementCharacterFlags.Log` — unsafe
+174. [best-effort] `added:Enum.PlayerDataElementAccountFlags` — behavioral
+175. [best-effort] `added:Enum.PlayerDataElementAccountFlags.Log` — behavioral
+176. [best-effort] `added:Enum.PlayerDataElementCharacterFlags` — behavioral
+177. [best-effort] `added:Enum.PlayerDataElementCharacterFlags.Log` — behavioral
 178. [evidence-required] `added:Enum.PluralType` — unsafe
 179. [evidence-required] `added:Enum.PluralType.Cardinal` — unsafe
 180. [evidence-required] `added:Enum.PluralType.Ordinal` — unsafe

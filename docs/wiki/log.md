@@ -1,3 +1,7 @@
+## [2026-09-09] audit | Credit PTR player-data flag enum publication
+
+`96b91aa4b` resolves four added enum rows as best-effort/behavioral: `Enum.PlayerDataElementAccountFlags`, `Enum.PlayerDataElementAccountFlags.Log`, `Enum.PlayerDataElementCharacterFlags`, and `Enum.PlayerDataElementCharacterFlags.Log`. Focused PTR proof verifies each exact one-member `Log = 1` map and metadata `1/1/1` before and after post-load bootstrap; focused earlier-retail proof preserves enum and metadata absence. Player-data, logging, gameplay, consumer, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 153 best-effort, 296 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
 ## [2026-09-09] audit | Credit PTR WeatherType publication
 
 `286d0d3f7` and `17c085065` resolve six added `Enum.WeatherType` rows as best-effort/behavioral: parent `Enum.WeatherType` and `Clear=0`, `Rain=1`, `Snow=2`, `Sandstorm=3`, and `Miscellaneous=4`. Focused PTR proof verifies the exact five-member map and metadata `0/4/5` before and after post-load bootstrap; focused earlier-retail proof preserves enum and metadata absence. Weather state, events, intensity, rendering, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 149 best-effort, 300 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].

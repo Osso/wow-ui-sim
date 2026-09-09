@@ -1689,7 +1689,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -1739,7 +1739,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -1789,7 +1789,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -1839,7 +1839,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -1889,7 +1889,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -1939,7 +1939,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -1989,7 +1989,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2039,7 +2039,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2089,7 +2089,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2139,7 +2139,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2189,7 +2189,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2239,7 +2239,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2289,7 +2289,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2339,7 +2339,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2389,7 +2389,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2439,7 +2439,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2489,7 +2489,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2539,7 +2539,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2589,7 +2589,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2639,7 +2639,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2689,7 +2689,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2739,7 +2739,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2789,7 +2789,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2839,7 +2839,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2889,7 +2889,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2939,7 +2939,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -2989,7 +2989,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3039,7 +3039,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3089,7 +3089,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3139,7 +3139,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3189,7 +3189,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3239,7 +3239,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3289,7 +3289,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3339,7 +3339,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3389,7 +3389,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3439,7 +3439,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3489,7 +3489,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3539,7 +3539,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3589,7 +3589,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3639,7 +3639,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3689,7 +3689,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3739,7 +3739,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3789,7 +3789,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3839,7 +3839,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3889,7 +3889,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3939,7 +3939,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -3989,7 +3989,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4039,7 +4039,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4089,7 +4089,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4139,7 +4139,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4189,7 +4189,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4239,7 +4239,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4289,7 +4289,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4339,7 +4339,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4389,7 +4389,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4439,7 +4439,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4489,7 +4489,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4539,7 +4539,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -4589,7 +4589,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -5292,7 +5292,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -5782,93 +5782,201 @@
       "id": "added:Enum.PlayerDataElementAccountFlags",
       "symbol": "Enum.PlayerDataElementAccountFlags",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact account player-data flag enum occurrence contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/player_data_flags.lua",
+          "summary": "PTR-only Lua publication defines the complete one-member account player-data flag enum as Log = 1 with metadata 1/1/1.",
+          "source_hash": "e4c661e245d2b60aabf051679b3d195fa88a5e23baece15e726b7b8cf3af4a73"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "summary": "PTR compatibility bootstrap loads the player-data flag enums during initialization and after load; earlier profiles retain their existing bootstrap.",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+          "summary": "Focused PTR proof verifies both exact one-member Log = 1 maps and metadata 1/1/1 before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail",
+          "summary": "Focused earlier-retail proof verifies both player-data flag enums and metadata remain absent before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "96b91aa4b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only PTR-only account player-data flag enum numeric publication: the complete one-member table is Log = 1 with metadata MinValue = 1, MaxValue = 1, and NumValues = 1; earlier retail omits the enum and metadata before and after post-load bootstrap. Player-data, logging, gameplay, consumer, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.PlayerDataElementAccountFlags.Log",
       "symbol": "Enum.PlayerDataElementAccountFlags.Log",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact account player-data flag enum occurrence contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/player_data_flags.lua",
+          "summary": "PTR-only Lua publication defines Enum.PlayerDataElementAccountFlags.Log as Log = 1 with metadata 1/1/1.",
+          "source_hash": "e4c661e245d2b60aabf051679b3d195fa88a5e23baece15e726b7b8cf3af4a73"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "summary": "PTR compatibility bootstrap loads the player-data flag enums during initialization and after load; earlier profiles retain their existing bootstrap.",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+          "summary": "Focused PTR proof verifies both exact one-member Log = 1 maps and metadata 1/1/1 before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail",
+          "summary": "Focused earlier-retail proof verifies both player-data flag enums and metadata remain absent before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "96b91aa4b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only PTR-only Enum.PlayerDataElementAccountFlags.Log = 1 numeric publication within its complete one-member enum and metadata 1/1/1; earlier retail omits the enum and metadata before and after post-load bootstrap. Player-data, logging, gameplay, consumer, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.PlayerDataElementCharacterFlags",
       "symbol": "Enum.PlayerDataElementCharacterFlags",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact character player-data flag enum occurrence contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/player_data_flags.lua",
+          "summary": "PTR-only Lua publication defines the complete one-member character player-data flag enum as Log = 1 with metadata 1/1/1.",
+          "source_hash": "e4c661e245d2b60aabf051679b3d195fa88a5e23baece15e726b7b8cf3af4a73"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "summary": "PTR compatibility bootstrap loads the player-data flag enums during initialization and after load; earlier profiles retain their existing bootstrap.",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+          "summary": "Focused PTR proof verifies both exact one-member Log = 1 maps and metadata 1/1/1 before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail",
+          "summary": "Focused earlier-retail proof verifies both player-data flag enums and metadata remain absent before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "96b91aa4b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only PTR-only character player-data flag enum numeric publication: the complete one-member table is Log = 1 with metadata MinValue = 1, MaxValue = 1, and NumValues = 1; earlier retail omits the enum and metadata before and after post-load bootstrap. Player-data, logging, gameplay, consumer, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.PlayerDataElementCharacterFlags.Log",
       "symbol": "Enum.PlayerDataElementCharacterFlags.Log",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "enum-member",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added enum-member occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact character player-data flag enum occurrence contract.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/player_data_flags.lua",
+          "summary": "PTR-only Lua publication defines Enum.PlayerDataElementCharacterFlags.Log as Log = 1 with metadata 1/1/1.",
+          "source_hash": "e4c661e245d2b60aabf051679b3d195fa88a5e23baece15e726b7b8cf3af4a73"
+        },
+        {
+          "kind": "source",
+          "reference": "src/ptr/compat_bootstrap.rs",
+          "summary": "PTR compatibility bootstrap loads the player-data flag enums during initialization and after load; earlier profiles retain their existing bootstrap.",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+          "summary": "Focused PTR proof verifies both exact one-member Log = 1 maps and metadata 1/1/1 before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail",
+          "summary": "Focused earlier-retail proof verifies both player-data flag enums and metadata remain absent before and after post-load bootstrap. Proof commit 96b91aa4b.",
+          "source_hash": "dc33b132f6f313fb8d02e99c1193b6e8af74de277af62de4224f42c8035dfebf"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_ptr",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_player_data_flag_enums.rs::patch_12_1_5_player_data_flag_enums_retail"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "96b91aa4b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes only PTR-only Enum.PlayerDataElementCharacterFlags.Log = 1 numeric publication within its complete one-member enum and metadata 1/1/1; earlier retail omits the enum and metadata before and after post-load bootstrap. Player-data, logging, gameplay, consumer, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.PluralType",
@@ -6078,7 +6186,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR compatibility bootstrap loads WeatherType during initialization and after load; earlier profiles retain their existing bootstrap."
         },
         {
@@ -6128,7 +6236,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR compatibility bootstrap loads WeatherType during initialization and after load; earlier profiles retain their existing bootstrap."
         },
         {
@@ -6178,7 +6286,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR compatibility bootstrap loads WeatherType during initialization and after load; earlier profiles retain their existing bootstrap."
         },
         {
@@ -6228,7 +6336,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR compatibility bootstrap loads WeatherType during initialization and after load; earlier profiles retain their existing bootstrap."
         },
         {
@@ -6278,7 +6386,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR compatibility bootstrap loads WeatherType during initialization and after load; earlier profiles retain their existing bootstrap."
         },
         {
@@ -6328,7 +6436,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR compatibility bootstrap loads WeatherType during initialization and after load; earlier profiles retain their existing bootstrap."
         },
         {
@@ -8872,7 +8980,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes BonusStatIndex publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9009,7 +9117,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9059,7 +9167,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9109,7 +9217,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9159,7 +9267,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9209,7 +9317,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9259,7 +9367,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9309,7 +9417,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9359,7 +9467,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9409,7 +9517,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9459,7 +9567,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9509,7 +9617,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9559,7 +9667,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9609,7 +9717,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9659,7 +9767,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9709,7 +9817,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9759,7 +9867,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9809,7 +9917,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9859,7 +9967,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9909,7 +10017,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -9959,7 +10067,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10009,7 +10117,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10059,7 +10167,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10109,7 +10217,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10159,7 +10267,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10209,7 +10317,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10259,7 +10367,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10309,7 +10417,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10359,7 +10467,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10409,7 +10517,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10459,7 +10567,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10509,7 +10617,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10559,7 +10667,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10609,7 +10717,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10659,7 +10767,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10709,7 +10817,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10759,7 +10867,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10809,7 +10917,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10859,7 +10967,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10909,7 +11017,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -10959,7 +11067,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -11009,7 +11117,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -11059,7 +11167,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -11109,7 +11217,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
@@ -11159,7 +11267,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "source_hash": "9c232c091b5019c8848de7d8f7d6d66fa56f596e865f4f75cbbdd619a1e3c5e7",
+          "source_hash": "cc0e87e636140465f423d315a8e96f76c32c6a3b66b42df01e223c3214ca5403",
           "summary": "PTR profile includes the exact FragmentID publication during initialization and post-load compatibility bootstrap while earlier profiles retain their existing bootstrap."
         },
         {
