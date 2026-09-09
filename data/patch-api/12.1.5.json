@@ -1695,13 +1695,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -1745,13 +1745,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -1795,13 +1795,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -1845,13 +1845,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -1895,13 +1895,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -1945,13 +1945,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -1995,13 +1995,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2045,13 +2045,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2095,13 +2095,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2145,13 +2145,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2195,13 +2195,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2245,13 +2245,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2295,13 +2295,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2345,13 +2345,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2395,13 +2395,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2445,13 +2445,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2495,13 +2495,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2545,13 +2545,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2595,13 +2595,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2645,13 +2645,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2695,13 +2695,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2745,13 +2745,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2795,13 +2795,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2845,13 +2845,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2895,13 +2895,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2945,13 +2945,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -2995,13 +2995,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3045,13 +3045,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3095,13 +3095,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3145,13 +3145,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3195,13 +3195,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3245,13 +3245,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3295,13 +3295,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3345,13 +3345,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3395,13 +3395,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3445,13 +3445,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3495,13 +3495,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3545,13 +3545,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3595,13 +3595,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3645,13 +3645,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3695,13 +3695,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3745,13 +3745,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3795,13 +3795,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3845,13 +3845,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3895,13 +3895,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3945,13 +3945,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -3995,13 +3995,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4045,13 +4045,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4095,13 +4095,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4145,13 +4145,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4195,13 +4195,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4245,13 +4245,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4295,13 +4295,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4345,13 +4345,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4395,13 +4395,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4445,13 +4445,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4495,13 +4495,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4545,13 +4545,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -4595,13 +4595,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
@@ -8689,13 +8689,13 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_ptr",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused PTR proof derives the preserved base members from the frozen register and verifies every Reserved_83 through Reserved_141 value plus exact BonusStatIndexMeta before and after post-load bootstrap. Proof commit bc786d5e5."
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_bonus_stat_index_enums.rs::patch_12_1_5_bonus_stat_index_enums_preserves_retail",
-          "source_hash": "88a67817545f0cff507656f2aa0d3c23d1662daca3ae1b926ecde15dd4c1f25b",
+          "source_hash": "e56ffd4592e41f35a6e047a23055242a48ebade6271c692535b244f732116362",
           "summary": "Focused earlier-retail proof verifies all base members and metadata remain exact while every Reserved_83 through Reserved_141 member remains absent before and after post-load bootstrap. Proof commit bc786d5e5."
         }
       ],
