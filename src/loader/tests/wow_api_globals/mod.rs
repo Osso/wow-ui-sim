@@ -33,6 +33,8 @@ mod patch_12_1_5_player_data_flag_enums;
 mod patch_12_1_5_table_count_info;
 mod patch_12_1_5_table_util_removal;
 mod patch_12_1_5_tiered_entrance_enums;
+#[cfg(feature = "client-retail")]
+mod patch_12_1_5_timed_signal_map;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_tooltip_line_enums;
 mod patch_12_1_5_transmog_illusion_flags;

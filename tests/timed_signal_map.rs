@@ -8,7 +8,10 @@ fn timed_signal_map_replaces_cancels_and_dispatches_due_key() {
     env.exec(
         r#"
         signal_calls = {}
-        signal_map = C_Timer.NewTimedSignalMap(function(key)
+        signal_map = C_Timer.NewTimedSignalMap(function(...)
+            assert(select("#", ...) == 1)
+            local key = ...
+            assert(type(key) == "number")
             table.insert(signal_calls, key)
         end)
         signal_map.custom_field = "kept"
@@ -36,6 +39,48 @@ fn timed_signal_map_replaces_cancels_and_dispatches_due_key() {
     assert_eq!(env.eval::<i64>("return signal_calls[1]").unwrap(), 7);
     assert_eq!(env.eval::<bool>("return signal_map:HasSignal(7)").unwrap(), false);
     assert_eq!(env.eval::<Option<f64>>("return signal_map:GetSignalTime(7)").unwrap(), None);
+}
+
+#[test]
+fn timed_signal_map_reports_present_key_and_exact_time() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local map = C_Timer.NewTimedSignalMap(function() end)
+        map:SignalAt(7, 12.5)
+        assert(map:HasSignal(7) == true)
+        assert(map:GetSignalTime(7) == 12.5)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn timed_signal_map_cancels_all_pending_callbacks() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        cancelled_signal_calls = 0
+        cancelled_map = C_Timer.NewTimedSignalMap(function()
+            cancelled_signal_calls = cancelled_signal_calls + 1
+        end)
+        cancelled_map:SignalAfter(11, 10)
+        cancelled_map:SignalAfter(22, 20)
+        assert(cancelled_map:GetSignalCount() == 2)
+        cancelled_map:CancelAllSignals()
+        assert(cancelled_map:GetSignalCount() == 0)
+        assert(cancelled_map:HasSignal(11) == false)
+        assert(cancelled_map:HasSignal(22) == false)
+        assert(cancelled_map:GetSignalTime(11) == nil)
+        assert(cancelled_map:GetSignalTime(22) == nil)
+        "#,
+    )
+    .unwrap();
+
+    env.state().borrow_mut().start_time -= std::time::Duration::from_secs(30);
+    assert_eq!(env.process_timers().unwrap(), 0);
+    assert_eq!(env.process_timers().unwrap(), 0);
+    assert_eq!(env.eval::<i64>("return cancelled_signal_calls").unwrap(), 0);
 }
 
 #[test]
