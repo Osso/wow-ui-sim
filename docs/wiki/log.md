@@ -1,3 +1,11 @@
+## [2026-09-09] audit | Credit PTR ICU casing
+
+`f94a5be6d` credits the six PTR global/context casing declarations for focused ICU 2.1.1 lower, upper, and full-fold behavior on valid UTF-8 plus earlier-retail absence. Locale identifier translation, invalid-input errors, Unicode-version equivalence, embedded-NUL, coercion, security, and native semantics remain simulator assumptions or unresolved. See [PTR Unicode casing](../specs/intl-casing.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU casing
+
+[PTR Unicode casing](../specs/intl-casing.md) records the direct ICU dependencies, modeled locale parsing, test coverage, and source-versus-native boundary.
+
 ## [2026-09-09] audit | Credit PTR locale scalar length
 
 `d491728e1` credits `C_Intl.Length` and `LuaLocaleContext.Length` for PTR-only valid UTF-8 Unicode scalar counting, locale-independent contexts, strict receiver/input validation, and earlier-retail absence. Scalar units and errors are simulator policy; byte, grapheme, UTF-16, cstring/NUL, MayReturnNothing, security, coercion, and native behavior remain unresolved. See [PTR text length](../specs/intl-length.md) and [[patch-12-1-5-api-audit]].

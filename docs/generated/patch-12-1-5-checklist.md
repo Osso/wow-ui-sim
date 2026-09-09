@@ -8,7 +8,7 @@
 8. [best-effort] `added:C_Intl.CreateLocaleContext` — behavioral
 9. [evidence-required] `added:C_Intl.FindBreaks` — unsafe
 10. [evidence-required] `added:C_Intl.FindStringMatches` — unsafe
-11. [evidence-required] `added:C_Intl.FoldCase` — unsafe
+11. [best-effort] `added:C_Intl.FoldCase` — behavioral
 12. [evidence-required] `added:C_Intl.FormatCurrency` — unsafe
 13. [evidence-required] `added:C_Intl.FormatDate` — unsafe
 14. [evidence-required] `added:C_Intl.FormatDateTime` — unsafe
@@ -26,9 +26,9 @@
 26. [evidence-required] `added:C_Intl.ParseCurrency` — unsafe
 27. [evidence-required] `added:C_Intl.ParseNumber` — unsafe
 28. [evidence-required] `added:C_Intl.SelectPlural` — unsafe
-29. [evidence-required] `added:C_Intl.ToLower` — unsafe
+29. [best-effort] `added:C_Intl.ToLower` — behavioral
 30. [evidence-required] `added:C_Intl.ToTitle` — unsafe
-31. [evidence-required] `added:C_Intl.ToUpper` — unsafe
+31. [best-effort] `added:C_Intl.ToUpper` — behavioral
 32. [evidence-required] `added:C_Intl.TransformLocale` — unsafe
 33. [evidence-required] `added:C_Intl.Transliterate` — unsafe
 34. [evidence-required] `added:C_LFGInfo.GetActiveLFGDungeonName` — unsafe
@@ -194,7 +194,7 @@
 194. [evidence-required] `added:LuaLocaleContext.CompareStrings` — unsafe
 195. [evidence-required] `added:LuaLocaleContext.FindBreaks` — unsafe
 196. [evidence-required] `added:LuaLocaleContext.FindStringMatches` — unsafe
-197. [evidence-required] `added:LuaLocaleContext.FoldCase` — unsafe
+197. [best-effort] `added:LuaLocaleContext.FoldCase` — behavioral
 198. [evidence-required] `added:LuaLocaleContext.FormatCurrency` — unsafe
 199. [evidence-required] `added:LuaLocaleContext.FormatDate` — unsafe
 200. [evidence-required] `added:LuaLocaleContext.FormatDateTime` — unsafe
@@ -209,9 +209,9 @@
 209. [evidence-required] `added:LuaLocaleContext.ParseNumber` — unsafe
 210. [evidence-required] `added:LuaLocaleContext.SelectPlural` — unsafe
 211. [best-effort] `added:LuaLocaleContext.SetLocale` — behavioral
-212. [evidence-required] `added:LuaLocaleContext.ToLower` — unsafe
+212. [best-effort] `added:LuaLocaleContext.ToLower` — behavioral
 213. [evidence-required] `added:LuaLocaleContext.ToTitle` — unsafe
-214. [evidence-required] `added:LuaLocaleContext.ToUpper` — unsafe
+214. [best-effort] `added:LuaLocaleContext.ToUpper` — behavioral
 215. [evidence-required] `added:LuaLocaleContext.TransformLocale` — unsafe
 216. [evidence-required] `added:RequiresTimedSignalMapAccess` — unsafe
 217. [evidence-required] `added:ScriptBucketThrottleLimits` — unsafe

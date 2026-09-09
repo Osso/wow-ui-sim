@@ -1,3 +1,5 @@
+`f94a5be6d` resolves `C_Intl.ToLower`, `ToUpper`, and `FoldCase` plus the matching `LuaLocaleContext` methods as bounded PTR ICU 2.1.1 simulator behavior. Locale-aware lower/upper use modeled locale identifiers; full folding is locale-independent. Locale parsing, invalid-input errors, Unicode-version equivalence, security, and native behavior remain unclaimed. See [PTR Unicode casing](../specs/intl-casing.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-09] audit | Credit PTR locale scalar length
 
 `d491728e1` resolves `C_Intl.Length` and `LuaLocaleContext.Length` as bounded PTR simulator behavior. Focused tests count valid UTF-8 Unicode scalars independently of stored locale, reject malformed input and invalid receivers, and preserve earlier-retail absence. Scalar units and errors are simulator assumptions; byte, grapheme, UTF-16, cstring/NUL, security, and native behavior remain unclaimed. See [PTR text length](../specs/intl-length.md) and [[patch-12-1-5-api-audit]].
