@@ -4,11 +4,11 @@ The PTR `C_ActionBar.IsMacroActionWithShowTooltip(actionID)` query reads the bod
 
 ## What it must do
 
-- [ ] PTR returns a boolean for positive action slots; empty, spell, outfit, and macros without a matching directive return false. Earlier retail does not expose the query, including through namespace fallback.
-- [ ] Query reads current `MacroInfo.body`, so `EditMacro` changes results without reassignment.
-- [ ] `A_Admin.SetMacroActionSlot(slot, macroID)` assigns an existing macro; `GetActionInfo` returns `"macro", macroID, nil` and `HasAction` recognizes it. Existing spell assignment positional arguments remain unchanged.
-- [ ] Admin clear/replace, cursor macro pickup/place, and `PutActionInSlot` preserve a single action kind per slot and remove obsolete associations.
-- [ ] `CreateMacro` stores name/icon/body; `DeleteMacro` clears bound slots and matching cursor/running state without renumbering IDs.
+- [x] PTR returns a boolean for positive action slots; empty, spell, outfit, and macros without a matching directive return false. Earlier retail does not expose the query, including through namespace fallback.
+- [x] Query reads current `MacroInfo.body`, so `EditMacro` changes results without reassignment.
+- [x] `A_Admin.SetMacroActionSlot(slot, macroID)` assigns an existing macro; `GetActionInfo` returns `"macro", macroID, nil` and `HasAction` recognizes it. Existing spell assignment positional arguments remain unchanged.
+- [x] Admin clear/replace, cursor macro pickup/place, and `PutActionInSlot` preserve a single action kind per slot and remove obsolete associations.
+- [x] `CreateMacro` creates an assignable macro whose body is queried; `DeleteMacro` clears bound slots and matching cursor/running state without renumbering IDs. Reusing a deleted ID does not restore old assignments.
 
 ### Simulator assumptions, not native facts
 
