@@ -97,6 +97,11 @@ const APPLICATION_BAR: &[Field] = &[
     ("interpolation", Enum(1), Optional),
 ];
 const APPLICATION_COUNT: &[Field] = &[("formatter", FORMATTER, Optional)];
+#[cfg(feature = "retail-12-1-5")]
+const CASTER_NAME: &[Field] = &[
+    ("showRealmName", Bool, Presence::Bool(false)),
+    ("useClassColors", Bool, Presence::Bool(false)),
+];
 const DISPEL_TEXT: &[Field] = &[
     ("showWhenHarmful", Bool, Presence::Bool(true)),
     ("showWhenHelpful", Bool, Presence::Bool(false)),
@@ -189,14 +194,21 @@ fn register_duration_property_enum(state: &mut LuaState) -> LuaResult<()> {
 }
 
 macro_rules! processors {
-    ($($function:ident => ($name:literal, $fields:ident, $nilable:literal)),+ $(,)?) => {
+    ($($(#[$attr:meta])* $function:ident => ($name:literal, $fields:ident, $nilable:literal)),+ $(,)?) => {
         pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
             register_duration_property_enum(state)?;
             let namespace = ensure_namespace(state, "C_AuraContainerUtil")?;
-            $(table_set_rust_fn_static(state, namespace, $name, $function)?;)+
+            #[cfg(not(feature = "retail-12-1-5"))]
+            {
+                // Prevent the namespace fallback from fabricating this PTR-only method.
+                let removed = create_table(state);
+                table_set_static(state, removed, "ProcessCustomAuraButtonCasterNameOptions", Val::Bool(true));
+                table_set_static(state, Val::Table(namespace), "__wow_removed_keys", removed);
+            }
+            $($(#[$attr])* table_set_rust_fn_static(state, namespace, $name, $function)?;)+
             Ok(())
         }
-        $(fn $function(state: &mut LuaState) -> LuaResult<u32> {
+        $($(#[$attr])* fn $function(state: &mut LuaState) -> LuaResult<u32> {
             let options = stack_val(state, 1);
             if options == Val::Nil && !$nilable {
                 return Err(runtime_error(concat!($name, ": options must be a table")));
@@ -214,6 +226,8 @@ processors! {
     tooltip_texture_slice => ("ProcessAuraTooltipTextureSliceOptions", TEXTURE_SLICE, false),
     application_bar => ("ProcessCustomAuraButtonApplicationBarOptions", APPLICATION_BAR, false),
     application_count => ("ProcessCustomAuraButtonApplicationCountOptions", APPLICATION_COUNT, true),
+    #[cfg(feature = "retail-12-1-5")]
+    caster_name => ("ProcessCustomAuraButtonCasterNameOptions", CASTER_NAME, true),
     dispel_text => ("ProcessCustomAuraButtonDispelTypeTextOptions", DISPEL_TEXT, true),
     dispel_texture => ("ProcessCustomAuraButtonDispelTypeTextureOptions", DISPEL_TEXTURE, true),
     duration_bar => ("ProcessCustomAuraButtonDurationBarOptions", DURATION_BAR, true),
