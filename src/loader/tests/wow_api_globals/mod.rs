@@ -185,6 +185,8 @@ mod patch_12_0_0_unit_power_spell_ids;
 }
 
 mod patch_12_0_7_edit_mode_enum_values;
+#[cfg(feature = "client-retail")]
+mod patch_12_1_5_curio_rarity;
 #[cfg(feature = "retail-12-1-5")]
 mod patch_12_1_5_math_extensions;
 #[cfg(feature = "retail-12-1-5")]
