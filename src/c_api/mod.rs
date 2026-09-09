@@ -31,6 +31,7 @@ pub mod c_discord;
 pub mod c_glue;
 pub mod c_housing;
 pub mod c_instance_encounter;
+pub mod c_intl;
 pub mod c_lfg_info;
 pub mod c_login;
 pub mod c_loot_history;
@@ -97,6 +98,7 @@ use rilua::vm::state::LuaState;
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_loot_history::register_c_loot_history(state)?;
     c_weather::register(state)?;
+    c_intl::register(state)?;
     #[cfg(feature = "retail-12-1-0")]
     c_aura_container_util::register(state)?;
     #[cfg(feature = "retail-12-1-0")]
