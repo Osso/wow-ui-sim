@@ -61,7 +61,7 @@
           "kind": "source",
           "reference": "src/c_api/c_aura_container_util.rs",
           "summary": "PTR-gated application-bar option normalization adds minApplications with numeric default 0 while preserving existing maxApplications and interpolation processing.",
-          "source_hash": "a8ca4c4f4c35273ee53619c158a021910170190be729f52dc3b8f267db23e46e"
+          "source_hash": "5d08ec716c380d3e2c069d8b8a55e8c9038a8b71443443ec1d826a8e95bca732"
         },
         {
           "kind": "test",
@@ -90,93 +90,177 @@
       "id": "added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions",
       "symbol": "C_AuraContainerUtil.CustomAuraButtonCasterNameOptions",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added structure occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added caster-name option structure, fields, and nilable processor contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_aura_container_util.rs",
+          "source_hash": "5d08ec716c380d3e2c069d8b8a55e8c9038a8b71443443ec1d826a8e95bca732",
+          "summary": "PTR-gated aura option normalization registers the caster-name processor and copies the two recognized boolean fields with false defaults."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused PTR proof publishes the processor, normalizes nil, omitted, and empty options to false, and preserves every explicit true/false combination. Proof commit 894333d48."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused earlier-retail proof keeps the PTR-only processor absent. Proof commit 894333d48."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "894333d48",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes the PTR-only normalized caster-name option structure: nil, omitted, and empty options normalize both documented booleans to false, explicit true/false values are preserved, and the processor is absent on earlier retail. This does not establish caster-name rendering, realm formatting, class-color display, invalid-type coercion, secret, taint, protected, forbidden, invalid-input, or native-edge behavior."
     },
     {
       "id": "added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName",
       "symbol": "C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added caster-name option structure, fields, and nilable processor contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_aura_container_util.rs",
+          "source_hash": "5d08ec716c380d3e2c069d8b8a55e8c9038a8b71443443ec1d826a8e95bca732",
+          "summary": "PTR-gated aura option normalization registers the caster-name processor and copies the two recognized boolean fields with false defaults."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused PTR proof publishes the processor, normalizes nil, omitted, and empty options to false, and preserves every explicit true/false combination. Proof commit 894333d48."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused earlier-retail proof keeps the PTR-only processor absent. Proof commit 894333d48."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "894333d48",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes the PTR-only showRealmName field: nil, omitted, and empty options normalize both documented booleans to false, explicit true/false values are preserved, and the processor is absent on earlier retail. This does not establish caster-name rendering, realm formatting, class-color display, invalid-type coercion, secret, taint, protected, forbidden, invalid-input, or native-edge behavior."
     },
     {
       "id": "added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors",
       "symbol": "C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added caster-name option structure, fields, and nilable processor contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_aura_container_util.rs",
+          "source_hash": "5d08ec716c380d3e2c069d8b8a55e8c9038a8b71443443ec1d826a8e95bca732",
+          "summary": "PTR-gated aura option normalization registers the caster-name processor and copies the two recognized boolean fields with false defaults."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused PTR proof publishes the processor, normalizes nil, omitted, and empty options to false, and preserves every explicit true/false combination. Proof commit 894333d48."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused earlier-retail proof keeps the PTR-only processor absent. Proof commit 894333d48."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "894333d48",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes the PTR-only useClassColors field: nil, omitted, and empty options normalize both documented booleans to false, explicit true/false values are preserved, and the processor is absent on earlier retail. This does not establish caster-name rendering, realm formatting, class-color display, invalid-type coercion, secret, taint, protected, forbidden, invalid-input, or native-edge behavior."
     },
     {
       "id": "added:C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions",
       "symbol": "C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact added caster-name option structure, fields, and nilable processor contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_aura_container_util.rs",
+          "source_hash": "5d08ec716c380d3e2c069d8b8a55e8c9038a8b71443443ec1d826a8e95bca732",
+          "summary": "PTR-gated aura option normalization registers the caster-name processor and copies the two recognized boolean fields with false defaults."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused PTR proof publishes the processor, normalizes nil, omitted, and empty options to false, and preserves every explicit true/false combination. Proof commit 894333d48."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles",
+          "source_hash": "fc8e2e8a660604134728ee84897c71f8fd72254a5bb509af7b8f74f545a8ada1",
+          "summary": "Focused earlier-retail proof keeps the PTR-only processor absent. Proof commit 894333d48."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_defaults_and_booleans",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_name_options.rs::patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "894333d48",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail proof establishes the PTR-only normalized caster-name option structure: nil, omitted, and empty options normalize both documented booleans to false, explicit true/false values are preserved, and the processor is absent on earlier retail. This does not establish caster-name rendering, realm formatting, class-color display, invalid-type coercion, secret, taint, protected, forbidden, invalid-input, or native-edge behavior."
     },
     {
       "id": "added:C_Intl.CompareStrings",
@@ -6414,7 +6498,7 @@
           "kind": "source",
           "reference": "src/c_api/c_aura_container_util.rs",
           "summary": "PTR-gated application-bar option normalization adds minApplications with numeric default 0 while preserving existing maxApplications and interpolation processing.",
-          "source_hash": "a8ca4c4f4c35273ee53619c158a021910170190be729f52dc3b8f267db23e46e"
+          "source_hash": "5d08ec716c380d3e2c069d8b8a55e8c9038a8b71443443ec1d826a8e95bca732"
         },
         {
           "kind": "test",

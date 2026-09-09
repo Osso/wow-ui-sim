@@ -1,9 +1,9 @@
 1. [evidence-required] `added:C_ActionBar.IsMacroActionWithShowTooltip` — unsafe
 2. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonApplicationBarOptions.minApplications` — behavioral
-3. [evidence-required] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions` — unsafe
-4. [evidence-required] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName` — unsafe
-5. [evidence-required] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors` — unsafe
-6. [evidence-required] `added:C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions` — unsafe
+3. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions` — behavioral
+4. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.showRealmName` — behavioral
+5. [best-effort] `added:C_AuraContainerUtil.CustomAuraButtonCasterNameOptions.useClassColors` — behavioral
+6. [best-effort] `added:C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions` — behavioral
 7. [evidence-required] `added:C_Intl.CompareStrings` — unsafe
 8. [evidence-required] `added:C_Intl.CreateLocaleContext` — unsafe
 9. [evidence-required] `added:C_Intl.FindBreaks` — unsafe
