@@ -1,4 +1,6 @@
-//! Opaque locale storage only; no locale parsing or formatting algorithms.
+//! Locale storage and PTR Unicode normalization; no locale formatting algorithms.
+#[cfg(feature = "retail-12-1-5")]
+mod normalization;
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
@@ -32,7 +34,8 @@ mod storage {
     pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         let namespace = crate::c_api::ensure_namespace(state, "C_Intl")?;
         table_set_rust_fn_static(state, namespace, "CreateLocaleContext", create)?;
-        table_set_rust_fn_static(state, namespace, "GetCurrentLocale", current_locale)
+        table_set_rust_fn_static(state, namespace, "GetCurrentLocale", current_locale)?;
+        super::normalization::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
