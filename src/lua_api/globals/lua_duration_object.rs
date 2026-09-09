@@ -15,6 +15,8 @@
 //! `missing_surface::register_all`, so the duration surface is installed before
 //! Blizzard/addon Lua can request duration objects.
 
+mod core;
+
 use crate::lua_api::methods::{
     create_table, registry_get, registry_set, table_get, table_set, table_set_static,
 };
@@ -177,9 +179,10 @@ fn create_manual_clock(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `C_DurationUtil.GetCurrentTime()` — stub returning 0.
+/// `C_DurationUtil.GetCurrentTime()` — simulator elapsed time, matching GetTime.
 fn get_current_time(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    let time = core::current_time(state)?;
+    state.push(Val::Num(time));
     Ok(1)
 }
 
@@ -347,11 +350,6 @@ fn m_evaluate_zero(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn m_get_mod_rate(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(1.0));
-    Ok(1)
-}
-
 fn m_get_clock(state: &mut LuaState) -> LuaResult<u32> {
     let object = crate::lua_bridge::stack_val(state, 1);
     let clock = table_get(state, object, "clock");
@@ -366,24 +364,9 @@ fn m_set_clock(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn m_false(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
-    Ok(1)
-}
-
 fn m_has_secret_values(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(false));
     Ok(1)
-}
-
-fn m_is_zero(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(true));
-    Ok(1)
-}
-
-fn m_noop(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = state;
-    Ok(0)
 }
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
@@ -413,7 +396,9 @@ fn new_duration_object(state: &mut LuaState) -> Val {
     }
 
     state.gc.barrier_back(obj_ref);
-    Val::Table(obj_ref)
+    let object = Val::Table(obj_ref);
+    core::initialize(state, object);
+    object
 }
 
 /// Build (or retrieve from the registry) the shared metatable.
@@ -457,7 +442,7 @@ fn build_methods_table(state: &mut LuaState) -> Val {
     install_lifecycle_methods(state, methods);
     install_zero_methods(state, methods);
     install_query_methods(state, methods);
-    install_noop_methods(state, methods);
+    core::register(state, methods);
     methods
 }
 
@@ -492,26 +477,9 @@ fn install_query_methods(state: &mut LuaState, methods: Val) {
     install_method(
         state,
         methods,
-        "GetModRate",
-        "LuaDurationObject.GetModRate",
-        m_get_mod_rate,
-    );
-    for key in ["HasExpired", "HasStarted", "IsActive"] {
-        install_method(state, methods, key, key, m_false);
-    }
-    install_method(
-        state,
-        methods,
         "HasSecretValues",
         "LuaDurationObject.HasSecretValues",
         m_has_secret_values,
-    );
-    install_method(
-        state,
-        methods,
-        "IsZero",
-        "LuaDurationObject.IsZero",
-        m_is_zero,
     );
 }
 
@@ -532,28 +500,10 @@ fn install_zero_methods(state: &mut LuaState, methods: Val) {
         "EvaluateElapsedPercent",
         "EvaluateRemainingDuration",
         "EvaluateRemainingPercent",
-        "GetClockTime",
-        "GetElapsedDuration",
         "GetElapsedPercent",
-        "GetEndTime",
-        "GetRemainingDuration",
         "GetRemainingPercent",
-        "GetStartTime",
-        "GetTotalDuration",
     ] {
         install_method(state, methods, key, key, m_evaluate_zero);
-    }
-}
-
-fn install_noop_methods(state: &mut LuaState, methods: Val) {
-    for key in [
-        "Reset",
-        "SetTimeFromEnd",
-        "SetTimeFromStart",
-        "SetTimeSpan",
-        "SetToDefaults",
-    ] {
-        install_method(state, methods, key, key, m_noop);
     }
 }
 
