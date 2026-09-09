@@ -22,10 +22,12 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use std::sync::Arc;
 
+#[derive(Clone, Copy)]
 enum RuntimeTemplateOverrides<'a> {
     None,
     Frame(&'a crate::xml::FrameXml),
     Initializer(Val),
+    Options(super::InitialFrameFlags),
 }
 
 // ---------------------------------------------------------------------------
@@ -76,9 +78,11 @@ pub(super) fn apply_runtime_template_chain_with_initializer(
     inherits: Option<&str>,
     fire_on_load: bool,
     initializer: Val,
+    initial_flags: Option<super::InitialFrameFlags>,
 ) -> LuaResult<()> {
-    let overrides = match initializer {
-        Val::Function(_) => RuntimeTemplateOverrides::Initializer(initializer),
+    let overrides = match (initial_flags, initializer) {
+        (Some(flags), _) => RuntimeTemplateOverrides::Options(flags),
+        (None, Val::Function(_)) => RuntimeTemplateOverrides::Initializer(initializer),
         _ => RuntimeTemplateOverrides::None,
     };
     apply_runtime_template_chain_impl(state, frame_id, inherits, fire_on_load, overrides)
@@ -116,6 +120,7 @@ fn apply_runtime_template_chain_impl(
         inherits,
         &frame_name,
         fire_on_load,
+        overrides,
     )
 }
 
@@ -126,6 +131,7 @@ fn apply_runtime_template_overrides(
 ) -> LuaResult<()> {
     match overrides {
         RuntimeTemplateOverrides::None => Ok(()),
+        RuntimeTemplateOverrides::Options(flags) => flags.apply(state, frame_id),
         RuntimeTemplateOverrides::Frame(frame) => {
             crate::lua_api::frame::methods::forbidden_aspects::apply_xml_forbidden_aspects(
                 state, frame_id, frame,
@@ -261,8 +267,12 @@ fn finalize_template_frame(
     inherits: &str,
     frame_name: &str,
     fire_on_load: bool,
+    overrides: RuntimeTemplateOverrides<'_>,
 ) -> LuaResult<()> {
     runtime::apply_runtime_template_direct_properties(state_rc, frame_id, inherits, frame_name);
+    if let RuntimeTemplateOverrides::Options(flags) = overrides {
+        flags.apply(state, frame_id)?;
+    }
     crate::lua_api::globals::template::repair_direct_child_parent_keys(state, frame_id)?;
     crate::lua_api::globals::template::repair_transparent_descendant_parent_key_aliases(
         state, frame_id,

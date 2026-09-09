@@ -11,6 +11,8 @@ mod dropdown_api;
 mod dropdown_children;
 mod helpers;
 pub mod helpers_shared;
+#[cfg(feature = "retail-12-1-5")]
+mod options;
 mod simple_window;
 mod template_chain;
 
@@ -32,19 +34,31 @@ use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 // ---------------------------------------------------------------------------
 
 pub fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
-    let mut args = parse_create_frame_args(state)?;
+    let args = parse_create_frame_args(state)?;
+    create_frame_from_args(state, args)
+}
+
+fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> LuaResult<u32> {
     let (parent_id, parent_explicit) =
         resolve_parent_id(state, args.parent_val, args.default_parent_allowed)?;
     let runtime_inherits = build_runtime_inherits(&args.frame_type, args.inherits.as_deref());
     let template_initializer = args.template_initializer;
+    let initial_flags = args.initial_flags;
     args.name = resolve_frame_name(state, args.name.take(), parent_id, parent_explicit)?;
     let frame_id = register_runtime_frame(state, args, parent_id, parent_explicit)?;
+    if let Some(flags) = initial_flags {
+        flags.apply(state, frame_id)?;
+    }
     apply_runtime_frame_templates(
         state,
         frame_id,
         runtime_inherits.as_deref(),
         template_initializer,
+        initial_flags,
     )?;
+    if initial_flags.is_some() {
+        fire_options_initial_on_show(state, frame_id)?;
+    }
     let frame_val = frame_ref(state, frame_id)?;
     state.push(frame_val);
     Ok(1)
@@ -87,6 +101,43 @@ struct CreateFrameArgs {
     inherits: Option<String>,
     id: Option<i32>,
     template_initializer: Val,
+    initial_flags: Option<InitialFrameFlags>,
+}
+
+#[derive(Clone, Copy)]
+struct InitialFrameFlags {
+    hidden: bool,
+    forbidden: bool,
+}
+
+impl InitialFrameFlags {
+    fn apply(self, state: &mut LuaState, frame_id: u64) -> LuaResult<()> {
+        let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+        sim.set_frame_visible(frame_id, !self.hidden);
+        if let Some(frame) = sim.widgets.get_mut_visual(frame_id) {
+            frame.forbidden |= self.forbidden;
+        }
+        Ok(())
+    }
+}
+
+fn fire_options_initial_on_show(state: &mut LuaState, frame_id: u64) -> LuaResult<()> {
+    let visible = {
+        let sim = borrow_state(state)?;
+        sim.widgets.is_ancestor_visible(frame_id)
+            && sim.widgets.get(frame_id).is_some_and(|frame| frame.visible)
+    };
+    if !visible {
+        return Ok(());
+    }
+    let frame = frame_ref(state, frame_id)?;
+    for handler in
+        crate::lua_api::script_helpers::get_scripts_for_dispatch(state, frame_id, "OnShow")
+    {
+        crate::lua_api::script_helpers::call_void_function_state(state, handler, &[frame])
+            .map_err(rilua::runtime_error)?;
+    }
+    Ok(())
 }
 
 fn register_runtime_frame(
@@ -111,6 +162,7 @@ fn apply_runtime_frame_templates(
     frame_id: u64,
     runtime_inherits: Option<&str>,
     template_initializer: Val,
+    initial_flags: Option<InitialFrameFlags>,
 ) -> LuaResult<()> {
     template_chain::ensure_runtime_slider_children(state, frame_id)?;
     let fire_on_load = borrow_state(state)?.suppress_runtime_on_load_depth == 0;
@@ -120,6 +172,7 @@ fn apply_runtime_frame_templates(
         runtime_inherits,
         fire_on_load,
         template_initializer,
+        initial_flags,
     )?;
     replay_runtime_template_parent_links(state, frame_id, runtime_inherits)
 }
@@ -156,6 +209,7 @@ fn parse_create_frame_args(state: &mut LuaState) -> LuaResult<CreateFrameArgs> {
         inherits,
         id,
         template_initializer,
+        initial_flags: None,
     })
 }
 
@@ -254,6 +308,12 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     super::loader_script_bindings::register_all(lua)?;
     LuaApiMut::register_function(lua, "CreateFrame", create_frame)?;
+    #[cfg(feature = "retail-12-1-5")]
+    LuaApiMut::register_function(
+        lua,
+        "CreateFrameWithOptions",
+        options::create_frame_with_options,
+    )?;
     LuaApiMut::register_function(lua, "CreateWindow", simple_window::create_window)?;
     LuaApiMut::register_function(lua, "EnumerateFrames", enumerate_frames)?;
     register_global_frames(lua)?;

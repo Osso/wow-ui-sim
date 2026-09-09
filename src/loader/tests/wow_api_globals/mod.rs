@@ -25,6 +25,8 @@ mod patch_12_1_5_bag_forbidden_enums;
 mod patch_12_1_5_bonus_stat_index_enums;
 mod patch_12_1_5_cooldown_thresholds;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_create_frame_options;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_fragment_id_enums;
 mod patch_12_1_5_housing_result_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
