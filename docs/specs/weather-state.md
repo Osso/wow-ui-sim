@@ -8,18 +8,18 @@ The PTR weather surface exposes simulator-owned weather state through `C_Weather
 
 Source: `data/patch-api/sources/12.1.5-register.json`, Gethe base `a89e9d0ceb7f6cd31e8fc5ca7df1a338ac0b1b58` and target `49b69918fcdc77e109813281e4f537d45ec7dcbf`.
 
-- [ ] PTR publishes `C_Weather.GetCurrentWeather()` returning a table with non-nil `type: WeatherType` and `intensity: number`; the structure documents `type` default `Clear`.
-- [ ] Earlier retail leaves `C_Weather` absent, including normal lookup through namespace fallback.
-- [ ] PTR accepts registration for the added `WEATHER_CHANGED` event.
+- [x] PTR publishes `C_Weather.GetCurrentWeather()` returning a table with non-nil `type: WeatherType` and `intensity: number`; the structure documents `type` default `Clear`.
+- [x] Earlier retail leaves `C_Weather` absent, including normal lookup through namespace fallback.
+- [x] PTR accepts registration for the added `WEATHER_CHANGED` event.
 
 ### Chosen simulator behavior (not native conformance)
 
-- [ ] Each simulator starts at Clear (`0`), intensity `0`. Zero intensity is an assumption; the source gives no intensity default.
-- [ ] Each getter call returns an independent table snapshot. Editing returned fields cannot change backing state.
-- [ ] PTR-only `A_Admin.SetWeather(type, intensity)` changes state without dispatching or queuing events.
-- [ ] Admin input requires a numeric integer WeatherType value `0..4` and finite numeric intensity. Invalid input fails before mutation. This is simulator validation, not native coercion or range behavior; finite intensities outside `0..1` remain accepted.
-- [ ] An explicit `A_Admin.FireEvent("WEATHER_CHANGED")` invokes a registered handler with zero injected arguments; the handler reads already-mutated state. No native event argument or timing claim follows.
-- [ ] No global `WeatherInfo` constructor/table is fabricated: the documented structure describes returned fields.
+- [x] Each simulator starts at Clear (`0`), intensity `0`. Zero intensity is an assumption; the source gives no intensity default.
+- [x] Each getter call returns an independent table snapshot. Editing returned fields cannot change backing state.
+- [x] PTR-only `A_Admin.SetWeather(type, intensity)` changes state without dispatching or queuing events.
+- [x] Admin input requires a numeric integer WeatherType value `0..4` and finite numeric intensity. Invalid input fails before mutation. This is simulator validation, not native coercion or range behavior; finite intensities outside `0..1` remain accepted.
+- [x] An explicit `A_Admin.FireEvent("WEATHER_CHANGED")` invokes a registered handler with zero injected arguments; the handler reads already-mutated state. No native event argument or timing claim follows.
+- [x] No global `WeatherInfo` constructor/table is fabricated: the documented structure describes returned fields.
 
 ## How it works
 
