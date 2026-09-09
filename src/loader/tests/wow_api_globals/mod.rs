@@ -31,6 +31,7 @@ mod patch_12_1_5_intl_enums;
 mod patch_12_1_5_player_data_flag_enums;
 mod patch_12_1_5_table_count_info;
 mod patch_12_1_5_table_util_removal;
+mod patch_12_1_5_tiered_entrance_enums;
 mod patch_12_1_5_weather_type_enums;
 
 macro_rules! active_retail_12_0_0_test_modules {
