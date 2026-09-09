@@ -34,6 +34,8 @@ mod patch_12_1_5_intl_breaks;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_casing;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_intl_collation;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_intl_length;
