@@ -150,8 +150,11 @@ if rawget(C_StringUtil, "CreateSecondsFormatter") == nil then
     return tostring(seconds or 0)
   end
 
+  -- Numeric configuration is modeled in c_api::seconds_formatter. Keep this
+  -- integration temporary until that model owns the complete formatter factory.
+  local initializeConfiguration = __wow_install_seconds_formatter_configuration(secondsFormatterMethods)
   function C_StringUtil.CreateSecondsFormatter()
-    return __wow_make_proxy_object("SecondsFormatter", secondsFormatterMethods, {})
+    return initializeConfiguration(__wow_make_proxy_object("SecondsFormatter", secondsFormatterMethods, {}))
   end
 end
 
@@ -505,7 +508,11 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(PROXY_OBJECT_FACTORIES_LUA)?;
+    let bootstrap = format!(
+        "{}\n{PROXY_OBJECT_FACTORIES_LUA}",
+        crate::c_api::seconds_formatter::CONFIGURATION_LUA
+    );
+    lua.exec(&bootstrap)?;
     Ok(())
 }
 
