@@ -57,6 +57,93 @@ fn cooldown_timing(env: &WowLuaEnv, name: &str) -> (f64, f64, f64, f64) {
 }
 
 #[test]
+fn cooldown_clear_resets_timing_and_rate() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        DirectClear = CreateFrame("Cooldown", "DirectClear")
+        DirectClear:SetCooldown(12.5, 6.25, 2.5)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(cooldown_timing(&env, "DirectClear"), (12.5, 6.25, 6250.0, 2.5));
+    env.exec(
+        r#"
+        DirectClear:Clear()
+        local start, duration = DirectClear:GetCooldownTimes()
+        assert(start == 0 and duration == 0)
+        assert(DirectClear:GetCooldownDisplayDuration() == 0)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(cooldown_timing(&env, "DirectClear"), (0.0, 0.0, 0.0, 1.0));
+}
+
+#[test]
+fn cooldown_set_cooldown_stores_timing_and_defaults_rate() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        DirectSet = CreateFrame("Cooldown", "DirectSet")
+        DirectSet:SetCooldown(12.5, 6.25, 2.5)
+        local start, duration = DirectSet:GetCooldownTimes()
+        assert(start == 12.5 and duration == 6.25)
+        assert(DirectSet:GetCooldownDisplayDuration() == 6250)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(cooldown_timing(&env, "DirectSet"), (12.5, 6.25, 6250.0, 2.5));
+    env.exec("DirectSet:SetCooldown(20.25, 3.5)")
+        .unwrap();
+    assert_eq!(cooldown_timing(&env, "DirectSet"), (20.25, 3.5, 3500.0, 1.0));
+}
+
+#[test]
+fn cooldown_set_duration_preserves_start_and_defaults_rate() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        DirectDuration = CreateFrame("Cooldown", "DirectDuration")
+        DirectDuration:SetCooldown(12.5, 6.25, 2.5)
+        DirectDuration:SetCooldownDuration(4.75, 1.5)
+        local start, duration = DirectDuration:GetCooldownTimes()
+        assert(start == 12.5 and duration == 4.75)
+        assert(DirectDuration:GetCooldownDisplayDuration() == 4750)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(cooldown_timing(&env, "DirectDuration"), (12.5, 4.75, 4750.0, 1.5));
+    env.exec("DirectDuration:SetCooldownDuration(2.25)")
+        .unwrap();
+    assert_eq!(cooldown_timing(&env, "DirectDuration"), (12.5, 2.25, 2250.0, 1.0));
+}
+
+#[test]
+fn cooldown_set_unix_stores_literal_start_without_epoch_conversion() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        DirectUnix = CreateFrame("Cooldown", "DirectUnix")
+        DirectUnix:SetCooldownUNIX(1700000000.25, 8.5, 2)
+        local start, duration = DirectUnix:GetCooldownTimes()
+        assert(start == 1700000000.25 and duration == 8.5)
+        assert(DirectUnix:GetCooldownDisplayDuration() == 8500)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(
+        cooldown_timing(&env, "DirectUnix"),
+        (1700000000.25, 8.5, 8500.0, 2.0)
+    );
+    env.exec("DirectUnix:SetCooldownUNIX(1700000100.5, 3.25)")
+        .unwrap();
+    assert_eq!(
+        cooldown_timing(&env, "DirectUnix"),
+        (1700000100.5, 3.25, 3250.0, 1.0)
+    );
+}
+
+#[test]
 fn cooldown_zero_duration_respects_clear_if_zero() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
