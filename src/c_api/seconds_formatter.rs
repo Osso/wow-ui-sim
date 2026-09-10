@@ -16,8 +16,11 @@ local function __wow_install_seconds_formatter_configuration(methods)
   end
 
   local function set_number(object, key, value)
-    if type(value) ~= "number" or value ~= value
-      or value == math.huge or value == -math.huge then
+    local is_number = type(value) == "number"
+    local is_nan = value ~= value
+    local is_infinite = value == math.huge or value == -math.huge
+    local is_finite_number = is_number and not is_nan and not is_infinite
+    if not is_finite_number then
       error("SecondsFormatter configuration requires a finite number", 3)
     end
     configuration(object)[key] = value
