@@ -114,7 +114,7 @@ retail-12-0-0 = []
 retail-12-0-5 = ["retail-12-0-0"]
 retail-12-0-7 = ["retail-12-0-5"]
 retail-12-1-0 = ["retail-12-0-7"]
-retail-12-1-5 = ["retail-12-1-0"]
+retail-12-1-5 = ["retail-12-1-0", "dep:cc", "dep:pkg-config", "dep:vcpkg"]
 
 # Client profile features — exactly one profile marker must be enabled. The
 # public client-retail bundle preserves the current retail epoch; profile-retail
@@ -235,6 +235,10 @@ path = "tests/classic_guild_roster_selection.rs"
 iced-layout-inspector = { git = "https://github.com/Osso/iced-layout-inspector.git", tag = "v0.2.0", features = ["server"], optional = true }
 
 [build-dependencies]
+# Compile/probe the PTR-only ICU4C C ABI shim; never activated by older profiles.
+cc = { version = "=1.2.52", optional = true }
+pkg-config = { version = "=0.3.32", optional = true }
+vcpkg = { version = "=0.2.15", optional = true }
 winresource = "0.1"
 # Parse explicit prefork test marker items in build.rs instead of maintaining a bespoke Rust lexer.
 syn = { version = "2", features = ["full", "parsing"] }

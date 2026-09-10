@@ -7,7 +7,14 @@ use syn::{
     ReturnType, Type, Visibility,
 };
 
+#[cfg(feature = "retail-12-1-5")]
+#[path = "build/intl_native.rs"]
+mod intl_native;
+
 fn main() {
+    #[cfg(feature = "retail-12-1-5")]
+    intl_native::build();
+
     println!("cargo:rerun-if-changed=installer/wow-sim.ico");
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=tests");
