@@ -6356,6 +6356,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5dfa6e8c60bb66d49db113e0125ee8711b7647b5579dc7f5f19c42357ed039fe"
 
 [[package]]
+name = "unicode-blocks"
+version = "0.1.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "328edfd6d0bb91a22e592bed3a3b54c7b1f5c92a517f5a7aca24a2caef10c363"
+
+[[package]]
 name = "unicode-ccc"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7636,6 +7642,7 @@ dependencies = [
  "icu_locale_core",
  "icu_normalizer",
  "icu_plurals",
+ "icu_properties",
  "icu_segmenter",
  "image 0.25.9",
  "image-blp",
@@ -7661,6 +7668,7 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-subscriber",
+ "unicode-blocks",
  "walkdir",
  "webp",
  "wgpu",

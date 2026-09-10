@@ -4,6 +4,8 @@ mod breaks;
 #[cfg(feature = "retail-12-1-5")]
 mod casing;
 #[cfg(feature = "retail-12-1-5")]
+mod character_properties;
+#[cfg(feature = "retail-12-1-5")]
 mod collation;
 #[cfg(feature = "retail-12-1-5")]
 mod normalization;
@@ -68,7 +70,8 @@ mod storage {
         super::breaks::register(state, namespace)?;
         super::transform::register(state, namespace)?;
         super::collation::register(state, namespace)?;
-        super::plurals::register(state, namespace)
+        super::plurals::register(state, namespace)?;
+        super::character_properties::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
