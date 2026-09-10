@@ -9,6 +9,7 @@ Ordinary simulator query behavior for `SimpleAnim` and `SimpleAnimGroup`, exerci
 - [x] `Finish` remains pending until a tick; completion callbacks observe settled state and fire once. Natural completion after restart also settles owner/child queries.
 - [x] Reverse playback and repeating loops update elapsed/progress while `IsReverse` and `GetLoopState` identify direction and configured loop mode. Bounce callbacks observe direction changes.
 - [x] Delayed animations expose local active elapsed/progress independently of the group's total timeline; animation progress clamps during end delay. `GetSmoothProgress` currently equals unsmoothed progress even with `IN` smoothing.
+- [x] `IsDelaying` identifies the animation's start-delay interval on its ordered timeline: inclusive at the order's start, exclusive at active playback's start. Earlier orders contribute their longest total duration, including end delay; parallel animations are not summed. Waiting for an earlier order and the queried animation's own end delay return false. Reverse playback queries the same timeline interval; no extra phase state is introduced.
 
 These are simulator-model requirements, not native lifecycle or smoothing claims.
 
@@ -33,7 +34,8 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 | `pending_finish_queries_are_settled_before_callbacks` | Above state/progress queries plus group `IsPendingFinish`; explicit Finish and natural completion callback visibility |
 | `reverse_and_repeat_queries_follow_playback_direction` | Group `IsReverse`, `GetLoopState`, elapsed/progress; child elapsed/progress across reverse and repeat |
 | `bounce_loop_callback_observes_direction_change` | Loop/direction/state queries inside real `OnLoop` callbacks |
-| `delayed_animation_queries_use_local_active_elapsed` | Animation `IsDelaying`, elapsed/progress/smooth progress; group elapsed/progress and completion across start/end delays |
+| `delayed_animation_queries_use_local_active_elapsed` | Animation `IsDelaying`, elapsed/progress/smooth progress; exact start-delay boundary and completion across start/end delays |
+| `delaying_uses_order_start_and_longest_parallel_duration` | Earlier-order wait, parallel maximum including end delay, exact delay boundaries, own end delay, and reverse traversal |
 
 Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs`, and `tests/animation_anim.rs`. No new Cargo target or API-publication absence assertions are needed.
 
@@ -47,11 +49,11 @@ Logs: `/tmp/animation-query-lifecycle-9bc06cfe2-{ptr,retail}.log`. Proof ledger:
 
 ## Known gaps (current cycle)
 
-- [ ] Delay-flag inconsistency reproduced in both profiles: with start delay `0.5` and group elapsed `0.75`, animation elapsed/progress are `0.25`, but `IsDelaying()` returns true. The getter compares already delay-adjusted local elapsed against start delay. The test records this flag diagnostically rather than asserting the inconsistency as required behavior. Production source is unchanged; correction requires separate authorization.
+- [x] Correct the reproduced double subtraction of start delay: group time `0.75` with start delay `0.5` now yields local elapsed/progress `0.25` and `IsDelaying() == false`. The getter derives time within the animation's order rather than reinterpreting clamped active elapsed.
 - [ ] Native owner-versus-child state, delay boundaries, smoothing, reverse/bounce geometry, and callback timing are not established by this model coverage.
 
 ## Out of scope
 
-- `SetParent` and `CreateAnimation` mutation contracts: no production changes in this test-only slice.
+- `SetParent` and `CreateAnimation` mutation contracts: unchanged by this query correction.
 - Forbidden-aspect, protected, taint, and secret enforcement: ordinary lifecycle tests do not exercise those boundaries.
 - Audit manifest/checklist changes, broad suites, rendering proof, and final verification gates: separate work.

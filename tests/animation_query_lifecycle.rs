@@ -223,13 +223,14 @@ fn delayed_animation_queries_use_local_active_elapsed() {
         "#,
     )
     .unwrap();
-    env.fire_on_update(0.5).unwrap();
+    env.fire_on_update(0.25).unwrap();
+    env.exec("near(group:GetElapsed(), 0.5); assert(not animation:IsDelaying())")
+        .unwrap();
+    env.fire_on_update(0.25).unwrap();
     let (elapsed, progress, delaying): (f64, f64, bool) = env
         .eval("return animation:GetElapsed(), animation:GetProgress(), animation:IsDelaying()")
         .unwrap();
-    assert_eq!((elapsed, progress), (0.25, 0.25));
-    // Diagnostic only: do not turn the suspect delay flag into a required behavior.
-    println!("delay boundary: elapsed={elapsed}, progress={progress}, IsDelaying={delaying}");
+    assert_eq!((elapsed, progress, delaying), (0.25, 0.25, false));
     env.fire_on_update(0.5).unwrap();
     env.exec(
         r#"
@@ -256,3 +257,55 @@ fn delayed_animation_queries_use_local_active_elapsed() {
     env.exec("state(false, false, true, false); near(group:GetProgress(), 1)")
         .unwrap();
 }
+
+#[test]
+fn delaying_uses_order_start_and_longest_parallel_duration() {
+    let env = setup();
+    env.exec(
+        r#"
+        animation:SetOrder(9)
+        animation:SetStartDelay(0.5)
+        animation:SetEndDelay(0.5)
+        local prior = group:CreateAnimation("Alpha")
+        prior:SetOrder(2)
+        prior:SetDuration(0.5)
+        prior:SetEndDelay(0.5)
+        local parallel = group:CreateAnimation("Alpha")
+        parallel:SetOrder(2)
+        parallel:SetDuration(0.25)
+        group:Play()
+        assert(not animation:IsDelaying())
+        "#,
+    )
+    .unwrap();
+    for (delta, time, delaying) in [
+        (0.75, 0.75, false),
+        (0.25, 1.0, true),
+        (0.25, 1.25, true),
+        (0.25, 1.5, false),
+        (0.25, 1.75, false),
+        (0.75, 2.5, false),
+        (0.25, 2.75, false),
+    ] {
+        env.fire_on_update(delta).unwrap();
+        let actual: (f64, bool) = env
+            .eval("return group:GetElapsed(), animation:IsDelaying()")
+            .unwrap();
+        assert_eq!(actual, (time, delaying), "ordered timeline at {time}");
+    }
+    env.exec("group:Pause(); assert(not animation:IsDelaying()); group:Play(true)")
+        .unwrap();
+    for (delta, time, delaying) in [
+        (1.25, 1.5, false),
+        (0.25, 1.25, true),
+        (0.25, 1.0, true),
+        (0.25, 0.75, false),
+    ] {
+        env.fire_on_update(delta).unwrap();
+        let actual: (f64, bool) = env
+            .eval("return group:GetElapsed(), animation:IsDelaying()")
+            .unwrap();
+        assert_eq!(actual, (time, delaying), "reverse timeline at {time}");
+    }
+}
+

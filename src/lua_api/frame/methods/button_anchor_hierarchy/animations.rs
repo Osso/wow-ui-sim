@@ -633,14 +633,36 @@ pub(super) fn animation_is_delaying(state: &mut LuaState) -> LuaResult<u32> {
             .get(&animation_frame_id)
             .and_then(|(group_id, animation_index)| {
                 sim.animation_groups.get(group_id).and_then(|group| {
-                    group.animations.get(*animation_index).map(|animation| {
-                        animation.elapsed < animation.start_delay && animation.start_delay > 0.0
-                    })
+                    group
+                        .animations
+                        .get(*animation_index)
+                        .map(|animation| animation_is_in_start_delay(group, animation))
                 })
             })
             .unwrap_or(false)
     };
     push_group_bool(state, value)
+}
+
+fn animation_is_in_start_delay(
+    group: &crate::lua_api::animation::AnimGroupState,
+    animation: &crate::lua_api::animation::AnimState,
+) -> bool {
+    let mut preceding_orders = std::collections::BTreeMap::<u32, f64>::new();
+    for prior in &group.animations {
+        if prior.order >= animation.order {
+            continue;
+        }
+        let duration = prior.total_time().max(0.0);
+        preceding_orders
+            .entry(prior.order)
+            .and_modify(|longest| *longest = longest.max(duration))
+            .or_insert(duration);
+    }
+    let order_start: f64 = preceding_orders.into_values().sum();
+    let within_order = group.elapsed - order_start;
+    // Active elapsed has already had this delay removed by the tick processor.
+    within_order >= 0.0 && within_order < animation.start_delay.max(0.0)
 }
 
 pub(super) fn animation_group_total_duration(
