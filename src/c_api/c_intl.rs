@@ -1,4 +1,4 @@
-//! Locale storage and PTR Unicode text operations; no locale formatting algorithms.
+//! PTR locale storage, ICU4X text operations, and ICU4C number formatting.
 #[cfg(feature = "retail-12-1-5")]
 mod breaks;
 #[cfg(feature = "retail-12-1-5")]
@@ -9,6 +9,8 @@ mod character_properties;
 mod collation;
 #[cfg(feature = "retail-12-1-5")]
 mod normalization;
+#[cfg(feature = "retail-12-1-5")]
+mod number_formatting;
 #[cfg(feature = "retail-12-1-5")]
 mod plurals;
 #[cfg(feature = "retail-12-1-5")]
@@ -71,7 +73,8 @@ mod storage {
         super::transform::register(state, namespace)?;
         super::collation::register(state, namespace)?;
         super::plurals::register(state, namespace)?;
-        super::character_properties::register(state, namespace)
+        super::character_properties::register(state, namespace)?;
+        super::number_formatting::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
@@ -106,6 +109,7 @@ mod storage {
         super::transform::register_context(state, metatable)?;
         super::collation::register_context(state, metatable)?;
         super::plurals::register_context(state, metatable)?;
+        super::number_formatting::register_context(state, metatable)?;
         table_set_static(
             state,
             Val::Table(metatable),
