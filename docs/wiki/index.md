@@ -1,3 +1,7 @@
+## [2026-09-10] audit | SecondsFormatter configuration
+
+`872b24bd8` adds independent approximation-seconds and millisecond-threshold state. Four audit rows cover modeled accessors only; formatting/evaluation and native defaults/security remain unverified. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].
+
 ## Table-freeze audit
 
 `8c1011969` supplies modeled `table.freeze` / `table.isfrozen` state and profile return arity. Four tests per profile cover isolated recursive graphs and guarded mutations; native traversal and shared-environment hazards remain unresolved. See [table freezing](../specs/table-freeze.md) and [[patch-12-1-5-api-audit]].

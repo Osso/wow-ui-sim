@@ -1,3 +1,7 @@
+## [2026-09-10] audit | SecondsFormatter configuration
+
+`872b24bd8` adds independent approximation-seconds and millisecond-threshold state. Four audit rows cover modeled accessors only; formatting/evaluation and native defaults/security remain unverified. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit cooldown `clearIfZero` behavior
 
 `8ccb7897c` credits `FrameAPICooldown.SetCooldownFromDurationObject` as bounded ordinary simulator behavior. Real duration-proxy tests establish explicit `false` preserves zero-duration timing, omitted/`true` clears it, and nonzero duration updates ignore the flag. The base/PTR declarations both default `clearIfZero` to `true`; protected-call enforcement, secret/taint/forbidden behavior, coercion, rendering, and native timing remain unresolved. Totals: 341 best-effort, 108 evidence-required, 0 untriaged. See [duration core](../specs/duration-core.md) and [[patch-12-1-5-api-audit]].
