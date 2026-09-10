@@ -146,6 +146,18 @@ fn creature_id_from_guid(guid: &str) -> Option<i32> {
     parts.nth(4)?.parse().ok()
 }
 
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn existing_guid_for_unit(
+    sim: &crate::lua_api::state::SimState,
+    unit: &str,
+) -> Option<String> {
+    if !super::group_queries::unit_exists_in_state(sim, unit) {
+        return None;
+    }
+    let guid = guid_for_unit(sim, unit);
+    (guid != UNKNOWN_CREATURE_GUID && !guid.is_empty()).then_some(guid)
+}
+
 fn guid_for_unit(sim: &crate::lua_api::state::SimState, unit: &str) -> String {
     match unit {
         "player" => SEEDED_LOCAL_CHARACTER_GUID.to_string(),

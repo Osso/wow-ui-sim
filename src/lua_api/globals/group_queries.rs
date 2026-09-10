@@ -405,15 +405,19 @@ fn unit_has_lfg_random_cooldown(state: &mut LuaState) -> LuaResult<u32> {
 
 fn unit_exists(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let exists = match unit.as_str() {
+    let exists = unit_exists_in_state(&borrow_state(state)?, &unit);
+    state.push(Val::Bool(exists));
+    Ok(1)
+}
+
+pub(crate) fn unit_exists_in_state(st: &crate::lua_api::state::SimState, unit: &str) -> bool {
+    match unit {
         "" => false,
-        "player" | "vehicle" => true,
-        "questnpc" => borrow_state(state)?.gossip.active,
-        "pet" => true,
-        "target" => borrow_state(state)?.current_target.is_some(),
-        "focus" => borrow_state(state)?.current_focus.is_some(),
+        "player" | "vehicle" | "pet" => true,
+        "questnpc" => st.gossip.active,
+        "target" => st.current_target.is_some(),
+        "focus" => st.current_focus.is_some(),
         other => {
-            let st = borrow_state(state)?;
             if let Some(idx) = crate::lua_api::globals::unit_api::parse_party_index(other) {
                 st.party_group_active && idx < st.party_members.len()
             } else if let Some(rest) = other.strip_prefix("raid") {
@@ -426,9 +430,7 @@ fn unit_exists(state: &mut LuaState) -> LuaResult<u32> {
                 false
             }
         }
-    };
-    state.push(Val::Bool(exists));
-    Ok(1)
+    }
 }
 
 fn unit_name(state: &mut LuaState) -> LuaResult<u32> {

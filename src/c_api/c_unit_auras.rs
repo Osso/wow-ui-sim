@@ -11,6 +11,14 @@ use std::cmp::Ordering;
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let public = super::ensure_namespace(state, "C_UnitAuras")?;
+    #[cfg(feature = "retail-12-1-5")]
+    table_set_rust_fn_static(state, public, "GetAuraCasterGUID", get_aura_caster_guid)?;
+    #[cfg(not(feature = "retail-12-1-5"))]
+    {
+        let removed = create_table(state);
+        table_set(state, removed, "GetAuraCasterGUID", Val::Bool(true));
+        table_set(state, Val::Table(public), "__wow_removed_keys", removed);
+    }
     table_set_rust_fn_static(
         state,
         public,
@@ -37,6 +45,29 @@ pub(crate) fn register_sound_trigger_enum(state: &mut LuaState, enums: Val) {
         table_set(state, metadata, name, Val::Num(value as f64));
     }
     table_set(state, enums, "UnitAuraSoundTriggerMeta", metadata);
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn get_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let instance_id = f64::from_stack(state, 2)? as i32;
+    let exists =
+        crate::lua_api::globals::group_queries::unit_exists_in_state(&borrow_state(state)?, &unit);
+    let aura = if exists {
+        crate::lua_api::globals::auras::find_aura_by_instance_id(state, &unit, instance_id)
+    } else {
+        None
+    };
+    let sim = borrow_state(state)?;
+    let guid = aura.and_then(|aura| {
+        crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, &aura.source_unit)
+    });
+    drop(sim);
+    let result = guid
+        .map(|guid| crate::lua_api::methods::create_string(state, &guid))
+        .unwrap_or(Val::Nil);
+    state.push(result);
+    Ok(1)
 }
 
 fn get_unit_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {

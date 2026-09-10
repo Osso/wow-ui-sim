@@ -495,7 +495,7 @@ fn push_aura_by_instance_id(state: &mut LuaState, unit: &str, aura_instance_id: 
     }
 }
 
-fn find_aura_by_instance_id(
+pub(crate) fn find_aura_by_instance_id(
     state: &mut LuaState,
     unit: &str,
     aura_instance_id: i32,

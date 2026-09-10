@@ -22,6 +22,8 @@ mod item_collection_secret_aspects;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_active_lfg_dungeon;
 mod patch_12_1_5_aura_application_options;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_aura_caster_guid;
 mod patch_12_1_5_aura_caster_name_options;
 mod patch_12_1_5_bag_forbidden_enums;
 mod patch_12_1_5_bonus_stat_index_enums;
