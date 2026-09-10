@@ -18,14 +18,7 @@ pub(super) fn build() {
     compiler.include("native/intl").std("c11");
     let target = env::var("TARGET").expect("Cargo TARGET is required for ICU4C");
     if target == "x86_64-pc-windows-msvc" {
-        let library = find_windows_icu();
-        compiler
-            .includes(&library.include_paths)
-            .define("U_STATIC_IMPLEMENTATION", None);
-        compiler.compile("wow_intl_native");
-        for line in library.cargo_metadata {
-            println!("{line}");
-        }
+        build_windows_icu(compiler);
     } else if env::var("CARGO_CFG_TARGET_FAMILY").as_deref() == Ok("unix") {
         build_unix_icu(compiler);
     } else {
@@ -49,6 +42,17 @@ fn build_unix_icu(mut compiler: cc::Build) {
             .atleast_version("72")
             .probe(package)
             .unwrap_or_else(|error| panic!("link PTR {package} >= 72: {error}"));
+    }
+}
+
+fn build_windows_icu(mut compiler: cc::Build) {
+    let library = find_windows_icu();
+    compiler
+        .includes(&library.include_paths)
+        .define("U_STATIC_IMPLEMENTATION", None);
+    compiler.compile("wow_intl_native");
+    for line in library.cargo_metadata {
+        println!("{line}");
     }
 }
 

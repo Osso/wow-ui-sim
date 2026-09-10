@@ -139,22 +139,27 @@ pub(super) fn parse(
         )
     };
     match status {
-        0 => {
-            let currency_code = if with_currency {
-                String::from_utf8(currency[..3].to_vec()).map_err(|error| {
-                    Error(format!("ICU4C returned invalid currency bytes: {error}"))
-                })?
-            } else {
-                String::new()
-            };
-            Ok(Some(ParsedCurrency {
-                amount,
-                currency_code,
-            }))
-        }
+        0 => decode_parsed_currency(amount, currency, with_currency).map(Some),
         1 => Ok(None),
         _ => Err(error.into_error(locale)),
     }
+}
+
+fn decode_parsed_currency(
+    amount: f64,
+    currency: [u8; 4],
+    with_currency: bool,
+) -> Result<ParsedCurrency, Error> {
+    let currency_code = if with_currency {
+        String::from_utf8(currency[..3].to_vec())
+            .map_err(|error| Error(format!("ICU4C returned invalid currency bytes: {error}")))?
+    } else {
+        String::new()
+    };
+    Ok(ParsedCurrency {
+        amount,
+        currency_code,
+    })
 }
 
 pub(super) fn version() -> String {

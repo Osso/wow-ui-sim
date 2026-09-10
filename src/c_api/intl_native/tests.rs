@@ -151,7 +151,9 @@ fn rejects_invalid_currency_codes_and_nonfinite_values() {
 
 #[test]
 fn reports_linked_icu_version() {
-    let parts: Vec<u32> = version()
+    let runtime_version = version();
+    println!("ICU4C runtime version: {runtime_version}");
+    let parts: Vec<u32> = runtime_version
         .split('.')
         .map(|part| part.parse().unwrap())
         .collect();
