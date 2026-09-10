@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit PTR spellcast producer payloads
+
+`f474fb2f9` and `c09027a2d` credit three changed spellcast event rows: `UNIT_SPELLCAST_START`, `UNIT_SPELLCAST_STOP`, and `UNIT_SPELLCAST_SUCCEEDED`. Real action-spell, crafting, specialization, and timed-completion tests establish four modeled payload fields: unit target, synthetic cast GUID, spell ID, and cast-bar ID. Native GUID format, lifecycle timing/order, secret/restricted behavior, invalid transitions, and all other spellcast events remain unresolved. Totals: 338 best-effort, 111 evidence-required, 0 untriaged. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR Training Grounds classification
 
 `60ca3d415` and `8c13c6e80` credit `C_PvP.IsTrainingGroundsArena` and `C_PvP.IsTrainingGroundsBG` as bounded PTR simulator behavior. Focused tests prove PTR publication, explicit Arena/Battleground catalog classification, unclassified and unknown false results, live catalog mutation, input validation, unaffected LFG/PvP regressions, and earlier-retail absence before and after bootstrap. Fixture IDs and default catalog classification are simulator-owned; real game catalog IDs, classification, security, taint, coercion, and native semantics remain unresolved. See [Training Grounds classification](../specs/training-grounds-classification.md) and [[patch-12-1-5-api-audit]].

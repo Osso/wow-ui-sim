@@ -432,9 +432,9 @@
 432. [evidence-required] `changed:UNIT_SPELLCAST_FAILED` — unsafe
 433. [evidence-required] `changed:UNIT_SPELLCAST_FAILED_QUIET` — unsafe
 434. [evidence-required] `changed:UNIT_SPELLCAST_INTERRUPTED` — unsafe
-435. [evidence-required] `changed:UNIT_SPELLCAST_START` — unsafe
-436. [evidence-required] `changed:UNIT_SPELLCAST_STOP` — unsafe
-437. [evidence-required] `changed:UNIT_SPELLCAST_SUCCEEDED` — unsafe
+435. [best-effort] `changed:UNIT_SPELLCAST_START` — behavioral
+436. [best-effort] `changed:UNIT_SPELLCAST_STOP` — behavioral
+437. [best-effort] `changed:UNIT_SPELLCAST_SUCCEEDED` — behavioral
 438. [best-effort] `changed:UnitCastingInfo` — behavioral
 439. [best-effort] `changed:UnitCastingInfoResult` — behavioral
 440. [best-effort] `changed:UnitCastingInfoResult.castBarID` — behavioral

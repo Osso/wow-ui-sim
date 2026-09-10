@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit PTR spellcast producer payloads
+
+`f474fb2f9` and `c09027a2d` credit `UNIT_SPELLCAST_START`, `UNIT_SPELLCAST_STOP`, and `UNIT_SPELLCAST_SUCCEEDED` as bounded simulator behavior. Focused real producer tests cover action-spell, crafting, and specialization starts plus timed completion with `(unitTarget, synthetic castGUID, spellID, castBarID)`. Synthetic GUID format, identity allocation, event timing/order, security, native semantics, and all other spellcast events remain unclaimed. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR active LFG dungeon name
 
 `cc15512ab` and `f96557ce2` credit `C_LFGInfo.GetActiveLFGDungeonName` as bounded PTR simulator behavior. Focused tests prove PTR publication, current instance-ID/LFD-catalog lookup, live state changes, inactive/proposal-only empty-string behavior, unknown-ID error recovery, arity, unaffected existing LFG APIs, and earlier-retail absence before and after bootstrap. Instance-ID-only selection, inactive/error behavior, validation, queue/proposal precedence, security, taint, coercion, and native semantics remain assumptions or unresolved. See [active LFG dungeon name](../specs/active-lfg-dungeon-name.md) and [[patch-12-1-5-api-audit]].

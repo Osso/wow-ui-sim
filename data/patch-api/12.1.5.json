@@ -17512,70 +17512,226 @@
       "id": "changed:UNIT_SPELLCAST_START",
       "symbol": "UNIT_SPELLCAST_START",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed four-argument spellcast event payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
+          "source_hash": "77ffc4f0078505454b2634a9957039584047b5957d9569e0edd1c4c65804c833"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/combat_verbs.rs",
+          "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "cc7524cf52f5e1248928dad60e5241ff37549e5e798d2b02211acaa1c901c8c2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
+          "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "86f38c2dc1c2e0460b0165527c52af0bc1dea364d5213d257d6e070ba8e2425b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_spec.rs",
+          "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "bd6a2a61d0269a207fc9906a245ca976d35bc07efcbe79b67070935f3c0ec75f"
+        },
+        {
+          "kind": "source",
+          "reference": "src/iced_app/casting.rs",
+          "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
+          "source_hash": "5d323aa2269d2359dfd7255f536ca2695066c52380db55728573560f711dd6e1"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_action_and_timed_completion_share_identity",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_crafting_uses_allocated_identity",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/iced_app/casting/tests.rs::spellcast_payload_action_and_timed_completion_share_identity",
+        "src/iced_app/casting/tests.rs::spellcast_payload_crafting_uses_allocated_identity",
+        "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "f474fb2f9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused real-producer proof establishes only modeled UNIT_SPELLCAST payloads `(unitTarget, synthetic castGUID, spellID, castBarID)` for existing action-spell, crafting, and specialization cast starts plus timed STOP/SUCCEEDED completion. Synthetic GUID format, cast identity allocation, event ordering/timing, restricted/secret behavior, taint, coercion, native GUID semantics, invalid transitions, and all other spellcast events remain unclaimed."
     },
     {
       "id": "changed:UNIT_SPELLCAST_STOP",
       "symbol": "UNIT_SPELLCAST_STOP",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed four-argument spellcast event payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
+          "source_hash": "77ffc4f0078505454b2634a9957039584047b5957d9569e0edd1c4c65804c833"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/combat_verbs.rs",
+          "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "cc7524cf52f5e1248928dad60e5241ff37549e5e798d2b02211acaa1c901c8c2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
+          "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "86f38c2dc1c2e0460b0165527c52af0bc1dea364d5213d257d6e070ba8e2425b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_spec.rs",
+          "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "bd6a2a61d0269a207fc9906a245ca976d35bc07efcbe79b67070935f3c0ec75f"
+        },
+        {
+          "kind": "source",
+          "reference": "src/iced_app/casting.rs",
+          "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
+          "source_hash": "5d323aa2269d2359dfd7255f536ca2695066c52380db55728573560f711dd6e1"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_action_and_timed_completion_share_identity",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_crafting_uses_allocated_identity",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/iced_app/casting/tests.rs::spellcast_payload_action_and_timed_completion_share_identity",
+        "src/iced_app/casting/tests.rs::spellcast_payload_crafting_uses_allocated_identity",
+        "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "f474fb2f9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused real-producer proof establishes only modeled UNIT_SPELLCAST payloads `(unitTarget, synthetic castGUID, spellID, castBarID)` for existing action-spell, crafting, and specialization cast starts plus timed STOP/SUCCEEDED completion. Synthetic GUID format, cast identity allocation, event ordering/timing, restricted/secret behavior, taint, coercion, native GUID semantics, invalid transitions, and all other spellcast events remain unclaimed."
     },
     {
       "id": "changed:UNIT_SPELLCAST_SUCCEEDED",
       "symbol": "UNIT_SPELLCAST_SUCCEEDED",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed four-argument spellcast event payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
+          "source_hash": "77ffc4f0078505454b2634a9957039584047b5957d9569e0edd1c4c65804c833"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/combat_verbs.rs",
+          "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "cc7524cf52f5e1248928dad60e5241ff37549e5e798d2b02211acaa1c901c8c2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
+          "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "86f38c2dc1c2e0460b0165527c52af0bc1dea364d5213d257d6e070ba8e2425b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_spec.rs",
+          "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
+          "source_hash": "bd6a2a61d0269a207fc9906a245ca976d35bc07efcbe79b67070935f3c0ec75f"
+        },
+        {
+          "kind": "source",
+          "reference": "src/iced_app/casting.rs",
+          "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
+          "source_hash": "5d323aa2269d2359dfd7255f536ca2695066c52380db55728573560f711dd6e1"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_action_and_timed_completion_share_identity",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_crafting_uses_allocated_identity",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state",
+          "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
+          "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/iced_app/casting/tests.rs::spellcast_payload_action_and_timed_completion_share_identity",
+        "src/iced_app/casting/tests.rs::spellcast_payload_crafting_uses_allocated_identity",
+        "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "f474fb2f9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused real-producer proof establishes only modeled UNIT_SPELLCAST payloads `(unitTarget, synthetic castGUID, spellID, castBarID)` for existing action-spell, crafting, and specialization cast starts plus timed STOP/SUCCEEDED completion. Synthetic GUID format, cast identity allocation, event ordering/timing, restricted/secret behavior, taint, coercion, native GUID semantics, invalid transitions, and all other spellcast events remain unclaimed."
     },
     {
       "id": "changed:UnitCastingInfo",
