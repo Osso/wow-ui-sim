@@ -17500,8 +17500,8 @@
       "id": "changed:SimpleAnim.SetParent",
       "symbol": "SimpleAnim.SetParent",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17510,14 +17510,34 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations/parent.rs",
+          "summary": "SimpleAnim:SetParent validates the destination and optional order, transfers the existing animation between owner groups, repairs ownership indexes, and applies the bounded local-progress policy.",
+          "source_hash": "5a35a7c1019e2b60ee13bb2630d4501789b3dc63d5e95fc3df5b92384de3fa3b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs",
+          "summary": "SetParent dispatches animation ownership transfer before the unchanged generic frame/region hierarchy path.",
+          "source_hash": "c72a3405601b43130abbcacfa0c6bd8d7c577525980fbb7b311cb2c3d5a7a8c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_set_parent.rs",
+          "summary": "Focused PTR and earlier-retail tests cover transfer identity/configuration, indexes, target resolution, local progress, group callback ownership, destination timelines, same-parent behavior, invalid-input atomicity, and generic parenting. Proof commit e44ffa9a8.",
+          "source_hash": "9688ce0c991f0eea99e13c718a9aec9556ff7fde5f1b77aa9ab0d2b05ae20961"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_set_parent.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e44ffa9a8",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests establish bounded ordinary simulator ownership transfer and timing behavior. Native timing, scheduling, numeric coercion, callback-dispatch mutation, protected, secret, taint, and forbidden-aspect semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.CreateAnimation",

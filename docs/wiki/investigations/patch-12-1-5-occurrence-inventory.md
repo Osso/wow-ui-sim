@@ -8,7 +8,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 369 best-effort, 80 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 374 best-effort, 75 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
@@ -427,7 +427,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `SimpleAnim.IsPaused` | best-effort | script-object-method | changed | Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified. |
 | `SimpleAnim.IsPlaying` | best-effort | script-object-method | changed | Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified. |
 | `SimpleAnim.IsStopped` | best-effort | script-object-method | changed | Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified. |
-| `SimpleAnim.SetParent` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `SimpleAnim.SetParent` | best-effort | script-object-method | changed | Focused PTR and earlier-retail tests establish bounded ordinary simulator ownership transfer: the animation moves once between groups while retaining configuration, repairs parent/target/index state, resets local progress only when changing owners, follows the destination timeline/callback ownership, preserves same-parent progress, rejects invalid transfers atomically, and leaves ordinary frame/region parenting unchanged. Native timing/scheduling/coercion/callback-dispatch mutation and protected, secret, taint, forbidden-aspect behavior remain unverified. |
 | `SimpleAnimGroup.CreateAnimation` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `SimpleAnimGroup.GetElapsed` | best-effort | script-object-method | changed | Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified. |
 | `SimpleAnimGroup.GetLoopState` | best-effort | script-object-method | changed | Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified. |

@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit `SimpleAnim.SetParent`
+
+`e44ffa9a8` credits the changed `SimpleAnim.SetParent` row as bounded ordinary simulator behavior. Focused PTR and earlier-retail tests cover ownership transfer, configuration/index/target preservation, local-progress reset only across owners, existing destination timelines, callback ownership, same-parent behavior, atomic rejection, and generic frame/region regression. Native timing, scheduling, coercion, callback-dispatch mutation, and protected/secret/taint/forbidden-aspect semantics remain unresolved. Totals: 374 best-effort, 75 evidence-required, 0 untriaged. See [animation SetParent](../specs/animation-set-parent.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit SecondsFormatter evaluators
 
 `89fced131` and `b2856c8ff` credit `SecondsFormatter.CanApproximate`, `EvaluateMinInterval`, `EvaluateMaxInterval`, and `EvaluateDesiredUnitCount` as bounded configured proxy behavior. Tests cover strict approximation bounds, static values, live curve dispatch/mode switching, validation, independence, and exact arity on PTR and earlier retail. Native defaults, unit policy, curve rounding, formatting, coercion, `Seconds` identity, and security remain unresolved. Totals: 373 best-effort, 76 evidence-required, 0 untriaged. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].
