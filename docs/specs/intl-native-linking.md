@@ -7,13 +7,13 @@ The PTR number-formatting bridge uses ICU4C's stable C `UNumberFormat` API behin
 - [ ] Compile and link the shim only with `retail-12-1-5`; earlier retail and Mists must not probe or link ICU4C.
 - [ ] On Unix, discover both `icu-i18n` and `icu-uc` through `pkg-config`, requiring ICU >=72. Reject missing/older development libraries explicitly.
 - [ ] On `x86_64-pc-windows-msvc`, require explicit `VCPKG_ROOT` and installed `icu:x64-windows-static-md`. Reject dynamic ICU selection, other triplets, and static-CRT Rust targets. No DLL/path guessing or alternate discovery route.
-- [ ] Accept complete BCP-47 locale tags, preserving Unicode extensions through `uloc_forLanguageTag`. Also accept explicit ICU underscore identifiers by strict conversion to a language tag. Reject partially parsed or NUL-containing identifiers.
-- [ ] Format finite numbers with Decimal, Integer, Percent, or Currency style. Currency style without a code uses ICU's locale default currency.
-- [ ] Format explicit three-ASCII-letter currency codes case-insensitively using ICU currency data, not handwritten maps.
-- [ ] Parse localized numbers and currencies only when ICU consumes the entire input and returns a finite value; return `None` for empty, invalid, nonfinite, or partial parses. Currency parsing also returns its ISO code.
-- [ ] Preserve explicit input byte lengths through UTF-8/UTF-16 conversion, including embedded NUL. Never truncate number text with `strlen` or lossy UTF-8 conversion.
+- [x] Accept complete BCP-47 locale tags, preserving Unicode extensions through `uloc_forLanguageTag`. Also accept explicit ICU underscore identifiers by strict conversion to a language tag. Reject partially parsed or NUL-containing identifiers.
+- [x] Format finite numbers with Decimal, Integer, Percent, or Currency style. Currency style without a code uses ICU's locale default currency.
+- [x] Format explicit three-ASCII-letter currency codes case-insensitively using ICU currency data, not handwritten maps.
+- [x] Parse localized numbers and currencies only when ICU consumes the entire input and returns a finite value; return `None` for empty, invalid, nonfinite, or partial parses. Currency parsing also returns its ISO code.
+- [x] Preserve explicit input byte lengths through UTF-8/UTF-16 conversion, including embedded NUL. Never truncate number text with `strlen` or lossy UTF-8 conversion.
 - [ ] Check native status, length/capacity arithmetic, allocation, and conversion failures. Close every formatter and release all C allocations on success and failure; expose safe Rust ownership.
-- [ ] Report the linked runtime ICU version.
+- [x] Report the linked runtime ICU version.
 
 ### Modeled policy and version scope
 
@@ -22,7 +22,7 @@ The PTR number-formatting bridge uses ICU4C's stable C `UNumberFormat` API behin
 - Input precision is `f64`. No arbitrary-precision/trailing-zero preservation is promised.
 - Operational/configuration failures return `Err`; unsuccessful parses return `Ok(None)`. Locale tags and currency codes reject embedded NUL; text is length-delimited.
 - The build enforces ICU >=72 in discovery (Unix) and installed headers (all targets). Output and parse behavior depend on linked ICU/CLDR data; no byte-for-byte equivalence with WoW is claimed.
-- Host discovery found ICU **78.3**. Focused Linux native behavioral proof is pending. Windows static linking is specified but **untested** here; parent packaging/CI owns that platform proof and vcpkg provisioning.
+- Linux native tests report linked ICU **78.3.0.0**: all eight tests pass at `8b1648770`. Windows static linking is specified but **untested** here; parent packaging/CI owns that platform proof and vcpkg provisioning.
 
 ## How it works
 
@@ -47,7 +47,7 @@ The PTR number-formatting bridge uses ICU4C's stable C `UNumberFormat` API behin
 
 ## Known gaps (current cycle)
 
-- [ ] Run focused Linux wrapper tests and record results.
+Focused Linux proof: `cargo test --lib --offline --no-default-features --features sound,gui,client-ptr intl_native::tests:: -- --nocapture` passes **8 tests** at `8b1648770`; log `/tmp/intl-native-green-8b1648770.log`. Initial RED had seven expected missing-implementation failures (`/tmp/intl-native-red.log`). Build/link exclusion for other client profiles and allocation-failure paths still require independent proof; the implementation gates discovery, linking, and the native module together.
 - [ ] Validate Windows static linking against a provisioned vcpkg tree in parent CI; do not infer success from Linux tests.
 - [ ] Test minimum ICU72 separately; this host provides 78.3.
 
