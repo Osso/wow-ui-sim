@@ -4,12 +4,12 @@ PTR `C_LFGInfo.GetActiveLFGDungeonName()` queries the existing instance ID and L
 
 ## What it must do
 
-- [ ] Publish the query only on PTR; earlier retail must retain absence through normal namespace lookup before and after bootstrap.
-- [ ] Resolve only `world.instance_lfg_dungeon_id` against `lfd_dungeons`; return the matching catalog name, not the world instance label or proposal name.
-- [ ] Read current state on every call: instance-ID changes and catalog renames must affect subsequent results.
-- [ ] Return one empty string when no instance LFG ID is set, including proposal-only state.
-- [ ] Raise an error naming the API, unknown ID, and catalog when a set ID has no matching entry; leave state unchanged and allow recovery after a valid ID is assigned.
-- [ ] Preserve existing instance and LFG queries.
+- [x] Publish the query only on PTR; earlier retail must retain absence through normal namespace lookup before and after bootstrap.
+- [x] Resolve only `world.instance_lfg_dungeon_id` against `lfd_dungeons`; return the matching catalog name, not the world instance label or proposal name.
+- [x] Read current state on every call: instance-ID changes and catalog renames must affect subsequent results.
+- [x] Return one empty string when no instance LFG ID is set, including proposal-only state.
+- [x] Raise an error naming the API, unknown ID, and catalog when a set ID has no matching entry; leave state unchanged and allow recovery after a valid ID is assigned.
+- [x] Preserve existing instance and LFG queries.
 
 The instance-ID-only selection, empty inactive result, and unknown-ID error are chosen simulator semantics, not verified native behavior. `in_instance` is not an additional selection condition: a set instance LFG ID is the sole lookup key.
 
