@@ -48,9 +48,7 @@ fn clear(state: &mut LuaState) -> LuaResult<u32> {
         .map(|frame| frame.widget_type);
     match widget_type {
         Some(WidgetType::Cooldown) => cooldown::clear(state),
-        Some(WidgetType::MessageFrame | WidgetType::ScrollingMessageFrame) => {
-            message_frame::clear(state)
-        }
+        Some(WidgetType::MessageFrame) => message_frame::clear(state),
         _ => Err(rilua::runtime_error(
             "Clear is unsupported for this widget type",
         )),

@@ -32,7 +32,7 @@ fn indented_word_wrap_field_name(state: &LuaState) -> String {
     }
 }
 
-pub(super) fn clear(state: &mut LuaState) -> LuaResult<u32> {
+pub(in super::super) fn clear(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let mut sim = borrow_state_mut(state)?;
     if let Some(data) = sim.message_frames.get_mut(&id) {
