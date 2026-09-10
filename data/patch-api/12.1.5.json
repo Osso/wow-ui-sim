@@ -16972,7 +16972,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17009,7 +17009,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17046,7 +17046,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17083,7 +17083,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17120,7 +17120,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17157,7 +17157,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17194,7 +17194,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17231,7 +17231,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17314,7 +17314,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17351,7 +17351,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17388,7 +17388,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17425,7 +17425,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17462,7 +17462,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17499,7 +17499,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17536,7 +17536,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
@@ -17573,7 +17573,7 @@
           "kind": "test",
           "reference": "tests/animation_query_lifecycle.rs",
           "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
-          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
+          "source_hash": "8d294dc8bfa7a62bdeb2ba336273c626c72d5729e455a7c8d5bfe57bf12a8d08"
         }
       ],
       "tests": [
