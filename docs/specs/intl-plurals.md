@@ -4,11 +4,11 @@ PTR `C_Intl.SelectPlural` and `LuaLocaleContext:SelectPlural` select CLDR plural
 
 ## What it must do
 
-- [ ] Accept a required Lua number and `PluralType.Cardinal=0` or `Ordinal=1`, returning one category string for valid input.
-- [ ] Use current `GetLocale()` globally and each context's stored locale independently; locale changes affect later selection without mutating other contexts.
-- [ ] Apply CLDR cardinal rules for English, French, Russian, and Arabic and English ordinal rules, including fractional, negative, and zero inputs.
-- [ ] Reject nonfinite/non-number operands, invalid plural types, invalid locales and incompatible receivers without changing context state.
-- [ ] Preserve earlier-retail namespace absence and existing Intl APIs.
+- [x] Accept a required Lua number and `PluralType.Cardinal=0` or `Ordinal=1`, returning one category string for valid input.
+- [x] Use current `GetLocale()` globally and each context's stored locale independently; locale changes affect later selection without mutating other contexts.
+- [x] Apply CLDR cardinal rules for English, French, Russian, and Arabic and English ordinal rules, including fractional, negative, and zero inputs.
+- [x] Reject nonfinite/non-number operands, invalid plural types, invalid locales and incompatible receivers without changing context state.
+- [x] Preserve earlier-retail namespace absence and existing Intl APIs.
 
 ### Simulator operand policy
 
