@@ -60,6 +60,8 @@ mod patch_12_1_5_round_layout;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_string_extensions;
 mod patch_12_1_5_table_count_info;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_table_freeze;
 mod patch_12_1_5_table_util_removal;
 mod patch_12_1_5_tiered_entrance_enums;
 #[cfg(feature = "client-retail")]

@@ -55,6 +55,7 @@ pub fn wipe(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
 
+    super::real::table_freeze::ensure_mutable(state, table_ref)?;
     let mut keys = Vec::new();
     if let Some(table) = state.gc.tables.get(table_ref) {
         let mut key = Val::Nil;
@@ -77,12 +78,12 @@ pub fn wipe(state: &mut LuaState) -> LuaResult<u32> {
 
 /// tinsert(t [, pos], value) — append or insert a value into an array table.
 pub fn tinsert(state: &mut LuaState) -> LuaResult<u32> {
-    rilua::stdlib::table::tab_insert(state)
+    super::real::table_freeze::insert(state)
 }
 
 /// tremove(t [, pos]) — remove and return a value from an array table.
 pub fn tremove(state: &mut LuaState) -> LuaResult<u32> {
-    rilua::stdlib::table::tab_remove(state)
+    super::real::table_freeze::remove(state)
 }
 
 /// tContains(t, value) — return true if value is present in the table.

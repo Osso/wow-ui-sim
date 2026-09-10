@@ -9,7 +9,8 @@ Retail 12.1.5 exposes native `table` helpers that `Blizzard_SharedXMLBase/TableU
 - [x] `table.keys` and `values` return arrays containing every key or value; result order is unspecified.
 - [x] `table.removeunordered` replaces an indexed array value with the last value and shortens the array; omitted index selects the last value.
 - [x] `table.removevalue` removes equal values from the array portion and returns the removal count.
-- [ ] `table.create`, `freeze`, `getcountinfo`, and `isfrozen` are documented native APIs but are not startup-required by the current PTR 12.1.5 `TableUtil.lua` aliases.
+- [ ] `table.create` and `getcountinfo` are documented native APIs but are not startup-required by the current PTR 12.1.5 `TableUtil.lua` aliases.
+- `table.freeze` and `isfrozen` have a separate [freezing contract](table-freeze.md), including earlier-retail API presence and PTR return arity.
 
 ## How it works
 
@@ -33,4 +34,4 @@ Retail 12.1.5 exposes native `table` helpers that `Blizzard_SharedXMLBase/TableU
 ## Out of scope
 
 - Secret-value taint behavior: source documents it, but it is not yet modeled for generic table operations.
-- Frozen-table semantics: requires a state/dispatch contract beyond this startup fix.
+- Frozen-table semantics are scoped separately in [table freezing](table-freeze.md).

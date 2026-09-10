@@ -32,6 +32,7 @@ pub mod spell_tabs;
 #[cfg(feature = "retail-12-1-5")]
 pub mod string_extensions;
 pub mod table_extensions;
+pub mod table_freeze;
 pub mod timerunning;
 pub mod ui_widget_container;
 #[cfg(feature = "retail-12-1-0")]

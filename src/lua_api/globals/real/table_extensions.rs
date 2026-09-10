@@ -24,7 +24,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     Ok(())
 }
 
-fn table_library(state: &mut LuaState) -> LuaResult<GcRef<Table>> {
+pub(super) fn table_library(state: &mut LuaState) -> LuaResult<GcRef<Table>> {
     let key = state.gc.intern_string_static(b"table");
     let Some(globals) = state.gc.tables.get(state.global) else {
         return Err(runtime_error("global table has been collected"));
@@ -35,7 +35,7 @@ fn table_library(state: &mut LuaState) -> LuaResult<GcRef<Table>> {
     Ok(table)
 }
 
-fn argument_table(state: &LuaState, index: i32) -> LuaResult<GcRef<Table>> {
+pub(super) fn argument_table(state: &LuaState, index: i32) -> LuaResult<GcRef<Table>> {
     let value = stack_val(state, index);
     let Val::Table(table) = value else {
         return Err(runtime_error(format!(
@@ -172,6 +172,7 @@ fn is_empty(state: &mut LuaState) -> LuaResult<u32> {
 
 fn remove_unordered(state: &mut LuaState) -> LuaResult<u32> {
     let table = argument_table(state, 1)?;
+    super::table_freeze::ensure_mutable(state, table)?;
     let length = table_len(state, table)?;
     let index = optional_index(state, length)?;
     if index == 0 || index > length {
@@ -190,6 +191,7 @@ fn remove_unordered(state: &mut LuaState) -> LuaResult<u32> {
 
 fn remove_value(state: &mut LuaState) -> LuaResult<u32> {
     let table = argument_table(state, 1)?;
+    super::table_freeze::ensure_mutable(state, table)?;
     let target = stack_val(state, 2);
     let length = table_len(state, table)?;
     let values = (1..=length)
