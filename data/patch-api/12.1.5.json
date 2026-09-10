@@ -1476,24 +1476,46 @@
       "id": "added:C_UnitAuras.GetAuraCasterGUID",
       "symbol": "C_UnitAuras.GetAuraCasterGUID",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added C_UnitAuras function, its UnitToken and aura-instance ID arguments, WOWGUID return, and native access/secrecy annotations.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_unit_auras.rs",
+          "summary": "PTR-only C_UnitAuras registration resolves the selected aura instance through the existing aura model and resolves its current source unit through UnitGUID.",
+          "source_hash": "769f316d581ed6dabcb1f4cd883364abed57832e1a1735ea43b9c9ee1eda8b41"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_guid.rs",
+          "summary": "Focused PTR and earlier-retail tests cover live player and party source resolution, unit and aura-instance isolation, unresolved sources, required arguments, and profile-gated absence. Proof commits 7e694c69d, b2a6b845c, and 41f83ecdb.",
+          "source_hash": "2116b40e2a9eec3d55d5480902110e0009db0956a3b12f49b8117ef439b13d02"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/aura-caster-guid.md",
+          "summary": "The feature spec documents the intentional live-source-token model and explicitly excludes claimed native snapshot, access-control, secret, taint, and invalid-instance semantics.",
+          "source_hash": "b5f15da413f582e2e03bc51f95de40c13d1791510c464f9a5b4d6c1fb989b874"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_guid.rs::aura_caster_guid_resolves_live_sources_and_isolates_units",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_guid.rs::aura_caster_guid_validates_required_arguments",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_guid.rs::aura_caster_guid_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "41f83ecdb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests establish PTR-only publication and the bounded simulator model: lookup selects the requested aura on the requested unit, then resolves its current source-unit token through UnitGUID; player and party sources resolve, unresolved sources return nil, and later source identity changes affect the result. This does not establish a captured native caster GUID. Native RequiresUnitAuraAccess, RequiresValidUnitAuraInstance, AllowedWhenTainted, restricted-aura secrecy, taint/secret enforcement, invalid-instance behavior, coercion, and native-edge semantics remain unclaimed."
     },
     {
       "id": "added:C_Weather.GetCurrentWeather",

@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit PTR aura caster GUID model
+
+`7e694c69d`, `b2a6b845c`, and `41f83ecdb` credit `C_UnitAuras.GetAuraCasterGUID` as bounded PTR simulator behavior. Focused tests prove PTR publication, player/party source resolution, unit and aura-instance isolation, unresolved-source nil, live source-token changes, required arguments, and earlier-retail absence. The result deliberately resolves the current `source_unit` through `UnitGUID`, not a captured native caster GUID; access control, aura validity, secrecy, taint, coercion, and native semantics remain unresolved. See [aura caster GUID](../specs/aura-caster-guid.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR active LFG dungeon name
 
 `cc15512ab` and `f96557ce2` credit `C_LFGInfo.GetActiveLFGDungeonName` as bounded PTR simulator behavior. Focused tests prove PTR publication, current instance-ID/LFD-catalog lookup, live state changes, inactive/proposal-only empty-string behavior, unknown-ID error recovery, arity, unaffected existing LFG APIs, and earlier-retail absence before and after bootstrap. Instance-ID-only selection, inactive/error behavior, validation, queue/proposal precedence, security, taint, coercion, and native semantics remain assumptions or unresolved. See [active LFG dungeon name](../specs/active-lfg-dungeon-name.md) and [[patch-12-1-5-api-audit]].

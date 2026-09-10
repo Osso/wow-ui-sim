@@ -35,7 +35,7 @@
 35. [evidence-required] `added:C_PvP.IsTrainingGroundsArena` — unsafe
 36. [evidence-required] `added:C_PvP.IsTrainingGroundsBG` — unsafe
 37. [best-effort] `added:C_Timer.NewTimedSignalMap` — behavioral
-38. [evidence-required] `added:C_UnitAuras.GetAuraCasterGUID` — unsafe
+38. [best-effort] `added:C_UnitAuras.GetAuraCasterGUID` — behavioral
 39. [best-effort] `added:C_Weather.GetCurrentWeather` — behavioral
 40. [best-effort] `added:C_Weather.WeatherInfo` — behavioral
 41. [best-effort] `added:C_Weather.WeatherInfo.intensity` — behavioral
