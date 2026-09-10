@@ -17533,7 +17533,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations/ownership.rs",
           "source_hash": "5d863095984cf9614f9def772e8993d5f6a67b2b9c3c94340d77541f4cb698f1",
-          "summary": "Shared ownership resolver rebuilds old and new animation-group indexes after an animation transfer, keeping animation-frame ownership aligned with scheduler state."
+          "summary": "Shared ownership resolver reads existing frame-to-group and animation-to-group maps to return an owning group ID; transfer and index repair remain implemented in parent.rs."
         }
       ],
       "tests": [
