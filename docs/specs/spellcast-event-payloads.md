@@ -4,11 +4,11 @@ The existing action-spell, crafting, specialization-change, and timed-completion
 
 ## What it must do
 
-- [ ] Emit exactly `(unitTarget, castGUID, spellID, castBarID)` for all three events on current retail and PTR. Both pinned revisions specify this order; PTR changes only the declared nullable cast-bar type from `number` to `UnitCastBarID`.
-- [ ] START callbacks from action spells, crafting, and specialization changes observe the initialized cast and the same numeric ID returned by `UnitCastingInfo` slot 10.
-- [ ] Timed completion clears casting before STOP, then emits SUCCEEDED with the same four payload values as START; subsequent completion checks emit nothing.
-- [ ] Successive allocated casts receive different modeled GUID/bar-ID pairs.
-- [ ] Specialization remains unchanged during these callbacks and changes through the existing post-completion specialization step. Requesting the already-active specialization emits no START.
+- [x] Emit exactly `(unitTarget, castGUID, spellID, castBarID)` for all three events on current retail and PTR. Both pinned revisions specify this order; PTR changes only the declared nullable cast-bar type from `number` to `UnitCastBarID`.
+- [x] START callbacks from action spells, crafting, and specialization changes observe the initialized cast and the same numeric ID returned by `UnitCastingInfo` slot 10.
+- [x] Timed completion clears casting before STOP, then emits SUCCEEDED with the same four payload values as START; subsequent completion checks emit nothing.
+- [x] Successive allocated casts receive different modeled GUID/bar-ID pairs.
+- [x] Specialization remains unchanged during these callbacks and changes through the existing post-completion specialization step. Requesting the already-active specialization emits no START.
 
 ### Simulator assumptions
 
@@ -32,6 +32,8 @@ Existing state visibility and event order are preserved, not asserted as indepen
 ## Tests asserting this spec
 
 - `src/iced_app/casting/tests.rs`: real producer callbacks and timed completion on both current profiles, in the existing library test target.
+- Focused `spellcast_payload_` tests: 3 passed per profile at `f474fb2f9`.
+- Existing grouped integration filters `spell_casting::`, `test_crafting::`, and `admin_spec_talent_api::c_spec_set_specialization`: 18, 22, and 2 passed respectively per profile. No broad suites or acceptance gates run.
 
 ## Known gaps (current cycle)
 
