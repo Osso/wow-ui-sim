@@ -10827,7 +10827,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
@@ -10909,7 +10909,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
@@ -10946,7 +10946,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
@@ -10983,7 +10983,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
@@ -11020,7 +11020,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
@@ -11057,7 +11057,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
@@ -11094,7 +11094,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
@@ -17974,7 +17974,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/real/table_extensions.rs",
           "summary": "PTR-gated native table extension implementation publishes and executes this function.",
-          "source_hash": "302866017650877869a8ed85a48ccc517d9b73e5fe8a8df3c8978fc544773480"
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
         },
         {
           "kind": "test",
