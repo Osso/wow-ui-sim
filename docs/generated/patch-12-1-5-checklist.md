@@ -25,7 +25,7 @@
 25. [best-effort] `added:C_Intl.Normalize` — behavioral
 26. [evidence-required] `added:C_Intl.ParseCurrency` — unsafe
 27. [evidence-required] `added:C_Intl.ParseNumber` — unsafe
-28. [evidence-required] `added:C_Intl.SelectPlural` — unsafe
+28. [best-effort] `added:C_Intl.SelectPlural` — behavioral
 29. [best-effort] `added:C_Intl.ToLower` — behavioral
 30. [best-effort] `added:C_Intl.ToTitle` — behavioral
 31. [best-effort] `added:C_Intl.ToUpper` — behavioral
@@ -207,7 +207,7 @@
 207. [best-effort] `added:LuaLocaleContext.Length` — behavioral
 208. [evidence-required] `added:LuaLocaleContext.ParseCurrency` — unsafe
 209. [evidence-required] `added:LuaLocaleContext.ParseNumber` — unsafe
-210. [evidence-required] `added:LuaLocaleContext.SelectPlural` — unsafe
+210. [best-effort] `added:LuaLocaleContext.SelectPlural` — behavioral
 211. [best-effort] `added:LuaLocaleContext.SetLocale` — behavioral
 212. [best-effort] `added:LuaLocaleContext.ToLower` — behavioral
 213. [best-effort] `added:LuaLocaleContext.ToTitle` — behavioral

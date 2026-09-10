@@ -308,19 +308,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -358,7 +358,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a"
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
         },
         {
           "kind": "test",
@@ -400,19 +400,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -478,19 +478,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -712,7 +712,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a"
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
         },
         {
           "kind": "test",
@@ -777,19 +777,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -832,19 +832,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -882,7 +882,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a"
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
         },
         {
           "kind": "source",
@@ -932,19 +932,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -1013,24 +1013,56 @@
       "id": "added:C_Intl.SelectPlural",
       "symbol": "C_Intl.SelectPlural",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added plural-selection declaration, required number and PluralType arguments, return contract, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/plurals.rs",
+          "source_hash": "1ab276d5a2c9ba4355b11c748365140e686f427ca996e07e2465f4065b34ba9f",
+          "summary": "PTR-only ICU plural selection uses cardinal or ordinal CLDR rules over validated finite Lua numbers converted through fixed_decimal round-trip operands."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_plurals.rs",
+          "source_hash": "7add5336d1bc6de4e75cde27f80acb8e936e82bb0b433c1c7127ffb43761b1f4",
+          "summary": "Focused PTR tests cover representative ICU cardinal and ordinal categories, context independence and mutation, simulator numeric validation, and earlier-retail absence. Proof commits 6dfc423af and 9ee26fcf2."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_plurals.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6dfc423af",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish modeled ICU 2.1.1 CLDR plural-category publication for cardinal and ordinal selections using global and independent locale-context state. Lua f64 operands use absolute fixed_decimal round-trip conversion; negative, nonfinite, invalid-locale, invalid-type, extreme-operand, trailing-zero, precision, MayReturnNothing, Unicode/CLDR-version, AllowedWhenUntainted, coercion, taint, secret, protected, and native-edge semantics remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:C_Intl.ToLower",
@@ -1056,19 +1088,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1111,19 +1143,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -1166,19 +1198,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1221,19 +1253,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
@@ -8329,7 +8361,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a"
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
         },
         {
           "kind": "test",
@@ -8371,19 +8403,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -8426,19 +8458,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -8504,19 +8536,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -8715,7 +8747,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a"
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
         },
         {
           "kind": "test",
@@ -8757,19 +8789,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -8807,7 +8839,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a"
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
         },
         {
           "kind": "source",
@@ -8883,24 +8915,56 @@
       "id": "added:LuaLocaleContext.SelectPlural",
       "symbol": "LuaLocaleContext.SelectPlural",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added plural-selection declaration, required number and PluralType arguments, return contract, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/plurals.rs",
+          "source_hash": "1ab276d5a2c9ba4355b11c748365140e686f427ca996e07e2465f4065b34ba9f",
+          "summary": "PTR-only ICU plural selection uses cardinal or ordinal CLDR rules over validated finite Lua numbers converted through fixed_decimal round-trip operands."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_plurals.rs",
+          "source_hash": "7add5336d1bc6de4e75cde27f80acb8e936e82bb0b433c1c7127ffb43761b1f4",
+          "summary": "Focused PTR tests cover representative ICU cardinal and ordinal categories, context independence and mutation, simulator numeric validation, and earlier-retail absence. Proof commits 6dfc423af and 9ee26fcf2."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_plurals.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6dfc423af",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish modeled ICU 2.1.1 CLDR plural-category publication for cardinal and ordinal selections using global and independent locale-context state. Lua f64 operands use absolute fixed_decimal round-trip conversion; negative, nonfinite, invalid-locale, invalid-type, extreme-operand, trailing-zero, precision, MayReturnNothing, Unicode/CLDR-version, AllowedWhenUntainted, coercion, taint, secret, protected, and native-edge semantics remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.SetLocale",
@@ -8921,7 +8985,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a"
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
         },
         {
           "kind": "test",
@@ -8963,19 +9027,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -9018,19 +9082,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -9073,19 +9137,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -9128,19 +9192,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "6af19462dc28a8325bcb7dfbefaa8175466ad4d1ca57fe6eb67796baf3b1f05a",
+          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "0c7b6fa53d56d6b0b8ebbe0e6ecdd6119f9d4d560ae5aa29b078c94b97eb4885",
+          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "821faa7653b84ec1c8bb526e16a53a784e38c0ce4438c6835d1b6bf174c74876",
+          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
