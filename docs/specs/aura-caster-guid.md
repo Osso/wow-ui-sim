@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] PTR publishes `GetAuraCasterGUID(auraInstanceUnit, auraInstanceID)`; earlier retail preserves absence, including namespace fallback and post-load bootstrap.
-- [ ] Required unit and numeric instance arguments use existing bridge validation. Numeric IDs use the existing aura-query conversion to `i32`.
-- [ ] Look up the aura through the shared per-unit instance lookup, including helpful and harmful auras; identical IDs on different units do not alias.
-- [ ] Return exactly one GUID string or nil. Missing units, missing auras, and unresolved source tokens return nil.
-- [ ] Resolve `source_unit` through the existing unit GUID model at query time. Player and party sources match `UnitGUID`; changing or removing the target source is reflected without replacing the aura.
+- [x] PTR publishes `GetAuraCasterGUID(auraInstanceUnit, auraInstanceID)`; earlier retail preserves absence, including namespace fallback and post-load bootstrap.
+- [x] Required unit and numeric instance arguments use existing bridge validation. Numeric IDs use the existing aura-query conversion to `i32`.
+- [x] Look up the aura through the shared per-unit instance lookup, including helpful and harmful auras; identical IDs on different units do not alias.
+- [x] Return exactly one GUID string or nil. Missing units, missing auras, and unresolved source tokens return nil.
+- [x] Resolve `source_unit` through the existing unit GUID model at query time. Player and party sources match `UnitGUID`; changing or removing the target source is reflected without replacing the aura.
 
 Live source-token resolution is a simulator choice, not a caster-identity snapshot. An aura whose source token later refers to another unit therefore reports that token's current GUID. Unit existence follows the existing `UnitExists` model; tokens without a modeled GUID return nil rather than the resolver's unknown-creature sentinel.
 
@@ -28,6 +28,8 @@ Live source-token resolution is a simulator choice, not a caster-identity snapsh
 
 - `src/loader/tests/wow_api_globals/patch_12_1_5_aura_caster_guid.rs`: player/party sources, unit and instance isolation, nil/error behavior, live target identity, earlier-retail absence.
 - `tests/aura_instance_ids.rs` and `tests/c_unit_auras_admin.rs`: existing shared aura query regressions.
+
+Focused proof: PTR query tests pass (2); retail absence passes (1). Existing `aura_instance_ids` (5) and `c_unit_auras_admin` (14) tests pass under both profiles. Logs: `/tmp/aura-caster-guid-b2a6b845c-*.log`; unchanged retail absence proof: `/tmp/aura-caster-guid-1ea409579-retail.log`.
 
 ## Known gaps (current cycle)
 
