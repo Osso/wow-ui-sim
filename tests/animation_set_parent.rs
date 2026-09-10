@@ -186,6 +186,35 @@ fn transfer_to_stopped_owner_stays_idle_until_destination_is_played() {
 }
 
 #[test]
+fn stopped_animation_joins_destination_timeline_without_restarting_it() {
+    let env = setup();
+    env.exec(
+        r#"
+        moved = animation(old, 1)
+        existing = animation(new, 2)
+        new:Play()
+        "#,
+    )
+    .unwrap();
+    env.fire_on_update(0.5).unwrap();
+    env.exec(
+        r#"
+        moved:SetParent(new, 2)
+        assert(not old:IsPlaying() and new:IsPlaying() and moved:IsPlaying())
+        near(new:GetElapsed(), 0.5)
+        near(moved:GetElapsed(), 0)
+        "#,
+    )
+    .unwrap();
+    env.fire_on_update(0.25).unwrap();
+    env.exec("near(existing:GetElapsed(), 0.75); near(moved:GetElapsed(), 0)")
+        .unwrap();
+    env.fire_on_update(1.5).unwrap();
+    env.exec("near(existing:GetElapsed(), 2); near(moved:GetElapsed(), 0.25)")
+        .unwrap();
+}
+
+#[test]
 fn invalid_target_and_order_leave_ownership_unchanged() {
     let env = setup();
     env.exec(
@@ -203,6 +232,10 @@ fn invalid_target_and_order_leave_ownership_unchanged() {
             assert(moved:GetOrder() == 7)
         end
         assert(new:GetAnimations() == another)
+        moved:SetParent(new, 2.75)
+        assert(moved:GetOrder() == 2)
+        moved:SetParent(new, 0)
+        assert(moved:GetOrder() == 0)
         "#,
     )
     .unwrap();

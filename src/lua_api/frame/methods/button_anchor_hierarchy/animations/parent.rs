@@ -20,24 +20,13 @@ pub(in crate::lua_api::frame::methods::button_anchor_hierarchy) fn reparent_anim
     let new_group_id = validate_destination(&sim, parent_id)?;
     let order = read_order(order_value)?;
     validate_source(&sim, old_group_id, old_index)?;
-    if old_group_id == new_group_id {
-        if let Some(order) = order {
-            sim.animation_groups
-                .get_mut(&old_group_id)
-                .unwrap()
-                .animations[old_index]
-                .order = order;
-        }
-    } else {
-        transfer_animation(
-            &mut sim,
-            frame_id,
-            old_group_id,
-            old_index,
-            new_group_id,
-            order,
-        );
-    }
+    update_animation_owner(
+        &mut sim,
+        frame_id,
+        (old_group_id, old_index),
+        new_group_id,
+        order,
+    );
     super::super::hierarchy::apply_parent_change(&mut sim, frame_id, Some(parent_id));
     Ok(true)
 }
@@ -77,15 +66,35 @@ fn read_order(value: Val) -> LuaResult<Option<u32>> {
     }
 }
 
-fn transfer_animation(
+fn update_animation_owner(
     sim: &mut SimState,
     frame_id: u64,
-    old_group_id: u64,
-    old_index: usize,
+    source: (u64, usize),
     new_group_id: u64,
     order: Option<u32>,
 ) {
+    let index = if source.0 == new_group_id {
+        source.1
+    } else {
+        transfer_animation(sim, frame_id, source, new_group_id)
+    };
+    if let Some(order) = order {
+        sim.animation_groups
+            .get_mut(&new_group_id)
+            .unwrap()
+            .animations[index]
+            .order = order;
+    }
+}
+
+fn transfer_animation(
+    sim: &mut SimState,
+    frame_id: u64,
+    source: (u64, usize),
+    new_group_id: u64,
+) -> usize {
     // Both groups and the source index were validated before any mutation.
+    let (old_group_id, old_index) = source;
     let mut animation = sim
         .animation_groups
         .get_mut(&old_group_id)
@@ -93,9 +102,6 @@ fn transfer_animation(
         .animations
         .remove(old_index);
     animation.elapsed = 0.0;
-    if let Some(order) = order {
-        animation.order = order;
-    }
     for (group_id, index) in sim.anim_frame_to_anim.values_mut() {
         if *group_id == old_group_id && *index > old_index {
             *index -= 1;
@@ -106,4 +112,5 @@ fn transfer_animation(
     group.animations.push(animation);
     sim.anim_frame_to_anim
         .insert(frame_id, (new_group_id, new_index));
+    new_index
 }
