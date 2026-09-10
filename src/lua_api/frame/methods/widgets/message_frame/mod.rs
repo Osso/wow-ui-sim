@@ -12,6 +12,8 @@ mod getters;
 mod scroll;
 mod transform;
 
+pub(super) use getters::clear;
+
 use crate::lua_api::methods::get_or_create_frame_fields;
 use crate::lua_bridge::table_set_rust_fn;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -27,7 +29,6 @@ const METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("_AddMessageSilent", add::add_message_silent),
     ("BackFillMessage", add::backfill_message),
     // Clear
-    ("Clear", getters::clear),
     ("ClearText", getters::clear_text),
     // Count / max lines
     ("GetNumMessages", getters::get_num_messages),

@@ -670,7 +670,6 @@ const COOLDOWN_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("GetCooldownDuration", get_cooldown_duration),
     ("GetCooldownDisplayDuration", get_cooldown_display_duration),
     // Playback controls
-    ("Clear", clear),
     ("Pause", pause),
     ("Resume", resume),
     ("IsPaused", is_paused),

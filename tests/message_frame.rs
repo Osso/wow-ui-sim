@@ -62,6 +62,42 @@ fn test_add_msg_alias() {
     assert_eq!(count, 1);
 }
 
+fn assert_clear_preserves_other_widgets(widget_type: &str) {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(&format!(r#"local frame = CreateFrame("{widget_type}")
+        local other = CreateFrame("{widget_type}")
+        local cooldown = CreateFrame("Cooldown")
+        cooldown:SetCooldown(12, 8, 2)
+        frame:AddMessage("First")
+        frame:AddMessage("Second")
+        other:AddMessage("Keep")
+        assert(frame:GetNumMessages() == 2)
+        assert(select('#', frame:Clear()) == 0)
+        assert(frame:GetNumMessages() == 0)
+        assert(frame:GetScrollOffset() == 0)
+        assert(other:GetNumMessages() == 1)
+        assert(other:GetMessageInfo(1) == "Keep")
+        local start, duration = cooldown:GetCooldownTimes()
+        assert(start == 12 and duration == 8)
+        assert(cooldown:GetCooldownModRate() == 2)
+        frame:AddMessage("After clear")
+        assert(frame:GetNumMessages() == 1)
+        assert(frame:GetMessageInfo(1) == "After clear")
+        frame:ClearText()
+        assert(frame:GetNumMessages() == 0)
+    "#)).unwrap();
+}
+
+#[test]
+fn clear_message_frame_history_preserves_other_widgets() {
+    assert_clear_preserves_other_widgets("MessageFrame");
+}
+
+#[test]
+fn clear_scrolling_message_frame_history_preserves_other_widgets() {
+    assert_clear_preserves_other_widgets("ScrollingMessageFrame");
+}
+
 #[test]
 fn test_clear_messages() {
     let env = WowLuaEnv::new().unwrap();

@@ -20,6 +20,9 @@ mod statusbar;
 mod texture;
 mod tooltip;
 
+use crate::lua_api::methods::{borrow_state, frame_id_from_stack};
+use crate::lua_bridge::table_set_rust_fn_static;
+use crate::widget::WidgetType;
 use rilua::LuaResult;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -34,6 +37,24 @@ pub(crate) fn refresh_scroll_frames_for_resized_frame(
 
 pub(crate) fn toggle_checkbutton_for_click(state: &mut LuaState, id: u64) -> LuaResult<()> {
     slider::toggle_checkbutton_for_click(state, id)
+}
+
+/// Dispatch the shared Clear name without overwriting either widget's handler.
+fn clear(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let widget_type = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.widget_type);
+    match widget_type {
+        Some(WidgetType::Cooldown) => cooldown::clear(state),
+        Some(WidgetType::MessageFrame | WidgetType::ScrollingMessageFrame) => {
+            message_frame::clear(state)
+        }
+        _ => Err(rilua::runtime_error(
+            "Clear is unsupported for this widget type",
+        )),
+    }
 }
 
 /// Register all widget-specific methods on the frame metatable.
@@ -55,5 +76,5 @@ pub fn register_all(state: &mut LuaState, metatable: GcRef<Table>) -> LuaResult<
     model::register_model(state, metatable)?;
     tooltip::register_tooltip(state, metatable)?;
     message_frame::register_message_frame(state, metatable)?;
-    Ok(())
+    table_set_rust_fn_static(state, metatable, "Clear", clear)
 }

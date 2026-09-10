@@ -4,7 +4,8 @@ Ordinary simulator state behavior for cooldown methods in `src/lua_api/frame/met
 
 ## What it must do
 
-- [ ] Direct `Clear` resets start, duration, and display duration to zero, and rate to one.
+- [x] Direct `Clear` resets start, duration, and display duration to zero, and rate to one.
+- [x] Shared `Clear` dispatch selects the existing Cooldown or MessageFrame/ScrollingMessageFrame handler by widget type; message history clearing and `ClearText` remain intact.
 - [x] Direct `SetCooldown` stores start/duration/rate; omitted rate becomes one.
 - [x] Direct `SetCooldownDuration` preserves start, replaces duration/rate, and defaults omitted rate to one.
 - [x] Direct `SetCooldownUNIX` preserves the supplied numeric start without epoch conversion; omitted rate becomes one.
@@ -20,7 +21,9 @@ Pinned base and target both declare these four methods. PTR adds protection anno
 
 ## Implementation inventory
 
-- `src/lua_api/frame/methods/widgets/cooldown.rs` — numeric setters, clearing, and query methods; unchanged by this coverage slice.
+- `src/lua_api/frame/methods/widgets/cooldown.rs` — numeric setters, clearing, and query methods.
+- `src/lua_api/frame/methods/widgets/mod.rs` — single shared `Clear` registration dispatching to existing widget handlers; unsupported widget types raise an explicit error.
+- `tests/message_frame.rs` — MessageFrame/ScrollingMessageFrame history clearing, reuse, and isolation from other widgets.
 - `tests/cooldown_widget.rs` — direct-method coverage and existing expiration/threshold/proxy regressions in the grouped integration target.
 
 ## Tests asserting this spec
@@ -44,10 +47,10 @@ At test revision `943b21255`, `cargo test --test integration --offline --no-defa
 
 ## Known gaps (current cycle)
 
-- [ ] Direct `Clear` fails to reset cooldown timing on PTR and retail. `widgets/mod.rs` registers cooldown methods before message-frame methods on the same metatable; the latter replaces `Clear` with `message_frame/getters.rs::clear`, which only changes message-frame data. The failing direct-call test retains the expected cooldown reset contract; production dispatch repair is outside this test-only slice.
+The shared-metatable `Clear` collision is repaired by one widget-type dispatcher. Cooldown and message-frame registrations no longer overwrite each other. No per-widget metatable redesign or method-allowlist change is involved.
 - [ ] Native units, epoch conversion, numeric coercion, and `Seconds`/`DurationSeconds` equivalence remain unverified.
 - [ ] Protected-call, taint, secret-value, and restricted-access behavior remain unverified.
 
 ## Out of scope
 
-Production changes, native timing corrections, security enforcement, rendering effects, and audit-status updates. This slice adds behavioral coverage only; parent audit owns later credit.
+Native timing corrections, security enforcement, rendering effects, unrelated shared-method collisions, and audit-status updates. Unsupported-widget error behavior is simulator policy, not a native compatibility claim; parent audit owns later credit.
