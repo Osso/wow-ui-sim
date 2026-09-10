@@ -308,4 +308,3 @@ fn delaying_uses_order_start_and_longest_parallel_duration() {
         assert_eq!(actual, (time, delaying), "reverse timeline at {time}");
     }
 }
-
