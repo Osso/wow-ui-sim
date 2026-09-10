@@ -1,6 +1,149 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
+fn seconds_formatter_evaluation_uses_current_configuration() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local first = C_StringUtil.CreateSecondsFormatter()
+        local second = C_StringUtil.CreateSecondsFormatter()
+        local interval = Enum.SecondsFormatterInterval
+        assert(interval.Seconds == 0 and interval.Minutes == 1)
+        assert(interval.Hours == 2 and interval.Days == 3)
+        for _, seconds in ipairs({-1, 0, 0.25, 59.999, 60, 3600, 86400}) do
+            assert(first:CanApproximate(seconds) == false)
+            assert(first:EvaluateMinInterval(seconds) == interval.Seconds)
+            assert(first:EvaluateMaxInterval(seconds) == interval.Days)
+            assert(first:EvaluateDesiredUnitCount(seconds) == 1)
+        end
+        first:SetApproximationSeconds(2.5)
+        for _, case in ipairs({{-1, false}, {0, false}, {0.25, true},
+                               {2.499, true}, {2.5, false}, {2.501, false}}) do
+            assert(first:CanApproximate(case[1]) == case[2])
+        end
+        first:SetMinInterval(interval.Minutes)
+        first:SetMaxInterval(interval.Hours)
+        first:SetDesiredUnitCount(2)
+        first:SetMillisecondsThreshold(0.5)
+        for _, seconds in ipairs({0, 0.25, 60, 86400}) do
+            assert(first:EvaluateMinInterval(seconds) == interval.Minutes)
+            assert(first:EvaluateMaxInterval(seconds) == interval.Hours)
+            assert(first:EvaluateDesiredUnitCount(seconds) == 2)
+            assert(second:EvaluateMinInterval(seconds) == interval.Seconds)
+            assert(second:EvaluateMaxInterval(seconds) == interval.Days)
+            assert(second:EvaluateDesiredUnitCount(seconds) == 1)
+        end
+        first:SetApproximationSeconds(0)
+        assert(not first:CanApproximate(0.1))
+        first:SetApproximationSeconds(-1)
+        assert(not first:CanApproximate(0.1))
+        first:SetDesiredUnitCount(3)
+        assert(first:EvaluateDesiredUnitCount(0.25) == 3)
+        for _, method in ipairs({first.CanApproximate, first.EvaluateMinInterval,
+                                  first.EvaluateMaxInterval, first.EvaluateDesiredUnitCount}) do
+            assert(select('#', method(first, 0.25)) == 1)
+        end
+        assert(first:Format(2.5) == '2.5') -- Existing placeholder stays unchanged.
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn seconds_formatter_evaluation_resolves_live_curve_methods_without_fallback() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local formatter = C_StringUtil.CreateSecondsFormatter()
+        local other = C_StringUtil.CreateSecondsFormatter()
+        local interval = Enum.SecondsFormatterInterval
+        local curve = C_CurveUtil.CreateCurve()
+        curve:AddPoint(0, interval.Seconds)
+        curve:AddPoint(60, interval.Minutes)
+        formatter:SetMaxInterval(interval.Days)
+        formatter:SetMaxIntervalCurve(curve)
+        assert(formatter:EvaluateMaxInterval(0) == interval.Seconds)
+        assert(formatter:EvaluateMaxInterval(60) == interval.Minutes)
+        assert(formatter:EvaluateMaxInterval(120) == interval.Minutes)
+        assert(other:EvaluateMaxInterval(0) == interval.Days)
+        -- Fractional curve results cannot silently become the static maximum.
+        local ok, err = pcall(formatter.EvaluateMaxInterval, formatter, 30)
+        assert(not ok and tostring(err):find('interval', 1, true))
+        curve:ClearPoints()
+        curve:AddPoint(0, interval.Hours)
+        collectgarbage('collect')
+        assert(formatter:EvaluateMaxInterval(0.25) == interval.Hours)
+        formatter:SetMaxInterval(interval.Minutes)
+        assert(formatter:EvaluateMaxInterval(0.25) == interval.Minutes)
+        formatter:SetMaxIntervalCurve(curve)
+        assert(formatter:EvaluateMaxInterval(0.25) == interval.Hours)
+        local observed
+        local proxy = setmetatable({}, {__index = {
+            Evaluate = function(self, seconds) observed = seconds; return interval.Seconds end,
+        }})
+        formatter:SetMaxIntervalCurve(proxy)
+        assert(formatter:EvaluateMaxInterval(12.5) == interval.Seconds and observed == 12.5)
+        for _, invalid in ipairs({false, {}, {Evaluate = false},
+                {Evaluate = function() return nil end},
+                {Evaluate = function() return 4 end},
+                {Evaluate = function() return 0/0 end}}) do
+            formatter:SetMaxIntervalCurve(invalid)
+            assert(not pcall(formatter.EvaluateMaxInterval, formatter, 12.5))
+        end
+        formatter:SetMaxIntervalCurve({Evaluate = function() error('curve failure marker') end})
+        ok, err = pcall(formatter.EvaluateMaxInterval, formatter, 12.5)
+        assert(not ok and tostring(err):find('curve failure marker', 1, true))
+        formatter:SetMaxIntervalCurve(nil)
+        assert(formatter:EvaluateMaxInterval(12.5) == interval.Minutes)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn seconds_formatter_evaluation_rejects_invalid_inputs_without_mutation() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local formatter = C_StringUtil.CreateSecondsFormatter()
+        formatter:SetApproximationSeconds(5)
+        formatter:SetMinInterval(1)
+        formatter:SetMaxInterval(2)
+        formatter:SetDesiredUnitCount(2)
+        for _, method in ipairs({formatter.CanApproximate, formatter.EvaluateMinInterval,
+                                  formatter.EvaluateMaxInterval, formatter.EvaluateDesiredUnitCount}) do
+            for _, invalid in ipairs({false, {}, '1', math.huge, -math.huge, 0/0}) do
+                assert(not pcall(method, formatter, invalid))
+            end
+            assert(not pcall(method, formatter))
+            assert(not pcall(method, {}, 1))
+        end
+        assert(formatter:GetApproximationSeconds() == 5)
+        assert(formatter:EvaluateMinInterval(1) == 1)
+        assert(formatter:EvaluateMaxInterval(1) == 2)
+        assert(formatter:EvaluateDesiredUnitCount(1) == 2)
+        for _, value in ipairs({-1, 0.5, 4, false, '1'}) do
+            formatter:SetMinInterval(value)
+            assert(not pcall(formatter.EvaluateMinInterval, formatter, 1))
+            formatter:SetMaxInterval(value)
+            assert(not pcall(formatter.EvaluateMaxInterval, formatter, 1))
+        end
+        for _, count in ipairs({0, -1, 1.5, false, '2', math.huge}) do
+            formatter:SetDesiredUnitCount(count)
+            assert(not pcall(formatter.EvaluateDesiredUnitCount, formatter, 1))
+        end
+        formatter:SetMinInterval(0)
+        formatter:SetMaxInterval(3)
+        formatter:SetDesiredUnitCount(1)
+        assert(formatter:EvaluateMinInterval(1) == 0)
+        assert(formatter:EvaluateMaxInterval(1) == 3)
+        assert(formatter:EvaluateDesiredUnitCount(1) == 1)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn seconds_formatter_configuration_is_independent_and_has_exact_arity() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

@@ -136,6 +136,7 @@ if rawget(C_StringUtil, "CreateSecondsFormatter") == nil then
 
   function secondsFormatterMethods:SetMaxInterval(interval)
     self.maxInterval = interval
+    self.maxIntervalCurve = nil
   end
 
   function secondsFormatterMethods:SetMaxIntervalCurve(curve)
