@@ -45,7 +45,9 @@ At test commit `9bc06cfe2`, all five new tests and 59 existing tests passed unde
 cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> -- animation_anim:: animation_group:: animation_group_state:: animation_query_lifecycle:: --nocapture
 ```
 
-Logs: `/tmp/animation-query-lifecycle-9bc06cfe2-{ptr,retail}.log`. Proof ledger: `/tmp/animation-query-lifecycle-ledger.json`. No check, readability, artifact, or broad-suite gates were run.
+Logs: `/tmp/animation-query-lifecycle-9bc06cfe2-{ptr,retail}.log`. Proof ledger: `/tmp/animation-query-lifecycle-ledger.json`.
+
+Correction `23bdf9fe6` first reproduced two failures: the exact active-start boundary and an animation incorrectly delaying while an earlier order was still running. After correction, the same bounded suite above passed **65 tests per profile** (six lifecycle tests plus 59 existing animation tests). Logs: `/tmp/animation-delay-23bdf9fe6-{ptr,retail}.log`; RED: `/tmp/animation-delay-red.log`; ledger: `/tmp/animation-delay-proof-ledger.json`. No check, readability, artifact, or broad-suite gates were run.
 
 ## Known gaps (current cycle)
 
