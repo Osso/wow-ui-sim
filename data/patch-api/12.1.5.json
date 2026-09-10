@@ -308,19 +308,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -358,7 +358,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
         },
         {
           "kind": "test",
@@ -400,19 +400,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -478,19 +478,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -628,24 +628,56 @@
       "id": "added:C_Intl.GetCharacterProperties",
       "symbol": "C_Intl.GetCharacterProperties",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "summary": "PTR-only C_Intl registration publishes GetCharacterProperties while earlier retail records the namespace as absent."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "summary": "Exact-pinned ICU properties and unicode-blocks dependencies provide the modeled property and block datasets without unrelated upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "summary": "Cargo.lock records the resolved ICU properties and unicode-blocks packages used by the modeled implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:C_Intl.GetCurrencyFractionDigits",
@@ -712,7 +744,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
         },
         {
           "kind": "test",
@@ -777,19 +809,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -832,19 +864,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -882,7 +914,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
         },
         {
           "kind": "source",
@@ -932,19 +964,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -1033,19 +1065,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
         },
         {
@@ -1088,19 +1120,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1143,19 +1175,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -1198,19 +1230,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1253,19 +1285,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
@@ -1601,185 +1633,309 @@
       "id": "added:CharacterProperties",
       "symbol": "CharacterProperties",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added structure occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.toml",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "summary": "Exact-pinned ICU properties and unicode-blocks dependencies provide the modeled property and block datasets without unrelated upgrades."
+        },
+        {
+          "kind": "source",
+          "reference": "Cargo.lock",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "summary": "Cargo.lock records the resolved ICU properties and unicode-blocks packages used by the modeled implementation."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CharacterProperties.blockCode",
       "symbol": "CharacterProperties.blockCode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CharacterProperties.codePoint",
       "symbol": "CharacterProperties.codePoint",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CharacterProperties.generalCategory",
       "symbol": "CharacterProperties.generalCategory",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CharacterProperties.isAlphabetic",
       "symbol": "CharacterProperties.isAlphabetic",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CharacterProperties.isDigit",
       "symbol": "CharacterProperties.isDigit",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CharacterProperties.isWhitespace",
       "symbol": "CharacterProperties.isWhitespace",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CharacterProperties.scriptCode",
       "symbol": "CharacterProperties.scriptCode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added declaration and its exact payload."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/character_properties.rs",
+          "source_hash": "5543c23a32c3c35554a5af5b08eb372b258a89085c2f2198e7f9366956939061",
+          "summary": "PTR-only implementation validates complete UTF-8 input, selects its first scalar, and publishes fresh Unicode-property tables from pinned ICU and Unicode block data."
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs",
+          "source_hash": "34aab35be949ca804029597897d21e56da157682c416d294343f3e3dfa9e6d3a",
+          "summary": "Focused PTR tests cover property values, exact seven-field tables, first-scalar and malformed-input behavior, fresh results, and earlier-retail absence."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_intl_character_properties.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "7c973505b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused profile tests establish PTR GetCharacterProperties publication and modeled first-scalar Unicode-property tables with exactly the documented seven fields. First-scalar selection, empty-input/no-result behavior, full-input UTF-8 validation, property naming, No_Block, ICU/block data-version agreement, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native-edge behavior remain simulator assumptions or unclaimed."
     },
     {
       "id": "added:CreateFrameOptions",
@@ -8361,7 +8517,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
         },
         {
           "kind": "test",
@@ -8403,19 +8559,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -8458,19 +8614,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -8536,19 +8692,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -8747,7 +8903,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
         },
         {
           "kind": "test",
@@ -8789,19 +8945,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -8839,7 +8995,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
         },
         {
           "kind": "source",
@@ -8935,19 +9091,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
         },
         {
@@ -8985,7 +9141,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895"
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
         },
         {
           "kind": "test",
@@ -9027,19 +9183,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -9082,19 +9238,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -9137,19 +9293,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -9192,19 +9348,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "60d33f04a639b754d0bdb4ecf2404998987462ed678d73aed5d33a484ba18895",
+          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "747e5e15ed03b125e9d0c17fc0a571bfc05c708e003144a0908eaaac56f43c22",
+          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "57d4b15144d24021d3bce8a01b2610e81684af376e5cb4847f8ebcbfcf8d8a4d",
+          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
