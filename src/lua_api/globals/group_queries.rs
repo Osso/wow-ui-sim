@@ -405,7 +405,7 @@ fn unit_has_lfg_random_cooldown(state: &mut LuaState) -> LuaResult<u32> {
 
 fn unit_exists(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let exists = unit_exists_in_state(&borrow_state(state)?, &unit);
+    let exists = unit_exists_in_state(&*borrow_state(state)?, &unit);
     state.push(Val::Bool(exists));
     Ok(1)
 }

@@ -52,7 +52,7 @@ fn get_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let instance_id = f64::from_stack(state, 2)? as i32;
     let exists =
-        crate::lua_api::globals::group_queries::unit_exists_in_state(&borrow_state(state)?, &unit);
+        crate::lua_api::globals::group_queries::unit_exists_in_state(&*borrow_state(state)?, &unit);
     let aura = if exists {
         crate::lua_api::globals::auras::find_aura_by_instance_id(state, &unit, instance_id)
     } else {
