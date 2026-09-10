@@ -19,6 +19,7 @@ fn seeded_env() -> WowLuaEnv {
             let mut aura = template.clone();
             aura.aura_instance_id = id;
             aura.source_unit = source.into();
+            aura.is_helpful = id != 702;
             aura
         })
         .collect();
