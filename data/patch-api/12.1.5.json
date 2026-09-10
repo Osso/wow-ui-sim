@@ -16024,24 +16024,57 @@
       "id": "changed:FrameAPICooldown.Clear",
       "symbol": "FrameAPICooldown.Clear",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/mod.rs",
+          "source_hash": "36e77e7826070848506c6228ab7a299a5ef97c546a421be488b1e06b8bf133bd",
+          "summary": "The shared Clear dispatcher selects the existing Cooldown handler by widget type while retaining MessageFrame and ScrollingMessageFrame clearing behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown Clear resets start, duration, display duration, and rate through the existing cooldown state model."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records direct Clear state behavior and the modeled shared-dispatch boundary."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_clear_resets_timing_and_rate",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Focused cooldown proof verifies Clear resets timing, display duration, and rate after configured state. Proof commits 9b2ddae68 through e70762b3b."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/message_frame.rs::clear_message_frame_history_preserves_other_widgets",
+          "source_hash": "dac1275484a130611db9d6cbb7ce4196b0c2f15bdfdb4d3e561920277b3bd4a5",
+          "summary": "Focused MessageFrame proof verifies shared Clear dispatch preserves message-history clearing, widget isolation, reuse, and ClearText behavior. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_clear_resets_timing_and_rate",
+        "tests/message_frame.rs::clear_message_frame_history_preserves_other_widgets"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes ordinary shared Clear dispatch: Cooldown clears start, duration, display duration, and rate; MessageFrame and ScrollingMessageFrame retain history clearing, isolation, reuse, and ClearText behavior. The PTR protection annotation, taint, secret, restricted access, unsupported-widget error policy, native timing, and native semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.GetCountdownAbbrevThreshold",
@@ -16061,7 +16094,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -16104,7 +16137,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -16133,70 +16166,130 @@
       "id": "changed:FrameAPICooldown.GetMinimumCountdownDuration",
       "symbol": "FrameAPICooldown.GetMinimumCountdownDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown getter returns the stored minimum countdown duration state."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records default-zero and numeric round-trip behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Existing focused cooldown proof verifies default zero and a numeric 2500 round trip. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes the stored numeric default-zero and round-trip behavior only. The PTR DurationMillisecondsPrimitive-to-Milliseconds return-type change, coercion, secret values, taint, protected access, native units, and native semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCooldown",
       "symbol": "FrameAPICooldown.SetCooldown",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown SetCooldown stores start, duration, rate, and the simulator display-duration state."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records ordinary timing storage and omitted-rate behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_set_cooldown_stores_timing_and_defaults_rate",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Focused cooldown proof verifies fractional timing storage, display duration, explicit rate, and omitted-rate default one. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_set_cooldown_stores_timing_and_defaults_rate"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes ordinary numeric timing storage, display-duration state, and omitted-rate default one. The PTR Seconds type change, protected annotation, secret values, taint, coercion, native timing, and native semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCooldownDuration",
       "symbol": "FrameAPICooldown.SetCooldownDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown SetCooldownDuration preserves stored start while replacing duration, rate, and display-duration state."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records preserved-start and omitted-rate behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_set_duration_preserves_start_and_defaults_rate",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Focused cooldown proof verifies preserved start, replaced duration/display state, explicit rate, and omitted-rate default one. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_set_duration_preserves_start_and_defaults_rate"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes ordinary start preservation, numeric duration/display state, and omitted-rate default one. The PTR Seconds type change, protected annotation, secret values, taint, coercion, native timing, and native semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCooldownFromDurationObject",
@@ -16217,7 +16310,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
           "summary": "Cooldown duration-object transfer preserves existing timing for a zero duration only when clearIfZero is explicitly false; omitted or true clears all timing fields, while nonzero durations always transfer timing.",
-          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31"
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0"
         },
         {
           "kind": "source",
@@ -16229,13 +16322,13 @@
           "kind": "test",
           "reference": "tests/cooldown_widget.rs::cooldown_zero_duration_respects_clear_if_zero",
           "summary": "Focused real duration-proxy test proves explicit false preserves prior timing and omitted/true clears it without affecting an independent cooldown. Proof commit 8ccb7897c.",
-          "source_hash": "305b65414b8e0895f1ba01e46df83709175bfea8308d867ac4c7840e99dbaa49"
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa"
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_widget.rs::cooldown_nonzero_duration_updates_regardless_of_clear_flag",
           "summary": "Focused real duration-proxy test proves nonzero duration transfer updates timing for omitted, true, and false clearIfZero values. Proof commit 8ccb7897c.",
-          "source_hash": "305b65414b8e0895f1ba01e46df83709175bfea8308d867ac4c7840e99dbaa49"
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa"
         }
       ],
       "tests": [
@@ -16252,70 +16345,130 @@
       "id": "changed:FrameAPICooldown.SetCooldownFromExpirationTime",
       "symbol": "FrameAPICooldown.SetCooldownFromExpirationTime",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown expiration-time setter derives and stores start as expiration minus duration in the simulator model."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records the focused expiration-time conversion and display-duration behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Existing focused cooldown proof verifies expiration 20 and duration 8 produce stored start 12, duration 8, and display duration 8000. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes ordinary expiration-minus-duration storage and display-duration state. The PTR Seconds type changes, protected annotation, secret values, taint, coercion, native time bases, and native semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCooldownUNIX",
       "symbol": "FrameAPICooldown.SetCooldownUNIX",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown SetCooldownUNIX forwards the supplied numeric start into ordinary cooldown state without simulator epoch conversion."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records literal numeric start storage as a simulator model."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_set_unix_stores_literal_start_without_epoch_conversion",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Focused cooldown proof verifies literal large numeric start storage, numeric duration/display state, explicit rate, and omitted-rate default one. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_set_unix_stores_literal_start_without_epoch_conversion"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes literal numeric start storage, duration/display state, and omitted-rate default one. It does not establish native UNIX-to-frame-time conversion, protected access, secret values, taint, coercion, or native semantics."
     },
     {
       "id": "changed:FrameAPICooldown.SetCountdownAbbrevThreshold",
       "symbol": "FrameAPICooldown.SetCountdownAbbrevThreshold",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown setter stores the abbreviation threshold in the existing per-frame cooldown state."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records the modeled numeric storage and paired getter behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Existing focused cooldown proof verifies numeric abbreviation-threshold storage. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes ordinary numeric threshold storage only. The PTR DurationSecondsPrimitive-to-Seconds type change, secret values, taint, coercion, rendering/countdown effects, and native semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCountdownMillisecondsThreshold",
@@ -16335,7 +16488,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -16364,24 +16517,44 @@
       "id": "changed:FrameAPICooldown.SetMinimumCountdownDuration",
       "symbol": "FrameAPICooldown.SetMinimumCountdownDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "cooldown",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact before/after cooldown method contract."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "source_hash": "e4d3fe2e2a980951c088fa90972152612fea2a60159c74cdb993802ecce2dbd0",
+          "summary": "Cooldown setter stores the minimum countdown duration in existing per-frame cooldown state."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/cooldown-numeric-methods.md",
+          "source_hash": "e25f7706452fe54b52899c5346d9fff9f8eeac776454e1df7f492c0c4a31de34",
+          "summary": "The cooldown numeric-method specification records modeled numeric storage and paired getter behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state",
+          "source_hash": "66f9e819cb233d6a6c7978e342cb6be020deb53bb4c29ed9b91c35f12f3b31fa",
+          "summary": "Existing focused cooldown proof verifies numeric minimum-duration storage at 2500 and paired getter round trip. Proof commits 9b2ddae68 through e70762b3b."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "e70762b3b",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes ordinary numeric minimum-duration storage only. The PTR DurationMillisecondsPrimitive-to-Milliseconds type change, secret values, taint, coercion, rendering/countdown effects, and native semantics remain unclaimed."
     },
     {
       "id": "changed:LuaDurationManualClock.AdvanceTime",

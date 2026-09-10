@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit cooldown numeric methods and shared `Clear`
+
+`943b21255`, `9b2ddae68`, `060dbc0ff`, and `e70762b3b` credit eight changed `FrameAPICooldown` rows: `Clear`, `GetMinimumCountdownDuration`, `SetCooldown`, `SetCooldownDuration`, `SetCooldownFromExpirationTime`, `SetCooldownUNIX`, `SetCountdownAbbrevThreshold`, and `SetMinimumCountdownDuration`. Focused PTR and earlier-retail tests prove stored numeric state, default rate one, literal UNIX-start storage, expiration-minus-duration storage, and shared `Clear` dispatch without MessageFrame/ScrollingMessageFrame regression. Native units/epoch conversion, coercion, security enforcement, rendering/countdown effects, and native timing remain unresolved. Totals: 369 best-effort, 80 evidence-required, 0 untriaged. See [cooldown numeric methods](../specs/cooldown-numeric-methods.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR animation query lifecycle
 
 `9bc06cfe2`, `23bdf9fe6`, and `70cf29a12` credit sixteen changed `SimpleAnim` / `SimpleAnimGroup` query rows as bounded ordinary simulator behavior. Focused PTR and earlier-retail tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Native owner/child lifecycle, security, timing, smoothing, identity, reverse/bounce geometry, callback timing, and mutation contracts remain unresolved. See [animation query lifecycle](../specs/animation-query-lifecycle.md) and [[patch-12-1-5-api-audit]].
