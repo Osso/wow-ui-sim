@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit PTR ICU4C number and currency APIs
+
+`03e788970`, `8b1648770`, `ddb780f86`, and `0f25b13b7` credit 11 bounded PTR rows: global/context `FormatNumber`, `ParseNumber`, `FormatCurrency`, `ParseCurrency`, and `CurrencyParseResult` with `amount`/`currencyCode`. Eight Linux native-wrapper tests and three PTR Lua API tests prove ordinary ICU4C-backed behavior only. ICU defaults/data, rounding, parsing grammar, error policy, `AllowedWhenUntainted` enforcement, native WoW equivalence, retail exclusion, and macOS/Windows linkage/runtime smoke remain unresolved. See [number formatting](../specs/intl-number-formatting.md), [native linking](../specs/intl-native-linking.md), and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit SecondsFormatter evaluators
 
 `89fced131` and `b2856c8ff` credit four changed `SecondsFormatter` rows: `CanApproximate`, `EvaluateMinInterval`, `EvaluateMaxInterval`, and `EvaluateDesiredUnitCount`. Focused PTR and earlier-retail tests prove only explicit proxy configuration: strict approximation bounds, static interval/count returns, live curve dispatch, mode changes, input/error boundaries, instance independence, and arity. Native defaults, unit selection, curve rounding, `Seconds` identity, formatting, coercion, and security/taint behavior remain unresolved. Totals: 373 best-effort, 76 evidence-required, 0 untriaged. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].

@@ -4,14 +4,14 @@ The PTR `C_Intl` namespace and locale contexts expose number/currency formatting
 
 ## What it must do
 
-- [ ] Publish `FormatNumber`, `ParseNumber`, `FormatCurrency`, and `ParseCurrency` globally and on locale-context userdata only for the PTR API epoch; preserve earlier-retail namespace absence.
-- [ ] Global calls use `GetCurrentLocale`; context calls use the context's current identifier without mutating it. Preserve BCP-47 extensions when selecting ICU4C locale behavior.
-- [ ] Support all four `NumberStyle` values: Decimal, Integer, Percent, Currency. Use real locale-specific symbols, grouping, and patterns rather than English substitutions.
-- [ ] `FormatCurrency(number, currencyCode)` uses its explicit currency code; currency-style `FormatNumber` uses ICU's locale-default currency. The latter is a simulator policy, not a verified native default.
-- [ ] Return one string for successful formatting, one finite number for successful number parsing, and a fresh `{ amount, currencyCode }` table for successful currency parsing.
-- [ ] Parsing consumes the complete input; malformed or incomplete parses return zero Lua results. Do not expose `CurrencyParseResult` as a global table.
-- [ ] Reject malformed UTF-8, invalid required argument types/styles/currency codes, and nonfinite format operands explicitly. Failed calls do not alter locale contexts.
-- [ ] Keep native allocation, formatter lifetime, encoding conversion, and error handling inside the bounded bridge; do not pass C++ objects or Rust references across the ABI.
+- [x] Publish `FormatNumber`, `ParseNumber`, `FormatCurrency`, and `ParseCurrency` globally and on locale-context userdata for the PTR API epoch. Earlier-retail absence remains pending independent profile proof.
+- [x] Global calls use `GetCurrentLocale`; context calls use the context's current identifier without mutating it. BCP-47 extensions pass to ICU4C locale conversion.
+- [x] Support Decimal, Integer, Percent, and Currency styles through locale-specific ICU4C symbols, grouping, and patterns.
+- [x] `FormatCurrency(number, currencyCode)` uses its explicit code; currency-style `FormatNumber` uses ICU's locale default. That default is simulator policy, not verified native WoW behavior.
+- [x] Return one string for successful formatting, one finite number for successful number parsing, and a fresh `{ amount, currencyCode }` table for successful currency parsing.
+- [x] Parsing consumes complete input; malformed or incomplete parses return zero Lua results. `CurrencyParseResult` is not a global table.
+- [x] Reject malformed UTF-8, invalid required argument types/styles/currency codes, and nonfinite format operands. Failed calls do not mutate locale contexts.
+- [x] Keep native allocation, formatter lifetime, encoding conversion, and error handling inside the bounded C bridge; pass neither C++ objects nor Rust references across the ABI.
 
 ## Simulator assumptions
 
@@ -35,9 +35,9 @@ ICU4C's default formatting precision, grouping, percent scaling, locale-default 
 
 ## Known gaps (current cycle)
 
-- [ ] Complete native bridge and Lua registration, then run focused tests and startup smoke.
-- [ ] Verify supported native build/packaging paths; unexecuted platform checks must remain explicit.
-- [ ] Native WoW precision, parsing grammar, failure conditions, currency selection, and `AllowedWhenUntainted` behavior remain unverified.
+- [x] Native bridge and Lua registration have focused proof: 8 Linux wrapper tests at `8b1648770` and 3 PTR Lua API tests at `0f25b13b7`.
+- [ ] Verify retail profile exclusion and supported native build/packaging paths; macOS and Windows workflow configuration exists but was not executed.
+- [ ] Native WoW precision, parsing grammar, failure conditions, currency selection, ICU-version/data equivalence, and `AllowedWhenUntainted` enforcement remain unverified.
 
 ## Out of scope
 

@@ -308,19 +308,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -358,7 +358,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d"
         },
         {
           "kind": "test",
@@ -400,19 +400,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -478,19 +478,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -513,24 +513,83 @@
       "id": "added:C_Intl.FormatCurrency",
       "symbol": "C_Intl.FormatCurrency",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:C_Intl.FormatDate",
@@ -582,24 +641,83 @@
       "id": "added:C_Intl.FormatNumber",
       "symbol": "C_Intl.FormatNumber",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:C_Intl.FormatTime",
@@ -648,19 +766,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration publishes GetCharacterProperties while earlier retail records the namespace as absent."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Exact-pinned ICU properties and unicode-blocks dependencies provide the modeled property and block datasets without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU properties and unicode-blocks packages used by the modeled implementation."
         },
         {
@@ -744,7 +862,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d"
         },
         {
           "kind": "test",
@@ -809,19 +927,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -864,19 +982,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -914,7 +1032,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d"
         },
         {
           "kind": "source",
@@ -964,19 +1082,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -999,47 +1117,165 @@
       "id": "added:C_Intl.ParseCurrency",
       "symbol": "C_Intl.ParseCurrency",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:C_Intl.ParseNumber",
       "symbol": "C_Intl.ParseNumber",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:C_Intl.SelectPlural",
@@ -1065,19 +1301,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
         },
         {
@@ -1120,19 +1356,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1175,19 +1411,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -1230,19 +1466,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1285,19 +1521,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
@@ -1717,13 +1953,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Exact-pinned ICU properties and unicode-blocks dependencies provide the modeled property and block datasets without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU properties and unicode-blocks packages used by the modeled implementation."
         },
         {
@@ -2642,70 +2878,247 @@
       "id": "added:CurrencyParseResult",
       "symbol": "CurrencyParseResult",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added structure occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the returned CurrencyParseResult-shaped table and its amount/currencyCode fields only when ParseCurrency succeeds; each result is fresh. The structure is not a published global. ICU4C output/defaults, precision, rounding, currency selection, full-consumption failure policy, argument validation, and locale handling are bounded simulator behavior. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and non-Linux platform linkage remain unresolved."
     },
     {
       "id": "added:CurrencyParseResult.amount",
       "symbol": "CurrencyParseResult.amount",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the returned CurrencyParseResult-shaped table and its amount/currencyCode fields only when ParseCurrency succeeds; each result is fresh. The structure is not a published global. ICU4C output/defaults, precision, rounding, currency selection, full-consumption failure policy, argument validation, and locale handling are bounded simulator behavior. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and non-Linux platform linkage remain unresolved."
     },
     {
       "id": "added:CurrencyParseResult.currencyCode",
       "symbol": "CurrencyParseResult.currencyCode",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the returned CurrencyParseResult-shaped table and its amount/currencyCode fields only when ParseCurrency succeeds; each result is fresh. The structure is not a published global. ICU4C output/defaults, precision, rounding, currency selection, full-consumption failure policy, argument validation, and locale handling are bounded simulator behavior. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and non-Linux platform linkage remain unresolved."
     },
     {
       "id": "added:Enum.BonusStatIndex.Reserved_100",
@@ -8028,7 +8441,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8078,7 +8491,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8151,7 +8564,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TooltipDataLineType.UnitCriteriaProgress",
@@ -8194,7 +8607,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TransmogIllusionFlags.HiddenIllusion",
@@ -8581,7 +8994,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d"
         },
         {
           "kind": "test",
@@ -8623,19 +9036,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -8678,19 +9091,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -8756,19 +9169,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -8791,24 +9204,83 @@
       "id": "added:LuaLocaleContext.FormatCurrency",
       "symbol": "LuaLocaleContext.FormatCurrency",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:LuaLocaleContext.FormatDate",
@@ -8860,24 +9332,83 @@
       "id": "added:LuaLocaleContext.FormatNumber",
       "symbol": "LuaLocaleContext.FormatNumber",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:LuaLocaleContext.FormatTime",
@@ -8967,12 +9498,12 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d"
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
-          "summary": "Focused PTR tests establish GetLocale returns each context’s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
+          "summary": "Focused PTR tests establish GetLocale returns each context\u2019s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
           "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
@@ -8983,7 +9514,7 @@
       "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile tests establish GetLocale returns each context’s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
+      "notes": "Focused profile tests establish GetLocale returns each context\u2019s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.GetSortKey",
@@ -9009,19 +9540,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -9059,7 +9590,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d"
         },
         {
           "kind": "source",
@@ -9089,47 +9620,165 @@
       "id": "added:LuaLocaleContext.ParseCurrency",
       "symbol": "LuaLocaleContext.ParseCurrency",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:LuaLocaleContext.ParseNumber",
       "symbol": "LuaLocaleContext.ParseNumber",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register declares the exact function/method/structure contract, return shape, MayReturnNothing metadata, and AllowedWhenUntainted annotation."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
+          "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "source_hash": "fdf230d03e4e9e9b802b989f4db29035f3a792e0245c534024629ce995cda561",
+          "summary": "Lua adapter registers all eight APIs, selects current/context locale, validates ordinary arguments, maps complete parse failure to zero results, and returns fresh amount/currencyCode tables."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "source_hash": "df7f96fd23f81fd8d8d6ad79939db4b7f91ef6cff5bf93dd04177569921cd0bf",
+          "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "source_hash": "ef5a4abe812e13e2c7cf51d142904df62d98b4b07677e7efa649b5dae75053bf",
+          "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "source_hash": "7a17af5c913d68c82240bbda93e72d6cac0d417c39c7bdc0f512ad0af686e382",
+          "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/text.c",
+          "source_hash": "86f642eb987e6563c6d4a7dc7d2c4e44fe4abb2823d5bcb3e239e504ce106f02",
+          "summary": "Native text/locale conversion validates complete BCP-47/ICU locale conversion and owns C allocations."
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/number_format.c",
+          "source_hash": "923a4aaa5f9117891b26870662082435add28ba2db14ca1cc42be92572c3baf6",
+          "summary": "Native ICU4C formatter/parsing bridge applies locale styles and requires full-input consumption for successful parses."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_number_formatting.rs",
+          "source_hash": "7198a6e4a72a9292ec0f8cc70386d1ae71a32628c808a4b332739b1f3365e3a2",
+          "summary": "Focused PTR integration proof at 0f25b13b7: 3 passed tests for all four styles, global/context APIs, locale differences, fresh currency result tables, validation, and incomplete parses; log /tmp/icu-number-api-green-ptr.log."
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/tests.rs",
+          "source_hash": "df1c97bed3fc53933029e5e07e6aa9f3ef909454e5fe257478452fa369e8fb4c",
+          "summary": "Focused Linux native wrapper proof at 8b1648770: 8 passed tests covering locale grouping, rounding, percent/currency, complete parsing, multibyte input, extensions, validation, and linked version."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_number_formatting.rs::intl_numbers_formats_and_parses_all_styles",
+        "tests/intl_number_formatting.rs::intl_numbers_currency_results_and_context_changes_are_independent",
+        "tests/intl_number_formatting.rs::intl_numbers_reject_invalid_arguments_and_incomplete_parses",
+        "src/c_api/intl_native/tests.rs::intl_native::tests::"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0f25b13b7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR proof establishes the declared global/context API publication and ordinary ICU4C-backed formatting or complete-input parsing behavior. ICU defaults for grouping, fraction digits, rounding, percent scaling, locale-default currency, parse grammar, ICU/CLDR version/data, and error/zero-result policy are bounded simulator behavior, not native WoW proof. The source annotation AllowedWhenUntainted is not enforced or proven; taint, secret, protected, coercion, native WoW equivalence, retail absence, and macOS/Windows linkage/runtime smoke remain unresolved."
     },
     {
       "id": "added:LuaLocaleContext.SelectPlural",
@@ -9155,19 +9804,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
         },
         {
@@ -9205,7 +9854,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366"
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d"
         },
         {
           "kind": "test",
@@ -9247,19 +9896,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -9302,19 +9951,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -9357,19 +10006,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -9412,19 +10061,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "77f3a9e1da63d2ce1b19fa42e226c631656d6b16a4d8bcdfd0bf9fdd77879366",
+          "source_hash": "44967d313b96c7f48a7607aa31e830a783498722d7a35218328c46f0aa64f07d",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "c7c67d708c2cc696d43464f9cadba23ea82a3d34c1acc334279ff05eb89cbbb7",
+          "source_hash": "dbf77cd03f4c1c9b155b15c0301ea45f170e04ea13715889006ab01516697858",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "a645fad194f5ca396112fd57f400c943a6713b27020cd94e0340fb4e26e3307e",
+          "source_hash": "70bbb6efa19dc71075f1b542f2edb1c00990b6bce34d15e3cb45ea152e6d2adc",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
@@ -15902,7 +16551,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -16339,7 +16988,7 @@
       "commit": "8ccb7897c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused ordinary simulator tests establish the clearIfZero interpretation for real duration proxies: zero duration with explicit false preserves the cooldown’s existing start, duration, display duration, and rate; omitted or true clears those fields; nonzero durations update timing regardless of the flag; and independent cooldown frames remain unchanged. The pinned base/PTR declarations both default clearIfZero to true. Native protected-call enforcement, secret/taint/forbidden behavior, coercion/type validation, duration-proxy error behavior beyond covered paths, rendering/countdown effects, and native timing semantics remain unclaimed."
+      "notes": "Focused ordinary simulator tests establish the clearIfZero interpretation for real duration proxies: zero duration with explicit false preserves the cooldown\u2019s existing start, duration, display duration, and rate; omitted or true clears those fields; nonzero durations update timing regardless of the flag; and independent cooldown frames remain unchanged. The pinned base/PTR declarations both default clearIfZero to true. Native protected-call enforcement, secret/taint/forbidden behavior, coercion/type validation, duration-proxy error behavior beyond covered paths, rendering/countdown effects, and native timing semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCooldownFromExpirationTime",

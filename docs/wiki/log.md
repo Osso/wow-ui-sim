@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit PTR ICU4C number and currency APIs
+
+`03e788970`, `8b1648770`, `ddb780f86`, and `0f25b13b7` credit 11 bounded PTR rows: global/context `FormatNumber`, `ParseNumber`, `FormatCurrency`, `ParseCurrency`, and `CurrencyParseResult` with `amount`/`currencyCode`. Eight Linux native-wrapper tests and three PTR Lua API tests prove ordinary ICU4C-backed behavior only. ICU defaults/data, rounding, parsing grammar, error policy, `AllowedWhenUntainted` enforcement, native WoW equivalence, retail exclusion, and macOS/Windows linkage/runtime smoke remain unresolved. See [number formatting](../specs/intl-number-formatting.md), [native linking](../specs/intl-native-linking.md), and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit `SimpleAnim.SetParent`
 
 `e44ffa9a8` credits the changed `SimpleAnim.SetParent` row as bounded ordinary simulator behavior. Focused PTR and earlier-retail tests cover ownership transfer, configuration/index/target preservation, local-progress reset only across owners, existing destination timelines, callback ownership, same-parent behavior, atomic rejection, and generic frame/region regression. Native timing, scheduling, coercion, callback-dispatch mutation, and protected/secret/taint/forbidden-aspect semantics remain unresolved. Totals: 374 best-effort, 75 evidence-required, 0 untriaged. See [animation SetParent](../specs/animation-set-parent.md) and [[patch-12-1-5-api-audit]].
