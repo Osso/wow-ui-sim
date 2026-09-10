@@ -59,12 +59,19 @@ pub(super) fn set_parent(state: &mut LuaState) -> LuaResult<u32> {
             "SetParent",
         )?;
     }
+    if super::animations::reparent_animation(state, id)? {
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     apply_parent_change(&mut sim, id, new_parent_id);
     Ok(0)
 }
 
-fn apply_parent_change(sim: &mut crate::lua_api::SimState, id: u64, new_parent_id: Option<u64>) {
+pub(super) fn apply_parent_change(
+    sim: &mut crate::lua_api::SimState,
+    id: u64,
+    new_parent_id: Option<u64>,
+) {
     let old_parent_id = sim.widgets.get(id).and_then(|frame| frame.parent_id);
     let retarget_all_points = should_retarget_parent_fill_anchors(&sim.widgets, id, old_parent_id);
     super::super::methods_hierarchy::reparent_widget(&mut sim.widgets, id, new_parent_id);

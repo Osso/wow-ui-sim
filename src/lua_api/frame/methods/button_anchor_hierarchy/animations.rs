@@ -7,7 +7,10 @@ use rilua::{LuaResult, Val};
 
 mod creation;
 mod fields;
+mod parent;
 mod runtime;
+
+pub(super) use parent::reparent_animation;
 
 pub(super) use creation::{
     animation_config_noop, create_animation, create_animation_group, create_control_point,
