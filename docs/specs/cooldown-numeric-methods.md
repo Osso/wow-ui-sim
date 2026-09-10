@@ -5,9 +5,9 @@ Ordinary simulator state behavior for cooldown methods in `src/lua_api/frame/met
 ## What it must do
 
 - [ ] Direct `Clear` resets start, duration, and display duration to zero, and rate to one.
-- [ ] Direct `SetCooldown` stores start/duration/rate; omitted rate becomes one.
-- [ ] Direct `SetCooldownDuration` preserves start, replaces duration/rate, and defaults omitted rate to one.
-- [ ] Direct `SetCooldownUNIX` preserves the supplied numeric start without epoch conversion; omitted rate becomes one.
+- [x] Direct `SetCooldown` stores start/duration/rate; omitted rate becomes one.
+- [x] Direct `SetCooldownDuration` preserves start, replaces duration/rate, and defaults omitted rate to one.
+- [x] Direct `SetCooldownUNIX` preserves the supplied numeric start without epoch conversion; omitted rate becomes one.
 
 The existing simulator computes display duration as nonnegative duration × 1000, independently of rate. Tests deliberately record that model rather than infer native units or elapsed-time behavior. The large numeric UNIX fixture proves literal storage only, **not native UNIX-to-frame-time conversion**.
 
@@ -40,8 +40,11 @@ All rows below run through `cooldown_widget::` on PTR and retail. Existing cover
 
 `SetCooldownFromDurationObject` has separate existing real-proxy, error-propagation, and zero-option coverage in the same module; see [duration core](duration-core.md).
 
+At test revision `943b21255`, `cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> cooldown_widget:: -- --nocapture` reports **10 passed, 1 failed** on each of `ptr` and `retail`. Only `cooldown_clear_resets_timing_and_rate` fails. All three other new tests and seven existing tests pass. No production changes were made.
+
 ## Known gaps (current cycle)
 
+- [ ] Direct `Clear` fails to reset cooldown timing on PTR and retail. `widgets/mod.rs` registers cooldown methods before message-frame methods on the same metatable; the latter replaces `Clear` with `message_frame/getters.rs::clear`, which only changes message-frame data. The failing direct-call test retains the expected cooldown reset contract; production dispatch repair is outside this test-only slice.
 - [ ] Native units, epoch conversion, numeric coercion, and `Seconds`/`DurationSeconds` equivalence remain unverified.
 - [ ] Protected-call, taint, secret-value, and restricted-access behavior remain unverified.
 
