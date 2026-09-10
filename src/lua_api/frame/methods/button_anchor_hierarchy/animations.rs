@@ -7,9 +7,11 @@ use rilua::{LuaResult, Val};
 
 mod creation;
 mod fields;
+mod ownership;
 mod parent;
 mod runtime;
 
+pub(super) use ownership::resolve_animation_group_id;
 pub(super) use parent::reparent_animation;
 
 pub(super) use creation::{
@@ -30,17 +32,6 @@ use fields::{push_anim_field, with_animation_state_mut};
 use runtime::{apply_group_flipbook_state, sync_action_bar_busy_for_group};
 
 // ── Resolve helpers ───────────────────────────────────────────────────────────
-
-pub(super) fn resolve_animation_group_id(
-    sim: &crate::lua_api::SimState,
-    frame_id: u64,
-) -> Option<u64> {
-    sim.anim_frame_to_group.get(&frame_id).copied().or_else(|| {
-        sim.anim_frame_to_anim
-            .get(&frame_id)
-            .map(|(group_id, _)| *group_id)
-    })
-}
 
 fn refresh_active_animation_group(sim: &mut crate::lua_api::SimState, group_id: u64) {
     let active = sim
