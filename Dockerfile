@@ -42,6 +42,10 @@ RUN cargo fetch --locked
 # --no-default-features skips sound, GUI, and CASC dependencies not needed for
 # headless test runs. client-retail still selects the required runtime profile.
 COPY build.rs ./
+# Keep optional PTR native build inputs available; client-retail below does not
+# enable retail-12-1-5 or require ICU4C build/runtime packages.
+COPY build/ build/
+COPY native/ native/
 COPY data/ data/
 COPY src/ src/
 RUN cargo build --release --bin wow-sim --no-default-features --features client-retail --locked \

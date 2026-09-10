@@ -1,0 +1,150 @@
+name: PTR ICU4C
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ptr-icu.yml'
+      - '.github/scripts/run_ptr_icu_tests.py'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'build.rs'
+      - 'build/**'
+      - 'native/**'
+      - 'src/c_api/intl_native/**'
+      - 'src/c_api/intl_native.rs'
+      - 'src/c_api/c_intl/**'
+      - 'src/c_api/c_intl.rs'
+      - 'vcpkg.json'
+  push:
+    branches: [master]
+    paths:
+      - '.github/workflows/ptr-icu.yml'
+      - '.github/scripts/run_ptr_icu_tests.py'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'build.rs'
+      - 'build/**'
+      - 'native/**'
+      - 'src/c_api/intl_native/**'
+      - 'src/c_api/intl_native.rs'
+      - 'src/c_api/c_intl/**'
+      - 'src/c_api/c_intl.rs'
+      - 'vcpkg.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  WOW_SIM_CASC: '0'
+  WOW_SIM_NO_ADDONS: '1'
+  WOW_SIM_NO_SAVED_VARS: '1'
+  WOW_INSTALL_PATH: ''
+  WOW_DATA_PATH: ''
+
+jobs:
+  native-wrapper:
+    name: Native wrapper (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-14, windows-2022]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout simulator
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Use CI Cargo config
+        run: Copy-Item .cargo/config.ci.toml .cargo/config.toml
+
+      - name: Install Linux ICU and GUI build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get -o Acquire::Retries=3 update
+          if ($LASTEXITCODE -ne 0) { throw 'apt-get update failed' }
+          sudo apt-get -o Acquire::Retries=3 install -y pkg-config libicu-dev libasound2-dev libudev-dev
+          if ($LASTEXITCODE -ne 0) { throw 'apt-get install failed' }
+
+      - name: Install macOS ICU
+        if: runner.os == 'macOS'
+        run: |
+          brew install icu4c pkg-config
+          if ($LASTEXITCODE -ne 0) { throw 'brew install failed' }
+          $icu = brew --prefix icu4c
+          if ($LASTEXITCODE -ne 0) { throw 'brew --prefix icu4c failed' }
+          "PKG_CONFIG_PATH=$icu/lib/pkgconfig" >> $env:GITHUB_ENV
+
+      - name: Read pinned vcpkg revision
+        if: runner.os == 'Windows'
+        id: vcpkg-pin
+        run: |
+          $revision = (Get-Content vcpkg.json -Raw | ConvertFrom-Json).'builtin-baseline'
+          if ($revision -notmatch '^[0-9a-f]{40}$') { throw 'Invalid vcpkg baseline' }
+          "revision=$revision" >> $env:GITHUB_OUTPUT
+
+      - name: Checkout pinned vcpkg
+        if: runner.os == 'Windows'
+        uses: actions/checkout@v4
+        with:
+          repository: microsoft/vcpkg
+          ref: ${{ steps.vcpkg-pin.outputs.revision }}
+          path: .ci-vcpkg
+          persist-credentials: false
+
+      - name: Install static Windows ICU
+        if: runner.os == 'Windows'
+        run: |
+          $root = Join-Path $env:GITHUB_WORKSPACE '.ci-vcpkg'
+          & "$root/bootstrap-vcpkg.bat" -disableMetrics
+          if ($LASTEXITCODE -ne 0) { throw 'vcpkg bootstrap failed' }
+          & "$root/vcpkg.exe" install --triplet x64-windows-static-md --host-triplet x64-windows-static-md "--x-manifest-root=$env:GITHUB_WORKSPACE" "--x-install-root=$root/installed"
+          if ($LASTEXITCODE -ne 0) { throw 'vcpkg ICU installation failed' }
+          "VCPKG_ROOT=$root" >> $env:GITHUB_ENV
+          'VCPKGRS_TRIPLET=x64-windows-static-md' >> $env:GITHUB_ENV
+
+      - name: Report Unix ICU versions
+        if: runner.os != 'Windows'
+        run: |
+          pkg-config --atleast-version=72 icu-i18n icu-uc
+          if ($LASTEXITCODE -ne 0) { throw 'ICU4C >=72 is required' }
+          pkg-config --modversion icu-i18n icu-uc
+          if ($LASTEXITCODE -ne 0) { throw 'ICU version lookup failed' }
+
+      - name: Restore Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ptr-icu-${{ matrix.os }}
+
+      - name: Build native wrapper tests
+        run: |
+          cargo test --lib --locked --no-default-features --features sound,gui,client-ptr --no-run --message-format=json > ptr-icu-build.jsonl
+          if ($LASTEXITCODE -ne 0) { throw 'PTR library test build failed' }
+
+      - name: Inspect linkage and run bounded native tests
+        run: python .github/scripts/run_ptr_icu_tests.py ptr-icu-build.jsonl
+
+      - name: Upload proof logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ptr-icu-${{ matrix.os }}
+          path: |
+            ptr-icu-build.jsonl
+            ptr-icu-linkage.txt
+            ptr-icu-tests.txt
+          if-no-files-found: warn
