@@ -9,19 +9,19 @@
 - [x] Each getter returns exactly one number; each setter returns no values.
 - [x] Missing, nil, nonnumeric, NaN, and infinite setter arguments raise an error without changing either stored value. This validation policy is a simulator choice; numeric strings are not coerced.
 - [x] Configuration remains intact while a formatter survives garbage collection and is isolated from other formatter instances.
-- [x] Existing factory identity and other setter behavior remain intact. `Format` retains its existing placeholder behavior and does not consume these fields.
+- [x] Existing factory identity and stored setter values remain intact; maximum-mode switching is specified below. `Format` retains its existing placeholder behavior and does not consume these fields.
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
 
 ### Evaluation model (simulator assumptions)
 
-- [ ] `CanApproximate(s)` returns `s > 0 and s < approximationSeconds`. Equality at either boundary is false. This agrees with the separate Blizzard Lua mixin's ordinary predicate, but is not native-object conformance evidence.
-- [ ] `EvaluateMinInterval(s)` returns the configured minimum enum value; default `Seconds = 0`.
-- [ ] `EvaluateMaxInterval(s)` returns the configured maximum enum value; default `Days = 3`. A configured curve instead receives the exact `s` through normal `curve:Evaluate(s)` lookup on every call, including mutations after installation.
-- [ ] Static intervals are configured bounds, not the largest unit fitting `s`: no automatic 60/3600/86400 promotion, clamping, or rounding is modeled. Curve output must itself be an integral enum value `0..3`; fractional, nonfinite, missing, or out-of-range results raise errors. Curve lookup/call errors propagate; no static fallback is used.
-- [ ] `SetMaxInterval` selects static mode and clears a previously configured curve. `SetMaxIntervalCurve(nil)` selects the retained static maximum. These mode-switch choices preserve the existing nullable setter behavior and remain native-unverified.
-- [ ] `EvaluateDesiredUnitCount(s)` returns the configured positive integral count; default `1`, independent of `s`. Existing setters still store their inputs; invalid stored interval/count values fail at evaluation without mutation.
-- [ ] All four evaluators accept finite numeric seconds (including negative values) and return exactly one value. Invalid seconds/receivers raise errors. Milliseconds threshold, abbreviation, rounding, and final-unit flags do not affect these configuration queries.
-- [ ] Evaluators share existing approximation state and proxy fields; instances remain independent. Existing accessors and placeholder `Format` remain unchanged.
+- [x] `CanApproximate(s)` returns `s > 0 and s < approximationSeconds`. Equality at either boundary is false. This agrees with the separate Blizzard Lua mixin's ordinary predicate, but is not native-object conformance evidence.
+- [x] `EvaluateMinInterval(s)` returns the configured minimum enum value; default `Seconds = 0`.
+- [x] `EvaluateMaxInterval(s)` returns the configured maximum enum value; default `Days = 3`. A configured curve instead receives the exact `s` through normal `curve:Evaluate(s)` lookup on every call, including mutations after installation.
+- [x] Static intervals are configured bounds, not the largest unit fitting `s`: no automatic 60/3600/86400 promotion, clamping, or rounding is modeled. Curve output must itself be an integral enum value `0..3`; fractional, nonfinite, missing, or out-of-range results raise errors. Curve lookup/call errors propagate; no static fallback is used.
+- [x] `SetMaxInterval` selects static mode and clears a previously configured curve. `SetMaxIntervalCurve(nil)` selects the retained static maximum. These mode-switch choices, including the existing simulator setter's acceptance of nil, remain native-unverified.
+- [x] `EvaluateDesiredUnitCount(s)` returns the configured positive integral count; default `1`, independent of `s`. Existing setters still store their inputs; invalid stored interval/count values fail at evaluation without mutation.
+- [x] All four evaluators accept finite numeric seconds (including negative values) and return exactly one value. Invalid seconds/receivers raise errors. Milliseconds threshold, abbreviation, rounding, and final-unit flags do not affect these configuration queries.
+- [x] Evaluators share existing approximation state and proxy fields; instances remain independent. Existing accessors and placeholder `Format` remain unchanged.
 
 The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) changes the four configuration accessor types and four evaluator argument types from `DurationSecondsDouble` to `Seconds`; it does not add the methods or specify default values or value bounds. Both setters retain `SecretArguments = AllowedWhenUntainted`; the four evaluators retain it and `ConstSecretAccessor = true`. Publication follows the existing cross-profile factory, not a new PTR-only gate.
 
@@ -40,6 +40,8 @@ The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) 
 
 - `tests/seconds_formatter_configuration.rs` — independent storage, arity, updates, atomic validation, GC retention, unchanged existing methods, evaluation boundaries, and real/proxy curve dispatch/errors; grouped `integration` target.
 - `src/lua_api/workarounds/temporary/proxy_object_factories.rs::tests::installs_proxy_factories` — existing factory regression.
+
+Focused development proof at `89fced131`: three new tests failed before implementation; the complete `seconds_formatter_configuration::` group passes six tests per profile with `--test integration --offline --no-default-features --features sound,gui,client-<ptr|retail>`. This includes the three existing configuration regressions. No broad, check, readability, or audit-artifact gates were run.
 
 ## Known gaps (current cycle)
 
