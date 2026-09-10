@@ -1380,47 +1380,75 @@
       "id": "added:C_PvP.IsTrainingGroundsArena",
       "symbol": "C_PvP.IsTrainingGroundsArena",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added one-argument C_PvP predicate and boolean return.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_pvp.rs",
+          "summary": "PTR-only C_PvP registration reads optional explicit Training Grounds classification metadata from the simulator LFD catalog; earlier retail removes fallback keys.",
+          "source_hash": "a78a7739d9352ee3f19288e476ddaac7993f2d1c63c391e8903287d5bafdab8e"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_training_grounds.rs",
+          "summary": "Focused PTR and retail tests cover explicit Arena/Battleground classifications, unclassified IDs, live catalog mutation, input validation, existing LFG/PvP regressions, and earlier-retail absence before and after bootstrap.",
+          "source_hash": "352cd6897416cfee51fa980ca41ae27e22b013b75cfb3e52fb317b872a91767d"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_training_grounds.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "8c13c6e80",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests establish modeled publication and ordinary simulator behavior: each predicate reads the current LFD catalog entry's explicit optional Training Grounds kind; matching Arena or Battleground returns true, and unclassified or unknown IDs return false. Synthetic fixture IDs and the unclassified default catalog are simulator-owned; real game catalog IDs, classification, security, taint, coercion, and native-edge semantics remain unclaimed."
     },
     {
       "id": "added:C_PvP.IsTrainingGroundsBG",
       "symbol": "C_PvP.IsTrainingGroundsBG",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added one-argument C_PvP predicate and boolean return.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_pvp.rs",
+          "summary": "PTR-only C_PvP registration reads optional explicit Training Grounds classification metadata from the simulator LFD catalog; earlier retail removes fallback keys.",
+          "source_hash": "a78a7739d9352ee3f19288e476ddaac7993f2d1c63c391e8903287d5bafdab8e"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_training_grounds.rs",
+          "summary": "Focused PTR and retail tests cover explicit Arena/Battleground classifications, unclassified IDs, live catalog mutation, input validation, existing LFG/PvP regressions, and earlier-retail absence before and after bootstrap.",
+          "source_hash": "352cd6897416cfee51fa980ca41ae27e22b013b75cfb3e52fb317b872a91767d"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_training_grounds.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "8c13c6e80",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests establish modeled publication and ordinary simulator behavior: each predicate reads the current LFD catalog entry's explicit optional Training Grounds kind; matching Arena or Battleground returns true, and unclassified or unknown IDs return false. Synthetic fixture IDs and the unclassified default catalog are simulator-owned; real game catalog IDs, classification, security, taint, coercion, and native-edge semantics remain unclaimed."
     },
     {
       "id": "added:C_Timer.NewTimedSignalMap",

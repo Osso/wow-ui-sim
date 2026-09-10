@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit PTR Training Grounds classification
+
+`60ca3d415` and `8c13c6e80` credit `C_PvP.IsTrainingGroundsArena` and `C_PvP.IsTrainingGroundsBG` as bounded PTR simulator behavior. Focused tests prove PTR publication, explicit Arena/Battleground catalog classification, unclassified and unknown false results, live catalog mutation, input validation, unaffected LFG/PvP regressions, and earlier-retail absence before and after bootstrap. Fixture IDs and default catalog classification are simulator-owned; real game catalog IDs, classification, security, taint, coercion, and native semantics remain unresolved. See [Training Grounds classification](../specs/training-grounds-classification.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR aura caster GUID model
 
 `7e694c69d`, `b2a6b845c`, and `41f83ecdb` credit `C_UnitAuras.GetAuraCasterGUID` as bounded PTR simulator behavior. Focused tests prove PTR publication, player/party source resolution, unit and aura-instance isolation, unresolved-source nil, live source-token changes, required arguments, and earlier-retail absence. The result deliberately resolves the current `source_unit` through `UnitGUID`, not a captured native caster GUID; access control, aura validity, secrecy, taint, coercion, and native semantics remain unresolved. See [aura caster GUID](../specs/aura-caster-guid.md) and [[patch-12-1-5-api-audit]].

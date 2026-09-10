@@ -32,8 +32,8 @@
 32. [best-effort] `added:C_Intl.TransformLocale` — behavioral
 33. [evidence-required] `added:C_Intl.Transliterate` — unsafe
 34. [best-effort] `added:C_LFGInfo.GetActiveLFGDungeonName` — behavioral
-35. [evidence-required] `added:C_PvP.IsTrainingGroundsArena` — unsafe
-36. [evidence-required] `added:C_PvP.IsTrainingGroundsBG` — unsafe
+35. [best-effort] `added:C_PvP.IsTrainingGroundsArena` — behavioral
+36. [best-effort] `added:C_PvP.IsTrainingGroundsBG` — behavioral
 37. [best-effort] `added:C_Timer.NewTimedSignalMap` — behavioral
 38. [best-effort] `added:C_UnitAuras.GetAuraCasterGUID` — behavioral
 39. [best-effort] `added:C_Weather.GetCurrentWeather` — behavioral
