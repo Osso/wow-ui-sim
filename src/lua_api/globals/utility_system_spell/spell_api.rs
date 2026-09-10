@@ -306,11 +306,9 @@ fn push_unit_cast_info(state: &mut LuaState, slot: CastSlot) -> LuaResult<u32> {
         return Ok(0);
     };
     if matches!(slot, CastSlot::Channeling) {
-        push_channel_info(state, &cast_info);
-        return Ok(10);
+        return Ok(push_channel_info(state, &cast_info));
     }
-    push_cast_info(state, &cast_info);
-    Ok(9)
+    Ok(push_cast_info(state, &cast_info))
 }
 
 fn extract_cast_info(state: &mut LuaState, slot: CastSlot) -> LuaResult<Option<CastInfoSnapshot>> {
@@ -342,19 +340,39 @@ fn push_common_cast_fields(state: &mut LuaState, cast_info: &CastInfoSnapshot) {
     state.push(Val::Bool(false));
 }
 
-fn push_cast_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) {
+fn push_cast_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 {
     push_common_cast_fields(state, cast_info);
     state.push(Val::Num(cast_info.cast_id as f64));
     state.push(Val::Bool(false));
     state.push(Val::Num(cast_info.spell_id as f64));
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        state.push(Val::Num(cast_info.cast_id as f64));
+        // Delay accumulation is not modeled; preserve timing and expose the tuple slot.
+        state.push(Val::Num(0.0));
+        11
+    }
+    #[cfg(not(feature = "retail-12-1-0"))]
+    {
+        9
+    }
 }
 
-fn push_channel_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) {
+fn push_channel_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 {
     push_common_cast_fields(state, cast_info);
     state.push(Val::Bool(false));
     state.push(Val::Num(cast_info.spell_id as f64));
     state.push(Val::Bool(cast_info.num_empower_stages > 0));
     state.push(Val::Num(cast_info.num_empower_stages as f64));
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        state.push(Val::Num(cast_info.cast_id as f64));
+        11
+    }
+    #[cfg(not(feature = "retail-12-1-0"))]
+    {
+        10
+    }
 }
 
 // ── Registration ─────────────────────────────────────────────────────────────
