@@ -3,8 +3,7 @@
 use crate::lua_api::game_data::CastingState;
 use crate::lua_api::globals::real::specialization_helpers::push_specialization_identity;
 use crate::lua_api::globals::spellbook_data;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, create_table};
-use crate::lua_api::script_helpers::fire_named_event_state;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use crate::specializations;
 use rilua::vm::gc::arena::GcRef;
@@ -220,19 +219,23 @@ fn c_spec_set_specialization(state: &mut LuaState) -> LuaResult<u32> {
         _ => 0,
     };
     let can_set = player_spec_by_index(state, requested_index).is_some();
-    if can_set && start_specialization_change(state, requested_index.max(1))? {
-        let player = create_string(state, "player");
-        let spell_id_val = Val::Num(SPEC_ACTIVATION_SPELL_ID as f64);
-        fire_named_event_state(state, "UNIT_SPELLCAST_START", &[player, spell_id_val]);
+    if can_set {
+        if let Some(cast_id) = start_specialization_change(state, requested_index.max(1))? {
+            crate::lua_api::spellcast_events::fire_player_cast_start(
+                state,
+                cast_id,
+                SPEC_ACTIVATION_SPELL_ID,
+            );
+        }
     }
     state.push(Val::Bool(can_set));
     Ok(1)
 }
 
-fn start_specialization_change(state: &mut LuaState, target_index: i32) -> LuaResult<bool> {
+fn start_specialization_change(state: &mut LuaState, target_index: i32) -> LuaResult<Option<u32>> {
     let mut sim = borrow_state_mut(state)?;
     if sim.player.active_spec_index == target_index && sim.player.pending_spec_change.is_none() {
-        return Ok(false);
+        return Ok(None);
     }
 
     sim.player.pending_spec_change = Some(target_index);
@@ -248,7 +251,7 @@ fn start_specialization_change(state: &mut LuaState, target_index: i32) -> LuaRe
         cast_id,
         num_empower_stages: 0,
     });
-    Ok(true)
+    Ok(Some(cast_id))
 }
 
 fn requested_or_active_spec(

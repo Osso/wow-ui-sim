@@ -35,6 +35,7 @@ pub(crate) mod script_helpers;
 mod script_object_transfer;
 pub(crate) mod sim_substates;
 pub mod simple_html;
+pub(crate) mod spellcast_events;
 pub mod state;
 mod state_defaults;
 mod state_hit_grid;

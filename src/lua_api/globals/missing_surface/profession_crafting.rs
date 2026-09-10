@@ -8,7 +8,7 @@
 use crate::items;
 use crate::lua_api::game_data::CastingState;
 use crate::lua_api::globals::profession_data;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state::BagItem;
 use rilua::Val;
@@ -112,9 +112,7 @@ fn start_crafting_cast(state: &mut LuaState, plan: &CraftPlan) {
     });
     drop(sim);
 
-    let player = create_string(state, "player");
-    let spell_id = Val::Num(plan.recipe_id as f64);
-    fire_named_event_state(state, "UNIT_SPELLCAST_START", &[player, spell_id]);
+    crate::lua_api::spellcast_events::fire_player_cast_start(state, cast_id, plan.recipe_id as u32);
 }
 
 fn crafted_item_name(recipe: &profession_data::RecipeEntry) -> &'static str {

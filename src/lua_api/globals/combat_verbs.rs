@@ -76,9 +76,9 @@ fn start_cast(
     spell_name: &str,
     icon_path: &str,
     duration: f64,
-) {
+) -> Option<u32> {
     let Ok(mut st) = borrow_state_mut(state) else {
-        return;
+        return None;
     };
     let now = st.start_time.elapsed().as_secs_f64();
     let cast_id = st.next_cast_id;
@@ -92,6 +92,7 @@ fn start_cast(
         cast_id,
         num_empower_stages: 0,
     });
+    Some(cast_id)
 }
 
 fn clear_cast_if_named(state: &mut LuaState, expected_name: &str) {
@@ -109,7 +110,7 @@ fn clear_cast_if_named(state: &mut LuaState, expected_name: &str) {
 
 /// `AttackTarget()` — engage auto-attack on the current target.
 fn attack_target(state: &mut LuaState) -> LuaResult<u32> {
-    start_cast(state, 0, AUTO_ATTACK_NAME, DEFAULT_ICON, f64::INFINITY);
+    let _ = start_cast(state, 0, AUTO_ATTACK_NAME, DEFAULT_ICON, f64::INFINITY);
     Ok(0)
 }
 
@@ -225,19 +226,19 @@ fn start_timed_spell_cast(state: &mut LuaState, spell_id: u32) -> bool {
     let spell_name = spell_name(spell_id);
     let icon_path = spell_icon(spell_id);
     start_gcd(state, DEFAULT_GCD_SECONDS);
-    start_cast(
+    let Some(cast_id) = start_cast(
         state,
         spell_id,
         &spell_name,
         &icon_path,
         cast_time_ms as f64 / 1000.0,
-    );
+    ) else {
+        return false;
+    };
     crate::logging::eprintln_elapsed(&format!(
         "[spellcast] START spell_id={spell_id} name={spell_name} duration_ms={cast_time_ms}"
     ));
-    let player = create_string(state, "player");
-    let spell_id_val = Val::Num(spell_id as f64);
-    fire_named_event_state(state, "UNIT_SPELLCAST_START", &[player, spell_id_val]);
+    crate::lua_api::spellcast_events::fire_player_cast_start(state, cast_id, spell_id);
     true
 }
 
@@ -399,7 +400,7 @@ pub(crate) fn cast_spell_by_name(state: &mut LuaState) -> LuaResult<u32> {
         let _unit = Option::<String>::from_stack(state, 2)?;
         execute_spell_by_id(state, spell_id)?;
     } else {
-        start_cast(state, 0, &name, DEFAULT_ICON, DEFAULT_CAST_DURATION);
+        let _ = start_cast(state, 0, &name, DEFAULT_ICON, DEFAULT_CAST_DURATION);
     }
     Ok(0)
 }
@@ -412,10 +413,10 @@ fn click_special_ability(state: &mut LuaState) -> LuaResult<u32> {
     };
     match index {
         1 => {
-            start_cast(state, 0, AUTO_ATTACK_NAME, DEFAULT_ICON, f64::INFINITY);
+            let _ = start_cast(state, 0, AUTO_ATTACK_NAME, DEFAULT_ICON, f64::INFINITY);
         }
         2 => {
-            start_cast(
+            let _ = start_cast(
                 state,
                 0,
                 EXTRA_ATTACK_NAME,

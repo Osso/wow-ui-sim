@@ -2,6 +2,9 @@
 
 use rilua::Val;
 
+#[cfg(all(test, feature = "retail-12-1-0"))]
+mod tests;
+
 /// Check if a cast has completed and extract its info, clearing state.
 pub(super) fn extract_completed_cast(
     state: &std::rc::Rc<std::cell::RefCell<crate::lua_api::SimState>>,
@@ -24,10 +27,11 @@ pub(super) fn fire_cast_complete_events(
     cast_id: u32,
     spell_id: u32,
 ) {
-    let player = env.lua_string("player");
-    let args = &[player, Val::Num(cast_id as f64), Val::Num(spell_id as f64)];
-    let _ = env.fire_event_with_args("UNIT_SPELLCAST_STOP", args);
-    let _ = env.fire_event_with_args("UNIT_SPELLCAST_SUCCEEDED", args);
+    let args = crate::lua_api::spellcast_events::player_cast_args(cast_id, spell_id, |text| {
+        env.lua_string(text)
+    });
+    let _ = env.fire_event_with_args("UNIT_SPELLCAST_STOP", &args);
+    let _ = env.fire_event_with_args("UNIT_SPELLCAST_SUCCEEDED", &args);
     if crate::lua_api::globals::profession_data::get_recipe(spell_id as i32).is_some() {
         let _ = env.fire_event_with_args("UPDATE_TRADESKILL_CAST_STOPPED", &[Val::Bool(false)]);
     }
