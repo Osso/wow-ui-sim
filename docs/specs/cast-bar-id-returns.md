@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Both pinned profiles return eleven values for active casting and channeling, in the order below.
-- [ ] `castBarID` uses the existing allocated `CastingState.cast_id`; repeated queries and timing/empower-state updates retain identity.
-- [ ] New admin-created casts receive new allocated identities; casting and channeling queries read their respective states.
-- [ ] Inactive and unsupported-unit queries retain existing nil-observable behavior (zero returned values).
+- [x] Both pinned profiles return eleven values for active casting and channeling, in the order below.
+- [x] `castBarID` uses the existing allocated `CastingState.cast_id`; repeated queries and timing/empower-state updates retain identity.
+- [x] New admin-created casts receive new allocated identities; casting and channeling queries read their respective states.
+- [x] Inactive and unsupported-unit queries retain existing nil-observable behavior.
 - [ ] Profiles before `retail-12-1-0` retain their existing nine casting and ten channeling returns.
 
 ### Complete pinned tuples
@@ -46,6 +46,8 @@ The arrows are the only tuple field type differences between the pinned base and
 - `tests/cast_bar_id.rs`: grouped integration tests driven through `A_Admin.SetCasting`/`StopCasting`, with allocated state transferred to the channel slot because no channel-start API exists. Timing and empowerment updates use existing state fields; no channel-event lifecycle is claimed.
 - `tests/spell_casting.rs`: existing casting regressions.
 - `tests/c_vehicle_possession_globals.rs`: existing casting/channel query regressions.
+
+Focused proof at `3d4d483d3`: two new tests passed on each of `client-ptr` and `client-retail`; eighteen `spell_casting::` and seventeen `c_vehicle_possession_globals::unit_` regressions passed per profile. PTR RED observed casting arity 9 and channel arity 10 before the serialization fix. These are targeted development tests, not final conformance verification.
 
 ## Known gaps (current cycle)
 
