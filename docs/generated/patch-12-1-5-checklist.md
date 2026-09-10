@@ -443,7 +443,7 @@
 443. [best-effort] `changed:UnitChannelInfoResult.castBarID` — behavioral
 444. [best-effort] `changed:table.count` — behavioral
 445. [best-effort] `changed:table.create` — behavioral
-446. [evidence-required] `changed:table.freeze` — unsafe
-447. [evidence-required] `changed:table.isfrozen` — unsafe
+446. [best-effort] `changed:table.freeze` — behavioral
+447. [best-effort] `changed:table.isfrozen` — behavioral
 448. [best-effort] `removed:C_TableUtil.FindIndexedMismatch` — behavioral
 449. [best-effort] `removed:Enum.BagFlag.IgnoreSoulbound` — behavioral

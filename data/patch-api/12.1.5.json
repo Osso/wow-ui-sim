@@ -8028,7 +8028,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8078,7 +8078,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8151,7 +8151,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TooltipDataLineType.UnitCriteriaProgress",
@@ -8194,7 +8194,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TransmogIllusionFlags.HiddenIllusion",
@@ -8972,7 +8972,7 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
-          "summary": "Focused PTR tests establish GetLocale returns each context\u2019s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
+          "summary": "Focused PTR tests establish GetLocale returns each context’s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
           "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
@@ -8983,7 +8983,7 @@
       "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile tests establish GetLocale returns each context\u2019s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
+      "notes": "Focused profile tests establish GetLocale returns each context’s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.GetSortKey",
@@ -15902,7 +15902,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -18040,47 +18040,99 @@
       "id": "changed:table.freeze",
       "symbol": "table.freeze",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned before/after argument and return contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_freeze.rs",
+          "summary": "Modeled VM freeze state, profile-dependent return arity, and guarded native mutators.",
+          "source_hash": "c7ed2b421342656e944e427a22bdacb7b3fdce5ac363051df28c2da8db07063f"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "Shared table argument validation and frozen-state checks for PTR mutators.",
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/mod.rs",
+          "summary": "Guarded global mutation aliases.",
+          "source_hash": "34f8890db0cdb27f53ade8aa4f3d0ad15ae7205fbb04bc9d06a1b753e3045859"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_freeze.rs",
+          "summary": "Four focused tests per profile cover arity, identity, frozen reads/writes, isolated recursive graphs, and table validation.",
+          "source_hash": "5471835f427dd34652c75489c8641148f0b2e282d9786e86ba5a8c4dd187861b"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_freeze.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "8c1011969",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests prove modeled frozen-table state, preserved reads, rejected tested mutations, idempotence, and isolated recursive traversal. PTR freeze returns its identical input table; earlier retail returns no values. Recursive traversal, strict table-only validation, and native mutator guards are simulator choices. Earlier non-table LuaValueReference inputs, secret keys/values, taint/security, native traversal, shared closure/environment hazards, metatable replacement, comparator reentrancy, and arbitrary Rust-side mutation remain unclaimed."
     },
     {
       "id": "changed:table.isfrozen",
       "symbol": "table.isfrozen",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned before/after argument and return contracts.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_freeze.rs",
+          "summary": "Modeled VM freeze state, profile-dependent return arity, and guarded native mutators.",
+          "source_hash": "c7ed2b421342656e944e427a22bdacb7b3fdce5ac363051df28c2da8db07063f"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/real/table_extensions.rs",
+          "summary": "Shared table argument validation and frozen-state checks for PTR mutators.",
+          "source_hash": "f8e2f521af0ae217d70ccea4b9d0f1d40af5a20e77c765511d98649fe0eaca57"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/mod.rs",
+          "summary": "Guarded global mutation aliases.",
+          "source_hash": "34f8890db0cdb27f53ade8aa4f3d0ad15ae7205fbb04bc9d06a1b753e3045859"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_table_freeze.rs",
+          "summary": "Four focused tests per profile cover arity, identity, frozen reads/writes, isolated recursive graphs, and table validation.",
+          "source_hash": "5471835f427dd34652c75489c8641148f0b2e282d9786e86ba5a8c4dd187861b"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_table_freeze.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "8c1011969",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests prove modeled frozen-table state, preserved reads, rejected tested mutations, idempotence, and isolated recursive traversal. PTR freeze returns its identical input table; earlier retail returns no values. Recursive traversal, strict table-only validation, and native mutator guards are simulator choices. Earlier non-table LuaValueReference inputs, secret keys/values, taint/security, native traversal, shared closure/environment hazards, metatable replacement, comparator reentrancy, and arbitrary Rust-side mutation remain unclaimed."
     },
     {
       "id": "removed:C_TableUtil.FindIndexedMismatch",

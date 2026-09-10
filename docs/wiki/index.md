@@ -1,3 +1,7 @@
+## Table-freeze audit
+
+`8c1011969` supplies modeled `table.freeze` / `table.isfrozen` state and profile return arity. Four tests per profile cover isolated recursive graphs and guarded mutations; native traversal and shared-environment hazards remain unresolved. See [table freezing](../specs/table-freeze.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR spellcast producer payloads
 
 `f474fb2f9` and `c09027a2d` credit `UNIT_SPELLCAST_START`, `UNIT_SPELLCAST_STOP`, and `UNIT_SPELLCAST_SUCCEEDED` as bounded simulator behavior. Focused real producer tests cover action-spell, crafting, and specialization starts plus timed completion with `(unitTarget, synthetic castGUID, spellID, castBarID)`. Synthetic GUID format, identity allocation, event timing/order, security, native semantics, and all other spellcast events remain unclaimed. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].

@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit table freezing
+
+`8c1011969` supplies modeled `table.freeze` / `table.isfrozen` state and profile return arity. Four tests per profile cover isolated recursive graphs and guarded mutations; native traversal and shared-environment hazards remain unresolved. See [table freezing](../specs/table-freeze.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR spellcast producer payloads
 
 `f474fb2f9` and `c09027a2d` credit three changed spellcast event rows: `UNIT_SPELLCAST_START`, `UNIT_SPELLCAST_STOP`, and `UNIT_SPELLCAST_SUCCEEDED`. Real action-spell, crafting, specialization, and timed-completion tests establish four modeled payload fields: unit target, synthetic cast GUID, spell ID, and cast-bar ID. Native GUID format, lifecycle timing/order, secret/restricted behavior, invalid transitions, and all other spellcast events remain unresolved. Totals: 338 best-effort, 111 evidence-required, 0 untriaged. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
