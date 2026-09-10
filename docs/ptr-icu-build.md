@@ -92,9 +92,17 @@ That file includes Unicode License V3 and additional notices; retain the full
 installed file, not only a short license label. No release package is produced
 by this workflow. Existing non-PTR packages are unchanged.
 
-As of 2026-09-10, this packaging slice supplies configuration and local
-syntax/preflight checks only. **Linux, macOS, and Windows native builds and
-link/runtime smoke have not been run by this slice.** Windows static linkage is
-a CI requirement, not a verified local result. Parent integration owns the
-platform jobs and final acceptance; a green workflow must be inspected before
-claiming platform support is proven.
+Local packaging preflight, 2026-09-10:
+
+| Check | Evidence in this slice |
+|---|---|
+| Workflow/script/manifest syntax | `actionlint .github/workflows/ptr-icu.yml`, Python `compile()`, JSON and YAML parsing passed |
+| Smoke-runner preflight | Synthetic Cargo artifact selection and process-output fixture passed; missing artifact and zero matching tests rejected. This is not native ICU proof. |
+| vcpkg pin | Official tag resolves to the manifest SHA; that revision's `versions/baseline.json` records ICU `74.2#5` |
+| Existing packaging | Release/test/Docker workflows, xtask, features and runtime image configuration unchanged; only Docker source inputs added |
+| Platform execution | Linux, macOS and Windows native builds/linkage/runtime smoke **not run by this slice**; no local package installation |
+
+Windows static linkage is a CI requirement, not a verified local result.
+Parent integration owns platform jobs and final acceptance; inspect successful
+job output before claiming platform support is proven. PowerShell was not
+available locally, so provisioning commands have only workflow syntax proof.
