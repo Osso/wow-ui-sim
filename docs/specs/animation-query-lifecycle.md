@@ -4,11 +4,11 @@ Ordinary simulator query behavior for `SimpleAnim` and `SimpleAnimGroup`, exerci
 
 ## What it must do
 
-- [ ] Animation `IsPlaying`, `IsPaused`, and `IsDone` follow their owning group through playback, pause/resume, restart, stop, and completion; an independent idle group stays unchanged.
-- [ ] Pausing freezes elapsed time. Restart and Stop reset elapsed/progress. The modeled animation `IsStopped` is true whenever its owner is not playing, including pause.
-- [ ] `Finish` remains pending until a tick; completion callbacks observe settled state and fire once. Natural completion after restart also settles owner/child queries.
-- [ ] Reverse playback and repeating loops update elapsed/progress while `IsReverse` and `GetLoopState` identify direction and configured loop mode. Bounce callbacks observe direction changes.
-- [ ] Delayed animations expose local active elapsed/progress independently of the group's total timeline; animation progress clamps during end delay. `GetSmoothProgress` currently equals unsmoothed progress even with `IN` smoothing.
+- [x] Animation `IsPlaying`, `IsPaused`, and `IsDone` follow their owning group through playback, pause/resume, restart, stop, and completion; an independent idle group stays unchanged.
+- [x] Pausing freezes elapsed time. Restart and Stop reset elapsed/progress. The modeled animation `IsStopped` is true whenever its owner is not playing, including pause.
+- [x] `Finish` remains pending until a tick; completion callbacks observe settled state and fire once. Natural completion after restart also settles owner/child queries.
+- [x] Reverse playback and repeating loops update elapsed/progress while `IsReverse` and `GetLoopState` identify direction and configured loop mode. Bounce callbacks observe direction changes.
+- [x] Delayed animations expose local active elapsed/progress independently of the group's total timeline; animation progress clamps during end delay. `GetSmoothProgress` currently equals unsmoothed progress even with `IN` smoothing.
 
 These are simulator-model requirements, not native lifecycle or smoothing claims.
 
@@ -37,9 +37,17 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 
 Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs`, and `tests/animation_anim.rs`. No new Cargo target or API-publication absence assertions are needed.
 
+At test commit `9bc06cfe2`, all five new tests and 59 existing tests passed under each of `client-ptr` and `client-retail`:
+
+```text
+cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> -- animation_anim:: animation_group:: animation_group_state:: animation_query_lifecycle:: --nocapture
+```
+
+Logs: `/tmp/animation-query-lifecycle-9bc06cfe2-{ptr,retail}.log`. Proof ledger: `/tmp/animation-query-lifecycle-ledger.json`. No check, readability, artifact, or broad-suite gates were run.
+
 ## Known gaps (current cycle)
 
-- [ ] Investigate delay-flag consistency: the getter compares already delay-adjusted local elapsed against start delay. The test records the intermediate flag diagnostically rather than requiring a suspected inconsistency.
+- [ ] Delay-flag inconsistency reproduced in both profiles: with start delay `0.5` and group elapsed `0.75`, animation elapsed/progress are `0.25`, but `IsDelaying()` returns true. The getter compares already delay-adjusted local elapsed against start delay. The test records this flag diagnostically rather than asserting the inconsistency as required behavior. Production source is unchanged; correction requires separate authorization.
 - [ ] Native owner-versus-child state, delay boundaries, smoothing, reverse/bounce geometry, and callback timing are not established by this model coverage.
 
 ## Out of scope
