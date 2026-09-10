@@ -38,10 +38,14 @@ Store start `s`, base duration `D >= 0`, and finite rate `r > 0`. Real span `T =
 
 Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
 
+## Cooldown zero-duration option
+
+`SetCooldownFromDurationObject(duration, clearIfZero)` defaults `clearIfZero` to `true` in both pinned base and PTR declarations. The simulator interprets explicit `false` with a zero duration as preserving the cooldown's current start, duration, display duration, and rate. Omitted/true clears timing; nonzero duration objects update timing regardless of the flag. `tests/cooldown_widget.rs` covers these cases with real duration proxies and independent frames. This interpretation does not establish native, protected-call, or type semantics.
+
 ## Known gaps (current cycle)
 
 - [ ] Native rate/modifier, endpoint, zero-state, reset, validation, and clock-binding semantics require real-client evidence.
-- [ ] `SetCooldownFromDurationObject` now resolves duration-proxy methods through Lua indexing and ordinary proxy transfer/reset behavior is covered. Its new PTR protected-function contract, secret handling, `clearIfZero = false`, and forbidden-object behavior remain unproven.
+- [ ] `SetCooldownFromDurationObject` now resolves duration-proxy methods through Lua indexing and ordinary proxy transfer/reset behavior is covered. Its new PTR protected-function contract, secret handling, and forbidden-object behavior remain unproven.
 - [ ] Existing `test_patch_12_1_duration_binding_reference_lifetime_and_identity` expects a table from the separate duration-text-binding factory and fails with `type`; the core preserves its own table identity. Existing AuraContainer binding integration fails with `expected forbidden object reference`. These are separate consumer boundaries; this slice establishes no cause beyond their observed failures.
 
 ## Out of scope

@@ -44,6 +44,67 @@ fn cooldown_consumes_real_duration_proxy_and_updates() {
     "#).unwrap();
 }
 
+fn cooldown_timing(env: &WowLuaEnv, name: &str) -> (f64, f64, f64, f64) {
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name(name).unwrap();
+    let frame = state.widgets.get(id).unwrap();
+    (
+        frame.cooldown_start,
+        frame.cooldown_duration,
+        frame.cooldown_display_duration_ms,
+        frame.cooldown_mod_rate,
+    )
+}
+
+#[test]
+fn cooldown_zero_duration_respects_clear_if_zero() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        ZeroDuration = C_DurationUtil.CreateDuration()
+        PreserveCooldown = CreateFrame("Cooldown", "PreserveCooldown")
+        ClearCooldown = CreateFrame("Cooldown", "ClearCooldown")
+        PreserveCooldown:SetCooldown(7, 9, 2)
+        ClearCooldown:SetCooldown(11, 15, 3)
+        PreserveCooldown:SetCooldownFromDurationObject(ZeroDuration, false)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(cooldown_timing(&env, "PreserveCooldown"), (7.0, 9.0, 9000.0, 2.0));
+    assert_eq!(cooldown_timing(&env, "ClearCooldown"), (11.0, 15.0, 15000.0, 3.0));
+    for arguments in ["ZeroDuration", "ZeroDuration, true"] {
+        env.exec(&format!(
+            "ClearCooldown:SetCooldown(11, 15, 3); ClearCooldown:SetCooldownFromDurationObject({arguments})"
+        ))
+        .unwrap();
+        assert_eq!(cooldown_timing(&env, "ClearCooldown"), (0.0, 0.0, 0.0, 1.0));
+        assert_eq!(cooldown_timing(&env, "PreserveCooldown"), (7.0, 9.0, 9000.0, 2.0));
+    }
+}
+
+#[test]
+fn cooldown_nonzero_duration_updates_regardless_of_clear_flag() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        NonzeroDuration = C_DurationUtil.CreateDuration()
+        NonzeroDuration:SetTimeFromStart(30, 12, 3)
+        UpdatedCooldown = CreateFrame("Cooldown", "UpdatedCooldown")
+        OtherCooldown = CreateFrame("Cooldown", "OtherCooldown")
+        OtherCooldown:SetCooldown(7, 9, 2)
+        "#,
+    )
+    .unwrap();
+    for arguments in ["NonzeroDuration", "NonzeroDuration, true", "NonzeroDuration, false"] {
+        env.exec(&format!(
+            "UpdatedCooldown:SetCooldown(11, 15, 2); UpdatedCooldown:SetCooldownFromDurationObject({arguments})"
+        ))
+        .unwrap();
+        assert_eq!(cooldown_timing(&env, "UpdatedCooldown"), (30.0, 4.0, 4000.0, 3.0));
+        assert_eq!(cooldown_timing(&env, "OtherCooldown"), (7.0, 9.0, 9000.0, 2.0));
+    }
+}
+
 #[test]
 fn cooldown_duration_method_errors_propagate() {
     let env = WowLuaEnv::new().unwrap();

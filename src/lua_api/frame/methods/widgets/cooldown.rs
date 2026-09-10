@@ -550,6 +550,9 @@ pub(super) fn set_from_duration_object(state: &mut LuaState) -> LuaResult<u32> {
         _ => return Err(rilua::runtime_error("IsZero must return a boolean")),
     };
     if zero {
+        if matches!(stack_val(state, 3), Val::Bool(false)) {
+            return Ok(0);
+        }
         if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut_visual(id) {
             clear_cooldown_timing(frame);
         }
