@@ -17581,139 +17581,223 @@
       "id": "changed:UnitCastingInfo",
       "symbol": "UnitCastingInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
+          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs",
+          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
+          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cast_bar_id.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d4d483d3",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
     },
     {
       "id": "changed:UnitCastingInfoResult",
       "symbol": "UnitCastingInfoResult",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
+          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs",
+          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
+          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cast_bar_id.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d4d483d3",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
     },
     {
       "id": "changed:UnitCastingInfoResult.castBarID",
       "symbol": "UnitCastingInfoResult.castBarID",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
+          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs",
+          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
+          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cast_bar_id.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d4d483d3",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
     },
     {
       "id": "changed:UnitChannelInfo",
       "symbol": "UnitChannelInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
+          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs",
+          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
+          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cast_bar_id.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d4d483d3",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
     },
     {
       "id": "changed:UnitChannelInfoResult",
       "symbol": "UnitChannelInfoResult",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
+          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs",
+          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
+          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cast_bar_id.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d4d483d3",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
     },
     {
       "id": "changed:UnitChannelInfoResult.castBarID",
       "symbol": "UnitChannelInfoResult.castBarID",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
+          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs",
+          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
+          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cast_bar_id.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3d4d483d3",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
     },
     {
       "id": "changed:table.count",
