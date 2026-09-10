@@ -16210,7 +16210,7 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records unchanged base/PTR clearIfZero default true plus the changed protected/secret metadata for SetCooldownFromDurationObject.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records unchanged clearIfZero default true and SecretArguments = AllowedWhenUntainted; only IsProtectedFunction = true is added for SetCooldownFromDurationObject.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {

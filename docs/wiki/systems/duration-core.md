@@ -8,7 +8,7 @@
 
 The core stores `start`, base duration, and rate. Its rate/modifier formulas, zero-state rules, validation, default clock, and reset behavior are simulator choices documented in [duration core](../../specs/duration-core.md), not native WoW confirmation.
 
-`FrameAPICooldown.SetCooldownFromDurationObject` now resolves proxy methods through Lua indexing, so ordinary duration transfer and reset work. Protected, secret, forbidden, and `clearIfZero = false` behavior remains unresolved.
+`FrameAPICooldown.SetCooldownFromDurationObject` resolves proxy methods through Lua indexing. A zero duration preserves existing cooldown timing when `clearIfZero = false`; omitted/true clears it. This is tested simulator behavior, not native confirmation. Protected, secret, and forbidden semantics remain unresolved.
 
 ## Sources
 
