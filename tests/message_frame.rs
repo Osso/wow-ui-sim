@@ -79,7 +79,7 @@ fn assert_clear_preserves_other_widgets(widget_type: &str) {
         assert(other:GetMessageInfo(1) == "Keep")
         local start, duration = cooldown:GetCooldownTimes()
         assert(start == 12 and duration == 8)
-        assert(cooldown:GetCooldownModRate() == 2)
+        assert(cooldown:GetCooldownDisplayDuration() == 8000)
         frame:AddMessage("After clear")
         assert(frame:GetNumMessages() == 1)
         assert(frame:GetMessageInfo(1) == "After clear")
