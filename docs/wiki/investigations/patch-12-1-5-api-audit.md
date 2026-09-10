@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 369 best-effort and 80 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 373 best-effort and 76 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -17,7 +17,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | Surface | Current evidence | Disposition | Missing proof |
 |---|---|---|---|
 | PTR table contracts | Commits `1d11c0176` and `f0ae4a96a`; focused tests cover extensions plus `getcountinfo` and required `create` hints | 10 best-effort / behavioral | Secret-key/value propagation, invalid arguments, sparse edge cases, capacity observability, and native error semantics |
-| SecondsFormatter configuration | Commit `872b24bd8`; three focused configuration tests and factory regression per profile | 4 best-effort / modeled behavioral rows | Defaults and finite-number policy are assumptions; Format, evaluation, approximation eligibility, native type/security behavior remain unclaimed. See [configuration](../../specs/seconds-formatter-configuration.md) |
+| SecondsFormatter configuration and evaluators | Commits `872b24bd8`, `89fced131`, and `b2856c8ff`; focused PTR and earlier-retail configuration/evaluation tests plus factory regression | 8 best-effort / modeled behavioral rows | Defaults, finite-number policy, strict approximation predicate, static interval/count policy, and curve handling are simulator assumptions; Format, native type/security behavior, and native unit selection remain unclaimed. See [configuration](../../specs/seconds-formatter-configuration.md) |
 | Table freezing | Commit `8c1011969`; four focused tests per profile cover frozen state, return arity, reads, guarded mutations, and isolated recursive graphs | 2 best-effort / modeled behavioral rows | Native traversal, earlier non-table inputs, secret/security behavior, shared closure environments, metatable replacement, and reentrant/native mutation paths remain unverified; see [table freezing](../../specs/table-freeze.md) |
 | PTR string extensions | Commit `65704757d` with focused PTR byte-preserving literal/case matching and one-sided byte-set trimming tests, plus earlier-retail absence proof | 5 best-effort / simulator behavioral rows | Byte-set/literal/case/explicit-nil choices are simulator assumptions; Unicode, locale, coercion, `AllowedWhenUntainted`, security, and native semantics remain unproven |
 | `C_Intl` locale-context storage | Commit `61bf36927` with focused PTR opaque-userdata storage, current-locale consistency, mutation/failure atomicity, and earlier-retail absence proof | 5 best-effort / simulator behavioral rows | Context algorithms, segmentation, collation, formatting, canonicalization, identifier validation, and taint/secret semantics remain unproven |

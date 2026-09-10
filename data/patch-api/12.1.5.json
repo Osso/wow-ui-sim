@@ -16861,93 +16861,173 @@
       "id": "changed:SecondsFormatter.CanApproximate",
       "symbol": "SecondsFormatter.CanApproximate",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "seconds-formatter",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact SecondsFormatter method contract delta."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/seconds_formatter.rs",
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66",
+          "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/seconds-formatter-configuration.md",
+          "source_hash": "ad94968959a9476d86338484dd494c2ab830620c280ab48fe72b9b7f499a4cfc",
+          "summary": "The SecondsFormatter specification records the explicit simulator evaluation policies and excluded native behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration",
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "summary": "Focused PTR and earlier-retail tests prove the strict positive/open approximation boundary, configured updates, instance independence, exact arity, and invalid-input errors. Proof commits 89fced131 and b2856c8ff."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "b2856c8ff",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes only the configured strict positive/open approximation predicate, updates, independence, arity, and invalid-input errors. Native predicate/defaults, Seconds representation, secret/taint enforcement, coercion, and native semantics remain unclaimed."
     },
     {
       "id": "changed:SecondsFormatter.EvaluateDesiredUnitCount",
       "symbol": "SecondsFormatter.EvaluateDesiredUnitCount",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "seconds-formatter",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact SecondsFormatter method contract delta."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/seconds_formatter.rs",
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66",
+          "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/seconds-formatter-configuration.md",
+          "source_hash": "ad94968959a9476d86338484dd494c2ab830620c280ab48fe72b9b7f499a4cfc",
+          "summary": "The SecondsFormatter specification records the explicit simulator evaluation policies and excluded native behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration",
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "summary": "Focused PTR and earlier-retail tests prove the default/configured positive integral count, independence, exact arity, and invalid-input or invalid-state errors. Proof commits 89fced131 and b2856c8ff."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "b2856c8ff",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes only default/configured positive-integral count returns, independence, arity, and invalid-input/state errors. Native count policy/defaults, Seconds representation, secret/taint enforcement, coercion, and native semantics remain unclaimed."
     },
     {
       "id": "changed:SecondsFormatter.EvaluateMaxInterval",
       "symbol": "SecondsFormatter.EvaluateMaxInterval",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "seconds-formatter",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact SecondsFormatter method contract delta."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/seconds_formatter.rs",
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66",
+          "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/seconds-formatter-configuration.md",
+          "source_hash": "ad94968959a9476d86338484dd494c2ab830620c280ab48fe72b9b7f499a4cfc",
+          "summary": "The SecondsFormatter specification records the explicit simulator evaluation policies and excluded native behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_resolves_live_curve_methods_without_fallback",
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "summary": "Focused PTR and earlier-retail tests prove static/curve mode switching, live curve dispatch, exact input forwarding, curve errors, invalid curve results, and fallback only after explicit curve removal. Proof commits 89fced131 and b2856c8ff."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_resolves_live_curve_methods_without_fallback"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "b2856c8ff",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes only configured static/curve mode switching, live curve dispatch, exact numeric forwarding, errors, and explicit nil removal fallback. Native unit selection/defaults, curve rounding, Seconds representation, secret/taint enforcement, coercion, and native semantics remain unclaimed."
     },
     {
       "id": "changed:SecondsFormatter.EvaluateMinInterval",
       "symbol": "SecondsFormatter.EvaluateMinInterval",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
-      "owner": "script-object-method",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "seconds-formatter",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact SecondsFormatter method contract delta."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/seconds_formatter.rs",
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66",
+          "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/seconds-formatter-configuration.md",
+          "source_hash": "ad94968959a9476d86338484dd494c2ab830620c280ab48fe72b9b7f499a4cfc",
+          "summary": "The SecondsFormatter specification records the explicit simulator evaluation policies and excluded native behavior."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration",
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "summary": "Focused PTR and earlier-retail tests prove default and configured static minimum-interval returns, instance independence, exact arity, and invalid-input errors. Proof commits 89fced131 and b2856c8ff."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "b2856c8ff",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail simulator proof establishes only default/configured static minimum-interval returns, independence, arity, and invalid-input errors. Native unit selection/defaults, Seconds representation, secret/taint enforcement, coercion, and native semantics remain unclaimed."
     },
     {
       "id": "changed:SecondsFormatter.Format",
@@ -16991,13 +17071,13 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "216edd93ce697ef096aa32a9bee4f0b0e83e2ed87e86aef14a47c4baad855374"
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66"
         },
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs",
           "summary": "Focused integration tests prove getter returns the stored approximation-seconds value with exact one-value arity and preserves independent per-formatter configuration. They also retain GC survival and existing formatter-method behavior. Proof commit 872b24bd8.",
-          "source_hash": "0a941d6c6976e652dcf0850e8c0438ddd44ac2a0412d52ab54791ff936a95adf"
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671"
         }
       ],
       "tests": [
@@ -17028,13 +17108,13 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "216edd93ce697ef096aa32a9bee4f0b0e83e2ed87e86aef14a47c4baad855374"
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66"
         },
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs",
           "summary": "Focused integration tests prove getter returns the stored milliseconds-threshold value with exact one-value arity and preserves independent per-formatter configuration. They also retain GC survival and existing formatter-method behavior. Proof commit 872b24bd8.",
-          "source_hash": "0a941d6c6976e652dcf0850e8c0438ddd44ac2a0412d52ab54791ff936a95adf"
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671"
         }
       ],
       "tests": [
@@ -17065,13 +17145,13 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "216edd93ce697ef096aa32a9bee4f0b0e83e2ed87e86aef14a47c4baad855374"
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66"
         },
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs",
           "summary": "Focused integration tests prove setter stores finite numeric approximation-seconds values with exact zero-value arity, retains zero/fractions/negative values, and rejects invalid values without mutation. They also retain GC survival and existing formatter-method behavior. Proof commit 872b24bd8.",
-          "source_hash": "0a941d6c6976e652dcf0850e8c0438ddd44ac2a0412d52ab54791ff936a95adf"
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671"
         }
       ],
       "tests": [
@@ -17102,13 +17182,13 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "216edd93ce697ef096aa32a9bee4f0b0e83e2ed87e86aef14a47c4baad855374"
+          "source_hash": "6b94b74e10395743eacc64e6b43cf9a3f69c86e9ea7f796fbc7193ddad216e66"
         },
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs",
           "summary": "Focused integration tests prove setter stores finite numeric milliseconds-threshold values with exact zero-value arity, retains zero/fractions/negative values, and rejects invalid values without mutation. They also retain GC survival and existing formatter-method behavior. Proof commit 872b24bd8.",
-          "source_hash": "0a941d6c6976e652dcf0850e8c0438ddd44ac2a0412d52ab54791ff936a95adf"
+          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671"
         }
       ],
       "tests": [

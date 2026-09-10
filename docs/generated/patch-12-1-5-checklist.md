@@ -395,10 +395,10 @@
 395. [best-effort] `changed:LuaDurationObject.GetTotalDuration` — behavioral
 396. [best-effort] `changed:LuaDurationObject.SetTimeFromEnd` — behavioral
 397. [best-effort] `changed:LuaDurationObject.SetTimeFromStart` — behavioral
-398. [evidence-required] `changed:SecondsFormatter.CanApproximate` — unsafe
-399. [evidence-required] `changed:SecondsFormatter.EvaluateDesiredUnitCount` — unsafe
-400. [evidence-required] `changed:SecondsFormatter.EvaluateMaxInterval` — unsafe
-401. [evidence-required] `changed:SecondsFormatter.EvaluateMinInterval` — unsafe
+398. [best-effort] `changed:SecondsFormatter.CanApproximate` — behavioral
+399. [best-effort] `changed:SecondsFormatter.EvaluateDesiredUnitCount` — behavioral
+400. [best-effort] `changed:SecondsFormatter.EvaluateMaxInterval` — behavioral
+401. [best-effort] `changed:SecondsFormatter.EvaluateMinInterval` — behavioral
 402. [evidence-required] `changed:SecondsFormatter.Format` — unsafe
 403. [best-effort] `changed:SecondsFormatter.GetApproximationSeconds` — behavioral
 404. [best-effort] `changed:SecondsFormatter.GetMillisecondsThreshold` — behavioral

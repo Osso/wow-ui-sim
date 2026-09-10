@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit SecondsFormatter evaluators
+
+`89fced131` and `b2856c8ff` credit `SecondsFormatter.CanApproximate`, `EvaluateMinInterval`, `EvaluateMaxInterval`, and `EvaluateDesiredUnitCount` as bounded configured proxy behavior. Tests cover strict approximation bounds, static values, live curve dispatch/mode switching, validation, independence, and exact arity on PTR and earlier retail. Native defaults, unit policy, curve rounding, formatting, coercion, `Seconds` identity, and security remain unresolved. Totals: 373 best-effort, 76 evidence-required, 0 untriaged. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit cooldown numeric methods and shared `Clear`
 
 `943b21255`, `9b2ddae68`, `060dbc0ff`, and `e70762b3b` credit eight changed `FrameAPICooldown` rows: `Clear`, `GetMinimumCountdownDuration`, `SetCooldown`, `SetCooldownDuration`, `SetCooldownFromExpirationTime`, `SetCooldownUNIX`, `SetCountdownAbbrevThreshold`, and `SetMinimumCountdownDuration`. Focused PTR and earlier-retail tests prove stored numeric state, default rate one, literal UNIX-start storage, expiration-minus-duration storage, and shared `Clear` dispatch without MessageFrame/ScrollingMessageFrame regression. Native units/epoch conversion, coercion, security enforcement, rendering/countdown effects, and native timing remain unresolved. Totals: 369 best-effort, 80 evidence-required, 0 untriaged. See [cooldown numeric methods](../specs/cooldown-numeric-methods.md) and [[patch-12-1-5-api-audit]].
