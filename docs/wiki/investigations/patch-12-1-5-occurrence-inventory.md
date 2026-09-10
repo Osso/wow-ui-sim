@@ -8,7 +8,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 - **Source SHA-256:** `89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb`
 - **Endpoints:** `12.1.0.69587` → `12.1.5.69594`
 - **Target:** PTR build `12.1.5` / interface `120105`
-- **Rows:** 449 total — 0 implemented, 340 best-effort, 109 evidence-required, 0 exception-requested, 0 untriaged
+- **Rows:** 449 total — 0 implemented, 341 best-effort, 108 evidence-required, 0 exception-requested, 0 untriaged
 - **Directions:** 262 added, 185 changed, 2 removed
 
 | Symbol | Status | Category | Direction | Note |
@@ -397,7 +397,7 @@ Occurrence-level inventory for the pinned PTR 12.1.5 generated API documentation
 | `FrameAPICooldown.GetMinimumCountdownDuration` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `FrameAPICooldown.SetCooldown` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `FrameAPICooldown.SetCooldownDuration` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
-| `FrameAPICooldown.SetCooldownFromDurationObject` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
+| `FrameAPICooldown.SetCooldownFromDurationObject` | best-effort | script-object-method | changed | Focused ordinary simulator tests establish the clearIfZero interpretation for real duration proxies: zero duration with explicit false preserves prior timing; omitted or true clears timing; nonzero durations update regardless of the flag; independent frames remain unchanged. Both pinned declarations default clearIfZero to true. Native protected-call enforcement, secret/taint/forbidden behavior, coercion/type validation, rendering/countdown effects, and native timing remain unclaimed. |
 | `FrameAPICooldown.SetCooldownFromExpirationTime` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `FrameAPICooldown.SetCooldownUNIX` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |
 | `FrameAPICooldown.SetCountdownAbbrevThreshold` | evidence-required | script-object-method | changed | Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof. |

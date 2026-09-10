@@ -382,7 +382,7 @@
 382. [evidence-required] `changed:FrameAPICooldown.GetMinimumCountdownDuration` — unsafe
 383. [evidence-required] `changed:FrameAPICooldown.SetCooldown` — unsafe
 384. [evidence-required] `changed:FrameAPICooldown.SetCooldownDuration` — unsafe
-385. [evidence-required] `changed:FrameAPICooldown.SetCooldownFromDurationObject` — unsafe
+385. [best-effort] `changed:FrameAPICooldown.SetCooldownFromDurationObject` — behavioral
 386. [evidence-required] `changed:FrameAPICooldown.SetCooldownFromExpirationTime` — unsafe
 387. [evidence-required] `changed:FrameAPICooldown.SetCooldownUNIX` — unsafe
 388. [evidence-required] `changed:FrameAPICooldown.SetCountdownAbbrevThreshold` — unsafe

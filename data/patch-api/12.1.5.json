@@ -8028,7 +8028,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8078,7 +8078,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8151,7 +8151,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TooltipDataLineType.UnitCriteriaProgress",
@@ -8194,7 +8194,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TransmogIllusionFlags.HiddenIllusion",
@@ -8972,7 +8972,7 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
-          "summary": "Focused PTR tests establish GetLocale returns each context’s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
+          "summary": "Focused PTR tests establish GetLocale returns each context\u2019s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
           "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
@@ -8983,7 +8983,7 @@
       "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile tests establish GetLocale returns each context’s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
+      "notes": "Focused profile tests establish GetLocale returns each context\u2019s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.GetSortKey",
@@ -15902,7 +15902,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -16061,7 +16061,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "2a694056d4dfda28ade2a6de19454bdd719b84fac588ffa417eae942f6a7946a",
+          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -16104,7 +16104,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "2a694056d4dfda28ade2a6de19454bdd719b84fac588ffa417eae942f6a7946a",
+          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
@@ -16202,24 +16202,51 @@
       "id": "changed:FrameAPICooldown.SetCooldownFromDurationObject",
       "symbol": "FrameAPICooldown.SetCooldownFromDurationObject",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records unchanged base/PTR clearIfZero default true plus the changed protected/secret metadata for SetCooldownFromDurationObject.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
+          "summary": "Cooldown duration-object transfer preserves existing timing for a zero duration only when clearIfZero is explicitly false; omitted or true clears all timing fields, while nonzero durations always transfer timing.",
+          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/duration-core.md",
+          "summary": "The duration-core specification records the bounded simulator interpretation and its exclusion of native, protected-call, and type semantics.",
+          "source_hash": "758375ddc29d1974166c23d8ac421a609dda6530c485cce81876e80bef721a5e"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_zero_duration_respects_clear_if_zero",
+          "summary": "Focused real duration-proxy test proves explicit false preserves prior timing and omitted/true clears it without affecting an independent cooldown. Proof commit 8ccb7897c.",
+          "source_hash": "305b65414b8e0895f1ba01e46df83709175bfea8308d867ac4c7840e99dbaa49"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_widget.rs::cooldown_nonzero_duration_updates_regardless_of_clear_flag",
+          "summary": "Focused real duration-proxy test proves nonzero duration transfer updates timing for omitted, true, and false clearIfZero values. Proof commit 8ccb7897c.",
+          "source_hash": "305b65414b8e0895f1ba01e46df83709175bfea8308d867ac4c7840e99dbaa49"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_widget.rs::cooldown_zero_duration_respects_clear_if_zero",
+        "tests/cooldown_widget.rs::cooldown_nonzero_duration_updates_regardless_of_clear_flag"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "8ccb7897c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused ordinary simulator tests establish the clearIfZero interpretation for real duration proxies: zero duration with explicit false preserves the cooldown\u2019s existing start, duration, display duration, and rate; omitted or true clears those fields; nonzero durations update timing regardless of the flag; and independent cooldown frames remain unchanged. The pinned base/PTR declarations both default clearIfZero to true. Native protected-call enforcement, secret/taint/forbidden behavior, coercion/type validation, duration-proxy error behavior beyond covered paths, rendering/countdown effects, and native timing semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCooldownFromExpirationTime",
@@ -16308,7 +16335,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/cooldown.rs",
-          "source_hash": "2a694056d4dfda28ade2a6de19454bdd719b84fac588ffa417eae942f6a7946a",
+          "source_hash": "a371b9db8eba02b5ec9823491475a1edb4380ba7f9baa96c9064f6a060eabe31",
           "summary": "Cooldown method registration publishes the getters and milliseconds setter across profiles; ordinary methods read and store literal numeric thresholds on the cooldown frame."
         },
         {
