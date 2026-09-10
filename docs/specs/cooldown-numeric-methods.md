@@ -45,6 +45,10 @@ All rows below run through `cooldown_widget::` on PTR and retail. Existing cover
 
 At test revision `943b21255`, `cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> cooldown_widget:: -- --nocapture` reports **10 passed, 1 failed** on each of `ptr` and `retail`. Only `cooldown_clear_resets_timing_and_rate` fails. All three other new tests and seven existing tests pass. No production changes were made.
 
+At `060dbc0ff`, targeted grouped integration tests pass on both PTR and retail: **11 cooldown tests and 30 message-frame tests per profile**. PTR cooldown proof from `e954c7ba6` remains valid: the subsequent change only corrected the new message-frame test's query name. Both message-frame types retain history clearing, independent-widget state, reuse after clearing, and `ClearText` behavior.
+
+Commands use `cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> <filter> -- --nocapture` with filters `cooldown_widget::` and `message_frame::`.
+
 ## Known gaps (current cycle)
 
 The shared-metatable `Clear` collision is repaired by one widget-type dispatcher. Cooldown and message-frame registrations no longer overwrite each other. No per-widget metatable redesign or method-allowlist change is involved.
