@@ -16951,8 +16951,8 @@
       "id": "changed:SimpleAnim.GetElapsed",
       "symbol": "SimpleAnim.GetElapsed",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -16961,21 +16961,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.GetProgress",
       "symbol": "SimpleAnim.GetProgress",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -16984,21 +16998,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.GetSmoothProgress",
       "symbol": "SimpleAnim.GetSmoothProgress",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17007,21 +17035,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.IsDelaying",
       "symbol": "SimpleAnim.IsDelaying",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17030,21 +17072,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.IsDone",
       "symbol": "SimpleAnim.IsDone",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17053,21 +17109,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.IsPaused",
       "symbol": "SimpleAnim.IsPaused",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17076,21 +17146,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.IsPlaying",
       "symbol": "SimpleAnim.IsPlaying",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17099,21 +17183,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.IsStopped",
       "symbol": "SimpleAnim.IsStopped",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17122,14 +17220,28 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnim.SetParent",
@@ -17181,8 +17293,8 @@
       "id": "changed:SimpleAnimGroup.GetElapsed",
       "symbol": "SimpleAnimGroup.GetElapsed",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17191,21 +17303,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.GetLoopState",
       "symbol": "SimpleAnimGroup.GetLoopState",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17214,21 +17340,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.GetProgress",
       "symbol": "SimpleAnimGroup.GetProgress",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17237,21 +17377,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.IsDone",
       "symbol": "SimpleAnimGroup.IsDone",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17260,21 +17414,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.IsPaused",
       "symbol": "SimpleAnimGroup.IsPaused",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17283,21 +17451,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.IsPendingFinish",
       "symbol": "SimpleAnimGroup.IsPendingFinish",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17306,21 +17488,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.IsPlaying",
       "symbol": "SimpleAnimGroup.IsPlaying",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17329,21 +17525,35 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.IsReverse",
       "symbol": "SimpleAnimGroup.IsReverse",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
@@ -17352,14 +17562,28 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
+          "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
+          "source_hash": "b04f2c2d53a7bcdc04a8b5fc01af1fd67bbd1f87e83ad7b3f1cba7d33c26ba01"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_query_lifecycle.rs",
+          "summary": "Focused PTR and earlier-retail lifecycle tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Proof commits 9bc06cfe2, 23bdf9fe6, and 70cf29a12.",
+          "source_hash": "8a9ca08f22cc998f38372d26e2800a9ab590995aaa1541964f8890edec2b11a1"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_query_lifecycle.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70cf29a12",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail lifecycle tests establish bounded ordinary simulator query behavior through playback and ticks. Native security, timing, smoothing, and identity semantics remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_CHANNEL_START",
