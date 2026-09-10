@@ -400,10 +400,10 @@
 400. [evidence-required] `changed:SecondsFormatter.EvaluateMaxInterval` — unsafe
 401. [evidence-required] `changed:SecondsFormatter.EvaluateMinInterval` — unsafe
 402. [evidence-required] `changed:SecondsFormatter.Format` — unsafe
-403. [evidence-required] `changed:SecondsFormatter.GetApproximationSeconds` — unsafe
-404. [evidence-required] `changed:SecondsFormatter.GetMillisecondsThreshold` — unsafe
-405. [evidence-required] `changed:SecondsFormatter.SetApproximationSeconds` — unsafe
-406. [evidence-required] `changed:SecondsFormatter.SetMillisecondsThreshold` — unsafe
+403. [best-effort] `changed:SecondsFormatter.GetApproximationSeconds` — behavioral
+404. [best-effort] `changed:SecondsFormatter.GetMillisecondsThreshold` — behavioral
+405. [best-effort] `changed:SecondsFormatter.SetApproximationSeconds` — behavioral
+406. [best-effort] `changed:SecondsFormatter.SetMillisecondsThreshold` — behavioral
 407. [evidence-required] `changed:SimpleAnim.GetElapsed` — unsafe
 408. [evidence-required] `changed:SimpleAnim.GetProgress` — unsafe
 409. [evidence-required] `changed:SimpleAnim.GetSmoothProgress` — unsafe
