@@ -1,3 +1,7 @@
+## [2026-09-10] audit | Credit PTR active LFG dungeon name
+
+`cc15512ab` and `f96557ce2` credit `C_LFGInfo.GetActiveLFGDungeonName` as bounded PTR simulator behavior. Focused tests prove PTR publication, current instance-ID/LFD-catalog lookup, live state changes, inactive/proposal-only empty-string behavior, unknown-ID error recovery, arity, unaffected existing LFG APIs, and earlier-retail absence before and after bootstrap. Instance-ID-only selection, inactive/error behavior, validation, queue/proposal precedence, security, taint, coercion, and native semantics remain assumptions or unresolved. See [active LFG dungeon name](../specs/active-lfg-dungeon-name.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-09] audit | Credit PTR ICU collation
 
 `974e38888` credits global and locale-context `CompareStrings` and `GetSortKey` for focused PTR ICU 2.1.1 five-strength comparison, binary-key ordering, locale-context mutation, validation, and earlier-retail absence. Signs, raw key bytes, locale parsing, errors, `MayReturnNothing`, Unicode/CLDR equivalence, security, and native semantics remain assumptions or unresolved. See [PTR Intl collation](../specs/intl-collation.md), [[intl-collation]], and [[patch-12-1-5-api-audit]].

@@ -1343,24 +1343,38 @@
       "id": "added:C_LFGInfo.GetActiveLFGDungeonName",
       "symbol": "C_LFGInfo.GetActiveLFGDungeonName",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added no-argument C_LFGInfo query and one non-nil string return.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_lfg_info.rs",
+          "summary": "PTR-only C_LFGInfo registration reads the current instance LFG dungeon ID from simulator state and resolves its catalog name; earlier retail removes the fallback key.",
+          "source_hash": "607563fc6a314b9fabce86a4b5aaad834a0b24bc4de59e0014c66d81bcc3b5c0"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_active_lfg_dungeon.rs",
+          "summary": "Focused PTR and retail tests cover live instance/catalog changes, inactive and proposal-only state, unknown-ID failure and recovery, one-result arity, existing LFG queries, and earlier-retail absence before and after bootstrap.",
+          "source_hash": "9638cb3e690d6ea2aa239de0b5d3f6748e079156660809a46f4cb798ed0a736a"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_active_lfg_dungeon.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "cc15512ab",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Focused PTR and earlier-retail tests establish modeled publication and ordinary simulator behavior: the query reads the current instance LFG dungeon ID, resolves only its current LFD catalog name, observes instance-ID/catalog mutations on subsequent calls, returns one empty string without an instance ID including proposal-only state, and retains earlier-retail absence before and after bootstrap. Instance-ID-only selection, empty inactive result, unknown-ID error and recovery, and validation are simulator choices; queue/proposal precedence, native inactive/error behavior, security, taint, coercion, and native-edge semantics remain unclaimed."
     },
     {
       "id": "added:C_PvP.IsTrainingGroundsArena",

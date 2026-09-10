@@ -31,7 +31,7 @@
 31. [best-effort] `added:C_Intl.ToUpper` — behavioral
 32. [best-effort] `added:C_Intl.TransformLocale` — behavioral
 33. [evidence-required] `added:C_Intl.Transliterate` — unsafe
-34. [evidence-required] `added:C_LFGInfo.GetActiveLFGDungeonName` — unsafe
+34. [best-effort] `added:C_LFGInfo.GetActiveLFGDungeonName` — behavioral
 35. [evidence-required] `added:C_PvP.IsTrainingGroundsArena` — unsafe
 36. [evidence-required] `added:C_PvP.IsTrainingGroundsBG` — unsafe
 37. [best-effort] `added:C_Timer.NewTimedSignalMap` — behavioral
