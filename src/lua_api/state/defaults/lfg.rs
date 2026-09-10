@@ -266,6 +266,7 @@ impl From<LfdDungeonSeed> for LfdDungeonInfo {
             is_scaling_dungeon: false,
             is_random: seed.is_random,
             is_follower_dungeon: seed.is_follower_dungeon,
+            training_ground_kind: None,
         }
     }
 }

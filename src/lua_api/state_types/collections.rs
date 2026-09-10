@@ -195,6 +195,8 @@ pub struct LfdDungeonInfo {
     pub is_random: bool,
     /// Whether `C_LFGInfo.IsLFGFollowerDungeon` returns true.
     pub is_follower_dungeon: bool,
+    /// Explicit simulator classification; no native Training Grounds IDs are seeded.
+    pub training_ground_kind: Option<crate::c_api::c_pvp::TrainingGroundKind>,
 }
 
 #[derive(Debug, Clone)]

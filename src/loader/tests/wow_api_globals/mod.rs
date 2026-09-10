@@ -66,6 +66,8 @@ mod patch_12_1_5_tiered_entrance_enums;
 mod patch_12_1_5_timed_signal_map;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_tooltip_line_enums;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+mod patch_12_1_5_training_grounds;
 mod patch_12_1_5_transmog_illusion_flags;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_weather;
