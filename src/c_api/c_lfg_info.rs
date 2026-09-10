@@ -32,7 +32,49 @@ pub(crate) fn register_c_lfg_info_surface(state: &mut LuaState) -> LuaResult<()>
     register_access_methods(state, table_ref)?;
     register_category_methods(state, table_ref)?;
     register_dungeon_methods(state, table_ref)?;
+    register_active_dungeon_name(state, table_ref)
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn register_active_dungeon_name(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetActiveLFGDungeonName",
+        get_active_lfg_dungeon_name,
+    )
+}
+
+#[cfg(not(feature = "retail-12-1-5"))]
+fn register_active_dungeon_name(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    // Keep the namespace fallback from fabricating this PTR-only method.
+    let removed = create_table(state);
+    table_set(state, removed, "GetActiveLFGDungeonName", Val::Bool(true));
+    table_set(state, Val::Table(table_ref), "__wow_removed_keys", removed);
     Ok(())
+}
+
+#[cfg(feature = "retail-12-1-5")]
+fn get_active_lfg_dungeon_name(state: &mut LuaState) -> LuaResult<u32> {
+    let name = {
+        let sim = borrow_state(state)?;
+        match sim.world.instance_lfg_dungeon_id {
+            None => String::new(),
+            Some(id) => sim
+                .lfd_dungeons
+                .iter()
+                .find(|dungeon| dungeon.dungeon_id == id)
+                .map(|dungeon| dungeon.name.clone())
+                .ok_or_else(|| {
+                    rilua::runtime_error(format!(
+                        "C_LFGInfo.GetActiveLFGDungeonName: instance LFG dungeon ID {id} is absent from lfd_dungeons"
+                    ))
+                })?,
+        }
+    };
+    let result = create_string(state, &name);
+    state.push(result);
+    Ok(1)
 }
 
 fn register_access_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
