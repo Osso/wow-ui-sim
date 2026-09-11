@@ -48,7 +48,41 @@ fn get_player_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {
     Ok(7)
 }
 
+#[cfg(feature = "retail-12-1-0")]
+fn unit_name_from_guid(state: &mut LuaState) -> LuaResult<u32> {
+    let guid = String::from_stack(state, 1)?;
+    if guid != SEEDED_LOCAL_CHARACTER_GUID {
+        return Ok(0);
+    }
+    let name = borrow_state(state)?.player.name.clone();
+    let name = create_string(state, &name);
+    let realm = create_string(state, SIM_REALM);
+    state.push(name);
+    state.push(realm);
+    Ok(2)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn unit_class_from_guid(state: &mut LuaState) -> LuaResult<u32> {
+    let guid = String::from_stack(state, 1)?;
+    if guid != SEEDED_LOCAL_CHARACTER_GUID {
+        return Ok(0);
+    }
+    let (localized, token, id) = class_info_by_index(borrow_state(state)?.player.class_index);
+    let localized = create_string(state, localized);
+    let token = create_string(state, token);
+    state.push(localized);
+    state.push(token);
+    state.push(Val::Num(id as f64));
+    Ok(3)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetPlayerInfoByGUID", get_player_info_by_guid)?;
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        LuaApiMut::register_function(lua, "UnitNameFromGUID", unit_name_from_guid)?;
+        LuaApiMut::register_function(lua, "UnitClassFromGUID", unit_class_from_guid)?;
+    }
     Ok(())
 }
