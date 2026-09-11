@@ -30,6 +30,8 @@ pub mod c_death_recap;
 pub mod c_discord;
 #[cfg(feature = "retail-12-1-5")]
 pub(crate) mod c_encounter_timeline;
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) mod c_encounter_warnings;
 pub mod c_glue;
 pub mod c_housing;
 pub mod c_instance_encounter;
