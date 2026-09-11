@@ -4,13 +4,13 @@ PTR global/context `FormatDate`, `FormatTime`, and `FormatDateTime` use the exis
 
 ## What it must do
 
-- [ ] Expose all six APIs only on PTR; preserve existing Intl operations and earlier-retail absence.
-- [ ] Convert finite Unix seconds to ICU milliseconds with overflow checking, preserving pre-epoch and fractional inputs without premature integer rounding.
-- [ ] Map None/Short/Medium/Long/Full to ICU styles. Date-only and time-only calls disable the other component.
-- [ ] Validate named and custom GMT-offset zones with ICU canonical timezone validation before opening a formatter; never silently use GMT for invalid IDs or the host timezone.
-- [ ] Use UTC for an explicitly empty zone string. Return an empty string when both styles are None, but still validate time, locale, and zone. These are simulator choices.
-- [ ] Preserve current global locale and context locale selection, including BCP-47 extensions; context mutation affects subsequent calls without changing other contexts.
-- [ ] Reject malformed UTF-8, embedded-NUL zone IDs, invalid required arguments/styles/zones, and nonfinite or overflowed times.
+- [x] Expose all six APIs only on PTR; preserve existing Intl operations and earlier-retail absence.
+- [x] Convert finite Unix seconds to ICU milliseconds with overflow checking, preserving pre-epoch and fractional inputs without premature integer rounding.
+- [x] Map None/Short/Medium/Long/Full to ICU styles. Date-only and time-only calls disable the other component.
+- [x] Validate named and custom GMT-offset zones with ICU canonical timezone validation before opening a formatter; never silently use GMT for invalid IDs or the host timezone.
+- [x] Use UTC for an explicitly empty zone string. Return an empty string when both styles are None, but still validate time, locale, and zone. These are simulator choices.
+- [x] Preserve current global locale and context locale selection, including BCP-47 extensions; context mutation affects subsequent calls without changing other contexts.
+- [x] Reject malformed UTF-8, embedded-NUL zone IDs, invalid required arguments/styles/zones, and nonfinite or overflowed times.
 - [ ] Reuse native allocation, UTF conversion, formatter close, and Rust output ownership/error paths; no C++ ABI or additional dependencies.
 
 ## How it works
@@ -33,7 +33,9 @@ PTR global/context `FormatDate`, `FormatTime`, and `FormatDateTime` use the exis
 
 ## Known gaps (current cycle)
 
-- [ ] Run focused native/Lua tests and existing Intl regressions.
+Focused development proof at `3259e3a76`: PTR library `intl_` passed 34 tests (including three native date tests); PTR integration date/number/currency filters passed nine tests (three date tests). Retail library `intl_` passed ten tests; matching integration filters passed three absence tests. Initial Lua RED had three missing-method failures; first native run caught canonical-zone validation rejecting a null preflight buffer, corrected to use a real buffer with overflow resizing. No final gates or platform jobs run.
+
+Logs: `/tmp/intl-dates-red.log`, `/tmp/intl-dates-native-and-intl-ptr-ca312b672.log`, `/tmp/intl-dates-native-intl-green-ptr.log`, `/tmp/intl-dates-lua-green-ptr.log`, `/tmp/intl-dates-intl-green-retail.log`, `/tmp/intl-dates-lua-green-retail.log`.
 - [ ] Windows/macOS execution remains accepted pending; this slice does not provision or claim platform verification.
 - [ ] Native WoW formatting patterns, calendar cutover, extreme date range/precision, timezone data version, locale data equivalence, no-result conditions, and security/taint semantics remain unverified.
 
