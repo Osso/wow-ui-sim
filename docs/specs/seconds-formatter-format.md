@@ -4,12 +4,12 @@ PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consu
 
 ## What it must do
 
-- [ ] PTR returns exactly one localized duration string; earlier retail retains its existing `tostring(seconds or 0)` output, including ignored settings. That earlier output is a known baseline gap, not formatting conformance.
-- [ ] Consume only registered settings: minimum/maximum interval, maximum curve, desired unit count, default/explicit abbreviation, rounding, final-unit round-up permission, approximation seconds, and millisecond threshold. Existing configuration accessors/evaluators remain unchanged.
-- [ ] Use a private bootstrap argument captured by the formatter closure for native rendering. Do not expose a public helper global or C namespace method. Keep the callback alive through collection without pinning instances.
-- [ ] Render actual localized plural-sensitive second/minute/hour/day units with `unumf` measure-unit skeletons and join them with `ulistfmt` units. Reuse checked native buffers, explicit lengths, locale parsing, and cleanup; no C++ ABI or new dependency.
-- [ ] Validate input/settings and propagate configured curve/ICU errors without falling back to static settings or placeholder output.
-- [ ] Preserve per-instance state and the six existing configuration/evaluation tests, with only profile-specific placeholder assertions updated for the new PTR contract.
+- [x] PTR returns exactly one localized duration string; earlier retail retains its existing `tostring(seconds or 0)` output, including ignored settings. That earlier output is a known baseline gap, not formatting conformance.
+- [x] Consume only registered settings: minimum/maximum interval, maximum curve, desired unit count, default/explicit abbreviation, rounding, final-unit round-up permission, approximation seconds, and millisecond threshold. Existing configuration accessors/evaluators remain unchanged.
+- [x] Use a private bootstrap argument captured by the formatter closure for native rendering. Do not expose a public helper global or C namespace method. Keep the callback alive through collection without pinning instances.
+- [x] Render actual localized plural-sensitive second/minute/hour/day units with `unumf` measure-unit skeletons and join them with `ulistfmt` units. Reuse checked native buffers, explicit lengths, locale parsing, and cleanup; no C++ ABI or new dependency.
+- [x] Validate input/settings and propagate configured curve/ICU errors without falling back to static settings or placeholder output.
+- [x] Preserve per-instance state and the six existing configuration/evaluation tests, with only profile-specific placeholder assertions updated for the new PTR contract.
 
 ## Simulator policies
 
@@ -41,9 +41,9 @@ PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consu
 - `tests/seconds_formatter_format.rs`: boundary values, window selection, settings, locale/width/plurals, validation, private lifetime, and retail baseline.
 - `tests/seconds_formatter_configuration.rs`: six existing configuration/evaluation regressions.
 
-## Known gaps (current cycle)
+Focused development proof at `59833ba76`: four new PTR tests failed against the prior placeholder. The grouped filters `seconds_formatter_format:: seconds_formatter_configuration::` then passed **11 PTR** and **8 retail** tests with `--test integration --offline --no-default-features --features sound,gui,client-<profile>`. Counts include four new PTR tests or one retail baseline test, all six existing configuration tests, and one matching existing garden-format test. Compiler output had no warnings. The matching garden test logs partial-addon Lua diagnostics also present in RED; this is not a clean full-startup claim. Logs: `/tmp/seconds-formatter-format-{red,59833ba76-ptr,59833ba76-retail}.log`. No final check/readability/smoke gates or audit artifact updates were run.
 
-- [ ] Complete targeted PTR/retail RED/GREEN proof; no final gates or artifact credit in this implementation slice.
+## Known gaps (current cycle)
 - [ ] Native defaults, selection/rounding, approximation text, millisecond precision, abbreviation semantics, secret/taint behavior, and exact ICU data equivalence remain unverified.
 - [ ] Numeric Step curves retain the existing engine limitation; Format propagates invalid fractional interval results rather than changing curve behavior.
 
