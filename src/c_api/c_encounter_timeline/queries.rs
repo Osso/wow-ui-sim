@@ -2,7 +2,9 @@ use super::{
     model::{EventInfo, EventState},
     read_id, timer,
 };
-use crate::lua_api::methods::{borrow_state, create_table_with_fields, table_set_num};
+use crate::lua_api::methods::{
+    borrow_state, create_table_with_fields, table_set_num, table_set_static,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
@@ -31,7 +33,36 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     for &(name, function) in methods {
         table_set_rust_fn_static(state, namespace, name, function)?;
     }
+    reserve_deferred_surface(state, namespace);
     Ok(())
+}
+
+fn reserve_deferred_surface(state: &mut LuaState, namespace: GcRef<Table>) {
+    // Prevent the generic namespace fallback from fabricating implementations.
+    let missing = state.gc.alloc_table(Table::with_sizes(0, 13));
+    for name in [
+        "GetEventTrack",
+        "GetTrackInfo",
+        "GetTrackList",
+        "GetTrackMaxEventDuration",
+        "GetTrackType",
+        "GetSortedEventList",
+        "GetEventHighlightTime",
+        "HasVisibleEvents",
+        "AddEditModeEvents",
+        "CancelEditModeEvents",
+        "GetViewType",
+        "SetViewType",
+        "SetEventIconTextures",
+    ] {
+        table_set_static(state, Val::Table(missing), name, Val::Bool(true));
+    }
+    table_set_static(
+        state,
+        Val::Table(namespace),
+        "__wow_removed_keys",
+        Val::Table(missing),
+    );
 }
 
 pub(super) fn info_table(state: &mut LuaState, info: &EventInfo) -> Val {

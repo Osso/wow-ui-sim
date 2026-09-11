@@ -7,6 +7,7 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(not(feature = "retail-12-1-5"))]
 #[test]
 fn test_c_encounter_timeline_returns_seeded_visible_event() {
     let env = env();

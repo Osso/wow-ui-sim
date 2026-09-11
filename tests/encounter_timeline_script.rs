@@ -168,3 +168,59 @@ fn encounter_script_preserves_retail_demo_baseline() {
         wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     }
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo() {
+    let env = environment();
+    env.exec(r#"
+        id = add(0, {paused=true, maxQueueDuration=4})
+        assert(timeline.GetEventState(id) == Enum.EncounterTimelineEventState.Paused)
+        assert(timeline.GetEventTimeElapsed(id) == 0)
+        assert(timeline.GetEventTrack == nil and timeline.GetSortedEventList == nil)
+        assert(timeline.AddEditModeEvents == nil)
+    "#).unwrap();
+    env.fire_on_update(1.0).unwrap();
+    env.exec("assert(timeline.HasPausedEvents()); timeline.ResumeScriptEvent(id)") .unwrap();
+    env.fire_on_update(0.0).unwrap();
+    env.exec("assert(timeline.GetEventState(id) == Enum.EncounterTimelineEventState.Finished)").unwrap();
+    env.fire_on_update(0.0).unwrap();
+    wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+    env.exec(r#"
+        assert(timeline.GetEventInfo(id) == nil and #timeline.GetEventList() == 0)
+        local nextID = add(3)
+        assert(nextID > id)
+        assert(timeline.GetEventInfo(nextID).duration == 3)
+    "#).unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn encounter_script_timer_supports_blizzard_event_frame_consumer() {
+    let env = environment();
+    let root = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap()
+        .join("Blizzard_EncounterTimeline");
+    for file in ["EncounterTimelineSettings.lua", "EncounterTimelineEventFrame.lua"] {
+        env.exec(&std::fs::read_to_string(root.join(file)).unwrap()).unwrap();
+    }
+    env.exec(r#"
+        id = add(4)
+        consumer = CreateFromMixins(EncounterTimelineEventFrameMixin)
+        consumer:Init(timeline.GetEventInfo(id), timeline.GetEventTimer(id),
+                      timeline.GetEventState(id), nil, nil, false, nil)
+        assert(consumer:GetEventTimeRemaining() == 4)
+    "#).unwrap();
+    env.fire_on_update(1.5).unwrap();
+    env.exec(r#"
+        assert(consumer:GetEventTimeElapsed() == 1.5 and consumer:GetEventTimeRemaining() == 2.5)
+        timeline.PauseScriptEvent(id)
+    "#).unwrap();
+    env.fire_on_update(5.0).unwrap();
+    env.exec(r#"
+        assert(consumer:GetEventTimeRemaining() == 2.5)
+        timeline.FinishScriptEvent(id)
+        assert(consumer:GetEventTimeRemaining() == 0)
+    "#).unwrap();
+    env.fire_on_update(0.1).unwrap();
+    env.exec("assert(timeline.GetEventInfo(id) == nil and consumer:GetEventTimeElapsed() == 4)").unwrap();
+}
