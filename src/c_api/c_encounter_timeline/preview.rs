@@ -11,7 +11,7 @@ use rilua::{LuaResult, Val, runtime_error};
 pub(super) const REFRESH_INTERVAL: f64 = 30.0;
 
 pub(super) fn add(state: &mut LuaState) -> LuaResult<u32> {
-    let existing = source_ids(state)?;
+    let existing = live_source_ids(state)?;
     for (slot, duration) in [8.0, 35.0, 90.0].into_iter().enumerate() {
         if let Some(&id) = existing.get(slot) {
             reset(state, id)?;
@@ -30,12 +30,14 @@ pub(super) fn add(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn source_ids(state: &LuaState) -> LuaResult<Vec<u32>> {
+fn live_source_ids(state: &LuaState) -> LuaResult<Vec<u32>> {
     Ok(borrow_state(state)?
         .encounter_timeline
         .events
         .iter()
-        .filter_map(|(&id, event)| (event.info.source == 2).then_some(id))
+        .filter_map(|(&id, event)| {
+            (event.info.source == 2 && !event.state.terminal()).then_some(id)
+        })
         .collect())
 }
 
@@ -46,6 +48,9 @@ fn reset(state: &mut LuaState, id: u32) -> LuaResult<()> {
         let Some(event) = sim.encounter_timeline.events.get_mut(&id) else {
             return Ok(());
         };
+        if event.state.terminal() {
+            return Ok(());
+        }
         let changed = event.state != EventState::Active;
         event.state = EventState::Active;
         event.terminal_tick = None;
@@ -78,7 +83,7 @@ fn fixture(slot: usize, duration: f64) -> EventInfo {
 }
 
 pub(super) fn cancel(state: &mut LuaState) -> LuaResult<u32> {
-    for id in source_ids(state)? {
+    for id in live_source_ids(state)? {
         super::transition(state, id, EventState::Canceled)?;
     }
     Ok(0)

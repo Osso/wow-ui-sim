@@ -184,3 +184,22 @@ fn encounter_tracks_queued_capacity_and_reentrant_view_updates() {
         assert(not T.HasVisibleEvents())
     "#).unwrap();
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn encounter_tracks_preview_refresh_preserves_terminal_removal() {
+    let env=environment();
+    env.exec(r#"
+        T.AddEditModeEvents(); old=T.GetEventList()
+        T.CancelEditModeEvents()
+        T.AddEditModeEvents(); T.AddEditModeEvents()
+        for _,id in ipairs(old) do assert(T.GetEventState(id)==Enum.EncounterTimelineEventState.Canceled) end
+        assert(#T.GetSortedEventList()==3)
+        assert(T.GetEventCountBySource(2)==6)
+    "#).unwrap();
+    env.fire_on_update(0.0).unwrap();
+    env.exec(r#"
+        for _,id in ipairs(old) do assert(T.GetEventInfo(id)==nil) end
+        assert(T.GetEventCountBySource(2)==3 and #T.GetSortedEventList()==3)
+    "#).unwrap();
+}
