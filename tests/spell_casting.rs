@@ -135,7 +135,7 @@ fn instant_spell_does_not_show_cast_bar() {
 }
 
 /// Load all Blizzard addons and fire startup events.
-fn env_with_full_blizzard_ui() -> WowLuaEnv {
+pub(crate) fn env_with_full_blizzard_ui() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available for cached full UI tests");
     env_with_blizzard_ui_from(ui)
@@ -250,7 +250,7 @@ fn cast_bar_times_are_in_milliseconds() {
 }
 
 /// Install a Lua error handler that collects errors into `__test_errors`.
-fn install_test_error_handler(env: &WowLuaEnv) {
+pub(crate) fn install_test_error_handler(env: &WowLuaEnv) {
     env.exec(
         r#"
         __test_errors = {}
@@ -263,7 +263,7 @@ fn install_test_error_handler(env: &WowLuaEnv) {
 }
 
 /// Read collected errors from `__test_errors` and clear it.
-fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
+pub(crate) fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
     common::drain_string_table(env, "__test_errors")
 }
 
