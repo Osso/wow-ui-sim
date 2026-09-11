@@ -4,7 +4,7 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
-pub(super) fn read(state: &LuaState) -> LuaResult<(EventInfo, bool)> {
+pub(super) fn read(state: &mut LuaState) -> LuaResult<(EventInfo, bool)> {
     let request = stack_val(state, 1);
     if !matches!(request, Val::Table(_)) {
         return Err(runtime_error("AddScriptEvent requires a request table"));
@@ -32,7 +32,7 @@ pub(super) fn read(state: &LuaState) -> LuaResult<(EventInfo, bool)> {
     ))
 }
 
-fn number(state: &LuaState, table: Val, key: &str, default: Option<f64>) -> LuaResult<f64> {
+fn number(state: &mut LuaState, table: Val, key: &str, default: Option<f64>) -> LuaResult<f64> {
     let value = match table_get(state, table, key) {
         Val::Num(value) => Some(value),
         Val::Nil => default,
@@ -43,7 +43,7 @@ fn number(state: &LuaState, table: Val, key: &str, default: Option<f64>) -> LuaR
         .ok_or_else(|| runtime_error(format!("AddScriptEvent {key} must be a finite number")))
 }
 
-fn seconds(state: &LuaState, table: Val, key: &str, default: Option<f64>) -> LuaResult<f64> {
+fn seconds(state: &mut LuaState, table: Val, key: &str, default: Option<f64>) -> LuaResult<f64> {
     let value = number(state, table, key, default)?;
     if value < 0.0 {
         return Err(runtime_error(format!(
@@ -54,7 +54,7 @@ fn seconds(state: &LuaState, table: Val, key: &str, default: Option<f64>) -> Lua
 }
 
 fn integer(
-    state: &LuaState,
+    state: &mut LuaState,
     table: Val,
     key: &str,
     default: Option<f64>,
@@ -70,7 +70,7 @@ fn integer(
     Ok(value as u32)
 }
 
-fn text(state: &LuaState, table: Val, key: &str) -> LuaResult<Vec<u8>> {
+fn text(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Vec<u8>> {
     match table_get(state, table, key) {
         Val::Nil => Ok(Vec::new()),
         Val::Str(value) => state
@@ -85,7 +85,7 @@ fn text(state: &LuaState, table: Val, key: &str) -> LuaResult<Vec<u8>> {
     }
 }
 
-fn boolean(state: &LuaState, table: Val, key: &str) -> LuaResult<bool> {
+fn boolean(state: &mut LuaState, table: Val, key: &str) -> LuaResult<bool> {
     match table_get(state, table, key) {
         Val::Nil => Ok(false),
         Val::Bool(value) => Ok(value),
