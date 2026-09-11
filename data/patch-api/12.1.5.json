@@ -308,7 +308,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -358,7 +358,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "test",
@@ -400,7 +400,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -450,7 +450,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration installs the global and locale-context search methods while earlier retail omits the namespace.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -535,7 +535,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -584,7 +584,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -667,7 +667,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -752,7 +752,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -836,7 +836,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -919,7 +919,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -1009,7 +1009,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration publishes GetCharacterProperties while earlier retail records the namespace as absent."
         },
         {
@@ -1089,7 +1089,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR C_Intl registration includes the currency metadata module while earlier profiles retain namespace absence.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -1176,7 +1176,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR C_Intl registration includes the currency metadata module while earlier profiles retain namespace absence.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -1233,7 +1233,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "test",
@@ -1325,7 +1325,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -1380,7 +1380,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -1430,7 +1430,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -1480,7 +1480,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -1529,7 +1529,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -1611,7 +1611,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -1699,7 +1699,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1754,7 +1754,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1809,7 +1809,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -1864,7 +1864,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1919,7 +1919,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -3317,7 +3317,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -3399,7 +3399,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -3481,7 +3481,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -9419,7 +9419,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "test",
@@ -9461,7 +9461,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -9516,7 +9516,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -9566,7 +9566,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration installs the global and locale-context search methods while earlier retail omits the namespace.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -9651,7 +9651,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -9700,7 +9700,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -9783,7 +9783,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -9868,7 +9868,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -9952,7 +9952,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -10035,7 +10035,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -10150,7 +10150,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR locale-context construction registers the currency metadata method while earlier profiles retain namespace absence.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -10257,7 +10257,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "test",
@@ -10299,7 +10299,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -10349,7 +10349,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "source",
@@ -10393,7 +10393,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -10475,7 +10475,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -10563,7 +10563,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -10613,7 +10613,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02"
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6"
         },
         {
           "kind": "test",
@@ -10655,7 +10655,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -10710,7 +10710,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -10765,7 +10765,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -10820,7 +10820,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "fa52ac1a1f6c1c121e1378a736f779c7cd2510d7e571fe56900d89e4653f9f02",
+          "source_hash": "e70e1ab45a0cda93307e14a96bfd0e094d6b80d65649200183e2423b9dc346e6",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
