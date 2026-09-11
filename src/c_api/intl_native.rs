@@ -119,6 +119,21 @@ pub fn format_date_time(
     )
 }
 
+/// Names the target locale in the requested display language using ICU data.
+pub fn display_name(target: &str, display_locale: &str) -> Result<String, Error> {
+    ffi::display_name(&locale_string(target)?, &locale_string(display_locale)?)
+}
+
+/// Applies a registered ICU transliterator to all text, preserving explicit lengths.
+pub fn transliterate(text: &str, id: &str) -> Result<String, Error> {
+    if id.is_empty() || id.contains('\0') {
+        return Err(Error(
+            "ICU4C transliterator ID must be nonempty and NUL-free".into(),
+        ));
+    }
+    ffi::transliterate(text, id)
+}
+
 /// Runtime ICU library version, as four dot-separated numeric components.
 pub fn version() -> String {
     ffi::version()
@@ -164,5 +179,7 @@ fn checked_length(length: usize, field: &str) -> Result<i32, Error> {
 mod currency_metadata_tests;
 #[cfg(test)]
 mod date_tests;
+#[cfg(test)]
+mod display_transliteration_tests;
 #[cfg(test)]
 mod tests;

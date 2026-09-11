@@ -40,6 +40,12 @@ int32_t wow_icu_format_date_time(const char *locale, int32_t locale_length,
                                  int32_t time_style, const uint8_t *zone,
                                  int32_t zone_length, WowIcuString *output,
                                  WowIcuError *error);
+int32_t wow_icu_display_name(const char *target, int32_t target_length,
+                              const char *display, int32_t display_length,
+                              WowIcuString *output, WowIcuError *error);
+int32_t wow_icu_transliterate(const uint8_t *text, int32_t text_length,
+                               const uint8_t *id, int32_t id_length,
+                               WowIcuString *output, WowIcuError *error);
 void wow_icu_string_free(uint8_t *data);
 const char *wow_icu_error_name(int32_t code);
 void wow_icu_version(uint8_t version[4]);

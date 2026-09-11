@@ -104,6 +104,22 @@ unsafe extern "C" {
         output: *mut NativeString,
         error: *mut NativeError,
     ) -> i32;
+    fn wow_icu_display_name(
+        target: *const c_char,
+        target_length: i32,
+        display: *const c_char,
+        display_length: i32,
+        output: *mut NativeString,
+        error: *mut NativeError,
+    ) -> i32;
+    fn wow_icu_transliterate(
+        text: *const u8,
+        text_length: i32,
+        id: *const u8,
+        id_length: i32,
+        output: *mut NativeString,
+        error: *mut NativeError,
+    ) -> i32;
     fn wow_icu_string_free(data: *mut u8);
     fn wow_icu_error_name(code: i32) -> *const c_char;
     fn wow_icu_version(version: *mut u8);
@@ -255,6 +271,52 @@ pub(super) fn format_date_time(
     };
     if status != 0 {
         return Err(error.into_error(locale));
+    }
+    output.copy_string()
+}
+
+pub(super) fn display_name(target: &CStr, display: &CStr) -> Result<String, Error> {
+    let target_length = checked_length(target.to_bytes().len(), "target locale")?;
+    let display_length = checked_length(display.to_bytes().len(), "display locale")?;
+    let mut output = NativeString::default();
+    let mut error = NativeError::default();
+    // SAFETY: checked C strings remain live during the call; output owns the
+    // shim allocation and frees it on every return path.
+    let status = unsafe {
+        wow_icu_display_name(
+            target.as_ptr(),
+            target_length,
+            display.as_ptr(),
+            display_length,
+            &mut output,
+            &mut error,
+        )
+    };
+    if status != 0 {
+        return Err(error.into_error(target));
+    }
+    output.copy_string()
+}
+
+pub(super) fn transliterate(text: &str, id: &str) -> Result<String, Error> {
+    let text_length = checked_length(text.len(), "transliteration text")?;
+    let id_length = checked_length(id.len(), "transliterator ID")?;
+    let mut output = NativeString::default();
+    let mut error = NativeError::default();
+    // SAFETY: valid UTF-8 inputs live through the call with checked byte lengths;
+    // the shim owns its UTF-16 copies and output is freed by NativeString.
+    let status = unsafe {
+        wow_icu_transliterate(
+            text.as_ptr(),
+            text_length,
+            id.as_ptr(),
+            id_length,
+            &mut output,
+            &mut error,
+        )
+    };
+    if status != 0 {
+        return Err(error.into_error(c"transliteration"));
     }
     output.copy_string()
 }
