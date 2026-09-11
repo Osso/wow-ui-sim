@@ -13,7 +13,7 @@ PTR `C_Intl.FindStringMatches` and `LuaLocaleContext:FindStringMatches` search t
 - [x] Keep offsets correct after supplementary characters and multibyte text. Validate both ends of native ranges as scalar boundaries and reject nonprogressing/overlapping results.
 - [x] Close each search iterator before its borrowed collator; release converted strings and result allocations on success and failure. Rust owns the returned range allocation through a drop guard.
 - [x] Build a UTF-16-scalar-boundary-to-UTF-8-byte map once, then translate matches in O(n + m) time and O(n + m) space outside ICU's own search. Never repeatedly convert prefixes for each result.
-- [ ] Preserve earlier-retail namespace absence and all existing Intl/native regressions in the bounded profile test run.
+- [x] Preserve earlier-retail namespace absence and all existing Intl/native regressions in the bounded profile test run.
 
 ## Simulator assumptions
 
@@ -43,7 +43,7 @@ Search uses installed ICU4C data. `CompareStrings` and `GetSortKey` still use IC
 
 ## Known gaps (current cycle)
 
-- [ ] Execute bounded existing Intl/native regressions and earlier-retail absence test.
+- Focused development proof at `cca21ea07`: RED was three missing-API failures; GREEN includes 40 library and 15 integration tests on PTR, 10 library and 5 integration tests on retail. Commands: `cargo test --lib --test integration --offline --no-default-features --features sound,gui,client-<profile> intl_ -- --nocapture` for each profile. No broad check/readability or audit-artifact gates were run.
 - [ ] Native WoW offsets, locale-data versions, `MayReturnNothing`, and `AllowedWhenUntainted` enforcement remain unverified.
 - [ ] Allocation-failure paths and ICU internal invariant failures are handled but have no fault-injection proof. Windows/macOS execution is not claimed by Linux tests.
 
