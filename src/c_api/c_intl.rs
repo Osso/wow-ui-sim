@@ -20,6 +20,8 @@ mod number_formatting;
 #[cfg(feature = "retail-12-1-5")]
 mod plurals;
 #[cfg(feature = "retail-12-1-5")]
+mod string_matches;
+#[cfg(feature = "retail-12-1-5")]
 mod text;
 #[cfg(feature = "retail-12-1-5")]
 mod transform;
@@ -83,7 +85,8 @@ mod storage {
         super::number_formatting::register(state, namespace)?;
         super::date_formatting::register(state, namespace)?;
         super::display_transliteration::register(state, namespace)?;
-        super::currency_metadata::register(state, namespace)
+        super::currency_metadata::register(state, namespace)?;
+        super::string_matches::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
@@ -122,6 +125,7 @@ mod storage {
         super::date_formatting::register_context(state, metatable)?;
         super::display_transliteration::register_context(state, metatable)?;
         super::currency_metadata::register_context(state, metatable)?;
+        super::string_matches::register_context(state, metatable)?;
         table_set_static(
             state,
             Val::Table(metatable),

@@ -20,6 +20,24 @@ typedef struct {
   const char *operation; /* Static storage; never freed by the caller. */
 } WowIcuError;
 
+/* UTF-16 match ranges; Rust validates and maps both scalar boundaries once. */
+typedef struct {
+  int32_t start;
+  int32_t end;
+} WowIcuMatch;
+
+typedef struct {
+  WowIcuMatch *data;
+  int32_t length;
+} WowIcuMatches;
+
+int32_t wow_icu_find_matches(const char *locale, int32_t locale_length,
+                              const uint8_t *text, int32_t text_length,
+                              const uint8_t *pattern, int32_t pattern_length,
+                              int32_t strength, WowIcuMatches *output,
+                              WowIcuError *error);
+void wow_icu_matches_free(WowIcuMatch *matches);
+
 enum { WOW_ICU_OK = 0, WOW_ICU_NO_MATCH = 1, WOW_ICU_ERROR = 2 };
 enum { WOW_DECIMAL = 0, WOW_INTEGER = 1, WOW_PERCENT = 2, WOW_CURRENCY = 3 };
 

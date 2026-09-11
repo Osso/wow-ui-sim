@@ -1,6 +1,9 @@
 //! Feature-gated ICU4C number operations. Lua wiring and packaging are separate.
 //! Native data/defaults may vary by installed ICU version; see `version()`.
 mod ffi;
+mod search;
+
+pub use search::{SearchStrength, find_string_matches};
 
 use std::ffi::CString;
 
@@ -181,5 +184,7 @@ mod currency_metadata_tests;
 mod date_tests;
 #[cfg(test)]
 mod display_transliteration_tests;
+#[cfg(test)]
+mod search_tests;
 #[cfg(test)]
 mod tests;

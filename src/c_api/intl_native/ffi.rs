@@ -31,13 +31,13 @@ impl NativeString {
 
 #[repr(C)]
 #[derive(Default)]
-struct NativeError {
+pub(super) struct NativeError {
     code: i32,
     operation: *const c_char,
 }
 
 impl NativeError {
-    fn into_error(self, context: &CStr) -> Error {
+    pub(super) fn into_error(self, context: &CStr) -> Error {
         // SAFETY: the shim supplies static NUL-terminated diagnostic strings.
         let operation = unsafe { diagnostic(self.operation) };
         // SAFETY: any integer code is accepted; ICU returns a static diagnostic name.
