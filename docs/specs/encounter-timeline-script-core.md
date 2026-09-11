@@ -41,9 +41,11 @@ Automatic completion occurs when active elapsed reaches duration at tick start. 
 - `tests/system_api_seeded.rs`: unchanged earlier-profile seeded timeline expectations; PTR uses the new lifecycle tests.
 - `startup_globals::test_patch_12_0_7_safe_global_bridges`: existing encounter color/customization consumer.
 
-### Proof and candidate audit rows
+### Audit credit
 
-No artifact statuses are changed by this slice. Nine changed occurrences have bounded candidate proof: `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`; `EncounterTimelineEventInfo` and its `duration`/`maxQueueDuration`; `EncounterTimelineScriptEventRequest` and its `duration`/`maxQueueDuration`. Queue-duration credit is field preservation only, not queued-hold behavior. The producer APIs themselves are unchanged between the pinned revisions and supply behavioral evidence for those structures. Earlier-retail tests preserve the existing demo, not native base conformance.
+Commit `385c7790f` moves nine changed occurrences to `best-effort` / `behavioral`: `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`; `EncounterTimelineEventInfo` and its `duration`/`maxQueueDuration`; and `EncounterTimelineScriptEventRequest` and its `duration`/`maxQueueDuration`. Credit is limited to the real script-event producer/lifecycle, shared OnUpdate clock, timer consumers, field storage, and PTR/earlier-retail profile boundary. Nine PTR and five retail integration tests, plus one PTR and two retail library tests, are recorded in the existing ledger/logs.
+
+ `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`; `EncounterTimelineEventInfo` and its `duration`/`maxQueueDuration`; `EncounterTimelineScriptEventRequest` and its `duration`/`maxQueueDuration`. Queue-duration credit is field preservation only, not queued-hold behavior. The producer APIs themselves are unchanged between the pinned revisions and supply behavioral evidence for those structures. Earlier-retail tests preserve the existing demo, not native base conformance.
 
 Commands (each profile run separately):
 
@@ -56,8 +58,8 @@ The PTR script tests load the existing Blizzard event-frame/settings files to ex
 
 ## Known gaps (current cycle)
 
-- [x] Focused proof at `39b037a91`: six PTR script-core tests plus three existing duration tests; retail preserves the demo with five integration tests; existing customization tests pass (one PTR, two retail).
-- [ ] Parent owns track/filter/EditMode/queued-hold integration and final check/readability/artifact gates.
+- [x] Focused proof at `385c7790f`: nine PTR and five retail integration tests plus existing customization library proof (one PTR, two retail); nine exact changed rows are credited only for the bounded script core.
+- [ ] Parent owns track/filter/EditMode/queued-hold/full-view integration and final check/readability/artifact gates.
 - [ ] Native transition/coalescing, secrecy, unknown-spell and validation semantics remain unverified.
 
 ## Out of scope

@@ -12637,139 +12637,403 @@
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventInfo",
       "symbol": "C_EncounterTimeline.EncounterTimelineEventInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetEventInfo snapshots stored script-event fields into independent Lua tables; duration and maxQueueDuration are numeric stored metadata.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "AddScriptEvent parses finite nonnegative duration and maxQueueDuration values; maxQueueDuration is stored metadata only, not a queued hold.",
+          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers independent info-table snapshots and stored duration/maxQueueDuration fields only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventInfo.duration",
       "symbol": "C_EncounterTimeline.EncounterTimelineEventInfo.duration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetEventInfo snapshots stored script-event fields into independent Lua tables; duration and maxQueueDuration are numeric stored metadata.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "AddScriptEvent parses finite nonnegative duration and maxQueueDuration values; maxQueueDuration is stored metadata only, not a queued hold.",
+          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers independent info-table snapshots and stored duration/maxQueueDuration fields only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventInfo.maxQueueDuration",
       "symbol": "C_EncounterTimeline.EncounterTimelineEventInfo.maxQueueDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetEventInfo snapshots stored script-event fields into independent Lua tables; duration and maxQueueDuration are numeric stored metadata.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "AddScriptEvent parses finite nonnegative duration and maxQueueDuration values; maxQueueDuration is stored metadata only, not a queued hold.",
+          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers stored request/info metadata and default zero only; it does not credit queued-hold behavior. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineScriptEventRequest",
       "symbol": "C_EncounterTimeline.EncounterTimelineScriptEventRequest",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "AddScriptEvent parses request duration and defaulted maxQueueDuration as stored numeric fields; maxQueueDuration is metadata only, not a queue-hold model.",
+          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetEventInfo exposes the stored duration and maxQueueDuration snapshot fields to timer consumers.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers request parsing and field storage for duration/defaulted maxQueueDuration only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineScriptEventRequest.duration",
       "symbol": "C_EncounterTimeline.EncounterTimelineScriptEventRequest.duration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "AddScriptEvent parses request duration and defaulted maxQueueDuration as stored numeric fields; maxQueueDuration is metadata only, not a queue-hold model.",
+          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetEventInfo exposes the stored duration and maxQueueDuration snapshot fields to timer consumers.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers request parsing and field storage for duration/defaulted maxQueueDuration only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineScriptEventRequest.maxQueueDuration",
       "symbol": "C_EncounterTimeline.EncounterTimelineScriptEventRequest.maxQueueDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "AddScriptEvent parses request duration and defaulted maxQueueDuration as stored numeric fields; maxQueueDuration is metadata only, not a queue-hold model.",
+          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetEventInfo exposes the stored duration and maxQueueDuration snapshot fields to timer consumers.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers stored request/info metadata and default zero only; it does not credit queued-hold behavior. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineTrackInfo",
@@ -12890,24 +13154,68 @@
       "id": "changed:C_EncounterTimeline.GetCurrentTime",
       "symbol": "C_EncounterTimeline.GetCurrentTime",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetCurrentTime and event elapsed/remaining queries read timeline shared-clock/event-clock numeric state.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "GetEventTimer creates duration wrappers over the same event-owned clock; wrappers are independent objects and follow lifecycle state.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers ordinary shared OnUpdate-clock current/elapsed/remaining numeric state and event-timer lifecycle only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.GetEventHighlightTime",
@@ -12936,47 +13244,135 @@
       "id": "changed:C_EncounterTimeline.GetEventTimeElapsed",
       "symbol": "C_EncounterTimeline.GetEventTimeElapsed",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetCurrentTime and event elapsed/remaining queries read timeline shared-clock/event-clock numeric state.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "GetEventTimer creates duration wrappers over the same event-owned clock; wrappers are independent objects and follow lifecycle state.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers ordinary shared OnUpdate-clock current/elapsed/remaining numeric state and event-timer lifecycle only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.GetEventTimeRemaining",
       "symbol": "C_EncounterTimeline.GetEventTimeRemaining",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
+          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
+          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/on_update.rs",
+          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
+          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/queries.rs",
+          "summary": "GetCurrentTime and event elapsed/remaining queries read timeline shared-clock/event-clock numeric state.",
+          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "GetEventTimer creates duration wrappers over the same event-owned clock; wrappers are independent objects and follow lifecycle state.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
+        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
+        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
+        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
+        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
+        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
+        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused PTR/earlier-retail proof covers ordinary shared OnUpdate-clock current/elapsed/remaining numeric state and event-timer lifecycle only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
     },
     {
       "id": "changed:C_EncounterTimeline.GetSortedEventList",
@@ -17983,7 +18379,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "bc42df830d882e769afa91e7a0163ff5c501be7f80266b705d6d254f39521a9d"
+          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
         },
         {
           "kind": "source",
@@ -18026,7 +18422,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "bc42df830d882e769afa91e7a0163ff5c501be7f80266b705d6d254f39521a9d"
+          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
         },
         {
           "kind": "source",
@@ -18069,7 +18465,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "bc42df830d882e769afa91e7a0163ff5c501be7f80266b705d6d254f39521a9d"
+          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
         },
         {
           "kind": "source",
@@ -18112,7 +18508,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "bc42df830d882e769afa91e7a0163ff5c501be7f80266b705d6d254f39521a9d"
+          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
         },
         {
           "kind": "source",
@@ -18155,7 +18551,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "bc42df830d882e769afa91e7a0163ff5c501be7f80266b705d6d254f39521a9d"
+          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
         },
         {
           "kind": "source",
@@ -18198,7 +18594,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "bc42df830d882e769afa91e7a0163ff5c501be7f80266b705d6d254f39521a9d"
+          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
         },
         {
           "kind": "source",
@@ -18241,7 +18637,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Simulator-owned duration core configures timing and queries ordinary clock-driven state; formulas and validation are explicit simulator assumptions.",
-          "source_hash": "bc42df830d882e769afa91e7a0163ff5c501be7f80266b705d6d254f39521a9d"
+          "source_hash": "4dbfbbede51cca068073bebc8219afbcad808b7b02cbd207ccd6ad2e98f21d42"
         },
         {
           "kind": "source",

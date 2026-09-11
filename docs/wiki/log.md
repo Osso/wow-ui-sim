@@ -1,3 +1,7 @@
+## [2026-09-11] audit | Credit PTR EncounterTimeline script core
+
+`385c7790f` moves nine exact changed rows to bounded best-effort: `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`, `EncounterTimelineEventInfo` with `duration`/`maxQueueDuration`, and `EncounterTimelineScriptEventRequest` with `duration`/`maxQueueDuration`. Recorded proof covers the real script-event producer/lifecycle, shared OnUpdate clock, timer consumers, field storage, and PTR/earlier-retail preservation. `maxQueueDuration` remains metadata only; track/filter/EditMode/full-view and queue-hold behavior remain withheld. Native ordering, security, coercion, and timing semantics remain unverified. Totals: 410 best-effort, 39 evidence-required, 0 untriaged. See [script-event core](../specs/encounter-timeline-script-core.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR SecondsFormatter.Format
 
 `59833ba76` implements; `ab2972d99` and `4901c9255` correct source/test evidence for `changed:SecondsFormatter.Format`. Pinned PTR publishes only `None=0`, `Truncate=1`, `OneLetter=2`, mapping `0` wide, `1` short, `2` narrow; aliases and `3` are absent/rejected. Earlier retail deliberately retains its legacy four-member enum and placeholder output as a baseline gap. Renderer policy, native wording/defaults, exact ICU output, coercion, security, and Windows/macOS/Docker execution remain unverified. Totals: 401 best-effort, 48 evidence-required, 0 untriaged. See [format](../specs/seconds-formatter-format.md) and [[patch-12-1-5-api-audit]].
