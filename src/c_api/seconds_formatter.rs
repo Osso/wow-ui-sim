@@ -3,8 +3,25 @@
 //! This source shares the temporary factory's Lua chunk so the installer stays
 //! local rather than exposing a new global or C_StringUtil helper API.
 
+#[cfg(feature = "retail-12-1-5")]
+mod render;
+
+pub(crate) const FORMAT_LUA: &str = include_str!("seconds_formatter/format.lua");
+
+pub(crate) fn renderer(state: &mut rilua::vm::state::LuaState) -> rilua::Val {
+    #[cfg(feature = "retail-12-1-5")]
+    {
+        render::callback(state)
+    }
+    #[cfg(not(feature = "retail-12-1-5"))]
+    {
+        let _ = state;
+        rilua::Val::Nil
+    }
+}
+
 pub(crate) const CONFIGURATION_LUA: &str = r#"
-local function __wow_install_seconds_formatter_configuration(methods)
+local function __wow_install_seconds_formatter_configuration(methods, render_duration_units)
   local configurations = setmetatable({}, { __mode = "k" })
 
   local function configuration(object)
@@ -89,6 +106,10 @@ local function __wow_install_seconds_formatter_configuration(methods)
       error("SecondsFormatter desired unit count must be a positive integer", 3)
     end
     return count
+  end
+
+  if render_duration_units ~= nil then
+    __wow_install_seconds_formatter_format(methods, render_duration_units)
   end
 
   return function(object)

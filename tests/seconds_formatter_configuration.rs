@@ -4,7 +4,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn seconds_formatter_evaluation_uses_current_configuration() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
-        r#"
+        &r#"
         local first = C_StringUtil.CreateSecondsFormatter()
         local second = C_StringUtil.CreateSecondsFormatter()
         local interval = Enum.SecondsFormatterInterval
@@ -43,8 +43,8 @@ fn seconds_formatter_evaluation_uses_current_configuration() {
                                   first.EvaluateMaxInterval, first.EvaluateDesiredUnitCount}) do
             assert(select('#', method(first, 0.25)) == 1)
         end
-        assert(first:Format(2.5) == '2.5') -- Existing placeholder stays unchanged.
-        "#,
+        assert(first:Format(2.5) == EXPECTED_FORMAT)
+        "#.replace("EXPECTED_FORMAT", if cfg!(feature = "retail-12-1-5") { "'0 minutes'" } else { "'2.5'" }),
     )
     .unwrap();
 }
@@ -217,7 +217,7 @@ fn seconds_formatter_configuration_survives_gc_and_preserves_existing_methods() 
     env.exec("collectgarbage('collect'); collectgarbage('collect')")
         .unwrap();
     env.exec(
-        r#"
+        &r#"
         local formatter = RetainedSecondsFormatter
         assert(formatter:GetApproximationSeconds() == 0.125)
         assert(formatter:GetMillisecondsThreshold() == -8.5)
@@ -234,12 +234,13 @@ fn seconds_formatter_configuration_survives_gc_and_preserves_existing_methods() 
         assert(formatter.canRoundUpLastUnit == true)
         assert(formatter.minInterval == 3 and formatter.maxInterval == 4)
         assert(formatter.maxIntervalCurve == curve and formatter.desiredUnitCount == 2)
-        -- Preserve the existing placeholder, not a native formatting claim.
-        assert(formatter:Format(2.5) == "2.5")
+        FORMAT_ASSERTION
         assert(formatter:GetApproximationSeconds() == 0.125)
         assert(formatter:GetMillisecondsThreshold() == -8.5)
         assert(C_StringUtil.CreateSecondsFormatter():GetApproximationSeconds() == 0)
-        "#,
+        "#.replace("FORMAT_ASSERTION", if cfg!(feature = "retail-12-1-5") {
+            "assert(not pcall(formatter.Format, formatter, 2.5)) -- Invalid max interval remains stored."
+        } else { "assert(formatter:Format(2.5) == '2.5')" }),
     )
     .unwrap();
 }

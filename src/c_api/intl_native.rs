@@ -137,6 +137,36 @@ pub fn transliterate(text: &str, id: &str) -> Result<String, Error> {
     ffi::transliterate(text, id)
 }
 
+/// One already-selected duration unit; rendering does not select or round intervals.
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub(crate) struct DurationPart {
+    pub value: f64,
+    pub unit: i32,
+    pub fraction_digits: i32,
+}
+
+pub(crate) fn format_duration_units(
+    locale: &str,
+    parts: &[DurationPart],
+    width: i32,
+) -> Result<String, Error> {
+    if parts.is_empty() || parts.len() > 4 || !(0..=3).contains(&width) {
+        return Err(Error("invalid duration unit list or width".into()));
+    }
+    for part in parts {
+        validate_finite(part.value)?;
+        let valid_unit = (0..=3).contains(&part.unit);
+        let valid_precision = matches!(part.fraction_digits, 0 | 3);
+        if part.value < 0.0 || !valid_unit || !valid_precision {
+            return Err(Error(
+                "invalid duration unit value, interval, or precision".into(),
+            ));
+        }
+    }
+    ffi::duration_units(&locale_string(locale)?, parts, width)
+}
+
 /// Runtime ICU library version, as four dot-separated numeric components.
 pub fn version() -> String {
     ffi::version()

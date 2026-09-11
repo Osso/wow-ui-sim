@@ -44,7 +44,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 pub(crate) use storage::register;
 
 #[cfg(feature = "retail-12-1-5")]
-fn parse_locale(bytes: &[u8], operation: &str) -> LuaResult<icu_locale_core::Locale> {
+pub(super) fn parse_locale(bytes: &[u8], operation: &str) -> LuaResult<icu_locale_core::Locale> {
     let is_wow_tag = bytes.len() == 4 && bytes.iter().all(u8::is_ascii_alphabetic);
     let tag = if is_wow_tag {
         [bytes[..2].to_vec(), vec![b'-'], bytes[2..].to_vec()].concat()

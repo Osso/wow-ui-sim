@@ -60,6 +60,15 @@ unsafe fn diagnostic(pointer: *const c_char) -> String {
 }
 
 unsafe extern "C" {
+    fn wow_icu_duration_units(
+        locale: *const c_char,
+        locale_length: i32,
+        parts: *const super::DurationPart,
+        count: i32,
+        width: i32,
+        output: *mut NativeString,
+        error: *mut NativeError,
+    ) -> i32;
     fn wow_icu_format(
         locale: *const c_char,
         locale_length: i32,
@@ -123,6 +132,33 @@ unsafe extern "C" {
     fn wow_icu_string_free(data: *mut u8);
     fn wow_icu_error_name(code: i32) -> *const c_char;
     fn wow_icu_version(version: *mut u8);
+}
+
+pub(super) fn duration_units(
+    locale: &CStr,
+    parts: &[super::DurationPart],
+    width: i32,
+) -> Result<String, Error> {
+    let locale_length = checked_length(locale.to_bytes().len(), "locale")?;
+    let count = checked_length(parts.len(), "duration unit count")?;
+    let mut output = NativeString::default();
+    let mut error = NativeError::default();
+    // SAFETY: repr(C) parts and locale live through the call; output has one RAII owner.
+    let status = unsafe {
+        wow_icu_duration_units(
+            locale.as_ptr(),
+            locale_length,
+            parts.as_ptr(),
+            count,
+            width,
+            &mut output,
+            &mut error,
+        )
+    };
+    if status != 0 {
+        return Err(error.into_error(locale));
+    }
+    output.copy_string()
 }
 
 pub(super) fn format(

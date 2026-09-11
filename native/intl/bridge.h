@@ -38,6 +38,17 @@ int32_t wow_icu_find_matches(const char *locale, int32_t locale_length,
                               WowIcuError *error);
 void wow_icu_matches_free(WowIcuMatch *matches);
 
+typedef struct {
+  double value;
+  int32_t unit;
+  int32_t fraction_digits;
+} WowIcuDurationPart;
+
+int32_t wow_icu_duration_units(const char *locale, int32_t locale_length,
+                                const WowIcuDurationPart *parts, int32_t count,
+                                int32_t width, WowIcuString *output,
+                                WowIcuError *error);
+
 enum { WOW_ICU_OK = 0, WOW_ICU_NO_MATCH = 1, WOW_ICU_ERROR = 2 };
 enum { WOW_DECIMAL = 0, WOW_INTEGER = 1, WOW_PERCENT = 2, WOW_CURRENCY = 3 };
 

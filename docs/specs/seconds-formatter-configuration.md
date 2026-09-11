@@ -9,7 +9,7 @@
 - [x] Each getter returns exactly one number; each setter returns no values.
 - [x] Missing, nil, nonnumeric, NaN, and infinite setter arguments raise an error without changing either stored value. This validation policy is a simulator choice; numeric strings are not coerced.
 - [x] Configuration remains intact while a formatter survives garbage collection and is isolated from other formatter instances.
-- [x] Existing factory identity and stored setter values remain intact; maximum-mode switching is specified below. `Format` retains its existing placeholder behavior and does not consume these fields.
+- [x] Existing factory identity and stored setter values remain intact; maximum-mode switching is specified below. PTR `Format` is modeled separately in [duration formatting](seconds-formatter-format.md); earlier retail retains placeholder output.
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
 
 ### Evaluation model (simulator assumptions)
@@ -21,7 +21,7 @@
 - [x] `SetMaxInterval` selects static mode and clears a previously configured curve. `SetMaxIntervalCurve(nil)` selects the retained static maximum. These mode-switch choices, including the existing simulator setter's acceptance of nil, remain native-unverified.
 - [x] `EvaluateDesiredUnitCount(s)` returns the configured positive integral count; default `1`, independent of `s`. Existing setters still store their inputs; invalid stored interval/count values fail at evaluation without mutation.
 - [x] All four evaluators accept finite numeric seconds (including negative values) and return exactly one value. Invalid seconds/receivers raise errors. Milliseconds threshold, abbreviation, rounding, and final-unit flags do not affect these configuration queries.
-- [x] Evaluators share existing approximation state and proxy fields; instances remain independent. Existing accessors and placeholder `Format` remain unchanged.
+- [x] Evaluators share existing approximation state and proxy fields; instances remain independent. Existing accessors remain unchanged; profile-specific `Format` behavior is specified separately.
 
 The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) changes the four configuration accessor types and four evaluator argument types from `DurationSecondsDouble` to `Seconds`; it does not add the methods or specify default values or value bounds. Both setters retain `SecretArguments = AllowedWhenUntainted`; the four evaluators retain it and `ConstSecretAccessor = true`. Publication follows the existing cross-profile factory, not a new PTR-only gate.
 
@@ -46,7 +46,7 @@ Focused development proof at `89fced131`: three new tests failed before implemen
 ## Known gaps (current cycle)
 
 - [ ] Native defaults, validation/coercion, `Seconds` representation, and secret/taint enforcement remain unverified.
-- [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. `Format` and milliseconds display remain placeholders/unmodeled by this slice.
+- [ ] Native defaults, time-unit selection, curve-output rounding, and desired-count policy remain unverified. PTR `Format` and millisecond display use the separate [modeled formatting policy](seconds-formatter-format.md); earlier retail still has placeholder output.
 - [ ] Existing numeric curves currently interpolate linearly even when configured as Step. These evaluators call that existing engine unchanged and explicitly reject a fractional interval result. Vendor AuraContainer's Step curve therefore still requires a separate curve-engine correction; no broader redesign was attempted.
 
 ## Out of scope

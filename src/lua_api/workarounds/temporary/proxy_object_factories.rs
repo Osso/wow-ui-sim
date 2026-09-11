@@ -153,7 +153,7 @@ if rawget(C_StringUtil, "CreateSecondsFormatter") == nil then
 
   -- Numeric configuration is modeled in c_api::seconds_formatter. Keep this
   -- integration temporary until that model owns the complete formatter factory.
-  local initializeConfiguration = __wow_install_seconds_formatter_configuration(secondsFormatterMethods)
+  local initializeConfiguration = __wow_install_seconds_formatter_configuration(secondsFormatterMethods, render_duration_units)
   function C_StringUtil.CreateSecondsFormatter()
     return initializeConfiguration(__wow_make_proxy_object("SecondsFormatter", secondsFormatterMethods, {}))
   end
@@ -509,11 +509,21 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    use rilua::LuaApiMut;
     let bootstrap = format!(
-        "{}\n{PROXY_OBJECT_FACTORIES_LUA}",
+        "local render_duration_units = ...\n{}\n{}\n{PROXY_OBJECT_FACTORIES_LUA}",
+        crate::c_api::seconds_formatter::FORMAT_LUA,
         crate::c_api::seconds_formatter::CONFIGURATION_LUA
     );
-    lua.exec(&bootstrap)?;
+    let function = lua.load_bytes(bootstrap.as_bytes(), "@seconds-formatter-proxy-bootstrap")?;
+    let saved_top = lua.state_mut().top;
+    // Root the loaded chunk while allocating its private native callback.
+    lua.state_mut()
+        .push(rilua::Val::Function(function.gc_ref()));
+    let renderer = crate::c_api::seconds_formatter::renderer(lua.state_mut());
+    let result = lua.call_function(&function, &[renderer]);
+    lua.state_mut().top = saved_top;
+    result?;
     Ok(())
 }
 
