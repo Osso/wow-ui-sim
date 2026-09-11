@@ -12568,70 +12568,173 @@
       "id": "changed:C_EncounterTimeline.AddEditModeEvents",
       "symbol": "C_EncounterTimeline.AddEditModeEvents",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/preview.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "4fe8b7ff5109a0c0625d6ac4c1462846c345158ef0354fe53f1407307ad511b7"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventFilter",
       "symbol": "C_EncounterTimeline.EncounterTimelineEventFilter",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/filter.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "972fc2064de23d6f7aa3d3713ed8bea06f70cddc008598150bd9098842af0251"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventFilter.maxEventDuration",
       "symbol": "C_EncounterTimeline.EncounterTimelineEventFilter.maxEventDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/filter.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "972fc2064de23d6f7aa3d3713ed8bea06f70cddc008598150bd9098842af0251"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventInfo",
@@ -12645,60 +12748,86 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetEventInfo snapshots stored script-event fields into independent Lua tables; duration and maxQueueDuration are numeric stored metadata.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/request.rs",
-          "summary": "AddScriptEvent parses finite nonnegative duration and maxQueueDuration values; maxQueueDuration is stored metadata only, not a queued hold.",
-          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers independent info-table snapshots and stored duration/maxQueueDuration fields only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventInfo.duration",
@@ -12712,60 +12841,86 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetEventInfo snapshots stored script-event fields into independent Lua tables; duration and maxQueueDuration are numeric stored metadata.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/request.rs",
-          "summary": "AddScriptEvent parses finite nonnegative duration and maxQueueDuration values; maxQueueDuration is stored metadata only, not a queued hold.",
-          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers independent info-table snapshots and stored duration/maxQueueDuration fields only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineEventInfo.maxQueueDuration",
@@ -12779,60 +12934,86 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetEventInfo snapshots stored script-event fields into independent Lua tables; duration and maxQueueDuration are numeric stored metadata.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/request.rs",
-          "summary": "AddScriptEvent parses finite nonnegative duration and maxQueueDuration values; maxQueueDuration is stored metadata only, not a queued hold.",
-          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers stored request/info metadata and default zero only; it does not credit queued-hold behavior. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineScriptEventRequest",
@@ -12846,60 +13027,86 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
-        },
-        {
-          "kind": "source",
-          "reference": "src/c_api/c_encounter_timeline/request.rs",
-          "summary": "AddScriptEvent parses request duration and defaulted maxQueueDuration as stored numeric fields; maxQueueDuration is metadata only, not a queue-hold model.",
-          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetEventInfo exposes the stored duration and maxQueueDuration snapshot fields to timer consumers.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers request parsing and field storage for duration/defaulted maxQueueDuration only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineScriptEventRequest.duration",
@@ -12913,60 +13120,86 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
-        },
-        {
-          "kind": "source",
-          "reference": "src/c_api/c_encounter_timeline/request.rs",
-          "summary": "AddScriptEvent parses request duration and defaulted maxQueueDuration as stored numeric fields; maxQueueDuration is metadata only, not a queue-hold model.",
-          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetEventInfo exposes the stored duration and maxQueueDuration snapshot fields to timer consumers.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers request parsing and field storage for duration/defaulted maxQueueDuration only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineScriptEventRequest.maxQueueDuration",
@@ -12980,175 +13213,346 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
-        },
-        {
-          "kind": "source",
-          "reference": "src/c_api/c_encounter_timeline/request.rs",
-          "summary": "AddScriptEvent parses request duration and defaulted maxQueueDuration as stored numeric fields; maxQueueDuration is metadata only, not a queue-hold model.",
-          "source_hash": "e2455a313349f562f11349095bc84d71a147360b215164da97d5d54e052833f4"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetEventInfo exposes the stored duration and maxQueueDuration snapshot fields to timer consumers.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/timer.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers stored request/info metadata and default zero only; it does not credit queued-hold behavior. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineTrackInfo",
       "symbol": "C_EncounterTimeline.EncounterTimelineTrackInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineTrackInfo.maximumDuration",
       "symbol": "C_EncounterTimeline.EncounterTimelineTrackInfo.maximumDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineTrackInfo.minimumDuration",
       "symbol": "C_EncounterTimeline.EncounterTimelineTrackInfo.minimumDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineTrackInfo.minimumEventGapDuration",
       "symbol": "C_EncounterTimeline.EncounterTimelineTrackInfo.minimumEventGapDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.EncounterTimelineTrackInfo.minimumEventIntroDuration",
       "symbol": "C_EncounterTimeline.EncounterTimelineTrackInfo.minimumEventIntroDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.GetCurrentTime",
@@ -13162,83 +13566,142 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetCurrentTime and event elapsed/remaining queries read timeline shared-clock/event-clock numeric state.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/timer.rs",
-          "summary": "GetEventTimer creates duration wrappers over the same event-owned clock; wrappers are independent objects and follow lifecycle state.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers ordinary shared OnUpdate-clock current/elapsed/remaining numeric state and event-timer lifecycle only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.GetEventHighlightTime",
       "symbol": "C_EncounterTimeline.GetEventHighlightTime",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.GetEventTimeElapsed",
@@ -13252,60 +13715,86 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetCurrentTime and event elapsed/remaining queries read timeline shared-clock/event-clock numeric state.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/timer.rs",
-          "summary": "GetEventTimer creates duration wrappers over the same event-owned clock; wrappers are independent objects and follow lifecycle state.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers ordinary shared OnUpdate-clock current/elapsed/remaining numeric state and event-timer lifecycle only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.GetEventTimeRemaining",
@@ -13319,106 +13808,191 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this exact changed occurrence and its DurationSeconds to Seconds contract delta.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline.rs",
-          "summary": "PTR registration and mutation/tick dispatch use the simulator-owned encounter timeline state; native ordering and security behavior are not claimed.",
-          "source_hash": "0c8d9685254243d08e69fb349ccfaa97a17d1889fd6dc3866a5b2fb8295a5cef"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/model.rs",
-          "summary": "Timeline owns per-environment event IDs and a shared OnUpdate-driven clock; elapsed/remaining are bounded ordinary simulator state.",
-          "source_hash": "1768c99f2cdbb31c091fa959c37b883605a659b576a0d91b19414bde435f78b0"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
-          "summary": "Normal simulator OnUpdate progression invokes the encounter timeline tick; this is the bounded shared-clock lifecycle path.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/encounter_timeline_script.rs",
-          "summary": "Committed focused PTR and earlier-retail integration proof exercises script-event request parsing, field snapshots, OnUpdate clock advancement, pause/resume, retained timer wrappers, terminal lifecycle, deferred-surface absence, Blizzard event-frame timer consumption, and retail demo preservation. Proof commit 385c7790f.",
-          "source_hash": "4bd18f9533f84bf9df6ed2d4deb8a5331dfc5c7abdb303e2f2176afc58219d0e"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/queries.rs",
-          "summary": "GetCurrentTime and event elapsed/remaining queries read timeline shared-clock/event-clock numeric state.",
-          "source_hash": "762f86063164b6f3942b9c192a5f8b723d4abcf79ea2e619feabb2a5c6504024"
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "58aad4dd4da36b264b6867790066ba7f498dce97dfce38056a1c6d0a50032fbb"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_encounter_timeline/timer.rs",
-          "summary": "GetEventTimer creates duration wrappers over the same event-owned clock; wrappers are independent objects and follow lifecycle state.",
+          "summary": "Focused source records the bounded timeline model used by this row.",
           "source_hash": "eb6651bf95bdd006446d62f02d2809d5bc0c4a2b615ce222915a9a40987d9e4b"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/request.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a63c125599a23f29c6c0bf39e645e2f535a8d1067518a938f267a48cbbbca2de"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_script.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "f3b2e90c4ac054272bab9b234886068a601ef2339ebbd6cda308cd8d41a6dca8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
       "tests": [
-        "tests/encounter_timeline_script.rs::encounter_script_defaults_info_and_atomic_validation",
-        "tests/encounter_timeline_script.rs::encounter_script_clock_pause_resume_and_retained_timer",
-        "tests/encounter_timeline_script.rs::encounter_script_terminal_callbacks_observe_consistent_tick_state",
-        "tests/encounter_timeline_script.rs::encounter_script_cancel_all_reentrancy_and_initial_pause",
-        "tests/encounter_timeline_script.rs::encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo",
-        "tests/encounter_timeline_script.rs::encounter_script_timer_supports_blizzard_event_frame_consumer",
-        "tests/encounter_timeline_script.rs::encounter_script_preserves_retail_demo_baseline"
+        "tests/encounter_timeline_script.rs",
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
       ],
       "assertions": [],
       "commit": "385c7790f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/earlier-retail proof covers ordinary shared OnUpdate-clock current/elapsed/remaining numeric state and event-timer lifecycle only. Existing logs record 9 PTR and 5 retail integration tests plus 1 PTR and 2 retail library tests. Track/filter/EditMode/full-view integration is withheld explicitly. Native transition ordering/coalescing, RequiresValidTimelineEvent and SecretArguments enforcement, taint/secret/protected behavior, coercion, and native timing semantics remain unverified or simulator assumptions."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.GetSortedEventList",
       "symbol": "C_EncounterTimeline.GetSortedEventList",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/filter.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "972fc2064de23d6f7aa3d3713ed8bea06f70cddc008598150bd9098842af0251"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/layout.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "ef8ce0321ea46c23d26b5a6e384181382483c563765fb02f56629ebe903b2fc9"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/model.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "9c467302fdd56f8f99759d790e7af412502c920c876475aac039e25f38b627e6"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterTimeline.GetTrackMaxEventDuration",
       "symbol": "C_EncounterTimeline.GetTrackMaxEventDuration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed declaration.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "a6d45e2da51b10a6128239fad359b69fda659661b1f34e0be9f23642a2a8d96e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_timeline/tracks.rs",
+          "summary": "Focused source records the bounded timeline model used by this row.",
+          "source_hash": "26163d82f22885cc3758188b314bda42b08758bc24c98e5d3492d4378ff981c2"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_tracks.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "8ab227b21a7d1d2ea12a35d02aa48dcc731f198579411071ae6639155eaf7789"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_timeline_view.rs",
+          "summary": "Focused committed test source supplies recorded PTR or earlier-retail behavioral evidence for this bounded model.",
+          "source_hash": "2410fa1f5a714ec8ec24d6fc89367f17f9c899b22bd5c168cc13651f017b89d3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_timeline_tracks.rs",
+        "tests/encounter_timeline_view.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "ec9f06834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed source and focused-test review credit bounded PTR simulator behavior only: script events share the normal OnUpdate clock; fixed modeled tracks, queue hold, sorted filtering, highlighting, Edit Mode previews, and actual Blizzard TrackLayout/TimelineView consumers are exercised. The generated target documents GetViewType, so its registration is not an invented helper. Track thresholds/capacities, hidden/overflow placement, sorting ties, duration filtering, colors, icon assets, preview fixtures, callback ordering, validation/coercion, RequiresValidTimelineEvent, SecretArguments, secret/protected/forbidden enforcement, encounter-owned events, and native timing/layout behavior remain simulator policy or unverified. This does not claim native queue-hold placement."
     },
     {
       "id": "changed:C_EncounterWarnings.EncounterWarningInfo",

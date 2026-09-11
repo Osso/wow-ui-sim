@@ -43,11 +43,15 @@ cargo test --lib --test integration --offline --no-default-features --features s
 
 Profiles ran separately. Logs: `/tmp/encounter-tracks-ec9f06834-ptr.log`, `/tmp/encounter-tracks-88461edd0-retail.log`; ledger: `/tmp/encounter-tracks-proof-ledger.json`. Initial RED: `/tmp/encounter-tracks-red.log`; terminal-preview RED: `/tmp/encounter-preview-terminal-red.log`. Root `cargo fmt` ran before source commits.
 
+### Audit boundary
+
+The pinned target documents every newly registered public helper used by this model, including `GetViewType`; no extra public helper is credited. The audit credits only the eleven changed rows represented here plus the prior nine core rows. Fixed thresholds, capacities, hidden/overflow placement, duration filtering, sorting ties, colors, icon assets, preview fixtures, callback ordering, and all native/security semantics are simulator policy or unverified. Queue-hold credit is modeled behavior only, not native placement conformance.
+
 ## Known gaps (current cycle)
 
 - [ ] Native layout capacities, thresholds, hidden/overflow policy, sorting ties, colors, icon assets, preview fixtures, and event ordering are unverified simulator policies.
 - [ ] Secret/protected/forbidden enforcement and encounter-owned events are not modeled by this slice.
-- [ ] Parent owns final combined check/readability/smoke gates and audit-artifact credit; this slice ran development tests only.
+- [ ] Parent owns final combined check/readability/smoke gates; this slice's committed source/test review now backs the audit artifact credit.
 
 ## Out of scope
 

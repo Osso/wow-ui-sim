@@ -19,7 +19,7 @@ The timeline's clock starts at zero and accumulates the real runtime OnUpdate de
 
 Automatic completion occurs when active elapsed reaches duration plus the configured queue hold at tick start; public elapsed/remaining duration queries remain clamped to the countdown. Terminal events remain in lists/counts until post-update removal on a later tick. Script events are never blocked or approximate. Feature available/enabled are true in this core model, not modeled user settings. Request IDs/icon masks require nonnegative `u32` integers; durations require finite nonnegative numbers and severity is Low/Medium/High. These input policies are not native coercion evidence.
 
-The dependent [track/view model](encounter-timeline-tracks.md) now implements queue holds, track placement, sorted filtering, highlighting, Edit Mode, and view APIs. Script timers remain countdown-clamped during holds. The original core-only proof below covered queue metadata storage; newer track tests cover hold behavior and real Blizzard view consumers. No security, secret-value, taint, or native timing equivalence is claimed.
+The dependent [track/view model](encounter-timeline-tracks.md) implements a bounded simulator queue-hold, track, filter, highlight, Edit Mode, and view model. Script timers remain countdown-clamped during holds. The core proof plus recorded track/view tests cover that model and real Blizzard consumers; neither establishes native hold placement, layout, timing, ordering, or security semantics.
 
 ## How it works
 
@@ -43,9 +43,7 @@ The dependent [track/view model](encounter-timeline-tracks.md) now implements qu
 
 ### Audit credit
 
-Commit `385c7790f` moves nine changed occurrences to `best-effort` / `behavioral`: `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`; `EncounterTimelineEventInfo` and its `duration`/`maxQueueDuration`; and `EncounterTimelineScriptEventRequest` and its `duration`/`maxQueueDuration`. Credit is limited to the real script-event producer/lifecycle, shared OnUpdate clock, timer consumers, field storage, and PTR/earlier-retail profile boundary. Nine PTR and five retail integration tests, plus one PTR and two retail library tests, are recorded in the existing ledger/logs.
-
- `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`; `EncounterTimelineEventInfo` and its `duration`/`maxQueueDuration`; `EncounterTimelineScriptEventRequest` and its `duration`/`maxQueueDuration`. Queue-duration credit is field preservation only, not queued-hold behavior. The producer APIs themselves are unchanged between the pinned revisions and supply behavioral evidence for those structures. Earlier-retail tests preserve the existing demo, not native base conformance.
+Commit `385c7790f` originally credits nine changed core rows: `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`; `EncounterTimelineEventInfo` with `duration`/`maxQueueDuration`; and `EncounterTimelineScriptEventRequest` with `duration`/`maxQueueDuration`. The later dependent model supplies recorded track/view evidence for queue holds and consumers, but credit remains bounded simulator behavior; it does not establish native hold placement. Earlier-retail tests preserve the existing demo, not native base conformance.
 
 Commands (each profile run separately):
 
@@ -58,8 +56,8 @@ The PTR script tests load the existing Blizzard event-frame/settings files to ex
 
 ## Known gaps (current cycle)
 
-- [x] Focused proof at `385c7790f`: nine PTR and five retail integration tests plus existing customization library proof (one PTR, two retail); nine exact changed rows are credited only for the bounded script core.
-- [ ] Parent owns final check/readability/artifact gates for the combined core and [track/view implementation](encounter-timeline-tracks.md).
+- [x] Recorded core proof at `385c7790f`: nine PTR and five retail integration tests plus existing customization library proof (one PTR, two retail). Recorded dependent proof at `ec9f06834`: 18 PTR integration cases plus one library bridge; earlier-retail proof at `88461edd0`: five integration and two library cases.
+- [ ] Parent owns final combined check/readability/smoke and artifact-validation gates for the core plus [track/view implementation](encounter-timeline-tracks.md).
 - [ ] Native transition/coalescing, secrecy, unknown-spell and validation semantics remain unverified.
 
 ## Out of scope
