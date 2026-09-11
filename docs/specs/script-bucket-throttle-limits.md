@@ -4,13 +4,13 @@ PTR `GetScriptBucketThrottleLimits()` is an explicit temporary mock in `src/lua_
 
 ## What it must do
 
-- [ ] Publish the getter only for the PTR API epoch; preserve earlier-retail absence.
-- [ ] Return exactly one fresh table with exactly four numeric zero fields:
+- [x] Publish the getter only for the PTR API epoch; preserve earlier-retail absence.
+- [x] Return exactly one fresh table with exactly four numeric zero fields:
   - `luaScriptBucketThrottleMaxMsPerSecondNormal`
   - `luaScriptBucketThrottleMaxMsPerSecondRestricted`
   - `luaScriptBucketThrottleMaxMsBurstNormal`
   - `luaScriptBucketThrottleMaxMsBurstRestricted`
-- [ ] Keep returned tables independent: modifying a result cannot affect another result or a later call.
+- [x] Keep returned tables independent: modifying a result cannot affect another result or a later call.
 
 ## How it works
 
@@ -25,6 +25,7 @@ PTR `GetScriptBucketThrottleLimits()` is an explicit temporary mock in `src/lua_
 ## Tests asserting this spec
 
 - `src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs`: exact keys, numeric zeros, arity, independent results, and profile behavior before/after bootstrap.
+- Focused development proof at `ec51f3a7e`: one PTR test and one retail test passed using `cargo test --lib --offline --no-default-features --features sound,gui,client-<profile> script_throttle_mock_ -- --nocapture`.
 
 ## Known gaps (current cycle)
 
