@@ -29,6 +29,10 @@ The chosen `INTERRUPTED` then `STOP` order follows two inspected consumers: `Bli
 
 `A_Admin.DelayCasting` and `A_Admin.FailCasting` supply the modeled DELAYED/FAILED/FAILED_QUIET producers. They retain the four-field identity, update or remove state before callbacks, and pair failure with STOP. The real Blizzard cast bar consumes those events using the same synthetic GUID now returned at casting slot seven. See [timed-cast inputs](cast-delay-failure-inputs.md) for scope, failure ordering, and failed-specialization cleanup; these inputs are not native failure detection.
 
+### Explicit channel and empower inputs
+
+On `retail-12-1-0` and later, `A_Admin.StartChannel` / `UpdateChannel` and `StartEmpower` / `UpdateEmpower` emit the respective four-field START/UPDATE payloads. `StopChannel(false)` captures state, then emits channel `(unit, castGUID, spellID, playerGUID, castBarID)` or empower `(unit, castGUID, spellID, false, playerGUID, castBarID)`; early release and deadline completion use `nil` instead of `playerGUID`, and empower sets `complete=true`. This nil convention is required by the inspected Blizzard consumer but conflicts with the generated non-nil `interruptedBy` declaration, so it is simulator policy rather than native conformance. Identity remains the shared `Cast-Sim-<id>` GUID plus numeric bar ID. Replacement and callback-created incoming state survive stale terminal producers. Native producer timing, secret/restricted delivery, interruption attribution, and event order remain unverified.
+
 ## How it works
 
 - [Event dispatch](../event-system.md)

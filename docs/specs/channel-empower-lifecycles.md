@@ -12,6 +12,7 @@ Explicit `A_Admin` inputs drive the channel slot and its six spellcast events. P
 - [x] `GetUnitEmpowerStageDuration("player", zeroBasedIndex)` and `GetUnitEmpowerHoldAtMaxTime("player")` return **milliseconds**. Missing stages, missing empower state, and unsupported units return no values as simulator policy.
 - [x] Channel/empower starts and updates emit `(unit, castGUID, spellID, castBarID)`. Channel stop emits `(unit, castGUID, spellID, interruptedBy, castBarID)`; empower stop inserts `complete` before `interruptedBy`.
 - [x] Natural completion/early release uses nil `interruptedBy`; cancellation uses current player GUID. The nil completion convention follows Blizzard's consumer but conflicts with generated non-nil metadata; native conformance remains unclaimed.
+- [x] `UnitChannelInfo` ends at stage duration and excludes empower hold. The deadline includes hold; stage and hold query values are milliseconds.
 - [x] Channel deadlines are checked at the existing OnUpdate boundary against the same clock as GetTime. Tests advance that deadline clock without sleeping. No periodic gameplay ticks, damage, or healing are invented.
 - [x] Replacement leaves only one active cast/channel. Terminal state is extracted before callbacks. Reentrant replacement wins; old events retain immutable old IDs and cannot later complete.
 - [x] Existing `SetCasting`/`StopCasting` signatures remain unchanged. Ordinary cast producers clear replaced channel state; `SpellStopCasting` also self-cancels a channel when no ordinary cast exists.
@@ -31,7 +32,7 @@ Explicit `A_Admin` inputs drive the channel slot and its six spellcast events. P
 - `src/lua_api/on_update.rs`: shared update boundary.
 - `src/lua_api/spellcast_events.rs`: stable existing cast identity and cross-mode START handling.
 - `src/lua_api/globals/admin.rs`: input registration and existing casting integration.
-- `src/lua_api/globals/real/player_identity.rs`: current local-player name/class queries required by the Blizzard self-cancel label; other GUIDs remain unmodeled.
+- `src/lua_api/globals/real/player_identity.rs`: current local-player `UnitNameFromGUID`/`UnitClassFromGUID` lookup required by the Blizzard cancellation label; other GUIDs remain unmodeled.
 
 ## Tests asserting this spec
 
@@ -40,7 +41,7 @@ Explicit `A_Admin` inputs drive the channel slot and its six spellcast events. P
 - `tests/channel_blizzard.rs`: unmodified Blizzard channel/empower handlers, three stage-pip offsets, natural/early/cancel stops, and the observed UPDATE boundary.
 - `tests/cast_bar_id.rs`: complete eleven-field tuple assertions through the real inputs.
 
-Development proof at `7a34d3891`: 11 library + 63 integration cases passed per profile, with one old simultaneous-mode fixture failing. `1de909e5d` replaced that fixture with public input/tuple checks; its three affected tests passed on each profile. `a844e36f8` strengthened stage-count update/hold validation and passed on both profiles. Together these cover 75 unique focused tests per profile (10 new, 65 existing); this is combined development proof, not one final acceptance run. Logs and exact commands: `/tmp/channel-development-ledger.json`, `/tmp/channel-tuple-final-ledger.json`, and `/tmp/channel-stage-count-final-{ptr,retail}.log`.
+Development proof at `7a34d3891`: 11 library + 63 integration cases passed per profile, with one old simultaneous-mode fixture failing. `1de909e5d` replaced internal fixture mutation with public input/tuple checks; its three affected tests passed on each profile. `a844e36f8` strengthened stage-count update/hold validation and passed on both profiles. `89c03462c` records the source-backed lifecycle/consumer boundary. Together these cover 75 unique focused tests per profile (10 new, 65 existing); this is combined development proof, not one final acceptance run. Logs and exact commands: `/tmp/channel-development-ledger.json`, `/tmp/channel-tuple-final-ledger.json`, and `/tmp/channel-stage-count-final-{ptr,retail}.log`.
 
 ## Known gaps (current cycle)
 

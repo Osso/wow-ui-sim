@@ -12767,7 +12767,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -12860,7 +12860,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -12953,7 +12953,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -13046,7 +13046,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -13139,7 +13139,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -13232,7 +13232,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -13585,7 +13585,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -13734,7 +13734,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -13827,7 +13827,7 @@
           "kind": "source",
           "reference": "src/lua_api/on_update.rs",
           "summary": "Focused source records the bounded timeline model used by this row.",
-          "source_hash": "31081de5ddf88c61577f6b193df42f7b5cc03c6675e7efad913f951a80bbf3f8"
+          "source_hash": "a1e71e411eba47b1249128d75e6fa5114a35d1e76e61db5d748081efad0a9524"
         },
         {
           "kind": "source",
@@ -20457,70 +20457,202 @@
       "id": "changed:UNIT_SPELLCAST_CHANNEL_START",
       "symbol": "UNIT_SPELLCAST_CHANNEL_START",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register records the exact before/after payload type delta: numeric castBarID becomes UnitCastBarID."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling.rs",
+          "source_hash": "a0640c549e7b5c437a91f04190ab8384120e1781607df45fc291940b9ef2af0e",
+          "summary": "State transition extracts old channel state before terminal callbacks, preserves callback replacements, and dispatches modeled START/STOP at the shared tick boundary."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling/inputs.rs",
+          "source_hash": "308838679d944c6d40802045050b720cce9aa8639fbfd493fcc417ba722afedd",
+          "summary": "Explicit A_Admin channel/empower inputs validate before state mutation, update matching mode timing, retain identity, and dispatch START/UPDATE."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
+          "summary": "Shared player-cast construction supplies the modeled four-field player, Cast-Sim GUID, spell ID, and numeric castBarID identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/channel-empower-lifecycles.md",
+          "source_hash": "9f09c7c0e4767e88bed0d2bcbc705a069850de46ab5662dc9d98d596f86ce781",
+          "summary": "Bounded public input contract documents timing-query units, STOP tails, consumer-required attribution policy, and known unmodified Blizzard UPDATE limitation."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/channel_lifecycle.rs::channel_inputs_update_complete_and_preserve_identity",
+          "source_hash": "1622ea8b9a4634206648cd538d3a0d49cdebb24aa7db074811f8f73953392645",
+          "summary": "Public channel start/update proof asserts exact four-field event identity, retained query identity, deadline completion, and duplicate-stop suppression."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/channel_lifecycle.rs::channel_inputs_update_complete_and_preserve_identity"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "89c03462c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail source and test proof establishes only modeled public A_Admin channel/empower inputs: matching mode state, millisecond stage/hold queries, exclusive replacement, retained synthetic GUID/numeric castBarID identity, callback-safe terminal extraction, and the unmodified Blizzard consumer. Channel query end excludes empower hold while deadline completion includes it. STOP uses nil interruptedBy for natural completion/early release and the current player GUID for cancellation; generated metadata declares non-nil interruptedBy, so this is consumer-driven policy, not native conformance. The unmodified empower UPDATE consumer omits hold and retains old pips, so full native UI correctness is not claimed. Native gameplay producers, automatic updates, timing/order, interruption attribution, secret/restricted delivery, security, coercion, GUID/UnitCastBarID semantics, and older-profile execution remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_CHANNEL_STOP",
       "symbol": "UNIT_SPELLCAST_CHANNEL_STOP",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register records the exact before/after payload type delta: numeric castBarID becomes UnitCastBarID."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling.rs",
+          "source_hash": "a0640c549e7b5c437a91f04190ab8384120e1781607df45fc291940b9ef2af0e",
+          "summary": "State transition extracts old channel state before terminal callbacks, preserves callback replacements, and dispatches modeled START/STOP at the shared tick boundary."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling/inputs.rs",
+          "source_hash": "308838679d944c6d40802045050b720cce9aa8639fbfd493fcc417ba722afedd",
+          "summary": "Explicit A_Admin channel/empower inputs validate before state mutation, update matching mode timing, retain identity, and dispatch START/UPDATE."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
+          "summary": "Shared player-cast construction supplies the modeled four-field player, Cast-Sim GUID, spell ID, and numeric castBarID identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/channel-empower-lifecycles.md",
+          "source_hash": "9f09c7c0e4767e88bed0d2bcbc705a069850de46ab5662dc9d98d596f86ce781",
+          "summary": "Bounded public input contract documents timing-query units, STOP tails, consumer-required attribution policy, and known unmodified Blizzard UPDATE limitation."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/channel_lifecycle.rs::channel_inputs_update_complete_and_preserve_identity",
+          "source_hash": "1622ea8b9a4634206648cd538d3a0d49cdebb24aa7db074811f8f73953392645",
+          "summary": "Public channel proof asserts captured five-field STOP, nil natural interruptedBy, retained identity, inactive state, and duplicate-stop suppression."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/channel_lifecycle.rs::channel_inputs_update_complete_and_preserve_identity"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "89c03462c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail source and test proof establishes only modeled public A_Admin channel/empower inputs: matching mode state, millisecond stage/hold queries, exclusive replacement, retained synthetic GUID/numeric castBarID identity, callback-safe terminal extraction, and the unmodified Blizzard consumer. Channel query end excludes empower hold while deadline completion includes it. STOP uses nil interruptedBy for natural completion/early release and the current player GUID for cancellation; generated metadata declares non-nil interruptedBy, so this is consumer-driven policy, not native conformance. The unmodified empower UPDATE consumer omits hold and retains old pips, so full native UI correctness is not claimed. Native gameplay producers, automatic updates, timing/order, interruption attribution, secret/restricted delivery, security, coercion, GUID/UnitCastBarID semantics, and older-profile execution remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_CHANNEL_UPDATE",
       "symbol": "UNIT_SPELLCAST_CHANNEL_UPDATE",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register records the exact before/after payload type delta: numeric castBarID becomes UnitCastBarID."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling.rs",
+          "source_hash": "a0640c549e7b5c437a91f04190ab8384120e1781607df45fc291940b9ef2af0e",
+          "summary": "State transition extracts old channel state before terminal callbacks, preserves callback replacements, and dispatches modeled START/STOP at the shared tick boundary."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling/inputs.rs",
+          "source_hash": "308838679d944c6d40802045050b720cce9aa8639fbfd493fcc417ba722afedd",
+          "summary": "Explicit A_Admin channel/empower inputs validate before state mutation, update matching mode timing, retain identity, and dispatch START/UPDATE."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
+          "summary": "Shared player-cast construction supplies the modeled four-field player, Cast-Sim GUID, spell ID, and numeric castBarID identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/channel-empower-lifecycles.md",
+          "source_hash": "9f09c7c0e4767e88bed0d2bcbc705a069850de46ab5662dc9d98d596f86ce781",
+          "summary": "Bounded public input contract documents timing-query units, STOP tails, consumer-required attribution policy, and known unmodified Blizzard UPDATE limitation."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/channel_blizzard.rs::channel_blizzard_view_observes_start_update_and_natural_completion",
+          "source_hash": "794f0c59ce929bed0343eab979456aa46733eb1944a955c031272ea2893cccf7",
+          "summary": "Unmodified Blizzard channel view observes public start/update timing and terminal clearing."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/channel_blizzard.rs::channel_blizzard_view_observes_start_update_and_natural_completion"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "89c03462c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail source and test proof establishes only modeled public A_Admin channel/empower inputs: matching mode state, millisecond stage/hold queries, exclusive replacement, retained synthetic GUID/numeric castBarID identity, callback-safe terminal extraction, and the unmodified Blizzard consumer. Channel query end excludes empower hold while deadline completion includes it. STOP uses nil interruptedBy for natural completion/early release and the current player GUID for cancellation; generated metadata declares non-nil interruptedBy, so this is consumer-driven policy, not native conformance. The unmodified empower UPDATE consumer omits hold and retains old pips, so full native UI correctness is not claimed. Native gameplay producers, automatic updates, timing/order, interruption attribution, secret/restricted delivery, security, coercion, GUID/UnitCastBarID semantics, and older-profile execution remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_DELAYED",
@@ -20546,13 +20678,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
-          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
           "summary": "Shared player-cast payload construction emits the modeled four-field `(player, Cast-Sim GUID, spell ID, numeric castBarID)` identity."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
         },
         {
@@ -20564,7 +20696,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "45345eb906d2aedbcc93afbcf12084f7ea0eb90ee341984aa2d96ec655aaf352",
+          "source_hash": "973d2b86a7e944d051e5d2fb178f9df0c133919c8e3f4049376a0aba63924cc1",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -20582,70 +20714,202 @@
       "id": "changed:UNIT_SPELLCAST_EMPOWER_START",
       "symbol": "UNIT_SPELLCAST_EMPOWER_START",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register records the exact before/after payload type delta: numeric castBarID becomes UnitCastBarID."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling.rs",
+          "source_hash": "a0640c549e7b5c437a91f04190ab8384120e1781607df45fc291940b9ef2af0e",
+          "summary": "State transition extracts old channel state before terminal callbacks, preserves callback replacements, and dispatches modeled START/STOP at the shared tick boundary."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling/inputs.rs",
+          "source_hash": "308838679d944c6d40802045050b720cce9aa8639fbfd493fcc417ba722afedd",
+          "summary": "Explicit A_Admin channel/empower inputs validate before state mutation, update matching mode timing, retain identity, and dispatch START/UPDATE."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
+          "summary": "Shared player-cast construction supplies the modeled four-field player, Cast-Sim GUID, spell ID, and numeric castBarID identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/channel-empower-lifecycles.md",
+          "source_hash": "9f09c7c0e4767e88bed0d2bcbc705a069850de46ab5662dc9d98d596f86ce781",
+          "summary": "Bounded public input contract documents timing-query units, STOP tails, consumer-required attribution policy, and known unmodified Blizzard UPDATE limitation."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/channel_blizzard.rs::channel_blizzard_empower_pips_use_milliseconds_and_release_flags",
+          "source_hash": "794f0c59ce929bed0343eab979456aa46733eb1944a955c031272ea2893cccf7",
+          "summary": "Unmodified Blizzard empower view observes public start, millisecond stage values, hold-derived deadline display, early release, cancellation, and natural completion."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/channel_blizzard.rs::channel_blizzard_empower_pips_use_milliseconds_and_release_flags"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "89c03462c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail source and test proof establishes only modeled public A_Admin channel/empower inputs: matching mode state, millisecond stage/hold queries, exclusive replacement, retained synthetic GUID/numeric castBarID identity, callback-safe terminal extraction, and the unmodified Blizzard consumer. Channel query end excludes empower hold while deadline completion includes it. STOP uses nil interruptedBy for natural completion/early release and the current player GUID for cancellation; generated metadata declares non-nil interruptedBy, so this is consumer-driven policy, not native conformance. The unmodified empower UPDATE consumer omits hold and retains old pips, so full native UI correctness is not claimed. Native gameplay producers, automatic updates, timing/order, interruption attribution, secret/restricted delivery, security, coercion, GUID/UnitCastBarID semantics, and older-profile execution remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_EMPOWER_STOP",
       "symbol": "UNIT_SPELLCAST_EMPOWER_STOP",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register records the exact before/after payload type delta: numeric castBarID becomes UnitCastBarID."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling.rs",
+          "source_hash": "a0640c549e7b5c437a91f04190ab8384120e1781607df45fc291940b9ef2af0e",
+          "summary": "State transition extracts old channel state before terminal callbacks, preserves callback replacements, and dispatches modeled START/STOP at the shared tick boundary."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling/inputs.rs",
+          "source_hash": "308838679d944c6d40802045050b720cce9aa8639fbfd493fcc417ba722afedd",
+          "summary": "Explicit A_Admin channel/empower inputs validate before state mutation, update matching mode timing, retain identity, and dispatch START/UPDATE."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
+          "summary": "Shared player-cast construction supplies the modeled four-field player, Cast-Sim GUID, spell ID, and numeric castBarID identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/channel-empower-lifecycles.md",
+          "source_hash": "9f09c7c0e4767e88bed0d2bcbc705a069850de46ab5662dc9d98d596f86ce781",
+          "summary": "Bounded public input contract documents timing-query units, STOP tails, consumer-required attribution policy, and known unmodified Blizzard UPDATE limitation."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/channel_lifecycle.rs::empower_inputs_expose_milliseconds_and_finish_after_hold",
+          "source_hash": "1622ea8b9a4634206648cd538d3a0d49cdebb24aa7db074811f8f73953392645",
+          "summary": "Public empower proof asserts captured six-field STOP, complete/nil natural tail, hold-inclusive deadline, and inactive state."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/channel_lifecycle.rs::empower_inputs_expose_milliseconds_and_finish_after_hold"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "89c03462c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail source and test proof establishes only modeled public A_Admin channel/empower inputs: matching mode state, millisecond stage/hold queries, exclusive replacement, retained synthetic GUID/numeric castBarID identity, callback-safe terminal extraction, and the unmodified Blizzard consumer. Channel query end excludes empower hold while deadline completion includes it. STOP uses nil interruptedBy for natural completion/early release and the current player GUID for cancellation; generated metadata declares non-nil interruptedBy, so this is consumer-driven policy, not native conformance. The unmodified empower UPDATE consumer omits hold and retains old pips, so full native UI correctness is not claimed. Native gameplay producers, automatic updates, timing/order, interruption attribution, secret/restricted delivery, security, coercion, GUID/UnitCastBarID semantics, and older-profile execution remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_EMPOWER_UPDATE",
       "symbol": "UNIT_SPELLCAST_EMPOWER_UPDATE",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 register records the exact before/after payload type delta: numeric castBarID becomes UnitCastBarID."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling.rs",
+          "source_hash": "a0640c549e7b5c437a91f04190ab8384120e1781607df45fc291940b9ef2af0e",
+          "summary": "State transition extracts old channel state before terminal callbacks, preserves callback replacements, and dispatches modeled START/STOP at the shared tick boundary."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/channeling/inputs.rs",
+          "source_hash": "308838679d944c6d40802045050b720cce9aa8639fbfd493fcc417ba722afedd",
+          "summary": "Explicit A_Admin channel/empower inputs validate before state mutation, update matching mode timing, retain identity, and dispatch START/UPDATE."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
+          "summary": "Shared player-cast construction supplies the modeled four-field player, Cast-Sim GUID, spell ID, and numeric castBarID identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
+          "summary": "UnitChannelInfo serializes the retained active state tuple, including numeric castBarID and distinct endpoint behavior."
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/channel-empower-lifecycles.md",
+          "source_hash": "9f09c7c0e4767e88bed0d2bcbc705a069850de46ab5662dc9d98d596f86ce781",
+          "summary": "Bounded public input contract documents timing-query units, STOP tails, consumer-required attribution policy, and known unmodified Blizzard UPDATE limitation."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/channel_blizzard.rs::channel_blizzard_empower_update_exposes_vendor_hold_boundary",
+          "source_hash": "794f0c59ce929bed0343eab979456aa46733eb1944a955c031272ea2893cccf7",
+          "summary": "Unmodified Blizzard consumer proof records retained old pips and omitted hold after public update while state queries/deadline retain new values."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/channel_blizzard.rs::channel_blizzard_empower_update_exposes_vendor_hold_boundary"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "89c03462c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail source and test proof establishes only modeled public A_Admin channel/empower inputs: matching mode state, millisecond stage/hold queries, exclusive replacement, retained synthetic GUID/numeric castBarID identity, callback-safe terminal extraction, and the unmodified Blizzard consumer. Channel query end excludes empower hold while deadline completion includes it. STOP uses nil interruptedBy for natural completion/early release and the current player GUID for cancellation; generated metadata declares non-nil interruptedBy, so this is consumer-driven policy, not native conformance. The unmodified empower UPDATE consumer omits hold and retains old pips, so full native UI correctness is not claimed. Native gameplay producers, automatic updates, timing/order, interruption attribution, secret/restricted delivery, security, coercion, GUID/UnitCastBarID semantics, and older-profile execution remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_FAILED",
@@ -20671,13 +20935,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
-          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
           "summary": "Shared player-cast payload construction emits the modeled four-field `(player, Cast-Sim GUID, spell ID, numeric castBarID)` identity."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
         },
         {
@@ -20689,7 +20953,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "45345eb906d2aedbcc93afbcf12084f7ea0eb90ee341984aa2d96ec655aaf352",
+          "source_hash": "973d2b86a7e944d051e5d2fb178f9df0c133919c8e3f4049376a0aba63924cc1",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -20727,13 +20991,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
-          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8",
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92",
           "summary": "Shared player-cast payload construction emits the modeled four-field `(player, Cast-Sim GUID, spell ID, numeric castBarID)` identity."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
         },
         {
@@ -20745,7 +21009,7 @@
         {
           "kind": "test",
           "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
-          "source_hash": "45345eb906d2aedbcc93afbcf12084f7ea0eb90ee341984aa2d96ec655aaf352",
+          "source_hash": "973d2b86a7e944d051e5d2fb178f9df0c133919c8e3f4049376a0aba63924cc1",
           "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
@@ -20778,19 +21042,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "SpellStopCasting atomically takes the active modeled cast before dispatching the interruption producer and returning its boolean result.",
-          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
+          "source_hash": "81f1206ba9cdc714d01e59e77616015030222ac133464ebf07519b9df1038bf5"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled producer emits the five-field interruption payload then a paired four-field STOP for the captured cast identity.",
-          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/unit_misc.rs",
           "summary": "The interruption actor uses the existing player UnitGUID resolver rather than target state or a fabricated enemy identity.",
-          "source_hash": "015622d10fd59e3873d9f3260e9e9b936b069073a8469190ca7fb193d813f988"
+          "source_hash": "9711b8a223fa1369850a45b74bd268b7a6be7b2e9dd5c20148087d07beec4bb5"
         },
         {
           "kind": "source",
@@ -20847,25 +21111,25 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
+          "source_hash": "81f1206ba9cdc714d01e59e77616015030222ac133464ebf07519b9df1038bf5"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
           "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "48368986933c49c531e4fd366224ad9bfa9dcfbbec7242ffa021293e7248bf8c"
+          "source_hash": "d3bda8bcafd5ab4e17c2864e21e58cb2758e734a26842e05f4b40fa0fe3ae93a"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "eb6281be5c6e643e3a6d2466209f0c9f3d62a98a1805573716e091b6e081bdb7"
+          "source_hash": "e5163bbd759ab9b97258a81f74c2eb9c3ea8a49aad6230fefa07478f9e3454f3"
         },
         {
           "kind": "source",
@@ -20922,25 +21186,25 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
+          "source_hash": "81f1206ba9cdc714d01e59e77616015030222ac133464ebf07519b9df1038bf5"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
           "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "48368986933c49c531e4fd366224ad9bfa9dcfbbec7242ffa021293e7248bf8c"
+          "source_hash": "d3bda8bcafd5ab4e17c2864e21e58cb2758e734a26842e05f4b40fa0fe3ae93a"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "eb6281be5c6e643e3a6d2466209f0c9f3d62a98a1805573716e091b6e081bdb7"
+          "source_hash": "e5163bbd759ab9b97258a81f74c2eb9c3ea8a49aad6230fefa07478f9e3454f3"
         },
         {
           "kind": "source",
@@ -21004,25 +21268,25 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
+          "source_hash": "15d6dba88902de5d9bdf1fc877ed9bab8d7babe43e89749df1f0bb225d89eb92"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
+          "source_hash": "81f1206ba9cdc714d01e59e77616015030222ac133464ebf07519b9df1038bf5"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
           "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "48368986933c49c531e4fd366224ad9bfa9dcfbbec7242ffa021293e7248bf8c"
+          "source_hash": "d3bda8bcafd5ab4e17c2864e21e58cb2758e734a26842e05f4b40fa0fe3ae93a"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "eb6281be5c6e643e3a6d2466209f0c9f3d62a98a1805573716e091b6e081bdb7"
+          "source_hash": "e5163bbd759ab9b97258a81f74c2eb9c3ea8a49aad6230fefa07478f9e3454f3"
         },
         {
           "kind": "source",
@@ -21078,13 +21342,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21096,13 +21360,13 @@
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
         },
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
         },
         {
@@ -21141,13 +21405,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21159,13 +21423,13 @@
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
         },
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
         },
         {
@@ -21204,13 +21468,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21222,13 +21486,13 @@
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
         },
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
         },
         {
@@ -21267,13 +21531,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21285,13 +21549,13 @@
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
         },
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
         },
         {
@@ -21330,13 +21594,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21348,13 +21612,13 @@
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
         },
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
         },
         {
@@ -21393,13 +21657,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "source_hash": "b530bdc62d14ffd55b58648cde85d2c51c8e06603c521588830fa0fef949bd9a",
           "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21411,13 +21675,13 @@
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
         },
         {
           "kind": "test",
           "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
-          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "source_hash": "82bd17c994ab81d1f040408c71a624467782353195a0adb955b7db2db009ae71",
           "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
         },
         {
