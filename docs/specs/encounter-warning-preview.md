@@ -15,7 +15,7 @@
 
 All content is synthetic. Text is `Simulated Low/Medium/High Warning`; caster/target names are `Simulator Caster` and `Simulator Target`, with opaque `Sim-Warning-Caster` / `Sim-Warning-Target` identifiers. These identifiers are not native WoW GUIDs. The chosen icon is file ID `136122`, tooltip spell is `0`, and duration is five seconds. Colors are white, amber `(1, 0.75, 0.1)`, and red `(1, 0.15, 0.05)`, all alpha one. Only High is deadly. Warnings are shown, but sound and chat output are disabled.
 
-The source establishes fields/types, ColorMixin shape, and severity values—not these preview values, validation errors, native secret handling, or exact expiration behavior. Ordinary strings are used even for source fields annotated secret. Existing legacy `PlaySound` behavior is untouched. No new preview setting API is needed.
+The source establishes fields/types, ColorMixin shape, and severity values—not these preview values, validation errors, native secret handling, or exact expiration behavior. Ordinary strings are used even for source fields annotated secret. Existing legacy `PlaySound` behavior is untouched. No new preview setting API is needed. The constructor uses the existing `CreateColor` factory, so the loaded Blizzard ColorMixin is retained. The initialization-only color fallback has getters and mutable RGBA fields but lacks `SetRGBA`; that unrelated fallback is not expanded here.
 
 ## How it works
 
@@ -35,7 +35,7 @@ The source establishes fields/types, ColorMixin shape, and severity values—not
 
 ## Known gaps (current cycle)
 
-- [ ] Focused RED/GREEN development proof pending implementation run.
+- [ ] Complete the real Blizzard preview display/expiration/cancel/reuse test. Current `AnimationGroup:Play()` changes playback flags without dispatching `OnPlay`; Blizzard's installed handler is what shows the warning view. The regression remains failing rather than calling `Show()` or replacing vendor callbacks. Animation-engine correction requires separate scope approval.
 - [ ] Native secret/taint behavior, preview content, GUID semantics, exact duration policy, and validation/error compatibility remain unverified.
 
 ## Out of scope

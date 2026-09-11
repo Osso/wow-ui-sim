@@ -38,7 +38,8 @@ fn warning_preview_ptr_has_complete_independent_records() {
                 local cr, cg, cb, ca = info.color:GetRGBA()
                 assert(cr == r and cg == g and cb == b and ca == 1)
                 assert(type(info.color.WrapTextInColorCode) == "function")
-                info.text = "modified"; info.duration = -1; info.color:SetRGBA(0, 0, 0, 0)
+                info.text = "modified"; info.duration = -1
+                info.color.r, info.color.g, info.color.b, info.color.a = 0, 0, 0, 0
                 local fresh = C_EncounterWarnings.GetEditModeWarningInfo(severity)
                 assert(fresh ~= info and fresh.color ~= info.color)
                 assert(fresh.text == text and fresh.duration == 5)
@@ -106,6 +107,22 @@ fn load_warning_view() -> WowLuaEnv {
 }
 
 #[cfg(feature = "client-ptr")]
+#[test]
+fn warning_preview_uses_loaded_blizzard_color_mixin() {
+    let env = load_warning_view();
+    env.exec(r#"
+        local first = C_EncounterWarnings.GetEditModeWarningInfo(Enum.EncounterEventSeverity.High)
+        local second = C_EncounterWarnings.GetEditModeWarningInfo(Enum.EncounterEventSeverity.High)
+        first.color:SetRGBA(0.2, 0.3, 0.4, 0.5)
+        local r, g, b, a = first.color:GetRGBA()
+        assert(r == 0.2 and g == 0.3 and b == 0.4 and a == 0.5)
+        r, g, b, a = second.color:GetRGBA()
+        assert(r == 1 and g == 0.15 and b == 0.05 and a == 1)
+        assert(first.color:IsEqualTo(CreateColor(0.2, 0.3, 0.4, 0.5)))
+    "#).unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
 fn expire_warning_timer(env: &WowLuaEnv, id: u64) {
     env.state().borrow_mut().rilua_timers.iter_mut().find(|timer| timer.id == id)
         .expect("queued warning timer").fire_at = std::time::Instant::now();
@@ -124,12 +141,16 @@ fn warning_preview_real_blizzard_frame_expires_cancels_and_reuses() {
         first = view:GetCurrentWarning()
         assert(first and first.severity == Enum.EncounterEventSeverity.High, "high severity preview")
         assert(first.isDeadly and first.duration == 5, "high preview flags and seconds")
-        assert(view:IsShown() and view.expirationTimer ~= nil, "visible preview with timer")
+        assert(view.expirationTimer ~= nil, "preview created its expiration timer")
+        assert(view.SwingAnimation:IsPlaying(), "preview started its real animation")
+        assert(type(view.SwingAnimation:GetScript("OnPlay")) == "function", "Blizzard OnPlay handler installed")
+        assert(view:IsShown(), "AnimationGroup:Play did not dispatch Blizzard OnPlay to show the preview")
         assert(view.Text:GetText() == first.text, "preview text")
         assert(view.LeftIcon.Icon:GetTexture() == first.iconFileID, "preview icon")
         assert(view.LeftIcon.DeadlyOverlay:IsShown(), "deadly overlay")
         local r, g, b = view.Text:GetTextColor()
-        assert(r == 1 and g == 0.15 and b == 0.05, "text color: " .. r .. ", " .. g .. ", " .. b)
+        assert(math.abs(r - 1) < 0.000001 and math.abs(g - 0.15) < 0.000001
+            and math.abs(b - 0.05) < 0.000001, "text color: " .. r .. ", " .. g .. ", " .. b)
     "#).unwrap();
     let first_timer = env.state().borrow().rilua_timers.back().unwrap().id;
     env.fire_on_update(0.5).unwrap();
