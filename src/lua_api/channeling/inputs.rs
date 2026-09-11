@@ -30,6 +30,15 @@ fn empower_timing(state: &LuaState, index: i32) -> LuaResult<EmpowerTiming> {
         .tables
         .get(reference)
         .ok_or_else(|| runtime_error("empower stages table unavailable"))?;
+    let stage_durations = read_stages(table)?;
+    let hold_at_max = seconds(stack_val(state, index + 1), false)?;
+    Ok(EmpowerTiming {
+        stage_durations,
+        hold_at_max,
+    })
+}
+
+fn read_stages(table: &rilua::vm::table::Table) -> LuaResult<Vec<f64>> {
     let count = table
         .array_slice()
         .iter()
@@ -43,14 +52,9 @@ fn empower_timing(state: &LuaState, index: i32) -> LuaResult<EmpowerTiming> {
     if count == 0 {
         return Err(runtime_error("empower stages must not be empty"));
     }
-    let stage_durations = (1..=count)
+    (1..=count)
         .map(|i| seconds(table.get_int(i as i64), true))
-        .collect::<LuaResult<Vec<_>>>()?;
-    let hold_at_max = seconds(stack_val(state, index + 1), false)?;
-    Ok(EmpowerTiming {
-        stage_durations,
-        hold_at_max,
-    })
+        .collect()
 }
 
 fn end_time(start: f64, duration: f64, hold: f64) -> LuaResult<f64> {
@@ -70,9 +74,9 @@ fn input_cast(
     let Val::Num(spell) = stack_val(state, 1) else {
         return Err(runtime_error("channel spell ID must be a positive integer"));
     };
-    let valid_spell =
-        spell.is_finite() && spell.fract() == 0.0 && spell > 0.0 && spell <= u32::MAX as f64;
-    if !valid_spell {
+    let integer = spell.fract() == 0.0;
+    let in_range = (1.0..=u32::MAX as f64).contains(&spell);
+    if !integer || !in_range {
         return Err(runtime_error("channel spell ID must be a positive integer"));
     }
     let spell_name = String::from_stack(state, 2)?;
@@ -106,25 +110,29 @@ pub(crate) fn start_empower(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+fn update_timing(
+    state: &mut LuaState,
+    duration: f64,
+    timing: Option<EmpowerTiming>,
+) -> LuaResult<Option<(u32, u32)>> {
+    let mut sim = borrow_state_mut(state)?;
+    let Some(cast) = sim
+        .channeling
+        .as_mut()
+        .filter(|cast| cast.empower.is_some() == timing.is_some())
+    else {
+        return Ok(None);
+    };
+    let hold = timing.as_ref().map_or(0.0, |value| value.hold_at_max);
+    let end = end_time(cast.start_time, duration, hold)?;
+    cast.end_time = end;
+    cast.empower = timing;
+    Ok(Some((cast.cast_id, cast.spell_id)))
+}
+
 fn update(state: &mut LuaState, duration: f64, timing: Option<EmpowerTiming>) -> LuaResult<u32> {
     let empowered = timing.is_some();
-    let identity = {
-        let mut sim = borrow_state_mut(state)?;
-        match sim
-            .channeling
-            .as_mut()
-            .filter(|cast| cast.empower.is_some() == empowered)
-        {
-            Some(cast) => {
-                let hold = timing.as_ref().map_or(0.0, |value| value.hold_at_max);
-                let end = end_time(cast.start_time, duration, hold)?;
-                cast.end_time = end;
-                cast.empower = timing;
-                Some((cast.cast_id, cast.spell_id))
-            }
-            None => None,
-        }
-    };
+    let identity = update_timing(state, duration, timing)?;
     if let Some((id, spell)) = identity {
         let event = if empowered {
             "UNIT_SPELLCAST_EMPOWER_UPDATE"

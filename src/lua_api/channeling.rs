@@ -85,26 +85,24 @@ fn is_current(state: &LuaState, id: u32) -> LuaResult<bool> {
         .is_some_and(|cast| cast.cast_id == id))
 }
 
-fn replace(state: &mut LuaState, mut incoming: CastingState) -> LuaResult<()> {
-    let (old_cast, old_channel, id, spell, empowered) = {
-        let mut sim = borrow_state_mut(state)?;
-        incoming.cast_id = sim.next_cast_id;
-        sim.next_cast_id = sim.next_cast_id.wrapping_add(1);
-        let identity = (
-            incoming.cast_id,
-            incoming.spell_id,
-            incoming.empower.is_some(),
-        );
-        let old_cast = sim.casting.take();
-        if old_cast
-            .as_ref()
-            .is_some_and(|cast| cast.spell_id == crate::c_api::c_spec::SPEC_ACTIVATION_SPELL_ID)
-        {
-            sim.player.pending_spec_change = None;
-        }
-        let old_channel = sim.channeling.replace(incoming);
-        (old_cast, old_channel, identity.0, identity.1, identity.2)
-    };
+fn install_incoming(
+    state: &mut LuaState,
+    mut incoming: CastingState,
+) -> LuaResult<(Option<CastingState>, Option<CastingState>, u32)> {
+    let mut sim = borrow_state_mut(state)?;
+    incoming.cast_id = sim.next_cast_id;
+    sim.next_cast_id = sim.next_cast_id.wrapping_add(1);
+    let id = incoming.cast_id;
+    super::spellcast_events::clear_replaced_specialization(&mut sim);
+    let old_cast = sim.casting.take();
+    let old_channel = sim.channeling.replace(incoming);
+    Ok((old_cast, old_channel, id))
+}
+
+fn replace(state: &mut LuaState, incoming: CastingState) -> LuaResult<()> {
+    let spell = incoming.spell_id;
+    let empowered = incoming.empower.is_some();
+    let (old_cast, old_channel, id) = install_incoming(state, incoming)?;
     if let Some(cast) = old_cast {
         let actor = actor_guid(state)?;
         fire_player_cast_interrupted(state, cast.cast_id, cast.spell_id, &actor);

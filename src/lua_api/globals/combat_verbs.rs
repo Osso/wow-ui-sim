@@ -475,11 +475,9 @@ fn spell_stop_casting(state: &mut LuaState) -> LuaResult<u32> {
             &interrupted_by,
         );
     }
-    let mut stopped = cast.is_some();
+    let stopped = cast.is_some();
     #[cfg(feature = "retail-12-1-0")]
-    if !stopped {
-        stopped = crate::lua_api::channeling::stop(state, false)?;
-    }
+    let stopped = stopped || crate::lua_api::channeling::stop(state, false)?;
     state.push(Val::Bool(stopped));
     Ok(1)
 }

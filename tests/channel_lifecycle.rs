@@ -80,6 +80,9 @@ fn empower_inputs_expose_milliseconds_and_finish_after_hold() {
         assert(GetUnitEmpowerStageDuration('player', 2) == 1500)
         assert(GetUnitEmpowerHoldAtMaxTime('player') == 2000)
         assert(GetUnitEmpowerStageDuration('player', 3) == nil)
+        assert(GetUnitEmpowerStageDuration('player', -1) == nil)
+        assert(GetUnitEmpowerStageDuration('player', 0.5) == nil)
+        assert(GetUnitEmpowerStageDuration('player', 0/0) == nil)
         assert(GetUnitEmpowerStageDuration('target', 0) == nil)
         assert(GetUnitEmpowerHoldAtMaxTime('target') == nil)
         assert(A_Admin.UpdateEmpower({1, 1, 2}, 3))
@@ -134,6 +137,11 @@ fn channel_inputs_validate_atomically_and_isolate_modes() {
         stop = channelEvents[#channelEvents]
         assert(stop.event == 'UNIT_SPELLCAST_EMPOWER_STOP' and stop[4] == false)
         assert(stop[5] == UnitGUID('player') and UnitChannelInfo('player') == nil)
+        assert(UnitNameFromGUID(stop[5]) == UnitName('player'))
+        local _, class, classID = UnitClassFromGUID(stop[5])
+        local _, expectedClass, expectedID = UnitClass('player')
+        assert(class == expectedClass and classID == expectedID)
+        assert(UnitNameFromGUID('unknown') == nil and UnitClassFromGUID('unknown') == nil)
     "#).unwrap();
 }
 
