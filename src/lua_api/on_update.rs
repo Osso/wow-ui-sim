@@ -38,6 +38,9 @@ pub(crate) fn fire(
     // instead of interleaving mid-dispatch.
     env.gc_stop();
 
+    #[cfg(feature = "retail-12-1-5")]
+    crate::c_api::c_encounter_timeline::begin_tick(env.rilua_mut().state_mut(), elapsed)?;
+
     reconcile_runtime_cache(env);
     let frame_ids = on_update_frame_ids(env);
 
@@ -54,6 +57,9 @@ pub(crate) fn fire(
     let started = Instant::now();
     fire_on_post_update_handlers(env, &frame_ids, elapsed)?;
     timings.on_post_update = started.elapsed();
+
+    #[cfg(feature = "retail-12-1-5")]
+    crate::c_api::c_encounter_timeline::end_tick(env.rilua_mut().state_mut())?;
 
     let started = Instant::now();
     finalize_frame_metrics(env, elapsed);

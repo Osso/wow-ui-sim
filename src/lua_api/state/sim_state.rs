@@ -4,6 +4,8 @@ pub struct SimState {
     pub widgets: WidgetRegistry,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
+    #[cfg(feature = "retail-12-1-5")]
+    pub(crate) encounter_timeline: crate::c_api::c_encounter_timeline::Timeline,
     pub events: EventQueue,
     pub scripts: ScriptRegistry,
     pub console_output: Vec<String>,

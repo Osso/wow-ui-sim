@@ -19,6 +19,8 @@ macro_rules! build_empty_sim_state {
             events: EventQueue::default(),
             #[cfg(feature = "retail-12-1-5")]
             weather: crate::c_api::c_weather::WeatherState::default(),
+            #[cfg(feature = "retail-12-1-5")]
+            encounter_timeline: crate::c_api::c_encounter_timeline::Timeline::default(),
             scripts: ScriptRegistry::default(),
             cvars: CVarStorage::new(),
             console_output: $collections.console_output,

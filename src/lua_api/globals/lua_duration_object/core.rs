@@ -88,13 +88,18 @@ pub(super) fn current_time(state: &LuaState) -> LuaResult<f64> {
 fn clock_time(state: &mut LuaState, object: Val) -> LuaResult<f64> {
     match table_get(state, object, "clock") {
         Val::Nil => current_time(state),
-        clock => match table_get(state, clock, "time") {
+        clock => match read_clock_time(state, clock)? {
             Val::Num(time) if time.is_finite() => Ok(time),
             _ => Err(rilua::runtime_error(
                 "duration clock must contain finite time",
             )),
         },
     }
+}
+
+fn read_clock_time(state: &mut LuaState, clock: Val) -> LuaResult<Val> {
+    let key = state.gc.intern_string(b"time");
+    state.gettable(clock, Val::Str(key))
 }
 
 fn finite_arg(state: &mut LuaState, index: i32) -> LuaResult<f64> {

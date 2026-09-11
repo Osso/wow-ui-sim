@@ -28,6 +28,8 @@ pub mod c_cursor;
 pub mod c_curve_util;
 pub mod c_death_recap;
 pub mod c_discord;
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) mod c_encounter_timeline;
 pub mod c_glue;
 pub mod c_housing;
 pub mod c_instance_encounter;
@@ -101,6 +103,8 @@ use rilua::vm::state::LuaState;
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_loot_history::register_c_loot_history(state)?;
     c_weather::register(state)?;
+    #[cfg(feature = "retail-12-1-5")]
+    c_encounter_timeline::register(state)?;
     c_intl::register(state)?;
     #[cfg(feature = "retail-12-1-0")]
     c_aura_container_util::register(state)?;

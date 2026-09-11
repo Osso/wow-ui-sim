@@ -3,7 +3,8 @@
 //! Encounter timeline and event customization are seeded startup fixtures. Keep
 //! them explicit until the simulator has a real encounter-event model.
 
-const ENCOUNTER_STATE_LUA: &str = r#"
+#[cfg(not(feature = "retail-12-1-5"))]
+const TIMELINE_DEMO_LUA: &str = r#"
 if type(C_EncounterTimeline) ~= "table" then
     C_EncounterTimeline = {}
 end
@@ -77,6 +78,10 @@ if rawget(C_EncounterTimeline, "CancelEditModeEvents") == nil then
     end
 end
 
+"#;
+
+const ENCOUNTER_STATE_LUA: &str = r#"
+if type(C_EncounterEvents) ~= "table" then C_EncounterEvents = {} end
 local state = rawget(C_EncounterEvents, "_state")
 if type(state) ~= "table" then
     state = {
@@ -231,11 +236,13 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(feature = "retail-12-1-5"))]
+    lua.exec(TIMELINE_DEMO_LUA)?;
     lua.exec(ENCOUNTER_STATE_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(test, not(feature = "retail-12-1-5")))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
