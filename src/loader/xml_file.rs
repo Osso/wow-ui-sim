@@ -117,13 +117,20 @@ fn process_element(
             Ok(0)
         }
         XmlElement::Binding(_) | XmlElement::ModifiedClick(_) => Ok(0),
-        _ => {
-            let frame_start = Instant::now();
-            process_frame_element(env, element, ctx, timing)?;
-            timing.xml_frame_create_time += frame_start.elapsed();
-            Ok(0)
-        }
+        _ => process_timed_frame(env, element, ctx, timing),
     }
+}
+
+fn process_timed_frame(
+    env: &LoaderEnv<'_>,
+    element: &XmlElement,
+    ctx: &AddonContext,
+    timing: &mut LoadTiming,
+) -> Result<usize, LoadError> {
+    let frame_start = Instant::now();
+    process_frame_element(env, element, ctx, timing)?;
+    timing.xml_frame_create_time += frame_start.elapsed();
+    Ok(0)
 }
 
 fn top_level_animation(element: &XmlElement) -> Option<&crate::xml::AnimationXml> {
