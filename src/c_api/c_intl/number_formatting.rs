@@ -30,7 +30,7 @@ pub(super) fn register_context(state: &mut LuaState, metatable: GcRef<Table>) ->
     })
 }
 
-fn read_locale(state: &mut LuaState, context: bool) -> LuaResult<String> {
+pub(super) fn read_locale(state: &mut LuaState, context: bool) -> LuaResult<String> {
     let bytes = if context {
         super::storage::context_locale_bytes(state)?
     } else {
@@ -56,11 +56,11 @@ fn read_style(state: &LuaState, index: i32) -> LuaResult<NumberStyle> {
     }
 }
 
-fn native_error(error: intl_native::Error) -> rilua::LuaError {
+pub(super) fn native_error(error: intl_native::Error) -> rilua::LuaError {
     runtime_error(error.to_string())
 }
 
-fn push_text(state: &mut LuaState, text: &str) -> LuaResult<u32> {
+pub(super) fn push_text(state: &mut LuaState, text: &str) -> LuaResult<u32> {
     let value = state.gc.intern_string(text.as_bytes());
     state.push(Val::Str(value));
     Ok(1)

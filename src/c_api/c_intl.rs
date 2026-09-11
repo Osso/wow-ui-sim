@@ -8,6 +8,8 @@ mod character_properties;
 #[cfg(feature = "retail-12-1-5")]
 mod collation;
 #[cfg(feature = "retail-12-1-5")]
+mod currency_metadata;
+#[cfg(feature = "retail-12-1-5")]
 mod normalization;
 #[cfg(feature = "retail-12-1-5")]
 mod number_formatting;
@@ -74,7 +76,8 @@ mod storage {
         super::collation::register(state, namespace)?;
         super::plurals::register(state, namespace)?;
         super::character_properties::register(state, namespace)?;
-        super::number_formatting::register(state, namespace)
+        super::number_formatting::register(state, namespace)?;
+        super::currency_metadata::register(state, namespace)
     }
 
     fn identifier(state: &LuaState, index: i32) -> LuaResult<Vec<u8>> {
@@ -110,6 +113,7 @@ mod storage {
         super::collation::register_context(state, metatable)?;
         super::plurals::register_context(state, metatable)?;
         super::number_formatting::register_context(state, metatable)?;
+        super::currency_metadata::register_context(state, metatable)?;
         table_set_static(
             state,
             Val::Table(metatable),

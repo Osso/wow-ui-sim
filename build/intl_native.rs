@@ -10,11 +10,16 @@ pub(super) fn build() {
         "native/intl/bridge.h",
         "native/intl/text.c",
         "native/intl/number_format.c",
+        "native/intl/currency_metadata.c",
     ] {
         println!("cargo:rerun-if-changed={path}");
     }
     let mut compiler = cc::Build::new();
-    compiler.files(["native/intl/text.c", "native/intl/number_format.c"]);
+    compiler.files([
+        "native/intl/text.c",
+        "native/intl/number_format.c",
+        "native/intl/currency_metadata.c",
+    ]);
     compiler.include("native/intl").std("c11");
     let target = env::var("TARGET").expect("Cargo TARGET is required for ICU4C");
     if target == "x86_64-pc-windows-msvc" {

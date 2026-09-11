@@ -1,7 +1,7 @@
 //! Private C ABI. ICU types and version-renamed symbols never cross this boundary.
 use std::ffi::{CStr, c_char};
 
-use super::{Error, NumberStyle, ParsedCurrency, checked_length};
+use super::{CurrencyNameStyle, Error, NumberStyle, ParsedCurrency, checked_length};
 
 #[repr(C)]
 #[derive(Default)]
@@ -37,13 +37,13 @@ struct NativeError {
 }
 
 impl NativeError {
-    fn into_error(self, locale: &CStr) -> Error {
+    fn into_error(self, context: &CStr) -> Error {
         // SAFETY: the shim supplies static NUL-terminated diagnostic strings.
         let operation = unsafe { diagnostic(self.operation) };
         // SAFETY: any integer code is accepted; ICU returns a static diagnostic name.
         let name = unsafe { diagnostic(wow_icu_error_name(self.code)) };
         Error(format!(
-            "ICU4C {operation} for locale {locale:?}: {name} ({})",
+            "ICU4C {operation} for {context:?}: {name} ({})",
             self.code
         ))
     }
@@ -78,6 +78,19 @@ unsafe extern "C" {
         with_currency: i32,
         value: *mut f64,
         currency: *mut u8,
+        error: *mut NativeError,
+    ) -> i32;
+    fn wow_icu_currency_name(
+        locale: *const c_char,
+        locale_length: i32,
+        currency: *const c_char,
+        style: i32,
+        output: *mut NativeString,
+        error: *mut NativeError,
+    ) -> i32;
+    fn wow_icu_currency_fraction_digits(
+        currency: *const c_char,
+        digits: *mut i32,
         error: *mut NativeError,
     ) -> i32;
     fn wow_icu_string_free(data: *mut u8);
@@ -160,6 +173,47 @@ fn decode_parsed_currency(
         amount,
         currency_code,
     })
+}
+
+pub(super) fn currency_name(
+    locale: &CStr,
+    currency: &CStr,
+    style: CurrencyNameStyle,
+) -> Result<Option<String>, Error> {
+    let locale_length = checked_length(locale.to_bytes().len(), "locale")?;
+    let mut output = NativeString::default();
+    let mut error = NativeError::default();
+    // SAFETY: checked C strings live through this call; outputs are writable locals.
+    // NativeString owns any allocated output and frees it on every return path.
+    let status = unsafe {
+        wow_icu_currency_name(
+            locale.as_ptr(),
+            locale_length,
+            currency.as_ptr(),
+            style as i32,
+            &mut output,
+            &mut error,
+        )
+    };
+    match status {
+        0 => output.copy_string().map(Some),
+        1 => Ok(None),
+        _ => Err(error.into_error(locale)),
+    }
+}
+
+pub(super) fn currency_fraction_digits(currency: &CStr) -> Result<Option<i32>, Error> {
+    let mut digits = 0;
+    let mut error = NativeError::default();
+    // SAFETY: validated three-letter C string lives through the call; outputs are
+    // writable locals. Status distinguishes unknown currency from valid zero digits.
+    let status =
+        unsafe { wow_icu_currency_fraction_digits(currency.as_ptr(), &mut digits, &mut error) };
+    match status {
+        0 => Ok(Some(digits)),
+        1 => Ok(None),
+        _ => Err(error.into_error(currency)),
+    }
 }
 
 pub(super) fn version() -> String {

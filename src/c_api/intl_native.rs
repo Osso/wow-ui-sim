@@ -13,6 +13,17 @@ pub enum NumberStyle {
     Currency = 3,
 }
 
+/// WoW selector values; the C shim explicitly maps these to ICU's different order.
+#[repr(i32)]
+#[derive(Clone, Copy, Debug)]
+pub enum CurrencyNameStyle {
+    Symbol = 0,
+    NarrowSymbol = 1,
+    Long = 2,
+    FormalSymbol = 3,
+    VariantSymbol = 4,
+}
+
 #[derive(Debug, PartialEq)]
 pub struct ParsedCurrency {
     pub amount: f64,
@@ -53,6 +64,21 @@ pub fn parse_number(locale: &str, text: &str, style: NumberStyle) -> Result<Opti
 /// Requires complete input consumption; returns ICU's parsed ISO currency code.
 pub fn parse_currency(locale: &str, text: &str) -> Result<Option<ParsedCurrency>, Error> {
     ffi::parse(&locale_string(locale)?, text, NumberStyle::Currency, true)
+}
+
+/// Returns ICU's localized name only for a currency in its all-date catalogue.
+pub fn currency_name(
+    locale: &str,
+    currency: &str,
+    style: CurrencyNameStyle,
+) -> Result<Option<String>, Error> {
+    let code = currency_string(currency)?;
+    ffi::currency_name(&locale_string(locale)?, &code, style)
+}
+
+/// Unknown currencies return None; a known zero-digit currency returns Some(0).
+pub fn currency_fraction_digits(currency: &str) -> Result<Option<i32>, Error> {
+    ffi::currency_fraction_digits(&currency_string(currency)?)
 }
 
 /// Runtime ICU library version, as four dot-separated numeric components.
@@ -96,5 +122,7 @@ fn checked_length(length: usize, field: &str) -> Result<i32, Error> {
     Ok(length as i32)
 }
 
+#[cfg(test)]
+mod currency_metadata_tests;
 #[cfg(test)]
 mod tests;

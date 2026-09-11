@@ -30,6 +30,11 @@ int32_t wow_icu_parse(const char *locale, int32_t locale_length, int32_t style,
                       const uint8_t *text, int32_t text_length,
                       int32_t with_currency, double *value, uint8_t currency[4],
                       WowIcuError *error);
+int32_t wow_icu_currency_name(const char *locale, int32_t locale_length,
+                              const char *currency, int32_t style,
+                              WowIcuString *output, WowIcuError *error);
+int32_t wow_icu_currency_fraction_digits(const char *currency, int32_t *digits,
+                                         WowIcuError *error);
 void wow_icu_string_free(uint8_t *data);
 const char *wow_icu_error_name(int32_t code);
 void wow_icu_version(uint8_t version[4]);
