@@ -20483,7 +20483,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
         },
         {
@@ -20550,7 +20550,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
         },
         {
@@ -20617,7 +20617,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
         },
         {
@@ -20740,8 +20740,14 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data/empower.rs",
+          "source_hash": "991ccc743ff043d76737a6a7a990917716b1dfb3f8830b767bef68b39d623345",
+          "summary": "EmpowerTiming owns the moved stage/hold timing and completion calculation; game_data re-exports the same public type."
         },
         {
           "kind": "source",
@@ -20807,8 +20813,14 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data/empower.rs",
+          "source_hash": "991ccc743ff043d76737a6a7a990917716b1dfb3f8830b767bef68b39d623345",
+          "summary": "EmpowerTiming owns the moved stage/hold timing and completion calculation; game_data re-exports the same public type."
         },
         {
           "kind": "source",
@@ -20874,8 +20886,14 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState keeps channel/empower timing, stage data, hold-at-max, identity, query endpoint, and completion deadline distinct."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data/empower.rs",
+          "source_hash": "991ccc743ff043d76737a6a7a990917716b1dfb3f8830b767bef68b39d623345",
+          "summary": "EmpowerTiming owns the moved stage/hold timing and completion calculation; game_data re-exports the same public type."
         },
         {
           "kind": "source",
@@ -21348,7 +21366,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21411,7 +21429,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21474,7 +21492,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21537,7 +21555,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21600,7 +21618,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
@@ -21663,7 +21681,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/game_data.rs",
-          "source_hash": "66e44bf15e8bfbe96be362773d07735ffb66a4b08def64ec39c27e1c6e521ecb",
+          "source_hash": "be1889d5e97d0ba7bc0edbb9856414f32398ba8eba58b18d6c29f41a8ba67d35",
           "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
         },
         {
