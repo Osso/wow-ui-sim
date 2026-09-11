@@ -452,11 +452,21 @@ fn spell_is_targeting(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `SpellStopCasting()` — interrupt the active cast marker when one exists.
 fn spell_stop_casting(state: &mut LuaState) -> LuaResult<u32> {
-    let stopped = {
-        let mut sim = borrow_state_mut(state)?;
-        sim.casting.take().is_some()
-    };
-    state.push(Val::Bool(stopped));
+    let cast = borrow_state_mut(state)?.casting.take();
+    #[cfg(feature = "retail-12-1-0")]
+    if let Some(cast) = &cast {
+        let interrupted_by = {
+            let sim = borrow_state(state)?;
+            super::unit_misc::guid_for_unit(&sim, "player")
+        };
+        crate::lua_api::spellcast_events::fire_player_cast_interrupted(
+            state,
+            cast.cast_id,
+            cast.spell_id,
+            &interrupted_by,
+        );
+    }
+    state.push(Val::Bool(cast.is_some()));
     Ok(1)
 }
 

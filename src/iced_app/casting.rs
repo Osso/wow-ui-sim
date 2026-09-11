@@ -3,6 +3,8 @@
 use rilua::Val;
 
 #[cfg(all(test, feature = "retail-12-1-0"))]
+mod interrupted_tests;
+#[cfg(all(test, feature = "retail-12-1-0"))]
 mod tests;
 
 /// Check if a cast has completed and extract its info, clearing state.

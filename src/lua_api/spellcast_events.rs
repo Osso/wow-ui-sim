@@ -23,3 +23,24 @@ pub(crate) fn fire_player_cast_start(state: &mut LuaState, cast_id: u32, spell_i
     let args = player_cast_args(cast_id, spell_id, |text| create_string(state, text));
     fire_named_event_state(state, "UNIT_SPELLCAST_START", &args);
 }
+
+/// Self-cancel policy: interruption first, then STOP for non-interruption listeners.
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn fire_player_cast_interrupted(
+    state: &mut LuaState,
+    cast_id: u32,
+    spell_id: u32,
+    interrupted_by: &str,
+) {
+    let [unit, guid, spell, bar_id] =
+        player_cast_args(cast_id, spell_id, |text| create_string(state, text));
+    let actor = create_string(state, interrupted_by);
+    fire_named_event_state(
+        state,
+        "UNIT_SPELLCAST_INTERRUPTED",
+        &[unit, guid, spell, actor, bar_id],
+    );
+    // Recreate Lua values after callbacks; IDs still describe the canceled cast.
+    let stopped = player_cast_args(cast_id, spell_id, |text| create_string(state, text));
+    fire_named_event_state(state, "UNIT_SPELLCAST_STOP", &stopped);
+}
