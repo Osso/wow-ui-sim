@@ -655,18 +655,18 @@ fn spellcast_input_blizzard_bar_observes_delay_and_failure() {
             ClearTarget()
             CastSpellByID(19750)
             local bar = PlayerCastingBarFrame
-            assert(bar.casting and bar:IsShown())
+            assert(bar.casting and bar:IsShown(), 'bar did not start: ' .. tostring(bar.casting) .. '/' .. tostring(bar:IsShown()))
             local maximum = bar.maxValue
             assert(A_Admin.DelayCasting(0.75))
-            assert(math.abs(bar.maxValue - maximum - 0.75) < 0.000001)
+            assert(math.abs(bar.maxValue - maximum - 0.75) < 0.000001, 'delay not reflected: ' .. tostring(maximum) .. '/' .. tostring(bar.maxValue))
             assert(select(11, UnitCastingInfo("player")) == 750)
             assert(A_Admin.FailCasting())
-            assert(not bar.casting)
-            assert(bar.Text:GetText() == FAILED)
+            assert(not bar.casting, 'failure did not clear casting')
+            assert(bar.Text:GetText() == FAILED, 'failure label: ' .. tostring(bar.Text:GetText()))
             assert(UnitCastingInfo("player") == nil)
             bar:StopAnims()
             CastSpellByID(19750)
-            assert(bar.casting)
+            assert(bar.casting, 'replacement did not start')
             assert(A_Admin.FailCasting(true))
             assert(not bar.casting and UnitCastingInfo("player") == nil)
         "#).unwrap();
