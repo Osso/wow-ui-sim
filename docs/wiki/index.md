@@ -36,7 +36,7 @@
 
 ## [2026-09-11] audit | Credit PTR SecondsFormatter.Format
 
-`59833ba76` implements and `3d1b2804d` records focused proof for one bounded `SecondsFormatter.Format` row. Credit covers the private ICU4C unit/list renderer, configured selection/rounding/curve/threshold paths, locale lookup, formatter identity, and preserved retail placeholder baseline; parent alias, native numeric/unit-width/default/negative/approximation policy, and security remain unverified. See [format](../specs/seconds-formatter-format.md) and [[patch-12-1-5-api-audit]].
+`59833ba76` implements; `ab2972d99` and `4901c9255` correct the pinned PTR abbreviation map for one bounded `SecondsFormatter.Format` row: `None=0`, `Truncate=1`, `OneLetter=2`; `0` wide, `1` short, `2` narrow; PTR aliases and `3` are absent/rejected. Earlier retail retains its legacy enum and placeholder output as an explicit baseline gap. Renderer policy, native wording/defaults, and platform execution remain unverified. See [format](../specs/seconds-formatter-format.md) and [[patch-12-1-5-api-audit]].
 
 ## [2026-09-10] audit | SecondsFormatter configuration
 
