@@ -1,9 +1,9 @@
 //! Simulator input validation happens before any cast/channel mutation.
 use crate::lua_api::game_data::{CastingState, EmpowerTiming};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::stack_val;
+use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
-use rilua::{FromStack, LuaResult, Val, runtime_error};
+use rilua::{LuaResult, Val, runtime_error};
 
 fn seconds(value: Val, positive: bool) -> LuaResult<f64> {
     let Val::Num(value) = value else {
