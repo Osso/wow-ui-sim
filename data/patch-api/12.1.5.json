@@ -18990,7 +18990,7 @@
           "kind": "source",
           "reference": "src/loader/xml_file.rs",
           "summary": "XML loading registers top-level virtual animation declarations through the shared template registry without creating runtime instances.",
-          "source_hash": "2e8b737277d31ca961b3da622b13f4a42eac39478d944069dec624d51c974ba1"
+          "source_hash": "3df9b00ef4a7f96f27944c754d5fded35bf4e322626d79288b9ebed9974a644a"
         },
         {
           "kind": "source",
