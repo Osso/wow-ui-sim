@@ -4,13 +4,13 @@ Simulator-owned `A_Admin.DelayCasting` and `A_Admin.FailCasting` drive the exist
 
 ## What it must do
 
-- [ ] `DelayCasting(seconds)` requires a finite nonnegative number and returns one boolean. No current cast returns false. An active cast extends its deadline and accumulates `UnitCastingInfo` result 11 in milliseconds, preserving start and identity, then emits `UNIT_SPELLCAST_DELAYED` with `(unit, castGUID, spellID, castBarID)`.
-- [ ] Zero delay succeeds on an active cast and emits one DELAYED notification. Invalid or overflowing timing is rejected before mutation or notification.
-- [ ] `FailCasting(quiet=false)` returns false without events when inactive; otherwise takes the old state before callbacks and emits FAILED or FAILED_QUIET, followed by STOP, each with the old four-field identity. Invalid nonboolean quiet values fail atomically.
-- [ ] Failed casts never later complete, apply spell effects, or apply their deferred specialization. A failed specialization clears its pending action before callbacks, without clearing a reentrant replacement.
-- [ ] Failure and STOP callbacks may start a replacement cast; it retains its state and completes normally. Repeated failure while inactive returns false.
-- [ ] Existing SetCasting, StopCasting, SpellStopCasting, and cast/channel query arities remain unchanged. New cast state starts with zero accumulated delay. On current retail/PTR, casting slot 7 returns the shared synthetic event GUID as the pinned `WOWGUID` contract requires; numeric castBarID stays in slot 10. Older epochs retain their numeric slot 7.
-- [ ] The real Blizzard cast bar updates its duration on DELAYED and ends casting on failure/paired STOP. Quiet failure has no added failure-flash contract.
+- [x] `DelayCasting(seconds)` requires a finite nonnegative number and returns one boolean. No current cast returns false. An active cast extends its deadline and accumulates `UnitCastingInfo` result 11 in milliseconds, preserving start and identity, then emits `UNIT_SPELLCAST_DELAYED` with `(unit, castGUID, spellID, castBarID)`.
+- [x] Zero delay succeeds on an active cast and emits one DELAYED notification. Invalid or overflowing timing is rejected before mutation or notification.
+- [x] `FailCasting(quiet=false)` returns false without events when inactive; otherwise takes the old state before callbacks and emits FAILED or FAILED_QUIET, followed by STOP, each with the old four-field identity. Invalid nonboolean quiet values fail atomically.
+- [x] Failed casts never later complete, apply spell effects, or apply their deferred specialization. A failed specialization clears its pending action before callbacks, without clearing a reentrant replacement.
+- [x] Failure and STOP callbacks may start a replacement cast; it retains its state and completes normally. Repeated failure while inactive returns false.
+- [x] Existing SetCasting, StopCasting, SpellStopCasting, and cast/channel query arities remain unchanged. New cast state starts with zero accumulated delay. On current retail/PTR, casting slot 7 returns the shared synthetic event GUID as the pinned `WOWGUID` contract requires; numeric castBarID stays in slot 10. Older epochs retain their numeric slot 7.
+- [x] The real Blizzard cast bar updates its duration on DELAYED and ends casting on failure/paired STOP. Quiet failure has no added failure-flash contract.
 
 ## Simulator policies
 
@@ -35,10 +35,18 @@ The input accepts any active timed-cast state, including an expired deadline not
 - `src/iced_app/casting/input_tests.rs`: actual spell producers, delay/failure callbacks, completion/effect boundary, reentrancy and specialization leak regression.
 - `tests/spell_casting.rs`: real Blizzard cast bar consumer.
 
+### Development proof
+
+Five lifecycle tests and one real Blizzard consumer test passed per profile at `5de64a2b3`; 59 existing cast/query/self-cancel/specialization regressions per profile passed at `0508553b4`. The subsequent source change only moved the admin helper module; the added overflow test also passes. No final acceptance gates were run.
+
+Commands use the existing library and grouped integration targets with `--offline --no-default-features --features sound,gui,client-<profile>`. Current input filter: `spellcast_input_`; regression filters: `spellcast_interrupted_`, `spellcast_payload_`, `cast_bar_id::`, `c_vehicle_possession_globals::unit_`, `c_spell_flyout_probes::`, `spell_casting::`, and `admin_spec_talent_api::c_spec_set_specialization`. The repeated full consumer is skipped in the supplemental PTR regression command.
+
+Logs: `/tmp/cast-input-5de64a2b3-{ptr,retail}.log`, `/tmp/cast-input-0508553b4-{ptr,retail}.log`, `/tmp/cast-input-existing-0508553b4-ptr.log`. Exact proof scope and command ledger: `/tmp/cast-input-proof-ledger.json`.
+
 ## Known gaps (current cycle)
 
 - [ ] Native delay generation, failure reasons, secret/restricted payloads, cast GUID encoding and event timing remain unverified.
-- [ ] Focused development proof pending; no final acceptance gates run by this implementation.
+- [ ] Pre-12.1 API epoch branches were preserved but not executed by this bounded profile proof.
 
 ## Out of scope
 

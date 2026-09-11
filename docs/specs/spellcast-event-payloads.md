@@ -25,6 +25,10 @@ Existing state visibility and event order are preserved, not asserted as indepen
 
 The chosen `INTERRUPTED` then `STOP` order follows two inspected consumers: `Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua` handles interruption and clears its casting flag, while `Blizzard_UnitFrame/Mainline/UnitFrame.lua` uses STOP (not INTERRUPTED) to clear mana-cost prediction. This is a modeled notification policy, **not native event-order confirmation**. It does not change normal completion ordering or add FAILED, DELAYED, channel, or empower producers. No GCD, cooldown, or unrelated pending-specialization behavior is reset by this slice.
 
+### Explicit delay and failure inputs
+
+`A_Admin.DelayCasting` and `A_Admin.FailCasting` supply the modeled DELAYED/FAILED/FAILED_QUIET producers. They retain the four-field identity, update or remove state before callbacks, and pair failure with STOP. The real Blizzard cast bar consumes those events using the same synthetic GUID now returned at casting slot seven. See [timed-cast inputs](cast-delay-failure-inputs.md) for scope, failure ordering, and failed-specialization cleanup; these inputs are not native failure detection.
+
 ## How it works
 
 - [Event dispatch](../event-system.md)
@@ -62,4 +66,4 @@ Run separately for `ptr` and `retail`. Logs: `/tmp/spellcast-interrupted-c89d475
 
 ## Out of scope
 
-Channel, empower, FAILED/FAILED_QUIET, DELAYED and instant-spell producers; native interruption actor/order semantics; artifact audit credit; security enforcement. Existing spell effects and specialization application remain separate post-event steps. Self-cancellation is limited to the existing `SpellStopCasting` path.
+Channel, empower and instant-spell producers; native interruption/failure actor and order semantics; artifact audit credit; security enforcement. Existing spell effects and specialization application remain separate post-event steps. Self-cancellation is limited to the existing `SpellStopCasting` path.

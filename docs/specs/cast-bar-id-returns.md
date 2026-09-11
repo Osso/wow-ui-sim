@@ -38,8 +38,10 @@ The arrows are the only tuple field type differences between the pinned base and
 ## Implementation inventory
 
 - `src/lua_api/globals/utility_system_spell/spell_api.rs`: state-backed tuple serialization and profile-dependent arity.
-- `src/lua_api/game_data.rs`: existing `CastingState` identity and timing fields; unchanged.
-- `src/lua_api/globals/admin.rs`: existing cast allocator/start/stop operations; unchanged.
+- `src/lua_api/game_data.rs`: `CastingState` identity, timing, and accumulated delay.
+- `src/lua_api/globals/admin.rs`: cast allocator/start/stop operations.
+- `src/lua_api/globals/admin/cast_inputs.rs`: explicit delay and failure inputs.
+- `src/lua_api/spellcast_events.rs`: shared synthetic GUID formatting.
 
 ## Tests asserting this spec
 
@@ -51,8 +53,8 @@ Focused proof at `3d4d483d3`: two new tests passed on each of `client-ptr` and `
 
 ## Known gaps (current cycle)
 
-- [ ] Numeric simulator `cast_id` mapping to native `UnitCastBarID` is unverified. The native `WOWGUID` at casting slot seven remains modeled as the existing numeric ID.
-- [ ] Casting `delayTimeMs` is an explicit zero placeholder: there is no accumulated-delay field. End-time changes do not update it; this slice does not introduce delay tracking or change timing.
+- [ ] Numeric simulator `cast_id` mapping to native `UnitCastBarID` is unverified. Casting slot seven now uses the same synthetic string GUID as event payloads; its native encoding remains unverified.
+- [x] `A_Admin.DelayCasting` accumulates delay seconds on cast state and returns milliseconds in slot eleven, preserving start and identity. See [delay/failure inputs](cast-delay-failure-inputs.md) for focused lifecycle and real cast-bar consumer proof.
 - [ ] Existing texture paths remain strings rather than native `fileID` values; existing trade/interruptibility defaults are unchanged.
 - [ ] Native identity lifetime, security/secret annotations and type semantics remain unverified.
 
