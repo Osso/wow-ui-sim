@@ -43,6 +43,10 @@ cargo test --test integration --offline --no-default-features --features sound,g
 
 Profiles ran separately. Logs: `/tmp/animation-templates-61eb0d358-{ptr,retail}.log`. Commands/revision/scope: `/tmp/animation-templates-proof-ledger.json`. Root `cargo fmt` ran before code commits. No broad/check/readability/artifact gates ran.
 
+## Audit credit boundary
+
+The PTR `changed:SimpleAnimGroup.CreateAnimation` row is best-effort/behavioral from committed code/test/spec review at `df07f0c37` over implementation commits `b171612210` and `61eb0d358`. Credit is limited to the checked ordinary factory, XML-template, supported-field, script, isolation, simulator-error, and PTR/earlier-retail profile behavior above. The generated PTR `AddAnimations` forbidden-aspect check, `SecretArguments`/security enforcement, native coercion, unsupported engine fields, and native error semantics are unverified.
+
 ## Known gaps (current cycle)
 - [ ] Existing engine methods for transforms/origin and named/key targets remain no-ops; XML values are dispatched through the shared path, not claimed as functional motion/target support. `childKey` targeting is tested.
 - [ ] Rotation `radians`, path control points/curve, and texture-coordinate offsets have no shared XML application support. No implementation claim for those fields, vertex-color animation data, or native coercion/errors.
@@ -51,4 +55,4 @@ Profiles ran separately. Logs: `/tmp/animation-templates-61eb0d358-{ptr,retail}.
 
 ## Out of scope
 
-Vendor edits, a broad FrameTemplate rewrite, new animation engine capabilities, native security enforcement, broad suites, final check/readability gates, audit artifact credit, delegation, publishing, and deployment are excluded from this bounded implementation task.
+Vendor edits, a broad FrameTemplate rewrite, new animation engine capabilities, native security enforcement, broad suites, final check/readability gates, delegation, publishing, and deployment are excluded from this bounded implementation task.

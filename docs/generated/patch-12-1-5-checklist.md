@@ -413,7 +413,7 @@
 413. [best-effort] `changed:SimpleAnim.IsPlaying` — behavioral
 414. [best-effort] `changed:SimpleAnim.IsStopped` — behavioral
 415. [best-effort] `changed:SimpleAnim.SetParent` — behavioral
-416. [evidence-required] `changed:SimpleAnimGroup.CreateAnimation` — unsafe
+416. [best-effort] `changed:SimpleAnimGroup.CreateAnimation` — behavioral
 417. [best-effort] `changed:SimpleAnimGroup.GetElapsed` — behavioral
 418. [best-effort] `changed:SimpleAnimGroup.GetLoopState` — behavioral
 419. [best-effort] `changed:SimpleAnimGroup.GetProgress` — behavioral

@@ -678,7 +678,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "summary": "Rust native boundary checks finite Unix seconds and converts seconds × 1000 before invoking the ICU4C C ABI.",
+          "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
           "source_hash": "10699bf6a880ae4e8f6b5fee0dff6c183050d15ba2654a33293b81eadddf2c99"
         },
         {
@@ -731,7 +731,7 @@
       "commit": "ec09c4037",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds × 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
+      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds \u00d7 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
     },
     {
       "id": "added:C_Intl.FormatDateTime",
@@ -763,7 +763,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "summary": "Rust native boundary checks finite Unix seconds and converts seconds × 1000 before invoking the ICU4C C ABI.",
+          "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
           "source_hash": "10699bf6a880ae4e8f6b5fee0dff6c183050d15ba2654a33293b81eadddf2c99"
         },
         {
@@ -816,7 +816,7 @@
       "commit": "ec09c4037",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds × 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
+      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds \u00d7 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
     },
     {
       "id": "added:C_Intl.FormatNumber",
@@ -930,7 +930,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "summary": "Rust native boundary checks finite Unix seconds and converts seconds × 1000 before invoking the ICU4C C ABI.",
+          "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
           "source_hash": "10699bf6a880ae4e8f6b5fee0dff6c183050d15ba2654a33293b81eadddf2c99"
         },
         {
@@ -983,7 +983,7 @@
       "commit": "ec09c4037",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds × 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
+      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds \u00d7 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
     },
     {
       "id": "added:C_Intl.GetCharacterProperties",
@@ -8866,7 +8866,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8916,7 +8916,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -8989,7 +8989,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes AuraCaster = 51 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TooltipDataLineType.UnitCriteriaProgress",
@@ -9032,7 +9032,7 @@
       "commit": "28330eedd",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR’s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
+      "notes": "Focused profile test establishes UnitCriteriaProgress = 50 numeric publication only within PTR\u2019s exact 52-member TooltipDataLineType map and metadata 0/51/52 before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata 0/43/44, not the pinned 50-member base; this is explicit baseline-drift preservation, not base-conformance proof. Tooltip rendering, gameplay, consumers, validation, coercion, security, taint, secret, protected, forbidden, invalid-input, and native-edge behavior remain unclaimed."
     },
     {
       "id": "added:Enum.TransmogIllusionFlags.HiddenIllusion",
@@ -9794,7 +9794,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "summary": "Rust native boundary checks finite Unix seconds and converts seconds × 1000 before invoking the ICU4C C ABI.",
+          "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
           "source_hash": "10699bf6a880ae4e8f6b5fee0dff6c183050d15ba2654a33293b81eadddf2c99"
         },
         {
@@ -9847,7 +9847,7 @@
       "commit": "ec09c4037",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds × 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
+      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds \u00d7 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
     },
     {
       "id": "added:LuaLocaleContext.FormatDateTime",
@@ -9879,7 +9879,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "summary": "Rust native boundary checks finite Unix seconds and converts seconds × 1000 before invoking the ICU4C C ABI.",
+          "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
           "source_hash": "10699bf6a880ae4e8f6b5fee0dff6c183050d15ba2654a33293b81eadddf2c99"
         },
         {
@@ -9932,7 +9932,7 @@
       "commit": "ec09c4037",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds × 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
+      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds \u00d7 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
     },
     {
       "id": "added:LuaLocaleContext.FormatNumber",
@@ -10046,7 +10046,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "summary": "Rust native boundary checks finite Unix seconds and converts seconds × 1000 before invoking the ICU4C C ABI.",
+          "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
           "source_hash": "10699bf6a880ae4e8f6b5fee0dff6c183050d15ba2654a33293b81eadddf2c99"
         },
         {
@@ -10099,7 +10099,7 @@
       "commit": "ec09c4037",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds × 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
+      "notes": "Focused PTR/native and earlier-retail profile proof establishes only ordinary ICU4C-backed formatting: finite Unix seconds are converted as seconds \u00d7 1000; date, time, and date-time paths accept all five DateTimeStyle values including None; supplied valid UTC, fixed-offset, and named zones cover a pre-epoch day boundary and New York DST transition; global/current and independent context locales affect results; and C_Intl remains absent on earlier retail. Empty-zone-as-UTC, both-None empty output, validation/error policy, exact textual output, ICU/CLDR/tzdata version, MayReturnNothing conditions, native WoW equivalence, AllowedWhenUntainted, taint, secret, protected, coercion, and security semantics remain policy choices or unverified. Windows/macOS/Docker execution remains accepted pending."
     },
     {
       "id": "added:LuaLocaleContext.GetCurrencyName",
@@ -10262,7 +10262,7 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_locale_context.rs",
-          "summary": "Focused PTR tests establish GetLocale returns each context’s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
+          "summary": "Focused PTR tests establish GetLocale returns each context\u2019s current stored identifier through userdata dispatch and survives collection; earlier retail preserves absence. Proof commit 61bf36927.",
           "source_hash": "d353c66728e8857a11d75b2c00c9f3ae5471593dc36c74b2f21e97937a82b72c"
         }
       ],
@@ -10273,7 +10273,7 @@
       "commit": "61bf36927",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused profile tests establish GetLocale returns each context’s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
+      "notes": "Focused profile tests establish GetLocale returns each context\u2019s independently stored tested identifier through userdata dispatch and survives collection; earlier retail preserves absence. Identifier canonicalization, locale algorithms, security, and native edges remain unclaimed."
     },
     {
       "id": "added:LuaLocaleContext.GetSortKey",
@@ -17310,7 +17310,7 @@
         {
           "kind": "source",
           "reference": "src/ptr/tiered_entrance_type.lua",
-          "summary": "PTR-only Lua publication retains the base values 0–4, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
+          "summary": "PTR-only Lua publication retains the base values 0\u20134, adds Placeholder_5 = 5 and Placeholder_6 = 6, and sets TieredEntranceTypeMeta to 0/6/7.",
           "source_hash": "d3af6feb3633e4709548f63025f314556b4047fb505c9944b29a3de3f01667f8"
         },
         {
@@ -17747,7 +17747,7 @@
       "commit": "8ccb7897c",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused ordinary simulator tests establish the clearIfZero interpretation for real duration proxies: zero duration with explicit false preserves the cooldown’s existing start, duration, display duration, and rate; omitted or true clears those fields; nonzero durations update timing regardless of the flag; and independent cooldown frames remain unchanged. The pinned base/PTR declarations both default clearIfZero to true. Native protected-call enforcement, secret/taint/forbidden behavior, coercion/type validation, duration-proxy error behavior beyond covered paths, rendering/countdown effects, and native timing semantics remain unclaimed."
+      "notes": "Focused ordinary simulator tests establish the clearIfZero interpretation for real duration proxies: zero duration with explicit false preserves the cooldown\u2019s existing start, duration, display duration, and rate; omitted or true clears those fields; nonzero durations update timing regardless of the flag; and independent cooldown frames remain unchanged. The pinned base/PTR declarations both default clearIfZero to true. Native protected-call enforcement, secret/taint/forbidden behavior, coercion/type validation, duration-proxy error behavior beyond covered paths, rendering/countdown effects, and native timing semantics remain unclaimed."
     },
     {
       "id": "changed:FrameAPICooldown.SetCooldownFromExpirationTime",
@@ -18627,7 +18627,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18664,7 +18664,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18701,7 +18701,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18738,7 +18738,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18775,7 +18775,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18812,7 +18812,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18849,7 +18849,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18886,7 +18886,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -18957,24 +18957,83 @@
       "id": "changed:SimpleAnimGroup.CreateAnimation",
       "symbol": "SimpleAnimGroup.CreateAnimation",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the unchanged optional arguments and return plus the new self AddAnimations forbidden-aspect check.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations/creation.rs",
+          "summary": "Factory reads optional type/name/template arguments, prepares templates before allocation, retains requested type/name and group ownership, registers the child, then applies the prepared template.",
+          "source_hash": "48b792fcba1b7f89d9286c06149b7abd88b81fb5674dc2348dbc61e730fb972a"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations/templates.rs",
+          "summary": "Template preparation resolves the virtual XML inheritance chain before allocation; application uses the existing animation XML path after the factory has created the owned instance.",
+          "source_hash": "a9a2a48099b7d8a8966c7ab5ba43e3af227c0e6597e3f4ca809709b6c60da959"
+        },
+        {
+          "kind": "source",
+          "reference": "src/xml/animation_templates.rs",
+          "summary": "Virtual animation templates are environment-local and resolve parent-first with explicit unknown-template and inheritance-cycle errors.",
+          "source_hash": "4b9e53e926c1e75bdf1d647d03067892161633df3a08b0dee21218835241a9a4"
+        },
+        {
+          "kind": "source",
+          "reference": "src/loader/xml_file.rs",
+          "summary": "XML loading registers top-level virtual animation declarations through the shared template registry without creating runtime instances.",
+          "source_hash": "e881acd8448c7d2a9829d7aa99684eb51ce2e1b3fda66cea4167bb59ab776669"
+        },
+        {
+          "kind": "source",
+          "reference": "src/loader/helpers_anim.rs",
+          "summary": "Shared XML animation application covers the supported property, KeyValue, and script bindings used by factory template application, including OnUpdate.",
+          "source_hash": "51c21ae7ca5df8e5da24d3d86c1ba1215bc48904c823fa5e7c953aad1e91e769"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_factory.rs",
+          "summary": "Focused factory tests cover omitted/nil optional arguments, requested identity, ordered group ownership, named lifecycle, and a real TOC/XML declared template.",
+          "source_hash": "2b4b7a34c0b0dc55538d2cf6df7fcbe6db3d381507782112f1f9ca92169f6fc9"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_factory_templates.rs",
+          "summary": "Focused real XML tests cover virtual template registration, parent-first inheritance, supported alpha/flipbook/target fields, KeyValues, scripts, OnLoad order, instance isolation, and simulator unknown/cyclic-template errors.",
+          "source_hash": "b92b0057001a8493e4c7469077a1a6e11185b8671ccfb352d36a2f253c4ced6c"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/xml_animation_group_onload.rs",
+          "summary": "Existing XML animation-group regression covers loader OnLoad ordering through the shared animation XML path.",
+          "source_hash": "4441d65d6f8ddf63a5f6811916b2493f0d509a263cbb793f58ed067da230b9d3"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_group.rs",
+          "summary": "Existing animation-group regression covers owned child ordering and lifecycle through the factory-backed group runtime.",
+          "source_hash": "9b8a12ac95d8717a49c670ccaaa0dc0cd72a0dc0efe2fb5e21759709f90320a7"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/animation_factory.rs",
+        "tests/animation_factory_templates.rs",
+        "tests/xml_animation_group_onload.rs",
+        "tests/animation_group.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "df07f0c37",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed code/test/spec review supports only ordinary simulator factory behavior: optional arguments, requested identity, group ownership, real XML virtual templates and inheritance, supported fields, script binding, instance isolation, simulator unknown/cyclic-template errors, and recorded PTR/earlier-retail proof. The PTR AddAnimations forbidden-aspect check, SecretArguments/security enforcement, native coercion, unsupported engine fields, and native error semantics remain unverified."
     },
     {
       "id": "changed:SimpleAnimGroup.GetElapsed",
@@ -18995,7 +19054,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -19032,7 +19091,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -19069,7 +19128,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -19106,7 +19165,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -19143,7 +19202,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -19180,7 +19239,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -19217,7 +19276,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
@@ -19254,7 +19313,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "49312d87858e98dfcae1033938892606f6bb0ec885bc952cced3ae1ddba4232c"
+          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
         },
         {
           "kind": "test",
