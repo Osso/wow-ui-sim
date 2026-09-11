@@ -17,9 +17,9 @@ PTR `C_EncounterTimeline` owns script events rather than the former Flash of Lig
 
 The timeline's clock starts at zero and accumulates the real runtime OnUpdate delta, matching animation simulation rather than the wall-clock `GetTime` epoch. Duration wrappers track `[0, duration]` using private read-only provider clocks; normal duration clock lookup observes provider metamethods. Finish forces elapsed to duration; cancellation freezes current elapsed. Invalid argument shapes error; unknown IDs return no values. Repeated or terminal transitions are no-ops. Added and state notifications dispatch synchronously in deterministic ID order; exact native uniqueness/coalescing is not claimed.
 
-Automatic completion occurs when active elapsed reaches duration at tick start. Terminal events remain in lists/counts until post-update removal on a later tick. Script events are never blocked or approximate. Feature available/enabled are true in this core model, not modeled user settings. Request IDs/icon masks require nonnegative `u32` integers; durations require finite nonnegative numbers and severity is Low/Medium/High. These input policies are not native coercion evidence.
+Automatic completion occurs when active elapsed reaches duration plus the configured queue hold at tick start; public elapsed/remaining duration queries remain clamped to the countdown. Terminal events remain in lists/counts until post-update removal on a later tick. Script events are never blocked or approximate. Feature available/enabled are true in this core model, not modeled user settings. Request IDs/icon masks require nonnegative `u32` integers; durations require finite nonnegative numbers and severity is Low/Medium/High. These input policies are not native coercion evidence.
 
-`maxQueueDuration` is preserved as request/info metadata only. No queued hold, track placement, sorted filtering, highlighting, EditMode, or view/layout APIs are implemented by this slice. Deferred track/filter/EditMode/view methods are explicitly withheld from the generic missing-method fallback. Full Blizzard timeline-view integration requires the parent-owned track slice. Timer elapsed/remaining consumers can operate independently of those tracks. No security, secret-value, taint, or native timing equivalence is claimed.
+The dependent [track/view model](encounter-timeline-tracks.md) now implements queue holds, track placement, sorted filtering, highlighting, Edit Mode, and view APIs. Script timers remain countdown-clamped during holds. The original core-only proof below covered queue metadata storage; newer track tests cover hold behavior and real Blizzard view consumers. No security, secret-value, taint, or native timing equivalence is claimed.
 
 ## How it works
 
@@ -59,9 +59,9 @@ The PTR script tests load the existing Blizzard event-frame/settings files to ex
 ## Known gaps (current cycle)
 
 - [x] Focused proof at `385c7790f`: nine PTR and five retail integration tests plus existing customization library proof (one PTR, two retail); nine exact changed rows are credited only for the bounded script core.
-- [ ] Parent owns track/filter/EditMode/queued-hold/full-view integration and final check/readability/artifact gates.
+- [ ] Parent owns final check/readability/artifact gates for the combined core and [track/view implementation](encounter-timeline-tracks.md).
 - [ ] Native transition/coalescing, secrecy, unknown-spell and validation semantics remain unverified.
 
 ## Out of scope
 
-Encounter-driven gameplay producers, visual track assignment, queue holds, filtering/sorting, EditMode, user settings, protected/restricted access and native secret enforcement belong to later slices. No alternate demo data remains on PTR.
+Encounter-driven gameplay producers, user-configurable track policy, protected/restricted access, and native secret enforcement remain separate work. Track/hold/filter/Edit Mode behavior is covered by the dependent spec. No alternate demo data remains on PTR.

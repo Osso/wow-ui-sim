@@ -19,6 +19,7 @@ fn environment() -> WowLuaEnv {
 fn encounter_tracks_queue_hold_and_transition_callbacks() {
     let env = environment();
     env.exec(r#"
+        assert(Enum.EncounterTimelineViewType.None==0 and Enum.EncounterTimelineViewType.Timeline==1 and Enum.EncounterTimelineViewType.Bars==2)
         assert(T.GetViewType() == Enum.EncounterTimelineViewType.Timeline)
         local tracks = T.GetTrackList()
         assert(#tracks == 5 and tracks[1].id == 0 and tracks[5].id == 4)
@@ -26,6 +27,12 @@ fn encounter_tracks_queue_hold_and_transition_callbacks() {
         assert(tracks[2].minimumDuration == 0 and tracks[2].maximumDuration == 15)
         assert(tracks[3].minimumDuration == 15 and tracks[3].maximumDuration == 60)
         assert(tracks[5].type == Enum.EncounterTimelineTrackType.Hidden)
+        assert(tracks[1].maximumEventCount==3 and tracks[4].maximumEventCount==3)
+        assert(tracks[1].minimumDuration==0 and tracks[1].maximumDuration==0)
+        for _,track in ipairs(tracks) do
+            assert(track.minimumEventIntroDuration==0 and track.minimumEventGapDuration==0)
+            assert(T.GetTrackType(track.id)==track.type)
+        end
         assert(T.GetTrackMaxEventDuration(1) == 15 and T.GetTrackMaxEventDuration(2) == 60)
         tracks[2].maximumDuration = 999
         assert(T.GetTrackInfo(1).maximumDuration == 15)
@@ -173,7 +180,7 @@ fn encounter_tracks_queued_capacity_and_reentrant_view_updates() {
             end
         end)
         T.SetViewType(Enum.EncounterTimelineViewType.Bars)
-        assert(T.GetViewType()==0 and #activated==1 and activated[1]==0)
+        assert(T.GetViewType()==0 and #activated==0)
         assert(not T.HasVisibleEvents())
     "#).unwrap();
 }

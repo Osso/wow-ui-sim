@@ -51,11 +51,13 @@ fn notify_view(
     notifications::emit(state, changes)?;
     dispatch_event_now(state, "ENCOUNTER_TIMELINE_LAYOUT_UPDATED", &[])?;
     if borrow_state(state)?.encounter_timeline.view == next {
-        dispatch_event_now(
-            state,
-            "ENCOUNTER_TIMELINE_VIEW_ACTIVATED",
-            &[Val::Num(f64::from(next))],
-        )?;
+        if next != 0 {
+            dispatch_event_now(
+                state,
+                "ENCOUNTER_TIMELINE_VIEW_ACTIVATED",
+                &[Val::Num(f64::from(next))],
+            )?;
+        }
         dispatch_event_now(state, "ENCOUNTER_TIMELINE_STATE_UPDATED", &[])?;
     }
     Ok(())

@@ -26,8 +26,10 @@ fn encounter_tracks_real_blizzard_track_layout_and_view() {
         local offset=layout:CalculateOffsetForDuration(10)
         assert(offset==offset and offset>=0 and offset<math.huge)
         EncounterTimeline:Show()
+        T.SetViewType(Enum.EncounterTimelineViewType.None)
+        T.SetViewType(Enum.EncounterTimelineViewType.Timeline)
         view=EncounterTimeline.TrackView
-        view:Show()
+        assert(EncounterTimeline:GetActiveView()==view and view:IsShown())
         id=T.AddScriptEvent({spellID=19750,iconFileID=135907,duration=10,maxQueueDuration=3})
         assert(view:HasEvent(id) and view:HasEventFrame(id))
         frame=view:GetEventFrame(id)
@@ -40,6 +42,8 @@ fn encounter_tracks_real_blizzard_track_layout_and_view() {
     env.fire_on_update(6.0).unwrap();
     env.exec(r#"
         assert(frame:GetEventTimeRemaining()==4)
+        local r,g,b=frame:GetEventColor():GetRGB()
+        assert(r==1 and g==0.3 and b==0.2)
         T.PauseScriptEvent(id)
         assert(T.GetEventTrack(id)==Enum.EncounterTimelineTrack.Indeterminate)
         T.ResumeScriptEvent(id)
@@ -51,7 +55,17 @@ fn encounter_tracks_real_blizzard_track_layout_and_view() {
     env.exec("assert(T.GetEventTrack(id)==0 and frame:GetEventTimeRemaining()==0)").unwrap();
     env.exec("T.FinishScriptEvent(id)").unwrap();
     env.fire_on_update(1.0).unwrap();
-    env.exec("assert(not view:HasEvent(id)); view:Hide(); assert(not view:HasAnyActiveEventFrames())").unwrap();
+    env.exec(r#"
+        assert(not view:HasEvent(id))
+        T.SetViewType(Enum.EncounterTimelineViewType.Bars)
+        local bars=EncounterTimeline.TimerView
+        assert(EncounterTimeline:GetActiveView()==bars and bars:IsShown())
+        local nextID=T.AddScriptEvent({spellID=19750,iconFileID=135907,duration=20})
+        assert(bars:HasEvent(nextID) and bars:HasEventFrame(nextID))
+        T.SetViewType(Enum.EncounterTimelineViewType.None)
+        assert(EncounterTimeline:GetActiveView()==nil)
+        assert(not bars:HasAnyActiveEventFrames() and not view:HasAnyActiveEventFrames())
+    "#).unwrap();
     let errors: Vec<_> = env.state().borrow().lua_errors.iter()
         .filter(|message| message.contains("EncounterTimeline"))
         .cloned().collect();

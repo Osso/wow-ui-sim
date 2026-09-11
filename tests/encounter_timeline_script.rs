@@ -164,6 +164,8 @@ fn encounter_script_preserves_retail_demo_baseline() {
             assert(C_EncounterTimeline.GetEventInfo(1).spellName == "Flash of Light")
             assert(C_EncounterTimeline.GetEventTimer(1):GetRemainingDuration() == 12.5)
             assert(C_EncounterTimeline.HasActiveEvents())
+            assert(Enum.EncounterTimelineViewType.None==0)
+            assert(Enum.EncounterTimelineViewType.Timeline==1 and Enum.EncounterTimelineViewType.Bars==2)
         "#).unwrap();
         wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     }
@@ -190,6 +192,7 @@ fn encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo() {
     wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     env.exec(r#"
         assert(timeline.GetEventInfo(id) == nil and #timeline.GetEventList() == 0)
+        assert(timeline.GetViewType()==Enum.EncounterTimelineViewType.Timeline)
         local nextID = add(3)
         assert(nextID > id)
         assert(timeline.GetEventInfo(nextID).duration == 3)

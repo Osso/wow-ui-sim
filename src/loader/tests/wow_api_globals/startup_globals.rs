@@ -226,14 +226,22 @@ fn test_patch_12_0_7_safe_global_bridges() {
             if type(C_Container.CalculateTotalNumberOfFreeBagSlots()) ~= "number" then return "container-free" end
             if type(C_DelvesUI.GetDelveEntranceTitleString(1)) ~= "string" then return "delve-title" end
             if type(C_DelvesUI.GetWorldTierDifficultyForActivePlayer()) ~= "number" then return "delve-world-tier" end
-            local r, g, b, a = C_EncounterTimeline.GetEventColor(1)
-            if r ~= 1 or g ~= 1 or b ~= 1 or a ~= 1 then return "event-color" end
-            C_EncounterEvents.SetEventColor(1, { r = 0.2, g = 0.4, b = 0.6, a = 0.8 })
-            r, g, b, a = C_EncounterTimeline.GetEventColor(1)
-            if r ~= 0.2 or g ~= 0.4 or b ~= 0.6 or a ~= 0.8 then return "event-color-state" end
-            C_EncounterEvents.SetEventColor(1, nil)
-            r, g, b, a = C_EncounterTimeline.GetEventColor(1)
-            if r ~= 1 or g ~= 1 or b ~= 1 or a ~= 1 then return "event-color-cleared" end
+            if rawget(C_EncounterTimeline, "AddScriptEvent") then
+                local id = C_EncounterTimeline.AddScriptEvent({spellID=19750, iconFileID=135907, duration=10, severity=0})
+                local color = C_EncounterTimeline.GetEventColor(id)
+                local r, g, b, a = color:GetRGBA()
+                if r ~= 1 or g ~= 1 or b ~= 1 or a ~= 1 then return "modeled-event-color" end
+                if C_EncounterTimeline.GetEventColor(id + 1) ~= nil then return "unknown-event-color" end
+            else
+                local r, g, b, a = C_EncounterTimeline.GetEventColor(1)
+                if r ~= 1 or g ~= 1 or b ~= 1 or a ~= 1 then return "event-color" end
+                C_EncounterEvents.SetEventColor(1, { r = 0.2, g = 0.4, b = 0.6, a = 0.8 })
+                r, g, b, a = C_EncounterTimeline.GetEventColor(1)
+                if r ~= 0.2 or g ~= 0.4 or b ~= 0.6 or a ~= 0.8 then return "event-color-state" end
+                C_EncounterEvents.SetEventColor(1, nil)
+                r, g, b, a = C_EncounterTimeline.GetEventColor(1)
+                if r ~= 1 or g ~= 1 or b ~= 1 or a ~= 1 then return "event-color-cleared" end
+            end
             if C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames(1) ~= nil then return "housing-catalog" end
             if C_HousingCustomizeMode.RoomConnectionSupportsDoorType(1, 1) ~= false then return "housing-door" end
             if C_HousingLayout.CanSetViewedFloor(1) ~= false then return "housing-floor" end
