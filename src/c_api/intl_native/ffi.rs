@@ -1,7 +1,7 @@
 //! Private C ABI. ICU types and version-renamed symbols never cross this boundary.
 use std::ffi::{CStr, c_char};
 
-use super::{CurrencyNameStyle, Error, NumberStyle, ParsedCurrency, checked_length};
+use super::{CurrencyNameStyle, DateTimeStyle, Error, NumberStyle, ParsedCurrency, checked_length};
 
 #[repr(C)]
 #[derive(Default)]
@@ -91,6 +91,17 @@ unsafe extern "C" {
     fn wow_icu_currency_fraction_digits(
         currency: *const c_char,
         digits: *mut i32,
+        error: *mut NativeError,
+    ) -> i32;
+    fn wow_icu_format_date_time(
+        locale: *const c_char,
+        locale_length: i32,
+        milliseconds: f64,
+        date_style: i32,
+        time_style: i32,
+        zone: *const u8,
+        zone_length: i32,
+        output: *mut NativeString,
         error: *mut NativeError,
     ) -> i32;
     fn wow_icu_string_free(data: *mut u8);
@@ -214,6 +225,38 @@ pub(super) fn currency_fraction_digits(currency: &CStr) -> Result<Option<i32>, E
         1 => Ok(None),
         _ => Err(error.into_error(currency)),
     }
+}
+
+pub(super) fn format_date_time(
+    locale: &CStr,
+    milliseconds: f64,
+    date_style: DateTimeStyle,
+    time_style: DateTimeStyle,
+    zone: &str,
+) -> Result<String, Error> {
+    let locale_length = checked_length(locale.to_bytes().len(), "locale")?;
+    let zone_length = checked_length(zone.len(), "time zone")?;
+    let mut output = NativeString::default();
+    let mut error = NativeError::default();
+    // SAFETY: locale and UTF-8 zone remain valid through this synchronous call;
+    // checked lengths describe their buffers, and outputs are writable locals.
+    let status = unsafe {
+        wow_icu_format_date_time(
+            locale.as_ptr(),
+            locale_length,
+            milliseconds,
+            date_style as i32,
+            time_style as i32,
+            zone.as_ptr(),
+            zone_length,
+            &mut output,
+            &mut error,
+        )
+    };
+    if status != 0 {
+        return Err(error.into_error(locale));
+    }
+    output.copy_string()
 }
 
 pub(super) fn version() -> String {

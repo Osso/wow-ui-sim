@@ -11,6 +11,7 @@ pub(super) fn build() {
         "native/intl/text.c",
         "native/intl/number_format.c",
         "native/intl/currency_metadata.c",
+        "native/intl/date_format.c",
     ] {
         println!("cargo:rerun-if-changed={path}");
     }
@@ -19,6 +20,7 @@ pub(super) fn build() {
         "native/intl/text.c",
         "native/intl/number_format.c",
         "native/intl/currency_metadata.c",
+        "native/intl/date_format.c",
     ]);
     compiler.include("native/intl").std("c11");
     let target = env::var("TARGET").expect("Cargo TARGET is required for ICU4C");

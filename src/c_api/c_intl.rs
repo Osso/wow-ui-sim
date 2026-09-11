@@ -10,6 +10,8 @@ mod collation;
 #[cfg(feature = "retail-12-1-5")]
 mod currency_metadata;
 #[cfg(feature = "retail-12-1-5")]
+mod date_formatting;
+#[cfg(feature = "retail-12-1-5")]
 mod normalization;
 #[cfg(feature = "retail-12-1-5")]
 mod number_formatting;
@@ -77,6 +79,7 @@ mod storage {
         super::plurals::register(state, namespace)?;
         super::character_properties::register(state, namespace)?;
         super::number_formatting::register(state, namespace)?;
+        super::date_formatting::register(state, namespace)?;
         super::currency_metadata::register(state, namespace)
     }
 
@@ -113,6 +116,7 @@ mod storage {
         super::collation::register_context(state, metatable)?;
         super::plurals::register_context(state, metatable)?;
         super::number_formatting::register_context(state, metatable)?;
+        super::date_formatting::register_context(state, metatable)?;
         super::currency_metadata::register_context(state, metatable)?;
         table_set_static(
             state,

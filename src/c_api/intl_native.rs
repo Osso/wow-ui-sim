@@ -13,6 +13,17 @@ pub enum NumberStyle {
     Currency = 3,
 }
 
+/// WoW date/time selectors; the C shim maps them to ICU's style constants.
+#[repr(i32)]
+#[derive(Clone, Copy, Debug)]
+pub enum DateTimeStyle {
+    None = 0,
+    Short = 1,
+    Medium = 2,
+    Long = 3,
+    Full = 4,
+}
+
 /// WoW selector values; the C shim explicitly maps these to ICU's different order.
 #[repr(i32)]
 #[derive(Clone, Copy, Debug)]
@@ -81,6 +92,33 @@ pub fn currency_fraction_digits(currency: &str) -> Result<Option<i32>, Error> {
     ffi::currency_fraction_digits(&currency_string(currency)?)
 }
 
+/// Formats Unix seconds in an explicit validated zone. Empty zone means UTC;
+/// both styles None produce an empty string after validating the inputs.
+pub fn format_date_time(
+    locale: &str,
+    seconds: f64,
+    date_style: DateTimeStyle,
+    time_style: DateTimeStyle,
+    zone: &str,
+) -> Result<String, Error> {
+    validate_finite(seconds)?;
+    let milliseconds = seconds * 1000.0;
+    if !milliseconds.is_finite() {
+        return Err(Error("ICU4C Unix seconds overflow milliseconds".into()));
+    }
+    if zone.contains('\0') {
+        return Err(Error("ICU4C time zone must not contain NUL".into()));
+    }
+    let zone = if zone.is_empty() { "UTC" } else { zone };
+    ffi::format_date_time(
+        &locale_string(locale)?,
+        milliseconds,
+        date_style,
+        time_style,
+        zone,
+    )
+}
+
 /// Runtime ICU library version, as four dot-separated numeric components.
 pub fn version() -> String {
     ffi::version()
@@ -124,5 +162,7 @@ fn checked_length(length: usize, field: &str) -> Result<i32, Error> {
 
 #[cfg(test)]
 mod currency_metadata_tests;
+#[cfg(test)]
+mod date_tests;
 #[cfg(test)]
 mod tests;
