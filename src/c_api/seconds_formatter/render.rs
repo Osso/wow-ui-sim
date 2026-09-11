@@ -84,7 +84,7 @@ fn render(state: &mut LuaState) -> LuaResult<u32> {
     let Val::Num(width) = stack_val(state, 2) else {
         return Err(runtime_error("duration renderer requires a numeric width"));
     };
-    let width = integer(width, 0, 3)?;
+    let width = integer(width, 0, 2)?;
     let locale = current_locale(state)?;
     let text = format_duration_units(&locale, &parts, width)
         .map_err(|error| runtime_error(error.to_string()))?;

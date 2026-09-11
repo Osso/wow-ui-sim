@@ -9,9 +9,9 @@
 
 static UListFormatterWidth list_width(int32_t width) {
   if (width == 1)
-    return ULISTFMT_WIDTH_NARROW;
-  if (width == 2)
     return ULISTFMT_WIDTH_SHORT;
+  if (width == 2)
+    return ULISTFMT_WIDTH_NARROW;
   return ULISTFMT_WIDTH_WIDE;
 }
 
@@ -20,7 +20,7 @@ static UNumberFormatter *open_unit_formatter(const char *locale,
                                              int32_t width,
                                              WowIcuError *error) {
   static const char *units[] = {"second", "minute", "hour", "day"};
-  const char *unit_width = width == 1 ? "narrow" : width == 2 ? "short" : "full-name";
+  const char *unit_width = width == 1 ? "short" : width == 2 ? "narrow" : "full-name";
   const char *precision = part->fraction_digits == 3 ? ".###" : "precision-integer";
   char skeleton[128];
   int length = snprintf(skeleton, sizeof(skeleton),
@@ -152,7 +152,7 @@ int32_t wow_icu_duration_units(const char *locale, int32_t locale_length,
                                 WowIcuError *error) {
   output->data = NULL;
   output->length = 0;
-  if (count < 1 || count > 4 || width < 0 || width > 3)
+  if (count < 1 || count > 4 || width < 0 || width > 2)
     return wow_icu_fail(error, U_ILLEGAL_ARGUMENT_ERROR, "validate duration unit list");
   for (int32_t i = 0; i < count; ++i) {
     const WowIcuDurationPart *part = &parts[i];

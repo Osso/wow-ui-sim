@@ -75,11 +75,11 @@ fn seconds_formatter_format_uses_locale_width_and_survives_gc() {
         local f = C_StringUtil.CreateSecondsFormatter()
         local other = C_StringUtil.CreateSecondsFormatter()
         f:SetDesiredUnitCount(2)
-        f:SetDefaultAbbreviation(1)
+        f:SetDefaultAbbreviation(2)
         assert(f:Format(90) == '1m 30s', f:Format(90))
         assert(f:Format(90, 0) == '1 minute, 30 seconds')
-        assert(f:Format(90, 2) == '1 min, 30 sec', f:Format(90, 2))
-        assert(f:Format(90, 3) == '1 minute, 30 seconds')
+        assert(f:Format(90, 1) == '1 min, 30 sec', f:Format(90, 1))
+        assert(not pcall(f.Format, f, 90, 3))
         assert(other:Format(90) == '1 minute')
         collectgarbage('collect'); collectgarbage('collect')
         assert(f:Format(90) == '1m 30s')
@@ -108,7 +108,7 @@ fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
         end
         assert(not pcall(f.Format, f))
         assert(not pcall(f.Format, {}, 1))
-        for _, value in ipairs({-1, 4, 0.5, '1', false}) do
+        for _, value in ipairs({-1, 3, 4, 0.5, '1', false}) do
             assert(not pcall(f.Format, f, 1, value))
         end
         f:SetMinInterval(3); f:SetMaxInterval(0)
@@ -126,6 +126,71 @@ fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
         assert(f:Format(1) == '1 second')
         assert(f:GetApproximationSeconds() == 0 and f:GetMillisecondsThreshold() == 0)
     "#).unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn seconds_formatter_format_uses_exact_ptr_abbreviation_enum_after_bootstrap() {
+    let env = WowLuaEnv::new().unwrap();
+    for _ in 0..2 {
+        env.exec(r#"
+            local enum = Enum.SecondsFormatterAbbreviation
+            local expected = {None = 0, Truncate = 1, OneLetter = 2}
+            local count = 0
+            for name, value in pairs(enum) do
+                assert(expected[name] == value, 'unexpected abbreviation: ' .. name)
+                count = count + 1
+            end
+            assert(count == 3)
+            for name, value in pairs(expected) do assert(enum[name] == value) end
+            assert(enum.TwoLetters == nil and enum.Full == nil)
+            local meta = Enum.SecondsFormatterAbbreviationMeta
+            assert(meta.MinValue == 0 and meta.MaxValue == 2 and meta.NumValues == 3)
+            local formatter = C_StringUtil.CreateSecondsFormatter()
+            formatter:SetDesiredUnitCount(2)
+            local outputs = {'1 minute, 30 seconds', '1 min, 30 sec', '1m 30s'}
+            for value = 0, 2 do
+                assert(formatter:Format(90, value) == outputs[value + 1])
+                formatter:SetDefaultAbbreviation(value)
+                assert(formatter:Format(90) == outputs[value + 1])
+            end
+            formatter:SetDefaultAbbreviation(3)
+            assert(not pcall(formatter.Format, formatter, 90))
+            assert(not pcall(formatter.Format, formatter, 90, 3))
+            assert(formatter:Format(90, 0) == outputs[1])
+        "#).unwrap();
+        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn seconds_formatter_format_preserves_retail_abbreviation_enum_after_bootstrap() {
+    let env = WowLuaEnv::new().unwrap();
+    for _ in 0..2 {
+        env.exec(r#"
+            local enum = Enum.SecondsFormatterAbbreviation
+            local expected = {None = 0, OneLetter = 1, TwoLetters = 2, Full = 3}
+            local count = 0
+            for name, value in pairs(enum) do
+                assert(expected[name] == value, 'unexpected retail abbreviation: ' .. name)
+                count = count + 1
+            end
+            assert(count == 4)
+            for name, value in pairs(expected) do assert(enum[name] == value) end
+            assert(enum.Truncate == nil)
+            local meta = Enum.SecondsFormatterAbbreviationMeta
+            assert(meta.MinValue == 0 and meta.MaxValue == 3 and meta.NumValues == 4)
+            local formatter = C_StringUtil.CreateSecondsFormatter()
+            for value = 0, 3 do
+                formatter:SetDefaultAbbreviation(value)
+                assert(formatter:Format(90) == '90')
+                assert(formatter:Format(90, value) == '90')
+            end
+            assert(C_Intl == nil)
+        "#).unwrap();
+        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+    }
 }
 
 #[cfg(feature = "client-retail")]

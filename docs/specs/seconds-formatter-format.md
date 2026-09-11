@@ -4,6 +4,8 @@ PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consu
 
 ## What it must do
 
+- [ ] Publish exactly the pinned PTR abbreviation map `None=0`, `Truncate=1`, `OneLetter=2`, with metadata `0/2/3`, before and after compatibility bootstrap. Reject value `3`; do not publish `TwoLetters` or `Full` on PTR.
+- [ ] Preserve actual earlier-retail abbreviation publication (`None=0`, `OneLetter=1`, `TwoLetters=2`, `Full=3`, metadata `0/3/4`) and its placeholder output. This is baseline preservation, not pinned-source conformance.
 - [x] PTR returns exactly one localized duration string; earlier retail retains its existing `tostring(seconds or 0)` output, including ignored settings. That earlier output is a known baseline gap, not formatting conformance.
 - [x] Consume only registered settings: minimum/maximum interval, maximum curve, desired unit count, default/explicit abbreviation, rounding, final-unit round-up permission, approximation seconds, and millisecond threshold. Existing configuration accessors/evaluators remain unchanged.
 - [x] Use a private bootstrap argument captured by the formatter closure for native rendering. Do not expose a public helper global or C namespace method. Keep the callback alive through collection without pinning instances.
@@ -16,7 +18,7 @@ PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consu
 - Intervals are seconds/minutes/hours/days (`0..3`) with lengths `1/60/3600/86400`. Select the largest allowed interval fitting the magnitude, or the minimum if none fits. Desired count selects a contiguous interval window, capped at four. Omit zero components, but always render one unit for zero.
 - Evaluate min/max/count at the selected magnitude; configured maximum curves are consulted on every call. A minimum larger than maximum is an error.
 - Default rounding is Truncate (`1`). RoundUp (`0`) rounds the last selected unit upward only when `canRoundUpLastUnit` is true (default true). Earlier components use integer decomposition. Normalize carries into allowed larger units and reselect the window; do not exceed configured maximum.
-- Abbreviation defaults to `None=0`. `None=0` and `Full=3` use ICU full unit names and wide unit lists; `OneLetter=1` uses ICU narrow width, `TwoLetters=2` uses ICU short width. These are width mappings, not guarantees of one/two literal letters in every locale. An explicit argument overrides the stored abbreviation.
+- Abbreviation defaults to `None=0`. Pinned Gethe `49b69918` `SecondsFormatterSharedDocumentation.lua` defines exactly `None=0`, `Truncate=1`, `OneLetter=2`, with metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. PTR maps these to ICU wide/full-name, short, and narrow unit/list widths respectively. These width choices do not guarantee literal string length or exact native wording in every locale. Value `3` is invalid, including when stored as the default; a valid explicit argument still overrides the stored abbreviation.
 - For `0 < seconds < approximationSeconds`, format the threshold magnitude with the literal prefix `< `. Equality is not approximate. Zero and negative inputs are not approximated.
 - If the formatted magnitude is positive and below `millisecondsThreshold`, seconds in the last position retain up to three fractional digits (trailing zeros removed). Other intervals remain integral. The threshold is tested against the entire magnitude, not a residual component.
 - Negative inputs format their absolute magnitude with a single literal `-` prefix, including a truncated `-0 seconds`. No special negative unit arithmetic or locale-specific prefix is claimed.
@@ -29,6 +31,7 @@ PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consu
 
 ## Implementation inventory
 
+- `src/ptr/seconds_formatter_abbreviation.lua`, `src/ptr/compat_bootstrap.rs`: exact PTR abbreviation publication at initialization and post-load bootstrap; earlier-retail compatibility enums remain unchanged.
 - `src/c_api/seconds_formatter/format.lua`: private selection, decomposition, rounding, and prefix policy.
 - `src/c_api/seconds_formatter/render.rs`: private Rust callback, part validation, and current locale lookup.
 - `src/c_api/seconds_formatter.rs`: configuration integration and feature-scoped callback construction.
@@ -44,6 +47,7 @@ PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consu
 Focused development proof at `59833ba76`: four new PTR tests failed against the prior placeholder. The grouped filters `seconds_formatter_format:: seconds_formatter_configuration::` then passed **11 PTR** and **8 retail** tests with `--test integration --offline --no-default-features --features sound,gui,client-<profile>`. Counts include four new PTR tests or one retail baseline test, all six existing configuration tests, and one matching existing garden-format test. Compiler output had no warnings. The matching garden test logs partial-addon Lua diagnostics also present in RED; this is not a clean full-startup claim. Logs: `/tmp/seconds-formatter-format-{red,59833ba76-ptr,59833ba76-retail}.log`. No final check/readability/smoke gates or audit artifact updates were run.
 
 ## Known gaps (current cycle)
+- [ ] Earlier retail intentionally retains the stale four-member compatibility enum and placeholder formatting; this slice does not upgrade that profile.
 - [ ] Native numeric/`Seconds` representation, unit-width semantics, defaults, selection, rounding, negative and approximation policy, millisecond precision, exact ICU/CLDR output, coercion, and security/taint behavior remain unverified.
 - [ ] Numeric Step curves retain the existing engine limitation; `Format` propagates invalid fractional interval results rather than changing curve behavior.
 

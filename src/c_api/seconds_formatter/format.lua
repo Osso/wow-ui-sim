@@ -51,8 +51,8 @@ local function __wow_install_seconds_formatter_format(methods, render_duration_u
     local minimum = object:EvaluateMinInterval(seconds)
     local maximum = object:EvaluateMaxInterval(seconds)
     if minimum > maximum then error("SecondsFormatter minimum exceeds maximum", 3) end
-    local width = enum_option(abbreviation, nil, 3, "abbreviation")
-    if width == nil then width = enum_option(object.defaultAbbreviation, 0, 3, "abbreviation") end
+    local width = enum_option(abbreviation, nil, 2, "abbreviation")
+    if width == nil then width = enum_option(object.defaultAbbreviation, 0, 2, "abbreviation") end
     local rounding = enum_option(object.rounding, 1, 1, "rounding")
     local can_round_up = object.canRoundUpLastUnit
     if can_round_up == nil then can_round_up = true end

@@ -151,14 +151,18 @@ pub(crate) fn format_duration_units(
     parts: &[DurationPart],
     width: i32,
 ) -> Result<String, Error> {
-    if parts.is_empty() || parts.len() > 4 || !(0..=3).contains(&width) {
+    let valid_part_count = (1..=4).contains(&parts.len());
+    let valid_width = (0..=2).contains(&width);
+    if !valid_part_count || !valid_width {
         return Err(Error("invalid duration unit list or width".into()));
     }
     for part in parts {
         validate_finite(part.value)?;
         let valid_unit = (0..=3).contains(&part.unit);
         let valid_precision = matches!(part.fraction_digits, 0 | 3);
-        if part.value < 0.0 || !valid_unit || !valid_precision {
+        let valid_value = part.value >= 0.0;
+        let valid_part = valid_value && valid_unit && valid_precision;
+        if !valid_part {
             return Err(Error(
                 "invalid duration unit value, interval, or precision".into(),
             ));

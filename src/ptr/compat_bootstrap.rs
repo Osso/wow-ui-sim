@@ -22,6 +22,8 @@ const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
     include_str!("compat_bootstrap.lua"),
     "\n",
     include_str!("tooltip_data_line_type.lua"),
+    "\n",
+    include_str!("seconds_formatter_abbreviation.lua"),
 );
 const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua");
 
