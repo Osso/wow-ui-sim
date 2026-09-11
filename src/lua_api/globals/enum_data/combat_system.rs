@@ -198,8 +198,13 @@ pub const ENCOUNTER_TIMELINE_ICON_SET: SeqEnumDef = (
     ],
 );
 
+#[cfg(not(feature = "retail-12-1-5"))]
 pub const ENCOUNTER_TIMELINE_VIEW_TYPE: SeqEnumDef =
     ("EncounterTimelineViewType", &["Timeline", "Bars"]);
+
+#[cfg(feature = "retail-12-1-5")]
+pub const ENCOUNTER_TIMELINE_VIEW_TYPE: SeqEnumDef =
+    ("EncounterTimelineViewType", &["None", "Timeline", "Bars"]);
 
 pub const STATUS_BAR_TIMER_DIRECTION: SeqEnumDef =
     ("StatusBarTimerDirection", &["RemainingTime", "ElapsedTime"]);

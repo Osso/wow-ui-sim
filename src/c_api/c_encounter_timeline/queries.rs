@@ -2,9 +2,7 @@ use super::{
     model::{EventInfo, EventState},
     read_id, timer,
 };
-use crate::lua_api::methods::{
-    borrow_state, create_table_with_fields, table_set_num, table_set_static,
-};
+use crate::lua_api::methods::{borrow_state, create_table_with_fields, table_set_num};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
@@ -33,36 +31,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     for &(name, function) in methods {
         table_set_rust_fn_static(state, namespace, name, function)?;
     }
-    reserve_deferred_surface(state, namespace);
     Ok(())
-}
-
-fn reserve_deferred_surface(state: &mut LuaState, namespace: GcRef<Table>) {
-    // Prevent the generic namespace fallback from fabricating implementations.
-    let missing = state.gc.alloc_table(Table::with_sizes(0, 13));
-    for name in [
-        "GetEventTrack",
-        "GetTrackInfo",
-        "GetTrackList",
-        "GetTrackMaxEventDuration",
-        "GetTrackType",
-        "GetSortedEventList",
-        "GetEventHighlightTime",
-        "HasVisibleEvents",
-        "AddEditModeEvents",
-        "CancelEditModeEvents",
-        "GetViewType",
-        "SetViewType",
-        "SetEventIconTextures",
-    ] {
-        table_set_static(state, Val::Table(missing), name, Val::Bool(true));
-    }
-    table_set_static(
-        state,
-        Val::Table(namespace),
-        "__wow_removed_keys",
-        Val::Table(missing),
-    );
 }
 
 pub(super) fn info_table(state: &mut LuaState, info: &EventInfo) -> Val {
@@ -71,7 +40,7 @@ pub(super) fn info_table(state: &mut LuaState, info: &EventInfo) -> Val {
         state,
         &[
             ("id", Val::Num(f64::from(info.id))),
-            ("source", Val::Num(1.0)),
+            ("source", Val::Num(f64::from(info.source))),
             ("spellName", Val::Str(name)),
             ("spellID", Val::Num(f64::from(info.spell_id))),
             ("iconFileID", Val::Num(f64::from(info.icon))),
@@ -173,11 +142,16 @@ fn has_events(state: &mut LuaState, selected: Option<EventState>) -> LuaResult<u
 }
 
 fn count_by_source(state: &mut LuaState) -> LuaResult<u32> {
-    let count = match stack_val(state, 1) {
-        Val::Num(1.0) => borrow_state(state)?.encounter_timeline.events.len(),
-        Val::Num(0.0) | Val::Num(2.0) => 0,
+    let source = match stack_val(state, 1) {
+        Val::Num(value) if (0.0..=2.0).contains(&value) && value.fract() == 0.0 => value as u8,
         _ => return Err(runtime_error("unknown EncounterTimelineEventSource")),
     };
+    let count = borrow_state(state)?
+        .encounter_timeline
+        .events
+        .values()
+        .filter(|event| event.info.source == source)
+        .count();
     state.push(Val::Num(count as f64));
     Ok(1)
 }

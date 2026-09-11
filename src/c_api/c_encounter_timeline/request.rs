@@ -20,6 +20,7 @@ pub(super) fn read(state: &mut LuaState) -> LuaResult<(EventInfo, bool)> {
     Ok((
         EventInfo {
             id: 0,
+            source: 1,
             spell_id,
             name,
             icon: integer(state, request, "iconFileID", None, u32::MAX)?,
