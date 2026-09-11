@@ -7,7 +7,7 @@
 7. [best-effort] `added:C_Intl.CompareStrings` — behavioral
 8. [best-effort] `added:C_Intl.CreateLocaleContext` — behavioral
 9. [best-effort] `added:C_Intl.FindBreaks` — behavioral
-10. [evidence-required] `added:C_Intl.FindStringMatches` — unsafe
+10. [best-effort] `added:C_Intl.FindStringMatches` — behavioral
 11. [best-effort] `added:C_Intl.FoldCase` — behavioral
 12. [best-effort] `added:C_Intl.FormatCurrency` — behavioral
 13. [best-effort] `added:C_Intl.FormatDate` — behavioral
@@ -193,7 +193,7 @@
 193. [best-effort] `added:LuaLocaleContext` — behavioral
 194. [best-effort] `added:LuaLocaleContext.CompareStrings` — behavioral
 195. [best-effort] `added:LuaLocaleContext.FindBreaks` — behavioral
-196. [evidence-required] `added:LuaLocaleContext.FindStringMatches` — unsafe
+196. [best-effort] `added:LuaLocaleContext.FindStringMatches` — behavioral
 197. [best-effort] `added:LuaLocaleContext.FoldCase` — behavioral
 198. [best-effort] `added:LuaLocaleContext.FormatCurrency` — behavioral
 199. [best-effort] `added:LuaLocaleContext.FormatDate` — behavioral

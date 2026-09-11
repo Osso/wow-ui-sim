@@ -1,3 +1,7 @@
+## [2026-09-11] audit | Credit PTR ICU4C string matches
+
+`cca21ea0774872e520a5a7f693f8148e978fc119` and `328f229e6c8f3793010027e8b498d0f5e873b3c0` credit global/context `FindStringMatches`. Committed source/test review covers all five strengths, global/context locale selection, one linear UTF-16-to-UTF-8 byte-offset map, canonical/expansion matching, multibyte/NUL input, non-overlap, and earlier-retail absence. Zero-based offsets, normalization, empty-table and zero-length-match policy remain modeled; `MayReturnNothing`, ICU4C-vs-ICU4X data, native WoW equivalence, and security remain unverified. Platform execution is accepted pending. Totals: 399 best-effort, 50 evidence-required, 0 untriaged. See [string matches](../specs/intl-string-matches.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR ICU4C display names and transliteration
 
 `617d79e82` moves global/context `GetDisplayName` and global `Transliterate` to bounded best-effort. Review covered naming direction, independent context/current locale selection, strict UTF-8, transliteration and retrying growth, and PTR/retail profile source. ICU data/version/inheritance, error/no-result behavior, native equivalence, and security remain unverified. Platform execution remains accepted pending. Totals: 397 best-effort, 52 evidence-required, 0 untriaged. See [display names and transliteration](../specs/intl-display-transliteration.md) and [[patch-12-1-5-api-audit]].

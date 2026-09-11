@@ -43,7 +43,7 @@ Search uses installed ICU4C data. `CompareStrings` and `GetSortKey` still use IC
 
 ## Known gaps (current cycle)
 
-- Focused development proof at `cca21ea07`: RED was three missing-API failures; GREEN includes 40 library and 15 integration tests on PTR, 10 library and 5 integration tests on retail. Commands: `cargo test --lib --test integration --offline --no-default-features --features sound,gui,client-<profile> intl_ -- --nocapture` for each profile. No broad check/readability or audit-artifact gates were run.
+- Committed source/test review at `328f229e6` credits the two audit rows. The prior focused development proof at `cca21ea07` recorded 40 library and 15 integration tests on PTR plus 10 library and 5 integration tests on retail; this documentation audit did not rerun them. Commands: `cargo test --lib --test integration --offline --no-default-features --features sound,gui,client-<profile> intl_ -- --nocapture` for each profile. No broad check/readability gate was run.
 - [ ] Native WoW offsets, locale-data versions, `MayReturnNothing`, and `AllowedWhenUntainted` enforcement remain unverified.
 - [ ] Allocation-failure paths and ICU internal invariant failures are handled but have no fault-injection proof. Windows/macOS execution is not claimed by Linux tests.
 
