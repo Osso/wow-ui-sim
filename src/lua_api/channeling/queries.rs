@@ -20,7 +20,11 @@ fn stage_duration(state: &mut LuaState) -> LuaResult<u32> {
     let Val::Num(index) = stack_val(state, 2) else {
         return Ok(0);
     };
-    if !index.is_finite() || index < 0.0 || index.fract() != 0.0 {
+    let is_finite = index.is_finite();
+    let is_integral = index.fract() == 0.0;
+    let is_in_range = index >= 0.0;
+    let is_valid_index = is_finite && is_integral && is_in_range;
+    if !is_valid_index {
         return Ok(0);
     }
     let value = borrow_state(state)?
