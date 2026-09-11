@@ -1,3 +1,7 @@
+## [2026-09-11] audit | Credit PTR ICU4C display names and transliteration
+
+`617d79e82` moves global/context `GetDisplayName` and global `Transliterate` to bounded best-effort. Review covered naming direction, independent context/current locale selection, strict UTF-8, transliteration and retrying growth, and PTR/retail profile source. ICU data/version/inheritance, error/no-result behavior, native equivalence, and security remain unverified. Platform execution remains accepted pending. Totals: 397 best-effort, 52 evidence-required, 0 untriaged. See [display names and transliteration](../specs/intl-display-transliteration.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR ICU4C date/time formatting
 
 `ca312b672`, `3259e3a76`, and `ec09c4037` credit six bounded PTR rows: global/context `FormatDate`, `FormatTime`, and `FormatDateTime`. Focused native and profile proof covers Unix seconds × 1000, all five styles including `None`, supplied valid UTC/fixed-offset/named zones, day boundary, New York DST, locale/context selection, and earlier-retail absence. Empty-zone UTC, both-None empty output, validation, exact output, ICU/CLDR/tzdata version, no-result conditions, native WoW equivalence, and security remain policy or unverified. Windows/macOS/Docker execution remains accepted pending. See [date and time formatting](../specs/intl-date-formatting.md) and [[patch-12-1-5-api-audit]].

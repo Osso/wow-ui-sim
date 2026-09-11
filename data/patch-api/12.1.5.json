@@ -308,7 +308,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -358,7 +358,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "test",
@@ -400,7 +400,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -478,7 +478,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -527,7 +527,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -539,19 +539,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -610,7 +610,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -622,25 +622,25 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI declaration carries the checked milliseconds, styles, locale, and explicit zone across the fixed-width C ABI.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "The bridge declares the explicit date/time formatter ABI and enforces ICU4C minimum-version compilation.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build includes the date formatter and keeps ICU4C provisioning/linking feature-scoped.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
@@ -695,7 +695,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -707,25 +707,25 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI declaration carries the checked milliseconds, styles, locale, and explicit zone across the fixed-width C ABI.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "The bridge declares the explicit date/time formatter ABI and enforces ICU4C minimum-version compilation.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build includes the date formatter and keeps ICU4C provisioning/linking feature-scoped.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
@@ -779,7 +779,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -791,19 +791,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -862,7 +862,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -874,25 +874,25 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI declaration carries the checked milliseconds, styles, locale, and explicit zone across the fixed-width C ABI.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "The bridge declares the explicit date/time formatter ABI and enforces ICU4C minimum-version compilation.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build includes the date formatter and keeps ICU4C provisioning/linking feature-scoped.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
@@ -952,7 +952,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration publishes GetCharacterProperties while earlier retail records the namespace as absent."
         },
         {
@@ -1002,13 +1002,13 @@
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build compiles the currency metadata bridge under the existing ICU4C gate without changing provisioning.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "Private fixed-width ABI exposes a separate status and output value for currency fraction digits.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
@@ -1020,19 +1020,19 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Safe boundary validates and normalizes three-letter codes and distinguishes a native no-match from a known zero-digit result.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI converts native fraction-digit status/output into Rust Option values without exposing ICU types.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR C_Intl registration includes the currency metadata module while earlier profiles retain namespace absence.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -1089,13 +1089,13 @@
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build compiles the currency metadata bridge under the existing ICU4C gate without changing provisioning.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "Private fixed-width ABI exposes a currency-name operation without leaking ICU types.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
@@ -1107,19 +1107,19 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Safe boundary validates and normalizes three-letter codes before invoking the currency-name bridge.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI owns and copies native output while converting native name status into Rust Option values.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR C_Intl registration includes the currency metadata module while earlier profiles retain namespace absence.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -1176,7 +1176,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "test",
@@ -1198,24 +1198,51 @@
       "id": "added:C_Intl.GetDisplayName",
       "symbol": "C_Intl.GetDisplayName",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added declaration, required strings, string result, MayReturnNothing, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/display_transliteration.rs",
+          "summary": "PTR registration dispatches global/current or receiver-stored target locale with the supplied display locale through strict UTF-8 and locale parsing, and exposes transliteration globally only.",
+          "source_hash": "9fe0bf7c2f1bc85fa4783312ca7e5dc1a20fcc21e0796e8c2c03b014787bc05c"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/display_transliteration.c",
+          "summary": "The bounded ICU4C shim converts explicit-length UTF-8 inputs, invokes display-name/transliteration APIs, and retries transliteration expansion from untouched UTF-16 input.",
+          "source_hash": "fbded28612528c307945cfe974e4ca06145b47b69e16f148337ac3cebc132f49"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_display_transliteration.rs::intl_display_names_use_argument_as_display_language",
+          "summary": "Focused committed test source asserts the credited PTR behavior; this documentation audit did not rerun it.",
+          "source_hash": "0b1e05d6710f5de8a1465135c746d65f69f3d797b5c0e26e2aaae62f62d66237"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_display_transliteration.rs::intl_display_transliteration_preserves_retail_absence",
+          "summary": "Focused committed retail test source asserts earlier-retail C_Intl/LuaLocaleContext absence; this documentation audit did not rerun it.",
+          "source_hash": "0b1e05d6710f5de8a1465135c746d65f69f3d797b5c0e26e2aaae62f62d66237"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_display_transliteration.rs::intl_display_names_use_argument_as_display_language",
+        "tests/intl_display_transliteration.rs::intl_display_transliteration_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "617d79e82",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Committed source and focused test evidence credit PTR global publication, display-locale argument direction, strict UTF-8 input handling, and the global current-locale target. ICU display-name data, version, inheritance, error/no-result behavior, AllowedWhenUntainted enforcement, taint/security, coercion, and native WoW equivalence remain unverified. Windows/macOS execution is accepted pending."
     },
     {
       "id": "added:C_Intl.GetSortKey",
@@ -1241,7 +1268,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -1296,7 +1323,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -1346,7 +1373,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration publishes Length beside the existing locale-context surface; earlier retail marks C_Intl absent.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -1396,7 +1423,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs normalization beside existing locale-context support; earlier retail retains C_Intl absence."
         },
         {
@@ -1445,7 +1472,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -1457,19 +1484,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -1527,7 +1554,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -1539,19 +1566,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -1615,7 +1642,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1670,7 +1697,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1725,7 +1752,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -1780,7 +1807,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -1835,7 +1862,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -1870,24 +1897,51 @@
       "id": "added:C_Intl.Transliterate",
       "symbol": "C_Intl.Transliterate",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added declaration, required strings, string result, MayReturnNothing, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/display_transliteration.rs",
+          "summary": "PTR registration dispatches global/current or receiver-stored target locale with the supplied display locale through strict UTF-8 and locale parsing, and exposes transliteration globally only.",
+          "source_hash": "9fe0bf7c2f1bc85fa4783312ca7e5dc1a20fcc21e0796e8c2c03b014787bc05c"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/display_transliteration.c",
+          "summary": "The bounded ICU4C shim converts explicit-length UTF-8 inputs, invokes display-name/transliteration APIs, and retries transliteration expansion from untouched UTF-16 input.",
+          "source_hash": "fbded28612528c307945cfe974e4ca06145b47b69e16f148337ac3cebc132f49"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_display_transliteration.rs::intl_transliteration_handles_growth_and_repeated_calls",
+          "summary": "Focused committed test source asserts the credited PTR behavior; this documentation audit did not rerun it.",
+          "source_hash": "0b1e05d6710f5de8a1465135c746d65f69f3d797b5c0e26e2aaae62f62d66237"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_display_transliteration.rs::intl_display_transliteration_preserves_retail_absence",
+          "summary": "Focused committed retail test source asserts earlier-retail C_Intl/LuaLocaleContext absence; this documentation audit did not rerun it.",
+          "source_hash": "0b1e05d6710f5de8a1465135c746d65f69f3d797b5c0e26e2aaae62f62d66237"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_display_transliteration.rs::intl_transliteration_handles_growth_and_repeated_calls",
+        "tests/intl_display_transliteration.rs::intl_display_transliteration_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "617d79e82",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Committed source and focused test evidence credit PTR global publication, strict UTF-8 text handling, registered ICU4C transliteration, explicit embedded-NUL/supplementary input preservation, and checked retrying output growth from original UTF-16 input. ICU transliterator data/version, exact output, inheritance, error/no-result behavior, AllowedWhenUntainted enforcement, taint/security, coercion, and native WoW equivalence remain unverified. No context transliteration is credited. Windows/macOS execution is accepted pending."
     },
     {
       "id": "added:C_LFGInfo.GetActiveLFGDungeonName",
@@ -3206,7 +3260,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -3218,19 +3272,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -3288,7 +3342,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -3300,19 +3354,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -3370,7 +3424,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -3382,19 +3436,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -9308,7 +9362,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "test",
@@ -9350,7 +9404,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -9405,7 +9459,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs FindBreaks on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -9483,7 +9537,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -9532,7 +9586,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -9544,19 +9598,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -9615,7 +9669,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -9627,25 +9681,25 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI declaration carries the checked milliseconds, styles, locale, and explicit zone across the fixed-width C ABI.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "The bridge declares the explicit date/time formatter ABI and enforces ICU4C minimum-version compilation.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build includes the date formatter and keeps ICU4C provisioning/linking feature-scoped.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
@@ -9700,7 +9754,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -9712,25 +9766,25 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI declaration carries the checked milliseconds, styles, locale, and explicit zone across the fixed-width C ABI.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "The bridge declares the explicit date/time formatter ABI and enforces ICU4C minimum-version compilation.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build includes the date formatter and keeps ICU4C provisioning/linking feature-scoped.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
@@ -9784,7 +9838,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -9796,19 +9850,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -9867,7 +9921,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-gated C_Intl registration exposes the global and locale-context date/time methods only under retail-12-1-5.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -9879,25 +9933,25 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Rust native boundary checks finite Unix seconds and converts seconds \u00d7 1000 before invoking the ICU4C C ABI.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI declaration carries the checked milliseconds, styles, locale, and explicit zone across the fixed-width C ABI.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "The bridge declares the explicit date/time formatter ABI and enforces ICU4C minimum-version compilation.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build includes the date formatter and keeps ICU4C provisioning/linking feature-scoped.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
@@ -9952,13 +10006,13 @@
           "kind": "source",
           "reference": "build/intl_native.rs",
           "summary": "PTR-only native build compiles the currency metadata bridge under the existing ICU4C gate without changing provisioning.",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037"
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f"
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
           "summary": "Private fixed-width ABI exposes a currency-name operation without leaking ICU types.",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd"
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa"
         },
         {
           "kind": "source",
@@ -9970,19 +10024,19 @@
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
           "summary": "Safe boundary validates and normalizes three-letter codes before invoking the currency-name bridge.",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0"
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700"
         },
         {
           "kind": "source",
           "reference": "src/c_api/intl_native/ffi.rs",
           "summary": "FFI owns and copies native output while converting native name status into Rust Option values.",
-          "source_hash": "78a430f1e32d144478523a1a6e61431fc4ddb8390b4c136b453a42824c7078a5"
+          "source_hash": "fd7aae723359d17c1aed46f71d32289651e10580593ba4bc987641c3e91ffda9"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR locale-context construction registers the currency metadata method while earlier profiles retain namespace absence.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -10024,24 +10078,51 @@
       "id": "added:LuaLocaleContext.GetDisplayName",
       "symbol": "LuaLocaleContext.GetDisplayName",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added declaration, required strings, string result, MayReturnNothing, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/display_transliteration.rs",
+          "summary": "PTR registration dispatches global/current or receiver-stored target locale with the supplied display locale through strict UTF-8 and locale parsing, and exposes transliteration globally only.",
+          "source_hash": "9fe0bf7c2f1bc85fa4783312ca7e5dc1a20fcc21e0796e8c2c03b014787bc05c"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/display_transliteration.c",
+          "summary": "The bounded ICU4C shim converts explicit-length UTF-8 inputs, invokes display-name/transliteration APIs, and retries transliteration expansion from untouched UTF-16 input.",
+          "source_hash": "fbded28612528c307945cfe974e4ca06145b47b69e16f148337ac3cebc132f49"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_display_transliteration.rs::intl_display_names_use_argument_as_display_language",
+          "summary": "Focused committed test source asserts the credited PTR behavior; this documentation audit did not rerun it.",
+          "source_hash": "0b1e05d6710f5de8a1465135c746d65f69f3d797b5c0e26e2aaae62f62d66237"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_display_transliteration.rs::intl_display_transliteration_preserves_retail_absence",
+          "summary": "Focused committed retail test source asserts earlier-retail C_Intl/LuaLocaleContext absence; this documentation audit did not rerun it.",
+          "source_hash": "0b1e05d6710f5de8a1465135c746d65f69f3d797b5c0e26e2aaae62f62d66237"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/intl_display_transliteration.rs::intl_display_names_use_argument_as_display_language",
+        "tests/intl_display_transliteration.rs::intl_display_transliteration_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "617d79e82",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Committed source and focused test evidence credit PTR userdata publication, display-locale argument direction, strict UTF-8 input handling, and independent stored-locale selection after context mutation. ICU display-name data, version, inheritance, error/no-result behavior, AllowedWhenUntainted enforcement, taint/security, coercion, and native WoW equivalence remain unverified. Windows/macOS execution is accepted pending."
     },
     {
       "id": "added:LuaLocaleContext.GetLocale",
@@ -10062,7 +10143,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "test",
@@ -10104,7 +10185,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs collation methods on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -10154,7 +10235,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "Locale context userdata registers Length on its metatable, validates the receiver, and delegates to shared PTR text handling without mutating stored locale state.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "source",
@@ -10198,7 +10279,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -10210,19 +10291,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -10280,7 +10361,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration wires number-formatting globals and locale-context methods only under retail-12-1-5."
         },
         {
@@ -10292,19 +10373,19 @@
         {
           "kind": "source",
           "reference": "src/c_api/intl_native.rs",
-          "source_hash": "603978c801c4907d106c8f0d9f5a8a0eb9fbb811b39f6ad08bcab1d28175b1a0",
+          "source_hash": "9ca263a8f85aff9a09d8ff21b8f2b23d835042b161e6c217bb98f6663b56c700",
           "summary": "Feature-gated Rust boundary uses finite f64 inputs and explicit ICU4C formatting/parsing policy without an approximate fallback."
         },
         {
           "kind": "source",
           "reference": "build/intl_native.rs",
-          "source_hash": "fbd6c94414769a46094e451c8da449ff9083aad12fa56079250e9d1d84ef2037",
+          "source_hash": "379c8c1ca517029697b03ed7e8ebd848ca53815524b843592e3d3111ddf3881f",
           "summary": "ICU4C build discovery/linking is restricted to retail-12-1-5; Unix requires pkg-config ICU >=72 and MSVC requires explicit static vcpkg provisioning."
         },
         {
           "kind": "source",
           "reference": "native/intl/bridge.h",
-          "source_hash": "a17ea40db67c879c162d2e69cc8accbf254eafc58aa58fcc69a84a35c80a25cd",
+          "source_hash": "ff77bce9f670b38a61ce29639ac42e4f115f1166f67401f07be3297d81722daa",
           "summary": "Narrow C ABI preserves explicit lengths and keeps ICU C API objects inside the native bridge."
         },
         {
@@ -10368,7 +10449,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs plural selection on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -10418,7 +10499,7 @@
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
           "summary": "PTR-only C_Intl registration owns opaque locale-context userdata storage and earlier-retail namespace absence. Identifier validation and mutation semantics are documented simulator choices, not native locale conformance.",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5"
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540"
         },
         {
           "kind": "test",
@@ -10460,7 +10541,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -10515,7 +10596,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs titlecasing on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {
@@ -10570,7 +10651,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs ICU casing on the global namespace and locale-context userdata; earlier retail retains C_Intl absence."
         },
         {
@@ -10625,7 +10706,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_intl.rs",
-          "source_hash": "ee317648a42afa91548c14495cef9e0069e0d89cb2aefb345e76b3aeb19d46e5",
+          "source_hash": "f43827d7c3d76bf0ad848e157fb94bde4014c45d9a6a8ecc51b895e756e8f540",
           "summary": "PTR-only C_Intl registration installs TransformLocale on the global namespace and locale-context userdata; earlier retail suppresses the surface."
         },
         {

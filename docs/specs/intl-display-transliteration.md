@@ -5,17 +5,17 @@ PTR exposes `C_Intl.GetDisplayName(displayLocale)`, `LuaLocaleContext:GetDisplay
 ## What it must do
 
 - [x] Display the global current locale or context's stored locale in the language specified by `displayLocale`, not the reverse. Context updates affect subsequent results without mutating other contexts.
-- [x] Reuse existing strict UTF-8 and locale parsing, including WoW tag translation; convert both target and display BCP-47 tags for ICU4C.
-- [x] Return ICU display names for English, French, and German display languages, preserving Unicode text.
+- [x] Route supplied display-locale and transliteration text through the existing strict UTF-8 boundary.
+- [ ] Establish exact display names, ICU data/version, locale inheritance, or native WoW output.
 - [x] Apply registered ICU transliterators through `utrans_openU` and `utrans_transUChars` using explicit UTF-16 lengths. Empty input is valid; embedded NUL and supplementary characters are preserved as input data.
 - [x] Grow output buffers with checked arithmetic. On overflow, discard partially transformed output and retry from the original UTF-16 input, restoring length and limit.
-- [ ] Close native transliterators and free temporary/output allocations on success, error, and retry paths.
-- [x] Reject empty/NUL-containing/unavailable transliterator IDs and malformed UTF-8 explicitly; later calls remain usable after failure.
-- [x] Preserve earlier-retail namespace absence and existing Intl behavior. Add no dependencies or platform provisioning changes.
+- [ ] Establish native allocation cleanup or error/no-result behavior.
+- [ ] Establish validation-error behavior or post-failure recovery.
+- [x] Preserve PTR publication and earlier-retail `C_Intl`/`LuaLocaleContext` absence. No context `Transliterate` is added.
 
 ## Simulator policies and native uncertainty
 
-Display names and registered transliterator rules come from the installed ICU4C data. ICU's naming inheritance and data-selected names are retained; there is no alternate approximate implementation. Exact spelling, transliteration output, naming inheritance, and data versions may differ from WoW. Validation failures raise errors; successful calls return one string, including empty text. Native `MayReturnNothing` conditions and secret/untainted enforcement remain unverified. These APIs do not change locale-context storage or add native security enforcement.
+ICU data/version, naming inheritance, exact display/transliteration output, error/no-result behavior, and native WoW equivalence are unverified. `MayReturnNothing`, `AllowedWhenUntainted`, taint, secret, protected, coercion, and other security behavior are unverified. These APIs do not add context `Transliterate` or native security enforcement.
 
 ## How it works
 
@@ -37,9 +37,9 @@ Display names and registered transliterator rules come from the installed ICU4C 
 
 ## Known gaps (current cycle)
 
-- [x] Focused Linux RED/GREEN at `617d79e82`: three missing-API failures before implementation; 37 PTR library/native tests, 12 PTR Lua integration tests, 10 retail library tests, and four retail integration tests passed. Includes three new native tests, three new PTR Lua tests, and one retail absence test.
-- [ ] Windows/macOS execution remains accepted pending; no new platform execution claim.
-- [ ] Native naming, inheritance, transliteration data/version equivalence, error behavior, and security remain unverified.
+- [ ] Independently execute focused native/PTR/retail tests; this audit reviewed committed test sources only.
+- [ ] Windows/macOS execution remains accepted pending.
+- [ ] ICU data/version, naming inheritance, exact output, error/no-result behavior, native equivalence, and security remain unverified.
 
 ## Out of scope
 

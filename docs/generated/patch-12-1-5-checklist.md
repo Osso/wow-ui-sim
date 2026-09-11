@@ -18,7 +18,7 @@
 18. [best-effort] `added:C_Intl.GetCurrencyFractionDigits` — behavioral
 19. [best-effort] `added:C_Intl.GetCurrencyName` — behavioral
 20. [best-effort] `added:C_Intl.GetCurrentLocale` — behavioral
-21. [evidence-required] `added:C_Intl.GetDisplayName` — unsafe
+21. [best-effort] `added:C_Intl.GetDisplayName` — behavioral
 22. [best-effort] `added:C_Intl.GetSortKey` — behavioral
 23. [best-effort] `added:C_Intl.IsNormalized` — behavioral
 24. [best-effort] `added:C_Intl.Length` — behavioral
@@ -30,7 +30,7 @@
 30. [best-effort] `added:C_Intl.ToTitle` — behavioral
 31. [best-effort] `added:C_Intl.ToUpper` — behavioral
 32. [best-effort] `added:C_Intl.TransformLocale` — behavioral
-33. [evidence-required] `added:C_Intl.Transliterate` — unsafe
+33. [best-effort] `added:C_Intl.Transliterate` — behavioral
 34. [best-effort] `added:C_LFGInfo.GetActiveLFGDungeonName` — behavioral
 35. [best-effort] `added:C_PvP.IsTrainingGroundsArena` — behavioral
 36. [best-effort] `added:C_PvP.IsTrainingGroundsBG` — behavioral
@@ -201,7 +201,7 @@
 201. [best-effort] `added:LuaLocaleContext.FormatNumber` — behavioral
 202. [best-effort] `added:LuaLocaleContext.FormatTime` — behavioral
 203. [best-effort] `added:LuaLocaleContext.GetCurrencyName` — behavioral
-204. [evidence-required] `added:LuaLocaleContext.GetDisplayName` — unsafe
+204. [best-effort] `added:LuaLocaleContext.GetDisplayName` — behavioral
 205. [best-effort] `added:LuaLocaleContext.GetLocale` — behavioral
 206. [best-effort] `added:LuaLocaleContext.GetSortKey` — behavioral
 207. [best-effort] `added:LuaLocaleContext.Length` — behavioral
