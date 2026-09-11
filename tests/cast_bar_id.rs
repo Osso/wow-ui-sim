@@ -20,7 +20,7 @@ fn assert_tuple(env: &WowLuaEnv, channel: bool, id: u32, stages: u32) {
     let tail = if channel {
         format!("false, 19750, {}, {stages}, {id}", stages > 0)
     } else {
-        format!("{id}, false, 19750, {id}, 0")
+        format!("'Cast-Sim-{id}', false, 19750, {id}, 0")
     };
     env.exec(&format!(
         r#"

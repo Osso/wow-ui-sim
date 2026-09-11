@@ -9,7 +9,7 @@ Simulator-owned `A_Admin.DelayCasting` and `A_Admin.FailCasting` drive the exist
 - [ ] `FailCasting(quiet=false)` returns false without events when inactive; otherwise takes the old state before callbacks and emits FAILED or FAILED_QUIET, followed by STOP, each with the old four-field identity. Invalid nonboolean quiet values fail atomically.
 - [ ] Failed casts never later complete, apply spell effects, or apply their deferred specialization. A failed specialization clears its pending action before callbacks, without clearing a reentrant replacement.
 - [ ] Failure and STOP callbacks may start a replacement cast; it retains its state and completes normally. Repeated failure while inactive returns false.
-- [ ] Existing SetCasting, StopCasting, SpellStopCasting, and cast/channel query arities remain unchanged. New cast state starts with zero accumulated delay.
+- [ ] Existing SetCasting, StopCasting, SpellStopCasting, and cast/channel query arities remain unchanged. New cast state starts with zero accumulated delay. On current retail/PTR, casting slot 7 returns the shared synthetic event GUID as the pinned `WOWGUID` contract requires; numeric castBarID stays in slot 10. Older epochs retain their numeric slot 7.
 - [ ] The real Blizzard cast bar updates its duration on DELAYED and ends casting on failure/paired STOP. Quiet failure has no added failure-flash contract.
 
 ## Simulator policies

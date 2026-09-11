@@ -344,6 +344,13 @@ fn push_common_cast_fields(state: &mut LuaState, cast_info: &CastInfoSnapshot) {
 
 fn push_cast_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 {
     push_common_cast_fields(state, cast_info);
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        let guid = crate::lua_api::spellcast_events::cast_guid(cast_info.cast_id);
+        let value = create_string(state, &guid);
+        state.push(value);
+    }
+    #[cfg(not(feature = "retail-12-1-0"))]
     state.push(Val::Num(cast_info.cast_id as f64));
     state.push(Val::Bool(false));
     state.push(Val::Num(cast_info.spell_id as f64));

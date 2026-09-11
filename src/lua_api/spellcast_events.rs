@@ -5,12 +5,16 @@ use rilua::vm::state::LuaState;
 use super::methods::create_string;
 use super::script_helpers::fire_named_event_state;
 
+pub(crate) fn cast_guid(cast_id: u32) -> String {
+    format!("Cast-Sim-{cast_id}")
+}
+
 pub(crate) fn player_cast_args(
     cast_id: u32,
     spell_id: u32,
     mut lua_string: impl FnMut(&str) -> Val,
 ) -> [Val; 4] {
-    let guid = format!("Cast-Sim-{cast_id}");
+    let guid = cast_guid(cast_id);
     [
         lua_string("player"),
         lua_string(&guid),
