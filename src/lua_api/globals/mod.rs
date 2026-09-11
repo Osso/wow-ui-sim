@@ -6,7 +6,6 @@ pub mod admin_actionbars_bags;
 pub mod admin_addons;
 pub mod admin_auction_house;
 pub mod admin_buffs;
-mod admin_cast_inputs;
 pub mod admin_collections;
 pub mod admin_crafting;
 pub mod admin_encounter;

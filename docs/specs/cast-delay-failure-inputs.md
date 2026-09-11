@@ -24,7 +24,7 @@ The input accepts any active timed-cast state, including an expired deadline not
 
 ## Implementation inventory
 
-- `src/lua_api/globals/admin_cast_inputs.rs`: input validation, atomic delay/failure state transition, notifications.
+- `src/lua_api/globals/admin/cast_inputs.rs`: input validation, atomic delay/failure state transition, notifications.
 - `src/lua_api/spellcast_events.rs`: shared four-field identity dispatch.
 - `src/lua_api/game_data.rs`: cumulative delay seconds on casting state.
 - `src/lua_api/globals/utility_system_spell/spell_api.rs`: milliseconds query output.

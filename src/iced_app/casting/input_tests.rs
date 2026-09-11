@@ -54,7 +54,7 @@ fn spellcast_input_delay_updates_query_and_deadline_atomically() {
             for j=1,4 do assert(row[j] == inputEvents[1][j]) end
             assert(row.bar == original[10] and row.delay == (i == 2 and 500 or 750))
         end
-        for _, invalid in ipairs({-1, math.huge, -math.huge, 0/0, false, '1'}) do
+        for _, invalid in ipairs({-1, 1e308, math.huge, -math.huge, 0/0, false, '1'}) do
             assert(not pcall(A_Admin.DelayCasting, invalid))
         end
         assert(not pcall(A_Admin.DelayCasting))
