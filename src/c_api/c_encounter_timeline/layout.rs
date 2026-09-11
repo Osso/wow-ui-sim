@@ -87,7 +87,10 @@ pub(super) fn refresh(timeline: &mut Timeline) -> LayoutChanges {
 
 fn should_highlight(event: &Event) -> bool {
     let visible_active = event.state == EventState::Active && event.track != INDETERMINATE;
-    visible_active && !event.highlighted && remaining(event) <= HIGHLIGHT_TIME
+    if !visible_active || event.highlighted {
+        return false;
+    }
+    remaining(event) <= HIGHLIGHT_TIME
 }
 
 pub(super) fn visible(event: &Event) -> bool {

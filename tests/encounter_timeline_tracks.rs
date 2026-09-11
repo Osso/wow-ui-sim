@@ -50,11 +50,11 @@ fn encounter_tracks_queue_hold_and_transition_callbacks() {
         assert(T.GetEventTrack(id) == 2)
     "#).unwrap();
     env.fire_on_update(11.0).unwrap();
-    env.exec("assert(T.GetEventTrack(id)==1 and highlights==1); assert(T.GetEventHighlightTime()==5)").unwrap();
+    env.exec("assert(T.GetEventTrack(id)==1 and highlights==1 and changes[#changes]==1); assert(T.GetEventHighlightTime()==5)").unwrap();
     env.fire_on_update(5.0).unwrap();
     env.exec(r#"
         local track,index=T.GetEventTrack(id)
-        assert(track==0 and index==1)
+        assert(track==0 and index==1 and changes[#changes]==0)
         assert(T.GetEventState(id)==Enum.EncounterTimelineEventState.Active)
         assert(T.GetEventTimeRemaining(id)==0 and timer:GetRemainingDuration()==0)
         assert(timer:GetElapsedDuration()==16 and T.HasVisibleEvents())
@@ -93,10 +93,13 @@ fn encounter_tracks_filter_limits_ties_capacity_pause_and_view() {
         for _,name in ipairs({'ENCOUNTER_TIMELINE_VIEW_DEACTIVATED','ENCOUNTER_TIMELINE_LAYOUT_UPDATED','ENCOUNTER_TIMELINE_VIEW_ACTIVATED'}) do frame:RegisterEvent(name) end
         frame:SetScript('OnEvent',function(_,event,view)
             views[#views+1]=event
-            if event=='ENCOUNTER_TIMELINE_VIEW_ACTIVATED' then assert(T.GetViewType()==view); assert(#T.GetTrackList()==5) end
+            if event=='ENCOUNTER_TIMELINE_VIEW_ACTIVATED' then
+                activatedView=T.GetViewType(); activatedTracks=#T.GetTrackList()
+            end
         end)
         T.SetViewType(Enum.EncounterTimelineViewType.Bars)
         assert(#views==3 and views[1]=='ENCOUNTER_TIMELINE_VIEW_DEACTIVATED' and views[3]=='ENCOUNTER_TIMELINE_VIEW_ACTIVATED')
+        assert(activatedView==Enum.EncounterTimelineViewType.Bars and activatedTracks==5)
         T.SetViewType(Enum.EncounterTimelineViewType.Bars); assert(#views==3)
         assert(not pcall(T.SetViewType, 99))
         assert(not pcall(T.GetSortedEventList,-1))

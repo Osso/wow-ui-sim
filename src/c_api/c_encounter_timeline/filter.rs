@@ -58,7 +58,8 @@ fn filtered_ids(
             let hidden_excluded = hidden && event.track == layout::INDETERMINATE;
             let duration_allowed =
                 duration.is_none_or(|maximum| layout::remaining(event) <= maximum);
-            !terminal_excluded && !hidden_excluded && duration_allowed
+            let excluded = terminal_excluded || hidden_excluded;
+            duration_allowed && !excluded
         })
         .collect())
 }

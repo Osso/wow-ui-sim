@@ -100,6 +100,7 @@ fn encounter_tracks_real_edit_mode_timer_refreshes_owned_slots() {
         script=T.AddScriptEvent({spellID=19750,iconFileID=135907,duration=100})
         EncounterTimeline:StartEditModeEvents()
         assert(EncounterTimeline.editModeEventTimer)
+        oldTimer=EncounterTimeline.editModeEventTimer
         assert(T.GetEventCountBySource(2)==3 and T.GetEventCountBySource(1)==1)
         EncounterTimeline:StartEditModeEvents()
         assert(T.GetEventCountBySource(2)==3)
@@ -113,6 +114,7 @@ fn encounter_tracks_real_edit_mode_timer_refreshes_owned_slots() {
     env.exec(r#"
         local T=C_EncounterTimeline
         assert(T.GetEventCountBySource(2)==3 and T.GetEventTimeRemaining(script)==70)
+        assert(EncounterTimeline.editModeEventTimer and EncounterTimeline.editModeEventTimer~=oldTimer)
         for _,id in ipairs(T.GetEventList()) do
             local info=T.GetEventInfo(id)
             if info.source==2 then assert(T.GetEventTimeRemaining(id)==info.duration) end

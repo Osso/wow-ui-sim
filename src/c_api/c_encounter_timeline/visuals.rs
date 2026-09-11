@@ -24,8 +24,9 @@ fn color(state: &mut LuaState) -> LuaResult<u32> {
         .events
         .get(&id)
         .map(|event| {
-            let highlight = trigger == Some(2)
-                || (trigger.is_none() && layout::remaining(event) <= layout::HIGHLIGHT_TIME);
+            let imminent = layout::remaining(event) <= layout::HIGHLIGHT_TIME;
+            let automatic_highlight = trigger.is_none() && imminent;
+            let highlight = trigger == Some(2) || automatic_highlight;
             if highlight {
                 [1.0, 0.3, 0.2, 1.0]
             } else {
