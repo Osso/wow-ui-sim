@@ -30,13 +30,23 @@ pub(super) fn set(state: &mut LuaState) -> LuaResult<u32> {
         timeline.view = next;
         (old, layout::refresh(timeline))
     };
+    notify_view(state, old, next, changes)?;
+    Ok(0)
+}
+
+fn notify_view(
+    state: &mut LuaState,
+    old: u8,
+    next: u8,
+    changes: layout::LayoutChanges,
+) -> LuaResult<()> {
     dispatch_event_now(
         state,
         "ENCOUNTER_TIMELINE_VIEW_DEACTIVATED",
         &[Val::Num(f64::from(old))],
     )?;
     if borrow_state(state)?.encounter_timeline.view != next {
-        return Ok(0);
+        return Ok(());
     }
     notifications::emit(state, changes)?;
     dispatch_event_now(state, "ENCOUNTER_TIMELINE_LAYOUT_UPDATED", &[])?;
@@ -48,5 +58,5 @@ pub(super) fn set(state: &mut LuaState) -> LuaResult<u32> {
         )?;
         dispatch_event_now(state, "ENCOUNTER_TIMELINE_STATE_UPDATED", &[])?;
     }
-    Ok(0)
+    Ok(())
 }

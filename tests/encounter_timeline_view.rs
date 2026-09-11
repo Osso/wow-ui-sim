@@ -44,6 +44,8 @@ fn encounter_tracks_real_blizzard_track_layout_and_view() {
         assert(T.GetEventTrack(id)==Enum.EncounterTimelineTrack.Indeterminate)
         T.ResumeScriptEvent(id)
         assert(T.GetEventTrack(id)==Enum.EncounterTimelineTrack.Short)
+        frame=view:GetEventFrame(id)
+        assert(frame and frame:GetEventTimeRemaining()==4)
     "#).unwrap();
     env.fire_on_update(4.0).unwrap();
     env.exec("assert(T.GetEventTrack(id)==0 and frame:GetEventTimeRemaining()==0)").unwrap();
@@ -74,4 +76,36 @@ fn encounter_tracks_icon_mask_selection_clears_stale_slots() {
         T.SetEventIconTextures(id,0,textures)
         for _,texture in ipairs(textures) do assert(texture:GetAlpha()==0 and texture:GetTexture()==nil) end
     "#).unwrap();
+}
+
+#[test]
+fn encounter_tracks_real_edit_mode_timer_refreshes_owned_slots() {
+    let env=load_view();
+    env.exec(r#"
+        local T=C_EncounterTimeline
+        script=T.AddScriptEvent({spellID=19750,iconFileID=135907,duration=100})
+        EncounterTimeline:StartEditModeEvents()
+        assert(EncounterTimeline.editModeEventTimer)
+        assert(T.GetEventCountBySource(2)==3 and T.GetEventCountBySource(1)==1)
+        EncounterTimeline:StartEditModeEvents()
+        assert(T.GetEventCountBySource(2)==3)
+    "#).unwrap();
+    let timer_id=env.state().borrow().rilua_timers.back().unwrap().id;
+    env.fire_on_update(30.0).unwrap();
+    // Drive the existing wall-clock timer deadline, not a substitute callback/API.
+    env.state().borrow_mut().rilua_timers.iter_mut().find(|timer| timer.id==timer_id)
+        .unwrap().fire_at=std::time::Instant::now();
+    env.process_timers().unwrap();
+    env.exec(r#"
+        local T=C_EncounterTimeline
+        assert(T.GetEventCountBySource(2)==3 and T.GetEventTimeRemaining(script)==70)
+        for _,id in ipairs(T.GetEventList()) do
+            local info=T.GetEventInfo(id)
+            if info.source==2 then assert(T.GetEventTimeRemaining(id)==info.duration) end
+        end
+        EncounterTimeline:CancelEditModeEvents()
+        assert(EncounterTimeline.editModeEventTimer==nil and T.GetEventState(script)==0)
+    "#).unwrap();
+    env.fire_on_update(0.0).unwrap();
+    env.exec("assert(C_EncounterTimeline.GetEventCountBySource(2)==0)").unwrap();
 }

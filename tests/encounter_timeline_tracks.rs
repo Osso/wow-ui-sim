@@ -149,3 +149,31 @@ fn encounter_tracks_reentrant_changes_and_queued_pause() {
     env.fire_on_update(0.1).unwrap();
     env.exec("assert(T.GetEventState(id)==2)").unwrap();
 }
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn encounter_tracks_queued_capacity_and_reentrant_view_updates() {
+    let env=environment();
+    env.exec(r#"
+        ids={add(0,{maxQueueDuration=10}),add(0,{maxQueueDuration=10}),add(0,{maxQueueDuration=10}),add(0,{maxQueueDuration=10})}
+        assert(T.GetEventTrack(ids[4])==4)
+        assert(#T.GetSortedEventList(nil,0)==3)
+        T.FinishScriptEvent(ids[1])
+        assert(T.GetEventTrack(ids[4])==0)
+        local _,index=T.GetEventTrack(ids[4]); assert(index==3)
+        local listener=CreateFrame('Frame')
+        listener:RegisterEvent('ENCOUNTER_TIMELINE_VIEW_DEACTIVATED')
+        listener:RegisterEvent('ENCOUNTER_TIMELINE_VIEW_ACTIVATED')
+        activated={}
+        listener:SetScript('OnEvent',function(_,event,view)
+            if event=='ENCOUNTER_TIMELINE_VIEW_DEACTIVATED' and not redirected then
+                redirected=true; T.SetViewType(Enum.EncounterTimelineViewType.None)
+            elseif event=='ENCOUNTER_TIMELINE_VIEW_ACTIVATED' then
+                activated[#activated+1]=view; assert(T.GetViewType()==view)
+            end
+        end)
+        T.SetViewType(Enum.EncounterTimelineViewType.Bars)
+        assert(T.GetViewType()==0 and #activated==1 and activated[1]==0)
+        assert(not T.HasVisibleEvents())
+    "#).unwrap();
+}

@@ -56,6 +56,7 @@ fn reset(state: &mut LuaState, id: u32) -> LuaResult<()> {
         changed
     };
     notifications::refresh(state)?;
+    notifications::event(state, "ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED", id)?;
     if changed {
         notifications::event(state, "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED", id)?;
     }
