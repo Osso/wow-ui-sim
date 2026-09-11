@@ -13998,8 +13998,8 @@
       "id": "changed:C_EncounterWarnings.EncounterWarningInfo",
       "symbol": "C_EncounterWarnings.EncounterWarningInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
@@ -14008,37 +14008,133 @@
           "reference": "data/patch-api/sources/12.1.5-register.json",
           "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed structure occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_warnings.rs",
+          "summary": "PTR-only C API returns a fresh fourteen-field synthetic Edit Mode warning record with strict severity validation and a finite documented record shape; it does not create gameplay warning state or triggers.",
+          "source_hash": "bb61ca43bb3e2539600164bdac5a53a820fb6716a9417f15f6fdbe61dc489cb8"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/missing_surface/encounter_warnings.rs",
+          "summary": "PTR registration routes the documented preview getter to the C API model while earlier retail keeps its existing legacy preview implementation.",
+          "source_hash": "7ab1c1facb4dd7367d3d680edb4fcf50e030144dea2f891ccd34ea9168b9d581"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations/play.rs",
+          "summary": "The simulator animation root commits playback state then dispatches existing OnPlay handlers, enabling the unmodified Blizzard warning view consumer; repeated-call policy is modeled only.",
+          "source_hash": "96ca846eba412cc5a27f45e8b0a1e1536400bd02ca383cfb5edd3091322021d7"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_warning_preview.rs::warning_preview_ptr_has_complete_independent_records",
+          "summary": "Focused PTR test proves a fresh complete fourteen-field synthetic preview record per valid severity, independent ColorMixin values, and documented field types; earlier retail baseline and native values are not conformance claims.",
+          "source_hash": "8a63e9facf518f1ad8b4c4fb5212612e7c1edb0f25d3fc8f59cb838a6a428581"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_warning_preview.rs::warning_preview_real_blizzard_frame_expires_cancels_and_reuses",
+          "summary": "Focused PTR consumer test exercises the actual Blizzard EncounterWarnings Edit Mode view, its existing timer expiration, replacement, cancellation, and reuse path without vendor changes or injected callbacks.",
+          "source_hash": "8a63e9facf518f1ad8b4c4fb5212612e7c1edb0f25d3fc8f59cb838a6a428581"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_on_play.rs::animation_on_play_observes_committed_group_and_preserves_reentrant_stop",
+          "summary": "Focused regression test proves the modeled root OnPlay dispatch receives the resolved group after state commit and preserves reentrant stop state.",
+          "source_hash": "b3dd0ba8039fd80f7bb4a15ce4b7c40f0862eb79ccb4e7b3c51af715eff5b8c4"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_on_play.rs::animation_on_play_routes_set_playing_and_play_synced",
+          "summary": "Focused regression test proves modeled OnPlay routing through SetPlaying(true) and PlaySynced without redispatch while already playing.",
+          "source_hash": "b3dd0ba8039fd80f7bb4a15ce4b7c40f0862eb79ccb4e7b3c51af715eff5b8c4"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_warning_preview.rs::warning_preview_ptr_has_complete_independent_records",
+        "tests/encounter_warning_preview.rs::warning_preview_real_blizzard_frame_expires_cancels_and_reuses",
+        "tests/encounter_warning_preview.rs::warning_preview_preserves_earlier_retail_record",
+        "tests/animation_on_play.rs::animation_on_play_observes_committed_group_and_preserves_reentrant_stop",
+        "tests/animation_on_play.rs::animation_on_play_routes_set_playing_and_play_synced"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "c4423207a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed focused PTR/earlier-retail proof supports only bounded simulator behavior: the PTR getter returns fresh synthetic fourteen-field Edit Mode preview records for Low/Medium/High severities, with independent ColorMixin colors and a finite five-second duration; the actual Blizzard warning view consumes text, icon, color, and its existing timer expiration, replacement, cancellation, and reuse lifecycle. The animation-root OnPlay dispatch is a model correction required by that unmodified consumer, not credit for unrelated changed animation rows or a native callback claim. Preview content, severity policy, duration, validation/errors, GUIDs, sound/chat, gameplay-warning triggers/storage, secret/taint/protected/forbidden behavior, and native values/timing remain unverified. Earlier retail preservation is a baseline regression, not pinned-base conformance."
     },
     {
       "id": "changed:C_EncounterWarnings.EncounterWarningInfo.duration",
       "symbol": "C_EncounterWarnings.EncounterWarningInfo.duration",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed duration field occurrence with exact before/after payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_encounter_warnings.rs",
+          "summary": "PTR-only C API returns a fresh fourteen-field synthetic Edit Mode warning record with strict severity validation and a finite five-second duration; it does not create gameplay warning state or triggers.",
+          "source_hash": "bb61ca43bb3e2539600164bdac5a53a820fb6716a9417f15f6fdbe61dc489cb8"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/missing_surface/encounter_warnings.rs",
+          "summary": "PTR registration routes the documented preview getter to the C API model while earlier retail keeps its existing legacy preview implementation.",
+          "source_hash": "7ab1c1facb4dd7367d3d680edb4fcf50e030144dea2f891ccd34ea9168b9d581"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations/play.rs",
+          "summary": "The simulator animation root commits playback state then dispatches existing OnPlay handlers, enabling the unmodified Blizzard warning view consumer; repeated-call policy is modeled only.",
+          "source_hash": "96ca846eba412cc5a27f45e8b0a1e1536400bd02ca383cfb5edd3091322021d7"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_warning_preview.rs::warning_preview_ptr_has_complete_independent_records",
+          "summary": "Focused PTR test proves a fresh complete fourteen-field synthetic preview record per valid severity, independent ColorMixin values, and finite five-second duration; earlier retail baseline and native values are not conformance claims.",
+          "source_hash": "8a63e9facf518f1ad8b4c4fb5212612e7c1edb0f25d3fc8f59cb838a6a428581"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/encounter_warning_preview.rs::warning_preview_real_blizzard_frame_expires_cancels_and_reuses",
+          "summary": "Focused PTR consumer test exercises the actual Blizzard EncounterWarnings Edit Mode view, its existing timer expiration, replacement, cancellation, and reuse path without vendor changes or injected callbacks.",
+          "source_hash": "8a63e9facf518f1ad8b4c4fb5212612e7c1edb0f25d3fc8f59cb838a6a428581"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_on_play.rs::animation_on_play_observes_committed_group_and_preserves_reentrant_stop",
+          "summary": "Focused regression test proves the modeled root OnPlay dispatch receives the resolved group after state commit and preserves reentrant stop state.",
+          "source_hash": "b3dd0ba8039fd80f7bb4a15ce4b7c40f0862eb79ccb4e7b3c51af715eff5b8c4"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/animation_on_play.rs::animation_on_play_routes_set_playing_and_play_synced",
+          "summary": "Focused regression test proves modeled OnPlay routing through SetPlaying(true) and PlaySynced without redispatch while already playing.",
+          "source_hash": "b3dd0ba8039fd80f7bb4a15ce4b7c40f0862eb79ccb4e7b3c51af715eff5b8c4"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/encounter_warning_preview.rs::warning_preview_ptr_has_complete_independent_records",
+        "tests/encounter_warning_preview.rs::warning_preview_real_blizzard_frame_expires_cancels_and_reuses",
+        "tests/encounter_warning_preview.rs::warning_preview_preserves_earlier_retail_record",
+        "tests/animation_on_play.rs::animation_on_play_observes_committed_group_and_preserves_reentrant_stop",
+        "tests/animation_on_play.rs::animation_on_play_routes_set_playing_and_play_synced"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "c4423207a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Committed focused PTR/earlier-retail proof supports only bounded simulator behavior: the PTR getter returns fresh synthetic fourteen-field Edit Mode preview records for Low/Medium/High severities, with independent ColorMixin colors and a finite five-second duration; the actual Blizzard warning view consumes text, icon, color, and its existing timer expiration, replacement, cancellation, and reuse lifecycle. The animation-root OnPlay dispatch is a model correction required by that unmodified consumer, not credit for unrelated changed animation rows or a native callback claim. Preview content, severity policy, duration, validation/errors, GUIDs, sound/chat, gameplay-warning triggers/storage, secret/taint/protected/forbidden behavior, and native values/timing remain unverified. Earlier retail preservation is a baseline regression, not pinned-base conformance."
     },
     {
       "id": "changed:Enum.BagFlag",
@@ -19653,7 +19749,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -19690,7 +19786,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -19727,7 +19823,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -19764,7 +19860,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -19801,7 +19897,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -19838,7 +19934,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -19875,7 +19971,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -19912,7 +20008,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20080,7 +20176,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20117,7 +20213,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20154,7 +20250,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20191,7 +20287,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20228,7 +20324,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20265,7 +20361,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20302,7 +20398,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",
@@ -20339,7 +20435,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs",
           "summary": "SimpleAnim and SimpleAnimGroup query methods read the simulator animation runtime owner state, local elapsed/progress, delays, loop state, pending finish, and reverse direction.",
-          "source_hash": "0bf778d363af9664d19d0a32a8c59b98500eca02402ffa11b9ed363de3fded9c"
+          "source_hash": "bdc84aa1bdc662c338fc513db828734165c3f9aecaae293fa18ab5271f02a869"
         },
         {
           "kind": "test",

@@ -281,8 +281,8 @@
 281. [best-effort] `changed:C_EncounterTimeline.GetEventTimeRemaining` — behavioral
 282. [best-effort] `changed:C_EncounterTimeline.GetSortedEventList` — behavioral
 283. [best-effort] `changed:C_EncounterTimeline.GetTrackMaxEventDuration` — behavioral
-284. [evidence-required] `changed:C_EncounterWarnings.EncounterWarningInfo` — unsafe
-285. [evidence-required] `changed:C_EncounterWarnings.EncounterWarningInfo.duration` — unsafe
+284. [best-effort] `changed:C_EncounterWarnings.EncounterWarningInfo` — behavioral
+285. [best-effort] `changed:C_EncounterWarnings.EncounterWarningInfo.duration` — behavioral
 286. [best-effort] `changed:Enum.BagFlag` — behavioral
 287. [best-effort] `changed:Enum.BonusStatIndex` — behavioral
 288. [best-effort] `changed:Enum.CurioRarity` — behavioral

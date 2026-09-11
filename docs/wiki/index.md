@@ -1,3 +1,7 @@
+## [2026-09-11] audit | Credit PTR EncounterWarnings Edit Mode preview rows
+
+`c4423207a` moves exactly `changed:C_EncounterWarnings.EncounterWarningInfo` and `.duration` to bounded best-effort. Credit is limited to synthetic fourteen-field previews for Low/Medium/High, independent ColorMixin values, a finite duration, and the unmodified Blizzard warning-view display/expiration/replacement/cancellation/reuse path. The committed model-root `OnPlay` correction supports that consumer only; it neither credits unrelated animation rows nor claims native callback/security behavior. Gameplay triggers/storage, sound/chat, native values/timing, and security remain unverified. See [warning preview](../specs/encounter-warning-preview.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR animation factory
 
 `df07f0c37` reviews implementation commits `b171612210` and `61eb0d358` and credits one changed `SimpleAnimGroup.CreateAnimation` row. Bounded ordinary behavior covers optional arguments, requested identity, owned ordering, real virtual XML templates, parent-first inheritance, supported fields, scripts, instance isolation, simulator template errors, and recorded PTR/earlier-retail proof. PTR `AddAnimations`, `SecretArguments`/security enforcement, native coercion, unsupported engine fields, and native error semantics remain unverified. See [animation factory](../specs/animation-factory.md) and [[patch-12-1-5-api-audit]].

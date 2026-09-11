@@ -52,6 +52,7 @@ Correction `23bdf9fe6` first reproduced two failures: the exact active-start bou
 ## Known gaps (current cycle)
 
 - [x] Correct the reproduced double subtraction of start delay: group time `0.75` with start delay `0.5` now yields local elapsed/progress `0.25` and `IsDelaying() == false`. The getter derives time within the animation's order rather than reinterpreting clamped active elapsed.
+- [x] The model root now commits playback/cache state, releases the simulation-state borrow, then dispatches existing resolved-group `OnPlay` handlers. This supports the unmodified Blizzard EncounterWarnings consumer; it does not change credit for these sixteen query rows or establish native callback/security semantics.
 - [ ] Native owner-versus-child state, delay boundaries, smoothing, reverse/bounce geometry, and callback timing are not established by this model coverage.
 
 ## Out of scope

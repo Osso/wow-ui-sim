@@ -35,6 +35,10 @@ The source establishes fields/types, ColorMixin shape, and severity values—not
 - `tests/animation_on_play.rs`: resolved-group callback identity, committed playback state, reentrant stop, repeated-call policy, and `SetPlaying(true)` / `PlaySynced` routing.
 - Development proof at `9ae2d2f98`: grouped integration filters `animation_on_play::`, `encounter_warning_preview::`, `animation_anim::`, `animation_group::`, `animation_group_state::`, `animation_query_lifecycle::`, `animation_set_parent::`, `animation_factory::`, and `animation_factory_templates::`. PTR: 86 passed; retail: 83 passed. The actual warning test executed its expiration/cancel/replacement/reuse assertions successfully. Logs: `/tmp/warning-onplay-9ae2d2f98-{ptr,retail}.log`. No final gates were run.
 
+## Audit credit boundary
+
+Commit `c4423207a` moves exactly two PTR rows to bounded best-effort/behavioral credit: `changed:C_EncounterWarnings.EncounterWarningInfo` and `.duration`. Credit covers only fresh fourteen-field synthetic previews for three severities, independent ColorMixin colors, finite duration, and the unmodified Blizzard Edit Mode consumer's display/expiration/replacement/cancellation/reuse path. The model-root `OnPlay` correction is consumer support, not credit for unrelated animation rows or native callback semantics.
+
 ## Known gaps (current cycle)
 
 `AnimationGroup:Play()` now dispatches `OnPlay` through existing state-level script helpers after releasing the simulation-state borrow and updating playback/cache state. The resolved AnimationGroup is `self`, including routed animation calls. Repeated `Play` while already playing does not redispatch; stopped/paused-to-playing transitions do. Reentrant callback state changes survive the call. This repeated-call policy is modeled, not native/security evidence. Pause/Stop callback behavior is unchanged.
@@ -42,4 +46,4 @@ The source establishes fields/types, ColorMixin shape, and severity values—not
 
 ## Out of scope
 
-Gameplay warning storage/dispatch, encounter/timeline coupling, new triggers, sound/chat models, native security enforcement, artifact credit, and final verification gates belong outside this bounded preview slice.
+Gameplay warning storage/dispatch, encounter/timeline coupling, new triggers, sound/chat models, native security enforcement, and final verification gates belong outside this bounded preview slice.
