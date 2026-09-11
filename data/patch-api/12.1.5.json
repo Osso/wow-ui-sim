@@ -9381,24 +9381,45 @@
       "id": "added:GetScriptBucketThrottleLimits",
       "symbol": "GetScriptBucketThrottleLimits",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added getter, ScriptBucketThrottleLimits return structure, and its four numeric fields; it does not supply runtime values or enforcement semantics.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs",
+          "summary": "PTR-only temporary bootstrap defines the explicit mock getter: each call constructs a new table with the four documented fields set to numeric zero; comments explicitly exclude native limits, disabled semantics, and enforcement.",
+          "source_hash": "2166fdfc94e3405e8333ed98aa80efd9af36e7524afe3111ac30b5d99f42cb95"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a6244864",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Bounded mock-output proof only: PTR publishes GetScriptBucketThrottleLimits and earlier retail omits it; each call returns one fresh table with exactly four numeric zero fields. Zero is a placeholder, not a native limit or disabled-mode semantic. Native limit values, normal/restricted selection, accounting, enforcement, and any setter are unclaimed."
     },
     {
       "id": "added:LuaLocaleContext",
@@ -10878,116 +10899,221 @@
       "id": "added:ScriptBucketThrottleLimits",
       "symbol": "ScriptBucketThrottleLimits",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added structure occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added getter, ScriptBucketThrottleLimits return structure, and its four numeric fields; it does not supply runtime values or enforcement semantics.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs",
+          "summary": "PTR-only temporary bootstrap defines the explicit mock getter: each call constructs a new table with the four documented fields set to numeric zero; comments explicitly exclude native limits, disabled semantics, and enforcement.",
+          "source_hash": "2166fdfc94e3405e8333ed98aa80efd9af36e7524afe3111ac30b5d99f42cb95"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a6244864",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Bounded mock-output proof only: the returned ScriptBucketThrottleLimits-shaped table is fresh per call and contains exactly the four documented numeric-zero fields on PTR; earlier retail omits the getter. Zeros are placeholders, not native limits or disabled-mode semantics. Native values, normal/restricted selection, accounting, enforcement, and setters are unclaimed."
     },
     {
       "id": "added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstNormal",
       "symbol": "ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstNormal",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added getter, ScriptBucketThrottleLimits return structure, and its four numeric fields; it does not supply runtime values or enforcement semantics.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs",
+          "summary": "PTR-only temporary bootstrap defines the explicit mock getter: each call constructs a new table with the four documented fields set to numeric zero; comments explicitly exclude native limits, disabled semantics, and enforcement.",
+          "source_hash": "2166fdfc94e3405e8333ed98aa80efd9af36e7524afe3111ac30b5d99f42cb95"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a6244864",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Bounded mock-output proof only: this documented field is present as numeric zero in each fresh PTR mock return table; earlier retail omits the getter. Zero is a placeholder, not a native limit or disabled-mode semantic. Native values, normal/restricted selection, accounting, enforcement, and setters are unclaimed."
     },
     {
       "id": "added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstRestricted",
       "symbol": "ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstRestricted",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added getter, ScriptBucketThrottleLimits return structure, and its four numeric fields; it does not supply runtime values or enforcement semantics.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs",
+          "summary": "PTR-only temporary bootstrap defines the explicit mock getter: each call constructs a new table with the four documented fields set to numeric zero; comments explicitly exclude native limits, disabled semantics, and enforcement.",
+          "source_hash": "2166fdfc94e3405e8333ed98aa80efd9af36e7524afe3111ac30b5d99f42cb95"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a6244864",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Bounded mock-output proof only: this documented field is present as numeric zero in each fresh PTR mock return table; earlier retail omits the getter. Zero is a placeholder, not a native limit or disabled-mode semantic. Native values, normal/restricted selection, accounting, enforcement, and setters are unclaimed."
     },
     {
       "id": "added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondNormal",
       "symbol": "ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondNormal",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added getter, ScriptBucketThrottleLimits return structure, and its four numeric fields; it does not supply runtime values or enforcement semantics.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs",
+          "summary": "PTR-only temporary bootstrap defines the explicit mock getter: each call constructs a new table with the four documented fields set to numeric zero; comments explicitly exclude native limits, disabled semantics, and enforcement.",
+          "source_hash": "2166fdfc94e3405e8333ed98aa80efd9af36e7524afe3111ac30b5d99f42cb95"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a6244864",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Bounded mock-output proof only: this documented field is present as numeric zero in each fresh PTR mock return table; earlier retail omits the getter. Zero is a placeholder, not a native limit or disabled-mode semantic. Native values, normal/restricted selection, accounting, enforcement, and setters are unclaimed."
     },
     {
       "id": "added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondRestricted",
       "symbol": "ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondRestricted",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added field occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added getter, ScriptBucketThrottleLimits return structure, and its four numeric fields; it does not supply runtime values or enforcement semantics.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs",
+          "summary": "PTR-only temporary bootstrap defines the explicit mock getter: each call constructs a new table with the four documented fields set to numeric zero; comments explicitly exclude native limits, disabled semantics, and enforcement.",
+          "source_hash": "2166fdfc94e3405e8333ed98aa80efd9af36e7524afe3111ac30b5d99f42cb95"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
+        },
+        {
+          "kind": "test",
+          "reference": "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence",
+          "summary": "Focused PTR and earlier-retail tests recorded by 6a6244864 prove PTR publication, one return table, exactly four numeric-zero fields, fresh-table independence, and earlier-retail absence. This is mock-output proof only.",
+          "source_hash": "4e9254735787a1150d5a4ca50d28a0316bbf399f1b67fbff69fca8a494339c76"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_returns_exact_fresh_zero_tables",
+        "src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs::script_throttle_mock_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6a6244864",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Bounded mock-output proof only: this documented field is present as numeric zero in each fresh PTR mock return table; earlier retail omits the getter. Zero is a placeholder, not a native limit or disabled-mode semantic. Native values, normal/restricted selection, accounting, enforcement, and setters are unclaimed."
     },
     {
       "id": "added:SecretWhenLuaTableHasSecretKeys",

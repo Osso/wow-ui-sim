@@ -1,6 +1,6 @@
 # Patch 12.1.5 API Audit
 
-PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 427 best-effort and 22 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
+PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12.1.0.69587`. The frozen register contains 449 semantic occurrences. Current manifest disposition is 439 best-effort and 10 evidence-required rows, with no untriaged rows; this remains an incomplete conformance audit.
 
 ## Source Boundary
 
@@ -63,13 +63,14 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 | `CreateFrameWithOptions` and `CreateFrameOptions` | Commit `e6712ab29` with focused PTR structured-constructor, lifecycle, validation-assumption, and earlier-retail absence tests | 9 best-effort / simulator adapter rows | PTR adapter publishes the constructor only on PTR, applies declared fields through existing allocation/template paths, and preserves earlier-retail absence. Lifecycle and validation choices are simulator assumptions, not native conformance; security, coercion, global structure publication, and native edges remain unclaimed |
 | Other new enums and metadata | Numeric generated values are available | evidence-required / unsafe | PTR-only publication tests and preservation on earlier profiles |
 | `C_Timer.NewTimedSignalMap`, `TimedSignalMap`, 8 methods, and callback | Commits `3bff28497`, `1be3abaa0`, `45b39beed`, and `ad23581f2`; focused PTR behavior and earlier-retail factory absence proof | 11 best-effort / behavioral rows | `RequiresTimedSignalMapAccess`, `TimedSignalMapEntry`/fields, empty-map `GetNextSignal`, FrameTime identity, coercion, security, and native semantics |
+| Script bucket throttle mock output | Commits `ec51f3a7e` and `6a6244864`; focused PTR and earlier-retail proof | 6 best-effort / bounded mock-output rows | Credit covers PTR getter publication, earlier-retail absence, one fresh returned table, and four numeric-zero fields only. Zeros are placeholders, not native limits or disabled-mode semantics. Native values, normal/restricted selection, accounting, enforcement, and setters remain unclaimed. |
 | Removed declarations | Two generated removals | evidence-required / unsafe | PTR absence and excluded-profile preservation |
 
 ## Confirmed High-Priority Gaps
 
 - Remaining locale modeling: `C_Intl` has bounded opaque context storage, scalar counting, normalization, collation, string matching, formatting, canonicalization, and segmentation models; other context methods remain unresolved. Native length units/errors, normalization failure behavior, Unicode-version equivalence, embedded-NUL cstrings, and security remain unproven. Stateful PvP and aura APIs remain missing. `C_Weather` has a bounded PTR simulator-owned state model; native weather values, transitions, intensity behavior, and event timing remain unresolved. `C_LFGInfo.GetActiveLFGDungeonName` has a bounded instance-ID/catalog model; native selection and inactive/error behavior remain unresolved. `CreateFrameWithOptions` has a bounded PTR simulator adapter; native lifecycle and validation remain unresolved. Duration core has bounded ordinary simulator behavior; native timing and security semantics remain unresolved.
 - Remaining table gaps: `table.freeze` and `table.isfrozen` need a frozen-table state model; `string.trim` remains a separate 12.0.0 mismatch rather than a 12.1.5 occurrence.
-- Missing additive helpers: selected `C_PvP`, remaining `C_LFGInfo`, `C_UnitAuras`, remaining aura-option normalization, and script-bucket throttle limits.
+- Missing additive helpers: selected `C_PvP`, remaining `C_LFGInfo`, `C_UnitAuras`, and remaining aura-option normalization. Script-bucket throttle output has bounded mock proof only; native values and enforcement semantics remain unclaimed.
 - Native evidence remains required for weather values, real Training Grounds catalog IDs/classification, active-LFG selection/error behavior, spellcast event payload/timing and castBarID identity behavior, Unicode/locale semantics, and protected/security behavior.
 
 ## Implementation Order

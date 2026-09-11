@@ -189,7 +189,7 @@
 189. [best-effort] `added:Enum.WeatherType.Rain` — behavioral
 190. [best-effort] `added:Enum.WeatherType.Sandstorm` — behavioral
 191. [best-effort] `added:Enum.WeatherType.Snow` — behavioral
-192. [evidence-required] `added:GetScriptBucketThrottleLimits` — unsafe
+192. [best-effort] `added:GetScriptBucketThrottleLimits` — behavioral
 193. [best-effort] `added:LuaLocaleContext` — behavioral
 194. [best-effort] `added:LuaLocaleContext.CompareStrings` — behavioral
 195. [best-effort] `added:LuaLocaleContext.FindBreaks` — behavioral
@@ -214,11 +214,11 @@
 214. [best-effort] `added:LuaLocaleContext.ToUpper` — behavioral
 215. [best-effort] `added:LuaLocaleContext.TransformLocale` — behavioral
 216. [evidence-required] `added:RequiresTimedSignalMapAccess` — unsafe
-217. [evidence-required] `added:ScriptBucketThrottleLimits` — unsafe
-218. [evidence-required] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstNormal` — unsafe
-219. [evidence-required] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstRestricted` — unsafe
-220. [evidence-required] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondNormal` — unsafe
-221. [evidence-required] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondRestricted` — unsafe
+217. [best-effort] `added:ScriptBucketThrottleLimits` — behavioral
+218. [best-effort] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstNormal` — behavioral
+219. [best-effort] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsBurstRestricted` — behavioral
+220. [best-effort] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondNormal` — behavioral
+221. [best-effort] `added:ScriptBucketThrottleLimits.luaScriptBucketThrottleMaxMsPerSecondRestricted` — behavioral
 222. [evidence-required] `added:SecretWhenLuaTableHasSecretKeys` — unsafe
 223. [best-effort] `added:SimpleScriptRegion.GetRoundLayoutToNearestPixel` — behavioral
 224. [best-effort] `added:SimpleScriptRegion.SetRoundLayoutToNearestPixel` — behavioral
