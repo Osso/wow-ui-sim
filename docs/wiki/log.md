@@ -1,3 +1,7 @@
+## [2026-09-11] audit | Credit PTR ICU4C date/time formatting
+
+`ca312b672`, `3259e3a76`, and `ec09c4037` credit six bounded PTR rows: global/context `FormatDate`, `FormatTime`, and `FormatDateTime`. Focused native and profile proof covers Unix seconds × 1000, all five styles including `None`, supplied valid UTC/fixed-offset/named zones, day boundary, New York DST, locale/context selection, and earlier-retail absence. Empty-zone UTC, both-None empty output, validation, exact output, ICU/CLDR/tzdata version, no-result conditions, native WoW equivalence, and security remain policy or unverified. Windows/macOS/Docker execution remains accepted pending. See [date and time formatting](../specs/intl-date-formatting.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR ICU4C currency metadata
 
 `2170f394a` supplies committed source and focused test evidence for global/context `GetCurrencyName` and global `GetCurrencyFractionDigits`. The manifest credits only five-style mapping, locale selection, known/miss catalogue behavior, USD/KWD/JPY precision, and PTR/earlier-retail profiles: 388 best-effort, 61 evidence-required, 0 untriaged. Invalid-code errors and unknown-code zero results remain selected policy; ICU naming/catalogue/version, security, native WoW conformance, and Windows/macOS execution remain unverified or pending. See [currency metadata](../specs/intl-currency-metadata.md) and [[patch-12-1-5-api-audit]].

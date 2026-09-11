@@ -10,10 +10,10 @@
 10. [evidence-required] `added:C_Intl.FindStringMatches` — unsafe
 11. [best-effort] `added:C_Intl.FoldCase` — behavioral
 12. [best-effort] `added:C_Intl.FormatCurrency` — behavioral
-13. [evidence-required] `added:C_Intl.FormatDate` — unsafe
-14. [evidence-required] `added:C_Intl.FormatDateTime` — unsafe
+13. [best-effort] `added:C_Intl.FormatDate` — behavioral
+14. [best-effort] `added:C_Intl.FormatDateTime` — behavioral
 15. [best-effort] `added:C_Intl.FormatNumber` — behavioral
-16. [evidence-required] `added:C_Intl.FormatTime` — unsafe
+16. [best-effort] `added:C_Intl.FormatTime` — behavioral
 17. [best-effort] `added:C_Intl.GetCharacterProperties` — behavioral
 18. [best-effort] `added:C_Intl.GetCurrencyFractionDigits` — behavioral
 19. [best-effort] `added:C_Intl.GetCurrencyName` — behavioral
@@ -196,10 +196,10 @@
 196. [evidence-required] `added:LuaLocaleContext.FindStringMatches` — unsafe
 197. [best-effort] `added:LuaLocaleContext.FoldCase` — behavioral
 198. [best-effort] `added:LuaLocaleContext.FormatCurrency` — behavioral
-199. [evidence-required] `added:LuaLocaleContext.FormatDate` — unsafe
-200. [evidence-required] `added:LuaLocaleContext.FormatDateTime` — unsafe
+199. [best-effort] `added:LuaLocaleContext.FormatDate` — behavioral
+200. [best-effort] `added:LuaLocaleContext.FormatDateTime` — behavioral
 201. [best-effort] `added:LuaLocaleContext.FormatNumber` — behavioral
-202. [evidence-required] `added:LuaLocaleContext.FormatTime` — unsafe
+202. [best-effort] `added:LuaLocaleContext.FormatTime` — behavioral
 203. [best-effort] `added:LuaLocaleContext.GetCurrencyName` — behavioral
 204. [evidence-required] `added:LuaLocaleContext.GetDisplayName` — unsafe
 205. [best-effort] `added:LuaLocaleContext.GetLocale` — behavioral

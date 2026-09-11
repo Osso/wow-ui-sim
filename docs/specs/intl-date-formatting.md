@@ -1,44 +1,39 @@
 # Intl date and time formatting
 
-PTR global/context `FormatDate`, `FormatTime`, and `FormatDateTime` use the existing ICU4C bridge. The [pinned API register](../../data/patch-api/sources/12.1.5-register.json) requires Unix seconds, date/time style selectors, and an explicit timezone string; all six declarations permit no result. Implementation policy returns one string for valid input and errors for invalid arguments.
+PTR global/context `FormatDate`, `FormatTime`, and `FormatDateTime` use the ICU4C bridge. The [pinned API register](../../data/patch-api/sources/12.1.5-register.json) declares Unix seconds, date/time styles, an explicit timezone string, and `MayReturnNothing`; generated documentation does not establish native runtime semantics.
 
-## What it must do
+## Credited behavior
 
-- [x] Expose all six APIs only on PTR; preserve existing Intl operations and earlier-retail absence.
-- [x] Convert finite Unix seconds to ICU milliseconds with overflow checking, preserving pre-epoch and fractional inputs without premature integer rounding.
-- [x] Map None/Short/Medium/Long/Full to ICU styles. Date-only and time-only calls disable the other component.
-- [x] Validate named and custom GMT-offset zones with ICU canonical timezone validation before opening a formatter; never silently use GMT for invalid IDs or the host timezone.
-- [x] Use UTC for an explicitly empty zone string. Return an empty string when both styles are None, but still validate time, locale, and zone. These are simulator choices.
-- [x] Preserve current global locale and context locale selection, including BCP-47 extensions; context mutation affects subsequent calls without changing other contexts.
-- [x] Reject malformed UTF-8, embedded-NUL zone IDs, invalid required arguments/styles/zones, and nonfinite or overflowed times.
-- [ ] Reuse native allocation, UTF conversion, formatter close, and Rust output ownership/error paths; no C++ ABI or additional dependencies.
+- [x] PTR-only global and locale-context publication; earlier retail keeps `C_Intl` absent.
+- [x] Finite Unix seconds cross the native boundary as seconds × 1000, including tested pre-epoch and fractional values.
+- [x] Date, time, and date-time paths accept all five `DateTimeStyle` values, including `None`.
+- [x] Supplied valid UTC, fixed-offset, and named zones produce tested epoch/day-boundary and New York DST results.
+- [x] Global/current and independent locale-context selection affect formatting; tested BCP-47 extensions are preserved.
 
-## How it works
+## Explicit policy or unverified behavior
+
+- Empty timezone means UTC; both styles `None` return an empty string; argument and zone validation errors are simulator policy, not native credit.
+- Exact rendered text, ICU/CLDR/tzdata version, calendar cutover, extreme precision/range, locale-data equivalence, and `MayReturnNothing` conditions are unverified.
+- Native WoW equivalence, `AllowedWhenUntainted`, taint, secret, protected, coercion, and security semantics are unverified.
+- Windows, macOS, and Docker execution remain accepted pending.
+
+## Implementation inventory
+
+- `native/intl/date_format.c`: ICU style mapping, supplied-zone formatter creation, formatting, and cleanup.
+- `native/intl/bridge.h`, `build/intl_native.rs`: fixed-width C ABI and PTR-native build scope.
+- `src/c_api/intl_native.rs`, `intl_native/ffi.rs`: checked Unix-seconds-to-milliseconds boundary.
+- `src/c_api/c_intl/date_formatting.rs`, `c_intl.rs`: Lua decoding and global/context registration.
+
+## Proof
+
+- `ca312b672`: implementation and focused native/Lua tests.
+- `3259e3a76`: canonical-zone validation repair.
+- `ec09c4037`: focused explicit-zone proof record.
+- `src/c_api/intl_native/date_tests.rs`: Unix seconds, styles including `None`, explicit zones, day boundary, DST, and locale extension.
+- `tests/intl_date_formatting.rs`: six APIs, global/context locale selection, profile absence, and focused PTR behavior.
+
+## Related specs
 
 - [Native ICU linking](intl-native-linking.md)
 - [Locale context storage](intl-locale-context.md)
 - [Number formatting bridge](intl-number-formatting.md)
-
-## Implementation inventory
-
-- `native/intl/date_format.c`: style mapping, canonical-zone validation, `udat_open`/`udat_format`, and resource cleanup.
-- `native/intl/bridge.h`, `build/intl_native.rs`: bounded C ABI declaration and source build list.
-- `src/c_api/intl_native.rs`, `intl_native/ffi.rs`: checked seconds conversion and safe native call boundary.
-- `src/c_api/c_intl/date_formatting.rs`, `c_intl.rs`: Lua argument decoding and global/context registration.
-
-## Tests asserting this spec
-
-- `src/c_api/intl_native/date_tests.rs`: native epoch, fractions, all styles, explicit zones, DST, extensions, and failures.
-- `tests/intl_date_formatting.rs`: six Lua methods, context changes, day boundaries, DST, style combinations, validation, and retail absence.
-
-## Known gaps (current cycle)
-
-Focused development proof at `3259e3a76`: PTR library `intl_` passed 34 tests (including three native date tests); PTR integration date/number/currency filters passed nine tests (three date tests). Retail library `intl_` passed ten tests; matching integration filters passed three absence tests. Initial Lua RED had three missing-method failures; first native run caught canonical-zone validation rejecting a null preflight buffer, corrected to use a real buffer with overflow resizing. No final gates or platform jobs run.
-
-Logs: `/tmp/intl-dates-red.log`, `/tmp/intl-dates-native-and-intl-ptr-ca312b672.log`, `/tmp/intl-dates-native-intl-green-ptr.log`, `/tmp/intl-dates-lua-green-ptr.log`, `/tmp/intl-dates-intl-green-retail.log`, `/tmp/intl-dates-lua-green-retail.log`.
-- [ ] Windows/macOS execution remains accepted pending; this slice does not provision or claim platform verification.
-- [ ] Native WoW formatting patterns, calendar cutover, extreme date range/precision, timezone data version, locale data equivalence, no-result conditions, and security/taint semantics remain unverified.
-
-## Out of scope
-
-Artifact credit, final check/readability gates, new dependencies/provisioning, date parsing, host timezone inference, native WoW security enforcement, deployment, and publishing. Exact punctuation and zone display names can vary with ICU/CLDR/tzdata; stable numeric en-GB fixtures test epoch and DST arithmetic without asserting a universal textual format.
