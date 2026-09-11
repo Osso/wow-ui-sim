@@ -2,8 +2,7 @@
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
-use crate::lua_api::globals::font_strings_collection::colors::make_rilua_color_table;
-use crate::lua_api::methods::{create_string, create_table, table_set};
+use crate::lua_api::methods::{call_function_state, create_string, create_table, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 
 const PREVIEW_DURATION_SECONDS: f64 = 5.0;
@@ -31,10 +30,20 @@ fn preview(state: &mut LuaState) -> LuaResult<u32> {
         1 => ("Simulated Medium Warning", 0.75, 0.1),
         _ => ("Simulated High Warning", 0.15, 0.05),
     };
+    let factory = crate::c_api::global_val(state, "CreateColor");
+    let color = call_function_state(
+        state,
+        factory,
+        &[
+            Val::Num(1.0),
+            Val::Num(green),
+            Val::Num(blue),
+            Val::Num(1.0),
+        ],
+    )?;
     let info = create_table(state);
     publish_preview_identity(state, info, text);
     publish_preview_display(state, info, severity);
-    let color = make_rilua_color_table(state, 1.0, green, blue, 1.0)?;
     table_set(state, info, "color", color);
     state.push(info);
     Ok(1)

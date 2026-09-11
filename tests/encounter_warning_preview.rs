@@ -122,14 +122,14 @@ fn warning_preview_real_blizzard_frame_expires_cancels_and_reuses() {
         system:SetIsEditing(true)
         view = system:GetView()
         first = view:GetCurrentWarning()
-        assert(first and first.severity == Enum.EncounterEventSeverity.High)
-        assert(first.isDeadly and first.duration == 5)
-        assert(view:IsShown() and view.expirationTimer ~= nil)
-        assert(view.Text:GetText() == first.text)
-        assert(view.LeftIcon.Icon:GetTexture() == first.iconFileID)
-        assert(view.LeftIcon.DeadlyOverlay:IsShown())
+        assert(first and first.severity == Enum.EncounterEventSeverity.High, "high severity preview")
+        assert(first.isDeadly and first.duration == 5, "high preview flags and seconds")
+        assert(view:IsShown() and view.expirationTimer ~= nil, "visible preview with timer")
+        assert(view.Text:GetText() == first.text, "preview text")
+        assert(view.LeftIcon.Icon:GetTexture() == first.iconFileID, "preview icon")
+        assert(view.LeftIcon.DeadlyOverlay:IsShown(), "deadly overlay")
         local r, g, b = view.Text:GetTextColor()
-        assert(r == 1 and g == 0.15 and b == 0.05)
+        assert(r == 1 and g == 0.15 and b == 0.05, "text color: " .. r .. ", " .. g .. ", " .. b)
     "#).unwrap();
     let first_timer = env.state().borrow().rilua_timers.back().unwrap().id;
     env.fire_on_update(0.5).unwrap();
