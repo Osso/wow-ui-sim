@@ -34,6 +34,10 @@
 
 `9bc06cfe2`, `23bdf9fe6`, and `70cf29a12` credit sixteen changed `SimpleAnim` / `SimpleAnimGroup` query rows as bounded ordinary simulator behavior. Focused PTR and earlier-retail tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Native owner/child lifecycle, security, timing, smoothing, identity, reverse/bounce geometry, callback timing, and mutation contracts remain unresolved. See [animation query lifecycle](../specs/animation-query-lifecycle.md) and [[patch-12-1-5-api-audit]].
 
+## [2026-09-11] audit | Credit PTR SecondsFormatter.Format
+
+`59833ba76` implements and `3d1b2804d` records focused proof for one bounded `SecondsFormatter.Format` row. Credit covers the private ICU4C unit/list renderer, configured selection/rounding/curve/threshold paths, locale lookup, formatter identity, and preserved retail placeholder baseline; parent alias, native numeric/unit-width/default/negative/approximation policy, and security remain unverified. See [format](../specs/seconds-formatter-format.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | SecondsFormatter configuration
 
 `872b24bd8` adds independent approximation-seconds and millisecond-threshold state. Four audit rows cover modeled accessors only; formatting/evaluation and native defaults/security remain unverified. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].

@@ -1,6 +1,6 @@
 # PTR SecondsFormatter.Format
 
-PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consumes the existing formatter configuration and renders duration units through the ICU4C C APIs. The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) specifies a string result and changes the seconds argument's type alias; it does not establish the algorithm below. This document defines simulator assumptions, not native WoW conformance.
+PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consumes existing formatter configuration and renders duration units through ICU4C C APIs. The pinned [12.1.5 register](../../data/patch-api/sources/12.1.5-register.json) changes only the parent seconds alias from `DurationSecondsDouble` to `Seconds`, while retaining the string result; that change establishes no runtime behavior. This document defines simulator behavior, not native WoW conformance.
 
 ## What it must do
 
@@ -44,8 +44,8 @@ PTR `C_StringUtil.CreateSecondsFormatter():Format(seconds, abbreviation?)` consu
 Focused development proof at `59833ba76`: four new PTR tests failed against the prior placeholder. The grouped filters `seconds_formatter_format:: seconds_formatter_configuration::` then passed **11 PTR** and **8 retail** tests with `--test integration --offline --no-default-features --features sound,gui,client-<profile>`. Counts include four new PTR tests or one retail baseline test, all six existing configuration tests, and one matching existing garden-format test. Compiler output had no warnings. The matching garden test logs partial-addon Lua diagnostics also present in RED; this is not a clean full-startup claim. Logs: `/tmp/seconds-formatter-format-{red,59833ba76-ptr,59833ba76-retail}.log`. No final check/readability/smoke gates or audit artifact updates were run.
 
 ## Known gaps (current cycle)
-- [ ] Native defaults, selection/rounding, approximation text, millisecond precision, abbreviation semantics, secret/taint behavior, and exact ICU data equivalence remain unverified.
-- [ ] Numeric Step curves retain the existing engine limitation; Format propagates invalid fractional interval results rather than changing curve behavior.
+- [ ] Native numeric/`Seconds` representation, unit-width semantics, defaults, selection, rounding, negative and approximation policy, millisecond precision, exact ICU/CLDR output, coercion, and security/taint behavior remain unverified.
+- [ ] Numeric Step curves retain the existing engine limitation; `Format` propagates invalid fractional interval results rather than changing curve behavior.
 
 ## Out of scope
 

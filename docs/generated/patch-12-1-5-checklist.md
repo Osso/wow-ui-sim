@@ -399,7 +399,7 @@
 399. [best-effort] `changed:SecondsFormatter.EvaluateDesiredUnitCount` — behavioral
 400. [best-effort] `changed:SecondsFormatter.EvaluateMaxInterval` — behavioral
 401. [best-effort] `changed:SecondsFormatter.EvaluateMinInterval` — behavioral
-402. [evidence-required] `changed:SecondsFormatter.Format` — unsafe
+402. [best-effort] `changed:SecondsFormatter.Format` — behavioral
 403. [best-effort] `changed:SecondsFormatter.GetApproximationSeconds` — behavioral
 404. [best-effort] `changed:SecondsFormatter.GetMillisecondsThreshold` — behavioral
 405. [best-effort] `changed:SecondsFormatter.SetApproximationSeconds` — behavioral
