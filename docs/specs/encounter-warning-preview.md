@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] Return exactly one fresh table containing all fourteen documented fields for each severity: Low `0`, Medium `1`, High `2`.
-- [ ] Return independent mutable ColorMixin-compatible colors with numeric RGBA channels; modifying a previous record/color must not affect later previews.
-- [ ] Supply finite numeric seconds for `duration`; preserve the requested severity and distinguish high-severity deadly presentation.
-- [ ] Reject missing, nonnumeric, nonintegral, and out-of-range severities without persistent state changes.
+- [x] Return exactly one fresh table containing all fourteen documented fields for each severity: Low `0`, Medium `1`, High `2`.
+- [x] Return independent mutable ColorMixin-compatible colors with numeric RGBA channels; modifying a previous record/color must not affect later previews.
+- [x] Supply finite numeric seconds for `duration`; preserve the requested severity and distinguish high-severity deadly presentation.
+- [x] Reject missing, nonnumeric, nonintegral, and out-of-range severities without persistent state changes.
 - [ ] Feed the actual Blizzard warning system's editing path, text/icons/color, and existing `C_Timer.NewTimer` expiration, cancellation, replacement, and reuse lifecycle without modifying vendor code.
-- [ ] Preserve the actual earlier-retail record, legacy severity mapping, permissive input handling, and 30-second duration before/after bootstrap. This is baseline preservation, not pinned-base conformance.
+- [x] Preserve the actual earlier-retail record, legacy severity mapping (including severity `3`), and 30-second duration before/after bootstrap. This is baseline preservation, not pinned-base conformance.
 
 ## Simulator preview policy
 
@@ -32,6 +32,7 @@ The source establishes fields/types, ColorMixin shape, and severity values—not
 ## Tests asserting this spec
 
 - `tests/encounter_warning_preview.rs`: complete records, independence, validation, retail baseline, and actual Blizzard preview/timer lifecycle. Timer deadlines are advanced through existing simulator timer state; callbacks are not replaced or injected.
+- Focused development proof at `ae642f1e4`: `cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> encounter_warning_preview:: -- --nocapture`. PTR: three passed, one failed at the real `AnimationGroup:Play()` visibility boundary. Retail: one passed. The later expiration/cancel/reuse assertions remain unexecuted, not passing evidence. No final gates were run.
 
 ## Known gaps (current cycle)
 
