@@ -15,10 +15,15 @@ static UBool validate_zone(const UChar *zone, int32_t length,
                            WowIcuError *error) {
   UErrorCode status = U_ZERO_ERROR;
   UBool system = 0;
-  int32_t required = ucal_getCanonicalTimeZoneID(zone, length, NULL, 0,
+  UChar initial[128];
+  int32_t required = ucal_getCanonicalTimeZoneID(zone, length, initial, 128,
                                                 &system, &status);
-  if (!wow_icu_preflight(status, error, "validate time zone"))
+  if (U_SUCCESS(status))
+    return 1;
+  if (status != U_BUFFER_OVERFLOW_ERROR) {
+    wow_icu_fail(error, status, "validate time zone");
     return 0;
+  }
   UChar *canonical = wow_icu_allocate(required, sizeof(UChar), error);
   if (canonical == NULL)
     return 0;
