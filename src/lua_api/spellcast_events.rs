@@ -26,19 +26,38 @@ pub(crate) fn player_cast_args(
 pub(crate) fn fire_player_cast_start(state: &mut LuaState, cast_id: u32, spell_id: u32) {
     #[cfg(feature = "retail-12-1-0")]
     {
-        // Channel-stop callbacks may replace the newly installed ordinary cast.
+        // A replacement callback can supersede this producer before it publishes START.
+        if !is_current_cast(state, cast_id) {
+            return;
+        }
         crate::lua_api::channeling::cancel_for_cast(state)
             .expect("registered cast producer has simulator state");
-        let current = super::methods::borrow_state(state)
-            .expect("registered cast producer has simulator state")
-            .casting
-            .as_ref()
-            .is_some_and(|cast| cast.cast_id == cast_id);
-        if !current {
+        if !is_current_cast(state, cast_id) {
             return;
         }
     }
     fire_player_cast_event(state, "UNIT_SPELLCAST_START", cast_id, spell_id);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn is_current_cast(state: &LuaState, cast_id: u32) -> bool {
+    super::methods::borrow_state(state)
+        .expect("registered cast producer has simulator state")
+        .casting
+        .as_ref()
+        .is_some_and(|cast| cast.cast_id == cast_id)
+}
+
+/// Discard a deferred specialization only when replacing its owning cast.
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn clear_replaced_specialization(sim: &mut super::SimState) {
+    if sim
+        .casting
+        .as_ref()
+        .is_some_and(|cast| cast.spell_id == crate::c_api::c_spec::SPEC_ACTIVATION_SPELL_ID)
+    {
+        sim.player.pending_spec_change = None;
+    }
 }
 
 pub(crate) fn fire_player_cast_event(

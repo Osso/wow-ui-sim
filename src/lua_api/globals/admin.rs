@@ -502,6 +502,8 @@ fn set_casting(state: &mut LuaState) -> LuaResult<u32> {
     let now = st.start_time.elapsed().as_secs_f64();
     let cast_id = st.next_cast_id;
     st.next_cast_id += 1;
+    #[cfg(feature = "retail-12-1-0")]
+    crate::lua_api::spellcast_events::clear_replaced_specialization(&mut st);
     st.casting = Some(CastingState {
         spell_id,
         spell_name,

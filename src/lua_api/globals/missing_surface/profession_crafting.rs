@@ -101,6 +101,8 @@ fn start_crafting_cast(state: &mut LuaState, plan: &CraftPlan) {
     let now = sim.start_time.elapsed().as_secs_f64();
     let cast_id = sim.next_cast_id;
     sim.next_cast_id = sim.next_cast_id.wrapping_add(1);
+    #[cfg(feature = "retail-12-1-0")]
+    crate::lua_api::spellcast_events::clear_replaced_specialization(&mut sim);
     sim.casting = Some(CastingState {
         spell_id: plan.recipe_id as u32,
         spell_name: plan.cast_name.clone(),
