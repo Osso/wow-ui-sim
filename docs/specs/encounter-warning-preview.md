@@ -36,7 +36,7 @@ The source establishes fields/types, ColorMixin shape, and severity values—not
 
 ## Known gaps (current cycle)
 
-- [ ] Complete the real Blizzard preview display/expiration/cancel/reuse test. Current `AnimationGroup:Play()` changes playback flags without dispatching `OnPlay`; Blizzard's installed handler is what shows the warning view. The regression remains failing rather than calling `Show()` or replacing vendor callbacks. Animation-engine correction requires separate scope approval.
+- [ ] Complete the real Blizzard preview display/expiration/cancel/reuse test. Current `AnimationGroup:Play()` changes playback flags without dispatching `OnPlay`; Blizzard's installed handler is what shows the warning view. The regression remains failing rather than calling `Show()` or replacing vendor callbacks. The approved consumer fix dispatches `OnPlay` through the existing state-level script helpers after releasing the simulation-state borrow and updating playback/cache state. The resolved AnimationGroup is `self`, including routed animation calls. Repeated `Play` while already playing does not redispatch; stopped/paused-to-playing transitions do. Reentrant callback state changes must survive the call. This repeated-call policy is modeled, not native/security evidence. Focused proof: `tests/animation_on_play.rs`; warning expiration/cancel/reuse still requires the full consumer test to pass.
 - [ ] Native secret/taint behavior, preview content, GUID semantics, exact duration policy, and validation/error compatibility remain unverified.
 
 ## Out of scope

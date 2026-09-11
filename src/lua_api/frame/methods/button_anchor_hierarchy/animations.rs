@@ -9,11 +9,13 @@ mod creation;
 mod fields;
 mod ownership;
 mod parent;
+mod play;
 mod runtime;
 mod templates;
 
 pub(super) use ownership::resolve_animation_group_id;
 pub(super) use parent::reparent_animation;
+pub(super) use play::animation_group_play;
 
 pub(super) use creation::{
     animation_config_noop, create_animation, create_animation_group, create_control_point,
@@ -167,25 +169,6 @@ pub(super) fn get_region_parent(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // ── Animation group control ───────────────────────────────────────────────────
-
-pub(super) fn animation_group_play(state: &mut LuaState) -> LuaResult<u32> {
-    let group_frame_id = frame_id_from_stack(state, 1)?;
-    let reverse = !matches!(stack_val(state, 2), Val::Nil | Val::Bool(false));
-    let mut sim = borrow_state_mut(state)?;
-    if let Some(group_id) = resolve_animation_group_id(&sim, group_frame_id) {
-        if let Some(group) = sim.animation_groups.get_mut(&group_id) {
-            group.playing = true;
-            group.paused = false;
-            group.done = false;
-            group.pending_finish = false;
-            group.reverse = reverse;
-        }
-        refresh_active_animation_group(&mut sim, group_id);
-        apply_group_flipbook_state(&mut sim, group_id);
-        sync_action_bar_busy_for_group(&mut sim, group_id);
-    }
-    Ok(0)
-}
 
 pub(super) fn animation_group_pause(state: &mut LuaState) -> LuaResult<u32> {
     let group_frame_id = frame_id_from_stack(state, 1)?;
