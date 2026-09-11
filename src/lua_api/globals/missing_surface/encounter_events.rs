@@ -34,6 +34,10 @@ pub(super) fn register_encounter_events_surface(state: &mut LuaState) -> LuaResu
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn register_encounter_timeline_surface(state: &mut LuaState) -> LuaResult<()> {
+    if cfg!(feature = "retail-12-1-5") {
+        // The modeled PTR namespace owns its ColorMixin return contract.
+        return Ok(());
+    }
     let timeline = ensure_namespace(state, "C_EncounterTimeline")?;
     table_set_rust_fn_static(state, timeline, "GetEventColor", get_timeline_event_color)
 }

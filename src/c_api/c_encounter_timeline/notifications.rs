@@ -29,7 +29,15 @@ pub(super) fn emit(state: &mut LuaState, changes: layout::LayoutChanges) -> LuaR
             .get(&id)
             .is_some_and(|event| event.state == EventState::Active && layout::visible(event));
         if current {
-            event(state, "ENCOUNTER_TIMELINE_EVENT_HIGHLIGHT", id)?;
+            event(state, "ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED", id)?;
+            let active = borrow_state(state)?
+                .encounter_timeline
+                .events
+                .get(&id)
+                .is_some_and(|event| event.state == EventState::Active && layout::visible(event));
+            if active {
+                event(state, "ENCOUNTER_TIMELINE_EVENT_HIGHLIGHT", id)?;
+            }
         }
     }
     Ok(())
