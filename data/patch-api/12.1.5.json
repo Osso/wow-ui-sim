@@ -18295,7 +18295,7 @@
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration",
-          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "source_hash": "dc4d0e5d10c5b411a015d2617c01fc64703ff1e9ad514f49ccdd1c4d83cbb4cd",
           "summary": "Focused PTR and earlier-retail tests prove the strict positive/open approximation boundary, configured updates, instance independence, exact arity, and invalid-input errors. Proof commits 89fced131 and b2856c8ff."
         }
       ],
@@ -18338,7 +18338,7 @@
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration",
-          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "source_hash": "dc4d0e5d10c5b411a015d2617c01fc64703ff1e9ad514f49ccdd1c4d83cbb4cd",
           "summary": "Focused PTR and earlier-retail tests prove the default/configured positive integral count, independence, exact arity, and invalid-input or invalid-state errors. Proof commits 89fced131 and b2856c8ff."
         }
       ],
@@ -18381,7 +18381,7 @@
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_resolves_live_curve_methods_without_fallback",
-          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "source_hash": "dc4d0e5d10c5b411a015d2617c01fc64703ff1e9ad514f49ccdd1c4d83cbb4cd",
           "summary": "Focused PTR and earlier-retail tests prove static/curve mode switching, live curve dispatch, exact input forwarding, curve errors, invalid curve results, and fallback only after explicit curve removal. Proof commits 89fced131 and b2856c8ff."
         }
       ],
@@ -18424,7 +18424,7 @@
         {
           "kind": "test",
           "reference": "tests/seconds_formatter_configuration.rs::seconds_formatter_evaluation_uses_current_configuration",
-          "source_hash": "652a51df149af460304a6f4bd623500a2676092a89ae9eb79027b3d437267671",
+          "source_hash": "dc4d0e5d10c5b411a015d2617c01fc64703ff1e9ad514f49ccdd1c4d83cbb4cd",
           "summary": "Focused PTR and earlier-retail tests prove default and configured static minimum-interval returns, instance independence, exact arity, and invalid-input errors. Proof commits 89fced131 and b2856c8ff."
         }
       ],
