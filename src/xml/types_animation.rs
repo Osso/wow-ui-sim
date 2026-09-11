@@ -48,12 +48,19 @@ pub enum AnimationElement {
     Unknown,
 }
 
-/// Common animation attributes. Since the simulator doesn't execute animations,
-/// all type-specific attributes are optional on a single struct.
+/// Common and type-specific animation attributes retained for shared XML application.
 #[derive(Debug, Deserialize, Default, Clone)]
 pub struct AnimationXml {
     #[serde(rename = "@name")]
     pub name: Option<String>,
+    #[serde(rename = "@inherits")]
+    pub inherits: Option<String>,
+    #[serde(rename = "@virtual")]
+    pub is_virtual: Option<bool>,
+    #[serde(rename = "Scripts")]
+    pub scripts: Option<Box<ScriptsXml>>,
+    #[serde(rename = "KeyValues")]
+    pub key_values: Option<KeyValuesXml>,
     #[serde(rename = "@parentKey", alias = "@parentkey")]
     pub parent_key: Option<String>,
     #[serde(rename = "@childKey")]
@@ -115,7 +122,7 @@ pub struct AnimationXml {
     // Path
     #[serde(rename = "@curve")]
     pub curve: Option<String>,
-    // Child elements (parsed but not executed)
+    // Child elements; support depends on the corresponding simulator animation methods.
     #[serde(rename = "Origin")]
     pub origin: Option<OriginXml>,
     #[serde(rename = "ControlPoints")]

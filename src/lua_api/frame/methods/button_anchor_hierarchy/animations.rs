@@ -10,6 +10,7 @@ mod fields;
 mod ownership;
 mod parent;
 mod runtime;
+mod templates;
 
 pub(super) use ownership::resolve_animation_group_id;
 pub(super) use parent::reparent_animation;

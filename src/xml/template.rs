@@ -410,6 +410,7 @@ pub fn clear_templates() {
 
     with_texture_template_registry_mut(|registry| registry.clear());
     with_anim_group_template_registry_mut(|registry| registry.clear());
+    super::animation_templates::clear_animation_templates();
     with_font_string_template_registry_mut(|registry| registry.clear());
 }
 

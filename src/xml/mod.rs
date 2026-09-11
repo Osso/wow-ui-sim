@@ -1,5 +1,6 @@
 //! XML parsing for WoW UI definition files.
 
+mod animation_templates;
 mod parse;
 mod profile_templates;
 mod template;
@@ -11,6 +12,7 @@ mod types_frame_data;
 mod types_support;
 
 // Re-export all public types and functions
+pub use animation_templates::{register_animation_template, resolve_animation_templates};
 pub use parse::{XmlLoadError, parse_xml, parse_xml_file};
 pub use template::{
     TemplateEntry, TemplateInfo, TemplateKeyValueInfo, clear_templates, collect_anim_group_mixins,

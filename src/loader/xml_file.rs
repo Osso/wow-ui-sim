@@ -112,7 +112,21 @@ fn process_element(
             register_virtual_anim_group(ag);
             Ok(0)
         }
-        XmlElement::Animation(_) | XmlElement::Binding(_) | XmlElement::ModifiedClick(_) => Ok(0),
+        XmlElement::Animation(animation)
+        | XmlElement::Alpha(animation)
+        | XmlElement::Translation(animation)
+        | XmlElement::LineTranslation(animation)
+        | XmlElement::Rotation(animation)
+        | XmlElement::Scale(animation)
+        | XmlElement::LineScale(animation)
+        | XmlElement::Path(animation)
+        | XmlElement::FlipBook(animation)
+        | XmlElement::VertexColor(animation)
+        | XmlElement::TextureCoordTranslation(animation) => {
+            register_virtual_animation(animation);
+            Ok(0)
+        }
+        XmlElement::Binding(_) | XmlElement::ModifiedClick(_) => Ok(0),
         _ => {
             let frame_start = Instant::now();
             process_frame_element(env, element, ctx, timing)?;
@@ -448,6 +462,14 @@ fn register_virtual_font_string(fontstring: &crate::xml::FontStringXml) {
         && let Some(ref name) = fontstring.name
     {
         crate::xml::register_font_string_template(name, fontstring.clone());
+    }
+}
+
+fn register_virtual_animation(animation: &crate::xml::AnimationXml) {
+    if animation.is_virtual == Some(true)
+        && let Some(name) = &animation.name
+    {
+        crate::xml::register_animation_template(name, animation.clone());
     }
 }
 

@@ -58,7 +58,7 @@ pub(in crate::lua_api::frame::methods::button_anchor_hierarchy) fn create_animat
     Ok(1)
 }
 
-/// CreateAnimation([type [, name]]) -> animation
+/// CreateAnimation([type [, name [, templateName]]]) -> animation
 pub(in crate::lua_api::frame::methods::button_anchor_hierarchy) fn create_animation(
     state: &mut LuaState,
 ) -> LuaResult<u32> {
@@ -66,14 +66,25 @@ pub(in crate::lua_api::frame::methods::button_anchor_hierarchy) fn create_animat
     let group_frame_id = frame_id_from_stack(state, 1)?;
     let anim_type_str = super::super::shared::opt_string(state, 2);
     let anim_name_raw: Option<String> = Option::<String>::from_stack(state, 3)?;
-
+    let template_name = Option::<String>::from_stack(state, 4)?;
     let group_id = lookup_anim_group_id(state, group_frame_id)?;
+    let template = super::templates::prepare_template(state, template_name.as_deref())?;
     let anim_type = AnimationType::from_str(anim_type_str.as_deref().unwrap_or("Animation"));
     let name = resolve_child_name(state, anim_name_raw, group_frame_id);
     let (child_id, anim) = build_animation_child(state, group_frame_id, name.clone(), anim_type)?;
-    register_animation(state, group_frame_id, group_id, child_id, name, anim)?;
-
+    register_animation(
+        state,
+        group_frame_id,
+        group_id,
+        child_id,
+        name.clone(),
+        anim,
+    )?;
+    if let Some(name) = &name {
+        bind_named_child_global(state, name, child_id)?;
+    }
     let val = frame_ref(state, child_id)?;
+    super::templates::apply_template(state, template, val)?;
     state.push(val);
     Ok(1)
 }

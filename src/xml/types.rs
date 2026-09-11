@@ -110,6 +110,16 @@ pub enum XmlElement {
     IncludeLower(IncludeXml),
     // Animation elements
     Animation(AnimationXml),
+    Alpha(AnimationXml),
+    Translation(AnimationXml),
+    LineTranslation(AnimationXml),
+    Rotation(AnimationXml),
+    Scale(AnimationXml),
+    LineScale(AnimationXml),
+    Path(AnimationXml),
+    FlipBook(AnimationXml),
+    VertexColor(AnimationXml),
+    TextureCoordTranslation(AnimationXml),
     AnimationGroup(AnimationGroupXml),
     // ModelScene elements
     Actor(ActorXml),

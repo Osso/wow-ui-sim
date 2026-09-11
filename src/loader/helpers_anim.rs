@@ -97,7 +97,7 @@ fn emit_anim_group_children(
                 code.push_str(&generate_anim_group_scripts_code(scripts, "__ag"));
             }
             crate::xml::AnimationElement::KeyValues(kv) => {
-                emit_anim_key_values(code, kv);
+                emit_anim_key_values(code, kv, "__ag");
             }
             crate::xml::AnimationElement::Unknown => {}
             _ => {
@@ -110,7 +110,7 @@ fn emit_anim_group_children(
 }
 
 /// Emit KeyValue assignments for an animation group.
-fn emit_anim_key_values(code: &mut String, kv: &crate::xml::KeyValuesXml) {
+fn emit_anim_key_values(code: &mut String, kv: &crate::xml::KeyValuesXml, target: &str) {
     for key_value in &kv.values {
         let value = match key_value.value_type.as_deref() {
             Some("number") => key_value.value.clone(),
@@ -118,7 +118,7 @@ fn emit_anim_key_values(code: &mut String, kv: &crate::xml::KeyValuesXml) {
             _ => format!("\"{}\"", escape_lua_string(&key_value.value)),
         };
         code.push_str(&format!(
-            "\n        __ag.{} = {}\n        ",
+            "\n        {target}.{} = {}\n        ",
             key_value.key, value
         ));
     }
@@ -205,11 +205,63 @@ fn generate_animation_code(
     anim_type: &str,
     _frame_ref: &str,
 ) -> String {
-    let mut code = String::new();
+    let templates = match animation_template_layers(anim.inherits.as_deref()) {
+        Ok(templates) => templates,
+        Err(error) => return format!("error(\"{}\")\n", escape_lua_string(&error)),
+    };
+    let mut code = String::from("\n        do\n");
     emit_animation_header(&mut code, anim, anim_type);
-    emit_animation_common_props(&mut code, anim);
-    emit_animation_flipbook_props(&mut code, anim);
+    for template in &templates {
+        emit_animation_properties(&mut code, template);
+    }
+    emit_animation_properties(&mut code, anim);
+    emit_animation_on_load(&mut code);
+    code.push_str("\n        end\n");
     code
+}
+
+/// Shared template application for the Lua factory and inline XML animations.
+/// Template names and parent keys are declarations, never instance identity.
+pub(crate) fn generate_animation_template_code(inherits: &str) -> Result<String, String> {
+    let templates = crate::xml::resolve_animation_templates(inherits)?;
+    let mut code = String::from("local __anim = ...\n");
+    for template in &templates {
+        emit_animation_properties(&mut code, template);
+    }
+    emit_animation_on_load(&mut code);
+    Ok(code)
+}
+
+fn animation_template_layers(
+    inherits: Option<&str>,
+) -> Result<Vec<crate::xml::AnimationXml>, String> {
+    inherits
+        .map(crate::xml::resolve_animation_templates)
+        .transpose()
+        .map(Option::unwrap_or_default)
+}
+
+fn emit_animation_properties(code: &mut String, anim: &crate::xml::AnimationXml) {
+    emit_animation_common_props(code, anim);
+    emit_animation_flipbook_props(code, anim);
+    if let Some(origin) = &anim.origin {
+        code.push_str(&format!(
+            "\n__anim:SetOrigin({}, {}, {})\n",
+            lua_opt_str(origin.point.as_deref().or(Some("CENTER"))),
+            origin.x.unwrap_or(0.0),
+            origin.y.unwrap_or(0.0)
+        ));
+    }
+    if let Some(values) = &anim.key_values {
+        emit_anim_key_values(code, values, "__anim");
+    }
+    if let Some(scripts) = &anim.scripts {
+        code.push_str(&generate_anim_group_scripts_code(scripts, "__anim"));
+    }
+}
+
+fn emit_animation_on_load(code: &mut String) {
+    code.push_str("\n do local onLoad = __anim:GetScript(\"OnLoad\"); if onLoad then onLoad(__anim) end end\n");
 }
 
 fn emit_animation_header(code: &mut String, anim: &crate::xml::AnimationXml, anim_type: &str) {
