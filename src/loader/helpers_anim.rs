@@ -253,7 +253,10 @@ fn emit_animation_properties(code: &mut String, anim: &crate::xml::AnimationXml)
         ));
     }
     if let Some(values) = &anim.key_values {
-        emit_anim_key_values(code, values, "__anim");
+        code.push_str(&super::xml_frame_codegen::generate_key_values_code(
+            Some(values),
+            "__anim",
+        ));
     }
     if let Some(scripts) = &anim.scripts {
         code.push_str(&generate_anim_group_scripts_code(scripts, "__anim"));
@@ -362,6 +365,7 @@ fn generate_anim_group_scripts_code(scripts: &crate::xml::ScriptsXml, group_ref:
             ("OnStop", scripts.on_stop.last()),
             ("OnLoop", scripts.on_loop.last()),
             ("OnPause", scripts.on_pause.last()),
+            ("OnUpdate", scripts.on_update.last()),
         ],
     )
 }

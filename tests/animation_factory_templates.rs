@@ -13,6 +13,7 @@ fn load_fixture(env: &WowLuaEnv, xml: &str) -> tempfile::TempDir {
 #[test]
 fn animation_templates_inherit_properties_scripts_and_instance_identity() {
     let env = WowLuaEnv::new().unwrap();
+    env.exec("FactoryMarker = { value = 19 }").unwrap();
     let _addon = load_fixture(&env, r#"<Ui>
       <Animation name="FactoryBase" virtual="true" duration="0.5" order="3" startDelay="0.125">
         <KeyValues><KeyValue key="marker" value="base" type="string"/></KeyValues>
@@ -20,14 +21,20 @@ fn animation_templates_inherit_properties_scripts_and_instance_identity() {
       </Animation>
       <Alpha name="FactoryAlpha" virtual="true" inherits="FactoryBase" parentKey="TemplateIdentity"
           duration="1.25" fromAlpha="0.25" toAlpha="0.75" childKey="Target">
-        <KeyValues><KeyValue key="marker" value="derived" type="string"/></KeyValues>
+        <KeyValues>
+          <KeyValue key="marker" value="derived" type="string"/>
+          <KeyValue key="shared" value="FactoryMarker" type="global"/>
+          <KeyValue key="enabled" value="true" type="boolean"/>
+        </KeyValues>
         <Scripts>
           <OnLoad inherit="prepend">
             assert(self.loaded == 1 and self.marker == "derived")
+            assert(self.shared == FactoryMarker and self.enabled)
             assert(self:GetDuration() == 1.25 and self:GetOrder() == 3)
             assert(self:GetTarget() == self:GetRegionParent().Target)
             self.loaded = self.loaded + 1
           </OnLoad>
+          <OnUpdate>self.updated = true</OnUpdate>
           <OnFinished>self.finished = (self.finished or 0) + 1</OnFinished>
         </Scripts>
       </Alpha>
@@ -45,6 +52,10 @@ fn animation_templates_inherit_properties_scripts_and_instance_identity() {
       assert(FactoryBase == nil and FactoryAlpha == nil and group.TemplateIdentity == nil)
       assert(a:GetObjectType() == "Alpha" and a:GetParent() == group)
       assert(a.loaded == 2 and b.loaded == 2)
+      local update = a:GetScript("OnUpdate")
+      assert(type(update) == "function")
+      update(a, 0.1)
+      assert(a.updated == true and b.updated == nil)
       assert(a:GetFromAlpha() == 0.25 and a:GetToAlpha() == 0.75)
       assert(a:GetStartDelay() == 0.125)
       a:SetDuration(2)
