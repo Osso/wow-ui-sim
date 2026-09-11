@@ -14,7 +14,7 @@ Simulator-owned `A_Admin.DelayCasting` and `A_Admin.FailCasting` drive the exist
 
 ## Simulator policies
 
-The input accepts any active timed-cast state, including an expired deadline not yet consumed by the existing completion tick. Zero delay is a notification, not a no-op. Explicit nil for `quiet` uses false. Failure-before-STOP ordering and the synthetic `Cast-Sim-<id>` identifier are model policies, not native timing or GUID evidence. GCDs/cooldowns are not reset. Specialization ownership cleanup is limited to failure of the existing specialization-activation spell; this slice does not redesign unrelated deferred actions or self-cancel behavior.
+The input accepts any active timed-cast state, including an expired deadline not yet consumed by the existing completion tick. Zero delay is a notification, not a no-op. Explicit nil for `quiet` uses false. Failure-before-STOP ordering and the synthetic `Cast-Sim-<id>` identifier are model policies, not native timing or GUID evidence. GCDs/cooldowns are not reset. The reproduced pending-specialization leak is fixed only by clearing the pending specialization when its existing activation cast fails before callbacks; a callback-created replacement remains intact. This does not redesign unrelated deferred actions, actor attribution, or self-cancel behavior.
 
 ## How it works
 

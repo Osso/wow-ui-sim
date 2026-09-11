@@ -20526,24 +20526,57 @@
       "id": "changed:UNIT_SPELLCAST_DELAYED",
       "symbol": "UNIT_SPELLCAST_DELAYED",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "A_Admin.DelayCasting validates and mutates/takes active casting state before dispatching UNIT_SPELLCAST_DELAYED."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8",
+          "summary": "Shared player-cast payload construction emits the modeled four-field `(player, Cast-Sim GUID, spell ID, numeric castBarID)` identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast producer proof covers state/query/payload behavior, callback replacement or completion boundary, on PTR and earlier retail."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
+          "source_hash": "45345eb906d2aedbcc93afbcf12084f7ea0eb90ee341984aa2d96ec655aaf352",
+          "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+        "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail proof establishes only modeled admin-driven timed-cast inputs: DelayCasting mutates the active timed state before the four-field DELAYED payload; FailCasting takes that state before the four-field FAILED or FAILED_QUIET payload and paired STOP. The shared Cast-Sim GUID, numeric castBarID, failure-before-STOP order, zero-delay notification, self-cancel actor policy, native failure generation/reasons, ordering/timing, coercion beyond tested inputs, taint, secret, protected/forbidden, and native semantics remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_EMPOWER_START",
@@ -20618,47 +20651,113 @@
       "id": "changed:UNIT_SPELLCAST_FAILED",
       "symbol": "UNIT_SPELLCAST_FAILED",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "A_Admin.FailCasting validates and mutates/takes active casting state before dispatching UNIT_SPELLCAST_FAILED; failure dispatches paired STOP."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8",
+          "summary": "Shared player-cast payload construction emits the modeled four-field `(player, Cast-Sim GUID, spell ID, numeric castBarID)` identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_failure_preserves_reentrant_cast_and_cancels_old_effects",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast producer proof covers state/query/payload behavior, callback replacement or completion boundary, on PTR and earlier retail."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
+          "source_hash": "45345eb906d2aedbcc93afbcf12084f7ea0eb90ee341984aa2d96ec655aaf352",
+          "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/iced_app/casting/input_tests.rs::spellcast_input_failure_preserves_reentrant_cast_and_cancels_old_effects",
+        "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail proof establishes only modeled admin-driven timed-cast inputs: DelayCasting mutates the active timed state before the four-field DELAYED payload; FailCasting takes that state before the four-field FAILED or FAILED_QUIET payload and paired STOP. The shared Cast-Sim GUID, numeric castBarID, failure-before-STOP order, zero-delay notification, self-cancel actor policy, native failure generation/reasons, ordering/timing, coercion beyond tested inputs, taint, secret, protected/forbidden, and native semantics remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_FAILED_QUIET",
       "symbol": "UNIT_SPELLCAST_FAILED_QUIET",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "A_Admin.FailCasting validates and mutates/takes active casting state before dispatching UNIT_SPELLCAST_FAILED_QUIET; failure dispatches paired STOP."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8",
+          "summary": "Shared player-cast payload construction emits the modeled four-field `(player, Cast-Sim GUID, spell ID, numeric castBarID)` identity."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "UnitCastingInfo serializes the same active state identity: synthetic string GUID at casting slot 7 and numeric castBarID at slot 10 on retail-12-1-0+."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_failure_preserves_reentrant_cast_and_cancels_old_effects",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast producer proof covers state/query/payload behavior, callback replacement or completion boundary, on PTR and earlier retail."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure",
+          "source_hash": "45345eb906d2aedbcc93afbcf12084f7ea0eb90ee341984aa2d96ec655aaf352",
+          "summary": "Focused full Blizzard UI consumer proof covers delayed bar duration plus normal and quiet failure clearing through public admin inputs on PTR and earlier retail."
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/iced_app/casting/input_tests.rs::spellcast_input_failure_preserves_reentrant_cast_and_cancels_old_effects",
+        "tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused current PTR/earlier-retail proof establishes only modeled admin-driven timed-cast inputs: DelayCasting mutates the active timed state before the four-field DELAYED payload; FailCasting takes that state before the four-field FAILED or FAILED_QUIET payload and paired STOP. The shared Cast-Sim GUID, numeric castBarID, failure-before-STOP order, zero-delay notification, self-cancel actor policy, native failure generation/reasons, ordering/timing, coercion beyond tested inputs, taint, secret, protected/forbidden, and native semantics remain unverified."
     },
     {
       "id": "changed:UNIT_SPELLCAST_INTERRUPTED",
@@ -20679,13 +20778,13 @@
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "SpellStopCasting atomically takes the active modeled cast before dispatching the interruption producer and returning its boolean result.",
-          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
+          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled producer emits the five-field interruption payload then a paired four-field STOP for the captured cast identity.",
-          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
+          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
         },
         {
           "kind": "source",
@@ -20697,7 +20796,7 @@
           "kind": "source",
           "reference": "src/iced_app/casting.rs",
           "summary": "Existing completion extraction clears only an active cast; a canceled captured cast cannot later emit completion or apply effects.",
-          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
+          "source_hash": "683ad5b0a34b9a2937c3ab824189948087133fdabbb85db4b9e5288dc1181cae"
         },
         {
           "kind": "test",
@@ -20748,31 +20847,31 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
+          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
+          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
           "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "86f38c2dc1c2e0460b0165527c52af0bc1dea364d5213d257d6e070ba8e2425b"
+          "source_hash": "48368986933c49c531e4fd366224ad9bfa9dcfbbec7242ffa021293e7248bf8c"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "bd6a2a61d0269a207fc9906a245ca976d35bc07efcbe79b67070935f3c0ec75f"
+          "source_hash": "eb6281be5c6e643e3a6d2466209f0c9f3d62a98a1805573716e091b6e081bdb7"
         },
         {
           "kind": "source",
           "reference": "src/iced_app/casting.rs",
           "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
-          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
+          "source_hash": "683ad5b0a34b9a2937c3ab824189948087133fdabbb85db4b9e5288dc1181cae"
         },
         {
           "kind": "test",
@@ -20823,31 +20922,31 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
+          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
+          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
           "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "86f38c2dc1c2e0460b0165527c52af0bc1dea364d5213d257d6e070ba8e2425b"
+          "source_hash": "48368986933c49c531e4fd366224ad9bfa9dcfbbec7242ffa021293e7248bf8c"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "bd6a2a61d0269a207fc9906a245ca976d35bc07efcbe79b67070935f3c0ec75f"
+          "source_hash": "eb6281be5c6e643e3a6d2466209f0c9f3d62a98a1805573716e091b6e081bdb7"
         },
         {
           "kind": "source",
           "reference": "src/iced_app/casting.rs",
           "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
-          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
+          "source_hash": "683ad5b0a34b9a2937c3ab824189948087133fdabbb85db4b9e5288dc1181cae"
         },
         {
           "kind": "test",
@@ -20905,31 +21004,31 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
+          "source_hash": "df0ae5b7c5afabb838efb7ccc50925411769a92cf4357f92c3750c76b6219fe8"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
+          "source_hash": "8ab95aa2b23cd0914bda034285fba85edc139fe236340469792b2b55af30c7bf"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface/profession_crafting.rs",
           "summary": "Crafting casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "86f38c2dc1c2e0460b0165527c52af0bc1dea364d5213d257d6e070ba8e2425b"
+          "source_hash": "48368986933c49c531e4fd366224ad9bfa9dcfbbec7242ffa021293e7248bf8c"
         },
         {
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
           "summary": "Specialization-change casts dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "bd6a2a61d0269a207fc9906a245ca976d35bc07efcbe79b67070935f3c0ec75f"
+          "source_hash": "eb6281be5c6e643e3a6d2466209f0c9f3d62a98a1805573716e091b6e081bdb7"
         },
         {
           "kind": "source",
           "reference": "src/iced_app/casting.rs",
           "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
-          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
+          "source_hash": "683ad5b0a34b9a2937c3ab824189948087133fdabbb85db4b9e5288dc1181cae"
         },
         {
           "kind": "test",
@@ -20973,30 +21072,56 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
-          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "Explicit admin timed-cast inputs mutate the same stored identity/deadline or clear it before their payload notifications."
         },
         {
           "kind": "test",
-          "reference": "tests/cast_bar_id.rs",
-          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
-          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast input proof verifies state-preserving delay updates and milliseconds at casting slot 11 without changing slots 7 or 10."
         }
       ],
       "tests": [
-        "tests/cast_bar_id.rs"
+        "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+        "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+        "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically"
       ],
       "assertions": [],
-      "commit": "3d4d483d3",
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
+      "notes": "Focused current PTR/earlier-retail tuple and timed-cast-input proof establishes eleven casting/channel returns for active modeled state, with casting slot 7 as the shared synthetic `Cast-Sim-<id>` string required by the PTR WOWGUID declaration and numeric castBarID unchanged at casting slot 10/channel slot 11. Delay milliseconds occupy casting slot 11. The string is a simulator identifier, not native GUID evidence; UnitCastBarID mapping, channel lifecycle, native identity allocation/reuse, texture/fileID fidelity, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unverified."
     },
     {
       "id": "changed:UnitCastingInfoResult",
@@ -21010,30 +21135,56 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
-          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "Explicit admin timed-cast inputs mutate the same stored identity/deadline or clear it before their payload notifications."
         },
         {
           "kind": "test",
-          "reference": "tests/cast_bar_id.rs",
-          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
-          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast input proof verifies state-preserving delay updates and milliseconds at casting slot 11 without changing slots 7 or 10."
         }
       ],
       "tests": [
-        "tests/cast_bar_id.rs"
+        "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+        "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+        "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically"
       ],
       "assertions": [],
-      "commit": "3d4d483d3",
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
+      "notes": "Focused current PTR/earlier-retail tuple and timed-cast-input proof establishes eleven casting/channel returns for active modeled state, with casting slot 7 as the shared synthetic `Cast-Sim-<id>` string required by the PTR WOWGUID declaration and numeric castBarID unchanged at casting slot 10/channel slot 11. Delay milliseconds occupy casting slot 11. The string is a simulator identifier, not native GUID evidence; UnitCastBarID mapping, channel lifecycle, native identity allocation/reuse, texture/fileID fidelity, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unverified."
     },
     {
       "id": "changed:UnitCastingInfoResult.castBarID",
@@ -21047,30 +21198,56 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
-          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "Explicit admin timed-cast inputs mutate the same stored identity/deadline or clear it before their payload notifications."
         },
         {
           "kind": "test",
-          "reference": "tests/cast_bar_id.rs",
-          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
-          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast input proof verifies state-preserving delay updates and milliseconds at casting slot 11 without changing slots 7 or 10."
         }
       ],
       "tests": [
-        "tests/cast_bar_id.rs"
+        "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+        "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+        "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically"
       ],
       "assertions": [],
-      "commit": "3d4d483d3",
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
+      "notes": "Focused current PTR/earlier-retail tuple and timed-cast-input proof establishes eleven casting/channel returns for active modeled state, with casting slot 7 as the shared synthetic `Cast-Sim-<id>` string required by the PTR WOWGUID declaration and numeric castBarID unchanged at casting slot 10/channel slot 11. Delay milliseconds occupy casting slot 11. The string is a simulator identifier, not native GUID evidence; UnitCastBarID mapping, channel lifecycle, native identity allocation/reuse, texture/fileID fidelity, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unverified."
     },
     {
       "id": "changed:UnitChannelInfo",
@@ -21084,30 +21261,56 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
-          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "Explicit admin timed-cast inputs mutate the same stored identity/deadline or clear it before their payload notifications."
         },
         {
           "kind": "test",
-          "reference": "tests/cast_bar_id.rs",
-          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
-          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast input proof verifies state-preserving delay updates and milliseconds at casting slot 11 without changing slots 7 or 10."
         }
       ],
       "tests": [
-        "tests/cast_bar_id.rs"
+        "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+        "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+        "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically"
       ],
       "assertions": [],
-      "commit": "3d4d483d3",
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
+      "notes": "Focused current PTR/earlier-retail tuple and timed-cast-input proof establishes eleven casting/channel returns for active modeled state, with casting slot 7 as the shared synthetic `Cast-Sim-<id>` string required by the PTR WOWGUID declaration and numeric castBarID unchanged at casting slot 10/channel slot 11. Delay milliseconds occupy casting slot 11. The string is a simulator identifier, not native GUID evidence; UnitCastBarID mapping, channel lifecycle, native identity allocation/reuse, texture/fileID fidelity, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unverified."
     },
     {
       "id": "changed:UnitChannelInfoResult",
@@ -21121,30 +21324,56 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
-          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "Explicit admin timed-cast inputs mutate the same stored identity/deadline or clear it before their payload notifications."
         },
         {
           "kind": "test",
-          "reference": "tests/cast_bar_id.rs",
-          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
-          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast input proof verifies state-preserving delay updates and milliseconds at casting slot 11 without changing slots 7 or 10."
         }
       ],
       "tests": [
-        "tests/cast_bar_id.rs"
+        "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+        "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+        "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically"
       ],
       "assertions": [],
-      "commit": "3d4d483d3",
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
+      "notes": "Focused current PTR/earlier-retail tuple and timed-cast-input proof establishes eleven casting/channel returns for active modeled state, with casting slot 7 as the shared synthetic `Cast-Sim-<id>` string required by the PTR WOWGUID declaration and numeric castBarID unchanged at casting slot 10/channel slot 11. Delay milliseconds occupy casting slot 11. The string is a simulator identifier, not native GUID evidence; UnitCastBarID mapping, channel lifecycle, native identity allocation/reuse, texture/fileID fidelity, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unverified."
     },
     {
       "id": "changed:UnitChannelInfoResult.castBarID",
@@ -21158,30 +21387,56 @@
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed cast/channel query tuple and castBarID type delta.",
-          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+          "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the changed spellcast event/query signatures and type deltas."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/utility_system_spell/spell_api.rs",
-          "summary": "State-backed cast and channel query implementations return the documented tuple positions and append their existing cast identity as numeric castBarID.",
-          "source_hash": "8430b98a095f9f49f1dc5ae728c87afeacf4e36fef561e997c2e395fccb16669"
+          "source_hash": "a86db8c8b0a80fa0e54bbb54f5aa9f385333e4a6e0c19a352be6a233f4f3137d",
+          "summary": "State-backed casting/channel serialization returns the pinned tuple slots, including string Cast-Sim GUID at casting slot 7 and numeric castBarID at casting slot 10/channel slot 11."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/game_data.rs",
+          "source_hash": "9d189f44f8ff4572cf848d71bc85cbe8fa780e0bfdef4b3a53269140e02cb225",
+          "summary": "CastingState stores the allocated numeric cast_id and cumulative delay used by the query serializer and timed-cast inputs."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin/cast_inputs.rs",
+          "source_hash": "d84643097e3505aac16fe0a60a0baa522571cf6ac1ea5071d4d536866dfdbba9",
+          "summary": "Explicit admin timed-cast inputs mutate the same stored identity/deadline or clear it before their payload notifications."
         },
         {
           "kind": "test",
-          "reference": "tests/cast_bar_id.rs",
-          "summary": "Focused tests cover casting and channel tuple arity/order, state-backed castBarID values, and no-cast nil results.",
-          "source_hash": "92139090ffabe4c9fe3730c5908473830ef80e9164f3b9497f3fafe8ad587a83"
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail cast tuple proof asserts all eleven active casting slots, synthetic string slot 7, numeric slot 10, identity stability, and nil boundaries."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+          "source_hash": "17dd53102abbe9744aaa1f228c3bbeca9d6d2ddbff4abb36c7c315adced6a22e",
+          "summary": "Focused PTR/earlier-retail channel tuple proof asserts all eleven channel slots and numeric slot 11 across allocated state updates."
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically",
+          "source_hash": "505a9fc94afc39f05de41b2952227ba1d157e3030026a7e5cb6e38973c10b2fa",
+          "summary": "Focused real timed-cast input proof verifies state-preserving delay updates and milliseconds at casting slot 11 without changing slots 7 or 10."
         }
       ],
       "tests": [
-        "tests/cast_bar_id.rs"
+        "tests/cast_bar_id.rs::cast_bar_id_cast_lifecycle_preserves_tuple_and_identity",
+        "tests/cast_bar_id.rs::cast_bar_id_channel_uses_allocated_identity_across_updates",
+        "src/iced_app/casting/input_tests.rs::spellcast_input_delay_updates_query_and_deadline_atomically"
       ],
       "assertions": [],
-      "commit": "3d4d483d3",
+      "commit": "70e681266",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused tests establish simulator query tuple arity and order for casts and channels, including a state-backed numeric castBarID at the documented position and no-cast nil result. The UnitCastBarID mapping is a simulator assumption. Spellcast event payloads/timing, native identity allocation and reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unclaimed."
+      "notes": "Focused current PTR/earlier-retail tuple and timed-cast-input proof establishes eleven casting/channel returns for active modeled state, with casting slot 7 as the shared synthetic `Cast-Sim-<id>` string required by the PTR WOWGUID declaration and numeric castBarID unchanged at casting slot 10/channel slot 11. Delay milliseconds occupy casting slot 11. The string is a simulator identifier, not native GUID evidence; UnitCastBarID mapping, channel lifecycle, native identity allocation/reuse, texture/fileID fidelity, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge semantics remain unverified."
     },
     {
       "id": "changed:table.count",

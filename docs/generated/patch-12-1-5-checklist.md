@@ -425,12 +425,12 @@
 425. [evidence-required] `changed:UNIT_SPELLCAST_CHANNEL_START` — unsafe
 426. [evidence-required] `changed:UNIT_SPELLCAST_CHANNEL_STOP` — unsafe
 427. [evidence-required] `changed:UNIT_SPELLCAST_CHANNEL_UPDATE` — unsafe
-428. [evidence-required] `changed:UNIT_SPELLCAST_DELAYED` — unsafe
+428. [best-effort] `changed:UNIT_SPELLCAST_DELAYED` — behavioral
 429. [evidence-required] `changed:UNIT_SPELLCAST_EMPOWER_START` — unsafe
 430. [evidence-required] `changed:UNIT_SPELLCAST_EMPOWER_STOP` — unsafe
 431. [evidence-required] `changed:UNIT_SPELLCAST_EMPOWER_UPDATE` — unsafe
-432. [evidence-required] `changed:UNIT_SPELLCAST_FAILED` — unsafe
-433. [evidence-required] `changed:UNIT_SPELLCAST_FAILED_QUIET` — unsafe
+432. [best-effort] `changed:UNIT_SPELLCAST_FAILED` — behavioral
+433. [best-effort] `changed:UNIT_SPELLCAST_FAILED_QUIET` — behavioral
 434. [best-effort] `changed:UNIT_SPELLCAST_INTERRUPTED` — behavioral
 435. [best-effort] `changed:UNIT_SPELLCAST_START` — behavioral
 436. [best-effort] `changed:UNIT_SPELLCAST_STOP` — behavioral

@@ -23,7 +23,7 @@ Existing state visibility and event order are preserved, not asserted as indepen
 - [x] Emit paired four-field `UNIT_SPELLCAST_STOP` after interruption, describing the captured canceled cast. Return exactly `true`; no active cast returns exactly `false` without notifications. A callback-created replacement survives the old STOP and later completes once. Older API epochs retain the prior clear-and-boolean path.
 - [x] An interruption or STOP callback can create a new cast. Do not clear it after callbacks; it subsequently completes with its own identity and effects. The canceled cast cannot later succeed or apply its effects.
 
-The chosen `INTERRUPTED` then `STOP` order follows two inspected consumers: `Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua` handles interruption and clears its casting flag, while `Blizzard_UnitFrame/Mainline/UnitFrame.lua` uses STOP (not INTERRUPTED) to clear mana-cost prediction. This is a modeled notification policy, **not native event-order confirmation**. It does not change normal completion ordering or add FAILED, DELAYED, channel, or empower producers. No GCD, cooldown, or unrelated pending-specialization behavior is reset by this slice.
+The chosen `INTERRUPTED` then `STOP` order follows two inspected consumers: `Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua` handles interruption and clears its casting flag, while `Blizzard_UnitFrame/Mainline/UnitFrame.lua` uses STOP (not INTERRUPTED) to clear mana-cost prediction. This is a modeled notification policy, **not native event-order confirmation**. The self-cancel path does not change normal completion ordering. Later explicit admin inputs separately provide modeled DELAYED/FAILED/FAILED_QUIET producers; no channel or empower producer is added. No GCD, cooldown, or unrelated pending-specialization behavior is reset by self-cancellation.
 
 ### Explicit delay and failure inputs
 
@@ -47,6 +47,8 @@ The chosen `INTERRUPTED` then `STOP` order follows two inspected consumers: `Bli
 
 - `src/iced_app/casting/tests.rs`: real producer callbacks and timed completion on both current profiles, in the existing library test target.
 - `src/iced_app/casting/interrupted_tests.rs`: real timed casts, cancellation callbacks, repeat/no-completion behavior, and reentrant replacement casts through the existing completion/effect boundary.
+- `src/iced_app/casting/input_tests.rs`: real timed spell producers through public admin delay/failure inputs, state/query/payload transitions, reentrant replacements, and narrowly scoped failed-specialization cleanup.
+- `tests/spell_casting.rs::spellcast_input_blizzard_bar_observes_delay_and_failure`: actual Blizzard cast-bar consumption of DELAYED and normal/quiet FAILED input paths.
 - Focused `spellcast_payload_` tests: 3 passed per profile at `f474fb2f9`.
 - Existing grouped integration filters `spell_casting::`, `test_crafting::`, and `admin_spec_talent_api::c_spec_set_specialization`: 18, 22, and 2 passed respectively per profile. No broad suites or acceptance gates run.
 

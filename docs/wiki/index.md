@@ -1,3 +1,7 @@
+## [2026-09-11] audit | Credit PTR timed-cast delay and failure inputs
+
+`70e681266` credits exactly `UNIT_SPELLCAST_DELAYED`, `UNIT_SPELLCAST_FAILED`, and `UNIT_SPELLCAST_FAILED_QUIET` from the current modeled timed-cast path. Proof is bounded to public `A_Admin` inputs, active state/query/payload transitions, cancellation/replacement boundaries, and actual Blizzard cast-bar consumption on PTR and earlier retail. Query audit notes now state that casting slot 7 is synthetic string `Cast-Sim-<id>` for PTR `WOWGUID`; numeric castBarID remains slot 10. Failure source, ordering, actor, native GUID/type behavior, and security remain unverified. See [timed-cast inputs](../specs/cast-delay-failure-inputs.md), [cast-bar returns](../specs/cast-bar-id-returns.md), and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR EncounterWarnings Edit Mode preview rows
 
 `c4423207a` moves exactly `changed:C_EncounterWarnings.EncounterWarningInfo` and `.duration` to bounded best-effort. Credit is limited to synthetic fourteen-field previews for Low/Medium/High, independent ColorMixin values, a finite duration, and the unmodified Blizzard warning-view display/expiration/replacement/cancellation/reuse path. The committed model-root `OnPlay` correction supports that consumer only; it neither credits unrelated animation rows nor claims native callback/security behavior. Gameplay triggers/storage, sound/chat, native values/timing, and security remain unverified. See [warning preview](../specs/encounter-warning-preview.md) and [[patch-12-1-5-api-audit]].
