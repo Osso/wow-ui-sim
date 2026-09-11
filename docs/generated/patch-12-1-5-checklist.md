@@ -15,8 +15,8 @@
 15. [best-effort] `added:C_Intl.FormatNumber` — behavioral
 16. [evidence-required] `added:C_Intl.FormatTime` — unsafe
 17. [best-effort] `added:C_Intl.GetCharacterProperties` — behavioral
-18. [evidence-required] `added:C_Intl.GetCurrencyFractionDigits` — unsafe
-19. [evidence-required] `added:C_Intl.GetCurrencyName` — unsafe
+18. [best-effort] `added:C_Intl.GetCurrencyFractionDigits` — behavioral
+19. [best-effort] `added:C_Intl.GetCurrencyName` — behavioral
 20. [best-effort] `added:C_Intl.GetCurrentLocale` — behavioral
 21. [evidence-required] `added:C_Intl.GetDisplayName` — unsafe
 22. [best-effort] `added:C_Intl.GetSortKey` — behavioral
@@ -200,7 +200,7 @@
 200. [evidence-required] `added:LuaLocaleContext.FormatDateTime` — unsafe
 201. [best-effort] `added:LuaLocaleContext.FormatNumber` — behavioral
 202. [evidence-required] `added:LuaLocaleContext.FormatTime` — unsafe
-203. [evidence-required] `added:LuaLocaleContext.GetCurrencyName` — unsafe
+203. [best-effort] `added:LuaLocaleContext.GetCurrencyName` — behavioral
 204. [evidence-required] `added:LuaLocaleContext.GetDisplayName` — unsafe
 205. [best-effort] `added:LuaLocaleContext.GetLocale` — behavioral
 206. [best-effort] `added:LuaLocaleContext.GetSortKey` — behavioral

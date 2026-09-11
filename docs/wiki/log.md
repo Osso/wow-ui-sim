@@ -1,3 +1,7 @@
+## [2026-09-11] audit | Credit PTR ICU4C currency metadata
+
+`2170f394a` supplies committed source and focused test evidence for global/context `GetCurrencyName` and global `GetCurrencyFractionDigits`. The manifest credits only five-style mapping, locale selection, known/miss catalogue behavior, USD/KWD/JPY precision, and PTR/earlier-retail profiles: 388 best-effort, 61 evidence-required, 0 untriaged. Invalid-code errors and unknown-code zero results remain selected policy; ICU naming/catalogue/version, security, native WoW conformance, and Windows/macOS execution remain unverified or pending. See [currency metadata](../specs/intl-currency-metadata.md) and [[patch-12-1-5-api-audit]].
+
 ## [2026-09-10] audit | Credit PTR ICU4C number and currency APIs
 
 `03e788970`, `8b1648770`, `ddb780f86`, and `0f25b13b7` credit 11 bounded PTR rows: global/context `FormatNumber`, `ParseNumber`, `FormatCurrency`, `ParseCurrency`, and `CurrencyParseResult` with `amount`/`currencyCode`. Eight Linux native-wrapper tests and three PTR Lua API tests prove ordinary ICU4C-backed behavior only. ICU defaults/data, rounding, parsing grammar, error policy, `AllowedWhenUntainted` enforcement, native WoW equivalence, retail exclusion, and macOS/Windows linkage/runtime smoke remain unresolved. See [number formatting](../specs/intl-number-formatting.md), [native linking](../specs/intl-native-linking.md), and [[patch-12-1-5-api-audit]].

@@ -801,47 +801,175 @@
       "id": "added:C_Intl.GetCurrencyFractionDigits",
       "symbol": "C_Intl.GetCurrencyFractionDigits",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added global cstring-to-number query, its MayReturnNothing contract, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "summary": "PTR-only native build compiles the currency metadata bridge under the existing ICU4C gate without changing provisioning.",
+          "source_hash": "28174e443b4d72e58c42c331a83eb85de4fd1bc6303a6b9a2be4b129fc511442"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "summary": "Private fixed-width ABI exposes a separate status and output value for currency fraction digits.",
+          "source_hash": "d8fb0c4741b0ce552fa2fbb02f196657113cb3c09526f6300ac20c2dc0a09d89"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/currency_metadata.c",
+          "summary": "Native bridge checks ICU's all-date catalogue and reads default fraction digits through ICU4C.",
+          "source_hash": "d01b85ae33dbb259ed813dcee51442414f403fe0cca2040808aa0c65b648b6e5"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "summary": "Safe boundary validates and normalizes three-letter codes and distinguishes a native no-match from a known zero-digit result.",
+          "source_hash": "721cbc5885db64e3105de4bdfe0c544b5c70eb184364a97f452a994ac5d08f6e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native/ffi.rs",
+          "summary": "FFI converts native fraction-digit status/output into Rust Option values without exposing ICU types.",
+          "source_hash": "3c6ce6b19b01166c968131d854cce0589df4153fa3a471c162b62fc6923c43bb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR C_Intl registration includes the currency metadata module while earlier profiles retain namespace absence.",
+          "source_hash": "5b7a5fd687b5de4010492dbf3bc1b45551aea1ecfff84937762d5b982045d9f2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/currency_metadata.rs",
+          "summary": "Lua global registration returns the native digits result as one Lua number and preserves no-match arity.",
+          "source_hash": "ec80644b7c363cb3131d2b77a5094400c58a25459602a58110847c58f8b6733d"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "summary": "Shared locale, text, and native-error helpers are reused by the metadata registration without changing number formatting semantics.",
+          "source_hash": "e378b250ff6bae28be3b654d4113aced196f13c29de98ea233e3f02967c30cf6"
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/currency_metadata_tests.rs::currency_metadata_distinguishes_catalogue_misses_from_zero_digits",
+          "summary": "Committed direct wrapper test covers USD/KWD/JPY precision and a catalogue miss.",
+          "source_hash": "4176726aee282582dc433de022a804dd2c05e96e2f90fa8c7af1f23365f52042"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_currency_metadata.rs::intl_currency_metadata_fraction_digits_distinguish_zero_and_unknown",
+          "summary": "Committed PTR integration test covers publication, precision, JPY zero digits, unknown arity, and earlier-retail absence.",
+          "source_hash": "d642a548ec6a51b9068078449592e2d9577a5874f6e3719cef28281d087865e6"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/c_api/intl_native/currency_metadata_tests.rs::currency_metadata_distinguishes_catalogue_misses_from_zero_digits",
+        "tests/intl_currency_metadata.rs::intl_currency_metadata_fraction_digits_distinguish_zero_and_unknown",
+        "tests/intl_currency_metadata.rs::intl_currency_metadata_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "2170f394a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Committed focused proof establishes only PTR publication and modeled ICU4C catalogue behavior: known codes return tested standard precision (USD 2, JPY 0, KWD 3), and JPY's zero remains distinguishable from a catalogue miss; earlier retail remains absent. The invalid-code error and unknown-code zero-result behaviors are selected simulator policies, not native credit. ICU catalogue/name/version behavior, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native WoW conformance remain unverified. Windows/macOS execution is accepted pending, not complete."
     },
     {
       "id": "added:C_Intl.GetCurrencyName",
       "symbol": "C_Intl.GetCurrencyName",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "global-api",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added function occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added global cstring/style-to-string query, its MayReturnNothing contract, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "summary": "PTR-only native build compiles the currency metadata bridge under the existing ICU4C gate without changing provisioning.",
+          "source_hash": "28174e443b4d72e58c42c331a83eb85de4fd1bc6303a6b9a2be4b129fc511442"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "summary": "Private fixed-width ABI exposes a currency-name operation without leaking ICU types.",
+          "source_hash": "d8fb0c4741b0ce552fa2fbb02f196657113cb3c09526f6300ac20c2dc0a09d89"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/currency_metadata.c",
+          "summary": "Native bridge explicitly maps five WoW name styles, checks ICU's all-date catalogue, and obtains localized names through ICU4C.",
+          "source_hash": "d01b85ae33dbb259ed813dcee51442414f403fe0cca2040808aa0c65b648b6e5"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "summary": "Safe boundary validates and normalizes three-letter codes before invoking the currency-name bridge.",
+          "source_hash": "721cbc5885db64e3105de4bdfe0c544b5c70eb184364a97f452a994ac5d08f6e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native/ffi.rs",
+          "summary": "FFI owns and copies native output while converting native name status into Rust Option values.",
+          "source_hash": "3c6ce6b19b01166c968131d854cce0589df4153fa3a471c162b62fc6923c43bb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR C_Intl registration includes the currency metadata module while earlier profiles retain namespace absence.",
+          "source_hash": "5b7a5fd687b5de4010492dbf3bc1b45551aea1ecfff84937762d5b982045d9f2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/currency_metadata.rs",
+          "summary": "Lua global registration uses the current locale and returns the native name as one Lua string.",
+          "source_hash": "ec80644b7c363cb3131d2b77a5094400c58a25459602a58110847c58f8b6733d"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "summary": "Shared locale, text, and native-error helpers are reused by the metadata registration without changing number formatting semantics.",
+          "source_hash": "e378b250ff6bae28be3b654d4113aced196f13c29de98ea233e3f02967c30cf6"
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/currency_metadata_tests.rs::currency_metadata_maps_all_name_styles_and_locales",
+          "summary": "Committed direct wrapper test covers all five selectors and en-US, fr-FR, de-DE, and extended-locale outputs.",
+          "source_hash": "4176726aee282582dc433de022a804dd2c05e96e2f90fa8c7af1f23365f52042"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_currency_metadata.rs::intl_currency_metadata_names_cover_styles_and_context_updates",
+          "summary": "Committed PTR integration test covers global current-locale lookup, all five selectors, context locale updates, known names, and earlier-retail absence.",
+          "source_hash": "d642a548ec6a51b9068078449592e2d9577a5874f6e3719cef28281d087865e6"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/c_api/intl_native/currency_metadata_tests.rs::currency_metadata_maps_all_name_styles_and_locales",
+        "tests/intl_currency_metadata.rs::intl_currency_metadata_names_cover_styles_and_context_updates",
+        "tests/intl_currency_metadata.rs::intl_currency_metadata_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "2170f394a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Committed focused proof establishes only PTR publication and modeled ICU4C behavior: the five documented CurrencyNameStyle selectors map explicitly, global lookup uses the current locale, known catalogue codes yield tested localized names, and earlier retail remains absent. The invalid-code error and unknown-code zero-result behaviors are selected simulator policies, not native credit. ICU currency naming/catalogue/version behavior, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native WoW conformance remain unverified. Windows/macOS execution is accepted pending, not complete."
     },
     {
       "id": "added:C_Intl.GetCurrentLocale",
@@ -9437,24 +9565,88 @@
       "id": "added:LuaLocaleContext.GetCurrencyName",
       "symbol": "LuaLocaleContext.GetCurrencyName",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "script-object-method",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this added method occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the added locale-context cstring/style-to-string method, its MayReturnNothing contract, and AllowedWhenUntainted annotation.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "build/intl_native.rs",
+          "summary": "PTR-only native build compiles the currency metadata bridge under the existing ICU4C gate without changing provisioning.",
+          "source_hash": "28174e443b4d72e58c42c331a83eb85de4fd1bc6303a6b9a2be4b129fc511442"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/bridge.h",
+          "summary": "Private fixed-width ABI exposes a currency-name operation without leaking ICU types.",
+          "source_hash": "d8fb0c4741b0ce552fa2fbb02f196657113cb3c09526f6300ac20c2dc0a09d89"
+        },
+        {
+          "kind": "source",
+          "reference": "native/intl/currency_metadata.c",
+          "summary": "Native bridge explicitly maps five WoW name styles, checks ICU's all-date catalogue, and obtains localized names through ICU4C.",
+          "source_hash": "d01b85ae33dbb259ed813dcee51442414f403fe0cca2040808aa0c65b648b6e5"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native.rs",
+          "summary": "Safe boundary validates and normalizes three-letter codes before invoking the currency-name bridge.",
+          "source_hash": "721cbc5885db64e3105de4bdfe0c544b5c70eb184364a97f452a994ac5d08f6e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/intl_native/ffi.rs",
+          "summary": "FFI owns and copies native output while converting native name status into Rust Option values.",
+          "source_hash": "3c6ce6b19b01166c968131d854cce0589df4153fa3a471c162b62fc6923c43bb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl.rs",
+          "summary": "PTR locale-context construction registers the currency metadata method while earlier profiles retain namespace absence.",
+          "source_hash": "5b7a5fd687b5de4010492dbf3bc1b45551aea1ecfff84937762d5b982045d9f2"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/currency_metadata.rs",
+          "summary": "Lua locale-context registration reads the receiver's stored locale and returns the native name as one Lua string.",
+          "source_hash": "ec80644b7c363cb3131d2b77a5094400c58a25459602a58110847c58f8b6733d"
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_intl/number_formatting.rs",
+          "summary": "Shared locale, text, and native-error helpers are reused by the metadata registration without changing number formatting semantics.",
+          "source_hash": "e378b250ff6bae28be3b654d4113aced196f13c29de98ea233e3f02967c30cf6"
+        },
+        {
+          "kind": "test",
+          "reference": "src/c_api/intl_native/currency_metadata_tests.rs::currency_metadata_maps_all_name_styles_and_locales",
+          "summary": "Committed direct wrapper test covers all five selectors and en-US, fr-FR, de-DE, and extended-locale outputs.",
+          "source_hash": "4176726aee282582dc433de022a804dd2c05e96e2f90fa8c7af1f23365f52042"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/intl_currency_metadata.rs::intl_currency_metadata_names_cover_styles_and_context_updates",
+          "summary": "Committed PTR integration test covers context locale updates, all five selectors, known names, and earlier-retail absence.",
+          "source_hash": "d642a548ec6a51b9068078449592e2d9577a5874f6e3719cef28281d087865e6"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/c_api/intl_native/currency_metadata_tests.rs::currency_metadata_maps_all_name_styles_and_locales",
+        "tests/intl_currency_metadata.rs::intl_currency_metadata_names_cover_styles_and_context_updates",
+        "tests/intl_currency_metadata.rs::intl_currency_metadata_preserves_retail_absence"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "2170f394a",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation establishes the added declaration only; PTR publication, behavior, security, state, and profile gating require occurrence-specific proof."
+      "notes": "Committed focused proof establishes only PTR publication and modeled ICU4C behavior: the five documented CurrencyNameStyle selectors map explicitly, each context uses its own stored locale and can observe its own later locale update, known catalogue codes yield tested localized names, and earlier retail remains absent. The invalid-code error and unknown-code zero-result behaviors are selected simulator policies, not native credit. ICU currency naming/catalogue/version behavior, AllowedWhenUntainted enforcement, coercion, taint, secret, protected, and native WoW conformance remain unverified. Windows/macOS execution is accepted pending, not complete."
     },
     {
       "id": "added:LuaLocaleContext.GetDisplayName",

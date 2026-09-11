@@ -1,15 +1,15 @@
 # Intl currency metadata
 
-PTR `C_Intl.GetCurrencyName`, `LuaLocaleContext:GetCurrencyName`, and `C_Intl.GetCurrencyFractionDigits` query ICU4C currency data. The [pinned register](../../data/patch-api/sources/12.1.5-register.json) requires currency strings and name-style selectors, permits no result, and marks arguments `AllowedWhenUntainted`. The [native linking contract](intl-native-linking.md) remains unchanged.
+PTR `C_Intl.GetCurrencyName`, `LuaLocaleContext:GetCurrencyName`, and `C_Intl.GetCurrencyFractionDigits` query ICU4C currency data. The [pinned register](../../data/patch-api/sources/12.1.5-register.json) requires currency strings and name-style selectors, permits no result, and marks arguments `AllowedWhenUntainted`. Audit credit is bounded in the [PTR occurrence inventory](../wiki/investigations/patch-12-1-5-occurrence-inventory.md); the [native linking contract](intl-native-linking.md) remains unchanged.
 
 ## What it must do
 
 - [x] Publish the three documented APIs on PTR; keep the earlier-retail namespace absent. Do not invent a context fraction-digits method.
 - [x] Map `CurrencyNameStyle` explicitly: Symbol (0), NarrowSymbol (1), Long (2), FormalSymbol (3), VariantSymbol (4). ICU's Long/Narrow enum order differs from WoW's.
 - [x] Global names use the current locale; context names use the stored locale. Preserve existing strict UTF-8 validation, WoW-tag translation, and BCP-47 extensions without mutating contexts.
-- [x] Reuse three-ASCII-letter currency validation and uppercase normalization. Malformed codes and styles raise errors.
-- [x] Check ICU's known currency catalogue before requesting names or fraction digits. Well-formed unknown codes return zero Lua results, not an ISO-code display or generic fraction-digit default.
-- [x] Return one localized string for a known currency name and one number for known fraction digits. Distinguish JPY's zero digits from unknown/no-result and native failure through an explicit native status and output parameter.
+- [x] Check the ICU catalogue before requesting names or fraction digits. Committed evidence covers known/miss distinction and USD=2, JPY=0, KWD=3 precision.
+- [x] Return one localized string for tested known names and one number for tested known fraction digits. JPY's zero remains distinguishable from a catalogue miss through a separate native status and output parameter.
+- [ ] Do not credit malformed-code errors, unknown-code zero results, ICU naming/catalogue/version behavior, or security semantics as native behavior.
 - [x] Keep returned Rust/Lua strings independent of borrowed ICU name data. Free allocated locale/output buffers on success and error paths; unknown-currency paths allocate no native lookup buffers.
 - [x] Preserve existing number/currency formatting, parsing, and ICU4X APIs; add no dependencies or platform provisioning changes.
 
@@ -17,7 +17,7 @@ PTR `C_Intl.GetCurrencyName`, `LuaLocaleContext:GetCurrencyName`, and `C_Intl.Ge
 
 Known means `ucurr_isAvailable(code, U_DATE_MIN, U_DATE_MAX)` succeeds: the ICU catalogue across all dates, not only currently circulating currencies. Names come from `ucurr_getName`; standard fraction digits come from `ucurr_getDefaultFractionDigits`. Names, catalogue membership, and minor units can change with the installed ICU/CLDR version. Tests use USD/CAD names and USD=2, JPY=0, KWD=3 as concrete data, not an exhaustive currency table.
 
-Unknown-code no-result, uppercase normalization, all-date catalogue membership, invalid-input errors, and ICU locale-data selection are simulator policies. They do not establish native WoW failure conditions, data-version equality, coercion, or secret/taint enforcement. These APIs do not change amounts or apply currency rounding. No native formatting fallback is added.
+Invalid-code errors and unknown-code zero results are selected simulator policies, not audit credit. Uppercase normalization, all-date catalogue membership, and ICU locale-data selection do not establish native WoW failure conditions, naming/version equality, coercion, or secret/taint enforcement. These APIs do not change amounts or apply currency rounding. No native formatting fallback is added.
 
 ## How it works
 
@@ -39,31 +39,20 @@ Unknown-code no-result, uppercase normalization, all-date catalogue membership, 
 
 ## Tests asserting this spec
 
-- `tests/intl_currency_metadata.rs`: all name styles, localized names, current/context state, zero-versus-unknown digits, errors, and profile absence.
-- `src/c_api/intl_native/currency_metadata_tests.rs`: direct native results and repeated success/no-match/error cleanup paths with retained output.
-- Existing `intl_number_formatting` integration and `intl_` library tests provide bounded regressions.
+- `tests/intl_currency_metadata.rs`: all name styles, localized names, global/context locale selection, known/miss catalogue behavior, precision, and profile absence.
+- `src/c_api/intl_native/currency_metadata_tests.rs`: direct style/locale, catalogue, and fraction-precision behavior.
+- Existing `intl_number_formatting` integration and `intl_` library tests are regression context, not metadata audit credit.
 
 ## Focused development proof
 
-- RED: three PTR metadata tests failed on the missing APIs.
-- Native wrapper tests: 11 passed, including three metadata tests exercising known/unknown currency, all styles, zero digits, retained outputs, and repeated success/no-match/error cleanup paths.
-- Number/metadata integration tests: 6 PTR and 2 retail passed.
-- Existing Intl/context library regressions: 21 PTR and 11 retail passed.
-- Root `cargo fmt` completed. ICU runtime: `78.3.0.0` on Linux. No Windows/macOS execution is claimed.
-
-Commands (each profile executed separately):
-
-```text
-cargo test --lib --offline --no-default-features --features sound,gui,client-ptr intl_native:: -- --nocapture
-cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> -- intl_currency_metadata:: intl_number_formatting:: --nocapture
-cargo test --lib --offline --no-default-features --features sound,gui,client-<profile> -- patch_12_1_5_intl_ patch_12_1_5_locale_context:: --nocapture
-```
+Committed focused proof at `2170f394a` covers five style mappings, global/current and context/stored locale selection, known/miss catalogue behavior, USD/KWD/JPY precision, and PTR/earlier-retail profile boundaries. This audit refresh does not rerun those tests or any native build.
 
 ## Known gaps (current cycle)
 
-- [ ] Windows/macOS execution remains pending as accepted by the user; this slice changes no provisioning.
-- [ ] Native WoW catalogue/name-style equivalence, Unicode/CLDR version equality, and `AllowedWhenUntainted` enforcement remain unverified.
+- [ ] Invalid-code errors and unknown-code zero results remain selected simulator policy, not native credit.
+- [ ] ICU naming/catalogue/version behavior, native WoW catalogue/name-style equivalence, Unicode/CLDR equality, and `AllowedWhenUntainted` enforcement remain unverified.
+- [ ] Windows/macOS execution remains accepted pending; this slice changes no provisioning.
 
 ## Out of scope
 
-Audit-manifest credit, broad verification/readability gates, new dependencies, native platform provisioning, titlecase/date/transliteration features, deployment, and publication.
+Broad verification/readability gates, new dependencies, native platform provisioning, titlecase/date/transliteration features, deployment, and publication.
