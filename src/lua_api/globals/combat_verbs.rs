@@ -91,6 +91,7 @@ fn start_cast(
         end_time: now + duration,
         cast_id,
         num_empower_stages: 0,
+        delay_time: 0.0,
     });
     Some(cast_id)
 }

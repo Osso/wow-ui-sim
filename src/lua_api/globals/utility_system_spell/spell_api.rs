@@ -287,6 +287,7 @@ struct CastInfoSnapshot {
     cast_id: u32,
     spell_id: u32,
     num_empower_stages: u32,
+    delay_time: f64,
 }
 
 fn unit_casting_info(state: &mut LuaState) -> LuaResult<u32> {
@@ -325,6 +326,7 @@ fn extract_cast_info(state: &mut LuaState, slot: CastSlot) -> LuaResult<Option<C
         cast_id: cast.cast_id,
         spell_id: cast.spell_id,
         num_empower_stages: cast.num_empower_stages,
+        delay_time: cast.delay_time,
     }))
 }
 
@@ -348,8 +350,7 @@ fn push_cast_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 {
     #[cfg(feature = "retail-12-1-0")]
     {
         state.push(Val::Num(cast_info.cast_id as f64));
-        // Delay accumulation is not modeled; preserve timing and expose the tuple slot.
-        state.push(Val::Num(0.0));
+        state.push(Val::Num(cast_info.delay_time * 1000.0));
         11
     }
     #[cfg(not(feature = "retail-12-1-0"))]

@@ -119,6 +119,8 @@ fn register_combat_casting(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetFrameProtected", set_frame_protected)?
         .set_function("SetCasting", set_casting)?
         .set_function("StopCasting", stop_casting)?
+        .set_function("DelayCasting", super::admin_cast_inputs::delay_casting)?
+        .set_function("FailCasting", super::admin_cast_inputs::fail_casting)?
         .set_function("SetGCD", set_gcd)?
         .set_function("SetSpellCooldown", set_spell_cooldown)?
         .set_function("SetMoving", set_moving)?
@@ -494,6 +496,7 @@ fn set_casting(state: &mut LuaState) -> LuaResult<u32> {
         end_time: now + duration,
         cast_id,
         num_empower_stages: 0,
+        delay_time: 0.0,
     });
     Ok(0)
 }

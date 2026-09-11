@@ -644,3 +644,33 @@ fn ui_error_message_wired_with_blizzard_ui() {
         );
     }
 }
+
+#[test]
+fn spellcast_input_blizzard_bar_observes_delay_and_failure() {
+    test_timeout! {
+        let env = env_with_full_blizzard_ui();
+        install_test_error_handler(&env);
+        env.exec(r#"
+            CastingBarMixin.OnLoad(PlayerCastingBarFrame, "player", true, false)
+            ClearTarget()
+            CastSpellByID(19750)
+            local bar = PlayerCastingBarFrame
+            assert(bar.casting and bar:IsShown())
+            local maximum = bar.maxValue
+            assert(A_Admin.DelayCasting(0.75))
+            assert(math.abs(bar.maxValue - maximum - 0.75) < 0.000001)
+            assert(select(11, UnitCastingInfo("player")) == 750)
+            assert(A_Admin.FailCasting())
+            assert(not bar.casting)
+            assert(bar.Text:GetText() == FAILED)
+            assert(UnitCastingInfo("player") == nil)
+            bar:StopAnims()
+            CastSpellByID(19750)
+            assert(bar.casting)
+            assert(A_Admin.FailCasting(true))
+            assert(not bar.casting and UnitCastingInfo("player") == nil)
+        "#).unwrap();
+        let errors = drain_test_errors(&env);
+        assert!(errors.is_empty(), "cast input consumer errors: {errors:?}");
+    }
+}

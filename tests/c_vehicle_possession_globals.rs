@@ -245,6 +245,7 @@ fn unit_channel_info_returns_channel_state() {
             end_time: 108.0,
             cast_id: 42,
             num_empower_stages: 0,
+            delay_time: 0.0,
         });
     }
 
@@ -287,6 +288,7 @@ fn unit_channel_info_returns_empower_stage_count() {
             end_time: 103.0,
             cast_id: 43,
             num_empower_stages: 4,
+            delay_time: 0.0,
         });
     }
 
@@ -309,6 +311,7 @@ fn unit_channel_info_only_for_player() {
             end_time: 8.0,
             cast_id: 1,
             num_empower_stages: 0,
+            delay_time: 0.0,
         });
     }
     let target_nil: bool = env.eval("return UnitChannelInfo('target') == nil").unwrap();

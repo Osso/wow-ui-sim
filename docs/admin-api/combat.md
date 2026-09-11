@@ -33,6 +33,16 @@ local name, text, texture, startTime, endTime = UnitCastingInfo("player")
 -- name="Flash of Light"
 ```
 
+### A_Admin.DelayCasting(seconds)
+
+Extend the current timed cast by finite, nonnegative seconds. Returns `true` and emits `UNIT_SPELLCAST_DELAYED` after updating the deadline and cumulative `UnitCastingInfo` delay in milliseconds. Zero is accepted and still notifies. Returns `false` when no cast exists; invalid/overflowing input errors without mutation.
+
+### A_Admin.FailCasting(quiet = false)
+
+Fail the current timed cast. Returns `true`, clears the old cast before callbacks, and emits `UNIT_SPELLCAST_FAILED` (or `UNIT_SPELLCAST_FAILED_QUIET`), then `UNIT_SPELLCAST_STOP`, with the old identity. Returns `false` when inactive. A callback-created replacement survives. A failed specialization cast discards its pending specialization before callbacks.
+
+These are explicit simulator inputs, not native failure detection. Failure order and quiet behavior are model policies; GCD/cooldown state is unchanged. See [delay/failure contract](../specs/cast-delay-failure-inputs.md).
+
 ### A_Admin.StopCasting()
 
 Cancels the current simulated cast.

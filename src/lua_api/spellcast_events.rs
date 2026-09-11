@@ -20,8 +20,17 @@ pub(crate) fn player_cast_args(
 }
 
 pub(crate) fn fire_player_cast_start(state: &mut LuaState, cast_id: u32, spell_id: u32) {
+    fire_player_cast_event(state, "UNIT_SPELLCAST_START", cast_id, spell_id);
+}
+
+pub(crate) fn fire_player_cast_event(
+    state: &mut LuaState,
+    event: &str,
+    cast_id: u32,
+    spell_id: u32,
+) {
     let args = player_cast_args(cast_id, spell_id, |text| create_string(state, text));
-    fire_named_event_state(state, "UNIT_SPELLCAST_START", &args);
+    fire_named_event_state(state, event, &args);
 }
 
 /// Self-cancel policy: interruption first, then STOP for non-interruption listeners.

@@ -91,6 +91,8 @@ pub struct CastingState {
     pub end_time: f64,
     pub cast_id: u32,
     pub num_empower_stages: u32,
+    /// Cumulative simulator delay input, in seconds.
+    pub delay_time: f64,
 }
 
 /// Per-spell cooldown tracking.

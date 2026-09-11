@@ -42,7 +42,7 @@ const C_SPECIALIZATION_INFO_METHODS: &[(&str, RustLuaFn)] = &[
     ("SetSpecialization", c_spec_set_specialization),
 ];
 
-const SPEC_ACTIVATION_SPELL_ID: u32 = 200749;
+pub(crate) const SPEC_ACTIVATION_SPELL_ID: u32 = 200749;
 const SPEC_ACTIVATION_CAST_SECONDS: f64 = 1.5;
 
 pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
@@ -250,6 +250,7 @@ fn start_specialization_change(state: &mut LuaState, target_index: i32) -> LuaRe
         end_time: now + SPEC_ACTIVATION_CAST_SECONDS,
         cast_id,
         num_empower_stages: 0,
+        delay_time: 0.0,
     });
     Ok(Some(cast_id))
 }
