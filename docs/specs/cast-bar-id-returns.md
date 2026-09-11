@@ -45,7 +45,7 @@ The arrows are the only tuple field type differences between the pinned base and
 
 ## Tests asserting this spec
 
-- `tests/cast_bar_id.rs`: grouped integration tests driven through `A_Admin.SetCasting`/`StopCasting`, with allocated state transferred to the channel slot because no channel-start API exists. Timing and empowerment updates use existing state fields; no channel-event lifecycle is claimed.
+- `tests/cast_bar_id.rs`: complete tuple assertions driven through `A_Admin.SetCasting`, `StartChannel`, `StartEmpower`, and timing-update inputs. Ordinary casts replace channels rather than retaining simultaneous active modes. See [channel/empower lifecycle](channel-empower-lifecycles.md) for separate producer and consumer proof.
 - `tests/spell_casting.rs`: existing casting regressions.
 - `tests/c_vehicle_possession_globals.rs`: existing casting/channel query regressions.
 
@@ -60,5 +60,5 @@ Focused proof at `3d4d483d3`: two new tests passed on each of `client-ptr` and `
 
 ## Out of scope
 
-- Changes to the thirteen cast-event payloads, dispatch ordering, timing, cast/channel scheduling or identity allocation.
+- This spec covers tuple serialization; event dispatch and channel scheduling are covered separately by [channel/empower lifecycle](channel-empower-lifecycles.md) and [spellcast payloads](spellcast-event-payloads.md).
 - Audit-manifest credit, artifact generation and broad/final verification gates.

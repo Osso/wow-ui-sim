@@ -24,8 +24,8 @@ Starts a simulated cast bar on the player.
 - **iconPath** `string` -- Texture path for the cast bar icon
 - **duration** `number` -- Cast time in seconds
 - **Affects:** `UnitCastingInfo("player")`
-- **Fires:** `UNIT_SPELLCAST_START`
-- **Note:** The cast does not auto-complete. Call `StopCasting()` to cancel, or overwrite with another `SetCasting`.
+- **Fires:** no ordinary cast-start event; this is the existing state-only initializer.
+- **Note:** On retail 12.1+, replacing a channel emits its cancellation event. The existing timed-cast completion path can consume this state at its deadline. `StopCasting()` clears it without cast events; use `SpellStopCasting()` for modeled self-cancel notifications.
 - **Example:**
 ```lua
 A_Admin.SetCasting(19750, "Flash of Light", "Interface\\Icons\\Spell_Holy_FlashHeal", 1.5)
@@ -48,7 +48,7 @@ These are explicit simulator inputs, not native failure detection. Failure order
 Cancels the current simulated cast.
 
 - **Affects:** `UnitCastingInfo("player")` returns `nil`
-- **Fires:** `UNIT_SPELLCAST_STOP`
+- **Fires:** none; this existing state-only API clears ordinary casting only. Use `StopChannel()` for channel/empower state.
 - **Example:**
 ```lua
 A_Admin.SetCasting(19750, "Flash of Light", "", 1.5)
@@ -63,7 +63,7 @@ print(UnitCastingInfo("player"))    -- nil
 - `A_Admin.UpdateChannel(durationSeconds)` / `UpdateEmpower(stageSeconds, holdSeconds)` replace total timing from the original start and return whether the matching mode was active.
 - `A_Admin.StopChannel(complete=false)` cancels either mode, or models successful early release with `true`; returns whether one existed.
 
-All inputs use **seconds**. `UnitChannelInfo` endpoints and empower stage/hold queries use **milliseconds**. New starts replace the old active mode; callbacks can replace the incoming operation. Natural completion occurs at the channel deadline, including empower hold, on OnUpdate. These are simulator inputs—not native spell data or damage ticks. See [channel/empower contract](../specs/channel-empower-lifecycles.md) for payloads and attribution assumptions.
+All inputs use **seconds**. `UnitChannelInfo` endpoints and empower stage/hold queries use **milliseconds**. `UpdateEmpower` changes modeled timing/counts, but the current Blizzard UPDATE handler does not rebuild pips or add hold to its display maximum; that consumer limitation remains explicit. New starts replace the old active mode; callbacks can replace the incoming operation. Natural completion occurs at the channel deadline, including empower hold, on OnUpdate. These are simulator inputs—not native spell data or damage ticks. See [channel/empower contract](../specs/channel-empower-lifecycles.md) for payloads and attribution assumptions.
 
 ### A_Admin.SetGCD(duration)
 
