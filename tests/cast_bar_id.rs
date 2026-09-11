@@ -57,36 +57,25 @@ fn cast_bar_id_cast_lifecycle_preserves_tuple_and_identity() {
 #[test]
 fn cast_bar_id_channel_uses_allocated_identity_across_updates() {
     let env = WowLuaEnv::new().unwrap();
-    let channel_id = start_cast(&env);
-    // No channel-start API exists: transfer the real admin-allocated state at this boundary.
-    {
-        let mut state = env.state().borrow_mut();
-        state.channeling = state.casting.take();
-    }
+    env.exec("A_Admin.StartChannel(19750, 'Flash of Light', 'cast-icon', 5)").unwrap();
+    let channel_id = env.state().borrow().channeling.as_ref().unwrap().cast_id;
     assert_tuple(&env, true, channel_id, 0);
-    env.exec("assert(UnitCastingInfo('player') == nil)").unwrap();
-    {
-        let mut state = env.state().borrow_mut();
-        let channel = state.channeling.as_mut().unwrap();
-        channel.end_time += 0.75;
-        channel.empower = Some(wow_ui_sim::lua_api::state::EmpowerTiming {
-            stage_durations: vec![1.0; 4],
-            hold_at_max: 0.0,
-        });
-    }
-    assert_tuple(&env, true, channel_id, 4);
+    env.exec("assert(UnitCastingInfo('player') == nil); assert(A_Admin.UpdateChannel(5.75))").unwrap();
+    assert_tuple(&env, true, channel_id, 0);
+    env.exec("A_Admin.StartEmpower(19750, 'Flash of Light', 'cast-icon', {1,1,1,1}, 0)").unwrap();
+    let empower_id = env.state().borrow().channeling.as_ref().unwrap().cast_id;
+    assert_ne!(empower_id, channel_id);
+    assert_tuple(&env, true, empower_id, 4);
+    env.exec("assert(A_Admin.UpdateEmpower({1,1,1,2}, 0.5))").unwrap();
+    assert_tuple(&env, true, empower_id, 4);
     let casting_id = start_cast(&env);
-    assert_ne!(casting_id, channel_id);
+    assert_ne!(casting_id, empower_id);
     assert_tuple(&env, false, casting_id, 0);
-    assert_tuple(&env, true, channel_id, 4);
-    env.state().borrow_mut().channeling = None;
-    env.exec("assert(UnitChannelInfo('player') == nil); assert(UnitChannelInfo('target') == nil)")
-        .unwrap();
-    let next_channel = start_cast(&env);
+    env.exec("assert(UnitChannelInfo('player') == nil); assert(UnitChannelInfo('target') == nil)").unwrap();
+    env.exec("A_Admin.StartChannel(19750, 'Flash of Light', 'cast-icon', 5)").unwrap();
+    let next_channel = env.state().borrow().channeling.as_ref().unwrap().cast_id;
     assert_ne!(next_channel, channel_id);
-    {
-        let mut state = env.state().borrow_mut();
-        state.channeling = state.casting.take();
-    }
+    assert_ne!(next_channel, casting_id);
     assert_tuple(&env, true, next_channel, 0);
+    env.exec("assert(UnitCastingInfo('player') == nil)").unwrap();
 }

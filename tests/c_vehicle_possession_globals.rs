@@ -287,7 +287,10 @@ fn unit_channel_info_returns_empower_stage_count() {
             start_time: 100.0,
             end_time: 103.0,
             cast_id: 43,
-            empower: Some(wow_ui_sim::lua_api::state::EmpowerTiming { stage_durations: vec![1.0; 4], hold_at_max: 0.0 }),
+            empower: Some(wow_ui_sim::lua_api::state::EmpowerTiming {
+                stage_durations: vec![0.75; 4],
+                hold_at_max: 0.0,
+            }),
             delay_time: 0.0,
         });
     }
