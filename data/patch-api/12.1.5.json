@@ -20664,24 +20664,70 @@
       "id": "changed:UNIT_SPELLCAST_INTERRUPTED",
       "symbol": "UNIT_SPELLCAST_INTERRUPTED",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "event",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
           "reference": "data/patch-api/sources/12.1.5-register.json",
-          "summary": "Pinned PTR 12.1.5 generated-documentation register records this changed event occurrence with exact before/after payload.",
+          "summary": "Pinned PTR 12.1.5 generated-documentation register records the exact changed five-argument interruption payload.",
           "source_hash": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/combat_verbs.rs",
+          "summary": "SpellStopCasting atomically takes the active modeled cast before dispatching the interruption producer and returning its boolean result.",
+          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/spellcast_events.rs",
+          "summary": "Shared modeled producer emits the five-field interruption payload then a paired four-field STOP for the captured cast identity.",
+          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/unit_misc.rs",
+          "summary": "The interruption actor uses the existing player UnitGUID resolver rather than target state or a fabricated enemy identity.",
+          "source_hash": "015622d10fd59e3873d9f3260e9e9b936b069073a8469190ca7fb193d813f988"
+        },
+        {
+          "kind": "source",
+          "reference": "src/iced_app/casting.rs",
+          "summary": "Existing completion extraction clears only an active cast; a canceled captured cast cannot later emit completion or apply effects.",
+          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_self_cancel_reports_actor_and_never_completes",
+          "summary": "Real timed-cast cancellation proof covers five payload fields, resolved player GUID, cleared state, repeat false/no notifications, and no later completion or effect.",
+          "source_hash": "84d7d5699b071a7906e83fca9e977032d0a545f435120faf68756f7a1225c3c0"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_handler_can_start_a_replacement_cast",
+          "summary": "Real interruption-handler reentrancy proof covers a replacement cast with a new identity surviving the old paired STOP and completing once.",
+          "source_hash": "84d7d5699b071a7906e83fca9e977032d0a545f435120faf68756f7a1225c3c0"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_stop_handler_can_start_a_replacement_cast",
+          "summary": "Real paired-STOP-handler reentrancy proof covers a replacement cast with a new identity surviving cancellation and completing once.",
+          "source_hash": "84d7d5699b071a7906e83fca9e977032d0a545f435120faf68756f7a1225c3c0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_self_cancel_reports_actor_and_never_completes",
+        "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_handler_can_start_a_replacement_cast",
+        "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_stop_handler_can_start_a_replacement_cast"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "6278d87a9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: generated documentation records a before/after contract delta; the runtime effect and simulator compatibility require occurrence-specific proof."
+      "notes": "Focused real-producer proof establishes only modeled SpellStopCasting self-cancel: it captures and clears the active player cast, emits exactly `(unitTarget, synthetic castGUID, spellID, resolvedPlayerGUID, castBarID)`, then emits paired four-field STOP for that captured identity. Repeated cancellation is false with no notifications; canceled casts do not later complete or apply effects; interruption and STOP callbacks may start a distinct replacement cast that survives and completes once. The INTERRUPTED\u2192STOP order and self actor are simulator notification policies, not native ordering, enemy attribution, security, taint, protected/secret, coercion, GUID-format, or native-lifecycle claims. No FAILED, DELAYED, channel, empower, or other event rows are credited."
     },
     {
       "id": "changed:UNIT_SPELLCAST_START",
@@ -20702,13 +20748,13 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "77ffc4f0078505454b2634a9957039584047b5957d9569e0edd1c4c65804c833"
+          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "cc7524cf52f5e1248928dad60e5241ff37549e5e798d2b02211acaa1c901c8c2"
+          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
         },
         {
           "kind": "source",
@@ -20726,7 +20772,7 @@
           "kind": "source",
           "reference": "src/iced_app/casting.rs",
           "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
-          "source_hash": "5d323aa2269d2359dfd7255f536ca2695066c52380db55728573560f711dd6e1"
+          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
         },
         {
           "kind": "test",
@@ -20777,13 +20823,13 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "77ffc4f0078505454b2634a9957039584047b5957d9569e0edd1c4c65804c833"
+          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "cc7524cf52f5e1248928dad60e5241ff37549e5e798d2b02211acaa1c901c8c2"
+          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
         },
         {
           "kind": "source",
@@ -20801,7 +20847,7 @@
           "kind": "source",
           "reference": "src/iced_app/casting.rs",
           "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
-          "source_hash": "5d323aa2269d2359dfd7255f536ca2695066c52380db55728573560f711dd6e1"
+          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
         },
         {
           "kind": "test",
@@ -20820,18 +20866,25 @@
           "reference": "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state",
           "summary": "Focused real producer proof covers the action, crafting, and specialization cast paths with stable synthetic identity through timed completion. Proof commits f474fb2f9 and c09027a2d.",
           "source_hash": "4b27add7d1c628fb87f1cce9f469e3067aa5db416b6da458a994cb648b587327"
+        },
+        {
+          "kind": "test",
+          "reference": "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_self_cancel_reports_actor_and_never_completes",
+          "summary": "Focused real producer proof covers self-cancel interruption followed by paired STOP, cleared state, resolved player GUID, repeat false/no notifications, and no later completion/effect. Proof commits c89d475e1 and 6278d87a9.",
+          "source_hash": "84d7d5699b071a7906e83fca9e977032d0a545f435120faf68756f7a1225c3c0"
         }
       ],
       "tests": [
         "src/iced_app/casting/tests.rs::spellcast_payload_action_and_timed_completion_share_identity",
         "src/iced_app/casting/tests.rs::spellcast_payload_crafting_uses_allocated_identity",
-        "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state"
+        "src/iced_app/casting/tests.rs::spellcast_payload_spec_change_preserves_deferred_state",
+        "src/iced_app/casting/interrupted_tests.rs::spellcast_interrupted_self_cancel_reports_actor_and_never_completes"
       ],
       "assertions": [],
-      "commit": "f474fb2f9",
+      "commit": "6278d87a9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Focused real-producer proof establishes only modeled UNIT_SPELLCAST payloads `(unitTarget, synthetic castGUID, spellID, castBarID)` for existing action-spell, crafting, and specialization cast starts plus timed STOP/SUCCEEDED completion. Synthetic GUID format, cast identity allocation, event ordering/timing, restricted/secret behavior, taint, coercion, native GUID semantics, invalid transitions, and all other spellcast events remain unclaimed."
+      "notes": "Focused real-producer proof establishes only modeled UNIT_SPELLCAST payloads `(unitTarget, synthetic castGUID, spellID, castBarID)` for existing action-spell, crafting, and specialization cast starts, timed STOP/SUCCEEDED completion, and the paired STOP after modeled self-cancel interruption. Synthetic GUID format, cast identity allocation, event ordering/timing, restricted/secret behavior, taint, coercion, native GUID semantics, invalid transitions, and all other spellcast events remain unclaimed."
     },
     {
       "id": "changed:UNIT_SPELLCAST_SUCCEEDED",
@@ -20852,13 +20905,13 @@
           "kind": "source",
           "reference": "src/lua_api/spellcast_events.rs",
           "summary": "Shared modeled spellcast payload construction allocates stable simulator cast GUID strings and dispatches four fields.",
-          "source_hash": "77ffc4f0078505454b2634a9957039584047b5957d9569e0edd1c4c65804c833"
+          "source_hash": "0ff7e22975ad664ada699e861c864f9873d963229bccf27cea3e47ea37576bce"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/combat_verbs.rs",
           "summary": "Action spell casts create state-backed identities and dispatch UNIT_SPELLCAST_START through the shared payload helper.",
-          "source_hash": "cc7524cf52f5e1248928dad60e5241ff37549e5e798d2b02211acaa1c901c8c2"
+          "source_hash": "51255eff508747813ec19cc26c42717a99aa21444ed76a105d829e33f3c63c51"
         },
         {
           "kind": "source",
@@ -20876,7 +20929,7 @@
           "kind": "source",
           "reference": "src/iced_app/casting.rs",
           "summary": "Timed completion dispatches UNIT_SPELLCAST_STOP and UNIT_SPELLCAST_SUCCEEDED through the shared payload helper.",
-          "source_hash": "5d323aa2269d2359dfd7255f536ca2695066c52380db55728573560f711dd6e1"
+          "source_hash": "01ef84c8256dcdd8097b4a43b41cd240d1a7e12fc5ce4a3757add2bc2bf6b024"
         },
         {
           "kind": "test",

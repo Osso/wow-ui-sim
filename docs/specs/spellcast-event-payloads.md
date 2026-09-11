@@ -20,7 +20,7 @@ Existing state visibility and event order are preserved, not asserted as indepen
 
 - [x] On the `retail-12-1-0` API epoch and later, `SpellStopCasting()` takes the old cast and clears casting before emitting exactly `(unitTarget, castGUID, spellID, interruptedBy, castBarID)` for `UNIT_SPELLCAST_INTERRUPTED`. Both pinned revisions have this five-field order; only the last field's declared type changes on PTR.
 - [x] Resolve `interruptedBy` with the same player GUID resolver used by `UnitGUID`, not the current target or a fabricated enemy. Self-cancel attribution is a **simulator assumption**, not native actor evidence.
-- [x] Emit paired four-field `UNIT_SPELLCAST_STOP` after interruption, describing the canceled cast. Return exactly `true`; no active cast returns exactly `false` without notifications. Older API epochs retain the prior clear-and-boolean path.
+- [x] Emit paired four-field `UNIT_SPELLCAST_STOP` after interruption, describing the captured canceled cast. Return exactly `true`; no active cast returns exactly `false` without notifications. A callback-created replacement survives the old STOP and later completes once. Older API epochs retain the prior clear-and-boolean path.
 - [x] An interruption or STOP callback can create a new cast. Do not clear it after callbacks; it subsequently completes with its own identity and effects. The canceled cast cannot later succeed or apply its effects.
 
 The chosen `INTERRUPTED` then `STOP` order follows two inspected consumers: `Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua` handles interruption and clears its casting flag, while `Blizzard_UnitFrame/Mainline/UnitFrame.lua` uses STOP (not INTERRUPTED) to clear mana-cost prediction. This is a modeled notification policy, **not native event-order confirmation**. It does not change normal completion ordering or add FAILED, DELAYED, channel, or empower producers. No GCD, cooldown, or unrelated pending-specialization behavior is reset by this slice.
@@ -48,7 +48,7 @@ The chosen `INTERRUPTED` then `STOP` order follows two inspected consumers: `Bli
 
 ### Self-cancel development proof
 
-At `c89d475e1`, the three new interruption tests and nineteen existing producer/stop/keyup regressions passed on each current profile (22 per profile). RED had three missing-notification failures before the producer change. The test completion boundary uses the same extraction, notification, and effect functions as the GUI tick; it advances a deadline or the existing time origin rather than sleeping.
+At `c89d475e1`, recorded by `6278d87a9`, the three new interruption tests and nineteen existing producer/stop/keyup regressions passed on each current profile (22 per profile). RED had three missing-notification failures before the producer change. The test completion boundary uses the same extraction, notification, and effect functions as the GUI tick; it advances a deadline or the existing time origin rather than sleeping.
 
 ```text
 cargo test --lib --test integration --offline --no-default-features --features sound,gui,client-<profile> -- spellcast_interrupted_ spellcast_payload_ key_dispatch::spell_stop_casting combat_verbs::spell_stop_casting c_action_bar_input_probes:: action_button_input_dispatch:: --nocapture

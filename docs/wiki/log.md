@@ -3830,3 +3830,7 @@ Audited commit `14bfc8eb0`. Updated [[prefork-test-harness]] and the prefork spe
 ## [2026-08-28] correction | Audit current PartyFrame portrait texture identity
 
 Audited commit `640aa7fbb` against current retail portrait evidence. Updated [[partyframe-tree]], [[partyframe-portrait-composition]], and their index summaries: player and party portraits expose `GetAtlas() == nil` and numeric `GetTexture() == 237669`; `GetTextureFilePath()` resolves the authored `Interface\\TargetingFrame\\UI-Classes-Circles` path. Removed the stale legacy fallback claim; no code, test, PLAN.md, vendor, cache, or protected-file changes were made.
+
+## [2026-09-11] audit | Credit PTR spellcast self-cancel interruption
+
+`c89d475e1` and proof record `6278d87a9` credit only `UNIT_SPELLCAST_INTERRUPTED` for modeled `SpellStopCasting()` self-cancel. Focused real producer tests cover captured state clear, five fields including resolved player GUID, paired STOP, repeat false/no notifications, no later completion/effect, and interruption/STOP callback replacement casts. `INTERRUPTED`→`STOP` ordering and self attribution remain simulator policy; enemy/native/security semantics and every other unimplemented spellcast event remain unresolved. Totals: 424 best-effort, 25 evidence-required, 0 untriaged. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].

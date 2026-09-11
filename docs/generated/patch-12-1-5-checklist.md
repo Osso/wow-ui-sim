@@ -431,7 +431,7 @@
 431. [evidence-required] `changed:UNIT_SPELLCAST_EMPOWER_UPDATE` — unsafe
 432. [evidence-required] `changed:UNIT_SPELLCAST_FAILED` — unsafe
 433. [evidence-required] `changed:UNIT_SPELLCAST_FAILED_QUIET` — unsafe
-434. [evidence-required] `changed:UNIT_SPELLCAST_INTERRUPTED` — unsafe
+434. [best-effort] `changed:UNIT_SPELLCAST_INTERRUPTED` — behavioral
 435. [best-effort] `changed:UNIT_SPELLCAST_START` — behavioral
 436. [best-effort] `changed:UNIT_SPELLCAST_STOP` — behavioral
 437. [best-effort] `changed:UNIT_SPELLCAST_SUCCEEDED` — behavioral

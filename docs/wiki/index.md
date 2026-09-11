@@ -52,7 +52,7 @@
 
 ## [2026-09-10] audit | Credit PTR spellcast producer payloads
 
-`f474fb2f9` and `c09027a2d` credit `UNIT_SPELLCAST_START`, `UNIT_SPELLCAST_STOP`, and `UNIT_SPELLCAST_SUCCEEDED` as bounded simulator behavior. Focused real producer tests cover action-spell, crafting, and specialization starts plus timed completion with `(unitTarget, synthetic castGUID, spellID, castBarID)`. Synthetic GUID format, identity allocation, event timing/order, security, native semantics, and all other spellcast events remain unclaimed. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
+`f474fb2f9`, `c09027a2d`, `c89d475e1`, and `6278d87a9` credit the bounded simulator spellcast producers. START/STOP/SUCCEEDED cover action-spell, crafting, specialization, and timed completion with `(unitTarget, synthetic castGUID, spellID, castBarID)`; INTERRUPTED covers only SpellStopCasting self-cancel with resolved player GUID, paired STOP, state clear, repeat/no-completion behavior, and replacement-cast reentrancy. INTERRUPTED→STOP ordering and self attribution are model policy, not native/security evidence; other spellcast events remain unclaimed. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
 
 ## [2026-09-10] audit | Credit PTR active LFG dungeon name
 
