@@ -8,7 +8,7 @@
 - [x] Return independent mutable ColorMixin-compatible colors with numeric RGBA channels; modifying a previous record/color must not affect later previews.
 - [x] Supply finite numeric seconds for `duration`; preserve the requested severity and distinguish high-severity deadly presentation.
 - [x] Reject missing, nonnumeric, nonintegral, and out-of-range severities without persistent state changes.
-- [ ] Feed the actual Blizzard warning system's editing path, text/icons/color, and existing `C_Timer.NewTimer` expiration, cancellation, replacement, and reuse lifecycle without modifying vendor code.
+- [x] Feed the actual Blizzard warning system's editing path, text/icons/color, and existing `C_Timer.NewTimer` expiration, cancellation, replacement, and reuse lifecycle without modifying vendor code.
 - [x] Preserve the actual earlier-retail record, legacy severity mapping (including severity `3`), and 30-second duration before/after bootstrap. This is baseline preservation, not pinned-base conformance.
 
 ## Simulator preview policy
@@ -32,11 +32,12 @@ The source establishes fields/types, ColorMixin shape, and severity values—not
 ## Tests asserting this spec
 
 - `tests/encounter_warning_preview.rs`: complete records, independence, validation, retail baseline, and actual Blizzard preview/timer lifecycle. Timer deadlines are advanced through existing simulator timer state; callbacks are not replaced or injected.
-- Focused development proof at `ae642f1e4`: `cargo test --test integration --offline --no-default-features --features sound,gui,client-<profile> encounter_warning_preview:: -- --nocapture`. PTR: three passed, one failed at the real `AnimationGroup:Play()` visibility boundary. Retail: one passed. The later expiration/cancel/reuse assertions remain unexecuted, not passing evidence. No final gates were run.
+- `tests/animation_on_play.rs`: resolved-group callback identity, committed playback state, reentrant stop, repeated-call policy, and `SetPlaying(true)` / `PlaySynced` routing.
+- Development proof at `9ae2d2f98`: grouped integration filters `animation_on_play::`, `encounter_warning_preview::`, `animation_anim::`, `animation_group::`, `animation_group_state::`, `animation_query_lifecycle::`, `animation_set_parent::`, `animation_factory::`, and `animation_factory_templates::`. PTR: 86 passed; retail: 83 passed. The actual warning test executed its expiration/cancel/replacement/reuse assertions successfully. Logs: `/tmp/warning-onplay-9ae2d2f98-{ptr,retail}.log`. No final gates were run.
 
 ## Known gaps (current cycle)
 
-- [ ] Complete the real Blizzard preview display/expiration/cancel/reuse test. Current `AnimationGroup:Play()` changes playback flags without dispatching `OnPlay`; Blizzard's installed handler is what shows the warning view. The regression remains failing rather than calling `Show()` or replacing vendor callbacks. The approved consumer fix dispatches `OnPlay` through the existing state-level script helpers after releasing the simulation-state borrow and updating playback/cache state. The resolved AnimationGroup is `self`, including routed animation calls. Repeated `Play` while already playing does not redispatch; stopped/paused-to-playing transitions do. Reentrant callback state changes must survive the call. This repeated-call policy is modeled, not native/security evidence. Focused proof: `tests/animation_on_play.rs`; warning expiration/cancel/reuse still requires the full consumer test to pass.
+`AnimationGroup:Play()` now dispatches `OnPlay` through existing state-level script helpers after releasing the simulation-state borrow and updating playback/cache state. The resolved AnimationGroup is `self`, including routed animation calls. Repeated `Play` while already playing does not redispatch; stopped/paused-to-playing transitions do. Reentrant callback state changes survive the call. This repeated-call policy is modeled, not native/security evidence. Pause/Stop callback behavior is unchanged.
 - [ ] Native secret/taint behavior, preview content, GUID semantics, exact duration policy, and validation/error compatibility remain unverified.
 
 ## Out of scope
