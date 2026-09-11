@@ -4,14 +4,14 @@ PTR exposes `C_Intl.GetDisplayName(displayLocale)`, `LuaLocaleContext:GetDisplay
 
 ## What it must do
 
-- [ ] Display the global current locale or context's stored locale in the language specified by `displayLocale`, not the reverse. Context updates affect subsequent results without mutating other contexts.
-- [ ] Reuse existing strict UTF-8 and locale parsing, including WoW tag translation; convert both target and display BCP-47 tags for ICU4C.
-- [ ] Return ICU display names for English, French, and German display languages, preserving Unicode text.
-- [ ] Apply registered ICU transliterators through `utrans_openU` and `utrans_transUChars` using explicit UTF-16 lengths. Empty input is valid; embedded NUL and supplementary characters are preserved as input data.
-- [ ] Grow output buffers with checked arithmetic. On overflow, discard partially transformed output and retry from the original UTF-16 input, restoring length and limit.
+- [x] Display the global current locale or context's stored locale in the language specified by `displayLocale`, not the reverse. Context updates affect subsequent results without mutating other contexts.
+- [x] Reuse existing strict UTF-8 and locale parsing, including WoW tag translation; convert both target and display BCP-47 tags for ICU4C.
+- [x] Return ICU display names for English, French, and German display languages, preserving Unicode text.
+- [x] Apply registered ICU transliterators through `utrans_openU` and `utrans_transUChars` using explicit UTF-16 lengths. Empty input is valid; embedded NUL and supplementary characters are preserved as input data.
+- [x] Grow output buffers with checked arithmetic. On overflow, discard partially transformed output and retry from the original UTF-16 input, restoring length and limit.
 - [ ] Close native transliterators and free temporary/output allocations on success, error, and retry paths.
-- [ ] Reject empty/NUL-containing/unavailable transliterator IDs and malformed UTF-8 explicitly; later calls remain usable after failure.
-- [ ] Preserve earlier-retail namespace absence and existing Intl behavior. Add no dependencies or platform provisioning changes.
+- [x] Reject empty/NUL-containing/unavailable transliterator IDs and malformed UTF-8 explicitly; later calls remain usable after failure.
+- [x] Preserve earlier-retail namespace absence and existing Intl behavior. Add no dependencies or platform provisioning changes.
 
 ## Simulator policies and native uncertainty
 
@@ -37,7 +37,7 @@ Display names and registered transliterator rules come from the installed ICU4C 
 
 ## Known gaps (current cycle)
 
-- [ ] Run focused Linux native/Lua RED/GREEN tests and existing Intl regressions.
+- [x] Focused Linux RED/GREEN at `617d79e82`: three missing-API failures before implementation; 37 PTR library/native tests, 12 PTR Lua integration tests, 10 retail library tests, and four retail integration tests passed. Includes three new native tests, three new PTR Lua tests, and one retail absence test.
 - [ ] Windows/macOS execution remains accepted pending; no new platform execution claim.
 - [ ] Native naming, inheritance, transliteration data/version equivalence, error behavior, and security remain unverified.
 
