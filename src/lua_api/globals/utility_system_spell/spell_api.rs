@@ -325,7 +325,7 @@ fn extract_cast_info(state: &mut LuaState, slot: CastSlot) -> LuaResult<Option<C
         end_time: cast.end_time,
         cast_id: cast.cast_id,
         spell_id: cast.spell_id,
-        num_empower_stages: cast.num_empower_stages,
+        num_empower_stages: cast.empower_stage_count() as u32,
         delay_time: cast.delay_time,
     }))
 }
@@ -386,6 +386,8 @@ fn push_channel_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 
 // ── Registration ─────────────────────────────────────────────────────────────
 
 pub(super) fn register_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-1-0")]
+    crate::lua_api::channeling::register_queries(lua)?;
     LuaApiMut::register_function(lua, "UnitHealth", unit_health)?;
     LuaApiMut::register_function(lua, "UnitHealthMax", unit_health_max)?;
     LuaApiMut::register_function(lua, "UnitHealthPercent", unit_health_percent)?;

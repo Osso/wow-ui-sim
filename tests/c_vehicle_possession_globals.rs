@@ -244,7 +244,7 @@ fn unit_channel_info_returns_channel_state() {
             start_time: 100.0,
             end_time: 108.0,
             cast_id: 42,
-            num_empower_stages: 0,
+            empower: None,
             delay_time: 0.0,
         });
     }
@@ -287,7 +287,7 @@ fn unit_channel_info_returns_empower_stage_count() {
             start_time: 100.0,
             end_time: 103.0,
             cast_id: 43,
-            num_empower_stages: 4,
+            empower: Some(wow_ui_sim::lua_api::state::EmpowerTiming { stage_durations: vec![1.0; 4], hold_at_max: 0.0 }),
             delay_time: 0.0,
         });
     }
@@ -310,7 +310,7 @@ fn unit_channel_info_only_for_player() {
             start_time: 0.0,
             end_time: 8.0,
             cast_id: 1,
-            num_empower_stages: 0,
+            empower: None,
             delay_time: 0.0,
         });
     }

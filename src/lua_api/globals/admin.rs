@@ -84,6 +84,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = TableBuilder::new(lua.state_mut());
     let builder = register_player(builder)?;
     let builder = register_combat_casting(builder)?;
+    #[cfg(feature = "retail-12-1-0")]
+    let builder = register_channel_inputs(builder)?;
     let builder = register_targeting_party(builder)?;
     let builder = register_world(builder)?;
     let builder = register_collections_pvp(builder)?;
@@ -130,6 +132,16 @@ fn register_combat_casting(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetFlying", set_flying)?
         .set_function("SetFalling", set_falling)?
         .set_function("SetSwimming", set_swimming)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn register_channel_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
+    use crate::lua_api::channeling;
+    b.set_function("StartChannel", channeling::start_channel)?
+        .set_function("StartEmpower", channeling::start_empower)?
+        .set_function("UpdateChannel", channeling::update_channel)?
+        .set_function("UpdateEmpower", channeling::update_empower)?
+        .set_function("StopChannel", channeling::stop_channel)
 }
 
 fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
@@ -497,9 +509,12 @@ fn set_casting(state: &mut LuaState) -> LuaResult<u32> {
         start_time: now,
         end_time: now + duration,
         cast_id,
-        num_empower_stages: 0,
+        empower: None,
         delay_time: 0.0,
     });
+    drop(st);
+    #[cfg(feature = "retail-12-1-0")]
+    crate::lua_api::channeling::cancel_for_cast(state)?;
     Ok(0)
 }
 

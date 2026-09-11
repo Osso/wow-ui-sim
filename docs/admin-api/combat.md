@@ -56,6 +56,15 @@ A_Admin.StopCasting()
 print(UnitCastingInfo("player"))    -- nil
 ```
 
+### Channel and empower inputs (retail 12.1+)
+
+- `A_Admin.StartChannel(spellID, name, icon, durationSeconds)` starts a channel.
+- `A_Admin.StartEmpower(spellID, name, icon, stageSeconds, holdSeconds)` starts empower from a dense array of positive stage durations.
+- `A_Admin.UpdateChannel(durationSeconds)` / `UpdateEmpower(stageSeconds, holdSeconds)` replace total timing from the original start and return whether the matching mode was active.
+- `A_Admin.StopChannel(complete=false)` cancels either mode, or models successful early release with `true`; returns whether one existed.
+
+All inputs use **seconds**. `UnitChannelInfo` endpoints and empower stage/hold queries use **milliseconds**. New starts replace the old active mode; callbacks can replace the incoming operation. Natural completion occurs at the channel deadline, including empower hold, on OnUpdate. These are simulator inputs—not native spell data or damage ticks. See [channel/empower contract](../specs/channel-empower-lifecycles.md) for payloads and attribution assumptions.
+
 ### A_Admin.SetGCD(duration)
 
 Triggers the global cooldown.

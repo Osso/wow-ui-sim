@@ -158,7 +158,7 @@ pub(crate) fn existing_guid_for_unit(
     (guid != UNKNOWN_CREATURE_GUID && !guid.is_empty()).then_some(guid)
 }
 
-pub(super) fn guid_for_unit(sim: &crate::lua_api::state::SimState, unit: &str) -> String {
+pub(crate) fn guid_for_unit(sim: &crate::lua_api::state::SimState, unit: &str) -> String {
     match unit {
         "player" => SEEDED_LOCAL_CHARACTER_GUID.to_string(),
         "target" => target_guid(sim),

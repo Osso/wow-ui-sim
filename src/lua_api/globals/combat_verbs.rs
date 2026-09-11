@@ -90,9 +90,15 @@ fn start_cast(
         start_time: now,
         end_time: now + duration,
         cast_id,
-        num_empower_stages: 0,
+        empower: None,
         delay_time: 0.0,
     });
+    drop(st);
+    #[cfg(feature = "retail-12-1-0")]
+    if let Err(error) = crate::lua_api::channeling::cancel_for_cast(state) {
+        tracing::error!(%error, "failed to cancel replaced channel");
+        return None;
+    }
     Some(cast_id)
 }
 
@@ -467,7 +473,12 @@ fn spell_stop_casting(state: &mut LuaState) -> LuaResult<u32> {
             &interrupted_by,
         );
     }
-    state.push(Val::Bool(cast.is_some()));
+    let mut stopped = cast.is_some();
+    #[cfg(feature = "retail-12-1-0")]
+    if !stopped {
+        stopped = crate::lua_api::channeling::stop(state, false)?;
+    }
+    state.push(Val::Bool(stopped));
     Ok(1)
 }
 

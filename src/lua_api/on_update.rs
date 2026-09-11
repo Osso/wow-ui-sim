@@ -1,7 +1,7 @@
 //! rilua-backed OnUpdate bridge.
 
 use super::state::SimState;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "retail-12-1-0")]
 use rilua::LuaApiMut;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -39,6 +39,9 @@ pub(crate) fn fire(
     // collection work into a single gc_step at the end of the tick
     // instead of interleaving mid-dispatch.
     env.gc_stop();
+
+    #[cfg(feature = "retail-12-1-0")]
+    super::channeling::tick(env.rilua_mut().state_mut())?;
 
     #[cfg(feature = "retail-12-1-5")]
     crate::c_api::c_encounter_timeline::begin_tick(env.rilua_mut().state_mut(), elapsed)?;

@@ -24,6 +24,20 @@ pub(crate) fn player_cast_args(
 }
 
 pub(crate) fn fire_player_cast_start(state: &mut LuaState, cast_id: u32, spell_id: u32) {
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        // Channel-stop callbacks may replace the newly installed ordinary cast.
+        crate::lua_api::channeling::cancel_for_cast(state)
+            .expect("registered cast producer has simulator state");
+        let current = super::methods::borrow_state(state)
+            .expect("registered cast producer has simulator state")
+            .casting
+            .as_ref()
+            .is_some_and(|cast| cast.cast_id == cast_id);
+        if !current {
+            return;
+        }
+    }
     fire_player_cast_event(state, "UNIT_SPELLCAST_START", cast_id, spell_id);
 }
 

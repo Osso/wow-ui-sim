@@ -69,7 +69,10 @@ fn cast_bar_id_channel_uses_allocated_identity_across_updates() {
         let mut state = env.state().borrow_mut();
         let channel = state.channeling.as_mut().unwrap();
         channel.end_time += 0.75;
-        channel.num_empower_stages = 4;
+        channel.empower = Some(wow_ui_sim::lua_api::state::EmpowerTiming {
+            stage_durations: vec![1.0; 4],
+            hold_at_max: 0.0,
+        });
     }
     assert_tuple(&env, true, channel_id, 4);
     let casting_id = start_cast(&env);

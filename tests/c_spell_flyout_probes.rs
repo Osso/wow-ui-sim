@@ -119,7 +119,7 @@ fn is_current_spell_matches_casting_state() {
         start_time: 0.0,
         end_time: 1.0,
         cast_id: 1,
-        num_empower_stages: 0,
+        empower: None,
         delay_time: 0.0,
     });
     let matches: bool = env.eval("return C_Spell.IsCurrentSpell(133)").unwrap();
@@ -140,7 +140,7 @@ fn flyout_update_state_branches_on_current_spell() {
         start_time: 0.0,
         end_time: 1.0,
         cast_id: 1,
-        num_empower_stages: 0,
+        empower: None,
         delay_time: 0.0,
     });
     let (checked_match, checked_other): (bool, bool) = env

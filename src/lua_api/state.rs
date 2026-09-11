@@ -360,8 +360,8 @@ macro_rules! build_empty_sim_state {
 pub use super::game_data::AuraInfo;
 pub use super::game_data::SpellCooldownState;
 pub use super::game_data::{
-    CLASS_LABELS, CastingState, PartyMember, RACE_DATA, ROT_DAMAGE_LEVELS, TargetInfo, XP_LEVELS,
-    tick_party_health,
+    CLASS_LABELS, CastingState, EmpowerTiming, PartyMember, RACE_DATA, ROT_DAMAGE_LEVELS,
+    TargetInfo, XP_LEVELS, tick_party_health,
 };
 use super::game_data::{
     default_action_bars, default_allied_races, default_major_faction_renown_levels,
