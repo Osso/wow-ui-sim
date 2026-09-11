@@ -82,6 +82,10 @@ fn process_element(
     ctx: &AddonContext,
     timing: &mut LoadTiming,
 ) -> Result<usize, LoadError> {
+    if let Some(animation) = top_level_animation(element) {
+        register_virtual_animation(animation);
+        return Ok(0);
+    }
     match element {
         XmlElement::Script(s) | XmlElement::ScriptLower(s) => {
             process_script(env, s, xml_dir, ctx, timing)
@@ -112,6 +116,18 @@ fn process_element(
             register_virtual_anim_group(ag);
             Ok(0)
         }
+        XmlElement::Binding(_) | XmlElement::ModifiedClick(_) => Ok(0),
+        _ => {
+            let frame_start = Instant::now();
+            process_frame_element(env, element, ctx, timing)?;
+            timing.xml_frame_create_time += frame_start.elapsed();
+            Ok(0)
+        }
+    }
+}
+
+fn top_level_animation(element: &XmlElement) -> Option<&crate::xml::AnimationXml> {
+    match element {
         XmlElement::Animation(animation)
         | XmlElement::Alpha(animation)
         | XmlElement::Translation(animation)
@@ -122,17 +138,8 @@ fn process_element(
         | XmlElement::Path(animation)
         | XmlElement::FlipBook(animation)
         | XmlElement::VertexColor(animation)
-        | XmlElement::TextureCoordTranslation(animation) => {
-            register_virtual_animation(animation);
-            Ok(0)
-        }
-        XmlElement::Binding(_) | XmlElement::ModifiedClick(_) => Ok(0),
-        _ => {
-            let frame_start = Instant::now();
-            process_frame_element(env, element, ctx, timing)?;
-            timing.xml_frame_create_time += frame_start.elapsed();
-            Ok(0)
-        }
+        | XmlElement::TextureCoordTranslation(animation) => Some(animation),
+        _ => None,
     }
 }
 
