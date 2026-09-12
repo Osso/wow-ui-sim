@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Credit bounded patch 12.1 binding and removal policies
+
+`37c599ca6` records three behavioral, simulator-only credits in the 12.1 behavior register: userdata `DurationTextBinding` retention/copy policy, one post-world-entry strict-removal boundary, and idempotent wrapper retirement. Current behavior totals are 36 best-effort and 18 evidence-required. Native object layout/finalization/GC, native removal timing, private/secret behavior, and security remain unverified; focused development proof still requires parent verification. See [DurationTextBinding](../specs/duration-text-binding.md), [strict-removal timing](../specs/strict-removal-timing.md), and [[patch-12-1-api-audit]].
+
 ## [2026-09-12] audit | Record PTR remaining structure controls
 
 [Ptr125RemainingProbe](../addons/Ptr125RemainingProbe/README.md) captured non-secret region and timed-signal controls on PTR `12.1.5.69594`; the exact artifact is [ptr-12-1-5-remaining-structures.lua](../baselines/ptr-12-1-5-remaining-structures.lua). Positional region calls and the two-number `GetNextSignal()` tuple were observed; candidate options tables and public documentation-structure globals were not. This is bounded observation, not a public-structure contract or audit upgrade: `439 / 10` remains unchanged. See [[patch-12-1-5-api-audit]].

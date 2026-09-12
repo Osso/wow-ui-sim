@@ -6,6 +6,8 @@ Patch 12.1 API surface work in wow-ui-sim is split between compatible bridges th
 
 The per-item machine SSOTs are `data/patch-api/12.1-framexml.json` for the 432 FrameXML symbol occurrences and `data/patch-api/12.1-behaviors.json` for 54 independently testable non-FrameXML behavior boundaries. [[patch-api-audit-manifest]] documents validation and checklist generation. Draft `untriaged` resolutions remain completion blockers and are not approved exceptions.
 
+As of September 12, 2026, the behavior register has 36 best-effort and 18 evidence-required rows. Commit `37c599ca6` credits three simulator policies: userdata DurationTextBinding representation/retention, one post-world-entry strict-removal boundary, and idempotent wrapper retirement. The focused development proofs are not native timing, finalization, ownership, or security conformance. See [DurationTextBinding](../../specs/duration-text-binding.md) and [strict-removal timing](../../specs/strict-removal-timing.md).
+
 ### Completed compatible bridge work
 
 The 12.1 compatibility work is currently captured by these commits:
@@ -17,7 +19,7 @@ The 12.1 compatibility work is currently captured by these commits:
 - `ed34635c5` — moved strict 12.1 removals after startup so Blizzard UI can still load current EditMode code.
 - `16b7d85d6` — modeled 12.1 forbidden aspect inheritance for compatible frame/object behavior.
 - `4b5fc502d` — bridged remaining inert social, Discord, Battle.net title-friend, encounter-journal, and housing/blueprint probes.
-- `85c2b11d3` — added 12.1 `DurationTextBinding` color-curve compatibility methods on the table returned by `C_DurationUtil.CreateDurationTextBinding`.
+- `85c2b11d3` — added 12.1 `DurationTextBinding` color-curve compatibility methods to the then table-backed bridge; current bindings are userdata handles.
 - `15f4ecc18` — modeled 12.1 Battle.net title-friend custom names/tags as best-effort per-friend metadata on `SimState.bnet_friends`.
 - `1211024ce` — modeled 12.1 Encounter Journal difficulty helpers from generated instance data (`is_raid` → base/valid difficulty guesses).
 - `aa889bd7f` — modeled `C_Discord.IsEnabled` from the existing `discordClientEnabled` CVar while leaving the rest of Discord as inert service placeholders.
@@ -117,14 +119,14 @@ A broad approval recorded on 2026-07-14 is superseded: the itemized checklist wa
 | Forbidden Aspects enforcement | **Best-effort:** inheritance plus query/add APIs are modeled and tested. | Runtime enforcement for `UntrustedScriptExecution`, `UntrustedLayoutScriptExecution`, `EventRegistrations`, `AlwaysPropagateInput`, `ScriptedInput`, and `QueryFocus` is unknown. | **Evidence-required: unsafe.** Await authoritative/live evidence. |
 | AuraContainer / AuraButton / ManagedAuraContainer | **Best-effort:** names, compatible creation, assignment/ownership, HELPFUL/HARMFUL/PLAYER filtering, configured comparator ordering, public/private/edit-mode partition selection, acquire-release-reacquire lifecycle, and tooltip filter/instance/leave-hide binding are covered by focused compatibility tests. | Secret exposure, taint, and error behavior remain unknown. | **Evidence-required: unsafe.** Await authoritative/live evidence. |
 | Texture radial progress | **Best-effort:** created Textures expose the radial method family; methods dispatch on Texture receivers; defaults, setters/getters, visual mode, and Clear reset are modeled as Texture-backed state. | Exact retail clamping and visual rendering remain unproven. | No exception requested. |
-| DurationTextBinding object fidelity | **Best-effort:** compatibility-table methods and 12.1 color-curve methods are implemented. | Exact Blizzard representation, metatable, GC/finalization, ownership, and invalidation remain unknown. | **Evidence-required: unsafe.** Await authoritative/live evidence. |
+| DurationTextBinding object fidelity | **Best-effort:** modeled userdata handles reject raw table access, retain identity through collection, and keep copied configuration independent while external resources remain shared. | Native metatable/finalization/ownership/invalidation, GC timing, and secrecy equivalence remain unknown. | Bounded simulator policy; see [DurationTextBinding](../../specs/duration-text-binding.md). |
 | Changed structure payloads with real service data | **Best-effort:** local state backs Battle.net, invites, Encounter Journal, Discord, housing, PlayerChoice, and `C_DelvesUI` TieredEntrance rows/rewards. | Exact Discord/housing/cooldown/pet/LFG/player-choice payloads remain service-dependent; inaccessible and secret private-aura payload fidelity is unknown. | **Evidence-required for PrivateAura.Payloads: unsafe.** Await authoritative/live evidence. |
-| Deprecated wrappers vs strict-removal timing | **Best-effort:** strict removals are hidden from addons after startup while preserving current Blizzard load compatibility. | Exact pre-startup visibility and per-wrapper retirement timing remain unknown and unsafe to move. | **Evidence-required: unsafe.** Await authoritative/live evidence. |
+| Deprecated wrappers vs strict-removal timing | **Best-effort:** modeled compatibility publications survive loading and first world-entry handlers, then retire once before later startup events; repeated cleanup preserves wrapper identity. | Native pre-startup visibility, per-wrapper timing, universal initial publication, and private/secret behavior remain unknown. | Bounded simulator policy; see [strict-removal timing](../../specs/strict-removal-timing.md). |
 | FrameXML symbol snapshot | **Complete:** [[patch-12-1-framexml-symbol-inventory]] contains 1 implemented, 431 best-effort, 0 exception-requested, and 0 untriaged occurrences. | Some rows deliberately document vendor defects or conservative source/runtime absence rather than exact behavioral fidelity. | No blanket exception requested or approved. |
 
 ### Practical next step
 
-The 21 unsafe rows are item-specific evidence-required rows with repository evidence and no approval, commit, or focused-test requirement. They remain open pending authoritative/live evidence. Do not guess security, taint, error-shape, private-data, or timing behavior, and do not treat approval as a substitute for correct behavior.
+The 18 unsafe rows are item-specific evidence-required rows with repository evidence and no approval. They remain open pending authoritative/live evidence. Do not guess security, taint, error-shape, private-data, or timing behavior, and do not treat approval as a substitute for correct behavior.
 
 Five live-client probes now provide the next evidence path:
 
@@ -134,14 +136,18 @@ Five live-client probes now provide the next evidence path:
 - [ForbiddenAspectsProbe](../../addons/ForbiddenAspectsProbe/README.md) distinguishes mask storage, registration, invocation, and dispatch behavior for all six forbidden-aspect restrictions, but cannot synthesize real input or secure-caller behavior.
 - [StrictRemovalTimingProbe](../../addons/StrictRemovalTimingProbe/README.md) collects addon-visible lifecycle timing for removed globals, enums, and CVar accessors across bootstrap, normal-file, addon-load, SavedVariables, login, world-entry, and manual phases.
 
-The probes are evidence collectors only. Their presence does not resolve, reclassify, or close any corresponding 12.1 behavior row. No row may be closed before raw retail/PTR SavedVariables captures are obtained and interpreted.
+The probes are evidence collectors only. They do not establish native conformance or resolve an evidence-required row without raw retail/PTR SavedVariables capture and interpretation. Bounded simulator-policy credits remain separately documented in their specs and manifest evidence.
 
 ## Sources
 
 - `/tmp/warcraft_patch_12_1_api_changes.txt` — source patch-note/API-change list used for the audit.
 - `data/patch-api/sources/12.1-behaviors.json` — normalized broader behavior boundaries and candidate disposition.
 - [[patch-12-1-behavior-inventory]] — itemized broader behavior machine state and candidate classification.
-- `src/loader/tests/wow_api_globals/startup_globals.rs` — regression coverage for safe bridges and strict removals.
+- `src/loader/tests/wow_api_globals/startup_globals.rs` — retained DurationTextBinding identity/lifetime and safe-bridge regressions.
+- `tests/duration_text_binding_copy.rs` — modeled userdata raw-access, copy, and collection-retention proof.
+- `patch-tests/patch_12_1/strict_removal_timing.rs` — modeled first-world-entry retirement and idempotence proof.
+- [DurationTextBinding](../../specs/duration-text-binding.md) — bounded userdata representation policy.
+- [strict-removal timing](../../specs/strict-removal-timing.md) — bounded retirement-boundary policy.
 - `src/lua_api/globals/strings/mod.rs` — version-gated registration of the live GlobalStrings slice.
 - `src/lua_api/globals/strings/string_data/more_strings.rs` — 61-string retail 12.1 compatibility table: 45 existing strings, including 13 housing Settings values pinned by `cc02aa287`, plus 16 Social UI compatibility labels that are not probe-exact.
 - `src/lua_api/globals/enum_data/addon_system.rs` — retail-12.1-gated Social UI, Cooldown Viewer, and Tiered Entrance enum contracts.
