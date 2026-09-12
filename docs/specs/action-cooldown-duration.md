@@ -18,7 +18,7 @@
 
 - `src/c_api/c_action_bar.rs`: shared action cooldown lookup and duration-object producer.
 - `src/lua_api/globals/action_bar_api.rs`: existing namespace registration owner and spell/GCD interval selection.
-- `src/lua_api/globals/lua_duration_object.rs`: duration factory and registered setters/queries.
+- `src/lua_api/globals/lua_duration_object.rs`: shared timed-duration construction and registered setters/queries.
 
 ## Tests asserting this spec
 
