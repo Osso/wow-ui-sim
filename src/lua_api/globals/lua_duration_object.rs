@@ -334,7 +334,7 @@ fn duration_tostring(state: &mut LuaState) -> LuaResult<u32> {
 
 // ── Method bodies ─────────────────────────────────────────────────────────────
 
-fn require_duration(state: &LuaState, index: i32) -> LuaResult<Val> {
+fn require_duration(state: &mut LuaState, index: i32) -> LuaResult<Val> {
     let object = crate::lua_bridge::stack_val(state, index);
     let expected = registry_get(state, MT_KEY);
     if let (Val::Table(reference), Val::Table(metatable)) = (object, expected) {
