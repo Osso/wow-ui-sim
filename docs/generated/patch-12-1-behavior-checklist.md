@@ -27,7 +27,7 @@
 27. [best-effort] `changed:Patch12_1.TextureRadialProgress.StateBehavior` — behavioral
 28. [best-effort] `changed:Patch12_1.DurationTextBinding.Lifetime` — behavioral
 29. [best-effort] `changed:Patch12_1.DurationTextBinding.StableIdentity` — behavioral
-30. [evidence-required] `changed:Patch12_1.DurationTextBinding.RepresentationFidelity` — unsafe
+30. [best-effort] `changed:Patch12_1.DurationTextBinding.RepresentationFidelity` — behavioral
 31. [best-effort] `changed:Patch12_1.DurationTextBinding.Formatter` — behavioral
 32. [best-effort] `changed:Patch12_1.DurationTextBinding.ColorCurve` — behavioral
 33. [best-effort] `changed:Patch12_1.DurationTextBinding.FontStringUpdate` — behavioral
@@ -48,7 +48,7 @@
 48. [best-effort] `changed:Patch12_1.Service.PlayerChoice.Payloads` — behavioral
 49. [best-effort] `changed:Patch12_1.Service.TieredEntrance.Payloads` — behavioral
 50. [evidence-required] `changed:Patch12_1.Service.PrivateAura.Payloads` — unsafe
-51. [evidence-required] `changed:Patch12_1.StrictRemoval.PreStartupVisibility` — unsafe
+51. [best-effort] `changed:Patch12_1.StrictRemoval.PreStartupVisibility` — behavioral
 52. [best-effort] `changed:Patch12_1.StrictRemoval.BlizzardLoadCompatibility` — behavioral
 53. [best-effort] `changed:Patch12_1.StrictRemoval.PostStartupHiding` — behavioral
-54. [evidence-required] `changed:Patch12_1.StrictRemoval.WrapperTiming` — unsafe
+54. [best-effort] `changed:Patch12_1.StrictRemoval.WrapperTiming` — behavioral

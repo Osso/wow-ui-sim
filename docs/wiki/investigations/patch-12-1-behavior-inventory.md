@@ -5,10 +5,10 @@ Non-FrameXML behavioral fidelity register. Family names group rows; status and e
 - **Source:** `data/patch-api/sources/12.1-behaviors.json`
 - **Source SHA-256:** `9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f`
 - **Target:** PTR build `12.1.0`
-- **Rows:** 54 changed behavioral boundaries — 0 implemented, 33 best-effort, 21 evidence-required, 0 exception-requested, 0 untriaged
-- **Resolution split:** 33 behavioral, 21 unsafe; no exception rows
+- **Rows:** 54 changed behavioral boundaries — 0 implemented, 36 best-effort, 18 evidence-required, 0 exception-requested, 0 untriaged
+- **Resolution split:** 36 behavioral, 18 unsafe; no exception rows
 
-The `StrictRemovalTimingProbe` live-evidence addon from commit `12ed1355b` does not change these totals or any row status. It collects addon-visible lifecycle timing for the strict-removal rows; the existing `ForbiddenAspectsProbe` collects addon-tainted evidence for the six `ForbiddenAspects` restrictions. Neither probe resolves or closes a row before raw retail/PTR SavedVariables captures are obtained and interpreted.
+The three new best-effort credits use simulator tests, not native captures: [duration-binding representation](../../specs/duration-text-binding.md) and [strict-removal timing](../../specs/strict-removal-timing.md). The frozen source register retains the original fidelity objectives; bounded modeled policies do not establish those objectives' native equivalence. Native probe preparation alone changes no disposition.
 
 | Symbol | Machine Status | Candidate | Family | Direction | Contract |
 |---|---|---|---|---|---|
@@ -40,8 +40,8 @@ The `StrictRemovalTimingProbe` live-evidence addon from commit `12ed1355b` does 
 | `Patch12_1.TextureRadialProgress.MethodDispatch` | best-effort  | behavioral  | Texture radial progress | changed | Radial progress methods dispatch on a Texture receiver. Texture method availability and value storage are tested; exact retail clamping and visual rendering remain best-effort. |
 | `Patch12_1.TextureRadialProgress.StateBehavior` | best-effort  | behavioral  | Texture radial progress | changed | Texture-backed radial progress defaults, setters/getters, visual mode, and Clear reset are modeled. Texture method availability and value storage are tested; exact retail clamping and visual rendering remain best-effort. |
 | `Patch12_1.DurationTextBinding.Lifetime` | best-effort  | behavioral  | DurationTextBinding | changed | A binding remains usable while retained by Lua references; exact Blizzard ownership and invalidation semantics remain unproven. |
-| `Patch12_1.DurationTextBinding.StableIdentity` | best-effort  | behavioral  | DurationTextBinding | changed | Factory calls return distinct Lua tables with stable object identity and method lookup while referenced. |
-| `Patch12_1.DurationTextBinding.RepresentationFidelity` | evidence-required  | unsafe  | DurationTextBinding | changed | The binding type, metatable, userdata representation, finalization, and ownership match Blizzard exactly. |
+| `Patch12_1.DurationTextBinding.StableIdentity` | best-effort  | behavioral  | DurationTextBinding | changed | Factory calls return distinct userdata handles with stable identity while referenced; this corrects the earlier table-backed model description. |
+| `Patch12_1.DurationTextBinding.RepresentationFidelity` | best-effort  | behavioral  | DurationTextBinding | changed | Modeled userdata identity, raw table-access rejection, copied configuration, and reference retention through collection; exact native metatable, finalization, ownership/invalidation, and GC equivalence remain unproven. |
 | `Patch12_1.DurationTextBinding.Formatter` | best-effort  | behavioral  | DurationTextBinding | changed | Duration formatting and interpolation use the documented compatible contract. |
 | `Patch12_1.DurationTextBinding.ColorCurve` | best-effort  | behavioral  | DurationTextBinding | changed | Color-curve methods preserve compatible binding state. |
 | `Patch12_1.DurationTextBinding.FontStringUpdate` | best-effort  | behavioral  | DurationTextBinding | changed | The binding updates a FontString through a documented compatible lifetime and update contract. |
@@ -62,10 +62,10 @@ The `StrictRemovalTimingProbe` live-evidence addon from commit `12ed1355b` does 
 | `Patch12_1.Service.PlayerChoice.Payloads` | best-effort  | behavioral  | Service payloads | changed | Player-choice structures, options, and state payloads follow a documented compatibility contract. |
 | `Patch12_1.Service.TieredEntrance.Payloads` | best-effort  | behavioral  | Service payloads | changed | C_DelvesUI TieredEntranceTierInfo rows expose tier, suggestedILvl, unlocked, tierDescription, modifierUIWidgetSetID, lockedReason, and rewards with id, quantity, rewardType, and context. Deterministic rows/rewards are modeled; live reward IDs, quantities, unlock timing, eligibility, and economics are not claimed. |
 | `Patch12_1.Service.PrivateAura.Payloads` | evidence-required  | unsafe  | Service payloads | changed | Private-aura payloads preserve inaccessible and secret structural boundaries. |
-| `Patch12_1.StrictRemoval.PreStartupVisibility` | evidence-required  | unsafe  | Strict removal timing | changed | Removed APIs are absent from addon-facing globals before Blizzard startup completes. |
+| `Patch12_1.StrictRemoval.PreStartupVisibility` | best-effort  | behavioral  | Strict removal timing | changed | Selected compatibility publications remain through all first world-entry handlers, then retire before later startup events; this simulator boundary is assumed, not native timing. |
 | `Patch12_1.StrictRemoval.BlizzardLoadCompatibility` | best-effort  | behavioral  | Strict removal timing | changed | Pinned Blizzard UI loads while required removed symbols remain temporarily available. |
 | `Patch12_1.StrictRemoval.PostStartupHiding` | best-effort  | behavioral  | Strict removal timing | changed | Removed symbols are hidden from addon-facing checks after startup. |
-| `Patch12_1.StrictRemoval.WrapperTiming` | evidence-required  | unsafe  | Strict removal timing | changed | Deprecated wrappers remain available exactly until their required Blizzard callers finish. |
+| `Patch12_1.StrictRemoval.WrapperTiming` | best-effort  | behavioral  | Strict removal timing | changed | CVar wrappers install once at the modeled retirement boundary and remain identical through repeated cleanup/world entry; native per-wrapper timing is unverified. |
 
 ## Pending live evidence
 
@@ -77,18 +77,16 @@ Open behavior gaps:
 - `Patch12_1.ForbiddenAspects.AlwaysPropagateInput`
 - `Patch12_1.ForbiddenAspects.ScriptedInput`
 - `Patch12_1.ForbiddenAspects.QueryFocus`
-- `Patch12_1.StrictRemoval.PreStartupVisibility`
-- `Patch12_1.StrictRemoval.WrapperTiming`
 
-Additional strict-removal captures can refine the already best-effort `BlizzardLoadCompatibility` and `PostStartupHiding` boundaries without changing their current status.
+Native strict-removal and duration-binding captures can refine the bounded simulator policies; their absence does not turn best-effort tests into native conformance.
 
 Probe installation, execution, or manual observations are not evidence captures and must not be used to resolve or close rows; retain the SavedVariables files first.
 
 ## Machine state totals
 
 - implemented: 0
-- best-effort: 33
-- evidence-required: 21
+- best-effort: 36
+- evidence-required: 18
 - exception-requested: 0
 - untriaged: 0
 

@@ -669,7 +669,7 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity",
-          "summary": "Factory calls return distinct Lua tables whose identity and methods remain stable while referenced.",
+          "summary": "Factory calls return distinct userdata handles whose identity and methods remain stable while referenced; native ownership and finalization remain unverified.",
           "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd"
         }
       ],
@@ -677,31 +677,45 @@
         "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity"
       ],
       "assertions": [],
-      "commit": "27f8fb213",
+      "commit": "d7bcd3589",
       "approval_id": null,
-      "notes": "Factory calls return distinct Lua tables whose identity and methods remain stable while referenced."
+      "notes": "Factory calls return distinct userdata handles whose identity and methods remain stable while referenced; native ownership and finalization remain unverified."
     },
     {
       "id": "changed:Patch12_1.DurationTextBinding.RepresentationFidelity",
       "symbol": "Patch12_1.DurationTextBinding.RepresentationFidelity",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "DurationTextBinding",
       "load_addon": null,
       "evidence": [
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Compatible table behavior exists; exact Blizzard representation, metatable, GC/finalization, ownership, and invalidation are unknown.",
-          "source_hash": "f20fe5f9637bc087a79e58ed417246efa74d5bbfced7527b4fde070f1dfb4c45"
+          "reference": "src/c_api/duration_text_binding.rs",
+          "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
+          "source_hash": "37a12dd795e115697f5edf1e917b6e9cc27c244134d21d6ae078efbadd3e6406"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/duration-text-binding.md",
+          "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
+          "source_hash": "5bae9fdb10ac13f82d90a791c6aa2e82868c53c24af37cb155e3cb57ec94cf70"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_text_binding_copy.rs::duration_binding_userdata_copy_retains_resources_through_collection",
+          "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
+          "source_hash": "86f93656b6d3fbd1017f7791f390406b18640503022b7af6b3242f6ff036c5a3"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_text_binding_copy.rs::duration_binding_userdata_copy_retains_resources_through_collection"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "9a8189612",
       "approval_id": null,
-      "notes": "Compatible table behavior exists; exact Blizzard representation, metatable, GC/finalization, ownership, and invalidation are unknown."
+      "notes": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified."
     },
     {
       "id": "changed:Patch12_1.DurationTextBinding.Formatter",
@@ -1192,23 +1206,43 @@
       "id": "changed:Patch12_1.StrictRemoval.PreStartupVisibility",
       "symbol": "Patch12_1.StrictRemoval.PreStartupVisibility",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "Strict removal timing",
       "load_addon": null,
       "evidence": [
         {
+          "kind": "test",
+          "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "source_hash": "902af53ad54fd1670a36288dacea270519878fc7bc2843ac9b879769f756bb41"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/strict-removal-timing.md",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "source_hash": "75086bde97c5d5e80c857dd852e3c7da2ced41d451ce0716068ed36f274c9557"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_events.rs",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e"
+        },
+        {
           "kind": "source",
           "reference": "src/ptr/strict_removals.lua",
-          "summary": "The safe boundary is after Blizzard loading/startup; exact earlier visibility timing is unknown and unsafe to move.",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
           "source_hash": "58309e5384154e54c2c5f74727033cd85707dd3b744d45aac0b5c3cd14e60acd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "960877d1c",
       "approval_id": null,
-      "notes": "The safe boundary is after Blizzard loading/startup; exact earlier visibility timing is unknown and unsafe to move."
+      "notes": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing."
     },
     {
       "id": "changed:Patch12_1.StrictRemoval.BlizzardLoadCompatibility",
@@ -1262,23 +1296,43 @@
       "id": "changed:Patch12_1.StrictRemoval.WrapperTiming",
       "symbol": "Patch12_1.StrictRemoval.WrapperTiming",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "Strict removal timing",
       "load_addon": null,
       "evidence": [
         {
+          "kind": "test",
+          "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "source_hash": "902af53ad54fd1670a36288dacea270519878fc7bc2843ac9b879769f756bb41"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/strict-removal-timing.md",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "source_hash": "75086bde97c5d5e80c857dd852e3c7da2ced41d451ce0716068ed36f274c9557"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/env_events.rs",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "source_hash": "0f2001a220f7308a8c494e1adafcfde740463bdc5f4f3db9ab80cc3528ba7d6e"
+        },
+        {
           "kind": "source",
           "reference": "src/ptr/strict_removals.lua",
-          "summary": "The safe boundary is after Blizzard loading/startup; exact per-wrapper retirement timing is unknown and unsafe to move.",
+          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
           "source_hash": "58309e5384154e54c2c5f74727033cd85707dd3b744d45aac0b5c3cd14e60acd"
         }
       ],
-      "tests": [],
+      "tests": [
+        "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "960877d1c",
       "approval_id": null,
-      "notes": "The safe boundary is after Blizzard loading/startup; exact per-wrapper retirement timing is unknown and unsafe to move."
+      "notes": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing."
     }
   ]
 }
