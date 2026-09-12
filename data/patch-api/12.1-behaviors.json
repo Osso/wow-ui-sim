@@ -4,7 +4,7 @@
   "target": {
     "flavor": "ptr",
     "build": "12.1.0",
-    "cache_manifest": "data/blizzard-ui-files/ptr.txt",
+    "cache_manifest": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
     "cache_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
   },
   "source": {

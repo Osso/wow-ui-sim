@@ -2,6 +2,10 @@
 
 Patch 12.1 API surface work in wow-ui-sim is split between compatible bridges that can be safely modeled as inert/additive simulator behavior and paused items that require exact Blizzard PTR observations before implementation.
 
+## Historical source input
+
+Both 12.1 manifests reference `data/patch-api/sources/12.1.0-ptr-cache-manifest.txt`, copied byte-for-byte from `caf5223635d357b9f08e0e77a5cba6c7365bf807:data/blizzard-ui-files/ptr.txt`. Its original SHA-256 remains `fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66`. The current runtime `ptr.txt` advances independently; this snapshot preserves audit provenance, not an installed historical runtime or native execution proof.
+
 ## Content
 
 The per-item machine SSOTs are `data/patch-api/12.1-framexml.json` for the 432 FrameXML symbol occurrences and `data/patch-api/12.1-behaviors.json` for 54 independently testable non-FrameXML behavior boundaries. [[patch-api-audit-manifest]] documents validation and checklist generation. Draft `untriaged` resolutions remain completion blockers and are not approved exceptions.
