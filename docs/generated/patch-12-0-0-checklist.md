@@ -190,8 +190,8 @@
 190. [evidence-required] `added:C_CreatureInfo.GetCreatureID` — unsafe
 191. [best-effort] `added:C_CurveUtil.CreateColorCurve` — behavioral
 192. [best-effort] `added:C_CurveUtil.CreateCurve` — behavioral
-193. [evidence-required] `added:C_CurveUtil.EvaluateColorFromBoolean` — unsafe
-194. [evidence-required] `added:C_CurveUtil.EvaluateColorValueFromBoolean` — unsafe
+193. [best-effort] `added:C_CurveUtil.EvaluateColorFromBoolean` — behavioral
+194. [best-effort] `added:C_CurveUtil.EvaluateColorValueFromBoolean` — behavioral
 195. [evidence-required] `added:C_CurveUtil.EvaluateGameCurve` — unsafe
 196. [best-effort] `added:C_DamageMeter.DamageMeterAvailableCombatSession` — provenance-only
 197. [best-effort] `added:C_DamageMeter.DamageMeterAvailableCombatSession.name` — behavioral

@@ -5,10 +5,10 @@ The ordinary-value `C_CurveUtil` selectors choose a color or color component fro
 ## What it must do
 
 - [ ] Publish both selectors on retail 12.0.0 and later, without adding them to earlier client profiles.
-- [ ] `EvaluateColorFromBoolean(boolean, valueIfTrue, valueIfFalse)` selects the corresponding RGBA value and returns a ColorMixin-compatible color without mutating inputs.
-- [ ] `EvaluateColorValueFromBoolean(boolean, valueIfTrue, valueIfFalse)` selects the corresponding numeric component, including zero.
-- [ ] Simulator policy: return a fresh color so later result mutations do not alter input colors. Native identity/copy behavior is unverified.
-- [ ] Simulator validation policy: require a boolean condition, numeric components, and color tables containing numeric `r`, `g`, `b`, and `a` fields in both branches. Reject invalid inputs without mutating colors. Native coercion and errors are unverified.
+- [x] `EvaluateColorFromBoolean(boolean, valueIfTrue, valueIfFalse)` selects the corresponding RGBA value and returns a ColorMixin-compatible color without mutating inputs.
+- [x] `EvaluateColorValueFromBoolean(boolean, valueIfTrue, valueIfFalse)` selects the corresponding numeric component, including zero.
+- [x] Simulator policy: return a fresh color so later result mutations do not alter input colors. Native identity/copy behavior is unverified.
+- [x] Simulator validation policy: require a boolean condition, numeric components, and color tables containing numeric `r`, `g`, `b`, and `a` fields in both branches. Reject invalid inputs without mutating colors. Native coercion and errors are unverified.
 
 ## How it works
 
@@ -21,7 +21,7 @@ The ordinary-value `C_CurveUtil` selectors choose a color or color component fro
 
 ## Tests asserting this spec
 
-- `tests/userdata_proxy.rs` — `curve_boolean_*` cases; development proof pending.
+- `tests/userdata_proxy.rs` — five `curve_boolean_*` cases passed on 12.0.0 with all 27 existing cases in that grouped module at `977d30276` (32/32). Earlier-profile and later-retail controls remain pending.
 
 ## Known gaps (current cycle)
 
