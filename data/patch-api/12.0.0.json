@@ -84459,7 +84459,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "summary": "Current Frame RegisterEventCallback registers a callback-capable event in the widget and rilua dispatch indexes.",
-          "source_hash": "5ecfd3460f0dad7968cc1ed39a2396cf2da7dcd81ff96e851290bcb92c8b0fd2"
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85"
         },
         {
           "kind": "test",
@@ -84496,7 +84496,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "summary": "Current Frame RegisterUnitEventCallback stores a frame-owned callback with an optional unit filter and dispatches through the event listener index.",
-          "source_hash": "5ecfd3460f0dad7968cc1ed39a2396cf2da7dcd81ff96e851290bcb92c8b0fd2"
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85"
         },
         {
           "kind": "test",
@@ -89014,7 +89014,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "5ecfd3460f0dad7968cc1ed39a2396cf2da7dcd81ff96e851290bcb92c8b0fd2",
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85",
           "summary": "Retail declares a global callback API, while the simulator fallback is inert and returns nil. Frame:RegisterEventCallback is separate and does not prove the free global registry or invocation semantics."
         },
         {
@@ -89067,7 +89067,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "5ecfd3460f0dad7968cc1ed39a2396cf2da7dcd81ff96e851290bcb92c8b0fd2",
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85",
           "summary": "Retail declares a global unit-filtered callback API, while the simulator fallback is inert and does not register, filter, or invoke callbacks. Frame:RegisterUnitEventCallback is separate."
         },
         {
@@ -92870,7 +92870,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "5ecfd3460f0dad7968cc1ed39a2396cf2da7dcd81ff96e851290bcb92c8b0fd2",
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85",
           "summary": "Retail adds a two-argument global callback removal API. The simulator exposes only an inert fallback returning nil; Frame:UnregisterEventCallback does not prove the free global registry."
         },
         {
@@ -92917,7 +92917,7 @@
         {
           "kind": "runtime",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "source_hash": "5ecfd3460f0dad7968cc1ed39a2396cf2da7dcd81ff96e851290bcb92c8b0fd2",
+          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85",
           "summary": "Retail adds a three-argument global unit-callback removal API. The simulator exposes only an inert fallback with no global registry, unit filtering, or invocation semantics."
         },
         {

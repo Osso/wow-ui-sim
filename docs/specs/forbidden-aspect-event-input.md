@@ -15,7 +15,7 @@ Patch 12.1 names `EventRegistrations` and `AlwaysPropagateInput` in `Enum.Forbid
 - [x] A frame carrying `AlwaysPropagateInput` reports effective keyboard propagation as true, including an inherited mask and a mask added after propagation was disabled.
 - [x] Reject disabling propagation on such a frame without changing state; explicitly enabling it remains allowed.
 - [x] The existing parent-chain `OnKeyDown` dispatcher uses effective propagation after the handler returns, including a mask added by that handler.
-- [x] Zero-mask frames and earlier profiles retain ordinary propagation behavior and key-dispatch ordering.
+- [ ] Zero-mask frames and earlier profiles retain ordinary propagation behavior and key-dispatch ordering.
 
 ## How it works
 
@@ -31,11 +31,14 @@ Patch 12.1 names `EventRegistrations` and `AlwaysPropagateInput` in `Enum.Forbid
 
 ## Tests asserting this spec
 
-Focused grouped integration tests exercise registration outcomes and real event delivery, and `tests/keyboard.rs` exercises real `send_key_press` parent routing.
+- `tests/forbidden_aspect_creation.rs` — five `event_registration_aspect_` tests cover mutation rejection, existing delivery, callback replacement, and zero-mask controls. Ordinary/unit/all listeners use the Rust event producer; callbacks use public `FireEvent`.
+- `tests/keyboard.rs` — three `always_propagate_input_` tests cover state, inherited restrictions, and handler-time mask changes through real `send_key_press` parent routing.
 
 ## Known gaps (current cycle)
 
-- [ ] Native routing, caller authority, error wording, and security equivalence remain unverified.
+Eight focused retail policy tests passed after the runtime change. Earlier-profile, startup, and independent verification remain pending.
+
+A pre-change fixture exposed an unrelated producer difference: public `FireEvent` delivered ordinary `UNIT_HEALTH` `OnEvent` again after `UnregisterAllEvents`, while the Rust event producer did not. This slice neither changes that dispatcher nor claims producer equivalence.
 
 ## Out of scope
 
