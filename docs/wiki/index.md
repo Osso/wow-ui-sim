@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Renew tested retail 12.0.0 evidence
+
+`5a4893d57` renews 1,040 stale evidence references: 1,034 behavioral references across 917 rows and six provenance-only references. Classifications stay **2242 best-effort / 1166 evidence-required / 2 exceptions**. Eleven curve rows now describe tested userdata behavior and cite `src/c_api/c_curve_util.rs`, not the obsolete table-proxy claim. The remaining 538 stale references are 536 evidence-required and two PTR-only legacy compatibility rows. Canonical validation remains pending. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Model bounded retail 12.0.0 paragon and specialization inputs
 
 `dc346a706` adds the sixth seeded `C_Reputation.GetFactionParagonInfo` return for 12.0.0+; it does not model earning, storage derivation, or actual Journeys consumption. `9a8c05992` makes `C_SpecializationInfo.GetSpecializationInfo` honor an explicit seventh `classID`; unchanged `CooldownViewerUtil` proof resolves cross-class tags. Independent behavioral/profile proof passed; exactly two 12.0.0 rows gain bounded best-effort credit (2242 / 1166 / 2 exceptions). Current-retail startup is error-free; historical consumer-loader errors remain unresolved. The 12.0.7 encounter-status producer also has profile proof without changing its existing best-effort classification. See [paragon storage](../specs/faction-paragon-storage-level.md), [specialization class selection](../specs/specialization-class-selection.md), and [[patch-12-0-0-api-audit]].
