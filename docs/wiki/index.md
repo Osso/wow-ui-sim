@@ -1,6 +1,6 @@
-## [2026-09-12] audit | Credit modeled 12.1 event and keyboard restrictions
+## [2026-09-12] audit | Credit modeled 12.1 event and input restrictions
 
-`5125e2407` adds two explicit simulator policies: `EventRegistrations` rejects all seven Lua registration mutations before state changes, while `AlwaysPropagateInput` forces effective keyboard parent routing and rejects disabling. Existing registered delivery, zero-mask behavior, key order, caller-taint neutrality, and inherited/handler-added masks have focused proof. Native security, caller authority, mouse/other input routes, error wording, and timing remain unverified. Current behavior totals: 38 best-effort / 16 evidence-required. See [policy spec](../specs/forbidden-aspect-event-input.md) and [[patch-12-1-api-audit]].
+`5125e2407` adds two explicit simulator policies: `EventRegistrations` rejects all seven Lua registration mutations before state changes, while `AlwaysPropagateInput` forces effective keyboard parent routing and rejects disabling. `7d4ff6e8d` adds uniform `ScriptedInput` and `QueryFocus` gates only to six PTR-annotated methods, preserving physical input and unannotated queries. Native security, caller authority, error wording, and timing remain unverified. Current behavior totals: 40 best-effort / 14 evidence-required. See [event/input policy](../specs/forbidden-aspect-event-input.md), [scripted-input/focus policy](../specs/forbidden-aspect-scripted-input-query-focus.md), and [[patch-12-1-api-audit]].
 
 ## [2026-09-12] audit | Preserve patch 12.1 historical cache input
 

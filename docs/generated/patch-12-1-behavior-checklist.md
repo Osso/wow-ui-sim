@@ -12,8 +12,8 @@
 12. [evidence-required] `changed:Patch12_1.ForbiddenAspects.UntrustedLayoutScriptExecution` — unsafe
 13. [best-effort] `changed:Patch12_1.ForbiddenAspects.EventRegistrations` — behavioral
 14. [best-effort] `changed:Patch12_1.ForbiddenAspects.AlwaysPropagateInput` — behavioral
-15. [evidence-required] `changed:Patch12_1.ForbiddenAspects.ScriptedInput` — unsafe
-16. [evidence-required] `changed:Patch12_1.ForbiddenAspects.QueryFocus` — unsafe
+15. [best-effort] `changed:Patch12_1.ForbiddenAspects.ScriptedInput` — behavioral
+16. [best-effort] `changed:Patch12_1.ForbiddenAspects.QueryFocus` — behavioral
 17. [best-effort] `changed:Patch12_1.AuraContainer.CreationTypes` — behavioral
 18. [best-effort] `changed:Patch12_1.AuraContainer.Assignment` — behavioral
 19. [best-effort] `changed:Patch12_1.AuraContainer.Filtering` — behavioral

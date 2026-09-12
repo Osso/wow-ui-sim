@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Credit modeled 12.1 scripted input and focus queries
+
+`7d4ff6e8d` moves exactly `ForbiddenAspects.ScriptedInput` and `QueryFocus` to bounded best-effort. A caller-neutral simulator policy rejects only six PTR-annotated Lua methods before state/callback changes: `Click`, `SetFocus`, `ClearFocus`, `SetCursorPosition`, `HasFocus`, and `IsMouseMotionFocus`. Four integration and three GUI-mouse tests retain physical clicking, edit-box click-to-focus/typing, ordinary controls, global focus queries, and `IsMouseOver`. Earlier-profile proof remains pending. Native security, authority, error wording, and timing remain unverified. Current register: 40 best-effort / 14 evidence-required. See [policy spec](../specs/forbidden-aspect-scripted-input-query-focus.md) and [[patch-12-1-api-audit]].
+
 ## [2026-09-12] audit | Credit modeled 12.1 event and keyboard restrictions
 
 `5125e2407` moves `ForbiddenAspects.EventRegistrations` and `AlwaysPropagateInput` to bounded best-effort. Event registration mutations reject before listener/callback/index changes and preserve existing delivery; effective keyboard propagation is forced by direct, inherited, or handler-added masks, and disabling rejects without state loss. These are caller-taint-neutral simulator policies, not native security/routing/error/timing claims. Focused retail tests: five event cases and three keyboard cases passed. Current register: 38 best-effort / 16 evidence-required. See [policy spec](../specs/forbidden-aspect-event-input.md) and [[patch-12-1-api-audit]].
