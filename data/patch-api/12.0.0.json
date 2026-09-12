@@ -8243,8 +8243,8 @@
       "id": "added:C_DurationUtil.GetCurrentTime",
       "symbol": "C_DurationUtil.GetCurrentTime",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -8256,17 +8256,25 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current Rust duration surface exposes C_DurationUtil.GetCurrentTime as simulator elapsed time through the shared duration clock. Source inspection does not establish the native clock, epoch, precision, pause behavior, or exact semantics.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; With simulator elapsed time set at least 40 seconds after its origin, GetCurrentTime returns at least 40 and the unbound duration clock is no earlier. Native epoch, precision, pause, and synchronization semantics remain unverified.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "With simulator elapsed time set at least 40 seconds after its origin, GetCurrentTime returns at least 40 and the unbound duration clock is no earlier. Native epoch, precision, pause, and synchronization semantics remain unverified."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_default_clock_and_instances"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current behavior returns simulator elapsed time through the shared duration clock. Native clock/epoch, precision, pause behavior, and exact semantics remain unverified; this source correction awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. With simulator elapsed time set at least 40 seconds after its origin, GetCurrentTime returns at least 40 and the unbound duration clock is no earlier. Native epoch, precision, pause, and synchronization semantics remain unverified. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:C_EncounterTimeline.AddEditModeEvents",
@@ -87663,8 +87671,8 @@
       "id": "added:LuaDurationObject.GetElapsedDuration",
       "symbol": "LuaDurationObject.GetElapsedDuration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87676,17 +87684,28 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Elapsed durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2. Default-clock and span-configuration observations are also asserted.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Elapsed durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2. Default-clock and span-configuration observations are also asserted."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind",
+        "tests/duration_core.rs::duration_core_default_clock_and_instances"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Elapsed durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2. Default-clock and span-configuration observations are also asserted. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetElapsedPercent",
@@ -87732,8 +87751,8 @@
       "id": "added:LuaDurationObject.GetEndTime",
       "symbol": "LuaDurationObject.GetEndTime",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87745,24 +87764,34 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; End is 20 for start 10/base 20/rate 2, changes to 30 with span 10..30, remains stable during clock movement, and resets to zero. Rejected configuration calls preserve end 30.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "End is 20 for start 10/base 20/rate 2, changes to 30 with span 10..30, remains stable during clock movement, and resets to zero. Rejected configuration calls preserve end 30."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. End is 20 for start 10/base 20/rate 2, changes to 30 with span 10..30, remains stable during clock movement, and resets to zero. Rejected configuration calls preserve end 30. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetModRate",
       "symbol": "LuaDurationObject.GetModRate",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87774,24 +87803,34 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Rate is 2 after configured start/end intervals and remains 2 during clock movement; span configuration and Reset report rate 1.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Rate is 2 after configured start/end intervals and remains 2 during clock movement; span configuration and Reset report rate 1."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Rate is 2 after configured start/end intervals and remains 2 during clock movement; span configuration and Reset report rate 1. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetRemainingDuration",
       "symbol": "LuaDurationObject.GetRemainingDuration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87803,17 +87842,28 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Remaining durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2; end configuration at clock 12 gives 8 and zero duration gives zero.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Remaining durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2; end configuration at clock 12 gives 8 and zero duration gives zero."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind",
+        "tests/duration_core.rs::duration_core_default_clock_and_instances"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Remaining durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2; end configuration at clock 12 gives 8 and zero duration gives zero. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetRemainingPercent",
@@ -87859,8 +87909,8 @@
       "id": "added:LuaDurationObject.GetStartTime",
       "symbol": "LuaDurationObject.GetStartTime",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87872,24 +87922,34 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Start is 10 for equivalent start/end configurations, stays 10 through clock boundaries and rewind, and resets to zero. Rejected configuration calls preserve start 10.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Start is 10 for equivalent start/end configurations, stays 10 through clock boundaries and rewind, and resets to zero. Rejected configuration calls preserve start 10."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Start is 10 for equivalent start/end configurations, stays 10 through clock boundaries and rewind, and resets to zero. Rejected configuration calls preserve start 10. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetTotalDuration",
       "symbol": "LuaDurationObject.GetTotalDuration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87901,17 +87961,27 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; For start 10, base duration 20 and rate 2, total is 10 in RealTime and 20 in BaseTime throughout clock movement; span configuration gives 20 and reset gives zero.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "For start 10, base duration 20 and rate 2, total is 10 in RealTime and 20 in BaseTime throughout clock movement; span configuration gives 20 and reset gives zero."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. For start 10, base duration 20 and rate 2, total is 10 in RealTime and 20 in BaseTime throughout clock movement; span configuration gives 20 and reset gives zero. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.HasSecretValues",
@@ -87983,8 +88053,8 @@
       "id": "added:LuaDurationObject.Reset",
       "symbol": "LuaDurationObject.Reset",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87996,24 +88066,32 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Reset after a configured interval sets endpoints and total to zero, rate to 1, and all activity predicates false while retaining the manual clock and its time 12.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Reset after a configured interval sets endpoints and total to zero, rate to 1, and all activity predicates false while retaining the manual clock and its time 12."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Reset after a configured interval sets endpoints and total to zero, rate to 1, and all activity predicates false while retaining the manual clock and its time 12. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.SetTimeFromEnd",
       "symbol": "LuaDurationObject.SetTimeFromEnd",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -88025,24 +88103,32 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Configuring end 20, base duration 20 and rate 2 yields start 10/end 20 and remaining 8 at clock 12. Zero rate errors while existing endpoints 10..30 remain unchanged.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Configuring end 20, base duration 20 and rate 2 yields start 10/end 20 and remaining 8 at clock 12. Zero rate errors while existing endpoints 10..30 remain unchanged."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Configuring end 20, base duration 20 and rate 2 yields start 10/end 20 and remaining 8 at clock 12. Zero rate errors while existing endpoints 10..30 remain unchanged. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.SetTimeFromStart",
       "symbol": "LuaDurationObject.SetTimeFromStart",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -88054,24 +88140,34 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Configuring start 10, base duration 20 and rate 2 yields endpoints 10..20 and concrete progress. Negative duration, NaN start and infinite duration error while existing endpoints 10..30 remain unchanged; configured zero duration is observed.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Configuring start 10, base duration 20 and rate 2 yields endpoints 10..20 and concrete progress. Negative duration, NaN start and infinite duration error while existing endpoints 10..30 remain unchanged; configured zero duration is observed."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_manual_progress_rate_and_rewind",
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Configuring start 10, base duration 20 and rate 2 yields endpoints 10..20 and concrete progress. Negative duration, NaN start and infinite duration error while existing endpoints 10..30 remain unchanged; configured zero duration is observed. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.SetTimeSpan",
       "symbol": "LuaDurationObject.SetTimeSpan",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -88083,17 +88179,25 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Existing simulator timing model; Configuring span 10..30 after rate 2 yields rate 1, total 20 and elapsed 2 at clock 12. Reversed span 5..4 errors while endpoints 10..30 remain unchanged.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
+          "summary": "Configuring span 10..30 after rate 2 yields rate 1, total 20 and elapsed 2 at clock 12. Reversed span 5..4 errors while endpoints 10..30 remain unchanged."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Configuring span 10..30 after rate 2 yields rate 1, total 20 and elapsed 2 at clock 12. Reversed span 5..4 errors while endpoints 10..30 remain unchanged. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.SetToDefaults",
