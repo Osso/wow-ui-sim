@@ -2246,8 +2246,8 @@
 2246. [evidence-required] `added:LuaCurveObjectBase.HasSecretValues` — unsafe
 2247. [evidence-required] `added:LuaCurveObjectBase.SetType` — unsafe
 2248. [best-effort] `added:LuaDurationObject` — behavioral
-2249. [evidence-required] `added:LuaDurationObject.Assign` — unsafe
-2250. [evidence-required] `added:LuaDurationObject.Copy` — unsafe
+2249. [best-effort] `added:LuaDurationObject.Assign` — behavioral
+2250. [best-effort] `added:LuaDurationObject.Copy` — behavioral
 2251. [evidence-required] `added:LuaDurationObject.EvaluateElapsedDuration` — unsafe
 2252. [evidence-required] `added:LuaDurationObject.EvaluateElapsedPercent` — unsafe
 2253. [evidence-required] `added:LuaDurationObject.EvaluateRemainingDuration` — unsafe

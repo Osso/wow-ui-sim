@@ -87517,7 +87517,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_copy_assign_preserves_receiver_identity_and_independent_timing",
-          "summary": "Focused ordinary simulator tests cover receiver timing/clock transfer, independent later mutation, self-assignment, unbound source clearing, preserved receiver identity/custom fields, and invalid-source atomicity.",
+          "summary": "This ordinary simulator test covers receiver timing transfer, independent later timing mutation, no returned values, and preserved receiver identity/custom fields; the other listed tests separately cover clocks, self-assignment, and invalid-source atomicity.",
           "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28"
         }
       ],
@@ -87558,7 +87558,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_copy_preserves_timing_and_returns_one_independent_object",
-          "summary": "Focused ordinary simulator tests cover one distinct return value, timing transfer, independent later timing mutation, copied clock reference, and independently mutable clock bindings.",
+          "summary": "This ordinary simulator test covers one distinct return value, timing transfer, and independent later timing mutation; the separately listed clock test covers reference copying and independent clock bindings.",
           "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28"
         }
       ],
