@@ -281,10 +281,10 @@ fn event_registration_aspect_preserves_callbacks_when_replacement_is_rejected() 
 fn event_registration_aspect_leaves_zero_mask_mutations_and_delivery_unchanged() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
-        EventAspectPlain = {individual=0, unit=0, all=0, callback=0, unitCallback=0}
+        EventAspectPlain = {individual=0, unit=0, all=0}
         local state = EventAspectPlain
         state.frames = {}
-        for _, name in ipairs({'individual', 'unit', 'all', 'callback', 'unitCallback'}) do
+        for _, name in ipairs({'individual', 'unit', 'all'}) do
             local frame = CreateFrame('Frame')
             assert(frame:GetForbiddenAspects() == 0)
             state.frames[name] = frame
@@ -298,32 +298,56 @@ fn event_registration_aspect_leaves_zero_mask_mutations_and_delivery_unchanged()
         assert(state.frames.individual:RegisterEvent('PLAYER_LOGIN'))
         assert(state.frames.unit:RegisterUnitEvent('UNIT_HEALTH', 'player'))
         state.frames.all:RegisterAllEvents()
-        state.frames.callback:RegisterEventCallback('MINIMAP_PING', function() state.callback = state.callback + 1 end)
-        state.frames.unitCallback:RegisterUnitEventCallback('UNIT_HEALTH', function(_, unit)
-            assert(unit == 'player')
-            state.unitCallback = state.unitCallback + 1
-        end, 'player')
-    "#).expect("all registration forms remain usable without the aspect");
+    "#).expect("ordinary registration forms remain usable without the aspect");
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.fire_event_with_args("UNIT_HEALTH", &[env.lua_string("target")])
+        .unwrap();
+    env.fire_event_with_args("UNIT_HEALTH", &[env.lua_string("player")])
+        .unwrap();
     env.exec(r#"
-        FireEvent('PLAYER_LOGIN')
-        FireEvent('MINIMAP_PING')
-        FireEvent('UNIT_HEALTH', 'player')
         local state = EventAspectPlain
         assert(state.individual == 1 and state.unit == 1 and state.all == 3)
-        assert(state.callback == 1 and state.unitCallback == 1)
         assert(state.frames.individual:UnregisterEvent('PLAYER_LOGIN'))
         for name, frame in pairs(state.frames) do
             if name ~= 'individual' then frame:UnregisterAllEvents() end
         end
     "#).expect("zero-mask listeners receive events and both unregistration forms remain usable");
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.fire_event_with_args("UNIT_HEALTH", &[env.lua_string("target")])
+        .unwrap();
+    env.fire_event_with_args("UNIT_HEALTH", &[env.lua_string("player")])
+        .unwrap();
     env.exec(r#"
-        FireEvent('PLAYER_LOGIN')
+        local state = EventAspectPlain
+        assert(state.individual == 1 and state.unit == 1 and state.all == 3)
+    "#).expect("unregistered zero-mask frames receive no further delivery");
+}
+
+#[test]
+fn event_registration_aspect_leaves_zero_mask_callback_delivery_unchanged() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local ordinary, unit = CreateFrame('Frame'), CreateFrame('Frame')
+        assert(ordinary:GetForbiddenAspects() == 0 and unit:GetForbiddenAspects() == 0)
+        local ordinaryCalls, unitCalls = 0, 0
+        ordinary:RegisterEventCallback('MINIMAP_PING', function(owner)
+            assert(owner == ordinary)
+            ordinaryCalls = ordinaryCalls + 1
+        end)
+        unit:RegisterUnitEventCallback('UNIT_HEALTH', function(owner, token)
+            assert(owner == unit and token == 'player')
+            unitCalls = unitCalls + 1
+        end, 'player')
+        FireEvent('MINIMAP_PING')
+        FireEvent('UNIT_HEALTH', 'target')
+        FireEvent('UNIT_HEALTH', 'player')
+        assert(ordinaryCalls == 1 and unitCalls == 1)
+        ordinary:UnregisterAllEvents()
+        unit:UnregisterAllEvents()
+        assert(not ordinary:IsEventRegistered('MINIMAP_PING'))
+        assert(not unit:IsEventRegistered('UNIT_HEALTH'))
         FireEvent('MINIMAP_PING')
         FireEvent('UNIT_HEALTH', 'player')
-        local state = EventAspectPlain
-        local counts = string.format('individual=%d unit=%d all=%d callback=%d unitCallback=%d',
-            state.individual, state.unit, state.all, state.callback, state.unitCallback)
-        assert(state.individual == 1 and state.unit == 1 and state.all == 3, counts)
-        assert(state.callback == 1 and state.unitCallback == 1, counts)
-    "#).expect("unregistered zero-mask frames receive no further delivery");
+        assert(ordinaryCalls == 1 and unitCalls == 1)
+    "#).expect("zero-mask callback listeners retain their public FireEvent delivery boundary");
 }
