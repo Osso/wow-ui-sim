@@ -70,4 +70,20 @@ assert_serializable(Ptr125RemainingProbeDB, {})
 _G.GetBuildInfo = function() return "12.1.5", "99999", "fixture", 120105 end
 assert(Probe.run("fixture").matchesPinnedBuild == false)
 assert(#Ptr125RemainingProbeDB.runs == 2)
-io.write("Core recording/redaction/cleanup/build-tag fixtures passed\n")
+_G.SlashCmdList = {}
+Probe.actions.structures = function(record)
+    Probe.note(record, "CLI fixture", "observed", "structure action selected")
+end
+Probe.actions.secrets = function() error(secret) end
+assert(loadfile(root .. "/Main.lua"))("Ptr125RemainingProbe", Probe)
+assert(#Ptr125RemainingProbeDB.runs == 2, "probe ran automatically")
+SlashCmdList.PTR125REMAININGPROBE(" STRUCTURES")
+assert(#Ptr125RemainingProbeDB.runs == 3)
+assert(Ptr125RemainingProbeDB.runs[3].kind == "structures")
+SlashCmdList.PTR125REMAININGPROBE("secrets")
+assert(Ptr125RemainingProbeDB.runs[4].status == "error")
+SlashCmdList.PTR125REMAININGPROBE("status")
+SlashCmdList.PTR125REMAININGPROBE("unknown")
+assert(#Ptr125RemainingProbeDB.runs == 4)
+assert_serializable(Ptr125RemainingProbeDB, {})
+io.write("Core recording/redaction/cleanup/build-tag/CLI fixtures passed\n")

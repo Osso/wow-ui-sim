@@ -1,0 +1,12 @@
+## Interface: 120105
+## Title: PTR 12.1.5 Remaining Contract Probe
+## Notes: Manual, redacted observations for unresolved structure and secrecy contracts.
+## Author: Alessio Deiana
+## Version: 0.1.0
+## SavedVariables: Ptr125RemainingProbeDB
+
+Core.lua
+Templates.xml
+Structures.lua
+Secrets.lua
+Main.lua
