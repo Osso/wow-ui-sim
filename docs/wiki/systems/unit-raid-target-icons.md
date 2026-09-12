@@ -1,6 +1,6 @@
 # Unit raid-target icons
 
-Simulator state for `SetRaidTarget`, standalone `SetRaidTargetIcon`, and `GetRaidTargetIndex`. It is GUID-keyed unit-icon state, independent of world markers. `104cb6fc9` added the model; focused historical development proof passed. Independent verification and audit classification remain pending.
+Simulator state for `SetRaidTarget`, standalone `SetRaidTargetIcon`, and `GetRaidTargetIndex`. It is GUID-keyed unit-icon state, independent of world markers. `b269650ae` credits bounded best-effort `SetRaidTarget` behavior and expands existing `GetRaidTargetIndex` credit; independent verification remains active.
 
 ## Model
 
@@ -30,5 +30,5 @@ World-marker APIs—including `PlaceRaidMarker`, `ClearRaidMarker`, `IsRaidMarke
 ## See Also
 
 - [sprite-sheet cell contract](../../specs/sprite-sheet-cell.md) — bounded coordinate model used by the consumer.
-- [[patch-12-0-0-api-audit]] — audit classification remains unchanged pending independent verification.
+- [[patch-12-0-0-api-audit]] — exactly SetRaidTarget and TextureBase.SetSpriteSheetCell gained bounded credit; world-marker and RemoveRaidTargets rows remain evidence-required.
 - [[patch-api-audit-manifest]] — manifest evidence rules.
