@@ -308,7 +308,7 @@
           "kind": "source",
           "reference": "docs/specs/forbidden-aspect-event-input.md",
           "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "209786f4591b0d399929b6b9d866adf783060ff715548ca4084b4f61f5848dec"
+          "source_hash": "b74de1b48983e7f427d37608a40e23f6b66a3ef738b44f85b46131bcfe8bc0e5"
         },
         {
           "kind": "test",
@@ -384,7 +384,7 @@
           "kind": "source",
           "reference": "docs/specs/forbidden-aspect-event-input.md",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "209786f4591b0d399929b6b9d866adf783060ff715548ca4084b4f61f5848dec"
+          "source_hash": "b74de1b48983e7f427d37608a40e23f6b66a3ef738b44f85b46131bcfe8bc0e5"
         },
         {
           "kind": "test",

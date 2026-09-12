@@ -15,7 +15,7 @@ Patch 12.1 names `EventRegistrations` and `AlwaysPropagateInput` in `Enum.Forbid
 - [x] A frame carrying `AlwaysPropagateInput` reports effective keyboard propagation as true, including an inherited mask and a mask added after propagation was disabled.
 - [x] Reject disabling propagation on such a frame without changing state; explicitly enabling it remains allowed.
 - [x] The existing parent-chain `OnKeyDown` dispatcher uses effective propagation after the handler returns, including a mask added by that handler.
-- [ ] Zero-mask frames and earlier profiles retain ordinary propagation behavior and key-dispatch ordering.
+- [x] Zero-mask frames and earlier profiles retain ordinary propagation behavior and key-dispatch ordering.
 
 ## How it works
 
@@ -36,7 +36,7 @@ Patch 12.1 names `EventRegistrations` and `AlwaysPropagateInput` in `Enum.Forbid
 
 ## Known gaps (current cycle)
 
-Eight focused retail policy tests passed after the runtime change. Earlier-profile, startup, and independent verification remain pending.
+Independent verification at `eb2dcbf35` retained eight focused retail policy proofs and passed four earlier-12.0.7 controls, formatting, retail checking, PTR build/startup (`[]`, exit 0), readability, and canonical audit validation. The earlier-profile build warned that `CastInfoSnapshot.delay_time` is unused in untouched `spell_api.rs`; its regression status was not established.
 
 A pre-change fixture exposed an unrelated producer difference: public `FireEvent` delivered ordinary `UNIT_HEALTH` `OnEvent` again after `UnregisterAllEvents`, while the Rust event producer did not. This slice neither changes that dispatcher nor claims producer equivalence.
 
