@@ -87804,14 +87804,14 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
-          "summary": "Existing simulator timing model; Rate is 2 after configured start/end intervals and remains 2 during clock movement; span configuration and Reset report rate 1.",
+          "summary": "Existing simulator timing model; Rate is 2 after configured start intervals and remains 2 during clock movement; span configuration and Reset report rate 1.",
           "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae",
-          "summary": "Rate is 2 after configured start/end intervals and remains 2 during clock movement; span configuration and Reset report rate 1."
+          "summary": "Rate is 2 after configured start intervals and remains 2 during clock movement; span configuration and Reset report rate 1."
         }
       ],
       "tests": [
@@ -87823,7 +87823,7 @@
       "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Rate is 2 after configured start/end intervals and remains 2 during clock movement; span configuration and Reset report rate 1. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
+      "notes": "Existing behavior credited from exact assertions, not new implementation. Seven grouped duration_core tests pass on simulator retail 12.0.0, 12.0.5 and 12.0.7; prior matching-hash proof is reused. Rate is 2 after configured start intervals and remains 2 during clock movement; span configuration and Reset report rate 1. Formulas and validation are simulator policies; native timing, rate/modifier, coercion, exact errors, identity, secret/taint and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetRemainingDuration",
@@ -88078,7 +88078,8 @@
         }
       ],
       "tests": [
-        "tests/duration_core.rs::duration_core_end_span_reset_and_validation"
+        "tests/duration_core.rs::duration_core_end_span_reset_and_validation",
+        "tests/duration_core.rs::duration_percent_zero_spans_remain_zero"
       ],
       "assertions": [],
       "commit": "24fe9d746",
