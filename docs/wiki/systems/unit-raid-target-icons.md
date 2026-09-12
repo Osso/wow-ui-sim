@@ -16,7 +16,7 @@ Retail `TargetFrameMixin:UpdateRaidTargetIcon()` reads `GetRaidTargetIndex(self.
 
 ## Verification
 
-Historical 12.0.0 development proof passed 23 core icon tests, three sprite tests, and one original-Lua consumer test; two corrected queued-record tests were run separately after `5bc5cdb6f`. Independent proof passed corrected record plus consumer cases 3/3 on 12.0.7 and record cases 2/2 on Mists. The earlier 12.0.5/12.0.7 51-case runs and Mists ordinary controls are reused only for assertions unaffected by restored queue records. Fresh format, check, build, and current standalone startup (`[]`) passed. No new readability issue was found; the `state.rs` length threshold was pre-existing.
+Historical 12.0.0 development proof passed 23 targeting tests (19 existing, four icon), three sprite tests, and one original-Lua consumer test; two corrected queued-record tests were run separately after `5bc5cdb6f`. Independent proof passed corrected record plus consumer cases 3/3 on 12.0.7 and record cases 2/2 on Mists. The earlier 12.0.5/12.0.7 51-case runs and Mists ordinary controls are reused only for assertions unaffected by restored queue records. Fresh format, check, build, and current standalone startup (`[]`) passed. No new readability issue was found; the `state.rs` length threshold was pre-existing.
 
 Historical consumer closures still emit 71 known Lua-error headers, unchanged from the earlier consumer proof. Current consumer closures have their own known errors and do not alter the standalone-startup result.
 
