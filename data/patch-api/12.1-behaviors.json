@@ -252,7 +252,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; runtime enforcement for trusted script execution is unknown.",
-          "source_hash": "51eb30e471ff4ff1db31890bea4b5804555ce0822cbe461c732bf25902a1e87b"
+          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
         }
       ],
       "tests": [],
@@ -274,7 +274,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; runtime layout-script enforcement is unknown.",
-          "source_hash": "51eb30e471ff4ff1db31890bea4b5804555ce0822cbe461c732bf25902a1e87b"
+          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
         }
       ],
       "tests": [],
@@ -296,7 +296,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; EventRegistrations enforcement is unknown.",
-          "source_hash": "51eb30e471ff4ff1db31890bea4b5804555ce0822cbe461c732bf25902a1e87b"
+          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
         }
       ],
       "tests": [],
@@ -318,7 +318,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; AlwaysPropagateInput enforcement is unknown.",
-          "source_hash": "51eb30e471ff4ff1db31890bea4b5804555ce0822cbe461c732bf25902a1e87b"
+          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
         }
       ],
       "tests": [],
@@ -340,7 +340,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; ScriptedInput enforcement is unknown.",
-          "source_hash": "51eb30e471ff4ff1db31890bea4b5804555ce0822cbe461c732bf25902a1e87b"
+          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
         }
       ],
       "tests": [],
@@ -362,7 +362,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; QueryFocus enforcement is unknown.",
-          "source_hash": "51eb30e471ff4ff1db31890bea4b5804555ce0822cbe461c732bf25902a1e87b"
+          "source_hash": "ac9ba6d450a6bd7ab6ee9aecba1081009a5e45b91b5aae39354adf05c81d55bb"
         }
       ],
       "tests": [],
