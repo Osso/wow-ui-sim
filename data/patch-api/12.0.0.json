@@ -1961,7 +1961,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCharges publishes chargeModRate in a static placeholder table without modeled slot charge state, cooldown progression, or dynamic charge semantics.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -1990,7 +1990,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCharges publishes cooldownDuration in a static placeholder table without modeled slot charge state, cooldown progression, or dynamic charge semantics.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2019,7 +2019,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCharges publishes cooldownStartTime in a static placeholder table without modeled slot charge state, cooldown progression, or dynamic charge semantics.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2048,7 +2048,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCharges publishes currentCharges in a static placeholder table without modeled slot charge state, cooldown progression, or dynamic charge semantics.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2077,7 +2077,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCharges publishes maxCharges in a static placeholder table without modeled slot charge state, cooldown progression, or dynamic charge semantics.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2130,7 +2130,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCooldown publishes duration in a partial table; start/duration are fixture-backed while enabled/mod-rate semantics remain constant and the complete typed contract is unproven.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2159,7 +2159,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCooldown publishes isEnabled in a partial table; start/duration are fixture-backed while enabled/mod-rate semantics remain constant and the complete typed contract is unproven.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2188,7 +2188,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCooldown publishes modRate in a partial table; start/duration are fixture-backed while enabled/mod-rate semantics remain constant and the complete typed contract is unproven.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2217,7 +2217,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCooldown publishes startTime in a partial table; start/duration are fixture-backed while enabled/mod-rate semantics remain constant and the complete typed contract is unproven.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         }
       ],
       "tests": [],
@@ -2245,7 +2245,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current action-bar implementation and registration do not publish this method (absent)."
         },
         {
@@ -2280,7 +2280,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetActionBarPage/SetActionBarPage store the current page in SimState; the page transition path fires ACTIONBAR_PAGE_CHANGED only for real changes."
         },
         {
@@ -2323,7 +2323,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns a fresh default LuaDurationObject without reading the action slot (default duration behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -2358,7 +2358,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns a partial zero/default ActionBarChargeInfo-shaped table: current/max charges and cooldown fields are zero, with modRate 1. No focused direct test is present in this evidence slice."
         },
         {
@@ -2393,7 +2393,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns a partial ActionBarCooldownInfo-shaped table: spell-slot cooldown start/duration are modeled, while isEnabled=true and modRate=1 are constant defaults. No focused direct test is present in this evidence slice."
         },
         {
@@ -2414,8 +2414,8 @@
       "id": "added:C_ActionBar.GetActionCooldownDuration",
       "symbol": "C_ActionBar.GetActionCooldownDuration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -2428,22 +2428,57 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
-          "summary": "Current implementation returns a fresh default LuaDurationObject without reading the action slot (default duration behavior). No focused direct test is present in this evidence slice."
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
+          "summary": "Existing action cooldown info uses the same C_API-owned action-slot interval lookup as the duration producer; spell_cooldown_times retains the existing active spell/GCD selection."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api/registration.rs",
           "source_hash": "1fce6600c8fe9ab8c0330e799c5c14dfdd4ce0c0ffc84fc6ff21b982ad2337cc",
           "summary": "Current C_ActionBar registration binds GetActionCooldownDuration to its Rust implementation in the namespace method table."
+        },
+        {
+          "kind": "source",
+          "reference": "src/c_api/c_action_bar.rs",
+          "source_hash": "1ff177e170195fec1d5c8e294d615ffa564646456e8c059791d9dd591a80ffee",
+          "summary": "Resolves assigned spell state through the existing spell/GCD selector and configures a fresh duration with the registered SetTimeFromStart method."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "summary": "Active spell-slot duration matches cooldown start/span/rate and runtime-clock elapsed/remaining bounds."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_snapshots_slot_and_spell_state",
+          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "summary": "Changing spell cooldown state and reassigning a slot changes a new query while the earlier duration retains its configured interval."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
+          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "summary": "An active later-ending GCD supplies the same start/span as existing action cooldown info."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_empty_inactive_and_expired_are_zero",
+          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "summary": "Valid empty, assigned-inactive, and expired slots yield a non-null duration with zero start/span/end and rate 1."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_snapshots_slot_and_spell_state",
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_empty_inactive_and_expired_are_zero"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "eb9383afb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current implementation returns a fresh default LuaDurationObject without reading the action slot (default duration behavior). Authoritative semantics or a correct model/test are required, and no approval can close the row."
+      "notes": "Ordinary simulator policy: snapshot the existing action-slot spell/GCD interval into a duration object with rate 1 and runtime clock; valid empty/inactive slots return zero timing. Native GCD/snapshot/identity/lifetime, invalid-slot/coercion/errors, secrets/security, later ignoreGCD option, and actual Blizzard consumer acceptance remain unverified."
     },
     {
       "id": "added:C_ActionBar.GetActionDisplayCount",
@@ -2463,7 +2498,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant nil for every input (no-op/absent-value behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -2498,7 +2533,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant startTime=0 and duration=0 for every input (default/no-op behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -2533,7 +2568,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns a fresh default LuaDurationObject without reading the action slot (default duration behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -2568,7 +2603,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant nil for every input (no-op/absent-value behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -2603,7 +2638,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetActionTexture resolves a modeled action-bar spell slot through SPELL_DB and returns the mapped texture path when the slot has a known spell."
         },
         {
@@ -2646,7 +2681,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant 0 for every input (default behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -2681,7 +2716,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetBonusBarIndex reads the simulator bonus-bar index state; the focused evidence covers the seeded state-backed value."
         },
         {
@@ -2724,7 +2759,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current C_ActionBar implementation publishes this query through action_bar_api.rs; the value is constant or derived compatibility behavior and is not covered by a focused direct test."
         },
         {
@@ -2759,7 +2794,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current C_ActionBar implementation publishes this query through action_bar_api.rs; the value is constant or derived compatibility behavior and is not covered by a focused direct test."
         },
         {
@@ -2794,7 +2829,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current C_ActionBar implementation publishes this query through action_bar_api.rs; the value is constant or derived compatibility behavior and is not covered by a focused direct test."
         },
         {
@@ -2829,7 +2864,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetOverrideBarIndex exposes the simulator override-bar index; focused evidence covers only inactive nil behavior."
         },
         {
@@ -2872,7 +2907,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetOverrideBarSkin reads the optional simulator override-bar skin used by the skinned override transition."
         },
         {
@@ -2915,7 +2950,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetProfessionQualityInfo reads the simulator action_profession_quality state and returns a table with inventoryQuality, iconInventory, and iconQualityContainer, or nil for missing/malformed input."
         },
         {
@@ -2972,7 +3007,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetTempShapeshiftBarIndex reads the simulator temp-shapeshift index state; focused evidence covers active state and inactive nil behavior only."
         },
         {
@@ -3016,7 +3051,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetVehicleBarIndex reads the simulator vehicle-bar index state; focused evidence covers active state and inactive nil behavior only."
         },
         {
@@ -3060,7 +3095,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "HasAction reports modeled action-slot presence from state.action_bars or state.action_outfits."
         },
         {
@@ -3103,7 +3138,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "HasBonusActionBar reads the simulator bonus-bar state used by the state-backed bonus-bar transition."
         },
         {
@@ -3146,7 +3181,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "HasExtraActionBar reads whether the simulator extra-action slot has a granted spell and drives the tested show/icon event path."
         },
         {
@@ -3189,7 +3224,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "HasOverrideActionBar reads the simulator override-bar state used by the skinned override transition."
         },
         {
@@ -3232,7 +3267,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current action-bar implementation and registration do not publish this method (absent)."
         },
         {
@@ -3267,7 +3302,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "HasTempShapeshiftActionBar reads the simulator temp-shapeshift state used by the state-backed transition."
         },
         {
@@ -3310,7 +3345,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "HasVehicleActionBar reads the simulator vehicle-bar state used by the skinned vehicle transition."
         },
         {
@@ -3353,7 +3388,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current action-bar implementation and registration do not publish this method (absent)."
         },
         {
@@ -3388,7 +3423,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant false for every input (default predicate behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -3423,7 +3458,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant false for every input (default predicate behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -3458,7 +3493,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant false for every input (default predicate behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -3493,7 +3528,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation provides a partial casting/action-slot model: it compares the active casting spell to the slot action and otherwise returns false. No focused direct test is present in this evidence slice."
         },
         {
@@ -3528,7 +3563,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant false for every input (default predicate behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -3563,7 +3598,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "IsEquippedGearOutfitAction reads the modeled equipped_gear_outfit_action_slots set used by the action-button outfit-lock overlay path."
         },
         {
@@ -3606,7 +3641,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant false for every input (default predicate behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -3641,7 +3676,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "IsPossessBarVisible reads the simulator possess-bar visibility state used by the tested UPDATE_POSSESS_BAR show/hide path."
         },
         {
@@ -3684,7 +3719,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation returns constant false for every input (default predicate behavior). No focused direct test is present in this evidence slice."
         },
         {
@@ -3719,7 +3754,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation provides a partial action-slot presence model: it reports whether a spell/outfit slot exists and always returns isLackingResources=false. No focused direct test is present in this evidence slice."
         },
         {
@@ -3754,7 +3789,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current implementation partially records button/action identity for simulator refresh dispatch but ignores the cooldown-frame argument; cooldown and lifecycle semantics are unproven. No focused direct test is present in this evidence slice."
         },
         {
@@ -3789,7 +3824,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "GetActionBarPage/SetActionBarPage store the current page in SimState; the page transition path fires ACTIONBAR_PAGE_CHANGED only for real changes."
         },
         {
@@ -3832,7 +3867,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47",
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
           "summary": "Current action-bar implementation and registration do not publish this method (absent)."
         },
         {
@@ -28543,7 +28578,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingItemSlotModification.reagent contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28584,7 +28619,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingOrderReagentInfo.reagentInfo contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28649,7 +28684,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.barBackground contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28690,7 +28725,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.barBackgroundCap contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28731,7 +28766,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.barFill contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28772,7 +28807,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.barHighlight contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28813,7 +28848,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current related profession-quality API returns a distinct reduced payload and does not construct the audited crafting structures.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28854,7 +28889,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.iconAppear contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28895,7 +28930,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.iconChat contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28936,7 +28971,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.iconDissolve contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -28977,7 +29012,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current related profession-quality API returns a distinct reduced payload and does not construct the audited crafting structures.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29018,7 +29053,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.iconMixed contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29059,7 +29094,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingQualityInfo.iconSmall contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29100,7 +29135,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current related profession-quality API returns a distinct reduced payload and does not construct the audited crafting structures.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29141,7 +29176,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingReagentInfo.reagent contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29182,7 +29217,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingReagentSlotSchematic.variableQuantities contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29223,7 +29258,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingResourceReturnInfo.reagent contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29288,7 +29323,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingVariableQuantities.quantity contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -29329,7 +29364,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Inspected related source at src/lua_api/globals/action_bar_api.rs; it does not independently establish the complete CraftingVariableQuantities.reagent contract. No repository-wide absence, placeholder value, or producer payload is inferred from an unmatched symbol or indirect source reference.",
-          "source_hash": "4e5fe8d3e0ff3ce92b5cdac02fb463ea4276a2e75f566dfd218c33e8c6166c47"
+          "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
         },
         {
           "kind": "source",
@@ -100581,7 +100616,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "368b344a0a90787ccb47d9c5df44be7587e75b09210673f3ad929f679f7277e7",
+          "source_hash": "f48dce2fac8fe3757d3cd41a233cb3dd50a3831ea722b543c6247b2c0fcd0aa4",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -100675,7 +100710,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "368b344a0a90787ccb47d9c5df44be7587e75b09210673f3ad929f679f7277e7",
+          "source_hash": "f48dce2fac8fe3757d3cd41a233cb3dd50a3831ea722b543c6247b2c0fcd0aa4",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {

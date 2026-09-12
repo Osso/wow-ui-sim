@@ -65,7 +65,7 @@
 65. [evidence-required] `added:C_ActionBar.GetActionChargeDuration` — unsafe
 66. [evidence-required] `added:C_ActionBar.GetActionCharges` — unsafe
 67. [evidence-required] `added:C_ActionBar.GetActionCooldown` — unsafe
-68. [evidence-required] `added:C_ActionBar.GetActionCooldownDuration` — unsafe
+68. [best-effort] `added:C_ActionBar.GetActionCooldownDuration` — behavioral
 69. [evidence-required] `added:C_ActionBar.GetActionDisplayCount` — unsafe
 70. [evidence-required] `added:C_ActionBar.GetActionLossOfControlCooldown` — unsafe
 71. [evidence-required] `added:C_ActionBar.GetActionLossOfControlCooldownDuration` — unsafe
