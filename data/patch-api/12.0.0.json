@@ -86548,8 +86548,8 @@
       "id": "added:LuaColorCurveObject.AddPoint",
       "symbol": "LuaColorCurveObject.AddPoint",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -86564,21 +86564,29 @@
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
           "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+          "summary": "New color points after clearing produce RGBA(0.5,0.5,0.5,0.25) through all four duration queries. Argument coercion and standalone insertion errors are not asserted.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current curve source uses userdata, not the former generic table proxy. The named native contract, complete method semantics, identity, coercion, errors, and security remain unverified; source relocation awards no behavioral credit."
+      "notes": "Existing duration-to-curve integration proof reused; no runtime or test changes. Credit is limited to the listed ordinary simulator observations. Native interpolation/extrapolation, empty curves, point ordering/duplicates, coercion/errors beyond the tested unsupported color mode, identity, secrets, lifecycle, and real Blizzard consumer semantics remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.ClearPoints",
       "symbol": "LuaColorCurveObject.ClearPoints",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -86593,14 +86601,22 @@
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
           "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+          "summary": "Clearing and rebuilding a color curve replaces the observed midpoint RGBA result through all four duration queries. Standalone empty-curve/count behavior is not asserted.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current curve source uses userdata, not the former generic table proxy. The named native contract, complete method semantics, identity, coercion, errors, and security remain unverified; source relocation awards no behavioral credit."
+      "notes": "Existing duration-to-curve integration proof reused; no runtime or test changes. Credit is limited to the listed ordinary simulator observations. Native interpolation/extrapolation, empty curves, point ordering/duplicates, coercion/errors beyond the tested unsupported color mode, identity, secrets, lifecycle, and real Blizzard consumer semantics remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.Copy",
@@ -86643,8 +86659,8 @@
       "id": "added:LuaColorCurveObject.Evaluate",
       "symbol": "LuaColorCurveObject.Evaluate",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -86659,14 +86675,24 @@
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
           "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_color_results_preserve_rgba_for_all_four_queries",
+          "summary": "Real registered color curves return the expected midpoint and endpoint ColorMixin channels through all four duration evaluations with tested modifiers.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_color_results_preserve_rgba_for_all_four_queries",
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+        "tests/duration_core.rs::duration_curve_unsupported_color_interpolation_propagates_evaluator_error"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current curve source uses userdata, not the former generic table proxy. The named native contract, complete method semantics, identity, coercion, errors, and security remain unverified; source relocation awards no behavioral credit."
+      "notes": "Existing duration-to-curve integration proof reused; no runtime or test changes. Credit is limited to the listed ordinary simulator observations. Native interpolation/extrapolation, empty curves, point ordering/duplicates, coercion/errors beyond the tested unsupported color mode, identity, secrets, lifecycle, and real Blizzard consumer semantics remain unverified."
     },
     {
       "id": "added:LuaColorCurveObject.EvaluateUnpacked",
@@ -87056,8 +87082,8 @@
       "id": "added:LuaCurveObject.ClearPoints",
       "symbol": "LuaCurveObject.ClearPoints",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87072,14 +87098,22 @@
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
           "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+          "summary": "Clearing and rebuilding a scalar curve changes its midpoint result from20 to70 through all four duration queries. Standalone empty-curve/count behavior is not asserted.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current curve source uses userdata, not the former generic table proxy. The named native contract, complete method semantics, identity, coercion, errors, and security remain unverified; source relocation awards no behavioral credit."
+      "notes": "Existing duration-to-curve integration proof reused; no runtime or test changes. Credit is limited to the listed ordinary simulator observations. Native interpolation/extrapolation, empty curves, point ordering/duplicates, coercion/errors beyond the tested unsupported color mode, identity, secrets, lifecycle, and real Blizzard consumer semantics remain unverified."
     },
     {
       "id": "added:LuaCurveObject.Copy",

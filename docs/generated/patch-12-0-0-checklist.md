@@ -2216,10 +2216,10 @@
 2216. [best-effort] `added:LE_PET_JOURNAL_FILTER_TYPE_NON_COMBAT_PETS` — behavioral
 2217. [evidence-required] `added:LayeredRegion.SetVertexColorFromBoolean` — unsafe
 2218. [best-effort] `added:LuaColorCurveObject` — behavioral
-2219. [evidence-required] `added:LuaColorCurveObject.AddPoint` — unsafe
-2220. [evidence-required] `added:LuaColorCurveObject.ClearPoints` — unsafe
+2219. [best-effort] `added:LuaColorCurveObject.AddPoint` — behavioral
+2220. [best-effort] `added:LuaColorCurveObject.ClearPoints` — behavioral
 2221. [best-effort] `added:LuaColorCurveObject.Copy` — behavioral
-2222. [evidence-required] `added:LuaColorCurveObject.Evaluate` — unsafe
+2222. [best-effort] `added:LuaColorCurveObject.Evaluate` — behavioral
 2223. [evidence-required] `added:LuaColorCurveObject.EvaluateUnpacked` — unsafe
 2224. [evidence-required] `added:LuaColorCurveObject.GetPoint` — unsafe
 2225. [evidence-required] `added:LuaColorCurveObject.GetPointCount` — unsafe
@@ -2232,7 +2232,7 @@
 2232. [evidence-required] `added:LuaColorCurvePoint.y` — unsafe
 2233. [best-effort] `added:LuaCurveObject` — behavioral
 2234. [best-effort] `added:LuaCurveObject.AddPoint` — behavioral
-2235. [evidence-required] `added:LuaCurveObject.ClearPoints` — unsafe
+2235. [best-effort] `added:LuaCurveObject.ClearPoints` — behavioral
 2236. [best-effort] `added:LuaCurveObject.Copy` — behavioral
 2237. [best-effort] `added:LuaCurveObject.Evaluate` — behavioral
 2238. [evidence-required] `added:LuaCurveObject.GetPoint` — unsafe
