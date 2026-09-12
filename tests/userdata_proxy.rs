@@ -646,6 +646,51 @@ fn curve_boolean_helpers_are_absent_before_retail_12_0_0() {
 }
 
 #[test]
+fn curve_get_type_scalar_tracks_mode_and_copy_independence() {
+    assert_curve_get_type_tracks_mode_and_copy("CreateCurve");
+}
+
+#[test]
+fn curve_get_type_color_tracks_mode_and_copy_independence() {
+    assert_curve_get_type_tracks_mode_and_copy("CreateColorCurve");
+}
+
+fn assert_curve_get_type_tracks_mode_and_copy(factory: &str) {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(&format!(
+        r#"
+        local function assert_type(expected, ...)
+            assert(select('#', ...) == 1, 'GetType must return one value')
+            local actual = ...
+            assert(type(actual) == 'number', 'GetType must return a number')
+            assert(actual == expected, 'unexpected curve type')
+        end
+        assert(Enum.LuaCurveType.Linear == 0 and Enum.LuaCurveType.Step == 1)
+        local source = C_CurveUtil.{factory}()
+        assert_type(0, source:GetType())
+        source:SetType(Enum.LuaCurveType.Step)
+        assert_type(1, source:GetType())
+        local copy = source:Copy()
+        assert_type(1, copy:GetType())
+        source:SetType(Enum.LuaCurveType.Linear)
+        assert_type(0, source:GetType())
+        assert_type(1, copy:GetType())
+        copy:SetType(Enum.LuaCurveType.Linear)
+        assert_type(0, copy:GetType())
+        source:SetType(Enum.LuaCurveType.Step)
+        assert_type(1, source:GetType())
+        assert_type(0, copy:GetType())
+        copy:SetType(Enum.LuaCurveType.Step)
+        assert_type(1, copy:GetType())
+        source:SetType(Enum.LuaCurveType.Linear)
+        assert_type(0, source:GetType())
+        assert_type(1, copy:GetType())
+        "#,
+    ))
+    .expect("GetType follows independent source and copy modes");
+}
+
+#[test]
 fn curve_object_is_userdata_with_methods() {
     let env = WowLuaEnv::new().unwrap();
     let (typ, has_add, has_eval): (String, bool, bool) = env
