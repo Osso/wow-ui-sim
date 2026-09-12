@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Test namespace current-action cast transitions
+
+`aead3f6e2` adds two direct `C_ActionBar.IsCurrentAction` fixtures for valid matching, nonmatching, and empty slots through actual `CastSpellByID` / `SpellStopCasting`, exact boolean arity, and live slot reassignment/removal. Retail 12.0.0 development proof passes 16/16 grouped cases with six existing historical-profile warnings; runtime is unchanged. One bounded credit reaches **2280 best-effort / 1128 evidence-required / 2 exceptions**, with two new test references and no hash renewals. Independent verification remains pending. Native semantics, invalid inputs, channeling, autorepeat, usability/resources, and Blizzard consumer behavior remain unproven.
+
 ## [2026-09-12] audit | Credit existing action cooldown info assertions
 
 `4474392b4` / `7dd785804` credit `C_ActionBar.GetActionCooldown` and its `startTime`, `duration`, and `modRate` fields from unchanged duration fixtures. Active-spell assertions establish start `now-5`, span `30`, and rate `1`; GCD assertions establish start `now-2` and span `60`, not GCD rate. `/tmp/verify-action-cooldown-fields-ledger.json` passes four credits, seven new references, zero renewals, all 14,820 fresh references, canonical validation and exact checklist/inventory matching. Hash-matched profile/build/startup proof is reused without Cargo runs. Totals: **2279 best-effort / 1129 evidence-required / 2 exceptions**. Enablement, invalid/empty namespace queries, non-default rates, complete native payload and consumer semantics remain unverified.

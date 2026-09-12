@@ -92,7 +92,7 @@
 92. [evidence-required] `added:C_ActionBar.IsAttackAction` — unsafe
 93. [evidence-required] `added:C_ActionBar.IsAutoRepeatAction` — unsafe
 94. [evidence-required] `added:C_ActionBar.IsConsumableAction` — unsafe
-95. [evidence-required] `added:C_ActionBar.IsCurrentAction` — unsafe
+95. [best-effort] `added:C_ActionBar.IsCurrentAction` — behavioral
 96. [evidence-required] `added:C_ActionBar.IsEquippedAction` — unsafe
 97. [best-effort] `added:C_ActionBar.IsEquippedGearOutfitAction` — behavioral
 98. [evidence-required] `added:C_ActionBar.IsItemAction` — unsafe

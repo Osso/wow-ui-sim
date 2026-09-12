@@ -3567,8 +3567,8 @@
       "id": "added:C_ActionBar.IsCurrentAction",
       "symbol": "C_ActionBar.IsCurrentAction",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -3582,21 +3582,36 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
-          "summary": "Current implementation provides a partial casting/action-slot model: it compares the active casting spell to the slot action and otherwise returns false. No focused direct test is present in this evidence slice."
+          "summary": "Compares the active casting spell with the action-slot spell; direct namespace fixtures exercise ordinary cast/stop transitions and live slot reassignment/removal."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api/registration.rs",
           "source_hash": "1fce6600c8fe9ab8c0330e799c5c14dfdd4ce0c0ffc84fc6ff21b982ad2337cc",
           "summary": "Current C_ActionBar registration binds IsCurrentAction to its Rust implementation in the namespace method table."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/spell_state_probes.rs::c_action_bar_is_current_action_follows_cast_lifecycle",
+          "source_hash": "37bc37a9e6e8fc1f7caefc37ada6d909b0562cc3210ad7e392cfc3f1de24c85a",
+          "summary": "One boolean for matching, nonmatching, and empty slots before/during CastSpellByID(42) and after SpellStopCasting; only the matching active slot is true."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/spell_state_probes.rs::c_action_bar_is_current_action_reflects_slot_changes_during_cast",
+          "source_hash": "37bc37a9e6e8fc1f7caefc37ada6d909b0562cc3210ad7e392cfc3f1de24c85a",
+          "summary": "Reassigning, restoring, and removing slot 99 changes the namespace predicate while spell 42 remains the active cast."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/spell_state_probes.rs::c_action_bar_is_current_action_follows_cast_lifecycle",
+        "tests/spell_state_probes.rs::c_action_bar_is_current_action_reflects_slot_changes_during_cast"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aead3f6e231062d664359fada486ad639408b834",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current implementation provides a partial casting/action-slot model: it compares the active casting spell to the slot action and otherwise returns false. Authoritative semantics or a correct model/test are required, and no approval can close the row."
+      "notes": "Direct retail 12.0.0 namespace tests establish one boolean result for valid populated and empty slots: false before casting; true only when the slot spell matches the active CastSpellByID cast; false for nonmatching or empty slots and after SpellStopCasting. Reassigning or removing a slot while the cast remains active updates the result immediately. Native semantics, invalid-input behavior, channeling, autorepeat, usability/resources, and Blizzard consumer behavior remain unproven."
     },
     {
       "id": "added:C_ActionBar.IsEquippedAction",

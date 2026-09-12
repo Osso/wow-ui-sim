@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Test namespace current-action cast transitions
+
+Two direct namespace fixtures add bounded cast/stop and live slot-state coverage without runtime changes. Independent verification pending. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Credit existing action cooldown info assertions
 
 Verified four metadata-only credits for the namespace cooldown query and observed start/span/default-rate fields; totals `2279 / 1129 / 2`. No source changes or Cargo reruns. GCD rate and native/consumer semantics remain open. See [[patch-12-0-0-api-audit]].
