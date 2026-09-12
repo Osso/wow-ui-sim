@@ -4,10 +4,10 @@ Loaded Blizzard tooltip code owns money-line rendering. See [[tooltip-money-line
 
 ## What it must do
 
-- [ ] Loaded `GameTooltip_AddMoneyLine(self, rawCopper, useRedLineColor)` formats money with the Blizzard money formatter.
-- [ ] A zero copper value produces the loaded tooltip formatter's single-space line.
-- [ ] `false` or omitted uses highlight color; `true` uses red.
-- [ ] Mail tooltip consumers add their label before enclosed-money or unaffordable-COD money lines.
+- [x] Loaded `GameTooltip_AddMoneyLine(self, rawCopper, useRedLineColor)` formats money with the Blizzard money formatter.
+- [x] A zero copper value produces the loaded tooltip formatter's single-space line.
+- [x] `false` or omitted uses highlight color; `true` uses red.
+- [x] Mail tooltip consumers add their label before enclosed-money or unaffordable-COD money lines.
 
 ## How it works
 
@@ -25,8 +25,7 @@ Loaded Blizzard tooltip code owns money-line rendering. See [[tooltip-money-line
 
 ## Known gaps (current cycle)
 
-- [ ] Independently verify focused loaded Blizzard tooltip/mail assertions and audit provenance.
-- [ ] Native locale/rendering, historical-client, and whole-addon-clean-startup behavior remain unproven.
+- [ ] Native locale/rendering, historical-client, and whole-addon-clean-startup behavior remain unproven. The focused dependency closure emitted 128 distinct Lua-error headers and 18 suppression notices; `EditModeSystemTemplates.lua:27` lacks `GetSystemSettingDisplayInfoMap`.
 
 ## Out of scope
 

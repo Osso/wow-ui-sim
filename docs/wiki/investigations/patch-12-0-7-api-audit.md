@@ -32,11 +32,13 @@ The simulator also provides safe 12.0.7 additive probes for API names that can b
 - `C_PartyInfo.ConfirmReadyCheck`, `DoReadyCheck`, `UninviteUnit` (now Rust-backed; `UninviteUnit` mutates the existing party roster by unit token/name)
 - `C_PingSecure.ClearPendingPingOffScreenCallback` (now Rust-backed through the shared PingSecure callback table)
 - `C_QuestHub.GetDragonridingRacesForAreaPOI` (now Rust-backed deterministic empty table until area-POI race content exists)
-- `C_UIFileAsset.GetFileID`, `IsKnownFile`, `IsLooseFile` (now best-effort modeled from the bundled limited listfile)
+- `C_UIFileAsset.GetFileID`, `IsKnownFile`, `IsLooseFile` (best-effort limited-listfile surface; `IsLooseFile` currently returns false and has no local loose-file registration model)
 - `GetEventCPUUsage`, `GetFunctionCPUUsage`, `GetScriptCPUUsage` (now provided by the shared performance-metric defaults module)
 - secure pending callback getters/setters: button, ping off-screen, toggle run (now Rust-backed through the shared PingSecure callback table; callback storage only, not real secure-execution enforcement)
-- `GameTooltip_AddMoneyLine` — `8097a844c` removed an unsupported bootstrap prefix-text shim; cached `Blizzard_GameTooltip` owns the loaded helper. `d99d0bc72` adds three focused loaded helper/mail-consumer assertions for concrete coin-atlas text, single-space zero output, boolean highlight/red colors, and label-before-money order; `dd701ae2e` credits only this loaded proof. Its dependency closure has 128 distinct Lua-error headers, so this is not clean whole-addon startup proof. Native historical-client/locale/rendering behavior remains open. See [[tooltip-money-line]].
+- `GameTooltip_AddMoneyLine` — `8097a844c` removed an unsupported bootstrap prefix-text shim; cached `Blizzard_GameTooltip` owns the loaded helper. `e393e2f8e` verifies three hash-matched focused loaded helper/mail-consumer assertions and two fresh bootstrap-surface checks: concrete coin-atlas text, single-space zero output, boolean highlight/red colors, and label-before-money order. Its dependency closure has 128 distinct Lua-error headers plus 18 suppression notices, so this is not clean whole-addon/container/layout startup proof. Native historical-client/locale/rendering behavior remains open. See [[tooltip-money-line]].
 - `ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED` registration under `retail-12-0-7`
+
+`C_UIFileAsset.IsLooseFile` has only constant-false bounded tests for known and unknown paths. No local loose-file registration/classification model exists, so this supplies no evidence for a true loose-file result, numeric IDs, normalization, invalid inputs, or native file semantics; no credit or runtime change is claimed.
 
 Already-existing coverage from prior work included `C_Container.CalculateTotalNumberOfFreeBagSlots`, `C_DelvesUI.GetWorldTierDifficultyForActivePlayer`, `C_PingSecure.SetPendingPingOffScreenCallback`, and `URL_TEXTURE_REQUEST_RESULT` registration.
 

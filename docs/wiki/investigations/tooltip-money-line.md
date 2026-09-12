@@ -14,13 +14,13 @@ The bootstrap behavior made `true` prefix the money string instead of choosing r
 
 The simulator must not replace this vendor behavior or duplicate MoneyFormatter.
 
-## Development proof
+## Verification
 
-`d99d0bc72` adds three grouped `retail-12-0-7` tests in `tests/tooltip_money_line.rs`. `/tmp/tooltip-money-development-ledger.json` records 3/3 focused cases passing: loaded helper zero output is a single space; false/default and true select highlight/red colors with concrete coin-atlas text; and real `InboxFrameItem_OnEnter` preserves label-before-money ordering for enclosed money and unaffordable COD.
+`d99d0bc72` adds three grouped `retail-12-0-7` tests in `tests/tooltip_money_line.rs`. `/tmp/verify-tooltip-money-ledger.json` reuses their hash-matched 3/3 focused consumer proof and records fresh 2/2 library checks for the removed bootstrap surface. The consumer cases assert loaded helper single-space zero output, false/default highlight versus true red with concrete coin-atlas text, and real `InboxFrameItem_OnEnter` label-before-money ordering for enclosed money and unaffordable COD.
 
-The closure recorded 128 distinct dependency Lua-error headers, including unrelated FriendsFrame, EditMode, chat, and social API gaps. The assertions passed despite those errors, so this is focused consumer proof only—not clean whole-addon startup or broader addon compatibility proof. One earlier test invocation was aborted before its output was captured; its result is not used as evidence. Independent verification remains pending.
+At `e393e2f8e`, format, default check, both default binary builds, zero-error default startup, three manifest validators, and all-manifest hash scanning pass. The first 12.0.7 validator failed only because `load_addon` metadata was invalid; `e393e2f8e` corrects it and the one validator retry passes. One earlier focused test invocation was aborted before output capture; it is not evidence.
 
-`dd701ae2e` credits `added:GameTooltip_AddMoneyLine` from the three loaded tests and replaces the retired startup bridge reference. Native historical-client behavior, locale/rendering variation, and complete addon-startup behavior remain unproven.
+The dependency closure emitted 128 distinct Lua-error headers, including nested duplicates, plus 18 suppression notices. `Blizzard_EditMode/Shared/EditModeSystemTemplates.lua:27` lacks `GetSystemSettingDisplayInfoMap`; FriendsFrame, chat, and social gaps also occur. The assertions therefore prove only the focused consumer boundary, not clean whole-addon, container, or layout compatibility. Native historical-client behavior, locale/rendering variation, and complete addon startup remain unproven.
 
 ## See also
 
