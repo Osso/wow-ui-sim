@@ -86568,7 +86568,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
-          "summary": "New color points after clearing produce RGBA(0.5,0.5,0.5,0.25) through all four duration queries. Argument coercion and standalone insertion errors are not asserted.",
+          "summary": "New color points after clearing produce RGBA (0.5, 0.5, 0.5, 0.25) through all four duration queries. Argument coercion and standalone insertion errors are not asserted.",
           "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
@@ -87102,7 +87102,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
-          "summary": "Clearing and rebuilding a scalar curve changes its midpoint result from20 to70 through all four duration queries. Standalone empty-curve/count behavior is not asserted.",
+          "summary": "Clearing and rebuilding a scalar curve changes its midpoint result from 20 to 70 through all four duration queries. Standalone empty-curve/count behavior is not asserted.",
           "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
