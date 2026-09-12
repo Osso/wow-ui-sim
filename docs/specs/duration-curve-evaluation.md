@@ -24,7 +24,7 @@ Cached duration documentation describes a `LuaCurveObjectBase` input and `LuaCur
 
 ## Tests asserting this spec
 
-`tests/duration_core.rs` contains ten `duration_curve_` cases for seconds/fractions, before-start through expiry and rewind, modifiers, color channels, live point changes, invalid inputs, and propagated interpolation errors. RED records all ten failing against the constant-zero placeholders; `/tmp/duration-curve-green-ledger.json` records 10/10 passing at `aae5996eb`. Independent verification remains pending.
+`tests/duration_core.rs` contains ten `duration_curve_` cases for seconds/fractions, before-start through expiry and rewind, modifiers, color channels, live point changes, invalid inputs, and propagated interpolation errors. RED records all ten failing against the constant-zero placeholders; `/tmp/duration-curve-green-ledger.json` records 10/10 passing at `aae5996eb`. Final proof `/tmp/verify-duration-curve-ledger.json` passes all 25 `duration_core::` cases with exit 0 on 12.0.0, 12.0.5, 12.0.7, and Mists; it also passes 11 PTR curve/userdata cases, format, default check, both default binaries, zero-error startup, affected validators, and the all-manifest hash scan.
 
 ## Known gaps (current cycle)
 
