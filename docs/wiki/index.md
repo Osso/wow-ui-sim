@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Renew tested retail 12.0.0 evidence
 
-`5a4893d57` renews 1,040 stale evidence references: 1,034 behavioral references across 917 rows and six provenance-only references. Classifications stay **2242 best-effort / 1166 evidence-required / 2 exceptions**. Eleven curve rows now describe tested userdata behavior and cite `src/c_api/c_curve_util.rs`, not the obsolete table-proxy claim. The remaining 538 stale references are 536 evidence-required and two PTR-only legacy compatibility rows. Canonical validation remains pending. See [[patch-12-0-0-api-audit]].
+`5a4893d57` renews 1,040 stale evidence references: 1,034 behavioral references across 917 rows and six provenance-only references. Classifications stay **2242 best-effort / 1166 evidence-required / 2 exceptions**. Eleven curve rows now describe tested userdata behavior and cite `src/c_api/c_curve_util.rs`, not the obsolete table-proxy claim. The remaining 538 stale references are 536 evidence-required and two PTR-only legacy compatibility rows. Independent metadata verification passed; five manifests validate, while 12.0.0 still fails on retained drift. See [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] audit | Model bounded retail 12.0.0 paragon and specialization inputs
 
