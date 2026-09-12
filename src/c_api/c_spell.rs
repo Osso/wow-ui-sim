@@ -73,6 +73,8 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     ("GetSpellLink", get_spell_link),
     ("GetSpellName", get_spell_name),
     ("GetSpellCooldown", get_spell_cooldown),
+    #[cfg(feature = "retail-12-0-0")]
+    ("GetSpellCooldownDuration", get_spell_cooldown_duration),
     ("GetMountFromSpell", get_mount_from_spell),
     ("GetSpellTradeSkillLink", get_spell_trade_skill_link),
     (
@@ -421,6 +423,20 @@ fn get_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+fn get_spell_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(spell_id) = read_spell_identifier(state)? else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let (start, seconds) = {
+        let sim = borrow_state(state)?;
+        let now = sim.start_time.elapsed().as_secs_f64();
+        spell_cooldown_times(&sim, spell_id, now)
+    };
+    crate::lua_api::globals::lua_duration_object::push_timed_duration_object(state, start, seconds)
+}
+
 /// `C_Spell.GetMountFromSpell(spellID)` → mountID or nil.
 ///
 /// Scans `world.mounts` for a matching spell_id. Returns the mount_id or nil.
@@ -574,22 +590,22 @@ fn alias_key_from_input(state: &LuaState, value: Val) -> Option<String> {
 /// when no alias is registered (matches retail's identity behavior for
 /// non-overridden spells); string input requires an alias entry.
 fn get_spell_id_for_spell_identifier(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_spell_identifier(state)?;
+    state.push(spell_id.map_or(Val::Nil, |id| Val::Num(id as f64)));
+    Ok(1)
+}
+
+fn read_spell_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     let raw = stack_val(state, 1);
-    let is_number = matches!(raw, Val::Num(_));
     let Some(key) = alias_key_from_input(state, raw) else {
-        state.push(Val::Nil);
-        return Ok(1);
+        return Ok(None);
+    };
+    let numeric_id = match raw {
+        Val::Num(number) => Some(number as u32),
+        _ => None,
     };
     let alias = borrow_state(state)?.spell_id_aliases.get(&key).copied();
-    match alias {
-        Some(id) => state.push(Val::Num(id as f64)),
-        None if is_number => {
-            let id: u32 = key.parse().unwrap_or(0);
-            state.push(Val::Num(id as f64));
-        }
-        None => state.push(Val::Nil),
-    }
-    Ok(1)
+    Ok(alias.or(numeric_id))
 }
 
 /// `C_Spell.IsCurrentSpell(spellID)` → `true` when the active cast matches.

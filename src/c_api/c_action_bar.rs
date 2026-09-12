@@ -1,8 +1,8 @@
 //! State-backed action cooldown queries; other action-bar APIs retain their existing owners.
 
 use crate::lua_api::globals::action_bar_api::spell_cooldown_times;
-use crate::lua_api::globals::lua_duration_object::new_duration_object_value;
-use crate::lua_api::methods::{borrow_state, call_function_state};
+use crate::lua_api::globals::lua_duration_object::push_timed_duration_object;
+use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -22,14 +22,5 @@ pub(crate) fn read_action_cooldown(state: &LuaState) -> LuaResult<(f64, f64)> {
 
 pub(crate) fn get_action_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
     let (start, seconds) = read_action_cooldown(state)?;
-    let duration = new_duration_object_value(state);
-    state.push(duration);
-    let key = state.gc.intern_string(b"SetTimeFromStart");
-    let set_time = state.gettable(duration, Val::Str(key))?;
-    call_function_state(
-        state,
-        set_time,
-        &[duration, Val::Num(start), Val::Num(seconds), Val::Num(1.0)],
-    )?;
-    Ok(1)
+    push_timed_duration_object(state, start, seconds)
 }

@@ -18,7 +18,8 @@
 mod core;
 
 use crate::lua_api::methods::{
-    create_table, registry_get, registry_set, table_get, table_set, table_set_static,
+    call_function_state, create_table, registry_get, registry_set, table_get, table_set,
+    table_set_static,
 };
 use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;
@@ -123,6 +124,24 @@ pub fn register_lua_duration_object(lua: &mut rilua::Lua) -> crate::Result<()> {
 pub(crate) fn new_duration_object_value(state: &mut LuaState) -> Val {
     ensure_metatable(state);
     new_duration_object(state)
+}
+
+/// Push a duration snapshot using the same validated setter exposed to Lua.
+pub(crate) fn push_timed_duration_object(
+    state: &mut LuaState,
+    start: f64,
+    seconds: f64,
+) -> LuaResult<u32> {
+    let duration = new_duration_object_value(state);
+    state.push(duration);
+    let key = state.gc.intern_string(b"SetTimeFromStart");
+    let set_time = state.gettable(duration, Val::Str(key))?;
+    call_function_state(
+        state,
+        set_time,
+        &[duration, Val::Num(start), Val::Num(seconds), Val::Num(1.0)],
+    )?;
+    Ok(1)
 }
 
 // ── Metamethod / method implementations ──────────────────────────────────────
