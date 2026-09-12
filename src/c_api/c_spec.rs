@@ -96,6 +96,14 @@ fn c_spec_get_specialization(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_spec_get_specialization_info(state: &mut LuaState) -> LuaResult<u32> {
+    let class_id = stack_val(state, 7);
+    if cfg!(feature = "retail-12-0-0") && class_id != Val::Nil {
+        match explicit_class_spec(class_id, stack_val(state, 1)) {
+            Some(spec) => push_specialization_info(state, spec),
+            None => push_specialization_defaults(state),
+        }
+        return Ok(10);
+    }
     let requested_index = match stack_val(state, 1) {
         Val::Num(n) => n as i32,
         _ => 1,
@@ -106,6 +114,41 @@ fn c_spec_get_specialization_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     push_specialization_info(state, spec);
     Ok(10)
+}
+
+fn explicit_class_spec(class_id: Val, index: Val) -> Option<&'static specializations::SpecInfo> {
+    let class_id = positive_integer(class_id)?;
+    let index = positive_integer(index)?;
+    specializations::specs_for_class(class_id).nth((index - 1) as usize)
+}
+
+fn positive_integer(value: Val) -> Option<u32> {
+    let Val::Num(number) = value else {
+        return None;
+    };
+    let in_range = number >= 1.0 && number <= u32::MAX as f64;
+    if in_range && number.fract() == 0.0 {
+        Some(number as u32)
+    } else {
+        None
+    }
+}
+
+fn push_specialization_defaults(state: &mut LuaState) {
+    for value in [
+        Val::Num(0.0),
+        Val::Nil,
+        Val::Nil,
+        Val::Nil,
+        Val::Nil,
+        Val::Nil,
+        Val::Num(0.0),
+        Val::Nil,
+        Val::Num(0.0),
+        Val::Bool(true),
+    ] {
+        state.push(value);
+    }
 }
 
 fn c_spec_get_spec_ids(state: &mut LuaState) -> LuaResult<u32> {
