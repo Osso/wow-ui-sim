@@ -500,8 +500,6 @@ fn install_zero_methods(state: &mut LuaState, methods: Val) {
         "EvaluateElapsedPercent",
         "EvaluateRemainingDuration",
         "EvaluateRemainingPercent",
-        "GetElapsedPercent",
-        "GetRemainingPercent",
     ] {
         install_method(state, methods, key, key, m_evaluate_zero);
     }

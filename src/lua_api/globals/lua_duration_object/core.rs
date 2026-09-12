@@ -168,6 +168,8 @@ enum Query {
     Total,
     Elapsed,
     Remaining,
+    ElapsedPercent,
+    RemainingPercent,
     Rate,
     Clock,
     Zero,
@@ -196,11 +198,14 @@ fn duration_value(
         return Ok(span * scale);
     }
     let elapsed = (clock_time(state, object)? - timing.start).clamp(0.0, span);
-    let duration = if matches!(query, Query::Elapsed) {
+    let duration = if matches!(query, Query::Elapsed | Query::ElapsedPercent) {
         elapsed
     } else {
         span - elapsed
     };
+    if matches!(query, Query::ElapsedPercent | Query::RemainingPercent) {
+        return Ok(if span > 0.0 { duration / span } else { 0.0 });
+    }
     Ok(duration * scale)
 }
 
@@ -241,6 +246,8 @@ pub(super) fn register(state: &mut LuaState, methods: Val) {
         ("GetTotalDuration", |s| query(s, Query::Total)),
         ("GetElapsedDuration", |s| query(s, Query::Elapsed)),
         ("GetRemainingDuration", |s| query(s, Query::Remaining)),
+        ("GetElapsedPercent", |s| query(s, Query::ElapsedPercent)),
+        ("GetRemainingPercent", |s| query(s, Query::RemainingPercent)),
         ("GetModRate", |s| query(s, Query::Rate)),
         ("GetClockTime", |s| query(s, Query::Clock)),
         ("IsZero", |s| query(s, Query::Zero)),

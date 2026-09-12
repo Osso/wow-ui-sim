@@ -11,11 +11,15 @@ Ordinary clock-driven duration state for the existing Lua table proxy in `src/lu
 - [x] Reset timing/rate without changing the selected clock; `SetToDefaults` also clears that clock binding.
 - [x] Reject tested nonfinite endpoints/durations, negative durations, reversed spans, and zero rates before changing timing state. Additional overflow/nonfinite-rate rejection is implemented but not separately proven.
 
+- [ ] Return elapsed/remaining fractions from the same timing state, with clock-boundary clamping, rewind, and modifier validation; verify historical profiles.
+
 ### Chosen formulas — native-unverified
 
 Store start `s`, base duration `D >= 0`, and finite rate `r > 0`. Real span `T = D / r`; end `e = s + T`. `SetTimeFromEnd(e,D,r)` derives `s=e-D/r`. `SetTimeSpan(s,e)` stores `D=e-s`, `r=1`.
 
 `RealTime=0` (default) returns total `T`, elapsed `clamp(now-s,0,T)`, remaining `T-elapsed`. `BaseTime=1` multiplies these duration results by `r`. Endpoint queries remain clock coordinates regardless of modifier. Unknown duration-query modifiers error; native modifier/coercion behavior is unverified.
+
+Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent` is elapsed divided by `T`, and `GetRemainingPercent` is remaining divided by `T`. Both return zero when `T==0`. Omitted/nil, `RealTime`, and `BaseTime` give the same fractions because numerator and denominator share the time scale; invalid modifiers and invalid bound clocks still error. Division uses real-time quantities before scaling. Fraction scale, clamping, zero-span results, validation, and rewind behavior are simulator policies, not native conformance claims.
 
 `IsZero` means configured `D==0`, not expiration. Zero durations report false for `HasStarted`, `HasExpired`, and `IsActive`, preserving existing default behavior. For nonzero durations, `HasStarted` means `now>=s`; `HasExpired` means `now>=e`; `IsActive` means `s<=now<e`. Before start, elapsed is zero and remaining is the full interval. After end, elapsed is the full interval and remaining is zero. Clock rewind reverses these observations without modifying configured timing.
 
@@ -33,7 +37,7 @@ Store start `s`, base duration `D >= 0`, and finite rate `r > 0`. Real span `T =
 
 ## Tests asserting this spec
 
-- `tests/duration_core.rs`: manual progression/rewind, rate modifiers, end/span configuration, reset, atomic validation, default time source, independent instances.
+- `tests/duration_core.rs`: manual progression/rewind, rate modifiers, end/span configuration, reset, atomic validation, default time source, independent instances; percentage boundary/rewind, zero-span, invalid modifier, and invalid clock policies.
 - Existing `tests/cooldown_widget.rs` and duration-text-binding tests: bounded consumer regression checks; these do not establish native core formulas.
 
 Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
@@ -50,6 +54,6 @@ Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR a
 
 ## Out of scope
 
-- Curve evaluation, percent queries, `Assign`/`Copy`, and rendering behavior remain existing placeholders; this slice adds no evaluation features.
+- Curve evaluation, `Assign`/`Copy`, and rendering behavior remain outside this slice; no curve-evaluation features are added.
 - Secret values, taint, protected/forbidden calls, and immutable proxy internals: not inferred from ordinary numeric behavior.
 - Consumer redesign or changes to duration-text-binding identity: preserve current proxy representation.
