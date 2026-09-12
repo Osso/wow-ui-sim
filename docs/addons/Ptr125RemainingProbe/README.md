@@ -1,6 +1,6 @@
 # PTR 12.1.5 remaining-contract probe
 
-**Prepared only. Not installed or executed in WoW.** Local fixture tests validate the recorder, not native behavior. Audit rows stay evidence-required until captured results are reviewed.
+**Installed in the desktop PTR addon directory; not executed in WoW.** Local fixture tests validate the recorder, not native behavior. Audit rows stay evidence-required until captured results are reviewed.
 
 Target: **12.1.5.69594**, interface **120105**. Every run records available `GetBuildInfo()` fields and marks the pinned-build match `true`, `false`, or `unknown` when build metadata is unavailable. Results from another or unknown build are not pinned-build proof.
 
@@ -15,7 +15,7 @@ Target: **12.1.5.69594**, interface **120105**. Every run records available `Get
 
 ## Manual capture
 
-1. Copy this folder to the actual PTR client's `Interface/AddOns/Ptr125RemainingProbe/`, keeping the TOC directly inside that folder. See [addon placement](../create-and-install-wow-addon.md); Desktop staging is not installation.
+1. The probe is installed at `C:/World of Warcraft/_xptr_/Interface/AddOns/Ptr125RemainingProbe/` on the desktop PTR. To reinstall it from the repository root, run `python3 docs/addons/Ptr125RemainingProbe/deploy.sh`.
 2. Enable the addon and run `/ptr125probe structures`.
 3. Run `/ptr125probe secrets`. Repeat only when your normal player/target state supplies suitable secret values; the addon does not target, cast, enter combat, or modify auras.
 4. Run `/ptr125probe status`. Later, when safe, `/reload` or log out to flush SavedVariables.
