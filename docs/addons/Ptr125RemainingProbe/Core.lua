@@ -35,6 +35,19 @@ function Probe.describe(value, includeValue)
     return result
 end
 
+function Probe.is_public(value, kind)
+    local metadata = Probe.describe(value, false)
+    return metadata.kind == kind and metadata.secret == false and metadata.accessible == true
+end
+
+function Probe.public_number(value)
+    if not Probe.is_public(value, "number") then return nil end
+    if value ~= value then return nil end
+    local infinite = value == math.huge or value == -math.huge
+    if infinite then return nil end
+    return value
+end
+
 function Probe.note(run, label, status, message)
     run.observations[#run.observations + 1] = {
         label = label, status = status, message = message,

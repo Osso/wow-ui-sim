@@ -74,6 +74,34 @@ local function inspect_first_signal(run, result)
     end
 end
 
+local function read_deadline(run)
+    local clock = Probe.capture(run, "signals:clock", "direct", rawget(_G, "GetTime"), Probe.pack(), true)
+    local now = clock[1] and Probe.public_number(clock[2]) or nil
+    if now == nil then
+        Probe.note(run, "signals:control", "inconclusive", "Clock is not a verified public finite number")
+        return nil
+    end
+    local deadline = Probe.public_number(now + 600)
+    if deadline == nil or deadline <= now then
+        Probe.note(run, "signals:control", "inconclusive", "Future deadline could not be represented")
+        return nil
+    end
+    Probe.capture(run, "signals:deadline", "direct", function() return deadline end, Probe.pack(), true)
+    return deadline
+end
+
+local function verify_scheduled_signal(run, map, deadline)
+    local member = capture_method(run, "signals:HasSignal", map, "HasSignal", Probe.pack(17), true)
+    local timing = capture_method(run, "signals:GetSignalTime", map, "GetSignalTime", Probe.pack(17), true)
+    local publicMember = member[1] and Probe.is_public(member[2], "boolean")
+    local actualTime = timing[1] and Probe.public_number(timing[2]) or nil
+    if not publicMember or not member[2] or actualTime ~= deadline then
+        Probe.note(run, "signals:control", "inconclusive", "Scheduled membership and time were not verified")
+        return false
+    end
+    return true
+end
+
 local function signal_control(run)
     local factory = Probe.capture(run, "signals:factory", "direct", function()
         local namespace = rawget(_G, "C_Timer")
@@ -84,17 +112,14 @@ local function signal_control(run)
     if not created[1] or created.n < 2 or created[2] == nil then return end
     local map = created[2]
     Probe.defer(run, "structures-signals", function() map:CancelAllSignals() end)
-    local deadline = Probe.capture(run, "signals:deadline", "direct",
-        function() return GetTime() + 600 end, Probe.pack(), true)
-    if not deadline[1] then
-        Probe.note(run, "signals:control", "inconclusive", "No valid deadline control; return shape not tested")
-        return
-    end
-    local scheduled = capture_method(run, "signals:SignalAt", map, "SignalAt", Probe.pack(17, deadline[2]), false)
+    local deadline = read_deadline(run)
+    if deadline == nil then return end
+    local scheduled = capture_method(run, "signals:SignalAt", map, "SignalAt", Probe.pack(17, deadline), false)
     if not scheduled[1] then
         Probe.note(run, "signals:control", "inconclusive", "Scheduling failed; populated return shape not tested")
         return
     end
+    if not verify_scheduled_signal(run, map, deadline) then return end
     local nextSignal = capture_method(run, "signals:GetNextSignal", map, "GetNextSignal", Probe.pack(), true)
     inspect_first_signal(run, nextSignal)
 end

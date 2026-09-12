@@ -10,7 +10,8 @@ end
 
 local function fixture(options)
     local Probe, objects = {}, {}
-    local state = { regions = {}, hidden = false, hideCalls = 0, cancelled = 0, nextCalls = 0 }
+    local state = { regions = {}, hidden = false, hideCalls = 0, cancelled = 0,
+        nextCalls = 0, signalCalls = 0, clockArithmetic = 0 }
     _G.Ptr125RemainingProbeDB = nil
     _G.issecretvalue = function(value) return value == state.secret end
     _G.canaccessvalue = function(value) return value ~= state.secret end
@@ -19,9 +20,12 @@ local function fixture(options)
     _G.GetBuildInfo = function() return "12.1.5", "69594", "fixture", 120105 end
     _G.GetLocale = function() return "enUS" end
     _G.time = function() return 123456 end
-    _G.GetTime = function() return 100 end
+    _G.GetTime = function() return options.secretClock and state.secret or 100 end
     _G.print = function() end
-    state.secret = setmetatable({}, { __tostring = function() error("secret stringified") end })
+    state.secret = setmetatable({}, {
+        __tostring = function() error("secret stringified") end,
+        __add = function() state.clockArithmetic = state.clockArithmetic + 1; error("secret clock arithmetic") end,
+    })
     objects[state.secret] = true
     _G.CreateRegionParams = options.globalTypes and {} or nil
     _G.TimedSignalMapEntry = options.globalTypes and newproxy(true) or nil
@@ -83,9 +87,15 @@ local function fixture(options)
         local map = {}
         objects[map] = true
         function map:SignalAt(key, at)
+            state.signalCalls = state.signalCalls + 1
             assert(key == 17 and at == 700)
             if options.signalError then error("fixture schedule failure") end
+            if options.silentSignal then return end
             self.key, self.at = key, at
+        end
+        function map:HasSignal(key) return self.key == key end
+        function map:GetSignalTime(key)
+            if self.key == key then return self.at end
         end
         function map:GetNextSignal()
             state.nextCalls = state.nextCalls + 1
@@ -208,4 +218,11 @@ assert(not observation(run, "signals:SignalAt").ok and state.cancelled == 1)
 assert(state.nextCalls == 0, "failed scheduling must not masquerade as a populated-map probe")
 assert(observation(run, "signals:control").status == "inconclusive")
 assert(not observation(run, "cleanup:structures-owner").ok)
+run, state = fixture({acceptTables = true, returnKind = "tuple", secretClock = true})
+assert(state.clockArithmetic == 0, "secret clock used in arithmetic")
+assert(state.signalCalls == 0 and state.nextCalls == 0 and state.cancelled == 1)
+assert(observation(run, "signals:control").status == "inconclusive")
+run, state = fixture({acceptTables = true, returnKind = "tuple", silentSignal = true})
+assert(state.signalCalls == 1 and state.nextCalls == 0 and state.cancelled == 1)
+assert(observation(run, "signals:control").status == "inconclusive")
 io.write("Structures recorder fixtures passed: " .. scenarios .. " scenarios\n")
