@@ -47,6 +47,193 @@ fn get_spell_cooldown_reads_spell_cooldowns_entry() {
     assert_close(duration, 30.0);
 }
 
+// ── C_Spell.GetSpellCooldownDuration ──────────────────────────────────────────
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn get_spell_cooldown_duration_reads_active_spell_and_runtime_clock() {
+    let env = env();
+    let start = {
+        let mut state = env.state().borrow_mut();
+        let start = state.start_time.elapsed().as_secs_f64() - 5.0;
+        state.gcd = None;
+        state.spell_cooldowns.insert(
+            12345,
+            SpellCooldownState {
+                start,
+                duration: 30.0,
+            },
+        );
+        start
+    };
+    let (actual_start, total, end, rate): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local duration = C_Spell.GetSpellCooldownDuration(12345)
+            local info = C_Spell.GetSpellCooldown(12345)
+            assert(duration ~= nil, 'active spell returns a duration object')
+            assert(math.abs(duration:GetStartTime() - info.startTime) < 1e-9)
+            assert(math.abs(duration:GetTotalDuration() - info.duration) < 1e-9)
+            assert(duration:GetModRate() == info.modRate)
+            local before = GetTime()
+            local elapsed = duration:GetElapsedDuration()
+            local remaining = duration:GetRemainingDuration()
+            local after = GetTime()
+            local start, finish = duration:GetStartTime(), duration:GetEndTime()
+            local epsilon = 1e-6
+            assert(elapsed >= math.min(30, math.max(0, before - start)) - epsilon)
+            assert(elapsed <= math.min(30, math.max(0, after - start)) + epsilon)
+            assert(remaining >= math.min(30, math.max(0, finish - after)) - epsilon)
+            assert(remaining <= math.min(30, math.max(0, finish - before)) + epsilon)
+            return start, duration:GetTotalDuration(), finish, duration:GetModRate()
+            "#,
+        )
+        .expect("spell duration matches modeled cooldown state and runtime clock");
+    assert_close(actual_start, start);
+    assert_close(total, 30.0);
+    assert_close(end, start + 30.0);
+    assert_close(rate, 1.0);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn get_spell_cooldown_duration_resolves_alias_and_snapshots_state() {
+    let env = env();
+    let start = {
+        let mut state = env.state().borrow_mut();
+        let start = state.start_time.elapsed().as_secs_f64() - 5.0;
+        state.gcd = None;
+        state.spell_id_aliases.insert("test spell".into(), 12345);
+        state.spell_cooldowns.insert(
+            12345,
+            SpellCooldownState {
+                start,
+                duration: 30.0,
+            },
+        );
+        start
+    };
+    env.exec(
+        r#"
+        -- Seeded alias policy, not a claim about real spell-name search.
+        oldSpellDuration = C_Spell.GetSpellCooldownDuration('TeSt SpElL')
+        local lower = C_Spell.GetSpellCooldownDuration('test spell')
+        assert(oldSpellDuration:GetStartTime() == lower:GetStartTime())
+        assert(oldSpellDuration:GetTotalDuration() == 30)
+        assert(lower:GetTotalDuration() == 30)
+        "#,
+    )
+    .expect("seeded spell alias resolves case variants");
+    {
+        let mut state = env.state().borrow_mut();
+        state.spell_cooldowns.insert(
+            12345,
+            SpellCooldownState {
+                start,
+                duration: 45.0,
+            },
+        );
+        state.spell_id_aliases.insert("test spell".into(), 54321);
+        state.spell_cooldowns.insert(
+            54321,
+            SpellCooldownState {
+                start: start + 1.0,
+                duration: 60.0,
+            },
+        );
+    }
+    let (old_start, old_total, new_start, new_total, numeric_total): (f64, f64, f64, f64, f64) =
+        env.eval(
+            r#"
+            local current = C_Spell.GetSpellCooldownDuration('TEST SPELL')
+            local numeric = C_Spell.GetSpellCooldownDuration(12345)
+            return oldSpellDuration:GetStartTime(), oldSpellDuration:GetTotalDuration(),
+                current:GetStartTime(), current:GetTotalDuration(), numeric:GetTotalDuration()
+            "#,
+        )
+        .expect("new queries reflect changed alias and cooldown state");
+    assert_close(old_start, start);
+    assert_close(old_total, 30.0);
+    assert_close(new_start, start + 1.0);
+    assert_close(new_total, 60.0);
+    assert_close(numeric_total, 45.0);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn get_spell_cooldown_duration_selects_later_ending_gcd() {
+    let env = env();
+    let gcd_start = {
+        let mut state = env.state().borrow_mut();
+        let now = state.start_time.elapsed().as_secs_f64();
+        state.spell_cooldowns.insert(
+            12345,
+            SpellCooldownState {
+                start: now - 5.0,
+                duration: 30.0,
+            },
+        );
+        state.gcd = Some((now - 2.0, 60.0));
+        now - 2.0
+    };
+    let (start, total, end, rate): (f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local duration = C_Spell.GetSpellCooldownDuration(12345)
+            local info = C_Spell.GetSpellCooldown(12345)
+            assert(math.abs(duration:GetStartTime() - info.startTime) < 1e-9)
+            assert(math.abs(duration:GetTotalDuration() - info.duration) < 1e-9)
+            return duration:GetStartTime(), duration:GetTotalDuration(),
+                duration:GetEndTime(), duration:GetModRate()
+            "#,
+        )
+        .expect("spell duration follows the modeled later-ending GCD");
+    assert_close(start, gcd_start);
+    assert_close(total, 60.0);
+    assert_close(end, gcd_start + 60.0);
+    assert_close(rate, 1.0);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias() {
+    let env = env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.gcd = None;
+        state.spell_cooldowns.remove(&12345);
+        state.spell_id_aliases.remove("unresolved test spell");
+    }
+    env.exec(
+        r#"
+        -- Explicit simulator policy, not native unknown-spell or return-arity proof.
+        local duration = C_Spell.GetSpellCooldownDuration(12345)
+        assert(duration ~= nil)
+        assert(duration:GetStartTime() == 0)
+        assert(duration:GetTotalDuration() == 0)
+        assert(duration:GetEndTime() == 0)
+        assert(duration:GetModRate() == 1)
+        assert(duration:GetElapsedDuration() == 0)
+        assert(duration:GetRemainingDuration() == 0)
+        assert(C_Spell.GetSpellCooldownDuration('unresolved test spell') == nil)
+        "#,
+    )
+    .expect("inactive numeric identifiers yield zero timing and unresolved aliases yield nil");
+}
+
+#[cfg(not(feature = "retail-12-0-0"))]
+#[test]
+fn get_spell_cooldown_duration_is_absent_before_retail_12_0_0() {
+    let env = env();
+    let absent: bool = env
+        .eval("return C_Spell.GetSpellCooldownDuration == nil")
+        .unwrap();
+    assert!(
+        absent,
+        "spell duration API must remain absent before retail 12.0.0"
+    );
+}
+
 // ── GetActionCooldown ─────────────────────────────────────────────────────────
 
 #[test]
