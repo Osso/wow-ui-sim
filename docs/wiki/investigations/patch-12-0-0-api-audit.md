@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Bound self-buff classifier evidence
 
-Direct simulator fixtures classify seeded spell 1272138 as true, spell 116 as false, and unknown ID 999999999 as false. This establishes only the modeled implicit_target classifier for these cases; native hasSelfEffectsOnly, effect or metadata completeness, coercion, security, and consumer semantics remain unproven. Runtime and tests are unchanged. Three existing test references add one bounded credit (2281 best-effort / 1127 evidence-required / 2 exceptions); fresh profile verification is pending.
+Direct simulator fixtures classify seeded spell 1272138 as true, spell 116 as false, and unknown ID 999999999 as false. This establishes only the modeled implicit_target classifier for these cases; native hasSelfEffectsOnly, effect or metadata completeness, coercion, security, and consumer semantics remain unproven. Runtime and tests are unchanged. Three existing test references add one bounded credit (2281 best-effort / 1127 evidence-required / 2 exceptions); `/tmp/verify-self-buff-ledger.json` passes 3/3 each on retail 12.0.0/12.0.5/12.0.7, canonical validation, all 14,825 hashes, and exact checklist/inventory matching. Historical-profile warnings remain 6/6/1; unchanged format/check/production proof is reused.
 
 ## [2026-09-12] audit | Test namespace current-action cast transitions
 
