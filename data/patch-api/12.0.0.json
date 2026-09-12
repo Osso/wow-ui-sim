@@ -101188,7 +101188,7 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs",
-          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd",
+          "source_hash": "db9b560b5e448cbcfd064e65e2f5edb1d3d84b174cc87e9d7cf5e8b4aab36f8d",
           "summary": "Existing startup coverage checks publication only."
         },
         {
@@ -101935,7 +101935,7 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs",
-          "source_hash": "4d9d99d67e9c4b660a05c8a323f822380c21c2fac30c0254f40dee0bc3d047dd",
+          "source_hash": "db9b560b5e448cbcfd064e65e2f5edb1d3d84b174cc87e9d7cf5e8b4aab36f8d",
           "summary": "Existing voice tests do not prove the changed SpeakText signature."
         },
         {
