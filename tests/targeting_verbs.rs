@@ -316,3 +316,139 @@ fn target_nearest_enemy_enemy_pool_is_replaceable() {
     assert_eq!(first, "Alpha");
     assert_eq!(second, "Beta");
 }
+
+#[test]
+fn raid_target_icons_assign_move_replace_and_clear() {
+    let env = env();
+    env.exec(
+        r#"
+        A_Admin.SetPartySize(2)
+        assert(GetRaidTargetIndex('player') == nil)
+        assert(select('#', GetRaidTargetIndex('player')) == 1)
+        assert(select('#', SetRaidTarget('player', 8)) == 0)
+        assert(GetRaidTargetIndex('self') == 8)
+        SetRaidTarget('party1', 7)
+        assert(GetRaidTargetIndex('player') == 8)
+        assert(GetRaidTargetIndex('party1') == 7)
+        SetRaidTargetIcon('party1', 8)
+        assert(GetRaidTargetIndex('player') == nil)
+        assert(GetRaidTargetIndex('party1') == 8)
+        SetRaidTarget('party2', 7)
+        assert(GetRaidTargetIndex('party2') == 7)
+        SetRaidTarget('party1', 0)
+        assert(GetRaidTargetIndex('party1') == nil)
+        assert(GetRaidTargetIndex('party2') == 7)
+        for index = 1, 8 do
+            SetRaidTarget('player', index)
+            assert(GetRaidTargetIndex('player') == index)
+        end
+        SetRaidTarget('player', 0)
+        assert(GetRaidTargetIndex('player') == nil)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn raid_target_icons_follow_guid_aliases_not_target_slots() {
+    let env = env();
+    env.exec(
+        r#"
+        A_Admin.SetPartySize(2)
+        TargetUnit('player')
+        assert(UnitGUID('target') == UnitGUID('player'), 'player snapshot GUID')
+        SetRaidTarget('target', 1)
+        TargetUnit('party1')
+        assert(UnitGUID('target') == UnitGUID('party1'), 'party1 snapshot GUID')
+        assert(UnitGUID('target') ~= UnitGUID('player'), 'distinct player and party GUIDs')
+        FocusUnit('target')
+        SetRaidTarget('FOCUS', 2)
+        assert(GetRaidTargetIndex('party1') == 2)
+        assert(GetRaidTargetIndex('target') == 2)
+        assert(GetRaidTargetIndex('player') == 1)
+        TargetUnit('party2')
+        assert(UnitGUID('target') == UnitGUID('party2'), 'party2 snapshot GUID')
+        assert(GetRaidTargetIndex('target') == nil)
+        assert(GetRaidTargetIndex('focus') == 2)
+        SetRaidTarget('target', 3)
+        TargetNearestFriend()
+        assert(UnitGUID('target') == UnitGUID('party1'), 'nearest friend snapshot GUID')
+        assert(GetRaidTargetIndex('target') == 2)
+        TargetUnit('enemy1')
+        SetRaidTarget('target', 4)
+        ClearTarget()
+        assert(GetRaidTargetIndex('target') == nil)
+        TargetUnit('enemy1')
+        assert(GetRaidTargetIndex('target') == 4)
+        assert(GetRaidTargetIndex('party2') == 3)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn raid_target_icons_reject_invalid_indices_without_side_effects() {
+    let env = env();
+    env.exec(r#"
+        SetRaidTarget('player', 5)
+        raidIconEvents = 0
+        local frame = CreateFrame('Frame')
+        frame:RegisterEvent('RAID_TARGET_UPDATE')
+        frame:SetScript('OnEvent', function() raidIconEvents = raidIconEvents + 1 end)
+        local invalid = {false, true, '2', 'bad', {}, function() end, -1, 9, 1.5, 0/0, math.huge, -math.huge}
+        for _, value in ipairs(invalid) do
+            assert(not pcall(SetRaidTarget, 'player', value), 'invalid index accepted')
+            assert(GetRaidTargetIndex('player') == 5, 'invalid input changed icon')
+        end
+        assert(not pcall(SetRaidTarget, 'player'))
+        assert(not pcall(SetRaidTarget, 'player', nil))
+        assert(raidIconEvents == 0)
+    "#).unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .events
+            .pending()
+            .iter()
+            .any(|event| event.name == "RAID_TARGET_UPDATE")
+    );
+}
+
+#[test]
+fn raid_target_icons_notify_once_after_mutation_without_queued_duplicate() {
+    let env = env();
+    env.exec(
+        r#"
+        raidIconEvents = 0
+        raidIconObserved = {}
+        local frame = CreateFrame('Frame')
+        frame:RegisterEvent('RAID_TARGET_UPDATE')
+        frame:SetScript('OnEvent', function(_, event, ...)
+            assert(event == 'RAID_TARGET_UPDATE' and select('#', ...) == 0)
+            raidIconEvents = raidIconEvents + 1
+            raidIconObserved[raidIconEvents] = GetRaidTargetIndex('player') or 0
+        end)
+        SetRaidTarget('player', 6)
+        assert(raidIconEvents == 1 and raidIconObserved[1] == 6)
+        SetRaidTarget('player', 6)
+        assert(raidIconEvents == 2 and raidIconObserved[2] == 6)
+        SetRaidTarget('player', 0)
+        assert(raidIconEvents == 3 and raidIconObserved[3] == 0)
+        assert(select('#', SetRaidTarget(nil)) == 0)
+        assert(select('#', SetRaidTarget('unknown', {})) == 0)
+        assert(select('#', SetRaidTarget('target')) == 0)
+        assert(GetRaidTargetIndex(nil) == nil and GetRaidTargetIndex('unknown') == nil)
+        assert(select('#', GetRaidTargetIndex(nil)) == 1)
+        assert(raidIconEvents == 3)
+    "#,
+    )
+    .unwrap();
+    assert!(
+        !env.state()
+            .borrow()
+            .events
+            .pending()
+            .iter()
+            .any(|event| event.name == "RAID_TARGET_UPDATE")
+    );
+}
