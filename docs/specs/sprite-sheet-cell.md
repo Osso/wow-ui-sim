@@ -4,10 +4,10 @@
 
 ## What it must do
 
-- [ ] Map one-based cells row-major into normalized UV rectangles, including nonsquare grids and the final cell. Replace prior quad coordinates and return zero Lua values; `GetTexCoord` exposes eight corner coordinates.
-- [ ] Require finite positive integer rows/columns and an integer cell in `1..rows*columns`, without arbitrary grid-size caps. Use existing floating-point texture-coordinate precision.
-- [ ] Reject malformed, missing, nonfinite, fractional, and out-of-range inputs before coordinate mutation.
-- [ ] Accept absent/nil optional dimensions; reject any nonnil `cellWidth` or `cellHeight` explicitly as unmodeled before mutation.
+- [x] Map one-based cells row-major into normalized UV rectangles, including nonsquare grids and the final cell. Replace prior quad coordinates and return zero Lua values; `GetTexCoord` exposes eight corner coordinates.
+- [x] Require finite positive integer rows/columns and an integer cell in `1..rows*columns`, without arbitrary grid-size caps. Use existing floating-point texture-coordinate precision.
+- [x] Reject malformed, missing, nonfinite, fractional, and out-of-range inputs before coordinate mutation.
+- [x] Accept absent/nil optional dimensions; reject any nonnil `cellWidth` or `cellHeight` explicitly as unmodeled before mutation.
 - [ ] Use the same atlas remapping and visual invalidation path as rectangular `SetTexCoord`, without modifying vendor code.
 
 ## How it works
@@ -27,7 +27,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Focused development proof and parent final verification.
+- Historical 12.0.0 development proof at `3abcd7fc7`: three primitive tests passed, followed by the exact Blizzard raid-icon consumer test (1/1). Ledger: `/tmp/sprite-sheet-cell-dev-ledger.json`. Historical loader errors remain; this is not clean XML/addon-loading proof.
+- [ ] Parent final verification, including readability and applicable checks.
 - [ ] Optional dimension semantics lack evidence and remain unsupported.
 
 ## Out of scope
