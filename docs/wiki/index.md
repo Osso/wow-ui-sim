@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
 
-`977d30276` adds retail-12.0.0+ ordinary `C_CurveUtil.EvaluateColorFromBoolean` and `EvaluateColorValueFromBoolean`. The declared API signatures support only ordinary selection here: fresh ColorMixin output and both-argument validation are explicit simulator policies; secrets, coercion, native identity, exact errors, and direct Blizzard-consumer proof remain open. Five test cases were RED before implementation; GREEN verification is pending. See [boolean color selection](../specs/boolean-color-selection.md) and [curve objects](../specs/curve-objects.md).
+`977d30276` and `be38a2c52` credit retail-12.0.0+ ordinary `C_CurveUtil.EvaluateColorFromBoolean` and `EvaluateColorValueFromBoolean`, moving totals to **2246 / 1162 / 2**. Fresh ColorMixin output and both-argument validation are simulator policies; secrets, coercion, native identity, exact errors, and direct Blizzard-consumer proof remain open. Development grouped userdata proof passed 32/32; final profile and acceptance gates remain pending. Eighty-two existing provenance references were renewed with proof reuse; only the two selectors gain credit. See [boolean color selection](../specs/boolean-color-selection.md) and [curve objects](../specs/curve-objects.md).
 
 ## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
 
