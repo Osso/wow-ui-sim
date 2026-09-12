@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Bound self-buff classifier evidence
+
+Existing self-buff classifier fixtures cover three concrete spell IDs; runtime unchanged. Fresh profile verification pending. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Test namespace current-action cast transitions
 
 Two direct namespace fixtures verify cast/stop and live slot-state behavior without runtime changes: 16/16 on retail 12.0.0/12.0.5/12.0.7. Format/check/readability and metadata verification pass; totals `2280 / 1128 / 2`. Native, channeling, autorepeat, and usability semantics remain open. See [[patch-12-0-0-api-audit]].

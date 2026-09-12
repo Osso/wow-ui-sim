@@ -538,7 +538,7 @@
 538. [evidence-required] `added:C_Spell.IsConsumableSpell` — unsafe
 539. [evidence-required] `added:C_Spell.IsExternalDefensive` — unsafe
 540. [evidence-required] `added:C_Spell.IsPriorityAura` — unsafe
-541. [evidence-required] `added:C_Spell.IsSelfBuff` — unsafe
+541. [best-effort] `added:C_Spell.IsSelfBuff` — behavioral
 542. [evidence-required] `added:C_Spell.IsSpellCrowdControl` — unsafe
 543. [evidence-required] `added:C_Spell.IsSpellImportant` — unsafe
 544. [evidence-required] `added:C_SpellBook.FindBaseSpellByID` — unsafe

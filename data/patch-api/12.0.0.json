@@ -18158,8 +18158,8 @@
       "id": "added:C_Spell.IsSelfBuff",
       "symbol": "C_Spell.IsSelfBuff",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -18172,16 +18172,38 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
-          "summary": "Clean current `src/c_api/c_spell.rs` contains a same-name `IsSelfBuff` registration/implementation based on `implicit_target`, but no matching 12.0.0 publication/behavioral contract is proven.",
+          "summary": "Registered namespace classifier returns whether spell metadata implicit_target is 1; three direct fixtures exercise seeded self-target, enemy-target, and unknown IDs. This does not establish the native hasSelfEffectsOnly contract.",
           "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_spell_probes.rs::test_is_self_buff_true_for_self_target_spell",
+          "source_hash": "b0311cc23e63c2eeed75521200fe1ed6d25c981b0a29f244336cb7231e07cea7",
+          "summary": "Direct namespace query of seeded self-target spell 1272138 returns true."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_spell_probes.rs::test_is_self_buff_false_for_enemy_spell",
+          "source_hash": "b0311cc23e63c2eeed75521200fe1ed6d25c981b0a29f244336cb7231e07cea7",
+          "summary": "Direct namespace query of seeded enemy-target spell 116 returns false."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/c_spell_probes.rs::test_is_self_buff_false_for_unknown_spell",
+          "source_hash": "b0311cc23e63c2eeed75521200fe1ed6d25c981b0a29f244336cb7231e07cea7",
+          "summary": "Direct namespace query of unknown numeric ID 999999999 returns false."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_spell_probes.rs::test_is_self_buff_true_for_self_target_spell",
+        "tests/c_spell_probes.rs::test_is_self_buff_false_for_enemy_spell",
+        "tests/c_spell_probes.rs::test_is_self_buff_false_for_unknown_spell"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "279f6f4ad",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "A same-name internal IsSelfBuff implementation exists, but no matching 12.0.0 publication/behavioral contract is proven; boolean semantics require authoritative evidence or a correct model, and no approval can close the row."
+      "notes": "Direct simulator fixtures classify seeded spell 1272138 as true, spell 116 as false, and unknown ID 999999999 as false. This establishes only the modeled implicit_target classifier for these cases; native hasSelfEffectsOnly, effect or metadata completeness, coercion, security, and consumer semantics remain unproven."
     },
     {
       "id": "added:C_Spell.IsSpellCrowdControl",
