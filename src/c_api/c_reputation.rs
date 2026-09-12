@@ -3,7 +3,7 @@
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 /// Seeded paragon payload; presence in `SimState.faction_paragon` marks a faction
 /// as paragon. Storage level is explicit state, not derived from reputation.
