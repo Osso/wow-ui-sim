@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Credit existing action cooldown info assertions
+
+`4474392b4` / `7dd785804` add four narrow credits for the namespace cooldown query and observed start/span/default-rate fields. `/tmp/verify-action-cooldown-fields-ledger.json` passes seven new references, no renewals, 14,820 fresh hashes, validation and inventory matching; existing profile proof is reused without Cargo. Totals `2279 / 1129 / 2`; GCD rate, enablement and broader native/consumer semantics remain open. See [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] investigation | Build spell cooldown duration objects from modeled state
 
 `f1535023c` adds retail 12.0.0 spell-duration regressions; all four fail because `C_Spell.GetSpellCooldownDuration` returns generic nil. `14e5f8e46` records the observed Mists nil control rather than claiming earlier-profile absence. `0e47eae2f` adds a retail 12.0.0+ producer that reuses seeded numeric/string alias resolution, the existing spell/GCD selector, and shared duration snapshots. `/tmp/verify-spell-cooldown-duration-ledger.json` passes 32/32 on each audited retail profile and 29/29 on Mists; format, default check/build, startup `[]`, validators, readability, and 14,813 references pass. It renews 39 references across 35 rows, adds five references, credits only this row, and reaches `2275 / 1133 / 2`. Native identifier/return/GCD/snapshot/identity/error, security, and consumer behavior remain open. See [spell cooldown duration](../../specs/spell-cooldown-duration.md).
