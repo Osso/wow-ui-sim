@@ -770,7 +770,7 @@
       "status": "best-effort",
       "resolution": "behavioral",
       "owner": "Blizzard_GameTooltip",
-      "load_addon": "Blizzard_GameTooltip",
+      "load_addon": null,
       "evidence": [
         {
           "kind": "test",
