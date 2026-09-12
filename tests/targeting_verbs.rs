@@ -9,14 +9,6 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-// Explicit consumption of these tests' zero-payload events, not an automatic tick.
-fn dispatch_queued_test_events(env: &WowLuaEnv) {
-    let events = env.state().borrow_mut().events.drain();
-    for event in events {
-        env.fire_event(&event.name).unwrap();
-    }
-}
-
 // ── TargetUnit ────────────────────────────────────────────────────────────────
 
 #[test]
@@ -499,8 +491,12 @@ fn raid_target_icons_follow_guid_aliases_not_target_slots() {
 #[test]
 fn raid_target_icons_reject_invalid_indices_without_side_effects() {
     let env = env();
+    env.exec("SetRaidTarget('player', 5)").unwrap();
+    let setup_events = env.state().borrow_mut().events.drain();
+    assert_eq!(setup_events.len(), 1);
+    assert_eq!(setup_events[0].name, "RAID_TARGET_UPDATE");
+    assert!(setup_events[0].args.is_empty());
     env.exec(r#"
-        SetRaidTarget('player', 5)
         raidIconEvents = 0
         local frame = CreateFrame('Frame')
         frame:RegisterEvent('RAID_TARGET_UPDATE')
@@ -514,12 +510,17 @@ fn raid_target_icons_reject_invalid_indices_without_side_effects() {
         assert(not pcall(SetRaidTarget, 'player', nil))
         assert(raidIconEvents == 0)
     "#).unwrap();
-    dispatch_queued_test_events(&env);
+    assert!(env.state().borrow_mut().events.drain().is_empty());
     assert_eq!(env.eval::<i64>("return raidIconEvents").unwrap(), 0);
+    assert_eq!(
+        env.eval::<i64>("return GetRaidTargetIndex('player')")
+            .unwrap(),
+        5
+    );
 }
 
 #[test]
-fn raid_target_icons_notify_once_after_mutation_without_queued_duplicate() {
+fn raid_target_icons_record_and_notify_after_mutation() {
     let env = env();
     env.exec(
         r#"
@@ -547,6 +548,11 @@ fn raid_target_icons_notify_once_after_mutation_without_queued_duplicate() {
     "#,
     )
     .unwrap();
-    dispatch_queued_test_events(&env);
+    let recorded_events = env.state().borrow_mut().events.drain();
+    assert_eq!(recorded_events.len(), 3);
+    for event in recorded_events {
+        assert_eq!(event.name, "RAID_TARGET_UPDATE");
+        assert!(event.args.is_empty());
+    }
     assert_eq!(env.eval::<i64>("return raidIconEvents").unwrap(), 3);
 }
