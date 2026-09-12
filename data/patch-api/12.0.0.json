@@ -90598,7 +90598,7 @@
           "kind": "test",
           "reference": "tests/targeting_verbs.rs",
           "summary": "Original Blizzard Lua uses SetSpriteSheetCell for visible raid icons 1 and 8; verifies resulting coordinates through real event dispatch.",
-          "source_hash": "66557ac6566f3942b4d563e38f678d6d98c2b1a4dcdb7535e8e1a01e2c8ae72a"
+          "source_hash": "dbae1a40a3785924ba8b6474735fe534a3c2a33a317937f157cdb76075c08245"
         }
       ],
       "tests": [
@@ -101979,7 +101979,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "source_hash": "a0278c69e5c9c793eb256cbfe15709f7375dfb91a0c9407048b97643acb93959",
           "summary": "Current runtime registers CanBeRaidTarget and returns a boolean from simulator unit-token resolution; this does not prove retail eligibility semantics."
         },
         {
@@ -102014,7 +102014,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "source_hash": "a0278c69e5c9c793eb256cbfe15709f7375dfb91a0c9407048b97643acb93959",
           "summary": "This module models unit raid-target icons, not world-marker placement, activity or clearing; its unit-icon state is not evidence for this contract."
         },
         {
@@ -108667,7 +108667,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
           "summary": "GUID-keyed unit icon assignment/query, replacement, clearing, alias identity and callback-visible mutation; player/party snapshots reuse existing UnitGUID identities.",
-          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11"
+          "source_hash": "a0278c69e5c9c793eb256cbfe15709f7375dfb91a0c9407048b97643acb93959"
         },
         {
           "kind": "source",
@@ -108679,21 +108679,21 @@
           "kind": "test",
           "reference": "tests/targeting_verbs.rs",
           "summary": "Concrete unit-icon state and error cases plus original TargetFrame Lua event consumption, icon visibility, sprite coordinates and vendor toggle.",
-          "source_hash": "66557ac6566f3942b4d563e38f678d6d98c2b1a4dcdb7535e8e1a01e2c8ae72a"
+          "source_hash": "dbae1a40a3785924ba8b6474735fe534a3c2a33a317937f157cdb76075c08245"
         }
       ],
       "tests": [
         "tests/targeting_verbs.rs::raid_target_icons_assign_move_replace_and_clear",
         "tests/targeting_verbs.rs::raid_target_icons_follow_guid_aliases_not_target_slots",
         "tests/targeting_verbs.rs::raid_target_icons_reject_invalid_indices_without_side_effects",
-        "tests/targeting_verbs.rs::raid_target_icons_notify_once_after_mutation_without_queued_duplicate",
+        "tests/targeting_verbs.rs::raid_target_icons_record_and_notify_after_mutation",
         "tests/targeting_verbs.rs::raid_target_icons_update_real_blizzard_target_frame_consumer"
       ],
       "assertions": [],
       "commit": "104cb6fc9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort bounded simulator policy: indices 1-8 assign unique per-unit/per-icon state, 0 clears; GUID aliases share state and other identities remain isolated. Valid calls synchronously notify once after mutation; explicit queued-event consumption confirms no queued copy. Invalid indices on valid units reject before mutation; unknown units remain no-ops/nil. Original Blizzard TargetFrame Lua consumes state and toggles icons; source is loaded explicitly because historical XML rejects AuraContainer. Native permissions, eligibility, error wording, timing/coalescing, identity lifecycle, bulk removal, world markers and clean historical XML/UI loading remain unproven."
+      "notes": "Best-effort bounded simulator policy: indices 1-8 assign unique per-unit/per-icon state, 0 clears; GUID aliases share state and other identities remain isolated. Valid calls preserve one queued zero-payload event record and one synchronous notification after mutation; callbacks observe updated state, and draining records does not itself dispatch callbacks. Invalid indices on valid units reject before mutation; unknown units remain no-ops/nil. Original Blizzard TargetFrame Lua consumes state and toggles icons; source is loaded explicitly because historical XML rejects AuraContainer. Native permissions, eligibility, error wording, timing/coalescing, identity lifecycle, bulk removal, world markers and clean historical XML/UI loading remain unproven."
     },
     {
       "id": "changed:HOUSE_LEVEL_CHANGED",
@@ -108891,7 +108891,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "source_hash": "a0278c69e5c9c793eb256cbfe15709f7375dfb91a0c9407048b97643acb93959",
           "summary": "This module models unit raid-target icons, not world-marker placement, activity or clearing; its unit-icon state is not evidence for this contract."
         },
         {
@@ -109534,7 +109534,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "source_hash": "a0278c69e5c9c793eb256cbfe15709f7375dfb91a0c9407048b97643acb93959",
           "summary": "This module models unit raid-target icons, not world-marker placement, activity or clearing; its unit-icon state is not evidence for this contract."
         },
         {
@@ -109575,7 +109575,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "source_hash": "a0278c69e5c9c793eb256cbfe15709f7375dfb91a0c9407048b97643acb93959",
           "summary": "Per-unit SetRaidTarget/GetRaidTargetIndex state does not implement or establish the separate RemoveRaidTargets bulk-removal contract."
         },
         {
@@ -109616,7 +109616,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "source_hash": "a0278c69e5c9c793eb256cbfe15709f7375dfb91a0c9407048b97643acb93959",
           "summary": "GUID-keyed unit icon assignment/query, replacement, clearing, alias identity and callback-visible mutation; player/party snapshots reuse existing UnitGUID identities."
         },
         {
@@ -109629,21 +109629,21 @@
           "kind": "test",
           "reference": "tests/targeting_verbs.rs",
           "summary": "Concrete unit-icon state and error cases plus original TargetFrame Lua event consumption, icon visibility, sprite coordinates and vendor toggle.",
-          "source_hash": "66557ac6566f3942b4d563e38f678d6d98c2b1a4dcdb7535e8e1a01e2c8ae72a"
+          "source_hash": "dbae1a40a3785924ba8b6474735fe534a3c2a33a317937f157cdb76075c08245"
         }
       ],
       "tests": [
         "tests/targeting_verbs.rs::raid_target_icons_assign_move_replace_and_clear",
         "tests/targeting_verbs.rs::raid_target_icons_follow_guid_aliases_not_target_slots",
         "tests/targeting_verbs.rs::raid_target_icons_reject_invalid_indices_without_side_effects",
-        "tests/targeting_verbs.rs::raid_target_icons_notify_once_after_mutation_without_queued_duplicate",
+        "tests/targeting_verbs.rs::raid_target_icons_record_and_notify_after_mutation",
         "tests/targeting_verbs.rs::raid_target_icons_update_real_blizzard_target_frame_consumer"
       ],
       "assertions": [],
-      "commit": "104cb6fc9",
+      "commit": "5bc5cdb6f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort bounded simulator policy: indices 1-8 assign unique per-unit/per-icon state, 0 clears; GUID aliases share state and other identities remain isolated. Valid calls synchronously notify once after mutation; explicit queued-event consumption confirms no queued copy. Invalid indices on valid units reject before mutation; unknown units remain no-ops/nil. Original Blizzard TargetFrame Lua consumes state and toggles icons; source is loaded explicitly because historical XML rejects AuraContainer. Native permissions, eligibility, error wording, timing/coalescing, identity lifecycle, bulk removal, world markers and clean historical XML/UI loading remain unproven."
+      "notes": "Best-effort bounded simulator policy: indices 1-8 assign unique per-unit/per-icon state, 0 clears; GUID aliases share state and other identities remain isolated. Valid calls preserve one queued zero-payload event record and one synchronous notification after mutation; callbacks observe updated state, and draining records does not itself dispatch callbacks. Invalid indices on valid units reject before mutation; unknown units remain no-ops/nil. Original Blizzard TargetFrame Lua consumes state and toggles icons; source is loaded explicitly because historical XML rejects AuraContainer. Native permissions, eligibility, error wording, timing/coalescing, identity lifecycle, bulk removal, world markers and clean historical XML/UI loading remain unproven."
     },
     {
       "id": "changed:StatusBar",
