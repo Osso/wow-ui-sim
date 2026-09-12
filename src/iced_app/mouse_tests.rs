@@ -3,6 +3,10 @@ use super::*;
 use crate::iced_app::{CanvasMessage, Message};
 use crate::screen::ScreenKind;
 
+#[cfg(feature = "retail-12-1-0")]
+#[path = "mouse_tests/forbidden_aspects.rs"]
+mod forbidden_aspects;
+
 #[test]
 fn mouse_focus_order_tracks_gui_hover_after_raise_and_lower() {
     let mut app = build_test_app(ScreenKind::Game);
