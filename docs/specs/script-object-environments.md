@@ -2,6 +2,17 @@
 
 Retail-family secure Blizzard functions use a distinct object-table partition for frame-private state. Public addon code must not obtain private mixin methods by overriding similarly named public fields. [XML mixin bindings](../xml-template-system.md) and the native AuraContainer frame provider exercise this boundary.
 
+## Bounded non-secret identity and field-isolation policy
+
+`PrivateIdentity` and `InaccessiblePublicKeys` can describe simulator partition behavior without claiming native private-object identity or security. The selected policy is:
+
+- Public and private projections are distinct Lua values for one underlying simulator frame; repeated private projection is interned and idempotent.
+- Private fields remain independent between frames and from same-named public assignments. Private XML key values/mixin methods are absent publicly unless explicitly exported or delegated; this is partition separation, not a universal inaccessible-key list.
+- Native frame methods and parent arguments accept the private projection as the same underlying frame. Ordinary tables cannot impersonate that identity.
+- Actual AuraContainer provider callbacks retain their public view; public overrides do not replace private implementations.
+
+Focused proof must cover projection identity, field isolation, native parent/method behavior, spoof rejection, and the unmodified provider boundary. Caller authority, secret accessibility, hooks, handler-storage isolation, and native security remain unverified.
+
 ## What it must do
 
 - [ ] Preserve native frame identity in the forbidden partition, so native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
