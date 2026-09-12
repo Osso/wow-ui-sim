@@ -28,6 +28,12 @@ pub fn is_rect_valid(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn is_mouse_motion_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
+    super::super::forbidden_aspects::ensure_forbidden_aspect_absent(
+        state,
+        id,
+        "QueryFocus",
+        "IsMouseMotionFocus",
+    )?;
     let sim = borrow_state(state)?;
     let result = sim.hovered_frame == Some(id);
     drop(sim);

@@ -4,6 +4,7 @@ mod registration;
 mod selection;
 
 use super::shared::{opt_string, val_to_bool, val_to_f64};
+use crate::lua_api::frame::methods::forbidden_aspects::ensure_forbidden_aspect_absent;
 use crate::lua_api::frame::methods::text_attribute_event::refresh_auto_text_height_after_width_change;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, frame_id_from_stack, get_or_create_frame_fields,
@@ -17,6 +18,7 @@ use rilua::{LuaResult, Val};
 
 pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "SetFocus")?;
     let old_focus = {
         let mut sim = borrow_state_mut(state)?;
         let old = sim.focused_frame_id;
@@ -43,6 +45,7 @@ pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn clear_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "ClearFocus")?;
     let cleared = {
         let mut sim = borrow_state_mut(state)?;
         if sim.focused_frame_id == Some(id) {
@@ -64,6 +67,7 @@ pub(super) fn clear_focus(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn has_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "QueryFocus", "HasFocus")?;
     let sim = borrow_state(state)?;
     let v = sim.focused_frame_id == Some(id);
     drop(sim);
@@ -84,6 +88,7 @@ pub(super) fn has_text(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "SetCursorPosition")?;
     let pos = val_to_f64(stack_val(state, 2)) as i32;
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {

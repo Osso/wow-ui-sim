@@ -1,5 +1,6 @@
 //! Button state, enable/disable, click, and related methods.
 
+use crate::lua_api::frame::methods::forbidden_aspects::ensure_forbidden_aspect_absent;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, extract_frame_id,
     frame_id_from_stack, frame_ref, get_or_create_frame_fields, table_get, table_set,
@@ -238,6 +239,7 @@ pub(super) fn is_down_over(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn click(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "Click")?;
     if !begin_click(state, id)? {
         return Ok(0);
     }

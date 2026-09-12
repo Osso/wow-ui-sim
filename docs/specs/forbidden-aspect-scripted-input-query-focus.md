@@ -1,6 +1,6 @@
 # Forbidden-aspect scripted input and focus queries
 
-Patch 12.1 PTR generated API declarations annotate exactly six methods with `ChecksForbiddenAspects`. This specification defines the next simulator policy slice. All requirements remain unchecked until runtime proof.
+Patch 12.1 PTR generated API declarations annotate exactly six methods with `ChecksForbiddenAspects`. This specification defines a bounded simulator policy. Requirements remain unchecked until runtime proof.
 
 ## Source annotation evidence
 
@@ -18,7 +18,7 @@ The same source does not annotate `Region:IsMouseOver`; no global focus query is
 ### Uniform policy assumption
 
 - [ ] Apply all six gates uniformly, without caller-taint, caller-identity, or privileged-caller exceptions. This is a simulator policy assumption, not native security conformance.
-- [ ] Reject a gated method when its receiver carries the relevant aspect, including an inherited aspect.
+- [ ] Reject a gated method when its receiver carries the relevant aspect.
 - [ ] Reject before any state mutation, click-depth transition, cursor change, focus-script callback, or click callback.
 - [ ] Preserve ordinary validation, return values, state changes, and callbacks for zero-mask receivers and receivers without the relevant aspect.
 
@@ -39,7 +39,7 @@ The same source does not annotate `Region:IsMouseOver`; no global focus query is
 
 - [ ] Focused tests demonstrate each annotated method rejects atomically, with observable state and callback non-mutation.
 - [ ] Focused tests demonstrate unaffected physical GUI mouse/keyboard paths and unannotated methods remain available.
-- [ ] Focused tests cover inherited masks and ordinary zero-mask controls.
+- [ ] Focused tests cover ordinary zero-mask controls.
 - [ ] Earlier-profile controls establish that the new policy does not alter pre-12.1 behavior.
 
 ## Out of scope
