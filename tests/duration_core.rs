@@ -200,6 +200,31 @@ fn duration_core_end_span_reset_and_validation() {
 }
 
 #[test]
+fn duration_core_set_to_defaults_clears_configured_timing_and_clock() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local clock = C_DurationUtil.CreateManualClock(15)
+        local d = C_DurationUtil.CreateDuration()
+        d:SetClock(clock)
+        d:SetTimeFromStart(10, 20, 2)
+        assert(d:GetStartTime() == 10 and d:GetEndTime() == 20)
+        assert(d:GetTotalDuration() == 10 and d:GetModRate() == 2)
+        assert(d:GetClock() == clock)
+
+        d:SetToDefaults()
+
+        assert(d:GetStartTime() == 0 and d:GetEndTime() == 0)
+        assert(d:GetTotalDuration() == 0 and d:GetModRate() == 1)
+        assert(d:GetClock() == nil and d:IsZero())
+        assert(not d:HasStarted() and not d:HasExpired() and not d:IsActive())
+        assert(d:GetElapsedPercent() == 0 and d:GetRemainingPercent() == 0)
+    "#,
+    )
+    .expect("SetToDefaults clears configured timing, rate, and clock binding");
+}
+
+#[test]
 fn duration_core_default_clock_and_instances() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().start_time =
