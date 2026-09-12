@@ -682,19 +682,37 @@ fn curve_object_add_and_evaluate() {
 #[test]
 fn curve_object_copy_returns_userdata() {
     let env = WowLuaEnv::new().unwrap();
-    let (typ, count): (String, i64) = env
-        .eval(
-            r#"
-            local c = C_CurveUtil.CreateCurve()
-            c:AddPoint(0, 10)
-            c:AddPoint(1, 20)
-            local copy = c:Copy()
-            return type(copy), copy:GetPointCount()
+    env.exec(
+        r#"
+        local source = C_CurveUtil.CreateCurve()
+        source:AddPoint(0, 10)
+        source:AddPoint(1, 20)
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'Copy returns one value')
+            return ...
+        end
+        local copy = one_result(source:Copy())
+        -- Distinct simulator handles, not native identity or lifecycle proof.
+        assert(type(copy) == 'userdata' and not rawequal(copy, source))
+        assert(copy:GetPointCount() == 2)
+        assert(source:Evaluate(0.5) == 15 and copy:Evaluate(0.5) == 15)
+
+        source:ClearPoints()
+        assert(source:GetPointCount() == 0 and copy:GetPointCount() == 2)
+        assert(copy:Evaluate(0.5) == 15, 'source clearing preserves copied points')
+        source:AddPoint(0, 30)
+        source:AddPoint(1, 50)
+        assert(source:Evaluate(0.5) == 40 and copy:Evaluate(0.5) == 15)
+
+        copy:ClearPoints()
+        assert(copy:GetPointCount() == 0 and source:GetPointCount() == 2)
+        copy:AddPoint(0, 70)
+        copy:AddPoint(1, 90)
+        assert(copy:GetPointCount() == 2)
+        assert(copy:Evaluate(0.5) == 80 and source:Evaluate(0.5) == 40)
         "#,
-        )
-        .unwrap();
-    assert_eq!(typ, "userdata");
-    assert_eq!(count, 2);
+    )
+    .expect("scalar curve copies retain independently mutable point values");
 }
 
 #[test]
@@ -777,15 +795,60 @@ fn curve_objects_keep_native_identity_through_securecopy() {
 #[test]
 fn color_curve_copy_returns_userdata() {
     let env = WowLuaEnv::new().unwrap();
-    let typ: String = env
-        .eval(
-            r#"
-            local cc = C_CurveUtil.CreateColorCurve()
-            cc:AddPoint(0, CreateColor(1, 0, 0, 1))
-            local copy = cc:Copy()
-            return type(copy)
+    env.exec(
+        r#"
+        local function assert_color(curve, r, g, b, a)
+            local actualR, actualG, actualB, actualA = curve:Evaluate(0.5):GetRGBA()
+            assert(actualR == r and actualG == g and actualB == b and actualA == a,
+                'unexpected copied color channels')
+        end
+        local function one_result(...)
+            assert(select('#', ...) == 1, 'Copy returns one value')
+            return ...
+        end
+        local source = C_CurveUtil.CreateColorCurve()
+        assert(source:GetPointCount() == 0)
+        source:AddPoint(0, CreateColor(1, 0, 0, 0.25))
+        assert(source:GetPointCount() == 1)
+        source:AddPoint(1, CreateColor(0, 0, 1, 0.75))
+        assert(source:GetPointCount() == 2)
+        source:SetType(Enum.LuaCurveType.Step)
+        local copy = one_result(source:Copy())
+        -- Modeled point/configuration independence, not native or security proof.
+        assert(type(copy) == 'userdata' and not rawequal(copy, source))
+        assert(copy:GetPointCount() == 2)
+        assert_color(source, 1, 0, 0, 0.25)
+        assert_color(copy, 1, 0, 0, 0.25)
+
+        source:SetType(Enum.LuaCurveType.Linear)
+        assert_color(source, 0.5, 0, 0.5, 0.5)
+        assert_color(copy, 1, 0, 0, 0.25)
+        source:SetType(Enum.LuaCurveType.Step)
+        copy:SetType(Enum.LuaCurveType.Linear)
+        assert_color(source, 1, 0, 0, 0.25)
+        assert_color(copy, 0.5, 0, 0.5, 0.5)
+
+        source:ClearPoints()
+        assert(source:GetPointCount() == 0 and copy:GetPointCount() == 2)
+        assert_color(copy, 0.5, 0, 0.5, 0.5)
+        source:AddPoint(0, CreateColor(0, 1, 0, 0.5))
+        assert(source:GetPointCount() == 1)
+        source:AddPoint(1, CreateColor(1, 1, 0, 1))
+        assert(source:GetPointCount() == 2)
+        source:SetType(Enum.LuaCurveType.Linear)
+        assert_color(source, 0.5, 1, 0, 0.75)
+        assert_color(copy, 0.5, 0, 0.5, 0.5)
+
+        copy:ClearPoints()
+        assert(copy:GetPointCount() == 0 and source:GetPointCount() == 2)
+        assert_color(source, 0.5, 1, 0, 0.75)
+        copy:AddPoint(0, CreateColor(1, 0, 1, 0))
+        assert(copy:GetPointCount() == 1)
+        copy:AddPoint(1, CreateColor(0, 1, 1, 0.5))
+        assert(copy:GetPointCount() == 2)
+        assert_color(copy, 0.5, 0.5, 1, 0.25)
+        assert_color(source, 0.5, 1, 0, 0.75)
         "#,
-        )
-        .unwrap();
-    assert_eq!(typ, "userdata");
+    )
+    .expect("color curve copies retain independently mutable points and interpolation modes");
 }
