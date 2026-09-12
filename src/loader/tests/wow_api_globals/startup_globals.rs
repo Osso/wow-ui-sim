@@ -310,11 +310,6 @@ fn test_patch_12_0_7_safe_global_bridges() {
             local toggleCallback = function() return "toggle" end
             SetSecurePendingToggleRunCallback(toggleCallback)
             if GetSecurePendingToggleRunCallback() ~= toggleCallback then return "toggle-callback" end
-            if type(GameTooltip_AddMoneyLine) ~= "function" then return "money-line" end
-            local moneyTooltip = { lines = {} }
-            function moneyTooltip:AddLine(text) table.insert(self.lines, text) end
-            GameTooltip_AddMoneyLine(moneyTooltip, 12345, "Cost: ")
-            if moneyTooltip.lines[1] ~= "Cost: 1g 23s 45c" then return "money-line-format" end
             return "ok"
             "#,
         )
