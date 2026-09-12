@@ -150,11 +150,15 @@ fn specialization_class_id_cooldown_viewer_uses_cross_class_tag() {
     let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(
         env!("CARGO_MANIFEST_DIR"),
     ));
-    let source =
-        std::fs::read_to_string(addons.join("Blizzard_CooldownViewer/CooldownViewerUtil.lua"))
-            .expect("cached Blizzard CooldownViewerUtil source");
-    env.exec(&source)
-        .expect("unmodified CooldownViewerUtil loads");
+    for file in [
+        "CooldownViewerSettingsConstants.lua",
+        "CooldownViewerUtil.lua",
+    ] {
+        let source = std::fs::read_to_string(addons.join("Blizzard_CooldownViewer").join(file))
+            .expect("cached Blizzard CooldownViewer source");
+        env.exec(&source)
+            .expect("unmodified CooldownViewer source loads");
+    }
     let mage: String = env
         .eval("return CooldownViewerUtil.GetClassAndSpecTagText(81)")
         .unwrap();
