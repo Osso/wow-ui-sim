@@ -18916,7 +18916,7 @@
           "kind": "source",
           "reference": "docs/specs/duration-core.md",
           "summary": "The duration-core specification records the bounded simulator interpretation and its exclusion of native, protected-call, and type semantics.",
-          "source_hash": "758375ddc29d1974166c23d8ac421a609dda6530c485cce81876e80bef721a5e"
+          "source_hash": "555c1736fffbbb6324c6c335734a280b53c5147ba9260ca5a7c493205ef21cfe"
         },
         {
           "kind": "test",
