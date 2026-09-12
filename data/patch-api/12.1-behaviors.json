@@ -32,7 +32,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact addon-vs-Blizzard secret error behavior is not modeled.",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6"
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
         }
       ],
       "tests": [],
@@ -54,7 +54,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact caller-sensitive Blizzard/internal secret access behavior is not modeled.",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6"
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
         }
       ],
       "tests": [],
@@ -76,7 +76,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact secret field accessibility and retail object behavior are not modeled.",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6"
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
         }
       ],
       "tests": [],
@@ -98,7 +98,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact secret UNIT_AURA payload values and tuple behavior are not modeled.",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6"
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
         }
       ],
       "tests": [],
@@ -384,7 +384,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_aura_frame_types_create",
           "summary": "AuraContainer, AuraButton, and ManagedAuraContainer creation returns the compatible frame object types.",
-          "source_hash": "6112f574cf998f589793324a36d393df8fa9b914e5db05cc78c63f410fec8b09"
+          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
         }
       ],
       "tests": [
@@ -574,7 +574,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_texture_radial_progress_surface_and_state",
           "summary": "A created Texture exposes the radial method family without claiming a standalone RadialProgress constructor or object.",
-          "source_hash": "6112f574cf998f589793324a36d393df8fa9b914e5db05cc78c63f410fec8b09"
+          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
         }
       ],
       "tests": [
@@ -598,7 +598,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_texture_radial_progress_surface_and_state",
           "summary": "Radial progress methods dispatch on a Texture receiver.",
-          "source_hash": "6112f574cf998f589793324a36d393df8fa9b914e5db05cc78c63f410fec8b09"
+          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
         }
       ],
       "tests": [
@@ -622,7 +622,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_texture_radial_progress_surface_and_state",
           "summary": "Texture-backed radial progress defaults, setters/getters, visual mode, and Clear reset are modeled.",
-          "source_hash": "6112f574cf998f589793324a36d393df8fa9b914e5db05cc78c63f410fec8b09"
+          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
         }
       ],
       "tests": [
@@ -1073,7 +1073,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_spell_cooldown_payload",
           "summary": "Seeded and inactive spell cooldown queries return the modeled start, duration, enabled, active, and rate fields.",
-          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
+          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
         }
       ],
       "tests": [
@@ -1097,7 +1097,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_pet_and_lfg_payloads",
           "summary": "Seeded and unknown species queries verify the modeled 12.1 pet information fields and nil boundary.",
-          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
+          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
         }
       ],
       "tests": [
@@ -1121,7 +1121,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_pet_and_lfg_payloads",
           "summary": "Seeded and unknown search-result queries verify the modeled LFG identity, activity, size, GUID, and censored fields.",
-          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
+          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
         }
       ],
       "tests": [
@@ -1145,7 +1145,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_player_choice_payload_and_mutator_intent",
           "summary": "Default and seeded PlayerChoice queries expose the generated nested payload shape while response, reroll, and close calls record local intent.",
-          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
+          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
         }
       ],
       "tests": [
@@ -1169,7 +1169,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_tiered_entrance_payloads",
           "summary": "Seeded and default C_DelvesUI TieredEntrance queries expose the documented tier and nested reward fields.",
-          "source_hash": "d1eeb2650c182e926882d52f3379468d26f22307197cd45a4b47582358aa2fa7"
+          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
         }
       ],
       "tests": [

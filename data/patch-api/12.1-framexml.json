@@ -221,7 +221,7 @@
           "kind": "runtime",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Delegates to existing state-backed aura collection; focused 12.1 bridge test.",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6"
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
         }
       ],
       "tests": [
@@ -252,7 +252,7 @@
           "kind": "runtime",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Rust validator accepts nonempty `HELPFUL`, `HARMFUL`, `RAID`, `INCLUDE_NAME_PLATE_ONLY`, and `PLAYER` token combinations; focused 12.1 bridge test.",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6"
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d"
         }
       ],
       "tests": [

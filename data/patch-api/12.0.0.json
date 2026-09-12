@@ -24728,7 +24728,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -24763,7 +24763,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -24798,7 +24798,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -24833,7 +24833,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -24868,7 +24868,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -24903,7 +24903,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -24938,7 +24938,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -24973,7 +24973,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -25008,7 +25008,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
@@ -101633,7 +101633,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
-          "source_hash": "58480b33a2186d5ca847a12711c81639d2c4c31c29af51f4029ce4e2dfe9a5a6",
+          "source_hash": "b8cb977f2f4eda8a2f55fcee223634fdf75e9bd54e5903ed51b2a85519ea881d",
           "summary": "Current src/lua_api/globals/auras.rs and src/lua_api/workarounds/temporary/unit_auras_state.rs provide existing seeded aura lookup/state behavior but do not model or prove these added 12.0.0 contracts."
         },
         {
