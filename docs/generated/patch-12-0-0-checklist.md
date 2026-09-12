@@ -2248,10 +2248,10 @@
 2248. [best-effort] `added:LuaDurationObject` — behavioral
 2249. [best-effort] `added:LuaDurationObject.Assign` — behavioral
 2250. [best-effort] `added:LuaDurationObject.Copy` — behavioral
-2251. [evidence-required] `added:LuaDurationObject.EvaluateElapsedDuration` — unsafe
-2252. [evidence-required] `added:LuaDurationObject.EvaluateElapsedPercent` — unsafe
-2253. [evidence-required] `added:LuaDurationObject.EvaluateRemainingDuration` — unsafe
-2254. [evidence-required] `added:LuaDurationObject.EvaluateRemainingPercent` — unsafe
+2251. [best-effort] `added:LuaDurationObject.EvaluateElapsedDuration` — behavioral
+2252. [best-effort] `added:LuaDurationObject.EvaluateElapsedPercent` — behavioral
+2253. [best-effort] `added:LuaDurationObject.EvaluateRemainingDuration` — behavioral
+2254. [best-effort] `added:LuaDurationObject.EvaluateRemainingPercent` — behavioral
 2255. [best-effort] `added:LuaDurationObject.GetElapsedDuration` — behavioral
 2256. [best-effort] `added:LuaDurationObject.GetElapsedPercent` — behavioral
 2257. [best-effort] `added:LuaDurationObject.GetEndTime` — behavioral

@@ -6540,7 +6540,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the CreateColorCurve factory and LuaColorCurveObject userdata shape.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -6577,7 +6577,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the CreateCurve factory and LuaCurveObject userdata shape.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -6614,7 +6614,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Ordinary boolean selection returns a fresh ColorMixin-compatible color from the chosen numeric RGBA inputs without mutation. Copy identity and both-branch validation are simulator policies.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -6653,7 +6653,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Ordinary boolean selection returns the chosen numeric color component, including zero. Strict boolean and both-branch numeric validation are simulator policies.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -6692,7 +6692,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module installs CreateCurve/CreateColorCurve and object methods; it does not define this named namespace helper. This is related source context, not implementation or native-contract evidence for the helper.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -8221,7 +8221,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust registration creates a table-backed LuaDurationObject with shared methods and an instance ID.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
         },
         {
           "kind": "test",
@@ -8258,12 +8258,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; With simulator elapsed time set at least 40 seconds after its origin, GetCurrentTime returns at least 40 and the unbound duration clock is no earlier. Native epoch, precision, pause, and synchronization semantics remain unverified.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "With simulator elapsed time set at least 40 seconds after its origin, GetCurrentTime returns at least 40 and the unbound duration clock is no earlier. Native epoch, precision, pause, and synchronization semantics remain unverified."
         }
       ],
@@ -86526,7 +86526,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the LuaColorCurveObject userdata and generic curve method dispatch.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -86563,7 +86563,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86592,7 +86592,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86621,7 +86621,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation copies points into a new LuaColorCurveObject userdata.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -86658,7 +86658,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86687,7 +86687,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86716,7 +86716,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86745,7 +86745,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86774,7 +86774,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86803,7 +86803,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86832,7 +86832,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86861,7 +86861,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86889,7 +86889,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3",
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced",
           "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior."
         },
         {
@@ -86925,7 +86925,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86954,7 +86954,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve implementation stores internal points with x/y fields and copies color values. Internal storage does not establish the named public LuaColorCurvePoint structure contract, field validation, native identity, or consumer behavior.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -86983,7 +86983,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation provides the LuaCurveObject userdata, method dispatch, per-instance fields, and tostring.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -87034,7 +87034,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation appends scalar x/y points to the curve userdata.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -87071,7 +87071,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87100,7 +87100,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation copies scalar points into a new LuaCurveObject userdata.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -87137,7 +87137,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation linearly interpolates scalar curve points.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -87174,7 +87174,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87203,7 +87203,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "Modeled curve implementation returns the stored scalar point count.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         },
         {
           "kind": "test",
@@ -87240,7 +87240,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87269,7 +87269,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87298,7 +87298,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87327,7 +87327,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87356,7 +87356,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87385,7 +87385,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87414,7 +87414,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87443,7 +87443,7 @@
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
           "summary": "The curve module defines this method on newproxy userdata backed by per-object Lua state. Source inspection does not establish the complete native method contract, coercion, exact errors, identity, or security.",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3"
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced"
         }
       ],
       "tests": [],
@@ -87472,7 +87472,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust implementation provides a table proxy with shared methods, per-instance fields, and tostring formatting.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
         },
         {
           "kind": "test",
@@ -87512,13 +87512,13 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_copy_assign_preserves_receiver_identity_and_independent_timing",
           "summary": "This ordinary simulator test covers receiver timing transfer, independent later timing mutation, no returned values, and preserved receiver identity/custom fields; the other listed tests separately cover clocks, self-assignment, and invalid-source atomicity.",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28"
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
       "tests": [
@@ -87553,13 +87553,13 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_copy_preserves_timing_and_returns_one_independent_object",
           "summary": "This ordinary simulator test covers one distinct return value, timing transfer, and independent later timing mutation; the separately listed clock test covers reference copying and independent clock bindings.",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28"
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
       "tests": [
@@ -87576,8 +87576,8 @@
       "id": "added:LuaDurationObject.EvaluateElapsedDuration",
       "symbol": "LuaDurationObject.EvaluateElapsedDuration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87591,22 +87591,36 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_elapsed_seconds_follow_clock_and_modifiers",
+          "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_elapsed_seconds_follow_clock_and_modifiers",
+        "tests/duration_core.rs::duration_curve_color_results_preserve_rgba_for_all_four_queries",
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+        "tests/duration_core.rs::duration_curve_invalid_modifiers_preserve_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_invalid_bound_clock_preserves_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_missing_and_wrong_curves_are_rejected_without_mutation",
+        "tests/duration_core.rs::duration_curve_unsupported_color_interpolation_propagates_evaluator_error"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Bounded ordinary simulator duration-to-curve dispatch through existing duration getters and registered scalar/color curve evaluators. Native historical-client, interpolation/extrapolation, identity, clock/modifier, coercion/error-precedence, security, lifecycle, and real Blizzard consumer conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.EvaluateElapsedPercent",
       "symbol": "LuaDurationObject.EvaluateElapsedPercent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87620,22 +87634,36 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_elapsed_percent_is_modifier_invariant",
+          "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_elapsed_percent_is_modifier_invariant",
+        "tests/duration_core.rs::duration_curve_color_results_preserve_rgba_for_all_four_queries",
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+        "tests/duration_core.rs::duration_curve_invalid_modifiers_preserve_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_invalid_bound_clock_preserves_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_missing_and_wrong_curves_are_rejected_without_mutation",
+        "tests/duration_core.rs::duration_curve_unsupported_color_interpolation_propagates_evaluator_error"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Bounded ordinary simulator duration-to-curve dispatch through existing duration getters and registered scalar/color curve evaluators. Native historical-client, interpolation/extrapolation, identity, clock/modifier, coercion/error-precedence, security, lifecycle, and real Blizzard consumer conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.EvaluateRemainingDuration",
       "symbol": "LuaDurationObject.EvaluateRemainingDuration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87649,22 +87677,36 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_remaining_seconds_follow_clock_and_modifiers",
+          "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_remaining_seconds_follow_clock_and_modifiers",
+        "tests/duration_core.rs::duration_curve_color_results_preserve_rgba_for_all_four_queries",
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+        "tests/duration_core.rs::duration_curve_invalid_modifiers_preserve_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_invalid_bound_clock_preserves_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_missing_and_wrong_curves_are_rejected_without_mutation",
+        "tests/duration_core.rs::duration_curve_unsupported_color_interpolation_propagates_evaluator_error"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Bounded ordinary simulator duration-to-curve dispatch through existing duration getters and registered scalar/color curve evaluators. Native historical-client, interpolation/extrapolation, identity, clock/modifier, coercion/error-precedence, security, lifecycle, and real Blizzard consumer conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.EvaluateRemainingPercent",
       "symbol": "LuaDurationObject.EvaluateRemainingPercent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87678,15 +87720,29 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs::duration_curve_remaining_percent_is_modifier_invariant",
+          "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_curve_remaining_percent_is_modifier_invariant",
+        "tests/duration_core.rs::duration_curve_color_results_preserve_rgba_for_all_four_queries",
+        "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
+        "tests/duration_core.rs::duration_curve_invalid_modifiers_preserve_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_invalid_bound_clock_preserves_duration_and_curve_state",
+        "tests/duration_core.rs::duration_curve_missing_and_wrong_curves_are_rejected_without_mutation",
+        "tests/duration_core.rs::duration_curve_unsupported_color_interpolation_propagates_evaluator_error"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "aae5996eb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Bounded ordinary simulator duration-to-curve dispatch through existing duration getters and registered scalar/color curve evaluators. Native historical-client, interpolation/extrapolation, identity, clock/modifier, coercion/error-precedence, security, lifecycle, and real Blizzard consumer conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetElapsedDuration",
@@ -87707,12 +87763,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Elapsed durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2. Default-clock and span-configuration observations are also asserted.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Elapsed durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2. Default-clock and span-configuration observations are also asserted."
         }
       ],
@@ -87747,13 +87803,13 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Current implementation computes elapsed/T from the existing clock-driven duration state, clamps elapsed to the configured span, returns zero for zero spans, and rejects invalid modifiers or bound clock values. These are ordinary simulator policies, not native semantics.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28"
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
       "tests": [
@@ -87787,12 +87843,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; End is 20 for start 10/base 20/rate 2, changes to 30 with span 10..30, remains stable during clock movement, and resets to zero. Rejected configuration calls preserve end 30.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "End is 20 for start 10/base 20/rate 2, changes to 30 with span 10..30, remains stable during clock movement, and resets to zero. Rejected configuration calls preserve end 30."
         }
       ],
@@ -87826,12 +87882,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Rate is 2 after configured start intervals and remains 2 during clock movement; span configuration and Reset report rate 1.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Rate is 2 after configured start intervals and remains 2 during clock movement; span configuration and Reset report rate 1."
         }
       ],
@@ -87865,12 +87921,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Remaining durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2; end configuration at clock 12 gives 8 and zero duration gives zero.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Remaining durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2; end configuration at clock 12 gives 8 and zero duration gives zero."
         }
       ],
@@ -87905,13 +87961,13 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Current implementation computes remaining/T from the existing clock-driven duration state, clamps elapsed to the configured span, returns zero for zero spans, and rejects invalid modifiers or bound clock values. These are ordinary simulator policies, not native semantics.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28"
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
       "tests": [
@@ -87945,12 +88001,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Start is 10 for equivalent start/end configurations, stays 10 through clock boundaries and rewind, and resets to zero. Rejected configuration calls preserve start 10.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Start is 10 for equivalent start/end configurations, stays 10 through clock boundaries and rewind, and resets to zero. Rejected configuration calls preserve start 10."
         }
       ],
@@ -87984,12 +88040,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; For start 10, base duration 20 and rate 2, total is 10 in RealTime and 20 in BaseTime throughout clock movement; span configuration gives 20 and reset gives zero.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "For start 10, base duration 20 and rate 2, total is 10 in RealTime and 20 in BaseTime throughout clock movement; span configuration gives 20 and reset gives zero."
         }
       ],
@@ -88023,7 +88079,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
         }
       ],
       "tests": [],
@@ -88052,7 +88108,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust implementation exposes IsZero as a default-zero constant.",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4"
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
         },
         {
           "kind": "test",
@@ -88089,12 +88145,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Reset after a configured interval sets endpoints and total to zero, rate to 1, and all activity predicates false while retaining the manual clock and its time 12.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Reset after a configured interval sets endpoints and total to zero, rate to 1, and all activity predicates false while retaining the manual clock and its time 12."
         }
       ],
@@ -88127,12 +88183,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Configuring end 20, base duration 20 and rate 2 yields start 10/end 20 and remaining 8 at clock 12. Zero rate errors while existing endpoints 10..30 remain unchanged.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Configuring end 20, base duration 20 and rate 2 yields start 10/end 20 and remaining 8 at clock 12. Zero rate errors while existing endpoints 10..30 remain unchanged."
         }
       ],
@@ -88164,12 +88220,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Configuring start 10, base duration 20 and rate 2 yields endpoints 10..20 and concrete progress. Negative duration, NaN start and infinite duration error while existing endpoints 10..30 remain unchanged; configured zero duration is observed.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Configuring start 10, base duration 20 and rate 2 yields endpoints 10..20 and concrete progress. Negative duration, NaN start and infinite duration error while existing endpoints 10..30 remain unchanged; configured zero duration is observed."
         }
       ],
@@ -88203,12 +88259,12 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Existing simulator timing model; Configuring span 10..30 after rate 2 yields rate 1, total 20 and elapsed 2 at clock 12. Reversed span 5..4 errors while endpoints 10..30 remain unchanged.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28",
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0",
           "summary": "Configuring span 10..30 after rate 2 yields rate 1, total 20 and elapsed 2 at clock 12. Reversed span 5..4 errors while endpoints 10..30 remain unchanged."
         }
       ],
@@ -88240,13 +88296,13 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object/core.rs",
           "summary": "Starting with a bound manual clock at 15 and configured start 10, base duration 20, rate 2, SetToDefaults clears clock binding, sets endpoints/total to zero and rate to one, and reports zero, inactive state and zero fractions. These are simulator policies, not native reset semantics.",
-          "source_hash": "39cf0dcbbedff5c84b64d8980cea782962787d7b0d891b287bb4fb8eab402f86"
+          "source_hash": "3afe4751848a8cd676e7ca81120e9c73ef51b488a3e25e2c8571138ca638939a"
         },
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Starting with a bound manual clock at 15 and configured start 10, base duration 20, rate 2, SetToDefaults clears clock binding, sets endpoints/total to zero and rate to one, and reports zero, inactive state and zero fractions. These are simulator policies, not native reset semantics.",
-          "source_hash": "5b6785e8080e11c4ccd3b848f25aa6bd53eed1af05fb460f31194c1b18574c28"
+          "source_hash": "dd9038f2b484f4d87179b911e7393c2e731394a1815d77cdd2e4e12ee6c514b0"
         }
       ],
       "tests": [
@@ -91211,7 +91267,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4",
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e",
           "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
@@ -91324,7 +91380,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4",
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e",
           "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
@@ -98843,7 +98899,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3",
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced",
           "summary": "Current curve implementation creates LuaColorCurveObject instances through the shared curve methods; tested behavior covers userdata/Evaluate shape and copy shape."
         },
         {
@@ -98881,7 +98937,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3",
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced",
           "summary": "Current curve implementation creates LuaCurveObject instances with shared point insertion, scalar evaluation, copy, and per-instance field behavior."
         },
         {
@@ -98922,7 +98978,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_curve_util.rs",
-          "source_hash": "31308e2063897c2929627aa86992c2e6eb7bcb2b07cf1540964837cabe3a52d3",
+          "source_hash": "700dcc3b9a4ae7cf9d0017af4c9b104c8ed4fb8077978d9bbb3fc961db78aced",
           "summary": "The curve module defines newproxy userdata, factories, and a bounded method set. That source context does not establish the named base/interface or missing-method contract; no complete native surface or identity claim is made."
         }
       ],
@@ -98951,7 +99007,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "8b6693c3e1116dc09570449fa88158ecd2cbd80f724ba987c9148e140dba89c4",
+          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e",
           "summary": "Current LuaDurationObject implementation exposes C_DurationUtil table proxies with the tested factory, zero-state, query, and lifecycle surface."
         },
         {
