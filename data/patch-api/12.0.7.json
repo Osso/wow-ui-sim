@@ -767,16 +767,39 @@
       "id": "added:GameTooltip_AddMoneyLine",
       "symbol": "GameTooltip_AddMoneyLine",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": null,
-      "owner": "global-api",
+      "status": "best-effort",
+      "resolution": "behavioral",
+      "owner": "Blizzard_GameTooltip",
       "load_addon": "Blizzard_GameTooltip",
-      "evidence": [],
-      "tests": [],
+      "evidence": [
+        {
+          "kind": "test",
+          "reference": "tests/tooltip_money_line.rs::tooltip_money_line_mail_enclosed_money_keeps_label_order_and_highlight",
+          "summary": "Unmodified loaded InboxFrameItem_OnEnter consumes a seeded 12345-copper mail and inserts ENCLOSED_MONEY before literal coin-atlas text in highlight color.",
+          "source_hash": "05bb78d9afd32648dbc688551596e27bdebb229c9f850c94f4e630b3e41a6bff"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/tooltip_money_line.rs::tooltip_money_line_mail_unaffordable_cod_keeps_label_order_and_red",
+          "summary": "Unmodified loaded inbox consumer inserts COD_AMOUNT before literal 12345-copper atlas text in red when player money is12344.",
+          "source_hash": "05bb78d9afd32648dbc688551596e27bdebb229c9f850c94f4e630b3e41a6bff"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/tooltip_money_line.rs::tooltip_money_line_loaded_helper_formats_zero_and_boolean_colors",
+          "summary": "Loaded Blizzard helper appends single-space zero text, highlight for false and red for true, with literal12345-copper coin-atlas text.",
+          "source_hash": "05bb78d9afd32648dbc688551596e27bdebb229c9f850c94f4e630b3e41a6bff"
+        }
+      ],
+      "tests": [
+        "tests/tooltip_money_line.rs::tooltip_money_line_mail_enclosed_money_keeps_label_order_and_highlight",
+        "tests/tooltip_money_line.rs::tooltip_money_line_mail_unaffordable_cod_keeps_label_order_and_red",
+        "tests/tooltip_money_line.rs::tooltip_money_line_loaded_helper_formats_zero_and_boolean_colors"
+      ],
       "assertions": [],
-      "commit": "8097a844c",
+      "commit": "d99d0bc72",
       "approval_id": null,
-      "notes": "Unsupported pre-load prefix shim removed. Blizzard_GameTooltip owns the helper; loaded mail/tooltip behavioral proof is pending. Bare-environment availability is not credited."
+      "notes": "Three focused loaded-Blizzard consumer cases pass on the simulator retail-12-0-7 profile. Bare-environment availability is not promised; unsupported prefix shim removed at8097a844c. Cached source is not native historical-client proof. Dependency-closure Lua errors remain; this is not clean whole-addon startup or whole-addon compatibility."
     },
     {
       "id": "added:SetSecurePendingButtonCallback",
