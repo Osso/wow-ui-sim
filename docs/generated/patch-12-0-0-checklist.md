@@ -2222,7 +2222,7 @@
 2222. [best-effort] `added:LuaColorCurveObject.Evaluate` — behavioral
 2223. [evidence-required] `added:LuaColorCurveObject.EvaluateUnpacked` — unsafe
 2224. [evidence-required] `added:LuaColorCurveObject.GetPoint` — unsafe
-2225. [evidence-required] `added:LuaColorCurveObject.GetPointCount` — unsafe
+2225. [best-effort] `added:LuaColorCurveObject.GetPointCount` — behavioral
 2226. [evidence-required] `added:LuaColorCurveObject.GetPoints` — unsafe
 2227. [evidence-required] `added:LuaColorCurveObject.RemovePoint` — unsafe
 2228. [evidence-required] `added:LuaColorCurveObject.SetPoints` — unsafe
