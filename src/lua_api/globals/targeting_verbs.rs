@@ -362,6 +362,10 @@ pub fn set_raid_target(state: &mut LuaState) -> LuaResult<u32> {
             icons.insert(target.guid, icon);
         }
     }
+    borrow_state_mut(state)?.events.push(Event {
+        name: "RAID_TARGET_UPDATE".to_string(),
+        args: Vec::new(),
+    });
     fire_event_now(state, "RAID_TARGET_UPDATE", &[]);
     Ok(0)
 }

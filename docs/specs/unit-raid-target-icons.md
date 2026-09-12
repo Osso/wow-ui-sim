@@ -8,7 +8,7 @@
 - [x] Key assignments by resolved GUID. Target/focus aliases share assignments; switching target does not transfer icons. Player and party targeting snapshots use the existing `UnitGUID` identity convention, including nearest-friend selection.
 - [x] Return exactly one number or nil from the getter and no results from the setter. Nil/unknown units are unmarked and their setters remain no-ops, without validating the icon argument.
 - [x] Reject missing, non-number, nonfinite, fractional, or out-of-range indices for valid units before mutation or notification.
-- [x] Dispatch one zero-payload synchronous `RAID_TARGET_UPDATE` after every valid explicit call, including repeated same-index calls. Callbacks see updated state; the event is not additionally queued for duplicate delivery.
+- [x] Preserve one zero-payload queued `RAID_TARGET_UPDATE` record and one synchronous notification after every valid explicit call, including repeated same-index calls. Both follow mutation; callbacks see updated state. Queue consumption does not imply automatic callback dispatch.
 
 ## How it works
 
@@ -23,11 +23,11 @@
 
 ## Tests asserting this spec
 
-- `tests/targeting_verbs.rs` — assignment/moving/replacement/clearing, alias identity/isolation, invalid input, callback-visible state, and absence of queued duplicates; existing targeting controls remain intact.
+- `tests/targeting_verbs.rs` — assignment/moving/replacement/clearing, alias identity/isolation, invalid input, callback-visible state, and preserved queued records consumed through the public drain API without re-dispatch; existing targeting controls remain intact.
 
 ## Known gaps (current cycle)
 
-- [ ] Independent final verification. Historical 12.0.0 development proof passed all 23 standalone targeting cases, including four new icon cases; the separate consumer fixture failed during setup before reaching icon assertions.
+- [ ] Independent final verification of restored queue recording. Prior icon/sprite/profile proof does not establish the restored event side effects; the two corrected event tests have separate development evidence in `/tmp/raid-icon-event-records-ledger.json`.
 - [ ] Actual unmodified Blizzard consumer proof, arranged separately by the parent.
 
 ## Out of scope
