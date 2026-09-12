@@ -34,6 +34,9 @@ Probe.capture(run, "unknown secrecy", "direct", function() return "do not copy" 
 assert(run.observations[3].results[1].secret == "unavailable")
 assert(run.observations[3].results[1].value == nil)
 _G.issecretvalue = function(value) return value == secret end
+_G.canaccessvalue = nil
+assert(Probe.describe("unknown access must not copy", true).value == nil)
+_G.canaccessvalue = function(value) return value ~= secret end
 _G.securecallfunction = nil
 Probe.capture(run, "missing secure wrapper", "securecallfunction", function() error("must not run") end, Probe.pack())
 assert(run.observations[4].status == "unavailable")

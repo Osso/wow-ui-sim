@@ -19,7 +19,7 @@ function Probe.describe(value, includeValue)
     local secret = observe_boolean(rawget(_G, "issecretvalue"), value)
     local accessible = observe_boolean(rawget(_G, "canaccessvalue"), value)
     local result = { kind = kind, secret = secret, accessible = accessible }
-    if not includeValue or secret ~= false or accessible == false then return result end
+    if not includeValue or secret ~= false or accessible ~= true then return result end
     if kind == "string" then
         result.value = string.sub(value, 1, 2048)
         result.truncated = #value > 2048
