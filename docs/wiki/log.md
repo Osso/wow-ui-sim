@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Prepare PTR remaining-contract native probe
+
+Prepared [`Ptr125RemainingProbe`](../addons/Ptr125RemainingProbe/README.md) for manual native capture of the ten remaining evidence-required rows. The addon has not been installed or run. Preparation records build metadata, redacted observations, controls, cleanup, and unavailable/inconclusive outcomes only; it changes no manifest disposition, evidence hash, or `439 / 10` count. See [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR script-bucket throttle mock output
 
 `ec51f3a7e` and `6a6244864` move exactly six added rows to bounded best-effort: `GetScriptBucketThrottleLimits`, `ScriptBucketThrottleLimits`, and its four fields. Credit proves only PTR publication, earlier-retail absence, one fresh return table, and four numeric-zero mock fields. The zeros are placeholders, not native limits or disabled-mode semantics. Native limit values, normal/restricted selection, accounting, enforcement, and setters remain unclaimed. Totals: 439 best-effort, 10 evidence-required, 0 untriaged. See [script bucket throttle mock](../specs/script-bucket-throttle-limits.md) and [[patch-12-1-5-api-audit]].

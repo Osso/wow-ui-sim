@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Prepare PTR remaining-contract native probe
+
+[Ptr125RemainingProbe](../addons/Ptr125RemainingProbe/README.md) is prepared for manual native capture of the ten evidence-required PTR 12.1.5 rows. It is not installed or executed; it changes no audit disposition, manifest evidence, or `439 / 10` count. See [[patch-12-1-5-api-audit]].
+
 ## [2026-09-11] audit | Credit PTR channel and empower spellcast events
 
 `89c03462c` credits exactly `UNIT_SPELLCAST_CHANNEL_START`, `CHANNEL_UPDATE`, `CHANNEL_STOP`, `EMPOWER_START`, `EMPOWER_UPDATE`, and `EMPOWER_STOP` from bounded public `A_Admin` inputs. Credit covers state/timing queries, cross-mode replacement, shared synthetic GUID/numeric bar ID, callback-safe terminal dispatch, and unmodified Blizzard consumers on PTR and earlier retail. Channel query end excludes empower hold while completion includes it. Completion/early-release nil attribution conflicts with generated metadata; empower UPDATE retains the vendor’s old-pip/omitted-hold limitation. Native producers, timing/order, security, and identity semantics remain unverified. See [channel/empower lifecycle](../specs/channel-empower-lifecycles.md) and [[patch-12-1-5-api-audit]].

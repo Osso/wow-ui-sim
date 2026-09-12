@@ -12,6 +12,10 @@ PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12
 
 The source boundary is immediate generated `*Documentation.lua` files. It excludes FrameXML-only helpers, CVars, GlobalStrings, patch-note behavior, runtime values, and intermediate builds. Documentation prose is ignored; ordered arguments, returns, fields, defaults, security metadata, and symbolic enum/constant expressions are retained.
 
+## Prepared Native Probe (Not Evidence)
+
+[`Ptr125RemainingProbe`](../../addons/Ptr125RemainingProbe/README.md) is prepared for manual PTR capture of the ten evidence-required rows. It records build metadata, redacted observations, control fixtures, cleanup status, and unavailable/inconclusive outcomes; it has not been installed or executed in a native client. Preparation changes neither the `439 / 10` disposition nor any manifest evidence.
+
 ## Coverage Matrix
 
 | Surface | Current evidence | Disposition | Missing proof |

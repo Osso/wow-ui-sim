@@ -2,7 +2,7 @@
 
 **Prepared only. Not installed or executed in WoW.** Local fixture tests validate the recorder, not native behavior. Audit rows stay evidence-required until captured results are reviewed.
 
-Target: **12.1.5.69594**, interface **120105**. Every run records `GetBuildInfo()` and whether it matches this target. Results from another build are not pinned-build proof.
+Target: **12.1.5.69594**, interface **120105**. Every run records available `GetBuildInfo()` fields and marks the pinned-build match `true`, `false`, or `unknown` when build metadata is unavailable. Results from another or unknown build are not pinned-build proof.
 
 ## Coverage
 
