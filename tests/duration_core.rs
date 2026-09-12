@@ -446,3 +446,257 @@ fn duration_copy_assign_rejects_missing_or_wrong_source_without_mutation() {
     )
     .expect("Assign requires a duration source and leaves the receiver unchanged on error");
 }
+
+// These assertions exercise existing simulator clock, modifier, and curve policies.
+// Native interpolation/extrapolation, coercion/errors, and secret behavior are unproven.
+fn duration_curve_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        clock = C_DurationUtil.CreateManualClock(15)
+        duration = C_DurationUtil.CreateDuration()
+        duration:SetTimeFromStart(10, 20, 2)
+        duration:SetClock(clock)
+        secondsCurve = C_CurveUtil.CreateCurve()
+        secondsCurve:AddPoint(0, 100)
+        secondsCurve:AddPoint(20, 300)
+        percentCurve = C_CurveUtil.CreateCurve()
+        percentCurve:AddPoint(0, 2)
+        percentCurve:AddPoint(1, 6)
+        methods = {
+            {'EvaluateElapsedDuration', secondsCurve},
+            {'EvaluateRemainingDuration', secondsCurve},
+            {'EvaluateElapsedPercent', percentCurve},
+            {'EvaluateRemainingPercent', percentCurve},
+        }
+        function AssertDurationCurveState()
+            assert(duration:GetStartTime() == 10 and duration:GetEndTime() == 20)
+            assert(duration:GetModRate() == 2 and duration:GetClock() == clock)
+            assert(secondsCurve:GetPointCount() == 2 and percentCurve:GetPointCount() == 2)
+            assert(secondsCurve:Evaluate(0) == 100 and secondsCurve:Evaluate(20) == 300)
+            assert(percentCurve:Evaluate(0) == 2 and percentCurve:Evaluate(1) == 6)
+        end
+        function AssertDurationCurveSamples(method, curve, realValues, baseValues)
+            local samples = {5, 10, 12.5, 15, 20, 25, 12.5}
+            for index, time in ipairs(samples) do
+                clock:SetTime(time)
+                local function check(expected, ...)
+                    local actual = duration[method](duration, curve, ...)
+                    assert(type(actual) == 'number' and actual == expected,
+                        method .. ' at ' .. time .. ': expected ' .. expected .. ', got ' .. tostring(actual))
+                end
+                check(realValues[index])
+                check(realValues[index], nil)
+                check(realValues[index], Enum.DurationTimeModifier.RealTime)
+                check(baseValues[index], Enum.DurationTimeModifier.BaseTime)
+                AssertDurationCurveState()
+                assert(clock:GetTime() == time)
+            end
+        end
+        function AssertDurationCurveColor(value, r, g, b, a)
+            assert(type(value) == 'table' and type(value.GetRGBA) == 'function',
+                'duration color evaluation must return a ColorMixin result')
+            local vr, vg, vb, va = value:GetRGBA()
+            assert(vr == r and vg == g and vb == b and va == a, 'unexpected evaluated RGBA')
+        end
+        function NewDurationColorCurve(maximum)
+            local curve = C_CurveUtil.CreateColorCurve()
+            curve:AddPoint(0, CreateColor(0, 0, 1, 0.5))
+            curve:AddPoint(maximum, CreateColor(1, 0.5, 0, 1))
+            return curve
+        end
+        "#,
+    )
+    .expect("real duration and curve fixtures should initialize");
+    env
+}
+
+#[test]
+fn duration_curve_elapsed_seconds_follow_clock_and_modifiers() {
+    duration_curve_env()
+        .exec(
+            r#"
+        AssertDurationCurveSamples('EvaluateElapsedDuration', secondsCurve,
+            {100, 100, 125, 150, 200, 200, 125},
+            {100, 100, 150, 200, 300, 300, 150})
+    "#,
+        )
+        .expect("elapsed seconds use 100 + 10 * seconds across clock boundaries and rewind");
+}
+
+#[test]
+fn duration_curve_remaining_seconds_follow_clock_and_modifiers() {
+    duration_curve_env()
+        .exec(
+            r#"
+        AssertDurationCurveSamples('EvaluateRemainingDuration', secondsCurve,
+            {200, 200, 175, 150, 100, 100, 175},
+            {300, 300, 250, 200, 100, 100, 250})
+    "#,
+        )
+        .expect("remaining seconds use 100 + 10 * seconds across clock boundaries and rewind");
+}
+
+#[test]
+fn duration_curve_elapsed_percent_is_modifier_invariant() {
+    duration_curve_env()
+        .exec(
+            r#"
+        AssertDurationCurveSamples('EvaluateElapsedPercent', percentCurve,
+            {2, 2, 3, 4, 6, 6, 3}, {2, 2, 3, 4, 6, 6, 3})
+    "#,
+        )
+        .expect("elapsed percentages use 2 + 4 * fraction for every supported modifier");
+}
+
+#[test]
+fn duration_curve_remaining_percent_is_modifier_invariant() {
+    duration_curve_env()
+        .exec(
+            r#"
+        AssertDurationCurveSamples('EvaluateRemainingPercent', percentCurve,
+            {6, 6, 5, 4, 2, 2, 5}, {6, 6, 5, 4, 2, 2, 5})
+    "#,
+        )
+        .expect("remaining percentages use 2 + 4 * fraction for every supported modifier");
+}
+
+#[test]
+fn duration_curve_color_results_preserve_rgba_for_all_four_queries() {
+    duration_curve_env()
+        .exec(
+            r#"
+        local seconds = NewDurationColorCurve(10)
+        local percent = NewDurationColorCurve(1)
+        for index, entry in ipairs(methods) do
+            local curve = index <= 2 and seconds or percent
+            local evaluate = duration[entry[1]]
+            AssertDurationCurveColor(evaluate(duration, curve), 0.5, 0.25, 0.5, 0.75)
+            AssertDurationCurveColor(evaluate(duration, curve, nil), 0.5, 0.25, 0.5, 0.75)
+            AssertDurationCurveColor(evaluate(duration, curve, Enum.DurationTimeModifier.RealTime),
+                0.5, 0.25, 0.5, 0.75)
+            local base = evaluate(duration, curve, Enum.DurationTimeModifier.BaseTime)
+            if index <= 2 then
+                AssertDurationCurveColor(base, 1, 0.5, 0, 1)
+            else
+                AssertDurationCurveColor(base, 0.5, 0.25, 0.5, 0.75)
+            end
+        end
+        AssertDurationCurveState()
+    "#,
+        )
+        .expect(
+            "duration evaluation preserves real color curve results rather than returning numbers",
+        );
+}
+
+#[test]
+fn duration_curve_live_point_reconfiguration_changes_all_queries() {
+    duration_curve_env()
+        .exec(
+            r#"
+        for index, entry in ipairs(methods) do
+            local scalar = C_CurveUtil.CreateCurve()
+            local maximum = index <= 2 and 10 or 1
+            scalar:AddPoint(0, 10)
+            scalar:AddPoint(maximum, 30)
+            local evaluate = duration[entry[1]]
+            assert(evaluate(duration, scalar) == 20, entry[1] .. ' initial scalar')
+            scalar:ClearPoints()
+            scalar:AddPoint(0, 50)
+            scalar:AddPoint(maximum, 90)
+            assert(evaluate(duration, scalar) == 70, entry[1] .. ' changed scalar')
+            local color = NewDurationColorCurve(maximum)
+            AssertDurationCurveColor(evaluate(duration, color), 0.5, 0.25, 0.5, 0.75)
+            color:ClearPoints()
+            color:AddPoint(0, CreateColor(1, 1, 0, 0))
+            color:AddPoint(maximum, CreateColor(0, 0, 1, 0.5))
+            AssertDurationCurveColor(evaluate(duration, color), 0.5, 0.5, 0.5, 0.25)
+        end
+        AssertDurationCurveState()
+    "#,
+        )
+        .expect("each duration query evaluates the live scalar or color curve points");
+}
+
+#[test]
+fn duration_curve_invalid_modifiers_preserve_duration_and_curve_state() {
+    duration_curve_env()
+        .exec(
+            r#"
+        for _, entry in ipairs(methods) do
+            assert(not pcall(duration[entry[1]], duration, entry[2], 2),
+                entry[1] .. ' must reject modifier 2')
+            AssertDurationCurveState()
+            assert(clock:GetTime() == 15)
+        end
+    "#,
+        )
+        .expect("invalid modifiers fail without changing duration state or curve points");
+}
+
+#[test]
+fn duration_curve_invalid_bound_clock_preserves_duration_and_curve_state() {
+    duration_curve_env()
+        .exec(
+            r#"
+        for _, badTime in ipairs({math.huge, 'not a time'}) do
+            clock.time = badTime
+            for _, entry in ipairs(methods) do
+                assert(not pcall(duration[entry[1]], duration, entry[2]),
+                    entry[1] .. ' must reject an invalid bound clock')
+                AssertDurationCurveState()
+                assert(clock.time == badTime, 'evaluation must not repair the clock')
+            end
+        end
+    "#,
+        )
+        .expect("invalid clock values propagate errors without changing configured state");
+}
+
+#[test]
+fn duration_curve_missing_and_wrong_curves_are_rejected_without_mutation() {
+    duration_curve_env()
+        .exec(
+            r#"
+        local fakeCalled = false
+        local fake = {Evaluate = function() fakeCalled = true; return 999 end}
+        local wrong = {{}, fake, clock, duration, false, 12, 'curve'}
+        for _, entry in ipairs(methods) do
+            local evaluate = duration[entry[1]]
+            assert(not pcall(evaluate, duration), entry[1] .. ' missing curve')
+            AssertDurationCurveState()
+            assert(not pcall(evaluate, duration, nil), entry[1] .. ' nil curve')
+            AssertDurationCurveState()
+            for _, curve in ipairs(wrong) do
+                assert(not pcall(evaluate, duration, curve), entry[1] .. ' wrong curve')
+                AssertDurationCurveState()
+                assert(clock:GetTime() == 15 and not fakeCalled)
+            end
+        end
+    "#,
+        )
+        .expect("only genuine curve objects are accepted; fake Evaluate tables are not invoked");
+}
+
+#[test]
+fn duration_curve_unsupported_color_interpolation_propagates_evaluator_error() {
+    duration_curve_env().exec(r#"
+        local curve = NewDurationColorCurve(10)
+        curve:SetType(Enum.LuaCurveType.Cubic)
+        local expected = 'Color curve interpolation type is not modeled'
+        local ok, directError = pcall(curve.Evaluate, curve, 5)
+        assert(not ok and tostring(directError):find(expected, 1, true),
+            'fixture must exercise the existing unsupported Cubic color evaluator')
+        for _, entry in ipairs(methods) do
+            local succeeded, message = pcall(duration[entry[1]], duration, curve)
+            assert(not succeeded, entry[1] .. ' must propagate the curve error')
+            assert(tostring(message):find(expected, 1, true), 'original evaluator error must survive')
+            AssertDurationCurveState()
+            assert(clock:GetTime() == 15 and curve:GetPointCount() == 2)
+        end
+        curve:SetType(Enum.LuaCurveType.Linear)
+        AssertDurationCurveColor(curve:Evaluate(0), 0, 0, 1, 0.5)
+        AssertDurationCurveColor(curve:Evaluate(10), 1, 0.5, 0, 1)
+    "#).expect("unsupported color interpolation errors are not replaced by zero fallback results");
+}
