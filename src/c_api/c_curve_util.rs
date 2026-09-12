@@ -117,8 +117,44 @@ C_CurveUtil.CreateCurve = make_factory('LuaCurveObject', false)
 C_CurveUtil.CreateColorCurve = make_factory('LuaColorCurveObject', true)
 "#;
 
+#[cfg(feature = "retail-12-0-0")]
+const BOOLEAN_SELECTION_LUA: &str = r#"
+local channels = {'r', 'g', 'b', 'a'}
+
+local function require_color(value)
+    if type(value) ~= 'table' then error('color table expected', 3) end
+    for _, channel in ipairs(channels) do
+        if type(value[channel]) ~= 'number' then
+            error('color must contain numeric RGBA channels', 3)
+        end
+    end
+end
+
+local function select_boolean_value(condition, valueIfTrue, valueIfFalse)
+    if type(condition) ~= 'boolean' then error('boolean expected', 3) end
+    if condition then return valueIfTrue end
+    return valueIfFalse
+end
+
+function C_CurveUtil.EvaluateColorFromBoolean(condition, valueIfTrue, valueIfFalse)
+    require_color(valueIfTrue)
+    require_color(valueIfFalse)
+    local value = select_boolean_value(condition, valueIfTrue, valueIfFalse)
+    return CreateColor(value.r, value.g, value.b, value.a)
+end
+
+function C_CurveUtil.EvaluateColorValueFromBoolean(condition, valueIfTrue, valueIfFalse)
+    if type(valueIfTrue) ~= 'number' or type(valueIfFalse) ~= 'number' then
+        error('numeric color components expected', 2)
+    end
+    return select_boolean_value(condition, valueIfTrue, valueIfFalse)
+end
+"#;
+
 pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CURVES_LUA)?;
+    #[cfg(feature = "retail-12-0-0")]
+    lua.exec(BOOLEAN_SELECTION_LUA)?;
     Ok(())
 }
 
