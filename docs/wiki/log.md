@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Document bounded 12.0.7 encounter-end input
+
+`ee979b81b` adds an explicit simulator-only `A_Admin.SimulateBossKill` status-list input for the 12.0.7 `ENCOUNTER_END.encounterUnitStatus` field. It copies caller-supplied records or emits a fresh empty list; it does not infer boss state. Tests were committed RED-first in `3c6c8e72d`; GREEN and historical-profile proof remain pending, so no audit credit is recorded. See [admin event inputs](../../admin-api/events.md), [encounter-end status](../../specs/encounter-end-unit-status.md), and [[patch-12-0-7-api-audit]].
+
 ## [2026-09-12] audit | Credit bounded 12.1 private projection policies
 
 `8787273ad` moves exactly `PrivateScriptObjects.PrivateIdentity` and `InaccessiblePublicKeys` to bounded best-effort. Six retail `forbidden_partition_` tests prove interned distinct projections, per-frame field/method isolation, native parent/method acceptance, ordinary-table spoof rejection, ordinary-field transfer, and actual AuraContainer provider/initializer boundaries. This is simulator partition behavior only: no native identity equivalence, universal inaccessible-key list, caller authority, hook/storage boundary, secret behavior, or security enforcement is claimed. Three earlier-12.0.7 controls also pass. Current register: 42 best-effort / 12 evidence-required. See [policy spec](../specs/script-object-environments.md) and [[patch-12-1-api-audit]].
