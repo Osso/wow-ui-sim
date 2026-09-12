@@ -33,6 +33,65 @@ fn is_current_action_matches_action_bar_to_cast() {
     assert!(b);
 }
 
+#[test]
+fn c_action_bar_is_current_action_follows_cast_lifecycle() {
+    let env = env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.action_bars.insert(99, 42);
+        state.action_bars.insert(98, 7);
+        state.action_bars.remove(&97);
+    }
+    env.exec(
+        r#"
+        local function assert_result(expected, ...)
+            assert(select('#', ...) == 1, 'IsCurrentAction returns one value')
+            local value = ...
+            assert(type(value) == 'boolean', 'IsCurrentAction returns a boolean')
+            assert(value == expected, 'unexpected current-action result')
+        end
+        assert_result(false, C_ActionBar.IsCurrentAction(99))
+        assert_result(false, C_ActionBar.IsCurrentAction(98))
+        assert_result(false, C_ActionBar.IsCurrentAction(97))
+
+        CastSpellByID(42)
+        assert(IsCurrentSpell(42), 'CastSpellByID must create the active cast')
+        assert_result(true, C_ActionBar.IsCurrentAction(99))
+        assert_result(false, C_ActionBar.IsCurrentAction(98))
+        assert_result(false, C_ActionBar.IsCurrentAction(97))
+
+        assert(SpellStopCasting(), 'SpellStopCasting must stop the active cast')
+        assert(not IsCurrentSpell(42))
+        assert_result(false, C_ActionBar.IsCurrentAction(99))
+        assert_result(false, C_ActionBar.IsCurrentAction(98))
+        assert_result(false, C_ActionBar.IsCurrentAction(97))
+        "#,
+    )
+    .expect("namespace current-action queries follow the actual cast lifecycle");
+}
+
+#[test]
+fn c_action_bar_is_current_action_reflects_slot_changes_during_cast() {
+    let env = env();
+    env.state().borrow_mut().action_bars.insert(99, 42);
+    env.exec(
+        "CastSpellByID(42); assert(IsCurrentSpell(42)); assert(C_ActionBar.IsCurrentAction(99))",
+    )
+    .expect("the assigned spell is current after the actual cast producer runs");
+
+    env.state().borrow_mut().action_bars.insert(99, 7);
+    env.exec("assert(IsCurrentSpell(42)); assert(C_ActionBar.IsCurrentAction(99) == false)")
+        .expect("remapping the slot changes the predicate without changing the cast");
+
+    env.state().borrow_mut().action_bars.insert(99, 42);
+    env.exec("assert(IsCurrentSpell(42)); assert(C_ActionBar.IsCurrentAction(99) == true)")
+        .expect("restoring the slot observes the same active cast");
+
+    env.state().borrow_mut().action_bars.remove(&99);
+    env.exec("assert(IsCurrentSpell(42)); assert(C_ActionBar.IsCurrentAction(99) == false)")
+        .expect("removing the slot clears the predicate while the cast stays active");
+}
+
 // ── IsSpellKnown ──────────────────────────────────────────────────────────────
 
 #[test]
