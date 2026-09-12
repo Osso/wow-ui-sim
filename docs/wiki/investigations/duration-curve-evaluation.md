@@ -14,6 +14,10 @@ Cached documentation names the return `LuaCurveEvaluatedResult`; cached scalar a
 
 The implementation reuses current duration modifier and clock validation plus existing curve behavior. It adds no `EvaluateTotalDuration`, interpolation policy, vendor code, VM changes, or security enforcement.
 
+## Existing integration credits
+
+`4393823e1` credits existing focused integration assertions for scalar `LuaCurveObject.ClearPoints` and color `LuaColorCurveObject.AddPoint`, `ClearPoints`, and `Evaluate`; no runtime or test changed. A rebuilt scalar curve changes the observed midpoint from `20` to `70`. A rebuilt color curve produces midpoint RGBA `(0.5, 0.5, 0.5, 0.25)`, and the existing color evaluation checks midpoint/endpoint ColorMixin channels with tested modifiers. `9957fc863` keeps the credit limited to those fixture values. The prior cross-profile/PTR proof at `/tmp/verify-duration-curve-ledger.json` covers the reused test file; independent validation of the metadata-only credit remains pending.
+
 ## Open boundaries
 
 Native clock/modifier/fraction policies, curve extrapolation, coercion/error precedence, color identity, secret/taint propagation, lifecycle, and real Blizzard consumer behavior remain unproven. Cached Blizzard UI has no practical consumer of these four methods.
