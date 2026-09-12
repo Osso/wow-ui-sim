@@ -2602,19 +2602,43 @@
       "load_addon": null,
       "evidence": [
         {
+          "kind": "source",
+          "reference": "data/patch-api/sources/12.0.7-api-changes.txt",
+          "summary": "Pinned added encounterUnitStatus list and fields.",
+          "source_hash": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin_encounter.rs",
+          "summary": "Explicit admin input and ordered event dispatch.",
+          "source_hash": "a4685627e57a6370459588b9639e7a7df7802acbdbeef448ab8760a334962e64"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/admin_encounter/unit_status.rs",
+          "summary": "Atomic validation and fresh copied records.",
+          "source_hash": "f445af0c5be10c5b3d45be645f2893fa37a047e721010d017b375d0084eda5d1"
+        },
+        {
+          "kind": "source",
+          "reference": "docs/specs/encounter-end-unit-status.md",
+          "summary": "Bounded producer contract and profile proof.",
+          "source_hash": "f74b0ec22bf3690a41e6009e483883e1a0fd51c3a845e1a47fb169786396cab5"
+        },
+        {
           "kind": "test",
-          "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_removal_and_event_surface",
-          "summary": "Focused 12.0.7 event-surface test registers this changed event.",
-          "source_hash": "db9b560b5e448cbcfd064e65e2f5edb1d3d84b174cc87e9d7cf5e8b4aab36f8d"
+          "reference": "tests/admin_encounter_api.rs",
+          "summary": "Fourteen12.0.7 admin cases and twelve12.0.5 controls pass; exact payload/order, isolation and atomic rejection.",
+          "source_hash": "562cbf8e434488e2d321dd1ceb6877b26f7b5898bc648e980c0b1d8d40e18350"
         }
       ],
       "tests": [
-        "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_removal_and_event_surface"
+        "tests/admin_encounter_api.rs"
       ],
       "assertions": [],
-      "commit": "367f35370",
+      "commit": "ee979b81b",
       "approval_id": null,
-      "notes": "Registration is tested; changed payload and secret-lockdown semantics remain best-effort."
+      "notes": "Explicit A_Admin.SimulateBossKill input produces the sixth ordered status-list payload, with copied records, empty omitted/nil lists, and atomic simulator validation. First five fields and subsequent BOSS_KILL stay unchanged;12.0.5 retains five event arguments. Native encounter tracking, timing, validation, security and Blizzard consumption of the new field are unproven."
     },
     {
       "id": "removed:BNInviteFriend",

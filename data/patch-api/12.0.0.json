@@ -12750,7 +12750,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current MajorFactionData state model has name and unlock_description fields but no description field or authoritative description state.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "source",
@@ -12785,7 +12785,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current MajorFactionData state model has no highlights collection or typed RenownHighlightInfo state.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "source",
@@ -12820,7 +12820,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current MajorFactionData state model has no nullable player companion ID or major-faction companion association.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "source",
@@ -12855,7 +12855,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain no MajorFactionRenownRewardInfo payload model or nullable reward type field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "source",
@@ -12920,7 +12920,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain no RenownHighlightInfo payload model or description field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "source",
@@ -12955,7 +12955,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain RenownLevelInfo.level for a different structure, but no RenownHighlightInfo model or highlight level field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "source",
@@ -12990,7 +12990,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current major-faction state types contain no RenownHighlightInfo payload model or title field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "source",
@@ -16650,19 +16650,19 @@
           "kind": "source",
           "reference": "src/lua_api/globals/faction_probes.rs",
           "summary": "Explicit Rust implementation reads faction_paragon state and returns true only for a registered faction not gated by too_low_level_for_paragon; missing or invalid IDs return false.",
-          "source_hash": "c4c2304e6d4da928743a7cd3281fe173e43997ecb29906fc5b0afade76497bcb"
+          "source_hash": "4598c1982bed7867fcdbf96d07d8ed34a9149331bf30bc1ae690d87ef0f50d35"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "FactionParagonInfo provides the modeled too_low_level_for_paragon state used by the API.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
           "reference": "tests/c_reputation_paragon.rs",
           "summary": "Focused tests prove registered eligible true, registered level-gated false, unregistered false, and Blizzard-style paragon reward-bar branching.",
-          "source_hash": "cdd74a753cb26b654631d946ed3049c5d16b71852ae068b2d1eb62c576c453bf"
+          "source_hash": "796ea8e6dffcf64f251b678521cf148b216bcb648baf2e0987f274c0680ed967"
         }
       ],
       "tests": [
@@ -28521,7 +28521,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28562,7 +28562,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28627,7 +28627,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28668,7 +28668,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28709,7 +28709,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28750,7 +28750,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28791,7 +28791,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28832,7 +28832,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28873,7 +28873,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28914,7 +28914,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28955,7 +28955,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -28996,7 +28996,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -29037,7 +29037,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -29078,7 +29078,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -29119,7 +29119,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -29160,7 +29160,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -29201,7 +29201,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -29266,7 +29266,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -29307,7 +29307,7 @@
           "kind": "source",
           "reference": "src/lua_api/state/support_types.rs",
           "summary": "Current support state contains no producer or typed model for the audited crafting field.",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2"
+          "source_hash": "559effe4a795e369466936b5a50085538bd181e357f0cf204f4e1087b03a9545"
         },
         {
           "kind": "test",
@@ -100276,7 +100276,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "b5fa6839f0775a55ab93c546d4ec0a27c2df5f4f4f7de41dc84a2ec889fcb1f2",
+          "source_hash": "368b344a0a90787ccb47d9c5df44be7587e75b09210673f3ad929f679f7277e7",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -100370,7 +100370,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "b5fa6839f0775a55ab93c546d4ec0a27c2df5f4f4f7de41dc84a2ec889fcb1f2",
+          "source_hash": "368b344a0a90787ccb47d9c5df44be7587e75b09210673f3ad929f679f7277e7",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
@@ -101055,8 +101055,8 @@
       "id": "changed:C_Reputation.GetFactionParagonInfo",
       "symbol": "C_Reputation.GetFactionParagonInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -101068,41 +101068,37 @@
         },
         {
           "kind": "source",
+          "reference": "src/c_api/c_reputation.rs",
+          "summary": "Profile-aware seeded paragon payload and getter.",
+          "source_hash": "a8c389d7fd21da0965fc7ecd5ce9f94663f89c96dd2a87195c1df7c15165c9fb"
+        },
+        {
+          "kind": "source",
           "reference": "src/lua_api/globals/faction_probes.rs",
-          "source_hash": "c4c2304e6d4da928743a7cd3281fe173e43997ecb29906fc5b0afade76497bcb",
-          "summary": "Explicit Rust C_Reputation implementation returns at most five paragon values."
+          "summary": "Existing C_Reputation registration delegates to the modeled getter.",
+          "source_hash": "4598c1982bed7867fcdbf96d07d8ed34a9149331bf30bc1ae690d87ef0f50d35"
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/state/support_types.rs",
-          "source_hash": "dab27c17cc4ae1161a83588738e76dd12d8b097ce18226ace79321413ac911f2",
-          "summary": "Faction paragon state type lacks the added storage-level field."
+          "reference": "docs/specs/faction-paragon-storage-level.md",
+          "summary": "Bounded seeded-state contract and proof limitations.",
+          "source_hash": "20b1c5ae459d63d82f2f02e9678ace31b7cf5d6c998c97d9caee45603564582f"
         },
         {
-          "kind": "source",
-          "reference": "src/lua_api/workarounds/temporary/reputation_state.rs",
-          "source_hash": "af92e1b07cc3bc3b76c9d707885c43032349162269d798ac9f691c20923d27d7",
-          "summary": "Fallback is shadowed by explicit registration in normal runtime loading."
-        },
-        {
-          "kind": "source",
-          "reference": "docs/wow-client-diff/WowDiscovery.lua",
-          "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
-          "summary": "Independent discovery evidence; no behavior is inferred."
-        },
-        {
-          "kind": "source",
-          "reference": "data/patch-api/sources/12.0.0-register.json",
-          "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Checked-in patch source records the changed occurrence and its before/after metadata."
+          "kind": "test",
+          "reference": "tests/c_reputation_paragon.rs",
+          "summary": "Exact arity/types, first-five values, unknown faction, storage updates and faction isolation; retail and Mists proof.",
+          "source_hash": "796ea8e6dffcf64f251b678521cf148b216bcb648baf2e0987f274c0680ed967"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/c_reputation_paragon.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "dc346a706",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: retail adds numeric paragonStorageLevel; explicit Rust runtime returns at most the prior five values and the model has no sixth field. Required full-LoD/state-backed probe must establish six-value arity/types, invalid IDs, pending/low-level states, storage-level values, and transitions. Claims are bounded to output shape; no paragon behavior or consumer semantics are claimed. Required probe: Full-LoD/state-backed probe: seed or obtain a known paragon faction, assert exactly six returns with numeric currentValue/threshold/rewardQuestID/paragonStorageLevel and boolean pending/low-level fields; assert invalid IDs return zero values; cover pending, low-level, storage-level, and transitions."
+      "notes": "Seeded paragon queries return six values on retail12.0.0+, including explicit per-faction storage level; preserve first five, state updates/isolation, and unknown-faction zero results. Mists retains five. Gameplay earning/storage derivation, native validation/security, sixth-return Journeys consumption, and clean historical UI loading are unproven."
     },
     {
       "id": "changed:C_Reputation.IsFactionParagon",
@@ -101122,7 +101118,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/faction_probes.rs",
-          "source_hash": "c4c2304e6d4da928743a7cd3281fe173e43997ecb29906fc5b0afade76497bcb",
+          "source_hash": "4598c1982bed7867fcdbf96d07d8ed34a9149331bf30bc1ae690d87ef0f50d35",
           "summary": "Existing faction probe publication is sufficient for the unchanged boolean contract; unrelated state gaps are out of scope."
         },
         {
@@ -101156,8 +101152,8 @@
       "id": "changed:C_SpecializationInfo.GetSpecializationInfo",
       "symbol": "C_SpecializationInfo.GetSpecializationInfo",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -101170,46 +101166,30 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_spec.rs",
-          "source_hash": "c4e53cec38d12053eeb1c252d5bc4947669228a2100d3ceacbcf197dc29ade38",
-          "summary": "Current specialization implementation reads only the first argument and lacks optional selection semantics."
+          "summary": "Explicit class/index lookup with existing output model and bounded default tuple.",
+          "source_hash": "5ef3c151a45f4359911b04def3e84678c9f8636e70dd0a565408fe1dd07681d1"
         },
         {
           "kind": "source",
-          "reference": "src/c_api/mod.rs",
-          "source_hash": "b5fa6839f0775a55ab93c546d4ec0a27c2df5f4f4f7de41dc84a2ec889fcb1f2",
-          "summary": "C API registration surface."
-        },
-        {
-          "kind": "source",
-          "reference": "src/lua_api/globals/real/specialization_helpers.rs",
-          "source_hash": "5b0b7dc4419115b467c7dab776cfd18b9f15fa09715e0f7a3bf4414eb6c02dcf",
-          "summary": "Shared specialization output helper."
+          "reference": "docs/specs/specialization-class-selection.md",
+          "summary": "Bounded class selection contract, controls, and gaps.",
+          "source_hash": "d4aa69ac6c304a4c53b57b135d0d4c9d3be7f612eb3e049c77e28e6fa0545f59"
         },
         {
           "kind": "test",
-          "reference": "src/loader/tests/wow_api_globals/startup_globals.rs",
-          "source_hash": "db9b560b5e448cbcfd064e65e2f5edb1d3d84b174cc87e9d7cf5e8b4aab36f8d",
-          "summary": "Existing startup coverage checks publication only."
-        },
-        {
-          "kind": "source",
-          "reference": "docs/wow-client-diff/WowDiscovery.lua",
-          "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
-          "summary": "Independent discovery evidence; no behavior is inferred."
-        },
-        {
-          "kind": "source",
-          "reference": "data/patch-api/sources/12.0.0-register.json",
-          "source_hash": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
-          "summary": "Checked-in patch source records the changed occurrence and its before/after metadata."
+          "reference": "tests/talent_spec_probes.rs",
+          "summary": "Cross-class state/query behavior, exact default tuple and unmodified CooldownViewer consumer; non-retail control.",
+          "source_hash": "e20e2cbc0f924b8bd6abe126833d03bd254a57cd2ba9914921de444db735a2d2"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/talent_spec_probes.rs"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "9a8c05992",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: retail adds optional classID; runtime reads only the first argument, ignores all optional selection inputs, returns zero values for unresolved specs, and lacks inspect/pet/class/sex/group backing. Required full-LoD/state-backed probe must establish ten outputs, defaults, invalid indices, classID and selection semantics, and state transitions. Claims are bounded to the added optional input and output behavior; no specialization consumer semantics are claimed. Required probe: Full-LoD/state-backed probe: invoke with valid and invalid specialization indices, classID, inspect, pet, inspectTarget, sex, and groupIndex combinations; assert exact ten-result arity/types/defaults, invalid behavior, and distinct class/inspect/pet/state selection."
+      "notes": "Optional seventh classID selects existing specialization records for the requested class without changing player state. Nil preserves the player path; invalid explicit class/index uses a bounded default-shaped ten-result policy, not player fallback. Unmodified CooldownViewer class-tag consumer is covered. Inspect/pet/sex/group, native invalid-input/security semantics and historical vendor equivalence remain unverified."
     },
     {
       "id": "changed:C_Timer.After",
@@ -102397,7 +102377,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingItem as Lua number 31, with source change 30→31. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingItem as Lua number 31, with source change 30\u219231. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.MissingNpc",
@@ -102440,7 +102420,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingNpc as Lua number 32, with source change 31→32. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingNpc as Lua number 32, with source change 31\u219232. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.MissingOrder",
@@ -102483,7 +102463,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingOrder as Lua number 33, with source change 32→33. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingOrder as Lua number 33, with source change 32\u219233. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.MissingRecraftItem",
@@ -102526,7 +102506,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingRecraftItem as Lua number 34, with source change 33→34. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.MissingRecraftItem as Lua number 34, with source change 33\u219234. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.NoAccountItems",
@@ -102569,7 +102549,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NoAccountItems as Lua number 35, with source change 34→35. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NoAccountItems as Lua number 35, with source change 34\u219235. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.NotClaimed",
@@ -102612,7 +102592,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotClaimed as Lua number 36, with source change 35→36. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotClaimed as Lua number 36, with source change 35\u219236. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.NotCrafted",
@@ -102655,7 +102635,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotCrafted as Lua number 37, with source change 36→37. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotCrafted as Lua number 37, with source change 36\u219237. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.NotInGuild",
@@ -102698,7 +102678,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotInGuild as Lua number 38, with source change 37→38. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotInGuild as Lua number 38, with source change 37\u219238. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.NotYetImplemented",
@@ -102741,7 +102721,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotYetImplemented as Lua number 39, with source change 38→39. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.NotYetImplemented as Lua number 39, with source change 38\u219239. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.OutOfPublicOrderCapacity",
@@ -102784,7 +102764,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.OutOfPublicOrderCapacity as Lua number 40, with source change 39→40. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.OutOfPublicOrderCapacity as Lua number 40, with source change 39\u219240. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.ServerIsNotAvailable",
@@ -102827,7 +102807,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.ServerIsNotAvailable as Lua number 41, with source change 40→41. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.ServerIsNotAvailable as Lua number 41, with source change 40\u219241. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.TargetCannotCraft",
@@ -102870,7 +102850,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.TargetCannotCraft as Lua number 43, with source change 42→43. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.TargetCannotCraft as Lua number 43, with source change 42\u219243. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.TargetLocked",
@@ -102913,7 +102893,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.TargetLocked as Lua number 44, with source change 43→44. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.TargetLocked as Lua number 44, with source change 43\u219244. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.ThrottleViolation",
@@ -102956,7 +102936,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.ThrottleViolation as Lua number 42, with source change 41→42. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.ThrottleViolation as Lua number 42, with source change 41\u219242. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.Timeout",
@@ -102999,7 +102979,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.Timeout as Lua number 45, with source change 44→45. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.Timeout as Lua number 45, with source change 44\u219245. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.TooManyItems",
@@ -103042,7 +103022,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.TooManyItems as Lua number 47, with source change 45→47. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.TooManyItems as Lua number 47, with source change 45\u219247. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResult.WrongVersion",
@@ -103085,7 +103065,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.WrongVersion as Lua number 48, with source change 46→48. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResult.WrongVersion as Lua number 48, with source change 46\u219248. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResultMeta.MaxValue",
@@ -103128,7 +103108,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResultMeta.MaxValue as Lua number 48, with source change 46→48. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order producer, interpretation, consumer, mutation, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResultMeta.MaxValue as Lua number 48, with source change 46\u219248. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order producer, interpretation, consumer, mutation, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingOrderResultMeta.NumValues",
@@ -103171,7 +103151,7 @@
       "commit": "f6db33a61",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResultMeta.NumValues as Lua number 49, with source change 47→49. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order producer, interpretation, consumer, mutation, persistence, transition, or lifecycle semantics are claimed."
+      "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication of Enum.CraftingOrderResultMeta.NumValues as Lua number 49, with source change 47\u219249. Guarded runtime publication matches and the focused proof covers the complete changed family plus metadata MinValue=0, MaxValue=48, NumValues=49. No crafting-order producer, interpretation, consumer, mutation, persistence, transition, or lifecycle semantics are claimed."
     },
     {
       "id": "changed:Enum.CraftingReagentItemFlag.TooltipShowsAsStatModifications",

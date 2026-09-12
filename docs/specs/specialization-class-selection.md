@@ -9,7 +9,7 @@
 - [x] Explicit invalid class or specialization index returns `(0, nil, nil, nil, nil, nil, 0, nil, 0, true)` rather than selecting the player's class. Positive integral class/index validation and using the pinned default-shaped tuple for invalid selections are bounded simulator policy, not native error claims.
 - [x] Queries leave player class and active specialization unchanged.
 - [x] The unmodified cached `CooldownViewerUtil.GetClassAndSpecTagText` produces `Mage - Arcane` for tag `81` and `Paladin - Holy` for tag `21` when the player is a Paladin.
-- [ ] Profiles without the retail 12.0.0 epoch retain their existing player-class selection behavior.
+- [x] Profiles without the retail 12.0.0 epoch retain their existing player-class selection behavior.
 
 ## How it works
 
@@ -26,8 +26,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Independent verification remains pending.
-- [ ] Non-retail control execution remains pending.
+Independent proof at `9a8c05992`: three class-selection tests passed on 12.0.7, and the Mists paragon/class-selection batch passed ten tests including the non-retail control. Format/check/build passed; current-retail startup emitted `[]`. Historical UI-loader errors in the separate paragon consumer harness remain unresolved; this does not claim clean historical startup.
 
 ## Out of scope
 

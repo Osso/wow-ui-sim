@@ -2579,9 +2579,9 @@
 2579. [evidence-required] `changed:C_PingSecure.SetPingRadialWheelCreatedCallback` — unsafe
 2580. [evidence-required] `changed:C_PingSecure.SetSendMacroPingCallback` — unsafe
 2581. [evidence-required] `changed:C_PingSecure.SetTogglePingListenerCallback` — unsafe
-2582. [evidence-required] `changed:C_Reputation.GetFactionParagonInfo` — unsafe
+2582. [best-effort] `changed:C_Reputation.GetFactionParagonInfo` — behavioral
 2583. [best-effort] `changed:C_Reputation.IsFactionParagon` — provenance-only
-2584. [evidence-required] `changed:C_SpecializationInfo.GetSpecializationInfo` — unsafe
+2584. [best-effort] `changed:C_SpecializationInfo.GetSpecializationInfo` — behavioral
 2585. [evidence-required] `changed:C_Timer.After` — unsafe
 2586. [best-effort] `changed:C_Timer.NewTicker` — behavioral
 2587. [best-effort] `changed:C_Timer.NewTimer` — behavioral

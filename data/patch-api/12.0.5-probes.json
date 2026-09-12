@@ -249,7 +249,7 @@
           "kind": "test",
           "reference": "src/iced_app/mouse_tests.rs::mouse_focus_order_tracks_gui_hover_after_raise_and_lower",
           "summary": "GUI mouse-move hit testing keeps the higher raw-level frame as both GetMouseFocus and GetMouseFoci()[1] across Raise and Lower, then clears focus when hidden.",
-          "source_hash": "846046d4f1a9fae6389530eab92fed1a333b4296b80012e889b350581686ae2b"
+          "source_hash": "80ebeb6a62da8c78ab0261f67d39afcd64965b2099cade26baf43a49d898a3a0"
         }
       ],
       "tests": [
@@ -467,7 +467,7 @@
           "kind": "test",
           "reference": "src/loader/tests/xml_basics_extra.rs::layer_fontstring_without_anchors_uses_justify_h_default_point",
           "summary": "Unanchored frame-layer FontStrings receive one LEFT, CENTER, or RIGHT parent-relative point selected by justifyH while justifyV does not alter it.",
-          "source_hash": "046291bb2f570ce7ca19ff66ea1fc77b88825ced3bc5f0486c969171df034482"
+          "source_hash": "e4c2ce85ca14941f8b46fb74246b5e845edfd2003d1f4c2e6740b09674d4a480"
         }
       ],
       "tests": [
@@ -515,7 +515,7 @@
           "kind": "test",
           "reference": "src/loader/tests/xml_basics_extra.rs::layer_fontstring_size_variants_keep_justify_h_default_points",
           "summary": "No-size, width-only, height-only, and width-plus-height FontStrings retain justifyH-selected default points while configured dimensions remain intact.",
-          "source_hash": "046291bb2f570ce7ca19ff66ea1fc77b88825ced3bc5f0486c969171df034482"
+          "source_hash": "e4c2ce85ca14941f8b46fb74246b5e845edfd2003d1f4c2e6740b09674d4a480"
         }
       ],
       "tests": [
@@ -539,7 +539,7 @@
           "kind": "test",
           "reference": "src/loader/tests/xml_basics_extra.rs::layer_fontstring_explicit_anchors_remain_authoritative",
           "summary": "TOP, BOTTOM, LEFT, RIGHT, and TOPLEFT explicit anchors remain the sole point regardless of justifyH.",
-          "source_hash": "046291bb2f570ce7ca19ff66ea1fc77b88825ced3bc5f0486c969171df034482"
+          "source_hash": "e4c2ce85ca14941f8b46fb74246b5e845edfd2003d1f4c2e6740b09674d4a480"
         }
       ],
       "tests": [

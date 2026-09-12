@@ -8,7 +8,7 @@
 - [x] Preserve numeric types for returns 1–3 and 6 and boolean types for returns 4–5; preserve existing first-five values.
 - [x] Return the explicitly seeded integer storage level, including nonzero values; reflect updates independently per faction without deriving storage from current reputation.
 - [x] Return zero values for an unknown faction.
-- [ ] Profiles without the retail 12.0.0 API epoch retain exactly five values.
+- [x] Profiles without the retail 12.0.0 API epoch retain exactly five values.
 
 ## How it works
 
@@ -29,7 +29,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Independent verification and earlier/classic execution remain parent integration obligations.
+Independent proof at `9a8c05992`: ten paragon tests passed on 12.0.7; the Mists paragon/class-selection batch passed ten tests. Two first-five Blizzard consumer assertions passed, but their historical-profile loader emitted errors whose regression status remains unestablished; clean historical UI loading is not claimed. Format/check/build passed and current-retail startup emitted `[]`.
 
 ## Out of scope
 

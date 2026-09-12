@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] On retail 12.0.7 and later epochs, emit six `ENCOUNTER_END` arguments followed by the existing two-argument `BOSS_KILL` event.
-- [ ] Preserve encounter ID, name, difficulty, group size, and success (`1`).
-- [ ] Accept an optional fifth admin argument: an ordered dense list of `{creatureID, creatureName, remainingHealthPercent}` records. Copy the records before dispatch; later changes to the caller's list do not change the event snapshot.
-- [ ] Omitted or nil status produces a fresh empty list, not inferred boss records.
-- [ ] Reject malformed input before either event. Simulator validation requires positive integral finite creature IDs, string names, and finite health percentages from 0 through 100; this validation is not a claim about native error behavior.
-- [ ] Earlier epochs retain the five-argument event and existing four-argument admin call. The additional admin input is unused on those profiles.
+- [x] On retail 12.0.7 and later epochs, emit six `ENCOUNTER_END` arguments followed by the existing two-argument `BOSS_KILL` event.
+- [x] Preserve encounter ID, name, difficulty, group size, and success (`1`).
+- [x] Accept an optional fifth admin argument: an ordered dense list of `{creatureID, creatureName, remainingHealthPercent}` records. Copy the records before dispatch; later changes to the caller's list do not change the event snapshot.
+- [x] Omitted or nil status produces a fresh empty list, not inferred boss records.
+- [x] Reject malformed input before either event. Simulator validation requires positive integral finite creature IDs, string names, and finite health percentages from 0 through 100; this validation is not a claim about native error behavior.
+- [x] Earlier epochs retain the five-argument event and existing four-argument admin call. The additional admin input is unused on those profiles.
 
 ## How it works
 
@@ -27,7 +27,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Focused post-implementation verification and historical-profile control.
+Independent proof at `9a8c05992`: fourteen 12.0.7 admin cases and twelve 12.0.5 controls passed. Format/check/build passed; current-retail startup emitted `[]`. Historical UI-loader errors remain outside this explicit-input proof; no clean historical startup claim.
 
 ## Out of scope
 

@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Record bounded 12.0.0 paragon and specialization proof
 
-`dc346a706` adds a sixth explicitly seeded paragon storage return; `9a8c05992` resolves the pinned seventh specialization `classID` against existing records. Focused paragon and specialization proof passed, including unchanged cached CooldownViewer cross-class output. Native storage/validation semantics, Journeys sixth-return consumption, independent verification, and earlier-profile controls remain unproven. No audit rows changed. See [paragon storage](../../specs/faction-paragon-storage-level.md), [specialization class selection](../../specs/specialization-class-selection.md), and [[patch-12-0-0-api-audit]].
+`dc346a706` adds a sixth explicitly seeded paragon storage return; `9a8c05992` resolves the pinned seventh specialization `classID` against existing records. Focused paragon and specialization proof passed, including unchanged cached CooldownViewer cross-class output. Independent proof at `9a8c05992` passed 29/29 grouped 12.0.7 cases, 12/12 historical admin controls, and 10/10 Mists controls; format/check/build/readability and current-retail startup (`[]`) passed. Two rows gain bounded best-effort credit (2242 / 1166 / 2 exceptions). Native storage/validation, Journeys sixth-return consumption, and clean historical UI loading remain unproven; historical loader errors are retained in the proof ledger. See [paragon storage](../../specs/faction-paragon-storage-level.md), [specialization class selection](../../specs/specialization-class-selection.md), and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] audit | Clarify 12.0.5 same-size transition blocker
 
@@ -8,7 +8,7 @@
 
 ## [2026-09-12] audit | Document bounded 12.0.7 encounter-end input
 
-`ee979b81b` adds an explicit simulator-only `A_Admin.SimulateBossKill` status-list input for the 12.0.7 `ENCOUNTER_END.encounterUnitStatus` field. It copies caller-supplied records or emits a fresh empty list; it does not infer boss state. Tests were committed RED-first in `3c6c8e72d`; GREEN and historical-profile proof remain pending, so no audit credit is recorded. See [admin event inputs](../../admin-api/events.md), [encounter-end status](../../specs/encounter-end-unit-status.md), and [[patch-12-0-7-api-audit]].
+`ee979b81b` adds an explicit simulator-only `A_Admin.SimulateBossKill` status-list input for the 12.0.7 `ENCOUNTER_END.encounterUnitStatus` field. It copies caller-supplied records or emits a fresh empty list; it does not infer boss state. Tests were committed RED-first in `3c6c8e72d`; independent proof now passes fourteen 12.0.7 admin cases and twelve 12.0.5 controls. Existing best-effort classification now describes the explicit producer rather than registration alone; native encounter production remains unproven. See [admin event inputs](../../admin-api/events.md), [encounter-end status](../../specs/encounter-end-unit-status.md), and [[patch-12-0-7-api-audit]].
 
 ## [2026-09-12] audit | Credit bounded 12.1 private projection policies
 
