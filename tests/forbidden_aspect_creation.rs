@@ -150,3 +150,180 @@ fn aura_button_icon_and_overlay_border_follow_real_initializer_order() {
         );
     });
 }
+
+#[test]
+fn event_registration_aspect_rejects_all_mutations_without_caller_exception() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local operations = {
+            {'RegisterEvent', 'PLAYER_LOGIN'},
+            {'RegisterUnitEvent', 'UNIT_HEALTH', 'player'},
+            {'RegisterAllEvents'},
+            {'RegisterEventCallback', 'MINIMAP_PING', function() end},
+            {'RegisterUnitEventCallback', 'UNIT_HEALTH', function() end, 'player'},
+            {'UnregisterEvent', 'PLAYER_LOGIN'},
+            {'UnregisterAllEvents'},
+        }
+        local accepted = {}
+        for _, taint in ipairs({false, 'EventRegistrationProbe'}) do
+            for _, operation in ipairs(operations) do
+                local frame = CreateFrame('Frame')
+                frame:RegisterEvent('PLAYER_LOGIN')
+                frame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
+                local function invoke()
+                    return frame[operation[1]](frame, unpack(operation, 2))
+                end
+                if taint then debug.setobjecttaint(invoke, taint) end
+                local ok, err = pcall(invoke)
+                if ok then
+                    accepted[#accepted + 1] = operation[1] .. ':' .. tostring(taint)
+                else
+                    assert(type(err) == 'string', 'rejection must report an error')
+                end
+            end
+        end
+        assert(#accepted == 0, 'aspect accepted mutations: ' .. table.concat(accepted, ', '))
+    "#).expect("the modeled aspect rejects all seven mutations for both caller contexts");
+}
+
+#[test]
+fn event_registration_aspect_preserves_existing_listener_delivery() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        EventAspectListeners = {individual=0, unit=0, all=0}
+        local state = EventAspectListeners
+        state.individualFrame = CreateFrame('Frame')
+        state.unitFrame = CreateFrame('Frame')
+        state.allFrame = CreateFrame('Frame')
+        state.individualFrame:SetScript('OnEvent', function(_, event)
+            assert(event == 'PLAYER_LOGIN')
+            state.individual = state.individual + 1
+        end)
+        state.unitFrame:SetScript('OnEvent', function(_, event, unit)
+            assert(event == 'UNIT_HEALTH' and unit == 'player')
+            state.unit = state.unit + 1
+        end)
+        state.allFrame:SetScript('OnEvent', function(_, event)
+            if event == 'PLAYER_LOGIN' or event == 'UNIT_HEALTH' then
+                state.all = state.all + 1
+            end
+        end)
+        state.individualFrame:RegisterEvent('PLAYER_LOGIN')
+        state.unitFrame:RegisterUnitEvent('UNIT_HEALTH', 'player')
+        state.allFrame:RegisterAllEvents()
+        for _, frame in ipairs({state.individualFrame, state.unitFrame, state.allFrame}) do
+            frame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
+        end
+        state.unregister = pcall(state.individualFrame.UnregisterEvent, state.individualFrame, 'PLAYER_LOGIN')
+        state.unitClear = pcall(state.unitFrame.UnregisterAllEvents, state.unitFrame)
+        state.allClear = pcall(state.allFrame.UnregisterAllEvents, state.allFrame)
+        state.unitReplace = pcall(state.unitFrame.RegisterUnitEvent, state.unitFrame, 'UNIT_HEALTH', 'target')
+    "#).expect("prepare individual, unit-filtered, and all-event registrations before restriction");
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.fire_event_with_args("UNIT_HEALTH", &[env.lua_string("target")])
+        .unwrap();
+    env.fire_event_with_args("UNIT_HEALTH", &[env.lua_string("player")])
+        .unwrap();
+    env.exec(r#"
+        local state = EventAspectListeners
+        assert(state.individual == 1, 'individual registration was removed')
+        assert(state.unit == 1, 'unit registration/filter was changed')
+        assert(state.all == 3, 'all-event registration was removed')
+        assert(not state.unregister and not state.unitClear and not state.allClear and not state.unitReplace)
+        assert(state.individualFrame:IsEventRegistered('PLAYER_LOGIN'))
+        local registered, unit = state.unitFrame:IsEventRegistered('UNIT_HEALTH')
+        assert(registered and unit == 'player', 'query must retain the original unit filter')
+    "#).expect("rejected mutations leave listener queries and actual delivery intact");
+}
+
+#[test]
+fn event_registration_aspect_preserves_callbacks_when_replacement_is_rejected() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        EventAspectCallbacks = {ordinary=0, unit=0, replacement=0}
+        local state = EventAspectCallbacks
+        state.ordinaryFrame = CreateFrame('Frame')
+        state.unitFrame = CreateFrame('Frame')
+        state.ordinaryFrame:RegisterEventCallback('MINIMAP_PING', function(owner)
+            assert(owner == state.ordinaryFrame)
+            state.ordinary = state.ordinary + 1
+        end)
+        state.unitFrame:RegisterUnitEventCallback('UNIT_HEALTH', function(owner, unit)
+            assert(owner == state.unitFrame and unit == 'player')
+            state.unit = state.unit + 1
+        end, 'player')
+        state.ordinaryFrame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
+        state.unitFrame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
+        local function replacement() state.replacement = state.replacement + 1 end
+        state.clearOrdinary = pcall(state.ordinaryFrame.UnregisterAllEvents, state.ordinaryFrame)
+        state.clearUnit = pcall(state.unitFrame.UnregisterEvent, state.unitFrame, 'UNIT_HEALTH')
+        state.replaceOrdinary = pcall(state.ordinaryFrame.RegisterEventCallback,
+            state.ordinaryFrame, 'MINIMAP_PING', replacement)
+        state.replaceUnit = pcall(state.unitFrame.RegisterUnitEventCallback,
+            state.unitFrame, 'UNIT_HEALTH', replacement, 'target')
+    "#).expect("prepare callback listeners and attempt replacement after adding the aspect");
+    env.exec(r#"
+        FireEvent('MINIMAP_PING')
+        FireEvent('UNIT_HEALTH', 'target')
+        FireEvent('UNIT_HEALTH', 'player')
+        local state = EventAspectCallbacks
+        assert(state.ordinary == 1, 'original event callback did not run')
+        assert(state.unit == 1, 'original unit callback/filter did not survive')
+        assert(state.replacement == 0, 'rejected replacement callback became active')
+        assert(not state.clearOrdinary and not state.clearUnit)
+        assert(not state.replaceOrdinary and not state.replaceUnit)
+        assert(state.ordinaryFrame:IsEventRegistered('MINIMAP_PING'))
+        assert(state.unitFrame:IsEventRegistered('UNIT_HEALTH'))
+    "#).expect("callback replacement and unregistration are atomic on rejected calls");
+}
+
+#[test]
+fn event_registration_aspect_leaves_zero_mask_mutations_and_delivery_unchanged() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        EventAspectPlain = {individual=0, unit=0, all=0, callback=0, unitCallback=0}
+        local state = EventAspectPlain
+        state.frames = {}
+        for _, name in ipairs({'individual', 'unit', 'all', 'callback', 'unitCallback'}) do
+            local frame = CreateFrame('Frame')
+            assert(frame:GetForbiddenAspects() == 0)
+            state.frames[name] = frame
+        end
+        state.frames.individual:SetScript('OnEvent', function() state.individual = state.individual + 1 end)
+        state.frames.unit:SetScript('OnEvent', function(_, _, unit)
+            assert(unit == 'player')
+            state.unit = state.unit + 1
+        end)
+        state.frames.all:SetScript('OnEvent', function() state.all = state.all + 1 end)
+        assert(state.frames.individual:RegisterEvent('PLAYER_LOGIN'))
+        assert(state.frames.unit:RegisterUnitEvent('UNIT_HEALTH', 'player'))
+        state.frames.all:RegisterAllEvents()
+        state.frames.callback:RegisterEventCallback('MINIMAP_PING', function() state.callback = state.callback + 1 end)
+        state.frames.unitCallback:RegisterUnitEventCallback('UNIT_HEALTH', function(_, unit)
+            assert(unit == 'player')
+            state.unitCallback = state.unitCallback + 1
+        end, 'player')
+    "#).expect("all registration forms remain usable without the aspect");
+    env.exec(r#"
+        FireEvent('PLAYER_LOGIN')
+        FireEvent('MINIMAP_PING')
+        FireEvent('UNIT_HEALTH', 'player')
+        local state = EventAspectPlain
+        assert(state.individual == 1 and state.unit == 1 and state.all == 3)
+        assert(state.callback == 1 and state.unitCallback == 1)
+        assert(state.frames.individual:UnregisterEvent('PLAYER_LOGIN'))
+        for name, frame in pairs(state.frames) do
+            if name ~= 'individual' then frame:UnregisterAllEvents() end
+        end
+    "#).expect("zero-mask listeners receive events and both unregistration forms remain usable");
+    env.exec(r#"
+        FireEvent('PLAYER_LOGIN')
+        FireEvent('MINIMAP_PING')
+        FireEvent('UNIT_HEALTH', 'player')
+        local state = EventAspectPlain
+        local counts = string.format('individual=%d unit=%d all=%d callback=%d unitCallback=%d',
+            state.individual, state.unit, state.all, state.callback, state.unitCallback)
+        assert(state.individual == 1 and state.unit == 1 and state.all == 3, counts)
+        assert(state.callback == 1 and state.unitCallback == 1, counts)
+    "#).expect("unregistered zero-mask frames receive no further delivery");
+}
