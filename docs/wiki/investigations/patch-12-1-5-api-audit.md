@@ -12,9 +12,9 @@ PTR `12.1.5.69594` adds or changes a broad generated API surface relative to `12
 
 The source boundary is immediate generated `*Documentation.lua` files. It excludes FrameXML-only helpers, CVars, GlobalStrings, patch-note behavior, runtime values, and intermediate builds. Documentation prose is ignored; ordered arguments, returns, fields, defaults, security metadata, and symbolic enum/constant expressions are retained.
 
-## Prepared Native Probe (Not Evidence)
+## Native structure capture (not an audit upgrade)
 
-[`Ptr125RemainingProbe`](../../addons/Ptr125RemainingProbe/README.md) is prepared for manual PTR capture of the ten evidence-required rows. It records build metadata, redacted observations, control fixtures, cleanup status, and unavailable/inconclusive outcomes; it has not been installed or executed in a native client. Preparation changes neither the `439 / 10` disposition nor any manifest evidence.
+[`Ptr125RemainingProbe`](../../addons/Ptr125RemainingProbe/README.md) captured its non-secret structure controls on PTR `12.1.5.69594`, interface `120105`; the exact SavedVariables-derived artifact is [ptr-12-1-5-remaining-structures.lua](../../baselines/ptr-12-1-5-remaining-structures.lua). Positional Texture, FontString, Line, and MaskTexture creation preserved the tested name/layer/sublevel inputs; Texture and FontString template controls measured about `17 × 19` and `23 × 29`. Candidate options-table calls failed for all four methods, and `CreateRegionParams`/`TimedSignalMapEntry` were nil globals. `SignalAt(17, 74362.09300000001)` produced `HasSignal(17) == true`, the same `GetSignalTime`, and a two-number `GetNextSignal()` tuple `(17, time)`, not a public entry table. This bounded observation neither establishes a generated structure's full contract nor justifies public globals/options-table support, so all ten rows remain `439 / 10` with no manifest evidence change. Secret/access experiments are deferred.
 
 ## Coverage Matrix
 
@@ -90,6 +90,7 @@ The source boundary is immediate generated `*Documentation.lua` files. It exclud
 - [`data/patch-api/sources/12.1.5-register.json`](../../../data/patch-api/sources/12.1.5-register.json) — frozen normalized source occurrence register.
 - [`data/patch-api/12.1.5.json`](../../../data/patch-api/12.1.5.json) — machine audit manifest.
 - [Patch API audit manifest specification](../../specs/patch-api-audit-manifest.md) — generator and evidence contract.
+- [PTR remaining structures capture](../../baselines/ptr-12-1-5-remaining-structures.lua) — exact non-secret native observation artifact for build `12.1.5.69594`.
 
 ## See Also
 

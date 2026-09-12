@@ -1,6 +1,6 @@
-## [2026-09-12] audit | Prepare PTR remaining-contract native probe
+## [2026-09-12] audit | Record PTR remaining structure controls
 
-[Ptr125RemainingProbe](../addons/Ptr125RemainingProbe/README.md) is prepared for manual native capture of the ten evidence-required PTR 12.1.5 rows. It is not installed or executed; it changes no audit disposition, manifest evidence, or `439 / 10` count. See [[patch-12-1-5-api-audit]].
+[Ptr125RemainingProbe](../addons/Ptr125RemainingProbe/README.md) captured non-secret region and timed-signal controls on PTR `12.1.5.69594`; the exact artifact is [ptr-12-1-5-remaining-structures.lua](../baselines/ptr-12-1-5-remaining-structures.lua). Positional region calls and the two-number `GetNextSignal()` tuple were observed; candidate options tables and public documentation-structure globals were not. This is bounded observation, not a public-structure contract or audit upgrade: `439 / 10` remains unchanged. See [[patch-12-1-5-api-audit]].
 
 ## [2026-09-11] audit | Credit PTR channel and empower spellcast events
 

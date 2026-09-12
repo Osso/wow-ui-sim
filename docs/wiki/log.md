@@ -1,6 +1,6 @@
-## [2026-09-12] audit | Prepare PTR remaining-contract native probe
+## [2026-09-12] audit | Record PTR remaining structure controls
 
-Prepared [`Ptr125RemainingProbe`](../addons/Ptr125RemainingProbe/README.md) for manual native capture of the ten remaining evidence-required rows. The addon has not been installed or run. Preparation records build metadata, redacted observations, controls, cleanup, and unavailable/inconclusive outcomes only; it changes no manifest disposition, evidence hash, or `439 / 10` count. See [[patch-12-1-5-api-audit]].
+Captured [`Ptr125RemainingProbe`](../addons/Ptr125RemainingProbe/README.md) non-secret structure controls on PTR `12.1.5.69594` / interface `120105`; committed exact artifact [`ptr-12-1-5-remaining-structures.lua`](../baselines/ptr-12-1-5-remaining-structures.lua). Positional Texture/FontString/Line/MaskTexture controls preserved tested names/layers/sublevels; templates measured about `17 × 19` and `23 × 29`; candidate options-table calls and public documentation-structure globals failed/returned nil. `SignalAt(17, 74362.09300000001)` yielded confirmed membership/time and a two-number `(17, time)` next-signal result, not an entry table. No generated structure contract, public globals, or audit rows were inferred; counts remain `439 / 10`. Secret/access work is deferred. See [[patch-12-1-5-api-audit]].
 
 ## [2026-09-11] audit | Credit PTR script-bucket throttle mock output
 
