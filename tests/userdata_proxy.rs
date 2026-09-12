@@ -486,6 +486,165 @@ fn heal_prediction_tostring() {
 // CurveUtil (LuaCurveObject + LuaColorCurveObject)
 // ============================================================================
 
+// Ordinary-value selection only; fresh color copies are simulator policy, not native identity proof.
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn curve_boolean_colors_select_fresh_copies_without_mutating_inputs() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local yes = CreateColor(0.125, 0.25, 0.5, 0.75)
+        local no = CreateColor(0.875, 0.625, 0.375, 0.25)
+        local function rgba(color, r, g, b, a)
+            local cr, cg, cb, ca = color:GetRGBA()
+            assert(cr == r and cg == g and cb == b and ca == a)
+        end
+        local selectedYes = C_CurveUtil.EvaluateColorFromBoolean(true, yes, no)
+        local selectedNo = C_CurveUtil.EvaluateColorFromBoolean(false, yes, no)
+        rgba(selectedYes, 0.125, 0.25, 0.5, 0.75)
+        rgba(selectedNo, 0.875, 0.625, 0.375, 0.25)
+        assert(selectedYes ~= yes and selectedYes ~= no and selectedYes ~= selectedNo)
+        assert(selectedNo ~= yes and selectedNo ~= no)
+        local repeated = C_CurveUtil.EvaluateColorFromBoolean(true, yes, no)
+        assert(repeated ~= selectedYes and repeated ~= yes and repeated ~= no)
+        selectedYes.r = 1
+        selectedNo.a = 0
+        rgba(yes, 0.125, 0.25, 0.5, 0.75)
+        rgba(no, 0.875, 0.625, 0.375, 0.25)
+        yes.g = 1
+        no.b = 0
+        rgba(repeated, 0.125, 0.25, 0.5, 0.75)
+        rgba(selectedYes, 1, 0.25, 0.5, 0.75)
+        rgba(selectedNo, 0.875, 0.625, 0.375, 0)
+        "#,
+    )
+    .expect("ordinary booleans select independent ColorMixin values");
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn curve_boolean_components_select_zero_and_fractional_values() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        for _, values in ipairs({{0, 0.75}, {0.25, 0}, {0.5, 1}}) do
+            local yes, no = values[1], values[2]
+            local actualYes = C_CurveUtil.EvaluateColorValueFromBoolean(true, yes, no)
+            local actualNo = C_CurveUtil.EvaluateColorValueFromBoolean(false, yes, no)
+            assert(type(actualYes) == "number" and actualYes == yes)
+            assert(type(actualNo) == "number" and actualNo == no)
+        end
+        "#,
+    )
+    .expect("ordinary booleans select numeric color components including zero");
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn curve_boolean_selectors_reject_non_boolean_conditions_atomically() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local color = C_CurveUtil.EvaluateColorFromBoolean
+        local component = C_CurveUtil.EvaluateColorValueFromBoolean
+        assert(type(color) == "function" and type(component) == "function")
+        local yes = CreateColor(0.125, 0.25, 0.5, 0.75)
+        local no = CreateColor(0.875, 0.625, 0.375, 0.25)
+        local function reject(condition)
+            assert(not pcall(color, condition, yes, no), "color condition must be boolean")
+            assert(not pcall(component, condition, 0.25, 0.75), "component condition must be boolean")
+            assert(yes.r == 0.125 and yes.g == 0.25 and yes.b == 0.5 and yes.a == 0.75)
+            assert(no.r == 0.875 and no.g == 0.625 and no.b == 0.375 and no.a == 0.25)
+        end
+        reject(nil)
+        for _, condition in ipairs({0, 1, "true", {}, function() end}) do reject(condition) end
+        "#,
+    )
+    .expect("invalid ordinary conditions reject without mutating color inputs");
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn curve_boolean_colors_validate_both_inputs_atomically() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local selectColor = C_CurveUtil.EvaluateColorFromBoolean
+        assert(type(selectColor) == "function")
+        local valid = CreateColor(0.125, 0.25, 0.5, 0.75)
+        local function reject(invalid)
+            local before = {}
+            if type(invalid) == "table" then
+                for key, value in pairs(invalid) do before[key] = value end
+            end
+            for _, condition in ipairs({true, false}) do
+                assert(not pcall(selectColor, condition, invalid, valid), "invalid true color")
+                assert(not pcall(selectColor, condition, valid, invalid), "invalid false color")
+                assert(valid.r == 0.125 and valid.g == 0.25 and valid.b == 0.5 and valid.a == 0.75)
+                if type(invalid) == "table" then
+                    for key, value in pairs(before) do assert(invalid[key] == value) end
+                    for key, value in pairs(invalid) do assert(before[key] == value) end
+                end
+            end
+        end
+        reject(nil)
+        for _, invalid in ipairs({false, 0.5, "color", function() end, {}}) do reject(invalid) end
+        for _, channel in ipairs({"r", "g", "b", "a"}) do
+            local missing = {r=0.125, g=0.25, b=0.5, a=0.75}
+            missing[channel] = nil
+            reject(missing)
+            for _, wrongType in ipairs({"0.5", false, {}}) do
+                local malformed = {r=0.125, g=0.25, b=0.5, a=0.75}
+                malformed[channel] = wrongType
+                reject(malformed)
+            end
+        end
+        "#,
+    )
+    .expect("both color arguments require numeric RGBA channels even when unselected");
+}
+
+#[test]
+#[cfg(feature = "retail-12-0-0")]
+fn curve_boolean_components_validate_both_inputs_atomically() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local selectComponent = C_CurveUtil.EvaluateColorValueFromBoolean
+        assert(type(selectComponent) == "function")
+        local sentinel = {value="unchanged"}
+        local function reject(invalid)
+            for _, condition in ipairs({true, false}) do
+                assert(not pcall(selectComponent, condition, invalid, 0.75), "invalid true component")
+                assert(not pcall(selectComponent, condition, 0.25, invalid), "invalid false component")
+                assert(sentinel.value == "unchanged")
+                for key in pairs(sentinel) do assert(key == "value") end
+            end
+        end
+        reject(nil)
+        for _, invalid in ipairs({false, "0.5", sentinel, function() end}) do reject(invalid) end
+        "#,
+    )
+    .expect("both components require numbers even when unselected; errors are not specified");
+}
+
+#[test]
+#[cfg(not(feature = "retail-12-0-0"))]
+fn curve_boolean_helpers_are_absent_before_retail_12_0_0() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        assert(rawget(C_CurveUtil, "EvaluateColorFromBoolean") == nil)
+        assert(rawget(C_CurveUtil, "EvaluateColorValueFromBoolean") == nil)
+        assert(type(C_CurveUtil.CreateCurve) == "function")
+        assert(type(C_CurveUtil.CreateColorCurve) == "function")
+        assert(C_CurveUtil.CreateCurve():GetPointCount() == 0)
+        assert(C_CurveUtil.CreateColorCurve():GetPointCount() == 0)
+        "#,
+    )
+    .expect("earlier profiles retain existing factories without retail boolean helpers");
+}
+
 #[test]
 fn curve_object_is_userdata_with_methods() {
     let env = WowLuaEnv::new().unwrap();
