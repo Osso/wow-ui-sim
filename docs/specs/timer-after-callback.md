@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] Accept the existing ordinary function and callback-container forms and return no values.
-- [ ] Defer zero-delay callbacks until normal timer processing, invoke them once with zero arguments, and not repeat on a later processing pass.
-- [ ] Preserve NewTimer/NewTicker callbacks' one container-proxy argument, handle equality, shared fields, and finite ticker iteration behavior.
+- [x] Accept the existing ordinary function and callback-container forms and return no values.
+- [x] Defer zero-delay callbacks until normal timer processing, invoke them once with zero arguments, and not repeat on a later processing pass.
+- [x] Preserve NewTimer/NewTicker callbacks' one container-proxy argument, handle equality, shared fields, and finite ticker iteration behavior.
 
 The cached retail `UITimerDocumentation.lua` declares `After` with a `TimerCallback` (no callback arguments), while `NewTimer`/`NewTicker` use `TickerCallback` (one callback argument). The checked-in 12.0.0 occurrence records the callback-type change to `LuaFunctionContainer`, seconds input, and no return values; it does not independently establish callback arguments. Historical simulator-profile tests are not native historical-client evidence.
 
