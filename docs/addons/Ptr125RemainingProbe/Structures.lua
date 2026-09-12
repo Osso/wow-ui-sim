@@ -86,8 +86,14 @@ local function signal_control(run)
     Probe.defer(run, "structures-signals", function() map:CancelAllSignals() end)
     local deadline = Probe.capture(run, "signals:deadline", "direct",
         function() return GetTime() + 600 end, Probe.pack(), true)
-    if deadline[1] then
-        capture_method(run, "signals:SignalAt", map, "SignalAt", Probe.pack(17, deadline[2]), false)
+    if not deadline[1] then
+        Probe.note(run, "signals:control", "inconclusive", "No valid deadline control; return shape not tested")
+        return
+    end
+    local scheduled = capture_method(run, "signals:SignalAt", map, "SignalAt", Probe.pack(17, deadline[2]), false)
+    if not scheduled[1] then
+        Probe.note(run, "signals:control", "inconclusive", "Scheduling failed; populated return shape not tested")
+        return
     end
     local nextSignal = capture_method(run, "signals:GetNextSignal", map, "GetNextSignal", Probe.pack(), true)
     inspect_first_signal(run, nextSignal)

@@ -10,7 +10,7 @@ end
 
 local function fixture(options)
     local Probe, objects = {}, {}
-    local state = { regions = {}, hidden = false, hideCalls = 0, cancelled = 0 }
+    local state = { regions = {}, hidden = false, hideCalls = 0, cancelled = 0, nextCalls = 0 }
     _G.Ptr125RemainingProbeDB = nil
     _G.issecretvalue = function(value) return value == state.secret end
     _G.canaccessvalue = function(value) return value ~= state.secret end
@@ -88,6 +88,7 @@ local function fixture(options)
             self.key, self.at = key, at
         end
         function map:GetNextSignal()
+            state.nextCalls = state.nextCalls + 1
             if options.returnKind == "tuple" then return self.key, self.at end
             local result
             if options.returnKind == "userdata" then
@@ -199,5 +200,7 @@ run, state = fixture({acceptTables = true, returnKind = "tuple", signalError = t
 assert(not observation(run, "regions:owner:Hide").ok)
 assert(#state.regions == 0 and state.hideCalls == 2)
 assert(not observation(run, "signals:SignalAt").ok and state.cancelled == 1)
+assert(state.nextCalls == 0, "failed scheduling must not masquerade as a populated-map probe")
+assert(observation(run, "signals:control").status == "inconclusive")
 assert(not observation(run, "cleanup:structures-owner").ok)
 io.write("Structures recorder fixtures passed: " .. scenarios .. " scenarios\n")
