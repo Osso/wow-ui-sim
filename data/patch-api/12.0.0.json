@@ -8237,7 +8237,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current Rust duration surface exposes C_DurationUtil.GetCurrentTime with constant/no-op/incomplete behavior; it does not establish authoritative semantics.",
+          "summary": "Current Rust duration surface exposes C_DurationUtil.GetCurrentTime as simulator elapsed time through the shared duration clock. Source inspection does not establish the native clock, epoch, precision, pause behavior, or exact semantics.",
           "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
         }
       ],
@@ -8246,7 +8246,7 @@
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current behavior is constant (returns 0); authoritative time semantics or a correct modeled implementation is required, and no approval can close this row."
+      "notes": "Current behavior returns simulator elapsed time through the shared duration clock. Native clock/epoch, precision, pause behavior, and exact semantics remain unverified; this source correction awards no behavioral credit."
     },
     {
       "id": "added:C_EncounterTimeline.AddEditModeEvents",
