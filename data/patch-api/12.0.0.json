@@ -2136,13 +2136,13 @@
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
           "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "The namespace duration field equals the seeded spell span 30 and later-ending GCD span 60, through duration fixtures with independent Rust expected-value assertions."
+          "summary": "The namespace duration field equals the seeded spell span 30, with an independent Rust expected-value assertion."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
           "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "The namespace duration field equals the seeded spell span 30 and later-ending GCD span 60, through duration fixtures with independent Rust expected-value assertions."
+          "summary": "The namespace duration field equals the later-ending GCD span 60, with an independent Rust expected-value assertion."
         }
       ],
       "tests": [
@@ -2246,13 +2246,13 @@
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
           "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "The namespace startTime field equals the seeded spell start (now-5) and later-ending GCD start (now-2), through duration fixtures with independent Rust expected-value assertions."
+          "summary": "The namespace startTime field equals the seeded spell start (now-5), with an independent Rust expected-value assertion."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
           "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "The namespace startTime field equals the seeded spell start (now-5) and later-ending GCD start (now-2), through duration fixtures with independent Rust expected-value assertions."
+          "summary": "The namespace startTime field equals the later-ending GCD start (now-2), with an independent Rust expected-value assertion."
         }
       ],
       "tests": [
@@ -2444,13 +2444,13 @@
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
           "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "Existing duration fixtures directly query the namespace cooldown info and assert startTime/duration against seeded active-spell and later-ending GCD intervals; the active-spell fixture also establishes modRate=1."
+          "summary": "Direct namespace info startTime/duration match independently asserted seeded spell start (now-5) and span 30; modRate matches the independently asserted rate 1."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
           "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
-          "summary": "Existing duration fixtures directly query the namespace cooldown info and assert startTime/duration against seeded active-spell and later-ending GCD intervals; the active-spell fixture also establishes modRate=1."
+          "summary": "Direct namespace info startTime/duration match independently asserted later-ending GCD start (now-2) and span 60; no GCD modRate assertion is made."
         }
       ],
       "tests": [
