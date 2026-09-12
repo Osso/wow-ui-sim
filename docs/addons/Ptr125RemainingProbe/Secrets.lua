@@ -62,6 +62,26 @@ local function verify_secret(run, label, check, fn, args)
     return false
 end
 
+local function accessible_number(check, access, value)
+    if type(check) ~= "function" or type(access) ~= "function" then return false end
+    local checked, secret = pcall(check, value)
+    if not checked or type(secret) ~= "boolean" or secret ~= false then return false end
+    local inspected, accessible = pcall(access, value)
+    if not inspected or type(accessible) ~= "boolean" or accessible ~= true then return false end
+    return type(value) == "number"
+end
+
+local function table_controls(run, functions)
+    for _, fixture in ipairs({ { "empty", {} }, { "populated", { control = true } } }) do
+        for _, name in ipairs({ "count", "getcountinfo", "isempty" }) do
+            for _, mode in ipairs(modes()) do
+                capture(run, "table:control:" .. fixture[1] .. ":" .. name .. ":" .. mode,
+                    mode, functions[name], fixture[2])
+            end
+        end
+    end
+end
+
 local function table_fixture(run, check, key, seedMode, functions)
     local object = {}
     local label = "table:" .. seedMode
@@ -92,14 +112,34 @@ local function capture_map_methods(run, object, label)
     }
 end
 
-local function cleanup_map(run, label, object, methods)
-    local done = false
+local function clear_and_verify(run, label, mode, object, methods, check)
+    capture(run, label, mode, methods.CancelAllSignals, object)
+    local count = capture(run, label .. ":count", mode, methods.GetSignalCount, object)
+    if not count[1] then return false end
+    local ok, empty = pcall(function()
+        if not accessible_number(check, rawget(_G, "canaccessvalue"), count[2]) then
+            return false
+        end
+        return count[2] == 0
+    end)
+    return ok and empty == true
+end
+
+local function cleanup_map(run, label, object, methods, check)
+    local done, attempts = false, 0
     local function clean()
         if done then return true end
+        if attempts >= 2 then return false end
+        attempts = attempts + 1
         local mode = type(rawget(_G, "securecallfunction")) == "function"
             and "securecallfunction" or "direct"
-        local result = capture(run, label .. ":cleanup", mode, methods.CancelAllSignals, object)
-        done = result[1] == true
+        done = clear_and_verify(run, label .. ":cleanup", mode, object, methods, check)
+        if not done then
+            local message = attempts == 1
+                and "Cleanup count unverified; deferred cleanup will retry once"
+                or "Cleanup count remains unverified after the bounded retry"
+            inconclusive(run, "secrets:" .. label .. ":cleanup", message)
+        end
         return done
     end
     Probe.defer(run, "secrets:" .. label, function() clean() end)
@@ -117,6 +157,29 @@ local function map_queries(run, label, object, methods)
     end
 end
 
+local function map_controls(run, check, label, object, methods)
+    map_queries(run, label .. ":control:empty", object, methods)
+    local now = capture(run, label .. ":control:clock", "direct", rawget(_G, "GetTime"))
+    local access = rawget(_G, "canaccessvalue")
+    if not now[1] or not accessible_number(check, access, now[2]) then
+        inconclusive(run, "secrets:" .. label, "Ordinary control clock could not be verified")
+        return false
+    end
+    local time = now[2]
+    if time ~= time or time == math.huge or time == -math.huge then
+        inconclusive(run, "secrets:" .. label, "Ordinary control clock is not finite")
+        return false
+    end
+    local seeded = capture(run, label .. ":control:seed", "direct", methods.SignalAt, object, 1, time + 60)
+    map_queries(run, label .. ":control:populated", object, methods)
+    local cleared = clear_and_verify(run, label .. ":control:clear", "direct", object, methods, check)
+    if not seeded[1] or not cleared then
+        inconclusive(run, "secrets:" .. label, "Ordinary map control could not be cleared and verified")
+        return false
+    end
+    return true
+end
+
 local function map_fixture(run, check, clock, seedMode, factory)
     local label = "map:" .. seedMode
     local created = capture(run, label .. ":create", "direct", factory, function() end)
@@ -130,7 +193,11 @@ local function map_fixture(run, check, clock, seedMode, factory)
         inconclusive(run, "secrets:" .. label, "Cannot capture native methods and cleanup before mutation")
         return
     end
-    local clean = cleanup_map(run, label, object, methods)
+    local clean = cleanup_map(run, label, object, methods, check)
+    if not map_controls(run, check, label, object, methods) then
+        clean()
+        return
+    end
     local seeded = capture(run, label .. ":seed", seedMode, methods.SignalAt, object, 1, clock)
     if not seeded[1] then
         inconclusive(run, "secrets:" .. label, "Native secret-clock insertion did not succeed")
@@ -140,8 +207,6 @@ local function map_fixture(run, check, clock, seedMode, factory)
     end
     if clean() then
         map_queries(run, label .. ":recovery", object, methods)
-    else
-        inconclusive(run, "secrets:" .. label, "Native cleanup failed; deferred cleanup will retry once")
     end
 end
 
@@ -155,6 +220,7 @@ function Probe.actions.secrets(run)
         "Direct and securecallfunction are invocation paths only; wrapper success does not establish privilege")
     local functions = { rawset = rawset, next = next, count = rawget(table, "count"),
         getcountinfo = rawget(table, "getcountinfo"), isempty = rawget(table, "isempty") }
+    table_controls(run, functions)
     local timers = rawget(_G, "C_Timer")
     local factory = type(timers) == "table" and rawget(timers, "NewTimedSignalMap")
     local hasKey, key = sample_key(run, check)
