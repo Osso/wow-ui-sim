@@ -342,19 +342,7 @@ pub struct SpellFlyoutInfo {
     pub slots: Vec<SpellFlyoutSlot>,
 }
 
-/// Paragon-rep payload returned by `C_Reputation.GetFactionParagonInfo`.
-/// Presence in `state.faction_paragon` doubles as the
-/// `IsFactionParagonForCurrentPlayer` truth, gating the gold reward badge in
-/// `ReputationStatusBarMixin:Update`. Empty by default — the bar stays on the
-/// standard rep code path.
-#[derive(Clone, Debug)]
-pub struct FactionParagonInfo {
-    pub current_value: i32,
-    pub threshold: i32,
-    pub reward_quest_id: i32,
-    pub has_reward_pending: bool,
-    pub too_low_level_for_paragon: bool,
-}
+pub use crate::c_api::c_reputation::FactionParagonInfo;
 
 /// `MajorFactionData` row returned by `C_MajorFactions.GetMajorFactionData`
 /// for a single faction. Drives `ReputationStatusBarMixin:Update` when the

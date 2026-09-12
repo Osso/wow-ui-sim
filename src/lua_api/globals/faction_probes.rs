@@ -247,7 +247,10 @@ const REPUTATION_METHODS: &[(&str, RustFn)] = &[
         "IsFactionParagonForCurrentPlayer",
         reputation_is_faction_paragon_for_current_player,
     ),
-    ("GetFactionParagonInfo", reputation_get_faction_paragon_info),
+    (
+        "GetFactionParagonInfo",
+        crate::c_api::c_reputation::get_faction_paragon_info,
+    ),
     ("GetNumFactions", reputation_get_num_factions),
     ("GetFactionInfo", reputation_get_faction_info),
     ("GetWatchedFactionData", reputation_get_watched_faction_data),
@@ -316,25 +319,6 @@ fn reputation_is_faction_paragon_for_current_player(state: &mut LuaState) -> Lua
     };
     state.push(Val::Bool(is_active));
     Ok(1)
-}
-
-fn reputation_get_faction_paragon_info(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(faction_id) = stack_i32(state, 1) else {
-        return Ok(0);
-    };
-    let Some(info) = borrow_state(state)?
-        .faction_paragon
-        .get(&(faction_id as i64))
-        .cloned()
-    else {
-        return Ok(0);
-    };
-    state.push(Val::Num(info.current_value as f64));
-    state.push(Val::Num(info.threshold as f64));
-    state.push(Val::Num(info.reward_quest_id as f64));
-    state.push(Val::Bool(info.has_reward_pending));
-    state.push(Val::Bool(info.too_low_level_for_paragon));
-    Ok(5)
 }
 
 fn reputation_get_num_factions(state: &mut LuaState) -> LuaResult<u32> {

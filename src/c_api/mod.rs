@@ -52,6 +52,7 @@ pub mod c_player_interaction_manager;
 pub mod c_pvp;
 pub mod c_quest_hub;
 pub mod c_report_system;
+pub mod c_reputation;
 #[cfg(feature = "retail-12-1-0")]
 pub mod c_secrets;
 pub mod c_settings_util;

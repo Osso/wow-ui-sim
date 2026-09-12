@@ -327,6 +327,7 @@ fn seed_paragon(env: &WowLuaEnv) {
             reward_quest_id: 0,
             has_reward_pending: false,
             too_low_level_for_paragon: false,
+            paragon_storage_level: 2,
         },
     );
 }

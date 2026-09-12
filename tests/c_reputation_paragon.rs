@@ -1,5 +1,5 @@
 //! Integration tests for the paragon-rep `C_Reputation` lookups in
-//! `src/lua_api/globals/faction_probes.rs`:
+//! `src/c_api/c_reputation.rs` and `src/lua_api/globals/faction_probes.rs`:
 //! `IsFactionParagon`, `IsFactionParagonForCurrentPlayer`, and
 //! `GetFactionParagonInfo` driven by `state.faction_paragon`.
 
@@ -12,6 +12,7 @@ fn sample_paragon() -> FactionParagonInfo {
         reward_quest_id: 53_982,
         has_reward_pending: false,
         too_low_level_for_paragon: false,
+        paragon_storage_level: 3,
     }
 }
 
@@ -77,10 +78,10 @@ fn is_faction_paragon_for_current_player_is_false_when_unregistered() {
 #[test]
 fn get_faction_paragon_info_returns_no_values_when_unset() {
     let env = WowLuaEnv::new().expect("env");
-    let nil: bool = env
-        .eval("return C_Reputation.GetFactionParagonInfo(2507) == nil")
+    let count: i32 = env
+        .eval("return select('#', C_Reputation.GetFactionParagonInfo(2507))")
         .unwrap();
-    assert!(nil);
+    assert_eq!(count, 0);
 }
 
 #[test]
@@ -117,6 +118,48 @@ fn get_faction_paragon_info_preserves_first_five_values() {
     assert!((quest_id - 53_982.0).abs() < 1e-6);
     assert!(!pending);
     assert!(!too_low);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn get_faction_paragon_info_storage_updates_are_faction_local() {
+    let env = WowLuaEnv::new().expect("env");
+    let mut second = sample_paragon();
+    second.paragon_storage_level = 7;
+    second.current_value = 12_500;
+    second.has_reward_pending = true;
+    second.too_low_level_for_paragon = true;
+    {
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        sim.faction_paragon.insert(2507, sample_paragon());
+        sim.faction_paragon.insert(2511, second);
+    }
+    env.exec(
+        r#"
+        function CheckParagon(id, current, pending, tooLow, storage)
+            local values = { C_Reputation.GetFactionParagonInfo(id) }
+            assert(select('#', C_Reputation.GetFactionParagonInfo(id)) == 6)
+            assert(type(values[1]) == 'number' and values[1] == current)
+            assert(type(values[2]) == 'number' and values[2] == 10000)
+            assert(type(values[3]) == 'number' and values[3] == 53982)
+            assert(type(values[4]) == 'boolean' and values[4] == pending)
+            assert(type(values[5]) == 'boolean' and values[5] == tooLow)
+            assert(type(values[6]) == 'number' and values[6] == storage)
+        end
+        CheckParagon(2507, 7500, false, false, 3)
+        CheckParagon(2507, 7500, false, false, 3)
+        CheckParagon(2511, 12500, true, true, 7)
+        assert(select('#', C_Reputation.GetFactionParagonInfo(9999)) == 0)
+        "#,
+    ).unwrap();
+    env.state().borrow_mut().faction_paragon.get_mut(&2507).unwrap().paragon_storage_level = 9;
+    env.exec(
+        r#"
+        CheckParagon(2507, 7500, false, false, 9)
+        CheckParagon(2511, 12500, true, true, 7)
+        "#,
+    ).unwrap();
 }
 
 #[test]
