@@ -188,7 +188,7 @@ fn test_patch_12_1_duration_binding_reference_lifetime_and_identity() {
             r#"
             local first = C_DurationUtil.CreateDurationTextBinding()
             local second = C_DurationUtil.CreateDurationTextBinding()
-            if type(first) ~= "table" then return "type" end
+            if type(first) ~= "userdata" then return "type" end
             if first == second then return "distinct" end
             if type(first.SetDuration) ~= "function" then return "method" end
 

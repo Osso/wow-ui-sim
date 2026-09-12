@@ -3,6 +3,51 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
+fn duration_binding_userdata_copy_retains_resources_through_collection() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local source = C_DurationUtil.CreateDurationTextBinding()
+        assert(type(source) == 'userdata')
+        assert(not pcall(rawget, source, 'duration'))
+        assert(not pcall(rawset, source, 'duration', 99))
+
+        local duration = C_DurationUtil.CreateDuration()
+        local clock = C_DurationUtil.CreateManualClock(12)
+        local label = CreateFrame('Frame'):CreateFontString()
+        local formatter = {Format=function(_, value) return 'retained:' .. value end}
+        local curve = C_CurveUtil.CreateColorCurve()
+        source:SetDuration(duration)
+        source:SetClock(clock)
+        source:SetFontString(label)
+        source:SetFormatter(formatter)
+        source:SetTextColorCurve(curve, Enum.DurationTextBindingProperty.RemainingDuration)
+        local resources = setmetatable({duration, clock, label, formatter, curve}, {__mode='v'})
+        local retained = source:Copy()
+        local identity = {[retained]=true}
+        source, duration, clock, label, formatter, curve = nil, nil, nil, nil, nil, nil
+        collectgarbage('collect')
+
+        assert(identity[retained], 'retained binding keeps its table-key identity')
+        for index = 1, 5 do assert(resources[index] ~= nil, 'copied resource was collected') end
+        assert(retained:GetDuration() == resources[1])
+        assert(retained:GetClock() == resources[2])
+        assert(retained:GetFontString() == resources[3])
+        assert(retained:GetTextColorCurve() == resources[5])
+        retained:GetClock():SetTime(29)
+        assert(resources[2]:GetTime() == 29)
+        retained:SetDuration(17)
+        retained:UpdateFontString()
+        assert(resources[3]:GetText() == 'retained:17')
+        resources[4].Format = function(_, value) return 'shared:' .. value end
+        retained:UpdateFontString()
+        assert(resources[3]:GetText() == 'shared:17')
+        "#,
+    )
+    .expect("userdata binding retains identity and copied resource handles through collection");
+}
+
+#[test]
 fn duration_binding_assign_preserves_receiver_and_configuration_handles() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

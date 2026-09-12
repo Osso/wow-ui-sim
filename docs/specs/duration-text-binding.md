@@ -10,6 +10,13 @@
 - [x] Copy absent values as absent, clearing prior receiver configuration. Preserve enabled state, interval, modifier, expired/zero text, and color-curve property.
 - [x] Support Blizzard `CustomAuraButton:SetDurationText(..., {binding=...})` without replacing the source binding's display target. Its `securecopy(options)` must copy ordinary option tables while retaining the binding handle; copied or forged tables are not binding objects.
 
+### Best-effort representation policy
+
+- [ ] Binding handles are userdata: `rawget` and `rawset` reject them. Retained handles remain usable and preserve identity through explicit collection.
+- [ ] A copied binding retains its duration, clock, font-string, formatter, and color-curve references after caller references and the source binding are released. Mutating a shared resource remains observable through the retained copy.
+
+These are simulator policies, not claims about native object layout or garbage collection. Configuration is independently owned by each binding; external resource handles remain shared. Existing assignment/copy tests cover configuration independence and receiver validation.
+
 ## How it works
 
 - [Numeric rule formatter](numeric-rule-formatter.md)
@@ -23,7 +30,8 @@
 
 ## Tests asserting this spec
 
-- `tests/duration_text_binding_copy.rs` — six behavioral cases, including secure option copying and the actual aura initializer.
+- `tests/duration_text_binding_copy.rs` — configuration/copy cases plus `duration_binding_userdata_copy_retains_resources_through_collection` in the grouped integration target.
+- `src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity` — retained identity and duration access; userdata expectation replaces the stale table expectation.
 - `tests/numeric_rule_formatter.rs` — existing formatter-to-font-string binding behavior.
 
 ## Known gaps (current cycle)
@@ -34,4 +42,4 @@ Actual addon/SavedVariables startup returned `[]`, exit 0 after the separate dis
 
 ## Out of scope
 
-This retains existing best-effort formatting behavior. It does not establish complete native userdata behavior, exact clocks, automatic scheduling, expiration policy, color-curve evaluation, or secret-value enforcement. No new behavior is claimed for those domains.
+This retains existing best-effort formatting behavior. Native finalization, invalidation, metatable shape, ownership, and GC equivalence are not established; no finalizer or invalidation policy is added. Exact clocks, automatic scheduling, expiration policy, color-curve evaluation, and secret-value enforcement remain outside this representation proof.
