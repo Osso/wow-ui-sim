@@ -84,7 +84,20 @@ fn get_faction_paragon_info_returns_no_values_when_unset() {
 }
 
 #[test]
-fn get_faction_paragon_info_returns_five_values() {
+fn get_faction_paragon_info_has_profile_specific_arity() {
+    let env = WowLuaEnv::new().expect("env");
+    env.state()
+        .borrow_mut()
+        .faction_paragon
+        .insert(2507, sample_paragon());
+    let count: i32 = env
+        .eval("return select('#', C_Reputation.GetFactionParagonInfo(2507))")
+        .unwrap();
+    assert_eq!(count, if cfg!(feature = "retail-12-0-0") { 6 } else { 5 });
+}
+
+#[test]
+fn get_faction_paragon_info_preserves_first_five_values() {
     let env = WowLuaEnv::new().expect("env");
     env.state()
         .borrow_mut()
