@@ -1,3 +1,7 @@
+## [2026-09-12] system | Add unit raid-target icon state pending proof
+
+`104cb6fc9` introduces simulator-only GUID-keyed unit raid-target icons for `SetRaidTarget` and `GetRaidTargetIndex`, aligns player/party targeting snapshots with the existing `UnitGUID` helper, and synchronously dispatches one post-mutation `RAID_TARGET_UPDATE`. The standalone alias differs from loaded Blizzard's toggle wrapper; world markers and native permission/lifecycle behavior remain excluded. Focused GREEN, consumer proof, and audit classification are pending. See [[unit-raid-target-icons]] and [[patch-12-0-0-api-audit]].
+
 ## [2026-09-12] audit | Renew tested retail 12.0.0 evidence
 
 `5a4893d57` renews 1,040 references: 1,034 behavioral references across 917 rows plus six provenance-only references. Eleven curve rows now describe tested userdata behavior through `src/c_api/c_curve_util.rs`; classifications remain `2242 / 1166 / 2`. The 538 unresolved references remain 536 evidence-required and two PTR-only legacy compatibility rows. Canonical validation is pending. See [[patch-12-0-0-api-audit]].

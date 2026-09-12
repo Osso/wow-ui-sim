@@ -1,3 +1,7 @@
+## [2026-09-12] investigation | Implement bounded unit raid-target icon state pending proof
+
+`104cb6fc9` replaces the `GetRaidTargetIndex` nil/no-op `SetRaidTarget` stub with GUID-keyed simulator icon assignments. It also makes player and party targeting snapshots reuse existing `UnitGUID` conventions rather than their shared placeholder GUID. Valid integer 1–8 assignment, zero clear, one-icon ownership, synchronous post-mutation `RAID_TARGET_UPDATE`, and invalid-index rejection are explicit simulator policies. Unit icons remain separate from world markers. Retail loaded `SetRaidTargetIcon` may toggle an already selected icon through Blizzard Lua; the standalone simulator alias is not forced over that override. GREEN, consumer proof, profile controls, and audit-credit decisions remain pending. See [[unit-raid-target-icons]].
+
 ## [2026-09-12] investigation | Model bounded paragon storage and class selection
 
 `dc346a706` moves the paragon payload/getter into `src/c_api/c_reputation.rs` and adds the pinned sixth `paragonStorageLevel` return for retail 12.0.0 and later. Storage is explicit per-faction state; no earning or derivation is invented. Ten focused tests passed; independent 12.0.7 and Mists proof subsequently confirmed profile arity and state behavior at `9a8c05992`. The first five returns and unknown-faction no-result behavior remain covered. Actual Journeys consumption of the sixth return is unproven because no paragon reward/item fixture exists.
