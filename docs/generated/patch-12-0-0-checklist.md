@@ -2253,11 +2253,11 @@
 2253. [evidence-required] `added:LuaDurationObject.EvaluateRemainingDuration` — unsafe
 2254. [evidence-required] `added:LuaDurationObject.EvaluateRemainingPercent` — unsafe
 2255. [evidence-required] `added:LuaDurationObject.GetElapsedDuration` — unsafe
-2256. [evidence-required] `added:LuaDurationObject.GetElapsedPercent` — unsafe
+2256. [best-effort] `added:LuaDurationObject.GetElapsedPercent` — behavioral
 2257. [evidence-required] `added:LuaDurationObject.GetEndTime` — unsafe
 2258. [evidence-required] `added:LuaDurationObject.GetModRate` — unsafe
 2259. [evidence-required] `added:LuaDurationObject.GetRemainingDuration` — unsafe
-2260. [evidence-required] `added:LuaDurationObject.GetRemainingPercent` — unsafe
+2260. [best-effort] `added:LuaDurationObject.GetRemainingPercent` — behavioral
 2261. [evidence-required] `added:LuaDurationObject.GetStartTime` — unsafe
 2262. [evidence-required] `added:LuaDurationObject.GetTotalDuration` — unsafe
 2263. [evidence-required] `added:LuaDurationObject.HasSecretValues` — unsafe

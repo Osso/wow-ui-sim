@@ -8221,7 +8221,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust registration creates a table-backed LuaDurationObject with shared methods and an instance ID.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
@@ -8258,7 +8258,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust duration surface exposes C_DurationUtil.GetCurrentTime as simulator elapsed time through the shared duration clock. Source inspection does not establish the native clock, epoch, precision, pause behavior, or exact semantics.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87464,7 +87464,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust implementation provides a table proxy with shared methods, per-instance fields, and tostring formatting.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
@@ -87504,7 +87504,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87533,7 +87533,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87562,7 +87562,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87591,7 +87591,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87620,7 +87620,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87649,7 +87649,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87678,7 +87678,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87692,8 +87692,8 @@
       "id": "added:LuaDurationObject.GetElapsedPercent",
       "symbol": "LuaDurationObject.GetElapsedPercent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87705,17 +87705,28 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Current implementation computes elapsed/T from the existing clock-driven duration state, clamps elapsed to the configured span, returns zero for zero spans, and rejects invalid modifiers or bound clock values. These are ordinary simulator policies, not native semantics.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind",
+        "tests/duration_core.rs::duration_percent_zero_spans_remain_zero",
+        "tests/duration_core.rs::duration_percent_rejects_unknown_modifier_without_mutation",
+        "tests/duration_core.rs::duration_percent_rejects_invalid_bound_clock_without_mutation"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Ordinary timing-model simulator policy only. Development proof at 24fe9d746 passed 7/7 grouped duration_core tests, including percentage boundaries, clamping, rewind, zero-span, invalid modifier, and invalid bound-clock cases. Fractions are modeled as elapsed/T and remaining/T in [0,1]; RealTime/BaseTime produce the same dimensionless fraction. Native modifier coercion, exact errors, table-proxy identity, secret/taint behavior, and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetEndTime",
@@ -87736,7 +87747,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87765,7 +87776,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87794,7 +87805,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87808,8 +87819,8 @@
       "id": "added:LuaDurationObject.GetRemainingPercent",
       "symbol": "LuaDurationObject.GetRemainingPercent",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "luaobject-method",
       "load_addon": null,
       "evidence": [
@@ -87821,17 +87832,28 @@
         },
         {
           "kind": "source",
-          "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "reference": "src/lua_api/globals/lua_duration_object/core.rs",
+          "summary": "Current implementation computes remaining/T from the existing clock-driven duration state, clamps elapsed to the configured span, returns zero for zero spans, and rejects invalid modifiers or bound clock values. These are ordinary simulator policies, not native semantics.",
+          "source_hash": "caf1a0e17719222648bc7bbbe6639efc6ee3d3c79734f39d107e8dbe17486509"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/duration_core.rs",
+          "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
+          "source_hash": "b6bbed8dd32610aec0b90c6eea4c5e86c335f021063ee86f4fad65c0aedb47ae"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/duration_core.rs::duration_percent_tracks_clock_boundaries_and_rewind",
+        "tests/duration_core.rs::duration_percent_zero_spans_remain_zero",
+        "tests/duration_core.rs::duration_percent_rejects_unknown_modifier_without_mutation",
+        "tests/duration_core.rs::duration_percent_rejects_invalid_bound_clock_without_mutation"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "24fe9d746",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The current duration implementation is a Lua table proxy with shared method closures. Native duration semantics, object identity, timing, secret behavior, coercion, and errors remain unverified; source inspection awards no behavioral credit."
+      "notes": "Ordinary timing-model simulator policy only. Development proof at 24fe9d746 passed 7/7 grouped duration_core tests, including percentage boundaries, clamping, rewind, zero-span, invalid modifier, and invalid bound-clock cases. Fractions are modeled as elapsed/T and remaining/T in [0,1]; RealTime/BaseTime produce the same dimensionless fraction. Native modifier coercion, exact errors, table-proxy identity, secret/taint behavior, and historical client conformance remain unverified."
     },
     {
       "id": "added:LuaDurationObject.GetStartTime",
@@ -87852,7 +87874,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87881,7 +87903,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87910,7 +87932,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -87939,7 +87961,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust implementation exposes IsZero as a default-zero constant.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         },
         {
           "kind": "test",
@@ -87976,7 +87998,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -88005,7 +88027,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -88034,7 +88056,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -88063,7 +88085,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -88092,7 +88114,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434"
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1"
         }
       ],
       "tests": [],
@@ -91055,7 +91077,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434",
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1",
           "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
@@ -91168,7 +91190,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434",
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1",
           "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
@@ -98795,7 +98817,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "058106808fc7f7d818002c8893aa67dd75409ad9a7b3c64d3024ca6a99afa434",
+          "source_hash": "ef8575200c00f7b11f38fac505250622c7aa51a00e10984ff9ab2ca23c72b4e1",
           "summary": "Current LuaDurationObject implementation exposes C_DurationUtil table proxies with the tested factory, zero-state, query, and lifecycle surface."
         },
         {
