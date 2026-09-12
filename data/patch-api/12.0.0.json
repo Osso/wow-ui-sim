@@ -2440,7 +2440,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_action_bar.rs",
-          "source_hash": "1ff177e170195fec1d5c8e294d615ffa564646456e8c059791d9dd591a80ffee",
+          "source_hash": "c6faf82b12148e90bf4f6f8f8f3614c906e7d68dbc74194c1c3d920be6bf99f0",
           "summary": "Resolves assigned spell state through the existing spell/GCD selector and configures a fresh duration with the registered SetTimeFromStart method."
         },
         {

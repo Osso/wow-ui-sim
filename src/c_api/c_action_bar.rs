@@ -5,7 +5,7 @@ use crate::lua_api::globals::lua_duration_object::new_duration_object_value;
 use crate::lua_api::methods::{borrow_state, call_function_state};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 pub(crate) fn read_action_cooldown(state: &LuaState) -> LuaResult<(f64, f64)> {
     let slot = match stack_val(state, 1) {
