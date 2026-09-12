@@ -12,7 +12,7 @@ The credit is limited to ordinary simulator behavior. Native timing/rate/modifie
 
 ## [2026-09-12] investigation | Model duration Copy and Assign
 
-`19416ff84` replaces `LuaDurationObject` Copy/Assign placeholders with transfer of modeled timing and optional clock binding. The seven new `duration_copy_` cases are development GREEN: Copy returns one independent duration; Assign returns no values while retaining its receiver identity/custom fields; self-assignment is stable; copied clocks are shared references with independently mutable bindings; an unbound source clears a prior target binding; invalid sources reject before mutation. The RED record `/tmp/duration-copy-red-ledger.json` had 1/7 pass and six failures before the runtime change. Independent verification remains pending.
+`19416ff84` replaces `LuaDurationObject` Copy/Assign placeholders with transfer of modeled timing and optional clock binding. The RED record `/tmp/duration-copy-red-ledger.json` had 1/7 pass and six failures before the runtime change. The first GREEN attempt failed to compile before tests ran: `/tmp/duration-copy-green-ledger.json` records E0308 at `lua_duration_object.rs:339`. `acb86ceda` corrects that mutability mismatch; focused retry and independent verification remain pending.
 
 This is only simulator behavior. Clock-reference policy, receiver identity/custom fields, target mutation boundaries, coercion/errors, native identity, security, lifecycle/GC, and real consumer behavior remain unverified. Metadata credit and hash renewal are pending the parent audit scan. See [duration core](../../specs/duration-core.md).
 

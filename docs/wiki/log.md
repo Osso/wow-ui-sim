@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Model duration Copy and Assign
 
-`19416ff84` copies only modeled duration timing and optional clock bindings. Seven `duration_copy_` development cases cover independent timing, return arity, receiver identity/custom fields, self-assignment, shared clock references with independently mutable bindings, unbound-source clearing, and invalid-source atomicity. The RED ledger had 1/7 pass and six failures before the implementation. Independent verification and audit metadata credit remain pending; native identity, clock, coercion, security, lifecycle/GC, and consumer behavior remain open. See [duration core](../specs/duration-core.md) and [[patch-12-0-0-api-audit]].
+`19416ff84` copies only modeled duration timing and optional clock bindings. Seven `duration_copy_` cases cover independent timing, return arity, receiver identity/custom fields, self-assignment, shared clock references with independently mutable bindings, unbound-source clearing, and invalid-source atomicity. The RED ledger had 1/7 pass and six failures. The first GREEN attempt did not compile: `/tmp/duration-copy-green-ledger.json` records E0308 before tests ran; `acb86ceda` corrects it. Focused retry, independent verification, and audit metadata credit remain pending; native identity, clock, coercion, security, lifecycle/GC, and consumer behavior remain open. See [duration core](../specs/duration-core.md) and [[patch-12-0-0-api-audit]].
 
 ## [2026-09-12] audit | Credit loaded Blizzard tooltip money consumers
 
