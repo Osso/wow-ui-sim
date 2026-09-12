@@ -2327,7 +2327,7 @@
 2327. [evidence-required] `added:TRANSMOG_DISPLAYED_OUTFIT_CHANGED` — unsafe
 2328. [evidence-required] `added:TUTORIAL_COMBAT_EVENT` — unsafe
 2329. [best-effort] `added:TextureBase.ResetTexCoord` — behavioral
-2330. [evidence-required] `added:TextureBase.SetSpriteSheetCell` — unsafe
+2330. [best-effort] `added:TextureBase.SetSpriteSheetCell` — behavioral
 2331. [evidence-required] `added:UIObject.HasAnySecretAspect` — unsafe
 2332. [evidence-required] `added:UIObject.HasSecretAspect` — unsafe
 2333. [evidence-required] `added:UIObject.HasSecretValues` — unsafe
@@ -2794,7 +2794,7 @@
 2794. [best-effort] `changed:NonEmitterCombatRange` — behavioral
 2795. [evidence-required] `changed:PlaceRaidMarker` — unsafe
 2796. [evidence-required] `changed:RemoveRaidTargets` — unsafe
-2797. [evidence-required] `changed:SetRaidTarget` — unsafe
+2797. [best-effort] `changed:SetRaidTarget` — behavioral
 2798. [evidence-required] `changed:StatusBar` — unsafe
 2799. [evidence-required] `changed:StatusBar.GetFillStyle` — unsafe
 2800. [evidence-required] `changed:StatusBar.SetFillStyle` — unsafe

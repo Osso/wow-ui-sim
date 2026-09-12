@@ -90543,13 +90543,13 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/coords.rs",
           "summary": "Current TextureBase ResetTexCoord restores the texture coordinates to the active default or atlas coordinates and clears custom quad coordinates.",
-          "source_hash": "0aa45b65e0f427602ec88569039d3b5cc44ee5a4636f010aa51cdbc3c63f4d95"
+          "source_hash": "bc1547a512573303c8e632ddbff40604c0e7aad44b0b7bcad60630046fd3d1a6"
         },
         {
           "kind": "test",
           "reference": "tests/texture_methods_port.rs",
           "summary": "Focused texture test verifies SetTexCoord followed by ResetTexCoord returns the default eight-corner coordinates (0,0, 0,1, 1,0, 1,1); commit 090af1ec8 corrected the stale four-value assertion.",
-          "source_hash": "c5b2573efc194a93eb3a387eaea40657b37f5945fb22761885bfde47c82de5cf"
+          "source_hash": "78d231a6ca97d40f13ec76517b46b31f991be7b8bffa4ef875b50c444b1f7598"
         }
       ],
       "tests": [
@@ -90565,8 +90565,8 @@
       "id": "added:TextureBase.SetSpriteSheetCell",
       "symbol": "TextureBase.SetSpriteSheetCell",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "uiobject-method",
       "load_addon": null,
       "evidence": [
@@ -90579,16 +90579,39 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/rotation_mask.rs",
-          "source_hash": "194ab06da36cfec02bb0cdc9ad38fb0a12bfb7d26aa4c822fa512a78f23f847f",
-          "summary": "Current SetSpriteSheetCell is a no-op stub that only validates the frame receiver and changes no sprite-sheet or texture-coordinate state."
+          "source_hash": "1d45d68c443e046bdb3c843a33e48844f7a249d6a51845f9f107aa9a63a1a20c",
+          "summary": "Bounded one-based row-major grid mapping applies normalized UV rectangles through the shared SetTexCoord mutation helper; validates inputs before mutation and rejects unmodeled nonnil optional dimensions."
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/frame/methods/widgets/texture/coords.rs",
+          "summary": "Shared rectangular SetTexCoord mutation path handles coordinate state and atlas remapping.",
+          "source_hash": "bc1547a512573303c8e632ddbff40604c0e7aad44b0b7bcad60630046fd3d1a6"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/texture_methods_port.rs",
+          "summary": "Exact eight UVs for square/nonsquare grids, replacement, zero returns, invalid-input atomicity and explicit optional-dimension rejection.",
+          "source_hash": "78d231a6ca97d40f13ec76517b46b31f991be7b8bffa4ef875b50c444b1f7598"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/targeting_verbs.rs",
+          "summary": "Original Blizzard Lua uses SetSpriteSheetCell for visible raid icons 1 and 8; verifies resulting coordinates through real event dispatch.",
+          "source_hash": "66557ac6566f3942b4d563e38f678d6d98c2b1a4dcdb7535e8e1a01e2c8ae72a"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/texture_methods_port.rs::test_sprite_sheet_cell_maps_and_replaces_coordinates",
+        "tests/texture_methods_port.rs::test_sprite_sheet_cell_rejects_invalid_inputs_atomically",
+        "tests/texture_methods_port.rs::test_sprite_sheet_cell_rejects_unmodeled_optional_dimensions",
+        "tests/targeting_verbs.rs::raid_target_icons_update_real_blizzard_target_frame_consumer"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "3abcd7fc7",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence-required/unsafe: current SetSpriteSheetCell is a no-op, and the existing callability-only test does not establish the documented cell contract. Exact cell indexing, row/column coordinate mapping, optional dimensions, validation, and rendering require authoritative evidence or a correct model/test; tests and assertions remain empty, with null commit, approval, and scope exception."
+      "notes": "Best-effort simulator policy covers one-based row-major UV mapping for finite positive integer grids/cells, replacement, eight getter coordinates and zero setter results. Malformed/out-of-grid inputs reject before mutation; absent/nil optional dimensions work, while nonnil cellWidth/cellHeight explicitly remain unsupported. Unmodified Blizzard Lua icon consumption passes, not historical XML construction. Native optional dimensions, indexing/validation equivalence, secrets, pixel rounding and native rendering conformance remain unproven."
     },
     {
       "id": "added:UIObject.HasAnySecretAspect",
@@ -101956,7 +101979,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "dae4a68421c9c181e1f1e7dae6f7b2215ef33da0ceefd2709b797c1640ff010e",
+          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
           "summary": "Current runtime registers CanBeRaidTarget and returns a boolean from simulator unit-token resolution; this does not prove retail eligibility semantics."
         },
         {
@@ -101991,8 +102014,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "dae4a68421c9c181e1f1e7dae6f7b2215ef33da0ceefd2709b797c1640ff010e",
-          "summary": "Current runtime does not register or implement ClearRaidMarker; related targeting functions have no shared raid-marker state."
+          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "summary": "This module models unit raid-target icons, not world-marker placement, activity or clearing; its unit-icon state is not evidence for this contract."
         },
         {
           "kind": "source",
@@ -102012,7 +102035,7 @@
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: shared state/full-LoD proof must cover PlaceRaidMarker, SetRaidTarget, GetRaidTargetIndex, IsRaidMarkerActive, ClearRaidMarker, and RemoveRaidTargets, including valid/invalid inputs, replacement, clearing, event delivery, return values, and errors. Registration or event dispatch alone is not behavior proof; no marker lifecycle, permission, UI, persistence, producer, consumer, or lifecycle semantics are claimed."
+      "notes": "Evidence required: establish populated world-marker placement, activity and clearing, valid/invalid inputs, event delivery/order, errors and lifecycle through the world-marker APIs. SetRaidTarget/GetRaidTargetIndex unit icons are separate and do not prove this contract. Native permissions, persistence, producers and consumers remain unproven."
     },
     {
       "id": "changed:EmitterCombatRange",
@@ -108643,30 +108666,34 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "summary": "Runtime registers GetRaidTargetIndex and returns nil while assigned raid markers are unmodeled.",
-          "source_hash": "dae4a68421c9c181e1f1e7dae6f7b2215ef33da0ceefd2709b797c1640ff010e"
-        },
-        {
-          "kind": "test",
-          "reference": "tests/startup_api_stubs.rs",
-          "summary": "Focused startup proof calls GetRaidTargetIndex with player and asserts nil without an assigned marker.",
-          "source_hash": "623001be5237b4f308683c7a8f29e75388ddfa776be8b0dec81bfd018eefe668"
+          "summary": "GUID-keyed unit icon assignment/query, replacement, clearing, alias identity and callback-visible mutation; player/party snapshots reuse existing UnitGUID identities.",
+          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11"
         },
         {
           "kind": "source",
           "reference": "docs/wow-client-diff/WowDiscovery.lua",
           "summary": "Independent discovery records the changed GetRaidTargetIndex API.",
           "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/targeting_verbs.rs",
+          "summary": "Concrete unit-icon state and error cases plus original TargetFrame Lua event consumption, icon visibility, sprite coordinates and vendor toggle.",
+          "source_hash": "66557ac6566f3942b4d563e38f678d6d98c2b1a4dcdb7535e8e1a01e2c8ae72a"
         }
       ],
       "tests": [
-        "tests/startup_api_stubs.rs::startup_party_chat_and_targeting_globals_are_callable"
+        "tests/targeting_verbs.rs::raid_target_icons_assign_move_replace_and_clear",
+        "tests/targeting_verbs.rs::raid_target_icons_follow_guid_aliases_not_target_slots",
+        "tests/targeting_verbs.rs::raid_target_icons_reject_invalid_indices_without_side_effects",
+        "tests/targeting_verbs.rs::raid_target_icons_notify_once_after_mutation_without_queued_duplicate",
+        "tests/targeting_verbs.rs::raid_target_icons_update_real_blizzard_target_frame_consumer"
       ],
       "assertions": [],
-      "commit": "492c4a189",
+      "commit": "104cb6fc9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Retail 12.0.0 startup publication and nil-without-marker behavior are behaviorally proven; assigned-marker lookup and raid-target semantics remain unclaimed."
+      "notes": "Best-effort bounded simulator policy: indices 1-8 assign unique per-unit/per-icon state, 0 clears; GUID aliases share state and other identities remain isolated. Valid calls synchronously notify once after mutation; explicit queued-event consumption confirms no queued copy. Invalid indices on valid units reject before mutation; unknown units remain no-ops/nil. Original Blizzard TargetFrame Lua consumes state and toggles icons; source is loaded explicitly because historical XML rejects AuraContainer. Native permissions, eligibility, error wording, timing/coalescing, identity lifecycle, bulk removal, world markers and clean historical XML/UI loading remain unproven."
     },
     {
       "id": "changed:HOUSE_LEVEL_CHANGED",
@@ -108864,8 +108891,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "dae4a68421c9c181e1f1e7dae6f7b2215ef33da0ceefd2709b797c1640ff010e",
-          "summary": "Current targeting runtime lacks shared raid-marker state needed to establish IsRaidMarkerActive semantics."
+          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "summary": "This module models unit raid-target icons, not world-marker placement, activity or clearing; its unit-icon state is not evidence for this contract."
         },
         {
           "kind": "source",
@@ -108879,7 +108906,7 @@
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: retail full-LoD/state-backed proof must establish publication, valid and invalid marker indices, state transitions through PlaceRaidMarker/SetRaidTarget/ClearRaidMarker/RemoveRaidTargets, repeated calls, event behavior, return type, and errors. The Mists constant-false fallback and registration do not prove retail behavior; no marker, permission, UI, persistence, producer, consumer, or lifecycle semantics are claimed."
+      "notes": "Evidence required: establish populated world-marker placement, activity and clearing, valid/invalid inputs, event delivery/order, errors and lifecycle through the world-marker APIs. SetRaidTarget/GetRaidTargetIndex unit icons are separate and do not prove this contract. Native permissions, persistence, producers and consumers remain unproven."
     },
     {
       "id": "changed:LE_EXPANSION_LEVEL_CURRENT",
@@ -109507,8 +109534,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "dae4a68421c9c181e1f1e7dae6f7b2215ef33da0ceefd2709b797c1640ff010e",
-          "summary": "Current runtime does not register or implement PlaceRaidMarker and has no shared raid-marker backing state."
+          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "summary": "This module models unit raid-target icons, not world-marker placement, activity or clearing; its unit-icon state is not evidence for this contract."
         },
         {
           "kind": "source",
@@ -109528,7 +109555,7 @@
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: shared state/full-LoD proof must cover PlaceRaidMarker, SetRaidTarget, GetRaidTargetIndex, IsRaidMarkerActive, ClearRaidMarker, and RemoveRaidTargets, including valid/invalid inputs, replacement, clearing, event delivery, return values, and errors. No marker lifecycle, permission, UI, persistence, producer, consumer, or lifecycle semantics are claimed."
+      "notes": "Evidence required: establish populated world-marker placement, activity and clearing, valid/invalid inputs, event delivery/order, errors and lifecycle through the world-marker APIs. SetRaidTarget/GetRaidTargetIndex unit icons are separate and do not prove this contract. Native permissions, persistence, producers and consumers remain unproven."
     },
     {
       "id": "changed:RemoveRaidTargets",
@@ -109548,8 +109575,8 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "dae4a68421c9c181e1f1e7dae6f7b2215ef33da0ceefd2709b797c1640ff010e",
-          "summary": "Current runtime does not register or implement RemoveRaidTargets; related raid-target functions have no shared marker state."
+          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "summary": "Per-unit SetRaidTarget/GetRaidTargetIndex state does not implement or establish the separate RemoveRaidTargets bulk-removal contract."
         },
         {
           "kind": "source",
@@ -109569,14 +109596,14 @@
       "commit": null,
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: full-LoD/state-backed proof must establish callable publication, return count/types, removal of assigned markers, and interaction with SetRaidTarget, GetRaidTargetIndex, ClearRaidMarker, IsRaidMarkerActive, and RAID_TARGET_UPDATE. No exact retail return, error, event-ordering, marker lifecycle, UI, persistence, mutation, producer, consumer, or lifecycle semantics are claimed."
+      "notes": "Evidence required: establish the RemoveRaidTargets removal domain, populated-state effects, return arity, repeated calls, event delivery/order, permissions and lifecycle. Per-unit icon assignment/clearing does not prove this bulk-removal contract; no world-marker or unit-removal equivalence is inferred."
     },
     {
       "id": "changed:SetRaidTarget",
       "symbol": "SetRaidTarget",
       "change": "changed",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -109589,22 +109616,34 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/targeting_verbs.rs",
-          "source_hash": "dae4a68421c9c181e1f1e7dae6f7b2215ef33da0ceefd2709b797c1640ff010e",
-          "summary": "Current SetRaidTarget validates a token and fires RAID_TARGET_UPDATE but stores no raid-marker state; GetRaidTargetIndex remains nil."
+          "source_hash": "3ca5e92bcb4615d9c6a17f2fa14746eff86fa7d9702acd72e3ffd44b066c6e11",
+          "summary": "GUID-keyed unit icon assignment/query, replacement, clearing, alias identity and callback-visible mutation; player/party snapshots reuse existing UnitGUID identities."
         },
         {
           "kind": "source",
           "reference": "docs/wow-client-diff/WowDiscovery.lua",
           "source_hash": "4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6",
           "summary": "Independent discovery records the changed SetRaidTarget contract."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/targeting_verbs.rs",
+          "summary": "Concrete unit-icon state and error cases plus original TargetFrame Lua event consumption, icon visibility, sprite coordinates and vendor toggle.",
+          "source_hash": "66557ac6566f3942b4d563e38f678d6d98c2b1a4dcdb7535e8e1a01e2c8ae72a"
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/targeting_verbs.rs::raid_target_icons_assign_move_replace_and_clear",
+        "tests/targeting_verbs.rs::raid_target_icons_follow_guid_aliases_not_target_slots",
+        "tests/targeting_verbs.rs::raid_target_icons_reject_invalid_indices_without_side_effects",
+        "tests/targeting_verbs.rs::raid_target_icons_notify_once_after_mutation_without_queued_duplicate",
+        "tests/targeting_verbs.rs::raid_target_icons_update_real_blizzard_target_frame_consumer"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "104cb6fc9",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: shared state/full-LoD proof must cover valid and invalid units and indices, replacement, GetRaidTargetIndex, IsRaidMarkerActive, ClearRaidMarker, RemoveRaidTargets, return values, event delivery/order, and errors. Current event firing without state is not behavior proof; no marker lifecycle, permission, UI, persistence, producer, consumer, or lifecycle semantics are claimed."
+      "notes": "Best-effort bounded simulator policy: indices 1-8 assign unique per-unit/per-icon state, 0 clears; GUID aliases share state and other identities remain isolated. Valid calls synchronously notify once after mutation; explicit queued-event consumption confirms no queued copy. Invalid indices on valid units reject before mutation; unknown units remain no-ops/nil. Original Blizzard TargetFrame Lua consumes state and toggles icons; source is loaded explicitly because historical XML rejects AuraContainer. Native permissions, eligibility, error wording, timing/coalescing, identity lifecycle, bulk removal, world markers and clean historical XML/UI loading remain unproven."
     },
     {
       "id": "changed:StatusBar",
@@ -109844,7 +109883,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/texture/coords.rs",
-          "source_hash": "0aa45b65e0f427602ec88569039d3b5cc44ee5a4636f010aa51cdbc3c63f4d95",
+          "source_hash": "bc1547a512573303c8e632ddbff40604c0e7aad44b0b7bcad60630046fd3d1a6",
           "summary": "Current TextureBase GetTexCoord returns full corner coordinates, while SetTexCoord remaps rectangular coordinates through an active atlas sub-region."
         },
         {
