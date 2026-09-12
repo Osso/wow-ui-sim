@@ -79,6 +79,105 @@ fn get_specialization_info_for_class_id_stops_after_class_specs() {
     assert_eq!(fourth_spec_id, None);
 }
 
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn specialization_class_id_selects_class_without_mutating_player() {
+    let env = env();
+    env.state().borrow_mut().player.class_index = 2;
+    env.state().borrow_mut().player.active_spec_index = 3;
+    env.exec(
+        r#"
+        local function check(classID, expectedID, expectedName)
+            local function query()
+                return C_SpecializationInfo.GetSpecializationInfo(1, false, false, nil, nil, nil, classID)
+            end
+            assert(select('#', query()) == 10)
+            local id, name, description, icon, role, stat, points, background, preview, unlocked = query()
+            assert(id == expectedID and name == expectedName)
+            assert(type(description) == 'string' and type(icon) == 'number')
+            assert(type(role) == 'string' and type(stat) == 'number')
+            assert(points == 0 and background == nil and preview == 0 and unlocked == true)
+        end
+        check(8, 62, 'Arcane')
+        check(2, 65, 'Holy')
+        check(8, 62, 'Arcane')
+        assert(C_SpecializationInfo.GetSpecializationInfo(1) == 65)
+        assert(C_SpecializationInfo.GetSpecializationInfo(1, false, false, nil, nil, nil, nil) == 65)
+        assert(C_SpecializationInfo.GetSpecializationInfo(99) == 70)
+        assert(C_SpecializationInfo.GetSpecialization() == 3)
+        "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    assert_eq!(state.player.class_index, 2);
+    assert_eq!(state.player.active_spec_index, 3);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn specialization_class_id_invalid_explicit_selection_returns_default_tuple() {
+    let env = env();
+    env.exec(
+        r#"
+        local function check(index, classID)
+            local function query()
+                return C_SpecializationInfo.GetSpecializationInfo(index, false, false, nil, nil, nil, classID)
+            end
+            assert(select('#', query()) == 10)
+            local id, name, description, icon, role, stat, points, background, preview, unlocked = query()
+            assert(id == 0 and name == nil and description == nil and icon == nil)
+            assert(role == nil and stat == nil and points == 0)
+            assert(background == nil and preview == 0 and unlocked == true)
+        end
+        check(1, 999)
+        check(1, 0)
+        check(1, -1)
+        check(1, 8.5)
+        check(0, 8)
+        check(-1, 8)
+        check(4, 8)
+        check(1.5, 8)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "retail-12-0-0")]
+#[test]
+fn specialization_class_id_cooldown_viewer_uses_cross_class_tag() {
+    let env = env();
+    env.state().borrow_mut().player.class_index = 2;
+    let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(
+        env!("CARGO_MANIFEST_DIR"),
+    ));
+    let source =
+        std::fs::read_to_string(addons.join("Blizzard_CooldownViewer/CooldownViewerUtil.lua"))
+            .expect("cached Blizzard CooldownViewerUtil source");
+    env.exec(&source)
+        .expect("unmodified CooldownViewerUtil loads");
+    let mage: String = env
+        .eval("return CooldownViewerUtil.GetClassAndSpecTagText(81)")
+        .unwrap();
+    let paladin: String = env
+        .eval("return CooldownViewerUtil.GetClassAndSpecTagText(21)")
+        .unwrap();
+    assert_eq!(mage, "Mage - Arcane");
+    assert_eq!(paladin, "Paladin - Holy");
+}
+
+#[cfg(not(feature = "retail-12-0-0"))]
+#[test]
+fn specialization_class_id_preserves_non_retail_player_selection() {
+    let env = env();
+    env.state().borrow_mut().player.class_index = 2;
+    let id: i32 = env
+        .eval(
+            "return C_SpecializationInfo.GetSpecializationInfo(1, false, false, nil, nil, nil, 8)",
+        )
+        .unwrap();
+    assert_eq!(id, 65);
+}
+
 // ── PvP talents ───────────────────────────────────────────────────────────────
 
 #[test]
