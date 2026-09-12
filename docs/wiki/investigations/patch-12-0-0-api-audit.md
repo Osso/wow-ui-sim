@@ -10,6 +10,12 @@ Final verification at `62b9eb70c` reuses hash-matched 12.0.0 GREEN (4/4) and rec
 
 The credit is limited to ordinary simulator behavior. Native timing/rate/modifier/coercion/error/identity/secret/protected semantics and historical consumers remain unverified. No rows are invented for `HasStarted`, `HasExpired`, `IsActive`, or `GetClock`; `Assign`, `Copy`, and evaluation methods remain open. See [duration core](../../specs/duration-core.md).
 
+## [2026-09-12] investigation | Model duration Copy and Assign
+
+`19416ff84` replaces `LuaDurationObject` Copy/Assign placeholders with transfer of modeled timing and optional clock binding. The seven new `duration_copy_` cases are development GREEN: Copy returns one independent duration; Assign returns no values while retaining its receiver identity/custom fields; self-assignment is stable; copied clocks are shared references with independently mutable bindings; an unbound source clears a prior target binding; invalid sources reject before mutation. The RED record `/tmp/duration-copy-red-ledger.json` had 1/7 pass and six failures before the runtime change. Independent verification remains pending.
+
+This is only simulator behavior. Clock-reference policy, receiver identity/custom fields, target mutation boundaries, coercion/errors, native identity, security, lifecycle/GC, and real consumer behavior remain unverified. Metadata credit and hash renewal are pending the parent audit scan. See [duration core](../../specs/duration-core.md).
+
 ## [2026-09-12] investigation | Credit nonzero duration defaults transition
 
 `5f7d70fe6` adds one focused nonzero `SetToDefaults` case: start `10`, base duration `20`, rate `2`, and bound clock `15` become zero endpoints, rate `1`, nil clock, zero/inactive state, and zero fractions. `44e8055e3` credits exactly `LuaDurationObject.SetToDefaults` as bounded best-effort, advancing the register to **2260 best-effort / 1148 evidence-required / 2 exceptions**. It renews 20 existing duration-test hashes across two manifests. `/tmp/verify-duration-defaults-ledger.json` records eight tests passing on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7; format/readability pass, while unchanged production check/build/startup proof is reused. Canonical 12.0.0 and 12.1.5 validation pass with all hashes fresh. This establishes only the stated simulator transition, not native reset, clock, coercion, error, identity, secret, protected-call, or consumer behavior.
