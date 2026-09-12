@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Credit existing duration timing assertions
+
+`fb6149683` changes eleven 12.0.0 duration rows to bounded best-effort from existing `duration_core::` behavior only: configuration, endpoints, rate, total/elapsed/remaining duration, reset, and current time. It adds no runtime/tests; seven grouped cases already pass on retail 12.0.0, 12.0.5, and 12.0.7. Totals are `2259 / 1149 / 2`. Native and consumer semantics remain open; `SetToDefaults`, `Assign`, `Copy`, and evaluation methods gain no credit. Final metadata verification remains pending. See [[patch-12-0-0-api-audit]] and [[duration-core]].
+
 ## [2026-09-12] system | Verify duration-percent simulator policy
 
 `/tmp/verify-duration-percent-ledger.json` reuses matching 12.0.0 proof and records seven `duration_core::` tests passing on 12.0.5 and 12.0.7, with format, check, build, and standalone startup also passing. `eb2d60dc8` refreshes 21 stale hashes across seven PTR rows as metadata only; independent metadata follow-up remains pending, so no overall-manifest PASS is claimed. Fractions remain ordinary simulator policies, not native or consumer proof. See [[duration-core]].
