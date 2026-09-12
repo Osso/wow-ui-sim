@@ -2115,8 +2115,8 @@
       "id": "added:C_ActionBar.ActionBarCooldownInfo.duration",
       "symbol": "C_ActionBar.ActionBarCooldownInfo.duration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
@@ -2131,14 +2131,29 @@
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCooldown publishes duration in a partial table; start/duration are fixture-backed while enabled/mod-rate semantics remain constant and the complete typed contract is unproven.",
           "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "The namespace duration field equals the seeded spell span 30 and later-ending GCD span 60, through duration fixtures with independent Rust expected-value assertions."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "The namespace duration field equals the seeded spell span 30 and later-ending GCD span 60, through duration fixtures with independent Rust expected-value assertions."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "eb9383afb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: current ActionBarCooldownInfo.duration publication does not establish complete typed payload fidelity, authoritative cooldown/enabled/mod-rate values, invalid-slot behavior, progression, secret behavior, or lifecycle semantics."
+      "notes": "Existing hash-matched simulator assertions only; no source/test change. Credit is limited to the named start/span/default-rate observations. isEnabled, complete typed payload fidelity, invalid/empty namespace inputs, non-default rates, native timing/identity, secrets/security, lifecycle and real-consumer semantics remain unverified."
     },
     {
       "id": "added:C_ActionBar.ActionBarCooldownInfo.isEnabled",
@@ -2173,8 +2188,8 @@
       "id": "added:C_ActionBar.ActionBarCooldownInfo.modRate",
       "symbol": "C_ActionBar.ActionBarCooldownInfo.modRate",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
@@ -2189,21 +2204,29 @@
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCooldown publishes modRate in a partial table; start/duration are fixture-backed while enabled/mod-rate semantics remain constant and the complete typed contract is unproven.",
           "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "The active-spell namespace modRate field equals the duration rate, independently asserted to be 1; non-default rates are not modeled or proven."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "eb9383afb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: current ActionBarCooldownInfo.modRate publication does not establish complete typed payload fidelity, authoritative cooldown/enabled/mod-rate values, invalid-slot behavior, progression, secret behavior, or lifecycle semantics."
+      "notes": "Existing hash-matched simulator assertions only; no source/test change. Credit is limited to the named start/span/default-rate observations. isEnabled, complete typed payload fidelity, invalid/empty namespace inputs, non-default rates, native timing/identity, secrets/security, lifecycle and real-consumer semantics remain unverified."
     },
     {
       "id": "added:C_ActionBar.ActionBarCooldownInfo.startTime",
       "symbol": "C_ActionBar.ActionBarCooldownInfo.startTime",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "structure-field",
       "load_addon": null,
       "evidence": [
@@ -2218,14 +2241,29 @@
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "summary": "Current C_ActionBar.GetActionCooldown publishes startTime in a partial table; start/duration are fixture-backed while enabled/mod-rate semantics remain constant and the complete typed contract is unproven.",
           "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "The namespace startTime field equals the seeded spell start (now-5) and later-ending GCD start (now-2), through duration fixtures with independent Rust expected-value assertions."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "The namespace startTime field equals the seeded spell start (now-5) and later-ending GCD start (now-2), through duration fixtures with independent Rust expected-value assertions."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "eb9383afb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Evidence required: current ActionBarCooldownInfo.startTime publication does not establish complete typed payload fidelity, authoritative cooldown/enabled/mod-rate values, invalid-slot behavior, progression, secret behavior, or lifecycle semantics."
+      "notes": "Existing hash-matched simulator assertions only; no source/test change. Credit is limited to the named start/span/default-rate observations. isEnabled, complete typed payload fidelity, invalid/empty namespace inputs, non-default rates, native timing/identity, secrets/security, lifecycle and real-consumer semantics remain unverified."
     },
     {
       "id": "added:C_ActionBar.GetActionAutocast",
@@ -2379,8 +2417,8 @@
       "id": "added:C_ActionBar.GetActionCooldown",
       "symbol": "C_ActionBar.GetActionCooldown",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -2394,21 +2432,36 @@
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api.rs",
           "source_hash": "fdcfbb2f1f7e60eb988aabd2825631647fcc5385543b9806f8df3fef976fe158",
-          "summary": "Current implementation returns a partial ActionBarCooldownInfo-shaped table: spell-slot cooldown start/duration are modeled, while isEnabled=true and modRate=1 are constant defaults. No focused direct test is present in this evidence slice."
+          "summary": "Publishes modeled spell/GCD start and duration using the shared action-slot lookup; isEnabled=true and modRate=1 remain constant defaults."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/globals/action_bar_api/registration.rs",
           "source_hash": "1fce6600c8fe9ab8c0330e799c5c14dfdd4ce0c0ffc84fc6ff21b982ad2337cc",
           "summary": "Current C_ActionBar registration binds GetActionCooldown to its Rust implementation in the namespace method table."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "Existing duration fixtures directly query the namespace cooldown info and assert startTime/duration against seeded active-spell and later-ending GCD intervals; the active-spell fixture also establishes modRate=1."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "Existing duration fixtures directly query the namespace cooldown info and assert startTime/duration against seeded active-spell and later-ending GCD intervals; the active-spell fixture also establishes modRate=1."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+        "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "eb9383afb",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "Current implementation returns a partial ActionBarCooldownInfo-shaped table: spell-slot cooldown start/duration are modeled, while isEnabled=true and modRate=1 are constant defaults. Authoritative semantics or a correct model/test are required, and no approval can close the row."
+      "notes": "Existing hash-matched simulator assertions only; no source/test change. Credit is limited to the named start/span/default-rate observations. isEnabled, complete typed payload fidelity, invalid/empty namespace inputs, non-default rates, native timing/identity, secrets/security, lifecycle and real-consumer semantics remain unverified."
     },
     {
       "id": "added:C_ActionBar.GetActionCooldownDuration",
