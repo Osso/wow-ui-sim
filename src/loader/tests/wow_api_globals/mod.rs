@@ -211,7 +211,6 @@ mod patch_12_0_0_secrecy_level_enums;
 mod patch_12_0_0_send_addon_message_result_enums;
 mod patch_12_0_0_simple_order_status_enums;
 mod patch_12_0_0_sleeves_geo_range_enums;
-mod patch_12_0_0_small_enums;
 mod patch_12_0_0_spell_aura_visibility_type_enums;
 mod patch_12_0_0_spell_diminish_category_enums;
 mod patch_12_0_0_spell_diminish_ruleset_enums;
@@ -244,6 +243,7 @@ mod patch_12_0_0_unit_aura_sort_rule_big_defensive;
 mod patch_12_0_0_unit_power_spell_ids;
 }
 
+mod patch_12_0_0_small_enums;
 mod patch_12_0_7_edit_mode_enum_values;
 #[cfg(feature = "client-retail")]
 mod patch_12_1_5_curio_rarity;

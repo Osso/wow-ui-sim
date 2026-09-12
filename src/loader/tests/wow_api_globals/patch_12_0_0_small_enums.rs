@@ -4,6 +4,7 @@
 
 use super::super::*;
 
+#[cfg(not(feature = "retail-12-0-5"))]
 const ENUM_VALUES: &[(&str, &[(&str, i64)])] = &[
     (
         "AccountTransType",
@@ -88,6 +89,7 @@ const ENUM_VALUES: &[(&str, &[(&str, i64)])] = &[
     ),
 ];
 
+#[cfg(not(feature = "retail-12-0-5"))]
 #[test]
 fn test_patch_12_0_0_enum_current_keys_and_old_keys_absent() {
     let env = WowLuaEnv::new().unwrap();
@@ -128,6 +130,7 @@ fn test_patch_12_0_0_enum_current_keys_and_old_keys_absent() {
     );
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 #[test]
 fn test_patch_12_0_0_small_enum_values() {
     let env = WowLuaEnv::new().unwrap();
