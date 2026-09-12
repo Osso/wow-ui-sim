@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Preserve patch 12.1 historical cache input
+
+`6572d7b0e` preserves the original PTR 12.1 file list in `data/patch-api/sources/12.1.0-ptr-cache-manifest.txt`; both 12.1 manifests point to that immutable audit input. Runtime `data/blizzard-ui-files/ptr.txt` remains current-PTR data. This is provenance preservation, not native historical execution. See [[patch-12-1-api-audit]].
+
 ## [2026-09-12] audit | Credit bounded patch 12.1 binding and removal policies
 
 Audited `37c599ca6` after implementation/proof commits `9a8189612`, `d7bcd3589`, `b78b996b4`, `960877d1c`, and `173023b62`. The 54-row 12.1 behavior register is now 36 best-effort and 18 evidence-required: userdata DurationTextBinding representation/retention, post-world-entry strict-removal visibility, and idempotent wrapper timing are bounded simulator policies. Native object layout/finalization/GC, exact native retirement timing, private/secret behavior, and security remain unverified. Development proof is recorded; final independent verification remains pending. See [DurationTextBinding](../specs/duration-text-binding.md), [strict-removal timing](../specs/strict-removal-timing.md), and [[patch-12-1-api-audit]].
