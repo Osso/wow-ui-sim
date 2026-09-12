@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Credit nonzero duration defaults transition
 
-`5f7d70fe6` adds one 12.0.0 test for `SetToDefaults` from nonzero configured timing and a bound manual clock. `44e8055e3` credits only that row, moving the register to `2260 / 1148 / 2`; 20 existing duration-test hashes renew across two manifests. Development 12.0.0 proof is eight tests; later-profile verification remains pending. Native reset/clock/coercion/error/identity/security and consumer behavior remain open. See [[patch-12-0-0-api-audit]] and [[duration-core]].
+`5f7d70fe6` adds one 12.0.0 test for `SetToDefaults` from nonzero configured timing and a bound manual clock. `44e8055e3` credits only that row, moving the register to `2260 / 1148 / 2`; 20 existing duration-test hashes renew across two manifests. `/tmp/verify-duration-defaults-ledger.json` records 8/8 duration-core tests on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7; format/readability pass, production check/build/startup proof is unchanged and reused, and both affected validators pass with fresh hashes. Native reset/clock/coercion/error/identity/security and consumer behavior remain open. See [[patch-12-0-0-api-audit]] and [[duration-core]].
 
 ## [2026-09-12] audit | Credit existing duration timing assertions
 
