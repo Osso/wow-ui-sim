@@ -23,7 +23,7 @@ The machine register is `data/patch-api/12.0.5-probes.json`, sourced from `data/
 A broad approval recorded on 2026-07-14 is superseded. The five rows below distinguish four item-specific evidence-required behavior gaps from one approved provenance-only exception-requested row. Evidence-required rows carry hashed repository evidence but need no approval, commit, or focused test; they await authoritative/live evidence or correct implementation.
 
 1. **ProtectedRetailProbe.SecureStore — evidence-required unsafe:** Retained Store frames are forbidden, legacy setters are absent, and `IsProtected` errors; the current simulator returns normally, so exact forbidden/secret-return enforcement is unsafe to guess.
-2. **ScaleEventProbe.SameSizeDuplicatePair — evidence-required impossible:** Duplicate ordered display/scale event pairs occur on same-size maximize/restore transitions, but the simulator receives no maximize/restore/fullscreen signal and cannot distinguish them from no transition; correct behavior remains unmodeled.
+2. **ScaleEventProbe.SameSizeDuplicatePair — evidence-required impossible:** Retained live observations already establish that maximize/restore can produce another ordered display/scale pair without a dimension change. The missing boundary is the production window-transition signal, not screen-size evidence: the probe records dimensions and state, while the simulator receives only draw-time `iced::Size` and deliberately ignores equal sizes. Pinned iced 0.14.0 / winit 0.30.12 expose no maximize/restore/fullscreen transition notification. Their mode/maximize queries are not ordered transition events, so polling would be an approximation. Correct behavior remains unmodeled.
 3. **XmlFrameLevelProbe.RawCaptureProvenance — approved impossible:** Behavior is regression-tested, but the raw SavedVariables capture does not exist and cannot be reconstructed locally.
 4. **StoreForbiddenProbe.DropdownPopulation — evidence-required unsafe:** The retained capture has `StoreDropdown_SetDropdown == nil`, so population, reuse, text/check, callback, and protection behavior was never observed.
 5. **StoreForbiddenProbe.ForbiddenDescendants — evidence-required unsafe:** The retained file lacks the `/sfp` manual descendant scan, so Store descendant forbidden/protected state is unknown; correct behavior remains unmodeled pending authoritative/live evidence.
@@ -64,6 +64,10 @@ Regression coverage exists in:
 - `tests/xml_frame_strata.rs` — XML `frameLevel` and `fixedFrameLevel` semantics.
 - `src/iced_app/resize_event_tests.rs` — display/scale ordered-pair behavior.
 
+### Same-size transition boundary
+
+`ScaleEventProbe` captures screen and physical dimensions, UI-scale CVars, and `UIParent` scales with each ordered event pair; it does not need another dimensions capture. `App::sync_screen_size_to_state` receives only `iced::Size` during drawing and does nothing when both dimensions match. The pinned window stack has resize, move, focus, and scale-factor notifications but no mode/maximize/restore/fullscreen transition notification. There is therefore no production input that distinguishes an equal-size maximize/restore transition from no transition. Do not fire another pair merely because the same size is observed again, and do not add an admin event as a fidelity substitute.
+
 ### Remaining inert/default surface
 
 There is no 12.0.5-specific inert-default module. Broad compatibility defaults still live in `src/lua_api/workarounds/temporary/` and permanent unsupported C API shims, but the 12.0.5 probe-backed findings listed above have modeled behavior and tests rather than patch-scoped inert stubs.
@@ -83,6 +87,9 @@ This audit remains open with 4 evidence-required rows and 1 approved provenance-
 - [CoreBehaviorProbe](../../../docs/addons/CoreBehaviorProbe/README.md) — live core behavior probe notes.
 - [FrameIdentityProbe](../../../docs/addons/FrameIdentityProbe/README.md) — live frame identity probe notes.
 - [ScaleEventProbe](../../../docs/addons/ScaleEventProbe/README.md) — live display/scale event probe notes.
+- [ScaleEventProbe source](../../../docs/addons/ScaleEventProbe/ScaleEventProbe.lua) — captured dimensions, CVars, and event order.
+- [screen-size synchronization](../../../src/iced_app/update_runtime.rs) — simulator's size-only input boundary.
+- [Cargo lockfile](../../../Cargo.lock) — pinned iced 0.14.0 and winit 0.30.12.
 
 ## See Also
 

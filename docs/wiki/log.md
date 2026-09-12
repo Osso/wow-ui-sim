@@ -1,3 +1,7 @@
+## [2026-09-12] audit | Clarify 12.0.5 same-size transition blocker
+
+`ScaleEventProbe.SameSizeDuplicatePair` remains evidence-required/impossible. Retained live data already captures dimensions and ordered pairs; the missing fact is a production maximize/restore/fullscreen transition input. The simulator receives only draw-time `iced::Size` and ignores equal sizes, while pinned iced 0.14.0 / winit 0.30.12 provide no ordered mode-transition notification. Polling mode/maximize state or firing an admin event would be an approximation, not a fidelity fix. The 12.0.5 register remains 33 best-effort, 4 evidence-required, and 1 provenance exception. See [[patch-12-0-5-api-audit]].
+
 ## [2026-09-12] audit | Document bounded 12.0.7 encounter-end input
 
 `ee979b81b` adds an explicit simulator-only `A_Admin.SimulateBossKill` status-list input for the 12.0.7 `ENCOUNTER_END.encounterUnitStatus` field. It copies caller-supplied records or emits a fresh empty list; it does not infer boss state. Tests were committed RED-first in `3c6c8e72d`; GREEN and historical-profile proof remain pending, so no audit credit is recorded. See [admin event inputs](../../admin-api/events.md), [encounter-end status](../../specs/encounter-end-unit-status.md), and [[patch-12-0-7-api-audit]].
