@@ -19181,7 +19181,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -19224,7 +19224,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -19267,7 +19267,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -19310,7 +19310,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -19353,7 +19353,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -19396,7 +19396,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -19439,7 +19439,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Duration proxy preserves table identity and registers the modeled duration and manual-clock methods.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",

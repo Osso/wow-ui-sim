@@ -530,7 +530,7 @@
 530. [evidence-required] `added:C_SettingsUtil.OpenSettingsPanel` — unsafe
 531. [evidence-required] `added:C_Sound.PlaySound` — unsafe
 532. [evidence-required] `added:C_Spell.GetSpellChargeDuration` — unsafe
-533. [evidence-required] `added:C_Spell.GetSpellCooldownDuration` — unsafe
+533. [best-effort] `added:C_Spell.GetSpellCooldownDuration` — behavioral
 534. [evidence-required] `added:C_Spell.GetSpellDisplayCount` — unsafe
 535. [evidence-required] `added:C_Spell.GetSpellLossOfControlCooldownDuration` — unsafe
 536. [evidence-required] `added:C_Spell.GetSpellMaxCumulativeAuraApplications` — unsafe

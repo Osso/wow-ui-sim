@@ -2440,31 +2440,31 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_action_bar.rs",
-          "source_hash": "c6faf82b12148e90bf4f6f8f8f3614c906e7d68dbc74194c1c3d920be6bf99f0",
+          "source_hash": "6f76cdb7cc1b8edb6f10e87e739d6f8bf92b2754ed11ace96902bb9afc45da3b",
           "summary": "Resolves assigned spell state through the existing spell/GCD selector and configures a fresh duration with the registered SetTimeFromStart method."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
-          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
           "summary": "Active spell-slot duration matches cooldown start/span/rate and runtime-clock elapsed/remaining bounds."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_snapshots_slot_and_spell_state",
-          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
           "summary": "Changing spell cooldown state and reassigning a slot changes a new query while the earlier duration retains its configured interval."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_selects_later_ending_gcd",
-          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
           "summary": "An active later-ending GCD supplies the same start/span as existing action cooldown info."
         },
         {
           "kind": "test",
           "reference": "tests/cooldown_probes.rs::get_action_cooldown_duration_empty_inactive_and_expired_are_zero",
-          "source_hash": "a01e371a553f8497a44496113b3c7ccc6946c41ad25b6d49dccb12db464693d4",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
           "summary": "Valid empty, assigned-inactive, and expired slots yield a non-null duration with zero start/span/end and rate 1."
         }
       ],
@@ -8256,7 +8256,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust registration creates a table-backed LuaDurationObject with shared methods and an instance ID.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -17809,7 +17809,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 duration method; duration-object lifecycle and semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -17823,8 +17823,8 @@
       "id": "added:C_Spell.GetSpellCooldownDuration",
       "symbol": "C_Spell.GetSpellCooldownDuration",
       "change": "added",
-      "status": "evidence-required",
-      "resolution": "unsafe",
+      "status": "best-effort",
+      "resolution": "behavioral",
       "owner": "api",
       "load_addon": null,
       "evidence": [
@@ -17837,16 +17837,51 @@
         {
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
-          "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 duration method; duration-object lifecycle and semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "summary": "Retail 12.0.0+ registers a producer that resolves the existing modeled numeric or seeded alias identifier, selects the current spell/GCD interval, and delegates duration snapshot construction.",
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
+        },
+        {
+          "kind": "source",
+          "reference": "src/lua_api/globals/lua_duration_object.rs",
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae",
+          "summary": "Shared timed-duration construction creates a fresh duration and applies the existing validated SetTimeFromStart path with rate 1."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "Active numeric spell state yields a duration whose start/span/rate match C_Spell.GetSpellCooldown and whose elapsed/remaining values follow the runtime clock."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_resolves_alias_and_snapshots_state",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "Seeded case-insensitive aliases resolve; later alias/cooldown updates affect a new query while the earlier duration keeps its configured interval."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_selects_later_ending_gcd",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "An active later-ending GCD supplies the same start/span as C_Spell.GetSpellCooldown."
+        },
+        {
+          "kind": "test",
+          "reference": "tests/cooldown_probes.rs::get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias",
+          "source_hash": "564454edbfb36866f081af9d847cd548bc3ee1d64469f37fbd930ea5e5bfc2ff",
+          "summary": "Inactive numeric identifiers yield zero timing while unresolved strings yield nil under the explicit simulator policy."
         }
       ],
-      "tests": [],
+      "tests": [
+        "tests/cooldown_probes.rs::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock",
+        "tests/cooldown_probes.rs::get_spell_cooldown_duration_resolves_alias_and_snapshots_state",
+        "tests/cooldown_probes.rs::get_spell_cooldown_duration_selects_later_ending_gcd",
+        "tests/cooldown_probes.rs::get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias"
+      ],
       "assertions": [],
-      "commit": null,
+      "commit": "0e47eae2f",
       "approval_id": null,
       "scope_exception": null,
-      "notes": "The 12.0.0 duration contract is not currently registered/implemented with focused proof; duration-object lifecycle and semantics require authoritative evidence or a correct model, and no approval can close the row."
+      "notes": "Ordinary simulator policy: retail 12.0.0+ resolves numeric identifiers and seeded case-insensitive aliases, snapshots the existing spell/GCD interval with rate 1 and the runtime clock, returns zero timing for inactive numeric identifiers, and returns nil for unresolved strings. Earlier profiles preserve the observed nil result. Native identifier/unknown-spell/return-arity, GCD/snapshot/identity/lifetime/error, security, later ignoreGCD, and real Blizzard consumer semantics remain unverified."
     },
     {
       "id": "added:C_Spell.GetSpellDisplayCount",
@@ -17867,7 +17902,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 display-count method; spell metadata/display semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -17896,7 +17931,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 duration method; duration-object lifecycle and semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -17925,7 +17960,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 metadata method; spell metadata semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -17954,7 +17989,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 metadata method; spell metadata semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -17983,7 +18018,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -18012,7 +18047,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -18041,7 +18076,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -18070,7 +18105,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` contains a same-name `IsSelfBuff` registration/implementation based on `implicit_target`, but no matching 12.0.0 publication/behavioral contract is proven.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -18099,7 +18134,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -18128,7 +18163,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -87557,7 +87592,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust implementation provides a table proxy with shared methods, per-instance fields, and tostring formatting.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -87597,7 +87632,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -87638,7 +87673,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -87676,7 +87711,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -87719,7 +87754,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -87762,7 +87797,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -87805,7 +87840,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -88164,7 +88199,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current source owner is src/lua_api/globals/lua_duration_object.rs: LuaDurationObject is implemented as a Lua table proxy with a shared metatable and Rust method closures. The listed method bodies are placeholders or local simulator behavior where shown; source ownership does not establish native duration semantics, userdata identity, secret behavior, timing, or exact errors.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         }
       ],
       "tests": [],
@@ -88193,7 +88228,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
           "summary": "Current Rust implementation exposes IsZero as a default-zero constant.",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e"
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae"
         },
         {
           "kind": "test",
@@ -90334,7 +90369,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Current implementation does not provide authoritative focused proof for SpellCooldownInfo.isOnGCD; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -90363,7 +90398,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Current implementation does not provide authoritative focused proof for SpellCooldownInfo.timeUntilEndOfStartRecovery; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "9a9f74f832a47b2f6c36be835ca5df84dcbab3647c38185672842a6b1f272dc1"
+          "source_hash": "9a02bbc37e74878105d5d9f2fa790f6e299cf452eaee0bedd551c68cd7aa7749"
         }
       ],
       "tests": [],
@@ -91352,7 +91387,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e",
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae",
           "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
@@ -91465,7 +91500,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e",
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae",
           "summary": "This module implements duration objects and clocks; its source context alone does not establish the named unit-duration publication or producer contract. No repository-wide absence is inferred."
         },
         {
@@ -99092,7 +99127,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/globals/lua_duration_object.rs",
-          "source_hash": "2176c10fe08b53f9186273dae248367aa1279a704344e4d95ebc3c651397ad4e",
+          "source_hash": "b49f6880114d0d0e6f387e10d6c7497d548dd1269662b6a770a7621913231eae",
           "summary": "Current LuaDurationObject implementation exposes C_DurationUtil table proxies with the tested factory, zero-state, query, and lifecycle surface."
         },
         {
