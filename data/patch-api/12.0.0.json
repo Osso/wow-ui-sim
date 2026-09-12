@@ -196,7 +196,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs",
           "summary": "Current temporary fallback ignores NumberAbbrevOptions and returns a floored numeric string; abbreviation thresholds, localization, options, validation, and edge semantics are unmodeled.",
-          "source_hash": "ab224bc98a89071db5da1574862458713303b127a213c08edc6465b691024e1c"
+          "source_hash": "3ccf2a58571edfa70c658a31592938c8cacaef97fad3ad4bf9fe6ed3c7a3283e"
         }
       ],
       "tests": [],
@@ -225,7 +225,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs",
           "summary": "Current temporary fallback ignores NumberAbbrevOptions and returns a direct string conversion; abbreviation thresholds, localization, options, validation, and edge semantics are unmodeled.",
-          "source_hash": "ab224bc98a89071db5da1574862458713303b127a213c08edc6465b691024e1c"
+          "source_hash": "3ccf2a58571edfa70c658a31592938c8cacaef97fad3ad4bf9fe6ed3c7a3283e"
         }
       ],
       "tests": [],
@@ -97248,7 +97248,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs",
           "summary": "A duplicate temporary fallback/test covers only basic doubling behavior.",
-          "source_hash": "ab224bc98a89071db5da1574862458713303b127a213c08edc6465b691024e1c"
+          "source_hash": "3ccf2a58571edfa70c658a31592938c8cacaef97fad3ad4bf9fe6ed3c7a3283e"
         },
         {
           "kind": "source",
@@ -102098,7 +102098,7 @@
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs",
-          "source_hash": "db9b560b5e448cbcfd064e65e2f5edb1d3d84b174cc87e9d7cf5e8b4aab36f8d",
+          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87",
           "summary": "Existing voice tests do not prove the changed SpeakText signature."
         },
         {
