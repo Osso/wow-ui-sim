@@ -21,12 +21,12 @@ Loaded Blizzard tooltip code owns money-line rendering. See [[tooltip-money-line
 
 ## Tests asserting this spec
 
-- Pending: grouped loaded-mail consumer coverage; exact file and test names await the focused test slice.
+- `tests/tooltip_money_line.rs` — loaded helper zero/boolean color behavior and real mail enclosed-money/COD ordering.
 
 ## Known gaps (current cycle)
 
-- [ ] Add focused loaded Blizzard tooltip/mail assertions for formatting, zero output, colors, and ordering.
-- [ ] Reconcile `added:GameTooltip_AddMoneyLine` only after those assertions pass.
+- [ ] Independently verify focused loaded Blizzard tooltip/mail assertions and audit provenance.
+- [ ] Native locale/rendering, historical-client, and whole-addon-clean-startup behavior remain unproven.
 
 ## Out of scope
 
