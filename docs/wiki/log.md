@@ -1,6 +1,6 @@
 ## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
 
-`977d30276` installs the two 12.0.0 `C_CurveUtil` boolean selectors behind the retail-12.0.0 feature gate; `be38a2c52` credits only those two rows. Ordinary color selection returns a fresh ColorMixin table, component selection returns the selected number, and both candidate arguments are validated before selection. These are simulator policies, not native identity/coercion/security evidence. The five behavioral tests were RED at `7e2d48ae8`; grouped development proof is 32/32. Final profile and acceptance gates remain pending. Eighty-two existing references renew provenance only. See [boolean color selection](../specs/boolean-color-selection.md).
+`977d30276` installs the two 12.0.0 `C_CurveUtil` boolean selectors behind the retail-12.0.0 feature gate; `be38a2c52` credits only those two rows. Ordinary color selection returns a fresh ColorMixin table, component selection returns the selected number, and both candidate arguments are validated before selection. These are simulator policies, not native identity/coercion/security evidence. The five behavioral tests were RED at `7e2d48ae8`; grouped 12.0.0 proof is 32/32. Independent controls passed 5/5 on 12.0.5, 5/5 on 12.0.7, and 1/1 on Mists; format/check/build and current-retail startup (`[]`) passed. Historical-profile warnings were pre-existing. Eighty-two existing references renew provenance only. See [boolean color selection](../specs/boolean-color-selection.md).
 
 ## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
 
