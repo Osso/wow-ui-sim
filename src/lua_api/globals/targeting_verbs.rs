@@ -72,7 +72,7 @@ fn player_target_info(st: &crate::lua_api::state::SimState) -> TargetInfo {
         power_type_name: "MANA".to_string(),
         is_player: true,
         is_enemy: false,
-        guid: "Player-0000-00000000".to_string(),
+        guid: super::unit_misc::guid_for_unit(st, "player"),
         classification: "normal".to_string(),
         creature_type: "Humanoid".to_string(),
         reaction: 5,
@@ -81,7 +81,9 @@ fn player_target_info(st: &crate::lua_api::state::SimState) -> TargetInfo {
 
 fn resolve_party_token(st: &crate::lua_api::state::SimState, token: &str) -> Option<TargetInfo> {
     let idx = parse_party_slot(token)?;
-    st.party_members.get(idx).map(party_member_to_target_info)
+    st.party_members.get(idx).map(|member| {
+        party_member_to_target_info(member, super::unit_misc::guid_for_unit(st, token))
+    })
 }
 
 fn resolve_enemy_token(st: &crate::lua_api::state::SimState, token: &str) -> Option<TargetInfo> {
@@ -131,7 +133,7 @@ fn parse_party_slot(token: &str) -> Option<usize> {
     }
 }
 
-fn party_member_to_target_info(m: &PartyMember) -> TargetInfo {
+fn party_member_to_target_info(m: &PartyMember, guid: String) -> TargetInfo {
     TargetInfo {
         unit_id: "target".to_string(),
         name: m.name.clone(),
@@ -145,7 +147,7 @@ fn party_member_to_target_info(m: &PartyMember) -> TargetInfo {
         power_type_name: m.power_type_name.clone(),
         is_player: true,
         is_enemy: false,
-        guid: "Player-0000-00000000".to_string(),
+        guid,
         classification: "normal".to_string(),
         creature_type: "Humanoid".to_string(),
         reaction: 5,
@@ -312,30 +314,54 @@ pub fn can_be_raid_target(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `GetRaidTargetIndex(unit)` — nil until the sim models assigned markers.
+/// `GetRaidTargetIndex(unit)` — assigned unit icon, or nil for an unmarked unit.
 pub fn get_raid_target_index(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = state;
-    state.push(rilua::Val::Nil);
+    let target = match Option::<String>::from_stack(state, 1)? {
+        Some(token) => resolve_token_to_target_info(state, &token)?,
+        None => None,
+    };
+    let icon = match target {
+        Some(target) => borrow_state(state)?
+            .unit_raid_target_icons
+            .get(&target.guid)
+            .copied(),
+        None => None,
+    };
+    state.push(icon.map_or(rilua::Val::Nil, |icon| rilua::Val::Num(icon as f64)));
     Ok(1)
 }
 
-/// `SetRaidTarget(unit, marker)` — assign a raid marker (1-8, or 0 to clear).
-///
-/// The simulator does not model per-unit markers, so this is a no-op that
-/// fires `RAID_TARGET_UPDATE` for valid tokens. Matches Blizzard slash command
-/// `/tm` and the raid-marker key bindings in `Bindings_Mists.xml`.
-pub fn set_raid_target(state: &mut LuaState) -> LuaResult<u32> {
-    let token = match Option::<String>::from_stack(state, 1)? {
-        Some(t) => t,
-        None => return Ok(0),
-    };
-    if resolve_token_to_target_info(state, &token)?.is_none() {
-        return Ok(0);
+fn read_raid_target_icon(state: &LuaState) -> LuaResult<u8> {
+    match crate::lua_bridge::stack_val(state, 2) {
+        rilua::Val::Num(index)
+            if index.is_finite() && index.fract() == 0.0 && (0.0..=8.0).contains(&index) =>
+        {
+            Ok(index as u8)
+        }
+        _ => Err(rilua::runtime_error(
+            "SetRaidTarget: index must be an integer from 0 to 8",
+        )),
     }
-    borrow_state_mut(state)?.events.push(Event {
-        name: "RAID_TARGET_UPDATE".to_string(),
-        args: Vec::new(),
-    });
+}
+
+/// Explicit simulator policy: assign/move one unit icon, or clear it with zero.
+/// Notify synchronously after mutation, including repeated valid assignments.
+pub fn set_raid_target(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(token) = Option::<String>::from_stack(state, 1)? else {
+        return Ok(0);
+    };
+    let Some(target) = resolve_token_to_target_info(state, &token)? else {
+        return Ok(0);
+    };
+    let icon = read_raid_target_icon(state)?;
+    {
+        let mut sim = borrow_state_mut(state)?;
+        let icons = &mut sim.unit_raid_target_icons;
+        icons.retain(|guid, assigned| guid != &target.guid && *assigned != icon);
+        if icon != 0 {
+            icons.insert(target.guid, icon);
+        }
+    }
     fire_event_now(state, "RAID_TARGET_UPDATE", &[]);
     Ok(0)
 }
@@ -380,7 +406,7 @@ pub fn target_nearest_friend(state: &mut LuaState) -> LuaResult<u32> {
     let new_target = {
         let st = borrow_state(state)?;
         if st.party_group_active {
-            st.party_members.first().map(party_member_to_target_info)
+            resolve_party_token(&st, "party1")
         } else {
             None
         }

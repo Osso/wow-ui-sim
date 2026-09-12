@@ -141,6 +141,7 @@ macro_rules! build_empty_sim_state {
             previous_target: None,
             current_focus: $runtime.current_focus,
             enemy_pool: Vec::new(),
+            unit_raid_target_icons: HashMap::new(),
             sound_manager: $runtime.sound_manager,
             last_sound_kit_requested: $runtime.last_sound_kit_requested,
             last_sound_file_requested: $runtime.last_sound_file_requested,
