@@ -41,6 +41,8 @@ mod shake;
 mod social_ui;
 #[path = "patch_12_1/source_absent.rs"]
 mod source_absent;
+#[path = "patch_12_1/strict_removal_timing.rs"]
+mod strict_removal_timing;
 #[path = "patch_12_1/table_extensions.rs"]
 mod table_extensions;
 #[path = "patch_12_1/ui_geometry.rs"]
