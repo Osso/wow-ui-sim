@@ -5,8 +5,8 @@ Non-FrameXML behavioral fidelity register. Family names group rows; status and e
 - **Source:** `data/patch-api/sources/12.1-behaviors.json`
 - **Source SHA-256:** `9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f`
 - **Target:** PTR build `12.1.0`
-- **Rows:** 54 changed behavioral boundaries — 0 implemented, 38 best-effort, 16 evidence-required, 0 exception-requested, 0 untriaged
-- **Resolution split:** 38 behavioral, 16 unsafe; no exception rows
+- **Rows:** 54 changed behavioral boundaries — 0 implemented, 42 best-effort, 12 evidence-required, 0 exception-requested, 0 untriaged
+- **Resolution split:** 42 behavioral, 12 unsafe; no exception rows
 
 The three new best-effort credits use simulator tests, not native captures: [duration-binding representation](../../specs/duration-text-binding.md) and [strict-removal timing](../../specs/strict-removal-timing.md). The frozen source register retains the original fidelity objectives; bounded modeled policies do not establish those objectives' native equivalence. Native probe preparation alone changes no disposition.
 
@@ -16,8 +16,8 @@ The three new best-effort credits use simulator tests, not native captures: [dur
 | `Patch12_1.UnitAura.BlizzardSecretAccess` | evidence-required  | unsafe  | UnitAura secrecy | changed | Blizzard/internal callers receive the permitted secret-aura behavior distinct from addon-tainted callers. |
 | `Patch12_1.UnitAura.SecretAuraData` | evidence-required  | unsafe  | UnitAura secrecy | changed | Fully secret AuraData fields remain inaccessible to addons while preserving the retail object shape. |
 | `Patch12_1.UnitAura.SecretEventPayload` | evidence-required  | unsafe  | UnitAura secrecy | changed | Secret UNIT_AURA payload values preserve retail secrecy and tuple shape. |
-| `Patch12_1.PrivateScriptObjects.PrivateIdentity` | evidence-required  | unsafe  | Private Script Objects | changed | Private or forbidden objects have identity distinct from their public frame view. |
-| `Patch12_1.PrivateScriptObjects.InaccessiblePublicKeys` | evidence-required  | unsafe  | Private Script Objects | changed | Private keys remain inaccessible through the public object. |
+| `Patch12_1.PrivateScriptObjects.PrivateIdentity` | best-effort | behavioral | Private Script Objects | changed | Simulator private projections are distinct/interned yet preserve one underlying frame identity for covered native parent/method and AuraContainer boundaries; native identity/security remains unverified. |
+| `Patch12_1.PrivateScriptObjects.InaccessiblePublicKeys` | best-effort | behavioral | Private Script Objects | changed | Simulator private fields/methods remain partitioned from same-named public assignments except explicit exports/delegates; no native key-access list or security enforcement is claimed. |
 | `Patch12_1.PrivateScriptObjects.ChildVisibility` | evidence-required  | unsafe  | Private Script Objects | changed | Public traversal cannot expose forbidden or private children. |
 | `Patch12_1.PrivateScriptObjects.HookBoundary` | evidence-required  | unsafe  | Private Script Objects | changed | Hooks cannot cross private or forbidden partitions except through permitted delegates. |
 | `Patch12_1.PrivateScriptObjects.ScriptStorage` | evidence-required  | unsafe  | Private Script Objects | changed | Script handlers stored in private partitions are not publicly readable or writable. |

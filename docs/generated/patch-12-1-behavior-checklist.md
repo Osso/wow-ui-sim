@@ -2,8 +2,8 @@
 2. [evidence-required] `changed:Patch12_1.UnitAura.BlizzardSecretAccess` — unsafe
 3. [evidence-required] `changed:Patch12_1.UnitAura.SecretAuraData` — unsafe
 4. [evidence-required] `changed:Patch12_1.UnitAura.SecretEventPayload` — unsafe
-5. [evidence-required] `changed:Patch12_1.PrivateScriptObjects.PrivateIdentity` — unsafe
-6. [evidence-required] `changed:Patch12_1.PrivateScriptObjects.InaccessiblePublicKeys` — unsafe
+5. [best-effort] `changed:Patch12_1.PrivateScriptObjects.PrivateIdentity` — behavioral
+6. [best-effort] `changed:Patch12_1.PrivateScriptObjects.InaccessiblePublicKeys` — behavioral
 7. [evidence-required] `changed:Patch12_1.PrivateScriptObjects.ChildVisibility` — unsafe
 8. [evidence-required] `changed:Patch12_1.PrivateScriptObjects.HookBoundary` — unsafe
 9. [evidence-required] `changed:Patch12_1.PrivateScriptObjects.ScriptStorage` — unsafe

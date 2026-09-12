@@ -15,11 +15,11 @@ Focused proof must cover projection identity, field isolation, native parent/met
 
 ## What it must do
 
-- [ ] Preserve native frame identity in the forbidden partition, so native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
-- [ ] Convert direct references to XML-partitioned frames when Lua closures cross between the public and secure environments. Ordinary frames retain their public fields; ordinary tables and nested data are not recursively rewritten. Native parent queries return the partition appropriate to their Lua caller.
-- [ ] Keep explicit native `GetObjectTable` results public for outbound addon initializers.
-- [ ] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
-- [ ] Run AuraContainer provider creation and inbound child ownership validation without publishing private methods or invoking public overrides of private methods.
+- [x] Preserve simulator frame identity in the forbidden partition: native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
+- [x] Convert direct references to XML-partitioned frames across the covered secure-environment boundary; ordinary frame fields remain public and nested data is not recursively rewritten.
+- [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
+- [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
+- [x] Run AuraContainer provider creation and inbound child ownership validation without publishing private methods or invoking public overrides of private methods.
 
 ## How it works
 
@@ -41,7 +41,8 @@ Focused proof must cover projection identity, field isolation, native parent/met
 
 ## Known gaps
 
-- [ ] Simulator integration verification pending.
+- [x] Focused retail proof at `8787273ad`: six `forbidden_partition_` cases cover interned projection/field isolation, native parent identity, spoof rejection, ordinary frame transfer, and real AuraContainer provider/initializer boundaries.
+- [x] Three earlier-12.0.7 controls pass, preserving focused partition behavior outside 12.1.
 - Coroutine yield/resume conversion and recursive conversion of table contents are not implemented by this facility.
 - Conditional aura-secrecy access enforcement is separate from partition conversion and remains unmodeled.
 
