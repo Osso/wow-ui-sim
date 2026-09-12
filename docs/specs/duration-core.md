@@ -13,6 +13,15 @@ Ordinary clock-driven duration state for the existing Lua table proxy in `src/lu
 
 - [x] Return elapsed/remaining fractions from the same timing state, with clock-boundary clamping, rewind, and modifier validation. Focused proof passed 7/7 on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7; see `/tmp/verify-duration-percent-ledger.json`.
 
+### Copy and assignment
+
+- [ ] `Copy` returns one independent duration with the source's configured start, base duration, and rate; subsequent timing changes on either object do not affect the other.
+- [ ] `Assign(other)` transfers configured timing into the existing receiver and returns no values; self-assignment leaves state unchanged.
+- [ ] Copy the optional clock reference, not the clock object. Clock advancement is shared; rebinding either duration is independent. An unbound source clears the receiver's previous clock binding.
+- [ ] Preserve receiver identity and custom fields during assignment. Reject missing or non-duration sources before changing receiver state.
+
+Cached `LuaDurationObjectAPIDocumentation.lua` describes copying a duration and assigning another duration into the receiver. Clock-reference handling, custom-field retention, and validation above are simulator policies, not native historical-client evidence. Only modeled timing and clock state transfer; arbitrary source fields are not part of duration state.
+
 ### Chosen formulas — native-unverified
 
 Store start `s`, base duration `D >= 0`, and finite rate `r > 0`. Real span `T = D / r`; end `e = s + T`. `SetTimeFromEnd(e,D,r)` derives `s=e-D/r`. `SetTimeSpan(s,e)` stores `D=e-s`, `r=1`.
@@ -54,6 +63,6 @@ Focused proof at `24fe9d746` and `/tmp/verify-duration-percent-ledger.json` pass
 
 ## Out of scope
 
-- Curve evaluation, `Assign`/`Copy`, and rendering behavior remain outside this slice; no curve-evaluation features are added.
+- Curve evaluation and rendering behavior remain outside this slice; no curve-evaluation features are added. Native copy/assignment identity, clock, coercion/error, custom-field, and lifecycle/GC semantics remain unverified.
 - Secret values, taint, protected/forbidden calls, and immutable proxy internals: not inferred from ordinary numeric behavior.
 - Consumer redesign or changes to duration-text-binding identity: preserve current proxy representation.

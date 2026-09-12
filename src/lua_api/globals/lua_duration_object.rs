@@ -332,16 +332,38 @@ fn duration_tostring(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-// ── Stub method bodies ────────────────────────────────────────────────────────
+// ── Method bodies ─────────────────────────────────────────────────────────────
+
+fn require_duration(state: &LuaState, index: i32) -> LuaResult<Val> {
+    let object = crate::lua_bridge::stack_val(state, index);
+    let expected = registry_get(state, MT_KEY);
+    if let (Val::Table(reference), Val::Table(metatable)) = (object, expected) {
+        let actual = state
+            .gc
+            .tables
+            .get(reference)
+            .and_then(|table| table.metatable());
+        if actual == Some(metatable) {
+            return Ok(object);
+        }
+    }
+    Err(rilua::runtime_error(format!(
+        "expected LuaDurationObject at argument {index}"
+    )))
+}
 
 fn m_assign(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = state;
+    let target = require_duration(state, 1)?;
+    let source = require_duration(state, 2)?;
+    core::copy_state(state, source, target);
     Ok(0)
 }
 
 fn m_copy(state: &mut LuaState) -> LuaResult<u32> {
+    let source = require_duration(state, 1)?;
     let obj = new_duration_object(state);
     state.push(obj);
+    core::copy_state(state, source, obj);
     Ok(1)
 }
 

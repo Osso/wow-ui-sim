@@ -81,6 +81,13 @@ pub(super) fn initialize(state: &mut LuaState, object: Val) {
     );
 }
 
+pub(super) fn copy_state(state: &mut LuaState, source: Val, target: Val) {
+    let timing = read_timing(state, source);
+    let clock = table_get(state, source, "clock");
+    write_timing(state, target, timing);
+    table_set(state, target, "clock", clock);
+}
+
 pub(super) fn current_time(state: &LuaState) -> LuaResult<f64> {
     Ok(borrow_state(state)?.start_time.elapsed().as_secs_f64())
 }
