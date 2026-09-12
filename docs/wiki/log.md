@@ -1,6 +1,6 @@
-## [2026-09-12] system | Document pending duration-percent simulator policy
+## [2026-09-12] system | Verify duration-percent simulator policy
 
-`24fe9d746` replaces two `LuaDurationObject` percent-query placeholders over existing table-proxy timing state. Elapsed and remaining fractions clamp to clock boundaries, rewind observes the selected clock without changing configuration, zero spans return two zeroes, and `RealTime`/`BaseTime` yield the same fraction. Existing modifier and bound-clock validation supplies errors. These are explicit simulator policies, not native proof; GREEN and independent verification remain pending. See [[duration-core]].
+`/tmp/verify-duration-percent-ledger.json` reuses matching 12.0.0 proof and records seven `duration_core::` tests passing on 12.0.5 and 12.0.7, with format, check, build, and standalone startup also passing. `eb2d60dc8` refreshes 21 stale hashes across seven PTR rows as metadata only; independent metadata follow-up remains pending, so no overall-manifest PASS is claimed. Fractions remain ordinary simulator policies, not native or consumer proof. See [[duration-core]].
 
 ## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
 

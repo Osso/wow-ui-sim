@@ -11,7 +11,7 @@ Ordinary clock-driven duration state for the existing Lua table proxy in `src/lu
 - [x] Reset timing/rate without changing the selected clock; `SetToDefaults` also clears that clock binding.
 - [x] Reject tested nonfinite endpoints/durations, negative durations, reversed spans, and zero rates before changing timing state. Additional overflow/nonfinite-rate rejection is implemented but not separately proven.
 
-- [ ] Return elapsed/remaining fractions from the same timing state, with clock-boundary clamping, rewind, and modifier validation; verify historical profiles.
+- [x] Return elapsed/remaining fractions from the same timing state, with clock-boundary clamping, rewind, and modifier validation. Focused proof passed 7/7 on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7; see `/tmp/verify-duration-percent-ledger.json`.
 
 ### Chosen formulas — native-unverified
 
@@ -40,7 +40,7 @@ Percentage queries return dimensionless fractions in `[0,1]`: `GetElapsedPercent
 - `tests/duration_core.rs`: manual progression/rewind, rate modifiers, end/span configuration, reset, atomic validation, default time source, independent instances; percentage boundary/rewind, zero-span, invalid modifier, and invalid clock policies.
 - Existing `tests/cooldown_widget.rs` and duration-text-binding tests: bounded consumer regression checks; these do not establish native core formulas.
 
-Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
+Focused proof at `24fe9d746` and `/tmp/verify-duration-percent-ledger.json` passes all seven `duration_core::` tests on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7. It also records `cargo fmt --check`, default `cargo check`, default `wow-sim`/`wow-cli` build, and no-addons/no-saved-vars startup `lua-errors` as exit 0; startup reported `[]`. This proves ordinary simulator policies only. Focused proof at `89a71308d`: `duration_core::` has three passing tests on PTR and retail; `test_patch_12_0_7_duration_objects_and_text_binding` passes on PTR. Bounded consumer run at `9aa4a1eb7` passed eight tests and failed one forbidden-object AuraContainer fixture; these are not a clean full consumer acceptance result.
 
 ## Cooldown zero-duration option
 
